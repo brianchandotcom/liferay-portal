@@ -75,7 +75,7 @@ public class CommerceOrderPaymentModelImpl extends BaseModelImpl<CommerceOrderPa
 			{ "commerceOrderId", Types.BIGINT },
 			{ "commercePaymentMethodId", Types.BIGINT },
 			{ "status", Types.INTEGER },
-			{ "content", Types.VARCHAR }
+			{ "content", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -90,10 +90,10 @@ public class CommerceOrderPaymentModelImpl extends BaseModelImpl<CommerceOrderPa
 		TABLE_COLUMNS_MAP.put("commerceOrderId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commercePaymentMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("content", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("content", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderPayment (commerceOrderPaymentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePaymentMethodId LONG,status INTEGER,content VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderPayment (commerceOrderPaymentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,commercePaymentMethodId LONG,status INTEGER,content TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderPayment";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderPayment.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderPayment.createDate DESC";

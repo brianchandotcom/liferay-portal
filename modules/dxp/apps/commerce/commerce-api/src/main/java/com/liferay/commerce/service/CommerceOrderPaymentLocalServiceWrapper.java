@@ -46,6 +46,15 @@ public class CommerceOrderPaymentLocalServiceWrapper
 		return _commerceOrderPaymentLocalService.addCommerceOrderPayment(commerceOrderPayment);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrderPayment addCommerceOrderPayment(
+		long commerceOrderId, int status, java.lang.String content,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderPaymentLocalService.addCommerceOrderPayment(commerceOrderId,
+			status, content, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce order payment with the primary key. Does not add the commerce order payment to the database.
 	*
@@ -82,6 +91,11 @@ public class CommerceOrderPaymentLocalServiceWrapper
 		long commerceOrderPaymentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderPaymentLocalService.deleteCommerceOrderPayment(commerceOrderPaymentId);
+	}
+
+	@Override
+	public void deleteCommerceOrderPayments(long commerceOrderId) {
+		_commerceOrderPaymentLocalService.deleteCommerceOrderPayments(commerceOrderId);
 	}
 
 	/**
@@ -236,6 +250,13 @@ public class CommerceOrderPaymentLocalServiceWrapper
 	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _commerceOrderPaymentLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderPayment getLatestCommerceOrderPayment(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderPaymentLocalService.getLatestCommerceOrderPayment(commerceOrderId);
 	}
 
 	/**

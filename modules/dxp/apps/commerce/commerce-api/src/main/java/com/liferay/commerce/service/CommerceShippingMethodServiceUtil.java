@@ -71,6 +71,11 @@ public class CommerceShippingMethodServiceUtil {
 		return getService().getCommerceShippingMethods(groupId, active);
 	}
 
+	public static int getCommerceShippingMethodsCount(long groupId,
+		boolean active) {
+		return getService().getCommerceShippingMethodsCount(groupId, active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

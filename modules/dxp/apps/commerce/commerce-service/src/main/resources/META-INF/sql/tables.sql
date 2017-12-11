@@ -181,7 +181,7 @@ create table CommerceOrderPayment (
 	commerceOrderId LONG,
 	commercePaymentMethodId LONG,
 	status INTEGER,
-	content VARCHAR(75) null
+	content TEXT null
 );
 
 create table CommercePaymentMethod (

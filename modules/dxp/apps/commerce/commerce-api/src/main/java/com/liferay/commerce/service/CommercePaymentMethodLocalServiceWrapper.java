@@ -266,6 +266,12 @@ public class CommercePaymentMethodLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommercePaymentMethodsCount(long groupId, boolean active) {
+		return _commercePaymentMethodLocalService.getCommercePaymentMethodsCount(groupId,
+			active);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _commercePaymentMethodLocalService.getIndexableActionableDynamicQuery();
 	}

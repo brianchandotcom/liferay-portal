@@ -266,6 +266,12 @@ public class CommerceShippingMethodLocalServiceWrapper
 	}
 
 	@Override
+	public int getCommerceShippingMethodsCount(long groupId, boolean active) {
+		return _commerceShippingMethodLocalService.getCommerceShippingMethodsCount(groupId,
+			active);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return _commerceShippingMethodLocalService.getIndexableActionableDynamicQuery();
 	}

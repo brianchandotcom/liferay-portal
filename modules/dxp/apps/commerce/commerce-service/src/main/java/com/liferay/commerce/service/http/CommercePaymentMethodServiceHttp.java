@@ -185,6 +185,34 @@ public class CommercePaymentMethodServiceHttp {
 		}
 	}
 
+	public static int getCommercePaymentMethodsCount(
+		HttpPrincipal httpPrincipal, long groupId, boolean active) {
+		try {
+			MethodKey methodKey = new MethodKey(CommercePaymentMethodServiceUtil.class,
+					"getCommercePaymentMethodsCount",
+					_getCommercePaymentMethodsCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(
 		HttpPrincipal httpPrincipal, long commercePaymentMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -196,7 +224,7 @@ public class CommercePaymentMethodServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommercePaymentMethodServiceUtil.class,
 					"updateCommercePaymentMethod",
-					_updateCommercePaymentMethodParameterTypes4);
+					_updateCommercePaymentMethodParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePaymentMethodId, nameMap, descriptionMap,
@@ -239,7 +267,9 @@ public class CommercePaymentMethodServiceHttp {
 	private static final Class<?>[] _getCommercePaymentMethodsParameterTypes3 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateCommercePaymentMethodParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getCommercePaymentMethodsCountParameterTypes4 =
+		new Class[] { long.class, boolean.class };
+	private static final Class<?>[] _updateCommercePaymentMethodParameterTypes5 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

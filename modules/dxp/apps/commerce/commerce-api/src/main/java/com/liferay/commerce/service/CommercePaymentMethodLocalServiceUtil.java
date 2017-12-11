@@ -249,6 +249,11 @@ public class CommercePaymentMethodLocalServiceUtil {
 		return getService().getCommercePaymentMethodsCount();
 	}
 
+	public static int getCommercePaymentMethodsCount(long groupId,
+		boolean active) {
+		return getService().getCommercePaymentMethodsCount(groupId, active);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
 	}

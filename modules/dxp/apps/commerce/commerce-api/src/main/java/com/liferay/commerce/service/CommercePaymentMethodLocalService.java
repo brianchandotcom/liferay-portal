@@ -229,6 +229,9 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	public int getCommercePaymentMethodsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePaymentMethodsCount(long groupId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

@@ -76,6 +76,9 @@ public interface CommerceShippingMethodService extends BaseService {
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
 		long groupId, boolean active);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShippingMethodsCount(long groupId, boolean active);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

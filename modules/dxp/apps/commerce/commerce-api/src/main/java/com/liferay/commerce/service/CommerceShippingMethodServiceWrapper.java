@@ -68,6 +68,12 @@ public class CommerceShippingMethodServiceWrapper
 			active);
 	}
 
+	@Override
+	public int getCommerceShippingMethodsCount(long groupId, boolean active) {
+		return _commerceShippingMethodService.getCommerceShippingMethodsCount(groupId,
+			active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

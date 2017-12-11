@@ -251,6 +251,11 @@ public class CommerceShippingMethodLocalServiceUtil {
 		return getService().getCommerceShippingMethodsCount();
 	}
 
+	public static int getCommerceShippingMethodsCount(long groupId,
+		boolean active) {
+		return getService().getCommerceShippingMethodsCount(groupId, active);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 		return getService().getIndexableActionableDynamicQuery();
 	}

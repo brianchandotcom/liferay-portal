@@ -129,13 +129,13 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap[] getCommerceWarehouses(
-		long groupId, long commerceCountryId, int start, int end,
+		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceWarehouse> returnValue =
 				CommerceWarehouseServiceUtil.getCommerceWarehouses(groupId,
-					commerceCountryId, start, end, orderByComparator);
+					start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModels(returnValue);
 		}
@@ -147,13 +147,13 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap[] getCommerceWarehouses(
-		long groupId, int start, int end,
+		long groupId, long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceWarehouse> returnValue =
 				CommerceWarehouseServiceUtil.getCommerceWarehouses(groupId,
-					start, end, orderByComparator);
+					commerceCountryId, start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModels(returnValue);
 		}

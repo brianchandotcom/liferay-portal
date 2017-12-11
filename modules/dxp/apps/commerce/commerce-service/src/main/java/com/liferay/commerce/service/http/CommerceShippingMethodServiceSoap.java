@@ -107,5 +107,20 @@ public class CommerceShippingMethodServiceSoap {
 		}
 	}
 
+	public static int getCommerceShippingMethodsCount(long groupId,
+		boolean active) throws RemoteException {
+		try {
+			int returnValue = CommerceShippingMethodServiceUtil.getCommerceShippingMethodsCount(groupId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceShippingMethodServiceSoap.class);
 }

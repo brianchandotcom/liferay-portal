@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,10 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 	public CommerceOrderPayment addCommerceOrderPayment(
 		CommerceOrderPayment commerceOrderPayment);
 
+	public CommerceOrderPayment addCommerceOrderPayment(long commerceOrderId,
+		int status, java.lang.String content, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new commerce order payment with the primary key. Does not add the commerce order payment to the database.
 	*
@@ -100,6 +105,8 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderPayment deleteCommerceOrderPayment(
 		long commerceOrderPaymentId) throws PortalException;
+
+	public void deleteCommerceOrderPayments(long commerceOrderId);
 
 	/**
 	* @throws PortalException
@@ -210,6 +217,10 @@ public interface CommerceOrderPaymentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderPayment getLatestCommerceOrderPayment(
+		long commerceOrderId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

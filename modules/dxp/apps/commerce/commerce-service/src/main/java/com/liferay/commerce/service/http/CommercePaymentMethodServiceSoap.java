@@ -107,5 +107,20 @@ public class CommercePaymentMethodServiceSoap {
 		}
 	}
 
+	public static int getCommercePaymentMethodsCount(long groupId,
+		boolean active) throws RemoteException {
+		try {
+			int returnValue = CommercePaymentMethodServiceUtil.getCommercePaymentMethodsCount(groupId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommercePaymentMethodServiceSoap.class);
 }

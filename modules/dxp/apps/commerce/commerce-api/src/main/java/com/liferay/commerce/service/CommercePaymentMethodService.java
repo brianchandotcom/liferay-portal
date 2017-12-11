@@ -76,6 +76,9 @@ public interface CommercePaymentMethodService extends BaseService {
 	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId,
 		boolean active);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommercePaymentMethodsCount(long groupId, boolean active);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

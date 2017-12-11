@@ -185,6 +185,34 @@ public class CommerceShippingMethodServiceHttp {
 		}
 	}
 
+	public static int getCommerceShippingMethodsCount(
+		HttpPrincipal httpPrincipal, long groupId, boolean active) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
+					"getCommerceShippingMethodsCount",
+					_getCommerceShippingMethodsCountParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					active);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceShippingMethod updateCommerceShippingMethod(
 		HttpPrincipal httpPrincipal, long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -196,7 +224,7 @@ public class CommerceShippingMethodServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShippingMethodServiceUtil.class,
 					"updateCommerceShippingMethod",
-					_updateCommerceShippingMethodParameterTypes4);
+					_updateCommerceShippingMethodParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShippingMethodId, nameMap, descriptionMap,
@@ -238,7 +266,9 @@ public class CommerceShippingMethodServiceHttp {
 	private static final Class<?>[] _getCommerceShippingMethodsParameterTypes3 = new Class[] {
 			long.class, boolean.class
 		};
-	private static final Class<?>[] _updateCommerceShippingMethodParameterTypes4 =
+	private static final Class<?>[] _getCommerceShippingMethodsCountParameterTypes4 =
+		new Class[] { long.class, boolean.class };
+	private static final Class<?>[] _updateCommerceShippingMethodParameterTypes5 =
 		new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, double.class, boolean.class,

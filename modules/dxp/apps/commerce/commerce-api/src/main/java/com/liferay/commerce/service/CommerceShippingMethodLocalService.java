@@ -229,6 +229,9 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public int getCommerceShippingMethodsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShippingMethodsCount(long groupId, boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**

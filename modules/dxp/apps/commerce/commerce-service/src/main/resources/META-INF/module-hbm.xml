@@ -179,7 +179,7 @@
 		<property name="commerceOrderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="commercePaymentMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommercePaymentMethodImpl" table="CommercePaymentMethod">
 		<id name="commercePaymentMethodId" type="long">

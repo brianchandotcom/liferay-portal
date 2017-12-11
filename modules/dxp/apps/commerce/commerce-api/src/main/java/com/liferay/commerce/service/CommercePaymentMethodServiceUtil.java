@@ -70,6 +70,11 @@ public class CommercePaymentMethodServiceUtil {
 		return getService().getCommercePaymentMethods(groupId, active);
 	}
 
+	public static int getCommercePaymentMethodsCount(long groupId,
+		boolean active) {
+		return getService().getCommercePaymentMethodsCount(groupId, active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

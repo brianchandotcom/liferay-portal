@@ -68,6 +68,12 @@ public class CommercePaymentMethodServiceWrapper
 			active);
 	}
 
+	@Override
+	public int getCommercePaymentMethodsCount(long groupId, boolean active) {
+		return _commercePaymentMethodService.getCommercePaymentMethodsCount(groupId,
+			active);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

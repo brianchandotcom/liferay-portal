@@ -20,14 +20,10 @@
 	<portlet:param name="mvcPath" value="/search/search.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav-bar-search cssClass="pull-right">
-		<div class="form-search">
-			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
+<div class="form-search">
+	<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+		<liferay-portlet:renderURLParams varImpl="searchURL" />
 
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</div>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+		<liferay-ui:input-search name="keywords" placeholder='<%= LanguageUtil.get(request, "keywords") %>' />
+	</aui:form>
+</div>

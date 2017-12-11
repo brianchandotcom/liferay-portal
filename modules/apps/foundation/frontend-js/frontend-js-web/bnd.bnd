@@ -155,7 +155,9 @@ Liferay-Top-Head-JS-Resources:\
 	/liferay/icon.js,\
 	/liferay/menu.js,\
 	/liferay/notice.js,\
-	/liferay/poller.js
+	/liferay/poller.js,\
+	\
+	/liferay/modal/main.js
 Provide-Capability:\
 	osgi.extender;\
 		osgi.extender="liferay.js";\

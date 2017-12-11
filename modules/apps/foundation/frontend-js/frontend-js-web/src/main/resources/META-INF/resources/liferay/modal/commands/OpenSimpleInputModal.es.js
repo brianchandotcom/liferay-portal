@@ -1,4 +1,4 @@
-import SimpleInputModal from './SimpleInputModal.es';
+import SimpleInputModal from '../components/SimpleInputModal.es';
 
 /**
  * Function that implements the SimpleInputModal pattern, which allows
@@ -93,8 +93,7 @@ function openSimpleInputModal({
 		if (serverResponseContent.redirectURL) {
 			if (Liferay.SPA) {
 				Liferay.SPA.app.navigate(serverResponseContent.redirectURL);
-			}
-			else {
+			} else {
 				location.href = serverResponseContent.redirectURL;
 			}
 		}
@@ -102,28 +101,26 @@ function openSimpleInputModal({
 		handleSimpleInputModalDisposal();
 	}
 
-	simpleInputModal = new SimpleInputModal(
-		{
-			checkboxFieldLabel,
-			checkboxFieldName,
-			checkboxFieldValue,
-			dialogTitle,
-			events: {
-				cancelButtonClicked: handleSimpleInputModalDisposal,
-				dialogHidden: handleSimpleInputModalDisposal,
-				formSuccess: handleSimpleInputModalSubmission,
-			},
-			formSubmitURL,
-			idFieldName,
-			idFieldValue,
-			mainFieldLabel,
-			mainFieldName,
-			mainFieldPlaceholder,
-			mainFieldValue,
-			namespace,
-			spritemap,
-		}
-	);
+	simpleInputModal = new SimpleInputModal({
+		checkboxFieldLabel,
+		checkboxFieldName,
+		checkboxFieldValue,
+		dialogTitle,
+		events: {
+			cancelButtonClicked: handleSimpleInputModalDisposal,
+			dialogHidden: handleSimpleInputModalDisposal,
+			formSuccess: handleSimpleInputModalSubmission,
+		},
+		formSubmitURL,
+		idFieldName,
+		idFieldValue,
+		mainFieldLabel,
+		mainFieldName,
+		mainFieldPlaceholder,
+		mainFieldValue,
+		namespace,
+		spritemap,
+	});
 
 	return simpleInputModal;
 }

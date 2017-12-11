@@ -1,8 +1,8 @@
-import Component from 'metal-component';
-import {Config} from 'metal-state';
-import Soy from 'metal-soy';
-
 import 'metal-modal';
+import Component from 'metal-component';
+import Soy from 'metal-soy';
+import {Config} from 'metal-state';
+
 import templates from './SimpleInputModal.soy';
 
 /**
@@ -13,11 +13,7 @@ class SimpleInputModal extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this.addListener(
-			'formSubmit',
-			this._defaultFormSubmit.bind(this),
-			true
-		);
+		this.addListener('formSubmit', this._defaultFormSubmit.bind(this), true);
 	}
 
 	/**
@@ -26,34 +22,24 @@ class SimpleInputModal extends Component {
 	 * @private
 	 */
 	_defaultFormSubmit(event) {
-		fetch(
-			this.formSubmitURL,
-			{
-				body: new FormData(event.form),
-				credentials: 'include',
-				method: 'POST',
-			}
-		)
-		.then(
-			response => response.json()
-		)
-		.then(
-			responseContent => {
+		fetch(this.formSubmitURL, {
+			body: new FormData(event.form),
+			credentials: 'include',
+			method: 'POST',
+		})
+			.then(response => response.json())
+			.then(responseContent => {
 				this._loadingResponse = false;
 
 				if (responseContent.error) {
 					this._handleFormError(responseContent);
-				}
-				else {
+				} else {
 					this._handleFormSuccess(responseContent);
 				}
-			}
-		)
-		.catch(
-			response => {
+			})
+			.catch(response => {
 				this._handleFormError(response);
-			}
-		);
+			});
 
 		this._loadingResponse = true;
 	}
@@ -77,12 +63,9 @@ class SimpleInputModal extends Component {
 	_handleFormError(responseContent) {
 		this._errorMessage = responseContent.error || '';
 
-		this.emit(
-			'formError',
-			{
-				errorMessage: this._errorMessage
-			}
-		);
+		this.emit('formError', {
+			errorMessage: this._errorMessage,
+		});
 	}
 
 	/**
@@ -95,12 +78,9 @@ class SimpleInputModal extends Component {
 	_handleFormSubmit(event) {
 		event.preventDefault();
 
-		this.emit(
-			'formSubmit',
-			{
-				form: event.delegateTarget
-			}
-		);
+		this.emit('formSubmit', {
+			form: event.delegateTarget,
+		});
 	}
 
 	/**
@@ -111,12 +91,9 @@ class SimpleInputModal extends Component {
 	 * @private
 	 */
 	_handleFormSuccess(responseContent) {
-		this.emit(
-			'formSuccess',
-			{
-				redirectURL: responseContent.redirectURL || '',
-			}
-		);
+		this.emit('formSuccess', {
+			redirectURL: responseContent.redirectURL || '',
+		});
 	}
 
 	/**

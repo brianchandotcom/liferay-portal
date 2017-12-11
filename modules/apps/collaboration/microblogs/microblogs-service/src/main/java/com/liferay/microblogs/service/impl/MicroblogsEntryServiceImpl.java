@@ -14,13 +14,16 @@
 
 package com.liferay.microblogs.service.impl;
 
+import com.liferay.microblogs.constants.MicroblogsConstants;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.base.MicroblogsEntryServiceBaseImpl;
-import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
-import com.liferay.microblogs.service.permission.MicroblogsPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -36,7 +39,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			int socialRelationType, ServiceContext serviceContext)
 		throws PortalException {
 
-		MicroblogsPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_ENTRY);
 
@@ -49,7 +52,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 	public MicroblogsEntry deleteMicroblogsEntry(long microblogsEntryId)
 		throws PortalException {
 
-		MicroblogsEntryPermission.check(
+		_microblogsEntryModelResourcePermission.check(
 			getPermissionChecker(), microblogsEntryId, ActionKeys.DELETE);
 
 		return microblogsEntryLocalService.deleteMicroblogsEntry(
@@ -99,7 +102,7 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 	public MicroblogsEntry getMicroblogsEntry(long microblogsEntryId)
 		throws PortalException {
 
-		MicroblogsEntryPermission.check(
+		_microblogsEntryModelResourcePermission.check(
 			getPermissionChecker(), microblogsEntryId, ActionKeys.VIEW);
 
 		return microblogsEntryLocalService.getMicroblogsEntry(
@@ -147,11 +150,23 @@ public class MicroblogsEntryServiceImpl extends MicroblogsEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		MicroblogsEntryPermission.check(
+		_microblogsEntryModelResourcePermission.check(
 			getPermissionChecker(), microblogsEntryId, ActionKeys.UPDATE);
 
 		return microblogsEntryLocalService.updateMicroblogsEntry(
 			microblogsEntryId, content, socialRelationType, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<MicroblogsEntry>
+		_microblogsEntryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				MicroblogsEntryServiceImpl.class,
+				"_microblogsEntryModelResourcePermission",
+				MicroblogsEntry.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				MicroblogsEntryServiceImpl.class, "_portletResourcePermission",
+				MicroblogsConstants.RESOURCE_NAME);
 
 }

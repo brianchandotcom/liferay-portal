@@ -52,6 +52,28 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
+		checkCommerceOrder(commerceOrder);
+
+		return commerceOrder;
+	}
+
+	@Override
+	public CommerceOrder getCommerceOrderByUuidAndGroupId(
+			String uuid, long groupId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrderByUuidAndGroupId(
+				uuid, groupId);
+
+		checkCommerceOrder(commerceOrder);
+
+		return commerceOrder;
+	}
+
+	protected void checkCommerceOrder(CommerceOrder commerceOrder)
+		throws PrincipalException {
+
 		PermissionChecker permissionChecker = getPermissionChecker();
 
 		if ((commerceOrder.getUserId() != permissionChecker.getUserId()) &&
@@ -62,8 +84,6 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 			throw new PrincipalException();
 		}
-
-		return commerceOrder;
 	}
 
 }

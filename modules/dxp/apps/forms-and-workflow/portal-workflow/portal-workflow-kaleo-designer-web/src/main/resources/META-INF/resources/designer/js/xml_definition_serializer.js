@@ -155,7 +155,7 @@ AUI.add(
 		};
 
 		var appendXMLAssignments = function(buffer, dataAssignments, wrapperNodeName, wrapperNodeAttrs) {
-			if (!AObject.isEmpty(dataAssignments)) {
+			if (dataAssignments) {
 				var assignmentType = AArray(dataAssignments.assignmentType)[0];
 
 				var xmlAssignments = XMLUtil.createObj(wrapperNodeName || 'assignments', wrapperNodeAttrs);

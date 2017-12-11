@@ -88,11 +88,10 @@ public class EditPublicPagesPortletConfigurationIcon
 		LayoutsAdminDisplayContext layoutsAdminDisplayContext =
 			new LayoutsAdminDisplayContext(liferayPortletRequest, null);
 
-		if (layoutsAdminDisplayContext.isPrivatePages()) {
-			return false;
-		}
+		if (layoutsAdminDisplayContext.isPageTemplates() ||
+			layoutsAdminDisplayContext.isPrivatePages() ||
+			!layoutsAdminDisplayContext.isShowPublicPages()) {
 
-		if (!layoutsAdminDisplayContext.isShowPublicPages()) {
 			return false;
 		}
 

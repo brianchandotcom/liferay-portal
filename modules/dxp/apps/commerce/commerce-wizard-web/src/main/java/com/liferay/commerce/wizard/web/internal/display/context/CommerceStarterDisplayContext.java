@@ -16,6 +16,13 @@ package com.liferay.commerce.wizard.web.internal.display.context;
 
 import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.product.util.CommerceStarterRegistry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -29,10 +36,13 @@ public class CommerceStarterDisplayContext {
 
 	public CommerceStarterDisplayContext(
 		CommerceStarterRegistry commerceStarterRegistry,
+		LayoutLocalService layoutLocalService, Portal portal,
 		HttpServletRequest httpServletRequest,
 		HttpServletResponse httpServletResponse) {
 
 		_commerceStarterRegistry = commerceStarterRegistry;
+		_layoutLocalService = layoutLocalService;
+		_portal = portal;
 		_httpServletRequest = httpServletRequest;
 		_httpServletResponse = httpServletResponse;
 	}
@@ -46,6 +56,18 @@ public class CommerceStarterDisplayContext {
 			true, _httpServletRequest);
 	}
 
+	public String getCurrentSiteRedirect() throws PortalException {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)_httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		Layout layout = _layoutLocalService.fetchFirstLayout(
+			themeDisplay.getScopeGroupId(), false,
+			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		return _portal.getLayoutFullURL(layout, themeDisplay);
+	}
+
 	public void renderPreview(CommerceStarter commerceStarter)
 		throws Exception {
 
@@ -56,5 +78,7 @@ public class CommerceStarterDisplayContext {
 	private final CommerceStarterRegistry _commerceStarterRegistry;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final LayoutLocalService _layoutLocalService;
+	private final Portal _portal;
 
 }

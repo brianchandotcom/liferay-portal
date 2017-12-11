@@ -109,6 +109,17 @@
 				(AssetEntry.classNameId = ?)
 		]]>
 	</sql>
+	<sql id="com.liferay.asset.kernel.service.persistence.AssetEntryFinder.findPriorityByC_C">
+		<![CDATA[
+			SELECT
+				AssetEntry.priority
+			FROM
+				AssetEntry
+			WHERE
+				(AssetEntry.classNameId = ?) AND
+				(AssetEntry.classPK = ?)
+		]]>
+	</sql>
 	<sql id="com.liferay.asset.kernel.service.persistence.AssetTagFinder.countByG_N">
 		<![CDATA[
 			SELECT

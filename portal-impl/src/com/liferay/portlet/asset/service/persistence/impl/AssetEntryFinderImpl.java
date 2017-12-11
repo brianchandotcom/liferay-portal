@@ -64,6 +64,9 @@ public class AssetEntryFinderImpl
 	public static final String FIND_BY_CLASS_NAME_ID =
 		AssetEntryFinder.class.getName() + ".findByClassNameId";
 
+	public static final String FIND_PRIORITY_BY_C_C =
+		AssetEntryFinder.class.getName() + ".findPriorityByC_C";
+
 	@Override
 	public int countEntries(AssetEntryQuery entryQuery) {
 		Session session = null;
@@ -187,6 +190,45 @@ public class AssetEntryFinderImpl
 
 			return (List<AssetEntry>)QueryUtil.list(
 				q, getDialect(), entryQuery.getStart(), entryQuery.getEnd());
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public long findPriorityByC_C(long classNameId, long classPK) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_PRIORITY_BY_C_C);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar("priority", Type.DOUBLE);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+
+			qPos.add(classPK);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long count = itr.next();
+
+				if (count != null) {
+					return count;
+				}
+			}
+
+			return 0L;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

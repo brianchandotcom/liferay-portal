@@ -12,52 +12,26 @@
  * details.
  */
 
-package com.liferay.asset.display.template.service.permission;
+package com.liferay.asset.display.template.web.internal.security.permission;
 
 import com.liferay.asset.display.template.constants.AssetDisplayConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"resource.name=" + AssetDisplayConstants.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class AssetDisplayPermission extends BaseResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME =
-		AssetDisplayConstants.RESOURCE_NAME;
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
-	}
+@Component(immediate = true)
+public class AssetDisplayPermission {
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
+			permissionChecker, groupId, actionId);
 	}
 
 	@Reference(

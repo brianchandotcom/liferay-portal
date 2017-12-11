@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.asset.display.template.service.permission;
+package com.liferay.asset.display.template.web.internal.security.permission;
 
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -24,34 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.asset.display.template.model.AssetDisplayTemplate"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class AssetDisplayTemplatePermission
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker,
-			AssetDisplayTemplate assetDisplayTemplate, String actionId)
-		throws PortalException {
-
-		_assetDisplayTemplateModelResourcePermission.check(
-			permissionChecker, assetDisplayTemplate, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long assetDisplayTemplateId,
-			String actionId)
-		throws PortalException {
-
-		_assetDisplayTemplateModelResourcePermission.check(
-			permissionChecker, assetDisplayTemplateId, actionId);
-	}
+@Component(immediate = true)
+public class AssetDisplayTemplatePermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker,
@@ -69,16 +44,6 @@ public class AssetDisplayTemplatePermission
 
 		return _assetDisplayTemplateModelResourcePermission.contains(
 			permissionChecker, assetDisplayTemplateId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_assetDisplayTemplateModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(

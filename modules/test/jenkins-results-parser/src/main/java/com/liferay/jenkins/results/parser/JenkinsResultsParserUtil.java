@@ -1014,10 +1014,12 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static String toDateString(Date date) {
+	public static String toDateString(Date date, String timeZoneName) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm:ss a z");
 
-		sdf.setTimeZone(TimeZone.getTimeZone("US/Pacific"));
+		if (timeZoneName != null) {
+			sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName));
+		}
 
 		return sdf.format(date);
 	}

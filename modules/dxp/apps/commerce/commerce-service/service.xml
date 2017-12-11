@@ -381,6 +381,43 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommerceOrderPayment" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderPaymentId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceOrderId" type="long" />
+		<column name="commercePaymentMethodId" type="long" />
+		<column name="status" type="int" />
+		<column name="content" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommercePaymentMethod" remote-service="true">
 
 		<!-- PK fields -->

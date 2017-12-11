@@ -585,26 +585,47 @@ username=&quot;liferay&quot;</echo>
 			</then>
 		</if>
 
-		<local name="elasticsearch.server.not.started" />
+		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
+
+		<var name="elasticsearch.node.count" value="1" />
 
 		<if>
-			<os family="unix" />
+			<isset property="remote.elasticsearch.cluster.size" />
 			<then>
-				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch" />
-				</exec>
+				<var name="elasticsearch.node.count" value="${remote.elasticsearch.cluster.size}" />
 			</then>
-			<elseif>
-				<os family="windows" />
+		</if>
+
+		<var name="elasticsearch.pid.file.count" value="0" />
+
+		<antelope:repeat count="${elasticsearch.node.count}">
+			<math
+				datatype="int"
+				operand1="${elasticsearch.pid.file.count}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.pid.file.count"
+			/>
+
+			<if>
+				<os family="unix" />
 				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="elasticsearch -d -p pid-elasticsearch" />
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="ES_HEAP_SIZE=512m ./elasticsearch -Des.insecure.allow.root=true -d -p pid-elasticsearch-${elasticsearch.pid.file.count}" />
 					</exec>
 				</then>
-			</elseif>
-		</if>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="elasticsearch -d -p pid-elasticsearch-${elasticsearch.pid.file.count}" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</antelope:repeat>
 
 		<if>
 			<equals arg1="${elastic.shield.enabled}" arg2="true" />
@@ -697,32 +718,57 @@ elasticsearch.password: "liferay"]]></replacevalue>
 	</target>
 
 	<target name="stop-elasticsearch">
-		<if>
-			<os family="unix" />
-			<then>
-				<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch">
-					<filterchain>
-						<linecontainsregexp>
-							<regexp pattern="[0-9]*" />
-						</linecontainsregexp>
-					</filterchain>
-				</loadfile>
+		<get-testcase-property property.name="remote.elasticsearch.cluster.size" />
 
-				<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
-					<arg value="-c" />
-					<arg value="kill ${pid-elasticsearch}" />
-				</exec>
+		<var name="elasticsearch.node.count" value="1" />
+
+		<if>
+			<isset property="remote.elasticsearch.cluster.size" />
+			<then>
+				<var name="elasticsearch.node.count" value="${remote.elasticsearch.cluster.size}" />
 			</then>
-			<elseif>
-				<os family="windows" />
-				<then>
-					<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
-						<arg value="/c" />
-						<arg value="for /f %x in (pid-elasticsearch) do taskkill /f /pid %x" />
-					</exec>
-				</then>
-			</elseif>
 		</if>
+
+		<var name="elasticsearch.pid.file.count" value="0" />
+
+		<antelope:repeat count="${elasticsearch.node.count}">
+			<math
+				datatype="int"
+				operand1="${elasticsearch.pid.file.count}"
+				operand2="1"
+				operation="+"
+				result="elasticsearch.pid.file.count"
+			/>
+
+			<if>
+				<os family="unix" />
+				<then>
+					<loadfile property="pid-elasticsearch" srcFile="${elasticsearch.dir}/bin/pid-elasticsearch-${elasticsearch.pid.file.count}">
+						<filterchain>
+							<linecontainsregexp>
+								<regexp pattern="[0-9]*" />
+							</linecontainsregexp>
+						</filterchain>
+					</loadfile>
+
+					<exec dir="${elasticsearch.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="kill ${pid-elasticsearch}" />
+					</exec>
+
+					<var name="pid-elasticsearch" unset="true" />
+				</then>
+				<elseif>
+					<os family="windows" />
+					<then>
+						<exec dir="${elasticsearch.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="for /f %x in (pid-elasticsearch-${elasticsearch.pid.file.count}) do taskkill /f /pid %x" />
+						</exec>
+					</then>
+				</elseif>
+			</if>
+		</antelope:repeat>
 	</target>
 
 	<target name="stop-kibana">

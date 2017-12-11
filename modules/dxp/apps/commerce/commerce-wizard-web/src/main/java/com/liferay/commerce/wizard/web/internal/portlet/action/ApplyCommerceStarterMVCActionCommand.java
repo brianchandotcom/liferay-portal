@@ -17,20 +17,25 @@ package com.liferay.commerce.wizard.web.internal.portlet.action;
 import com.liferay.commerce.product.constants.CPPortletKeys;
 import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.product.util.CommerceStarterRegistry;
-import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.WebKeys;
+
+import java.io.IOException;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -55,31 +60,57 @@ public class ApplyCommerceStarterMVCActionCommand extends BaseMVCActionCommand {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			actionRequest);
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
 
-		String commerceStarterKey = ParamUtil.getString(
-			actionRequest, "commerceStarterKey");
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
 
-		CommerceStarter commerceStarter =
-			_commerceStarterRegistry.getCommerceStarter(commerceStarterKey);
+		try {
+			String commerceStarterKey = ParamUtil.getString(
+				actionRequest, "commerceStarterKey");
 
-		commerceStarter.create(httpServletRequest);
+			CommerceStarter commerceStarter =
+				_commerceStarterRegistry.getCommerceStarter(commerceStarterKey);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			commerceStarter.create(httpServletRequest);
 
-		Layout layout = _layoutLocalService.fetchFirstLayout(
-			themeDisplay.getScopeGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+			jsonObject.put("success", true);
+		}
+		catch (Exception e) {
+			_log.error(e);
 
-		String redirect = _portal.getLayoutFullURL(layout, themeDisplay);
-
-		sendRedirect(actionRequest, actionResponse, redirect);
+			jsonObject.put("message", e.getMessage());
+			jsonObject.put("success", false);
+		}
 
 		hideDefaultSuccessMessage(actionRequest);
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		writeJSON(actionResponse, jsonObject);
 	}
+
+	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+		throws IOException {
+
+		HttpServletResponse httpServletResponse =
+			_portal.getHttpServletResponse(actionResponse);
+
+		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
+
+		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+
+		httpServletResponse.flushBuffer();
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ApplyCommerceStarterMVCActionCommand.class);
 
 	@Reference
 	private CommerceStarterRegistry _commerceStarterRegistry;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

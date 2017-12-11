@@ -28,19 +28,19 @@ CommerceStarter commerceStarter = commerceStarterDisplayContext.getCommerceStart
 
 <div class="container-fluid-1280">
 	<div class="col-md-8 commerce-wizard-container offset-md-2">
-		<portlet:actionURL name="applyCommerceStarter" var="applyCommerceStarterURL" />
+		<portlet:actionURL name="applyCommerceStarter" var="applyCommerceStarterURL">
+			<portlet:param name="redirect" value="<%= redirect %>" />
+			<portlet:param name="commerceStarterKey" value="<%= commerceStarterKey %>" />
+		</portlet:actionURL>
 
-		<aui:form action="<%= applyCommerceStarterURL %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "onSubmit();" %>'>
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="commerceStarterKey" type="hidden" value="<%= commerceStarterKey %>" />
-
+		<aui:form action="<%= applyCommerceStarterURL %>" method="post" name="fm">
 			<div class="commerce-wizard-header row">
 				<div class="col-md-6">
 					<h1><%= commerceStarter.getName(locale) %></h1>
 				</div>
 
 				<div class="col-md-6 commerce-starter-controls">
-					<aui:button name="applyButton" primary="<%= true %>" type="submit" value="apply" />
+					<aui:button name="applyButton" primary="<%= true %>" value="apply" />
 
 					<c:if test="<%= commerceStarters.size() > 1 %>">
 						<portlet:actionURL name="selectCommerceStarter" var="selectCommerceStarterActionURL">
@@ -97,10 +97,47 @@ CommerceStarter commerceStarter = commerceStarterDisplayContext.getCommerceStart
 	</div>
 </div>
 
-<aui:script>
-	function <portlet:namespace />onSubmit() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue-all-contents-will-be-deleted") %>')) {
-			submitForm($(document.<portlet:namespace />fm));
+<aui:script use="aui-base,aui-io-request">
+	A.one('#<portlet:namespace/>applyButton').on(
+		'click',
+		function(event) {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-continue-all-contents-will-be-deleted") %>')) {
+				applyCommerceStarter();
+			}
 		}
-	}
+	);
+
+	Liferay.provide(
+		window,
+		'applyCommerceStarter',
+		function() {
+			var loadingMask = new A.LoadingMask(
+				{
+					'strings.loading' : '<%= UnicodeLanguageUtil.get(request, "this-may-take-several-minutes") %>',
+					target : A.getBody()
+				}
+			);
+
+			loadingMask.show();
+
+			A.io.request(
+				'<%= applyCommerceStarterURL.toString() %>',
+				{
+					on: {
+						failure: function() {
+							loadingMask.hide();
+
+							var message = this.get('message');
+
+							alert(message);
+						},
+						success: function(event, id, obj) {
+							window.location.href = '<%= commerceStarterDisplayContext.getCurrentSiteRedirect() %>';
+						}
+					}
+				}
+			);
+		},
+		['aui-io-request','aui-loading-mask-deprecated']
+	);
 </aui:script>

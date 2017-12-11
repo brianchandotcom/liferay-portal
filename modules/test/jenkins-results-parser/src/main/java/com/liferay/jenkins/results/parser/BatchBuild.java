@@ -155,17 +155,33 @@ public class BatchBuild extends BaseBuild {
 
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
-		JSONArray childReportsJSONArray = testReportJSONObject.getJSONArray(
+		JSONArray childReportsJSONArray = testReportJSONObject.optJSONArray(
 			"childReports");
+
+		if (childReportsJSONArray == null) {
+			return Collections.emptyList();
+		}
 
 		for (int i = 0; i < childReportsJSONArray.length(); i++) {
 			JSONObject childReportJSONObject =
-				childReportsJSONArray.getJSONObject(i);
+				childReportsJSONArray.optJSONObject(i);
 
-			JSONObject childJSONObject = childReportJSONObject.getJSONObject(
+			if (childReportJSONObject == null) {
+				continue;
+			}
+
+			JSONObject childJSONObject = childReportJSONObject.optJSONObject(
 				"child");
 
-			String axisBuildURL = childJSONObject.getString("url");
+			if (childJSONObject == null) {
+				continue;
+			}
+
+			String axisBuildURL = childJSONObject.optString("url");
+
+			if (axisBuildURL == null) {
+				continue;
+			}
 
 			Matcher axisBuildURLMatcher = null;
 
@@ -182,10 +198,18 @@ public class BatchBuild extends BaseBuild {
 
 			String axisVariable = axisBuildURLMatcher.group("axisVariable");
 
-			JSONObject resultJSONObject = childReportJSONObject.getJSONObject(
+			JSONObject resultJSONObject = childReportJSONObject.optJSONObject(
 				"result");
 
+			if (resultJSONObject == null) {
+				continue;
+			}
+
 			JSONArray suitesJSONArray = resultJSONObject.getJSONArray("suites");
+
+			if (suitesJSONArray == null) {
+				continue;
+			}
 
 			testResults.addAll(
 				TestResult.getTestResults(

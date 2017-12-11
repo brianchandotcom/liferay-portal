@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML OpenSAML Integration
 Bundle-SymbolicName: com.liferay.saml.opensaml.integration
-Bundle-Version: 1.1.2
+Bundle-Version: 1.1.3
 Export-Package: com.liferay.saml.opensaml.integration.resolver
 Import-Package:\
 	!bsh,\

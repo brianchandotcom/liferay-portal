@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>EDIT_COG</td>
-	<td>//*[@data-qa-id='controlMenu']//span/*[name()='svg'][contains(@class,'icon-cog')]</td>
+	<td>//*[@data-qa-id='controlMenu']//a[span/*[name()='svg'][contains(@class,'icon-cog')]]</td>
 	<td></td>
 </tr>
 <tr>

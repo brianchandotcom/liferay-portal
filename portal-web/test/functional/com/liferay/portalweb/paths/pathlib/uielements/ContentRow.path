@@ -50,7 +50,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS</td>
-	<td>xpath=(//*[@data-qa-id='row']//span/*[name()='svg'][contains(@class,'icon-ellipsis')])[${key_rowNumber}]</td>
+	<td>xpath=(//*[@data-qa-id='row']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]])[${key_rowNumber}]</td>
 	<td></td>
 </tr>
 <tr>
@@ -86,7 +86,7 @@
 </tr>
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_ELLIPSIS</td>
-	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//*[@data-qa-id='row'][contains(.,'${key_rowEntry}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <!--ENTRY_CONTENT_LIST-->

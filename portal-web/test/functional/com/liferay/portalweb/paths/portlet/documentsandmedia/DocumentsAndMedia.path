@@ -111,7 +111,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_VERTICAL_ELLIPSIS</td>
-	<td>//div[contains(@class,'document-container')]//li[contains(.,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')] | //ul[contains(@class,'display-style')]/li[contains(@data-title,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//div[contains(@class,'document-container')]//li[contains(.,'${key_dmDocumentTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')] | //ul[contains(@class,'display-style')]/li[contains(@data-title,'${key_dmDocumentTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -142,7 +142,7 @@
 </tr>
 <tr>
 	<td>ICON_FOLDER_ACTIONS</td>
-	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//div[contains(@class,'selectable') and contains(.,'${key_dmFolderName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -183,7 +183,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_DOCUMENT_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(.,'${key_dmDocumentTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//li[contains(.,'${key_dmDocumentTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -194,7 +194,7 @@
 <!--DESCRIPTIVE_LIST_FOLDER-->
 <tr>
 	<td>DESCRIPTIVE_LIST_VERTICAL_ELLIPSIS</td>
-	<td>//li[contains(.,'${key_dmFolderName}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//li[contains(.,'${key_dmFolderName}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

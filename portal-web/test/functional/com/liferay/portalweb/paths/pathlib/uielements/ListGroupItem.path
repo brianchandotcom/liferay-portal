@@ -10,12 +10,12 @@
 <tbody>
 <tr>
 	<td>ITEM_ACTIONS</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]/../..//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_ACTIONS_DEFAULT</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5/../..//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

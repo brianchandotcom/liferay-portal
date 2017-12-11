@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.fragment.service.permission;
+package com.liferay.fragment.web.internal.security.permission;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -24,33 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.fragment.model.FragmentEntry"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class FragmentEntryPermission implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, FragmentEntry fragmentEntry,
-			String actionId)
-		throws PortalException {
-
-		_fragmentEntryModelResourcePermission.check(
-			permissionChecker, fragmentEntry, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long fragmentEntryId,
-			String actionId)
-		throws PortalException {
-
-		_fragmentEntryModelResourcePermission.check(
-			permissionChecker, fragmentEntryId, actionId);
-	}
+@Component(immediate = true)
+public class FragmentEntryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, FragmentEntry fragmentEntry,
@@ -59,25 +35,6 @@ public class FragmentEntryPermission implements BaseModelPermissionChecker {
 
 		return _fragmentEntryModelResourcePermission.contains(
 			permissionChecker, fragmentEntry, actionId);
-	}
-
-	public static boolean contains(
-			PermissionChecker permissionChecker, long fragmentEntryId,
-			String actionId)
-		throws PortalException {
-
-		return _fragmentEntryModelResourcePermission.contains(
-			permissionChecker, fragmentEntryId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_fragmentEntryModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(

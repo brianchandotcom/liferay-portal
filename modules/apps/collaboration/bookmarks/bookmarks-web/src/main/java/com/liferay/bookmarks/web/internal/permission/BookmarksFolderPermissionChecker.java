@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.bookmarks.service.permission;
+package com.liferay.bookmarks.web.internal.permission;
 
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -26,36 +24,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @author Raymond Augé
- * @deprecated As of 1.2.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"}
-)
-@Deprecated
-public class BookmarksFolderPermissionChecker
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, BookmarksFolder folder,
-			String actionId)
-		throws PortalException {
-
-		_folderModelResourcePermission.check(
-			permissionChecker, folder, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, long folderId,
-			String actionId)
-		throws PortalException {
-
-		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, permissionChecker, groupId,
-			folderId, actionId);
-	}
+@Component(immediate = true)
+public class BookmarksFolderPermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, BookmarksFolder folder,
@@ -74,21 +46,6 @@ public class BookmarksFolderPermissionChecker
 		return ModelResourcePermissionHelper.contains(
 			_folderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, permissionChecker, groupId,
-			primaryKey, actionId);
-	}
-
-	protected void setBookmarksFolderLocalService(
-		BookmarksFolderLocalService bookmarksFolderLocalService) {
 	}
 
 	@Reference(

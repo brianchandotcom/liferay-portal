@@ -23,6 +23,7 @@
 
 		<execute macro="AdaptiveMedia#addImageResolution">
 			<var name="addHighDensityDisplay" value="true" />
+			<var name="description" value="Low resolution variant" />
 			<var name="imageName" value="Low Resolution" />
 			<var name="maxHeight" value="480" />
 			<var name="maxWidth" value="320" />
@@ -40,6 +41,14 @@
 			<var name="maxHeight" value="960" />
 			<var name="maxWidth" value="640" />
 			<var name="percentAdapted" value="0" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#gotoImageVariantEntry">
+			<var name="imageName" value="Low Resolution" />
+		</execute>
+
+		<execute macro="AdaptiveMedia#viewImageVariantDescription">
+			<var name="description" value="Low resolution variant" />
 		</execute>
 	</command>
 

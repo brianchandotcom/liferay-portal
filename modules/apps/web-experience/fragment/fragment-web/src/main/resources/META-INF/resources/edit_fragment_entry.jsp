@@ -58,13 +58,13 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	</aui:button-row>
 </aui:form>
 
-<aui:script require="fragment-web/js/FragmentEditor">
+<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
 	var wrapper = document.getElementById('<portlet:namespace />fragmentEditor');
 
-	var fragmentEditor = new fragmentWebJsFragmentEditor.default(
+	var fragmentEditor = new FragmentEditor.default(
 		{
 			events: {
 				contentChanged: function(event) {

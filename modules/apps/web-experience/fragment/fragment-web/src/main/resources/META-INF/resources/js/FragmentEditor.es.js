@@ -3,8 +3,8 @@ import Soy from 'metal-soy';
 import { Config } from 'metal-state';
 
 import templates from './FragmentEditor.soy';
-import './FragmentPreview';
-import './SourceEditor';
+import './FragmentPreview.es';
+import './SourceEditor.es';
 
 /**
  * Component that allows editing an existing or new Fragment

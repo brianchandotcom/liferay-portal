@@ -3,7 +3,7 @@ import Soy from 'metal-soy';
 import { Config } from 'metal-state';
 
 import templates from './SourceEditor.soy';
-import './AceEditor';
+import './AceEditor.es';
 
 /**
  * Component that creates an instance of Ace editor

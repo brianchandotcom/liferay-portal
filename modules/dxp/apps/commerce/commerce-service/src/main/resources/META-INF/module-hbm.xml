@@ -9,6 +9,7 @@
 	<import class="com.liferay.commerce.model.CommerceCountry" />
 	<import class="com.liferay.commerce.model.CommerceOrder" />
 	<import class="com.liferay.commerce.model.CommerceOrderItem" />
+	<import class="com.liferay.commerce.model.CommerceOrderPayment" />
 	<import class="com.liferay.commerce.model.CommercePaymentMethod" />
 	<import class="com.liferay.commerce.model.CommercePriceEntry" />
 	<import class="com.liferay.commerce.model.CommercePriceList" />
@@ -164,6 +165,21 @@
 		<property name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceOrderPaymentImpl" table="CommerceOrderPayment">
+		<id name="commerceOrderPaymentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceOrderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commercePaymentMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="content" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommercePaymentMethodImpl" table="CommercePaymentMethod">
 		<id name="commercePaymentMethodId" type="long">

@@ -43,6 +43,8 @@ create index IX_FD99BA9B on CommerceOrderItem (CPDefinitionId);
 create index IX_2E1BB39D on CommerceOrderItem (CPInstanceId);
 create index IX_945497D2 on CommerceOrderItem (commerceOrderId);
 
+create index IX_CF274005 on CommerceOrderPayment (commerceOrderId);
+
 create index IX_1FB6FD31 on CommercePaymentMethod (groupId, active_);
 create unique index IX_B0FDFD55 on CommercePaymentMethod (groupId, engineKey[$COLUMN_LENGTH:75$]);
 

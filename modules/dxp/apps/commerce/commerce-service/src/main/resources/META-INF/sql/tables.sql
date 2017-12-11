@@ -170,6 +170,20 @@ create table CommerceOrderItem (
 	price DOUBLE
 );
 
+create table CommerceOrderPayment (
+	commerceOrderPaymentId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceOrderId LONG,
+	commercePaymentMethodId LONG,
+	status INTEGER,
+	content VARCHAR(75) null
+);
+
 create table CommercePaymentMethod (
 	commercePaymentMethodId LONG not null primary key,
 	groupId LONG,

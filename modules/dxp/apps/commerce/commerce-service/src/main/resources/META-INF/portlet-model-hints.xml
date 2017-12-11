@@ -154,6 +154,19 @@
 			<validator name="number" />
 		</field>
 	</model>
+	<model name="com.liferay.commerce.model.CommerceOrderPayment">
+		<field name="commerceOrderPaymentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceOrderId" type="long" />
+		<field name="commercePaymentMethodId" type="long" />
+		<field name="status" type="int" />
+		<field name="content" type="String" />
+	</model>
 	<model name="com.liferay.commerce.model.CommercePaymentMethod">
 		<field name="commercePaymentMethodId" type="long" />
 		<field name="groupId" type="long" />

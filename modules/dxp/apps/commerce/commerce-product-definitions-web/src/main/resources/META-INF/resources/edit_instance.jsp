@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
+
 CPInstanceDisplayContext cpInstanceDisplayContext = (CPInstanceDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstanceDisplayContext.getCPDefinition();
@@ -41,6 +43,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPDefini
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
+<%@ include file="/navbar.jspf" %>
 <%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation

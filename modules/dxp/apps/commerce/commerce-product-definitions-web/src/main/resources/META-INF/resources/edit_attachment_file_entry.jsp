@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
+
 CPAttachmentFileEntriesDisplayContext cpAttachmentFileEntriesDisplayContext = (CPAttachmentFileEntriesDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpAttachmentFileEntriesDisplayContext.getCPDefinition();
@@ -56,6 +58,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, screenNavigationCategoryKey, produ
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
+<%@ include file="/navbar.jspf" %>
 <%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCPAttachmentFileEntry" var="editProductDefinitionOptionRelActionURL" />

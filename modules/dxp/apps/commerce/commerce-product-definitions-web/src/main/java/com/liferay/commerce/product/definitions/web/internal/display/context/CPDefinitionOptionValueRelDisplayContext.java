@@ -119,7 +119,7 @@ public class CPDefinitionOptionValueRelDisplayContext extends
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_OPTIONS;
 	}
 

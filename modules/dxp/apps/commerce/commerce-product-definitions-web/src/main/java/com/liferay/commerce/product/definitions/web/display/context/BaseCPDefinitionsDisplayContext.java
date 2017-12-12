@@ -154,13 +154,11 @@ public abstract class BaseCPDefinitionsDisplayContext {
 		return themeDisplay.getScopeGroupId();
 	}
 
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 
-	public String getSelectedScreenNavigationCategoryKey()
-		throws PortalException {
-
+	public String getSelectedScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
 			httpServletRequest, "screenNavigationCategoryKey",
 			getScreenNavigationCategoryKey());

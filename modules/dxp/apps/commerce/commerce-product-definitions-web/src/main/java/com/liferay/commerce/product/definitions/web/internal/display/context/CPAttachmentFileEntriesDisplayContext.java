@@ -252,7 +252,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		String screenNavigationCategoryKey =
 			super.getScreenNavigationCategoryKey();
 

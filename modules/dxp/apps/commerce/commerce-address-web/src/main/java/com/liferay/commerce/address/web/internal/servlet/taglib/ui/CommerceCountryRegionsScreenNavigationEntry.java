@@ -58,12 +58,14 @@ public class CommerceCountryRegionsScreenNavigationEntry
 
 	@Override
 	public String getCategoryKey() {
-		return "regions";
+		return CommerceCountryScreenNavigationConstants.
+			CATEGORY_KEY_COUNTRY_REGIONS;
 	}
 
 	@Override
 	public String getEntryKey() {
-		return "regions";
+		return CommerceCountryScreenNavigationConstants.
+			CATEGORY_KEY_COUNTRY_REGIONS;
 	}
 
 	@Override
@@ -77,7 +79,7 @@ public class CommerceCountryRegionsScreenNavigationEntry
 	@Override
 	public String getScreenNavigationKey() {
 		return CommerceCountryScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS;
+			SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL;
 	}
 
 	@Override

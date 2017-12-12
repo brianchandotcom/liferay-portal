@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.lcs.messaging.messagebus;
+package com.liferay.lcs.messaging.bus;
 
 import java.util.Map;
 

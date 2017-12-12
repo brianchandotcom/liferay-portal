@@ -1,4 +1,4 @@
 Bundle-Name: Liferay LCS Messaging API
 Bundle-SymbolicName: com.liferay.lcs.messaging.api
 Bundle-Version: 2.0.0
-Export-Package: com.liferay.lcs.messaging.messagebus
+Export-Package: com.liferay.lcs.messaging.bus

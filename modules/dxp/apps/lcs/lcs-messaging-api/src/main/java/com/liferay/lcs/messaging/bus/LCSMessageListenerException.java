@@ -12,18 +12,10 @@
  * details.
  */
 
-package com.liferay.lcs.messaging.messagebus;
-
-import java.util.Map;
+package com.liferay.lcs.messaging.bus;
 
 /**
  * @author Riccardo Ferrari
  */
-public interface LCSMessageListener {
-
-	public void receive(
-			String destinationName, Map<String, String> metadata,
-			String payload, String responseDestinationName)
-		throws LCSMessageListenerException;
-
+public class LCSMessageListenerException extends Exception {
 }

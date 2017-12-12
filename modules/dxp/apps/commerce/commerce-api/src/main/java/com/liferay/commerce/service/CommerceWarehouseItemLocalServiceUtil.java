@@ -198,6 +198,12 @@ public class CommerceWarehouseItemLocalServiceUtil {
 		return getService().fetchCommerceWarehouseItem(commerceWarehouseItemId);
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId) {
+		return getService()
+				   .fetchCommerceWarehouseItem(commerceWarehouseId, cpInstanceId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}

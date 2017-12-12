@@ -64,6 +64,10 @@ public interface CommerceWarehouseItemService extends BaseService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceWarehouseItem getCommerceWarehouseItem(
 		long commerceWarehouseItemId) throws PortalException;
 

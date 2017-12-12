@@ -251,18 +251,25 @@ public class CommerceWarehouseLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
-		long groupId, long commerceCountryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
-		return _commerceWarehouseLocalService.getCommerceWarehouses(groupId,
-			commerceCountryId, start, end, orderByComparator);
+		long cpInstanceId, int quantity, int start, int end) {
+		return _commerceWarehouseLocalService.getCommerceWarehouses(cpInstanceId,
+			quantity, start, end);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
-		java.lang.String className, long classPK, int quantity, int start,
-		int end) {
-		return _commerceWarehouseLocalService.getCommerceWarehouses(className,
-			classPK, quantity, start, end);
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return _commerceWarehouseLocalService.getCommerceWarehouses(groupId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		long groupId, long commerceCountryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return _commerceWarehouseLocalService.getCommerceWarehouses(groupId,
+			commerceCountryId, start, end, orderByComparator);
 	}
 
 	/**

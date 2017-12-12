@@ -50,6 +50,14 @@ public class CommerceWarehouseItemServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceWarehouseItemService.fetchCommerceWarehouseItem(commerceWarehouseId,
+			cpInstanceId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceWarehouseItem getCommerceWarehouseItem(
 		long commerceWarehouseItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

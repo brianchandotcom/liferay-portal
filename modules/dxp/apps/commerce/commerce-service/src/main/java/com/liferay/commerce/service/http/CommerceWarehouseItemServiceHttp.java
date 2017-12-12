@@ -119,13 +119,46 @@ public class CommerceWarehouseItemServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseItem fetchCommerceWarehouseItem(
+		HttpPrincipal httpPrincipal, long commerceWarehouseId, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
+					"fetchCommerceWarehouseItem",
+					_fetchCommerceWarehouseItemParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceWarehouseId, cpInstanceId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceWarehouseItem)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceWarehouseItem getCommerceWarehouseItem(
 		HttpPrincipal httpPrincipal, long commerceWarehouseItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
 					"getCommerceWarehouseItem",
-					_getCommerceWarehouseItemParameterTypes2);
+					_getCommerceWarehouseItemParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceWarehouseItemId);
@@ -158,7 +191,7 @@ public class CommerceWarehouseItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
 					"getCommerceWarehouseItems",
-					_getCommerceWarehouseItemsParameterTypes3);
+					_getCommerceWarehouseItemsParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId);
@@ -192,7 +225,7 @@ public class CommerceWarehouseItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
 					"getCommerceWarehouseItems",
-					_getCommerceWarehouseItemsParameterTypes4);
+					_getCommerceWarehouseItemsParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId, start, end, orderByComparator);
@@ -225,7 +258,7 @@ public class CommerceWarehouseItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
 					"getCommerceWarehouseItemsCount",
-					_getCommerceWarehouseItemsCountParameterTypes5);
+					_getCommerceWarehouseItemsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId);
@@ -258,7 +291,7 @@ public class CommerceWarehouseItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
 					"getCPInstanceQuantity",
-					_getCPInstanceQuantityParameterTypes6);
+					_getCPInstanceQuantityParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpInstanceId);
@@ -293,7 +326,7 @@ public class CommerceWarehouseItemServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseItemServiceUtil.class,
 					"updateCommerceWarehouseItem",
-					_updateCommerceWarehouseItemParameterTypes7);
+					_updateCommerceWarehouseItemParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceWarehouseItemId, quantity, serviceContext);
@@ -328,22 +361,25 @@ public class CommerceWarehouseItemServiceHttp {
 	private static final Class<?>[] _deleteCommerceWarehouseItemParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceWarehouseItemParameterTypes2 = new Class[] {
-			long.class
+	private static final Class<?>[] _fetchCommerceWarehouseItemParameterTypes2 = new Class[] {
+			long.class, long.class
 		};
-	private static final Class<?>[] _getCommerceWarehouseItemsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCommerceWarehouseItemParameterTypes3 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _getCommerceWarehouseItemsParameterTypes4 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCommerceWarehouseItemsParameterTypes5 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceWarehouseItemsCountParameterTypes5 =
+	private static final Class<?>[] _getCommerceWarehouseItemsCountParameterTypes6 =
 		new Class[] { long.class };
-	private static final Class<?>[] _getCPInstanceQuantityParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getCPInstanceQuantityParameterTypes7 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateCommerceWarehouseItemParameterTypes7 = new Class[] {
+	private static final Class<?>[] _updateCommerceWarehouseItemParameterTypes8 = new Class[] {
 			long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};

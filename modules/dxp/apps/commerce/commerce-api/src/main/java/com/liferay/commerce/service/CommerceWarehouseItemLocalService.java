@@ -181,6 +181,10 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 		long commerceWarehouseItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**

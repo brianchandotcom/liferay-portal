@@ -94,6 +94,21 @@ public class CommerceWarehouseItemServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseItemSoap fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouseItem returnValue = CommerceWarehouseItemServiceUtil.fetchCommerceWarehouseItem(commerceWarehouseId,
+					cpInstanceId);
+
+			return com.liferay.commerce.model.CommerceWarehouseItemSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceWarehouseItemSoap getCommerceWarehouseItem(
 		long commerceWarehouseItemId) throws RemoteException {
 		try {

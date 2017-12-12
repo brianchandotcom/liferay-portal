@@ -223,13 +223,42 @@ public class CommerceWarehouseServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		HttpPrincipal httpPrincipal, long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceWarehouseServiceUtil.class,
+					"getCommerceWarehouses",
+					_getCommerceWarehousesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					start, end, orderByComparator);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.model.CommerceWarehouse>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static int getCommerceWarehousesCount(HttpPrincipal httpPrincipal,
 		long groupId, long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseServiceUtil.class,
 					"getCommerceWarehousesCount",
-					_getCommerceWarehousesCountParameterTypes5);
+					_getCommerceWarehousesCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					commerceCountryId);
@@ -263,7 +292,7 @@ public class CommerceWarehouseServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseServiceUtil.class,
-					"search", _searchParameterTypes6);
+					"search", _searchParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					keywords, commerceCountryId, start, end, orderByComparator);
@@ -295,7 +324,7 @@ public class CommerceWarehouseServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseServiceUtil.class,
-					"searchCount", _searchCountParameterTypes7);
+					"searchCount", _searchCountParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					keywords, commerceCountryId);
@@ -334,7 +363,7 @@ public class CommerceWarehouseServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceWarehouseServiceUtil.class,
 					"updateCommerceWarehouse",
-					_updateCommerceWarehouseParameterTypes8);
+					_updateCommerceWarehouseParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceWarehouseId, name, description, street1, street2,
@@ -384,17 +413,21 @@ public class CommerceWarehouseServiceHttp {
 			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceWarehousesCountParameterTypes5 = new Class[] {
+	private static final Class<?>[] _getCommerceWarehousesParameterTypes5 = new Class[] {
+			long.class, int.class, int.class,
+			com.liferay.portal.kernel.util.OrderByComparator.class
+		};
+	private static final Class<?>[] _getCommerceWarehousesCountParameterTypes6 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _searchParameterTypes6 = new Class[] {
+	private static final Class<?>[] _searchParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _searchCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _searchCountParameterTypes8 = new Class[] {
 			long.class, java.lang.String.class, long.class
 		};
-	private static final Class<?>[] _updateCommerceWarehouseParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateCommerceWarehouseParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

@@ -206,6 +206,13 @@ public class CommerceWarehouseItemLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId) {
+		return _commerceWarehouseItemLocalService.fetchCommerceWarehouseItem(commerceWarehouseId,
+			cpInstanceId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceWarehouseItemLocalService.getActionableDynamicQuery();
 	}

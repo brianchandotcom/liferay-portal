@@ -73,6 +73,13 @@ public class CommerceWarehouseServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
+		return getService()
+				   .getCommerceWarehouses(groupId, start, end, orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
 		long groupId, long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {

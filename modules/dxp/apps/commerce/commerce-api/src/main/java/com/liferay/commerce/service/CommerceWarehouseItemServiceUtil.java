@@ -55,6 +55,13 @@ public class CommerceWarehouseItemServiceUtil {
 		getService().deleteCommerceWarehouseItem(commerceWarehouseItemId);
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .fetchCommerceWarehouseItem(commerceWarehouseId, cpInstanceId);
+	}
+
 	public static com.liferay.commerce.model.CommerceWarehouseItem getCommerceWarehouseItem(
 		long commerceWarehouseItemId)
 		throws com.liferay.portal.kernel.exception.PortalException {

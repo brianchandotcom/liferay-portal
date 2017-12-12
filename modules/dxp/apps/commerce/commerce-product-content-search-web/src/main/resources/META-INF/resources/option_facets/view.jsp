@@ -24,27 +24,32 @@
 
 <%
 CPOptionFacetsDisplayContext cpOptionFacetsDisplayContext = (CPOptionFacetsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+List<Facet> facets = cpOptionFacetsDisplayContext.getFacets();
 %>
 
-<%
-for (Facet facet : cpOptionFacetsDisplayContext.getFacets()) {
-%>
+<c:choose>
+	<c:when test="<%= facets.size() > 0 %>">
 
-	<liferay-ui:panel-container extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
-		<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" markupView="lexicon" persistState="<%= true %>" title="<%= cpOptionFacetsDisplayContext.getCPOptionTitle(scopeGroupId, facet.getFieldName()) %>">
-			<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
-				<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpOptionFacetsDisplayContext.getCPOptionKey(scopeGroupId, facet.getFieldName()) %>" />
+		<%
+		for (Facet facet : facets) {
+		%>
 
-				<aui:fieldset>
-				<ul class="asset-type list-unstyled">
+		<liferay-ui:panel-container extended="<%= true %>" markupView="lexicon" persistState="<%= true %>">
+			<liferay-ui:panel collapsible="<%= true %>" cssClass="search-facet" markupView="lexicon" persistState="<%= true %>" title="<%= cpOptionFacetsDisplayContext.getCPOptionTitle(scopeGroupId, facet.getFieldName()) %>">
+				<aui:form method="post" name='<%= "assetEntriesFacetForm_" + facet.getFieldName() %>'>
+					<aui:input cssClass="facet-parameter-name" name="facet-parameter-name" type="hidden" value="<%= cpOptionFacetsDisplayContext.getCPOptionKey(scopeGroupId, facet.getFieldName()) %>" />
 
-					<%
-					int i = 0;
-					FacetCollector facetCollector = facet.getFacetCollector();
+					<aui:fieldset>
+						<ul class="asset-type list-unstyled">
 
-					for (TermCollector termCollector : facetCollector.getTermCollectors()) {
-						i++;
-					%>
+						<%
+						int i = 0;
+						FacetCollector facetCollector = facet.getFacetCollector();
+
+						for (TermCollector termCollector : facetCollector.getTermCollectors()) {
+							i++;
+						%>
 
 						<li class="facet-value">
 							<label class="facet-checkbox-label" for="<portlet:namespace />term_<%= i %>">
@@ -68,17 +73,25 @@ for (Facet facet : cpOptionFacetsDisplayContext.getFacets()) {
 							</label>
 						</li>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</aui:fieldset>
-			</aui:form>
-		</liferay-ui:panel>
-	</liferay-ui:panel-container>
+					</aui:fieldset>
+				</aui:form>
+			</liferay-ui:panel>
+		</liferay-ui:panel-container>
 
-<%
-}
-%>
+		<%
+		}
+		%>
+
+	</c:when>
+	<c:otherwise>
+		<div class="alert alert-info">
+			<liferay-ui:message key="no-facets-were-found" />
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <aui:script use="liferay-search-facet-util"></aui:script>

@@ -24,6 +24,8 @@ Map<String, Object> contextObjects = new HashMap<>();
 contextObjects.put("cpSearchResultsDisplayContext", cpSearchResultsDisplayContext);
 
 SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContainer();
+
+List<Document> results = searchContainer.getResults();
 %>
 
 <liferay-ddm:template-renderer
@@ -31,44 +33,52 @@ SearchContainer searchContainer = cpSearchResultsDisplayContext.getSearchContain
 	contextObjects="<%= contextObjects %>"
 	displayStyle="<%= cpSearchResultsDisplayContext.getDisplayStyle() %>"
 	displayStyleGroupId="<%= cpSearchResultsDisplayContext.getDisplayStyleGroupId() %>"
-	entries="<%= searchContainer.getResults() %>"
+	entries="<%= results %>"
 >
-	<div class="row">
+	<c:choose>
+		<c:when test="<%= results.size() > 0 %>">
+			<div class="row">
 
-	<%
-	for (Object object : searchContainer.getResults()) {
-		Document document = (Document)object;
-	%>
+				<%
+				for (Object object : results) {
+					Document document = (Document)object;
+				%>
 
-		<div class="col-md-4">
-			<div class="card">
-				<a class="aspect-ratio" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
+				<div class="col-md-4">
+					<div class="card">
+						<a class="aspect-ratio" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
 
-					<%
-					String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
-					%>
+							<%
+							String img = cpSearchResultsDisplayContext.getProductDefaultImage(document, themeDisplay);
+							%>
 
-					<c:if test="<%= Validator.isNotNull(img) %>">
-						<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
-					</c:if>
-				</a>
-
-				<div class="card-row card-row-padded card-row-valign-top">
-					<div class="card-col-content">
-						<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
-							<%= cpSearchResultsDisplayContext.getTitle(document) %>
+							<c:if test="<%= Validator.isNotNull(img) %>">
+								<img class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="<%= img %>">
+							</c:if>
 						</a>
+
+						<div class="card-row card-row-padded card-row-valign-top">
+							<div class="card-col-content">
+								<a class="truncate-text" href="<%= cpSearchResultsDisplayContext.getProductFriendlyURL(document) %>">
+									<%= cpSearchResultsDisplayContext.getTitle(document) %>
+								</a>
+							</div>
+						</div>
 					</div>
 				</div>
+
+				<%
+				}
+				%>
+
 			</div>
-		</div>
-
-	<%
-	}
-	%>
-
-	</div>
-
+		</c:when>
+		<c:otherwise>
+			<div class="alert alert-info">
+				<liferay-ui:message key="no-products-were-found" />
+			</div>
+		</c:otherwise>
+	</c:choose>
 </liferay-ddm:template-renderer>
 
 <liferay-ui:search-paginator searchContainer="<%= searchContainer %>" />

@@ -1,5 +1,5 @@
 <definition component-name="portal-commerce">
-	<property name="portal.upstream" value="true" />
+	<property name="portal.upstream" value="false" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Commerce" />
 
@@ -37,7 +37,7 @@
 	</tear-down>
 
 	<command ignore="true" name="UploadImageToGroupedProduct" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
@@ -105,7 +105,7 @@
 	</command>
 
 	<command name="UploadImageToVirtualProduct" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 

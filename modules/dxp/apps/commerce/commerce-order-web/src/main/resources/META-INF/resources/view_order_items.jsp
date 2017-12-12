@@ -35,7 +35,6 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "commerceOrderItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
-
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

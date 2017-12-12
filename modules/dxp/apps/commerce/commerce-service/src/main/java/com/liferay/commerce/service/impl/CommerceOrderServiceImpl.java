@@ -93,8 +93,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		throws PortalException {
 
 		CommercePermission.check(
-				getPermissionChecker(), groupId,
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		return commerceOrderLocalService.getCommerceOrders(
 			groupId, start, end, orderByComparator);
@@ -103,8 +103,8 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	@Override
 	public int getCommerceOrdersCount(long groupId) throws PortalException {
 		CommercePermission.check(
-				getPermissionChecker(), groupId,
-				CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		return commerceOrderLocalService.getCommerceOrdersCount(groupId);
 	}

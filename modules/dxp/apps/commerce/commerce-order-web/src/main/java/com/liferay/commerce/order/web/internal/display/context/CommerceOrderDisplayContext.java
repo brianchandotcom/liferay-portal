@@ -17,7 +17,6 @@ package com.liferay.commerce.order.web.internal.display.context;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.order.web.internal.util.CommerceOrderPortletUtil;
-import com.liferay.commerce.service.CommerceOrderLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -53,8 +52,8 @@ public class CommerceOrderDisplayContext
 	public String getCommerceOrderTotal(long commerceOrderId)
 		throws PortalException {
 
-		CommerceOrder commerceOrder =
-				_commerceOrderService.fetchCommerceOrder(commerceOrderId);
+		CommerceOrder commerceOrder = _commerceOrderService.fetchCommerceOrder(
+			commerceOrderId);
 
 		return _commercePriceFormatter.format(
 			httpServletRequest, commerceOrder.getTotal());
@@ -90,10 +89,9 @@ public class CommerceOrderDisplayContext
 
 		searchContainer.setTotal(total);
 
-		List<CommerceOrder> results =
-				_commerceOrderService.getCommerceOrders(
-				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
-				searchContainer.getEnd(), orderByComparator);
+		List<CommerceOrder> results = _commerceOrderService.getCommerceOrders(
+			themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+			searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 

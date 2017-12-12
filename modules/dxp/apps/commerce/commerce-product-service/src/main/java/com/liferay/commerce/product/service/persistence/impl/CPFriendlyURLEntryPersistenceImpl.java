@@ -1495,64 +1495,57 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "cpFriendlyURLEntry.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(cpFriendlyURLEntry.uuid IS NULL OR cpFriendlyURLEntry.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C =
-		new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_C",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			},
 			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName()
+				Long.class.getName(), Long.class.getName(), Long.class.getName()
 			});
 
 	/**
-	 * Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK) {
-		return findByG_C_C_C(groupId, companyId, classNameId, classPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CPFriendlyURLEntry> findByG_C_C(long groupId, long classNameId,
+		long classPK) {
+		return findByG_C_C(groupId, classNameId, classPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -1560,21 +1553,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK, int start, int end) {
-		return findByG_C_C_C(groupId, companyId, classNameId, classPK, start,
-			end, null);
+	public List<CPFriendlyURLEntry> findByG_C_C(long groupId, long classNameId,
+		long classPK, int start, int end) {
+		return findByG_C_C(groupId, classNameId, classPK, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -1583,22 +1574,21 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK, int start, int end,
+	public List<CPFriendlyURLEntry> findByG_C_C(long groupId, long classNameId,
+		long classPK, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return findByG_C_C_C(groupId, companyId, classNameId, classPK, start,
-			end, orderByComparator, true);
+		return findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -1608,8 +1598,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK, int start, int end,
+	public List<CPFriendlyURLEntry> findByG_C_C(long groupId, long classNameId,
+		long classPK, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -1619,13 +1609,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C;
-			finderArgs = new Object[] { groupId, companyId, classNameId, classPK };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C;
+			finderArgs = new Object[] { groupId, classNameId, classPK };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_C;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C;
 			finderArgs = new Object[] {
-					groupId, companyId, classNameId, classPK,
+					groupId, classNameId, classPK,
 					
 					start, end, orderByComparator
 				};
@@ -1640,7 +1630,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			if ((list != null) && !list.isEmpty()) {
 				for (CPFriendlyURLEntry cpFriendlyURLEntry : list) {
 					if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
-							(companyId != cpFriendlyURLEntry.getCompanyId()) ||
 							(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
 							(classPK != cpFriendlyURLEntry.getClassPK())) {
 						list = null;
@@ -1655,22 +1644,20 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(6 +
+				query = new StringBundler(5 +
 						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(6);
+				query = new StringBundler(5);
 			}
 
 			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1693,8 +1680,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -1731,10 +1716,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1742,26 +1726,22 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_C_First(long groupId, long companyId,
-		long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+	public CPFriendlyURLEntry findByG_C_C_First(long groupId, long classNameId,
+		long classPK, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_First(groupId,
-				companyId, classNameId, classPK, orderByComparator);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_First(groupId,
+				classNameId, classPK, orderByComparator);
 
 		if (cpFriendlyURLEntry != null) {
 			return cpFriendlyURLEntry;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(8);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("groupId=");
 		msg.append(groupId);
-
-		msg.append(", companyId=");
-		msg.append(companyId);
 
 		msg.append(", classNameId=");
 		msg.append(classNameId);
@@ -1775,21 +1755,20 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_First(long groupId,
-		long companyId, long classNameId, long classPK,
+	public CPFriendlyURLEntry fetchByG_C_C_First(long groupId,
+		long classNameId, long classPK,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		List<CPFriendlyURLEntry> list = findByG_C_C_C(groupId, companyId,
-				classNameId, classPK, 0, 1, orderByComparator);
+		List<CPFriendlyURLEntry> list = findByG_C_C(groupId, classNameId,
+				classPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1799,10 +1778,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1810,26 +1788,22 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_C_Last(long groupId, long companyId,
-		long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+	public CPFriendlyURLEntry findByG_C_C_Last(long groupId, long classNameId,
+		long classPK, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_Last(groupId,
-				companyId, classNameId, classPK, orderByComparator);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_Last(groupId,
+				classNameId, classPK, orderByComparator);
 
 		if (cpFriendlyURLEntry != null) {
 			return cpFriendlyURLEntry;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(8);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("groupId=");
 		msg.append(groupId);
-
-		msg.append(", companyId=");
-		msg.append(companyId);
 
 		msg.append(", classNameId=");
 		msg.append(classNameId);
@@ -1843,27 +1817,25 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_Last(long groupId, long companyId,
-		long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		int count = countByG_C_C_C(groupId, companyId, classNameId, classPK);
+	public CPFriendlyURLEntry fetchByG_C_C_Last(long groupId, long classNameId,
+		long classPK, OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		int count = countByG_C_C(groupId, classNameId, classPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPFriendlyURLEntry> list = findByG_C_C_C(groupId, companyId,
-				classNameId, classPK, count - 1, count, orderByComparator);
+		List<CPFriendlyURLEntry> list = findByG_C_C(groupId, classNameId,
+				classPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1873,11 +1845,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1885,10 +1856,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry[] findByG_C_C_C_PrevAndNext(
-		long CPFriendlyURLEntryId, long groupId, long companyId,
-		long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+	public CPFriendlyURLEntry[] findByG_C_C_PrevAndNext(
+		long CPFriendlyURLEntryId, long groupId, long classNameId,
+		long classPK, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
 		CPFriendlyURLEntry cpFriendlyURLEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
@@ -1899,15 +1869,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
-			array[0] = getByG_C_C_C_PrevAndNext(session, cpFriendlyURLEntry,
-					groupId, companyId, classNameId, classPK,
-					orderByComparator, true);
+			array[0] = getByG_C_C_PrevAndNext(session, cpFriendlyURLEntry,
+					groupId, classNameId, classPK, orderByComparator, true);
 
 			array[1] = cpFriendlyURLEntry;
 
-			array[2] = getByG_C_C_C_PrevAndNext(session, cpFriendlyURLEntry,
-					groupId, companyId, classNameId, classPK,
-					orderByComparator, false);
+			array[2] = getByG_C_C_PrevAndNext(session, cpFriendlyURLEntry,
+					groupId, classNameId, classPK, orderByComparator, false);
 
 			return array;
 		}
@@ -1919,31 +1887,28 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 	}
 
-	protected CPFriendlyURLEntry getByG_C_C_C_PrevAndNext(Session session,
-		CPFriendlyURLEntry cpFriendlyURLEntry, long groupId, long companyId,
-		long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
+	protected CPFriendlyURLEntry getByG_C_C_PrevAndNext(Session session,
+		CPFriendlyURLEntry cpFriendlyURLEntry, long groupId, long classNameId,
+		long classPK, OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(7 +
+			query = new StringBundler(6 +
 					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(6);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+		query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+		query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2015,8 +1980,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		qPos.add(groupId);
 
-		qPos.add(companyId);
-
 		qPos.add(classNameId);
 
 		qPos.add(classPK);
@@ -2040,55 +2003,46 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Removes all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	 * Removes all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 */
 	@Override
-	public void removeByG_C_C_C(long groupId, long companyId, long classNameId,
-		long classPK) {
-		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByG_C_C_C(groupId,
-				companyId, classNameId, classPK, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByG_C_C(long groupId, long classNameId, long classPK) {
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByG_C_C(groupId,
+				classNameId, classPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(cpFriendlyURLEntry);
 		}
 	}
 
 	/**
-	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	 * Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @return the number of matching cp friendly url entries
 	 */
 	@Override
-	public int countByG_C_C_C(long groupId, long companyId, long classNameId,
-		long classPK) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_C;
+	public int countByG_C_C(long groupId, long classNameId, long classPK) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C;
 
-		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK
-			};
+		Object[] finderArgs = new Object[] { groupId, classNameId, classPK };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_CLASSPK_2);
 
 			String sql = query.toString();
 
@@ -2102,8 +2056,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -2126,68 +2078,63 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_C_C_C_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_G_C_C_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_U",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_U",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_U =
-		new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_U",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_U",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			},
 			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_U",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_U",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName()
 			});
 
 	/**
-	 * Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @return the matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_U(long groupId, long companyId,
-		long classNameId, String urlTitle) {
-		return findByG_C_C_U(groupId, companyId, classNameId, urlTitle,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CPFriendlyURLEntry> findByG_C_U(long groupId, long classNameId,
+		String urlTitle) {
+		return findByG_C_U(groupId, classNameId, urlTitle, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -2195,21 +2142,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_U(long groupId, long companyId,
-		long classNameId, String urlTitle, int start, int end) {
-		return findByG_C_C_U(groupId, companyId, classNameId, urlTitle, start,
-			end, null);
+	public List<CPFriendlyURLEntry> findByG_C_U(long groupId, long classNameId,
+		String urlTitle, int start, int end) {
+		return findByG_C_U(groupId, classNameId, urlTitle, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -2218,22 +2163,21 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_U(long groupId, long companyId,
-		long classNameId, String urlTitle, int start, int end,
+	public List<CPFriendlyURLEntry> findByG_C_U(long groupId, long classNameId,
+		String urlTitle, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return findByG_C_C_U(groupId, companyId, classNameId, urlTitle, start,
-			end, orderByComparator, true);
+		return findByG_C_U(groupId, classNameId, urlTitle, start, end,
+			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param start the lower bound of the range of cp friendly url entries
@@ -2243,8 +2187,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_U(long groupId, long companyId,
-		long classNameId, String urlTitle, int start, int end,
+	public List<CPFriendlyURLEntry> findByG_C_U(long groupId, long classNameId,
+		String urlTitle, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -2254,13 +2198,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_U;
-			finderArgs = new Object[] { groupId, companyId, classNameId, urlTitle };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_U;
+			finderArgs = new Object[] { groupId, classNameId, urlTitle };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_U;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_U;
 			finderArgs = new Object[] {
-					groupId, companyId, classNameId, urlTitle,
+					groupId, classNameId, urlTitle,
 					
 					start, end, orderByComparator
 				};
@@ -2275,7 +2219,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			if ((list != null) && !list.isEmpty()) {
 				for (CPFriendlyURLEntry cpFriendlyURLEntry : list) {
 					if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
-							(companyId != cpFriendlyURLEntry.getCompanyId()) ||
 							(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
 							!Objects.equals(urlTitle,
 								cpFriendlyURLEntry.getUrlTitle())) {
@@ -2291,33 +2234,31 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(6 +
+				query = new StringBundler(5 +
 						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(6);
+				query = new StringBundler(5);
 			}
 
 			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_U_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_U_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_U_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_U_CLASSNAMEID_2);
 
 			boolean bindUrlTitle = false;
 
 			if (urlTitle == null) {
-				query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_1);
+				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_1);
 			}
 			else if (urlTitle.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_3);
+				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_3);
 			}
 			else {
 				bindUrlTitle = true;
 
-				query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_2);
+				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2341,8 +2282,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -2381,10 +2320,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2392,26 +2330,22 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_U_First(long groupId, long companyId,
-		long classNameId, String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+	public CPFriendlyURLEntry findByG_C_U_First(long groupId, long classNameId,
+		String urlTitle, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_U_First(groupId,
-				companyId, classNameId, urlTitle, orderByComparator);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_U_First(groupId,
+				classNameId, urlTitle, orderByComparator);
 
 		if (cpFriendlyURLEntry != null) {
 			return cpFriendlyURLEntry;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(8);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("groupId=");
 		msg.append(groupId);
-
-		msg.append(", companyId=");
-		msg.append(companyId);
 
 		msg.append(", classNameId=");
 		msg.append(classNameId);
@@ -2425,21 +2359,20 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_U_First(long groupId,
-		long companyId, long classNameId, String urlTitle,
+	public CPFriendlyURLEntry fetchByG_C_U_First(long groupId,
+		long classNameId, String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		List<CPFriendlyURLEntry> list = findByG_C_C_U(groupId, companyId,
-				classNameId, urlTitle, 0, 1, orderByComparator);
+		List<CPFriendlyURLEntry> list = findByG_C_U(groupId, classNameId,
+				urlTitle, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2449,10 +2382,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2460,26 +2392,22 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_U_Last(long groupId, long companyId,
-		long classNameId, String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+	public CPFriendlyURLEntry findByG_C_U_Last(long groupId, long classNameId,
+		String urlTitle, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_U_Last(groupId,
-				companyId, classNameId, urlTitle, orderByComparator);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_U_Last(groupId,
+				classNameId, urlTitle, orderByComparator);
 
 		if (cpFriendlyURLEntry != null) {
 			return cpFriendlyURLEntry;
 		}
 
-		StringBundler msg = new StringBundler(10);
+		StringBundler msg = new StringBundler(8);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("groupId=");
 		msg.append(groupId);
-
-		msg.append(", companyId=");
-		msg.append(companyId);
 
 		msg.append(", classNameId=");
 		msg.append(classNameId);
@@ -2493,27 +2421,25 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_U_Last(long groupId, long companyId,
-		long classNameId, String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		int count = countByG_C_C_U(groupId, companyId, classNameId, urlTitle);
+	public CPFriendlyURLEntry fetchByG_C_U_Last(long groupId, long classNameId,
+		String urlTitle, OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		int count = countByG_C_U(groupId, classNameId, urlTitle);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPFriendlyURLEntry> list = findByG_C_C_U(groupId, companyId,
-				classNameId, urlTitle, count - 1, count, orderByComparator);
+		List<CPFriendlyURLEntry> list = findByG_C_U(groupId, classNameId,
+				urlTitle, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2523,11 +2449,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2535,10 +2460,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry[] findByG_C_C_U_PrevAndNext(
-		long CPFriendlyURLEntryId, long groupId, long companyId,
-		long classNameId, String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+	public CPFriendlyURLEntry[] findByG_C_U_PrevAndNext(
+		long CPFriendlyURLEntryId, long groupId, long classNameId,
+		String urlTitle, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
 		CPFriendlyURLEntry cpFriendlyURLEntry = findByPrimaryKey(CPFriendlyURLEntryId);
 
@@ -2549,15 +2473,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
-			array[0] = getByG_C_C_U_PrevAndNext(session, cpFriendlyURLEntry,
-					groupId, companyId, classNameId, urlTitle,
-					orderByComparator, true);
+			array[0] = getByG_C_U_PrevAndNext(session, cpFriendlyURLEntry,
+					groupId, classNameId, urlTitle, orderByComparator, true);
 
 			array[1] = cpFriendlyURLEntry;
 
-			array[2] = getByG_C_C_U_PrevAndNext(session, cpFriendlyURLEntry,
-					groupId, companyId, classNameId, urlTitle,
-					orderByComparator, false);
+			array[2] = getByG_C_U_PrevAndNext(session, cpFriendlyURLEntry,
+					groupId, classNameId, urlTitle, orderByComparator, false);
 
 			return array;
 		}
@@ -2569,42 +2491,40 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 	}
 
-	protected CPFriendlyURLEntry getByG_C_C_U_PrevAndNext(Session session,
-		CPFriendlyURLEntry cpFriendlyURLEntry, long groupId, long companyId,
-		long classNameId, String urlTitle,
+	protected CPFriendlyURLEntry getByG_C_U_PrevAndNext(Session session,
+		CPFriendlyURLEntry cpFriendlyURLEntry, long groupId, long classNameId,
+		String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(7 +
+			query = new StringBundler(6 +
 					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(6);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-		query.append(_FINDER_COLUMN_G_C_C_U_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_C_U_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_C_C_U_COMPANYID_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_U_CLASSNAMEID_2);
+		query.append(_FINDER_COLUMN_G_C_U_CLASSNAMEID_2);
 
 		boolean bindUrlTitle = false;
 
 		if (urlTitle == null) {
-			query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_1);
+			query.append(_FINDER_COLUMN_G_C_U_URLTITLE_1);
 		}
 		else if (urlTitle.equals("")) {
-			query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_3);
+			query.append(_FINDER_COLUMN_G_C_U_URLTITLE_3);
 		}
 		else {
 			bindUrlTitle = true;
 
-			query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_2);
+			query.append(_FINDER_COLUMN_G_C_U_URLTITLE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2676,8 +2596,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		QueryPos qPos = QueryPos.getInstance(q);
 
 		qPos.add(groupId);
-
-		qPos.add(companyId);
 
 		qPos.add(classNameId);
 
@@ -2704,66 +2622,58 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Removes all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
+	 * Removes all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 */
 	@Override
-	public void removeByG_C_C_U(long groupId, long companyId, long classNameId,
-		String urlTitle) {
-		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByG_C_C_U(groupId,
-				companyId, classNameId, urlTitle, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+	public void removeByG_C_U(long groupId, long classNameId, String urlTitle) {
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByG_C_U(groupId,
+				classNameId, urlTitle, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
 			remove(cpFriendlyURLEntry);
 		}
 	}
 
 	/**
-	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	 * Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param urlTitle the url title
 	 * @return the number of matching cp friendly url entries
 	 */
 	@Override
-	public int countByG_C_C_U(long groupId, long companyId, long classNameId,
-		String urlTitle) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_U;
+	public int countByG_C_U(long groupId, long classNameId, String urlTitle) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_U;
 
-		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, urlTitle
-			};
+		Object[] finderArgs = new Object[] { groupId, classNameId, urlTitle };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(5);
+			StringBundler query = new StringBundler(4);
 
 			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_U_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_U_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_U_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_U_CLASSNAMEID_2);
 
 			boolean bindUrlTitle = false;
 
 			if (urlTitle == null) {
-				query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_1);
+				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_1);
 			}
 			else if (urlTitle.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_3);
+				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_3);
 			}
 			else {
 				bindUrlTitle = true;
 
-				query.append(_FINDER_COLUMN_G_C_C_U_URLTITLE_2);
+				query.append(_FINDER_COLUMN_G_C_U_URLTITLE_2);
 			}
 
 			String sql = query.toString();
@@ -2778,8 +2688,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -2804,73 +2712,68 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_C_C_U_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_U_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_U_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_U_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL";
-	private static final String _FINDER_COLUMN_G_C_C_U_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ?";
-	private static final String _FINDER_COLUMN_G_C_C_U_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_C_M =
-		new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_G_C_U_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_U_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_U_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL";
+	private static final String _FINDER_COLUMN_G_C_U_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ?";
+	private static final String _FINDER_COLUMN_G_C_U_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_C_M",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_C_C_M",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName(),
+				Boolean.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C_M =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_M =
 		new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_C_M",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_C_C_M",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
+				Boolean.class.getName()
 			},
 			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.MAIN_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_M",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_M",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), Boolean.class.getName()
+				Boolean.class.getName()
 			});
 
 	/**
-	 * Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
 	 * @return the matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main) {
-		return findByG_C_C_C_M(groupId, companyId, classNameId, classPK, main,
+	public List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main) {
+		return findByG_C_C_M(groupId, classNameId, classPK, main,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -2879,22 +2782,20 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
-		int start, int end) {
-		return findByG_C_C_C_M(groupId, companyId, classNameId, classPK, main,
-			start, end, null);
+	public List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main, int start, int end) {
+		return findByG_C_C_M(groupId, classNameId, classPK, main, start, end,
+			null);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -2904,23 +2805,21 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
-		int start, int end,
+	public List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return findByG_C_C_C_M(groupId, companyId, classNameId, classPK, main,
-			start, end, orderByComparator, true);
+		return findByG_C_C_M(groupId, classNameId, classPK, main, start, end,
+			orderByComparator, true);
 	}
 
 	/**
-	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -2931,9 +2830,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the ordered range of matching cp friendly url entries
 	 */
 	@Override
-	public List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
-		int start, int end,
+	public List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -2943,15 +2841,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C_M;
-			finderArgs = new Object[] {
-					groupId, companyId, classNameId, classPK, main
-				};
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_M;
+			finderArgs = new Object[] { groupId, classNameId, classPK, main };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_C_M;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C_C_M;
 			finderArgs = new Object[] {
-					groupId, companyId, classNameId, classPK, main,
+					groupId, classNameId, classPK, main,
 					
 					start, end, orderByComparator
 				};
@@ -2966,7 +2862,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			if ((list != null) && !list.isEmpty()) {
 				for (CPFriendlyURLEntry cpFriendlyURLEntry : list) {
 					if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
-							(companyId != cpFriendlyURLEntry.getCompanyId()) ||
 							(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
 							(classPK != cpFriendlyURLEntry.getClassPK()) ||
 							(main != cpFriendlyURLEntry.getMain())) {
@@ -2982,24 +2877,22 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(7 +
+				query = new StringBundler(6 +
 						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(7);
+				query = new StringBundler(6);
 			}
 
 			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_M_MAIN_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_MAIN_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -3022,8 +2915,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -3062,10 +2953,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -3074,26 +2964,23 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_C_M_First(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public CPFriendlyURLEntry findByG_C_C_M_First(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_M_First(groupId,
-				companyId, classNameId, classPK, main, orderByComparator);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_M_First(groupId,
+				classNameId, classPK, main, orderByComparator);
 
 		if (cpFriendlyURLEntry != null) {
 			return cpFriendlyURLEntry;
 		}
 
-		StringBundler msg = new StringBundler(12);
+		StringBundler msg = new StringBundler(10);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("groupId=");
 		msg.append(groupId);
-
-		msg.append(", companyId=");
-		msg.append(companyId);
 
 		msg.append(", classNameId=");
 		msg.append(classNameId);
@@ -3110,10 +2997,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -3121,11 +3007,11 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_M_First(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public CPFriendlyURLEntry fetchByG_C_C_M_First(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		List<CPFriendlyURLEntry> list = findByG_C_C_C_M(groupId, companyId,
-				classNameId, classPK, main, 0, 1, orderByComparator);
+		List<CPFriendlyURLEntry> list = findByG_C_C_M(groupId, classNameId,
+				classPK, main, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3135,10 +3021,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -3147,26 +3032,23 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_C_M_Last(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public CPFriendlyURLEntry findByG_C_C_M_Last(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_M_Last(groupId,
-				companyId, classNameId, classPK, main, orderByComparator);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_M_Last(groupId,
+				classNameId, classPK, main, orderByComparator);
 
 		if (cpFriendlyURLEntry != null) {
 			return cpFriendlyURLEntry;
 		}
 
-		StringBundler msg = new StringBundler(12);
+		StringBundler msg = new StringBundler(10);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 		msg.append("groupId=");
 		msg.append(groupId);
-
-		msg.append(", companyId=");
-		msg.append(companyId);
 
 		msg.append(", classNameId=");
 		msg.append(classNameId);
@@ -3183,10 +3065,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -3194,18 +3075,17 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_M_Last(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public CPFriendlyURLEntry fetchByG_C_C_M_Last(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		int count = countByG_C_C_C_M(groupId, companyId, classNameId, classPK,
-				main);
+		int count = countByG_C_C_M(groupId, classNameId, classPK, main);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CPFriendlyURLEntry> list = findByG_C_C_C_M(groupId, companyId,
-				classNameId, classPK, main, count - 1, count, orderByComparator);
+		List<CPFriendlyURLEntry> list = findByG_C_C_M(groupId, classNameId,
+				classPK, main, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -3215,11 +3095,10 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
@@ -3228,9 +3107,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry[] findByG_C_C_C_M_PrevAndNext(
-		long CPFriendlyURLEntryId, long groupId, long companyId,
-		long classNameId, long classPK, boolean main,
+	public CPFriendlyURLEntry[] findByG_C_C_M_PrevAndNext(
+		long CPFriendlyURLEntryId, long groupId, long classNameId,
+		long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws NoSuchCPFriendlyURLEntryException {
 		CPFriendlyURLEntry cpFriendlyURLEntry = findByPrimaryKey(CPFriendlyURLEntryId);
@@ -3242,15 +3121,14 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			CPFriendlyURLEntry[] array = new CPFriendlyURLEntryImpl[3];
 
-			array[0] = getByG_C_C_C_M_PrevAndNext(session, cpFriendlyURLEntry,
-					groupId, companyId, classNameId, classPK, main,
-					orderByComparator, true);
+			array[0] = getByG_C_C_M_PrevAndNext(session, cpFriendlyURLEntry,
+					groupId, classNameId, classPK, main, orderByComparator, true);
 
 			array[1] = cpFriendlyURLEntry;
 
-			array[2] = getByG_C_C_C_M_PrevAndNext(session, cpFriendlyURLEntry,
-					groupId, companyId, classNameId, classPK, main,
-					orderByComparator, false);
+			array[2] = getByG_C_C_M_PrevAndNext(session, cpFriendlyURLEntry,
+					groupId, classNameId, classPK, main, orderByComparator,
+					false);
 
 			return array;
 		}
@@ -3262,33 +3140,31 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 	}
 
-	protected CPFriendlyURLEntry getByG_C_C_C_M_PrevAndNext(Session session,
-		CPFriendlyURLEntry cpFriendlyURLEntry, long groupId, long companyId,
-		long classNameId, long classPK, boolean main,
+	protected CPFriendlyURLEntry getByG_C_C_M_PrevAndNext(Session session,
+		CPFriendlyURLEntry cpFriendlyURLEntry, long groupId, long classNameId,
+		long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(8 +
+			query = new StringBundler(7 +
 					(orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(7);
+			query = new StringBundler(6);
 		}
 
 		query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_M_GROUPID_2);
+		query.append(_FINDER_COLUMN_G_C_C_M_GROUPID_2);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_M_COMPANYID_2);
+		query.append(_FINDER_COLUMN_G_C_C_M_CLASSNAMEID_2);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_M_CLASSNAMEID_2);
+		query.append(_FINDER_COLUMN_G_C_C_M_CLASSPK_2);
 
-		query.append(_FINDER_COLUMN_G_C_C_C_M_CLASSPK_2);
-
-		query.append(_FINDER_COLUMN_G_C_C_C_M_MAIN_2);
+		query.append(_FINDER_COLUMN_G_C_C_M_MAIN_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -3360,8 +3236,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		qPos.add(groupId);
 
-		qPos.add(companyId);
-
 		qPos.add(classNameId);
 
 		qPos.add(classPK);
@@ -3387,59 +3261,53 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Removes all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; from the database.
+	 * Removes all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
 	 */
 	@Override
-	public void removeByG_C_C_C_M(long groupId, long companyId,
-		long classNameId, long classPK, boolean main) {
-		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByG_C_C_C_M(groupId,
-				companyId, classNameId, classPK, main, QueryUtil.ALL_POS,
+	public void removeByG_C_C_M(long groupId, long classNameId, long classPK,
+		boolean main) {
+		for (CPFriendlyURLEntry cpFriendlyURLEntry : findByG_C_C_M(groupId,
+				classNameId, classPK, main, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(cpFriendlyURLEntry);
 		}
 	}
 
 	/**
-	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	 * Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param main the main
 	 * @return the number of matching cp friendly url entries
 	 */
 	@Override
-	public int countByG_C_C_C_M(long groupId, long companyId, long classNameId,
-		long classPK, boolean main) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_C_M;
+	public int countByG_C_C_M(long groupId, long classNameId, long classPK,
+		boolean main) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_M;
 
-		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, main
-			};
+		Object[] finderArgs = new Object[] { groupId, classNameId, classPK, main };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(6);
+			StringBundler query = new StringBundler(5);
 
 			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_CLASSNAMEID_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_CLASSPK_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_M_CLASSPK_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_M_MAIN_2);
+			query.append(_FINDER_COLUMN_G_C_C_M_MAIN_2);
 
 			String sql = query.toString();
 
@@ -3453,8 +3321,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -3479,37 +3345,34 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_C_C_C_M_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_M_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_M_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_M_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_M_MAIN_2 = "cpFriendlyURLEntry.main = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_G_C_C_M_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_M_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_M_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_M_MAIN_2 = "cpFriendlyURLEntry.main = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_C_C_L_U",
+			"fetchByG_C_L_U",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
 			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L_U",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_L_U",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			});
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param languageId the language ID
 	 * @param urlTitle the url title
@@ -3517,22 +3380,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_L_U(long groupId, long companyId,
-		long classNameId, String languageId, String urlTitle)
+	public CPFriendlyURLEntry findByG_C_L_U(long groupId, long classNameId,
+		String languageId, String urlTitle)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_L_U(groupId,
-				companyId, classNameId, languageId, urlTitle);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_L_U(groupId,
+				classNameId, languageId, urlTitle);
 
 		if (cpFriendlyURLEntry == null) {
-			StringBundler msg = new StringBundler(12);
+			StringBundler msg = new StringBundler(10);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("groupId=");
 			msg.append(groupId);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
 
 			msg.append(", classNameId=");
 			msg.append(classNameId);
@@ -3556,27 +3416,24 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param languageId the language ID
 	 * @param urlTitle the url title
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId, long companyId,
-		long classNameId, String languageId, String urlTitle) {
-		return fetchByG_C_C_L_U(groupId, companyId, classNameId, languageId,
-			urlTitle, true);
+	public CPFriendlyURLEntry fetchByG_C_L_U(long groupId, long classNameId,
+		String languageId, String urlTitle) {
+		return fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle, true);
 	}
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param languageId the language ID
 	 * @param urlTitle the url title
@@ -3584,11 +3441,375 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId, long companyId,
-		long classNameId, String languageId, String urlTitle,
+	public CPFriendlyURLEntry fetchByG_C_L_U(long groupId, long classNameId,
+		String languageId, String urlTitle, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, languageId, urlTitle
+			};
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_L_U,
+					finderArgs, this);
+		}
+
+		if (result instanceof CPFriendlyURLEntry) {
+			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
+
+			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
+					(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
+					!Objects.equals(languageId,
+						cpFriendlyURLEntry.getLanguageId()) ||
+					!Objects.equals(urlTitle, cpFriendlyURLEntry.getUrlTitle())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(6);
+
+			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_L_U_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_L_U_CLASSNAMEID_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_1);
+			}
+			else if (languageId.equals("")) {
+				query.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				query.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_2);
+			}
+
+			boolean bindUrlTitle = false;
+
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_1);
+			}
+			else if (urlTitle.equals("")) {
+				query.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_3);
+			}
+			else {
+				bindUrlTitle = true;
+
+				query.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (bindLanguageId) {
+					qPos.add(languageId);
+				}
+
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
+				}
+
+				List<CPFriendlyURLEntry> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L_U,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"CPFriendlyURLEntryPersistenceImpl.fetchByG_C_L_U(long, long, String, String, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					CPFriendlyURLEntry cpFriendlyURLEntry = list.get(0);
+
+					result = cpFriendlyURLEntry;
+
+					cacheResult(cpFriendlyURLEntry);
+
+					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
+							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
+							(cpFriendlyURLEntry.getLanguageId() == null) ||
+							!cpFriendlyURLEntry.getLanguageId()
+												   .equals(languageId) ||
+							(cpFriendlyURLEntry.getUrlTitle() == null) ||
+							!cpFriendlyURLEntry.getUrlTitle().equals(urlTitle)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L_U,
+							finderArgs, cpFriendlyURLEntry);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_L_U,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (CPFriendlyURLEntry)result;
+		}
+	}
+
+	/**
+	 * Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the cp friendly url entry that was removed
+	 */
+	@Override
+	public CPFriendlyURLEntry removeByG_C_L_U(long groupId, long classNameId,
+		String languageId, String urlTitle)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_L_U(groupId,
+				classNameId, languageId, urlTitle);
+
+		return remove(cpFriendlyURLEntry);
+	}
+
+	/**
+	 * Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the number of matching cp friendly url entries
+	 */
+	@Override
+	public int countByG_C_L_U(long groupId, long classNameId,
+		String languageId, String urlTitle) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_L_U;
+
+		Object[] finderArgs = new Object[] {
+				groupId, classNameId, languageId, urlTitle
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(5);
+
+			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
+
+			query.append(_FINDER_COLUMN_G_C_L_U_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_C_L_U_CLASSNAMEID_2);
+
+			boolean bindLanguageId = false;
+
+			if (languageId == null) {
+				query.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_1);
+			}
+			else if (languageId.equals("")) {
+				query.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_3);
+			}
+			else {
+				bindLanguageId = true;
+
+				query.append(_FINDER_COLUMN_G_C_L_U_LANGUAGEID_2);
+			}
+
+			boolean bindUrlTitle = false;
+
+			if (urlTitle == null) {
+				query.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_1);
+			}
+			else if (urlTitle.equals("")) {
+				query.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_3);
+			}
+			else {
+				bindUrlTitle = true;
+
+				query.append(_FINDER_COLUMN_G_C_L_U_URLTITLE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(classNameId);
+
+				if (bindLanguageId) {
+					qPos.add(languageId);
+				}
+
+				if (bindUrlTitle) {
+					qPos.add(urlTitle);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_C_L_U_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_L_U_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_L_U_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_L_U_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_L_U_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
+	private static final String _FINDER_COLUMN_G_C_L_U_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL";
+	private static final String _FINDER_COLUMN_G_C_L_U_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ?";
+	private static final String _FINDER_COLUMN_G_C_L_U_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
+			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_C_C_L_U",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			},
+			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
+			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L_U",
+			new String[] {
+				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				String.class.getName(), String.class.getName()
+			});
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the matching cp friendly url entry
+	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry findByG_C_C_L_U(long groupId, long classNameId,
+		long classPK, String languageId, String urlTitle)
+		throws NoSuchCPFriendlyURLEntryException {
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_L_U(groupId,
+				classNameId, classPK, languageId, urlTitle);
+
+		if (cpFriendlyURLEntry == null) {
+			StringBundler msg = new StringBundler(12);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", classNameId=");
+			msg.append(classNameId);
+
+			msg.append(", classPK=");
+			msg.append(classPK);
+
+			msg.append(", languageId=");
+			msg.append(languageId);
+
+			msg.append(", urlTitle=");
+			msg.append(urlTitle);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
+		}
+
+		return cpFriendlyURLEntry;
+	}
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId, long classNameId,
+		long classPK, String languageId, String urlTitle) {
+		return fetchByG_C_C_L_U(groupId, classNameId, classPK, languageId,
+			urlTitle, true);
+	}
+
+	/**
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param classNameId the class name ID
+	 * @param classPK the class pk
+	 * @param languageId the language ID
+	 * @param urlTitle the url title
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	 */
+	@Override
+	public CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId, long classNameId,
+		long classPK, String languageId, String urlTitle,
 		boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, languageId, urlTitle
+				groupId, classNameId, classPK, languageId, urlTitle
 			};
 
 		Object result = null;
@@ -3602,8 +3823,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
 
 			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
-					(companyId != cpFriendlyURLEntry.getCompanyId()) ||
 					(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
+					(classPK != cpFriendlyURLEntry.getClassPK()) ||
 					!Objects.equals(languageId,
 						cpFriendlyURLEntry.getLanguageId()) ||
 					!Objects.equals(urlTitle, cpFriendlyURLEntry.getUrlTitle())) {
@@ -3618,9 +3839,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			query.append(_FINDER_COLUMN_G_C_C_L_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_L_U_COMPANYID_2);
-
 			query.append(_FINDER_COLUMN_G_C_C_L_U_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_L_U_CLASSPK_2);
 
 			boolean bindLanguageId = false;
 
@@ -3663,9 +3884,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 				qPos.add(groupId);
 
-				qPos.add(companyId);
-
 				qPos.add(classNameId);
+
+				qPos.add(classPK);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -3700,8 +3921,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					cacheResult(cpFriendlyURLEntry);
 
 					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
-							(cpFriendlyURLEntry.getCompanyId() != companyId) ||
 							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
+							(cpFriendlyURLEntry.getClassPK() != classPK) ||
 							(cpFriendlyURLEntry.getLanguageId() == null) ||
 							!cpFriendlyURLEntry.getLanguageId()
 												   .equals(languageId) ||
@@ -3732,42 +3953,42 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
+	 * Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param languageId the language ID
 	 * @param urlTitle the url title
 	 * @return the cp friendly url entry that was removed
 	 */
 	@Override
-	public CPFriendlyURLEntry removeByG_C_C_L_U(long groupId, long companyId,
-		long classNameId, String languageId, String urlTitle)
+	public CPFriendlyURLEntry removeByG_C_C_L_U(long groupId, long classNameId,
+		long classPK, String languageId, String urlTitle)
 		throws NoSuchCPFriendlyURLEntryException {
 		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_C_L_U(groupId,
-				companyId, classNameId, languageId, urlTitle);
+				classNameId, classPK, languageId, urlTitle);
 
 		return remove(cpFriendlyURLEntry);
 	}
 
 	/**
-	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63;.
+	 * Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
+	 * @param classPK the class pk
 	 * @param languageId the language ID
 	 * @param urlTitle the url title
 	 * @return the number of matching cp friendly url entries
 	 */
 	@Override
-	public int countByG_C_C_L_U(long groupId, long companyId, long classNameId,
+	public int countByG_C_C_L_U(long groupId, long classNameId, long classPK,
 		String languageId, String urlTitle) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_L_U;
 
 		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, languageId, urlTitle
+				groupId, classNameId, classPK, languageId, urlTitle
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
@@ -3779,9 +4000,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			query.append(_FINDER_COLUMN_G_C_C_L_U_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_L_U_COMPANYID_2);
-
 			query.append(_FINDER_COLUMN_G_C_C_L_U_CLASSNAMEID_2);
+
+			query.append(_FINDER_COLUMN_G_C_C_L_U_CLASSPK_2);
 
 			boolean bindLanguageId = false;
 
@@ -3824,9 +4045,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 				qPos.add(groupId);
 
-				qPos.add(companyId);
-
 				qPos.add(classNameId);
+
+				qPos.add(classPK);
 
 				if (bindLanguageId) {
 					qPos.add(languageId);
@@ -3854,443 +4075,39 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	private static final String _FINDER_COLUMN_G_C_C_L_U_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_L_U_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_U_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ?";
 	private static final String _FINDER_COLUMN_G_C_C_L_U_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_L_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
 			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_C_C_C_L_U",
+			"fetchByG_C_C_L_M",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
+				String.class.getName(), Boolean.class.getName()
 			},
 			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.URLTITLE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C_L_U = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_L_U",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			});
-
-	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @return the matching cp friendly url entry
-	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
-	 */
-	@Override
-	public CPFriendlyURLEntry findByG_C_C_C_L_U(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, String urlTitle)
-		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_L_U(groupId,
-				companyId, classNameId, classPK, languageId, urlTitle);
-
-		if (cpFriendlyURLEntry == null) {
-			StringBundler msg = new StringBundler(14);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("groupId=");
-			msg.append(groupId);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
-
-			msg.append(", classNameId=");
-			msg.append(classNameId);
-
-			msg.append(", classPK=");
-			msg.append(classPK);
-
-			msg.append(", languageId=");
-			msg.append(languageId);
-
-			msg.append(", urlTitle=");
-			msg.append(urlTitle);
-
-			msg.append("}");
-
-			if (_log.isDebugEnabled()) {
-				_log.debug(msg.toString());
-			}
-
-			throw new NoSuchCPFriendlyURLEntryException(msg.toString());
-		}
-
-		return cpFriendlyURLEntry;
-	}
-
-	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	 */
-	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, String urlTitle) {
-		return fetchByG_C_C_C_L_U(groupId, companyId, classNameId, classPK,
-			languageId, urlTitle, true);
-	}
-
-	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	 */
-	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, String urlTitle,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, languageId, urlTitle
-			};
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
-					finderArgs, this);
-		}
-
-		if (result instanceof CPFriendlyURLEntry) {
-			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
-
-			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
-					(companyId != cpFriendlyURLEntry.getCompanyId()) ||
-					(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
-					(classPK != cpFriendlyURLEntry.getClassPK()) ||
-					!Objects.equals(languageId,
-						cpFriendlyURLEntry.getLanguageId()) ||
-					!Objects.equals(urlTitle, cpFriendlyURLEntry.getUrlTitle())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(8);
-
-			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSPK_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_1);
-			}
-			else if (languageId.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_2);
-			}
-
-			boolean bindUrlTitle = false;
-
-			if (urlTitle == null) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_1);
-			}
-			else if (urlTitle.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_3);
-			}
-			else {
-				bindUrlTitle = true;
-
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(companyId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (bindLanguageId) {
-					qPos.add(languageId);
-				}
-
-				if (bindUrlTitle) {
-					qPos.add(urlTitle);
-				}
-
-				List<CPFriendlyURLEntry> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
-						finderArgs, list);
-				}
-				else {
-					if (list.size() > 1) {
-						Collections.sort(list, Collections.reverseOrder());
-
-						if (_log.isWarnEnabled()) {
-							_log.warn(
-								"CPFriendlyURLEntryPersistenceImpl.fetchByG_C_C_C_L_U(long, long, long, long, String, String, boolean) with parameters (" +
-								StringUtil.merge(finderArgs) +
-								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-						}
-					}
-
-					CPFriendlyURLEntry cpFriendlyURLEntry = list.get(0);
-
-					result = cpFriendlyURLEntry;
-
-					cacheResult(cpFriendlyURLEntry);
-
-					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
-							(cpFriendlyURLEntry.getCompanyId() != companyId) ||
-							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
-							(cpFriendlyURLEntry.getClassPK() != classPK) ||
-							(cpFriendlyURLEntry.getLanguageId() == null) ||
-							!cpFriendlyURLEntry.getLanguageId()
-												   .equals(languageId) ||
-							(cpFriendlyURLEntry.getUrlTitle() == null) ||
-							!cpFriendlyURLEntry.getUrlTitle().equals(urlTitle)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
-							finderArgs, cpFriendlyURLEntry);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CPFriendlyURLEntry)result;
-		}
-	}
-
-	/**
-	 * Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @return the cp friendly url entry that was removed
-	 */
-	@Override
-	public CPFriendlyURLEntry removeByG_C_C_C_L_U(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, String urlTitle)
-		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_C_C_L_U(groupId,
-				companyId, classNameId, classPK, languageId, urlTitle);
-
-		return remove(cpFriendlyURLEntry);
-	}
-
-	/**
-	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param classNameId the class name ID
-	 * @param classPK the class pk
-	 * @param languageId the language ID
-	 * @param urlTitle the url title
-	 * @return the number of matching cp friendly url entries
-	 */
-	@Override
-	public int countByG_C_C_C_L_U(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, String urlTitle) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_C_L_U;
-
-		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, languageId, urlTitle
-			};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(7);
-
-			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_GROUPID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_COMPANYID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_U_CLASSPK_2);
-
-			boolean bindLanguageId = false;
-
-			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_1);
-			}
-			else if (languageId.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_3);
-			}
-			else {
-				bindLanguageId = true;
-
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_2);
-			}
-
-			boolean bindUrlTitle = false;
-
-			if (urlTitle == null) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_1);
-			}
-			else if (urlTitle.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_3);
-			}
-			else {
-				bindUrlTitle = true;
-
-				query.append(_FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(groupId);
-
-				qPos.add(companyId);
-
-				qPos.add(classNameId);
-
-				qPos.add(classPK);
-
-				if (bindLanguageId) {
-					qPos.add(languageId);
-				}
-
-				if (bindUrlTitle) {
-					qPos.add(urlTitle);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_1 = "cpFriendlyURLEntry.urlTitle IS NULL";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_2 = "cpFriendlyURLEntry.urlTitle = ?";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_U_URLTITLE_3 = "(cpFriendlyURLEntry.urlTitle IS NULL OR cpFriendlyURLEntry.urlTitle = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_G_C_C_C_L_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
-			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED,
-			CPFriendlyURLEntryImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByG_C_C_C_L_M",
-			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
-			},
-			CPFriendlyURLEntryModelImpl.GROUPID_COLUMN_BITMASK |
-			CPFriendlyURLEntryModelImpl.COMPANYID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSNAMEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.CLASSPK_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.LANGUAGEID_COLUMN_BITMASK |
 			CPFriendlyURLEntryModelImpl.MAIN_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_C_L_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_C_C_L_M = new FinderPath(CPFriendlyURLEntryModelImpl.ENTITY_CACHE_ENABLED,
 			CPFriendlyURLEntryModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_C_L_M",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_C_C_L_M",
 			new String[] {
 				Long.class.getName(), Long.class.getName(), Long.class.getName(),
-				Long.class.getName(), String.class.getName(),
-				Boolean.class.getName()
+				String.class.getName(), Boolean.class.getName()
 			});
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param languageId the language ID
@@ -4299,22 +4116,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry findByG_C_C_C_L_M(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, boolean main)
+	public CPFriendlyURLEntry findByG_C_C_L_M(long groupId, long classNameId,
+		long classPK, String languageId, boolean main)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_C_L_M(groupId,
-				companyId, classNameId, classPK, languageId, main);
+		CPFriendlyURLEntry cpFriendlyURLEntry = fetchByG_C_C_L_M(groupId,
+				classNameId, classPK, languageId, main);
 
 		if (cpFriendlyURLEntry == null) {
-			StringBundler msg = new StringBundler(14);
+			StringBundler msg = new StringBundler(12);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
 			msg.append("groupId=");
 			msg.append(groupId);
-
-			msg.append(", companyId=");
-			msg.append(companyId);
 
 			msg.append(", classNameId=");
 			msg.append(classNameId);
@@ -4341,10 +4155,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param languageId the language ID
@@ -4352,17 +4165,16 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, boolean main) {
-		return fetchByG_C_C_C_L_M(groupId, companyId, classNameId, classPK,
-			languageId, main, true);
+	public CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId, long classNameId,
+		long classPK, String languageId, boolean main) {
+		return fetchByG_C_C_L_M(groupId, classNameId, classPK, languageId,
+			main, true);
 	}
 
 	/**
-	 * Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param languageId the language ID
@@ -4371,17 +4183,16 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	 */
 	@Override
-	public CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, boolean main,
-		boolean retrieveFromCache) {
+	public CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId, long classNameId,
+		long classPK, String languageId, boolean main, boolean retrieveFromCache) {
 		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, languageId, main
+				groupId, classNameId, classPK, languageId, main
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_C_C_L_M,
 					finderArgs, this);
 		}
 
@@ -4389,7 +4200,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			CPFriendlyURLEntry cpFriendlyURLEntry = (CPFriendlyURLEntry)result;
 
 			if ((groupId != cpFriendlyURLEntry.getGroupId()) ||
-					(companyId != cpFriendlyURLEntry.getCompanyId()) ||
 					(classNameId != cpFriendlyURLEntry.getClassNameId()) ||
 					(classPK != cpFriendlyURLEntry.getClassPK()) ||
 					!Objects.equals(languageId,
@@ -4400,33 +4210,31 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(8);
+			StringBundler query = new StringBundler(7);
 
 			query.append(_SQL_SELECT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_CLASSPK_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_1);
 			}
 			else if (languageId.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_2);
 			}
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_MAIN_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_MAIN_2);
 
 			String sql = query.toString();
 
@@ -4441,8 +4249,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 				qPos.add(groupId);
 
-				qPos.add(companyId);
-
 				qPos.add(classNameId);
 
 				qPos.add(classPK);
@@ -4456,7 +4262,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				List<CPFriendlyURLEntry> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_M,
 						finderArgs, list);
 				}
 				else {
@@ -4465,7 +4271,7 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 						if (_log.isWarnEnabled()) {
 							_log.warn(
-								"CPFriendlyURLEntryPersistenceImpl.fetchByG_C_C_C_L_M(long, long, long, long, String, boolean, boolean) with parameters (" +
+								"CPFriendlyURLEntryPersistenceImpl.fetchByG_C_C_L_M(long, long, long, String, boolean, boolean) with parameters (" +
 								StringUtil.merge(finderArgs) +
 								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 						}
@@ -4478,20 +4284,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 					cacheResult(cpFriendlyURLEntry);
 
 					if ((cpFriendlyURLEntry.getGroupId() != groupId) ||
-							(cpFriendlyURLEntry.getCompanyId() != companyId) ||
 							(cpFriendlyURLEntry.getClassNameId() != classNameId) ||
 							(cpFriendlyURLEntry.getClassPK() != classPK) ||
 							(cpFriendlyURLEntry.getLanguageId() == null) ||
 							!cpFriendlyURLEntry.getLanguageId()
 												   .equals(languageId) ||
 							(cpFriendlyURLEntry.getMain() != main)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_M,
 							finderArgs, cpFriendlyURLEntry);
 					}
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_L_M,
 					finderArgs);
 
 				throw processException(e);
@@ -4510,10 +4315,9 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	}
 
 	/**
-	 * Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
+	 * Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param languageId the language ID
@@ -4521,20 +4325,19 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the cp friendly url entry that was removed
 	 */
 	@Override
-	public CPFriendlyURLEntry removeByG_C_C_C_L_M(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, boolean main)
+	public CPFriendlyURLEntry removeByG_C_C_L_M(long groupId, long classNameId,
+		long classPK, String languageId, boolean main)
 		throws NoSuchCPFriendlyURLEntryException {
-		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_C_C_L_M(groupId,
-				companyId, classNameId, classPK, languageId, main);
+		CPFriendlyURLEntry cpFriendlyURLEntry = findByG_C_C_L_M(groupId,
+				classNameId, classPK, languageId, main);
 
 		return remove(cpFriendlyURLEntry);
 	}
 
 	/**
-	 * Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63;.
+	 * Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63;.
 	 *
 	 * @param groupId the group ID
-	 * @param companyId the company ID
 	 * @param classNameId the class name ID
 	 * @param classPK the class pk
 	 * @param languageId the language ID
@@ -4542,44 +4345,42 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 	 * @return the number of matching cp friendly url entries
 	 */
 	@Override
-	public int countByG_C_C_C_L_M(long groupId, long companyId,
-		long classNameId, long classPK, String languageId, boolean main) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_C_L_M;
+	public int countByG_C_C_L_M(long groupId, long classNameId, long classPK,
+		String languageId, boolean main) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_C_C_L_M;
 
 		Object[] finderArgs = new Object[] {
-				groupId, companyId, classNameId, classPK, languageId, main
+				groupId, classNameId, classPK, languageId, main
 			};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(7);
+			StringBundler query = new StringBundler(6);
 
 			query.append(_SQL_COUNT_CPFRIENDLYURLENTRY_WHERE);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_GROUPID_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_GROUPID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_COMPANYID_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_CLASSNAMEID_2);
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSNAMEID_2);
-
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_CLASSPK_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_CLASSPK_2);
 
 			boolean bindLanguageId = false;
 
 			if (languageId == null) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_1);
+				query.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_1);
 			}
 			else if (languageId.equals("")) {
-				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_3);
+				query.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_3);
 			}
 			else {
 				bindLanguageId = true;
 
-				query.append(_FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_2);
+				query.append(_FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_2);
 			}
 
-			query.append(_FINDER_COLUMN_G_C_C_C_L_M_MAIN_2);
+			query.append(_FINDER_COLUMN_G_C_C_L_M_MAIN_2);
 
 			String sql = query.toString();
 
@@ -4593,8 +4394,6 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				QueryPos qPos = QueryPos.getInstance(q);
 
 				qPos.add(groupId);
-
-				qPos.add(companyId);
 
 				qPos.add(classNameId);
 
@@ -4623,14 +4422,13 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_COMPANYID_2 = "cpFriendlyURLEntry.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
-	private static final String _FINDER_COLUMN_G_C_C_C_L_M_MAIN_2 = "cpFriendlyURLEntry.main = ?";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_GROUPID_2 = "cpFriendlyURLEntry.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_CLASSNAMEID_2 = "cpFriendlyURLEntry.classNameId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_CLASSPK_2 = "cpFriendlyURLEntry.classPK = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_1 = "cpFriendlyURLEntry.languageId IS NULL AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_2 = "cpFriendlyURLEntry.languageId = ? AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_LANGUAGEID_3 = "(cpFriendlyURLEntry.languageId IS NULL OR cpFriendlyURLEntry.languageId = '') AND ";
+	private static final String _FINDER_COLUMN_G_C_C_L_M_MAIN_2 = "cpFriendlyURLEntry.main = ?";
 
 	public CPFriendlyURLEntryPersistenceImpl() {
 		setModelClass(CPFriendlyURLEntry.class);
@@ -4670,29 +4468,26 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				cpFriendlyURLEntry.getUuid(), cpFriendlyURLEntry.getGroupId()
 			}, cpFriendlyURLEntry);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_U,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L_U,
 			new Object[] {
 				cpFriendlyURLEntry.getGroupId(),
-				cpFriendlyURLEntry.getCompanyId(),
 				cpFriendlyURLEntry.getClassNameId(),
 				cpFriendlyURLEntry.getLanguageId(),
 				cpFriendlyURLEntry.getUrlTitle()
 			}, cpFriendlyURLEntry);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_U,
 			new Object[] {
 				cpFriendlyURLEntry.getGroupId(),
-				cpFriendlyURLEntry.getCompanyId(),
 				cpFriendlyURLEntry.getClassNameId(),
 				cpFriendlyURLEntry.getClassPK(),
 				cpFriendlyURLEntry.getLanguageId(),
 				cpFriendlyURLEntry.getUrlTitle()
 			}, cpFriendlyURLEntry);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_M,
 			new Object[] {
 				cpFriendlyURLEntry.getGroupId(),
-				cpFriendlyURLEntry.getCompanyId(),
 				cpFriendlyURLEntry.getClassNameId(),
 				cpFriendlyURLEntry.getClassPK(),
 				cpFriendlyURLEntry.getLanguageId(), cpFriendlyURLEntry.getMain()
@@ -4784,8 +4579,20 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		args = new Object[] {
 				cpFriendlyURLEntryModelImpl.getGroupId(),
-				cpFriendlyURLEntryModelImpl.getCompanyId(),
 				cpFriendlyURLEntryModelImpl.getClassNameId(),
+				cpFriendlyURLEntryModelImpl.getLanguageId(),
+				cpFriendlyURLEntryModelImpl.getUrlTitle()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_L_U, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_L_U, args,
+			cpFriendlyURLEntryModelImpl, false);
+
+		args = new Object[] {
+				cpFriendlyURLEntryModelImpl.getGroupId(),
+				cpFriendlyURLEntryModelImpl.getClassNameId(),
+				cpFriendlyURLEntryModelImpl.getClassPK(),
 				cpFriendlyURLEntryModelImpl.getLanguageId(),
 				cpFriendlyURLEntryModelImpl.getUrlTitle()
 			};
@@ -4797,30 +4604,15 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 		args = new Object[] {
 				cpFriendlyURLEntryModelImpl.getGroupId(),
-				cpFriendlyURLEntryModelImpl.getCompanyId(),
-				cpFriendlyURLEntryModelImpl.getClassNameId(),
-				cpFriendlyURLEntryModelImpl.getClassPK(),
-				cpFriendlyURLEntryModelImpl.getLanguageId(),
-				cpFriendlyURLEntryModelImpl.getUrlTitle()
-			};
-
-		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_U, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U, args,
-			cpFriendlyURLEntryModelImpl, false);
-
-		args = new Object[] {
-				cpFriendlyURLEntryModelImpl.getGroupId(),
-				cpFriendlyURLEntryModelImpl.getCompanyId(),
 				cpFriendlyURLEntryModelImpl.getClassNameId(),
 				cpFriendlyURLEntryModelImpl.getClassPK(),
 				cpFriendlyURLEntryModelImpl.getLanguageId(),
 				cpFriendlyURLEntryModelImpl.getMain()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_M, args,
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_C_C_L_M, args,
 			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M, args,
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_C_C_L_M, args,
 			cpFriendlyURLEntryModelImpl, false);
 	}
 
@@ -4851,8 +4643,33 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getGroupId(),
-					cpFriendlyURLEntryModelImpl.getCompanyId(),
 					cpFriendlyURLEntryModelImpl.getClassNameId(),
+					cpFriendlyURLEntryModelImpl.getLanguageId(),
+					cpFriendlyURLEntryModelImpl.getUrlTitle()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_L_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_L_U, args);
+		}
+
+		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_C_L_U.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
+					cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
+					cpFriendlyURLEntryModelImpl.getOriginalLanguageId(),
+					cpFriendlyURLEntryModelImpl.getOriginalUrlTitle()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_L_U, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_L_U, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					cpFriendlyURLEntryModelImpl.getGroupId(),
+					cpFriendlyURLEntryModelImpl.getClassNameId(),
+					cpFriendlyURLEntryModelImpl.getClassPK(),
 					cpFriendlyURLEntryModelImpl.getLanguageId(),
 					cpFriendlyURLEntryModelImpl.getUrlTitle()
 				};
@@ -4865,8 +4682,8 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 				FINDER_PATH_FETCH_BY_G_C_C_L_U.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
-					cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
 					cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
+					cpFriendlyURLEntryModelImpl.getOriginalClassPK(),
 					cpFriendlyURLEntryModelImpl.getOriginalLanguageId(),
 					cpFriendlyURLEntryModelImpl.getOriginalUrlTitle()
 				};
@@ -4878,59 +4695,28 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 		if (clearCurrent) {
 			Object[] args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getGroupId(),
-					cpFriendlyURLEntryModelImpl.getCompanyId(),
-					cpFriendlyURLEntryModelImpl.getClassNameId(),
-					cpFriendlyURLEntryModelImpl.getClassPK(),
-					cpFriendlyURLEntryModelImpl.getLanguageId(),
-					cpFriendlyURLEntryModelImpl.getUrlTitle()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_U, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U, args);
-		}
-
-		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_C_C_C_L_U.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
-					cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
-					cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
-					cpFriendlyURLEntryModelImpl.getOriginalClassPK(),
-					cpFriendlyURLEntryModelImpl.getOriginalLanguageId(),
-					cpFriendlyURLEntryModelImpl.getOriginalUrlTitle()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_U, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_U, args);
-		}
-
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					cpFriendlyURLEntryModelImpl.getGroupId(),
-					cpFriendlyURLEntryModelImpl.getCompanyId(),
 					cpFriendlyURLEntryModelImpl.getClassNameId(),
 					cpFriendlyURLEntryModelImpl.getClassPK(),
 					cpFriendlyURLEntryModelImpl.getLanguageId(),
 					cpFriendlyURLEntryModelImpl.getMain()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_M, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_L_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_L_M, args);
 		}
 
 		if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_G_C_C_C_L_M.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_G_C_C_L_M.getColumnBitmask()) != 0) {
 			Object[] args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
-					cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
 					cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
 					cpFriendlyURLEntryModelImpl.getOriginalClassPK(),
 					cpFriendlyURLEntryModelImpl.getOriginalLanguageId(),
 					cpFriendlyURLEntryModelImpl.getOriginalMain()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_L_M, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_C_L_M, args);
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_L_M, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_C_C_L_M, args);
 		}
 	}
 
@@ -5125,36 +4911,33 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 
 			args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getGroupId(),
-					cpFriendlyURLEntryModelImpl.getCompanyId(),
 					cpFriendlyURLEntryModelImpl.getClassNameId(),
 					cpFriendlyURLEntryModelImpl.getClassPK()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
 				args);
 
 			args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getGroupId(),
-					cpFriendlyURLEntryModelImpl.getCompanyId(),
 					cpFriendlyURLEntryModelImpl.getClassNameId(),
 					cpFriendlyURLEntryModelImpl.getUrlTitle()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_U, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_U,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_U, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_U,
 				args);
 
 			args = new Object[] {
 					cpFriendlyURLEntryModelImpl.getGroupId(),
-					cpFriendlyURLEntryModelImpl.getCompanyId(),
 					cpFriendlyURLEntryModelImpl.getClassNameId(),
 					cpFriendlyURLEntryModelImpl.getClassPK(),
 					cpFriendlyURLEntryModelImpl.getMain()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_M, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C_M,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_M, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_M,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -5202,79 +4985,73 @@ public class CPFriendlyURLEntryPersistenceImpl extends BasePersistenceImpl<CPFri
 			}
 
 			if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
-						cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
 						cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
 						cpFriendlyURLEntryModelImpl.getOriginalClassPK()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
 					args);
 
 				args = new Object[] {
 						cpFriendlyURLEntryModelImpl.getGroupId(),
-						cpFriendlyURLEntryModelImpl.getCompanyId(),
 						cpFriendlyURLEntryModelImpl.getClassNameId(),
 						cpFriendlyURLEntryModelImpl.getClassPK()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C,
 					args);
 			}
 
 			if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_U.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
-						cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
 						cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
 						cpFriendlyURLEntryModelImpl.getOriginalUrlTitle()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_U, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_U,
 					args);
 
 				args = new Object[] {
 						cpFriendlyURLEntryModelImpl.getGroupId(),
-						cpFriendlyURLEntryModelImpl.getCompanyId(),
 						cpFriendlyURLEntryModelImpl.getClassNameId(),
 						cpFriendlyURLEntryModelImpl.getUrlTitle()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_U, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_U,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_U, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_U,
 					args);
 			}
 
 			if ((cpFriendlyURLEntryModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C_M.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_M.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						cpFriendlyURLEntryModelImpl.getOriginalGroupId(),
-						cpFriendlyURLEntryModelImpl.getOriginalCompanyId(),
 						cpFriendlyURLEntryModelImpl.getOriginalClassNameId(),
 						cpFriendlyURLEntryModelImpl.getOriginalClassPK(),
 						cpFriendlyURLEntryModelImpl.getOriginalMain()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_M, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C_M,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_M, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_M,
 					args);
 
 				args = new Object[] {
 						cpFriendlyURLEntryModelImpl.getGroupId(),
-						cpFriendlyURLEntryModelImpl.getCompanyId(),
 						cpFriendlyURLEntryModelImpl.getClassNameId(),
 						cpFriendlyURLEntryModelImpl.getClassPK(),
 						cpFriendlyURLEntryModelImpl.getMain()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_C_M, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_C_M,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C_C_M, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C_C_M,
 					args);
 			}
 		}

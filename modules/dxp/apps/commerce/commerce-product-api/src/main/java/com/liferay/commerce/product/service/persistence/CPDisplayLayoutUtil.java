@@ -234,18 +234,18 @@ public class CPDisplayLayoutUtil {
 	/**
 	* Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63;.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the current cp display layout
+	* @param CPDisplayLayoutId the primary key of the current cp display layout
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
 	public static CPDisplayLayout[] findByUuid_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid,
+		long CPDisplayLayoutId, java.lang.String uuid,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence()
-				   .findByUuid_PrevAndNext(CPFriendlyURLEntryId, uuid,
+				   .findByUuid_PrevAndNext(CPDisplayLayoutId, uuid,
 			orderByComparator);
 	}
 
@@ -469,7 +469,7 @@ public class CPDisplayLayoutUtil {
 	/**
 	* Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the current cp display layout
+	* @param CPDisplayLayoutId the primary key of the current cp display layout
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -477,11 +477,11 @@ public class CPDisplayLayoutUtil {
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
 	public static CPDisplayLayout[] findByUuid_C_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid, long companyId,
+		long CPDisplayLayoutId, java.lang.String uuid, long companyId,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
 		return getPersistence()
-				   .findByUuid_C_PrevAndNext(CPFriendlyURLEntryId, uuid,
+				   .findByUuid_C_PrevAndNext(CPDisplayLayoutId, uuid,
 			companyId, orderByComparator);
 	}
 
@@ -588,23 +588,23 @@ public class CPDisplayLayoutUtil {
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
-	* @param CPFriendlyURLEntryId the primary key for the new cp display layout
+	* @param CPDisplayLayoutId the primary key for the new cp display layout
 	* @return the new cp display layout
 	*/
-	public static CPDisplayLayout create(long CPFriendlyURLEntryId) {
-		return getPersistence().create(CPFriendlyURLEntryId);
+	public static CPDisplayLayout create(long CPDisplayLayoutId) {
+		return getPersistence().create(CPDisplayLayoutId);
 	}
 
 	/**
 	* Removes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout that was removed
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
-	public static CPDisplayLayout remove(long CPFriendlyURLEntryId)
+	public static CPDisplayLayout remove(long CPDisplayLayoutId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
-		return getPersistence().remove(CPFriendlyURLEntryId);
+		return getPersistence().remove(CPDisplayLayoutId);
 	}
 
 	public static CPDisplayLayout updateImpl(CPDisplayLayout cpDisplayLayout) {
@@ -614,23 +614,23 @@ public class CPDisplayLayoutUtil {
 	/**
 	* Returns the cp display layout with the primary key or throws a {@link NoSuchCPDisplayLayoutException} if it could not be found.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
-	public static CPDisplayLayout findByPrimaryKey(long CPFriendlyURLEntryId)
+	public static CPDisplayLayout findByPrimaryKey(long CPDisplayLayoutId)
 		throws com.liferay.commerce.product.exception.NoSuchCPDisplayLayoutException {
-		return getPersistence().findByPrimaryKey(CPFriendlyURLEntryId);
+		return getPersistence().findByPrimaryKey(CPDisplayLayoutId);
 	}
 
 	/**
 	* Returns the cp display layout with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout, or <code>null</code> if a cp display layout with the primary key could not be found
 	*/
-	public static CPDisplayLayout fetchByPrimaryKey(long CPFriendlyURLEntryId) {
-		return getPersistence().fetchByPrimaryKey(CPFriendlyURLEntryId);
+	public static CPDisplayLayout fetchByPrimaryKey(long CPDisplayLayoutId) {
+		return getPersistence().fetchByPrimaryKey(CPDisplayLayoutId);
 	}
 
 	public static java.util.Map<java.io.Serializable, CPDisplayLayout> fetchByPrimaryKeys(

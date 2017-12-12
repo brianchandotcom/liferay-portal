@@ -137,7 +137,7 @@ create table CPDefinitionOptionValueRel (
 
 create table CPDisplayLayout (
 	uuid_ VARCHAR(75) null,
-	CPFriendlyURLEntryId LONG not null primary key,
+	CPDisplayLayoutId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

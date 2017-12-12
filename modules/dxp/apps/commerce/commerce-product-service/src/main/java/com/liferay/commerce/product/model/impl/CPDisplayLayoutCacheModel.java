@@ -51,7 +51,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 
 		CPDisplayLayoutCacheModel cpDisplayLayoutCacheModel = (CPDisplayLayoutCacheModel)obj;
 
-		if (CPFriendlyURLEntryId == cpDisplayLayoutCacheModel.CPFriendlyURLEntryId) {
+		if (CPDisplayLayoutId == cpDisplayLayoutCacheModel.CPDisplayLayoutId) {
 			return true;
 		}
 
@@ -60,7 +60,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CPFriendlyURLEntryId);
+		return HashUtil.hash(0, CPDisplayLayoutId);
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", CPFriendlyURLEntryId=");
-		sb.append(CPFriendlyURLEntryId);
+		sb.append(", CPDisplayLayoutId=");
+		sb.append(CPDisplayLayoutId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -105,7 +105,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 			cpDisplayLayoutImpl.setUuid(uuid);
 		}
 
-		cpDisplayLayoutImpl.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+		cpDisplayLayoutImpl.setCPDisplayLayoutId(CPDisplayLayoutId);
 		cpDisplayLayoutImpl.setGroupId(groupId);
 		cpDisplayLayoutImpl.setCompanyId(companyId);
 		cpDisplayLayoutImpl.setUserId(userId);
@@ -150,7 +150,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		CPFriendlyURLEntryId = objectInput.readLong();
+		CPDisplayLayoutId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -177,7 +177,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(CPFriendlyURLEntryId);
+		objectOutput.writeLong(CPDisplayLayoutId);
 
 		objectOutput.writeLong(groupId);
 
@@ -208,7 +208,7 @@ public class CPDisplayLayoutCacheModel implements CacheModel<CPDisplayLayout>,
 	}
 
 	public String uuid;
-	public long CPFriendlyURLEntryId;
+	public long CPDisplayLayoutId;
 	public long groupId;
 	public long companyId;
 	public long userId;

@@ -74,7 +74,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 	public static final String TABLE_NAME = "CPDisplayLayout";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "CPFriendlyURLEntryId", Types.BIGINT },
+			{ "CPDisplayLayoutId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -89,7 +89,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("CPFriendlyURLEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("CPDisplayLayoutId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -101,10 +101,10 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		TABLE_COLUMNS_MAP.put("layoutUuid", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDisplayLayout (uuid_ VARCHAR(75) null,CPFriendlyURLEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDisplayLayout (uuid_ VARCHAR(75) null,CPDisplayLayoutId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,layoutUuid VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDisplayLayout";
-	public static final String ORDER_BY_JPQL = " ORDER BY cpDisplayLayout.CPFriendlyURLEntryId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY CPDisplayLayout.CPFriendlyURLEntryId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY cpDisplayLayout.CPDisplayLayoutId ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CPDisplayLayout.CPDisplayLayoutId ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -122,7 +122,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 	public static final long COMPANYID_COLUMN_BITMASK = 4L;
 	public static final long GROUPID_COLUMN_BITMASK = 8L;
 	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long CPFRIENDLYURLENTRYID_COLUMN_BITMASK = 32L;
+	public static final long CPDISPLAYLAYOUTID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,7 +138,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		CPDisplayLayout model = new CPDisplayLayoutImpl();
 
 		model.setUuid(soapModel.getUuid());
-		model.setCPFriendlyURLEntryId(soapModel.getCPFriendlyURLEntryId());
+		model.setCPDisplayLayoutId(soapModel.getCPDisplayLayoutId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -181,17 +181,17 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 
 	@Override
 	public long getPrimaryKey() {
-		return _CPFriendlyURLEntryId;
+		return _CPDisplayLayoutId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setCPFriendlyURLEntryId(primaryKey);
+		setCPDisplayLayoutId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _CPFriendlyURLEntryId;
+		return _CPDisplayLayoutId;
 	}
 
 	@Override
@@ -214,7 +214,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CPFriendlyURLEntryId", getCPFriendlyURLEntryId());
+		attributes.put("CPDisplayLayoutId", getCPDisplayLayoutId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -239,10 +239,10 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 			setUuid(uuid);
 		}
 
-		Long CPFriendlyURLEntryId = (Long)attributes.get("CPFriendlyURLEntryId");
+		Long CPDisplayLayoutId = (Long)attributes.get("CPDisplayLayoutId");
 
-		if (CPFriendlyURLEntryId != null) {
-			setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+		if (CPDisplayLayoutId != null) {
+			setCPDisplayLayoutId(CPDisplayLayoutId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -326,13 +326,13 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 
 	@JSON
 	@Override
-	public long getCPFriendlyURLEntryId() {
-		return _CPFriendlyURLEntryId;
+	public long getCPDisplayLayoutId() {
+		return _CPDisplayLayoutId;
 	}
 
 	@Override
-	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
-		_CPFriendlyURLEntryId = CPFriendlyURLEntryId;
+	public void setCPDisplayLayoutId(long CPDisplayLayoutId) {
+		_CPDisplayLayoutId = CPDisplayLayoutId;
 	}
 
 	@JSON
@@ -572,7 +572,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		CPDisplayLayoutImpl cpDisplayLayoutImpl = new CPDisplayLayoutImpl();
 
 		cpDisplayLayoutImpl.setUuid(getUuid());
-		cpDisplayLayoutImpl.setCPFriendlyURLEntryId(getCPFriendlyURLEntryId());
+		cpDisplayLayoutImpl.setCPDisplayLayoutId(getCPDisplayLayoutId());
 		cpDisplayLayoutImpl.setGroupId(getGroupId());
 		cpDisplayLayoutImpl.setCompanyId(getCompanyId());
 		cpDisplayLayoutImpl.setUserId(getUserId());
@@ -679,7 +679,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 			cpDisplayLayoutCacheModel.uuid = null;
 		}
 
-		cpDisplayLayoutCacheModel.CPFriendlyURLEntryId = getCPFriendlyURLEntryId();
+		cpDisplayLayoutCacheModel.CPDisplayLayoutId = getCPDisplayLayoutId();
 
 		cpDisplayLayoutCacheModel.groupId = getGroupId();
 
@@ -734,8 +734,8 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", CPFriendlyURLEntryId=");
-		sb.append(getCPFriendlyURLEntryId());
+		sb.append(", CPDisplayLayoutId=");
+		sb.append(getCPDisplayLayoutId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -772,8 +772,8 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CPFriendlyURLEntryId</column-name><column-value><![CDATA[");
-		sb.append(getCPFriendlyURLEntryId());
+			"<column><column-name>CPDisplayLayoutId</column-name><column-value><![CDATA[");
+		sb.append(getCPDisplayLayoutId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -823,7 +823,7 @@ public class CPDisplayLayoutModelImpl extends BaseModelImpl<CPDisplayLayout>
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _CPFriendlyURLEntryId;
+	private long _CPDisplayLayoutId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

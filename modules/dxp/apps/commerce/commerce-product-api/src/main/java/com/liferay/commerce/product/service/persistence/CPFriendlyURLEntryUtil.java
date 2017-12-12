@@ -510,51 +510,46 @@ public class CPFriendlyURLEntryUtil {
 	}
 
 	/**
-	* Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C(long groupId,
-		long companyId, long classNameId, long classPK) {
-		return getPersistence()
-				   .findByG_C_C_C(groupId, companyId, classNameId, classPK);
+	public static List<CPFriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK) {
+		return getPersistence().findByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	* Returns a range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param start the lower bound of the range of cp friendly url entries
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C(long groupId,
-		long companyId, long classNameId, long classPK, int start, int end) {
+	public static List<CPFriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end) {
 		return getPersistence()
-				   .findByG_C_C_C(groupId, companyId, classNameId, classPK,
-			start, end);
+				   .findByG_C_C(groupId, classNameId, classPK, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param start the lower bound of the range of cp friendly url entries
@@ -562,23 +557,22 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C(long groupId,
-		long companyId, long classNameId, long classPK, int start, int end,
+	public static List<CPFriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
-				   .findByG_C_C_C(groupId, companyId, classNameId, classPK,
-			start, end, orderByComparator);
+				   .findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param start the lower bound of the range of cp friendly url entries
@@ -587,189 +581,172 @@ public class CPFriendlyURLEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C(long groupId,
-		long companyId, long classNameId, long classPK, int start, int end,
+	public static List<CPFriendlyURLEntry> findByG_C_C(long groupId,
+		long classNameId, long classPK, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_C_C_C(groupId, companyId, classNameId, classPK,
-			start, end, orderByComparator, retrieveFromCache);
+				   .findByG_C_C(groupId, classNameId, classPK, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByG_C_C_C_First(long groupId,
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .findByG_C_C_C_First(groupId, companyId, classNameId,
-			classPK, orderByComparator);
-	}
-
-	/**
-	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_First(long groupId,
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_C_C_C_First(groupId, companyId, classNameId,
-			classPK, orderByComparator);
-	}
-
-	/**
-	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp friendly url entry
-	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry findByG_C_C_C_Last(long groupId,
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .findByG_C_C_C_Last(groupId, companyId, classNameId,
-			classPK, orderByComparator);
-	}
-
-	/**
-	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_Last(long groupId,
-		long companyId, long classNameId, long classPK,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_C_C_C_Last(groupId, companyId, classNameId,
-			classPK, orderByComparator);
-	}
-
-	/**
-	* Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
-	*
-	* @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cp friendly url entry
-	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
-	*/
-	public static CPFriendlyURLEntry[] findByG_C_C_C_PrevAndNext(
-		long CPFriendlyURLEntryId, long groupId, long companyId,
+	public static CPFriendlyURLEntry findByG_C_C_First(long groupId,
 		long classNameId, long classPK,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_C_PrevAndNext(CPFriendlyURLEntryId, groupId,
-			companyId, classNameId, classPK, orderByComparator);
+				   .findByG_C_C_First(groupId, classNameId, classPK,
+			orderByComparator);
 	}
 
 	/**
-	* Removes all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_First(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_C_First(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry findByG_C_C_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_Last(long groupId,
+		long classNameId, long classPK,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_C_Last(groupId, classNameId, classPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
+	*/
+	public static CPFriendlyURLEntry[] findByG_C_C_PrevAndNext(
+		long CPFriendlyURLEntryId, long groupId, long classNameId,
+		long classPK, OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_C_PrevAndNext(CPFriendlyURLEntryId, groupId,
+			classNameId, classPK, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	*/
-	public static void removeByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK) {
-		getPersistence()
-			.removeByG_C_C_C(groupId, companyId, classNameId, classPK);
+	public static void removeByG_C_C(long groupId, long classNameId,
+		long classPK) {
+		getPersistence().removeByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByG_C_C_C(long groupId, long companyId,
-		long classNameId, long classPK) {
-		return getPersistence()
-				   .countByG_C_C_C(groupId, companyId, classNameId, classPK);
+	public static int countByG_C_C(long groupId, long classNameId, long classPK) {
+		return getPersistence().countByG_C_C(groupId, classNameId, classPK);
 	}
 
 	/**
-	* Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @return the matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_U(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle) {
-		return getPersistence()
-				   .findByG_C_C_U(groupId, companyId, classNameId, urlTitle);
+	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle) {
+		return getPersistence().findByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns a range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @param start the lower bound of the range of cp friendly url entries
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_U(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle, int start,
-		int end) {
+	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle, int start, int end) {
 		return getPersistence()
-				   .findByG_C_C_U(groupId, companyId, classNameId, urlTitle,
-			start, end);
+				   .findByG_C_U(groupId, classNameId, urlTitle, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @param start the lower bound of the range of cp friendly url entries
@@ -777,23 +754,22 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_U(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle, int start,
-		int end, OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle, int start, int end,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
-				   .findByG_C_C_U(groupId, companyId, classNameId, urlTitle,
-			start, end, orderByComparator);
+				   .findByG_C_U(groupId, classNameId, urlTitle, start, end,
+			orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @param start the lower bound of the range of cp friendly url entries
@@ -802,168 +778,156 @@ public class CPFriendlyURLEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_U(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle, int start,
-		int end, OrderByComparator<CPFriendlyURLEntry> orderByComparator,
+	public static List<CPFriendlyURLEntry> findByG_C_U(long groupId,
+		long classNameId, java.lang.String urlTitle, int start, int end,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_C_C_U(groupId, companyId, classNameId, urlTitle,
-			start, end, orderByComparator, retrieveFromCache);
+				   .findByG_C_U(groupId, classNameId, urlTitle, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByG_C_C_U_First(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .findByG_C_C_U_First(groupId, companyId, classNameId,
-			urlTitle, orderByComparator);
-	}
-
-	/**
-	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param urlTitle the url title
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_U_First(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_C_C_U_First(groupId, companyId, classNameId,
-			urlTitle, orderByComparator);
-	}
-
-	/**
-	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param urlTitle the url title
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp friendly url entry
-	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry findByG_C_C_U_Last(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .findByG_C_C_U_Last(groupId, companyId, classNameId,
-			urlTitle, orderByComparator);
-	}
-
-	/**
-	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param urlTitle the url title
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_U_Last(long groupId,
-		long companyId, long classNameId, java.lang.String urlTitle,
-		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
-		return getPersistence()
-				   .fetchByG_C_C_U_Last(groupId, companyId, classNameId,
-			urlTitle, orderByComparator);
-	}
-
-	/**
-	* Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
-	*
-	* @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param urlTitle the url title
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next cp friendly url entry
-	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
-	*/
-	public static CPFriendlyURLEntry[] findByG_C_C_U_PrevAndNext(
-		long CPFriendlyURLEntryId, long groupId, long companyId,
+	public static CPFriendlyURLEntry findByG_C_U_First(long groupId,
 		long classNameId, java.lang.String urlTitle,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_U_PrevAndNext(CPFriendlyURLEntryId, groupId,
-			companyId, classNameId, urlTitle, orderByComparator);
+				   .findByG_C_U_First(groupId, classNameId, urlTitle,
+			orderByComparator);
 	}
 
 	/**
-	* Removes all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
+	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param urlTitle the url title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_U_First(long groupId,
+		long classNameId, java.lang.String urlTitle,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_U_First(groupId, classNameId, urlTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param urlTitle the url title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry findByG_C_U_Last(long groupId,
+		long classNameId, java.lang.String urlTitle,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_U_Last(groupId, classNameId, urlTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param urlTitle the url title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_U_Last(long groupId,
+		long classNameId, java.lang.String urlTitle,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
+		return getPersistence()
+				   .fetchByG_C_U_Last(groupId, classNameId, urlTitle,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	*
+	* @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param urlTitle the url title
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
+	*/
+	public static CPFriendlyURLEntry[] findByG_C_U_PrevAndNext(
+		long CPFriendlyURLEntryId, long groupId, long classNameId,
+		java.lang.String urlTitle,
+		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_U_PrevAndNext(CPFriendlyURLEntryId, groupId,
+			classNameId, urlTitle, orderByComparator);
+	}
+
+	/**
+	* Removes all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63; from the database.
+	*
+	* @param groupId the group ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	*/
-	public static void removeByG_C_C_U(long groupId, long companyId,
-		long classNameId, java.lang.String urlTitle) {
-		getPersistence()
-			.removeByG_C_C_U(groupId, companyId, classNameId, urlTitle);
+	public static void removeByG_C_U(long groupId, long classNameId,
+		java.lang.String urlTitle) {
+		getPersistence().removeByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and urlTitle = &#63;.
+	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and urlTitle = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param urlTitle the url title
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByG_C_C_U(long groupId, long companyId,
-		long classNameId, java.lang.String urlTitle) {
-		return getPersistence()
-				   .countByG_C_C_U(groupId, companyId, classNameId, urlTitle);
+	public static int countByG_C_U(long groupId, long classNameId,
+		java.lang.String urlTitle) {
+		return getPersistence().countByG_C_U(groupId, classNameId, urlTitle);
 	}
 
 	/**
-	* Returns all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @return the matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main) {
+	public static List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main) {
 		return getPersistence()
-				   .findByG_C_C_C_M(groupId, companyId, classNameId, classPK,
-			main);
+				   .findByG_C_C_M(groupId, classNameId, classPK, main);
 	}
 
 	/**
-	* Returns a range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns a range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
@@ -971,23 +935,21 @@ public class CPFriendlyURLEntryUtil {
 	* @param end the upper bound of the range of cp friendly url entries (not inclusive)
 	* @return the range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
-		int start, int end) {
+	public static List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main, int start, int end) {
 		return getPersistence()
-				   .findByG_C_C_C_M(groupId, companyId, classNameId, classPK,
-			main, start, end);
+				   .findByG_C_C_M(groupId, classNameId, classPK, main, start,
+			end);
 	}
 
 	/**
-	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
@@ -996,24 +958,22 @@ public class CPFriendlyURLEntryUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
-		int start, int end,
+	public static List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
-				   .findByG_C_C_C_M(groupId, companyId, classNameId, classPK,
-			main, start, end, orderByComparator);
+				   .findByG_C_C_M(groupId, classNameId, classPK, main, start,
+			end, orderByComparator);
 	}
 
 	/**
-	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns an ordered range of all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CPFriendlyURLEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
@@ -1023,21 +983,19 @@ public class CPFriendlyURLEntryUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching cp friendly url entries
 	*/
-	public static List<CPFriendlyURLEntry> findByG_C_C_C_M(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
-		int start, int end,
+	public static List<CPFriendlyURLEntry> findByG_C_C_M(long groupId,
+		long classNameId, long classPK, boolean main, int start, int end,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_C_C_C_M(groupId, companyId, classNameId, classPK,
-			main, start, end, orderByComparator, retrieveFromCache);
+				   .findByG_C_C_M(groupId, classNameId, classPK, main, start,
+			end, orderByComparator, retrieveFromCache);
 	}
 
 	/**
-	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
@@ -1045,39 +1003,37 @@ public class CPFriendlyURLEntryUtil {
 	* @return the first matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByG_C_C_C_M_First(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public static CPFriendlyURLEntry findByG_C_C_M_First(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_C_M_First(groupId, companyId, classNameId,
-			classPK, main, orderByComparator);
+				   .findByG_C_C_M_First(groupId, classNameId, classPK, main,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the first cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_M_First(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public static CPFriendlyURLEntry fetchByG_C_C_M_First(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_C_C_C_M_First(groupId, companyId, classNameId,
-			classPK, main, orderByComparator);
+				   .fetchByG_C_C_M_First(groupId, classNameId, classPK, main,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
@@ -1085,40 +1041,38 @@ public class CPFriendlyURLEntryUtil {
 	* @return the last matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByG_C_C_C_M_Last(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public static CPFriendlyURLEntry findByG_C_C_M_Last(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_C_M_Last(groupId, companyId, classNameId,
-			classPK, main, orderByComparator);
+				   .findByG_C_C_M_Last(groupId, classNameId, classPK, main,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the last cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_M_Last(long groupId,
-		long companyId, long classNameId, long classPK, boolean main,
+	public static CPFriendlyURLEntry fetchByG_C_C_M_Last(long groupId,
+		long classNameId, long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator) {
 		return getPersistence()
-				   .fetchByG_C_C_C_M_Last(groupId, companyId, classNameId,
-			classPK, main, orderByComparator);
+				   .fetchByG_C_C_M_Last(groupId, classNameId, classPK, main,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the cp friendly url entries before and after the current cp friendly url entry in the ordered set where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param CPFriendlyURLEntryId the primary key of the current cp friendly url entry
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
@@ -1126,246 +1080,222 @@ public class CPFriendlyURLEntryUtil {
 	* @return the previous, current, and next cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a cp friendly url entry with the primary key could not be found
 	*/
-	public static CPFriendlyURLEntry[] findByG_C_C_C_M_PrevAndNext(
-		long CPFriendlyURLEntryId, long groupId, long companyId,
-		long classNameId, long classPK, boolean main,
+	public static CPFriendlyURLEntry[] findByG_C_C_M_PrevAndNext(
+		long CPFriendlyURLEntryId, long groupId, long classNameId,
+		long classPK, boolean main,
 		OrderByComparator<CPFriendlyURLEntry> orderByComparator)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_C_M_PrevAndNext(CPFriendlyURLEntryId, groupId,
-			companyId, classNameId, classPK, main, orderByComparator);
+				   .findByG_C_C_M_PrevAndNext(CPFriendlyURLEntryId, groupId,
+			classNameId, classPK, main, orderByComparator);
 	}
 
 	/**
-	* Removes all the cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; from the database.
+	* Removes all the cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	*/
-	public static void removeByG_C_C_C_M(long groupId, long companyId,
-		long classNameId, long classPK, boolean main) {
-		getPersistence()
-			.removeByG_C_C_C_M(groupId, companyId, classNameId, classPK, main);
+	public static void removeByG_C_C_M(long groupId, long classNameId,
+		long classPK, boolean main) {
+		getPersistence().removeByG_C_C_M(groupId, classNameId, classPK, main);
 	}
 
 	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
+	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param main the main
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByG_C_C_C_M(long groupId, long companyId,
-		long classNameId, long classPK, boolean main) {
+	public static int countByG_C_C_M(long groupId, long classNameId,
+		long classPK, boolean main) {
 		return getPersistence()
-				   .countByG_C_C_C_M(groupId, companyId, classNameId, classPK,
-			main);
+				   .countByG_C_C_M(groupId, classNameId, classPK, main);
 	}
 
 	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the matching cp friendly url entry
+	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry findByG_C_L_U(long groupId,
+		long classNameId, java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .findByG_C_L_U(groupId, classNameId, languageId, urlTitle);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_L_U(long groupId,
+		long classNameId, java.lang.String languageId, java.lang.String urlTitle) {
+		return getPersistence()
+				   .fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_L_U(long groupId,
+		long classNameId, java.lang.String languageId,
+		java.lang.String urlTitle, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_C_L_U(groupId, classNameId, languageId, urlTitle,
+			retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the cp friendly url entry that was removed
+	*/
+	public static CPFriendlyURLEntry removeByG_C_L_U(long groupId,
+		long classNameId, java.lang.String languageId, java.lang.String urlTitle)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .removeByG_C_L_U(groupId, classNameId, languageId, urlTitle);
+	}
+
+	/**
+	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63;.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param languageId the language ID
+	* @param urlTitle the url title
+	* @return the number of matching cp friendly url entries
+	*/
+	public static int countByG_C_L_U(long groupId, long classNameId,
+		java.lang.String languageId, java.lang.String urlTitle) {
+		return getPersistence()
+				   .countByG_C_L_U(groupId, classNameId, languageId, urlTitle);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
 	* @param languageId the language ID
 	* @param urlTitle the url title
 	* @return the matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry findByG_C_C_L_U(long groupId,
-		long companyId, long classNameId, java.lang.String languageId,
+		long classNameId, long classPK, java.lang.String languageId,
 		java.lang.String urlTitle)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_L_U(groupId, companyId, classNameId,
-			languageId, urlTitle);
+				   .findByG_C_C_L_U(groupId, classNameId, classPK, languageId,
+			urlTitle);
 	}
 
 	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
+	* @param classPK the class pk
 	* @param languageId the language ID
 	* @param urlTitle the url title
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId,
-		long companyId, long classNameId, java.lang.String languageId,
+		long classNameId, long classPK, java.lang.String languageId,
 		java.lang.String urlTitle) {
 		return getPersistence()
-				   .fetchByG_C_C_L_U(groupId, companyId, classNameId,
-			languageId, urlTitle);
+				   .fetchByG_C_C_L_U(groupId, classNameId, classPK, languageId,
+			urlTitle);
 	}
 
 	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
+	* @param classPK the class pk
 	* @param languageId the language ID
 	* @param urlTitle the url title
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
 	*/
 	public static CPFriendlyURLEntry fetchByG_C_C_L_U(long groupId,
-		long companyId, long classNameId, java.lang.String languageId,
+		long classNameId, long classPK, java.lang.String languageId,
 		java.lang.String urlTitle, boolean retrieveFromCache) {
 		return getPersistence()
-				   .fetchByG_C_C_L_U(groupId, companyId, classNameId,
-			languageId, urlTitle, retrieveFromCache);
+				   .fetchByG_C_C_L_U(groupId, classNameId, classPK, languageId,
+			urlTitle, retrieveFromCache);
 	}
 
 	/**
-	* Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
+	* Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
+	* @param classPK the class pk
 	* @param languageId the language ID
 	* @param urlTitle the url title
 	* @return the cp friendly url entry that was removed
 	*/
 	public static CPFriendlyURLEntry removeByG_C_C_L_U(long groupId,
-		long companyId, long classNameId, java.lang.String languageId,
+		long classNameId, long classPK, java.lang.String languageId,
 		java.lang.String urlTitle)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .removeByG_C_C_L_U(groupId, companyId, classNameId,
+				   .removeByG_C_C_L_U(groupId, classNameId, classPK,
 			languageId, urlTitle);
 	}
 
 	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and languageId = &#63; and urlTitle = &#63;.
+	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the number of matching cp friendly url entries
-	*/
-	public static int countByG_C_C_L_U(long groupId, long companyId,
-		long classNameId, java.lang.String languageId, java.lang.String urlTitle) {
-		return getPersistence()
-				   .countByG_C_C_L_U(groupId, companyId, classNameId,
-			languageId, urlTitle);
-	}
-
-	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the matching cp friendly url entry
-	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry findByG_C_C_C_L_U(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .findByG_C_C_C_L_U(groupId, companyId, classNameId, classPK,
-			languageId, urlTitle);
-	}
-
-	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle) {
-		return getPersistence()
-				   .fetchByG_C_C_C_L_U(groupId, companyId, classNameId,
-			classPK, languageId, urlTitle);
-	}
-
-	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_L_U(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle,
-		boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_C_C_C_L_U(groupId, companyId, classNameId,
-			classPK, languageId, urlTitle, retrieveFromCache);
-	}
-
-	/**
-	* Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param urlTitle the url title
-	* @return the cp friendly url entry that was removed
-	*/
-	public static CPFriendlyURLEntry removeByG_C_C_C_L_U(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, java.lang.String urlTitle)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .removeByG_C_C_C_L_U(groupId, companyId, classNameId,
-			classPK, languageId, urlTitle);
-	}
-
-	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and urlTitle = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param languageId the language ID
 	* @param urlTitle the url title
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByG_C_C_C_L_U(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String urlTitle) {
+	public static int countByG_C_C_L_U(long groupId, long classNameId,
+		long classPK, java.lang.String languageId, java.lang.String urlTitle) {
 		return getPersistence()
-				   .countByG_C_C_C_L_U(groupId, companyId, classNameId,
-			classPK, languageId, urlTitle);
+				   .countByG_C_C_L_U(groupId, classNameId, classPK, languageId,
+			urlTitle);
 	}
 
 	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or throws a {@link NoSuchCPFriendlyURLEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param languageId the language ID
@@ -1373,91 +1303,86 @@ public class CPFriendlyURLEntryUtil {
 	* @return the matching cp friendly url entry
 	* @throws NoSuchCPFriendlyURLEntryException if a matching cp friendly url entry could not be found
 	*/
-	public static CPFriendlyURLEntry findByG_C_C_C_L_M(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main)
+	public static CPFriendlyURLEntry findByG_C_C_L_M(long groupId,
+		long classNameId, long classPK, java.lang.String languageId,
+		boolean main)
 		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
 		return getPersistence()
-				   .findByG_C_C_C_L_M(groupId, companyId, classNameId, classPK,
+				   .findByG_C_C_L_M(groupId, classNameId, classPK, languageId,
+			main);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId,
+		long classNameId, long classPK, java.lang.String languageId,
+		boolean main) {
+		return getPersistence()
+				   .fetchByG_C_C_L_M(groupId, classNameId, classPK, languageId,
+			main);
+	}
+
+	/**
+	* Returns the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
+	*/
+	public static CPFriendlyURLEntry fetchByG_C_C_L_M(long groupId,
+		long classNameId, long classPK, java.lang.String languageId,
+		boolean main, boolean retrieveFromCache) {
+		return getPersistence()
+				   .fetchByG_C_C_L_M(groupId, classNameId, classPK, languageId,
+			main, retrieveFromCache);
+	}
+
+	/**
+	* Removes the cp friendly url entry where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param classNameId the class name ID
+	* @param classPK the class pk
+	* @param languageId the language ID
+	* @param main the main
+	* @return the cp friendly url entry that was removed
+	*/
+	public static CPFriendlyURLEntry removeByG_C_C_L_M(long groupId,
+		long classNameId, long classPK, java.lang.String languageId,
+		boolean main)
+		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
+		return getPersistence()
+				   .removeByG_C_C_L_M(groupId, classNameId, classPK,
 			languageId, main);
 	}
 
 	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the number of cp friendly url entries where groupId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63;.
 	*
 	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param main the main
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main) {
-		return getPersistence()
-				   .fetchByG_C_C_C_L_M(groupId, companyId, classNameId,
-			classPK, languageId, main);
-	}
-
-	/**
-	* Returns the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param main the main
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching cp friendly url entry, or <code>null</code> if a matching cp friendly url entry could not be found
-	*/
-	public static CPFriendlyURLEntry fetchByG_C_C_C_L_M(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_C_C_C_L_M(groupId, companyId, classNameId,
-			classPK, languageId, main, retrieveFromCache);
-	}
-
-	/**
-	* Removes the cp friendly url entry where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
-	* @param classNameId the class name ID
-	* @param classPK the class pk
-	* @param languageId the language ID
-	* @param main the main
-	* @return the cp friendly url entry that was removed
-	*/
-	public static CPFriendlyURLEntry removeByG_C_C_C_L_M(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main)
-		throws com.liferay.commerce.product.exception.NoSuchCPFriendlyURLEntryException {
-		return getPersistence()
-				   .removeByG_C_C_C_L_M(groupId, companyId, classNameId,
-			classPK, languageId, main);
-	}
-
-	/**
-	* Returns the number of cp friendly url entries where groupId = &#63; and companyId = &#63; and classNameId = &#63; and classPK = &#63; and languageId = &#63; and main = &#63;.
-	*
-	* @param groupId the group ID
-	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class pk
 	* @param languageId the language ID
 	* @param main the main
 	* @return the number of matching cp friendly url entries
 	*/
-	public static int countByG_C_C_C_L_M(long groupId, long companyId,
-		long classNameId, long classPK, java.lang.String languageId,
-		boolean main) {
+	public static int countByG_C_C_L_M(long groupId, long classNameId,
+		long classPK, java.lang.String languageId, boolean main) {
 		return getPersistence()
-				   .countByG_C_C_C_L_M(groupId, companyId, classNameId,
-			classPK, languageId, main);
+				   .countByG_C_C_L_M(groupId, classNameId, classPK, languageId,
+			main);
 	}
 
 	/**

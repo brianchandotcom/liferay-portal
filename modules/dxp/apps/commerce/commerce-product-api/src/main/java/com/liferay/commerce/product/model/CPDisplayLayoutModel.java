@@ -85,18 +85,18 @@ public interface CPDisplayLayoutModel extends AttachedModel,
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the cp friendly url entry ID of this cp display layout.
+	 * Returns the cp display layout ID of this cp display layout.
 	 *
-	 * @return the cp friendly url entry ID of this cp display layout
+	 * @return the cp display layout ID of this cp display layout
 	 */
-	public long getCPFriendlyURLEntryId();
+	public long getCPDisplayLayoutId();
 
 	/**
-	 * Sets the cp friendly url entry ID of this cp display layout.
+	 * Sets the cp display layout ID of this cp display layout.
 	 *
-	 * @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp display layout
+	 * @param CPDisplayLayoutId the cp display layout ID of this cp display layout
 	 */
-	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId);
+	public void setCPDisplayLayoutId(long CPDisplayLayoutId);
 
 	/**
 	 * Returns the group ID of this cp display layout.

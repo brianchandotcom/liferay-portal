@@ -61,7 +61,7 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CPFriendlyURLEntryId", getCPFriendlyURLEntryId());
+		attributes.put("CPDisplayLayoutId", getCPDisplayLayoutId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -83,10 +83,10 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 			setUuid(uuid);
 		}
 
-		Long CPFriendlyURLEntryId = (Long)attributes.get("CPFriendlyURLEntryId");
+		Long CPDisplayLayoutId = (Long)attributes.get("CPDisplayLayoutId");
 
-		if (CPFriendlyURLEntryId != null) {
-			setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+		if (CPDisplayLayoutId != null) {
+			setCPDisplayLayoutId(CPDisplayLayoutId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -195,13 +195,13 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	/**
-	* Returns the cp friendly url entry ID of this cp display layout.
+	* Returns the cp display layout ID of this cp display layout.
 	*
-	* @return the cp friendly url entry ID of this cp display layout
+	* @return the cp display layout ID of this cp display layout
 	*/
 	@Override
-	public long getCPFriendlyURLEntryId() {
-		return _cpDisplayLayout.getCPFriendlyURLEntryId();
+	public long getCPDisplayLayoutId() {
+		return _cpDisplayLayout.getCPDisplayLayoutId();
 	}
 
 	/**
@@ -370,13 +370,13 @@ public class CPDisplayLayoutWrapper implements CPDisplayLayout,
 	}
 
 	/**
-	* Sets the cp friendly url entry ID of this cp display layout.
+	* Sets the cp display layout ID of this cp display layout.
 	*
-	* @param CPFriendlyURLEntryId the cp friendly url entry ID of this cp display layout
+	* @param CPDisplayLayoutId the cp display layout ID of this cp display layout
 	*/
 	@Override
-	public void setCPFriendlyURLEntryId(long CPFriendlyURLEntryId) {
-		_cpDisplayLayout.setCPFriendlyURLEntryId(CPFriendlyURLEntryId);
+	public void setCPDisplayLayoutId(long CPDisplayLayoutId) {
+		_cpDisplayLayout.setCPDisplayLayoutId(CPDisplayLayoutId);
 	}
 
 	/**

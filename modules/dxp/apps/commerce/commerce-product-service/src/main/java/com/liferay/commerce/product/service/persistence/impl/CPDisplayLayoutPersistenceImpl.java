@@ -402,17 +402,17 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	/**
 	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63;.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the current cp display layout
+	 * @param CPDisplayLayoutId the primary key of the current cp display layout
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next cp display layout
 	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	 */
 	@Override
-	public CPDisplayLayout[] findByUuid_PrevAndNext(long CPFriendlyURLEntryId,
+	public CPDisplayLayout[] findByUuid_PrevAndNext(long CPDisplayLayoutId,
 		String uuid, OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws NoSuchCPDisplayLayoutException {
-		CPDisplayLayout cpDisplayLayout = findByPrimaryKey(CPFriendlyURLEntryId);
+		CPDisplayLayout cpDisplayLayout = findByPrimaryKey(CPDisplayLayoutId);
 
 		Session session = null;
 
@@ -1233,7 +1233,7 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	/**
 	 * Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the current cp display layout
+	 * @param CPDisplayLayoutId the primary key of the current cp display layout
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1241,11 +1241,11 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	 */
 	@Override
-	public CPDisplayLayout[] findByUuid_C_PrevAndNext(
-		long CPFriendlyURLEntryId, String uuid, long companyId,
+	public CPDisplayLayout[] findByUuid_C_PrevAndNext(long CPDisplayLayoutId,
+		String uuid, long companyId,
 		OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws NoSuchCPDisplayLayoutException {
-		CPDisplayLayout cpDisplayLayout = findByPrimaryKey(CPFriendlyURLEntryId);
+		CPDisplayLayout cpDisplayLayout = findByPrimaryKey(CPDisplayLayoutId);
 
 		Session session = null;
 
@@ -1892,15 +1892,15 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	/**
 	 * Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key for the new cp display layout
+	 * @param CPDisplayLayoutId the primary key for the new cp display layout
 	 * @return the new cp display layout
 	 */
 	@Override
-	public CPDisplayLayout create(long CPFriendlyURLEntryId) {
+	public CPDisplayLayout create(long CPDisplayLayoutId) {
 		CPDisplayLayout cpDisplayLayout = new CPDisplayLayoutImpl();
 
 		cpDisplayLayout.setNew(true);
-		cpDisplayLayout.setPrimaryKey(CPFriendlyURLEntryId);
+		cpDisplayLayout.setPrimaryKey(CPDisplayLayoutId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -1914,14 +1914,14 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	/**
 	 * Removes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the cp display layout
+	 * @param CPDisplayLayoutId the primary key of the cp display layout
 	 * @return the cp display layout that was removed
 	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	 */
 	@Override
-	public CPDisplayLayout remove(long CPFriendlyURLEntryId)
+	public CPDisplayLayout remove(long CPDisplayLayoutId)
 		throws NoSuchCPDisplayLayoutException {
-		return remove((Serializable)CPFriendlyURLEntryId);
+		return remove((Serializable)CPDisplayLayoutId);
 	}
 
 	/**
@@ -2144,7 +2144,7 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 		cpDisplayLayoutImpl.setPrimaryKey(cpDisplayLayout.getPrimaryKey());
 
 		cpDisplayLayoutImpl.setUuid(cpDisplayLayout.getUuid());
-		cpDisplayLayoutImpl.setCPFriendlyURLEntryId(cpDisplayLayout.getCPFriendlyURLEntryId());
+		cpDisplayLayoutImpl.setCPDisplayLayoutId(cpDisplayLayout.getCPDisplayLayoutId());
 		cpDisplayLayoutImpl.setGroupId(cpDisplayLayout.getGroupId());
 		cpDisplayLayoutImpl.setCompanyId(cpDisplayLayout.getCompanyId());
 		cpDisplayLayoutImpl.setUserId(cpDisplayLayout.getUserId());
@@ -2185,14 +2185,14 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	/**
 	 * Returns the cp display layout with the primary key or throws a {@link NoSuchCPDisplayLayoutException} if it could not be found.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the cp display layout
+	 * @param CPDisplayLayoutId the primary key of the cp display layout
 	 * @return the cp display layout
 	 * @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	 */
 	@Override
-	public CPDisplayLayout findByPrimaryKey(long CPFriendlyURLEntryId)
+	public CPDisplayLayout findByPrimaryKey(long CPDisplayLayoutId)
 		throws NoSuchCPDisplayLayoutException {
-		return findByPrimaryKey((Serializable)CPFriendlyURLEntryId);
+		return findByPrimaryKey((Serializable)CPDisplayLayoutId);
 	}
 
 	/**
@@ -2246,12 +2246,12 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	/**
 	 * Returns the cp display layout with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the cp display layout
+	 * @param CPDisplayLayoutId the primary key of the cp display layout
 	 * @return the cp display layout, or <code>null</code> if a cp display layout with the primary key could not be found
 	 */
 	@Override
-	public CPDisplayLayout fetchByPrimaryKey(long CPFriendlyURLEntryId) {
-		return fetchByPrimaryKey((Serializable)CPFriendlyURLEntryId);
+	public CPDisplayLayout fetchByPrimaryKey(long CPDisplayLayoutId) {
+		return fetchByPrimaryKey((Serializable)CPDisplayLayoutId);
 	}
 
 	@Override
@@ -2569,7 +2569,7 @@ public class CPDisplayLayoutPersistenceImpl extends BasePersistenceImpl<CPDispla
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CPDISPLAYLAYOUT = "SELECT cpDisplayLayout FROM CPDisplayLayout cpDisplayLayout";
-	private static final String _SQL_SELECT_CPDISPLAYLAYOUT_WHERE_PKS_IN = "SELECT cpDisplayLayout FROM CPDisplayLayout cpDisplayLayout WHERE CPFriendlyURLEntryId IN (";
+	private static final String _SQL_SELECT_CPDISPLAYLAYOUT_WHERE_PKS_IN = "SELECT cpDisplayLayout FROM CPDisplayLayout cpDisplayLayout WHERE CPDisplayLayoutId IN (";
 	private static final String _SQL_SELECT_CPDISPLAYLAYOUT_WHERE = "SELECT cpDisplayLayout FROM CPDisplayLayout cpDisplayLayout WHERE ";
 	private static final String _SQL_COUNT_CPDISPLAYLAYOUT = "SELECT COUNT(cpDisplayLayout) FROM CPDisplayLayout cpDisplayLayout";
 	private static final String _SQL_COUNT_CPDISPLAYLAYOUT_WHERE = "SELECT COUNT(cpDisplayLayout) FROM CPDisplayLayout cpDisplayLayout WHERE ";

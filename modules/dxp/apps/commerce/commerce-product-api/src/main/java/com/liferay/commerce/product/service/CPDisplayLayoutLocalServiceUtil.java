@@ -43,8 +43,7 @@ public class CPDisplayLayoutLocalServiceUtil {
 	 */
 	public static com.liferay.commerce.product.model.CPDisplayLayout addCPDisplayLayout(
 		java.lang.Class<?> clazz, long classPK, java.lang.String layoutUuid,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService()
 				   .addCPDisplayLayout(clazz, classPK, layoutUuid,
 			serviceContext);
@@ -64,17 +63,16 @@ public class CPDisplayLayoutLocalServiceUtil {
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
-	* @param CPFriendlyURLEntryId the primary key for the new cp display layout
+	* @param CPDisplayLayoutId the primary key for the new cp display layout
 	* @return the new cp display layout
 	*/
 	public static com.liferay.commerce.product.model.CPDisplayLayout createCPDisplayLayout(
-		long CPFriendlyURLEntryId) {
-		return getService().createCPDisplayLayout(CPFriendlyURLEntryId);
+		long CPDisplayLayoutId) {
+		return getService().createCPDisplayLayout(CPDisplayLayoutId);
 	}
 
 	public static void deleteCPDisplayLayout(java.lang.Class<?> clazz,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long classPK) {
 		getService().deleteCPDisplayLayout(clazz, classPK);
 	}
 
@@ -92,14 +90,14 @@ public class CPDisplayLayoutLocalServiceUtil {
 	/**
 	* Deletes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout that was removed
 	* @throws PortalException if a cp display layout with the primary key could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDisplayLayout deleteCPDisplayLayout(
-		long CPFriendlyURLEntryId)
+		long CPDisplayLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteCPDisplayLayout(CPFriendlyURLEntryId);
+		return getService().deleteCPDisplayLayout(CPDisplayLayoutId);
 	}
 
 	/**
@@ -195,8 +193,8 @@ public class CPDisplayLayoutLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPDisplayLayout fetchCPDisplayLayout(
-		long CPFriendlyURLEntryId) {
-		return getService().fetchCPDisplayLayout(CPFriendlyURLEntryId);
+		long CPDisplayLayoutId) {
+		return getService().fetchCPDisplayLayout(CPDisplayLayoutId);
 	}
 
 	/**
@@ -218,14 +216,14 @@ public class CPDisplayLayoutLocalServiceUtil {
 	/**
 	* Returns the cp display layout with the primary key.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout
 	* @throws PortalException if a cp display layout with the primary key could not be found
 	*/
 	public static com.liferay.commerce.product.model.CPDisplayLayout getCPDisplayLayout(
-		long CPFriendlyURLEntryId)
+		long CPDisplayLayoutId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCPDisplayLayout(CPFriendlyURLEntryId);
+		return getService().getCPDisplayLayout(CPDisplayLayoutId);
 	}
 
 	/**

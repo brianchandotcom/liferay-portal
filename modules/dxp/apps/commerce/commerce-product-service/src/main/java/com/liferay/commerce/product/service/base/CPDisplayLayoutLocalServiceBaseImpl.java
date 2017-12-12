@@ -117,26 +117,26 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 	/**
 	 * Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key for the new cp display layout
+	 * @param CPDisplayLayoutId the primary key for the new cp display layout
 	 * @return the new cp display layout
 	 */
 	@Override
-	public CPDisplayLayout createCPDisplayLayout(long CPFriendlyURLEntryId) {
-		return cpDisplayLayoutPersistence.create(CPFriendlyURLEntryId);
+	public CPDisplayLayout createCPDisplayLayout(long CPDisplayLayoutId) {
+		return cpDisplayLayoutPersistence.create(CPDisplayLayoutId);
 	}
 
 	/**
 	 * Deletes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the cp display layout
+	 * @param CPDisplayLayoutId the primary key of the cp display layout
 	 * @return the cp display layout that was removed
 	 * @throws PortalException if a cp display layout with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CPDisplayLayout deleteCPDisplayLayout(long CPFriendlyURLEntryId)
+	public CPDisplayLayout deleteCPDisplayLayout(long CPDisplayLayoutId)
 		throws PortalException {
-		return cpDisplayLayoutPersistence.remove(CPFriendlyURLEntryId);
+		return cpDisplayLayoutPersistence.remove(CPDisplayLayoutId);
 	}
 
 	/**
@@ -236,8 +236,8 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 	}
 
 	@Override
-	public CPDisplayLayout fetchCPDisplayLayout(long CPFriendlyURLEntryId) {
-		return cpDisplayLayoutPersistence.fetchByPrimaryKey(CPFriendlyURLEntryId);
+	public CPDisplayLayout fetchCPDisplayLayout(long CPDisplayLayoutId) {
+		return cpDisplayLayoutPersistence.fetchByPrimaryKey(CPDisplayLayoutId);
 	}
 
 	/**
@@ -256,14 +256,14 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 	/**
 	 * Returns the cp display layout with the primary key.
 	 *
-	 * @param CPFriendlyURLEntryId the primary key of the cp display layout
+	 * @param CPDisplayLayoutId the primary key of the cp display layout
 	 * @return the cp display layout
 	 * @throws PortalException if a cp display layout with the primary key could not be found
 	 */
 	@Override
-	public CPDisplayLayout getCPDisplayLayout(long CPFriendlyURLEntryId)
+	public CPDisplayLayout getCPDisplayLayout(long CPDisplayLayoutId)
 		throws PortalException {
-		return cpDisplayLayoutPersistence.findByPrimaryKey(CPFriendlyURLEntryId);
+		return cpDisplayLayoutPersistence.findByPrimaryKey(CPDisplayLayoutId);
 	}
 
 	@Override
@@ -274,7 +274,7 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CPDisplayLayout.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CPFriendlyURLEntryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("CPDisplayLayoutId");
 
 		return actionableDynamicQuery;
 	}
@@ -288,7 +288,7 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(CPDisplayLayout.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CPFriendlyURLEntryId");
+			"CPDisplayLayoutId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -299,7 +299,7 @@ public abstract class CPDisplayLayoutLocalServiceBaseImpl
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CPDisplayLayout.class);
 
-		actionableDynamicQuery.setPrimaryKeyPropertyName("CPFriendlyURLEntryId");
+		actionableDynamicQuery.setPrimaryKeyPropertyName("CPDisplayLayoutId");
 	}
 
 	@Override

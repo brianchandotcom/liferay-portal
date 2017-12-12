@@ -61,13 +61,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().addCPFriendlyURLEntry(cpFriendlyURLEntry);
 	}
 
-	public static java.lang.String buildUrlTitle(long groupId, long companyId,
+	public static java.lang.String buildUrlTitle(long groupId,
 		long classNameId, long classPK, java.lang.String languageId,
-		java.lang.String title)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		java.lang.String title) {
 		return getService()
-				   .buildUrlTitle(groupId, companyId, classNameId, classPK,
-			languageId, title);
+				   .buildUrlTitle(groupId, classNameId, classPK, languageId,
+			title);
 	}
 
 	/**
@@ -81,10 +80,9 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 		return getService().createCPFriendlyURLEntry(CPFriendlyURLEntryId);
 	}
 
-	public static void deleteCPFriendlyURLEntries(long groupId, long companyId,
+	public static void deleteCPFriendlyURLEntries(long groupId,
 		java.lang.Class<?> clazz, long classPK) {
-		getService()
-			.deleteCPFriendlyURLEntries(groupId, companyId, clazz, classPK);
+		getService().deleteCPFriendlyURLEntries(groupId, clazz, classPK);
 	}
 
 	/**
@@ -204,12 +202,11 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry fetchCPFriendlyURLEntry(
-		long groupId, long companyId, long classNameId, long classPK,
-		java.lang.String languageId, boolean main)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		long groupId, long classNameId, long classPK,
+		java.lang.String languageId, boolean main) {
 		return getService()
-				   .fetchCPFriendlyURLEntry(groupId, companyId, classNameId,
-			classPK, languageId, main);
+				   .fetchCPFriendlyURLEntry(groupId, classNameId, classPK,
+			languageId, main);
 	}
 
 	/**
@@ -246,10 +243,9 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.product.model.CPFriendlyURLEntry> getCPFriendlyURLEntries(
-		long groupId, long companyId, long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK) {
 		return getService()
-				   .getCPFriendlyURLEntries(groupId, companyId, classNameId,
-			classPK);
+				   .getCPFriendlyURLEntries(groupId, classNameId, classPK);
 	}
 
 	/**
@@ -306,12 +302,12 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.product.model.CPFriendlyURLEntry getCPFriendlyURLEntry(
-		long groupId, long companyId, long classNameId,
-		java.lang.String languageId, java.lang.String urlTitle)
+		long groupId, long classNameId, java.lang.String languageId,
+		java.lang.String urlTitle)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCPFriendlyURLEntry(groupId, companyId, classNameId,
-			languageId, urlTitle);
+				   .getCPFriendlyURLEntry(groupId, classNameId, languageId,
+			urlTitle);
 	}
 
 	/**
@@ -338,10 +334,9 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static java.util.Map<java.lang.String, java.lang.String> getLanguageIdToUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK) {
+		long groupId, long classNameId, long classPK) {
 		return getService()
-				   .getLanguageIdToUrlTitleMap(groupId, companyId, classNameId,
-			classPK);
+				   .getLanguageIdToUrlTitleMap(groupId, classNameId, classPK);
 	}
 
 	/**
@@ -360,17 +355,15 @@ public class CPFriendlyURLEntryLocalServiceUtil {
 	}
 
 	public static java.util.Map<java.util.Locale, java.lang.String> getUrlTitleMap(
-		long groupId, long companyId, long classNameId, long classPK) {
-		return getService()
-				   .getUrlTitleMap(groupId, companyId, classNameId, classPK);
+		long groupId, long classNameId, long classPK) {
+		return getService().getUrlTitleMap(groupId, classNameId, classPK);
 	}
 
 	public static java.lang.String getUrlTitleMapAsXML(long groupId,
-		long companyId, long classNameId, long classPK,
-		java.lang.String defaultLanguageId) {
+		long classNameId, long classPK, java.lang.String defaultLanguageId) {
 		return getService()
-				   .getUrlTitleMapAsXML(groupId, companyId, classNameId,
-			classPK, defaultLanguageId);
+				   .getUrlTitleMapAsXML(groupId, classNameId, classPK,
+			defaultLanguageId);
 	}
 
 	/**

@@ -65,8 +65,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link CPDisplayLayoutLocalServiceUtil} to access the cp display layout local service. Add custom service methods to {@link com.liferay.commerce.product.service.impl.CPDisplayLayoutLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CPDisplayLayout addCPDisplayLayout(java.lang.Class<?> clazz,
-		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext)
-		throws PortalException;
+		long classPK, java.lang.String layoutUuid, ServiceContext serviceContext);
 
 	/**
 	* Adds the cp display layout to the database. Also notifies the appropriate model listeners.
@@ -80,13 +79,12 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
-	* @param CPFriendlyURLEntryId the primary key for the new cp display layout
+	* @param CPDisplayLayoutId the primary key for the new cp display layout
 	* @return the new cp display layout
 	*/
-	public CPDisplayLayout createCPDisplayLayout(long CPFriendlyURLEntryId);
+	public CPDisplayLayout createCPDisplayLayout(long CPDisplayLayoutId);
 
-	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK)
-		throws PortalException;
+	public void deleteCPDisplayLayout(java.lang.Class<?> clazz, long classPK);
 
 	/**
 	* Deletes the cp display layout from the database. Also notifies the appropriate model listeners.
@@ -101,12 +99,12 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	/**
 	* Deletes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout that was removed
 	* @throws PortalException if a cp display layout with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
-	public CPDisplayLayout deleteCPDisplayLayout(long CPFriendlyURLEntryId)
+	public CPDisplayLayout deleteCPDisplayLayout(long CPDisplayLayoutId)
 		throws PortalException;
 
 	/**
@@ -180,7 +178,7 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout fetchCPDisplayLayout(long CPFriendlyURLEntryId);
+	public CPDisplayLayout fetchCPDisplayLayout(long CPDisplayLayoutId);
 
 	/**
 	* Returns the cp display layout matching the UUID and group.
@@ -199,12 +197,12 @@ public interface CPDisplayLayoutLocalService extends BaseLocalService,
 	/**
 	* Returns the cp display layout with the primary key.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout
 	* @throws PortalException if a cp display layout with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CPDisplayLayout getCPDisplayLayout(long CPFriendlyURLEntryId)
+	public CPDisplayLayout getCPDisplayLayout(long CPDisplayLayoutId)
 		throws PortalException;
 
 	/**

@@ -147,13 +147,13 @@ public interface CPDisplayLayoutPersistence extends BasePersistence<CPDisplayLay
 	/**
 	* Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63;.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the current cp display layout
+	* @param CPDisplayLayoutId the primary key of the current cp display layout
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
-	public CPDisplayLayout[] findByUuid_PrevAndNext(long CPFriendlyURLEntryId,
+	public CPDisplayLayout[] findByUuid_PrevAndNext(long CPDisplayLayoutId,
 		java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws NoSuchCPDisplayLayoutException;
@@ -342,15 +342,15 @@ public interface CPDisplayLayoutPersistence extends BasePersistence<CPDisplayLay
 	/**
 	* Returns the cp display layouts before and after the current cp display layout in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the current cp display layout
+	* @param CPDisplayLayoutId the primary key of the current cp display layout
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
-	public CPDisplayLayout[] findByUuid_C_PrevAndNext(
-		long CPFriendlyURLEntryId, java.lang.String uuid, long companyId,
+	public CPDisplayLayout[] findByUuid_C_PrevAndNext(long CPDisplayLayoutId,
+		java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CPDisplayLayout> orderByComparator)
 		throws NoSuchCPDisplayLayoutException;
 
@@ -438,19 +438,19 @@ public interface CPDisplayLayoutPersistence extends BasePersistence<CPDisplayLay
 	/**
 	* Creates a new cp display layout with the primary key. Does not add the cp display layout to the database.
 	*
-	* @param CPFriendlyURLEntryId the primary key for the new cp display layout
+	* @param CPDisplayLayoutId the primary key for the new cp display layout
 	* @return the new cp display layout
 	*/
-	public CPDisplayLayout create(long CPFriendlyURLEntryId);
+	public CPDisplayLayout create(long CPDisplayLayoutId);
 
 	/**
 	* Removes the cp display layout with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout that was removed
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
-	public CPDisplayLayout remove(long CPFriendlyURLEntryId)
+	public CPDisplayLayout remove(long CPDisplayLayoutId)
 		throws NoSuchCPDisplayLayoutException;
 
 	public CPDisplayLayout updateImpl(CPDisplayLayout cpDisplayLayout);
@@ -458,20 +458,20 @@ public interface CPDisplayLayoutPersistence extends BasePersistence<CPDisplayLay
 	/**
 	* Returns the cp display layout with the primary key or throws a {@link NoSuchCPDisplayLayoutException} if it could not be found.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout
 	* @throws NoSuchCPDisplayLayoutException if a cp display layout with the primary key could not be found
 	*/
-	public CPDisplayLayout findByPrimaryKey(long CPFriendlyURLEntryId)
+	public CPDisplayLayout findByPrimaryKey(long CPDisplayLayoutId)
 		throws NoSuchCPDisplayLayoutException;
 
 	/**
 	* Returns the cp display layout with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param CPFriendlyURLEntryId the primary key of the cp display layout
+	* @param CPDisplayLayoutId the primary key of the cp display layout
 	* @return the cp display layout, or <code>null</code> if a cp display layout with the primary key could not be found
 	*/
-	public CPDisplayLayout fetchByPrimaryKey(long CPFriendlyURLEntryId);
+	public CPDisplayLayout fetchByPrimaryKey(long CPDisplayLayoutId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, CPDisplayLayout> fetchByPrimaryKeys(

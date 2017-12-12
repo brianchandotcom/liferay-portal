@@ -169,7 +169,7 @@
 	</model>
 	<model name="com.liferay.commerce.product.model.CPDisplayLayout">
 		<field name="uuid" type="String" />
-		<field name="CPFriendlyURLEntryId" type="long" />
+		<field name="CPDisplayLayoutId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

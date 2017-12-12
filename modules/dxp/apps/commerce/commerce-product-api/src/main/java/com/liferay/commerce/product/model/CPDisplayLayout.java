@@ -37,11 +37,11 @@ public interface CPDisplayLayout extends CPDisplayLayoutModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.product.model.impl.CPDisplayLayoutImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CPDisplayLayout, Long> CP_FRIENDLY_URL_ENTRY_ID_ACCESSOR =
+	public static final Accessor<CPDisplayLayout, Long> CP_DISPLAY_LAYOUT_ID_ACCESSOR =
 		new Accessor<CPDisplayLayout, Long>() {
 			@Override
 			public Long get(CPDisplayLayout cpDisplayLayout) {
-				return cpDisplayLayout.getCPFriendlyURLEntryId();
+				return cpDisplayLayout.getCPDisplayLayoutId();
 			}
 
 			@Override

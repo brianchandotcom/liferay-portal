@@ -1,7 +1,16 @@
+@import "mixins";
 @import './LayoutPageTemplateFragment.scss';
 
 .layout-columns {
 	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+@include sm {
+	.layout-column {
+		height: calc(100vh - 384px);
+		overflow-y: scroll;
+	}
 }
 
 .portlet-layouts-admin {

@@ -14,12 +14,10 @@
 
 package com.liferay.wiki.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
 
@@ -28,20 +26,21 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 1.7.0, with no direct replacement
  */
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.liferay.wiki.model.WikiNode"}
 )
+@Deprecated
 public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
-
-		check(permissionChecker, node, actionId);
+		_wikiNodeModelResourcePermission.check(
+			permissionChecker, nodeId, actionId);
 	}
 
 	/**
@@ -55,27 +54,24 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 
 		WikiNode node = _wikiNodeLocalService.getNode(groupId, name);
 
-		check(permissionChecker, node, actionId);
+		_wikiNodeModelResourcePermission.check(
+			permissionChecker, node, actionId);
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, WikiNode node, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, node, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, WikiNode.class.getName(), node.getNodeId(),
-				actionId);
-		}
+		_wikiNodeModelResourcePermission.check(
+			permissionChecker, node, actionId);
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long nodeId, String actionId)
 		throws PortalException {
 
-		WikiNode node = _wikiNodeLocalService.getNode(nodeId);
-
-		return contains(permissionChecker, node, actionId);
+		return _wikiNodeModelResourcePermission.contains(
+			permissionChecker, nodeId, actionId);
 	}
 
 	/**
@@ -89,30 +85,16 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 
 		WikiNode node = _wikiNodeLocalService.getNode(groupId, name);
 
-		return contains(permissionChecker, node, actionId);
+		return _wikiNodeModelResourcePermission.contains(
+			permissionChecker, node, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, WikiNode node, String actionId) {
+			PermissionChecker permissionChecker, WikiNode node, String actionId)
+		throws PortalException {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, node.getGroupId(), WikiNode.class.getName(),
-			node.getNodeId(), WikiPortletKeys.WIKI, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				node.getCompanyId(), WikiNode.class.getName(), node.getNodeId(),
-				node.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			node.getGroupId(), WikiNode.class.getName(), node.getNodeId(),
-			actionId);
+		return _wikiNodeModelResourcePermission.contains(
+			permissionChecker, node, actionId);
 	}
 
 	@Override
@@ -121,7 +103,18 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_wikiNodeModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
+	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.wiki.model.WikiNode)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<WikiNode> modelResourcePermission) {
+
+		_wikiNodeModelResourcePermission = modelResourcePermission;
 	}
 
 	@Reference(unbind = "-")
@@ -132,5 +125,7 @@ public class WikiNodePermissionChecker implements BaseModelPermissionChecker {
 	}
 
 	private static WikiNodeLocalService _wikiNodeLocalService;
+	private static ModelResourcePermission<WikiNode>
+		_wikiNodeModelResourcePermission;
 
 }

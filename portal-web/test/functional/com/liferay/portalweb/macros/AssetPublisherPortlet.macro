@@ -471,9 +471,9 @@
 				<then>
 					<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
 
-					<execute function="AssertElementPresent" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+					<execute function="AssertElementPresent" locator1="Configuration#MOVE_AVAILABLE_TO_CURRENT" />
 
-					<execute function="Click" locator1="Button#MOVE_AVAILABLE_TO_CURRENT" />
+					<execute function="Click" locator1="Configuration#MOVE_AVAILABLE_TO_CURRENT" />
 
 					<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
 				</then>
@@ -486,9 +486,9 @@
 				<then>
 					<execute function="AddSelection" locator1="APConfigurationDisplaysettings#SHOW_METADATA_CURRENT_FIELD_SELECT" value1="${metadataField}" />
 
-					<execute function="AssertElementPresent" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
+					<execute function="AssertElementPresent" locator1="Configuration#MOVE_CURRENT_TO_AVAILABLE" />
 
-					<execute function="Click" locator1="Button#MOVE_CURRENT_TO_AVAILABLE" />
+					<execute function="Click" locator1="Configuration#MOVE_CURRENT_TO_AVAILABLE" />
 
 					<execute function="AssertTextEquals" locator1="APConfigurationDisplaysettings#SHOW_METADATA_AVAILABLE_FIELD_SELECT" value1="${metadataField}" />
 				</then>

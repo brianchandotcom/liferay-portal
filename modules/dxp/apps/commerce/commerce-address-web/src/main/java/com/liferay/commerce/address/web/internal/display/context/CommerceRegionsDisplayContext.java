@@ -15,6 +15,7 @@
 package com.liferay.commerce.address.web.internal.display.context;
 
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants;
 import com.liferay.commerce.address.web.internal.util.CommerceAddressUtil;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceRegionService;
@@ -84,7 +85,9 @@ public class CommerceRegionsDisplayContext
 
 	public String getScreenNavigationCategoryKey() {
 		return ParamUtil.getString(
-			renderRequest, "screenNavigationCategoryKey", "regions");
+			renderRequest, "screenNavigationCategoryKey",
+			CommerceCountryScreenNavigationConstants.
+				CATEGORY_KEY_COUNTRY_REGIONS);
 	}
 
 	@Override

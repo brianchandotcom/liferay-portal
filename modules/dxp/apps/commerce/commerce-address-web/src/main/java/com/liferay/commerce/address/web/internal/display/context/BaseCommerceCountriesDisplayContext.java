@@ -15,6 +15,7 @@
 package com.liferay.commerce.address.web.internal.display.context;
 
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants;
 import com.liferay.commerce.address.web.internal.util.CountriesCommerceAdminModule;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
@@ -81,6 +82,11 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 		portletURL.setParameter(
 			"commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
 
+		if (getCommerceCountryId() > 0) {
+			portletURL.setParameter(
+				"commerceCountryId", String.valueOf(getCommerceCountryId()));
+		}
+
 		String delta = ParamUtil.getString(renderRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
@@ -102,8 +108,19 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 		return _rowChecker;
 	}
 
+	public String getScreenNavigationCategoryKey() {
+		return CommerceCountryScreenNavigationConstants.
+			CATEGORY_KEY_COUNTRY_DETAILS;
+	}
+
 	public abstract SearchContainer<T> getSearchContainer()
 		throws PortalException;
+
+	public String getSelectedScreenNavigationCategoryKey() {
+		return ParamUtil.getString(
+			renderRequest, "screenNavigationCategoryKey",
+			getScreenNavigationCategoryKey());
+	}
 
 	public void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;

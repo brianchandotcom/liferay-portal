@@ -29,6 +29,23 @@ header {
 		}
 	}
 
+	.user-avatar-link {
+		position: relative;
+	}
+
+	.user-personal-bar {
+		.fieldset {
+			position: relative;
+		}
+
+		.sticker {
+			bottom: auto;
+			left: -1rem;
+			right: auto;
+			top: -1rem;
+		}
+	}
+
 	.search-input {
 		background-color: #29343D;
 		border-color: transparent;

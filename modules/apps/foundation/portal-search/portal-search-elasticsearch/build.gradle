@@ -64,6 +64,7 @@ dependencies {
 
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
 	testCompile project(":apps:foundation:portal-search:portal-search")
+	testCompile project(":apps:foundation:portal-search:portal-search-api")
 	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"

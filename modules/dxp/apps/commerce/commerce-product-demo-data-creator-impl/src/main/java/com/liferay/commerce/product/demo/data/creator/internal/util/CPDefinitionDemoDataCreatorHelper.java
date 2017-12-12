@@ -14,11 +14,13 @@
 
 package com.liferay.commerce.product.demo.data.creator.internal.util;
 
+import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -79,6 +81,15 @@ public class CPDefinitionDemoDataCreatorHelper
 			CPDefinition cpDefinition = createCPDefinition(
 				userId, groupId, title, description, productTypeName,
 				assetCategoryIds);
+
+			// Commerce product definition inventory
+
+			_cpDefinitionInventoryLocalService.addCPDefinitionInventory(
+				cpDefinition.getCPDefinitionId(), null, null, false, false, 0,
+				true, CPDefinitionInventoryConstants.DEFAULT_MIN_CART_QUANTITY,
+				CPDefinitionInventoryConstants.DEFAULT_MAX_CART_QUANTITY, null,
+				CPDefinitionInventoryConstants.DEFAULT_MULTIPLE_CART_QUANTITY,
+				serviceContext);
 
 			// Commerce product option categories
 
@@ -212,7 +223,7 @@ public class CPDefinitionDemoDataCreatorHelper
 
 		cpDefinition = _cpDefinitionLocalService.addCPDefinition(
 			titleMap, null, descriptionMap, titleMap, null, null, null,
-			productTypeName, false, false, false, false, 0, 0, 0, 0, 0, null,
+			productTypeName, false, true, false, false, 0, 10, 10, 10, 10, null,
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute, true,
@@ -291,6 +302,10 @@ public class CPDefinitionDemoDataCreatorHelper
 	@Reference
 	private CPAttachmentFileEntryDemoDataCreatorHelper
 		_cpAttachmentFileEntryDemoDataCreatorHelper;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 	@Reference
 	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;

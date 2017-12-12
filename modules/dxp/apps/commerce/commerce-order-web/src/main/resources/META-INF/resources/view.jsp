@@ -38,22 +38,6 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 	<portlet:param name="jspPage" value="/view.jsp" />
 </liferay-portlet:renderURL>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item
-			href="<%= viewCommerceOrdersURL.toString() %>"
-			label="Orders"
-			selected='<%= toolbarItem.equals("view-all-orders") %>'
-		/>
-	</aui:nav>
-
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
-
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="commerceOrders" />
 </liferay-util:include>

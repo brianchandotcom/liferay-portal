@@ -55,7 +55,7 @@ public class DescriptiveNameTag extends IncludeTag {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		StringBundler sb = new StringBundler(1);
+		StringBundler sb = new StringBundler(5);
 
 		try {
 			String descriptiveName = HtmlUtil.escape(

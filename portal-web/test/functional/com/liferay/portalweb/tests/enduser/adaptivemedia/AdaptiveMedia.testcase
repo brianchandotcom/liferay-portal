@@ -237,7 +237,7 @@
 		<execute macro="AdaptiveMedia#viewNoImageResolution" />
 	</command>
 
-	<command name="AddImageVariantsForBlogEntry" priority="5">
+	<command name="AssertAdaptedImageInBlogsEntry" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />

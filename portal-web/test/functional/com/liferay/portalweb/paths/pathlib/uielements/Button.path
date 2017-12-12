@@ -470,12 +470,12 @@
 </tr>
 <tr>
 	<td>MOVE_AVAILABLE_TO_CURRENT</td>
-	<td>//div[@id='metadataContent']//button[@title='Move selected items from Available to Current.']</td>
+	<td>//button[@title='Move selected items from Available to Current.']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>MOVE_CURRENT_TO_AVAILABLE</td>
-	<td>//div[@id='metadataContent']//button[@title='Move selected items from Current to Available.']</td>
+	<td>//button[@title='Move selected items from Current to Available.']</td>
 	<td></td>
 </tr>
 <tr>

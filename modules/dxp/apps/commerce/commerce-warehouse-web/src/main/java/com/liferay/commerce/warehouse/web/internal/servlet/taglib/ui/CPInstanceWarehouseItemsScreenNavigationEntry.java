@@ -18,10 +18,10 @@ import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPInstance
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
+import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.warehouse.web.internal.display.context.CommerceWarehouseItemsDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,7 +59,7 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 
 	@Override
 	public String getEntryKey() {
-		return "warehouses";
+		return "inventory";
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 
-		return LanguageUtil.get(resourceBundle, "warehouses");
+		return LanguageUtil.get(resourceBundle, "inventory");
 	}
 
 	@Override
@@ -95,8 +95,9 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 			CommerceWarehouseItemsDisplayContext
 				commerceWarehouseItemsDisplayContext =
 					new CommerceWarehouseItemsDisplayContext(
-						_commerceWarehouseItemService, _cpInstanceService,
-						_itemSelector, httpServletRequest, _portal);
+						_commerceWarehouseItemService,
+						_commerceWarehouseService, _cpInstanceService,
+						httpServletRequest, _portal);
 
 			httpServletRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -118,10 +119,10 @@ public class CPInstanceWarehouseItemsScreenNavigationEntry
 	private CommerceWarehouseItemService _commerceWarehouseItemService;
 
 	@Reference
-	private CPInstanceService _cpInstanceService;
+	private CommerceWarehouseService _commerceWarehouseService;
 
 	@Reference
-	private ItemSelector _itemSelector;
+	private CPInstanceService _cpInstanceService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

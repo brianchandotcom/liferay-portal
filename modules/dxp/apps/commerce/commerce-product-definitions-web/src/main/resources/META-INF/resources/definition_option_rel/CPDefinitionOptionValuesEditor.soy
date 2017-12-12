@@ -33,6 +33,9 @@
 			{/if}
 		{/let}
 
+		{if $show}
+			<div class="modal-backdrop fade show"></div>
+		{/if}
 		<div aria-labelledby="clayLargeModalLabel" class="{$classes}" role="dialog" tabindex="-1">
 			<div class="modal-dialog modal-full-screen">
 				<div class="modal-content">
@@ -84,8 +87,5 @@
 				</div>
 			</div>
 		</div>
-		{if $show}
-			<div class="modal-backdrop fade show"></div>
-		{/if}
 	</div>
 {/template}

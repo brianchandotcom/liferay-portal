@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -64,9 +65,14 @@ public class DefaultLayoutTypeAccessPolicyImpl
 			}
 		}
 
+		StringBundler sb = new StringBundler(3);
+
+		sb.append(portlet.getDisplayName());
+		sb.append(" ");
+		sb.append(portlet.getPortletId());
+
 		throw new PrincipalException.MustHavePermission(
-			PortalUtil.getUserId(request), portlet.getDisplayName(),
-			portlet.getPortletId(), ActionKeys.ACCESS);
+			PortalUtil.getUserId(request), sb.toString(), 0, ActionKeys.ACCESS);
 	}
 
 	@Override

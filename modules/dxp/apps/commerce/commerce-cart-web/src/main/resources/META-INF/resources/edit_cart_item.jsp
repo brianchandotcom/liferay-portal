@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String cartToolbarItem = ParamUtil.getString(request, "cartToolbarItem", "view-all-carts");
+
 String languageId = LanguageUtil.getLanguageId(locale);
 
 CommerceCartItemDisplayContext commerceCartItemDisplayContext = (CommerceCartItemDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -29,6 +31,10 @@ CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
 
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
+PortletURL cartAdminURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_CART, lifecycle);
+
+cartAdminURLObj.setParameter("toolbarItem", cartToolbarItem);
+
 PortletURL cartItemsAdminURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_CART, lifecycle);
 
 cartItemsAdminURLObj.setParameter("mvcRenderCommandName", "viewCommerceCartItems");
@@ -36,11 +42,35 @@ cartItemsAdminURLObj.setParameter("commerceCartId", String.valueOf(commerceCart.
 
 String cartItemsAdminURL = cartItemsAdminURLObj.toString();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(cartItemsAdminURL);
+PortletURL cartItemsURL = renderResponse.createRenderURL();
 
-renderResponse.setTitle(commerceCart.getName() + " - " + cpDefinition.getTitle(languageId));
+cartItemsURL.setParameter("mvcRenderCommandName", "viewCommerceCartItems");
+cartItemsURL.setParameter("commerceCartId", String.valueOf(commerceCart.getCommerceCartId()));
+
+String title = commerceCart.getName() + " - " + cpDefinition.getTitle(languageId);
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+String cartToolbarItemLabel = StringPool.BLANK;
+
+if (cartToolbarItem.equals("view-all-carts")) {
+	cartToolbarItemLabel = "carts";
+}
+
+if (cartToolbarItem.equals("view-all-wish-lists")) {
+	cartToolbarItemLabel = "wish-lists";
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, cartToolbarItemLabel), cartAdminURLObj.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, commerceCart.getName(), cartItemsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "cart"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceCartItem" var="editCommerceCartItemActionURL" />
 
@@ -53,9 +83,11 @@ renderResponse.setTitle(commerceCart.getName() + " - " + cpDefinition.getTitle(l
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceCartItem %>" model="<%= CommerceCartItem.class %>" />
 
-		<aui:fieldset>
-			<aui:input name="quantity" />
-		</aui:fieldset>
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input name="quantity" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<aui:button-row>
 			<aui:button cssClass="btn-lg" type="submit" />

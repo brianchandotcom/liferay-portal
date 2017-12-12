@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String cartToolbarItem = ParamUtil.getString(request, "cartToolbarItem", "view-all-carts");
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
@@ -26,6 +28,7 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 	<portlet:renderURL var="editURL">
 		<portlet:param name="mvcRenderCommandName" value="editCommerceCartItem" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cartToolbarItem" value="<%= cartToolbarItem %>" />
 		<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCartItem.getCommerceCartId()) %>" />
 		<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
 	</portlet:renderURL>
@@ -38,6 +41,7 @@ CommerceCartItem commerceCartItem = (CommerceCartItem)row.getObject();
 	<portlet:actionURL name="editCommerceCartItem" var="deleteURL">
 		<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="cartToolbarItem" value="<%= cartToolbarItem %>" />
 		<portlet:param name="commerceCartItemId" value="<%= String.valueOf(commerceCartItem.getCommerceCartItemId()) %>" />
 	</portlet:actionURL>
 

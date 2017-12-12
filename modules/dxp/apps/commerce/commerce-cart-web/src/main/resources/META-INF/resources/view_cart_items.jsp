@@ -33,30 +33,48 @@ String displayStyle = commerceCartItemDisplayContext.getDisplayStyle();
 
 PortletURL portletURL = commerceCartItemDisplayContext.getPortletURL();
 
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", "commerceCartItems");
-
-request.setAttribute("view.jsp-portletURL", portletURL);
-
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
 PortletURL cartAdminURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_CART, lifecycle);
 
 cartAdminURLObj.setParameter("toolbarItem", cartToolbarItem);
 
-String cartAdminURL = cartAdminURLObj.toString();
+String title = commerceCart.getName();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(cartAdminURL);
+Map<String, Object> data = new HashMap<>();
 
-renderResponse.setTitle(commerceCart.getName());
+data.put("direction-right", Boolean.TRUE.toString());
+
+String cartToolbarItemLabel = StringPool.BLANK;
+
+if (cartToolbarItem.equals("view-all-carts")) {
+	cartToolbarItemLabel = "carts";
+}
+
+if (cartToolbarItem.equals("view-all-wish-lists")) {
+	cartToolbarItemLabel = "wish-lists";
+}
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, cartToolbarItemLabel), cartAdminURLObj.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "cart-items"), StringPool.BLANK, data);
+
+portletURL.setParameter("toolbarItem", toolbarItem);
+portletURL.setParameter("searchContainerId", "commerceCartItems");
+
+request.setAttribute("view.jsp-portletURL", portletURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "cart"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<liferay-portlet:renderURL varImpl="viewCommerceCartItemsURL">
 			<portlet:param name="mvcRenderCommandName" value="viewCommerceCartItems" />
 			<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCart.getCommerceCartId()) %>" />
+			<portlet:param name="cartToolbarItem" value="<%= cartToolbarItem %>" />
 			<portlet:param name="toolbarItem" value="view-all-cart-items" />
 		</liferay-portlet:renderURL>
 
@@ -168,6 +186,7 @@ renderResponse.setTitle(commerceCart.getName());
 
 							rowURL.setParameter("mvcRenderCommandName", "editCommerceCartItem");
 							rowURL.setParameter("redirect", currentURL);
+							rowURL.setParameter("cartToolbarItem", cartToolbarItem);
 							rowURL.setParameter("commerceCartId", String.valueOf(commerceCartItem.getCommerceCartId()));
 							rowURL.setParameter("commerceCartItemId", String.valueOf(commerceCartItem.getCommerceCartItemId()));
 							%>

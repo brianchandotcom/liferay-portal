@@ -18,6 +18,8 @@ import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import javax.portlet.ActionRequest;
@@ -52,8 +54,11 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
 
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
+
 		_fragmentEntryService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js);
+			fragmentEntryId, name, css, html, js, serviceContext);
 	}
 
 	@Reference

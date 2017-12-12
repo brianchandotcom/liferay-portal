@@ -25,8 +25,8 @@ import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
+import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -195,12 +196,14 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			return StringPool.BLANK;
 		}
 
-		LayoutSet layoutSet = themeDisplay.getLayoutSet();
+		Group group = _groupService.getGroup(themeDisplay.getScopeGroupId());
 
-		String groupFriendlyUrl = _portal.getGroupFriendlyURL(
-			layoutSet, themeDisplay);
+		String currentSiteURL =
+			_portal.getPortalURL(themeDisplay) +
+				themeDisplay.getPathFriendlyURLPublic() +
+					group.getFriendlyURL();
 
-		return groupFriendlyUrl + CPConstants.SEPARATOR_PRODUCT_URL +
+		return currentSiteURL + CPConstants.SEPARATOR_PRODUCT_URL +
 			cpFriendlyURLEntry.getUrlTitle();
 	}
 
@@ -284,6 +287,9 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private FacetFactory _facetFactory;
+
+	@Reference
+	private GroupService _groupService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

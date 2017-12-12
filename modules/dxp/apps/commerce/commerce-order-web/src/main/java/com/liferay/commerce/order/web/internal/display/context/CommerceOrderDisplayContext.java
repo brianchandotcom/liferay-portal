@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.order.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.order.web.internal.util.CommerceOrderPortletUtil;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +38,7 @@ public class CommerceOrderDisplayContext
 
 	public CommerceOrderDisplayContext(
 			ActionHelper actionHelper, HttpServletRequest httpServletRequest,
-			CommerceOrderLocalService commerceOrderLocalService,
+			CommerceOrderService commerceOrderService,
 			CommercePriceFormatter commercePriceFormatter)
 		throws PortalException {
 
@@ -45,7 +46,7 @@ public class CommerceOrderDisplayContext
 			actionHelper, httpServletRequest,
 			CommerceOrder.class.getSimpleName());
 
-		_commerceOrderLocalService = commerceOrderLocalService;
+		_commerceOrderService = commerceOrderService;
 		_commercePriceFormatter = commercePriceFormatter;
 	}
 
@@ -53,7 +54,7 @@ public class CommerceOrderDisplayContext
 		throws PortalException {
 
 		CommerceOrder commerceOrder =
-			_commerceOrderLocalService.fetchCommerceOrder(commerceOrderId);
+				_commerceOrderService.fetchCommerceOrder(commerceOrderId);
 
 		return _commercePriceFormatter.format(
 			httpServletRequest, commerceOrder.getTotal());
@@ -84,13 +85,13 @@ public class CommerceOrderDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 		searchContainer.setRowChecker(getRowChecker());
 
-		int total = _commerceOrderLocalService.getCommerceOrdersCount(
+		int total = _commerceOrderService.getCommerceOrdersCount(
 			themeDisplay.getScopeGroupId());
 
 		searchContainer.setTotal(total);
 
 		List<CommerceOrder> results =
-			_commerceOrderLocalService.getCommerceOrders(
+				_commerceOrderService.getCommerceOrders(
 				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
 				searchContainer.getEnd(), orderByComparator);
 
@@ -99,7 +100,7 @@ public class CommerceOrderDisplayContext
 		return searchContainer;
 	}
 
-	private final CommerceOrderLocalService _commerceOrderLocalService;
+	private final CommerceOrderService _commerceOrderService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 
 }

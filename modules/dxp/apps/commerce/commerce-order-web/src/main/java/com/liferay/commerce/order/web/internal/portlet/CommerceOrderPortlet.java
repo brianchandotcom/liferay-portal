@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.order.web.internal.display.context.CommerceOrderDisplayContext;
 import com.liferay.commerce.order.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -45,7 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = {
 		"com.liferay.portlet.add-default-resource=true",
 		"com.liferay.portlet.css-class-wrapper=portlet-commerce-order",
-		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.display-category=commerce",
 		"com.liferay.portlet.layout-cacheable=true",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.preferences-unique-per-layout=false",
@@ -76,7 +77,7 @@ public class CommerceOrderPortlet extends MVCPortlet {
 			CommerceOrderDisplayContext commerceOrderDisplayContext =
 				new CommerceOrderDisplayContext(
 					_actionHelper, httpServletRequest,
-					_commerceOrderLocalService, _commercePriceFormatter);
+						_commerceOrderService, _commercePriceFormatter);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceOrderDisplayContext);
@@ -92,7 +93,7 @@ public class CommerceOrderPortlet extends MVCPortlet {
 	private ActionHelper _actionHelper;
 
 	@Reference
-	private CommerceOrderLocalService _commerceOrderLocalService;
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

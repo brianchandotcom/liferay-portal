@@ -138,9 +138,7 @@ public class KaleoDesignerDisplayContext {
 			KaleoDefinitionVersion kaleoDefinitionVersion)
 		throws PortalException {
 
-		List<WorkflowDefinition> workflowDefinitions = new ArrayList<>();
-
-		workflowDefinitions =
+		List<WorkflowDefinition> workflowDefinitions =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
 				_kaleoDesignerRequestHelper.getCompanyId(),
 				kaleoDefinitionVersion.getName(), QueryUtil.ALL_POS,

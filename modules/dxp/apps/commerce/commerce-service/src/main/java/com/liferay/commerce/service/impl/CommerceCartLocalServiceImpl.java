@@ -15,11 +15,15 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.exception.CommerceCartBillingAddressException;
+import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
 import com.liferay.commerce.exception.CommerceCartShippingAddressException;
+import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceCountry;
+import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.util.DDMFormValuesHelper;
 import com.liferay.commerce.service.base.CommerceCartLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -207,6 +211,11 @@ public class CommerceCartLocalServiceImpl
 		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
 			commerceCartId);
 
+		validate(
+			commerceCart.getUserId(), commerceCart.getGroupId(),
+			billingAddressId, shippingAddressId, commercePaymentMethodId,
+			commerceShippingMethodId);
+
 		commerceCart.setBillingAddressId(billingAddressId);
 		commerceCart.setShippingAddressId(shippingAddressId);
 		commerceCart.setCommercePaymentMethodId(commercePaymentMethodId);
@@ -235,7 +244,9 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	protected void validate(
-			long userId, long billingAddressId, long shippingAddressId)
+			long userId, long groupId, long billingAddressId,
+			long shippingAddressId, long commercePaymentMethodId,
+			long commerceShippingMethodId)
 		throws PortalException {
 
 		if (billingAddressId > 0) {
@@ -273,6 +284,26 @@ public class CommerceCartLocalServiceImpl
 				!commerceCountry.isShippingAllowed()) {
 
 				throw new CommerceCartShippingAddressException();
+			}
+		}
+
+		if (commercePaymentMethodId > 0) {
+			CommercePaymentMethod commercePaymentMethod =
+				commercePaymentMethodLocalService.getCommercePaymentMethod(
+					commercePaymentMethodId);
+
+			if (groupId != commercePaymentMethod.getGroupId()) {
+				throw new CommerceCartPaymentMethodException();
+			}
+		}
+
+		if (commerceShippingMethodId > 0) {
+			CommerceShippingMethod commerceShippingMethod =
+				commerceShippingMethodLocalService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			if (groupId != commerceShippingMethod.getGroupId()) {
+				throw new CommerceCartShippingMethodException();
 			}
 		}
 	}

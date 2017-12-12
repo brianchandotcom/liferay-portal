@@ -198,7 +198,11 @@ AUI.add(
 						instance._contentBox = contentBox;
 						instance._guid = baseRows.size();
 
+						instance.namespace = config.namespace;
+
 						instance.url = config.url;
+
+						instance.urlNamespace = config.urlNamespace;
 
 						instance._undoManager = new Liferay.UndoManager().render(contentBox);
 
@@ -529,14 +533,23 @@ AUI.add(
 
 						contentBox.plug(A.Plugin.ParseContent);
 
+						var namespaceData;
+
+						var index = {
+								index: guid
+							};
+
+						if (instance.urlNamespace && instance.namespace != instance.urlNamespace) {
+							namespaceData = Liferay.Util.ns(instance.urlNamespace, index);
+						}
+						else {
+							namespaceData = instance.ns(index);
+						}
+
 						A.io.request(
 							instance.url,
 							{
-								data: instance.ns(
-									{
-										index: guid
-									}
-								),
+								data: namespaceData,
 								on: {
 									success: function(event, id, obj) {
 										var responseData = this.get('responseData');

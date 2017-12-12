@@ -52,8 +52,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public String buildUrlTitle(
-		long groupId, long classNameId, long classPK,
-		String languageId, String title) {
+		long groupId, long classNameId, long classPK, String languageId,
+		String title) {
 
 		int maxLength = ModelHintsUtil.getMaxLength(
 			CPFriendlyURLEntry.class.getName(), "urlTitle");
@@ -107,8 +107,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 
 	@Override
 	public CPFriendlyURLEntry getCPFriendlyURLEntry(
-			long groupId, long classNameId, String languageId,
-			String urlTitle)
+			long groupId, long classNameId, String languageId, String urlTitle)
 		throws PortalException {
 
 		return cpFriendlyURLEntryPersistence.findByG_C_L_U(
@@ -203,9 +202,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
 
-		validate(
-			groupId, classNameId, classPK, languageId,
-			normalizedUrlTitle);
+		validate(groupId, classNameId, classPK, languageId, normalizedUrlTitle);
 
 		CPFriendlyURLEntry mainCPFriendlyURLEntry =
 			cpFriendlyURLEntryPersistence.fetchByG_C_C_L_M(
@@ -219,8 +216,7 @@ public class CPFriendlyURLEntryLocalServiceImpl
 
 		CPFriendlyURLEntry oldCPFriendlyURLEntry =
 			cpFriendlyURLEntryPersistence.fetchByG_C_C_L_U(
-				groupId, classNameId, classPK, languageId,
-				normalizedUrlTitle);
+				groupId, classNameId, classPK, languageId, normalizedUrlTitle);
 
 		if (oldCPFriendlyURLEntry != null) {
 			oldCPFriendlyURLEntry.setMain(true);
@@ -245,8 +241,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	protected String getUniqueUrlTitle(
-		long groupId, long classNameId, long classPK,
-		String languageId, String urlTitle) {
+		long groupId, long classNameId, long classPK, String languageId,
+		String urlTitle) {
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(
 			urlTitle);
@@ -290,8 +286,8 @@ public class CPFriendlyURLEntryLocalServiceImpl
 	}
 
 	protected void validate(
-			long groupId, long classNameId, long classPK,
-			String languageId, String urlTitle)
+			long groupId, long classNameId, long classPK, String languageId,
+			String urlTitle)
 		throws PortalException {
 
 		String normalizedUrlTitle = FriendlyURLNormalizerUtil.normalize(

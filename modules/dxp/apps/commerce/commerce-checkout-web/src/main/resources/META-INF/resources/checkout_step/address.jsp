@@ -47,16 +47,14 @@ long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 						<label>
 							<aui:input checked="<%= commerceAddressId == commerceAddress.getCommerceAddressId() %>" label="" name="<%= baseAddressCheckoutStepDisplayContext.getParamName() %>" type="radio" value="<%= commerceAddress.getCommerceAddressId() %>" />
 
-							<div class="card card-horizontal">
-								<div class="card-row">
-									<div class="card-col-content card-col-gutters">
+							<div class="card card-commerce">
+								<div class="card-body">
 
-										<%
-										request.setAttribute("address.jsp-commerceAddress", commerceAddress);
-										%>
+									<%
+									request.setAttribute("address.jsp-commerceAddress", commerceAddress);
+									%>
 
-										<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
-									</div>
+									<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
 								</div>
 							</div>
 						</label>

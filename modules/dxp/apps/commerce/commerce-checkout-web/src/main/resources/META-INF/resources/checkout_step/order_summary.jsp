@@ -26,46 +26,41 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = or
 
 <div class="address-container row">
 	<div class="col-md-4">
-		<div class="card card-horizontal">
-			<div class="card-row card-row-valign-top">
-				<div class="card-col-content card-col-gutters">
-					<h3><liferay-ui:message key="billing-address" /></h3>
+		<div class="card card-commerce">
+			<div class="card-body">
+				<h3><liferay-ui:message key="billing-address" /></h3>
 
-					<%
-					request.setAttribute("address.jsp-commerceAddress", commerceCart.getBillingAddress());
-					%>
+				<%
+				request.setAttribute("address.jsp-commerceAddress", commerceCart.getBillingAddress());
+				%>
 
-					<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
-				</div>
+				<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
 			</div>
 		</div>
 	</div>
 
 	<div class="col-md-4">
-		<div class="card card-horizontal">
-			<div class="card-row card-row-valign-top">
-				<div class="card-col-content card-col-gutters">
-					<h3><liferay-ui:message key="shipping-address" /></h3>
+		<div class="card card-commerce">
+			<div class="card-body">
+				<h3><liferay-ui:message key="shipping-address" /></h3>
 
-					<%
-					request.setAttribute("address.jsp-commerceAddress", commerceCart.getShippingAddress());
-					%>
+				<%
+				request.setAttribute("address.jsp-commerceAddress", commerceCart.getShippingAddress());
+				%>
 
-					<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
-				</div>
+				<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
 			</div>
 		</div>
 	</div>
 
 	<div class="col-md-4">
-		<div class="card card-horizontal">
-			<div class="card-row card-row-valign-top">
-				<div class="card-col-content card-col-gutters">
-					<h3>Order Total</h3>
-					<h3>
-						<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceCartSubtotal()) %>
-					</h3>
-				</div>
+		<div class="card card-commerce">
+			<div class="card-body">
+				<h3>Order Total</h3>
+
+				<h3>
+					<%= HtmlUtil.escape(orderSummaryCheckoutStepDisplayContext.getCommerceCartSubtotal()) %>
+				</h3>
 			</div>
 		</div>
 	</div>

@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-definitions");
+
 CPInstanceCommerceTierPriceEntryDisplayContext cpInstanceCommerceTierPriceEntryDisplayContext = (CPInstanceCommerceTierPriceEntryDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPDefinition cpDefinition = cpInstanceCommerceTierPriceEntryDisplayContext.getCPDefinition();
@@ -35,9 +37,9 @@ SearchContainer<CommerceTierPriceEntry> commerceTierPriceEntriesSearchContainer 
 
 PortletURL portletURL = cpInstanceCommerceTierPriceEntryDisplayContext.getPortletURL();
 
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tier-price-entries");
+String instancePriceEntryToolbarItem = ParamUtil.getString(request, "instancePriceEntryToolbarItem", "view-tier-price-entries");
 
-portletURL.setParameter("toolbarItem", toolbarItem);
+portletURL.setParameter("instancePriceEntryToolbarItem", instancePriceEntryToolbarItem);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
@@ -58,6 +60,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, cpInstance.getSku(), instancePrice
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
+<%@ include file="/navbar.jspf" %>
 <%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/instance_price_entry_navbar.jspf" %>
 

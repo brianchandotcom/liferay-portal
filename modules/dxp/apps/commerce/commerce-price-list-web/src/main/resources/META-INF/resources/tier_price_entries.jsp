@@ -23,6 +23,9 @@ CommercePriceList commercePriceList = commerceTierPriceEntryDisplayContext.getCo
 
 CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
 
+CPInstance cpInstance = commercePriceEntry.getCPInstance();
+CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
 long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
 long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
 
@@ -30,23 +33,32 @@ SearchContainer<CommerceTierPriceEntry> commerceTierPriceEntriesSearchContainer 
 
 PortletURL portletURL = commerceTierPriceEntryDisplayContext.getPortletURL();
 
+PortletURL priceEntriesURL = renderResponse.createRenderURL();
+
+priceEntriesURL.setParameter("mvcRenderCommandName", "viewCommercePriceEntries");
+priceEntriesURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
+
+String title = cpDefinition.getTitle(languageId);
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), priceEntriesURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "tier-price-entries"), StringPool.BLANK, data);
+
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tier-price-entries");
 
 portletURL.setParameter("toolbarItem", toolbarItem);
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-PortletURL priceEntriesURL = renderResponse.createRenderURL();
-
-priceEntriesURL.setParameter("mvcRenderCommandName", "viewCommercePriceEntries");
-priceEntriesURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(priceEntriesURL.toString());
-
-renderResponse.setTitle(commercePriceList.getName());
+renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
 
+<%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/price_entry_navbar.jspf" %>
 
 <liferay-frontend:management-bar
@@ -142,10 +154,6 @@ renderResponse.setTitle(commercePriceList.getName());
 							rowURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntryId));
 							rowURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 							rowURL.setParameter("commerceTierPriceEntryId", String.valueOf(commerceTierPriceEntry.getCommerceTierPriceEntryId()));
-
-							CPInstance cpInstance = commercePriceEntry.getCPInstance();
-
-							CPDefinition cpDefinition = cpInstance.getCPDefinition();
 							%>
 
 							<liferay-ui:search-container-column-text

@@ -21,6 +21,9 @@ CommercePriceEntryDisplayContext commercePriceEntryDisplayContext = (CommercePri
 
 CommercePriceEntry commercePriceEntry = commercePriceEntryDisplayContext.getCommercePriceEntry();
 
+CPInstance cpInstance = commercePriceEntry.getCPInstance();
+CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
 CommercePriceList commercePriceList = commercePriceEntryDisplayContext.getCommercePriceList();
 
 long commercePriceEntryId = commercePriceEntryDisplayContext.getCommercePriceEntryId();
@@ -35,17 +38,28 @@ portletURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntr
 portletURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 portletURL.setParameter("toolbarItem", toolbarItem);
 
-PortletURL priceEntriesURL = renderResponse.createRenderURL();
+PortletURL editPriceListURL = renderResponse.createRenderURL();
 
-priceEntriesURL.setParameter("mvcRenderCommandName", "viewCommercePriceEntries");
-priceEntriesURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
+editPriceListURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
+editPriceListURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(priceEntriesURL.toString());
+String title = cpDefinition.getTitle(languageId);
 
-renderResponse.setTitle((commercePriceList == null) ? LanguageUtil.get(request, "add-price-list") : commercePriceList.getName());
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), editPriceListURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details"), StringPool.BLANK, data);
+
+editPriceListURL.setParameter("screenNavigationCategoryKey", String.valueOf(CommercePriceListScreenNavigationConstants.CATEGORY_KEY_ENTRIES));
+
+renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
 
+<%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/price_entry_navbar.jspf" %>
 
 <portlet:actionURL name="editCommercePriceEntry" var="editCommercePriceEntryActionURL" />
@@ -58,7 +72,7 @@ renderResponse.setTitle((commercePriceList == null) ? LanguageUtil.get(request, 
 
 	<div class="lfr-form-content">
 		<liferay-ui:form-navigator
-			backURL="<%= priceEntriesURL.toString() %>"
+			backURL="<%= editPriceListURL.toString() %>"
 			formModelBean="<%= commercePriceEntry %>"
 			id="<%= CommercePriceEntryFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_PRICE_ENTRY %>"
 			markupView="lexicon"

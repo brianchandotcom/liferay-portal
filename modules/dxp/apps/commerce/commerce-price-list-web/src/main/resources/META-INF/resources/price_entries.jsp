@@ -26,11 +26,6 @@ long commercePriceListId = commercePriceEntryDisplayContext.getCommercePriceList
 SearchContainer<CommercePriceEntry> commercePriceEntriesSearchContainer = commercePriceEntryDisplayContext.getSearchContainer();
 
 PortletURL portletURL = commercePriceEntryDisplayContext.getPortletURL();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(priceListsURL);
-
-renderResponse.setTitle(commercePriceList.getName());
 %>
 
 <liferay-frontend:management-bar

@@ -21,11 +21,29 @@ CommerceTierPriceEntryDisplayContext commerceTierPriceEntryDisplayContext = (Com
 
 CommerceTierPriceEntry commerceTierPriceEntry = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntry();
 
+CommercePriceList commercePriceList = commerceTierPriceEntryDisplayContext.getCommercePriceList();
+
+CommercePriceEntry commercePriceEntry = commerceTierPriceEntryDisplayContext.getCommercePriceEntry();
+
+CPInstance cpInstance = commercePriceEntry.getCPInstance();
+CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
 long commercePriceEntryId = commerceTierPriceEntryDisplayContext.getCommercePriceEntryId();
 long commercePriceListId = commerceTierPriceEntryDisplayContext.getCommercePriceListId();
 long commerceTierPriceEntryId = commerceTierPriceEntryDisplayContext.getCommerceTierPriceEntryId();
 
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-tier-price-entries");
+
+PortletURL editPriceListURL = renderResponse.createRenderURL();
+
+editPriceListURL.setParameter("mvcRenderCommandName", "editCommercePriceList");
+editPriceListURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
+
+PortletURL editPriceEntryURL = renderResponse.createRenderURL();
+
+editPriceEntryURL.setParameter("mvcRenderCommandName", "editCommercePriceEntry");
+editPriceEntryURL.setParameter("commercePriceEntryId", String.valueOf(commercePriceEntryId));
+editPriceEntryURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 
 PortletURL tierPriceEntriesURL = renderResponse.createRenderURL();
 
@@ -34,11 +52,22 @@ tierPriceEntriesURL.setParameter("commercePriceEntryId", String.valueOf(commerce
 tierPriceEntriesURL.setParameter("commercePriceListId", String.valueOf(commercePriceListId));
 tierPriceEntriesURL.setParameter("toolbarItem", toolbarItem);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(tierPriceEntriesURL.toString());
+String title = commerceTierPriceEntryDisplayContext.getContextTitle();
 
-renderResponse.setTitle(commerceTierPriceEntryDisplayContext.getContextTitle());
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), editPriceListURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), editPriceEntryURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "tier-price-entries"), tierPriceEntriesURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceTierPriceEntry" var="editCommerceTierPriceEntryActionURL" />
 
@@ -51,11 +80,13 @@ renderResponse.setTitle(commerceTierPriceEntryDisplayContext.getContextTitle());
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceTierPriceEntry %>" model="<%= CommerceTierPriceEntry.class %>" />
 
-		<aui:fieldset>
-			<aui:input name="price" />
+		<aui:fieldset-group markupView="lexicon">
+			<aui:fieldset>
+				<aui:input name="price" />
 
-			<aui:input name="minQuantity" />
-		</aui:fieldset>
+				<aui:input name="minQuantity" />
+			</aui:fieldset>
+		</aui:fieldset-group>
 
 		<c:if test="<%= commerceTierPriceEntryDisplayContext.hasCustomAttributes() %>">
 			<aui:fieldset>

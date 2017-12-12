@@ -21,11 +21,28 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 
 CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommercePriceList();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(priceListsURL);
+PortletURL portletURL = commercePriceListDisplayContext.getPortletURL();
 
-renderResponse.setTitle((commercePriceList == null) ? LanguageUtil.get(request, "add-price-list") : commercePriceList.getName());
+String title = LanguageUtil.get(request, "add-price-list");
+
+if (commercePriceList != null) {
+	title = commercePriceList.getName();
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+String selectedScreenNavigationCategoryKey = commercePriceListDisplayContext.getSelectedScreenNavigationCategoryKey();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, selectedScreenNavigationCategoryKey, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
 	key="<%= CommercePriceListScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_PRICE_LIST_GENERAL %>"

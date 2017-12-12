@@ -22,11 +22,6 @@ CommercePriceListDisplayContext commercePriceListDisplayContext = (CommercePrice
 CommercePriceList commercePriceList = commercePriceListDisplayContext.getCommercePriceList();
 
 long commercePriceListId = commercePriceListDisplayContext.getCommercePriceListId();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(priceListsURL);
-
-renderResponse.setTitle((commercePriceList == null) ? LanguageUtil.get(request, "add-price-list") : commercePriceList.getName());
 %>
 
 <portlet:actionURL name="editCommercePriceList" var="editCommercePriceListActionURL" />

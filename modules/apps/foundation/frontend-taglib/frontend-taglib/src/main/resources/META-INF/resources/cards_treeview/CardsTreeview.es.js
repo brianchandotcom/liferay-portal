@@ -4,7 +4,7 @@ import Soy from 'metal-soy';
 import Treeview from 'metal-treeview';
 import { Config } from 'metal-state';
 
-import templates from './CardsTreeview.soy.js';
+import templates from './CardsTreeview.soy';
 
 /**
  * CardsTreeview

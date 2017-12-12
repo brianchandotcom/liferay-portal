@@ -18,9 +18,10 @@
 
 <%
 CommerceWarehouseItemsDisplayContext commerceWarehouseItemsDisplayContext = (CommerceWarehouseItemsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
 CPInstance cpInstance = commerceWarehouseItemsDisplayContext.getCPInstance();
-PortletURL portletURL = commerceWarehouseItemsDisplayContext.getPortletURL();
-String title = commerceWarehouseItemsDisplayContext.getTitle();
+
+List<CommerceWarehouse> commerceWarehouses = commerceWarehouseItemsDisplayContext.getCommerceWarehouses();
 
 String backURL = commerceWarehouseItemsDisplayContext.getBackURL();
 
@@ -28,122 +29,85 @@ if (Validator.isNotNull(backURL)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(backURL);
 }
-
-renderResponse.setTitle(title);
 %>
 
-<liferay-frontend:management-bar
-	searchContainerId="commerceWarehouseItems"
->
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-display-buttons
-			displayViews='<%= new String[] {"list"} %>'
-			portletURL="<%= portletURL %>"
-			selectedDisplayStyle="list"
-		/>
-	</liferay-frontend:management-bar-buttons>
-
-	<liferay-frontend:management-bar-filters>
-		<liferay-frontend:management-bar-navigation
-			navigationKeys='<%= new String[] {"all"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-
-		<liferay-frontend:management-bar-sort
-			orderByCol="<%= commerceWarehouseItemsDisplayContext.getOrderByCol() %>"
-			orderByType="<%= commerceWarehouseItemsDisplayContext.getOrderByType() %>"
-			orderColumns='<%= new String[] {"name", "quantity"} %>'
-			portletURL="<%= portletURL %>"
-		/>
-	</liferay-frontend:management-bar-filters>
-</liferay-frontend:management-bar>
-
 <div class="container-fluid-1280">
-	<liferay-ui:search-container
-		id="commerceWarehouseItems"
-		searchContainer="<%= commerceWarehouseItemsDisplayContext.getSearchContainer() %>"
-	>
-		<liferay-ui:search-container-row
-			className="com.liferay.commerce.model.CommerceWarehouseItem"
-			keyProperty="commerceWarehouseItemId"
-			modelVar="commerceWarehouseItem"
-		>
+	<portlet:actionURL name="editCommerceWarehouseItem" var="updateCommerceWarehouseItemURL" />
 
-			<%
-			CommerceWarehouse commerceWarehouse = commerceWarehouseItem.getCommerceWarehouse();
+	<aui:form action="<%= updateCommerceWarehouseItemURL %>" method="post" name="fm">
+		<aui:input name="<%= Constants.CMD %>" type="hidden" />
+		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+		<aui:input name="commerceWarehouseId" type="hidden" />
+		<aui:input name="commerceWarehouseItemId" type="hidden" />
+		<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
 
-			PortletURL rowURL = renderResponse.createRenderURL();
+		<table class="show-quick-actions-on-hover table table-autofit table-list table-responsive-lg">
+			<thead>
+				<tr>
+					<th class="table-cell-content"><liferay-ui:message key="title" /></th>
+					<th><liferay-ui:message key="quantity" /></th>
+					<th></th>
+				</tr>
+			</thead>
 
-			rowURL.setParameter("mvcRenderCommandName", "editCommerceWarehouseItem");
-			rowURL.setParameter("redirect", currentURL);
-			rowURL.setParameter("commerceWarehouseItemId", String.valueOf(commerceWarehouseItem.getCommerceWarehouseItemId()));
-			%>
+			<tbody>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				href="<%= rowURL %>"
-				name="name"
-				value="<%= HtmlUtil.escape(commerceWarehouse.getName()) %>"
-			/>
+				<%
+				for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
+				CommerceWarehouseItem commerceWarehouseItem = commerceWarehouseItemsDisplayContext.getCommerceWarehouseItem(commerceWarehouse);
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				property="quantity"
-			/>
+				long commerceWarehouseItemId = 0;
 
-			<liferay-ui:search-container-column-jsp
-				cssClass="entry-action-column"
-				path="/warehouse_item_action.jsp"
-			/>
-		</liferay-ui:search-container-row>
+				if (commerceWarehouseItem != null) {
+					commerceWarehouseItemId = commerceWarehouseItem.getCommerceWarehouseItemId();
+				}
 
-		<liferay-ui:search-iterator markupView="lexicon" />
-	</liferay-ui:search-container>
+				int curIndex = commerceWarehouses.indexOf(commerceWarehouse);
+				%>
+
+					<aui:model-context bean="<%= commerceWarehouseItem %>" model="<%= CommerceWarehouseItem.class %>" />
+
+					<tr>
+						<td>
+							<%= commerceWarehouse.getName() %>
+						</td>
+						<td>
+							<aui:input id='<%= "commerceWarehouseItemQuantity" + curIndex %>' label="" name="quantity" wrapperCssClass="m-0" />
+						</td>
+						<td class="text-center">
+							<aui:button cssClass="btn btn-primary" name='<%= "saveButton" + curIndex %>' onClick="<%= commerceWarehouseItemsDisplayContext.getUpdateCommerceWarehouseItemTaglibOnClick(commerceWarehouse.getCommerceWarehouseId(), commerceWarehouseItemId, curIndex) %>" primary="<%= true %>" value="save" />
+						</td>
+					</tr>
+
+				<%
+				}
+				%>
+
+			</tbody>
+		</table>
+	</aui:form>
 </div>
 
-<c:if test="<%= commerceWarehouseItemsDisplayContext.isShowAddButton() %>">
-	<portlet:actionURL name="editCommerceWarehouseItem" var="addCommerceWarehouseItemURL" />
+<aui:script>
+	function <portlet:namespace/>updateCommerceWarehouseItem(commerceWarehouseId, commerceWarehouseItemId, index) {
+		var form = $(document.<portlet:namespace />fm);
 
-	<aui:form action="<%= addCommerceWarehouseItemURL %>" method="post" name="addCommerceWarehouseItemFm">
-		<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.ADD_MULTIPLE %>" />
-		<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-		<aui:input name="commerceWarehouseIds" type="hidden" />
-		<aui:input name="cpInstanceId" type="hidden" value="<%= cpInstance.getCPInstanceId() %>" />
-	</aui:form>
+		if (commerceWarehouseItemId > 0) {
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.UPDATE %>');
+		}
+		else {
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.ADD %>');
+		}
 
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="addCommerceWarehouseItem" title='<%= LanguageUtil.get(request, "add-to-a-warehouse") %>' url="javascript:;" />
-	</liferay-frontend:add-menu>
+		form.fm('commerceWarehouseId').val(commerceWarehouseId);
+		form.fm('commerceWarehouseItemId').val(commerceWarehouseItemId);
 
-	<aui:script use="liferay-item-selector-dialog">
-		$('#<portlet:namespace />addCommerceWarehouseItem').on(
-			'click',
-			function(event) {
-				event.preventDefault();
+		var quantityInputId = '#<portlet:namespace />commerceWarehouseItemQuantity' + index;
 
-				var itemSelectorDialog = new A.LiferayItemSelectorDialog(
-					{
-						eventName: 'commerceWarehousesSelectItem',
-						on: {
-							selectedItemChange: function(event) {
-								var selectedItems = event.newVal;
+		var quantityInput = $(quantityInputId);
 
-								if (selectedItems) {
-									$('#<portlet:namespace />commerceWarehouseIds').val(selectedItems);
+		form.fm('quantity').val(quantityInput.val());
 
-									var addCommerceWarehouseItemFm = $('#<portlet:namespace />addCommerceWarehouseItemFm');
-
-									submitForm(addCommerceWarehouseItemFm);
-								}
-							}
-						},
-						title: '<liferay-ui:message arguments="<%= title %>" key="add-x-to-a-warehouse" />',
-						url: '<%= commerceWarehouseItemsDisplayContext.getItemSelectorUrl() %>'
-					}
-				);
-
-				itemSelectorDialog.open();
-			}
-		);
-	</aui:script>
-</c:if>
+		submitForm(form);
+	}
+</aui:script>

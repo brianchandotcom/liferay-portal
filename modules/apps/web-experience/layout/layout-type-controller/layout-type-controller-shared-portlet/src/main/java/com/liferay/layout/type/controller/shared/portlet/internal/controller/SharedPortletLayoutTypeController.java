@@ -31,12 +31,13 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of 2.0.0, with no direct replacement
  */
 @Component(
-	immediate = true,
 	property = {"layout.type=" + SharedPortletLayoutTypeControllerConstants.LAYOUT_TYPE_SHARED_PORTLET},
 	service = LayoutTypeController.class
 )
+@Deprecated
 public class SharedPortletLayoutTypeController
 	extends BaseLayoutTypeControllerImpl {
 

@@ -83,7 +83,7 @@ public class LPKGTestUtil {
 			zipOutputStream.putNextEntry(
 				new ZipEntry("liferay-marketplace.properties"));
 
-			StringBundler sb = new StringBundler(11);
+			StringBundler sb = new StringBundler(13);
 
 			sb.append("bundles=");
 			sb.append(symbolicName);

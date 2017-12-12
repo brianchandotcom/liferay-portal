@@ -121,7 +121,7 @@ public class UpgradePermission extends UpgradeProcess {
 		try {
 			long resourceActionId = increment(ResourceAction.class.getName());
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(3);
 
 			sb.append("insert into ResourceAction (mvccVersion, ");
 			sb.append("resourceActionId, name, actionId, bitwiseValue) ");

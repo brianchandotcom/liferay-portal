@@ -189,7 +189,7 @@ public class ViewJournalSourcePortletConfigurationIcon
 	protected String getWindowJS(
 		PortletRequest portletRequest, JournalArticle article) {
 
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(14);
 
 		sb.append("Liferay.Util.Window.getWindow({bodyCssClass: ");
 		sb.append("'dialog-with-footer', destroyOnHide: true, dialog: ");

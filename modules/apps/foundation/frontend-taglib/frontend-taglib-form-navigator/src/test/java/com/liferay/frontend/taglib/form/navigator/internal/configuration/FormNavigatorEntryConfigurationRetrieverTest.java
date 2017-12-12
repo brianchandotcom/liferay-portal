@@ -39,7 +39,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void setUp() throws Exception {
 			super.setUp();
 
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(10);
 
 			sb.append("add.general");
 			sb.append(StringPool.EQUAL);
@@ -203,7 +203,7 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 		public void setUp() throws Exception {
 			super.setUp();
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(2);
 
 			sb.append("formNavigatorEntryKey1,");
 			sb.append("formNavigatorEntryKey2");

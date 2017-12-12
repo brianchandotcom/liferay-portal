@@ -69,7 +69,7 @@ public class TermRangeQueryImpl
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("{className=");
 

@@ -79,7 +79,7 @@ public class ReadingTimeTag extends AttributesTagSupport {
 		String readingTimeMessage = _getReadingTimeMessage(readingTimeDuration);
 
 		if (Validator.isNotNull(readingTimeMessage)) {
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(11);
 
 			sb.append("<time class=\"reading-time\" datetime=\"");
 			sb.append(String.valueOf(readingTimeDuration.getSeconds()));

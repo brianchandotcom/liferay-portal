@@ -37,7 +37,7 @@ public class USAddressTextLocalizer implements AddressTextLocalizer {
 
 	@Override
 	public String format(Address address) {
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(13);
 
 		Address escapedAddress = address.toEscapedModel();
 

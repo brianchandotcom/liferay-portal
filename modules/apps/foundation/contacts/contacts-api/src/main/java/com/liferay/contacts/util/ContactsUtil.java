@@ -293,7 +293,7 @@ public class ContactsUtil {
 	}
 
 	private static String _getInstantMessaging(Contact contact) {
-		StringBundler sb = new StringBundler(18);
+		StringBundler sb = new StringBundler(6);
 
 		if (Validator.isNotNull(contact.getJabberSn())) {
 			sb.append("X-JABBER;type=OTHER;type=pref:");

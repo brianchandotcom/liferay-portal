@@ -353,7 +353,7 @@ public class PortalImplCanonicalURLTest {
 		String portalDomain, String port, String i18nPath,
 		String groupFriendlyURL, String layoutFriendlyURL, boolean secure) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(8);
 
 		if (secure) {
 			sb.append(Http.HTTPS_WITH_SLASH);

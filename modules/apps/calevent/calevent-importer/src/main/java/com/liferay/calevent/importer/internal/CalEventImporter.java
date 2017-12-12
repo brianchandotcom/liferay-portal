@@ -874,7 +874,7 @@ public class CalEventImporter {
 
 	protected CalendarBooking importCalEvent(long calEventId) throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("select uuid_, eventId, groupId, companyId, userId, ");
 			sb.append("userName, createDate, modifiedDate, title, ");
@@ -1294,7 +1294,7 @@ public class CalEventImporter {
 			long entryId1, long entryId2, int type)
 		throws SQLException {
 
-		StringBundler sb = new StringBundler(128);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("select count(*) from AssetLink where ((entryId1 = ? and ");
 		sb.append("entryId2 = ?) or (entryId2 = ? and entryId1 = ?)) and ");

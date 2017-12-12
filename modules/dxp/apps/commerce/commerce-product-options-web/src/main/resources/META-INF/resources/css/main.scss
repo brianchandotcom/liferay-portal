@@ -1,4 +1,20 @@
 .portlet-commerce-product-option-categories {
+	.product-detail-header {
+		background-color: #FFF;
+	}
+
+	.breadcrumb {
+		margin-bottom: 0;
+
+		& > li {
+			text-transform: capitalize;
+
+			a {
+				font-size: 0.9rem;
+			}
+		}
+	}
+
 	.commerce-product-option-category-description, .commerce-product-option-category-title {
 		.input-localized-content {
 			display: none;
@@ -7,6 +23,22 @@
 }
 
 .portlet-commerce-product-options {
+	.product-detail-header {
+		background-color: #FFF;
+	}
+
+	.breadcrumb {
+		margin-bottom: 0;
+
+		& > li {
+			text-transform: capitalize;
+
+			a {
+				font-size: 0.9rem;
+			}
+		}
+	}
+
 	.commerce-product-option-description, .commerce-product-option-title, .commerce-product-option-value-title {
 		.input-localized-content {
 			display: none;
@@ -33,6 +65,22 @@
 }
 
 .portlet-commerce-product-specification-options {
+	.product-detail-header {
+		background-color: #FFF;
+	}
+
+	.breadcrumb {
+		margin-bottom: 0;
+
+		& > li {
+			text-transform: capitalize;
+
+			a {
+				font-size: 0.9rem;
+			}
+		}
+	}
+
 	.commerce-product-specification-option-description, .commerce-product-specification-option-title {
 		.input-localized-content {
 			display: none;

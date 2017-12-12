@@ -704,8 +704,8 @@
 			<var name="dmRepositoryName" value="Sharepoint Repository Name" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoEditDocument">
-			<var name="dmDocumentTitle" value="Document_1.xls" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Document_1.xls" />
 		</execute>
 
 		<execute macro="DMDocument#editCmd">
@@ -753,8 +753,8 @@
 			<var name="dmDocumentTitle" value="Document_1.docx" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoEditDocument">
-			<var name="dmDocumentTitle" value="Document_1.docx" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Document_1.docx" />
 		</execute>
 
 		<execute macro="DMDocument#editCmd">
@@ -800,8 +800,8 @@
 			<var name="dmDocumentTitle" value="Document_3.docx" />
 		</execute>
 
-		<execute macro="DMNavigator#gotoEditDocument">
-			<var name="dmDocumentTitle" value="Document_3.docx" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="Document_3.docx" />
 		</execute>
 
 		<execute macro="DMDocument#editCmd">

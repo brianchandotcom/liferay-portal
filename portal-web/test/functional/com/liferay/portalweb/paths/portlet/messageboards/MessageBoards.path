@@ -439,7 +439,7 @@
 <!--THREAD_REPLY-->
 <tr>
 	<td>THREAD_REPLY_ACTIONS</td>
-	<td>//div[contains(@class,'message-content') and contains(.,'${key_threadReplyBody}')]/../..//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//div[contains(@class,'message-content') and contains(.,'${key_threadReplyBody}')]/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

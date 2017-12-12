@@ -11,7 +11,7 @@
 <!--BANNED_USERS_TABLE-->
 <tr>
 	<td>BANNED_USERS_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_userScreenName}')]//*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td>//tr[contains(.,'${key_userScreenName}')]//a[span/*[name()='svg'][contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>DOCUMENT_VERSION_VERTICAL_ELLIPSIS</td>
-	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/..//div//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//li[@class='list-group-item']/div[contains(.,'${key_dmDocumentVersionNumber}')]/..//div//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_ICON_LOCKED</td>
-	<td>//div[contains(@id,'entriesContainer')]//li[contains(@data-title,'${key_dmDocumentTitle}')]//*[name()='svg'][@message='locked']</td>
+	<td>//div[contains(@id,'entriesContainer')]//li[contains(@data-title,'${key_dmDocumentTitle}')]//a[span/*[name()='svg'][@message='locked']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -204,7 +204,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_LIST_FOLDER_ICON</td>
-	<td>//li[@data-title='${key_dmFolderName}']//*[name()='svg'][contains(@class,'icon-folder')]</td>
+	<td>//li[@data-title='${key_dmFolderName}']//a[span/*[name()='svg'][contains(@class,'icon-folder')]]</td>
 	<td></td>
 </tr>
 <tr>

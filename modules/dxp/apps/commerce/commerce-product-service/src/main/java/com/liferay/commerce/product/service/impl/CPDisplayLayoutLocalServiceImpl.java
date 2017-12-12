@@ -16,7 +16,6 @@ package com.liferay.commerce.product.service.impl;
 
 import com.liferay.commerce.product.model.CPDisplayLayout;
 import com.liferay.commerce.product.service.base.CPDisplayLayoutLocalServiceBaseImpl;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
@@ -27,9 +26,8 @@ public class CPDisplayLayoutLocalServiceImpl
 
 	@Override
 	public CPDisplayLayout addCPDisplayLayout(
-			Class<?> clazz, long classPK, String layoutUuid,
-			ServiceContext serviceContext)
-		throws PortalException {
+		Class<?> clazz, long classPK, String layoutUuid,
+		ServiceContext serviceContext) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 
@@ -57,8 +55,7 @@ public class CPDisplayLayoutLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCPDisplayLayout(Class<?> clazz, long classPK)
-		throws PortalException {
+	public void deleteCPDisplayLayout(Class<?> clazz, long classPK) {
 
 		long classNameId = classNameLocalService.getClassNameId(clazz);
 

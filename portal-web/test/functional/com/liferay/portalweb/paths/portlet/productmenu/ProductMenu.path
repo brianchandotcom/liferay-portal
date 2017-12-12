@@ -130,7 +130,7 @@
 </tr>
 <tr>
 	<td>PAGES_ICON</td>
-	<td>//*[contains(@data-qa-id,'PagesOptions')]//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//*[contains(@data-qa-id,'PagesOptions')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

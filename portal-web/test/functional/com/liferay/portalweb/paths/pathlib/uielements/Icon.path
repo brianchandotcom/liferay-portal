@@ -25,12 +25,12 @@
 </tr>
 <tr>
 	<td>ANGLE_LEFT_BACK</td>
-	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')]/a | //*[name()='svg'][contains(@class,'icon-angle-left')]</td>
+	<td>//div[contains(@class,'taglib-header')]//span[contains(.,'Back')]/a | //a[span/*[name()='svg'][contains(@class,'icon-angle-left')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ASTERISK</td>
-	<td>//*[name()='svg'][contains(@class,'icon-asterisk')] | //span[contains(@class,'icon-asterisk')]</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-asterisk')]] | //span[contains(@class,'icon-asterisk')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//*[name()='svg'][contains(@class,'icon-angle-left')] | //a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-angle-left')]] | //a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -110,7 +110,7 @@
 </tr>
 <tr>
 	<td>EDIT</td>
-	<td>//span[contains(.,'${key_assetTitle}')]//*[name()='svg'][contains(@class,'icon-pencil')]</td>
+	<td>//a[span[contains(.,'${key_assetTitle}')]//*[name()='svg'][contains(@class,'icon-pencil')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -125,7 +125,7 @@
 </tr>
 <tr>
 	<td>EDIT_PENCIL</td>
-	<td>//*[name()='svg'][contains(@class,'lexicon-icon-pencil')]</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'lexicon-icon-pencil')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@
 </tr>
 <tr>
 	<td>FLAG</td>
-	<td>//div[@title='Flag']//*[name()='svg'][contains(@class,'lexicon-icon')]</td>
+	<td>//div[@title='Flag']//a[span/*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -266,7 +266,7 @@
 </tr>
 <tr>
 	<td>HEADER_VERTICAL_ELLIPSIS</td>
-	<td>//*[@data-qa-id='header']//*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//*[@data-qa-id='header']//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>

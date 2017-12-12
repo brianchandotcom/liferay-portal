@@ -270,7 +270,7 @@
 </tr>
 <tr>
 	<td>COLOR_EFFECT</td>
-	<td>//a[contains(@class, 'btn')]//*[name()='svg'][@data-icon='effects']</td>
+	<td>//a[contains(@class, 'btn')][span/*[name()='svg'][@data-icon='effects']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -390,7 +390,7 @@
 </tr>
 <tr>
 	<td>FILTER_EFFECT</td>
-	<td>//a[contains(@class,'btn') and (@data-control='effects')]//*[name()='svg'][contains(@class,'lexicon-icon')]</td>
+	<td>//a[contains(@class,'btn') and (@data-control='effects')][span/*[name()='svg'][contains(@class,'lexicon-icon')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -760,7 +760,7 @@
 </tr>
 <tr>
 	<td>TRANSFORM</td>
-	<td>//a[contains(@class, 'btn')]//*[name()='svg'][@data-icon='transform']</td>
+	<td>//a[contains(@class, 'btn')][span/*[name()='svg'][@data-icon='transform']]</td>
 	<td></td>
 </tr>
 <tr>

@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_ELLIPSIS</td>
-	<td>//*[name()='svg'][contains(@class,'icon-ellipsis-h')]</td>
+	<td>//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-h')]]</td>
 	<td></td>
 </tr>
 <tr>

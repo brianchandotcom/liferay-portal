@@ -83,6 +83,8 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 </portlet:actionURL>
 
 <aui:form action="<%= deleteFragmentEntriesURL %>" cssClass="container-fluid-1280" name="fm">
+	<liferay-ui:error key="deleteFragmentEntriesInvalid" message="one-or-more-fragment-entries-could-not-be-deleted.-please-check-if-they-are-used-in-page-templates" />
+
 	<liferay-ui:search-container
 		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"

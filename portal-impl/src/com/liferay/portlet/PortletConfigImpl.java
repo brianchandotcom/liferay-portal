@@ -97,6 +97,11 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			}
 		}
 
+		// PLT 8.4: If the deployment descriptor contains
+		// <container-runtime-option> elements of the same name defined at both
+		// the portlet and the portlet application levels, the returned Map
+		// contains a the value defined at the portlet level.
+
 		for (Map.Entry<String, String[]> portletAppContainerRuntimeOption :
 				portletAppContainerRuntimeOptions.entrySet()) {
 

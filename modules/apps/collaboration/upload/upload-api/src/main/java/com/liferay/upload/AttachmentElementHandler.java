@@ -29,7 +29,8 @@ public interface AttachmentElementHandler {
 
 	public String replaceAttachmentElements(
 			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException> saveTempFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException>
+				saveTempFileUnsafeFunction)
 		throws PortalException;
 
 }

@@ -33,6 +33,7 @@ dependencies {
 	provided project(":apps:web-experience:fragment:fragment-api")
 	provided project(":apps:web-experience:html-preview:html-preview-api")
 	provided project(":apps:web-experience:journal:journal-api")
+	provided project(":apps:web-experience:layout:layout-admin-api")
 	provided project(":apps:web-experience:layout:layout-api")
 	provided project(":apps:web-experience:layout:layout-item-selector-api")
 	provided project(":apps:web-experience:layout:layout-page-template-api")

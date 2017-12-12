@@ -15,10 +15,15 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -58,7 +63,14 @@ public class DeleteFragmentEntriesMVCActionCommand
 				actionRequest, "rowIds");
 		}
 
-		_fragmentEntryService.deleteFragmentEntries(deleteFragmentEntryIds);
+		List<FragmentEntry> fragmentEntryList =
+			_fragmentEntryService.deleteFragmentEntries(deleteFragmentEntryIds);
+
+		if (ListUtil.isNotEmpty(fragmentEntryList)) {
+			SessionErrors.add(actionRequest, "deleteFragmentEntriesInvalid");
+
+			sendRedirect(actionRequest, actionResponse);
+		}
 	}
 
 	@Reference

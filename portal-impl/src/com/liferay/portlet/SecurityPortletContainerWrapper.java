@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.LayoutTypeAccessPolicyTracker;
 import com.liferay.portal.util.PropsValues;
@@ -406,8 +405,9 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 
 		if (_log.isWarnEnabled()) {
 			_log.warn(
-				StringBundler.concat(
-					"Reject serveResource for ", url, " on ",
+				String.format(
+					"User %s is not allowed to serveResource for % on %",
+					PortalUtil.getUserId(request), url,
 					portlet.getPortletId()));
 		}
 	}

@@ -373,16 +373,15 @@ public class WabProcessorTest {
 			Assert.assertTrue(
 				importedPackages.containsKey("com.liferay.portal.webserver"));
 
-			// Check if packages referenced from
-			// portalListenerClasses in web.xml are imported.
+			// Check if packages referenced from portalListenerClasses in
+			// web.xml are imported.
 
 			Assert.assertTrue(
 				importedPackages.containsKey(
 					"com.liferay.portal.kernel.spring.context"));
 
-			// Check if packages referenced from
-			// portalListenerClasses in web.xml but available on the
-			// Bundle-Classpath are not imported.
+			// Check if packages referenced from portalListenerClasses in
+			// web.xml but available on the Bundle-Classpath are not imported.
 
 			Assert.assertFalse(
 				importedPackages.containsKey(

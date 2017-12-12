@@ -147,23 +147,23 @@ public class CPMeasurementUnitLocalServiceImpl
 		throws PortalException {
 
 		_addCPMeasurementUnit(
-			"inch(es)", "inches", 1, true, 1,
+			"inch(es)", "in", 1, true, 1,
 			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
 
 		_addCPMeasurementUnit(
-			"feet", "feet", 0.08333333, false, 2,
+			"feet", "ft", 0.08333333, false, 2,
 			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
 
 		_addCPMeasurementUnit(
-			"meter(s)", "meters", 0.0254, false, 3,
+			"meter(s)", "m", 0.0254, false, 3,
 			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
 
 		_addCPMeasurementUnit(
-			"millimeter(s)", "millimeters", 25.4, false, 1,
+			"millimeter(s)", "mm", 25.4, false, 1,
 			CPMeasurementUnitConstants.TYPE_DIMENSION, serviceContext);
 
 		_addCPMeasurementUnit(
-			"ounce(s)", "ounce", 16, false, 1,
+			"ounce(s)", "oz", 16, false, 1,
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 
 		_addCPMeasurementUnit(
@@ -175,7 +175,7 @@ public class CPMeasurementUnitLocalServiceImpl
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 
 		_addCPMeasurementUnit(
-			"gram(s)", "gram", 453.59237, false, 4,
+			"gram(s)", "g", 453.59237, false, 4,
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 	}
 

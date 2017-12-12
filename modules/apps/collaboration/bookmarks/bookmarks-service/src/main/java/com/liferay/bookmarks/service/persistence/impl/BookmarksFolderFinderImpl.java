@@ -173,7 +173,7 @@ public class BookmarksFolderFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, BookmarksEntry.class.getName(),
-					"BookmarksEntry.fileEntryId", groupId);
+					"BookmarksEntry.entryId", groupId);
 			}
 
 			sb.append(sql);
@@ -268,7 +268,7 @@ public class BookmarksFolderFinderImpl
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, BookmarksEntry.class.getName(),
-					"BookmarksEntry.fileEntryId", groupId);
+					"BookmarksEntry.entryId", groupId);
 			}
 
 			sb.append(sql);

@@ -80,12 +80,8 @@
 	</command>
 
 	<command name="gotoEditDocument">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="${dmDocumentTitle}" />
 		</execute>
 	</command>
 

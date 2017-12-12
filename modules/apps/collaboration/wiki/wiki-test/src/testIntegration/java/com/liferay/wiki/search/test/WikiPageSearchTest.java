@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.search.test.util.BaseSearchTestCase;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
@@ -182,7 +181,9 @@ public class WikiPageSearchTest extends BaseSearchTestCase {
 
 	@Override
 	protected Long getBaseModelClassPK(ClassedModel classedModel) {
-		return WikiPageAssetRenderer.getClassPK((WikiPage)classedModel);
+		WikiPage page = (WikiPage)classedModel;
+
+		return page.getResourcePrimKey();
 	}
 
 	@Override

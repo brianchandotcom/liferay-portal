@@ -25,11 +25,19 @@ CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayCo
 
 long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.format(request, "edit-x", commerceShippingMethod.getName(locale), false);
 
-renderResponse.setTitle(LanguageUtil.format(request, "edit-x", commerceShippingMethod.getName(locale), false));
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ShippingMethodsCommerceAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceShippingMethod" var="editCommerceShippingMethodActionURL" />
 

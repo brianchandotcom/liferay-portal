@@ -120,7 +120,7 @@ public class CPDefinitionInventoryDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
 	}
 

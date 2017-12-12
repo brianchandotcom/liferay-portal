@@ -21,14 +21,31 @@ CommerceCountriesDisplayContext commerceCountriesDisplayContext = (CommerceCount
 
 CommerceCountry commerceCountry = commerceCountriesDisplayContext.getCommerceCountry();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+PortletURL portletURL = commerceCountriesDisplayContext.getPortletURL();
 
-renderResponse.setTitle((commerceCountry == null) ? LanguageUtil.get(request, "add-country") : LanguageUtil.format(request, "edit-x", commerceCountry.getName(locale), false));
+String title = LanguageUtil.get(request, "add-country");
+
+if (commerceCountry != null) {
+	title = LanguageUtil.format(request, "edit-x", commerceCountry.getName(locale), false);
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+String selectedScreenNavigationCategoryKey = commerceCountriesDisplayContext.getSelectedScreenNavigationCategoryKey();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CountriesCommerceAdminModule.KEY), countriesURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, portletURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedScreenNavigationCategoryKey), StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
 	context="<%= commerceCountry %>"
-	key="<%= CommerceCountryScreenNavigationConstants.CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS %>"
+	key="<%= CommerceCountryScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL %>"
 	portletURL="<%= currentURLObj %>"
 />

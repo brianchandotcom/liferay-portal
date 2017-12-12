@@ -27,8 +27,10 @@ CommerceRegion commerceRegion = commerceRegionsDisplayContext.getCommerceRegion(
 
 long commerceRegionId = commerceRegionsDisplayContext.getCommerceRegionId();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(backURL);
+PortletURL editCountryURL = renderResponse.createRenderURL();
+
+editCountryURL.setParameter("commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
+editCountryURL.setParameter("commerceCountryId", String.valueOf(commerceCountryId));
 
 String contextTitle = commerceCountry.getName(locale);
 
@@ -41,8 +43,24 @@ else {
 	title = contextTitle + " - " + commerceRegion.getName();
 }
 
-renderResponse.setTitle(title);
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+String screenNavigationCategoryKey = commerceRegionsDisplayContext.getScreenNavigationCategoryKey();
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CountriesCommerceAdminModule.KEY), countriesURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, editCountryURL.toString(), data);
+
+editCountryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationCategoryKey), editCountryURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceRegion" var="editCommerceRegionActionURL" />
 

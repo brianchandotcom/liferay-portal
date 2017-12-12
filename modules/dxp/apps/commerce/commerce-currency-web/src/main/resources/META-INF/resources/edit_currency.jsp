@@ -29,11 +29,23 @@ String roundingTypeName = BeanParamUtil.getString(commerceCurrency, request, "ro
 
 boolean primary = BeanParamUtil.getBoolean(commerceCurrency, request, "primary");
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.get(request, "add-currency");
 
-renderResponse.setTitle((commerceCurrency == null) ? LanguageUtil.get(request, "add-currency") : LanguageUtil.format(request, "edit-x", commerceCurrency.getName(locale), false));
+if (commerceCurrency != null) {
+	title = LanguageUtil.format(request, "edit-x", commerceCurrency.getName(locale), false);
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CurrenciesCommerceAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceCurrency" var="editCommerceCurrencyActionURL" />
 

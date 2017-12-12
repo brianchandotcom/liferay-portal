@@ -34,11 +34,23 @@ if (primaryCPMeasurementUnit == null) {
 
 boolean primary = BeanParamUtil.getBoolean(cpMeasurementUnit, request, "primary", defaultPrimary);
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.get(request, "add-measurement-unit");
 
-renderResponse.setTitle((cpMeasurementUnit == null) ? LanguageUtil.get(request, "add-measurement-unit") : LanguageUtil.format(request, "edit-x", cpMeasurementUnit.getName(locale), false));
+if (cpMeasurementUnit != null) {
+	title = LanguageUtil.format(request, "edit-x", cpMeasurementUnit.getName(locale), false);
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPMeasurementUnitAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCPMeasurementUnit" var="editCPMeasurementUnitActionURL" />
 

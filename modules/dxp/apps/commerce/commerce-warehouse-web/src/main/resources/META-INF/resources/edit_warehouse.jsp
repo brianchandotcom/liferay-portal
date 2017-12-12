@@ -23,11 +23,23 @@ CommerceWarehousesDisplayContext commerceWarehousesDisplayContext = (CommerceWar
 
 CommerceWarehouse commerceWarehouse = commerceWarehousesDisplayContext.getCommerceWarehouse();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.get(request, "add-warehouse");
 
-renderResponse.setTitle((commerceWarehouse == null) ? LanguageUtil.get(request, "add-warehouse") : LanguageUtil.format(request, "edit-x", commerceWarehouse.getName(), false));
+if (commerceWarehouse != null) {
+	title = LanguageUtil.format(request, "edit-x", commerceWarehouse.getName(), false);
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, WarehousesCommerceAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceWarehouse" var="editCommerceWarehouseActionURL" />
 

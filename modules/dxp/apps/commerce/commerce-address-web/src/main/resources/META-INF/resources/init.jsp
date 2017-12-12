@@ -26,6 +26,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.commerce.address.web.internal.display.context.CommerceCountriesDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext" %><%@
 page import="com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants" %><%@
+page import="com.liferay.commerce.address.web.internal.util.CountriesCommerceAdminModule" %><%@
+page import="com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys" %><%@
 page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceCountryNameException" %><%@
 page import="com.liferay.commerce.exception.CommerceCountryThreeLettersISOCodeException" %><%@
@@ -38,10 +40,16 @@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.LiferayPortletRequest" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
+page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
+
+<%@ page import="java.util.HashMap" %><%@
+page import="java.util.Map" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -55,4 +63,12 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
+
+String lifecycle = (String)request.getAttribute(LiferayPortletRequest.LIFECYCLE_PHASE);
+
+PortletURL countriesURLObj = PortalUtil.getControlPanelPortletURL(request, CommerceAdminPortletKeys.COMMERCE_ADMIN, lifecycle);
+
+countriesURLObj.setParameter("commerceAdminModuleKey", CountriesCommerceAdminModule.KEY);
+
+String countriesURL = countriesURLObj.toString();
 %>

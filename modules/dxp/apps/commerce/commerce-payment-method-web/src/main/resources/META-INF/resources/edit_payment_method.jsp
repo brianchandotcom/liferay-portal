@@ -25,11 +25,19 @@ CommercePaymentMethod commercePaymentMethod = commercePaymentMethodsDisplayConte
 
 long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.format(request, "edit-x", commercePaymentMethod.getName(locale), false);
 
-renderResponse.setTitle(LanguageUtil.format(request, "edit-x", commercePaymentMethod.getName(locale), false));
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, PaymentMethodsCommerceAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommercePaymentMethod" var="editCommercePaymentMethodActionURL" />
 

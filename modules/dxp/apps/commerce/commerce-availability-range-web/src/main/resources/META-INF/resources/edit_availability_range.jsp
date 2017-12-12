@@ -23,11 +23,23 @@ CommerceAvailabilityRangeDisplayContext commerceAvailabilityRangeDisplayContext 
 
 CommerceAvailabilityRange commerceAvailabilityRange = commerceAvailabilityRangeDisplayContext.getCommerceAvailabilityRange();
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+String title = LanguageUtil.get(request, "add-availability-range");
 
-renderResponse.setTitle((commerceAvailabilityRange == null) ? LanguageUtil.get(request, "add-availability-range") : LanguageUtil.format(request, "edit-x", commerceAvailabilityRange.getTitle(languageId), false));
+if (commerceAvailabilityRange != null) {
+	title = LanguageUtil.format(request, "edit-x", commerceAvailabilityRange.getTitle(languageId), false);
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CommerceAvailabilityRangeAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+
+renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editCommerceAvailabilityRange" var="editCommerceAvailabilityRangeActionURL" />
 

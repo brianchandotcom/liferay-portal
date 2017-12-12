@@ -362,6 +362,11 @@ public class AssetLinkLocalServiceUtil {
 		return getService().getLinks(entryId, typeId);
 	}
 
+	public static java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
+		long classNameId, long classPK) {
+		return getService().getLinks(classNameId, classPK);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

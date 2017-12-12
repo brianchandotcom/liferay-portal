@@ -261,6 +261,34 @@
 				AssetVocabulary.name ASC
 		]]>
 	</sql>
+	<sql id="com.liferay.portlet.asset.service.impl.AssetLinkFinder.findByC_C">
+		<![CDATA[
+			(
+				SELECT
+					AssetLink.*
+					FROM
+						AssetEntry
+						INNER JOIN
+						AssetLink ON
+						AssetEntry.entryId = AssetLink.entryId1
+					WHERE
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.classPK = ?)
+			) UNION
+			(
+				SELECT
+					AssetLink.*
+					FROM
+						AssetEntry
+						INNER JOIN
+							AssetLink ON
+							AssetEntry.entryId = AssetLink.entryId2
+					WHERE
+						(AssetEntry.classNameId = ?) AND
+						(AssetEntry.classPK = ?)
+			)
+	]]>
+	</sql>
 	<sql id="com.liferay.portlet.asset.service.impl.AssetLinkLocalServiceImpl.findByAssetEntryGroupId">
 		<![CDATA[
 			SELECT

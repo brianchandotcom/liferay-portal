@@ -320,6 +320,9 @@ public interface AssetLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetLink> getLinks(long entryId, int typeId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetLink> getLinks(long classNameId, long classPK);
+
 	/**
 	* Returns the OSGi service identifier.
 	*

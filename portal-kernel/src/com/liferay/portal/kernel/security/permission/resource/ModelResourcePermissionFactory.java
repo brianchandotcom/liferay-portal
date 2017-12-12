@@ -63,7 +63,7 @@ public class ModelResourcePermissionFactory {
 				portletResourcePermission, modelResourcePermissionLogics,
 				actionIdMapper);
 
-		modelResourcePermissionConfigurator.configChecks(
+		modelResourcePermissionConfigurator.configPermissionLogics(
 			modelResourcePermission, modelResourcePermissionLogics::add);
 
 		return modelResourcePermission;
@@ -84,7 +84,7 @@ public class ModelResourcePermissionFactory {
 	public interface ModelResourcePermissionConfigurator
 		<T extends GroupedModel> {
 
-		public void configChecks(
+		public void configPermissionLogics(
 			ModelResourcePermission<T> modelResourcePermission,
 			Consumer<ModelResourcePermissionLogic<T>> logicConsumer);
 

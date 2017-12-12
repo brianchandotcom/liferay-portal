@@ -26,7 +26,9 @@ import java.io.IOException;
 /**
  * @author Leonardo Barros
  * @see    com.liferay.petra.xml.XMLUtil
+ * @deprecated As of 7.0.0
  */
+@Deprecated
 public class XMLUtil {
 
 	public static String fixProlog(String xml) {

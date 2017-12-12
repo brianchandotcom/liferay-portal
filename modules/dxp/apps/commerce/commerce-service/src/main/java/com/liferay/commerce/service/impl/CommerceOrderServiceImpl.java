@@ -23,6 +23,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -43,6 +46,18 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.addCommerceOrderFromCart(
 			commerceCart.getCommerceCartId(), serviceContext);
+	}
+
+	@Override
+	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderPersistence.fetchByPrimaryKey(commerceOrderId);
+
+		checkCommerceOrder(commerceOrder);
+
+		return commerceOrder;
 	}
 
 	@Override
@@ -69,6 +84,29 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		checkCommerceOrder(commerceOrder);
 
 		return commerceOrder;
+	}
+
+	@Override
+	public List<CommerceOrder> getCommerceOrders(
+			long groupId, int start, int end,
+			OrderByComparator<CommerceOrder> orderByComparator)
+		throws PortalException {
+
+		CommercePermission.check(
+				getPermissionChecker(), groupId,
+				CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+
+		return commerceOrderLocalService.getCommerceOrders(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCommerceOrdersCount(long groupId) throws PortalException {
+		CommercePermission.check(
+				getPermissionChecker(), groupId,
+				CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+
+		return commerceOrderLocalService.getCommerceOrdersCount(groupId);
 	}
 
 	protected void checkCommerceOrder(CommerceOrder commerceOrder)

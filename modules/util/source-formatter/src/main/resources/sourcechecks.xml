@@ -299,6 +299,7 @@
 		<check name="JavaMultiPlusConcatCheck" />
 		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaServiceUtilCheck" />
+		<check name="JavaStringBundlerInitialCapacityCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />
 		<check name="JavaUnsafeCastingCheck" />

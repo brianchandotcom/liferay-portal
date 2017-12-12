@@ -86,18 +86,26 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		String className = LiferayPortletConfig.class.getName();
 
-		for (String name : portletAppContainerRuntimeOptions.keySet()) {
+		for (Map.Entry<String, String[]> portletAppContainerRuntimeOption :
+				portletAppContainerRuntimeOptions.entrySet()) {
+
+			String name = portletAppContainerRuntimeOption.getKey();
+
 			if (!name.startsWith(className)) {
 				containerRuntimeOptions.put(
-					name, portletAppContainerRuntimeOptions.get(name));
+					name, portletAppContainerRuntimeOption.getValue());
 			}
 		}
 
-		for (String name : portletAppContainerRuntimeOptions.keySet()) {
+		for (Map.Entry<String, String[]> portletAppContainerRuntimeOption :
+				portletAppContainerRuntimeOptions.entrySet()) {
+
+			String name = portletAppContainerRuntimeOption.getKey();
+
 			if (name.startsWith(_containerRuntimeOptionPrefix)) {
 				containerRuntimeOptions.put(
 					name.substring(_containerRuntimeOptionPrefix.length()),
-					portletAppContainerRuntimeOptions.get(name));
+					portletAppContainerRuntimeOption.getValue());
 			}
 		}
 

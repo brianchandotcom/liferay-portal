@@ -1818,7 +1818,7 @@
 
 		<execute macro="BlogsConfiguration#selectConfigurationIFrame" />
 
-		<execute function="Check" locator1="Checkbox#ENABLE_VIEW_COUNT" />
+		<execute function="Check" locator1="Checkbox#SHOW_VIEW_COUNT" />
 
 		<execute macro="IFrame#saveConfiguration" />
 

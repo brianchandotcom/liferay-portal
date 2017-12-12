@@ -100,7 +100,7 @@
 </tr>
 <tr>
 	<td>ENABLE_COMMENT_RATINGS</td>
-	<td>//label[contains(.,'Enable Comment Ratings')]/input[@type='checkbox']</td>
+	<td>//label[contains(.,'Enable Ratings for Comments')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -179,8 +179,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_RELATED_ASSETS</td>
-	<td>//label[contains(.,'Enable Related Assets')]/input[@type='checkbox']</td>
+	<td>SHOW_RELATED_ASSETS</td>
+	<td>//label[contains(.,'Show Related Assets')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>
@@ -194,8 +194,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENABLE_VIEW_COUNT</td>
-	<td>//label[contains(.,'Enable View Count')]/input[@type='checkbox']</td>
+	<td>SHOW_VIEW_COUNT</td>
+	<td>//label[contains(.,'Show View Count')]/input[@type='checkbox']</td>
 	<td></td>
 </tr>
 <tr>

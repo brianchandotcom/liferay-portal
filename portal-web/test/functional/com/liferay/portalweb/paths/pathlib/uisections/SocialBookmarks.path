@@ -18,10 +18,36 @@
 	<td>//li[contains(@class,'taglib-social-bookmark-twitter')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--ENABLE_SOCIAL_BOOKMARKS-->
+<tr>
+	<td>ENABLE_SOCIAL_BOOKMARK_CURRENT_SELECT</td>
+	<td>//select[contains(@id,'currentTypes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENABLE_SOCIAL_BOOKMARK_AVAILABLE_SELECT</td>
+	<td>//select[contains(@id,'availableTypes')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
 <!--SOCIAL_BOOKMARKS_CONFIGURATION-->
 <tr>
 	<td>SOCIAL_BOOKMARKS_CONFIGURATION_CHECKBOX</td>
 	<td>//input[contains(@id,'socialBookmarksTypes${key_socialBookmarkSite}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td></td>
+	<td></td>
 	<td></td>
 </tr>
 <!--SOCIAL_BOOKMARKS-->

@@ -79,7 +79,7 @@
 	</command>
 
 	<command name="uncheckRelatedAssets">
-		<execute function="Uncheck" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
+		<execute function="Uncheck" locator1="Checkbox#SHOW_RELATED_ASSETS" />
 	</command>
 
 	<command name="uncheckRSSSubscriptionCheckbox">
@@ -115,7 +115,7 @@
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_MAXIMUM_ITEMS_TO_DISPLAY_SELECT" value1="20" />
 		<execute function="AssertTextEquals#assertValue" locator1="Configuration#SETUP_DISPLAY_SETTINGS_DISPLAY_TEMPLATE_SELECT" value1="abstract" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_FLAGS" />
-		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RELATED_ASSETS" />
+		<execute function="AssertChecked" locator1="Checkbox#SHOW_RELATED_ASSETS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_RATINGS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENTS" />
 		<execute function="AssertChecked" locator1="Checkbox#ENABLE_COMMENT_RATINGS" />

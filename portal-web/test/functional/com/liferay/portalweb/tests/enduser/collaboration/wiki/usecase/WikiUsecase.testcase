@@ -197,7 +197,7 @@
 		</execute>
 
 		<execute macro="WikiPortlet#configureDisplaySettings">
-			<var name="uncheckSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
+			<var name="uncheckSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS" />
 		</execute>
 
 		<execute macro="Navigator#gotoPage">
@@ -209,7 +209,7 @@
 		</execute>
 
 		<execute macro="WikiPortlet#viewDisplaySettings">
-			<var name="uncheckedSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,ENABLE_RELATED_ASSETS" />
+			<var name="uncheckedSetting" value="ENABLE_COMMENTS,ENABLE_COMMENT_RATINGS,ENABLE_PAGE_RATINGS,SHOW_RELATED_ASSETS" />
 		</execute>
 	</command>
 

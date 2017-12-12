@@ -37,7 +37,7 @@
 		<form class="container-fluid-1280" name="{$namespace}selectCategoryFm">
 			<fieldset class="panel-body">
 				<div class="category-tree" id="{$namespace}categoryContainer">
-					{call CardsTreeview.render}
+					{call liferay.frontend.CardsTreeview.render}
 						{param events: [
 							'selectedNodesChanged': $selectedNodeChange_
 						]/}

@@ -28,6 +28,10 @@ import java.util.Map;
 @ProviderType
 public interface CommercePaymentHelper {
 
+	public void cancelPayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws PortalException;
+
 	public void completePayment(
 			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
 		throws PortalException;

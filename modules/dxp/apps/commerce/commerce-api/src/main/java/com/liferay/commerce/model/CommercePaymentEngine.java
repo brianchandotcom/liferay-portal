@@ -31,6 +31,10 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CommercePaymentEngine {
 
+	public void cancelPayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws CommercePaymentEngineException;
+
 	public void completePayment(
 			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
 		throws CommercePaymentEngineException;

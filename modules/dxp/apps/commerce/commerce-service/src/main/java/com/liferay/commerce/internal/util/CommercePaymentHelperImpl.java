@@ -45,6 +45,21 @@ import org.osgi.service.component.annotations.Reference;
 public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 
 	@Override
+	public void cancelPayment(
+			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+		throws PortalException {
+
+		CommercePaymentEngine commercePaymentEngine = _getCommercePaymentEngine(
+			commerceOrder);
+
+		if (commercePaymentEngine == null) {
+			return;
+		}
+
+		commercePaymentEngine.cancelPayment(commerceOrder, parameterMap);
+	}
+
+	@Override
 	public void completePayment(
 			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
 		throws PortalException {

@@ -84,6 +84,8 @@ public class CommercePaymentServlet extends HttpServlet {
 					uuid, groupId);
 
 			if (cancel) {
+				_commercePaymentHelper.cancelPayment(
+					commerceOrder, httpServletRequest.getParameterMap());
 			}
 			else {
 				_commercePaymentHelper.completePayment(

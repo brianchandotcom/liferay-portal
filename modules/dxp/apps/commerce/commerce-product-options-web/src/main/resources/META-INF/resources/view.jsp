@@ -18,6 +18,8 @@
 
 <%
 String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-options");
+
+renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
 <%@ include file="/navbar.jspf" %>

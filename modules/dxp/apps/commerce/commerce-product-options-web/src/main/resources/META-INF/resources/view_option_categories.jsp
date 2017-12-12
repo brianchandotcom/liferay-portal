@@ -31,6 +31,8 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "cpOptionCategories");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
 <%@ include file="/navbar.jspf" %>

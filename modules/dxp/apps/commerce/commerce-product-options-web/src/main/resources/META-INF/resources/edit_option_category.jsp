@@ -17,14 +17,24 @@
 <%@ include file="/init.jsp" %>
 
 <%
+String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-product-option-categories");
+
 CPOptionCategory cpOptionCategory = (CPOptionCategory)request.getAttribute(CPWebKeys.CP_OPTION_CATEGORY);
 
 long cpOptionCategoryId = BeanParamUtil.getLong(cpOptionCategory, request, "CPOptionCategoryId");
 
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(optionCategoriesURL);
+String title = LanguageUtil.get(request, "add-option-category");
 
-renderResponse.setTitle((cpOptionCategory == null) ? LanguageUtil.get(request, "add-option-category") : cpOptionCategory.getTitle(locale));
+if (cpOptionCategory != null) {
+	title = cpOptionCategory.getTitle(locale);
+}
+
+Map<String, Object> data = new HashMap<>();
+
+data.put("direction-right", Boolean.TRUE.toString());
+
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "option-categories"), optionCategoriesURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
 
@@ -33,7 +43,12 @@ Set<Locale> availableLocalesSet = new HashSet<>();
 availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
 
 Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
+
+renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
+
+<%@ include file="/navbar.jspf" %>
+<%@ include file="/breadcrumb.jspf" %>
 
 <portlet:actionURL name="editProductOptionCategory" var="editProductOptionCategoryActionURL" />
 

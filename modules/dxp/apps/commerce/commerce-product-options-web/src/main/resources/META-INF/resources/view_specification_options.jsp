@@ -31,6 +31,8 @@ portletURL.setParameter("toolbarItem", toolbarItem);
 portletURL.setParameter("searchContainerId", "cpSpecificationOptions");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
+
+renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 %>
 
 <%@ include file="/navbar.jspf" %>
@@ -178,7 +180,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 </liferay-portlet:renderURL>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification-option") %>' url="<%= addProductSpecificationOptionURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-specification") %>' url="<%= addProductSpecificationOptionURL.toString() %>" />
 </liferay-frontend:add-menu>
 
 <aui:script>

@@ -1,9 +1,0 @@
-.sticker {
-	color: $brand-dark;
-}
-
-.sticker-outside {
-	@include position(null, -8px 0 null 0);
-
-	width: 100%;
-}

@@ -98,9 +98,7 @@ public class CommerceWarehouseItemsDisplayContext {
 			cpInstance.getCPInstanceId());
 	}
 
-	public List<CommerceWarehouse> getCommerceWarehouses()
-		throws PortalException {
-
+	public List<CommerceWarehouse> getCommerceWarehouses() {
 		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(

@@ -101,7 +101,7 @@ public class LayoutRevisionAssetRenderer
 
 		Locale locale = getLocale(portletRequest);
 
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(15);
 
 		sb.append(LanguageUtil.get(locale, "page"));
 		sb.append(": ");

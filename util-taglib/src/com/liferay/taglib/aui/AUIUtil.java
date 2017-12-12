@@ -113,7 +113,7 @@ public class AUIUtil {
 		String baseType, boolean inlineField, boolean showForLabel,
 		String forLabel, boolean disabled) {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(6);
 
 		if (baseType.equals("boolean")) {
 			baseType = "checkbox";

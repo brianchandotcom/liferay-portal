@@ -305,7 +305,7 @@ public class ConsumerPortlet extends MVCPortlet {
 		String wsrpAuth = GetterUtil.getString(
 			resourceRequest.getParameter(WebKeys.WSRP_AUTH));
 
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(resourceID);
 		sb.append(url);

@@ -770,7 +770,7 @@ public class DDLFormAdminDisplayContext {
 	}
 
 	protected String getFormLayoutURL(boolean privateLayout) {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(3);
 
 		ThemeDisplay themeDisplay = ddlFormAdminRequestHelper.getThemeDisplay();
 

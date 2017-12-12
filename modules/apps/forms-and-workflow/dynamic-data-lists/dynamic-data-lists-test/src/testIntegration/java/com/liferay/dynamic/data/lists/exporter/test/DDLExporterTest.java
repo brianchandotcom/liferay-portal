@@ -397,7 +397,7 @@ public class DDLExporterTest {
 
 			String row0 = bufferedReader.readLine();
 
-			StringBundler sb = new StringBundler(10);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("\"I'm \"\"good\"\"\"");
 			sb.append(CharPool.COMMA);

@@ -1323,7 +1323,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	}
 
 	public String getInvokerFilterContent() {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(getInvokerFilterContent("ASYNC"));
 		sb.append(getInvokerFilterContent("ERROR"));

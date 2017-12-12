@@ -621,7 +621,7 @@ public class ServiceComponentLocalServiceImpl
 		}
 		else if (PropsValues.SCHEMA_MODULE_BUILD_AUTO_UPGRADE) {
 			if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(6);
+				StringBundler sb = new StringBundler(7);
 
 				sb.append("Auto upgrading ");
 				sb.append(buildNamespace);

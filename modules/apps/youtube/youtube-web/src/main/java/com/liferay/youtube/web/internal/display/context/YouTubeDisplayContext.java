@@ -39,7 +39,7 @@ public class YouTubeDisplayContext {
 	}
 
 	public String getEmbedURL() {
-		StringBundler sb = new StringBundler(13);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append(HttpUtil.getProtocol(_request));
 		sb.append("://www.youtube.com/embed/");

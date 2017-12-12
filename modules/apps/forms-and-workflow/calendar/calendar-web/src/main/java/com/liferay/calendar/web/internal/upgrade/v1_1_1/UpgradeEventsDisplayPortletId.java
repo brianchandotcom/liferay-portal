@@ -211,7 +211,7 @@ public class UpgradeEventsDisplayPortletId
 
 		portletPreferences.setPortletId(newPortletId);
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(12);
 
 		sb.append("<portlet-preferences>");
 		sb.append(String.format(_preferenceFormat, "defaultView", "agenda"));

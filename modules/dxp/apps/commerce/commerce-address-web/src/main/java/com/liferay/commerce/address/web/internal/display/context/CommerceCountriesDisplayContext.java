@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -43,6 +44,15 @@ public class CommerceCountriesDisplayContext
 		super(actionHelper, renderRequest, renderResponse);
 
 		_commerceCountryService = commerceCountryService;
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "editCommerceCountry");
+
+		return portletURL;
 	}
 
 	@Override

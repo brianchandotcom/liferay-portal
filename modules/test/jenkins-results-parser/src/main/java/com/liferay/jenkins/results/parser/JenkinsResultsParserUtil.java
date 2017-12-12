@@ -54,6 +54,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -1013,8 +1014,12 @@ public class JenkinsResultsParserUtil {
 		}
 	}
 
-	public static String toDateString(Date date) {
+	public static String toDateString(Date date, String timeZoneName) {
 		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm:ss a z");
+
+		if (timeZoneName != null) {
+			sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName));
+		}
 
 		return sdf.format(date);
 	}

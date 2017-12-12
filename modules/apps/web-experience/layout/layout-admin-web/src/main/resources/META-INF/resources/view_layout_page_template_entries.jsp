@@ -137,15 +137,17 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	function handleAddLayoutPageTemplateEntryMenuItemClick(event) {
 		event.preventDefault();
 
-		Liferay.Util.openSimpleInputModal({
-			dialogTitle: '<liferay-ui:message key="add-page-template" />',
-			formSubmitURL: '<%= addLayoutPageTemplateEntryURL %>',
-			mainFieldLabel: '<liferay-ui:message key="name" />',
-			mainFieldName: 'name',
-			mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-			namespace: '<portlet:namespace />',
-			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-		});
+		Liferay.Util.openSimpleInputModal(
+			{
+				dialogTitle: '<liferay-ui:message key="add-page-template" />',
+				formSubmitURL: '<%= addLayoutPageTemplateEntryURL %>',
+				mainFieldLabel: '<liferay-ui:message key="name" />',
+				mainFieldName: 'name',
+				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		);
 	}
 
 	function handleDestroyPortlet() {

@@ -43,10 +43,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
@@ -202,8 +201,8 @@ public class CPAssetCategoriesNavigationDisplayContext {
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
 			_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-				assetCategory.getGroupId(), assetCategory.getCompanyId(),
-				classNameId, categoryId, languageId, true);
+				assetCategory.getGroupId(), classNameId, categoryId, languageId,
+				true);
 
 		if (cpFriendlyURLEntry == null) {
 			return StringPool.BLANK;

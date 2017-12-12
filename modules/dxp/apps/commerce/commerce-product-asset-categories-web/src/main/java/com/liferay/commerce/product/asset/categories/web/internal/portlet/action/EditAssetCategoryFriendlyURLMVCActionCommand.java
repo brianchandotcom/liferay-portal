@@ -29,16 +29,14 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Marco Leo
@@ -106,9 +104,8 @@ public class EditAssetCategoryFriendlyURLMVCActionCommand
 			String languageId = LanguageUtil.getLanguageId(locale);
 
 			urlTitle = _cpFriendlyURLEntryLocalService.buildUrlTitle(
-				assetCategory.getGroupId(), assetCategory.getCompanyId(),
-				classNameId, assetCategory.getCategoryId(), languageId,
-				urlTitle);
+				assetCategory.getGroupId(), classNameId,
+				assetCategory.getCategoryId(), languageId, urlTitle);
 
 			newUrlTitleMap.put(locale, urlTitle);
 		}

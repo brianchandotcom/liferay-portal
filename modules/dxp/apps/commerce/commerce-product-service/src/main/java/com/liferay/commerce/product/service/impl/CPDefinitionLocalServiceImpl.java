@@ -346,8 +346,8 @@ public class CPDefinitionLocalServiceImpl
 		// Commerce product friendly URL entries
 
 		cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
-			cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
-			CPDefinition.class, cpDefinition.getCPDefinitionId());
+			cpDefinition.getGroupId(), CPDefinition.class,
+			cpDefinition.getCPDefinitionId());
 
 		// Commerce product display layout
 
@@ -642,7 +642,7 @@ public class CPDefinitionLocalServiceImpl
 			CPDefinition.class);
 
 		return cpFriendlyURLEntryLocalService.getUrlTitleMap(
-			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
+			cpDefinition.getGroupId(), classNameId,
 			cpDefinition.getCPDefinitionId());
 	}
 
@@ -661,7 +661,7 @@ public class CPDefinitionLocalServiceImpl
 		String defaultLanguageId = LanguageUtil.getLanguageId(defaultLocale);
 
 		return cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(
-			cpDefinition.getGroupId(), cpDefinition.getCompanyId(), classNameId,
+			cpDefinition.getGroupId(), classNameId,
 			cpDefinition.getCPDefinitionId(), defaultLanguageId);
 	}
 
@@ -1432,9 +1432,8 @@ public class CPDefinitionLocalServiceImpl
 			String languageId = LanguageUtil.getLanguageId(titleEntry.getKey());
 
 			urlTitle = cpFriendlyURLEntryLocalService.buildUrlTitle(
-				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
-				classNameId, cpDefinition.getCPDefinitionId(), languageId,
-				urlTitle);
+				cpDefinition.getGroupId(), classNameId,
+				cpDefinition.getCPDefinitionId(), languageId, urlTitle);
 
 			newUrlTitleMap.put(titleEntry.getKey(), urlTitle);
 		}

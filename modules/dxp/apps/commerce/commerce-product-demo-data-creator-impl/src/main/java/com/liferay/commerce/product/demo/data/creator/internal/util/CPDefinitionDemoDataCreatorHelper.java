@@ -27,21 +27,18 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
@@ -147,24 +144,7 @@ public class CPDefinitionDemoDataCreatorHelper
 		createCPDefinitionLinks(catalogJSONArray, serviceContext);
 	}
 
-	public void deleteCPDefinitions() throws PortalException {
-		Set<Map.Entry<String, CPDefinition>> entrySet =
-			_cpDefinitions.entrySet();
-
-		Iterator<Map.Entry<String, CPDefinition>> iterator =
-			entrySet.iterator();
-
-		while (iterator.hasNext()) {
-			Map.Entry<String, CPDefinition> entry = iterator.next();
-
-			_cpDefinitionLocalService.deleteCPDefinition(entry.getValue());
-
-			iterator.remove();
-		}
-	}
-
-	public CPDefinition getCPDefinitionByTitle(String title)
-		throws PortalException {
+	public CPDefinition getCPDefinitionByTitle(String title) {
 
 		return _cpDefinitions.get(title);
 	}

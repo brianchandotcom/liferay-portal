@@ -45,18 +45,16 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -178,8 +176,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		Map<String, String> languageIdToUrlTitleMap =
 			_cpFriendlyURLEntryLocalService.getLanguageIdToUrlTitleMap(
-				cpDefinition.getGroupId(), cpDefinition.getCompanyId(),
-				classNameId, cpDefinition.getCPDefinitionId());
+				cpDefinition.getGroupId(), classNameId,
+				cpDefinition.getCPDefinitionId());
 
 		for (String languageId : languageIds) {
 			String description = cpDefinition.getDescription(languageId);

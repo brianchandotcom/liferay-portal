@@ -44,8 +44,8 @@ public class AssetCategoryModelListener
 				AssetCategory.class, assetCategory.getCategoryId());
 
 			_cpFriendlyURLEntryLocalService.deleteCPFriendlyURLEntries(
-				assetCategory.getGroupId(), assetCategory.getCompanyId(),
-				AssetCategory.class, assetCategory.getCategoryId());
+				assetCategory.getGroupId(), AssetCategory.class,
+				assetCategory.getCategoryId());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

@@ -45,23 +45,19 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
-import javax.portlet.PortletURL;
-import javax.portlet.RenderRequest;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -198,8 +194,7 @@ public class CategoryCPFriendlyURLScreenNavigationEntry
 
 				titleMapAsXML =
 					_cpFriendlyURLEntryLocalService.getUrlTitleMapAsXML(
-						assetCategory.getGroupId(),
-						assetCategory.getCompanyId(), classNameId, categoryId,
+						assetCategory.getGroupId(), classNameId, categoryId,
 						defaultLanguageId);
 
 				CPDisplayLayout cpDisplayLayout =

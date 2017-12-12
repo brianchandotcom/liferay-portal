@@ -36,15 +36,13 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
@@ -73,13 +71,13 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
 			_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
-				groupId, companyId, classNameId, languageId, urlTitle);
+				groupId, classNameId, languageId, urlTitle);
 
 		if (!cpFriendlyURLEntry.isMain()) {
 			cpFriendlyURLEntry =
 				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					groupId, companyId, classNameId,
-					cpFriendlyURLEntry.getPrimaryKey(), languageId, true);
+					groupId, classNameId, cpFriendlyURLEntry.getPrimaryKey(),
+					languageId, true);
 		}
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(
@@ -154,13 +152,13 @@ public class ProductFriendlyURLResolver implements FriendlyURLResolver {
 
 		CPFriendlyURLEntry cpFriendlyURLEntry =
 			_cpFriendlyURLEntryLocalService.getCPFriendlyURLEntry(
-				groupId, companyId, classNameId, languageId, urlTitle);
+				groupId, classNameId, languageId, urlTitle);
 
 		if (!cpFriendlyURLEntry.isMain()) {
 			cpFriendlyURLEntry =
 				_cpFriendlyURLEntryLocalService.fetchCPFriendlyURLEntry(
-					groupId, companyId, classNameId,
-					cpFriendlyURLEntry.getPrimaryKey(), languageId, true);
+					groupId, classNameId, cpFriendlyURLEntry.getPrimaryKey(),
+					languageId, true);
 		}
 
 		CPDefinition cpDefinition = _cpDefinitionService.getCPDefinition(

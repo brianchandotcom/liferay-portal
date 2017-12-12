@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -83,13 +85,16 @@ public class CommercePaymentServlet extends HttpServlet {
 				_commerceOrderService.getCommerceOrderByUuidAndGroupId(
 					uuid, groupId);
 
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				httpServletRequest);
+
 			if (cancel) {
 				_commercePaymentHelper.cancelPayment(
-					commerceOrder, httpServletRequest.getParameterMap());
+					commerceOrder, serviceContext);
 			}
 			else {
 				_commercePaymentHelper.completePayment(
-					commerceOrder, httpServletRequest.getParameterMap());
+					commerceOrder, serviceContext);
 			}
 
 			httpServletResponse.sendRedirect(redirect);

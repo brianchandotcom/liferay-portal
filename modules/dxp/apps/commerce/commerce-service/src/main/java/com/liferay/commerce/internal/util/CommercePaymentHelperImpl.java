@@ -15,12 +15,16 @@
 package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.constants.CommerceConstants;
+import com.liferay.commerce.exception.CommercePaymentEngineException;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.model.CommerceOrderPaymentConstants;
 import com.liferay.commerce.model.CommercePaymentEngine;
+import com.liferay.commerce.model.CommercePaymentEngineResult;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.service.CommerceOrderLocalService;
+import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.CommercePaymentHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,12 +32,11 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StackTraceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
-
-import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -46,7 +49,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 
 	@Override
 	public void cancelPayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePaymentEngine commercePaymentEngine = _getCommercePaymentEngine(
@@ -56,12 +59,28 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			return;
 		}
 
-		commercePaymentEngine.cancelPayment(commerceOrder, parameterMap);
+		String content = null;
+		int status = CommerceOrderPaymentConstants.STATUS_CANCELED;
+
+		try {
+			CommercePaymentEngineResult commercePaymentEngineResult =
+				commercePaymentEngine.cancelPayment(
+					commerceOrder, serviceContext);
+
+			content = commercePaymentEngineResult.getContent();
+		}
+		catch (CommercePaymentEngineException cpee) {
+			content = _getContent(cpee);
+		}
+
+		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
+			commerceOrder.getCommerceOrderId(), status, content,
+			serviceContext);
 	}
 
 	@Override
 	public void completePayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePaymentEngine commercePaymentEngine = _getCommercePaymentEngine(
@@ -71,12 +90,29 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			return;
 		}
 
-		commercePaymentEngine.completePayment(commerceOrder, parameterMap);
+		String content = null;
+		int status = CommerceOrderPaymentConstants.STATUS_COMPLETED;
 
-		_commerceOrderLocalService.updatePaymentStatus(
-			commerceOrder.getCommerceOrderId(),
-			CommerceOrderConstants.PAYMENT_STATUS_PAID,
-			CommerceOrderConstants.STATUS_PROCESSING);
+		try {
+			CommercePaymentEngineResult commercePaymentEngineResult =
+				commercePaymentEngine.completePayment(
+					commerceOrder, serviceContext);
+
+			content = commercePaymentEngineResult.getContent();
+
+			_commerceOrderLocalService.updatePaymentStatus(
+				commerceOrder.getCommerceOrderId(),
+				CommerceOrderConstants.PAYMENT_STATUS_PAID,
+				CommerceOrderConstants.STATUS_PROCESSING);
+		}
+		catch (CommercePaymentEngineException cpee) {
+			content = _getContent(cpee);
+			status = CommerceOrderPaymentConstants.STATUS_FAILED;
+		}
+
+		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
+			commerceOrder.getCommerceOrderId(), status, content,
+			serviceContext);
 	}
 
 	@Override
@@ -122,8 +158,29 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 
 		String cancelURL = sb.toString();
 
-		return commercePaymentEngine.startPayment(
-			commerceOrder, cancelURL, returnURL, serviceContext.getLocale());
+		String paymentURL = null;
+
+		String content = null;
+		int status = CommerceOrderPaymentConstants.STATUS_PENDING;
+
+		try {
+			CommercePaymentEngineResult.StartPayment startPayment =
+				commercePaymentEngine.startPayment(
+					commerceOrder, cancelURL, returnURL, serviceContext);
+
+			content = startPayment.getContent();
+			paymentURL = startPayment.getURL();
+		}
+		catch (CommercePaymentEngineException cpee) {
+			content = _getContent(cpee);
+			status = CommerceOrderPaymentConstants.STATUS_FAILED;
+		}
+
+		_commerceOrderPaymentLocalService.addCommerceOrderPayment(
+			commerceOrder.getCommerceOrderId(), status, content,
+			serviceContext);
+
+		return paymentURL;
 	}
 
 	private CommercePaymentEngine _getCommercePaymentEngine(
@@ -146,8 +203,15 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			commercePaymentMethod.getEngineKey());
 	}
 
+	private String _getContent(CommercePaymentEngineException cpee) {
+		return StackTraceUtil.getStackTrace(cpee);
+	}
+
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;
+
+	@Reference
+	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
 	@Reference
 	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;

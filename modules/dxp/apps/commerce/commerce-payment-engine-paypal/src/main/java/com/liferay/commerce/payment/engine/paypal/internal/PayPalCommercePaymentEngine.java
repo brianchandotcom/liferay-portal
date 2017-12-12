@@ -22,6 +22,7 @@ import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommercePaymentEngine;
+import com.liferay.commerce.model.CommercePaymentEngineResult;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.engine.paypal.internal.configuration.PayPalCommercePaymentEngineGroupServiceConfiguration;
@@ -30,6 +31,8 @@ import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactory;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,7 +43,7 @@ import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
-import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -87,18 +90,28 @@ import org.osgi.service.component.annotations.Reference;
 public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 
 	@Override
-	public void cancelPayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	public CommercePaymentEngineResult cancelPayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws CommercePaymentEngineException {
+
+		String payerId = ParamUtil.getString(serviceContext, "PayerID");
+		String paymentId = ParamUtil.getString(serviceContext, "paymentId");
+
+		JSONObject jsonObject = _jsonFactory.createJSONObject();
+
+		jsonObject.put("payerId", payerId);
+		jsonObject.put("paymentId", paymentId);
+
+		return new CommercePaymentEngineResult(jsonObject.toJSONString());
 	}
 
 	@Override
-	public void completePayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	public CommercePaymentEngineResult completePayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws CommercePaymentEngineException {
 
 		try {
-			_completePayment(commerceOrder, parameterMap);
+			return _completePayment(commerceOrder, serviceContext);
 		}
 		catch (CommercePaymentEngineException cpee) {
 			throw cpee;
@@ -157,13 +170,14 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 	}
 
 	@Override
-	public String startPayment(
+	public CommercePaymentEngineResult.StartPayment startPayment(
 			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
+			ServiceContext serviceContext)
 		throws CommercePaymentEngineException {
 
 		try {
-			return _getPaymentURL(commerceOrder, cancelURL, returnURL, locale);
+			return _startPayment(
+				commerceOrder, cancelURL, returnURL, serviceContext);
 		}
 		catch (CommercePaymentEngineException cpee) {
 			throw cpee;
@@ -193,12 +207,12 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 		modifiableSettings.store();
 	}
 
-	private void _completePayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	private CommercePaymentEngineResult _completePayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws Exception {
 
-		String payerId = MapUtil.getString(parameterMap, "PayerID");
-		String paymentId = MapUtil.getString(parameterMap, "paymentId");
+		String payerId = ParamUtil.getString(serviceContext, "PayerID");
+		String paymentId = ParamUtil.getString(serviceContext, "paymentId");
 
 		APIContext apiContext = _getAPIContext(commerceOrder);
 
@@ -210,7 +224,9 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 
 		paymentExecution.setPayerId(payerId);
 
-		payment.execute(apiContext, paymentExecution);
+		payment = payment.execute(apiContext, paymentExecution);
+
+		return new CommercePaymentEngineResult(payment.toJSON());
 	}
 
 	private Amount _getAmount(
@@ -306,63 +322,6 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 		return items;
 	}
 
-	private String _getPaymentURL(
-			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
-		throws Exception {
-
-		CommerceCurrency commerceCurrency =
-			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
-				commerceOrder.getGroupId());
-
-		if (commerceCurrency == null) {
-			throw new CommercePaymentEngineException.MustSetPrimaryCurrency();
-		}
-
-		APIContext apiContext = _getAPIContext(commerceOrder);
-
-		Payment payment = new Payment();
-
-		payment.setIntent("sale");
-
-		Payer payer = new Payer();
-
-		payer.setPaymentMethod("paypal");
-
-		payment.setPayer(payer);
-
-		RedirectUrls redirectUrls = new RedirectUrls();
-
-		redirectUrls.setCancelUrl(cancelURL);
-		redirectUrls.setReturnUrl(returnURL);
-
-		payment.setRedirectUrls(redirectUrls);
-
-		payment.setTransactions(
-			_getTransactions(commerceOrder, commerceCurrency, locale));
-
-		payment = payment.create(apiContext);
-
-		String url = null;
-
-		for (Links links : payment.getLinks()) {
-			if ("approval_url".equals(links.getRel())) {
-				url = links.getHref();
-
-				break;
-			}
-		}
-
-		if (Validator.isNull(url)) {
-			throw new CommercePaymentEngineException(
-				"Unable to get PayPal payment URL");
-		}
-
-		url = _http.addParameter(url, "useraction", "commit");
-
-		return url;
-	}
-
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -407,6 +366,65 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 		return Collections.singletonList(transaction);
 	}
 
+	private CommercePaymentEngineResult.StartPayment _startPayment(
+			CommerceOrder commerceOrder, String cancelURL, String returnURL,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		CommerceCurrency commerceCurrency =
+			_commerceCurrencyLocalService.fetchPrimaryCommerceCurrency(
+				commerceOrder.getGroupId());
+
+		if (commerceCurrency == null) {
+			throw new CommercePaymentEngineException.MustSetPrimaryCurrency();
+		}
+
+		APIContext apiContext = _getAPIContext(commerceOrder);
+
+		Payment payment = new Payment();
+
+		payment.setIntent("sale");
+
+		Payer payer = new Payer();
+
+		payer.setPaymentMethod("paypal");
+
+		payment.setPayer(payer);
+
+		RedirectUrls redirectUrls = new RedirectUrls();
+
+		redirectUrls.setCancelUrl(cancelURL);
+		redirectUrls.setReturnUrl(returnURL);
+
+		payment.setRedirectUrls(redirectUrls);
+
+		payment.setTransactions(
+			_getTransactions(
+				commerceOrder, commerceCurrency, serviceContext.getLocale()));
+
+		payment = payment.create(apiContext);
+
+		String url = null;
+
+		for (Links links : payment.getLinks()) {
+			if ("approval_url".equals(links.getRel())) {
+				url = links.getHref();
+
+				break;
+			}
+		}
+
+		if (Validator.isNull(url)) {
+			throw new CommercePaymentEngineException(
+				"Unable to get PayPal payment URL");
+		}
+
+		url = _http.addParameter(url, "useraction", "commit");
+
+		return new CommercePaymentEngineResult.StartPayment(
+			payment.toJSON(), url);
+	}
+
 	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
@@ -415,6 +433,9 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private JSONFactory _jsonFactory;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

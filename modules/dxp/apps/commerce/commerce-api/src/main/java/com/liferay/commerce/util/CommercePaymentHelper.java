@@ -20,8 +20,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.Map;
-
 /**
  * @author Andrea Di Giorgi
  */
@@ -29,11 +27,11 @@ import java.util.Map;
 public interface CommercePaymentHelper {
 
 	public void cancelPayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException;
 
 	public void completePayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws PortalException;
 
 	public String startPayment(

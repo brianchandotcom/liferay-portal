@@ -31,12 +31,12 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CommercePaymentEngine {
 
-	public void cancelPayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	public CommercePaymentEngineResult cancelPayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws CommercePaymentEngineException;
 
-	public void completePayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	public CommercePaymentEngineResult completePayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws CommercePaymentEngineException;
 
 	public String getDescription(Locale locale);
@@ -47,9 +47,9 @@ public interface CommercePaymentEngine {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws Exception;
 
-	public String startPayment(
+	public CommercePaymentEngineResult.StartPayment startPayment(
 			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
+			ServiceContext serviceContext)
 		throws CommercePaymentEngineException;
 
 	public void updateConfiguration(

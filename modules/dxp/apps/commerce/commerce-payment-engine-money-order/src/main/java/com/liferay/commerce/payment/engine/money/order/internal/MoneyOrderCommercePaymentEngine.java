@@ -17,6 +17,7 @@ package com.liferay.commerce.payment.engine.money.order.internal;
 import com.liferay.commerce.exception.CommercePaymentEngineException;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommercePaymentEngine;
+import com.liferay.commerce.model.CommercePaymentEngineResult;
 import com.liferay.commerce.payment.engine.money.order.internal.configuration.MoneyOrderCommercePaymentEngineGroupServiceConfiguration;
 import com.liferay.commerce.payment.engine.money.order.internal.constants.MoneyOrderCommercePaymentEngineConstants;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -57,15 +58,19 @@ import org.osgi.service.component.annotations.Reference;
 public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 
 	@Override
-	public void cancelPayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	public CommercePaymentEngineResult cancelPayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws CommercePaymentEngineException {
+
+		return new CommercePaymentEngineResult(null);
 	}
 
 	@Override
-	public void completePayment(
-			CommerceOrder commerceOrder, Map<String, String[]> parameterMap)
+	public CommercePaymentEngineResult completePayment(
+			CommerceOrder commerceOrder, ServiceContext serviceContext)
 		throws CommercePaymentEngineException {
+
+		return new CommercePaymentEngineResult(null);
 	}
 
 	@Override
@@ -118,12 +123,12 @@ public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 	}
 
 	@Override
-	public String startPayment(
+	public CommercePaymentEngineResult.StartPayment startPayment(
 			CommerceOrder commerceOrder, String cancelURL, String returnURL,
-			Locale locale)
+			ServiceContext serviceContext)
 		throws CommercePaymentEngineException {
 
-		return null;
+		return new CommercePaymentEngineResult.StartPayment(null, null);
 	}
 
 	@Override

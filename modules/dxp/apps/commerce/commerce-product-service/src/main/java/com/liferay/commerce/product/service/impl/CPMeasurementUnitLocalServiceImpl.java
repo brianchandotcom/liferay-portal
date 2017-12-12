@@ -167,11 +167,11 @@ public class CPMeasurementUnitLocalServiceImpl
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 
 		_addCPMeasurementUnit(
-			"lb(s)", "lb", 1, true, 2, CPMeasurementUnitConstants.TYPE_WEIGHT,
-			serviceContext);
+			"pound(s)", "lb", 1, true, 2,
+			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 
 		_addCPMeasurementUnit(
-			"kg(s)", "kg", 0.45359237, false, 3,
+			"kilogram(s)", "kg", 0.45359237, false, 3,
 			CPMeasurementUnitConstants.TYPE_WEIGHT, serviceContext);
 
 		_addCPMeasurementUnit(

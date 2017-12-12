@@ -2372,9 +2372,11 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		Map<String, String[]> containerRuntimeOptions =
 			portletApp.getContainerRuntimeOptions();
 
-		String portletLevelPrefix = LiferayPortletConfig.class.getName();
+		String containerRuntimeOptionPrefix =
+			LiferayPortletConfig.class.getName();
 
-		portletLevelPrefix = portletLevelPrefix.concat(portletName);
+		containerRuntimeOptionPrefix = containerRuntimeOptionPrefix.concat(
+			portletName);
 
 		for (Element containerRuntimeOptionElement :
 				portletElement.elements("container-runtime-option")) {
@@ -2391,7 +2393,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 
 			containerRuntimeOptions.put(
-				portletLevelPrefix + name,
+				containerRuntimeOptionPrefix + name,
 				values.toArray(new String[values.size()]));
 		}
 

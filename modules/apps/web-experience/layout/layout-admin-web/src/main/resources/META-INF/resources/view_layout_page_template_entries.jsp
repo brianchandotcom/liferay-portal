@@ -133,35 +133,23 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 </portlet:actionURL>
 
-<aui:script require="layout-admin-web/js/LayoutPageTemplateNameEditor.es">
-	var layoutPageTemplateNameEditor;
-
+<aui:script>
 	function handleAddLayoutPageTemplateEntryMenuItemClick(event) {
 		event.preventDefault();
 
-		layoutPageTemplateNameEditor = new layoutAdminWebJsLayoutPageTemplateNameEditorEs.default(
-			{
-				actionURL: '<%= addLayoutPageTemplateEntryURL %>',
-				editorTitle: '<liferay-ui:message key="add-page-template" />',
-				events: {
-					hide: function() {
-						layoutPageTemplateNameEditor.dispose();
-
-						layoutPageTemplateNameEditor = null;
-					}
-				},
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		);
+		Liferay.Util.openSimpleInputModal({
+			dialogTitle: '<liferay-ui:message key="add-page-template" />',
+			formSubmitURL: '<%= addLayoutPageTemplateEntryURL %>',
+			mainFieldLabel: '<liferay-ui:message key="name" />',
+			mainFieldName: 'name',
+			mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+			namespace: '<portlet:namespace />',
+			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+		});
 	}
 
 	function handleDestroyPortlet() {
 		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
-
-		if (layoutPageTemplateNameEditor) {
-			layoutPageTemplateNameEditor.dispose();
-		}
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

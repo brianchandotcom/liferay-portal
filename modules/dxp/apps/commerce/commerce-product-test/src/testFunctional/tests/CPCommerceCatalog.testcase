@@ -1,5 +1,5 @@
 <definition component-name="portal-commerce">
-	<property name="portal.upstream" value="true" />
+	<property name="portal.upstream" value="false" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Commerce" />
 
@@ -37,7 +37,7 @@
 	</tear-down>
 
 	<command name="AddGroupedCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -70,7 +70,7 @@
 	</command>
 
 	<command name="AddGroupedDraftCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -122,7 +122,7 @@
 	</command>
 
 	<command ignore="true" name="AddSimpleDraftCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -141,7 +141,7 @@
 	</command>
 
 	<command name="AddVirtualCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -174,7 +174,7 @@
 	</command>
 
 	<command name="AddVirtualDraftCatalogEntry" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
@@ -289,7 +289,7 @@
 	</command>
 
 	<command ignore="true" name="DeleteAllSimpleCatalogEntriesViaCheckbox" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<for list="1,2,3" param="entryNumber">
 			<execute macro="ProductMenu#gotoSitesCommerce">
@@ -320,7 +320,7 @@
 	</command>
 
 	<command name="DeleteGroupedCatalogEntryViaCheckbox" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
@@ -330,7 +330,7 @@
 	</command>
 
 	<command name="DeleteSimpleCatalogEntryViaCheckbox" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
@@ -403,7 +403,7 @@
 	</command>
 
 	<command ignore="true" name="SetSimpleCatalogEntryExpirationDate" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 

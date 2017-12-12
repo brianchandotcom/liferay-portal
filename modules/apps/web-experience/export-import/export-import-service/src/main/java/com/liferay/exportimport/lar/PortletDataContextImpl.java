@@ -241,7 +241,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 				long classNameId = ExportImportClassedModelUtil.getClassNameId(
 					classedModel);
 
-				_addAssetPriority(
+				_addAssetEntryPriority(
 					element, classNameId, GetterUtil.getLong(classPK));
 
 				addExpando(element, path, classedModel, clazz);
@@ -2220,7 +2220,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 
 		if (element != null) {
 			Attribute assetPriorityAttribute = element.attribute(
-				"asset-priority");
+				"asset-entry-priority");
 
 			if (assetPriorityAttribute != null) {
 				double assetPriority = GetterUtil.getDouble(
@@ -2811,13 +2811,14 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	private void _addAssetPriority(
+	private void _addAssetEntryPriority(
 		Element element, long classNameId, long classPK) {
 
-		double assetPriority = AssetEntryLocalServiceUtil.getEntryPriority(
+		double assetEntryPriority = AssetEntryLocalServiceUtil.getEntryPriority(
 			classNameId, classPK);
 
-		element.addAttribute("asset-priority", String.valueOf(assetPriority));
+		element.addAttribute(
+			"asset-entry-priority", String.valueOf(assetEntryPriority));
 	}
 
 	private static final Class<?>[] _XSTREAM_DEFAULT_ALLOWED_TYPES = {

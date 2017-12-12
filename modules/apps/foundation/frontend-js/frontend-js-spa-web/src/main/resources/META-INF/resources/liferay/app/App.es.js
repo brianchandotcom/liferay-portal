@@ -6,6 +6,7 @@ import dom from 'metal-dom/src/dom';
 import LiferaySurface from '../surface/Surface.es';
 import Utils from '../util/Utils.es';
 import {CancellablePromise} from 'metal-promise/src/promise/Promise';
+import Uri from 'metal-uri/src/Uri';
 
 class LiferayApp extends App {
 	constructor() {

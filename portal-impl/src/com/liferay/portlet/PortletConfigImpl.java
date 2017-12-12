@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -74,7 +75,29 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 	@Override
 	public Map<String, String[]> getContainerRuntimeOptions() {
-		return _portletApp.getContainerRuntimeOptions();
+		Map<String, String[]> portletAppContainerRuntimeOptions =
+			_portletApp.getContainerRuntimeOptions();
+
+		Map<String, String[]> containerRuntimeOptions = new HashMap<>();
+
+		for (String name : portletAppContainerRuntimeOptions.keySet()) {
+			if (!name.startsWith("PortletLevel_")) {
+				containerRuntimeOptions.put(
+					name, portletAppContainerRuntimeOptions.get(name));
+			}
+		}
+
+		String portletLevelPrefix = "PortletLevel_" + _portletName;
+
+		for (String name : portletAppContainerRuntimeOptions.keySet()) {
+			if (name.startsWith(portletLevelPrefix)) {
+				containerRuntimeOptions.put(
+					name.substring(portletLevelPrefix.length()),
+					portletAppContainerRuntimeOptions.get(name));
+			}
+		}
+
+		return Collections.unmodifiableMap(containerRuntimeOptions);
 	}
 
 	@Override

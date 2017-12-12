@@ -57,11 +57,44 @@ import com.liferay.portal.kernel.util.MethodKey;
 public class AnnouncementsDeliveryServiceHttp {
 	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
 		HttpPrincipal httpPrincipal, long userId, java.lang.String type,
-		boolean email, boolean sms, boolean website)
+		boolean email, boolean sms)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnnouncementsDeliveryServiceUtil.class,
 					"updateDelivery", _updateDeliveryParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
+					type, email, sms);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.announcements.kernel.model.AnnouncementsDelivery)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
+		HttpPrincipal httpPrincipal, long userId, java.lang.String type,
+		boolean email, boolean sms, boolean website)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(AnnouncementsDeliveryServiceUtil.class,
+					"updateDelivery", _updateDeliveryParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, userId,
 					type, email, sms, website);
@@ -90,6 +123,9 @@ public class AnnouncementsDeliveryServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(AnnouncementsDeliveryServiceHttp.class);
 	private static final Class<?>[] _updateDeliveryParameterTypes0 = new Class[] {
+			long.class, java.lang.String.class, boolean.class, boolean.class
+		};
+	private static final Class<?>[] _updateDeliveryParameterTypes1 = new Class[] {
 			long.class, java.lang.String.class, boolean.class, boolean.class,
 			boolean.class
 		};

@@ -51,6 +51,17 @@ public class AnnouncementsDeliveryServiceUtil {
 	}
 
 	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
+		long userId, java.lang.String type, boolean email, boolean sms)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateDelivery(userId, type, email, sms);
+	}
+
+	/**
+	* @deprecated As of 7.0.0, replaced by {@link
+	#updateDelivery(long, String, boolean, boolean)}
+	*/
+	@Deprecated
+	public static com.liferay.announcements.kernel.model.AnnouncementsDelivery updateDelivery(
 		long userId, java.lang.String type, boolean email, boolean sms,
 		boolean website)
 		throws com.liferay.portal.kernel.exception.PortalException {

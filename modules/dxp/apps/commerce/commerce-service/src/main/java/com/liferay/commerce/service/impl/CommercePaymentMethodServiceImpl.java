@@ -81,6 +81,12 @@ public class CommercePaymentMethodServiceImpl
 	}
 
 	@Override
+	public int getCommercePaymentMethodsCount(long groupId, boolean active) {
+		return commercePaymentMethodLocalService.getCommercePaymentMethodsCount(
+			groupId, active);
+	}
+
+	@Override
 	public CommercePaymentMethod updateCommercePaymentMethod(
 			long commercePaymentMethodId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,

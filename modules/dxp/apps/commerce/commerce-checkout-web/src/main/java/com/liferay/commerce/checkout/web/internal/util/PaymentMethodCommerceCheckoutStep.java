@@ -25,8 +25,10 @@ import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -74,7 +76,17 @@ public class PaymentMethodCommerceCheckoutStep implements CommerceCheckoutStep {
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		return true;
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		if (_commercePaymentMethodService.getCommercePaymentMethodsCount(
+				themeDisplay.getScopeGroupId(), true) > 0) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

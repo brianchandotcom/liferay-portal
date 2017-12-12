@@ -24,6 +24,11 @@ CommerceCart commerceCart = orderSummaryCheckoutStepDisplayContext.getCommerceCa
 Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = orderSummaryCheckoutStepDisplayContext.getCommerceCartValidatorResults();
 %>
 
+<liferay-ui:error exception="<%= CommerceCartBillingAddressException.class %>" message="please-select-a-valid-billing-address" />
+<liferay-ui:error exception="<%= CommerceCartPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
+<liferay-ui:error exception="<%= CommerceCartShippingAddressException.class %>" message="please-select-a-valid-shipping-address" />
+<liferay-ui:error exception="<%= CommerceCartShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
+
 <div class="address-container row">
 	<div class="col-md-4">
 		<div class="card card-commerce">

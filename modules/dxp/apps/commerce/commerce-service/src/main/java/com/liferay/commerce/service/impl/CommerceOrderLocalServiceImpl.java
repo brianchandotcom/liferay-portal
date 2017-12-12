@@ -14,10 +14,16 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.exception.CommerceCartBillingAddressException;
+import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
+import com.liferay.commerce.exception.CommerceCartShippingAddressException;
+import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.model.CommercePaymentMethod;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -87,6 +93,8 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceCart commerceCart = commerceCartLocalService.getCommerceCart(
 			commerceCartId);
+
+		validate(commerceCart);
 
 		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
 		double shippingPrice = commerceCart.getShippingPrice();
@@ -203,6 +211,58 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrderPersistence.update(commerceOrder);
 
 		return commerceOrder;
+	}
+
+	protected void validate(CommerceCart commerceCart) throws PortalException {
+		CommercePaymentMethod commercePaymentMethod = null;
+
+		long commercePaymentMethodId =
+			commerceCart.getCommercePaymentMethodId();
+
+		if (commercePaymentMethodId > 0) {
+			commercePaymentMethod =
+				commercePaymentMethodLocalService.getCommercePaymentMethod(
+					commercePaymentMethodId);
+
+			if (!commercePaymentMethod.isActive()) {
+				commercePaymentMethod = null;
+			}
+			else if (commerceCart.getBillingAddressId() <= 0) {
+				throw new CommerceCartBillingAddressException();
+			}
+		}
+
+		if ((commercePaymentMethod == null) &&
+			(commercePaymentMethodLocalService.getCommercePaymentMethodsCount(
+				commerceCart.getGroupId(), true) > 0)) {
+
+			throw new CommerceCartPaymentMethodException();
+		}
+
+		CommerceShippingMethod commerceShippingMethod = null;
+
+		long commerceShippingMethodId =
+			commerceCart.getCommerceShippingMethodId();
+
+		if (commerceShippingMethodId > 0) {
+			commerceShippingMethod =
+				commerceShippingMethodLocalService.getCommerceShippingMethod(
+					commerceShippingMethodId);
+
+			if (!commerceShippingMethod.isActive()) {
+				commerceShippingMethod = null;
+			}
+			else if (commerceCart.getShippingAddressId() <= 0) {
+				throw new CommerceCartShippingAddressException();
+			}
+		}
+
+		if ((commerceShippingMethod == null) &&
+			(commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+				commerceCart.getGroupId(), true) > 0)) {
+
+			throw new CommerceCartShippingMethodException();
+		}
 	}
 
 	@ServiceReference(type = CommercePriceCalculator.class)

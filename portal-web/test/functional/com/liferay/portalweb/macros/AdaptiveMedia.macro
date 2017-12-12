@@ -39,6 +39,13 @@
 			<var name="name" value="${imageName}" />
 		</execute>
 
+		<if>
+			<isset var="description" />
+			<then>
+				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+			</then>
+		</if>
+
 		<execute function="Type" locator1="TextInput#MAX_WIDTH" value1="${maxWidth}" />
 
 		<execute function="Type" locator1="TextInput#MAX_HEIGHT" value1="${maxHeight}" />
@@ -248,6 +255,10 @@
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="AdaptiveMediaTable#MAX_WIDTH" value1="${maxWidth}" />
 		<execute function="AssertTextEquals#assertPartialText" locator1="AdaptiveMediaTable#MAX_HEIGHT" value1="${maxHeight}" />
+	</command>
+
+	<command name="viewImageVariantDescription">
+		<execute function="AssertTextEquals" locator1="TextArea#DESCRIPTION" value1="${description}" />
 	</command>
 
 	<command name="viewImageVariantID">

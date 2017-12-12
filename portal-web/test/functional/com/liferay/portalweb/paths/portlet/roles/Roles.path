@@ -36,12 +36,12 @@
 </tr>
 <tr>
 	<td>ROLE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_roleTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//tr[contains(.,'${key_roleTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ROLE_TABLE_ACTIONS_DEFAULT</td>
-	<td>//tr//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//tr//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <!---->

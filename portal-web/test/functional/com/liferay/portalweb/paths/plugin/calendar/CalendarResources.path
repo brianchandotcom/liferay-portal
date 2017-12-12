@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>RESOURCE_TABLE_ACTIONS</td>
-	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//tr[contains(.,'${key_calendarResourceName}')]/td[4]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

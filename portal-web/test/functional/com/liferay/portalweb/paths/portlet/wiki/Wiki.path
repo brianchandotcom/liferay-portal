@@ -186,7 +186,7 @@
 </tr>
 <tr>
 	<td>DESCRIPTIVE_VIEW_ACTIONS</td>
-	<td>//li[contains(.,'${key_wikiPageTitle}')]//span/*[name()='svg'][contains(@class,'icon-ellipsis')]</td>
+	<td>//li[contains(.,'${key_wikiPageTitle}')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
 	<td></td>
 </tr>
 <tr>
@@ -233,7 +233,7 @@
 </tr>
 <tr>
 	<td>HISTORY_VERSIONS_ACTIONS</td>
-	<td>//tr[contains(.,'${key_wikiPageRevision}')]/td[8]//span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//tr[contains(.,'${key_wikiPageRevision}')]/td[8]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

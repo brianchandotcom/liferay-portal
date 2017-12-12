@@ -21,6 +21,10 @@ PayPalCommercePaymentEngineGroupServiceConfiguration paypalCommercePaymentEngine
 %>
 
 <aui:fieldset>
+	<div class="alert alert-info">
+		<%= LanguageUtil.format(resourceBundle, "paypal-configuration-help", new Object[] {"<a href=\"https://developer.paypal.com/developer/applications/create\">", "</a>"}, false) %>
+	</div>
+
 	<aui:input label="client-id" name="settings--clientId--" value="<%= paypalCommercePaymentEngineGroupServiceConfiguration.clientId() %>" />
 
 	<aui:input label="client-secret" name="settings--clientSecret--" value="<%= paypalCommercePaymentEngineGroupServiceConfiguration.clientSecret() %>" />

@@ -21,7 +21,8 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.commerce.payment.engine.paypal.internal.configuration.PayPalCommercePaymentEngineGroupServiceConfiguration" %><%@
-page import="com.liferay.commerce.payment.engine.paypal.internal.constants.PayPalCommercePaymentEngineConstants" %>
+page import="com.liferay.commerce.payment.engine.paypal.internal.constants.PayPalCommercePaymentEngineConstants" %><%@
+page import="com.liferay.portal.kernel.language.LanguageUtil" %>
 
 <liferay-frontend:defineObjects />
 

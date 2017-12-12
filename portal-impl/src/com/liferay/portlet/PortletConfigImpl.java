@@ -70,6 +70,10 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		_portletName = portletName;
 
+		String className = LiferayPortletConfig.class.getName();
+
+		_containerRuntimeOptionPrefix = className.concat(_portletName);
+
 		_resourceBundles = new ConcurrentHashMap<>();
 	}
 
@@ -80,19 +84,19 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		Map<String, String[]> containerRuntimeOptions = new HashMap<>();
 
+		String className = LiferayPortletConfig.class.getName();
+
 		for (String name : portletAppContainerRuntimeOptions.keySet()) {
-			if (!name.startsWith("PortletLevel_")) {
+			if (!name.startsWith(className)) {
 				containerRuntimeOptions.put(
 					name, portletAppContainerRuntimeOptions.get(name));
 			}
 		}
 
-		String portletLevelPrefix = "PortletLevel_" + _portletName;
-
 		for (String name : portletAppContainerRuntimeOptions.keySet()) {
-			if (name.startsWith(portletLevelPrefix)) {
+			if (name.startsWith(_containerRuntimeOptionPrefix)) {
 				containerRuntimeOptions.put(
-					name.substring(portletLevelPrefix.length()),
+					name.substring(_containerRuntimeOptionPrefix.length()),
 					portletAppContainerRuntimeOptions.get(name));
 			}
 		}
@@ -254,6 +258,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return javaxQNames;
 	}
 
+	private final String _containerRuntimeOptionPrefix;
 	private final boolean _copyRequestParameters;
 	private final Portlet _portlet;
 	private final PortletApp _portletApp;

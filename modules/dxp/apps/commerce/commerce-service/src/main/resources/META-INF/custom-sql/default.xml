@@ -92,8 +92,7 @@
 					FROM
 						CommerceWarehouseItem
 					WHERE
-						(CommerceWarehouseItem.classNameId = ?) AND
-						(CommerceWarehouseItem.classPK = ?) AND
+						(CommerceWarehouseItem.CPInstanceId = ?) AND
 						(CommerceWarehouseItem.quantity >= ?)
 				))
 		]]>

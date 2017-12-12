@@ -178,7 +178,7 @@ public class CommerceWarehouseFinderImpl
 
 	@Override
 	public List<CommerceWarehouse> findByCommerceWarehouseItemQuantity(
-		long classNameId, long classPK, int quantity, int start, int end) {
+		long cpInstanceId, int quantity, int start, int end) {
 
 		Session session = null;
 
@@ -194,8 +194,7 @@ public class CommerceWarehouseFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(classNameId);
-			qPos.add(classPK);
+			qPos.add(cpInstanceId);
 			qPos.add(quantity);
 
 			return (List<CommerceWarehouse>)QueryUtil.list(

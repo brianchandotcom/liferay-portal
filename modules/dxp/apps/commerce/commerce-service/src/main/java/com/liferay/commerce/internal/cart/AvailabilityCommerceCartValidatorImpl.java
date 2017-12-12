@@ -16,9 +16,11 @@ package com.liferay.commerce.internal.cart;
 
 import com.liferay.commerce.cart.CommerceCartValidator;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceCartItemLocalService;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -53,6 +55,17 @@ public class AvailabilityCommerceCartValidatorImpl
 		throws PortalException {
 
 		if (commerceCartItem != null) {
+			CPDefinitionInventory cpDefinitionInventory =
+				_cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(
+						commerceCartItem.getCPDefinitionId());
+
+			if ((cpDefinitionInventory != null) &&
+				cpDefinitionInventory.getBackOrders()) {
+
+				return new CommerceCartValidatorResult(true);
+			}
+
 			int availableQuantity =
 				_commerceWarehouseItemLocalService.getCPInstanceQuantity(
 					commerceCartItem.getCPInstanceId());
@@ -79,6 +92,17 @@ public class AvailabilityCommerceCartValidatorImpl
 		throws PortalException {
 
 		if (cpInstance != null) {
+			CPDefinitionInventory cpDefinitionInventory =
+				_cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(
+						cpInstance.getCPDefinitionId());
+
+			if ((cpDefinitionInventory != null) &&
+				cpDefinitionInventory.getBackOrders()) {
+
+				return new CommerceCartValidatorResult(true);
+			}
+
 			int availableQuantity =
 				_commerceWarehouseItemLocalService.getCPInstanceQuantity(
 					cpInstance.getCPInstanceId());
@@ -106,5 +130,9 @@ public class AvailabilityCommerceCartValidatorImpl
 	@Reference
 	private CommerceWarehouseItemLocalService
 		_commerceWarehouseItemLocalService;
+
+	@Reference
+	private CPDefinitionInventoryLocalService
+		_cpDefinitionInventoryLocalService;
 
 }

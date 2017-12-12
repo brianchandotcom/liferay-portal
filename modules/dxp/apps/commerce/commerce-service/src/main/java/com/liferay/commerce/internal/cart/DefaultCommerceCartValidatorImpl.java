@@ -79,6 +79,10 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 					cpInstance.getCPDefinitionId());
 
 		if (cpDefinitionInventory != null) {
+			if (cpDefinitionInventory.getBackOrders()) {
+				return new CommerceCartValidatorResult(true);
+			}
+
 			int minCartQuantity = cpDefinitionInventory.getMinCartQuantity();
 			int maxCartQuantity = cpDefinitionInventory.getMaxCartQuantity();
 			String[] allowedCartQuantities = StringUtil.split(
@@ -135,6 +139,10 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 					cpInstance.getCPDefinitionId());
 
 		if (cpDefinitionInventory != null) {
+			if (cpDefinitionInventory.getBackOrders()) {
+				return new CommerceCartValidatorResult(true);
+			}
+
 			int minCartQuantity = cpDefinitionInventory.getMinCartQuantity();
 			int maxCartQuantity = cpDefinitionInventory.getMaxCartQuantity();
 			String[] allowedCartQuantities = StringUtil.split(

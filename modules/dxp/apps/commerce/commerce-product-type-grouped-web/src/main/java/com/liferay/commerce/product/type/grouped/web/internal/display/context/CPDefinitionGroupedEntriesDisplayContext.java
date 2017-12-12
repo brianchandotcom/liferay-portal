@@ -26,6 +26,8 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -140,8 +142,15 @@ public class CPDefinitionGroupedEntriesDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
-		CPType cpType = getCPType();
+	public String getScreenNavigationCategoryKey() {
+		CPType cpType = null;
+
+		try {
+			cpType = getCPType();
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 
 		if (cpType != null) {
 			return cpType.getName();
@@ -248,6 +257,9 @@ public class CPDefinitionGroupedEntriesDisplayContext
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionGroupedEntriesDisplayContext.class);
 
 	private CPDefinitionGroupedEntry _cpDefinitionGroupedEntry;
 	private final CPDefinitionGroupedEntryService

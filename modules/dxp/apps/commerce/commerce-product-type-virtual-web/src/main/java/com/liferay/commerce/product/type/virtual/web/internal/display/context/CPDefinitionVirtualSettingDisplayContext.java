@@ -28,6 +28,8 @@ import com.liferay.item.selector.criteria.file.criterion.FileItemSelectorCriteri
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleService;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -201,8 +203,15 @@ public class CPDefinitionVirtualSettingDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
-		CPType cpType = getCPType();
+	public String getScreenNavigationCategoryKey() {
+		CPType cpType = null;
+
+		try {
+			cpType = getCPType();
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
 
 		if (cpType != null) {
 			return cpType.getName();
@@ -241,6 +250,9 @@ public class CPDefinitionVirtualSettingDisplayContext
 
 		return selectedGroupIds;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPDefinitionVirtualSettingDisplayContext.class);
 
 	private CPDefinitionVirtualSetting _cpDefinitionVirtualSetting;
 	private final CPDefinitionVirtualSettingActionHelper

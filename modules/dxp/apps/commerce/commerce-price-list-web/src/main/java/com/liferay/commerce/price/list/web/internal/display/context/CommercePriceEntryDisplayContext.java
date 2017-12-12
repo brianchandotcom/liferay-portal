@@ -125,7 +125,7 @@ public class CommercePriceEntryDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return CommercePriceListScreenNavigationConstants.CATEGORY_KEY_ENTRIES;
 	}
 

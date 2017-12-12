@@ -83,9 +83,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return commercePriceEntryId;
 	}
 
-	public CommerceTierPriceEntry getCommerceTierPriceEntry()
-		throws PortalException {
-
+	public CommerceTierPriceEntry getCommerceTierPriceEntry() {
 		if (_commerceTierPriceEntry != null) {
 			return _commerceTierPriceEntry;
 		}
@@ -97,7 +95,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		return _commerceTierPriceEntry;
 	}
 
-	public long getCommerceTierPriceEntryId() throws PortalException {
+	public long getCommerceTierPriceEntryId() {
 		CommerceTierPriceEntry commerceTierPriceEntry =
 			getCommerceTierPriceEntry();
 
@@ -206,10 +204,12 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 		portletURL.setParameter(
 			"cpInstanceId", String.valueOf(getCPInstanceId()));
 
-		String toolbarItem = ParamUtil.getString(
-			httpServletRequest, "toolbarItem", "view-tier-price-entries");
+		String instancePriceEntryToolbarItem = ParamUtil.getString(
+			httpServletRequest, "instancePriceEntryToolbarItem",
+			"view-tier-price-entries");
 
-		portletURL.setParameter("toolbarItem", toolbarItem);
+		portletURL.setParameter(
+			"instancePriceEntryToolbarItem", instancePriceEntryToolbarItem);
 
 		return portletURL;
 	}
@@ -224,11 +224,6 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 			"commercePriceEntryId", String.valueOf(getCommercePriceEntryId()));
 		portletURL.setParameter(
 			"cpInstanceId", String.valueOf(getCPInstanceId()));
-
-		String toolbarItem = ParamUtil.getString(
-			httpServletRequest, "toolbarItem", "view-tier-price-entries");
-
-		portletURL.setParameter("toolbarItem", toolbarItem);
 
 		return portletURL;
 	}
@@ -248,7 +243,7 @@ public class CPInstanceCommerceTierPriceEntryDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return "price-lists";
 	}
 

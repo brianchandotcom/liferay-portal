@@ -137,7 +137,7 @@ public class OrganizationCommercePriceListQualificationTypeDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return "organizations";
 	}
 

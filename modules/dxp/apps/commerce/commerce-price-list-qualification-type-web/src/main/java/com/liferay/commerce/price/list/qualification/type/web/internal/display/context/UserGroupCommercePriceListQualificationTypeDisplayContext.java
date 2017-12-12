@@ -136,7 +136,7 @@ public class UserGroupCommercePriceListQualificationTypeDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return "user-groups";
 	}
 

@@ -155,7 +155,7 @@ public abstract class BaseCommercePriceListDisplayContext<T> {
 		return _rowChecker;
 	}
 
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return CommercePriceListScreenNavigationConstants.CATEGORY_KEY_DETAILS;
 	}
 

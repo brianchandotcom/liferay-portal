@@ -180,7 +180,7 @@ public class CPInstanceCommercePriceEntryDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return "price-lists";
 	}
 

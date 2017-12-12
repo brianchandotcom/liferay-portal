@@ -135,7 +135,7 @@ public class RoleCommercePriceListQualificationTypeDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return "roles";
 	}
 

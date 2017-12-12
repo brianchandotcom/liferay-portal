@@ -135,7 +135,7 @@ public class UserCommercePriceListQualificationTypeDisplayContext
 	}
 
 	@Override
-	public String getScreenNavigationCategoryKey() throws PortalException {
+	public String getScreenNavigationCategoryKey() {
 		return "users";
 	}
 

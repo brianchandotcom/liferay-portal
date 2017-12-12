@@ -131,10 +131,11 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js)
+		java.lang.String html, java.lang.String js,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.updateFragmentEntry(fragmentEntryId, name,
-			css, html, js);
+			css, html, js, serviceContext);
 	}
 
 	@Override

@@ -80,7 +80,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			{ "name", Types.VARCHAR },
 			{ "css", Types.VARCHAR },
 			{ "html", Types.VARCHAR },
-			{ "js", Types.VARCHAR }
+			{ "js", Types.VARCHAR },
+			{ "htmlPreviewEntryId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -97,9 +98,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		TABLE_COLUMNS_MAP.put("css", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("html", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("js", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("htmlPreviewEntryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table FragmentEntry (fragmentEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,fragmentCollectionId LONG,name VARCHAR(75) null,css STRING null,html STRING null,js STRING null,htmlPreviewEntryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table FragmentEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY fragmentEntry.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY FragmentEntry.name ASC";
@@ -144,6 +146,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		model.setCss(soapModel.getCss());
 		model.setHtml(soapModel.getHtml());
 		model.setJs(soapModel.getJs());
+		model.setHtmlPreviewEntryId(soapModel.getHtmlPreviewEntryId());
 
 		return model;
 	}
@@ -220,6 +223,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
+		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -299,6 +303,12 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 		if (js != null) {
 			setJs(js);
+		}
+
+		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+
+		if (htmlPreviewEntryId != null) {
+			setHtmlPreviewEntryId(htmlPreviewEntryId);
 		}
 	}
 
@@ -515,6 +525,17 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		_js = js;
 	}
 
+	@JSON
+	@Override
+	public long getHtmlPreviewEntryId() {
+		return _htmlPreviewEntryId;
+	}
+
+	@Override
+	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
+		_htmlPreviewEntryId = htmlPreviewEntryId;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -558,6 +579,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		fragmentEntryImpl.setCss(getCss());
 		fragmentEntryImpl.setHtml(getHtml());
 		fragmentEntryImpl.setJs(getJs());
+		fragmentEntryImpl.setHtmlPreviewEntryId(getHtmlPreviewEntryId());
 
 		fragmentEntryImpl.resetOriginalValues();
 
@@ -705,12 +727,14 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			fragmentEntryCacheModel.js = null;
 		}
 
+		fragmentEntryCacheModel.htmlPreviewEntryId = getHtmlPreviewEntryId();
+
 		return fragmentEntryCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{fragmentEntryId=");
 		sb.append(getFragmentEntryId());
@@ -736,6 +760,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 		sb.append(getHtml());
 		sb.append(", js=");
 		sb.append(getJs());
+		sb.append(", htmlPreviewEntryId=");
+		sb.append(getHtmlPreviewEntryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -743,7 +769,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.fragment.model.FragmentEntry");
@@ -797,6 +823,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 			"<column><column-name>js</column-name><column-value><![CDATA[");
 		sb.append(getJs());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>htmlPreviewEntryId</column-name><column-value><![CDATA[");
+		sb.append(getHtmlPreviewEntryId());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -825,6 +855,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	private String _css;
 	private String _html;
 	private String _js;
+	private long _htmlPreviewEntryId;
 	private long _columnBitmask;
 	private FragmentEntry _escapedModel;
 }

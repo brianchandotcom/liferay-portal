@@ -70,6 +70,7 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		attributes.put("css", getCss());
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
+		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 
 		return attributes;
 	}
@@ -146,6 +147,12 @@ public class FragmentEntryWrapper implements FragmentEntry,
 
 		if (js != null) {
 			setJs(js);
+		}
+
+		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+
+		if (htmlPreviewEntryId != null) {
+			setHtmlPreviewEntryId(htmlPreviewEntryId);
 		}
 	}
 
@@ -232,6 +239,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public java.lang.String getHtml() {
 		return _fragmentEntry.getHtml();
+	}
+
+	/**
+	* Returns the html preview entry ID of this fragment entry.
+	*
+	* @return the html preview entry ID of this fragment entry
+	*/
+	@Override
+	public long getHtmlPreviewEntryId() {
+		return _fragmentEntry.getHtmlPreviewEntryId();
 	}
 
 	/**
@@ -423,6 +440,16 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public void setHtml(java.lang.String html) {
 		_fragmentEntry.setHtml(html);
+	}
+
+	/**
+	* Sets the html preview entry ID of this fragment entry.
+	*
+	* @param htmlPreviewEntryId the html preview entry ID of this fragment entry
+	*/
+	@Override
+	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
+		_fragmentEntry.setHtmlPreviewEntryId(htmlPreviewEntryId);
 	}
 
 	/**

@@ -54,15 +54,15 @@ if (Validator.isNotNull(backURL)) {
 
 				<%
 				for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
-				CommerceWarehouseItem commerceWarehouseItem = commerceWarehouseItemsDisplayContext.getCommerceWarehouseItem(commerceWarehouse);
+					CommerceWarehouseItem commerceWarehouseItem = commerceWarehouseItemsDisplayContext.getCommerceWarehouseItem(commerceWarehouse);
 
-				long commerceWarehouseItemId = 0;
+					long commerceWarehouseItemId = 0;
 
-				if (commerceWarehouseItem != null) {
-					commerceWarehouseItemId = commerceWarehouseItem.getCommerceWarehouseItemId();
-				}
+					if (commerceWarehouseItem != null) {
+						commerceWarehouseItemId = commerceWarehouseItem.getCommerceWarehouseItemId();
+					}
 
-				int curIndex = commerceWarehouses.indexOf(commerceWarehouse);
+					int curIndex = commerceWarehouses.indexOf(commerceWarehouse);
 				%>
 
 					<aui:model-context bean="<%= commerceWarehouseItem %>" model="<%= CommerceWarehouseItem.class %>" />

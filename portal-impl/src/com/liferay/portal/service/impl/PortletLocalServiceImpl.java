@@ -2393,7 +2393,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 			}
 
 			containerRuntimeOptions.put(
-				containerRuntimeOptionPrefix + name,
+				containerRuntimeOptionPrefix.concat(name),
 				values.toArray(new String[values.size()]));
 		}
 

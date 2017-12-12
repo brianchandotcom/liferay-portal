@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.page.template.service.permission;
+package com.liferay.layout.admin.web.internal.security.permission;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -24,35 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateCollection"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class LayoutPageTemplateCollectionPermission
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker,
-			LayoutPageTemplateCollection layoutPageTemplateCollection,
-			String actionId)
-		throws PortalException {
-
-		_layoutPageTemplateCollectionModelResourcePermission.check(
-			permissionChecker, layoutPageTemplateCollection, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker,
-			long layoutPageTemplateCollectionId, String actionId)
-		throws PortalException {
-
-		_layoutPageTemplateCollectionModelResourcePermission.check(
-			permissionChecker, layoutPageTemplateCollectionId, actionId);
-	}
+@Component(immediate = true)
+public class LayoutPageTemplateCollectionPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker,
@@ -71,16 +45,6 @@ public class LayoutPageTemplateCollectionPermission
 
 		return _layoutPageTemplateCollectionModelResourcePermission.contains(
 			permissionChecker, layoutPageTemplateCollectionId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_layoutPageTemplateCollectionModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(

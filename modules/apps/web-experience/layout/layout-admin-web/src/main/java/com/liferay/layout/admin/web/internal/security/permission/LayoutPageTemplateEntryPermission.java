@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.page.template.service.permission;
+package com.liferay.layout.admin.web.internal.security.permission;
 
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -24,34 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jürgen Kappler
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class LayoutPageTemplateEntryPermission
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker,
-			LayoutPageTemplateEntry layoutPageTemplateEntry, String actionId)
-		throws PortalException {
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			permissionChecker, layoutPageTemplateEntry, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long layoutPageTemplateEntryId,
-			String actionId)
-		throws PortalException {
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			permissionChecker, layoutPageTemplateEntryId, actionId);
-	}
+@Component(immediate = true)
+public class LayoutPageTemplateEntryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker,
@@ -69,16 +44,6 @@ public class LayoutPageTemplateEntryPermission
 
 		return _layoutPageTemplateEntryModelResourcePermission.contains(
 			permissionChecker, layoutPageTemplateEntryId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_layoutPageTemplateEntryModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(

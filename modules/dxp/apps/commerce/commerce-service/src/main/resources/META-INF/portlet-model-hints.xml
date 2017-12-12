@@ -165,7 +165,9 @@
 		<field name="commerceOrderId" type="long" />
 		<field name="commercePaymentMethodId" type="long" />
 		<field name="status" type="int" />
-		<field name="content" type="String" />
+		<field name="content" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.commerce.model.CommercePaymentMethod">
 		<field name="commercePaymentMethodId" type="long" />

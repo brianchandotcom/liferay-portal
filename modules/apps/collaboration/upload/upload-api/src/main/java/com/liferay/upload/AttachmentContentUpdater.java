@@ -26,7 +26,8 @@ public interface AttachmentContentUpdater {
 
 	public String updateContent(
 			String content, String contentType,
-			UnsafeFunction<FileEntry, FileEntry, PortalException> saveTempFile)
+			UnsafeFunction<FileEntry, FileEntry, PortalException>
+				saveTempFileUnsafeFunction)
 		throws PortalException;
 
 }

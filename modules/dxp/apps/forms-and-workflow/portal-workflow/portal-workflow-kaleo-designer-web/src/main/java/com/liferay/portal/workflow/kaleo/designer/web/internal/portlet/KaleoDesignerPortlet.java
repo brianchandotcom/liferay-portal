@@ -323,8 +323,6 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		KaleoDefinitionVersion kaleoDefinitionVersion = null;
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -339,12 +337,14 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 
 		String name = ParamUtil.getString(renderRequest, "name");
 
-		String draftVersion = ParamUtil.getString(
-			renderRequest, "draftVersion");
-
 		if (Validator.isNull(name)) {
 			return;
 		}
+
+		KaleoDefinitionVersion kaleoDefinitionVersion = null;
+
+		String draftVersion = ParamUtil.getString(
+			renderRequest, "draftVersion");
 
 		if (Validator.isNull(draftVersion)) {
 			kaleoDefinitionVersion =

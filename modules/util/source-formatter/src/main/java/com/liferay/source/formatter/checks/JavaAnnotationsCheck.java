@@ -67,7 +67,7 @@ public class JavaAnnotationsCheck extends BaseFileCheck {
 		sb.append("' as delimeter");
 
 		addMessage(
-			fileName, sb.toString(),
+			fileName, sb.toString(), "meta_annotations.markdown",
 			getLineCount(content, content.indexOf(matcher.group())));
 	}
 

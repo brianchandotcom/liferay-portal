@@ -3,6 +3,8 @@ AUI.add(
 	function(A) {
 		var AArray = A.Array;
 
+		var formConfig;
+
 		var DEFAULTS_FORM_VALIDATOR = A.config.FormValidator;
 
 		var defaultAcceptFiles = DEFAULTS_FORM_VALIDATOR.RULES.acceptFiles;
@@ -76,6 +78,10 @@ AUI.add(
 
 							return instance._onSubmit;
 						}
+					},
+					validateOnBlur: {
+						validator: A.Lang.isBoolean,
+						value: true
 					}
 				},
 
@@ -96,7 +102,8 @@ AUI.add(
 						if (formNode) {
 							var formValidator = new A.FormValidator(
 								{
-									boundingBox: formNode
+									boundingBox: formNode,
+									validateOnBlur: instance.get('validateOnBlur')
 								}
 							);
 
@@ -372,6 +379,8 @@ AUI.add(
 
 				register: function(config) {
 					var instance = this;
+
+					formConfig = config;
 
 					var form = new Liferay.Form(config);
 

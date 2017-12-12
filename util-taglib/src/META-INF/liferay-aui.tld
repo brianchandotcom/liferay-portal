@@ -538,6 +538,13 @@
 			<rtexprvalue>true</rtexprvalue>
 			<type>boolean</type>
 		</attribute>
+		<attribute>
+			<description><![CDATA[Whether to validate fields on blur method or not. The default value is <code>true</code>.]]></description>
+			<name>validateOnBlur</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
 		<dynamic-attributes>true</dynamic-attributes>
 	</tag>
 	<tag>

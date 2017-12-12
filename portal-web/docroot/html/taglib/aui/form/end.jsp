@@ -71,6 +71,8 @@ String fullName = namespace + HtmlUtil.escapeJS(name);
 					<%= onSubmit %>
 				}
 			</c:if>
+
+			, validateOnBlur: <%= validateOnBlur %>
 		}
 	);
 

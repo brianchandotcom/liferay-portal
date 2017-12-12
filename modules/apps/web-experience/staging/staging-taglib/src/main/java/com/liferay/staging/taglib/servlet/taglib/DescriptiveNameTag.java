@@ -70,8 +70,6 @@ public class DescriptiveNameTag extends IncludeTag {
 				sb.append(StringPool.OPEN_PARENTHESIS);
 				sb.append(LanguageUtil.get(request, "staging"));
 				sb.append(StringPool.CLOSE_PARENTHESIS);
-
-				return sb.toString();
 			}
 		}
 		catch (PortalException pe) {
@@ -80,7 +78,7 @@ public class DescriptiveNameTag extends IncludeTag {
 			}
 		}
 
-		return StringPool.BLANK;
+		return sb.toString();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

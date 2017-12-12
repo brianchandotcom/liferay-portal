@@ -14,8 +14,27 @@
 
 package com.liferay.fragment.model.impl;
 
+import com.liferay.portal.kernel.util.StringBundler;
+
 /**
  * @author Eudaldo Alonso
  */
 public class FragmentEntryImpl extends FragmentEntryBaseImpl {
+
+	@Override
+	public String getContent() {
+		StringBundler sb = new StringBundler(8);
+
+		sb.append("<html><head>");
+		sb.append("<style>");
+		sb.append(getCss());
+		sb.append("</style><script>");
+		sb.append(getJs());
+		sb.append("</script></head><body>");
+		sb.append(getHtml());
+		sb.append("</body></html>");
+
+		return sb.toString();
+	}
+
 }

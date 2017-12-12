@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -214,31 +213,21 @@ public class FragmentEntryLocalServiceImpl
 			FragmentEntry fragmentEntry, ServiceContext serviceContext)
 		throws PortalException {
 
-		StringBundler sb = new StringBundler(8);
-
-		sb.append("<html><head>");
-		sb.append("<style>");
-		sb.append(fragmentEntry.getCss());
-		sb.append("</style><script>");
-		sb.append(fragmentEntry.getJs());
-		sb.append("</script></head><body>");
-		sb.append(fragmentEntry.getHtml());
-		sb.append("</body></html>");
-
 		HtmlPreviewEntry htmlPreviewEntry =
 			_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
 				fragmentEntry.getHtmlPreviewEntryId());
 
 		if (htmlPreviewEntry != null) {
 			return _htmlPreviewEntryLocalService.updateHtmlPreviewEntry(
-				htmlPreviewEntry.getHtmlPreviewEntryId(), sb.toString(),
-				ContentTypes.IMAGE_PNG, serviceContext);
+				htmlPreviewEntry.getHtmlPreviewEntryId(),
+				fragmentEntry.getContent(), ContentTypes.IMAGE_PNG,
+				serviceContext);
 		}
 
 		return _htmlPreviewEntryLocalService.addHtmlPreviewEntry(
 			fragmentEntry.getUserId(), fragmentEntry.getGroupId(),
 			classNameLocalService.getClassNameId(FragmentEntry.class),
-			fragmentEntry.getFragmentEntryId(), sb.toString(),
+			fragmentEntry.getFragmentEntryId(), fragmentEntry.getContent(),
 			ContentTypes.IMAGE_PNG, serviceContext);
 	}
 

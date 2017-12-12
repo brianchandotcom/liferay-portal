@@ -49,6 +49,12 @@ public class CommerceOrderServiceUtil {
 				   .addCommerceOrderFromCart(commerceCartId, serviceContext);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().fetchCommerceOrder(commerceOrderId);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder getCommerceOrder(
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -59,6 +65,19 @@ public class CommerceOrderServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrderByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceOrders(groupId, start, end, orderByComparator);
+	}
+
+	public static int getCommerceOrdersCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrdersCount(groupId);
 	}
 
 	/**

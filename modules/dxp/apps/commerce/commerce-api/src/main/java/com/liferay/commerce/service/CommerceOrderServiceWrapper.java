@@ -43,6 +43,13 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
+		long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.fetchCommerceOrder(commerceOrderId);
+	}
+
+	@Override
 	public com.liferay.commerce.model.CommerceOrder getCommerceOrder(
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -55,6 +62,21 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.getCommerceOrderByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.getCommerceOrders(groupId, start, end,
+			orderByComparator);
+	}
+
+	@Override
+	public int getCommerceOrdersCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.getCommerceOrdersCount(groupId);
 	}
 
 	/**

@@ -329,6 +329,7 @@
 														</liferay-util:buffer>
 
 														<liferay-ui:message arguments="<%= importFileMark %>" key="write-your-definition-or-x" translateArguments="<%= false %>" />
+
 														<input id="<portlet:namespace />upload" style="display:none" type="file" />
 
 														<div class="lfr-template-editor-wrapper" id="<portlet:namespace />editorWrapper"></div>

@@ -133,6 +133,23 @@ public class CommerceWarehouseLocalServiceImpl
 
 	@Override
 	public List<CommerceWarehouse> getCommerceWarehouses(
+		long cpInstanceId, int quantity, int start, int end) {
+
+		return commerceWarehouseFinder.findByCommerceWarehouseItemQuantity(
+			cpInstanceId, quantity, start, end);
+	}
+
+	@Override
+	public List<CommerceWarehouse> getCommerceWarehouses(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+
+		return commerceWarehousePersistence.findByGroupId(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceWarehouse> getCommerceWarehouses(
 		long groupId, long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator) {
 
@@ -143,16 +160,6 @@ public class CommerceWarehouseLocalServiceImpl
 
 		return commerceWarehousePersistence.findByGroupId(
 			groupId, start, end, orderByComparator);
-	}
-
-	@Override
-	public List<CommerceWarehouse> getCommerceWarehouses(
-		String className, long classPK, int quantity, int start, int end) {
-
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return commerceWarehouseFinder.findByCommerceWarehouseItemQuantity(
-			classNameId, classPK, quantity, start, end);
 	}
 
 	@Override

@@ -91,6 +91,15 @@ public class CommerceWarehouseServiceImpl
 
 	@Override
 	public List<CommerceWarehouse> getCommerceWarehouses(
+		long groupId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+
+		return commerceWarehouseLocalService.getCommerceWarehouses(
+			groupId, start, end, orderByComparator);
+	}
+
+	@Override
+	public List<CommerceWarehouse> getCommerceWarehouses(
 			long groupId, long commerceCountryId, int start, int end,
 			OrderByComparator<CommerceWarehouse> orderByComparator)
 		throws PortalException {

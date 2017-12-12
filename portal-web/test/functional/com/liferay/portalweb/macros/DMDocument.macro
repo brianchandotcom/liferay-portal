@@ -1166,8 +1166,8 @@
 	</command>
 
 	<command name="editCP">
-		<execute macro="DMNavigator#gotoEditDocument">
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="${dmDocumentTitle}" />
 		</execute>
 
 		<execute macro="DMDocument#editCmd">
@@ -1737,8 +1737,8 @@
 	</command>
 
 	<command name="saveAndCheckinEditedDocumentPG">
-		<execute macro="DMNavigator#gotoEditDocument">
-			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="rowEntry" value="${dmDocumentTitle}" />
 		</execute>
 
 		<execute function="AssertClick" locator1="Button#SAVE_AND_CHECKIN" value1="Save and Check In" />

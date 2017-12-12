@@ -49,7 +49,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		<aui:nav-item
 			href="<%= viewNotificationsURL %>"
-			label="notifications-list"
+			label='<%= LanguageUtil.format(request, "notifications-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, false))) %>'
 			selected="<%= !actionRequired %>"
 		/>
 
@@ -59,7 +59,7 @@ navigationURL.setParameter(SearchContainer.DEFAULT_CUR_PARAM, "0");
 
 		<aui:nav-item
 			href="<%= viewRequestsURL %>"
-			label="requests-list"
+			label='<%= LanguageUtil.format(request, "requests-list-x", String.valueOf(UserNotificationEventLocalServiceUtil.getDeliveredUserNotificationEventsCount(themeDisplay.getUserId(), UserNotificationDeliveryConstants.TYPE_WEBSITE, true, true))) %>'
 			selected="<%= actionRequired %>"
 		/>
 	</aui:nav>

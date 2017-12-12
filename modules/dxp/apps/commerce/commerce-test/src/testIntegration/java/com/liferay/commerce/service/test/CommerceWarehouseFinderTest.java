@@ -110,8 +110,8 @@ public class CommerceWarehouseFinderTest {
 
 		List<CommerceWarehouse> commerceWarehouses =
 			CommerceWarehouseLocalServiceUtil.getCommerceWarehouses(
-				CPInstance.class.getName(), cpInstance.getCPInstanceId(),
-				quantity, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				cpInstance.getCPInstanceId(), quantity, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(
 			commerceWarehouses.toString(),

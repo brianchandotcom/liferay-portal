@@ -19,7 +19,6 @@ import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.commerce.shipping.origin.locator.warehouse.internal.util.DistanceCalculator;
@@ -139,7 +138,7 @@ public class WarehouseCommerceShippingOriginLocator
 
 		List<CommerceWarehouse> commerceWarehouses =
 			_commerceWarehouseLocalService.getCommerceWarehouses(
-				CPInstance.class.getName(), commerceCartItem.getCPInstanceId(),
+				commerceCartItem.getCPInstanceId(),
 				commerceCartItem.getQuantity(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 

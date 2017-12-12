@@ -36,16 +36,6 @@ portletURL.setParameter("searchContainerId", "commerceOrderItems");
 
 request.setAttribute("view.jsp-portletURL", portletURL);
 
-String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
-
-PortletURL ordersURLObj = PortalUtil.getControlPanelPortletURL(request, CommercePortletKeys.COMMERCE_ORDER, lifecycle);
-
-String ordersURL = ordersURLObj.toString();
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(ordersURL);
-
-renderResponse.setTitle(String.valueOf(commerceOrderId));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -160,18 +150,6 @@ renderResponse.setTitle(String.valueOf(commerceOrderId));
 						cssClass="table-cell-content"
 						name="user"
 						property="userName"
-					/>
-
-					<liferay-ui:search-container-column-date
-						cssClass="table-cell-content"
-						name="create-date"
-						property="createDate"
-					/>
-
-					<liferay-ui:search-container-column-date
-						cssClass="table-cell-content"
-						name="modified-date"
-						property="modifiedDate"
 					/>
 
 					<liferay-ui:search-container-column-jsp

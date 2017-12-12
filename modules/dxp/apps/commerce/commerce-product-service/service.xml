@@ -385,7 +385,7 @@
 
 		<!-- PK fields -->
 
-		<column name="CPFriendlyURLEntryId" primary="true" type="long" />
+		<column name="CPDisplayLayoutId" primary="true" type="long" />
 
 		<!-- Group instance -->
 
@@ -448,43 +448,37 @@
 
 		<!-- Finder methods -->
 
-		<finder name="G_C_C_C" return-type="Collection">
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_C_C_U" return-type="Collection">
+		<finder name="G_C_U" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="G_C_C_C_M" return-type="Collection">
+		<finder name="G_C_C_M" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="main" />
 		</finder>
-		<finder name="G_C_C_L_U" return-type="FriendlyURLEntry">
+		<finder name="G_C_L_U" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="languageId" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="G_C_C_C_L_U" return-type="FriendlyURLEntry">
+		<finder name="G_C_C_L_U" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="languageId" />
 			<finder-column name="urlTitle" />
 		</finder>
-		<finder name="G_C_C_C_L_M" return-type="FriendlyURLEntry">
+		<finder name="G_C_C_L_M" return-type="FriendlyURLEntry">
 			<finder-column name="groupId" />
-			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 			<finder-column name="languageId" />

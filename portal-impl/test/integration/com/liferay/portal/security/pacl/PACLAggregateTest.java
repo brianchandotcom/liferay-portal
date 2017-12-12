@@ -309,7 +309,7 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 
 			Path newTempDirPath = Paths.get(originalTempDirName, "PACL");
 
-			ProcessException processException = null;
+			IOException ioException = null;
 
 			try {
 				Files.createDirectories(newTempDirPath);
@@ -341,9 +341,9 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 					_classes.toArray(new Class<?>[_classes.size()]));
 			}
 			catch (IOException ioe) {
-				processException = new ProcessException(ioe);
+				ioException = ioe;
 
-				throw processException;
+				throw new ProcessException(ioe);
 			}
 			finally {
 				InitUtil.stopRuntime();
@@ -385,10 +385,8 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 							});
 					}
 					catch (IOException ioe) {
-						if (processException != null) {
-							processException.addSuppressed(ioe);
-
-							throw processException;
+						if (ioException != null) {
+							ioe.addSuppressed(ioException);
 						}
 
 						throw new ProcessException(ioe);

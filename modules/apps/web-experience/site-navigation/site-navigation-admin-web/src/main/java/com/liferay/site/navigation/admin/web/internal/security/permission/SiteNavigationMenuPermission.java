@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.site.navigation.service.permission;
+package com.liferay.site.navigation.admin.web.internal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -24,34 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
- * @deprecated As of 1.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.site.navigation.model.SiteNavigationMenu"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class SiteNavigationMenuPermission
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long siteNavigationMenuId,
-			String actionId)
-		throws PortalException {
-
-		_siteNavigationMenuModelResourcePermission.check(
-			permissionChecker, siteNavigationMenuId, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker,
-			SiteNavigationMenu siteNavigationMenu, String actionId)
-		throws PortalException {
-
-		_siteNavigationMenuModelResourcePermission.check(
-			permissionChecker, siteNavigationMenu, actionId);
-	}
+@Component(immediate = true)
+public class SiteNavigationMenuPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long siteNavigationMenuId,
@@ -69,16 +44,6 @@ public class SiteNavigationMenuPermission
 
 		return _siteNavigationMenuModelResourcePermission.contains(
 			permissionChecker, siteNavigationMenu, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_siteNavigationMenuModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(

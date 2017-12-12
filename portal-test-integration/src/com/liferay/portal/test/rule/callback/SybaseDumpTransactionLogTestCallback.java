@@ -37,6 +37,15 @@ public class SybaseDumpTransactionLogTestCallback
 		new SybaseDumpTransactionLogTestCallback();
 
 	@Override
+	public void afterMethod(Description description, Void v, Object target)
+		throws Exception {
+
+		if (_thread != null) {
+			_thread.interrupt();
+		}
+	}
+
+	@Override
 	public Void beforeClass(Description description) throws SQLException {
 		SybaseDumpTransactionLog sybaseDumpTransactionLog =
 			description.getAnnotation(SybaseDumpTransactionLog.class);
@@ -68,6 +77,31 @@ public class SybaseDumpTransactionLogTestCallback
 
 			if (ArrayUtil.contains(sybaseDumps, SybaseDump.METHOD)) {
 				_dumpTransactionLog();
+
+				_thread = new Thread() {
+
+					public void run() {
+						while (true) {
+							try {
+								_dumpTransactionLog();
+
+								Thread.sleep(10000);
+							}
+							catch (Exception e) {
+								String message = e.getMessage();
+
+								if (!message.contains("sleep interrupted")) {
+									throw new RuntimeException(e);
+								}
+							}
+						}
+					};
+
+				};
+
+				_thread.setName("Sybase-dumpTransactionLog-thread");
+
+				_thread.start();
 			}
 		}
 
@@ -91,5 +125,7 @@ public class SybaseDumpTransactionLogTestCallback
 				"dump transaction " + connection.getCatalog() + " with no_log");
 		}
 	}
+
+	private Thread _thread;
 
 }

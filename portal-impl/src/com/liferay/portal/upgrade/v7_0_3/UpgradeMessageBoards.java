@@ -123,7 +123,7 @@ public class UpgradeMessageBoards extends UpgradeProcess {
 
 		DBTypeToSQLMap dbTypeToSQLMap = new DBTypeToSQLMap(sb.toString());
 
-		sb = new StringBundler(8);
+		sb = new StringBundler(9);
 
 		sb.append("delete AssetEntry from AssetEntry inner join MBMessage on ");
 		sb.append("AssetEntry.classPK = MBMessage.messageId and ");

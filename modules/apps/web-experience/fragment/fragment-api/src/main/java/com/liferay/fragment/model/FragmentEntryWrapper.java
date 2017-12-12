@@ -176,6 +176,11 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		return _fragmentEntry.getCompanyId();
 	}
 
+	@Override
+	public java.lang.String getContent() {
+		return _fragmentEntry.getContent();
+	}
+
 	/**
 	* Returns the create date of this fragment entry.
 	*

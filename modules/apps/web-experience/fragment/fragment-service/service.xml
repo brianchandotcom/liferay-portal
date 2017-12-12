@@ -110,7 +110,43 @@
 		<!-- References -->
 
 		<reference entity="FragmentCollection" package-path="com.liferay.fragment" />
+		<reference entity="FragmentLayoutTemplateLink" package-path="com.liferay.fragment" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="FragmentLayoutTemplateLink" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="fragmentLayoutTemplateLinkId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Other fields -->
+
+		<column name="fragmentEntryId" type="long" />
+		<column name="layoutPageTemplateEntryId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="G_F" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="fragmentEntryId" />
+		</finder>
+		<finder name="G_L" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="layoutPageTemplateEntryId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="FragmentEntry" package-path="com.liferay.fragment" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>

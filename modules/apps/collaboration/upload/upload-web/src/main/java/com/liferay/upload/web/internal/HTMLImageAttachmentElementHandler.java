@@ -14,7 +14,6 @@
 
 package com.liferay.upload.web.internal;
 
-import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
@@ -22,6 +21,7 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.upload.AttachmentContentUpdater;
 import com.liferay.upload.AttachmentElementHandler;
 
 import java.util.regex.Matcher;
@@ -58,9 +58,7 @@ public class HTMLImageAttachmentElementHandler
 
 	@Override
 	public String replaceAttachmentElements(
-			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException>
-				saveTempFileUnsafeFunction)
+			String content, AttachmentContentUpdater.SaveTempFile saveTempFile)
 		throws PortalException {
 
 		Matcher matcher = _TEMP_ATTACHMENT_PATTERN.matcher(content);
@@ -70,7 +68,7 @@ public class HTMLImageAttachmentElementHandler
 		while (matcher.find()) {
 			FileEntry tempAttachmentFileEntry = _getFileEntry(matcher);
 
-			FileEntry attachmentFileEntry = saveTempFileUnsafeFunction.apply(
+			FileEntry attachmentFileEntry = saveTempFile.apply(
 				tempAttachmentFileEntry);
 
 			matcher.appendReplacement(

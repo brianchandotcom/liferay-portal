@@ -24,10 +24,11 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
  */
 public interface AttachmentContentUpdater {
 
+	public interface SaveTempFile
+		extends UnsafeFunction<FileEntry, FileEntry, PortalException> {}
+
 	public String updateContent(
-			String content, String contentType,
-			UnsafeFunction<FileEntry, FileEntry, PortalException>
-				saveTempFileUnsafeFunction)
+			String content, String contentType, SaveTempFile saveTempFile)
 		throws PortalException;
 
 }

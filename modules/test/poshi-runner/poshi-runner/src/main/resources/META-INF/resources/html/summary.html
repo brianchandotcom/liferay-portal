@@ -12,10 +12,10 @@
 				function(Y) {
 					new Y.ImageViewer(
 						{
-					        caption: 'Screenshots',
-					        intervalTime: 10,
-					        links: '.screenshots a',
-					        zIndex: 1
+							caption: 'Screenshots',
+							intervalTime: 10,
+							links: '.screenshots a',
+							zIndex: 1
 						}
 					).render();
 
@@ -25,7 +25,7 @@
 						}
 					).render();
 
-			        new Y.TogglerDelegate(
+					new Y.TogglerDelegate(
 						{
 							animated: true,
 							container: '#summaries',
@@ -33,7 +33,7 @@
 							expanded: false,
 							header: '.header'
 						}
-				    );
+					);
 				}
 			);
 		</script>

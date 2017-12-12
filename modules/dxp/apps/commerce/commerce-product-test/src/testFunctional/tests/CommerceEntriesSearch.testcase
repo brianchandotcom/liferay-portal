@@ -37,7 +37,7 @@
 	</tear-down>
 
 	<command ignore="true" name="AssertCatalogEntriesSearchResultsNotInTrashBin" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />

@@ -81,6 +81,13 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
+	public int getCommerceShippingMethodsCount(long groupId, boolean active) {
+		return
+			commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
+				groupId, active);
+	}
+
+	@Override
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,

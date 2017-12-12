@@ -93,11 +93,13 @@ public class ShippingMethodCommerceCheckoutStep
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		List<CommerceShippingMethod> commerceShippingMethods =
-			_commerceShippingMethodService.getCommerceShippingMethods(
-				themeDisplay.getScopeGroupId(), true);
+		if (_commerceShippingMethodService.getCommerceShippingMethodsCount(
+				themeDisplay.getScopeGroupId(), true) > 0) {
 
-		return !commerceShippingMethods.isEmpty();
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

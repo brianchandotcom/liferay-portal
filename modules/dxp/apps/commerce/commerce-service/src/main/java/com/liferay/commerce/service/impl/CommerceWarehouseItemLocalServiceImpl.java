@@ -72,6 +72,14 @@ public class CommerceWarehouseItemLocalServiceImpl
 	}
 
 	@Override
+	public CommerceWarehouseItem fetchCommerceWarehouseItem(
+		long commerceWarehouseId, long cpInstanceId) {
+
+		return commerceWarehouseItemPersistence.fetchByC_C(
+			commerceWarehouseId, cpInstanceId);
+	}
+
+	@Override
 	public List<CommerceWarehouseItem> getCommerceWarehouseItems(
 		long cpInstanceId) {
 

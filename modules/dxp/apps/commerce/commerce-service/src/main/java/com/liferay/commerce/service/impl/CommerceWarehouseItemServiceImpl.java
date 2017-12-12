@@ -64,6 +64,18 @@ public class CommerceWarehouseItemServiceImpl
 	}
 
 	@Override
+	public CommerceWarehouseItem fetchCommerceWarehouseItem(
+			long commerceWarehouseId, long cpInstanceId)
+		throws PortalException {
+
+		CPDefinitionPermission.checkCPInstance(
+			getPermissionChecker(), cpInstanceId, ActionKeys.UPDATE);
+
+		return commerceWarehouseItemLocalService.fetchCommerceWarehouseItem(
+			commerceWarehouseId, cpInstanceId);
+	}
+
+	@Override
 	public CommerceWarehouseItem getCommerceWarehouseItem(
 			long commerceWarehouseItemId)
 		throws PortalException {

@@ -17,7 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceOrder commerceOrder = (CommerceOrder)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_ORDER);
+OrderConfirmationCheckoutStepDisplayContext orderConfirmationCheckoutStepDisplayContext = (OrderConfirmationCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
+
+CommerceOrder commerceOrder = orderConfirmationCheckoutStepDisplayContext.getCommerceOrder();
 %>
 
 Order <%= commerceOrder.getCommerceOrderId() %>

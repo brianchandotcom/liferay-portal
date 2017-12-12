@@ -15,12 +15,11 @@
 package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
+import com.liferay.commerce.checkout.web.internal.display.context.OrderConfirmationCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
-import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
@@ -37,6 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marco Leo
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
@@ -101,14 +101,14 @@ public class OrderConfirmationCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		long commerceOrderId = ParamUtil.getLong(
-			httpServletRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
+		OrderConfirmationCheckoutStepDisplayContext
+			orderConfirmationCheckoutStepDisplayContext =
+				new OrderConfirmationCheckoutStepDisplayContext(
+					_commerceOrderService, httpServletRequest);
 
 		httpServletRequest.setAttribute(
-			CommerceCheckoutWebKeys.COMMERCE_ORDER, commerceOrder);
+			CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT,
+			orderConfirmationCheckoutStepDisplayContext);
 
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,

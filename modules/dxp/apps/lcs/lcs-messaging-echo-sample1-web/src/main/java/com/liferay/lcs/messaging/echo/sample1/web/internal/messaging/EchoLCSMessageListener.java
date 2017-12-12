@@ -14,9 +14,9 @@
 
 package com.liferay.lcs.messaging.echo.sample1.web.internal.messaging;
 
-import com.liferay.lcs.messaging.LCSMessageBusService;
-import com.liferay.lcs.messaging.LCSMessageListener;
-import com.liferay.lcs.messaging.LCSMessageListenerException;
+import com.liferay.lcs.messaging.bus.LCSMessageBusService;
+import com.liferay.lcs.messaging.bus.LCSMessageListener;
+import com.liferay.lcs.messaging.bus.LCSMessageListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;

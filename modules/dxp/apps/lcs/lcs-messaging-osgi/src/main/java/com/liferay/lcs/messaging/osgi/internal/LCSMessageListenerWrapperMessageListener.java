@@ -14,8 +14,8 @@
 
 package com.liferay.lcs.messaging.osgi.internal;
 
-import com.liferay.lcs.messaging.LCSMessageListener;
-import com.liferay.lcs.messaging.LCSMessageListenerException;
+import com.liferay.lcs.messaging.bus.LCSMessageListener;
+import com.liferay.lcs.messaging.bus.LCSMessageListenerException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;

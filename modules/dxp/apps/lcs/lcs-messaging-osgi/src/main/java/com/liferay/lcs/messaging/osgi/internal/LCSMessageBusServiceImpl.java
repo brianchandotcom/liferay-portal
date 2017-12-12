@@ -14,8 +14,8 @@
 
 package com.liferay.lcs.messaging.osgi.internal;
 
-import com.liferay.lcs.messaging.LCSMessageBusService;
-import com.liferay.lcs.messaging.LCSMessageListener;
+import com.liferay.lcs.messaging.bus.LCSMessageBusService;
+import com.liferay.lcs.messaging.bus.LCSMessageListener;
 import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;

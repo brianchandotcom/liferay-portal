@@ -14,8 +14,8 @@
 
 package com.liferay.lcs.messaging.echo.sample1.web.internal.activator;
 
-import com.liferay.lcs.messaging.LCSMessageBusService;
-import com.liferay.lcs.messaging.LCSMessageListener;
+import com.liferay.lcs.messaging.bus.LCSMessageBusService;
+import com.liferay.lcs.messaging.bus.LCSMessageListener;
 import com.liferay.lcs.messaging.echo.sample1.web.internal.messaging.EchoLCSMessageListener;
 
 import org.osgi.service.component.annotations.Activate;

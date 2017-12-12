@@ -1093,12 +1093,6 @@ public class PortalUtil {
 		return getPortal().getJsSafePortletId(portletId);
 	}
 
-	public static HttpServletRequest getLastForwardRequest(
-		HttpServletRequest request) {
-
-		return getPortal().getLastForwardRequest(request);
-	}
-
 	public static String getLayoutActualURL(Layout layout) {
 		return getPortal().getLayoutActualURL(layout);
 	}

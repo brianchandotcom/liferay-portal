@@ -308,10 +308,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			HttpServletRequest request =
 				(HttpServletRequest)pageContext.getRequest();
 
-			if (_useLastForwardRequest) {
-				request = PortalUtil.getLastForwardRequest(request);
-			}
-
 			Layout layout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
 			if (layout == null) {
@@ -379,10 +375,6 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		_settingsScope = settingsScope;
 	}
 
-	public void setUseLastForwardRequest(boolean useLastForwardRequest) {
-		_useLastForwardRequest = useLastForwardRequest;
-	}
-
 	/**
 	 * @see com.liferay.portal.model.impl.LayoutTypePortletImpl#getStaticPortlets(
 	 *      String)
@@ -443,6 +435,5 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 	private String _portletProviderClassName;
 	private String _queryString;
 	private String _settingsScope = _SETTINGS_SCOPE_DEFAULT;
-	private boolean _useLastForwardRequest;
 
 }

@@ -291,7 +291,6 @@ import javax.portlet.StateAwareResponse;
 import javax.portlet.ValidatorException;
 import javax.portlet.WindowState;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -2656,68 +2655,6 @@ public class PortalImpl implements Portal {
 	@Override
 	public String getJsSafePortletId(String portletId) {
 		return JS.getSafeName(portletId);
-	}
-
-	/**
-	 * @see PortalImpl#getOriginalServletRequest
-	 */
-	@Override
-	public HttpServletRequest getLastForwardRequest(
-		HttpServletRequest request) {
-
-		HttpServletRequestWrapper requestWrapper = null;
-		HttpServletRequest originalRequest = null;
-		HttpServletRequest nextRequest = null;
-
-		while (request instanceof HttpServletRequestWrapper) {
-			if (request instanceof
-					PersistentHttpServletRequestWrapper) {
-
-				PersistentHttpServletRequestWrapper
-					persistentHttpServletRequestWrapper =
-						(PersistentHttpServletRequestWrapper)request;
-
-				persistentHttpServletRequestWrapper =
-					persistentHttpServletRequestWrapper.clone();
-
-				if (originalRequest == null) {
-					originalRequest =
-						persistentHttpServletRequestWrapper.clone();
-				}
-
-				if (requestWrapper != null) {
-					requestWrapper.setRequest(
-						persistentHttpServletRequestWrapper);
-				}
-
-				requestWrapper = persistentHttpServletRequestWrapper;
-			}
-
-			HttpServletRequestWrapper httpServletRequestWrapper =
-				(HttpServletRequestWrapper)request;
-
-			nextRequest =
-				(HttpServletRequest)httpServletRequestWrapper.getRequest();
-
-			if ((request.getDispatcherType() ==
-					DispatcherType.FORWARD) &&
-				(nextRequest.getDispatcherType() == DispatcherType.REQUEST)) {
-
-				break;
-			}
-
-			request = nextRequest;
-		}
-
-		if (requestWrapper != null) {
-			requestWrapper.setRequest(request);
-		}
-
-		if (originalRequest != null) {
-			return originalRequest;
-		}
-
-		return request;
 	}
 
 	@Override

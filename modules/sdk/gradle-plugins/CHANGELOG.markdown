@@ -3077,6 +3077,32 @@ to version 2.3.44.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.515.
 
+## 3.5.64 - 2017-12-12
+
+### Changed
+- [LPS-76018]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.18.
+- [LPS-76018]: Update the [Liferay Gradle Plugins Service Builder] dependency to
+version 1.0.62.
+- [LPS-76018]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.45.
+- [LPS-76018]: Update the [Liferay Gradle Plugins TLD Formatter] dependency to
+version 1.0.6.
+- [LPS-76018]: Update the [Liferay Gradle Plugins WSDD Builder] dependency to
+version 1.0.10.
+- [LPS-76018]: Update the [Liferay Gradle Plugins XML Formatter] dependency to
+version 1.0.8.
+- [LPS-76018]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.24.
+- [LPS-76018]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.178.
+- [LPS-76018]: Update the [Liferay Portal Tools WSDD Builder] dependency to
+version 1.0.9.
+- [LPS-76018]: Update the [Liferay Source Formatter] dependency to version
+1.0.516.
+- [LPS-76018]: Update the [Liferay TLD Formatter] dependency to version 1.0.4.
+- [LPS-76018]: Update the [Liferay XML Formatter] dependency to version 1.0.4.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3098,6 +3124,7 @@ to version 2.3.44.
 [Liferay Gradle Plugins Test Integration]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-test-integration
 [Liferay Gradle Plugins Theme Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-theme-builder
 [Liferay Gradle Plugins Upgrade Table Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-upgrade-table-builder
+[Liferay Gradle Plugins WSDD Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-wsdd-builder
 [Liferay Gradle Plugins WSDL Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-wsdl-builder
 [Liferay Gradle Plugins XML Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-xml-formatter
 [Liferay Gradle Util]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-util
@@ -3346,6 +3373,7 @@ to version 2.3.44.
 [LPS-75952]: https://issues.liferay.com/browse/LPS-75952
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
 [LPS-75971]: https://issues.liferay.com/browse/LPS-75971
+[LPS-76018]: https://issues.liferay.com/browse/LPS-76018
 [LPS-76110]: https://issues.liferay.com/browse/LPS-76110
 [LPS-76202]: https://issues.liferay.com/browse/LPS-76202
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221

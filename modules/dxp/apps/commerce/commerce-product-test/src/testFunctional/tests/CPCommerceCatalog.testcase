@@ -36,7 +36,7 @@
 		</if>
 	</tear-down>
 
-	<command name="AddGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="AddGroupedCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -69,7 +69,7 @@
 		</execute>
 	</command>
 
-	<command name="AddGroupedDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddGroupedDraftCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -88,7 +88,7 @@
 		</execute>
 	</command>
 
-	<command name="AddSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="AddSimpleCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -140,7 +140,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="AddVirtualCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -173,7 +173,7 @@
 		</execute>
 	</command>
 
-	<command name="AddVirtualDraftCatalogEntry" priority="5">
+	<command ignore="true" name="AddVirtualDraftCatalogEntry" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -192,7 +192,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckGroupedDraftCatalogEntry" priority="5">
+	<command ignore="true" name="CheckGroupedDraftCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddGroupedDraftCatalogEntry" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -210,7 +210,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckPublishedGroupedCatalogEntry" priority="5">
+	<command ignore="true" name="CheckPublishedGroupedCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -224,7 +224,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckPublishedSimpleCatalogEntry" priority="5">
+	<command ignore="true" name="CheckPublishedSimpleCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -238,7 +238,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckPublishedVirtualCatalogEntry" priority="5">
+	<command ignore="true" name="CheckPublishedVirtualCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />
 
 		<execute macro="CommerceNavigator#gotoEntry">
@@ -252,7 +252,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckSimpleDraftCatalogEntry" priority="5">
+	<command ignore="true" name="CheckSimpleDraftCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddSimpleDraftCatalogEntry" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -270,7 +270,7 @@
 		</execute>
 	</command>
 
-	<command name="CheckVirtualDraftCatalogEntry" priority="5">
+	<command ignore="true" name="CheckVirtualDraftCatalogEntry" priority="5">
 		<execute test-case="CPCommerceCatalog#AddVirtualDraftCatalogEntry" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
@@ -319,7 +319,7 @@
 		<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
 	</command>
 
-	<command name="DeleteGroupedCatalogEntryViaCheckbox" priority="5">
+	<command ignore="true" name="DeleteGroupedCatalogEntryViaCheckbox" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddGroupedCatalogEntry" />
@@ -329,7 +329,7 @@
 		</execute>
 	</command>
 
-	<command name="DeleteSimpleCatalogEntryViaCheckbox" priority="5">
+	<command ignore="true" name="DeleteSimpleCatalogEntryViaCheckbox" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />

@@ -27,6 +27,9 @@ import java.util.List;
  */
 public class OSGiBundleBuilderArgs {
 
+	protected static final File DEFAULT_BASE_DIR =
+		new File(System.getProperty("user.dir"));
+
 	public File getBaseDir() {
 		return _baseDir;
 	}
@@ -84,10 +87,9 @@ public class OSGiBundleBuilderArgs {
 	}
 
 	@Parameter(
-		description = "The base directory.", names = {"--base-dir"},
-		required = true
+		description = "The base directory.", names = {"--base-dir"}
 	)
-	private File _baseDir;
+	private File _baseDir = DEFAULT_BASE_DIR;
 
 	@Parameter(
 		description = "The location of the Bnd file.", names = {"--bnd-file"},

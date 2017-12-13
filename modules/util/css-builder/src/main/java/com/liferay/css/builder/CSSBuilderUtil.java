@@ -18,7 +18,6 @@ import com.liferay.css.builder.internal.util.StringUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.model.ModelHintsConstants;
 
 import java.io.File;
 
@@ -85,23 +84,6 @@ public class CSSBuilderUtil {
 		matcher.appendTail(sb);
 
 		return sb.toString();
-	}
-
-	public static String parseStaticTokens(String content) {
-		return StringUtil.replace(
-			content,
-			new String[] {
-				"@model_hints_constants_text_display_height@",
-				"@model_hints_constants_text_display_width@",
-				"@model_hints_constants_textarea_display_height@",
-				"@model_hints_constants_textarea_display_width@"
-			},
-			new String[] {
-				ModelHintsConstants.TEXT_DISPLAY_HEIGHT,
-				ModelHintsConstants.TEXT_DISPLAY_WIDTH,
-				ModelHintsConstants.TEXTAREA_DISPLAY_HEIGHT,
-				ModelHintsConstants.TEXTAREA_DISPLAY_WIDTH
-			});
 	}
 
 	private static final Pattern _cssImportPattern = Pattern.compile(

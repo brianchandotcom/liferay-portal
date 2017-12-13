@@ -314,6 +314,14 @@ public class LayoutPageTemplateEntryLocalServiceUtil {
 			layoutPageTemplateEntryId, name, fragmentEntries, serviceContext);
 	}
 
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+		long layoutPageTemplateEntryId, java.lang.String name)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateLayoutPageTemplateEntry(layoutPageTemplateEntryId,
+			name);
+	}
+
 	public static LayoutPageTemplateEntryLocalService getService() {
 		return _serviceTracker.getService();
 	}

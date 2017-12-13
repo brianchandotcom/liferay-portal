@@ -97,11 +97,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 				<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 			</liferay-ui:search-container>
 
-			<portlet:actionURL name="/layout/add_layout" var="addLayoutURL">
+			<portlet:actionURL name="/layout/add_content_layout" var="addLayoutURL">
 				<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 				<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
-				<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
-				<portlet:param name="stagingGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getStagingGroupId()) %>" />
 				<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
 				<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
 			</portlet:actionURL>

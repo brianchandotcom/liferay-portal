@@ -122,9 +122,12 @@
 	</command>
 
 	<command name="assertCannotDeleteOnlyPage">
-		<execute macro="LexiconEntry#delete">
-			<var name="failure" value="You must have at least one page." />
-			<var name="rowEntry" value="${pageName}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
+			<var name="key_rowEntry" value="${pageName}" />
+		</execute>
+
+		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
+			<var name="key_menuItem" value="Delete" />
 		</execute>
 	</command>
 

@@ -30,7 +30,7 @@
 </tr>
 <tr>
 	<td>DRAFT_AUTO_SAVE</td>
-	<td>//div/small[contains(@id,'saveStatus') and contains(.,'Draft saved at')]</td>
+	<td>//div/small[contains(@id,'saveStatus') and contains(.,'Draft Saved at')]</td>
 	<td></td>
 </tr>
 <tr>

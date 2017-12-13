@@ -80,11 +80,8 @@ public class OSGiBundleBuilderArgs {
 		return _help;
 	}
 
-	protected static final File DEFAULT_BASE_DIR = new File(
-		System.getProperty("user.dir"));
-
 	@Parameter(description = "The base directory.", names = {"--base-dir"})
-	private File _baseDir = DEFAULT_BASE_DIR;
+	private File _baseDir = new File(System.getProperty("user.dir"));
 
 	@Parameter(
 		description = "The location of the Bnd file.", names = {"--bnd-file"},

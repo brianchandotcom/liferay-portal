@@ -50,6 +50,7 @@ import com.liferay.taglib.DirectTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
@@ -172,7 +173,8 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 		RestrictPortletServletRequest restrictPortletServletRequest =
 			new RestrictPortletServletRequest(originalRequest);
 
-		Map<String, String[]> parameterMap = request.getParameterMap();
+		Map<String, String[]> parameterMap = new HashMap<>(
+			request.getParameterMap());
 
 		String portletInstanceKey = portletName;
 

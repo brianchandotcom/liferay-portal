@@ -82,17 +82,19 @@
 						</div>
 
 						<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,revision-history" refresh="<%= false %>" type="tabs">
-							<liferay-ui:section>
-								<div class="sidebar-body">
-									<h3 class="version">
-										<liferay-ui:message key="version" /> <%= workflowDefinition.getVersion() %>
-									</h3>
+							<c:if test="<%= workflowDefinition != null %>">
+								<liferay-ui:section>
+									<div class="sidebar-body">
+										<h3 class="version">
+											<liferay-ui:message key="version" /> <%= workflowDefinition.getVersion() %>
+										</h3>
 
-									<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
+										<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
 
-									<aui:workflow-status model="<%= WorkflowDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
-								</div>
-							</liferay-ui:section>
+										<aui:workflow-status model="<%= WorkflowDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
+									</div>
+								</liferay-ui:section>
+							</c:if>
 
 							<liferay-ui:section>
 								<div class="sidebar-body workflow-definition-sidebar">

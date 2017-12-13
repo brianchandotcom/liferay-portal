@@ -15,3 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+List<LayoutPageTemplateFragment> layoutPageTemplateFragments = (List<LayoutPageTemplateFragment>)request.getAttribute(ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
+%>

@@ -24,13 +24,11 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
@@ -168,14 +166,6 @@ public class CommerceShippingMethodLocalServiceImpl
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		byte[] imageBytes = null;
-
-		try {
-			imageBytes = FileUtil.getBytes(imageFile);
-		}
-		catch (IOException ioe) {
-		}
-
 		// Commerce shipping method
 
 		CommerceShippingMethod commerceShippingMethod =
@@ -185,7 +175,7 @@ public class CommerceShippingMethodLocalServiceImpl
 		commerceShippingMethod.setNameMap(nameMap);
 		commerceShippingMethod.setDescriptionMap(descriptionMap);
 
-		if ((imageFile != null) && (imageBytes != null)) {
+		if ((imageFile != null) && (commerceShippingMethod.getImageId() <= 0)) {
 			commerceShippingMethod.setImageId(counterLocalService.increment());
 		}
 
@@ -196,9 +186,9 @@ public class CommerceShippingMethodLocalServiceImpl
 
 		// Image
 
-		if ((imageFile != null) && (imageBytes != null)) {
+		if (imageFile != null) {
 			imageLocalService.updateImage(
-				commerceShippingMethod.getImageId(), imageBytes);
+				commerceShippingMethod.getImageId(), imageFile);
 		}
 
 		// Commerce shipping engine

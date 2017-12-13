@@ -261,12 +261,6 @@ public class LayoutStagedModelDataHandler
 			PortletDataContext portletDataContext, Layout layout)
 		throws Exception {
 
-		if (Objects.equals(
-				layout.getType(), LayoutConstants.TYPE_SHARED_PORTLET)) {
-
-			return;
-		}
-
 		Element layoutElement = portletDataContext.getExportDataElement(layout);
 
 		populateElementLayoutMetadata(layoutElement, layout);

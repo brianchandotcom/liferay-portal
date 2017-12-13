@@ -169,6 +169,12 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
+		if (Objects.equals(fragmentEntry.getName(), name)) {
+			return fragmentEntry;
+		}
+
+		validate(fragmentEntry.getGroupId(), name);
+
 		fragmentEntry.setName(name);
 
 		return fragmentEntryPersistence.update(fragmentEntry);

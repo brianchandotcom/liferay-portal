@@ -60,9 +60,6 @@
 		portletDisplay.setURLBack(redirect);
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : name);
-
-		String publishUpdateButtonLabel = kaleoDefinitionVersion == null
-				|| !kaleoDefinitionVersion.isApproved() ? "publish" : "update";
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -841,13 +838,19 @@
 					</aui:fieldset-group>
 
 					<aui:button-row>
-						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.PUBLISH) %>">
-							<aui:button onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>' primary="<%= true %>" value="<%= publishUpdateButtonLabel %>" />
+						<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
+							<aui:button
+								onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>'
+								primary="<%= true %>"
+								value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>"
+							/>
 						</c:if>
 
-						<c:if test="<%= KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)
-							&& kaleoDefinitionVersion == null || kaleoDefinitionVersion.isDraft()) %>">
-							<aui:button onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>' value="save" />
+						<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
+							<aui:button
+								onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>'
+								value="save"
+							/>
 						</c:if>
 
 						<span class="lfr-portlet-workflowdesigner-message" id="<portlet:namespace />toolbarMessage"></span>

@@ -17,14 +17,19 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionNameComparator;
@@ -52,6 +57,8 @@ public class KaleoDesignerDisplayContext {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 		_userLocalService = userLocalService;
 
 		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
@@ -115,6 +122,18 @@ public class KaleoDesignerDisplayContext {
 		return _ORDER_COLUMNS;
 	}
 
+	public String getPublishKaleoDefinitionVersionButtonLabel(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+
+		if ((kaleoDefinitionVersion == null) ||
+			!kaleoDefinitionVersion.isApproved()) {
+
+			return "publish";
+		}
+
+		return "update";
+	}
+
 	public ResourceBundle getResourceBundle(Locale locale) {
 		Class<?> clazz = getClass();
 
@@ -172,6 +191,32 @@ public class KaleoDesignerDisplayContext {
 		return user.getFullName();
 	}
 
+	public boolean isPublishKaleoDefinitionVersionButtonVisible(
+		PermissionChecker permissionChecker) {
+
+		return KaleoDesignerPermission.contains(
+			permissionChecker, _themeDisplay.getCompanyGroupId(),
+			KaleoDesignerActionKeys.PUBLISH);
+	}
+
+	public boolean isSaveKaleoDefinitionVersionButtonVisible(
+		PermissionChecker permissionChecker,
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+
+		if (!KaleoDesignerPermission.contains(
+				permissionChecker, _themeDisplay.getCompanyGroupId(),
+				KaleoDesignerActionKeys.ADD_DRAFT)) {
+
+			return false;
+		}
+
+		if (kaleoDefinitionVersion == null) {
+			return true;
+		}
+
+		return kaleoDefinitionVersion.isDraft();
+	}
+
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
 	private static final String[] _ORDER_COLUMNS = {"name", "title"};
@@ -179,6 +224,7 @@ public class KaleoDesignerDisplayContext {
 	private final KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
+	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
 
 }

@@ -18,6 +18,10 @@ import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
+import com.liferay.commerce.exception.CommerceCartBillingAddressException;
+import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
+import com.liferay.commerce.exception.CommerceCartShippingAddressException;
+import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.util.CPInstanceHelper;
@@ -33,6 +37,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -108,31 +113,22 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		long commerceCartId = ParamUtil.getLong(
-			actionRequest, "commerceCartId");
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CommerceOrder.class.getName(), actionRequest);
-
-		CommerceOrder commerceOrder =
-			_commerceOrderService.addCommerceOrderFromCart(
-				commerceCartId, serviceContext);
-
-		redirect = _http.addParameter(
-			redirect, actionResponse.getNamespace() + "commerceOrderId",
-			commerceOrder.getCommerceOrderId());
-
-		serviceContext.setAttribute("redirect", redirect);
-
-		String paymentURL = _commercePaymentHelper.startPayment(
-			commerceOrder, serviceContext);
-
-		if (Validator.isNotNull(paymentURL)) {
-			redirect = paymentURL;
+		try {
+			startPayment(actionRequest, actionResponse);
 		}
+		catch (Exception e) {
+			if (e instanceof CommerceCartBillingAddressException ||
+				e instanceof CommerceCartPaymentMethodException ||
+				e instanceof CommerceCartShippingAddressException ||
+				e instanceof CommerceCartShippingMethodException) {
 
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+				SessionErrors.add(actionRequest, e.getClass());
+
+				return;
+			}
+
+			throw e;
+		}
 	}
 
 	@Override
@@ -176,6 +172,37 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 			return false;
 		}
+	}
+
+	protected void startPayment(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortalException {
+
+		long commerceCartId = ParamUtil.getLong(
+			actionRequest, "commerceCartId");
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceOrder.class.getName(), actionRequest);
+
+		CommerceOrder commerceOrder =
+			_commerceOrderService.addCommerceOrderFromCart(
+				commerceCartId, serviceContext);
+
+		redirect = _http.addParameter(
+			redirect, actionResponse.getNamespace() + "commerceOrderId",
+			commerceOrder.getCommerceOrderId());
+
+		serviceContext.setAttribute("redirect", redirect);
+
+		String paymentURL = _commercePaymentHelper.startPayment(
+			commerceOrder, serviceContext);
+
+		if (Validator.isNotNull(paymentURL)) {
+			redirect = paymentURL;
+		}
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -3103,6 +3103,28 @@ version 1.0.9.
 - [LPS-76018]: Update the [Liferay TLD Formatter] dependency to version 1.0.4.
 - [LPS-76018]: Update the [Liferay XML Formatter] dependency to version 1.0.4.
 
+## 3.5.65 - 2017-12-12
+
+### Changed
+- [LPS-76018]: Update the [Liferay XML Formatter] dependency to version 1.0.5.
+
+## 3.5.66 - 2017-12-12
+
+### Changed
+- [LPS-76018]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.46.
+- [LPS-76018]: Update the [Liferay Gradle Plugins TLD Formatter] dependency to
+version 1.0.7.
+- [LPS-76018]: Update the [Liferay Gradle Plugins WSDD Builder] dependency to
+version 1.0.11.
+- [LPS-76018]: Update the [Liferay Gradle Plugins XML Formatter] dependency tos
+version 1.0.9.
+- [LPS-76018]: Update the [Liferay Portal Tools WSDD Builder] dependency to
+version 1.0.10.
+- [LPS-76018]: Update the [Liferay Source Formatter] dependency to version
+1.0.517.
+- [LPS-76018]: Update the [Liferay TLD Formatter] dependency to version 1.0.5.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd

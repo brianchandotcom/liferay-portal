@@ -2577,6 +2577,16 @@ read-only sub-repositories.
 ### Changed
 - [LPS-76018]: Update the [Liferay Gradle Plugins] dependency to version 3.5.64.
 
+## 5.2.18 - 2017-12-12
+
+### Changed
+- [LPS-76018]: Update the [Liferay Gradle Plugins] dependency to version 3.5.65.
+
+## 5.2.19 - 2017-12-12
+
+### Changed
+- [LPS-76018]: Update the [Liferay Gradle Plugins] dependency to version 3.5.66.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public

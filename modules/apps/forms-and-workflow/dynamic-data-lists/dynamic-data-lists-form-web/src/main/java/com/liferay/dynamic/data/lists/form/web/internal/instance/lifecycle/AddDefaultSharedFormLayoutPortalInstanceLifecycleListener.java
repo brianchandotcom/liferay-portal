@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
 import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -46,9 +47,23 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Leonardo Barros
  */
-@Component(immediate = true, service = PortalInstanceLifecycleListener.class)
+@Component(
+	immediate = true,
+	service = {
+		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener.class,
+		PortalInstanceLifecycleListener.class
+	}
+)
 public class AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
 	extends BasePortalInstanceLifecycleListener {
+
+	public boolean isSharedLayout(ThemeDisplay themeDisplay) {
+		Layout layout = themeDisplay.getLayout();
+
+		String type = layout.getType();
+
+		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
+	}
 
 	@Override
 	public void portalInstanceRegistered(Company company) throws Exception {

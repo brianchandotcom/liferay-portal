@@ -17,6 +17,7 @@ package com.liferay.commerce.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
 
 /**
@@ -34,7 +35,7 @@ public class CommerceShippingMethodImpl extends CommerceShippingMethodBaseImpl {
 			return null;
 		}
 
-		StringBuilder sb = new StringBuilder(5);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/shipping/method?img_id=");

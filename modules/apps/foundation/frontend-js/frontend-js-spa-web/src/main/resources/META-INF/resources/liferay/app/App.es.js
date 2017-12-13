@@ -283,6 +283,14 @@ class LiferayApp extends App {
 			);
 		}
 	}
+
+	updateHistory_(title, path, state, opt_replaceHistory) {
+		if (state && state.redirectPath) {
+			state.path = state.redirectPath
+		}
+
+		super.updateHistory_(title, path, state, opt_replaceHistory);
+	}
 }
 
 export default LiferayApp;

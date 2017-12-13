@@ -14,7 +14,11 @@
 
 package com.liferay.fragment.model.impl;
 
+import com.liferay.html.preview.model.HtmlPreviewEntry;
+import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Eudaldo Alonso
@@ -34,6 +38,19 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		sb.append("</body></html>");
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
+		if (getHtmlPreviewEntryId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		HtmlPreviewEntry htmlPreviewEntry =
+			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
+				getHtmlPreviewEntryId());
+
+		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
 	}
 
 }

@@ -8562,9 +8562,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 			</then>
 			<else>
 				<if>
-					<and>
-						<equals arg1="${app.server.type}" arg2="jboss" />
-					</and>
+					<equals arg1="${app.server.type}" arg2="jboss" />
 					<then>
 						<ant antfile="build-dist.xml" inheritAll="false" target="unzip-jboss" />
 					</then>

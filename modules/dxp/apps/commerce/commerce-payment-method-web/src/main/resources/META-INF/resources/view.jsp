@@ -53,6 +53,26 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 		>
 
 			<%
+			String thumbnailSrc = commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
+			%>
+
+			<c:choose>
+				<c:when test="<%= Validator.isNotNull(thumbnailSrc) %>">
+					<liferay-ui:search-container-column-image
+						cssClass="table-cell-content"
+						name="logo"
+						src="<%= thumbnailSrc %>"
+					/>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-icon
+						icon="documents-and-media"
+						name="logo"
+					/>
+				</c:otherwise>
+			</c:choose>
+
+			<%
 			PortletURL rowURL = renderResponse.createRenderURL();
 
 			rowURL.setParameter("mvcRenderCommandName", "editCommercePaymentMethod");

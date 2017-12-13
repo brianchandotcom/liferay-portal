@@ -98,7 +98,7 @@ public class OSGiBundleBuilderArgs {
 	private File _bndFile;
 
 	@Parameter(
-		description = "The directory which contains the class files.",
+		description = "The directory or jar which contains the class files.",
 		names = {"--classes-dir"}
 	)
 	private File _classesDir;
@@ -122,7 +122,7 @@ public class OSGiBundleBuilderArgs {
 	private File _outputDir;
 
 	@Parameter(
-		description = "The directory that contains the processed resources.",
+		description = "The directory or jar that contains the processed resources.",
 		names = {"--resources-dir"}
 	)
 	private File _resourcesDir;

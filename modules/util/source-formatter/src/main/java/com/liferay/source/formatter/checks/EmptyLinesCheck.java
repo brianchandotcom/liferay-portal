@@ -351,11 +351,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 
 		while (matcher.find()) {
 			if (isJavaSource(content, matcher.start()) &&
-				(getLevel(matcher.group()) != 0) &&
-				(content.charAt(matcher.end()) != CharPool.NEW_LINE)) {
+				(getLevel(matcher.group(1)) != 0)) {
 
 				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.end() - 1);
+					content, "\n", "\n\n", matcher.end(1));
 			}
 		}
 
@@ -527,7 +526,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
-		"\n.*\\) \\{\n");
+		"\n(.*\\) \\{)\n[\t ]*[^ \n\t\\}]");
 	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
 		"\n\t*// .*\n[\t ]*(?!// )\\S");
 	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(

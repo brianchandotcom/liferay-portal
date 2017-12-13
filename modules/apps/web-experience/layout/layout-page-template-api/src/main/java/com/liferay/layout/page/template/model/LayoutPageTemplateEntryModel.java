@@ -222,6 +222,20 @@ public interface LayoutPageTemplateEntryModel extends BaseModel<LayoutPageTempla
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the html preview entry ID of this layout page template entry.
+	 *
+	 * @return the html preview entry ID of this layout page template entry
+	 */
+	public long getHtmlPreviewEntryId();
+
+	/**
+	 * Sets the html preview entry ID of this layout page template entry.
+	 *
+	 * @param htmlPreviewEntryId the html preview entry ID of this layout page template entry
+	 */
+	public void setHtmlPreviewEntryId(long htmlPreviewEntryId);
+
 	@Override
 	public boolean isNew();
 

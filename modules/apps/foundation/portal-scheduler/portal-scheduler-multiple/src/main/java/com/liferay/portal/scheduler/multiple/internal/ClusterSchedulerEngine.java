@@ -334,11 +334,11 @@ public class ClusterSchedulerEngine
 					}
 				}
 				else {
-					ObjectValuePair<SchedulerResponse, TriggerState> value =
-						_memoryClusteredJobs.get(
+					ObjectValuePair<SchedulerResponse, TriggerState>
+						objectValuePair = _memoryClusteredJobs.get(
 							getFullName(jobName, groupName));
 
-					if (value == null) {
+					if (objectValuePair == null) {
 						MethodHandler methodHandler = new MethodHandler(
 							_getScheduledJobMethodKey, jobName, groupName,
 							StorageType.MEMORY_CLUSTERED);

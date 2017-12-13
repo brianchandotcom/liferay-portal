@@ -61,7 +61,9 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 %>
 
 <%@ include file="/navbar.jspf" %>
+
 <%@ include file="/breadcrumb.jspf" %>
+
 <%@ include file="/instance_price_entry_navbar.jspf" %>
 
 <liferay-frontend:management-bar

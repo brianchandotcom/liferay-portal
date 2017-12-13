@@ -308,7 +308,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected String fixMissingEmptyLines(String content) {
+	protected String fixMissingEmptyLines(String absolutePath, String content) {
 		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
 
 		while (matcher.find()) {
@@ -401,6 +401,10 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
 			}
+		}
+
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
 		}
 
 		matcher = _missingEmptyLinePattern9.matcher(content);

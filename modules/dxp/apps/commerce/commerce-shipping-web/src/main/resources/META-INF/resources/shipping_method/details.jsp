@@ -49,7 +49,7 @@ CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayCo
 		</div>
 	</c:if>
 
-	<aui:input label="" name="imageFile" type="file" />
+	<aui:input label="image" name="imageFile" type="file" />
 
 	<aui:input name="priority" />
 

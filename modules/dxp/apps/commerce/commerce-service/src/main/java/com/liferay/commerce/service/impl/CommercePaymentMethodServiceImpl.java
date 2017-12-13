@@ -21,12 +21,15 @@ import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.io.File;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommercePaymentMethodServiceImpl
 	extends CommercePaymentMethodServiceBaseImpl {
@@ -34,8 +37,9 @@ public class CommercePaymentMethodServiceImpl
 	@Override
 	public CommercePaymentMethod addCommercePaymentMethod(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String engineKey, Map<String, String> engineParameterMap,
-			double priority, boolean active, ServiceContext serviceContext)
+			File imageFile, String engineKey,
+			Map<String, String> engineParameterMap, double priority,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -43,8 +47,8 @@ public class CommercePaymentMethodServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
 
 		return commercePaymentMethodLocalService.addCommercePaymentMethod(
-			nameMap, descriptionMap, engineKey, engineParameterMap, priority,
-			active, serviceContext);
+			nameMap, descriptionMap, imageFile, engineKey, engineParameterMap,
+			priority, active, serviceContext);
 	}
 
 	@Override
@@ -89,7 +93,7 @@ public class CommercePaymentMethodServiceImpl
 	@Override
 	public CommercePaymentMethod updateCommercePaymentMethod(
 			long commercePaymentMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap,
+			Map<Locale, String> descriptionMap, File imageFile,
 			Map<String, String> engineParameterMap, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
@@ -104,7 +108,7 @@ public class CommercePaymentMethodServiceImpl
 
 		return commercePaymentMethodLocalService.updateCommercePaymentMethod(
 			commercePaymentMethod.getCommercePaymentMethodId(), nameMap,
-			descriptionMap, engineParameterMap, priority, active,
+			descriptionMap, imageFile, engineParameterMap, priority, active,
 			serviceContext);
 	}
 

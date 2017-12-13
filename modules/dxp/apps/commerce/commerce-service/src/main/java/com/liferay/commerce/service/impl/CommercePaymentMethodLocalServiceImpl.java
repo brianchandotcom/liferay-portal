@@ -24,9 +24,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
+
+import java.io.File;
+import java.io.IOException;
 
 import java.util.List;
 import java.util.Locale;
@@ -34,6 +38,7 @@ import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommercePaymentMethodLocalServiceImpl
 	extends CommercePaymentMethodLocalServiceBaseImpl {
@@ -41,14 +46,23 @@ public class CommercePaymentMethodLocalServiceImpl
 	@Override
 	public CommercePaymentMethod addCommercePaymentMethod(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String engineKey, Map<String, String> engineParameterMap,
-			double priority, boolean active, ServiceContext serviceContext)
+			File imageFile, String engineKey,
+			Map<String, String> engineParameterMap, double priority,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce payment method
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		byte[] imageBytes = null;
+
+		try {
+			imageBytes = FileUtil.getBytes(imageFile);
+		}
+		catch (IOException ioe) {
+		}
 
 		validate(nameMap, engineKey);
 
@@ -63,11 +77,19 @@ public class CommercePaymentMethodLocalServiceImpl
 		commercePaymentMethod.setUserName(user.getFullName());
 		commercePaymentMethod.setNameMap(nameMap);
 		commercePaymentMethod.setDescriptionMap(descriptionMap);
+		commercePaymentMethod.setImageId(counterLocalService.increment());
 		commercePaymentMethod.setEngineKey(engineKey);
 		commercePaymentMethod.setPriority(priority);
 		commercePaymentMethod.setActive(active);
 
 		commercePaymentMethodPersistence.update(commercePaymentMethod);
+
+		// Image
+
+		if ((imageFile != null) && (imageBytes != null)) {
+			imageLocalService.updateImage(
+				commercePaymentMethod.getImageId(), imageBytes);
+		}
 
 		// Commerce payment engine
 
@@ -102,10 +124,18 @@ public class CommercePaymentMethodLocalServiceImpl
 	@Override
 	public CommercePaymentMethod updateCommercePaymentMethod(
 			long commercePaymentMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap,
+			Map<Locale, String> descriptionMap, File imageFile,
 			Map<String, String> engineParameterMap, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
+
+		byte[] imageBytes = null;
+
+		try {
+			imageBytes = FileUtil.getBytes(imageFile);
+		}
+		catch (IOException ioe) {
+		}
 
 		// Commerce payment method
 
@@ -115,10 +145,22 @@ public class CommercePaymentMethodLocalServiceImpl
 
 		commercePaymentMethod.setNameMap(nameMap);
 		commercePaymentMethod.setDescriptionMap(descriptionMap);
+
+		if ((imageFile != null) && (imageBytes != null)) {
+			commercePaymentMethod.setImageId(counterLocalService.increment());
+		}
+
 		commercePaymentMethod.setPriority(priority);
 		commercePaymentMethod.setActive(active);
 
 		commercePaymentMethodPersistence.update(commercePaymentMethod);
+
+		// Image
+
+		if ((imageFile != null) && (imageBytes != null)) {
+			imageLocalService.updateImage(
+				commercePaymentMethod.getImageId(), imageBytes);
+		}
 
 		// Commerce payment engine
 

@@ -58,4 +58,7 @@ public interface LayoutPageTemplateEntry extends LayoutPageTemplateEntryModel,
 
 	public java.lang.String getContent()
 		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 }

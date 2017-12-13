@@ -256,6 +256,12 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		return _fragmentEntry.getHtmlPreviewEntryId();
 	}
 
+	@Override
+	public java.lang.String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _fragmentEntry.getImagePreviewURL(themeDisplay);
+	}
+
 	/**
 	* Returns the js of this fragment entry.
 	*

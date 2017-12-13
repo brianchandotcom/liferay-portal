@@ -261,7 +261,7 @@
 				AssetVocabulary.name ASC
 		]]>
 	</sql>
-	<sql id="com.liferay.portlet.asset.service.impl.AssetLinkFinder.findByC_C">
+	<sql id="com.liferay.asset.kernel.service.persistence.AssetLinkFinder.findByC_C">
 		<![CDATA[
 			(
 				SELECT

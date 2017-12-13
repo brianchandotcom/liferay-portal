@@ -8,6 +8,7 @@ Import-Package:\
 	*
 Main-Class: com.liferay.tld.formatter.TLDFormatter
 -includeresource:\
+	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/util/EntityResolver.class,\
@@ -40,5 +41,4 @@ Main-Class: com.liferay.tld.formatter.TLDFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/SystemProperties.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@xercesImpl-[0-9]*.jar!/org/apache/xerces/xni/XNIException.class

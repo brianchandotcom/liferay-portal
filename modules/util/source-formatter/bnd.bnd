@@ -15,6 +15,7 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@biz.aQute.bndlib-[0-9]*.jar!/aQute/bnd/osgi/Constants.class,\
 	@com.liferay.petra.content-[0-9]*.jar!/com/liferay/petra/content/ContentUtil.class,\
 	@com.liferay.petra.string-[0-9]*.jar!/com/liferay/petra/string/CharPool.class,\
+	@com.liferay.petra.xml-[0-9]*.jar!/com/liferay/petra/xml/Dom4jUtil.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/deploy/dependencies/web.xml,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsMap.class,\
 	@com.liferay.portal.impl-[0-9]*.jar!/com/liferay/portal/tools/ArgumentsUtil.class,\
@@ -90,5 +91,4 @@ Main-Class: com.liferay.source.formatter.SourceFormatter
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/UnicodeFormatter.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/util/Validator.class,\
 	@com.liferay.portal.kernel-[0-9]*.jar!/com/liferay/portal/kernel/xml/XMLSchema.class,\
-	@com.liferay.util.java-[0-9]*.jar!/com/liferay/util/xml/Dom4jUtil.class,\
 	@xercesImpl-[0-9]*.jar!/org/apache/xerces/xni/XNIException.class

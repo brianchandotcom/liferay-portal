@@ -24,25 +24,57 @@ CommerceCart commerceCart = paymentMethodCheckoutStepDisplayContext.getCommerceC
 long commercePaymentMethodId = BeanParamUtil.getLong(commerceCart, request, "commercePaymentMethodId");
 %>
 
-<h3><liferay-ui:message key="payment-method" /></h3>
+<h3 class="p-4"><liferay-ui:message key="payment-method" /></h3>
 
 <aui:fieldset>
 	<liferay-ui:error exception="<%= CommerceCartPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
 
-	<%
-	for (CommercePaymentMethod commercePaymentMethod : paymentMethodCheckoutStepDisplayContext.getCommercePaymentMethods()) {
-	%>
+	<div class="row text-center" id="commercePaymentMethodsContainer">
 
-		<aui:input
-			checked="<%= commercePaymentMethod.getCommercePaymentMethodId() == commercePaymentMethodId %>"
-			label="<%= commercePaymentMethod.getName(locale) %>"
-			name="commercePaymentMethodId"
-			type="radio"
-			value="<%= commercePaymentMethod.getCommercePaymentMethodId() %>"
-		/>
+		<%
+		for (CommercePaymentMethod commercePaymentMethod : paymentMethodCheckoutStepDisplayContext.getCommercePaymentMethods()) {
+		%>
 
-	<%
-	}
-	%>
+			<div class="col-md-3 mx-auto">
+				<div class="radio radio-card radio-middle-left">
+					<label>
+						<aui:input
+							checked="<%= commercePaymentMethod.getCommercePaymentMethodId() == commercePaymentMethodId %>"
+							label=""
+							name="commercePaymentMethodId"
+							type="radio"
+							value="<%= commercePaymentMethod.getCommercePaymentMethodId() %>"
+						/>
 
+						<h4 class="font-weight-bold text-uppercase"><%= commercePaymentMethod.getName(locale) %></h4>
+					</label>
+				</div>
+
+				<div class="card card-commerce">
+					<div class="card-body">
+
+						<%
+						String thumbnailSrc = commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
+						%>
+
+						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+							<img class="w-25" src="<%= thumbnailSrc %>" />
+						</c:if>
+					</div>
+				</div>
+			</div>
+
+		<%
+		}
+		%>
+
+	</div>
 </aui:fieldset>
+
+<aui:script>
+	$('.col-md-3').click(
+		function() {
+			$(this).find('input[type="radio"]').prop("checked", true);
+		}
+	);
+</aui:script>

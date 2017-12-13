@@ -28,30 +28,60 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 }
 %>
 
-<h3><liferay-ui:message key="shipping-method" /></h3>
+<h3 class="p-4"><liferay-ui:message key="shipping-method" /></h3>
 
 <aui:fieldset>
 	<liferay-ui:error exception="<%= CommerceCartShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
-	<%
-	for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
-		List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
+	<div class="row text-center" id="commerceShippingMethodsContainer">
 
-		for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
-			String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
-	%>
+		<%
+		for (CommerceShippingMethod commerceShippingMethod : shippingMethodCheckoutStepDisplayContext.getCommerceShippingMethods()) {
+			List<CommerceShippingOption> commerceShippingOptions = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptions(commerceShippingMethod);
 
-			<aui:input
-				checked="<%= curCommerceShippingOptionKey.equals(commerceShippingOptionKey) %>"
-				label="<%= shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionLabel(commerceShippingOption) %>"
-				name="commerceShippingOptionKey"
-				type="radio"
-				value="<%= curCommerceShippingOptionKey %>"
-			/>
+			for (CommerceShippingOption commerceShippingOption : commerceShippingOptions) {
+				String curCommerceShippingOptionKey = shippingMethodCheckoutStepDisplayContext.getCommerceShippingOptionKey(commerceShippingMethod.getCommerceShippingMethodId(), commerceShippingOption.getName());
+		%>
 
-	<%
+				<div class="col-md-3 mx-auto">
+					<div class="radio radio-card radio-middle-left">
+						<label>
+							<aui:input
+								checked="<%= curCommerceShippingOptionKey.equals(commerceShippingOptionKey) %>"
+								label=""
+								name="commerceShippingOptionKey"
+								type="radio"
+								value="<%= curCommerceShippingOptionKey %>"
+							/>
+
+							<div class="card card-commerce">
+								<div class="card-body">
+
+									<%
+									String thumbnailSrc = commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
+									%>
+
+									<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+										<img class="w-25" src="<%= thumbnailSrc %>" />
+									</c:if>
+								</div>
+							</div>
+						</label>
+					</div>
+				</div>
+
+		<%
+			}
 		}
-	}
-	%>
+		%>
 
+	</div>
 </aui:fieldset>
+
+<aui:script>
+	$('.col-md-3').click(
+		function() {
+			$(this).find('input[type="radio"]').prop("checked", true);
+		}
+	);
+</aui:script>

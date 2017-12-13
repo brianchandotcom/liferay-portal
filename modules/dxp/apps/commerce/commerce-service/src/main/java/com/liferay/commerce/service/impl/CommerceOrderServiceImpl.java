@@ -29,6 +29,7 @@ import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Marco Leo
  */
 public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
@@ -111,6 +112,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	protected void checkCommerceOrder(CommerceOrder commerceOrder)
 		throws PrincipalException {
+
+		if (commerceOrder == null) {
+			return;
+		}
 
 		PermissionChecker permissionChecker = getPermissionChecker();
 

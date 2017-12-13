@@ -48,7 +48,7 @@ public class ExplodedJarCommand extends BaseCommand {
 
 		long lastModified = jar.lastModified();
 
-		File outputDir = osgiBundleBuilderArgs.getOutput();
+		File outputDir = osgiBundleBuilderArgs.getOutputFile();
 
 		Files.createDirectories(outputDir.toPath());
 

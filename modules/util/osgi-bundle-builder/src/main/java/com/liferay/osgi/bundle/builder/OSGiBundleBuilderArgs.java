@@ -44,8 +44,8 @@ public class OSGiBundleBuilderArgs {
 		return _classpath;
 	}
 
-	public File getOutput() {
-		return _output;
+	public File getOutputFile() {
+		return _outputFile;
 	}
 
 	public File getResourcesDir() {
@@ -68,8 +68,8 @@ public class OSGiBundleBuilderArgs {
 		_classpath = classpath;
 	}
 
-	public void setOutput(File output) {
-		_output = output;
+	public void setOutputFile(File outputFile) {
+		_outputFile = outputFile;
 	}
 
 	public void setResourcesDir(File resourcesDir) {
@@ -111,7 +111,7 @@ public class OSGiBundleBuilderArgs {
 		description = "The output path.", names = {"-o", "--output"},
 		required = true
 	)
-	private File _output;
+	private File _outputFile;
 
 	@Parameter(
 		description = "The directory or JAR file that contains the processed resources.",

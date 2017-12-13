@@ -212,7 +212,7 @@ public class OSGiBundleBuilderCommandTest {
 					_projectDir,
 					"org.osgi.service.component.annotations-1.3.0.jar"),
 				new File(_projectDir, "shiro-core-1.1.0.jar")));
-		osgiBundleBuilderArgs.setOutput(outputFile);
+		osgiBundleBuilderArgs.setOutputFile(outputFile);
 		osgiBundleBuilderArgs.setResourcesDir(
 			new File(_projectDir, "resources"));
 

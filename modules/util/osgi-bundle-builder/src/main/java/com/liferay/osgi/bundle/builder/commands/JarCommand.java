@@ -39,13 +39,13 @@ public class JarCommand extends BaseCommand {
 			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
 		throws Exception {
 
-		File output = osgiBundleBuilderArgs.getOutput();
+		File outputFile = osgiBundleBuilderArgs.getOutputFile();
 
-		File parent = output.getParentFile();
+		File dir = outputFile.getParentFile();
 
-		Files.createDirectories(parent.toPath());
+		Files.createDirectories(dir.toPath());
 
-		jar.write(output);
+		jar.write(outputFile);
 	}
 
 }

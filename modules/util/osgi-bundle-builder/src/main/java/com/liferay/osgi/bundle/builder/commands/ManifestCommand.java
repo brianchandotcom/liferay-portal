@@ -41,13 +41,13 @@ public class ManifestCommand extends BaseCommand {
 			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
 		throws Exception {
 
-		File output = osgiBundleBuilderArgs.getOutput();
+		File outputFile = osgiBundleBuilderArgs.getOutputFile();
 
-		File parent = output.getParentFile();
+		File dir = outputFile.getParentFile();
 
-		Files.createDirectories(parent.toPath());
+		Files.createDirectories(dir.toPath());
 
-		try (OutputStream outputStream = new FileOutputStream(output)) {
+		try (OutputStream outputStream = new FileOutputStream(outputFile)) {
 			jar.writeManifest(outputStream);
 		}
 	}

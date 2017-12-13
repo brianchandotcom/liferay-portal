@@ -100,8 +100,8 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 		}
 
 		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, HtmlPreviewEntry.class.getName(), 0,
-			HtmlPreviewEntry.class.getName(),
+			groupId, userId, HtmlPreviewEntry.class.getName(),
+			htmlPreviewEntryId, HtmlPreviewEntry.class.getName(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
 			String.valueOf(htmlPreviewEntryId), mimeType, false);
 

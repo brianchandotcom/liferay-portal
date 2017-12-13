@@ -1077,7 +1077,7 @@ public class StringUtilTest {
 
 		// unquote shall not fail a string with single character of quote
 
-		Assert.assertEquals(StringUtil.unquote("\""), "\"");
+		Assert.assertEquals("\"", StringUtil.unquote("\""));
 	}
 
 	@Test

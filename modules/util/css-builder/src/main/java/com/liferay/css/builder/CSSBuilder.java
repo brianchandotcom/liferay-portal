@@ -94,18 +94,18 @@ public class CSSBuilder implements AutoCloseable {
 	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
 		_cssBuilderArgs = cssBuilderArgs;
 
-		File portalCommonDir = _cssBuilderArgs.getPortalCommonPath();
+		File importDir = _cssBuilderArgs.getImportDir();
 
-		if (portalCommonDir.isFile()) {
-			portalCommonDir = _unzipPortalCommon(portalCommonDir);
+		if (importDir.isFile()) {
+			importDir = _unzipImport(importDir);
 
-			_cleanPortalCommonDir = true;
+			_cleanImportDir = true;
 		}
 		else {
-			_cleanPortalCommonDir = false;
+			_cleanImportDir = false;
 		}
 
-		_portalCommonDirName = portalCommonDir.getCanonicalPath();
+		_importDirName = importDir.getCanonicalPath();
 
 		List<String> rtlExcludedPathRegexps =
 			_cssBuilderArgs.getRtlExcludedPathRegexps();
@@ -122,8 +122,8 @@ public class CSSBuilder implements AutoCloseable {
 
 	@Override
 	public void close() throws Exception {
-		if (_cleanPortalCommonDir) {
-			FileUtil.deltree(Paths.get(_portalCommonDirName));
+		if (_cleanImportDir) {
+			FileUtil.deltree(Paths.get(_importDirName));
 		}
 
 		_sassCompiler.close();
@@ -132,9 +132,9 @@ public class CSSBuilder implements AutoCloseable {
 	public void execute() throws Exception {
 		List<String> fileNames = new ArrayList<>();
 
-		File docrootDir = _cssBuilderArgs.getDocrootDir();
+		File docrootDir = _cssBuilderArgs.getBaseDir();
 
-		for (String dirName : _cssBuilderArgs.getDirNames()) {
+		for (String dirName : _cssBuilderArgs.getIncludes()) {
 			List<String> sassFileNames = _collectSassFiles(dirName, docrootDir);
 
 			fileNames.addAll(sassFileNames);
@@ -343,7 +343,7 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String _parseSass(String fileName) throws SassCompilerException {
-		File sassFile = new File(_cssBuilderArgs.getDocrootDir(), fileName);
+		File sassFile = new File(_cssBuilderArgs.getBaseDir(), fileName);
 
 		String filePath = sassFile.toPath().toString();
 
@@ -363,14 +363,14 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		String css = _sassCompiler.compileFile(
-			filePath, _portalCommonDirName + File.pathSeparator + cssBasePath,
+			filePath, _importDirName + File.pathSeparator + cssBasePath,
 			_cssBuilderArgs.isGenerateSourceMap(), filePath + ".map");
 
 		return CSSBuilderUtil.parseStaticTokens(css);
 	}
 
 	private void _parseSassFile(String fileName) throws Exception {
-		File file = new File(_cssBuilderArgs.getDocrootDir(), fileName);
+		File file = new File(_cssBuilderArgs.getBaseDir(), fileName);
 
 		if (!file.exists()) {
 			return;
@@ -390,7 +390,7 @@ public class CSSBuilder implements AutoCloseable {
 			fileName);
 
 		File rtlCustomFile = new File(
-			_cssBuilderArgs.getDocrootDir(), rtlCustomFileName);
+			_cssBuilderArgs.getBaseDir(), rtlCustomFileName);
 
 		if (rtlCustomFile.exists()) {
 			rtlContent += _parseSass(rtlCustomFileName);
@@ -399,11 +399,11 @@ public class CSSBuilder implements AutoCloseable {
 		_writeOutputFile(fileName, rtlContent, true);
 	}
 
-	private File _unzipPortalCommon(File portalCommonFile) throws IOException {
+	private File _unzipImport(File importFile) throws IOException {
 		Path portalCommonCssDirPath = Files.createTempDirectory(
-			"portalCommonCss");
+			"cssBuilderImport");
 
-		try (ZipFile zipFile = new ZipFile(portalCommonFile)) {
+		try (ZipFile zipFile = new ZipFile(importFile)) {
 			Enumeration<? extends ZipEntry> enumeration = zipFile.entries();
 
 			while (enumeration.hasMoreElements()) {
@@ -467,13 +467,12 @@ public class CSSBuilder implements AutoCloseable {
 				_cssBuilderArgs.getOutputDirName(), outputFileName);
 		}
 		else {
-			outputFile = new File(
-				_cssBuilderArgs.getDocrootDir(), outputFileName);
+			outputFile = new File(_cssBuilderArgs.getBaseDir(), outputFileName);
 		}
 
 		FileUtil.write(outputFile, content);
 
-		File file = new File(_cssBuilderArgs.getDocrootDir(), fileName);
+		File file = new File(_cssBuilderArgs.getBaseDir(), fileName);
 
 		outputFile.setLastModified(file.lastModified());
 	}
@@ -486,9 +485,9 @@ public class CSSBuilder implements AutoCloseable {
 
 	private static RTLCSSConverter _rtlCSSConverter;
 
-	private final boolean _cleanPortalCommonDir;
+	private final boolean _cleanImportDir;
 	private final CSSBuilderArgs _cssBuilderArgs;
-	private final String _portalCommonDirName;
+	private final String _importDirName;
 	private final Pattern[] _rtlExcludedPathPatterns;
 	private SassCompiler _sassCompiler;
 

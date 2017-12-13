@@ -31,28 +31,28 @@ public class CSSBuilderArgs {
 
 	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;
 
-	public static final String DIR_NAME = "/";
+	public static final String BASE_DIR_NAME = "src";
 
-	public static final String DOCROOT_DIR_NAME = "src/META-INF/resources";
+	public static final String INCLUDES = "/";
 
-	public static final String OUTPUT_DIR_NAME = ".sass-cache/";
+	public static final String OUTPUT_DIR_NAME = "/";
 
 	public static final int PRECISION = 9;
 
-	public List<String> getDirNames() {
-		return _dirNames;
+	public File getBaseDir() {
+		return _baseDir;
 	}
 
-	public File getDocrootDir() {
-		return _docrootDir;
+	public File getImportDir() {
+		return _importDir;
+	}
+
+	public List<String> getIncludes() {
+		return _includes;
 	}
 
 	public String getOutputDirName() {
 		return _outputDirName;
-	}
-
-	public File getPortalCommonPath() {
-		return _portalCommonPath;
 	}
 
 	public int getPrecision() {
@@ -81,28 +81,28 @@ public class CSSBuilderArgs {
 		_appendCssImportTimestamps = appendCssImportTimestamps;
 	}
 
-	public void setDirNames(String dirNames) {
-		setDirNames(_split(dirNames));
-	}
-
-	public void setDirNames(String[] dirNames) {
-		_dirNames = Arrays.asList(dirNames);
-	}
-
-	public void setDocrootDir(File docrootDir) {
-		_docrootDir = docrootDir;
+	public void setBaseDir(File baseDir) {
+		_baseDir = baseDir;
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
 		_generateSourceMap = generateSourceMap;
 	}
 
-	public void setOutputDirName(String outputDirName) {
-		_outputDirName = outputDirName;
+	public void setImportDir(File importDir) {
+		_importDir = importDir;
 	}
 
-	public void setPortalCommonPath(File portalCommonPath) {
-		_portalCommonPath = portalCommonPath;
+	public void setIncludes(String includes) {
+		setIncludes(_split(includes));
+	}
+
+	public void setIncludes(String[] includes) {
+		_includes = Arrays.asList(includes);
+	}
+
+	public void setOutputDirName(String outputDirName) {
+		_outputDirName = outputDirName;
 	}
 
 	public void setPrecision(int precision) {
@@ -133,26 +133,20 @@ public class CSSBuilderArgs {
 	@Parameter(
 		arity = 1,
 		description = "Whether to append the current timestamp to the URLs in the @import CSS at-rules.",
-		names = "sass.append.css.import.timestamps"
+		names = "append-css-import-timestamps"
 	)
 	private boolean _appendCssImportTimestamps = APPEND_CSS_IMPORT_TIMESTAMPS;
 
 	@Parameter(
-		description = "The name of the directories, relative to docrootDir, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
-		names = "sass.dir"
-	)
-	private List<String> _dirNames = Arrays.asList(DIR_NAME);
-
-	@Parameter(
 		description = "The base directory that contains the SCSS files to compile.",
-		names = "sass.docroot.dir"
+		names = "base-dir"
 	)
-	private File _docrootDir = new File(DOCROOT_DIR_NAME);
+	private File _baseDir = new File(BASE_DIR_NAME);
 
 	@Parameter(
 		arity = 1,
 		description = "Whether to generate source maps for easier debugging.",
-		names = "sass.generate.source.map"
+		names = "generate-source-map"
 	)
 	private boolean _generateSourceMap;
 
@@ -163,32 +157,38 @@ public class CSSBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
+		description = "The import directory of sass libraries.",
+		names = {"import-dir", "import-path"}
+	)
+	private File _importDir;
+
+	@Parameter(
+		description = "The name of the directories, relative to base directory, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
+		names = "includes"
+	)
+	private List<String> _includes = Arrays.asList(INCLUDES);
+
+	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",
-		names = "sass.output.dir"
+		names = "output-dir"
 	)
 	private String _outputDirName = OUTPUT_DIR_NAME;
 
 	@Parameter(
-		description = "The META-INF/resources directory of the Liferay Frontend Common CSS artifact. This is required in order to make Bourbon and other CSS libraries available to the compilation.",
-		names = {"sass.portal.common.dir", "sass.portal.common.path"}
-	)
-	private File _portalCommonPath;
-
-	@Parameter(
 		description = "The numeric precision of numbers in Sass.",
-		names = "sass.precision"
+		names = "precision"
 	)
 	private int _precision = PRECISION;
 
 	@Parameter(
 		description = "The SCSS file patterns to exclude when converting for right-to-left (RTL) support.",
-		names = "sass.rtl.excluded.path.regexps"
+		names = "rtl-excluded-path-regexps"
 	)
 	private List<String> _rtlExcludedPathRegexps = new ArrayList<>();
 
 	@Parameter(
 		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". If not set, defaults to \"jni\".",
-		names = "sass.compiler.class.name"
+		names = "compiler"
 	)
 	private String _sassCompilerClassName = "jni";
 

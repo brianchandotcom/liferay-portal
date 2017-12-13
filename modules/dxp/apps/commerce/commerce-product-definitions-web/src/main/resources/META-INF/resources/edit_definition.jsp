@@ -23,6 +23,8 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 
 CPDefinition cpDefinition = cpDefinitionsDisplayContext.getCPDefinition();
 
+String productURL = cpDefinitionsDisplayContext.getProductURL(cpDefinition);
+
 PortletURL portletURL = cpDefinitionsDisplayContext.getEditProductDefinitionURL();
 
 String title = LanguageUtil.get(request, "add-product");
@@ -48,7 +50,7 @@ request.setAttribute("view.jsp-showSearch", false);
 %>
 
 <%@ include file="/navbar.jspf" %>
-<%@ include file="/breadcrumb.jspf" %>
+<%@ include file="/definition_breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation
 	key="<%= CPDefinitionScreenNavigationConstants.SCREEN_NAVIGATION_KEY_CP_DEFINITION_GENERAL %>"

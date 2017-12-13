@@ -117,23 +117,6 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 					</span>
 
 					<liferay-ui:input-localized cssClass="form-control" defaultLanguageId="<%= LocaleUtil.toLanguageId(themeDisplay.getSiteDefaultLocale()) %>" name="urlTitleMapAsXML" xml="<%= HttpUtil.decodeURL(cpDefinitionsDisplayContext.getUrlTitleMapAsXML()) %>" />
-
-					<c:if test="<%= cpDefinition != null %>">
-
-						<%
-						String productURL = cpDefinitionsDisplayContext.getProductURL(cpDefinition);
-						%>
-
-						<span class="input-group-addon" id="<portlet:namespace />urlIcon">
-							<liferay-ui:icon
-								iconCssClass="icon-new-window"
-								label="<%= false %>"
-								message="go-to-page"
-								target="_blank"
-								url="<%= productURL %>"
-							/>
-						</span>
-					</c:if>
 				</div>
 			</div>
 

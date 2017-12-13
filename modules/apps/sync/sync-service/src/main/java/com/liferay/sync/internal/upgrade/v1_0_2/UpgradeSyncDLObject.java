@@ -117,7 +117,7 @@ public class UpgradeSyncDLObject extends UpgradeProcess {
 	protected void verifyDLFileEntriesAndFolders(long groupId)
 		throws Exception {
 
-		StringBundler sb1 = new StringBundler(51);
+		StringBundler sb1 = new StringBundler(50);
 
 		sb1.append("select DLFolder.companyId, DLFolder.userId, ");
 		sb1.append("DLFolder.userName, DLFolder.createDate, ");

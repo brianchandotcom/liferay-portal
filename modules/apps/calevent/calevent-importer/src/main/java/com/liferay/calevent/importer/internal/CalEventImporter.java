@@ -1012,7 +1012,7 @@ public class CalEventImporter {
 		}
 
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(5);
+			StringBundler sb = new StringBundler(6);
 
 			sb.append("select uuid_, eventId, groupId, companyId, userId, ");
 			sb.append("userName, createDate, modifiedDate, title, ");

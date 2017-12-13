@@ -146,11 +146,12 @@ public abstract class CommercePaymentMethodLocalServiceBaseImpl
 	 *
 	 * @param commercePaymentMethod the commerce payment method
 	 * @return the commerce payment method that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommercePaymentMethod deleteCommercePaymentMethod(
-		CommercePaymentMethod commercePaymentMethod) {
+		CommercePaymentMethod commercePaymentMethod) throws PortalException {
 		return commercePaymentMethodPersistence.remove(commercePaymentMethod);
 	}
 

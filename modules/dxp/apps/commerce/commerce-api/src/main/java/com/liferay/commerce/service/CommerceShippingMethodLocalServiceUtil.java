@@ -84,9 +84,11 @@ public class CommerceShippingMethodLocalServiceUtil {
 	*
 	* @param commerceShippingMethod the commerce shipping method
 	* @return the commerce shipping method that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.model.CommerceShippingMethod deleteCommerceShippingMethod(
-		com.liferay.commerce.model.CommerceShippingMethod commerceShippingMethod) {
+		com.liferay.commerce.model.CommerceShippingMethod commerceShippingMethod)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceShippingMethod(commerceShippingMethod);
 	}
 
@@ -104,7 +106,8 @@ public class CommerceShippingMethodLocalServiceUtil {
 				   .deleteCommerceShippingMethod(commerceShippingMethodId);
 	}
 
-	public static void deleteCommerceShippingMethods(long groupId) {
+	public static void deleteCommerceShippingMethods(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceShippingMethods(groupId);
 	}
 

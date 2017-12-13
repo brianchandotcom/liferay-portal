@@ -97,10 +97,12 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	*
 	* @param commerceShippingMethod the commerce shipping method
 	* @return the commerce shipping method that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceShippingMethod deleteCommerceShippingMethod(
-		CommerceShippingMethod commerceShippingMethod);
+		CommerceShippingMethod commerceShippingMethod)
+		throws PortalException;
 
 	/**
 	* Deletes the commerce shipping method with the primary key from the database. Also notifies the appropriate model listeners.
@@ -113,7 +115,8 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public CommerceShippingMethod deleteCommerceShippingMethod(
 		long commerceShippingMethodId) throws PortalException;
 
-	public void deleteCommerceShippingMethods(long groupId);
+	public void deleteCommerceShippingMethods(long groupId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException

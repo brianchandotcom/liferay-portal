@@ -77,10 +77,12 @@ public class CommerceShippingMethodLocalServiceWrapper
 	*
 	* @param commerceShippingMethod the commerce shipping method
 	* @return the commerce shipping method that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.model.CommerceShippingMethod deleteCommerceShippingMethod(
-		com.liferay.commerce.model.CommerceShippingMethod commerceShippingMethod) {
+		com.liferay.commerce.model.CommerceShippingMethod commerceShippingMethod)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingMethodLocalService.deleteCommerceShippingMethod(commerceShippingMethod);
 	}
 
@@ -99,7 +101,8 @@ public class CommerceShippingMethodLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceShippingMethods(long groupId) {
+	public void deleteCommerceShippingMethods(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceShippingMethodLocalService.deleteCommerceShippingMethods(groupId);
 	}
 

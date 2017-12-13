@@ -83,9 +83,11 @@ public class CommercePaymentMethodLocalServiceUtil {
 	*
 	* @param commercePaymentMethod the commerce payment method
 	* @return the commerce payment method that was removed
+	* @throws PortalException
 	*/
 	public static com.liferay.commerce.model.CommercePaymentMethod deleteCommercePaymentMethod(
-		com.liferay.commerce.model.CommercePaymentMethod commercePaymentMethod) {
+		com.liferay.commerce.model.CommercePaymentMethod commercePaymentMethod)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommercePaymentMethod(commercePaymentMethod);
 	}
 
@@ -102,7 +104,8 @@ public class CommercePaymentMethodLocalServiceUtil {
 		return getService().deleteCommercePaymentMethod(commercePaymentMethodId);
 	}
 
-	public static void deleteCommercePaymentMethods(long groupId) {
+	public static void deleteCommercePaymentMethods(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommercePaymentMethods(groupId);
 	}
 

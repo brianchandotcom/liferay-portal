@@ -331,6 +331,12 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 		return _commerceShippingMethod.getImageId();
 	}
 
+	@Override
+	public java.lang.String getImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _commerceShippingMethod.getImageURL(themeDisplay);
+	}
+
 	/**
 	* Returns the modified date of this commerce shipping method.
 	*
@@ -441,12 +447,6 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 	@Override
 	public double getPriority() {
 		return _commerceShippingMethod.getPriority();
-	}
-
-	@Override
-	public java.lang.String getShippingMethodImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
 	}
 
 	/**

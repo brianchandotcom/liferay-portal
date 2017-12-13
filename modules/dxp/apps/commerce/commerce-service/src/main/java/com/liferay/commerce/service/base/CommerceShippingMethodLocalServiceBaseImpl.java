@@ -146,11 +146,13 @@ public abstract class CommerceShippingMethodLocalServiceBaseImpl
 	 *
 	 * @param commerceShippingMethod the commerce shipping method
 	 * @return the commerce shipping method that was removed
+	 * @throws PortalException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceShippingMethod deleteCommerceShippingMethod(
-		CommerceShippingMethod commerceShippingMethod) {
+		CommerceShippingMethod commerceShippingMethod)
+		throws PortalException {
 		return commerceShippingMethodPersistence.remove(commerceShippingMethod);
 	}
 

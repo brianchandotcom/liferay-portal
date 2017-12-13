@@ -331,6 +331,12 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 		return _commercePaymentMethod.getImageId();
 	}
 
+	@Override
+	public java.lang.String getImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _commercePaymentMethod.getImageURL(themeDisplay);
+	}
+
 	/**
 	* Returns the modified date of this commerce payment method.
 	*
@@ -416,12 +422,6 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	@Override
 	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _commercePaymentMethod.getNameMap();
-	}
-
-	@Override
-	public java.lang.String getPaymentMethodImageURL(
-		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
-		return _commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
 	}
 
 	/**

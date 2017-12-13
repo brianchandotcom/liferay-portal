@@ -77,10 +77,12 @@ public class CommercePaymentMethodLocalServiceWrapper
 	*
 	* @param commercePaymentMethod the commerce payment method
 	* @return the commerce payment method that was removed
+	* @throws PortalException
 	*/
 	@Override
 	public com.liferay.commerce.model.CommercePaymentMethod deleteCommercePaymentMethod(
-		com.liferay.commerce.model.CommercePaymentMethod commercePaymentMethod) {
+		com.liferay.commerce.model.CommercePaymentMethod commercePaymentMethod)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePaymentMethodLocalService.deleteCommercePaymentMethod(commercePaymentMethod);
 	}
 
@@ -99,7 +101,8 @@ public class CommercePaymentMethodLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommercePaymentMethods(long groupId) {
+	public void deleteCommercePaymentMethods(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commercePaymentMethodLocalService.deleteCommercePaymentMethods(groupId);
 	}
 

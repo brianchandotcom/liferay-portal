@@ -97,10 +97,11 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	*
 	* @param commercePaymentMethod the commerce payment method
 	* @return the commerce payment method that was removed
+	* @throws PortalException
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommercePaymentMethod deleteCommercePaymentMethod(
-		CommercePaymentMethod commercePaymentMethod);
+		CommercePaymentMethod commercePaymentMethod) throws PortalException;
 
 	/**
 	* Deletes the commerce payment method with the primary key from the database. Also notifies the appropriate model listeners.
@@ -113,7 +114,8 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	public CommercePaymentMethod deleteCommercePaymentMethod(
 		long commercePaymentMethodId) throws PortalException;
 
-	public void deleteCommercePaymentMethods(long groupId);
+	public void deleteCommercePaymentMethods(long groupId)
+		throws PortalException;
 
 	/**
 	* @throws PortalException

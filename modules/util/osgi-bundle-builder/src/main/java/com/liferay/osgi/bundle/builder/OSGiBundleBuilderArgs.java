@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class OSGiBundleBuilderArgs {
 

@@ -22,7 +22,6 @@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/soy" prefix="soy" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
@@ -43,6 +42,9 @@ page import="com.liferay.layout.page.template.exception.DuplicateLayoutPageTempl
 page import="com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
+page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil" %><%@
+page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
+page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.permission.LayoutPageTemplateCollectionPermission" %><%@
 page import="com.liferay.layout.page.template.service.permission.LayoutPageTemplateEntryPermission" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@

@@ -86,32 +86,53 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 		File file = htmlPreviewProcessor.generateHtmlPreview(content);
 
-		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
-			groupId, HtmlPreviewEntry.class.getName());
+		synchronized (HtmlPreviewGeneratorMessageListener.class) {
+			Repository repository =
+				PortletFileRepositoryUtil.fetchPortletRepository(
+					groupId, HtmlPreviewEntry.class.getName());
 
-		FileEntry fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
-			groupId, repository.getDlFolderId(),
-			String.valueOf(htmlPreviewEntryId));
+			long folderId = DLFolderConstants.DEFAULT_PARENT_FOLDER_ID;
 
-		if (fileEntry != null) {
-			PortletFileRepositoryUtil.deletePortletFileEntry(
-				groupId, repository.getDlFolderId(),
-				String.valueOf(htmlPreviewEntryId));
+			if (repository != null) {
+				FileEntry fileEntry =
+					PortletFileRepositoryUtil.fetchPortletFileEntry(
+						groupId, repository.getDlFolderId(),
+						String.valueOf(htmlPreviewEntryId));
+
+				if (fileEntry != null) {
+					PortletFileRepositoryUtil.deletePortletFileEntry(
+						groupId, repository.getDlFolderId(),
+						String.valueOf(htmlPreviewEntryId));
+				}
+
+				folderId = repository.getDlFolderId();
+			}
+
+			FileEntry fileEntry =
+				PortletFileRepositoryUtil.fetchPortletFileEntry(
+					groupId, folderId, String.valueOf(htmlPreviewEntryId));
+
+			if (fileEntry != null) {
+				PortletFileRepositoryUtil.deletePortletFileEntry(
+					groupId, repository.getDlFolderId(),
+					String.valueOf(htmlPreviewEntryId));
+			}
+
+			fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
+				groupId, userId, HtmlPreviewEntry.class.getName(),
+				htmlPreviewEntryId, HtmlPreviewEntry.class.getName(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
+				String.valueOf(htmlPreviewEntryId), mimeType, false);
+
+			HtmlPreviewEntry htmlPreviewEntry =
+				_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
+					htmlPreviewEntryId);
+
+			htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
+
+			_htmlPreviewEntryLocalService.updateHtmlPreviewEntry(
+				htmlPreviewEntry);
 		}
-
-		fileEntry = PortletFileRepositoryUtil.addPortletFileEntry(
-			groupId, userId, HtmlPreviewEntry.class.getName(), 0,
-			HtmlPreviewEntry.class.getName(),
-			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, file,
-			String.valueOf(htmlPreviewEntryId), mimeType, false);
-
-		HtmlPreviewEntry htmlPreviewEntry =
-			_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
-				htmlPreviewEntryId);
-
-		htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
-
-		_htmlPreviewEntryLocalService.updateHtmlPreviewEntry(htmlPreviewEntry);
 	}
 
 	@Reference

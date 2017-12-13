@@ -70,7 +70,7 @@
 		</if>
 	</command>
 
-	<command name="UploadImageToSimpleProduct" priority="5">
+	<command ignore="true" name="UploadImageToSimpleProduct" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 
 		<execute test-case="CPCommerceCatalog#AddSimpleCatalogEntry" />
@@ -104,7 +104,7 @@
 		</if>
 	</command>
 
-	<command name="UploadImageToVirtualProduct" priority="5">
+	<command ignore="true" name="UploadImageToVirtualProduct" priority="5">
 		<property name="portal.acceptance" value="false" />
 
 		<execute test-case="CPCommerceCatalog#AddVirtualCatalogEntry" />

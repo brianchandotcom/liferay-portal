@@ -39,7 +39,7 @@ public class CommercePaymentMethodImpl extends CommercePaymentMethodBaseImpl {
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/payment/method?img_id=");
-		sb.append(String.valueOf(getImageId()));
+		sb.append(getImageId());
 		sb.append("&t=");
 		sb.append(WebServerServletTokenUtil.getToken(getImageId()));
 

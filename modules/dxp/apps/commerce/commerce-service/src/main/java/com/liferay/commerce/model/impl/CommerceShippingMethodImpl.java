@@ -39,7 +39,7 @@ public class CommerceShippingMethodImpl extends CommerceShippingMethodBaseImpl {
 
 		sb.append(themeDisplay.getPathImage());
 		sb.append("/shipping/method?img_id=");
-		sb.append(String.valueOf(getImageId()));
+		sb.append(getImageId());
 		sb.append("&t=");
 		sb.append(WebServerServletTokenUtil.getToken(getImageId()));
 

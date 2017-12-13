@@ -312,11 +312,9 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
-			}
+			if (isJavaSource(content, matcher.start()) &&
+				(getLevel(matcher.group()) == 0)) {
 
-			if (getLevel(matcher.group()) == 0) {
 				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
 			}
@@ -352,11 +350,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		matcher = _missingEmptyLinePattern3.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
-			}
-
-			if ((getLevel(matcher.group()) != 0) &&
+			if (isJavaSource(content, matcher.start()) &&
+				(getLevel(matcher.group()) != 0) &&
 				(content.charAt(matcher.end()) != CharPool.NEW_LINE)) {
 
 				return StringUtil.replaceFirst(
@@ -367,56 +362,46 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		matcher = _missingEmptyLinePattern4.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
 			}
-
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start() + 1);
 		}
 
 		matcher = _missingEmptyLinePattern5.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
 			}
-
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start() + 1);
 		}
 
 		matcher = _missingEmptyLinePattern6.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
 			}
-
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start());
 		}
 
 		matcher = _missingEmptyLinePattern7.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
 			}
-
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start() + 1);
 		}
 
 		matcher = _missingEmptyLinePattern8.matcher(content);
 
 		while (matcher.find()) {
-			if (!isJavaSource(content, matcher.start())) {
-				continue;
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
 			}
-
-			return StringUtil.replaceFirst(
-				content, "\n", "\n\n", matcher.start());
 		}
 
 		return content;

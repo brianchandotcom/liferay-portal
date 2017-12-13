@@ -8,13 +8,19 @@
 			<var name="fragmentName" value="${fragmentName}" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Fragment#submit" />
 	</command>
 
 	<command name="editFragment">
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${fragmentName}" />
 		</execute>
+	</command>
+
+	<command name="submit">
+		<execute function="Click" locator1="Button#MODAL_CONTENT_SUBMIT" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="typeFragmentEditor">

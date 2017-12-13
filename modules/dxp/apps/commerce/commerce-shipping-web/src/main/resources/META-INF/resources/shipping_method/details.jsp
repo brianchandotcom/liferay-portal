@@ -33,6 +33,24 @@ CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayCo
 
 	<aui:input name="description" />
 
+	<%
+	String thumbnailSrc = StringPool.BLANK;
+
+	if (commerceShippingMethod != null) {
+		thumbnailSrc = commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
+	}
+	%>
+
+	<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+		<div class="row">
+			<div class="col-md-4">
+				<img class="w-100" src="<%= thumbnailSrc %>" />
+			</div>
+		</div>
+	</c:if>
+
+	<aui:input label="" name="imageFile" type="file" />
+
 	<aui:input name="priority" />
 
 	<aui:input name="active" />

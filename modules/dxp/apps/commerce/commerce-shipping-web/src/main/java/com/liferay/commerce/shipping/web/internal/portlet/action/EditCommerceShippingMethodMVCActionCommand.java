@@ -26,11 +26,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.File;
 
 import java.util.Locale;
 import java.util.Map;
@@ -110,6 +114,9 @@ public class EditCommerceShippingMethodMVCActionCommand
 			ActionRequest actionRequest)
 		throws PortalException {
 
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
 		long commerceShippingMethodId = ParamUtil.getLong(
 			actionRequest, "commerceShippingMethodId");
 
@@ -117,6 +124,7 @@ public class EditCommerceShippingMethodMVCActionCommand
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		File imageFile = uploadPortletRequest.getFile("imageFile");
 		String engineKey = ParamUtil.getString(actionRequest, "engineKey");
 		UnicodeProperties engineParameterMap =
 			PropertiesParamUtil.getProperties(actionRequest, "settings--");
@@ -131,14 +139,15 @@ public class EditCommerceShippingMethodMVCActionCommand
 		if (commerceShippingMethodId <= 0) {
 			commerceShippingMethod =
 				_commerceShippingMethodService.addCommerceShippingMethod(
-					nameMap, descriptionMap, engineKey, engineParameterMap,
-					priority, active, serviceContext);
+					nameMap, descriptionMap, imageFile, engineKey,
+					engineParameterMap, priority, active, serviceContext);
 		}
 		else {
 			commerceShippingMethod =
 				_commerceShippingMethodService.updateCommerceShippingMethod(
 					commerceShippingMethodId, nameMap, descriptionMap,
-					engineParameterMap, priority, active, serviceContext);
+					imageFile, engineParameterMap, priority, active,
+					serviceContext);
 		}
 
 		return commerceShippingMethod;
@@ -146,5 +155,8 @@ public class EditCommerceShippingMethodMVCActionCommand
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
+
+	@Reference
+	private Portal _portal;
 
 }

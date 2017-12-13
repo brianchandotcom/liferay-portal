@@ -16,6 +16,9 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.webserver.WebServerServletTokenUtil;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -23,6 +26,23 @@ import aQute.bnd.annotation.ProviderType;
 public class CommerceShippingMethodImpl extends CommerceShippingMethodBaseImpl {
 
 	public CommerceShippingMethodImpl() {
+	}
+
+	@Override
+	public String getShippingMethodImageURL(ThemeDisplay themeDisplay) {
+		if (getImageId() <= 0) {
+			return null;
+		}
+
+		StringBuilder sb = new StringBuilder(5);
+
+		sb.append(themeDisplay.getPathImage());
+		sb.append("/shipping/method?img_id=");
+		sb.append(String.valueOf(getImageId()));
+		sb.append("&t=");
+		sb.append(WebServerServletTokenUtil.getToken(getImageId()));
+
+		return sb.toString();
 	}
 
 }

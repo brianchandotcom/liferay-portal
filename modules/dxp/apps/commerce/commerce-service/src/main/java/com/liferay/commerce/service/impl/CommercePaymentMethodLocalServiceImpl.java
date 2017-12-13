@@ -96,8 +96,49 @@ public class CommercePaymentMethodLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommercePaymentMethods(long groupId) {
-		commercePaymentMethodPersistence.removeByGroupId(groupId);
+	public CommercePaymentMethod deleteCommercePaymentMethod(
+			CommercePaymentMethod commercePaymentMethod)
+		throws PortalException {
+
+		// Commerce payment method
+
+		commercePaymentMethodPersistence.remove(commercePaymentMethod);
+
+		// Image
+
+		if (commercePaymentMethod.getImageId() > 0) {
+			imageLocalService.deleteImage(commercePaymentMethod.getImageId());
+		}
+
+		return commercePaymentMethod;
+	}
+
+	@Override
+	public CommercePaymentMethod deleteCommercePaymentMethod(
+			long commercePaymentMethodId)
+		throws PortalException {
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodPersistence.findByPrimaryKey(
+				commercePaymentMethodId);
+
+		return commercePaymentMethodLocalService.deleteCommercePaymentMethod(
+			commercePaymentMethod);
+	}
+
+	@Override
+	public void deleteCommercePaymentMethods(long groupId)
+		throws PortalException {
+
+		List<CommercePaymentMethod> commercePaymentMethods =
+			commercePaymentMethodPersistence.findByGroupId(groupId);
+
+		for (CommercePaymentMethod commercePaymentMethod :
+				commercePaymentMethods) {
+
+			commercePaymentMethodLocalService.deleteCommercePaymentMethod(
+				commercePaymentMethod);
+		}
 	}
 
 	@Override

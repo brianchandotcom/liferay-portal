@@ -96,8 +96,49 @@ public class CommerceShippingMethodLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceShippingMethods(long groupId) {
-		commerceShippingMethodPersistence.removeByGroupId(groupId);
+	public CommerceShippingMethod deleteCommerceShippingMethod(
+			CommerceShippingMethod commerceShippingMethod)
+		throws PortalException {
+
+		// Commerce shipping method
+
+		commerceShippingMethodPersistence.remove(commerceShippingMethod);
+
+		// Image
+
+		if (commerceShippingMethod.getImageId() > 0) {
+			imageLocalService.deleteImage(commerceShippingMethod.getImageId());
+		}
+
+		return commerceShippingMethod;
+	}
+
+	@Override
+	public CommerceShippingMethod deleteCommerceShippingMethod(
+			long commerceShippingMethodId)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodPersistence.findByPrimaryKey(
+				commerceShippingMethodId);
+
+		return commerceShippingMethodLocalService.deleteCommerceShippingMethod(
+			commerceShippingMethod);
+	}
+
+	@Override
+	public void deleteCommerceShippingMethods(long groupId)
+		throws PortalException {
+
+		List<CommerceShippingMethod> commerceShippingMethods =
+			commerceShippingMethodPersistence.findByGroupId(groupId);
+
+		for (CommerceShippingMethod commerceShippingMethod :
+				commerceShippingMethods) {
+
+			commerceShippingMethodLocalService.deleteCommerceShippingMethod(
+				commerceShippingMethod);
+		}
 	}
 
 	@Override

@@ -15,7 +15,6 @@
 package com.liferay.css.builder.internal.util;
 
 import com.liferay.css.builder.CSSBuilder;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +32,7 @@ import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
+import com.liferay.petra.string.StringPool;
 import org.apache.tools.ant.DirectoryScanner;
 
 /**

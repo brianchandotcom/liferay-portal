@@ -11,6 +11,6 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
 
-	soyCompile group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20171206.012807-7"
 	soyCompile group: "com.liferay", name: "com.liferay.frontend.js.metal.web", version: "1.0.10"
+	soyCompile group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20171206.012807-7"
 }

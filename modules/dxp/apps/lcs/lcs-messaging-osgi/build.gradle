@@ -1,5 +1,5 @@
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.lcs.messaging.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.lcs.messaging.api", version: "3.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.11.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"

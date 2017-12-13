@@ -629,7 +629,7 @@
 
 	<command name="AddRecordWithRepeatableTextField" priority="5">
 		<description message="This is a use case for LPS-65069." />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -3874,7 +3874,7 @@
 	<command name="ViewRequiredNestedDocumentsAndMediaField" priority="5">
 		<description message="This is a use case for LPS-60155." />
 
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />

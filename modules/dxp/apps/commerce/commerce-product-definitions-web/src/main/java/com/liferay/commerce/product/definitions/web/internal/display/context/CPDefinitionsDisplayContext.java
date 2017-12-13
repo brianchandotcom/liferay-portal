@@ -235,6 +235,10 @@ public class CPDefinitionsDisplayContext
 	public String getProductURL(CPDefinition cpDefinition)
 		throws PortalException {
 
+		if (cpDefinition == null) {
+			return StringPool.BLANK;
+		}
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);

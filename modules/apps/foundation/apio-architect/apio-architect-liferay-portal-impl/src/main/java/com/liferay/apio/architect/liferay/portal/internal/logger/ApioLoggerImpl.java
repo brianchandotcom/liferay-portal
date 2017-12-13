@@ -14,8 +14,8 @@
 
 package com.liferay.apio.architect.liferay.portal.internal.logger;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.logger.ApioLogger;
-import com.liferay.apio.architect.result.APIError;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Validator;

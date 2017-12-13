@@ -22,7 +22,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;

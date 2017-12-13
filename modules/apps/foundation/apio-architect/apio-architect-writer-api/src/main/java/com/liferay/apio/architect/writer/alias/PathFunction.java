@@ -15,7 +15,7 @@
 package com.liferay.apio.architect.writer.alias;
 
 import com.liferay.apio.architect.function.TriFunction;
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Optional;

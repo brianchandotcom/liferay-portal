@@ -16,7 +16,7 @@ package com.liferay.apio.architect.logger;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.result.APIError;
+import com.liferay.apio.architect.error.APIError;
 
 /**
  * Defines loggers for Apio warnings.

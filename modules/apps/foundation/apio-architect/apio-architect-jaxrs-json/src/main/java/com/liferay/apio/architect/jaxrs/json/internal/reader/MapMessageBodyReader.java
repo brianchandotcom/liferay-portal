@@ -16,7 +16,7 @@ package com.liferay.apio.architect.jaxrs.json.internal.reader;
 
 import com.google.gson.Gson;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 
 import java.io.IOException;
 import java.io.InputStream;

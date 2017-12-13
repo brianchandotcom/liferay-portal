@@ -22,12 +22,12 @@ import static com.liferay.apio.architect.test.resource.MockRepresentorCreator.cr
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.identifier.StringIdentifier;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
-import com.liferay.apio.architect.pagination.SingleModel;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.identifier.Identifier;
-import com.liferay.apio.architect.resource.identifier.StringIdentifier;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.test.resource.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.resource.model.RootModel;
 import com.liferay.apio.architect.test.resource.model.SecondEmbeddedModel;

@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.User;
  *
  * <p>
  * To use this class, add it as a parameter to the methods of {@link
- * Routes.Builder}.
+ * com.liferay.apio.architect.routes.Routes.Builder}.
  * </p>
  *
  * @author Alejandro Hernández

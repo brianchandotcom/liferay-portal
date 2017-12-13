@@ -17,10 +17,9 @@ package com.liferay.apio.architect.wiring.osgi.manager;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.apio.architect.documentation.Documentation;
-import com.liferay.apio.architect.resource.CollectionResourceInfo;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.Routes;
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.representor.Representor;
+import com.liferay.apio.architect.routes.Routes;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,18 +71,6 @@ public interface CollectionResourceManager {
 	 */
 	public <T, U extends Identifier> Optional<Representor<T, U>>
 		getRepresentorOptional(Class<T> modelClass);
-
-	/**
-	 * Returns the {@link CollectionResourceInfo} of the collection resource's
-	 * model class, if that info exists. Returns {@code Optional#empty()}
-	 * otherwise.
-	 *
-	 * @param  modelClass the collection resource's model class
-	 * @return the model class's {@code CollectionResourceInfo}, if present;
-	 *         {@code Optional#empty()} otherwise
-	 */
-	public <T, U extends Identifier> Optional<CollectionResourceInfo<T, U>>
-		getResourceInfoOptional(Class<T> modelClass);
 
 	/**
 	 * Returns the root collection resource's list of names.

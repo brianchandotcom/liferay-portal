@@ -14,11 +14,11 @@
 
 package com.liferay.apio.architect.message.hal.internal;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.wiring.osgi.manager.CollectionResourceManager;
 
 import java.util.List;

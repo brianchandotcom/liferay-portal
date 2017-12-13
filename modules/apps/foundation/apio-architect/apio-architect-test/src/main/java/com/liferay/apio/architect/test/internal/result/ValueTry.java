@@ -16,7 +16,7 @@ package com.liferay.apio.architect.test.internal.result;
 
 import static com.liferay.apio.architect.test.result.TryMatchers.aSuccessTry;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;

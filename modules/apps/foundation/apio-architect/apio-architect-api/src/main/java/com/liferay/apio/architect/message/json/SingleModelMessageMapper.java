@@ -17,7 +17,7 @@ package com.liferay.apio.architect.message.json;
 import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.apio.architect.list.FunctionalList;
-import com.liferay.apio.architect.pagination.SingleModel;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.List;
 

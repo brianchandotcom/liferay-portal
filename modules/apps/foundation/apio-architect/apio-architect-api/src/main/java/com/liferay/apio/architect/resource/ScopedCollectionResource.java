@@ -16,10 +16,10 @@ package com.liferay.apio.architect.resource;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.identifier.Identifier;
 
 /**
- * Maps your domain models to resources that Vulcan can understand.
+ * Maps your domain models to resources that Apio can understand.
  *
  * <p>
  * {@code ScopedCollectionResources} are a special type of {@code
@@ -34,18 +34,20 @@ import com.liferay.apio.architect.resource.identifier.Identifier;
  *
  * <p>
  * Representors created by the method {@link
- * CollectionResource#buildRepresentor(Representor.Builder)} hold all the
+ * CollectionResource#representor(
+ * com.liferay.apio.architect.representor.Representor.Builder)} hold all the
  * information needed to write your domain models' hypermedia representations.
  * </p>
  *
  * <p>
  * Finally, you can add the different supported routes for the resource via the
- * method {@link CollectionResource#routes(Routes.Builder)}.
+ * method {@link
+ * CollectionResource#routes(com.liferay.apio.architect.routes.Routes.Builder)}.
  * </p>
  *
  * @author Alejandro Hernández
- * @see    Representor.Builder
- * @see    Routes.Builder
+ * @see    com.liferay.apio.architect.representor.Representor.Builder
+ * @see    com.liferay.apio.architect.routes.Routes.Builder
  */
 @ConsumerType
 public interface ScopedCollectionResource<T, U extends Identifier>

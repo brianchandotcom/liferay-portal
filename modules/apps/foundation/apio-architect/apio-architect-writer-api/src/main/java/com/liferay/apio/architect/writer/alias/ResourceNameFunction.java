@@ -20,7 +20,7 @@ import java.util.function.Function;
 /**
  * Defines a type alias for a function that receives a model's class name and
  * returns an {@code Optional} of its {@link
- * com.liferay.apio.architect.resource.Representor} name.
+ * com.liferay.apio.architect.representor.Representor} name.
  *
  * @author Alejandro Hernández
  */

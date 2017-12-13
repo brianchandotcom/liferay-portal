@@ -14,8 +14,8 @@
 
 package com.liferay.apio.architect.test.resource;
 
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.identifier.StringIdentifier;
+import com.liferay.apio.architect.identifier.StringIdentifier;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.test.resource.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.resource.model.RootModel;
 import com.liferay.apio.architect.test.resource.model.SecondEmbeddedModel;
@@ -56,11 +56,11 @@ public class MockRepresentorCreator {
 			"binary", __ -> null
 		).addBoolean(
 			"boolean", __ -> true
-		).addEmbeddedModel(
-			"embedded", SecondEmbeddedModel.class,
-			__ -> Optional.of(() -> "first")
 		).addLink(
 			"link", "www.liferay.com"
+		).addLinkedModel(
+			"embedded", SecondEmbeddedModel.class,
+			__ -> Optional.of(() -> "first")
 		).addLinkedModel(
 			"linked", SecondEmbeddedModel.class,
 			__ -> Optional.of(() -> "second")
@@ -103,10 +103,10 @@ public class MockRepresentorCreator {
 				"date1", __ -> new Date(1465981200000L)
 			).addDate(
 				"date2", __ -> new Date(1491244560000L)
-			).addEmbeddedModel(
+			).addLinkedModel(
 				"embedded1", FirstEmbeddedModel.class,
 				__ -> Optional.of(() -> "first")
-			).addEmbeddedModel(
+			).addLinkedModel(
 				"embedded2", FirstEmbeddedModel.class,
 				__ -> Optional.of(() -> "second")
 			).addLinkedModel(
@@ -181,11 +181,11 @@ public class MockRepresentorCreator {
 			"binary", __ -> null
 		).addBoolean(
 			"boolean", __ -> false
-		).addEmbeddedModel(
-			"embedded", ThirdEmbeddedModel.class,
-			__ -> Optional.of(() -> "first")
 		).addLink(
 			"link", "community.liferay.com"
+		).addLinkedModel(
+			"embedded", ThirdEmbeddedModel.class,
+			__ -> Optional.of(() -> "first")
 		).addLinkedModel(
 			"linked", ThirdEmbeddedModel.class,
 			__ -> Optional.of(() -> "second")

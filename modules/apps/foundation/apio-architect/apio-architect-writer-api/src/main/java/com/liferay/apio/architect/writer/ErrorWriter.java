@@ -16,9 +16,9 @@ package com.liferay.apio.architect.writer;
 
 import com.google.gson.JsonObject;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
-import com.liferay.apio.architect.result.APIError;
 
 import java.util.Optional;
 

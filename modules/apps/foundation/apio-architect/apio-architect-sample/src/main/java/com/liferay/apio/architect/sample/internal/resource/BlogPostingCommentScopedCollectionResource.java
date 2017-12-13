@@ -14,13 +14,13 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
+import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.Routes;
 import com.liferay.apio.architect.resource.ScopedCollectionResource;
-import com.liferay.apio.architect.resource.identifier.LongIdentifier;
+import com.liferay.apio.architect.routes.Routes;
 import com.liferay.apio.architect.sample.internal.model.BlogPostingComment;
 import com.liferay.apio.architect.sample.internal.model.Person;
 
@@ -44,11 +44,15 @@ public class BlogPostingCommentScopedCollectionResource
 	implements ScopedCollectionResource<BlogPostingComment, LongIdentifier> {
 
 	@Override
-	public Representor<BlogPostingComment, LongIdentifier> buildRepresentor(
-		Representor.Builder<BlogPostingComment, LongIdentifier>
-			representorBuilder) {
+	public String getName() {
+		return "comments";
+	}
 
-		return representorBuilder.types(
+	@Override
+	public Representor<BlogPostingComment, LongIdentifier> representor(
+		Representor.Builder<BlogPostingComment, LongIdentifier> builder) {
+
+		return builder.types(
 			"Comment"
 		).identifier(
 			blogPostingComment -> blogPostingComment::getBlogPostingCommentId
@@ -56,18 +60,13 @@ public class BlogPostingCommentScopedCollectionResource
 			"dateCreated", BlogPostingComment::getCreateDate
 		).addDate(
 			"dateModified", BlogPostingComment::getModifiedDate
-		).addEmbeddedModel(
+		).addLinkedModel(
 			"author", Person.class,
 			blogPostingComment ->
 				Person.getPerson(blogPostingComment.getAuthorId())
 		).addString(
 			"text", BlogPostingComment::getContent
 		).build();
-	}
-
-	@Override
-	public String getName() {
-		return "comments";
 	}
 
 	@Override

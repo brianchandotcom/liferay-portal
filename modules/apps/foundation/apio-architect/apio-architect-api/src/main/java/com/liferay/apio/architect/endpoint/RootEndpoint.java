@@ -17,9 +17,9 @@ package com.liferay.apio.architect.endpoint;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.apio.architect.documentation.Documentation;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.Page;
-import com.liferay.apio.architect.pagination.SingleModel;
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.io.InputStream;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.apio.architect.sample.internal.logger;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.logger.ApioLogger;
-import com.liferay.apio.architect.result.APIError;
 
 import java.util.Optional;
 

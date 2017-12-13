@@ -18,13 +18,13 @@ import static org.osgi.service.component.annotations.ReferenceCardinality.AT_LEA
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
 import com.liferay.apio.architect.error.ApioDeveloperError;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
-import com.liferay.apio.architect.pagination.SingleModel;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.response.control.Embedded;
 import com.liferay.apio.architect.response.control.Fields;
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.CollectionResourceManager;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;

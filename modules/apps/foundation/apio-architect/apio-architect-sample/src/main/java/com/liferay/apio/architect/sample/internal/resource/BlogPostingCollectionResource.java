@@ -14,13 +14,13 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
+import com.liferay.apio.architect.identifier.LongIdentifier;
+import com.liferay.apio.architect.identifier.RootIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.Routes;
-import com.liferay.apio.architect.resource.identifier.LongIdentifier;
-import com.liferay.apio.architect.resource.identifier.RootIdentifier;
+import com.liferay.apio.architect.routes.Routes;
 import com.liferay.apio.architect.sample.internal.model.BlogPosting;
 import com.liferay.apio.architect.sample.internal.model.BlogPostingComment;
 import com.liferay.apio.architect.sample.internal.model.Person;
@@ -45,10 +45,15 @@ public class BlogPostingCollectionResource
 	implements CollectionResource<BlogPosting, LongIdentifier> {
 
 	@Override
-	public Representor<BlogPosting, LongIdentifier> buildRepresentor(
-		Representor.Builder<BlogPosting, LongIdentifier> representorBuilder) {
+	public String getName() {
+		return "blog-postings";
+	}
 
-		return representorBuilder.types(
+	@Override
+	public Representor<BlogPosting, LongIdentifier> representor(
+		Representor.Builder<BlogPosting, LongIdentifier> builder) {
+
+		return builder.types(
 			"BlogPosting"
 		).identifier(
 			blogPosting -> blogPosting::getBlogPostingId
@@ -56,7 +61,7 @@ public class BlogPostingCollectionResource
 			"dateCreated", BlogPosting::getCreateDate
 		).addDate(
 			"dateModified", BlogPosting::getModifiedDate
-		).addEmbeddedModel(
+		).addLinkedModel(
 			"creator", Person.class,
 			blogPosting -> Person.getPerson(blogPosting.getCreatorId())
 		).addRelatedCollection(
@@ -71,11 +76,6 @@ public class BlogPostingCollectionResource
 		).addString(
 			"headline", BlogPosting::getTitle
 		).build();
-	}
-
-	@Override
-	public String getName() {
-		return "blog-postings";
 	}
 
 	@Override

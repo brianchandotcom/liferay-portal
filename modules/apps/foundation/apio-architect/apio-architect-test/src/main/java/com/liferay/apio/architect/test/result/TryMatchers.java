@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.test.result;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.test.internal.result.FailTry;
 import com.liferay.apio.architect.test.internal.result.SuccessTry;
 import com.liferay.apio.architect.test.internal.result.ValueTry;

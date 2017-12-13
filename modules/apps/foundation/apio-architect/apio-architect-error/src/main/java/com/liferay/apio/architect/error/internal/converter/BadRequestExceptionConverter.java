@@ -17,7 +17,7 @@ package com.liferay.apio.architect.error.internal.converter;
 import static javax.ws.rs.core.Response.Status.BAD_REQUEST;
 
 import com.liferay.apio.architect.converter.ExceptionConverter;
-import com.liferay.apio.architect.result.APIError;
+import com.liferay.apio.architect.error.APIError;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;

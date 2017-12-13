@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.writer;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 
 import java.io.IOException;

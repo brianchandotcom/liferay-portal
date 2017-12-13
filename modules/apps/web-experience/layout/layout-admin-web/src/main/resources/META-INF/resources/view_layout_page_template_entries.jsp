@@ -95,24 +95,18 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
 
-			HtmlPreviewEntry htmlPreviewEntry = HtmlPreviewEntryLocalServiceUtil.getHtmlPreviewEntry(layoutPageTemplateEntry.getHtmlPreviewEntryId());
-
-			FileEntry fileEntry = null;
-
-			if (htmlPreviewEntry.getFileEntryId() > 0) {
-				fileEntry = DLAppLocalServiceUtil.getFileEntry(htmlPreviewEntry.getFileEntryId());
-			}
+			String imagePreviewURL = layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 			%>
 
 			<liferay-ui:search-container-column-text>
 				<c:choose>
-					<c:when test="<%= fileEntry != null %>">
+					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
 						<liferay-frontend:vertical-card
 							actionJsp="/layout_page_template_entry_action.jsp"
 							actionJspServletContext="<%= application %>"
 							cssClass="entry-display-style"
 							imageCSSClass="aspect-ratio-bg-contain"
-							imageUrl="<%= DLUtil.getImagePreviewURL(fileEntry, themeDisplay) %>"
+							imageUrl="<%= imagePreviewURL %>"
 							resultRow="<%= row %>"
 							rowChecker="<%= searchContainer.getRowChecker() %>"
 							title="<%= layoutPageTemplateEntry.getName() %>"

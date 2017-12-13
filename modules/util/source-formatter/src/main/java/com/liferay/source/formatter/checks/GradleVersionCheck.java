@@ -14,6 +14,12 @@
 
 package com.liferay.source.formatter.checks;
 
+import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.source.formatter.util.FileUtil;
+
+import java.io.File;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +41,11 @@ public class GradleVersionCheck extends BaseFileCheck {
 
 			_checkDefaultVersion(
 				fileName, content, name, version, matcher.start());
+
+			if (absolutePath.contains("/modules/apps/")) {
+				content = _fixMicroVersion(
+					fileName, content, matcher.group(1), name, version);
+			}
 		}
 
 		return content;
@@ -55,6 +66,49 @@ public class GradleVersionCheck extends BaseFileCheck {
 		}
 	}
 
+	private String _fixMicroVersion(
+			String fileName, String content, String line, String name,
+			String version)
+		throws Exception {
+
+		if (!line.startsWith("provided ") || !name.startsWith("com.liferay.") ||
+			!version.matches("[0-9]+\\.[0-9]+\\.[1-9][0-9]*")) {
+
+			return content;
+		}
+
+		int pos = fileName.lastIndexOf(CharPool.SLASH);
+
+		String bndFileLocation = fileName.substring(0, pos + 1) + "bnd.bnd";
+
+		File bndFile = new File(bndFileLocation);
+
+		if (bndFile.exists()) {
+			String bndFileContent = FileUtil.read(bndFile);
+
+			Matcher matcher = _bndConditionalPackagePattern.matcher(
+				bndFileContent);
+
+			if (matcher.find()) {
+				String conditionalPackageContent = matcher.group();
+
+				if (conditionalPackageContent.contains(name)) {
+					return content;
+				}
+			}
+		}
+
+		pos = version.lastIndexOf(".");
+
+		String newLine = StringUtil.replaceFirst(
+			line, "version: \"" + version + "\"",
+			"version: \"" + version.substring(0, pos + 1) + "0\"");
+
+		return StringUtil.replaceFirst(content, line, newLine);
+	}
+
+	private final Pattern _bndConditionalPackagePattern = Pattern.compile(
+		"-conditionalpackage:(.*[^\\\\])(\n|\\Z)", Pattern.DOTALL);
 	private final Pattern _versionPattern = Pattern.compile(
 		"\n\t*(.* name: \"(.*?)\", version: \"(.*?)\")");
 

@@ -15,6 +15,8 @@
 package com.liferay.commerce.checkout.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderPayment;
+import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,10 +29,12 @@ import javax.servlet.http.HttpServletRequest;
 public class OrderConfirmationCheckoutStepDisplayContext {
 
 	public OrderConfirmationCheckoutStepDisplayContext(
+			CommerceOrderPaymentLocalService commerceOrderPaymentLocalService,
 			CommerceOrderService commerceOrderService,
 			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
+		_commerceOrderPaymentLocalService = commerceOrderPaymentLocalService;
 		_commerceOrderService = commerceOrderService;
 		_httpServletRequest = httpServletRequest;
 	}
@@ -49,7 +53,18 @@ public class OrderConfirmationCheckoutStepDisplayContext {
 		return _commerceOrder;
 	}
 
+	public CommerceOrderPayment getCommerceOrderPayment()
+		throws PortalException {
+
+		CommerceOrder commerceOrder = getCommerceOrder();
+
+		return _commerceOrderPaymentLocalService.getLatestCommerceOrderPayment(
+			commerceOrder.getCommerceOrderId());
+	}
+
 	private CommerceOrder _commerceOrder;
+	private final CommerceOrderPaymentLocalService
+		_commerceOrderPaymentLocalService;
 	private final CommerceOrderService _commerceOrderService;
 	private final HttpServletRequest _httpServletRequest;
 

@@ -20,6 +20,30 @@
 OrderConfirmationCheckoutStepDisplayContext orderConfirmationCheckoutStepDisplayContext = (OrderConfirmationCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
 CommerceOrder commerceOrder = orderConfirmationCheckoutStepDisplayContext.getCommerceOrder();
+CommerceOrderPayment commerceOrderPayment = orderConfirmationCheckoutStepDisplayContext.getCommerceOrderPayment();
+
+int paymentStatus = commerceOrderPayment.getStatus();
 %>
 
 Order <%= commerceOrder.getCommerceOrderId() %>
+
+<c:if test="<%= (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) || (paymentStatus == CommerceOrderPaymentConstants.STATUS_FAILED) %>">
+	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
+
+	<div class="alert alert-warning">
+
+		<%
+		String taglibMessageKey = "an-error-occurred-while-processing-your-payment";
+		String taglibValue = "retry";
+
+		if (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) {
+			taglibMessageKey = "your-payment-has-been-cancelled";
+			taglibValue = "pay-now";
+		}
+		%>
+
+		<liferay-ui:message key="<%= taglibMessageKey %>" />
+
+		<aui:button cssClass="alert-link btn-link" type="submit" value="<%= taglibValue %>" />
+	</div>
+</c:if>

@@ -258,6 +258,5 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String js) throws PortalException;
 }

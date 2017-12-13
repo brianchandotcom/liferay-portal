@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -86,16 +85,13 @@ public class HtmlPreviewGeneratorMessageListener extends BaseMessageListener {
 
 		File file = htmlPreviewProcessor.generateHtmlPreview(content);
 
-		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
-			groupId, HtmlPreviewEntry.class.getName());
-
 		FileEntry fileEntry = PortletFileRepositoryUtil.fetchPortletFileEntry(
-			groupId, repository.getDlFolderId(),
+			groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 			String.valueOf(htmlPreviewEntryId));
 
 		if (fileEntry != null) {
 			PortletFileRepositoryUtil.deletePortletFileEntry(
-				groupId, repository.getDlFolderId(),
+				groupId, DLFolderConstants.DEFAULT_PARENT_FOLDER_ID,
 				String.valueOf(htmlPreviewEntryId));
 		}
 

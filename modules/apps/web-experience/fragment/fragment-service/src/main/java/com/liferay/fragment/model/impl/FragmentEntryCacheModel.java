@@ -65,7 +65,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{fragmentEntryId=");
 		sb.append(fragmentEntryId);
@@ -91,8 +91,6 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		sb.append(html);
 		sb.append(", js=");
 		sb.append(js);
-		sb.append(", htmlPreviewEntryId=");
-		sb.append(htmlPreviewEntryId);
 		sb.append("}");
 
 		return sb.toString();
@@ -158,8 +156,6 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 			fragmentEntryImpl.setJs(js);
 		}
 
-		fragmentEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
-
 		fragmentEntryImpl.resetOriginalValues();
 
 		return fragmentEntryImpl;
@@ -183,8 +179,6 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		css = objectInput.readUTF();
 		html = objectInput.readUTF();
 		js = objectInput.readUTF();
-
-		htmlPreviewEntryId = objectInput.readLong();
 	}
 
 	@Override
@@ -237,8 +231,6 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		else {
 			objectOutput.writeUTF(js);
 		}
-
-		objectOutput.writeLong(htmlPreviewEntryId);
 	}
 
 	public long fragmentEntryId;
@@ -253,5 +245,4 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	public String css;
 	public String html;
 	public String js;
-	public long htmlPreviewEntryId;
 }

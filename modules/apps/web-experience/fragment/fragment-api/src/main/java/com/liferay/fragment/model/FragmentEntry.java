@@ -54,6 +54,4 @@ public interface FragmentEntry extends FragmentEntryModel, PersistedModel {
 				return FragmentEntry.class;
 			}
 		};
-
-	public java.lang.String getContent();
 }

@@ -302,12 +302,10 @@ public class FragmentEntryLocalServiceUtil {
 
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		long fragmentEntryId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.lang.String html, java.lang.String js)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updateFragmentEntry(fragmentEntryId, name, css, html, js,
-			serviceContext);
+				   .updateFragmentEntry(fragmentEntryId, name, css, html, js);
 	}
 
 	public static FragmentEntryLocalService getService() {

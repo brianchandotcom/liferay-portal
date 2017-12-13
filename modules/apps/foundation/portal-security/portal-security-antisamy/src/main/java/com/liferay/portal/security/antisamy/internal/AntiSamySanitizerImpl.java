@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.sanitizer.BaseSanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -56,6 +57,8 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 				blacklistItem = blacklistItem.trim();
 
 				if (!blacklistItem.isEmpty()) {
+					blacklistItem = stripTrailingStar(blacklistItem);
+
 					_blacklist.add(blacklistItem);
 				}
 			}
@@ -66,6 +69,8 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 				whitelistItem = whitelistItem.trim();
 
 				if (!whitelistItem.isEmpty()) {
+					whitelistItem = stripTrailingStar(whitelistItem);
+
 					_whitelist.add(whitelistItem);
 				}
 			}
@@ -133,6 +138,20 @@ public class AntiSamySanitizerImpl extends BaseSanitizer {
 		}
 
 		return false;
+	}
+
+	protected String stripTrailingStar(String item) {
+		if (item.equals(StringPool.STAR)) {
+			return item;
+		}
+
+		char lastChar = item.charAt(item.length() - 1);
+
+		if (lastChar == CharPool.STAR) {
+			return item.substring(0, item.length() - 1);
+		}
+
+		return item;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

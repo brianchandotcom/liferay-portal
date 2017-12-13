@@ -201,6 +201,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		return _layoutPageTemplateEntry.getHtmlPreviewEntryId();
 	}
 
+	@Override
+	public java.lang.String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
+	}
+
 	/**
 	* Returns the layout page template collection ID of this layout page template entry.
 	*

@@ -885,6 +885,7 @@ Error-Prone was automatically installed. Please rerun your task.
 	<macrodef name="publish-portal-artifact">
 		<attribute default="jar" name="packaging" />
 		<attribute default="false" name="snapshot" />
+		<attribute name="targets" />
 
 		<element implicit="true" name="attach-files" optional="true" />
 
@@ -974,6 +975,12 @@ Error-Prone was automatically installed. Please rerun your task.
 					<echo>${artifact.name} is not stale and does not need to be published.</echo>
 				</then>
 				<else>
+					<for list="@{targets}" param="target">
+						<sequential>
+							<ant dir="${project.dir}/${artifact.name}" inheritAll="false" target="@{target}" />
+						</sequential>
+					</for>
+
 					<artifact:deploy file="${artifact.name}.@{packaging}">
 						<attach-files />
 						<pom file="pom.xml" />

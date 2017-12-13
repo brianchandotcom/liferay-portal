@@ -16,10 +16,14 @@ package com.liferay.layout.page.template.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.html.preview.model.HtmlPreviewEntry;
+import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 
@@ -63,6 +67,19 @@ public class LayoutPageTemplateEntryImpl
 		sb.append("</body></html>");
 
 		return sb.toString();
+	}
+
+	@Override
+	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
+		if (getHtmlPreviewEntryId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		HtmlPreviewEntry htmlPreviewEntry =
+			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
+				getHtmlPreviewEntryId());
+
+		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
 	}
 
 }

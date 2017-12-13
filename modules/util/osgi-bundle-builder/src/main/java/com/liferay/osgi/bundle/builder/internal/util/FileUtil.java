@@ -33,6 +33,18 @@ import java.util.Properties;
  */
 public class FileUtil {
 
+	public static void createDirectories(File dir) throws IOException {
+		if (dir.isDirectory()) {
+			return;
+		}
+
+		boolean created = dir.mkdirs();
+
+		if (!created) {
+			throw new IOException("Unable to create " + dir);
+		}
+	}
+
 	public static File getJarFile() throws Exception {
 		ProtectionDomain protectionDomain =
 			OSGiBundleBuilder.class.getProtectionDomain();

@@ -19,10 +19,9 @@ import aQute.bnd.osgi.Jar;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
+import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
 import java.io.File;
-
-import java.nio.file.Files;
 
 /**
  * @author David Truong
@@ -41,9 +40,7 @@ public class JarCommand extends BaseCommand {
 
 		File outputFile = osgiBundleBuilderArgs.getOutputFile();
 
-		File dir = outputFile.getParentFile();
-
-		Files.createDirectories(dir.toPath());
+		FileUtil.createDirectories(outputFile.getParentFile());
 
 		jar.write(outputFile);
 	}

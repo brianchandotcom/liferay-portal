@@ -60,7 +60,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 		}
 
 		String content = null;
-		int status = CommerceOrderPaymentConstants.STATUS_CANCELED;
+		int status = CommerceOrderPaymentConstants.STATUS_CANCELLED;
 
 		try {
 			CommercePaymentEngineResult commercePaymentEngineResult =

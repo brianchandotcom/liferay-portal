@@ -551,7 +551,7 @@
 	</command>
 
 	<command name="ConfigureSpreadsheetListPG" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1894,7 +1894,7 @@
 
 	<command name="ViewListRecordWithUploadedFreeMarkerDisplayTemplate" priority="5">
 		<property name="custom.properties" value="freemarker.engine.restricted.variables=${line.separator}restricted.variables=" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />

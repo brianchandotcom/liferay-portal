@@ -110,7 +110,7 @@
 	</command>
 
 	<command name="AddFormTemplate" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -1493,7 +1493,7 @@
 
 	<command name="AddListRecordWithLinkToPageField" priority="5">
 		<description message="This is a use case for LPS-65726" />
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />
@@ -2846,7 +2846,7 @@
 	</command>
 
 	<command name="DeleteList" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -3372,7 +3372,7 @@
 	</command>
 
 	<command name="EditDataDefinition" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -3752,7 +3752,7 @@
 	</command>
 
 	<command name="EditListRecord" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 
 		<execute macro="Navigator#openURL" />
 

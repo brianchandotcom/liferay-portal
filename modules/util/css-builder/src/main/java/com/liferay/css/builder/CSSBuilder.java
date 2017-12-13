@@ -18,10 +18,9 @@ import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
 import com.liferay.css.builder.internal.util.FileUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
+import com.liferay.css.builder.internal.util.StringUtil;
+import com.liferay.petra.string.StringBundler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.rtl.css.RTLCSSConverter;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
@@ -277,7 +276,8 @@ public class CSSBuilder implements AutoCloseable {
 
 		int precision = _cssBuilderArgs.getPrecision();
 
-		if (Validator.isNull(sassCompilerClassName) ||
+		if ((sassCompilerClassName == null) ||
+			sassCompilerClassName.equals("") ||
 			sassCompilerClassName.equals("jni")) {
 
 			try {

@@ -50,20 +50,16 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 		List<String> args = new ArrayList<>();
 
-		args.add("sass.dir" + _separator + dirName);
+		args.add("includes" + _separator + dirName);
+		args.add("base-dir" + _separator + docrootDirPath.toAbsolutePath());
+		args.add("generate-source-map" + _separator + generateSourceMap);
+		args.add("output-dir" + _separator + outputDirName);
+		args.add("import-dir" + _separator + portalCommonPath.toAbsolutePath());
+		args.add("precision" + _separator + precision);
 		args.add(
-			"sass.docroot.dir" + _separator + docrootDirPath.toAbsolutePath());
-		args.add("sass.generate.source.map" + _separator + generateSourceMap);
-		args.add("sass.output.dir" + _separator + outputDirName);
-		args.add(
-			"sass.portal.common.path" + _separator +
-				portalCommonPath.toAbsolutePath());
-		args.add("sass.precision" + _separator + precision);
-		args.add(
-			"sass.rtl.excluded.path.regexps" + _separator +
+			"rtl-excluded-path-regexps" + _separator +
 				StringUtil.merge(rtlExcludedPathRegexps));
-		args.add(
-			"sass.compiler.class.name" + _separator + sassCompilerClassName);
+		args.add("compiler" + _separator + sassCompilerClassName);
 
 		CSSBuilder.main(args.toArray(new String[0]));
 	}

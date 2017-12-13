@@ -60,11 +60,11 @@ public class BuildCSSMojo extends AbstractMojo {
 				String artifactId = componentDependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.css.common") &&
-					(_cssBuilderArgs.getPortalCommonPath() == null)) {
+					(_cssBuilderArgs.getImportDir() == null)) {
 
 					Artifact artifact = _resolveArtifact(componentDependency);
 
-					_cssBuilderArgs.setPortalCommonPath(artifact.getFile());
+					_cssBuilderArgs.setImportDir(artifact.getFile());
 				}
 			}
 
@@ -105,7 +105,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	public void setDirNames(String dirNames) {
-		_cssBuilderArgs.setDirNames(dirNames);
+		_cssBuilderArgs.setIncludes(dirNames);
 	}
 
 	/**
@@ -118,7 +118,7 @@ public class BuildCSSMojo extends AbstractMojo {
 			docrootDir = new File(_baseDir, docrootDirName);
 		}
 
-		_cssBuilderArgs.setDocrootDir(docrootDir);
+		_cssBuilderArgs.setBaseDir(docrootDir);
 	}
 
 	/**
@@ -139,7 +139,7 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @parameter
 	 */
 	public void setPortalCommonPath(File portalCommonPath) {
-		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
+		_cssBuilderArgs.setImportDir(portalCommonPath);
 	}
 
 	/**

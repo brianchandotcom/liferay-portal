@@ -35,7 +35,13 @@ List<CommerceStarter> commerceStarters = commerceStarterDisplayContext.getCommer
 				for (CommerceStarter commerceStarter : commerceStarters) {
 				%>
 
-					<div class="commerce-starter row">
+					<portlet:renderURL var="viewCommerceStarterDetailsURL">
+						<portlet:param name="mvcRenderCommandName" value="viewCommerceStarterDetails" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="commerceStarterKey" value="<%= commerceStarter.getKey() %>" />
+					</portlet:renderURL>
+
+					<div class="commerce-starter row" data-url="<%= viewCommerceStarterDetailsURL.toString() %>">
 						<div class="col-md-3">
 
 							<%
@@ -45,22 +51,10 @@ List<CommerceStarter> commerceStarters = commerceStarterDisplayContext.getCommer
 							<img src="<%= thumbnailSrc %>" />
 						</div>
 
-						<div class="col-md-6">
+						<div class="col-md-9">
 							<h3><%= commerceStarter.getName(locale) %></h3>
 
 							<p><%= commerceStarter.getDescription(locale) %></p>
-						</div>
-
-						<div class="col-md-3">
-							<portlet:renderURL var="viewCommerceStarterDetailsURL">
-								<portlet:param name="mvcRenderCommandName" value="viewCommerceStarterDetails" />
-								<portlet:param name="redirect" value="<%= currentURL %>" />
-								<portlet:param name="commerceStarterKey" value="<%= commerceStarter.getKey() %>" />
-							</portlet:renderURL>
-
-							<a class="btn-primary btn-sm" href="<%= viewCommerceStarterDetailsURL.toString() %>">
-								<liferay-ui:message key="view-details" />
-							</a>
 						</div>
 					</div>
 
@@ -84,3 +78,21 @@ List<CommerceStarter> commerceStarters = commerceStarterDisplayContext.getCommer
 		</div>
 	</div>
 </div>
+
+<aui:script>
+	$('.commerce-starter').on(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			var url = $(currentTarget).attr('data-url');
+
+			if (Liferay.SPA) {
+				Liferay.SPA.app.navigate(url);
+			}
+			else {
+				window.location.href = url;
+			}
+		}
+	);
+</aui:script>

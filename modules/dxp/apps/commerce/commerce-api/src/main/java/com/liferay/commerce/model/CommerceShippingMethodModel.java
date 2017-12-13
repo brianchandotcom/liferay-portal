@@ -397,6 +397,20 @@ public interface CommerceShippingMethodModel extends BaseModel<CommerceShippingM
 		Locale defaultLocale);
 
 	/**
+	 * Returns the image ID of this commerce shipping method.
+	 *
+	 * @return the image ID of this commerce shipping method
+	 */
+	public long getImageId();
+
+	/**
+	 * Sets the image ID of this commerce shipping method.
+	 *
+	 * @param imageId the image ID of this commerce shipping method
+	 */
+	public void setImageId(long imageId);
+
+	/**
 	 * Returns the engine key of this commerce shipping method.
 	 *
 	 * @return the engine key of this commerce shipping method

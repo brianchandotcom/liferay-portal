@@ -65,7 +65,7 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{commerceShippingMethodId=");
 		sb.append(commerceShippingMethodId);
@@ -85,6 +85,8 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", imageId=");
+		sb.append(imageId);
 		sb.append(", engineKey=");
 		sb.append(engineKey);
 		sb.append(", priority=");
@@ -140,6 +142,8 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 			commerceShippingMethodImpl.setDescription(description);
 		}
 
+		commerceShippingMethodImpl.setImageId(imageId);
+
 		if (engineKey == null) {
 			commerceShippingMethodImpl.setEngineKey("");
 		}
@@ -169,6 +173,8 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		imageId = objectInput.readLong();
 		engineKey = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
@@ -211,6 +217,8 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(imageId);
+
 		if (engineKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -232,6 +240,7 @@ public class CommerceShippingMethodCacheModel implements CacheModel<CommerceShip
 	public long modifiedDate;
 	public String name;
 	public String description;
+	public long imageId;
 	public String engineKey;
 	public double priority;
 	public boolean active;

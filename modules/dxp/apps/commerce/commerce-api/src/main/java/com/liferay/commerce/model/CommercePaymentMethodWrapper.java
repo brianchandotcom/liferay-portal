@@ -68,6 +68,7 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("imageId", getImageId());
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("priority", getPriority());
 		attributes.put("active", getActive());
@@ -130,6 +131,12 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long imageId = (Long)attributes.get("imageId");
+
+		if (imageId != null) {
+			setImageId(imageId);
 		}
 
 		String engineKey = (String)attributes.get("engineKey");
@@ -315,6 +322,16 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	}
 
 	/**
+	* Returns the image ID of this commerce payment method.
+	*
+	* @return the image ID of this commerce payment method
+	*/
+	@Override
+	public long getImageId() {
+		return _commercePaymentMethod.getImageId();
+	}
+
+	/**
 	* Returns the modified date of this commerce payment method.
 	*
 	* @return the modified date of this commerce payment method
@@ -399,6 +416,12 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	@Override
 	public Map<java.util.Locale, java.lang.String> getNameMap() {
 		return _commercePaymentMethod.getNameMap();
+	}
+
+	@Override
+	public java.lang.String getPaymentMethodImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
 	}
 
 	/**
@@ -647,6 +670,16 @@ public class CommercePaymentMethodWrapper implements CommercePaymentMethod,
 	@Override
 	public void setGroupId(long groupId) {
 		_commercePaymentMethod.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the image ID of this commerce payment method.
+	*
+	* @param imageId the image ID of this commerce payment method
+	*/
+	@Override
+	public void setImageId(long imageId) {
+		_commercePaymentMethod.setImageId(imageId);
 	}
 
 	/**

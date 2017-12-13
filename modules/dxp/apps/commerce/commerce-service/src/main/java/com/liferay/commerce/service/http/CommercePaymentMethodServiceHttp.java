@@ -59,7 +59,7 @@ public class CommercePaymentMethodServiceHttp {
 		HttpPrincipal httpPrincipal,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey,
+		java.io.File imageFile, java.lang.String engineKey,
 		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -70,8 +70,8 @@ public class CommercePaymentMethodServiceHttp {
 					_addCommercePaymentMethodParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, nameMap,
-					descriptionMap, engineKey, engineParameterMap, priority,
-					active, serviceContext);
+					descriptionMap, imageFile, engineKey, engineParameterMap,
+					priority, active, serviceContext);
 
 			Object returnObj = null;
 
@@ -217,6 +217,7 @@ public class CommercePaymentMethodServiceHttp {
 		HttpPrincipal httpPrincipal, long commercePaymentMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.io.File imageFile,
 		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -228,7 +229,8 @@ public class CommercePaymentMethodServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commercePaymentMethodId, nameMap, descriptionMap,
-					engineParameterMap, priority, active, serviceContext);
+					imageFile, engineParameterMap, priority, active,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -254,8 +256,9 @@ public class CommercePaymentMethodServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommercePaymentMethodServiceHttp.class);
 	private static final Class<?>[] _addCommercePaymentMethodParameterTypes0 = new Class[] {
-			java.util.Map.class, java.util.Map.class, java.lang.String.class,
-			java.util.Map.class, double.class, boolean.class,
+			java.util.Map.class, java.util.Map.class, java.io.File.class,
+			java.lang.String.class, java.util.Map.class, double.class,
+			boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommercePaymentMethodParameterTypes1 = new Class[] {
@@ -271,7 +274,7 @@ public class CommercePaymentMethodServiceHttp {
 		new Class[] { long.class, boolean.class };
 	private static final Class<?>[] _updateCommercePaymentMethodParameterTypes5 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
-			java.util.Map.class, double.class, boolean.class,
+			java.io.File.class, java.util.Map.class, double.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

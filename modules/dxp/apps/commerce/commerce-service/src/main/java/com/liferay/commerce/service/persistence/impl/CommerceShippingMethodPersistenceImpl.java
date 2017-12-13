@@ -1821,6 +1821,7 @@ public class CommerceShippingMethodPersistenceImpl extends BasePersistenceImpl<C
 		commerceShippingMethodImpl.setModifiedDate(commerceShippingMethod.getModifiedDate());
 		commerceShippingMethodImpl.setName(commerceShippingMethod.getName());
 		commerceShippingMethodImpl.setDescription(commerceShippingMethod.getDescription());
+		commerceShippingMethodImpl.setImageId(commerceShippingMethod.getImageId());
 		commerceShippingMethodImpl.setEngineKey(commerceShippingMethod.getEngineKey());
 		commerceShippingMethodImpl.setPriority(commerceShippingMethod.getPriority());
 		commerceShippingMethodImpl.setActive(commerceShippingMethod.isActive());

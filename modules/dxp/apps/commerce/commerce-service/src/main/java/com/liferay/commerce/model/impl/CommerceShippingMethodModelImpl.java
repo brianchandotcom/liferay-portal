@@ -85,6 +85,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "imageId", Types.BIGINT },
 			{ "engineKey", Types.VARCHAR },
 			{ "priority", Types.DOUBLE },
 			{ "active_", Types.BOOLEAN }
@@ -101,12 +102,13 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("imageId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("engineKey", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("priority", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceShippingMethod (commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceShippingMethod (commerceShippingMethodId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,imageId LONG,engineKey VARCHAR(75) null,priority DOUBLE,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceShippingMethod";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceShippingMethod.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceShippingMethod.priority ASC";
@@ -150,6 +152,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setImageId(soapModel.getImageId());
 		model.setEngineKey(soapModel.getEngineKey());
 		model.setPriority(soapModel.getPriority());
 		model.setActive(soapModel.getActive());
@@ -227,6 +230,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("imageId", getImageId());
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("priority", getPriority());
 		attributes.put("active", getActive());
@@ -292,6 +296,12 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long imageId = (Long)attributes.get("imageId");
+
+		if (imageId != null) {
+			setImageId(imageId);
 		}
 
 		String engineKey = (String)attributes.get("engineKey");
@@ -633,6 +643,17 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 
 	@JSON
 	@Override
+	public long getImageId() {
+		return _imageId;
+	}
+
+	@Override
+	public void setImageId(long imageId) {
+		_imageId = imageId;
+	}
+
+	@JSON
+	@Override
 	public String getEngineKey() {
 		if (_engineKey == null) {
 			return "";
@@ -821,6 +842,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		commerceShippingMethodImpl.setModifiedDate(getModifiedDate());
 		commerceShippingMethodImpl.setName(getName());
 		commerceShippingMethodImpl.setDescription(getDescription());
+		commerceShippingMethodImpl.setImageId(getImageId());
 		commerceShippingMethodImpl.setEngineKey(getEngineKey());
 		commerceShippingMethodImpl.setPriority(getPriority());
 		commerceShippingMethodImpl.setActive(getActive());
@@ -961,6 +983,8 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 			commerceShippingMethodCacheModel.description = null;
 		}
 
+		commerceShippingMethodCacheModel.imageId = getImageId();
+
 		commerceShippingMethodCacheModel.engineKey = getEngineKey();
 
 		String engineKey = commerceShippingMethodCacheModel.engineKey;
@@ -978,7 +1002,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{commerceShippingMethodId=");
 		sb.append(getCommerceShippingMethodId());
@@ -998,6 +1022,8 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", imageId=");
+		sb.append(getImageId());
 		sb.append(", engineKey=");
 		sb.append(getEngineKey());
 		sb.append(", priority=");
@@ -1011,7 +1037,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceShippingMethod");
@@ -1054,6 +1080,10 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>imageId</column-name><column-value><![CDATA[");
+		sb.append(getImageId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>engineKey</column-name><column-value><![CDATA[");
 		sb.append(getEngineKey());
 		sb.append("]]></column-value></column>");
@@ -1089,6 +1119,7 @@ public class CommerceShippingMethodModelImpl extends BaseModelImpl<CommerceShipp
 	private String _nameCurrentLanguageId;
 	private String _description;
 	private String _descriptionCurrentLanguageId;
+	private long _imageId;
 	private String _engineKey;
 	private String _originalEngineKey;
 	private double _priority;

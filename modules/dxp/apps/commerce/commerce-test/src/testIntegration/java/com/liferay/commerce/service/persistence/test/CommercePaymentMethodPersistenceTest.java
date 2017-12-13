@@ -141,6 +141,8 @@ public class CommercePaymentMethodPersistenceTest {
 
 		newCommercePaymentMethod.setDescription(RandomTestUtil.randomString());
 
+		newCommercePaymentMethod.setImageId(RandomTestUtil.nextLong());
+
 		newCommercePaymentMethod.setEngineKey(RandomTestUtil.randomString());
 
 		newCommercePaymentMethod.setPriority(RandomTestUtil.nextDouble());
@@ -172,6 +174,8 @@ public class CommercePaymentMethodPersistenceTest {
 			newCommercePaymentMethod.getName());
 		Assert.assertEquals(existingCommercePaymentMethod.getDescription(),
 			newCommercePaymentMethod.getDescription());
+		Assert.assertEquals(existingCommercePaymentMethod.getImageId(),
+			newCommercePaymentMethod.getImageId());
 		Assert.assertEquals(existingCommercePaymentMethod.getEngineKey(),
 			newCommercePaymentMethod.getEngineKey());
 		AssertUtils.assertEquals(existingCommercePaymentMethod.getPriority(),
@@ -231,8 +235,8 @@ public class CommercePaymentMethodPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommercePaymentMethod",
 			"commercePaymentMethodId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true,
-			"engineKey", true, "priority", true, "active", true);
+			"modifiedDate", true, "name", true, "description", true, "imageId",
+			true, "engineKey", true, "priority", true, "active", true);
 	}
 
 	@Test
@@ -474,6 +478,8 @@ public class CommercePaymentMethodPersistenceTest {
 		commercePaymentMethod.setName(RandomTestUtil.randomString());
 
 		commercePaymentMethod.setDescription(RandomTestUtil.randomString());
+
+		commercePaymentMethod.setImageId(RandomTestUtil.nextLong());
 
 		commercePaymentMethod.setEngineKey(RandomTestUtil.randomString());
 

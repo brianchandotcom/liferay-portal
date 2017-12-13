@@ -65,7 +65,7 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{commercePaymentMethodId=");
 		sb.append(commercePaymentMethodId);
@@ -85,6 +85,8 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", imageId=");
+		sb.append(imageId);
 		sb.append(", engineKey=");
 		sb.append(engineKey);
 		sb.append(", priority=");
@@ -140,6 +142,8 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 			commercePaymentMethodImpl.setDescription(description);
 		}
 
+		commercePaymentMethodImpl.setImageId(imageId);
+
 		if (engineKey == null) {
 			commercePaymentMethodImpl.setEngineKey("");
 		}
@@ -169,6 +173,8 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		imageId = objectInput.readLong();
 		engineKey = objectInput.readUTF();
 
 		priority = objectInput.readDouble();
@@ -211,6 +217,8 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 			objectOutput.writeUTF(description);
 		}
 
+		objectOutput.writeLong(imageId);
+
 		if (engineKey == null) {
 			objectOutput.writeUTF("");
 		}
@@ -232,6 +240,7 @@ public class CommercePaymentMethodCacheModel implements CacheModel<CommercePayme
 	public long modifiedDate;
 	public String name;
 	public String description;
+	public long imageId;
 	public String engineKey;
 	public double priority;
 	public boolean active;

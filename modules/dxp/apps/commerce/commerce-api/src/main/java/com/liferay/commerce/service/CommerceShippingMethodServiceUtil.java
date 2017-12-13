@@ -44,14 +44,15 @@ public class CommerceShippingMethodServiceUtil {
 	public static com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey,
+		java.io.File imageFile, java.lang.String engineKey,
 		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceShippingMethod(nameMap, descriptionMap,
-			engineKey, engineParameterMap, priority, active, serviceContext);
+			imageFile, engineKey, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	public static void deleteCommerceShippingMethod(
@@ -89,14 +90,15 @@ public class CommerceShippingMethodServiceUtil {
 		long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.io.File imageFile,
 		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceShippingMethod(commerceShippingMethodId,
-			nameMap, descriptionMap, engineParameterMap, priority, active,
-			serviceContext);
+			nameMap, descriptionMap, imageFile, engineParameterMap, priority,
+			active, serviceContext);
 	}
 
 	public static CommerceShippingMethodService getService() {

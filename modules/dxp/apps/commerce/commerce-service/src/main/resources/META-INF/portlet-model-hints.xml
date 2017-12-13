@@ -179,6 +179,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
+		<field name="imageId" type="long" />
 		<field name="engineKey" type="String" />
 		<field name="priority" type="double">
 			<validator name="number" />
@@ -300,6 +301,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field localized="true" name="name" type="String" />
 		<field localized="true" name="description" type="String" />
+		<field name="imageId" type="long" />
 		<field name="engineKey" type="String" />
 		<field name="priority" type="double">
 			<validator name="number" />

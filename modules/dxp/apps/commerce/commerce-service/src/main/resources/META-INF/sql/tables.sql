@@ -194,6 +194,7 @@ create table CommercePaymentMethod (
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
+	imageId LONG,
 	engineKey VARCHAR(75) null,
 	priority DOUBLE,
 	active_ BOOLEAN
@@ -310,6 +311,7 @@ create table CommerceShippingMethod (
 	modifiedDate DATE null,
 	name STRING null,
 	description STRING null,
+	imageId LONG,
 	engineKey VARCHAR(75) null,
 	priority DOUBLE,
 	active_ BOOLEAN

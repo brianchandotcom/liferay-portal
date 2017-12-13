@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.File;
 import java.io.Serializable;
 
 import java.util.List;
@@ -76,7 +77,7 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 
 	public CommerceShippingMethod addCommerceShippingMethod(
 		Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> descriptionMap, File imageFile,
 		java.lang.String engineKey,
 		Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active, ServiceContext serviceContext)
@@ -258,7 +259,7 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 
 	public CommerceShippingMethod updateCommerceShippingMethod(
 		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
-		Map<Locale, java.lang.String> descriptionMap,
+		Map<Locale, java.lang.String> descriptionMap, File imageFile,
 		Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;

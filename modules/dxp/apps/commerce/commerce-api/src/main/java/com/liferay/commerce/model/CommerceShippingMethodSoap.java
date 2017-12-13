@@ -44,6 +44,7 @@ public class CommerceShippingMethodSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setImageId(model.getImageId());
 		soapModel.setEngineKey(model.getEngineKey());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setActive(model.getActive());
@@ -174,6 +175,14 @@ public class CommerceShippingMethodSoap implements Serializable {
 		_description = description;
 	}
 
+	public long getImageId() {
+		return _imageId;
+	}
+
+	public void setImageId(long imageId) {
+		_imageId = imageId;
+	}
+
 	public String getEngineKey() {
 		return _engineKey;
 	}
@@ -211,6 +220,7 @@ public class CommerceShippingMethodSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private long _imageId;
 	private String _engineKey;
 	private double _priority;
 	private boolean _active;

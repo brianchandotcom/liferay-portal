@@ -397,6 +397,20 @@ public interface CommercePaymentMethodModel extends BaseModel<CommercePaymentMet
 		Locale defaultLocale);
 
 	/**
+	 * Returns the image ID of this commerce payment method.
+	 *
+	 * @return the image ID of this commerce payment method
+	 */
+	public long getImageId();
+
+	/**
+	 * Sets the image ID of this commerce payment method.
+	 *
+	 * @param imageId the image ID of this commerce payment method
+	 */
+	public void setImageId(long imageId);
+
+	/**
 	 * Returns the engine key of this commerce payment method.
 	 *
 	 * @return the engine key of this commerce payment method

@@ -1818,6 +1818,7 @@ public class CommercePaymentMethodPersistenceImpl extends BasePersistenceImpl<Co
 		commercePaymentMethodImpl.setModifiedDate(commercePaymentMethod.getModifiedDate());
 		commercePaymentMethodImpl.setName(commercePaymentMethod.getName());
 		commercePaymentMethodImpl.setDescription(commercePaymentMethod.getDescription());
+		commercePaymentMethodImpl.setImageId(commercePaymentMethod.getImageId());
 		commercePaymentMethodImpl.setEngineKey(commercePaymentMethod.getEngineKey());
 		commercePaymentMethodImpl.setPriority(commercePaymentMethod.getPriority());
 		commercePaymentMethodImpl.setActive(commercePaymentMethod.isActive());

@@ -44,14 +44,15 @@ public class CommercePaymentMethodServiceUtil {
 	public static com.liferay.commerce.model.CommercePaymentMethod addCommercePaymentMethod(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.lang.String engineKey,
+		java.io.File imageFile, java.lang.String engineKey,
 		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommercePaymentMethod(nameMap, descriptionMap,
-			engineKey, engineParameterMap, priority, active, serviceContext);
+			imageFile, engineKey, engineParameterMap, priority, active,
+			serviceContext);
 	}
 
 	public static void deleteCommercePaymentMethod(long commercePaymentMethodId)
@@ -88,14 +89,15 @@ public class CommercePaymentMethodServiceUtil {
 		long commercePaymentMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.io.File imageFile,
 		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
 		double priority, boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommercePaymentMethod(commercePaymentMethodId,
-			nameMap, descriptionMap, engineParameterMap, priority, active,
-			serviceContext);
+			nameMap, descriptionMap, imageFile, engineParameterMap, priority,
+			active, serviceContext);
 	}
 
 	public static CommercePaymentMethodService getService() {

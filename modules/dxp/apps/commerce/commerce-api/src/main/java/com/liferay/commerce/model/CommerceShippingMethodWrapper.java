@@ -68,6 +68,7 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("imageId", getImageId());
 		attributes.put("engineKey", getEngineKey());
 		attributes.put("priority", getPriority());
 		attributes.put("active", getActive());
@@ -130,6 +131,12 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Long imageId = (Long)attributes.get("imageId");
+
+		if (imageId != null) {
+			setImageId(imageId);
 		}
 
 		String engineKey = (String)attributes.get("engineKey");
@@ -315,6 +322,16 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 	}
 
 	/**
+	* Returns the image ID of this commerce shipping method.
+	*
+	* @return the image ID of this commerce shipping method
+	*/
+	@Override
+	public long getImageId() {
+		return _commerceShippingMethod.getImageId();
+	}
+
+	/**
 	* Returns the modified date of this commerce shipping method.
 	*
 	* @return the modified date of this commerce shipping method
@@ -424,6 +441,12 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 	@Override
 	public double getPriority() {
 		return _commerceShippingMethod.getPriority();
+	}
+
+	@Override
+	public java.lang.String getShippingMethodImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
 	}
 
 	/**
@@ -648,6 +671,16 @@ public class CommerceShippingMethodWrapper implements CommerceShippingMethod,
 	@Override
 	public void setGroupId(long groupId) {
 		_commerceShippingMethod.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the image ID of this commerce shipping method.
+	*
+	* @param imageId the image ID of this commerce shipping method
+	*/
+	@Override
+	public void setImageId(long imageId) {
+		_commerceShippingMethod.setImageId(imageId);
 	}
 
 	/**

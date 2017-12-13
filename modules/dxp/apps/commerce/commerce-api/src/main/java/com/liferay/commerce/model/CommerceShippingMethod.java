@@ -55,4 +55,7 @@ public interface CommerceShippingMethod extends CommerceShippingMethodModel,
 				return CommerceShippingMethod.class;
 			}
 		};
+
+	public java.lang.String getShippingMethodImageURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay);
 }

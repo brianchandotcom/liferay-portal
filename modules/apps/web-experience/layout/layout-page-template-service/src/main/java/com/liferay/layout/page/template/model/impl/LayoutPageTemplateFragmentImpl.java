@@ -21,14 +21,11 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Jürgen Kappler
  */
 @ProviderType
 public class LayoutPageTemplateFragmentImpl
 	extends LayoutPageTemplateFragmentBaseImpl {
-
-	public LayoutPageTemplateFragmentImpl() {
-	}
 
 	@Override
 	public String getCss() throws PortalException {

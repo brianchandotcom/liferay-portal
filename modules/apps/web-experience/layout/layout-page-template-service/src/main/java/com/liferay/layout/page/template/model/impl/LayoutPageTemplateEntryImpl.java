@@ -24,14 +24,11 @@ import com.liferay.portal.kernel.util.StringBundler;
 import java.util.List;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Jürgen Kappler
  */
 @ProviderType
 public class LayoutPageTemplateEntryImpl
 	extends LayoutPageTemplateEntryBaseImpl {
-
-	public LayoutPageTemplateEntryImpl() {
-	}
 
 	@Override
 	public String getContent() throws PortalException {

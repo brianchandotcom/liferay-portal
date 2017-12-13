@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.lists.form.web.internal.portlet;
 
 import com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormDisplayContext;
+import com.liferay.dynamic.data.lists.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetService;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
@@ -116,7 +116,12 @@ public class DDLFormPortlet extends MVCPortlet {
 				SessionErrors.add(actionRequest, cause.getClass(), cause);
 			}
 
-			if (isSharedLayout(actionRequest)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			if (_addDefaultSharedFormLayoutPortalInstanceLifecycleListener.
+					isSharedLayout(themeDisplay)) {
+
 				saveParametersInSession(actionRequest);
 			}
 		}
@@ -194,17 +199,6 @@ public class DDLFormPortlet extends MVCPortlet {
 		return false;
 	}
 
-	protected boolean isSharedLayout(ActionRequest actionRequest) {
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		String type = layout.getType();
-
-		return type.equals(LayoutConstants.TYPE_SHARED_PORTLET);
-	}
-
 	protected void saveParametersInSession(ActionRequest actionRequest) {
 		long recordSetId = ParamUtil.getLong(actionRequest, "recordSetId");
 
@@ -231,6 +225,10 @@ public class DDLFormPortlet extends MVCPortlet {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(DDLFormPortlet.class);
+
+	@Reference
+	private AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
+		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 
 	@Reference
 	private DDLRecordSetService _ddlRecordSetService;

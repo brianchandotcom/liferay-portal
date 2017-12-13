@@ -440,6 +440,7 @@
 
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
+		<column name="imageId" type="long" />
 		<column name="engineKey" type="String" />
 		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
@@ -463,6 +464,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="active" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="CommercePriceEntry" remote-service="true" uuid="true">
 
@@ -775,6 +780,7 @@
 
 		<column localized="true" name="name" type="String" />
 		<column localized="true" name="description" type="String" />
+		<column name="imageId" type="long" />
 		<column name="engineKey" type="String" />
 		<column name="priority" type="double" />
 		<column name="active" type="boolean" />
@@ -798,6 +804,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="active" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="Image" package-path="com.liferay.portal" />
 	</entity>
 	<entity local-service="true" name="CommerceTierPriceEntry" remote-service="true" uuid="true">
 

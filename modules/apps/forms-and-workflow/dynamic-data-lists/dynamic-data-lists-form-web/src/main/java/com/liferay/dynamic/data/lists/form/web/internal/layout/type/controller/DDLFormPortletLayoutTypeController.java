@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.servlet.PipingServletResponse;
 
 import javax.servlet.ServletContext;
@@ -94,7 +93,7 @@ public class DDLFormPortletLayoutTypeController
 
 	@Override
 	protected String getEditPage() {
-		return StringPool.BLANK;
+		return _EDIT_PAGE;
 	}
 
 	@Override
@@ -109,6 +108,8 @@ public class DDLFormPortletLayoutTypeController
 	protected void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
+
+	private static final String _EDIT_PAGE = "/layout/edit/portlet.jsp";
 
 	private static final String _URL =
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +

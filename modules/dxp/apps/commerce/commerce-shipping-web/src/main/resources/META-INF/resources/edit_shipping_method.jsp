@@ -29,7 +29,7 @@ String title = LanguageUtil.format(request, "edit-x", commerceShippingMethod.get
 
 Map<String, Object> data = new HashMap<>();
 
-data.put("direction-right", Boolean.TRUE.toString());
+data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ShippingMethodsCommerceAdminModule.KEY), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);

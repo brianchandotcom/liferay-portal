@@ -43,7 +43,7 @@ String title = commerceCart.getName();
 
 Map<String, Object> data = new HashMap<>();
 
-data.put("direction-right", Boolean.TRUE.toString());
+data.put("direction-right", StringPool.TRUE);
 
 String cartToolbarItemLabel = StringPool.BLANK;
 

@@ -47,7 +47,7 @@ String title = cpDefinition.getTitle(languageId);
 
 Map<String, Object> data = new HashMap<>();
 
-data.put("direction-right", Boolean.TRUE.toString());
+data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "price-lists"), priceListsURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, commercePriceList.getName(), editPriceListURL.toString(), data);

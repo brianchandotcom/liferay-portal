@@ -43,7 +43,7 @@ String title = cpSpecificationOption.getTitle(locale);
 
 Map<String, Object> data = new HashMap<>();
 
-data.put("direction-right", Boolean.TRUE.toString());
+data.put("direction-right", StringPool.TRUE);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "products"), catalogURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, cpDefinition.getTitle(languageId), String.valueOf(cpDefinitionSpecificationOptionValueDisplayContext.getEditProductDefinitionURL()), data);

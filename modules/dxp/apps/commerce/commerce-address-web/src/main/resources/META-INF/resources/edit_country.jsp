@@ -31,7 +31,7 @@ if (commerceCountry != null) {
 
 Map<String, Object> data = new HashMap<>();
 
-data.put("direction-right", Boolean.TRUE.toString());
+data.put("direction-right", StringPool.TRUE);
 
 String selectedScreenNavigationCategoryKey = commerceCountriesDisplayContext.getSelectedScreenNavigationCategoryKey();
 

@@ -58,7 +58,7 @@ if (Validator.isNull(commerceShippingOptionKey)) {
 								<div class="card-body">
 
 									<%
-									String thumbnailSrc = commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
+									String thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
 									%>
 
 									<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">

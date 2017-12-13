@@ -54,7 +54,7 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceCart, request, "com
 					<div class="card-body">
 
 						<%
-						String thumbnailSrc = commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
+						String thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
 						%>
 
 						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">

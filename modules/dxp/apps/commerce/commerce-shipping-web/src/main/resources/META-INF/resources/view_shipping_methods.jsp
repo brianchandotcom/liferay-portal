@@ -53,7 +53,7 @@ SearchContainer<CommerceShippingMethod> commerceShippingMethodSearchContainer = 
 		>
 
 			<%
-			String thumbnailSrc = commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
+			String thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
 			%>
 
 			<c:choose>

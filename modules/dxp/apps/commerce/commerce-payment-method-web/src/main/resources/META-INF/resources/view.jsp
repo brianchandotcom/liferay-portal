@@ -53,7 +53,7 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 		>
 
 			<%
-			String thumbnailSrc = commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
+			String thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
 			%>
 
 			<c:choose>

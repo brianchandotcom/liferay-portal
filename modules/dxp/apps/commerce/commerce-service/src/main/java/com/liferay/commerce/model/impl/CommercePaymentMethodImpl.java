@@ -29,7 +29,7 @@ public class CommercePaymentMethodImpl extends CommercePaymentMethodBaseImpl {
 	}
 
 	@Override
-	public String getPaymentMethodImageURL(ThemeDisplay themeDisplay) {
+	public String getImageURL(ThemeDisplay themeDisplay) {
 		if (getImageId() <= 0) {
 			return null;
 		}

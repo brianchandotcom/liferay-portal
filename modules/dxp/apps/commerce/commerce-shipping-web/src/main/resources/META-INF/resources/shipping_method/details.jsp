@@ -37,7 +37,7 @@ CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayCo
 	String thumbnailSrc = StringPool.BLANK;
 
 	if (commerceShippingMethod != null) {
-		thumbnailSrc = commerceShippingMethod.getShippingMethodImageURL(themeDisplay);
+		thumbnailSrc = commerceShippingMethod.getImageURL(themeDisplay);
 	}
 	%>
 

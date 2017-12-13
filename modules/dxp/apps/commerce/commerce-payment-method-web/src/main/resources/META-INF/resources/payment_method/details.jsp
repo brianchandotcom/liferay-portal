@@ -37,7 +37,7 @@ CommercePaymentMethod commercePaymentMethod = commercePaymentMethodsDisplayConte
 	String thumbnailSrc = StringPool.BLANK;
 
 	if (commercePaymentMethod != null) {
-		thumbnailSrc = commercePaymentMethod.getPaymentMethodImageURL(themeDisplay);
+		thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
 	}
 	%>
 

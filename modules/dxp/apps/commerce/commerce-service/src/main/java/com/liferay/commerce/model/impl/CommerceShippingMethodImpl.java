@@ -29,7 +29,7 @@ public class CommerceShippingMethodImpl extends CommerceShippingMethodBaseImpl {
 	}
 
 	@Override
-	public String getShippingMethodImageURL(ThemeDisplay themeDisplay) {
+	public String getImageURL(ThemeDisplay themeDisplay) {
 		if (getImageId() <= 0) {
 			return null;
 		}

@@ -1927,10 +1927,12 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 			</if>
 
 			<loadfile property="module-file-contents" srcFile="${module-file}">
-				<linecontains>
-					<contains name="resource-root" />
-					<contains name="petra" />
-				</linecontains>
+				<filterchain>
+					<filterreader classname="org.apache.tools.ant.filters.LineContains">
+						<param type="contains" value="resource-root" />
+						<param type="contains" value="petra" />
+					</filterreader>
+				</filterchain>
 			</loadfile>
 
 			<antelope:stringutil property="petra.jar.list" string="${module-file-contents}">

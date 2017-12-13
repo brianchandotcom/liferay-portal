@@ -749,6 +749,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_CONTENT_SUBMIT</td>
+	<td>//div[@class='modal-content']//button[@type='submit']</td>
+	<td></td>
+</tr>
+<tr>
 	<td>TAB_SUBMIT_BTN</td>
 	<td>//button[contains(@type,'submit') and contains(.,'${key_tab}')]</td>
 	<td></td>

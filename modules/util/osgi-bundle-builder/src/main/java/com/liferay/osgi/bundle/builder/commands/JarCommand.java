@@ -21,6 +21,7 @@ import com.beust.jcommander.Parameters;
 import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
 
 import java.io.File;
+import java.nio.file.Files;
 
 /**
  * @author David Truong
@@ -37,9 +38,13 @@ public class JarCommand extends BaseCommand {
 			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
 		throws Exception {
 
-		jar.write(
-			new File(
-				osgiBundleBuilderArgs.getOutputDir(), jar.getName() + ".jar"));
+		File output = osgiBundleBuilderArgs.getOutput();
+
+		File parent = output.getParentFile();
+
+		Files.createDirectories(parent.toPath());
+
+		jar.write(output);
 	}
 
 }

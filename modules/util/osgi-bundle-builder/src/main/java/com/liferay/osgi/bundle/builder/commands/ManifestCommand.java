@@ -23,6 +23,7 @@ import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.nio.file.Files;
 
 /**
  * @author David Truong
@@ -39,10 +40,13 @@ public class ManifestCommand extends BaseCommand {
 			Jar jar, OSGiBundleBuilderArgs osgiBundleBuilderArgs)
 		throws Exception {
 
-		File file = new File(
-			osgiBundleBuilderArgs.getOutputDir(), "MANIFEST.MF");
+		File output = osgiBundleBuilderArgs.getOutput();
 
-		try (OutputStream outputStream = new FileOutputStream(file)) {
+		File parent = output.getParentFile();
+
+		Files.createDirectories(parent.toPath());
+
+		try (OutputStream outputStream = new FileOutputStream(output)) {
 			jar.writeManifest(outputStream);
 		}
 	}

@@ -77,7 +77,11 @@ public class CommerceShippingMethodLocalServiceImpl
 		commerceShippingMethod.setUserName(user.getFullName());
 		commerceShippingMethod.setNameMap(nameMap);
 		commerceShippingMethod.setDescriptionMap(descriptionMap);
-		commerceShippingMethod.setImageId(counterLocalService.increment());
+
+		if (imageFile != null) {
+			commerceShippingMethod.setImageId(counterLocalService.increment());
+		}
+
 		commerceShippingMethod.setEngineKey(engineKey);
 		commerceShippingMethod.setPriority(priority);
 		commerceShippingMethod.setActive(active);

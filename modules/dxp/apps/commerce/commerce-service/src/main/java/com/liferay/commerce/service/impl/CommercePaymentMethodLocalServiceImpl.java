@@ -77,7 +77,11 @@ public class CommercePaymentMethodLocalServiceImpl
 		commercePaymentMethod.setUserName(user.getFullName());
 		commercePaymentMethod.setNameMap(nameMap);
 		commercePaymentMethod.setDescriptionMap(descriptionMap);
-		commercePaymentMethod.setImageId(counterLocalService.increment());
+
+		if (imageFile != null) {
+			commercePaymentMethod.setImageId(counterLocalService.increment());
+		}
+
 		commercePaymentMethod.setEngineKey(engineKey);
 		commercePaymentMethod.setPriority(priority);
 		commercePaymentMethod.setActive(active);

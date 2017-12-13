@@ -237,39 +237,7 @@
 		<execute macro="AdaptiveMedia#viewNoImageResolution" />
 	</command>
 
-	<command name="AddImageVariantsForBlogEntry" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
+	<command name="AssertAdaptedImageInBlogsEntry" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -283,36 +251,6 @@
 		</execute>
 
 		<execute function="Pause" locator1="3000" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#adaptRemainingImages">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#adaptRemainingImages">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Small Image Variant" />
-			<var name="maxHeight" value="100" />
-			<var name="maxWidth" value="100" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Large Image Variant" />
-			<var name="maxHeight" value="1000" />
-			<var name="maxWidth" value="1000" />
-			<var name="percentAdapted" value="100" />
-		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -333,6 +271,55 @@
 		</execute>
 
 		<execute function="Pause" locator1="2000" />
+
+		<execute macro="AdaptiveMedia#viewImageVariantURL">
+			<var name="imageName" value="high_resolution_photo.jpg" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+	</command>
+
+	<command name="AssertAdaptedImageInWebContent" priority="5">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Adaptive Media" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Documents and Media" />
+		</execute>
+
+		<execute macro="DMDocument#addCP">
+			<var name="dmDocumentDescription" value="Adaptive Media Image Description" />
+			<var name="dmDocumentFile" value="high_resolution_photo.jpg" />
+			<var name="dmDocumentTitle" value="high_resolution_photo.jpg" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoAddCP" />
+
+		<execute macro="WebContent#addWithDocumentCP">
+			<var name="dmDocumentTitle" value="high_resolution_photo.jpg" />
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoEditCP">
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
+
+		<execute macro="WebContent#viewCP">
+			<var name="webContentContent" value="Web Content Content" />
+			<var name="webContentTitle" value="Web Content Title" />
+		</execute>
 
 		<execute macro="AdaptiveMedia#viewImageVariantURL">
 			<var name="imageName" value="high_resolution_photo.jpg" />
@@ -619,89 +606,6 @@
 
 		<execute macro="AdaptiveMedia#viewImageVariantID">
 			<var name="imageVariantID" value="custom-id" />
-		</execute>
-	</command>
-
-	<command name="ViewAutomaticOptimizationForImageResolution" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="Automatically optimized variant" />
-			<var name="maxHeight" value="500" />
-			<var name="maxWidth" value="400" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Automatically optimized variant" />
-			<var name="maxHeight" value="500" />
-			<var name="maxWidth" value="400" />
-			<var name="percentAdapted" value="0" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Documents and Media" />
-		</execute>
-
-		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
-			<var name="dmDocumentFile" value="Document_1.jpg" />
-			<var name="dmDocumentTitle" value="Document_1.jpg" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="Automatically optimized variant" />
-			<var name="maxHeight" value="500" />
-			<var name="maxWidth" value="400" />
-			<var name="percentAdapted" value="100" />
-		</execute>
-	</command>
-
-	<command name="ViewImageResolutionAcrossSites" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#addImageResolution">
-			<var name="imageName" value="This should appear on a new site" />
-			<var name="maxHeight" value="400" />
-			<var name="maxWidth" value="300" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Sites" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Sites" />
-		</execute>
-
-		<execute macro="Site#addBlankCP">
-			<var name="siteName" value="New Site with AM" />
-		</execute>
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Adaptive Media" />
-		</execute>
-
-		<execute macro="AdaptiveMedia#viewImageResolutionTableEntry">
-			<var name="imageName" value="This should appear on a new site" />
-			<var name="maxHeight" value="400" />
-			<var name="maxWidth" value="300" />
-			<var name="percentAdapted" value="0" />
 		</execute>
 	</command>
 

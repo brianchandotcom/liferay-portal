@@ -366,7 +366,7 @@ public class CSSBuilder implements AutoCloseable {
 			filePath, _importDirName + File.pathSeparator + cssBasePath,
 			_cssBuilderArgs.isGenerateSourceMap(), filePath + ".map");
 
-		return CSSBuilderUtil.parseStaticTokens(css);
+		return css;
 	}
 
 	private void _parseSassFile(String fileName) throws Exception {

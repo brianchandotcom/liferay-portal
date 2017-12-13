@@ -24,33 +24,38 @@ public class GradleVersionCheck extends BaseFileCheck {
 
 	@Override
 	protected String doProcess(
-		String fileName, String absolutePath, String content) {
+			String fileName, String absolutePath, String content)
+		throws Exception {
 
-		_checkDefaultVersion(fileName, content);
+		Matcher matcher = _versionPattern.matcher(content);
+
+		while (matcher.find()) {
+			String name = matcher.group(2);
+			String version = matcher.group(3);
+
+			_checkDefaultVersion(
+				fileName, content, name, version, matcher.start());
+		}
 
 		return content;
 	}
 
-	private void _checkDefaultVersion(String fileName, String content) {
-		Matcher matcher = _defaultVersionPattern.matcher(content);
+	private void _checkDefaultVersion(
+		String fileName, String content, String name, String version, int pos) {
 
-		while (matcher.find()) {
-			String name = matcher.group(1);
+		if (version.equals("default") &&
+			!name.equals("com.liferay.portal.impl") &&
+			!name.equals("com.liferay.portal.kernel") &&
+			!name.equals("com.liferay.util.bridges") &&
+			!name.equals("com.liferay.util.taglib")) {
 
-			if (!name.equals("com.liferay.portal.impl") &&
-				!name.equals("com.liferay.portal.kernel") &&
-				!name.equals("com.liferay.util.bridges") &&
-				!name.equals("com.liferay.util.taglib")) {
-
-				addMessage(
-					fileName, "Do not use 'default' version for '" + name + "'",
-					"gradle_versioning.markdown",
-					getLineCount(content, matcher.start()));
-			}
+			addMessage(
+				fileName, "Do not use 'default' version for '" + name + "'",
+				"gradle_versioning.markdown", getLineCount(content, pos));
 		}
 	}
 
-	private final Pattern _defaultVersionPattern = Pattern.compile(
-		"name: \"(.*?)\", version: \"default\"");
+	private final Pattern _versionPattern = Pattern.compile(
+		"\n\t*(.* name: \"(.*?)\", version: \"(.*?)\")");
 
 }

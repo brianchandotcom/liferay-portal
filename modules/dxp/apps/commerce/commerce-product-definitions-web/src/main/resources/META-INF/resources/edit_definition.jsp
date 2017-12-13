@@ -50,6 +50,7 @@ request.setAttribute("view.jsp-showSearch", false);
 %>
 
 <%@ include file="/navbar.jspf" %>
+
 <%@ include file="/definition_breadcrumb.jspf" %>
 
 <liferay-frontend:screen-navigation

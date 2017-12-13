@@ -16,7 +16,6 @@ package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
 
@@ -79,7 +78,7 @@ public class BuildCSSMojo extends AbstractMojo {
 
 				String[] includedFiles = scanner.getIncludedFiles();
 
-				if (ArrayUtil.isNotEmpty(includedFiles)) {
+				if (includedFiles != null && includedFiles.length > 0) {
 					_execute();
 				}
 			}

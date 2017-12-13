@@ -100,11 +100,12 @@ public class CheckoutDisplayContext {
 		return commerceCheckoutStep.getName();
 	}
 
-	public String getPreviusCheckoutStepName() throws Exception {
+	public String getPreviousCheckoutStepName() throws Exception {
 		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getPreviusCommerceCheckoutStep(
-				_currentCheckoutStep.getName(), _httpServletRequest,
-				_httpServletResponse);
+			_commerceCheckoutStepServicesTracker.
+				getPreviousCommerceCheckoutStep(
+					_currentCheckoutStep.getName(), _httpServletRequest,
+					_httpServletResponse);
 
 		if (commerceCheckoutStep == null) {
 			return null;

@@ -135,7 +135,7 @@ public class CommerceCheckoutStepServicesTrackerImpl
 	}
 
 	@Override
-	public CommerceCheckoutStep getPreviusCommerceCheckoutStep(
+	public CommerceCheckoutStep getPreviousCommerceCheckoutStep(
 			String commerceCheckoutStepName,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

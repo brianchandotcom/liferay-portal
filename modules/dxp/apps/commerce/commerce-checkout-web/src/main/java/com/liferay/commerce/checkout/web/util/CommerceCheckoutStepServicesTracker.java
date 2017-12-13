@@ -41,7 +41,7 @@ public interface CommerceCheckoutStepServicesTracker {
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 
-	public CommerceCheckoutStep getPreviusCommerceCheckoutStep(
+	public CommerceCheckoutStep getPreviousCommerceCheckoutStep(
 			String commerceCheckoutStepName,
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

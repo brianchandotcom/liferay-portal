@@ -72,12 +72,12 @@ int step = 1;
 
 	<c:if test="<%= checkoutDisplayContext.showControls() %>">
 		<aui:button-row>
-			<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviusCheckoutStepName()) %>">
-				<portlet:renderURL var="previusStepURL">
-					<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviusCheckoutStepName() %>" />
+			<c:if test="<%= Validator.isNotNull(checkoutDisplayContext.getPreviousCheckoutStepName()) %>">
+				<portlet:renderURL var="previousStepURL">
+					<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getPreviousCheckoutStepName() %>" />
 				</portlet:renderURL>
 
-				<aui:button cssClass="btn-lg btn-primary" href="<%= previusStepURL %>" type="cancel" value="previous" />
+				<aui:button cssClass="btn-lg btn-primary" href="<%= previousStepURL %>" type="cancel" value="previous" />
 			</c:if>
 
 			<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="next" />

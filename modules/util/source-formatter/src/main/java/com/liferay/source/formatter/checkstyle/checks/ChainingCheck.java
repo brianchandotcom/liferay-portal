@@ -242,7 +242,16 @@ public class ChainingCheck extends BaseCheck {
 			return false;
 		}
 
-		DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+		DetailAST nameAST = null;
+
+		DetailAST firstChild = dotAST.getFirstChild();
+
+		if (firstChild.getType() == TokenTypes.LITERAL_NEW) {
+			nameAST = firstChild.findFirstToken(TokenTypes.IDENT);
+		}
+		else {
+			nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+		}
 
 		String classOrVariableName = nameAST.getText();
 

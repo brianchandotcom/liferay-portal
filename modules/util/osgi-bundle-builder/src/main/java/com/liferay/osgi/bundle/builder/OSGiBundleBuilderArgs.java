@@ -27,9 +27,6 @@ import java.util.List;
  */
 public class OSGiBundleBuilderArgs {
 
-	protected static final File DEFAULT_BASE_DIR =
-		new File(System.getProperty("user.dir"));
-
 	public File getBaseDir() {
 		return _baseDir;
 	}
@@ -86,9 +83,10 @@ public class OSGiBundleBuilderArgs {
 		_resourcesDir = resourcesDir;
 	}
 
-	@Parameter(
-		description = "The base directory.", names = {"--base-dir"}
-	)
+	protected static final File DEFAULT_BASE_DIR = new File(
+		System.getProperty("user.dir"));
+
+	@Parameter(description = "The base directory.", names = {"--base-dir"})
 	private File _baseDir = DEFAULT_BASE_DIR;
 
 	@Parameter(

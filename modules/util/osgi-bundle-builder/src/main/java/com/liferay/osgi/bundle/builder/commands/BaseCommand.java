@@ -25,7 +25,6 @@ import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
 import java.io.File;
 
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;

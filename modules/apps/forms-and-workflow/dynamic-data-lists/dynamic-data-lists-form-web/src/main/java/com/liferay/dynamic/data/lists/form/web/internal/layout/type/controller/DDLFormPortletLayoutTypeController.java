@@ -14,29 +14,30 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.layout.type.controller;
 
-import com.liferay.layout.type.controller.shared.portlet.internal.constants.SharedPortletLayoutTypeControllerConstants;
+import com.liferay.dynamic.data.lists.form.web.internal.layout.type.constants.DDLFormPortletLayoutTypeConstants;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.taglib.servlet.PipingServletResponse;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Leonardo Barros
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + SharedPortletLayoutTypeControllerConstants.LAYOUT_TYPE_SHARED_PORTLET},
+	property = {"layout.type=" + DDLFormPortletLayoutTypeConstants.LAYOUT_TYPE},
 	service = LayoutTypeController.class
 )
-public class SharedPortletLayoutTypeController
+public class DDLFormPortletLayoutTypeController
 	extends BaseLayoutTypeControllerImpl {
 
 	@Override
@@ -102,7 +103,7 @@ public class SharedPortletLayoutTypeController
 	}
 
 	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.layout.type.controller.shared.portlet)",
+		target = "(osgi.web.symbolicname=com.liferay.dynamic.data.lists.form.web)",
 		unbind = "-"
 	)
 	protected void setServletContext(ServletContext servletContext) {
@@ -113,6 +114,6 @@ public class SharedPortletLayoutTypeController
 		"${liferay:mainPath}/portal/layout?p_l_id=${liferay:plid}" +
 			"&p_v_l_s_g_id=${liferay:pvlsgid}&p_p_state=pop_up";
 
-	private static final String _VIEW_PAGE = "/layout/view/shared_portlet.jsp";
+	private static final String _VIEW_PAGE = "/layout/view/portlet.jsp";
 
 }

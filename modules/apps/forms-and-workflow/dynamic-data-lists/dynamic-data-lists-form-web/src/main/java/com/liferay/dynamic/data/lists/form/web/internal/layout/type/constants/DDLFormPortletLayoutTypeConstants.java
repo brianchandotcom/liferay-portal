@@ -14,11 +14,14 @@
 
 package com.liferay.dynamic.data.lists.form.web.internal.layout.type.constants;
 
+import com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys;
+
 /**
  * @author Leonardo Barros
  */
-public class SharedPortletLayoutTypeControllerConstants {
+public class DDLFormPortletLayoutTypeConstants {
 
-	public static final String LAYOUT_TYPE_SHARED_PORTLET = "shared_portlet";
+	public static final String LAYOUT_TYPE =
+		DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM;
 
 }

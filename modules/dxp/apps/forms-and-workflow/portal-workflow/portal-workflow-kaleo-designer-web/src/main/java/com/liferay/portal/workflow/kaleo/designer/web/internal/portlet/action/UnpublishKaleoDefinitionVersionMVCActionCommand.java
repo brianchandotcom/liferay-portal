@@ -16,17 +16,20 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -44,6 +47,31 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class UnpublishKaleoDefinitionVersionMVCActionCommand
 	extends BaseMVCActionCommand {
+
+	@Override
+	public boolean processAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws PortletException {
+
+		try {
+			doProcessAction(actionRequest, actionResponse);
+
+			return SessionErrors.isEmpty(actionRequest);
+		}
+		catch (WorkflowException we) {
+			hideDefaultErrorMessage(actionRequest);
+
+			SessionErrors.add(actionRequest, we.getClass());
+
+			return false;
+		}
+		catch (PortletException pe) {
+			throw pe;
+		}
+		catch (Exception e) {
+			throw new PortletException(e);
+		}
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -74,7 +102,7 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
 
-	@Reference(target = "(proxy.bean=false)")
+	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;
 
 }

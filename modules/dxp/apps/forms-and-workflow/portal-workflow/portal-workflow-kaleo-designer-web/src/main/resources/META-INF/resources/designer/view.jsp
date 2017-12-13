@@ -22,6 +22,8 @@ PortletURL iteratorURL = kaleoDesignerDisplayContext.getBasePortletURL();
 iteratorURL.setParameter("mvcPath", "/designer/view.jsp");
 %>
 
+<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>" message="you-cannot-deactivate-or-delete-this-definition" />
+
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
 		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />

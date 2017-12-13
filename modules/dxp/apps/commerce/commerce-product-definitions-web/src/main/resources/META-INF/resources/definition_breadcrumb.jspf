@@ -22,10 +22,10 @@
 			</div>
 
 			<div class="product-title">
-				<h1><%= HtmlUtil.escape(title) %></h1>
+				<h1 class="d-inline"><%= HtmlUtil.escape(title) %></h1>
 
 				<c:if test="<%= Validator.isNotNull(productURL) %>">
-					<span class="input-group-addon" id="<portlet:namespace />urlIcon">
+					<span class="d-inline p-2" id="<portlet:namespace />urlIcon">
 						<liferay-ui:icon
 							iconCssClass="icon-new-window"
 							label="<%= false %>"

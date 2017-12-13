@@ -226,14 +226,16 @@ public class DefaultExportImportContentProcessorTest {
 			String exportedUrl = exportedURLs[i];
 			String url = urls.get(i);
 
-			Assert.assertFalse(exportedUrl.matches("[?&]t="));
+			Assert.assertFalse(exportedUrl, exportedUrl.matches("[?&]t="));
 
 			if (url.contains("/documents/") && url.contains("?")) {
-				Assert.assertTrue(exportedUrl.contains("width=100&height=100"));
+				Assert.assertTrue(
+					exportedUrl, exportedUrl.contains("width=100&height=100"));
 			}
 
 			if (url.contains("/documents/") && url.contains("mustkeep")) {
-				Assert.assertTrue(exportedUrl.contains("mustkeep"));
+				Assert.assertTrue(
+					exportedUrl, exportedUrl.contains("mustkeep"));
 			}
 		}
 	}
@@ -255,7 +257,7 @@ public class DefaultExportImportContentProcessorTest {
 			true);
 
 		for (String url : urls) {
-			Assert.assertFalse(content.contains(url));
+			Assert.assertFalse(content, content.contains(url));
 		}
 
 		TestReaderWriter testReaderWriter =
@@ -278,6 +280,7 @@ public class DefaultExportImportContentProcessorTest {
 		for (String entry : testReaderWriter.getEntries()) {
 			if (entry.contains(DLFileEntryConstants.getClassName())) {
 				Assert.assertTrue(
+					content,
 					content.contains("[$dl-reference=" + entry + "$]"));
 
 				count++;
@@ -351,23 +354,30 @@ public class DefaultExportImportContentProcessorTest {
 			true);
 
 		Assert.assertFalse(
+			content,
 			content.contains(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
 		Assert.assertFalse(
+			content,
 			content.contains(GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
 		Assert.assertFalse(
+			content,
 			content.contains(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
 		Assert.assertFalse(
+			content,
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
 		Assert.assertFalse(
+			content,
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
 		Assert.assertTrue(
+			content,
 			content.contains(
 				"@data_handler_group_friendly_url@@" +
 					_stagingGroup.getFriendlyURL() + "@"));
-		Assert.assertFalse(content.contains(PortalUtil.getPathContext()));
-		Assert.assertFalse(content.contains("/en/en"));
+		Assert.assertFalse(
+			content, content.contains(PortalUtil.getPathContext()));
+		Assert.assertFalse(content, content.contains("/en/en"));
 
 		setFinalStaticField(
 			PropsValues.class.getDeclaredField(
@@ -411,22 +421,28 @@ public class DefaultExportImportContentProcessorTest {
 			true);
 
 		Assert.assertFalse(
+			content,
 			content.contains(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR));
 		Assert.assertFalse(
+			content,
 			content.contains(GroupConstants.CONTROL_PANEL_FRIENDLY_URL));
 		Assert.assertFalse(
+			content,
 			content.contains(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL));
 		Assert.assertFalse(
+			content,
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_GROUP_SERVLET_MAPPING));
 		Assert.assertFalse(
+			content,
 			content.contains(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING));
 		Assert.assertTrue(
+			content,
 			content.contains(
 				"@data_handler_group_friendly_url@@" +
 					_stagingGroup.getFriendlyURL() + "@"));
-		Assert.assertFalse(content.contains("/en/en"));
+		Assert.assertFalse(content, content.contains("/en/en"));
 
 		setFinalStaticField(
 			PropsValues.class.getDeclaredField(
@@ -524,7 +540,7 @@ public class DefaultExportImportContentProcessorTest {
 		content = _exportImportContentProcessor.replaceImportContentReferences(
 			_portletDataContextImport, _referrerStagedModel, content);
 
-		Assert.assertFalse(content.contains("[$dl-reference="));
+		Assert.assertFalse(content, content.contains("[$dl-reference="));
 	}
 
 	@Test
@@ -542,15 +558,19 @@ public class DefaultExportImportContentProcessorTest {
 			_portletDataContextImport, _referrerStagedModel, content);
 
 		Assert.assertFalse(
-			content.contains("@data_handler_group_friendly_url@"));
-		Assert.assertFalse(content.contains("@data_handler_path_context@"));
+			content, content.contains("@data_handler_group_friendly_url@"));
 		Assert.assertFalse(
+			content, content.contains("@data_handler_path_context@"));
+		Assert.assertFalse(
+			content,
 			content.contains("@data_handler_private_group_servlet_mapping@"));
 		Assert.assertFalse(
+			content,
 			content.contains("@data_handler_private_user_servlet_mapping@"));
 		Assert.assertFalse(
-			content.contains("@data_handler_public_servlet_mapping@"));
-		Assert.assertFalse(content.contains("@data_handler_site_admin_url@"));
+			content, content.contains("@data_handler_public_servlet_mapping@"));
+		Assert.assertFalse(
+			content, content.contains("@data_handler_site_admin_url@"));
 	}
 
 	@Test

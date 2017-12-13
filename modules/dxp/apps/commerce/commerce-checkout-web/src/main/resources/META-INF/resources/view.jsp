@@ -18,6 +18,8 @@
 
 <%
 CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepName();
 %>
 
 <ul class="multi-step-progress-bar multi-step-progress-bar-collapse my-4">
@@ -29,7 +31,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 	for (CommerceCheckoutStep commerceCheckoutStep : checkoutDisplayContext.getCommerceCheckoutSteps()) {
 		String cssClass = "";
 
-		if (checkoutDisplayContext.isCurrentCommerceCheckoutStep(commerceCheckoutStep)) {
+		if (currentCheckoutStepName.equals(commerceCheckoutStep.getName())) {
 			cssClass = "active";
 			complete = false;
 		}
@@ -55,7 +57,7 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 <portlet:actionURL name="saveStep" var="saveStepURL" />
 
 <aui:form action="<%= saveStepURL %>" cssClass="text-center" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
-	<aui:input name="checkoutStepName" type="hidden" value="<%= checkoutDisplayContext.getCurrentCheckoutStepName() %>" />
+	<aui:input name="checkoutStepName" type="hidden" value="<%= currentCheckoutStepName %>" />
 	<aui:input name="commerceCartId" type="hidden" value="<%= checkoutDisplayContext.getCommerceCartId() %>" />
 	<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />
 

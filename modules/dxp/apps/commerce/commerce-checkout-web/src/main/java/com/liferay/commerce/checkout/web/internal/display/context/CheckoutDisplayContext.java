@@ -135,18 +135,6 @@ public class CheckoutDisplayContext {
 		return portletURL.toString();
 	}
 
-	public boolean isCurrentCommerceCheckoutStep(
-		CommerceCheckoutStep commerceCheckoutStep) {
-
-		if (getCurrentCheckoutStepName().equals(
-				commerceCheckoutStep.getName())) {
-
-			return true;
-		}
-
-		return false;
-	}
-
 	public boolean isSennaDisabled() {
 		return _commerceCheckoutStep.isSennaDisabled();
 	}

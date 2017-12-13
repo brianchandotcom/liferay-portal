@@ -29,16 +29,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface ImageRequestAuthVerifierConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "enabled", required = false)
 	public boolean enabled();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "hosts-allowed", required = false)
 	public String hostsAllowed();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "urls-excludes", required = false)
 	public String urlsExcludes();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "urls-includes", required = false)
 	public String urlsIncludes();
 
 }

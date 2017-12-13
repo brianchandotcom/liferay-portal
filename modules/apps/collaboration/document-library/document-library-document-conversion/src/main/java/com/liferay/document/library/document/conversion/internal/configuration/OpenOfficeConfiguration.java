@@ -28,19 +28,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OpenOfficeConfiguration {
 
-	@Meta.AD(deflt = "true", required = false)
+	@Meta.AD(deflt = "true", name = "cache-enabled", required = false)
 	public boolean cacheEnabled();
 
 	@Meta.AD(
 		deflt = "false", description = "openoffice-server-enabled-help",
-		required = false
+		name = "server-enabled", required = false
 	)
 	public boolean serverEnabled();
 
-	@Meta.AD(deflt = "127.0.0.1", required = false)
+	@Meta.AD(deflt = "127.0.0.1", name = "server-host", required = false)
 	public String serverHost();
 
-	@Meta.AD(deflt = "8100", required = false)
+	@Meta.AD(deflt = "8100", name = "server-port", required = false)
 	public int serverPort();
 
 }

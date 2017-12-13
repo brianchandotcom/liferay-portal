@@ -31,7 +31,8 @@ public interface AdvancedFileSystemStoreConfiguration {
 
 	@Meta.AD(
 		deflt = "data/document_library",
-		description = "file-system-store-configuration-root-dir-description"
+		description = "file-system-store-configuration-root-dir-description",
+		name = "root-dir"
 	)
 	public String rootDir();
 

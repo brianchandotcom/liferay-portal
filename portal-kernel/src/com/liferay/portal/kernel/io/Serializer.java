@@ -265,6 +265,7 @@ public class Serializer {
 
 			if ((c == 0) || (c > 127)) {
 				asciiCode = false;
+
 				break;
 			}
 		}

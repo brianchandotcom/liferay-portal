@@ -249,14 +249,17 @@ public class Recurrence implements Serializable {
 			case WEEKLY :
 				reduce_constant_length_field(
 					Calendar.DAY_OF_WEEK, dtStart, candidate);
+
 				break;
 
 			case MONTHLY :
 				reduce_day_of_month(dtStart, candidate);
+
 				break;
 
 			case YEARLY :
 				reduce_day_of_year(dtStart, candidate);
+
 				break;
 		}
 

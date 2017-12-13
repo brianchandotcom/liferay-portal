@@ -54,11 +54,11 @@ public class BuildCSSTask extends Task {
 	}
 
 	public void setDirNames(String dirNames) {
-		_cssBuilderArgs.setDirNames(dirNames);
+		_cssBuilderArgs.setIncludes(dirNames);
 	}
 
 	public void setDocrootDir(File docrootDir) {
-		_cssBuilderArgs.setDocrootDir(docrootDir);
+		_cssBuilderArgs.setBaseDir(docrootDir);
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
@@ -70,7 +70,7 @@ public class BuildCSSTask extends Task {
 	}
 
 	public void setPortalCommonPath(File portalCommonPath) {
-		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
+		_cssBuilderArgs.setImportDir(portalCommonPath);
 	}
 
 	public void setPrecision(int precision) {

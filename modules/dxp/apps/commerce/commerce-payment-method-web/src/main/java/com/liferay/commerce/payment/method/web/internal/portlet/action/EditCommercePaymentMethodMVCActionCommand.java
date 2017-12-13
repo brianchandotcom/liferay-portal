@@ -26,11 +26,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+
+import java.io.File;
 
 import java.util.Locale;
 import java.util.Map;
@@ -110,6 +114,9 @@ public class EditCommercePaymentMethodMVCActionCommand
 			ActionRequest actionRequest)
 		throws PortalException {
 
+		UploadPortletRequest uploadPortletRequest =
+			_portal.getUploadPortletRequest(actionRequest);
+
 		long commercePaymentMethodId = ParamUtil.getLong(
 			actionRequest, "commercePaymentMethodId");
 
@@ -117,6 +124,7 @@ public class EditCommercePaymentMethodMVCActionCommand
 			actionRequest, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(actionRequest, "description");
+		File imageFile = uploadPortletRequest.getFile("imageFile");
 		String engineKey = ParamUtil.getString(actionRequest, "engineKey");
 		UnicodeProperties engineParameterMap =
 			PropertiesParamUtil.getProperties(actionRequest, "settings--");
@@ -131,13 +139,13 @@ public class EditCommercePaymentMethodMVCActionCommand
 		if (commercePaymentMethodId <= 0) {
 			commercePaymentMethod =
 				_commercePaymentMethodService.addCommercePaymentMethod(
-					nameMap, descriptionMap, engineKey, engineParameterMap,
-					priority, active, serviceContext);
+					nameMap, descriptionMap, imageFile, engineKey,
+					engineParameterMap, priority, active, serviceContext);
 		}
 		else {
 			commercePaymentMethod =
 				_commercePaymentMethodService.updateCommercePaymentMethod(
-					commercePaymentMethodId, nameMap, descriptionMap,
+					commercePaymentMethodId, nameMap, descriptionMap, imageFile,
 					engineParameterMap, priority, active, serviceContext);
 		}
 
@@ -146,5 +154,8 @@ public class EditCommercePaymentMethodMVCActionCommand
 
 	@Reference
 	private CommercePaymentMethodService _commercePaymentMethodService;
+
+	@Reference
+	private Portal _portal;
 
 }

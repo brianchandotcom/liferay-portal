@@ -54,6 +54,10 @@ public class CommercePaymentMethodLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
+		if ((imageFile != null) && !imageFile.exists()) {
+			imageFile = null;
+		}
+
 		validate(nameMap, engineKey);
 
 		long commercePaymentMethodId = counterLocalService.increment();
@@ -169,6 +173,10 @@ public class CommercePaymentMethodLocalServiceImpl
 		CommercePaymentMethod commercePaymentMethod =
 			commercePaymentMethodPersistence.findByPrimaryKey(
 				commercePaymentMethodId);
+
+		if ((imageFile != null) && !imageFile.exists()) {
+			imageFile = null;
+		}
 
 		commercePaymentMethod.setNameMap(nameMap);
 		commercePaymentMethod.setDescriptionMap(descriptionMap);

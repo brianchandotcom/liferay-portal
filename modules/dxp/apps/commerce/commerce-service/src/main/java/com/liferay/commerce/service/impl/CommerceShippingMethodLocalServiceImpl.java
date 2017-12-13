@@ -54,6 +54,10 @@ public class CommerceShippingMethodLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
+		if ((imageFile != null) && !imageFile.exists()) {
+			imageFile = null;
+		}
+
 		validate(nameMap, engineKey);
 
 		long commerceShippingMethodId = counterLocalService.increment();
@@ -171,6 +175,10 @@ public class CommerceShippingMethodLocalServiceImpl
 		CommerceShippingMethod commerceShippingMethod =
 			commerceShippingMethodPersistence.findByPrimaryKey(
 				commerceShippingMethodId);
+
+		if ((imageFile != null) && !imageFile.exists()) {
+			imageFile = null;
+		}
 
 		commerceShippingMethod.setNameMap(nameMap);
 		commerceShippingMethod.setDescriptionMap(descriptionMap);

@@ -18,17 +18,15 @@
 
 <%
 CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-List<CommerceCheckoutStep> commerceCheckoutSteps = checkoutDisplayContext.getCommerceCheckoutSteps();
-
-boolean complete = true;
-int step = 1;
 %>
 
 <ul class="multi-step-progress-bar multi-step-progress-bar-collapse my-4">
 
 	<%
-	for (CommerceCheckoutStep commerceCheckoutStep : commerceCheckoutSteps) {
+	boolean complete = true;
+	int step = 1;
+
+	for (CommerceCheckoutStep commerceCheckoutStep : checkoutDisplayContext.getCommerceCheckoutSteps()) {
 		String cssClass = "";
 
 		if (checkoutDisplayContext.isCurrentCommerceCheckoutStep(commerceCheckoutStep)) {

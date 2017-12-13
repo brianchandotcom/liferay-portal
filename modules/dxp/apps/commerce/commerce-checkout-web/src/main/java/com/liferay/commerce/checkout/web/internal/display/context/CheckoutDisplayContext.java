@@ -65,7 +65,7 @@ public class CheckoutDisplayContext {
 			commerceCheckoutStep = commerceCheckoutSteps.get(0);
 		}
 
-		_currentCheckoutStep = commerceCheckoutStep;
+		_commerceCheckoutStep = commerceCheckoutStep;
 	}
 
 	public long getCommerceCartId() {
@@ -84,13 +84,13 @@ public class CheckoutDisplayContext {
 	}
 
 	public String getCurrentCheckoutStepName() {
-		return _currentCheckoutStep.getName();
+		return _commerceCheckoutStep.getName();
 	}
 
 	public String getNextCheckoutStepName() throws Exception {
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
-				_currentCheckoutStep.getName(), _httpServletRequest,
+				_commerceCheckoutStep.getName(), _httpServletRequest,
 				_httpServletResponse);
 
 		if (commerceCheckoutStep == null) {
@@ -104,7 +104,7 @@ public class CheckoutDisplayContext {
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.
 				getPreviousCommerceCheckoutStep(
-					_currentCheckoutStep.getName(), _httpServletRequest,
+					_commerceCheckoutStep.getName(), _httpServletRequest,
 					_httpServletResponse);
 
 		if (commerceCheckoutStep == null) {
@@ -127,23 +127,23 @@ public class CheckoutDisplayContext {
 	}
 
 	public boolean isSennaDisabled() {
-		return _currentCheckoutStep.isSennaDisabled();
+		return _commerceCheckoutStep.isSennaDisabled();
 	}
 
 	public void renderCurrentCheckoutStep() throws Exception {
-		_currentCheckoutStep.render(_httpServletRequest, _httpServletResponse);
+		_commerceCheckoutStep.render(_httpServletRequest, _httpServletResponse);
 	}
 
 	public boolean showControls() {
-		return _currentCheckoutStep.showControls(
+		return _commerceCheckoutStep.showControls(
 			_httpServletRequest, _httpServletResponse);
 	}
 
 	private final CommerceCart _commerceCart;
 	private final CommerceCartHelper _commerceCartHelper;
+	private final CommerceCheckoutStep _commerceCheckoutStep;
 	private final CommerceCheckoutStepServicesTracker
 		_commerceCheckoutStepServicesTracker;
-	private final CommerceCheckoutStep _currentCheckoutStep;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
 

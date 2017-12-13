@@ -54,15 +54,10 @@ CheckoutDisplayContext checkoutDisplayContext = (CheckoutDisplayContext)request.
 
 <portlet:actionURL name="saveStep" var="saveStepURL" />
 
-<portlet:renderURL var="nextStepURL">
-	<portlet:param name="checkoutStepName" value="<%= checkoutDisplayContext.getNextCheckoutStepName() %>" />
-	<portlet:param name="commerceCartId" value="<%= String.valueOf(checkoutDisplayContext.getCommerceCartId()) %>" />
-</portlet:renderURL>
-
 <aui:form action="<%= saveStepURL %>" cssClass="text-center" data-senna-off="<%= checkoutDisplayContext.isSennaDisabled() %>" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCheckoutStep();" %>'>
 	<aui:input name="checkoutStepName" type="hidden" value="<%= checkoutDisplayContext.getCurrentCheckoutStepName() %>" />
 	<aui:input name="commerceCartId" type="hidden" value="<%= checkoutDisplayContext.getCommerceCartId() %>" />
-	<aui:input name="redirect" type="hidden" value="<%= nextStepURL.toString() %>" />
+	<aui:input name="redirect" type="hidden" value="<%= checkoutDisplayContext.getRedirect() %>" />
 
 	<%
 	checkoutDisplayContext.renderCurrentCheckoutStep();

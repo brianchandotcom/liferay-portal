@@ -19,9 +19,15 @@ import com.liferay.commerce.checkout.web.util.CommerceCheckoutStepServicesTracke
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.util.CommerceCartHelper;
+import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.PortletURLUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 
 import java.util.List;
+
+import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,23 +41,27 @@ public class CheckoutDisplayContext {
 			CommerceCartHelper commerceCartHelper,
 			CommerceCheckoutStepServicesTracker
 				commerceCheckoutStepServicesTracker,
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
+			LiferayPortletRequest liferayPortletRequest,
+			LiferayPortletResponse liferayPortletResponse, Portal portal)
 		throws Exception {
 
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCheckoutStepServicesTracker =
 			commerceCheckoutStepServicesTracker;
+		_liferayPortletRequest = liferayPortletRequest;
+		_liferayPortletResponse = liferayPortletResponse;
 
-		_httpServletRequest = httpServletRequest;
-		_httpServletResponse = httpServletResponse;
+		_httpServletRequest = portal.getHttpServletRequest(
+			_liferayPortletRequest);
+		_httpServletResponse = portal.getHttpServletResponse(
+			_liferayPortletResponse);
 
 		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
-			httpServletRequest, httpServletResponse,
+			_httpServletRequest, _httpServletResponse,
 			CommerceCartConstants.TYPE_CART);
 
 		String checkoutStepName = ParamUtil.getString(
-			httpServletRequest, "checkoutStepName");
+			liferayPortletRequest, "checkoutStepName");
 
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.getCommerceCheckoutStep(
@@ -87,19 +97,6 @@ public class CheckoutDisplayContext {
 		return _commerceCheckoutStep.getName();
 	}
 
-	public String getNextCheckoutStepName() throws Exception {
-		CommerceCheckoutStep commerceCheckoutStep =
-			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
-				_commerceCheckoutStep.getName(), _httpServletRequest,
-				_httpServletResponse);
-
-		if (commerceCheckoutStep == null) {
-			return null;
-		}
-
-		return commerceCheckoutStep.getName();
-	}
-
 	public String getPreviousCheckoutStepName() throws Exception {
 		CommerceCheckoutStep commerceCheckoutStep =
 			_commerceCheckoutStepServicesTracker.
@@ -112,6 +109,30 @@ public class CheckoutDisplayContext {
 		}
 
 		return commerceCheckoutStep.getName();
+	}
+
+	public String getRedirect() throws Exception {
+		PortletURL portletURL = null;
+
+		CommerceCheckoutStep commerceCheckoutStep =
+			_commerceCheckoutStepServicesTracker.getNextCommerceCheckoutStep(
+				_commerceCheckoutStep.getName(), _httpServletRequest,
+				_httpServletResponse);
+
+		if (commerceCheckoutStep == null) {
+			portletURL = PortletURLUtil.getCurrent(
+				_liferayPortletRequest, _liferayPortletResponse);
+		}
+		else {
+			portletURL = _liferayPortletResponse.createRenderURL();
+
+			portletURL.setParameter(
+				"checkoutStepName", commerceCheckoutStep.getName());
+			portletURL.setParameter(
+				"commerceCartId", String.valueOf(getCommerceCartId()));
+		}
+
+		return portletURL.toString();
 	}
 
 	public boolean isCurrentCommerceCheckoutStep(
@@ -146,5 +167,7 @@ public class CheckoutDisplayContext {
 		_commerceCheckoutStepServicesTracker;
 	private final HttpServletRequest _httpServletRequest;
 	private final HttpServletResponse _httpServletResponse;
+	private final LiferayPortletRequest _liferayPortletRequest;
+	private final LiferayPortletResponse _liferayPortletResponse;
 
 }

@@ -64,13 +64,22 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			%>
 
 			<liferay-ui:search-container-column-text>
+
+				<%
+				Map<String, Object> addLayoutData = new HashMap<>();
+
+				addLayoutData.put("layout-page-template-entry-id", layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+				%>
+
 				<liferay-frontend:icon-vertical-card
 					actionJspServletContext="<%= application %>"
 					cssClass='<%= renderResponse.getNamespace() + "add-layout-action-option" %>'
+					data="<%= addLayoutData %>"
 					icon="page"
 					resultRow="<%= row %>"
 					rowChecker="<%= searchContainer.getRowChecker() %>"
 					title="<%= layoutPageTemplateEntry.getName() %>"
+					url="javascript:;"
 				>
 					<liferay-frontend:vertical-card-header>
 						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - layoutPageTemplateEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
@@ -82,3 +91,44 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 		<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
+
+<portlet:actionURL name="/layout/add_layout" var="addLayoutURL">
+	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
+	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
+	<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />
+	<portlet:param name="stagingGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getStagingGroupId()) %>" />
+	<portlet:param name="parentLayoutId" value="<%= String.valueOf(layoutsAdminDisplayContext.getSelPlid()) %>" />
+	<portlet:param name="privateLayout" value="<%= String.valueOf(layoutsAdminDisplayContext.isPrivateLayout()) %>" />
+</portlet:actionURL>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var addLayoutActionOptionQueryClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />add-layout-action-option',
+		function(event) {
+			var actionElement = event.delegateTarget;
+
+			Liferay.Util.openSimpleInputModal(
+				{
+					dialogTitle: '<liferay-ui:message key="add-page" />',
+					formSubmitURL: '<%= addLayoutURL %>',
+					idFieldName: 'layoutPageTemplateEntryId',
+					idFieldValue: actionElement.dataset.layoutPageTemplateEntryId,
+					mainFieldName: 'name',
+					mainFieldLabel: '<liferay-ui:message key="name" />',
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+	);
+
+	function handleDestroyPortlet () {
+		addLayoutActionOptionQueryClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</aui:script>

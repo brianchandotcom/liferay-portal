@@ -80,7 +80,7 @@ public abstract class BaseAddressCommerceCheckoutStep
 	}
 
 	@Override
-	public boolean processAction(
+	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -97,13 +97,11 @@ public abstract class BaseAddressCommerceCheckoutStep
 
 				SessionErrors.add(actionRequest, e.getClass());
 
-				return false;
+				return;
 			}
 
 			throw e;
 		}
-
-		return true;
 	}
 
 	@Override

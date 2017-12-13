@@ -117,7 +117,7 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	@Override
-	public boolean processAction(
+	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -128,13 +128,11 @@ public class ShippingMethodCommerceCheckoutStep
 			if (e instanceof CommerceCartShippingMethodException) {
 				SessionErrors.add(actionRequest, e.getClass());
 
-				return false;
+				return;
 			}
 
 			throw e;
 		}
-
-		return true;
 	}
 
 	@Override

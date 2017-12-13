@@ -43,7 +43,7 @@ public interface CommerceCheckoutStep {
 			HttpServletResponse httpServletResponse)
 		throws Exception;
 
-	public boolean processAction(
+	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception;
 

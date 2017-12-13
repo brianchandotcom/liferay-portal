@@ -104,7 +104,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 	}
 
 	@Override
-	public boolean processAction(
+	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
@@ -133,8 +133,6 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
-
-		return true;
 	}
 
 	@Override

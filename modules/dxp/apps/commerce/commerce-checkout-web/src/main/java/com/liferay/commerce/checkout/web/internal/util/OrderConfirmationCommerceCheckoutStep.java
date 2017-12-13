@@ -88,11 +88,9 @@ public class OrderConfirmationCommerceCheckoutStep
 	}
 
 	@Override
-	public boolean processAction(
+	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		return false;
 	}
 
 	@Override

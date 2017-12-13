@@ -89,6 +89,44 @@
 	}
 }
 
+#commercePaymentMethodsContainer {
+	margin-bottom :50px;
+
+	.col-md-3 {
+		border-bottom: 1px solid;
+		border-top: 1px solid;
+		cursor: pointer;
+		padding: 30px 20px 0 20px;
+	}
+
+	.col-md-3:hover {
+		background-color: #FAF9F7;
+
+		.card-commerce {
+			background-color: #FAF9F7;
+		}
+	}
+}
+
+#commerceShippingMethodsContainer {
+	margin-bottom :50px;
+
+	.col-md-3 {
+		border-bottom: 1px solid;
+		border-top: 1px solid;
+		cursor: pointer;
+		padding: 30px 20px 0 20px;
+	}
+
+	.col-md-3:hover {
+		background-color: #FAF9F7;
+
+		.card-commerce {
+			background-color: #FAF9F7;
+		}
+	}
+}
+
 .product-detail-header {
 	margin-top: 20px;
 

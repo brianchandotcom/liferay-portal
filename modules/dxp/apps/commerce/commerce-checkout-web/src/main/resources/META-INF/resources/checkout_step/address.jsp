@@ -32,7 +32,7 @@ long commerceCountryId = ParamUtil.getLong(request, "commerceCountryId");
 long commerceRegionId = ParamUtil.getLong(request, "commerceRegionId");
 %>
 
-<h3><liferay-ui:message key="<%= baseAddressCheckoutStepDisplayContext.getTitle() %>" /></h3>
+<h3 class="p-4"><liferay-ui:message key="<%= baseAddressCheckoutStepDisplayContext.getTitle() %>" /></h3>
 
 <aui:fieldset>
 	<div id="<portlet:namespace />commerceAddressChoice">

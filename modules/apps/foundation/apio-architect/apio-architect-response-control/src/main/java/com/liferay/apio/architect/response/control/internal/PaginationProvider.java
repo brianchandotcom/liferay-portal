@@ -14,9 +14,9 @@
 
 package com.liferay.apio.architect.response.control.internal;
 
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.provider.Provider;
-import com.liferay.apio.architect.result.Try;
 
 import javax.servlet.http.HttpServletRequest;
 

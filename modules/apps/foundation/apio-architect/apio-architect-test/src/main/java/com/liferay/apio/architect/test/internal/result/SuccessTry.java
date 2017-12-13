@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.test.internal.result;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeDiagnosingMatcher;

@@ -13,18 +13,22 @@ Export-Package:\
 	com.liferay.apio.architect.error,\
 	com.liferay.apio.architect.exception,\
 	com.liferay.apio.architect.function,\
+	com.liferay.apio.architect.functional,\
+	com.liferay.apio.architect.identifier,\
+	com.liferay.apio.architect.identifier.mapper,\
 	com.liferay.apio.architect.language,\
 	com.liferay.apio.architect.list,\
 	com.liferay.apio.architect.logger,\
 	com.liferay.apio.architect.message.json,\
 	com.liferay.apio.architect.pagination,\
 	com.liferay.apio.architect.provider,\
+	com.liferay.apio.architect.related,\
+	com.liferay.apio.architect.representor,\
 	com.liferay.apio.architect.request,\
 	com.liferay.apio.architect.resource,\
-	com.liferay.apio.architect.resource.builder,\
-	com.liferay.apio.architect.resource.identifier,\
-	com.liferay.apio.architect.resource.identifier.mapper,\
 	com.liferay.apio.architect.response.control,\
-	com.liferay.apio.architect.result,\
+	com.liferay.apio.architect.routes,\
+	com.liferay.apio.architect.single.model,\
+	com.liferay.apio.architect.supplier,\
 	com.liferay.apio.architect.uri,\
 	com.liferay.apio.architect.url

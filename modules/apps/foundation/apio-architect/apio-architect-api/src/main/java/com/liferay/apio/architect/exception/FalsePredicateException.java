@@ -16,9 +16,9 @@ package com.liferay.apio.architect.exception;
 
 /**
  * Defines the exception returned inside {@link
- * com.liferay.apio.architect.result.Try} when {@link
- * com.liferay.apio.architect.result.Try#filter(java.util.function.Predicate)}
- * returns {@code false}.
+ * com.liferay.apio.architect.functional.Try} when {@link
+ * com.liferay.apio.architect.functional.Try#filter(
+ * java.util.function.Predicate)} returns {@code false}.
  *
  * @author Alejandro Hernández
  */

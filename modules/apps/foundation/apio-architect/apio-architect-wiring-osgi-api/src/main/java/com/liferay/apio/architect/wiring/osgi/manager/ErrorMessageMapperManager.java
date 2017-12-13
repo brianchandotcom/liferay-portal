@@ -16,8 +16,8 @@ package com.liferay.apio.architect.wiring.osgi.manager;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.result.APIError;
 
 import javax.ws.rs.core.HttpHeaders;
 

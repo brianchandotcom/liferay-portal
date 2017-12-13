@@ -794,6 +794,10 @@ public abstract class BasePortletDataHandler implements PortletDataHandler {
 		_dataLocalized = dataLocalized;
 	}
 
+	/**
+	 * @deprecated As of 7.1.0
+	 */
+	@Deprecated
 	protected void setDataPortletPreferences(String... dataPortletPreferences) {
 		_dataPortletPreferences = dataPortletPreferences;
 	}

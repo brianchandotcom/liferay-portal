@@ -1,11 +1,11 @@
 <div align="center">
-    <a href="https://travis-ci.org/liferay/com-liferay-vulcan">
-        <img src="https://travis-ci.org/liferay/com-liferay-vulcan.svg?branch=master" alt="Travis CI" />
+    <a href="https://travis-ci.org/liferay/com-liferay-apio-architect">
+        <img src="https://travis-ci.org/liferay/com-liferay-apio-architect.svg?branch=master" alt="Travis CI" />
     </a>
-    <a href='https://coveralls.io/github/liferay/com-liferay-vulcan?branch=master'>
-        <img src='https://coveralls.io/repos/github/liferay/com-liferay-vulcan/badge.svg?branch=master' alt='Coverage Status' />
+    <a href='https://coveralls.io/github/liferay/com-liferay-apio-architect?branch=master'>
+        <img src='https://coveralls.io/repos/github/liferay/com-liferay-apio-architect/badge.svg?branch=master' alt='Coverage Status' />
     </a>
-    <a href="https://codebeat.co/projects/github-com-liferay-com-liferay-vulcan-master">
+    <a href="https://codebeat.co/projects/github-com-liferay-com-liferay-apio-architect-master">
         <img alt="codebeat badge" src="https://codebeat.co/badges/bb871bcd-dd93-49f2-a8bc-6166169b0e44" />
     </a>
     <a href='https://www.gnu.org/licenses/lgpl-3.0'>
@@ -90,7 +90,7 @@ dependencies {
 
 Now you're ready to create your first Apio Architect resource!
 
-Create a new Java class and annotate it with `@Component` to expose it as an OSGi component. Then implement the [`CollectionResource`](https://github.com/liferay/com-liferay-vulcan/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/CollectionResource.java) class of `apio-api`. You must provide two type arguments: the type of the model you want to expose, and the type of the identifier that uses that model. For example, if your model's type uses a `long` as an internal identifier, then use [`LongIdentifier`](https://github.com/liferay/com-liferay-vulcan/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/identifier/LongIdentifier.java).
+Create a new Java class and annotate it with `@Component` to expose it as an OSGi component. Then implement the [`CollectionResource`](https://github.com/liferay/com-liferay-apio-architect/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/CollectionResource.java) class of `apio-api`. You must provide two type arguments: the type of the model you want to expose, and the type of the identifier that uses that model. For example, if your model's type uses a `long` as an internal identifier, then use [`LongIdentifier`](https://github.com/liferay/com-liferay-apio-architect/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/identifier/LongIdentifier.java).
 
 Now you must implement three methods:
 
@@ -110,7 +110,7 @@ Now you're ready to start surfing the Hypermedia world!
 
 The Apio project provides a set of guidelines and software to build evolvable APIs and consumers.
 
-### [Apio Guidelines](https://vulcan.wedeploy.io/guidelines/)
+### [Apio Guidelines](https://apio.wedeploy.io/guidelines/)
 
 An opinionated way to do RESTful APIs for *evolvability* and *discoverability*. Evolvability means that it's easy to add to and modify the API without breaking consumers.
 

@@ -92,7 +92,9 @@ public interface PortletDataHandler {
 	 *
 	 * @return an array of the portlet preferences that reference data
 	 */
-	public String[] getDataPortletPreferences();
+	public default String[] getDataPortletPreferences() {
+		return StringPool.EMPTY_ARRAY;
+	}
 
 	public StagedModelType[] getDeletionSystemEventStagedModelTypes();
 

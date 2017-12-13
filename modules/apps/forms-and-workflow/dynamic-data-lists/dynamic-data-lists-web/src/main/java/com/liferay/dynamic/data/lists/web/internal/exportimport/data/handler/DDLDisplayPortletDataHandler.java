@@ -44,6 +44,13 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {
+			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId"
+		};
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
@@ -51,8 +58,6 @@ public class DDLDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences(
-			"displayDDMTemplateId", "formDDMTemplateId", "recordSetId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 

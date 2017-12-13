@@ -24,14 +24,13 @@ import com.liferay.apio.architect.documentation.APIDescription;
 import com.liferay.apio.architect.documentation.APITitle;
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.error.ApioDeveloperError;
+import com.liferay.apio.architect.functional.Try;
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.related.RelatedCollection;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.resource.CollectionResourceInfo;
-import com.liferay.apio.architect.resource.RelatedCollection;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.Routes;
 import com.liferay.apio.architect.resource.ScopedCollectionResource;
-import com.liferay.apio.architect.resource.identifier.Identifier;
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.routes.Routes;
 import com.liferay.apio.architect.wiring.osgi.manager.CollectionResourceManager;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
@@ -97,26 +96,14 @@ public class CollectionResourceManagerImpl
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <T, U extends Identifier> Optional<Representor<T, U>>
 		getRepresentorOptional(Class<T> modelClass) {
 
-		Optional<CollectionResourceInfo<T, U>> optional =
-			getResourceInfoOptional(modelClass);
+		Optional<? extends Representor<?, ?>> optional = Optional.ofNullable(
+			_representorMap.get(modelClass.getName()));
 
-		return optional.map(CollectionResourceInfo::getRepresentor);
-	}
-
-	@Override
-	@SuppressWarnings("unchecked")
-	public <T, U extends Identifier> Optional<CollectionResourceInfo<T, U>>
-		getResourceInfoOptional(Class<T> modelClass) {
-
-		Optional<CollectionResourceInfo> optional = Optional.ofNullable(
-			_collectionResourceInfoMap.get(modelClass.getName()));
-
-		return optional.map(
-			collectionResourceInfo ->
-				(CollectionResourceInfo<T, U>)collectionResourceInfo);
+		return optional.map(representor -> (Representor<T, U>)representor);
 	}
 
 	@Override
@@ -125,13 +112,16 @@ public class CollectionResourceManagerImpl
 	}
 
 	@Override
+	@SuppressWarnings("unchecked")
 	public <T> Optional<Routes<T>> getRoutesOptional(String name) {
 		Optional<Class<T>> optional = getModelClassOptional(name);
 
-		return optional.flatMap(
-			this::getResourceInfoOptional
+		return optional.map(
+			Class::getName
 		).map(
-			CollectionResourceInfo::getRoutes
+			_routesMap::get
+		).map(
+			routes -> (Routes<T>)routes
 		);
 	}
 
@@ -168,8 +158,10 @@ public class CollectionResourceManagerImpl
 	private <T, U extends Identifier> void _addModelClassMaps(
 		Class<T> modelClass) {
 
+		String className = modelClass.getName();
+
 		Optional<CollectionResource> optional = _getCollectionResourceOptional(
-			modelClass.getName());
+			className);
 
 		optional.map(
 			collectionResource -> (CollectionResource<T, U>)collectionResource
@@ -188,15 +180,15 @@ public class CollectionResourceManagerImpl
 
 				Supplier<List<RelatedCollection<T, ?>>>
 					relatedCollectionSupplier =
-						() -> (List)_relatedCollections.get(
-							modelClass.getName());
+						() -> (List)_relatedCollections.get(className);
 
-				Representor<T, U> representor =
-					collectionResource.buildRepresentor(
-						new Representor.Builder<>(
-							identifierClass,
-							_addRelatedCollectionTriConsumer(modelClass),
-							relatedCollectionSupplier));
+				Representor<T, U> representor = collectionResource.representor(
+					new Representor.Builder<>(
+						identifierClass,
+						_addRelatedCollectionTriConsumer(modelClass),
+						relatedCollectionSupplier));
+
+				_representorMap.put(className, representor);
 
 				RequestFunction<Function<Class<?>, Optional<?>>>
 					provideClassFunction =
@@ -210,11 +202,7 @@ public class CollectionResourceManagerImpl
 
 				Routes<T> routes = collectionResource.routes(builder);
 
-				CollectionResourceInfo<T, U> collectionResourceInfo =
-					new CollectionResourceInfo<>(name, representor, routes);
-
-				_collectionResourceInfoMap.put(
-					modelClass.getName(), collectionResourceInfo);
+				_routesMap.put(className, routes);
 			}
 		);
 	}
@@ -267,12 +255,12 @@ public class CollectionResourceManagerImpl
 				relatedCollection ->
 					relatedCollection.getModelClass().equals(modelClass)));
 
-		_collectionResourceInfoMap.remove(modelClass.getName());
+		_representorMap.remove(modelClass.getName());
+
+		_routesMap.remove(modelClass.getName());
 	}
 
 	private final Map<String, Class<?>> _classes = new ConcurrentHashMap<>();
-	private final Map<String, CollectionResourceInfo>
-		_collectionResourceInfoMap = new ConcurrentHashMap<>();
 	private Documentation _documentation;
 
 	@Reference
@@ -283,6 +271,9 @@ public class CollectionResourceManagerImpl
 
 	private final Map<String, List<RelatedCollection<?, ?>>>
 		_relatedCollections = new ConcurrentHashMap<>();
+	private final Map<String, Representor<?, ?>> _representorMap =
+		new ConcurrentHashMap<>();
 	private final List<String> _rootCollectionResourceNames = new ArrayList<>();
+	private final Map<String, Routes<?>> _routesMap = new ConcurrentHashMap<>();
 
 }

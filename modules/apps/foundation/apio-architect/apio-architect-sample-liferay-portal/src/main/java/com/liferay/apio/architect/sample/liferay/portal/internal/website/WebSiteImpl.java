@@ -14,8 +14,8 @@
 
 package com.liferay.apio.architect.sample.liferay.portal.internal.website;
 
+import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.language.Language;
-import com.liferay.apio.architect.resource.identifier.LongIdentifier;
 import com.liferay.apio.architect.sample.liferay.portal.website.WebSite;
 import com.liferay.portal.kernel.model.Group;
 

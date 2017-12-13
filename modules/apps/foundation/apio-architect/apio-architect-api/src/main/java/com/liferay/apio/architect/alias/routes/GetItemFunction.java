@@ -15,7 +15,7 @@
 package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
-import com.liferay.apio.architect.pagination.SingleModel;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.function.Function;

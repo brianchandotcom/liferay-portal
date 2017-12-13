@@ -21,7 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * Provides instances of {@code T} that are dependent on the current request.
  * These instances can then be provided as a parameter in the methods of {@link
- * RoutesBuilder}.
+ * com.liferay.apio.architect.routes.Routes.Builder}.
  *
  * @author Alejandro Hernández
  */

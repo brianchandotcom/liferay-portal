@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.wiring.osgi.util;
 
-import com.liferay.apio.architect.result.Try;
+import com.liferay.apio.architect.functional.Try;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

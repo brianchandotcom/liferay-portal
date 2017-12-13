@@ -16,7 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.manager;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Optional;
@@ -33,8 +33,8 @@ public interface PathIdentifierMapperManager {
 	/**
 	 * Converts a {@code Path} to its equivalent {@code Identifier} of type
 	 * {@code T}, if a valid {@link
-	 * com.liferay.apio.architect.resource.identifier.mapper.PathIdentifierMapper}
-	 * can be found. Returns {@code Optional#empty()} otherwise.
+	 * com.liferay.apio.architect.identifier.mapper.PathIdentifierMapper} can be
+	 * found. Returns {@code Optional#empty()} otherwise.
 	 *
 	 * @param  clazz the class of the desired {@code Identifier}
 	 * @param  path the {@code Path}

@@ -43,6 +43,11 @@ public class WikiDisplayPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"title", "nodeId"};
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
@@ -50,7 +55,6 @@ public class WikiDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences("title", "nodeId");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 

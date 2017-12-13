@@ -17,10 +17,10 @@ package com.liferay.apio.architect.wiring.osgi.internal.manager;
 import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.error.ApioDeveloperError;
+import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.result.APIError;
-import com.liferay.apio.architect.result.Try;
 import com.liferay.apio.architect.wiring.osgi.manager.ErrorMessageMapperManager;
 
 import java.util.List;

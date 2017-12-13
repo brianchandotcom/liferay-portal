@@ -42,6 +42,11 @@ public class KBDisplayPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "2.0.0";
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"resourceClassNameId", "resourcePrimKey"};
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
@@ -49,7 +54,6 @@ public class KBDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences("resourceClassNameId", "resourcePrimKey");
 		setExportControls(new PortletDataHandlerControl[0]);
 	}
 

@@ -18,9 +18,9 @@ import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIP
 import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
 import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
 
-import com.liferay.apio.architect.resource.identifier.Identifier;
-import com.liferay.apio.architect.resource.identifier.RootIdentifier;
-import com.liferay.apio.architect.resource.identifier.mapper.PathIdentifierMapper;
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.identifier.RootIdentifier;
+import com.liferay.apio.architect.identifier.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 

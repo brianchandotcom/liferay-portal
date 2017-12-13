@@ -17,9 +17,9 @@ package com.liferay.apio.architect;
 import static com.openpojo.reflection.impl.PojoClassFactory.getPojoClass;
 
 import com.liferay.apio.architect.pagination.PageItems;
-import com.liferay.apio.architect.pagination.SingleModel;
-import com.liferay.apio.architect.resource.RelatedCollection;
-import com.liferay.apio.architect.resource.RelatedModel;
+import com.liferay.apio.architect.related.RelatedCollection;
+import com.liferay.apio.architect.related.RelatedModel;
+import com.liferay.apio.architect.single.model.SingleModel;
 
 import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.utils.AttributeHelper;

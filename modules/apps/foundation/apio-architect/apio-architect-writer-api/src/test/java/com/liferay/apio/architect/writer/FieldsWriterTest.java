@@ -28,12 +28,12 @@ import static org.hamcrest.collection.IsMapWithSize.anEmptyMap;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
+import com.liferay.apio.architect.identifier.StringIdentifier;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.list.FunctionalList;
-import com.liferay.apio.architect.pagination.SingleModel;
+import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.resource.RelatedModel;
-import com.liferay.apio.architect.resource.identifier.StringIdentifier;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.test.resource.MockRepresentorCreator;
 import com.liferay.apio.architect.test.resource.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.resource.model.RootModel;
@@ -200,10 +200,12 @@ public class FieldsWriterTest {
 			pathFunction.apply(Mockito.any())
 		).thenReturn(
 			Optional.of(new Path("name1", "id1")),
-			Optional.of(new Path("name2", "id2"))
+			Optional.of(new Path("name2", "id2")),
+			Optional.of(new Path("name3", "id3")),
+			Optional.of(new Path("name4", "id4"))
 		);
 
-		_fieldsWriter.writeEmbeddedRelatedModels(
+		_fieldsWriter.writeRelatedModels(
 			pathFunction,
 			(singleModel, embeddedPathElements) -> {
 				singleModels.add(singleModel);
@@ -225,9 +227,12 @@ public class FieldsWriterTest {
 		assertThat(
 			singleModel.getModel(), is(instanceOf(FirstEmbeddedModel.class)));
 
-		assertThat(linkedRelatedModelURLs, hasSize(equalTo(1)));
+		assertThat(linkedRelatedModelURLs, hasSize(equalTo(3)));
 		assertThat(
-			linkedRelatedModelURLs, contains("www.liferay.com/p/name1/id1"));
+			linkedRelatedModelURLs,
+			contains(
+				"www.liferay.com/p/name1/id1", "www.liferay.com/p/name3/id3",
+				"www.liferay.com/p/name4/id4"));
 
 		assertThat(embeddedRelatedModelURLs, hasSize(equalTo(1)));
 		assertThat(
@@ -238,10 +243,13 @@ public class FieldsWriterTest {
 			firstEmbeddedPathElementsList,
 			contains(aFunctionalListThat(contains("first", "embedded2"))));
 
-		assertThat(secondEmbeddedPathElementsList, hasSize(equalTo(1)));
+		assertThat(secondEmbeddedPathElementsList, hasSize(equalTo(3)));
 		assertThat(
 			secondEmbeddedPathElementsList,
-			contains(aFunctionalListThat(contains("first", "embedded1"))));
+			contains(
+				aFunctionalListThat(contains("first", "embedded1")),
+				aFunctionalListThat(contains("first", "linked1")),
+				aFunctionalListThat(contains("first", "linked2"))));
 
 		assertThat(thirdEmbeddedPathElementsList, hasSize(equalTo(1)));
 		assertThat(
@@ -270,7 +278,7 @@ public class FieldsWriterTest {
 			Optional.of(new Path("name2", "id2"))
 		);
 
-		_fieldsWriter.writeEmbeddedRelatedModels(
+		_fieldsWriter.writeRelatedModels(
 			pathFunction,
 			(singleModel, embeddedPathElements) ->
 				Assert.fail("Shouldn't be embedded"),
@@ -304,10 +312,12 @@ public class FieldsWriterTest {
 			pathFunction.apply(Mockito.any())
 		).thenReturn(
 			Optional.of(new Path("name1", "id1")),
-			Optional.of(new Path("name2", "id2"))
+			Optional.of(new Path("name2", "id2")),
+			Optional.of(new Path("name3", "id3")),
+			Optional.of(new Path("name4", "id4"))
 		);
 
-		_fieldsWriter.writeEmbeddedRelatedModels(
+		_fieldsWriter.writeRelatedModels(
 			pathFunction,
 			(singleModel, embeddedPathElements) ->
 				Assert.fail("Shouldn't be embedded"),
@@ -318,17 +328,20 @@ public class FieldsWriterTest {
 			(url, embeddedPathElements) -> Assert.fail(
 				"Shouldn't be embedded"));
 
-		assertThat(linkedRelatedModelURLs, hasSize(equalTo(2)));
+		assertThat(linkedRelatedModelURLs, hasSize(equalTo(4)));
 		assertThat(
 			linkedRelatedModelURLs,
 			contains(
-				"www.liferay.com/p/name1/id1", "www.liferay.com/p/name2/id2"));
+				"www.liferay.com/p/name1/id1", "www.liferay.com/p/name2/id2",
+				"www.liferay.com/p/name3/id3", "www.liferay.com/p/name4/id4"));
 
 		assertThat(
 			embeddedPathElementsList,
 			contains(
 				aFunctionalListThat(contains("first", "embedded1")),
-				aFunctionalListThat(contains("first", "embedded2"))));
+				aFunctionalListThat(contains("first", "embedded2")),
+				aFunctionalListThat(contains("first", "linked1")),
+				aFunctionalListThat(contains("first", "linked2"))));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -345,25 +358,34 @@ public class FieldsWriterTest {
 			pathFunction.apply(Mockito.any())
 		).thenReturn(
 			Optional.of(new Path("name1", "id1")),
-			Optional.of(new Path("name2", "id2"))
+			Optional.of(new Path("name2", "id2")),
+			Optional.of(new Path("name3", "id3")),
+			Optional.of(new Path("name4", "id4"))
 		);
 
-		_fieldsWriter.writeLinkedRelatedModels(
+		_fieldsWriter.writeRelatedModels(
 			pathFunction,
+			(singleModel, embeddedPathElements) -> {
+			},
 			(url, embeddedPathElements) -> {
 				linkedRelatedModelsURLs.add(url);
 				embeddedPathElementsList.add(embeddedPathElements);
+			},
+			(url, embeddedPathElements) -> {
 			});
 
-		assertThat(linkedRelatedModelsURLs, hasSize(equalTo(2)));
+		assertThat(linkedRelatedModelsURLs, hasSize(equalTo(4)));
 		assertThat(
 			linkedRelatedModelsURLs,
 			contains(
-				"www.liferay.com/p/name1/id1", "www.liferay.com/p/name2/id2"));
+				"www.liferay.com/p/name1/id1", "www.liferay.com/p/name2/id2",
+				"www.liferay.com/p/name3/id3", "www.liferay.com/p/name4/id4"));
 
 		assertThat(
 			embeddedPathElementsList,
 			contains(
+				aFunctionalListThat(contains("first", "embedded1")),
+				aFunctionalListThat(contains("first", "embedded2")),
 				aFunctionalListThat(contains("first", "linked1")),
 				aFunctionalListThat(contains("first", "linked2"))));
 	}
@@ -390,11 +412,15 @@ public class FieldsWriterTest {
 			Optional.of(new Path("name2", "id2"))
 		);
 
-		_fieldsWriter.writeLinkedRelatedModels(
+		_fieldsWriter.writeRelatedModels(
 			pathFunction,
+			(singleModel, embeddedPathElements) -> {
+			},
 			(url, embeddedPathElements) -> {
 				linkedRelatedModelsURLs.add(url);
 				embeddedPathElementsList.add(embeddedPathElements);
+			},
+			(url, embeddedPathElements) -> {
 			});
 
 		assertThat(linkedRelatedModelsURLs, hasSize(equalTo(1)));
@@ -596,7 +622,7 @@ public class FieldsWriterTest {
 		).thenReturn(
 			Optional.of(new Path("name1", "id1"))
 		);
-		_fieldsWriter.writeEmbeddedRelatedModel(
+		_fieldsWriter.writeRelatedModel(
 			relatedModel, pathFunction,
 			(singleModel, embeddedPathElements) ->
 				Assert.fail("Shouldn't be called"),

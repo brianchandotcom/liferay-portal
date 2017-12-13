@@ -14,8 +14,8 @@
 
 package com.liferay.apio.architect.writer.alias;
 
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.representor.Representor;
 
 import java.util.Optional;
 import java.util.function.Function;

@@ -14,10 +14,10 @@
 
 package com.liferay.apio.architect.jaxrs.json.internal.exception.mapper;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveExceptionConverter;
 import com.liferay.apio.architect.logger.ApioLogger;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
-import com.liferay.apio.architect.result.APIError;
 import com.liferay.apio.architect.wiring.osgi.manager.ErrorMessageMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ExceptionConverterManager;
 import com.liferay.apio.architect.writer.ErrorWriter;

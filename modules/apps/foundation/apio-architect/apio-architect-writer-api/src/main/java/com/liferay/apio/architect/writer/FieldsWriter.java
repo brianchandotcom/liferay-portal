@@ -18,16 +18,16 @@ import static com.liferay.apio.architect.writer.url.URLCreator.createBinaryURL;
 import static com.liferay.apio.architect.writer.url.URLCreator.createCollectionURL;
 import static com.liferay.apio.architect.writer.url.URLCreator.createSingleURL;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.list.FunctionalList;
-import com.liferay.apio.architect.pagination.SingleModel;
+import com.liferay.apio.architect.related.RelatedCollection;
+import com.liferay.apio.architect.related.RelatedModel;
+import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.resource.RelatedCollection;
-import com.liferay.apio.architect.resource.RelatedModel;
-import com.liferay.apio.architect.resource.Representor;
-import com.liferay.apio.architect.resource.identifier.Identifier;
 import com.liferay.apio.architect.response.control.Embedded;
 import com.liferay.apio.architect.response.control.Fields;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.List;
@@ -148,91 +148,6 @@ public class FieldsWriter<T, U extends Identifier> {
 	}
 
 	/**
-	 * Writes an embedded related model. This method uses three consumers: one
-	 * that writes the model's info, one that writes its URL if it's a linked
-	 * related model, and one that writes its URL if it's an embedded related
-	 * model. Therefore, each {@code javax.ws.rs.ext.MessageBodyWriter} can
-	 * write the related model differently.
-	 *
-	 * @param relatedModel the related model instance
-	 * @param pathFunction the function that gets a single model's path
-	 * @param modelBiConsumer the consumer that writes the related model's
-	 *        information
-	 * @param linkedURLBiConsumer the consumer that writes a linked related
-	 *        model's URL
-	 * @param embeddedURLBiConsumer the consumer that writes an embedded related
-	 *        model's url
-	 */
-	public <V> void writeEmbeddedRelatedModel(
-		RelatedModel<T, V> relatedModel,
-		Function<SingleModel<?>, Optional<Path>> pathFunction,
-		BiConsumer<SingleModel<?>, FunctionalList<String>> modelBiConsumer,
-		BiConsumer<String, FunctionalList<String>> linkedURLBiConsumer,
-		BiConsumer<String, FunctionalList<String>> embeddedURLBiConsumer) {
-
-		writeRelatedModel(
-			relatedModel, pathFunction,
-			(url, embeddedPathElements) -> {
-				Optional<SingleModel<V>> singleModelOptional = getSingleModel(
-					relatedModel, _singleModel);
-
-				if (!singleModelOptional.isPresent()) {
-					return;
-				}
-
-				Predicate<String> embeddedPredicate = getEmbeddedPredicate();
-
-				SingleModel<V> singleModel = singleModelOptional.get();
-
-				Stream<String> stream = Stream.concat(
-					Stream.of(embeddedPathElements.head()),
-					embeddedPathElements.tailStream());
-
-				String embeddedPath = String.join(
-					".", stream.collect(Collectors.toList()));
-
-				if (embeddedPredicate.test(embeddedPath)) {
-					embeddedURLBiConsumer.accept(url, embeddedPathElements);
-					modelBiConsumer.accept(singleModel, embeddedPathElements);
-				}
-				else {
-					linkedURLBiConsumer.accept(url, embeddedPathElements);
-				}
-			});
-	}
-
-	/**
-	 * Writes the embedded related models contained in the {@link Representor}
-	 * this writer handles. This method uses three consumers: one that writes
-	 * the model's info, one that writes its URL if it's a linked related model,
-	 * and one that writes its URL if it's an embedded related model. Therefore,
-	 * each {@code javax.ws.rs.ext.MessageBodyWriter} can write the related
-	 * model differently.
-	 *
-	 * @param pathFunction the function that gets a single model's path
-	 * @param modelBiConsumer the consumer that writes the related model's
-	 *        information
-	 * @param linkedURLBiConsumer the consumer that writes a linked related
-	 *        model's URL
-	 * @param embeddedURLBiConsumer the consumer that writes an embedded related
-	 *        model's URL
-	 */
-	public void writeEmbeddedRelatedModels(
-		Function<SingleModel<?>, Optional<Path>> pathFunction,
-		BiConsumer<SingleModel<?>, FunctionalList<String>> modelBiConsumer,
-		BiConsumer<String, FunctionalList<String>> linkedURLBiConsumer,
-		BiConsumer<String, FunctionalList<String>> embeddedURLBiConsumer) {
-
-		List<RelatedModel<T, ?>> embeddedRelatedModels =
-			_representor.getEmbeddedRelatedModels();
-
-		embeddedRelatedModels.forEach(
-			relatedModel -> writeEmbeddedRelatedModel(
-				relatedModel, pathFunction, modelBiConsumer,
-				linkedURLBiConsumer, embeddedURLBiConsumer));
-	}
-
-	/**
 	 * Returns a consumer for entries of a {@code Map<String, Function<T, V>}.
 	 * The consumer uses a value function to get the final value, then uses the
 	 * bi-consumer provided as the second parameter to process the key and the
@@ -306,48 +221,6 @@ public class FieldsWriter<T, U extends Identifier> {
 		).forEach(
 			consumer
 		);
-	}
-
-	/**
-	 * Writes a linked related model. This method uses a consumer so each {@code
-	 * javax.ws.rs.ext.MessageBodyWriter} can write the related model
-	 * differently.
-	 *
-	 * @param relatedModel the related model instance
-	 * @param pathFunction the function that gets the path of a {@link
-	 *        SingleModel}
-	 * @param linkedURLBiConsumer the consumer that writes a linked related
-	 *        model's URL
-	 */
-	public <V> void writeLinkedRelatedModel(
-		RelatedModel<T, V> relatedModel,
-		Function<SingleModel<?>, Optional<Path>> pathFunction,
-		BiConsumer<String, FunctionalList<String>> linkedURLBiConsumer) {
-
-		writeRelatedModel(relatedModel, pathFunction, linkedURLBiConsumer);
-	}
-
-	/**
-	 * Writes the linked related models contained in the {@link Representor}
-	 * this writer handles. This method uses a consumer so each {@code
-	 * javax.ws.rs.ext.MessageBodyWriter} can write the related model
-	 * differently.
-	 *
-	 * @param pathFunction the function that gets the path of a {@link
-	 *        SingleModel}
-	 * @param linkedURLBiConsumer the consumer that writes a linked related
-	 *        model's URL
-	 */
-	public void writeLinkedRelatedModels(
-		Function<SingleModel<?>, Optional<Path>> pathFunction,
-		BiConsumer<String, FunctionalList<String>> linkedURLBiConsumer) {
-
-		List<RelatedModel<T, ?>> linkedRelatedModels =
-			_representor.getLinkedRelatedModels();
-
-		linkedRelatedModels.forEach(
-			relatedModel -> writeLinkedRelatedModel(
-				relatedModel, pathFunction, linkedURLBiConsumer));
 	}
 
 	/**
@@ -462,6 +335,60 @@ public class FieldsWriter<T, U extends Identifier> {
 	}
 
 	/**
+	 * Writes a related model. This method uses three consumers: one that writes
+	 * the model's info, one that writes its URL if it's a linked related model,
+	 * and one that writes its URL if it's an embedded related model. Therefore,
+	 * each {@code javax.ws.rs.ext.MessageBodyWriter} can write the related
+	 * model differently.
+	 *
+	 * @param relatedModel the related model instance
+	 * @param pathFunction the function that gets a single model's path
+	 * @param modelBiConsumer the consumer that writes the related model's
+	 *        information
+	 * @param linkedURLBiConsumer the consumer that writes a linked related
+	 *        model's URL
+	 * @param embeddedURLBiConsumer the consumer that writes an embedded related
+	 *        model's url
+	 */
+	public <V> void writeRelatedModel(
+		RelatedModel<T, V> relatedModel,
+		Function<SingleModel<?>, Optional<Path>> pathFunction,
+		BiConsumer<SingleModel<?>, FunctionalList<String>> modelBiConsumer,
+		BiConsumer<String, FunctionalList<String>> linkedURLBiConsumer,
+		BiConsumer<String, FunctionalList<String>> embeddedURLBiConsumer) {
+
+		writeRelatedModel(
+			relatedModel, pathFunction,
+			(url, embeddedPathElements) -> {
+				Optional<SingleModel<V>> singleModelOptional = getSingleModel(
+					relatedModel, _singleModel);
+
+				if (!singleModelOptional.isPresent()) {
+					return;
+				}
+
+				Predicate<String> embeddedPredicate = getEmbeddedPredicate();
+
+				SingleModel<V> singleModel = singleModelOptional.get();
+
+				Stream<String> stream = Stream.concat(
+					Stream.of(embeddedPathElements.head()),
+					embeddedPathElements.tailStream());
+
+				String embeddedPath = String.join(
+					".", stream.collect(Collectors.toList()));
+
+				if (embeddedPredicate.test(embeddedPath)) {
+					embeddedURLBiConsumer.accept(url, embeddedPathElements);
+					modelBiConsumer.accept(singleModel, embeddedPathElements);
+				}
+				else {
+					linkedURLBiConsumer.accept(url, embeddedPathElements);
+				}
+			});
+	}
+
+	/**
 	 * Writes a related model. This method uses a consumer so each {@code
 	 * javax.ws.rs.ext.MessageBodyWriter} can write the related model
 	 * differently.
@@ -498,6 +425,37 @@ public class FieldsWriter<T, U extends Identifier> {
 		).ifPresent(
 			url -> biConsumer.accept(url, embeddedPathElements)
 		);
+	}
+
+	/**
+	 * Writes the related models contained in the {@link Representor} this
+	 * writer handles. This method uses three consumers: one that writes the
+	 * model's info, one that writes its URL if it's a linked related model, and
+	 * one that writes its URL if it's an embedded related model. Therefore,
+	 * each {@code javax.ws.rs.ext.MessageBodyWriter} can write the related
+	 * model differently.
+	 *
+	 * @param pathFunction the function that gets a single model's path
+	 * @param modelBiConsumer the consumer that writes the related model's
+	 *        information
+	 * @param linkedURLBiConsumer the consumer that writes a linked related
+	 *        model's URL
+	 * @param embeddedURLBiConsumer the consumer that writes an embedded related
+	 *        model's URL
+	 */
+	public void writeRelatedModels(
+		Function<SingleModel<?>, Optional<Path>> pathFunction,
+		BiConsumer<SingleModel<?>, FunctionalList<String>> modelBiConsumer,
+		BiConsumer<String, FunctionalList<String>> linkedURLBiConsumer,
+		BiConsumer<String, FunctionalList<String>> embeddedURLBiConsumer) {
+
+		List<RelatedModel<T, ?>> embeddedRelatedModels =
+			_representor.getRelatedModels();
+
+		embeddedRelatedModels.forEach(
+			relatedModel -> writeRelatedModel(
+				relatedModel, pathFunction, modelBiConsumer,
+				linkedURLBiConsumer, embeddedURLBiConsumer));
 	}
 
 	/**

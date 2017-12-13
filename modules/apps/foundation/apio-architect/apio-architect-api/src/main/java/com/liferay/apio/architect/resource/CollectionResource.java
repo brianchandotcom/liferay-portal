@@ -16,10 +16,12 @@ package com.liferay.apio.architect.resource;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.identifier.Identifier;
+import com.liferay.apio.architect.representor.Representor;
+import com.liferay.apio.architect.routes.Routes;
 
 /**
- * Maps your domain models to resources that Vulcan can understand.
+ * Maps your domain models to resources that Apio can understand.
  *
  * <p>
  * Resources behave like an API so you must add the API's name via the {@link
@@ -27,9 +29,9 @@ import com.liferay.apio.architect.resource.identifier.Identifier;
  * </p>
  *
  * <p>
- * Representors created by the {@link #buildRepresentor(Representor.Builder)}
- * method hold all the information needed to write your domain models'
- * hypermedia representations.
+ * Representors created by the {@link #representor(Representor.Builder)} method
+ * hold all the information needed to write your domain models' hypermedia
+ * representations.
  * </p>
  *
  * <p>
@@ -47,6 +49,13 @@ import com.liferay.apio.architect.resource.identifier.Identifier;
 public interface CollectionResource<T, U extends Identifier> {
 
 	/**
+	 * Returns the resource's name.
+	 *
+	 * @return the resource's name
+	 */
+	public String getName();
+
+	/**
 	 * Creates a {@link Representor} for a certain domain model from the
 	 * provided {@link Representor.Builder}.
 	 *
@@ -58,19 +67,10 @@ public interface CollectionResource<T, U extends Identifier> {
 	 * the data.
 	 * </p>
 	 *
-	 * @param representorBuilder the representor builder used to create the
-	 *        representor
+	 * @param builder the representor builder used to create the representor
 	 * @see   Representor.Builder
 	 */
-	public Representor<T, U> buildRepresentor(
-		Representor.Builder<T, U> representorBuilder);
-
-	/**
-	 * Returns the resource's name.
-	 *
-	 * @return the resource's name
-	 */
-	public String getName();
+	public Representor<T, U> representor(Representor.Builder<T, U> builder);
 
 	/**
 	 * Creates the {@link Routes} supported by the {@code CollectionResource}.

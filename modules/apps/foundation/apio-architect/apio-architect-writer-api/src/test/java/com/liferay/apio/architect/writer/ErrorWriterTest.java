@@ -23,9 +23,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import com.liferay.apio.architect.error.APIError;
 import com.liferay.apio.architect.message.json.ErrorMessageMapper;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
-import com.liferay.apio.architect.result.APIError;
 import com.liferay.apio.architect.test.json.Conditions;
 import com.liferay.apio.architect.test.result.MockAPIError;
 

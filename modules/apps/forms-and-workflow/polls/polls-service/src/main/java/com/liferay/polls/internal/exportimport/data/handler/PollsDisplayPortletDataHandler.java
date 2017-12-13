@@ -43,6 +43,11 @@ public class PollsDisplayPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.0.0";
 
 	@Override
+	public String[] getDataPortletPreferences() {
+		return new String[] {"questionId"};
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
@@ -50,7 +55,6 @@ public class PollsDisplayPortletDataHandler extends BasePortletDataHandler {
 	@Activate
 	protected void activate() {
 		setDataLevel(DataLevel.PORTLET_INSTANCE);
-		setDataPortletPreferences("questionId");
 		setExportControls(new PortletDataHandlerControl[0]);
 		setPublishToLiveByDefault(
 			PollsServiceConfigurationValues.PUBLISH_TO_LIVE_BY_DEFAULT);

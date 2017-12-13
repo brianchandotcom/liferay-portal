@@ -32,7 +32,7 @@ public class APITitleProvider implements Provider<APITitle> {
 
 	@Override
 	public APITitle createContext(HttpServletRequest httpServletRequest) {
-		return () -> "Vulcan Sample API";
+		return () -> "Apio Sample API";
 	}
 
 }

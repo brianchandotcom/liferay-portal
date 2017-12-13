@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.error.internal.converter;
 
-import com.liferay.apio.architect.result.APIError;
+import com.liferay.apio.architect.error.APIError;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;

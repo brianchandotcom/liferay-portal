@@ -21,14 +21,14 @@ import static com.liferay.apio.architect.writer.util.WriterUtil.getPathOptional;
 
 import com.google.gson.JsonObject;
 
+import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageType;
-import com.liferay.apio.architect.pagination.SingleModel;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.resource.identifier.Identifier;
+import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.writer.alias.PathFunction;
 import com.liferay.apio.architect.writer.alias.RepresentorFunction;
@@ -72,7 +72,7 @@ public class PageWriter<T> {
 	/**
 	 * Writes the handled {@link Page} to a string. This method uses a {@link
 	 * FieldsWriter} to write the different fields of its items' {@link
-	 * com.liferay.apio.architect.resource.Representor}. If no {@code
+	 * com.liferay.apio.architect.representor.Representor}. If no {@code
 	 * Representor} or {@code Path} exist for the model, this method returns
 	 * {@code Optional#empty()}.
 	 *
@@ -185,7 +185,8 @@ public class PageWriter<T> {
 
 			/**
 			 * Adds information to the builder about the function that gets a
-			 * class's {@link com.liferay.apio.architect.resource.Representor}.
+			 * class's {@link
+			 * com.liferay.apio.architect.representor.Representor}.
 			 *
 			 * @param  representorFunction the function that gets a class's
 			 *         {@code Representor}
@@ -224,7 +225,7 @@ public class PageWriter<T> {
 			/**
 			 * Adds information to the builder about the function that gets the
 			 * name of a class's {@link
-			 * com.liferay.apio.architect.resource.Representor}.
+			 * com.liferay.apio.architect.representor.Representor}.
 			 *
 			 * @param  resourceNameFunction the function that gets the name of a
 			 *         class's {@code Representor}
@@ -311,7 +312,7 @@ public class PageWriter<T> {
 			url -> _pageMessageMapper.mapItemSelfURL(
 				_jsonObjectBuilder, itemJsonObjectBuilder, url));
 
-		fieldsWriter.writeEmbeddedRelatedModels(
+		fieldsWriter.writeRelatedModels(
 			embeddedSingleModel -> getPathOptional(
 				embeddedSingleModel, _pathFunction, _representorFunction),
 			(embeddedSingleModel, embeddedPathElements1) ->
@@ -326,14 +327,6 @@ public class PageWriter<T> {
 				_pageMessageMapper.mapItemEmbeddedResourceURL(
 					_jsonObjectBuilder, itemJsonObjectBuilder,
 					embeddedPathElements, resourceURL));
-
-		fieldsWriter.writeLinkedRelatedModels(
-			embeddedSingleModel -> getPathOptional(
-				embeddedSingleModel, _pathFunction, _representorFunction),
-			(url, embeddedPathElements) ->
-				_pageMessageMapper.mapItemLinkedResourceURL(
-					_jsonObjectBuilder, itemJsonObjectBuilder,
-					embeddedPathElements, url));
 
 		fieldsWriter.writeRelatedCollections(
 			_resourceNameFunction,
@@ -400,7 +393,7 @@ public class PageWriter<T> {
 				_jsonObjectBuilder, itemJsonObjectBuilder, embeddedPathElements,
 				field, value));
 
-		fieldsWriter.writeEmbeddedRelatedModels(
+		fieldsWriter.writeRelatedModels(
 			embeddedSingleModel -> getPathOptional(
 				embeddedSingleModel, _pathFunction, _representorFunction),
 			(embeddedSingleModel, embeddedModelEmbeddedPathElements) ->
@@ -415,14 +408,6 @@ public class PageWriter<T> {
 				_pageMessageMapper.mapItemEmbeddedResourceURL(
 					_jsonObjectBuilder, itemJsonObjectBuilder,
 					resourceEmbeddedPathElements, resourceURL));
-
-		fieldsWriter.writeLinkedRelatedModels(
-			embeddedSingleModel -> getPathOptional(
-				embeddedSingleModel, _pathFunction, _representorFunction),
-			(url, resourceEmbeddedPathElements) ->
-				_pageMessageMapper.mapItemLinkedResourceURL(
-					_jsonObjectBuilder, itemJsonObjectBuilder,
-					resourceEmbeddedPathElements, url));
 
 		fieldsWriter.writeRelatedCollections(
 			_resourceNameFunction,

@@ -16,7 +16,7 @@ package com.liferay.apio.architect.converter;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.result.APIError;
+import com.liferay.apio.architect.error.APIError;
 
 /**
  * Defines an interface whose instances are used to convert between a Java

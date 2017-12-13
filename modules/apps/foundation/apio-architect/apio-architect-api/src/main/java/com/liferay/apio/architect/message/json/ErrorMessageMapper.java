@@ -16,7 +16,7 @@ package com.liferay.apio.architect.message.json;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.result.APIError;
+import com.liferay.apio.architect.error.APIError;
 
 import javax.ws.rs.core.HttpHeaders;
 

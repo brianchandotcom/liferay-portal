@@ -1936,7 +1936,7 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 			</loadfile>
 
 			<antelope:stringutil property="petra.jar.list" string="${module-file-contents}">
-				<antelope:replace regex="&lt;resource-root path=&quot;" replacement="" />
+				<antelope:replace regex="\s*&lt;resource-root path=&quot;" replacement="" />
 				<antelope:replace regex="&quot;\s/&gt;[\n\r]" replacement="," />
 			</antelope:stringutil>
 
@@ -1947,7 +1947,8 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 							<available file="${app.server.portal.dir}/lib/ext/${petra.jar}" />
 						</not>
 						<then>
-							<replaceregexp file="${module-file}" match="\s*&lt;resource-root path=&quot;${petra.jar}&quot;\s/&gt;[\n\r]" replace="" />
+							<var name="regex" value="\s*&lt;resource-root path=&quot;@{petra.jar}&quot;\s/&gt;[\n\r]" />
+							<replaceregexp file="${module-file}" match="${regex}" replace="" />
 						</then>
 					</if>
 				</sequential>

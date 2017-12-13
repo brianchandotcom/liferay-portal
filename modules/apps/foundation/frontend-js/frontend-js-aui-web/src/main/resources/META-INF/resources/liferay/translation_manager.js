@@ -290,7 +290,7 @@ AUI.add(
 							AArray.filter(
 								availableLocales,
 								function(item) {
-									return AArray.indexOf(locales, item) === -1;
+									return AArray.indexOf(locales, item) > -1;
 								}
 							)
 						);

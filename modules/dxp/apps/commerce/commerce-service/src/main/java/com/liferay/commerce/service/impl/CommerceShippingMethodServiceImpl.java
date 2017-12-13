@@ -21,12 +21,15 @@ import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
+import java.io.File;
+
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceShippingMethodServiceImpl
 	extends CommerceShippingMethodServiceBaseImpl {
@@ -34,8 +37,9 @@ public class CommerceShippingMethodServiceImpl
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			String engineKey, Map<String, String> engineParameterMap,
-			double priority, boolean active, ServiceContext serviceContext)
+			File imageFile, String engineKey,
+			Map<String, String> engineParameterMap, double priority,
+			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -43,8 +47,8 @@ public class CommerceShippingMethodServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
 		return commerceShippingMethodLocalService.addCommerceShippingMethod(
-			nameMap, descriptionMap, engineKey, engineParameterMap, priority,
-			active, serviceContext);
+			nameMap, descriptionMap, imageFile, engineKey, engineParameterMap,
+			priority, active, serviceContext);
 	}
 
 	@Override
@@ -90,7 +94,7 @@ public class CommerceShippingMethodServiceImpl
 	@Override
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap,
+			Map<Locale, String> descriptionMap, File imageFile,
 			Map<String, String> engineParameterMap, double priority,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
@@ -105,7 +109,7 @@ public class CommerceShippingMethodServiceImpl
 
 		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
 			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
-			descriptionMap, engineParameterMap, priority, active,
+			descriptionMap, imageFile, engineParameterMap, priority, active,
 			serviceContext);
 	}
 

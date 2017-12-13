@@ -56,14 +56,6 @@ public class CommercePaymentMethodLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		byte[] imageBytes = null;
-
-		try {
-			imageBytes = FileUtil.getBytes(imageFile);
-		}
-		catch (IOException ioe) {
-		}
-
 		validate(nameMap, engineKey);
 
 		long commercePaymentMethodId = counterLocalService.increment();
@@ -90,9 +82,9 @@ public class CommercePaymentMethodLocalServiceImpl
 
 		// Image
 
-		if ((imageFile != null) && (imageBytes != null)) {
+		if (imageFile != null) {
 			imageLocalService.updateImage(
-				commercePaymentMethod.getImageId(), imageBytes);
+				commercePaymentMethod.getImageId(), imageFile);
 		}
 
 		// Commerce payment engine

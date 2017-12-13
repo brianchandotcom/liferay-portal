@@ -56,14 +56,6 @@ public class CommerceShippingMethodLocalServiceImpl
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
 
-		byte[] imageBytes = null;
-
-		try {
-			imageBytes = FileUtil.getBytes(imageFile);
-		}
-		catch (IOException ioe) {
-		}
-
 		validate(nameMap, engineKey);
 
 		long commerceShippingMethodId = counterLocalService.increment();
@@ -90,9 +82,9 @@ public class CommerceShippingMethodLocalServiceImpl
 
 		// Image
 
-		if ((imageFile != null) && (imageBytes != null)) {
+		if (imageFile != null) {
 			imageLocalService.updateImage(
-				commerceShippingMethod.getImageId(), imageBytes);
+				commerceShippingMethod.getImageId(), imageFile);
 		}
 
 		// Commerce shipping engine

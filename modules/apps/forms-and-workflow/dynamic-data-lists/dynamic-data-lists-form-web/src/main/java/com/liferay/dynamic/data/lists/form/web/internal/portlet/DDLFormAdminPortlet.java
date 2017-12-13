@@ -18,6 +18,7 @@ import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfigura
 import com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminDisplayContext;
 import com.liferay.dynamic.data.lists.form.web.internal.display.context.DDLFormAdminFieldSetDisplayContext;
+import com.liferay.dynamic.data.lists.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -285,6 +286,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new DDLFormAdminFieldSetDisplayContext(
 					renderRequest, renderResponse,
+					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddlFormWebConfigurationActivator.
 						getDDLFormWebConfiguration(), _ddlRecordLocalService,
 					_ddlRecordSetService, _ddmFormFieldTypeServicesTracker,
@@ -322,6 +324,7 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				new DDLFormAdminDisplayContext(
 					renderRequest, renderResponse,
+					_addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 					_ddlFormWebConfigurationActivator.
 						getDDLFormWebConfiguration(),
 					_ddlRecordLocalService, _ddlRecordSetService,
@@ -353,6 +356,10 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDLFormAdminPortlet.class);
+
+	@Reference
+	private AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
+		_addDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 
 	private DDLFormWebConfigurationActivator _ddlFormWebConfigurationActivator;
 	private DDLRecordLocalService _ddlRecordLocalService;

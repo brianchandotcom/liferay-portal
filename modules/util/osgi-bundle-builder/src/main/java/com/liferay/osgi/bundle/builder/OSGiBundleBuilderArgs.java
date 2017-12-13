@@ -51,10 +51,6 @@ public class OSGiBundleBuilderArgs {
 		return _resourcesDir;
 	}
 
-	public boolean isHelp() {
-		return _help;
-	}
-
 	public void setBaseDir(File baseDir) {
 		_baseDir = baseDir;
 	}
@@ -71,16 +67,16 @@ public class OSGiBundleBuilderArgs {
 		_classpath = classpath;
 	}
 
-	public void setHelp(boolean help) {
-		_help = help;
-	}
-
 	public void setOutput(File output) {
 		_output = output;
 	}
 
 	public void setResourcesDir(File resourcesDir) {
 		_resourcesDir = resourcesDir;
+	}
+
+	protected boolean isHelp() {
+		return _help;
 	}
 
 	protected static final File DEFAULT_BASE_DIR = new File(

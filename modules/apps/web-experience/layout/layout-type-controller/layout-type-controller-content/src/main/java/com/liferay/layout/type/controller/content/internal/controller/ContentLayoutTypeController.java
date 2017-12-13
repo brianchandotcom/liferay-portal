@@ -14,15 +14,24 @@
 
 package com.liferay.layout.type.controller.content.internal.controller;
 
+import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
+import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
+import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeController;
 import com.liferay.portal.kernel.model.impl.BaseLayoutTypeControllerImpl;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.taglib.servlet.PipingServletResponse;
+
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
@@ -46,6 +55,30 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	@Override
 	public String getURL() {
 		return _URL;
+	}
+
+	@Override
+	public boolean includeLayoutContent(
+			HttpServletRequest request, HttpServletResponse response,
+			Layout layout)
+		throws Exception {
+
+		UnicodeProperties typeSettingsProperties =
+			layout.getTypeSettingsProperties();
+
+		long layoutPageTemplateEntryId = GetterUtil.getLong(
+			typeSettingsProperties.get("layoutPageTemplateEntryId"));
+
+		List<LayoutPageTemplateFragment> layoutPageTemplateFragments =
+			_layoutPageTemplateFragmentLocalService.
+				getLayoutPageTemplateFragmentsByPageTemplate(
+					layout.getGroupId(), layoutPageTemplateEntryId);
+
+		request.setAttribute(
+			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
+			layoutPageTemplateFragments);
+
+		return super.includeLayoutContent(request, response, layout);
 	}
 
 	@Override
@@ -110,5 +143,9 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 			"&p_v_l_s_g_id=${liferay:pvlsgid}";
 
 	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
+
+	@Reference
+	private LayoutPageTemplateFragmentLocalService
+		_layoutPageTemplateFragmentLocalService;
 
 }

@@ -1911,7 +1911,6 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 	<macrodef name="prepare-jboss-module-file">
 		<sequential>
-
 			<var name="module-file" unset="true" />
 
 			<if>
@@ -1956,7 +1955,6 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 					</if>
 				</sequential>
 			</for>
-
 		</sequential>
 	</macrodef>
 

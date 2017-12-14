@@ -284,7 +284,7 @@ public class UpgradeJournal extends BaseUpgradePortletPreferences {
 		}
 
 		if (warn && _log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("Unable to get the DDM structure ID for group ");
 			sb.append(groupId);

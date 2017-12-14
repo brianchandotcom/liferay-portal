@@ -1670,7 +1670,7 @@ public class FileSystemImporter extends BaseImporter {
 				}
 				catch (SearchException se) {
 					if (_log.isWarnEnabled()) {
-						StringBundler sb = new StringBundler();
+						StringBundler sb = new StringBundler(4);
 
 						sb.append("Cannot index entry: className=");
 						sb.append(JournalArticle.class.getName());

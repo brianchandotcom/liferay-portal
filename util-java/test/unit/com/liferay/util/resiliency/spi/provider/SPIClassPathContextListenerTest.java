@@ -226,7 +226,7 @@ public class SPIClassPathContextListenerTest {
 			spiClassPathContextListener.contextInitialized(
 				new ServletContextEvent(_mockServletContext));
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(14);
 
 			sb.append(_jarFile.getAbsolutePath());
 			sb.append(File.pathSeparator);

@@ -783,7 +783,7 @@ public class IMAPAccessor {
 	}
 
 	protected String getFlags(Message jxMessage) throws MessagingException {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		if (jxMessage.isSet(Flags.Flag.FLAGGED)) {
 			sb.append(MailConstants.FLAG_FLAGGED);

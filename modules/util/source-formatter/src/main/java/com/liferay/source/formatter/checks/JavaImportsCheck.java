@@ -45,7 +45,7 @@ public class JavaImportsCheck extends BaseFileCheck {
 		Matcher matcher = _importMethodPattern.matcher(content);
 
 		while (matcher.find()) {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("Do not import method '");
 			sb.append(matcher.group(1));

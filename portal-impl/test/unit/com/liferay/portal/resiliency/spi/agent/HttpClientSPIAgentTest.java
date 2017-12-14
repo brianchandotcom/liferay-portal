@@ -298,7 +298,7 @@ public class HttpClientSPIAgentTest {
 			PropsValues.PORTAL_RESILIENCY_SPI_AGENT_CLIENT_POOL_MAX_SIZE,
 			socketBlockingQueue.remainingCapacity());
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("POST ");
 		sb.append(HttpClientSPIAgent.SPI_AGENT_CONTEXT_PATH);

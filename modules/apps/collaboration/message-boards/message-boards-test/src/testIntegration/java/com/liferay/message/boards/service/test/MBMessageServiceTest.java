@@ -199,7 +199,7 @@ public class MBMessageServiceTest {
 
 					String message = loggingEvent.getRenderedMessage();
 
-					StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler(2);
 
 					sb.append("com.liferay.portal.kernel.exception.");
 					sb.append("SystemException:");

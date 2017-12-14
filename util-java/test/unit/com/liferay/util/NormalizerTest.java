@@ -36,7 +36,7 @@ public class NormalizerTest {
 
 	@Test
 	public void testGreek() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("\u0391\u0392\u0393\u0394\u0395\u0396\u0397\u0398\u0399");
 		sb.append("\u039a\u039b\u039c\u039d\u039e\u039f\u03a0\u03a1\u03a3");
@@ -67,7 +67,7 @@ public class NormalizerTest {
 
 	@Test
 	public void testRussian() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(8);
 
 		sb.append("\u0410\u0411\u0412\u0413\u0414\u0415\u0401\u0416\u0417");
 		sb.append("\u0418\u0419\u041a\u041b\u041c\u041d\u041e\u041f\u0420");

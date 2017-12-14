@@ -3635,7 +3635,7 @@ public class ServiceBuilder {
 				EntityColumn column = columnList.get(j);
 
 				if ("sequence".equals(column.getIdType())) {
-					StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler(3);
 
 					String sequenceName = column.getIdParam();
 
@@ -4978,7 +4978,7 @@ public class ServiceBuilder {
 
 			String content = _read(newFinderImplFile);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(13);
 
 			sb.append("package ");
 			sb.append(_packagePath);

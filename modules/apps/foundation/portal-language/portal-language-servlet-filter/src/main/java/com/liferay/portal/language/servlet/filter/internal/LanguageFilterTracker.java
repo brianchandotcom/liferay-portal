@@ -131,7 +131,7 @@ public class LanguageFilterTracker {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			StringBundler filterSB = new StringBundler();
+			StringBundler filterSB = new StringBundler(17);
 
 			Object contextName = serviceReference.getProperty(
 				HttpWhiteboardConstants.HTTP_WHITEBOARD_CONTEXT_NAME);

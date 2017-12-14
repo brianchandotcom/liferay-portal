@@ -449,7 +449,7 @@ public class LPKGBundleTrackerCustomizer
 					!location.equals(installedBundle.getLocation())) {
 
 					if (_log.isInfoEnabled()) {
-						StringBundler sb = new StringBundler();
+						StringBundler sb = new StringBundler(7);
 
 						sb.append("Skipping installation of ");
 						sb.append(symbolicName);

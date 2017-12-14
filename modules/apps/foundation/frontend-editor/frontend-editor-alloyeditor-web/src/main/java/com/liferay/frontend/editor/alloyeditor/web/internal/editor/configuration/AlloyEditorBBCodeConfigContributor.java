@@ -75,7 +75,7 @@ public class AlloyEditorBBCodeConfigContributor
 
 		String removePlugins = jsonObject.getString("removePlugins");
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("bidi,colorbutton,colordialog,div,flash,font,forms,");
 		sb.append("indentblock,keystrokes,maximize,newpage,pagebreak,");

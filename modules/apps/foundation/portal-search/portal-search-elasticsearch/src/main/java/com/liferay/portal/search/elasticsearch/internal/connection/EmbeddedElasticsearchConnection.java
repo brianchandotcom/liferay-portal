@@ -346,7 +346,7 @@ public class EmbeddedElasticsearchConnection
 			sb.append("Remote Elasticsearch connections can be configured in ");
 			sb.append("the Control Panel.");
 
-			_log.warn(sb);
+			_log.warn(sb.toString());
 		}
 
 		if (_log.isDebugEnabled()) {

@@ -479,7 +479,7 @@ public class CMISStore extends BaseStore {
 			sb.append("\"dl.store.impl\" to use CMIS to persist documents. ");
 			sb.append("CMIS is deprecated and is not supported.");
 
-			_log.warn(sb);
+			_log.warn(sb.toString());
 		}
 
 		_cmisStoreConfiguration = ConfigurableUtil.createConfigurable(

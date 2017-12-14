@@ -863,7 +863,7 @@ public class JCRStore extends BaseStore {
 			sb.append("\"dl.store.impl\" to use JCR to persist documents. ");
 			sb.append("JCR is deprecated and is not supported.");
 
-			_log.warn(sb);
+			_log.warn(sb.toString());
 		}
 
 		_jcrStoreConfiguration = ConfigurableUtil.createConfigurable(

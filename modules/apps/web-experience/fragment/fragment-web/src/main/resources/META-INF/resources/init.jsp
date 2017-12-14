@@ -24,7 +24,9 @@ taglib uri="http://liferay.com/tld/security" prefix="liferay-security" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
+<%@ page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@
+page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
+page import="com.liferay.fragment.constants.FragmentActionKeys" %><%@
 page import="com.liferay.fragment.exception.DuplicateFragmentCollectionException" %><%@
 page import="com.liferay.fragment.exception.FragmentCollectionNameException" %><%@
 page import="com.liferay.fragment.model.FragmentCollection" %><%@
@@ -32,8 +34,11 @@ page import="com.liferay.fragment.model.FragmentEntry" %><%@
 page import="com.liferay.fragment.service.permission.FragmentCollectionPermission" %><%@
 page import="com.liferay.fragment.service.permission.FragmentEntryPermission" %><%@
 page import="com.liferay.fragment.web.internal.display.context.FragmentDisplayContext" %><%@
+page import="com.liferay.html.preview.model.HtmlPreviewEntry" %><%@
+page import="com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@

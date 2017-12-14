@@ -53,24 +53,48 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setAppendCssImportTimestamps(appendCssImportTimestamps);
 	}
 
-	public void setDirNames(String dirNames) {
-		_cssBuilderArgs.setIncludes(dirNames);
+	public void setBaseDir(File baseDir) {
+		_cssBuilderArgs.setBaseDir(baseDir);
 	}
 
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #setIncludes(String)}
+	 */
+	@Deprecated
+	public void setDirNames(String dirNames) {
+		setIncludes(dirNames);
+	}
+
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
+	 */
+	@Deprecated
 	public void setDocrootDir(File docrootDir) {
-		_cssBuilderArgs.setBaseDir(docrootDir);
+		setBaseDir(docrootDir);
 	}
 
 	public void setGenerateSourceMap(boolean generateSourceMap) {
 		_cssBuilderArgs.setGenerateSourceMap(generateSourceMap);
 	}
 
+	public void setImportDir(File importDir) {
+		_cssBuilderArgs.setImportDir(importDir);
+	}
+
+	public void setIncludes(String includes) {
+		_cssBuilderArgs.setIncludes(includes);
+	}
+
 	public void setOutputDirName(String outputDirName) {
 		_cssBuilderArgs.setOutputDirName(outputDirName);
 	}
 
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
+	 */
+	@Deprecated
 	public void setPortalCommonPath(File portalCommonPath) {
-		_cssBuilderArgs.setImportDir(portalCommonPath);
+		setImportDir(portalCommonPath);
 	}
 
 	public void setPrecision(int precision) {

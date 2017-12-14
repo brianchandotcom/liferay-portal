@@ -69,7 +69,7 @@ public class BuildCSSMojo extends AbstractMojo {
 			}
 
 			if (_buildContext.isIncremental()) {
-				Scanner scanner = _buildContext.newScanner(_baseDir);
+				Scanner scanner = _buildContext.newScanner(_projectBaseDir);
 
 				String[] includes = {StringPool.BLANK, "**/*.scss"};
 
@@ -102,23 +102,34 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter
+	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
 	 */
-	public void setDirNames(String dirNames) {
-		_cssBuilderArgs.setIncludes(dirNames);
+	public void setBaseDir(File baseDir) {
+		_cssBuilderArgs.setBaseDir(baseDir);
 	}
 
 	/**
-	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
+	 * @deprecated As of 2.1.0, replaced by {@link #setIncludes(String)}
+	 * @parameter
 	 */
-	public void setDocrootDirName(String docrootDirName) {
-		File docrootDir = new File(docrootDirName);
+	@Deprecated
+	public void setDirNames(String dirNames) {
+		setIncludes(dirNames);
+	}
 
-		if (!docrootDir.isAbsolute()) {
-			docrootDir = new File(_baseDir, docrootDirName);
+	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
+	 * @parameter
+	 */
+	@Deprecated
+	public void setDocrootDirName(String docrootDirName) {
+		File baseDir = new File(docrootDirName);
+
+		if (!baseDir.isAbsolute()) {
+			baseDir = new File(_projectBaseDir, docrootDirName);
 		}
 
-		_cssBuilderArgs.setBaseDir(docrootDir);
+		setBaseDir(baseDir);
 	}
 
 	/**
@@ -129,6 +140,20 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @parameter
+	 */
+	public void setImportDir(File importDir) {
+		_cssBuilderArgs.setImportDir(importDir);
+	}
+
+	/**
+	 * @parameter
+	 */
+	public void setIncludes(String includes) {
+		_cssBuilderArgs.setIncludes(includes);
+	}
+
+	/**
 	 * @parameter default-value=".sass-cache/"
 	 */
 	public void setOutputDirName(String outputDirName) {
@@ -136,10 +161,12 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
 	 * @parameter
 	 */
+	@Deprecated
 	public void setPortalCommonPath(File portalCommonPath) {
-		_cssBuilderArgs.setImportDir(portalCommonPath);
+		setImportDir(portalCommonPath);
 	}
 
 	/**
@@ -195,12 +222,6 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}"
-	 * @readonly
-	 */
-	private File _baseDir;
-
-	/**
 	 * @component
 	 */
 	private BuildContext _buildContext;
@@ -220,6 +241,12 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @readonly
 	 */
 	private MavenProject _project;
+
+	/**
+	 * @parameter default-value="${project.basedir}"
+	 * @readonly
+	 */
+	private File _projectBaseDir;
 
 	/**
 	 * @component

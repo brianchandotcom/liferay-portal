@@ -302,7 +302,7 @@ public class CSSBuilder implements AutoCloseable {
 		int precision = _cssBuilderArgs.getPrecision();
 
 		if ((sassCompilerClassName == null) ||
-			sassCompilerClassName.equals("") ||
+			sassCompilerClassName.isEmpty() ||
 			sassCompilerClassName.equals("jni")) {
 
 			try {

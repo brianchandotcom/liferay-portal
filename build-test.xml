@@ -1937,7 +1937,10 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 			<antelope:stringutil property="petra.jar.list" string="${module-file-contents}">
 				<antelope:replace regex="\s*&lt;resource-root path=&quot;" replacement="" />
-				<antelope:replace regex="&quot;\s/&gt;[\n\r]" replacement="," />
+			</antelope:stringutil>
+
+			<antelope:stringutil property="petra.jar.list" string="${petra.jar.list}">
+				<antelope:replace regex="&quot;\s/&gt;[\n\r]*" replacement="," />
 			</antelope:stringutil>
 
 			<for list="${petra.jar.list}" param="petra.jar">

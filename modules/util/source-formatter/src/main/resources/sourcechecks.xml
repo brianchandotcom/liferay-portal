@@ -235,6 +235,7 @@
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLogClassNameCheck" />
 		<check name="JavaLogLevelCheck" />
+		<check name="JavaLogStringBundlerCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaPackagePathCheck" />
 		<check name="JavaParameterAnnotationsCheck" />

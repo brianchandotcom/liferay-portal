@@ -36,6 +36,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
@@ -93,18 +94,29 @@ public class CSSBuilder implements AutoCloseable {
 	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
 		_cssBuilderArgs = cssBuilderArgs;
 
+		if (_cssBuilderArgs.getBaseDir() == null) {
+			_cssBuilderArgs.setBaseDir(
+				new File(System.getProperty("user.dir")));
+		}
+
 		File importDir = _cssBuilderArgs.getImportDir();
 
-		if (importDir.isFile()) {
+		if (importDir != null && importDir.isFile()) {
 			importDir = _unzipImport(importDir);
 
 			_cleanImportDir = true;
+
+			_importDirName = importDir.getCanonicalPath();
 		}
 		else {
 			_cleanImportDir = false;
+
+			_importDirName = "";
 		}
 
-		_importDirName = importDir.getCanonicalPath();
+		if (_cssBuilderArgs.getIncludes() == null) {
+			_cssBuilderArgs.setIncludes("");
+		}
 
 		List<String> rtlExcludedPathRegexps =
 			_cssBuilderArgs.getRtlExcludedPathRegexps();
@@ -131,12 +143,21 @@ public class CSSBuilder implements AutoCloseable {
 	public void execute() throws Exception {
 		List<String> fileNames = new ArrayList<>();
 
-		File docrootDir = _cssBuilderArgs.getBaseDir();
+		File baseDir = _cssBuilderArgs.getBaseDir();
+
+		if (!baseDir.exists()) {
+			throw new Exception("Directory does not exist," + baseDir);
+		}
 
 		for (String dirName : _cssBuilderArgs.getIncludes()) {
-			List<String> sassFileNames = _collectSassFiles(dirName, docrootDir);
+			List<String> sassFileNames = _collectSassFiles(dirName, baseDir);
 
 			fileNames.addAll(sassFileNames);
+		}
+
+		if (fileNames.size() == 0) {
+			System.out.println("There are no files to compile");
+			return;
 		}
 
 		for (String fileName : fileNames) {
@@ -168,12 +189,12 @@ public class CSSBuilder implements AutoCloseable {
 		jCommander.usage();
 	}
 
-	private List<String> _collectSassFiles(String dirName, File docrootDir)
+	private List<String> _collectSassFiles(String dirName, File baseDir)
 		throws Exception {
 
 		List<String> fileNames = new ArrayList<>();
 
-		String basedir = new File(docrootDir, dirName).toString();
+		String basedir = new File(baseDir, dirName).toString();
 
 		String[] scssFiles = _getScssFiles(basedir);
 

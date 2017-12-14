@@ -58,4 +58,19 @@
 
 		<execute function="KeyPress" locator1="SearchBar#SEARCH_FIELD" value1="\RETURN" />
 	</command>
+
+	<command name="selectScopeInputPG">
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (All Sites|This Site)." />
+			</else>
+		</if>
+	</command>
 </definition>

@@ -275,9 +275,9 @@ public class CSSBuilder implements AutoCloseable {
 		return rtlCss;
 	}
 
-	private String[] _getScssFiles(String baseDir) {
-		String[] fragments = {"**\\_*.scss"};
-		String[] includes = {"**\\*.scss"};
+	private String[] _getScssFiles(String baseDir) throws IOException {
+		String[] fragments = {"**/_*.scss"};
+		String[] includes = {"**/*.scss"};
 
 		Stream<String[]> stream = Stream.of(fragments, _EXCLUDES);
 
@@ -290,8 +290,8 @@ public class CSSBuilder implements AutoCloseable {
 		return FileUtil.getFilesFromDirectory(baseDir, includes, excludes);
 	}
 
-	private String[] _getScssFragments(String baseDir) {
-		String[] includes = {"**\\\\_*.scss"};
+	private String[] _getScssFragments(String baseDir) throws IOException {
+		String[] includes = {"**/_*.scss"};
 
 		return FileUtil.getFilesFromDirectory(baseDir, includes, _EXCLUDES);
 	}
@@ -505,9 +505,9 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private static final String[] _EXCLUDES = {
-		"**\\_diffs\\**", "**\\.sass-cache*\\**", "**\\.sass_cache_*\\**",
-		"**\\_sass_cache_*\\**", "**\\_styled\\**", "**\\_unstyled\\**",
-		"**\\css\\aui\\**", "**\\tmp\\**"
+		"**/_diffs/**", "**/.sass-cache*/**", "**/.sass_cache_*/**",
+		"**/_sass_cache_*/**", "**/_styled/**", "**/_unstyled/**",
+		"**/css/aui/**", "**/tmp/**"
 	};
 
 	private static RTLCSSConverter _rtlCSSConverter;

@@ -119,7 +119,7 @@ public class ValidatorTest {
 			"test", "liferay.com", "@liferay.com", "test(@liferay.com",
 			"test)@liferay.com", "test,@liferay.com", ".test@liferay.com",
 			"test.@liferay.com", "te..st@liferay.com", "test user@liferay.com",
-			"test@-liferay.com", "test@liferay.com-", "test@.liferay.com",
+			"test@-liferay.com", "test@.liferay.com", "test@liferay.com-",
 			"test@liferay.com."
 		};
 

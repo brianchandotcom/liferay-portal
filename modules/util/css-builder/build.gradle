@@ -48,6 +48,7 @@ dependencies {
 	compile group: "org.sonatype.plexus", name: "plexus-build-api", transitive: false, version: "0.0.7"
 
 	compileInclude group: "com.beust", name: "jcommander", version: "1.72"
+	compileInclude group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	compileInclude group: "com.liferay", name: "com.liferay.rtl.css", version: "1.0.5"
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.1"

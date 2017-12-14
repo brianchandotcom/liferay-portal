@@ -573,7 +573,7 @@
 				<defaultValue>true</defaultValue>
 			</attribute>
 			<attribute>
-				<description>Whether to validate fields on blur method or not. The default value is <![CDATA[<code>true</code>]]>.</description>
+				<description>Whether to validate fields when they lose focus. The default value is <![CDATA[<code>true</code>]]>.</description>
 				<name>validateOnBlur</name>
 				<inputType>boolean</inputType>
 				<outputType>boolean</outputType>

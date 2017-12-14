@@ -269,9 +269,6 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 				if (insideLoop.contains(varName + ".append(")) {
 					return true;
 				}
-				else {
-					return false;
-				}
 			}
 		}
 	}

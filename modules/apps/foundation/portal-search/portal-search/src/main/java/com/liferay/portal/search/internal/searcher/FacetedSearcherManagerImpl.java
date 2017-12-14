@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.facet.internal.faceted.searcher;
+package com.liferay.portal.search.internal.searcher;
 
 import com.liferay.expando.kernel.util.ExpandoBridgeFactory;
 import com.liferay.portal.kernel.search.IndexSearcherHelper;

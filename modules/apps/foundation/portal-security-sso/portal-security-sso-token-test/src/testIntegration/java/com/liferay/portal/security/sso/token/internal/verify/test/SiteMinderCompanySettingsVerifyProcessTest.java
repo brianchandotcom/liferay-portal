@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
-import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
-import com.liferay.portal.security.sso.token.constants.TokenConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
 
@@ -50,7 +47,12 @@ public class SiteMinderCompanySettingsVerifyProcessTest
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 
-		for (String key : LegacyTokenPropsKeys.SHIBBOLETH_KEYS) {
+		String[] shibbolethKeys = {
+			"shibboleth.auth.enabled", "shibboleth.import.from.ldap",
+			"shibboleth.logout.url", "shibboleth.user.header"
+		};
+
+		for (String key : shibbolethKeys) {
 			Assert.assertTrue(
 				Validator.isNull(
 					portletPreferences.getValue(key, StringPool.BLANK)));
@@ -58,21 +60,18 @@ public class SiteMinderCompanySettingsVerifyProcessTest
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				settings.getValue(
-					TokenConfigurationKeys.AUTH_ENABLED, StringPool.FALSE)));
+				settings.getValue("enabled", StringPool.FALSE)));
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
-				settings.getValue(
-					TokenConfigurationKeys.IMPORT_FROM_LDAP, StringPool.TRUE)));
+				settings.getValue("importFromLDAP", StringPool.TRUE)));
 		Assert.assertEquals(
 			"testSiteminder",
-			settings.getValue(
-				TokenConfigurationKeys.USER_HEADER, StringPool.BLANK));
+			settings.getValue("userTokenName", StringPool.BLANK));
 	}
 
 	@Override
 	protected String getSettingsId() {
-		return TokenConstants.SERVICE_NAME;
+		return "com.liferay.portal.security.sso.token";
 	}
 
 	@Override
@@ -82,11 +81,9 @@ public class SiteMinderCompanySettingsVerifyProcessTest
 
 	@Override
 	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED, "true");
-		properties.put(
-			LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP, "false");
-		properties.put(
-			LegacyTokenPropsKeys.SITEMINDER_USER_HEADER, "testSiteminder");
+		properties.put("siteminder.auth.enabled", "true");
+		properties.put("siteminder.import.from.ldap", "false");
+		properties.put("siteminder.user.header", "testSiteminder");
 	}
 
 }

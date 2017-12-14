@@ -14,9 +14,42 @@
 
 package com.liferay.css.builder.internal.util;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 
+/**
+ * @author David Truong
+ */
 public class StringUtil {
+
+	public static String merge(Object[] array) {
+		return merge(array, StringPool.COMMA);
+	}
+
+	public static String merge(Object[] array, String delimiter) {
+		if (array == null) {
+			return null;
+		}
+
+		if (array.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		if (array.length == 1) {
+			return String.valueOf(array[0]);
+		}
+
+		StringBundler sb = new StringBundler(2 * array.length - 1);
+
+		for (int i = 0; i < array.length; i++) {
+			if (i != 0) {
+				sb.append(delimiter);
+			}
+
+			sb.append(String.valueOf(array[i]).trim());
+		}
+
+		return sb.toString();
 
 	public static String replace(String s, char oldSub, char newSub) {
 		if (s == null) {
@@ -48,7 +81,7 @@ public class StringUtil {
 		int y = s.indexOf(oldSub, fromIndex);
 
 		if (y >= 0) {
-			StringBuilder sb = new StringBuilder();
+			StringBundler sb = new StringBundler();
 
 			int length = oldSub.length();
 			int x = 0;

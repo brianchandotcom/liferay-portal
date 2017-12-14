@@ -15,7 +15,6 @@
 package com.liferay.css.builder.ant;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.File;
 
@@ -23,6 +22,7 @@ import java.net.URL;
 
 import java.nio.file.Path;
 
+import com.liferay.css.builder.internal.util.StringUtil;
 import org.apache.tools.ant.BuildFileRule;
 import org.apache.tools.ant.Project;
 

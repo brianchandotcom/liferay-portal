@@ -22,6 +22,8 @@ import com.liferay.document.library.kernel.service.DLFolderServiceUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.service.RepositoryLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -126,13 +128,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 	@Override
 	public boolean hasInheritableLock() {
-		try {
-			return DLFolderLocalServiceUtil.hasInheritableLock(getFolderId());
-		}
-		catch (Exception e) {
-		}
-
-		return false;
+		return DLFolderLocalServiceUtil.hasInheritableLock(getFolderId());
 	}
 
 	@Override
@@ -149,8 +145,14 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 	@Override
 	public boolean isInHiddenFolder() {
 		try {
+			long repositoryId = getRepositoryId();
+
+			if (getGroupId() == repositoryId) {
+				return false;
+			}
+
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
-				getRepositoryId());
+				repositoryId);
 
 			long dlFolderId = repository.getDlFolderId();
 
@@ -158,7 +160,10 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 			return dlFolder.isHidden();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		return false;
@@ -166,13 +171,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 	@Override
 	public boolean isLocked() {
-		try {
-			return DLFolderServiceUtil.isFolderLocked(getFolderId());
-		}
-		catch (Exception e) {
-		}
-
-		return false;
+		return DLFolderServiceUtil.isFolderLocked(getFolderId());
 	}
 
 	@Override
@@ -183,5 +182,7 @@ public class DLFolderImpl extends DLFolderBaseImpl {
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(DLFolderImpl.class);
 
 }

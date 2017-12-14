@@ -79,8 +79,8 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 
 			toTitle = fileEntry.getTitle();
 		}
-		catch (Exception e) {
-			_log.error(e, e);
+		catch (PortalException pe) {
+			_log.error(pe, pe);
 		}
 
 		return toTitle;
@@ -91,6 +91,10 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 		try {
 			long repositoryId = getRepositoryId();
 
+			if (getGroupId() == repositoryId) {
+				return false;
+			}
+
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
 				repositoryId);
 
@@ -100,7 +104,10 @@ public class DLFileShortcutImpl extends DLFileShortcutBaseImpl {
 
 			return dlFolder.isHidden();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		return false;

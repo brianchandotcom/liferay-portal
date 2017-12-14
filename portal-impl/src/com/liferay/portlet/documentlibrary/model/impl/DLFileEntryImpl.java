@@ -141,9 +141,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 			return dlFileVersion.getExpandoBridge();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(pe, pe);
 			}
 		}
 
@@ -244,9 +244,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			return LockManagerUtil.getLock(
 				DLFileEntry.class.getName(), getFileEntryId());
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(pe, pe);
 			}
 		}
 
@@ -293,28 +293,19 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 	@Override
 	public boolean hasLock() {
-		try {
-			long folderId = getFolderId();
+		long folderId = getFolderId();
 
-			boolean hasLock = LockManagerUtil.hasLock(
-				PrincipalThreadLocal.getUserId(), DLFileEntry.class.getName(),
-				getFileEntryId());
+		boolean hasLock = LockManagerUtil.hasLock(
+			PrincipalThreadLocal.getUserId(), DLFileEntry.class.getName(),
+			getFileEntryId());
 
-			if (!hasLock &&
-				(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
+		if (!hasLock &&
+			(folderId != DLFolderConstants.DEFAULT_PARENT_FOLDER_ID)) {
 
-				hasLock = DLFolderLocalServiceUtil.hasInheritableLock(folderId);
-			}
-
-			return hasLock;
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
-			}
+			hasLock = DLFolderLocalServiceUtil.hasInheritableLock(folderId);
 		}
 
-		return false;
+		return hasLock;
 	}
 
 	@Override
@@ -323,9 +314,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 			return DLFileEntryServiceUtil.isFileEntryCheckedOut(
 				getFileEntryId());
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(pe, pe);
 			}
 		}
 
@@ -337,6 +328,10 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 		try {
 			long repositoryId = getRepositoryId();
 
+			if (getGroupId() == repositoryId) {
+				return false;
+			}
+
 			Repository repository = RepositoryLocalServiceUtil.getRepository(
 				repositoryId);
 
@@ -346,9 +341,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 
 			return dlFolder.isHidden();
 		}
-		catch (Exception e) {
+		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {
-				_log.warn(e, e);
+				_log.warn(pe, pe);
 			}
 		}
 

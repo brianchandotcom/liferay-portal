@@ -114,7 +114,6 @@ public class CSSBuilder implements AutoCloseable {
 		}
 		else {
 			_cleanImportDir = false;
-
 			_importDirName = null;
 		}
 
@@ -161,6 +160,7 @@ public class CSSBuilder implements AutoCloseable {
 
 		if (fileNames.isEmpty()) {
 			System.out.println("There are no files to compile");
+
 			return;
 		}
 
@@ -454,7 +454,7 @@ public class CSSBuilder implements AutoCloseable {
 			}
 		}
 
-		System.out.println(portalCommonCssDirPath.toString());
+		System.out.println(portalCommonCssDirPath);
 
 		return portalCommonCssDirPath.toFile();
 	}

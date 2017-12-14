@@ -255,7 +255,7 @@ element.style.border='2px dashed red';
 			<var name="fragmentName" value="Rename Fragment" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="Fragment#submit" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

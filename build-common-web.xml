@@ -163,12 +163,12 @@
 		<install-portal-artifact packaging="war" snapshot="true" />
 	</target>
 
-	<target depends="check-stale-release,war" name="publish-portal-release">
-		<publish-portal-artifact packaging="war" />
+	<target name="publish-portal-release">
+		<publish-portal-artifact packaging="war" targets="war" />
 	</target>
 
-	<target depends="war" name="publish-portal-snapshot">
-		<publish-portal-artifact packaging="war" snapshot="true" />
+	<target name="publish-portal-snapshot">
+		<publish-portal-artifact packaging="war" snapshot="true" targets="war" />
 	</target>
 
 	<target name="war">

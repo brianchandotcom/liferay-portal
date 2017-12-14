@@ -108,16 +108,16 @@
 		</zip>
 	</target>
 
-	<target depends="check-stale-release,jar,jar-javadoc,jar-sources,jar-tlddoc" name="publish-portal-release">
-		<publish-portal-artifact>
+	<target name="publish-portal-release">
+		<publish-portal-artifact targets="jar,jar-javadoc,jar-sources,jar-tlddoc">
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 			<attach classifier="tlddoc" file="${artifact.name}-tlddoc.jar" />
 		</publish-portal-artifact>
 	</target>
 
-	<target depends="jar,jar-javadoc,jar-sources,jar-tlddoc" name="publish-portal-snapshot">
-		<publish-portal-artifact snapshot="true">
+	<target name="publish-portal-snapshot">
+		<publish-portal-artifact snapshot="true" targets="jar,jar-javadoc,jar-sources,jar-tlddoc">
 			<attach classifier="javadoc" file="${artifact.name}-javadoc.jar" />
 			<attach classifier="sources" file="${artifact.name}-sources.jar" />
 			<attach classifier="tlddoc" file="${artifact.name}-tlddoc.jar" />

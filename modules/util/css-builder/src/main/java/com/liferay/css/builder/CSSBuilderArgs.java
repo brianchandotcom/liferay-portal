@@ -183,7 +183,7 @@ public class CSSBuilderArgs {
 	private List<String> _rtlExcludedPathRegexps = new ArrayList<>();
 
 	@Parameter(
-		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". If not set, defaults to \"jni\".",
+		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". Ruby sass compiler requires com.liferay.sass.compiler.ruby.jar, ruby-gems, and jruby to be added to the classpath",
 		names = "compiler"
 	)
 	private String _sassCompilerClassName = "jni";

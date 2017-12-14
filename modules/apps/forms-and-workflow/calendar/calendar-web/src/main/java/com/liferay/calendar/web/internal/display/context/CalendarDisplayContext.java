@@ -163,7 +163,7 @@ public class CalendarDisplayContext {
 			}
 			catch (PrincipalException pe) {
 				if (_log.isInfoEnabled()) {
-					StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler(4);
 
 					sb.append("No ");
 					sb.append(ActionKeys.VIEW);

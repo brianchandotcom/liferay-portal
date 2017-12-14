@@ -159,7 +159,7 @@ public class ContactsUtil {
 	}
 
 	public static String getVCard(User user) throws Exception {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(9);
 
 		sb.append(_getHeader());
 

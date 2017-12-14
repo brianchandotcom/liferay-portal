@@ -85,7 +85,7 @@ public class ConfigurationAdminBundleActivator implements BundleActivator {
 
 			_soapConfiguration.update(properties);
 
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("(&(objectClass=");
 			sb.append(ServletContextHelper.class.getName());

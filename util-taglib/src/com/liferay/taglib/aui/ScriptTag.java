@@ -124,7 +124,7 @@ public class ScriptTag extends BaseScriptTag {
 			}
 
 			if (getSandbox() || (require != null) || (use != null)) {
-				StringBundler sb = new StringBundler();
+				StringBundler sb = new StringBundler(5);
 
 				if ((require == null) && (use == null)) {
 					sb.append("(function() {");

@@ -53,7 +53,7 @@ public class BufferedIncreasableEntry<K, T>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(_methodInvocation.toString());
 		sb.append(StringPool.OPEN_PARENTHESIS);

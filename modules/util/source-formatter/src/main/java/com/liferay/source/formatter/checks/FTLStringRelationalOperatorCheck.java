@@ -67,7 +67,7 @@ public class FTLStringRelationalOperatorCheck extends BaseFileCheck {
 			}
 		}
 		else {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(6);
 
 			if (operator.equals("!=")) {
 				sb.append(StringPool.EXCLAMATION);

@@ -17,6 +17,7 @@ package com.liferay.css.builder;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 
+import com.liferay.css.builder.internal.util.CSSBuilderUtil;
 import com.liferay.css.builder.internal.util.FileUtil;
 import com.liferay.css.builder.internal.util.StringUtil;
 import com.liferay.petra.string.StringBundler;

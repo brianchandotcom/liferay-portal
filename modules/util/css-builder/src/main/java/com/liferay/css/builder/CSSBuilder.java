@@ -100,17 +100,22 @@ public class CSSBuilder implements AutoCloseable {
 
 		File importDir = _cssBuilderArgs.getImportDir();
 
-		if ((importDir != null) && importDir.isFile()) {
-			importDir = _unzipImport(importDir);
+		if (importDir != null) {
+			if (importDir.isFile()) {
+				importDir = _unzipImport(importDir);
 
-			_cleanImportDir = true;
+				_cleanImportDir = true;
+			}
+			else {
+				_cleanImportDir = false;
+			}
 
 			_importDirName = importDir.getCanonicalPath();
 		}
 		else {
 			_cleanImportDir = false;
 
-			_importDirName = "";
+			_importDirName = null;
 		}
 
 		if (_cssBuilderArgs.getIncludes() == null) {
@@ -448,6 +453,8 @@ public class CSSBuilder implements AutoCloseable {
 					StandardCopyOption.REPLACE_EXISTING);
 			}
 		}
+
+		System.out.println(portalCommonCssDirPath.toString());
 
 		return portalCommonCssDirPath.toFile();
 	}

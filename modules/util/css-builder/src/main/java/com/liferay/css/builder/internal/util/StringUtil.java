@@ -50,6 +50,7 @@ public class StringUtil {
 		}
 
 		return sb.toString();
+	}
 
 	public static String replace(String s, char oldSub, char newSub) {
 		if (s == null) {

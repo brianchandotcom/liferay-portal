@@ -15,9 +15,9 @@
 package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
+import com.liferay.css.builder.internal.util.StringUtil;
 import com.liferay.css.builder.util.FileTestUtil;
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 

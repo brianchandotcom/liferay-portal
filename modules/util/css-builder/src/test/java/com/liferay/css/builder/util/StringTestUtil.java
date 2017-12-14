@@ -14,16 +14,13 @@
 
 package com.liferay.css.builder.util;
 
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-
 /**
  * @author David Truong
  */
 public class StringTestUtil {
 
 	public static String merge(Object[] array) {
-		return _merge(array, StringPool.COMMA);
+		return _merge(array, ",");
 	}
 
 	private static String _merge(Object[] array, String delimiter) {
@@ -32,14 +29,14 @@ public class StringTestUtil {
 		}
 
 		if (array.length == 0) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		if (array.length == 1) {
 			return String.valueOf(array[0]);
 		}
 
-		StringBundler sb = new StringBundler(2 * array.length - 1);
+		StringBuilder sb = new StringBuilder();
 
 		for (int i = 0; i < array.length; i++) {
 			if (i != 0) {

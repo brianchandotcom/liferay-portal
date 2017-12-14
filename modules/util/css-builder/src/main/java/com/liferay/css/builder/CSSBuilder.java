@@ -19,9 +19,6 @@ import com.beust.jcommander.ParameterException;
 
 import com.liferay.css.builder.internal.util.CSSBuilderUtil;
 import com.liferay.css.builder.internal.util.FileUtil;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
 import com.liferay.rtl.css.RTLCSSConverter;
 import com.liferay.sass.compiler.SassCompiler;
 import com.liferay.sass.compiler.SassCompilerException;
@@ -119,7 +116,7 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		if (_cssBuilderArgs.getIncludes() == null) {
-			_cssBuilderArgs.setIncludes(StringPool.BLANK);
+			_cssBuilderArgs.setIncludes("");
 		}
 
 		List<String> rtlExcludedPathRegexps =
@@ -171,10 +168,9 @@ public class CSSBuilder implements AutoCloseable {
 			_parseSassFile(fileName);
 
 			System.out.println(
-				StringBundler.concat(
-					"Parsed ", fileName, " in ",
-					String.valueOf(System.currentTimeMillis() - startTime),
-					"ms"));
+				"Parsed " + fileName + " in " +
+					String.valueOf(System.currentTimeMillis() - startTime) +
+						"ms");
 		}
 	}
 
@@ -268,9 +264,8 @@ public class CSSBuilder implements AutoCloseable {
 		}
 		catch (Exception e) {
 			System.out.println(
-				StringBundler.concat(
-					"Unable to generate RTL version for ", fileName,
-					StringPool.COMMA_AND_SPACE, e.getMessage()));
+				"Unable to generate RTL version for " + fileName + ", " +
+					e.getMessage());
 		}
 
 		return rtlCss;
@@ -360,10 +355,10 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		fileName = dirName + StringPool.SLASH + fileName;
+		fileName = dirName + "/" + fileName;
 
-		fileName = fileName.replace(CharPool.BACK_SLASH, CharPool.SLASH);
-		fileName = fileName.replace(StringPool.DOUBLE_SLASH, StringPool.SLASH);
+		fileName = fileName.replace('\\', '/');
+		fileName = fileName.replace("//", "/");
 
 		return fileName;
 	}
@@ -437,7 +432,7 @@ public class CSSBuilder implements AutoCloseable {
 
 				String name = zipEntry.getName();
 
-				if (name.endsWith(StringPool.SLASH) ||
+				if (name.endsWith("/") ||
 					!name.startsWith("META-INF/resources/")) {
 
 					continue;
@@ -474,18 +469,18 @@ public class CSSBuilder implements AutoCloseable {
 
 		if (FileUtil.isAbsolute(outputFileDirName)) {
 			absoluteOutputDir = true;
-			outputFileDirName = StringPool.BLANK;
+			outputFileDirName = "";
 		}
 
 		if (rtl) {
 			String rtlFileName = CSSBuilderUtil.getRtlCustomFileName(fileName);
 
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				rtlFileName, outputFileDirName, StringPool.BLANK);
+				rtlFileName, outputFileDirName, "");
 		}
 		else {
 			outputFileName = CSSBuilderUtil.getOutputFileName(
-				fileName, outputFileDirName, StringPool.BLANK);
+				fileName, outputFileDirName, "");
 		}
 
 		File outputFile;

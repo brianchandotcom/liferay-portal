@@ -15,7 +15,6 @@
 package com.liferay.css.builder;
 
 import com.liferay.css.builder.util.StringTestUtil;
-import com.liferay.petra.string.StringPool;
 
 import java.nio.file.Path;
 
@@ -34,7 +33,7 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 	@Parameters(name = "{0}")
 	public static String[] getSeparators() {
-		return new String[] {StringPool.EQUAL, StringPool.SPACE};
+		return new String[] {"=", " "};
 	}
 
 	public CSSBuilderTest(String separator) {

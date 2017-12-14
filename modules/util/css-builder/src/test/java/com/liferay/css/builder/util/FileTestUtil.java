@@ -14,8 +14,6 @@
 
 package com.liferay.css.builder.util;
 
-import com.liferay.petra.string.StringPool;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -103,7 +101,7 @@ public class FileTestUtil {
 	public static String read(Path path) throws IOException {
 		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		return s.replace(StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+		return s.replace("\r\n", "\n");
 	}
 
 }

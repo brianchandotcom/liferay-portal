@@ -28,6 +28,7 @@ page import="com.liferay.portal.kernel.comment.DiscussionPermission" %><%@
 page import="com.liferay.portal.kernel.comment.WorkflowableComment" %><%@
 page import="com.liferay.portal.kernel.comment.display.context.CommentSectionDisplayContext" %><%@
 page import="com.liferay.portal.kernel.comment.display.context.CommentTreeDisplayContext" %><%@
+page import="com.liferay.portal.kernel.security.auth.AuthTokenUtil" %><%@
 page import="com.liferay.portal.kernel.service.ServiceContextFunction" %>
 
 <portlet:defineObjects />

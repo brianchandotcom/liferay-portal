@@ -107,7 +107,7 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 				s = s.substring(0, x);
 			}
 
-			if (s.contains("for (") || s.contains("while (") ||
+			if (_hasAppendCallInsideLoop(s, varName) ||
 				s.matches("(?s).*\\W" + varName + "([,)]|\\.index\\().*")) {
 
 				continue;
@@ -230,6 +230,49 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 			}
 
 			x = -1;
+		}
+	}
+
+	private boolean _hasAppendCallInsideLoop(String s, String varName) {
+		int x = -1;
+
+		while (true) {
+			int y = s.indexOf("\tfor (", x + 1);
+			int z = s.indexOf("\twhile (", x + 1);
+
+			if ((y == -1) ^ (z == -1)) {
+				x = Math.max(y, z);
+			}
+			else {
+				x = Math.min(y, z);
+			}
+
+			if (x == -1) {
+				return false;
+			}
+
+			y = x;
+
+			while (true) {
+				y = s.indexOf("}", y + 1);
+
+				if (y == -1) {
+					return true;
+				}
+
+				String insideLoop = s.substring(x, y + 1);
+
+				if (getLevel(insideLoop, "{", "}") != 0) {
+					continue;
+				}
+
+				if (insideLoop.contains(varName + ".append(")) {
+					return true;
+				}
+				else {
+					return false;
+				}
+			}
 		}
 	}
 

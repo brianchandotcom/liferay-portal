@@ -127,7 +127,6 @@ public abstract class BaseFormTag extends com.liferay.taglib.util.IncludeTag {
 		_portletNamespace = null;
 		_useNamespace = true;
 		_validateOnBlur = true;
-
 	}
 
 	@Override

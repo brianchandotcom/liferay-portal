@@ -119,7 +119,7 @@ public class CSSBuilder implements AutoCloseable {
 		}
 
 		if (_cssBuilderArgs.getIncludes() == null) {
-			_cssBuilderArgs.setIncludes("");
+			_cssBuilderArgs.setIncludes(StringPool.BLANK);
 		}
 
 		List<String> rtlExcludedPathRegexps =
@@ -436,7 +436,7 @@ public class CSSBuilder implements AutoCloseable {
 
 				String name = zipEntry.getName();
 
-				if (name.endsWith("/") ||
+				if (name.endsWith(StringPool.SLASH) ||
 					!name.startsWith("META-INF/resources/")) {
 
 					continue;

@@ -18,6 +18,7 @@ import com.liferay.css.builder.BaseCSSBuilderTestCase;
 import com.liferay.css.builder.internal.util.StringUtil;
 import com.liferay.css.builder.util.FileTestUtil;
 import com.liferay.maven.executor.MavenExecutor;
+import com.liferay.petra.string.StringPool;
 
 import java.io.IOException;
 
@@ -94,7 +95,7 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 
 	private static String _replace(String s, String key, String value) {
 		if (value == null) {
-			value = "";
+			value = StringPool.BLANK;
 		}
 
 		return s.replace(key, value);

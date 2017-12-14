@@ -150,7 +150,7 @@ public class CSSBuilder implements AutoCloseable {
 		File baseDir = _cssBuilderArgs.getBaseDir();
 
 		if (!baseDir.exists()) {
-			throw new Exception("Directory does not exist," + baseDir);
+			throw new IOException("Directory " + baseDir + " does not exist");
 		}
 
 		for (String dirName : _cssBuilderArgs.getIncludes()) {

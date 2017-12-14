@@ -5,4 +5,5 @@
 	<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ClassLoaderObjectInputStream\.java" />
 	<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/ProtectedObjectInputStream\.java" />
 	<suppress checks="JavaDeserializationSecurityCheck" files="modules/core/petra/petra-process/src/main/java/com/liferay/petra/process/local/LocalProcessLauncher\.java" />
+	<suppress checks="JavaStringBundlerInitialCapacityCheck" files="modules/core/petra/petra-string/src/test/java/com/liferay/petra/string/StringBundlerTest\.java" />
 </suppressions>

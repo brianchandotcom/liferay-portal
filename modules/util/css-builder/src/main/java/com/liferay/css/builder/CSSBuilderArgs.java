@@ -155,8 +155,8 @@ public class CSSBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
-		description = "The import directory of sass libraries.",
 		names = {"import-dir", "import-path"}
+		description = "The import directory of Sass libraries.",
 	)
 	private File _importDir;
 
@@ -185,7 +185,7 @@ public class CSSBuilderArgs {
 	private List<String> _rtlExcludedPathRegexps = new ArrayList<>();
 
 	@Parameter(
-		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". Ruby sass compiler requires com.liferay.sass.compiler.ruby.jar, ruby-gems, and jruby to be added to the classpath",
+		description = "The type of Sass compiler to use. Supported values are \"jni\" and \"ruby\". The Ruby Sass compiler requires \"com.liferay.sass.compiler.ruby.jar\", \"com.liferay.ruby.gems.jar\", and \"jruby-complete.jar\" to be added to the classpath.",
 		names = "compiler"
 	)
 	private String _sassCompilerClassName = "jni";

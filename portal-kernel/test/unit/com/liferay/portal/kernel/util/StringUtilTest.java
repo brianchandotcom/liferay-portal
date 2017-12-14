@@ -1073,6 +1073,16 @@ public class StringUtilTest {
 	}
 
 	@Test
+	public void testUnquote() {
+		Assert.assertEquals(
+			"Hello World", StringUtil.unquote("\"Hello World\""));
+
+		// String with single character
+
+		Assert.assertEquals("\"", StringUtil.unquote("\""));
+	}
+
+	@Test
 	public void testWildcardMatches() {
 
 		// Exact match in a case sensitive manner

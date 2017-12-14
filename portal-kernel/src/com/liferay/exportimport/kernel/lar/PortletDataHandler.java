@@ -255,7 +255,7 @@ public interface PortletDataHandler {
 	}
 
 	public default boolean isSupportsDataStrategyMirrorWithOverwriting() {
-		return true;
+		return false;
 	}
 
 	public void prepareManifestSummary(PortletDataContext portletDataContext)

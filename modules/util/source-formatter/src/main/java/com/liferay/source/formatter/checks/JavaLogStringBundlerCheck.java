@@ -33,6 +33,10 @@ public class JavaLogStringBundlerCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		Matcher matcher = _logPattern.matcher(content);
 
 		if (matcher.find()) {

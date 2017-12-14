@@ -180,6 +180,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.SizeIsZero">
 			<message key="method.use" value="Use method ''{0}'' instead" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.StringCastCheck">
+			<message key="string.cast.unneeded" value="No need to call ''.toString()'' on type String" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.Subname">
 			<message key="method.invalidName" value="'sub' should be followed by a lowercase character for method ''{0}''" />
 			<message key="parameter.invalidName" value="'sub' should be followed by a lowercase character for parameter ''{0}''" />

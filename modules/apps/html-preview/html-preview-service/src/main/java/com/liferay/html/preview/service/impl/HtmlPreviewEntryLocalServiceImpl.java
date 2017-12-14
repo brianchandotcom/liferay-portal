@@ -80,8 +80,10 @@ public class HtmlPreviewEntryLocalServiceImpl
 
 		htmlPreviewEntryPersistence.remove(htmlPreviewEntry);
 
-		PortletFileRepositoryUtil.deletePortletFileEntry(
-			htmlPreviewEntry.getFileEntryId());
+		if (htmlPreviewEntry.getFileEntryId() > 0) {
+			PortletFileRepositoryUtil.deletePortletFileEntry(
+				htmlPreviewEntry.getFileEntryId());
+		}
 
 		return htmlPreviewEntry;
 	}

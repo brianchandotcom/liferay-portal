@@ -25,6 +25,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -207,12 +208,12 @@ public class ChainingCheck extends BaseCheck {
 			}
 		}
 
-		String variableType = DetailASTUtil.getVariableType(
+		Set<String> variableTypeNames = DetailASTUtil.getVariableTypeNames(
 			detailAST, classOrVariableName);
 
-		if (variableType != null) {
+		for (String variableTypeName : variableTypeNames) {
 			for (String allowedVariableTypeName : _allowedVariableTypeNames) {
-				if (variableType.matches(allowedVariableTypeName)) {
+				if (variableTypeName.matches(allowedVariableTypeName)) {
 					return true;
 				}
 			}

@@ -21,7 +21,9 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -203,8 +205,10 @@ public class DetailASTUtil {
 		return typeIdent.getText();
 	}
 
-	public static String getVariableType(
+	public static Set<String> getVariableTypeNames(
 		DetailAST detailAST, String variableName) {
+
+		Set<String> variableTypeNames = new HashSet<>();
 
 		List<DetailAST> definitionASTList = new ArrayList<>();
 
@@ -235,14 +239,14 @@ public class DetailASTUtil {
 				nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
 
 				if (nameAST == null) {
-					return null;
+					return variableTypeNames;
 				}
 
-				return nameAST.getText();
+				variableTypeNames.add(nameAST.getText());
 			}
 		}
 
-		return null;
+		return variableTypeNames;
 	}
 
 	public static boolean hasParentWithTokenType(

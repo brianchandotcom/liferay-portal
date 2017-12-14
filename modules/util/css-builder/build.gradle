@@ -54,13 +54,13 @@ dependencies {
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.api", version: "2.0.1"
 	compileInclude group: "com.liferay", name: "com.liferay.sass.compiler.jni", version: "2.0.7"
 
+	compileOnly group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-core", version: "3.2.5"
+	compileOnly group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
+
 	mavenCompile group: "com.liferay", name: "com.liferay.frontend.css.common", version: "2.0.4"
 
 	mavenDistribution classifier: "bin", ext: "zip", group: "org.apache.maven", name: "apache-maven", version: "3.3.9"
-
-	provided group: "org.apache.maven", name: "maven-artifact", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-core", version: "3.2.5"
-	provided group: "org.apache.maven", name: "maven-plugin-api", version: "3.2.5"
 
 	testCompile group: "org.apache.ant", name: "ant-testutil", version: "1.9.7"
 	testCompile project(":test:maven-executor")

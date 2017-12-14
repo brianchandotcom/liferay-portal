@@ -213,12 +213,12 @@ public class DetailASTUtil {
 		List<DetailAST> definitionASTList = new ArrayList<>();
 
 		if (variableName.matches("_[a-z].*")) {
-			definitionASTList = DetailASTUtil.getAllChildTokens(
+			definitionASTList = getAllChildTokens(
 				_getClassAST(detailAST), true, TokenTypes.PARAMETER_DEF,
 				TokenTypes.VARIABLE_DEF);
 		}
 		else if (variableName.matches("[a-z].*")) {
-			definitionASTList = DetailASTUtil.getAllChildTokens(
+			definitionASTList = getAllChildTokens(
 				detailAST, true, TokenTypes.PARAMETER_DEF,
 				TokenTypes.VARIABLE_DEF);
 		}

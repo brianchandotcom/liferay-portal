@@ -200,6 +200,9 @@
 	<source-processor name="GroovySourceProcessor">
 		<check name="WhitespaceCheck" />
 	</source-processor>
+	<source-processor name="HTMLSourceProcessor">
+		<check name="WhitespaceCheck" />
+	</source-processor>
 	<source-processor name="JavaSourceProcessor">
 		<check name="CopyrightCheck">
 			<property name="copyrightFileName" value="copyright.txt" />

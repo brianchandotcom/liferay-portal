@@ -31,10 +31,6 @@ public class CSSBuilderArgs {
 
 	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;
 
-	public static final String BASE_DIR_NAME = "src";
-
-	public static final String INCLUDES = "/";
-
 	public static final String OUTPUT_DIR_NAME = "/";
 
 	public static final int PRECISION = 9;
@@ -141,7 +137,7 @@ public class CSSBuilderArgs {
 		description = "The base directory that contains the SCSS files to compile.",
 		names = "base-dir"
 	)
-	private File _baseDir = new File(BASE_DIR_NAME);
+	private File _baseDir;
 
 	@Parameter(
 		arity = 1,
@@ -166,7 +162,7 @@ public class CSSBuilderArgs {
 		description = "The name of the directories, relative to base directory, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
 		names = "includes"
 	)
-	private List<String> _includes = Arrays.asList(INCLUDES);
+	private List<String> _includes;
 
 	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",

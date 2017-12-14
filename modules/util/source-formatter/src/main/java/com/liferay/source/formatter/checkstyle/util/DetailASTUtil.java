@@ -203,6 +203,48 @@ public class DetailASTUtil {
 		return typeIdent.getText();
 	}
 
+	public static String getVariableType(
+		DetailAST detailAST, String variableName) {
+
+		List<DetailAST> definitionASTList = new ArrayList<>();
+
+		if (variableName.matches("_[a-z].*")) {
+			definitionASTList = DetailASTUtil.getAllChildTokens(
+				_getClassAST(detailAST), true, TokenTypes.PARAMETER_DEF,
+				TokenTypes.VARIABLE_DEF);
+		}
+		else if (variableName.matches("[a-z].*")) {
+			definitionASTList = DetailASTUtil.getAllChildTokens(
+				detailAST, true, TokenTypes.PARAMETER_DEF,
+				TokenTypes.VARIABLE_DEF);
+		}
+
+		for (DetailAST definitionAST : definitionASTList) {
+			DetailAST nameAST = definitionAST.findFirstToken(TokenTypes.IDENT);
+
+			if (nameAST == null) {
+				continue;
+			}
+
+			String name = nameAST.getText();
+
+			if (name.equals(variableName)) {
+				DetailAST typeAST = definitionAST.findFirstToken(
+					TokenTypes.TYPE);
+
+				nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
+
+				if (nameAST == null) {
+					return null;
+				}
+
+				return nameAST.getText();
+			}
+		}
+
+		return null;
+	}
+
 	public static boolean hasParentWithTokenType(
 		DetailAST detailAST, int... tokenTypes) {
 
@@ -299,6 +341,20 @@ public class DetailASTUtil {
 		}
 
 		return list;
+	}
+
+	private static DetailAST _getClassAST(DetailAST detailAST) {
+		DetailAST parentAST = detailAST.getParent();
+
+		while (true) {
+			if (parentAST.getParent() == null) {
+				break;
+			}
+
+			return parentAST.getParent();
+		}
+
+		return null;
 	}
 
 }

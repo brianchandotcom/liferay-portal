@@ -16,7 +16,6 @@ package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.petra.string.StringPool;
 
 import java.io.File;
 
@@ -71,7 +70,7 @@ public class BuildCSSMojo extends AbstractMojo {
 			if (_buildContext.isIncremental()) {
 				Scanner scanner = _buildContext.newScanner(_projectBaseDir);
 
-				String[] includes = {StringPool.BLANK, "**/*.scss"};
+				String[] includes = {"", "**/*.scss"};
 
 				scanner.setIncludes(includes);
 

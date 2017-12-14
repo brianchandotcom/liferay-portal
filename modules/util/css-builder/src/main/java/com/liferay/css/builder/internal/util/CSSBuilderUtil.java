@@ -14,10 +14,6 @@
 
 package com.liferay.css.builder.internal.util;
 
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringBundler;
-import com.liferay.petra.string.StringPool;
-
 import java.io.File;
 
 import java.util.Date;
@@ -33,7 +29,7 @@ import java.util.regex.Pattern;
 public class CSSBuilderUtil {
 
 	public static File getOutputFile(String fileName, String outputDirName) {
-		return getOutputFile(fileName, outputDirName, StringPool.BLANK);
+		return getOutputFile(fileName, outputDirName, "");
 	}
 
 	public static File getOutputFile(
@@ -45,24 +41,22 @@ public class CSSBuilderUtil {
 	public static String getOutputFileName(
 		String fileName, String outputDirName, String suffix) {
 
-		String cacheFileName = fileName.replace(
-			CharPool.BACK_SLASH, CharPool.SLASH);
+		String cacheFileName = fileName.replace('\\', '/');
 
-		int x = cacheFileName.lastIndexOf(CharPool.SLASH);
-		int y = cacheFileName.lastIndexOf(CharPool.PERIOD);
+		int x = cacheFileName.lastIndexOf('/');
+		int y = cacheFileName.lastIndexOf('.');
 
 		if (cacheFileName.endsWith(".scss")) {
 			cacheFileName = cacheFileName.substring(0, y + 1) + "css";
 		}
 
-		return StringBundler.concat(
-			cacheFileName.substring(0, x + 1), outputDirName,
-			cacheFileName.substring(x + 1, y), suffix,
-			cacheFileName.substring(y));
+		return cacheFileName.substring(0, x + 1) + outputDirName +
+			cacheFileName.substring(x + 1, y) + suffix +
+				cacheFileName.substring(y);
 	}
 
 	public static String getRtlCustomFileName(String fileName) {
-		int pos = fileName.lastIndexOf(CharPool.PERIOD);
+		int pos = fileName.lastIndexOf('.');
 
 		return fileName.substring(0, pos) + "_rtl" + fileName.substring(pos);
 	}

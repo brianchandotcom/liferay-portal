@@ -25,6 +25,7 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -162,60 +163,6 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
-	private DetailAST _getClassAST(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
-
-		while (true) {
-			if (parentAST.getParent() == null) {
-				break;
-			}
-
-			return parentAST.getParent();
-		}
-
-		return null;
-	}
-
-	private String _getVariableType(DetailAST detailAST, String variableName) {
-		List<DetailAST> definitionASTList = new ArrayList<>();
-
-		if (variableName.matches("_[a-z].*")) {
-			definitionASTList = DetailASTUtil.getAllChildTokens(
-				_getClassAST(detailAST), true, TokenTypes.PARAMETER_DEF,
-				TokenTypes.VARIABLE_DEF);
-		}
-		else if (variableName.matches("[a-z].*")) {
-			definitionASTList = DetailASTUtil.getAllChildTokens(
-				detailAST, true, TokenTypes.PARAMETER_DEF,
-				TokenTypes.VARIABLE_DEF);
-		}
-
-		for (DetailAST definitionAST : definitionASTList) {
-			DetailAST nameAST = definitionAST.findFirstToken(TokenTypes.IDENT);
-
-			if (nameAST == null) {
-				continue;
-			}
-
-			String name = nameAST.getText();
-
-			if (name.equals(variableName)) {
-				DetailAST typeAST = definitionAST.findFirstToken(
-					TokenTypes.TYPE);
-
-				nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
-
-				if (nameAST == null) {
-					return null;
-				}
-
-				return nameAST.getText();
-			}
-		}
-
-		return null;
-	}
-
 	private boolean _isAllowedChainingMethodCall(
 		DetailAST detailAST, DetailAST methodCallAST,
 		List<String> chainedMethodNames) {
@@ -261,11 +208,12 @@ public class ChainingCheck extends BaseCheck {
 			}
 		}
 
-		String variableType = _getVariableType(detailAST, classOrVariableName);
+		Set<String> variableTypeNames = DetailASTUtil.getVariableTypeNames(
+			detailAST, classOrVariableName);
 
-		if (variableType != null) {
+		for (String variableTypeName : variableTypeNames) {
 			for (String allowedVariableTypeName : _allowedVariableTypeNames) {
-				if (variableType.matches(allowedVariableTypeName)) {
+				if (variableTypeName.matches(allowedVariableTypeName)) {
 					return true;
 				}
 			}

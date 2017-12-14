@@ -185,7 +185,7 @@ public class WikiSocialActivityHelper {
 					false);
 			}
 			else if (type == WikiActivityKeys.ADD_PAGE) {
-				String titleLink = getLink(page.getTitle(), pageURL.toString());
+				String titleLink = getLink(page.getTitle(), pageURL);
 
 				return LanguageUtil.format(
 					resourceBundle, "x-added-the-page-x",

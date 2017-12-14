@@ -108,8 +108,7 @@ public class XugglerImpl implements Xuggler {
 		}
 		finally {
 			Log4JUtil.setLevel(
-				JNILibraryLoader.class.getName(), originalLevel.toString(),
-				false);
+				JNILibraryLoader.class.getName(), originalLevel, false);
 		}
 
 		return _nativeLibraryInstalled;

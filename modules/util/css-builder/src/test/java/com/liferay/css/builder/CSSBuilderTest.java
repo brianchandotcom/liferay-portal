@@ -43,9 +43,10 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			String dirName, Path docrootDirPath, boolean generateSourceMap,
-			String outputDirName, Path portalCommonPath, int precision,
-			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
+			Path docrootDirPath, boolean generateSourceMap,
+			Path portalCommonPath, String dirName, String outputDirName,
+			int precision, String[] rtlExcludedPathRegexps,
+			String sassCompilerClassName)
 		throws Exception {
 
 		List<String> args = new ArrayList<>();

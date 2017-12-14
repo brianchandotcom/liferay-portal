@@ -60,6 +60,43 @@ public class StringUtil {
 		return s.replace(oldSub, newSub);
 	}
 
+	public static String replace(String s, char oldSub, String newSub) {
+		if ((s == null) || (newSub == null)) {
+			return null;
+		}
+
+		int index = s.indexOf(oldSub);
+
+		if (index == -1) {
+			return s;
+		}
+
+		int previousIndex = index;
+
+		StringBundler sb = new StringBundler();
+
+		if (previousIndex != 0) {
+			sb.append(s.substring(0, previousIndex));
+		}
+
+		sb.append(newSub);
+
+		while ((index = s.indexOf(oldSub, previousIndex + 1)) != -1) {
+			sb.append(s.substring(previousIndex + 1, index));
+			sb.append(newSub);
+
+			previousIndex = index;
+		}
+
+		index = previousIndex + 1;
+
+		if (index < s.length()) {
+			sb.append(s.substring(index));
+		}
+
+		return sb.toString();
+	}
+
 	public static String replace(String s, String oldSub, String newSub) {
 		return replace(s, oldSub, newSub, 0);
 	}

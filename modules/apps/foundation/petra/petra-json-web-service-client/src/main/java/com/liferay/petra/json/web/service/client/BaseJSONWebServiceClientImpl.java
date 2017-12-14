@@ -436,7 +436,7 @@ public abstract class BaseJSONWebServiceClientImpl
 
 		addHeaders(httpPost, headers);
 
-		StringEntity stringEntity = new StringEntity(json.toString(), _CHARSET);
+		StringEntity stringEntity = new StringEntity(json, _CHARSET);
 
 		stringEntity.setContentType("application/json");
 

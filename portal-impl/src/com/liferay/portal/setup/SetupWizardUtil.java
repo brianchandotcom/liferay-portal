@@ -18,6 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.events.EventsProcessorUtil;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
 import com.liferay.portal.kernel.dao.jdbc.DataSourceFactoryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -105,7 +106,8 @@ public class SetupWizardUtil {
 	}
 
 	public static void updateLanguage(
-		HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request, HttpServletResponse response)
+		throws PortalException {
 
 		String languageId = ParamUtil.getString(
 			request, "companyLocale", getDefaultLanguageId());
@@ -115,6 +117,9 @@ public class SetupWizardUtil {
 		if (!LanguageUtil.isAvailableLocale(locale)) {
 			return;
 		}
+
+		CompanyLocalServiceUtil.updateDisplay(
+			PortalInstances.getDefaultCompanyId(), languageId, StringPool.UTC);
 
 		HttpSession session = request.getSession();
 

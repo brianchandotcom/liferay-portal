@@ -178,16 +178,46 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 <c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
 	<portlet:renderURL var="addSiteNavigationMenuURL">
-		<portlet:param name="mvcPath" value="/add_site_navigation_menu.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
+		<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addSiteNavigationMenuURL %>" />
+		<liferay-frontend:add-menu-item id="addNavigationMenuMenuItem" title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addSiteNavigationMenuURL %>" />
 	</liferay-frontend:add-menu>
 </c:if>
 
-<aui:script sandbox="<%= true %>">
+<portlet:actionURL name="/navigation_menu/add_site_navigation_menu" var="addSiteNavigationMenuURL">
+	<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</portlet:actionURL>
+
+<aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
+	function handleAddNavigationMenuMenuItemClick(event) {
+		event.preventDefault();
+
+		Liferay.Util.openSimpleInputModal(
+			{
+				dialogTitle: '<liferay-ui:message key="add-menu" />',
+				formSubmitURL: '<%= addSiteNavigationMenuURL.toString() %>',
+				mainFieldLabel: '<liferay-ui:message key="name" />',
+				mainFieldName: 'name',
+				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+				namespace: '<portlet:namespace />',
+				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+			}
+		);
+	}
+
+	function handleDestroyPortlet() {
+		addNavigationMenuMenuItem.removeEventListener('click', handleAddNavigationMenuMenuItemClick);
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	var addNavigationMenuMenuItem = document.getElementById('<portlet:namespace />addNavigationMenuMenuItem');
+
+	addNavigationMenuMenuItem.addEventListener('click', handleAddNavigationMenuMenuItemClick);
+
 	$('#<portlet:namespace />deleteSelectedSiteNavigationMenus').on(
 		'click',
 		function() {
@@ -196,4 +226,6 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			}
 		}
 	);
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

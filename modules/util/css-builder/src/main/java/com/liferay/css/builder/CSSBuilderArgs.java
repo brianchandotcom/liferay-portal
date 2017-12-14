@@ -17,6 +17,8 @@ package com.liferay.css.builder;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+import com.liferay.petra.string.StringPool;
+
 import java.io.File;
 
 import java.util.ArrayList;
@@ -31,7 +33,7 @@ public class CSSBuilderArgs {
 
 	public static final boolean APPEND_CSS_IMPORT_TIMESTAMPS = true;
 
-	public static final String OUTPUT_DIR_NAME = "/";
+	public static final String OUTPUT_DIR_NAME = StringPool.SLASH;
 
 	public static final int PRECISION = 9;
 
@@ -123,7 +125,7 @@ public class CSSBuilderArgs {
 	}
 
 	private String[] _split(String s) {
-		return s.split(",");
+		return s.split(StringPool.COMMA);
 	}
 
 	@Parameter(

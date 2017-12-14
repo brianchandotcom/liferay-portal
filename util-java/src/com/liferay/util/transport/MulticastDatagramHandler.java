@@ -72,7 +72,7 @@ public class MulticastDatagramHandler implements DatagramHandler {
 		sb.append(new String(bytes));
 
 		if (_log.isInfoEnabled()) {
-			_log.info(sb);
+			_log.info(sb.toString());
 		}
 	}
 

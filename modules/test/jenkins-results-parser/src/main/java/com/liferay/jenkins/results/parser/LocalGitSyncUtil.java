@@ -161,7 +161,9 @@ public class LocalGitSyncUtil {
 		GitWorkingDirectory.Branch localUpstreamBranch =
 			updateLocalUpstreamBranch(gitWorkingDirectory, upstreamBranchSHA);
 
-		gitWorkingDirectory.checkoutBranch(localUpstreamBranch);
+		if (localUpstreamBranch != null) {
+			gitWorkingDirectory.checkoutBranch(localUpstreamBranch);
+		}
 	}
 
 	protected static void copyUpstreamRefsToHeads(
@@ -539,7 +541,9 @@ public class LocalGitSyncUtil {
 			originalBranch = gitWorkingDirectory.getBranch(
 				gitWorkingDirectory.getUpstreamBranchName(), null);
 
-			gitWorkingDirectory.checkoutBranch(originalBranch);
+			if (originalBranch != null) {
+				gitWorkingDirectory.checkoutBranch(originalBranch);
+			}
 		}
 
 		System.out.println(
@@ -791,7 +795,8 @@ public class LocalGitSyncUtil {
 					updated = true;
 				}
 				finally {
-					if (gitWorkingDirectory.branchExists(
+					if ((currentBranch != null) &&
+						gitWorkingDirectory.branchExists(
 							currentBranch.getName(), null)) {
 
 						gitWorkingDirectory.checkoutBranch(currentBranch);

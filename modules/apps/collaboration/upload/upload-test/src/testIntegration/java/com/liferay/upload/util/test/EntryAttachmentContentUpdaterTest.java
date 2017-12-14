@@ -262,7 +262,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 	@Test
 	public void testUpdateContentWitImgTag() throws Exception {
-		StringBundler sb = new StringBundler(4);
+		StringBundler sb = new StringBundler(2);
 
 		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
 		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");

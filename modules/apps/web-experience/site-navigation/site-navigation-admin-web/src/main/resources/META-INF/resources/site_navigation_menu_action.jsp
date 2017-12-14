@@ -38,6 +38,27 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		/>
 	</c:if>
 
+	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.UPDATE) %>">
+		<portlet:actionURL name="/navigation_menu/update_site_navigation_menu" var="updateSiteNavigationMenuURL">
+			<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+		</portlet:actionURL>
+
+		<%
+		Map<String, Object> updateSiteNavigationMenuData = new HashMap<String, Object>();
+
+		updateSiteNavigationMenuData.put("form-submit-url", updateSiteNavigationMenuURL.toString());
+		updateSiteNavigationMenuData.put("id-field-value", siteNavigationMenu.getSiteNavigationMenuId());
+		updateSiteNavigationMenuData.put("main-field-value", siteNavigationMenu.getName());
+		%>
+
+		<liferay-ui:icon
+			cssClass='<%= renderResponse.getNamespace() + "update-site-navigation-menu-action-option" %>'
+			data="<%= updateSiteNavigationMenuData %>"
+			message="rename"
+			url="javascript:;"
+		/>
+	</c:if>
+
 	<c:if test="<%= SiteNavigationMenuPermission.contains(permissionChecker, siteNavigationMenu, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= SiteNavigationMenu.class.getName() %>"

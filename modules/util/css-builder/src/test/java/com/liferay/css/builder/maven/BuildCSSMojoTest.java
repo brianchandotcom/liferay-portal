@@ -15,8 +15,8 @@
 package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
-import com.liferay.css.builder.internal.util.StringUtil;
 import com.liferay.css.builder.util.FileTestUtil;
+import com.liferay.css.builder.util.StringTestUtil;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.petra.string.StringPool;
 
@@ -83,7 +83,7 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 			content, "[$CSS_BUILDER_PRECISION$]", String.valueOf(precision));
 		content = _replace(
 			content, "[$CSS_BUILDER_RTL_EXCLUDED_PATH_REGEXPS$]",
-			StringUtil.merge(rtlExcludedPathRegexps));
+			StringTestUtil.merge(rtlExcludedPathRegexps));
 		content = _replace(
 			content, "[$CSS_BUILDER_SASS_COMPILER_CLASS_NAME$]",
 			sassCompilerClassName);

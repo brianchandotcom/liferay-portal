@@ -152,9 +152,15 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		return updateFragmentEntry(
-			fragmentEntryId, name, fragmentEntry.getCss(),
-			fragmentEntry.getHtml(), fragmentEntry.getJs());
+		if (Objects.equals(fragmentEntry.getName(), name)) {
+			return fragmentEntry;
+		}
+
+		validate(fragmentEntry.getGroupId(), name);
+
+		fragmentEntry.setName(name);
+
+		return fragmentEntryPersistence.update(fragmentEntry);
 	}
 
 	@Override

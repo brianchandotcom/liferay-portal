@@ -14,8 +14,6 @@
 
 package com.liferay.css.builder;
 
-import com.liferay.css.builder.internal.util.StringUtil;
-
 /**
  * @author Brian Wing Shun Chan
  * @author Raymond Augé
@@ -29,18 +27,19 @@ public class CSSBuilderUtil
 	extends com.liferay.css.builder.internal.util.CSSBuilderUtil {
 
 	public static String parseStaticTokens(String content) {
-		return StringUtil.replace(
-			content,
-			new String[] {
-				"@model_hints_constants_text_display_height@",
-				"@model_hints_constants_text_display_width@",
-				"@model_hints_constants_textarea_display_height@",
-				"@model_hints_constants_textarea_display_width@"
-			},
-			new String[] {
-				_TEXT_DISPLAY_HEIGHT, _TEXT_DISPLAY_WIDTH,
-				_TEXTAREA_DISPLAY_HEIGHT, _TEXTAREA_DISPLAY_WIDTH
-			});
+		content = content.replace(
+			"@model_hints_constants_text_display_height@",
+			_TEXT_DISPLAY_HEIGHT);
+		content = content.replace(
+			"@model_hints_constants_text_display_width@", _TEXT_DISPLAY_WIDTH);
+		content = content.replace(
+			"@model_hints_constants_textarea_display_height@",
+			_TEXTAREA_DISPLAY_HEIGHT);
+		content = content.replace(
+			"@model_hints_constants_textarea_display_width@",
+			_TEXTAREA_DISPLAY_WIDTH);
+
+		return content;
 	}
 
 	private static final String _TEXT_DISPLAY_HEIGHT = "15";

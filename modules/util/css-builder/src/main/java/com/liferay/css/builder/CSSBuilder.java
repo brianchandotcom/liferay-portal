@@ -19,7 +19,7 @@ import com.beust.jcommander.ParameterException;
 
 import com.liferay.css.builder.internal.util.CSSBuilderUtil;
 import com.liferay.css.builder.internal.util.FileUtil;
-import com.liferay.css.builder.internal.util.StringUtil;
+import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.rtl.css.RTLCSSConverter;
@@ -360,10 +360,10 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String _normalizeFileName(String dirName, String fileName) {
-		fileName = StringUtil.replace(
-			dirName + StringPool.SLASH + fileName,
-			new String[] {StringPool.BACK_SLASH, StringPool.DOUBLE_SLASH},
-			new String[] {StringPool.SLASH, StringPool.SLASH});
+		fileName = dirName + StringPool.SLASH + fileName;
+
+		fileName = fileName.replace(CharPool.BACK_SLASH, CharPool.SLASH);
+		fileName = fileName.replace(StringPool.DOUBLE_SLASH, StringPool.SLASH);
 
 		return fileName;
 	}

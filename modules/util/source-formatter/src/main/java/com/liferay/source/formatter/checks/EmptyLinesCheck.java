@@ -308,137 +308,112 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		return content;
 	}
 
-	protected String fixMissingEmptyLines(String content) {
-		outerLoop:
-		while (true) {
-			Matcher matcher = _missingEmptyLinePattern1.matcher(content);
+	protected String fixMissingEmptyLines(String absolutePath, String content) {
+		Matcher matcher = _missingEmptyLinePattern1.matcher(content);
 
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start()) &&
+				(getLevel(matcher.group()) == 0)) {
 
-				if (getLevel(matcher.group()) == 0) {
-					content = StringUtil.replaceFirst(
-						content, "\n", "\n\n", matcher.start());
-
-					continue outerLoop;
-				}
-			}
-
-			matcher = _missingEmptyLinePattern2.matcher(content);
-
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
-
-				String match = matcher.group();
-
-				if (!match.contains(StringPool.OPEN_PARENTHESIS)) {
-					continue;
-				}
-
-				String whitespace = matcher.group(1);
-
-				int x = content.indexOf(
-					whitespace + StringPool.CLOSE_CURLY_BRACE + "\n",
-					matcher.end());
-				int y = content.indexOf(
-					whitespace + StringPool.CLOSE_CURLY_BRACE + "\n\n",
-					matcher.end());
-
-				if ((x != -1) && (x != y)) {
-					content = StringUtil.replaceFirst(
-						content, "\n", "\n\n", x + 1);
-
-					continue outerLoop;
-				}
-			}
-
-			matcher = _missingEmptyLinePattern3.matcher(content);
-
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
-
-				if ((getLevel(matcher.group()) != 0) &&
-					(content.charAt(matcher.end()) != CharPool.NEW_LINE)) {
-
-					content = StringUtil.replaceFirst(
-						content, "\n", "\n\n", matcher.end() - 1);
-
-					continue outerLoop;
-				}
-			}
-
-			matcher = _missingEmptyLinePattern4.matcher(content);
-
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
-
-				content = StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.start() + 1);
-
-				continue outerLoop;
-			}
-
-			matcher = _missingEmptyLinePattern5.matcher(content);
-
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
-
-				content = StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.start() + 1);
-
-				continue outerLoop;
-			}
-
-			matcher = _missingEmptyLinePattern6.matcher(content);
-
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
-
-				content = StringUtil.replaceFirst(
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
+			}
+		}
 
-				continue outerLoop;
+		matcher = _missingEmptyLinePattern2.matcher(content);
+
+		while (matcher.find()) {
+			if (!isJavaSource(content, matcher.start())) {
+				continue;
 			}
 
-			matcher = _missingEmptyLinePattern7.matcher(content);
+			String match = matcher.group();
 
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
+			if (!match.contains(StringPool.OPEN_PARENTHESIS)) {
+				continue;
+			}
 
-				content = StringUtil.replaceFirst(
+			String whitespace = matcher.group(1);
+
+			int x = content.indexOf(
+				whitespace + StringPool.CLOSE_CURLY_BRACE + "\n",
+				matcher.end());
+			int y = content.indexOf(
+				whitespace + StringPool.CLOSE_CURLY_BRACE + "\n\n",
+				matcher.end());
+
+			if ((x != -1) && (x != y)) {
+				return StringUtil.replaceFirst(content, "\n", "\n\n", x + 1);
+			}
+		}
+
+		matcher = _missingEmptyLinePattern3.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start()) &&
+				(getLevel(matcher.group(1)) != 0)) {
+
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.end(1));
+			}
+		}
+
+		matcher = _missingEmptyLinePattern4.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start() + 1);
-
-				continue outerLoop;
 			}
+		}
 
-			matcher = _missingEmptyLinePattern8.matcher(content);
+		matcher = _missingEmptyLinePattern5.matcher(content);
 
-			while (matcher.find()) {
-				if (!isJavaSource(content, matcher.start())) {
-					continue;
-				}
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+			}
+		}
 
-				content = StringUtil.replaceFirst(
+		matcher = _missingEmptyLinePattern6.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
-
-				continue outerLoop;
 			}
+		}
 
-			break;
+		matcher = _missingEmptyLinePattern7.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+			}
+		}
+
+		matcher = _missingEmptyLinePattern8.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+			}
+		}
+
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
+		matcher = _missingEmptyLinePattern9.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+			}
 		}
 
 		return content;
@@ -564,7 +539,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	private final Pattern _missingEmptyLinePattern2 = Pattern.compile(
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
-		"\n.*\\) \\{\n");
+		"\n(.*\\) \\{)\n[\t ]*[^ \n\t\\}]");
 	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
 		"\n\t*// .*\n[\t ]*(?!// )\\S");
 	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(
@@ -576,6 +551,8 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			"\\S");
 	private final Pattern _missingEmptyLinePattern8 = Pattern.compile(
 		"[^:\\{\\s]\n\t*return ");
+	private final Pattern _missingEmptyLinePattern9 = Pattern.compile(
+		"[^\\{\\s]\n\t*break;");
 	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
 		"\n(.*)\n\npublic ((abstract|static) )*(class|enum|interface) ");
 	private final Pattern _redundantEmptyLinePattern2 = Pattern.compile(

@@ -193,6 +193,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 
 				if (isDateField(ddmForm, selectedFieldName)) {
 					transformDateFieldValue(portletPreferences);
+
 					break;
 				}
 			}

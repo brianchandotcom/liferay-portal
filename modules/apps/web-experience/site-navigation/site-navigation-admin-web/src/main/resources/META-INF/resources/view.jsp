@@ -208,8 +208,35 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		);
 	}
 
+	var updateSiteNavigationMenuMenuItemClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />update-site-navigation-menu-action-option > a',
+		function(event) {
+			var data = event.delegateTarget.dataset;
+
+			event.preventDefault();
+
+			Liferay.Util.openSimpleInputModal(
+				{
+					dialogTitle: '<%= LanguageUtil.get(request, "rename-site-navigation-menu") %>',
+					formSubmitURL: data.formSubmitUrl,
+					idFieldName: 'id',
+					idFieldValue: data.idFieldValue,
+					mainFieldLabel: '<liferay-ui:message key="name" />',
+					mainFieldName: 'name',
+					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+					mainFieldValue: data.mainFieldValue,
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+	);
+
 	function handleDestroyPortlet() {
 		addNavigationMenuMenuItem.removeEventListener('click', handleAddNavigationMenuMenuItemClick);
+		updateSiteNavigationMenuMenuItemClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}

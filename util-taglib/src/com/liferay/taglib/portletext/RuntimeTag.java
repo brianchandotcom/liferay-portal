@@ -50,6 +50,7 @@ import com.liferay.taglib.DirectTag;
 import com.liferay.taglib.servlet.PipingServletResponse;
 import com.liferay.taglib.util.PortalIncludeUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Stack;
@@ -166,6 +167,15 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 			}
 		}
 
+		HttpServletRequest originalRequest =
+			PortalUtil.getOriginalServletRequest(request);
+
+		RestrictPortletServletRequest restrictPortletServletRequest =
+			new RestrictPortletServletRequest(originalRequest);
+
+		Map<String, String[]> parameterMap = new HashMap<>(
+			request.getParameterMap());
+
 		String portletInstanceKey = portletName;
 
 		if (Validator.isNotNull(instanceId)) {
@@ -174,21 +184,23 @@ public class RuntimeTag extends TagSupport implements DirectTag {
 				PortletIdCodec.decodeUserId(portletName), instanceId);
 		}
 
-		RestrictPortletServletRequest restrictPortletServletRequest =
-			new RestrictPortletServletRequest(
-				PortalUtil.getOriginalServletRequest(request));
-
-		queryString = PortletParameterUtil.addNamespace(
-			portletInstanceKey, queryString);
-
-		Map<String, String[]> parameterMap = request.getParameterMap();
-
 		if (!Objects.equals(
 				portletInstanceKey, request.getParameter("p_p_id"))) {
 
 			parameterMap = MapUtil.filterByKeys(
 				parameterMap, key -> !key.startsWith("p_p_"));
 		}
+
+		String portletNamespace = PortalUtil.getPortletNamespace(
+			portletInstanceKey);
+
+		parameterMap.putAll(
+			MapUtil.filterByKeys(
+				originalRequest.getParameterMap(),
+				key -> key.startsWith(portletNamespace)));
+
+		queryString = PortletParameterUtil.addNamespace(
+			portletInstanceKey, queryString);
 
 		request = DynamicServletRequest.addQueryString(
 			restrictPortletServletRequest, parameterMap, queryString, false);

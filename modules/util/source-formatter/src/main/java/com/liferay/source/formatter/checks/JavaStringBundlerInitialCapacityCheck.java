@@ -119,15 +119,15 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 				continue;
 			}
 
-			int sbInitialCapacity = GetterUtil.getInteger(matcher.group(4));
+			int sbInitialCapacity = GetterUtil.getInteger(matcher.group(5));
 
 			if ((sbInitialCapacity > count) ||
 				((sbInitialCapacity != count) &&
 				 !s.contains(varName + ".setIndex"))) {
 
 				return StringUtil.replaceFirst(
-					content, String.valueOf(sbInitialCapacity),
-					String.valueOf(count), matcher.start());
+					content, matcher.group(4), "(" + String.valueOf(count),
+					matcher.start());
 			}
 		}
 
@@ -266,6 +266,7 @@ public class JavaStringBundlerInitialCapacityCheck extends BaseJavaTermCheck {
 	private final Pattern _loopPattern = Pattern.compile(
 		"\t(do \\{|(for|while) \\()");
 	private final Pattern _stringBundlerPattern = Pattern.compile(
-		"\n(\t+)(StringBundler )?(\\w+) = new StringBundler\\(([0-9]+)\\);\n");
+		"\n(\t+)(StringBundler )?(\\w+) = new StringBundler(\\(([0-9]+)?)\\)" +
+			";\n");
 
 }

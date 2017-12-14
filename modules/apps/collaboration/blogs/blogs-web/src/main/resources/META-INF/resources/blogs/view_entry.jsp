@@ -224,7 +224,14 @@ if (portletTitleBasedNavigation) {
 <%
 PortalUtil.setPageTitle(BlogsEntryUtil.getDisplayTitle(resourceBundle, entry), request);
 PortalUtil.setPageSubtitle(entry.getSubtitle(), request);
-PortalUtil.setPageDescription(entry.getDescription(), request);
+
+String description = entry.getDescription();
+
+if (Validator.isNull(description)) {
+	description = HtmlUtil.stripHtml(StringUtil.shorten(entry.getContent(), pageAbstractLength));
+}
+
+PortalUtil.setPageDescription(description, request);
 
 List<AssetTag> assetTags = AssetTagLocalServiceUtil.getTags(BlogsEntry.class.getName(), entry.getEntryId());
 

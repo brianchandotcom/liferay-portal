@@ -357,7 +357,7 @@
 			<var name="wikiNodeName" value="Main" />
 		</execute>
 
-		<for list="Child Page Title,Child Page Title Rename, Child Page Title Rename 1" param="wikiPageTitle">
+		<for list="Child Page Title,Child Page Title Rename,Child Page Title Rename 1" param="wikiPageTitle">
 			<execute macro="LexiconEntry#viewEntryName">
 				<var name="rowEntry" value="${wikiPageTitle}" />
 			</execute>

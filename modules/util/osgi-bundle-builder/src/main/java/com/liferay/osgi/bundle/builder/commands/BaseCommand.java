@@ -99,10 +99,6 @@ public abstract class BaseCommand implements Command {
 
 			Jar jar = builder.build();
 
-			File outputDir = osgiBundleBuilderArgs.getOutputDir();
-
-			outputDir.mkdirs();
-
 			writeOutput(jar, osgiBundleBuilderArgs);
 		}
 	}

@@ -23,12 +23,11 @@ import aQute.lib.io.IO;
 import com.beust.jcommander.Parameters;
 
 import com.liferay.osgi.bundle.builder.OSGiBundleBuilderArgs;
+import com.liferay.osgi.bundle.builder.internal.util.FileUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
-
-import java.nio.file.Files;
 
 import java.util.Map;
 
@@ -48,10 +47,9 @@ public class ExplodedJarCommand extends BaseCommand {
 
 		long lastModified = jar.lastModified();
 
-		File outputDir = new File(
-			osgiBundleBuilderArgs.getOutputDir(), jar.getName());
+		File outputDir = osgiBundleBuilderArgs.getOutputFile();
 
-		Files.createDirectories(outputDir.toPath());
+		FileUtil.createDirectories(outputDir);
 
 		Map<String, Resource> resources = jar.getResources();
 
@@ -71,9 +69,7 @@ public class ExplodedJarCommand extends BaseCommand {
 			if (!outputFile.exists() ||
 				(outputFile.lastModified() < lastModified)) {
 
-				File dir = outputFile.getParentFile();
-
-				Files.createDirectories(dir.toPath());
+				FileUtil.createDirectories(outputFile.getParentFile());
 
 				try (OutputStream outputStream = new FileOutputStream(
 						outputFile)) {
@@ -85,7 +81,7 @@ public class ExplodedJarCommand extends BaseCommand {
 
 		File manifestDir = new File(outputDir, "META-INF");
 
-		Files.createDirectories(manifestDir.toPath());
+		FileUtil.createDirectories(manifestDir);
 
 		File manifestFile = new File(manifestDir, "MANIFEST.MF");
 

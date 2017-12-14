@@ -60,10 +60,10 @@ public class OSGiBundleBuilderCommandTest {
 	public void testExplodedJarCommand() throws Exception {
 		ExplodedJarCommand explodedJarCommand = new ExplodedJarCommand();
 
-		explodedJarCommand.build(_getOSGiBundleBuilderArgs());
-
 		File actualDir = new File(
 			_projectDir, "build/com.liferay.blade.authenticator.shiro");
+
+		explodedJarCommand.build(_getOSGiBundleBuilderArgs(actualDir));
 
 		Assert.assertTrue(actualDir.isDirectory());
 
@@ -74,10 +74,10 @@ public class OSGiBundleBuilderCommandTest {
 	public void testJarCommand() throws Exception {
 		JarCommand jarCommand = new JarCommand();
 
-		jarCommand.build(_getOSGiBundleBuilderArgs());
-
 		File jarFile = new File(
 			_projectDir, "build/com.liferay.blade.authenticator.shiro.jar");
+
+		jarCommand.build(_getOSGiBundleBuilderArgs(jarFile));
 
 		Assert.assertTrue(jarFile.exists());
 
@@ -92,9 +92,9 @@ public class OSGiBundleBuilderCommandTest {
 	public void testManifestCommand() throws Exception {
 		ManifestCommand manifestCommand = new ManifestCommand();
 
-		manifestCommand.build(_getOSGiBundleBuilderArgs());
-
 		File actualFile = new File(_projectDir, "build/MANIFEST.MF");
+
+		manifestCommand.build(_getOSGiBundleBuilderArgs(actualFile));
 
 		Assert.assertTrue(actualFile.exists());
 
@@ -198,7 +198,7 @@ public class OSGiBundleBuilderCommandTest {
 		}
 	}
 
-	private OSGiBundleBuilderArgs _getOSGiBundleBuilderArgs() {
+	private OSGiBundleBuilderArgs _getOSGiBundleBuilderArgs(File outputFile) {
 		OSGiBundleBuilderArgs osgiBundleBuilderArgs =
 			new OSGiBundleBuilderArgs();
 
@@ -212,7 +212,7 @@ public class OSGiBundleBuilderCommandTest {
 					_projectDir,
 					"org.osgi.service.component.annotations-1.3.0.jar"),
 				new File(_projectDir, "shiro-core-1.1.0.jar")));
-		osgiBundleBuilderArgs.setOutputDir(new File(_projectDir, "build"));
+		osgiBundleBuilderArgs.setOutputFile(outputFile);
 		osgiBundleBuilderArgs.setResourcesDir(
 			new File(_projectDir, "resources"));
 

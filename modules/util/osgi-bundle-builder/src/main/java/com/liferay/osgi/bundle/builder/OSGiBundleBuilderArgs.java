@@ -24,6 +24,7 @@ import java.util.List;
 
 /**
  * @author David Truong
+ * @author Andrea Di Giorgi
  */
 public class OSGiBundleBuilderArgs {
 
@@ -43,16 +44,12 @@ public class OSGiBundleBuilderArgs {
 		return _classpath;
 	}
 
-	public File getOutputDir() {
-		return _outputDir;
+	public File getOutputFile() {
+		return _outputFile;
 	}
 
 	public File getResourcesDir() {
 		return _resourcesDir;
-	}
-
-	public boolean isHelp() {
-		return _help;
 	}
 
 	public void setBaseDir(File baseDir) {
@@ -71,23 +68,20 @@ public class OSGiBundleBuilderArgs {
 		_classpath = classpath;
 	}
 
-	public void setHelp(boolean help) {
-		_help = help;
-	}
-
-	public void setOutputDir(File outputDir) {
-		_outputDir = outputDir;
+	public void setOutputFile(File outputFile) {
+		_outputFile = outputFile;
 	}
 
 	public void setResourcesDir(File resourcesDir) {
 		_resourcesDir = resourcesDir;
 	}
 
-	@Parameter(
-		description = "The base directory.", names = {"--base-dir"},
-		required = true
-	)
-	private File _baseDir;
+	protected boolean isHelp() {
+		return _help;
+	}
+
+	@Parameter(description = "The base directory.", names = {"--base-dir"})
+	private File _baseDir = new File(System.getProperty("user.dir"));
 
 	@Parameter(
 		description = "The location of the Bnd file.", names = {"--bnd-file"},
@@ -96,7 +90,7 @@ public class OSGiBundleBuilderArgs {
 	private File _bndFile;
 
 	@Parameter(
-		description = "The directory which contains the class files.",
+		description = "The directory or JAR file which contains the class files.",
 		names = {"--classes-dir"}
 	)
 	private File _classesDir;
@@ -114,13 +108,13 @@ public class OSGiBundleBuilderArgs {
 	private boolean _help;
 
 	@Parameter(
-		description = "The output directory.", names = {"-o", "--output-dir"},
+		description = "The output path.", names = {"-o", "--output"},
 		required = true
 	)
-	private File _outputDir;
+	private File _outputFile;
 
 	@Parameter(
-		description = "The directory that contains the processed resources.",
+		description = "The directory or JAR file that contains the processed resources.",
 		names = {"--resources-dir"}
 	)
 	private File _resourcesDir;

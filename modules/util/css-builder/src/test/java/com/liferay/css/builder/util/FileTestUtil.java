@@ -14,8 +14,8 @@
 
 package com.liferay.css.builder.util;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.css.builder.internal.util.StringUtil;
+import com.liferay.petra.string.StringPool;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

@@ -15,14 +15,13 @@
 package com.liferay.css.builder.internal.util;
 
 import com.liferay.css.builder.CSSBuilder;
-import com.liferay.petra.string.CharPool;
-import com.liferay.petra.string.StringPool;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -157,7 +156,7 @@ public class FileUtil {
 
 		Path path = Paths.get(file.toURI());
 
-		Files.write(path, content.getBytes(StringPool.UTF8));
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 	}
 
 	private static List<PathMatcher> _getPathMatchers(
@@ -166,9 +165,8 @@ public class FileUtil {
 		List<PathMatcher> pathMatchers = new ArrayList<>(patterns.length);
 
 		for (String pattern : patterns) {
-			if (File.separatorChar == CharPool.BACK_SLASH) {
-				pattern = pattern.replace(
-					StringPool.SLASH, StringPool.DOUBLE_BACK_SLASH);
+			if (File.separatorChar == '\\') {
+				pattern = pattern.replace("/", "\\\\");
 			}
 
 			PathMatcher pathMatcher = fileSystem.getPathMatcher(

@@ -17,8 +17,6 @@ package com.liferay.css.builder;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
-import com.liferay.petra.string.StringPool;
-
 import java.io.File;
 
 import java.util.ArrayList;
@@ -197,7 +195,7 @@ public class CSSBuilderArgs {
 	}
 
 	private String[] _split(String s) {
-		return s.split(StringPool.COMMA);
+		return s.split(",");
 	}
 
 	@Parameter(

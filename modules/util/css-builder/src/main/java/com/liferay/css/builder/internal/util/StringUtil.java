@@ -16,30 +16,14 @@ package com.liferay.css.builder.internal.util;
 
 import com.liferay.petra.string.StringPool;
 
-
 public class StringUtil {
+
 	public static String replace(String s, char oldSub, char newSub) {
 		if (s == null) {
 			return null;
 		}
 
 		return s.replace(oldSub, newSub);
-	}
-	
-	public static String replace(String s, String[] oldSubs, String[] newSubs) {
-		if ((s == null) || (oldSubs == null) || (newSubs == null)) {
-			return null;
-		}
-
-		if (oldSubs.length != newSubs.length) {
-			return s;
-		}
-
-		for (int i = 0; i < oldSubs.length; i++) {
-			s = replace(s, oldSubs[i], newSubs[i]);
-		}
-
-		return s;
 	}
 
 	public static String replace(String s, String oldSub, String newSub) {
@@ -86,4 +70,21 @@ public class StringUtil {
 			return s;
 		}
 	}
+
+	public static String replace(String s, String[] oldSubs, String[] newSubs) {
+		if ((s == null) || (oldSubs == null) || (newSubs == null)) {
+			return null;
+		}
+
+		if (oldSubs.length != newSubs.length) {
+			return s;
+		}
+
+		for (int i = 0; i < oldSubs.length; i++) {
+			s = replace(s, oldSubs[i], newSubs[i]);
+		}
+
+		return s;
+	}
+
 }

@@ -78,7 +78,7 @@ public class BuildCSSMojo extends AbstractMojo {
 
 				String[] includedFiles = scanner.getIncludedFiles();
 
-				if (includedFiles != null && includedFiles.length > 0) {
+				if ((includedFiles != null) && (includedFiles.length > 0)) {
 					_execute();
 				}
 			}

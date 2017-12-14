@@ -36,7 +36,6 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
@@ -101,7 +100,7 @@ public class CSSBuilder implements AutoCloseable {
 
 		File importDir = _cssBuilderArgs.getImportDir();
 
-		if (importDir != null && importDir.isFile()) {
+		if ((importDir != null) && importDir.isFile()) {
 			importDir = _unzipImport(importDir);
 
 			_cleanImportDir = true;
@@ -155,7 +154,7 @@ public class CSSBuilder implements AutoCloseable {
 			fileNames.addAll(sassFileNames);
 		}
 
-		if (fileNames.size() == 0) {
+		if (fileNames.isEmpty()) {
 			System.out.println("There are no files to compile");
 			return;
 		}

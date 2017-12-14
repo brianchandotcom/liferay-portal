@@ -1307,7 +1307,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 					if (!projectPath.startsWith(":apps:") &&
 						!projectPath.startsWith(":core:") &&
-						!projectPath.startsWith(":private:")) {
+						!projectPath.startsWith(":private:apps:") &&
+						!projectPath.startsWith(":private:core:")) {
 
 						return true;
 					}
@@ -1844,7 +1845,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		String projectPath = project.getPath();
 
 		if (projectPath.startsWith(":apps:") ||
-			projectPath.startsWith(":private:")) {
+			projectPath.startsWith(":private:apps:")) {
 
 			String exportPackage = bundleInstructions.get(
 				Constants.EXPORT_PACKAGE);

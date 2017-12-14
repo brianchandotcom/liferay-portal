@@ -167,8 +167,8 @@ public class FileUtil {
 
 		for (String pattern : patterns) {
 			if (File.separatorChar == CharPool.BACK_SLASH) {
-				pattern = StringUtil.replace(
-					pattern, CharPool.SLASH, StringPool.DOUBLE_BACK_SLASH);
+				pattern = pattern.replace(
+					StringPool.SLASH, StringPool.DOUBLE_BACK_SLASH);
 			}
 
 			PathMatcher pathMatcher = fileSystem.getPathMatcher(

@@ -45,8 +45,8 @@ public class CSSBuilderUtil {
 	public static String getOutputFileName(
 		String fileName, String outputDirName, String suffix) {
 
-		String cacheFileName = StringUtil.replace(
-			fileName, CharPool.BACK_SLASH, CharPool.SLASH);
+		String cacheFileName = fileName.replace(
+			CharPool.BACK_SLASH, CharPool.SLASH);
 
 		int x = cacheFileName.lastIndexOf(CharPool.SLASH);
 		int y = cacheFileName.lastIndexOf(CharPool.PERIOD);

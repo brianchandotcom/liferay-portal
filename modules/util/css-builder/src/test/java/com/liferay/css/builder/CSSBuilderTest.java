@@ -14,7 +14,7 @@
 
 package com.liferay.css.builder;
 
-import com.liferay.css.builder.internal.util.StringUtil;
+import com.liferay.css.builder.util.StringTestUtil;
 import com.liferay.petra.string.StringPool;
 
 import java.nio.file.Path;
@@ -59,7 +59,7 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 		args.add("precision" + _separator + precision);
 		args.add(
 			"rtl-excluded-path-regexps" + _separator +
-				StringUtil.merge(rtlExcludedPathRegexps));
+				StringTestUtil.merge(rtlExcludedPathRegexps));
 		args.add("compiler" + _separator + sassCompilerClassName);
 
 		CSSBuilder.main(args.toArray(new String[0]));

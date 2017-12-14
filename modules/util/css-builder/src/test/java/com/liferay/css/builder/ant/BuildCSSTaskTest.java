@@ -15,7 +15,7 @@
 package com.liferay.css.builder.ant;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
-import com.liferay.css.builder.internal.util.StringUtil;
+import com.liferay.css.builder.util.StringTestUtil;
 
 import java.io.File;
 
@@ -75,7 +75,7 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 		project.setProperty("build.css.precision", String.valueOf(precision));
 		project.setProperty(
 			"build.css.rtl.excluded.path.regexps",
-			StringUtil.merge(rtlExcludedPathRegexps));
+			StringTestUtil.merge(rtlExcludedPathRegexps));
 		project.setProperty(
 			"build.css.sass.compiler.class.name", sassCompilerClassName);
 

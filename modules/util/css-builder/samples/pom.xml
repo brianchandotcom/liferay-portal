@@ -16,7 +16,7 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.css.builder</artifactId>
-				<version>2.0.2</version>
+				<version>2.1.0</version>
 				<configuration>
 					<docrootDirName>css</docrootDirName>
 					<portalCommonPath>../../../apps/foundation/frontend-css/frontend-css-common/tmp/META-INF/resources</portalCommonPath>

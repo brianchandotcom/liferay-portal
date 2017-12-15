@@ -62,14 +62,12 @@ public class ServiceBuilderProjectTemplateCustomizer
 				destinationDirPath = destinationDirPath.toAbsolutePath();
 				workspaceDirPath = workspaceDirPath.toAbsolutePath();
 
-				Path relativePath = workspaceDirPath.relativize(
-					destinationDirPath);
+				String relativePath = String.valueOf(
+					workspaceDirPath.relativize(destinationDirPath));
 
-				String path = relativePath.toString();
+				relativePath = relativePath.replace(File.separatorChar, ':');
 
-				path = path.replace(File.separatorChar, ':');
-
-				apiPath = ":" + path + ":" + artifactId + apiPath;
+				apiPath = ":" + relativePath + ":" + artifactId + apiPath;
 			}
 		}
 		catch (IOException ioe) {

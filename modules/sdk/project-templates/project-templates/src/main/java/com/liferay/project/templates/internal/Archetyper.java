@@ -252,17 +252,16 @@ public class Archetyper {
 
 		URI uri = archetypeFile.toURI();
 
-		URL[] urls = {uri.toURL()};
+		URLClassLoader urlClassLoader = new URLClassLoader(
+			new URL[] {uri.toURL()});
 
-		URLClassLoader loader = new URLClassLoader(urls);
+		ServiceLoader<ProjectTemplateCustomizer> serviceLoader =
+			ServiceLoader.load(ProjectTemplateCustomizer.class, urlClassLoader);
 
-		ServiceLoader<ProjectTemplateCustomizer> ptc = ServiceLoader.load(
-			ProjectTemplateCustomizer.class, loader);
+		Iterator<ProjectTemplateCustomizer> iterator = serviceLoader.iterator();
 
-		Iterator<ProjectTemplateCustomizer> services = ptc.iterator();
-
-		if (services.hasNext()) {
-			return services.next();
+		if (iterator.hasNext()) {
+			return iterator.next();
 		}
 
 		return null;

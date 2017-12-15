@@ -40,17 +40,15 @@ public class SoyPortletProjectTemplateCustomizer
 		if ((archetypeGenerationResult.getCause() == null) &&
 			_projectTemplateArgs.isGradle()) {
 
-			Path projectPath = destinationDir.toPath();
+			Path destinationDirPath = destinationDir.toPath();
 
-			Path gulpfileJs = projectPath.resolve("gulpfile.js");
+			Path gulpfileJsPath = destinationDirPath.resolve("gulpfile.js");
 
-			if (Files.exists(gulpfileJs)) {
-				try {
-					Files.delete(gulpfileJs);
-				}
-				catch (IOException ioe) {
-					archetypeGenerationResult.setCause(ioe);
-				}
+			try {
+				Files.deleteIfExists(gulpfileJsPath);
+			}
+			catch (IOException ioe) {
+				archetypeGenerationResult.setCause(ioe);
 			}
 		}
 	}

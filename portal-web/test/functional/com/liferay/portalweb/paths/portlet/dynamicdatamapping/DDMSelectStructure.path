@@ -32,7 +32,7 @@
 </tr>
 <tr>
 	<td>DDM_STRUCTURE_ELLIPSIS_1</td>
-	<td>xpath=(//td[contains(@class,'entry-action')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')])[1]]</td>
+	<td>xpath=(//td[contains(@class,'entry-action')]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]])[1]</td>
 	<td></td>
 </tr>
 <tr>

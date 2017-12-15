@@ -5,6 +5,7 @@
 		<resource-root path="com.liferay.petra.concurrent.jar" />
 		<resource-root path="com.liferay.petra.executor.jar" />
 		<resource-root path="com.liferay.petra.function.jar" />
+		<resource-root path="com.liferay.petra.io.jar" />
 		<resource-root path="com.liferay.petra.lang.jar" />
 		<resource-root path="com.liferay.petra.memory.jar" />
 		<resource-root path="com.liferay.petra.nio.jar" />

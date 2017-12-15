@@ -46,7 +46,7 @@ public class KaleoActivatorTest {
 	public void testDefaultKaleoDefinitionsAreDeployed() throws Exception {
 		List<Company> companies = CompanyLocalServiceUtil.getCompanies();
 
-		Assert.assertFalse(companies.isEmpty());
+		Assert.assertFalse(companies.toString(), companies.isEmpty());
 
 		for (Company company : companies) {
 			ServiceContext serviceContext = new ServiceContext();

@@ -84,21 +84,17 @@ boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_S
 
 	<aui:input name="content" type="hidden" value="<%= content %>" />
 
-	<div class="card-horizontal main-content-card">
-		<div class="card-row-padded">
-			<aui:fieldset cssClass="workflow-definition-content">
-				<aui:col>
-					<aui:field-wrapper label="title">
-						<liferay-ui:input-localized disabled="<%= true %>" name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
-					</aui:field-wrapper>
-				</aui:col>
+	<aui:fieldset cssClass="workflow-definition-content">
+		<aui:col>
+			<aui:field-wrapper label="title">
+				<liferay-ui:input-localized disabled="<%= true %>" name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+			</aui:field-wrapper>
+		</aui:col>
 
-				<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
-					<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
-				</aui:col>
-			</aui:fieldset>
-		</div>
-	</div>
+		<aui:col cssClass="workflow-definition-content-source-wrapper" id="contentSourceWrapper">
+			<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
+		</aui:col>
+	</aui:fieldset>
 
 	<c:choose>
 		<c:when test="<%= previewBeforeRestore %>">

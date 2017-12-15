@@ -46,6 +46,88 @@
 		<field name="dataProviderInstanceId" type="long" />
 		<field name="structureId" type="long" />
 	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstance">
+		<field name="uuid" type="String" />
+		<field name="formInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="versionUserId" type="long" />
+		<field name="versionUserName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="structureId" type="long" />
+		<field name="version" type="String" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord">
+		<field name="uuid" type="String" />
+		<field name="formInstanceRecordId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="versionUserId" type="long" />
+		<field name="versionUserName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="formInstanceId" type="long" />
+		<field name="formInstanceVersion" type="String" />
+		<field name="storageId" type="long" />
+		<field name="version" type="String" />
+		<field name="lastPublishDate" type="Date" />
+	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion">
+		<field name="formInstanceRecordVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="formInstanceId" type="long" />
+		<field name="formInstanceVersion" type="String" />
+		<field name="formInstanceRecordId" type="long" />
+		<field name="version" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+		<field name="storageId" type="long" />
+	</model>
+	<model name="com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion">
+		<field name="formInstanceVersionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="formInstanceId" type="long" />
+		<field name="structureVersionId" type="long" />
+		<field localized="true" name="name" type="String">
+			<validator name="required" />
+		</field>
+		<field localized="true" name="description" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="settings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+		<field name="version" type="String" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
+	</model>
 	<model name="com.liferay.dynamic.data.mapping.model.DDMStorageLink">
 		<field name="uuid" type="String" />
 		<field name="storageLinkId" type="long" />

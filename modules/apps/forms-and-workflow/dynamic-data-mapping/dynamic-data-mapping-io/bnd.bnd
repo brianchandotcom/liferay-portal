@@ -1,6 +1,14 @@
 Bundle-Name: Liferay Dynamic Data Mapping IO
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.io
 Bundle-Version: 2.1.0
-Export-Package: com.liferay.dynamic.data.mapping.io
+Export-Package:\
+	com.liferay.dynamic.data.mapping.io,\
+	com.liferay.dynamic.data.mapping.io.exporter
+Import-Package:\
+	!org.apache.poi.hssf.usermodel.*,\
+	!org.apache.poi.ss.usermodel.*,\
+	\
+	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+-includeresource: @poi-[0-9]*.jar

@@ -57,7 +57,8 @@ public class BinaryResourceBodyWriter
 		MediaType mediaType) {
 
 		Try<Class<Object>> classTry =
-			GenericUtil.getFirstGenericTypeArgumentTry(genericType);
+			GenericUtil.getFirstGenericTypeArgumentFromTypeTry(
+				genericType, Try.class);
 
 		return classTry.filter(
 			InputStream.class::equals

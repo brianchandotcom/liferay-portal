@@ -17,12 +17,12 @@ package com.liferay.dynamic.data.mapping.type.date.internal;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTemplateContextContributor;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
@@ -44,16 +44,11 @@ public class DateDDMFormFieldTemplateContextContributor
 
 		Map<String, Object> parameters = new HashMap<>();
 
-		String displayValue = dateDDMFormFieldValueRenderer.render(
-			ddmFormFieldRenderingContext.getValue(),
-			ddmFormFieldRenderingContext.getLocale());
-
-		parameters.put("displayValue", displayValue);
+		parameters.put(
+			"predefinedValue",
+			GetterUtil.getString(ddmFormField.getPredefinedValue(), ""));
 
 		return parameters;
 	}
-
-	@Reference
-	protected DateDDMFormFieldValueRenderer dateDDMFormFieldValueRenderer;
 
 }

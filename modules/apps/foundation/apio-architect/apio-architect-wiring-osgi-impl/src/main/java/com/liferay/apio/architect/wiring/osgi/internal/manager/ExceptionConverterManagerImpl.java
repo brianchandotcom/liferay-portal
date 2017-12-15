@@ -46,14 +46,14 @@ public class ExceptionConverterManagerImpl
 	protected void setServiceReference(
 		ServiceReference<ExceptionConverter> serviceReference) {
 
-		addService(serviceReference);
+		addService(serviceReference, ExceptionConverter.class);
 	}
 
 	@SuppressWarnings("unused")
 	protected void unsetServiceReference(
 		ServiceReference<ExceptionConverter> serviceReference) {
 
-		removeService(serviceReference);
+		removeService(serviceReference, ExceptionConverter.class);
 	}
 
 	@SuppressWarnings("unchecked")

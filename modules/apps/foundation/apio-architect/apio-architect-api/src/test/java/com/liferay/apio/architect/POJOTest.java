@@ -21,7 +21,6 @@ import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.single.model.SingleModel;
 
-import com.openpojo.reflection.PojoClass;
 import com.openpojo.reflection.utils.AttributeHelper;
 import com.openpojo.validation.Validator;
 import com.openpojo.validation.ValidatorBuilder;
@@ -62,22 +61,18 @@ public class POJOTest {
 
 	@Test
 	public void testIdentifier() {
-		PojoClass relatedCollectionPojoClass = getPojoClass(
-			RelatedCollection.class);
-
-		PojoClass relatedModelPojoClass = getPojoClass(RelatedModel.class);
-
-		_validator.validate(relatedCollectionPojoClass);
-		_validator.validate(relatedModelPojoClass);
+		_validator.validate(getPojoClass(RelatedCollection.class));
+		_validator.validate(getPojoClass(RelatedModel.class));
 	}
 
 	@Test
 	public void testPagination() {
-		PojoClass pageItemsPojoClass = getPojoClass(PageItems.class);
-		PojoClass singleModelPojoClass = getPojoClass(SingleModel.class);
+		_validator.validate(getPojoClass(PageItems.class));
+	}
 
-		_validator.validate(pageItemsPojoClass);
-		_validator.validate(singleModelPojoClass);
+	@Test
+	public void testSingleModel() {
+		_validator.validate(getPojoClass(SingleModel.class));
 	}
 
 	@Test

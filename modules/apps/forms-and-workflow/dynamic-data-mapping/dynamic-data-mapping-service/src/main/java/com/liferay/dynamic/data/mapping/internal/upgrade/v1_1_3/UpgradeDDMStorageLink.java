@@ -38,10 +38,13 @@ public class UpgradeDDMStorageLink extends UpgradeProcess {
 		try (PreparedStatement ps1 = connection.prepareStatement(
 				StringBundler.concat(
 					"select structureId, structureVersionId from ",
-					"DDMStructureVersion parent where parent.structureId in (",
-					"select structureId from DDMStorageLink) and version in (",
-					"select max(child.version) from DDMStructureVersion child ",
-					"where child.structureId = parent.structureId)"));
+					"DDMStructureVersion parentStructureVersion where ",
+					"parentStructureVersion.structureId in (select ",
+					"structureId from DDMStorageLink) and version in (select ",
+					"max(childStructureVersion.version) from ",
+					"DDMStructureVersion childStructureVersion where ",
+					"childStructureVersion.structureId = ",
+					"parentStructureVersion.structureId)"));
 			PreparedStatement ps2 =
 				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
 					connection,

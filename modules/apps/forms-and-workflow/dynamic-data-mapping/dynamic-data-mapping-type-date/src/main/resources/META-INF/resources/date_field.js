@@ -23,6 +23,10 @@ AUI.add(
 						value: Liferay.AUI.getDateFormat()
 					},
 
+					predefinedValue: {
+						value: ''
+					},
+
 					type: {
 						value: 'date'
 					}
@@ -72,12 +76,14 @@ AUI.add(
 					getTemplateContext: function() {
 						var instance = this;
 
+						var predefinedValue = instance.get('predefinedValue');
 						var value = instance.get('value');
 
 						return A.merge(
 							DateField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								displayValue: instance.formatDate(value),
+								formattedValue: instance.formatDate(value),
+								predefinedValue: instance.formatDate(predefinedValue),
 								value: value
 							}
 						);
@@ -105,9 +111,9 @@ AUI.add(
 
 						DateField.superclass.setValue.apply(instance, arguments);
 
-						var formattedDate = instance.formatDate(isoDate);
+						var formattedValue = instance.get('formattedValue');
 
-						instance.getTriggerNode().val(formattedDate);
+						instance.getTriggerNode().val(formattedValue);
 
 						instance.set('value', isoDate);
 					},

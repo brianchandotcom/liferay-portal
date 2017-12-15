@@ -54,7 +54,7 @@ public class DocumentLibraryDDMFormFieldValueAccessorTest extends PowerMockito {
 
 	@Test
 	public void testNotEmpty() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("{\"groupId\":\"32964\",");
 		sb.append("\"title\":\"Welcome to Liferay Forms!\",");

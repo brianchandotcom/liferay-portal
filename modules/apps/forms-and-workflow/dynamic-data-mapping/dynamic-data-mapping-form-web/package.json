@@ -1,0 +1,12 @@
+{
+	"dependencies": {
+		"metal-component": "^2.5.13",
+		"metal-soy": "^2.7.0"
+	},
+	"devDependencies": {
+		"liferay-module-config-generator": "^1.2.1",
+		"metal-cli": "^4.2.0"
+	},
+	"name": "dynamic-data-mapping-form-web",
+	"version": "1.0.0"
+}

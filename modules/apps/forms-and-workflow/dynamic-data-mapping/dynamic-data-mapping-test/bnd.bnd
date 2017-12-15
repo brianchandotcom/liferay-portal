@@ -1,9 +1,9 @@
 Bundle-Name: Liferay Dynamic Data Mapping Test
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.test
 Bundle-Version: 1.0.0
-Include-Resource:\
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Dynamic Data Mapping
+-includeresource:\
 	test-classes/integration,\
 	@lib/json.jar,\
 	@lib/jsonassert.jar
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Mapping

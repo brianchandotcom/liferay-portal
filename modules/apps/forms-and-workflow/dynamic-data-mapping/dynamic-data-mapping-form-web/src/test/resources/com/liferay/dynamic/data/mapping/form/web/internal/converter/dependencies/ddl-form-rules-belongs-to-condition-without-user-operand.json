@@ -1,0 +1,21 @@
+[
+	{
+		"actions": [
+			{
+				"action": "show",
+				"target": "Field1"
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "list",
+						"value": "Role1,Role2"
+					}
+				],
+				"operator": "belongs-to"
+			}
+		]
+	}
+]

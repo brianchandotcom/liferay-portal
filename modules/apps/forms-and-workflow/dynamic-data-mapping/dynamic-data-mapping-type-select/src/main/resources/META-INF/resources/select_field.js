@@ -340,7 +340,7 @@ AUI.add(
 							if (currentTarget.getAttribute('data-option-selected')) {
 								value = instance._removeValue(itemValue);
 							}
-							else {
+							else if (value.indexOf(itemValue) == -1) {
 								value.push(itemValue);
 							}
 						}
@@ -397,7 +397,6 @@ AUI.add(
 						if (triggers.length) {
 							for (var i = 0; i < triggers.length; i++) {
 								if (triggers[i].contains(event.target)) {
-
 									return false;
 								}
 							}

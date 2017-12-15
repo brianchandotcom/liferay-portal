@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Objects;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -51,7 +53,9 @@ public class SelectDDMFormFieldValueRequestParameterRetriever
 	protected String[] getDefaultDDMFormFieldParameterValues(
 		String defaultDDMFormFieldParameterValue) {
 
-		if (Validator.isNull(defaultDDMFormFieldParameterValue)) {
+		if (Validator.isNull(defaultDDMFormFieldParameterValue) ||
+			Objects.equals(defaultDDMFormFieldParameterValue, "[]")) {
+
 			return GetterUtil.DEFAULT_STRING_VALUES;
 		}
 

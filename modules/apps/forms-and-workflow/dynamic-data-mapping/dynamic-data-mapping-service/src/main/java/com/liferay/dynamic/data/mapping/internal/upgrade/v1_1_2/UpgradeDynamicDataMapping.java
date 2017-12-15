@@ -286,7 +286,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 	}
 
 	protected void upgradeDLDDMContentReferences() throws Exception {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("select DDMContent.contentId, DDMContent.data_,");
 		sb.append("DDMStructure.structureId from DLFileEntryMetadata inner ");

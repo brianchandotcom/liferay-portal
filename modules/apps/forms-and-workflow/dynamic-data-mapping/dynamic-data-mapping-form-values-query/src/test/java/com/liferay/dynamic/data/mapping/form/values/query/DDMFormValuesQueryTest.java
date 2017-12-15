@@ -223,7 +223,7 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testSelectUsingAndExpressionForLocalizedFieldAndMulitpleStep()
+	public void testSelectUsingAndExpressionForLocalizedFieldAndMultipleStep()
 		throws Exception {
 
 		DDMFormValuesQuery ddmFormValuesQuery = createDDMFormValuesQuery(
@@ -254,7 +254,7 @@ public class DDMFormValuesQueryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testSelectUsingLocalizedValueMatcherAndMulitpleStep()
+	public void testSelectUsingLocalizedValueMatcherAndMultipleStep()
 		throws Exception {
 
 		DDMFormValuesQuery ddmFormValuesQuery = createDDMFormValuesQuery(

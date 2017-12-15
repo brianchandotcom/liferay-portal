@@ -272,7 +272,7 @@ AUI.add(
 					_getFieldTypeMenuLayout: function(fieldType) {
 						var instance = this;
 
-						return Liferay.Util.getLexiconIconTpl(fieldType.get('icon')) + '<span>' + fieldType.get('label') + '</span>' + Liferay.Util.getLexiconIconTpl('caret-bottom');
+						return '<div>' + Liferay.Util.getLexiconIconTpl(fieldType.get('icon')) + '</div><span>' + fieldType.get('label') + '</span>' + Liferay.Util.getLexiconIconTpl('caret-bottom');
 					},
 
 					_isFieldNode: function(node) {

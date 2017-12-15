@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -103,6 +104,9 @@ public class DDMFormFunctionsServlet extends HttpServlet {
 
 		JSONArray jsonArray = toJSONArray(
 			entries, Locale.forLanguageTag(bcp47LanguageId));
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+		response.setStatus(HttpServletResponse.SC_OK);
 
 		ServletResponseUtil.write(response, jsonArray.toJSONString());
 	}

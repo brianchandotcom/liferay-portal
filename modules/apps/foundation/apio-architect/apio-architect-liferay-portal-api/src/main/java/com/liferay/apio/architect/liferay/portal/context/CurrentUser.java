@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.model.User;
  * Provides the current {@code User}.
  *
  * <p>
- * To use this class, add it as a parameter to the methods of {@link
- * com.liferay.apio.architect.routes.Routes.Builder}.
+ * To use this class, add it as a parameter to the methods of the different
+ * routes builders.
  * </p>
  *
  * @author Alejandro Hernández

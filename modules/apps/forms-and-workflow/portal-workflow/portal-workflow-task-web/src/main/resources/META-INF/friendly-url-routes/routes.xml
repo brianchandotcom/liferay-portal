@@ -4,6 +4,7 @@
 <routes>
 	<route>
 		<pattern>/view/{workflowTaskId:\d+}</pattern>
+		<implicit-parameter name="mvcPath">/edit_workflow_task.jsp</implicit-parameter>
 		<implicit-parameter name="p_p_mode">view</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>

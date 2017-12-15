@@ -106,6 +106,200 @@
 			<finder-column name="structureId" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="DDMFormInstance" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="formInstanceId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="versionUserId" type="long" />
+		<column name="versionUserName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="structureId" type="long" />
+		<column name="version" type="String" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="settings" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column arrayable-operator="OR" name="groupId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="DDMFormInstanceRecord" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMFormInstanceVersion" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMStructure" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="Resource" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="WorkflowDefinitionLink" package-path="com.liferay.portal" />
+	</entity>
+	<entity local-service="true" name="DDMFormInstanceRecord" remote-service="true" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="formInstanceRecordId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="versionUserId" type="long" />
+		<column name="versionUserName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="formInstanceId" type="long" />
+		<column name="formInstanceVersion" type="String" />
+		<column name="storageId" type="long" />
+		<column name="version" type="String" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="FormInstanceId" return-type="Collection">
+			<finder-column name="formInstanceId" />
+		</finder>
+		<finder name="U_F" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="formInstanceId" />
+		</finder>
+		<finder name="F_F" return-type="Collection">
+			<finder-column name="formInstanceId" />
+			<finder-column name="formInstanceVersion" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="DDMFormInstance" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="DDMFormInstanceRecordVersion" package-path="com.liferay.dynamic.data.mapping" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="WorkflowInstanceLink" package-path="com.liferay.portal" />
+		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
+	</entity>
+	<entity local-service="true" name="DDMFormInstanceRecordVersion" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="formInstanceRecordVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="formInstanceId" type="long" />
+		<column name="formInstanceVersion" type="String" />
+		<column name="formInstanceRecordId" type="long" />
+		<column name="version" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+		<column name="storageId" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="FormInstanceRecordId" return-type="Collection">
+			<finder-column name="formInstanceRecordId" />
+		</finder>
+		<finder name="F_F" return-type="Collection">
+			<finder-column name="formInstanceId" />
+			<finder-column name="formInstanceVersion" />
+		</finder>
+		<finder name="F_V" return-type="DDMFormInstanceRecordVersion" unique="true">
+			<finder-column name="formInstanceRecordId" />
+			<finder-column name="version" />
+		</finder>
+		<finder name="F_S" return-type="Collection">
+			<finder-column name="formInstanceRecordId" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="U_F_F_S" return-type="Collection">
+			<finder-column name="userId" />
+			<finder-column name="formInstanceId" />
+			<finder-column name="formInstanceVersion" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="DDMFormInstanceVersion" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="formInstanceVersionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="formInstanceId" type="long" />
+		<column name="structureVersionId" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="settings" type="String" />
+		<column name="version" type="String" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="FormInstanceId" return-type="Collection">
+			<finder-column name="formInstanceId" />
+		</finder>
+		<finder name="F_V" return-type="DDMFormInstanceVersion" unique="true">
+			<finder-column name="formInstanceId" />
+			<finder-column name="version" />
+		</finder>
+		<finder name="F_S" return-type="Collection">
+			<finder-column name="formInstanceId" />
+			<finder-column name="status" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="DDMStorageLink" remote-service="false" uuid="true">
 
 		<!-- PK fields -->
@@ -530,6 +724,10 @@
 		<exception>ContentData</exception>
 		<exception>ContentName</exception>
 		<exception>DataProviderInstanceName</exception>
+		<exception>FormInstanceName</exception>
+		<exception>FormInstanceRecordGroupId</exception>
+		<exception>FormInstanceSettingsRedirectURL</exception>
+		<exception>FormInstanceStructureId</exception>
 		<exception>InvalidParentStructure</exception>
 		<exception>InvalidStructureVersion</exception>
 		<exception>InvalidTemplateVersion</exception>

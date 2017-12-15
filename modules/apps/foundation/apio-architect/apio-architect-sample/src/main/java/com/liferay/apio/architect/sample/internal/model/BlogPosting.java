@@ -225,8 +225,7 @@ public class BlogPosting {
 		_title = title;
 	}
 
-	private static Map<Long, BlogPosting> _blogPostings =
-		_blogPostings = new HashMap<>();
+	private static Map<Long, BlogPosting> _blogPostings = new HashMap<>();
 	private static final AtomicLong _count = new AtomicLong(30);
 
 	static {

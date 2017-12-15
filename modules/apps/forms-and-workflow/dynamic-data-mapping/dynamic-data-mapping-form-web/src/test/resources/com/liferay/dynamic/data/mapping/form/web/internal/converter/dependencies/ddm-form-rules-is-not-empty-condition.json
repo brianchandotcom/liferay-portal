@@ -1,0 +1,8 @@
+[
+	{
+		"actions": [
+			"setVisible('Field1', true)"
+		],
+		"condition": "not(isEmpty(getValue('Field0')))"
+	}
+]

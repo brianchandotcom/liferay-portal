@@ -33,6 +33,8 @@ AUI.add(
 
 		var STR_SPACE = ' ';
 
+		var STR_UNDERSCORE = '_';
+
 		DEFAULTS_FORM_VALIDATOR.STRINGS.structureFieldName = Liferay.Language.get('please-enter-only-alphanumeric-characters');
 
 		DEFAULTS_FORM_VALIDATOR.RULES.structureFieldName = function(value) {
@@ -763,7 +765,7 @@ AUI.add(
 				for (var i = 0; i < key.length; i++) {
 					var item = key[i];
 
-					if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd')) {
+					if (!A.Text.Unicode.test(item, 'L') && !A.Text.Unicode.test(item, 'N') && !A.Text.Unicode.test(item, 'Pd') && item != STR_UNDERSCORE) {
 						key = key.replace(item, STR_SPACE);
 					}
 				}
@@ -798,7 +800,7 @@ AUI.add(
 			},
 
 			validateFieldName: function(fieldName) {
-				return (/^[\w]+$/).test(fieldName) && !Lang.String.contains(fieldName, '_');
+				return (/^[\w]+$/).test(fieldName);
 			}
 		};
 

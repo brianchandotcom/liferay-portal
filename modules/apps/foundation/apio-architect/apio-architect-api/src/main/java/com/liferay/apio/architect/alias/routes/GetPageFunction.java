@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.uri.Path;
 
@@ -29,5 +28,5 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface GetPageFunction<T>
-	extends RequestFunction<Function<Path, Function<Identifier, Page<T>>>> {
+	extends RequestFunction<Function<Path, Page<T>>> {
 }

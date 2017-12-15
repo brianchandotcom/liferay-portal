@@ -22,8 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide {@link APIDescription} as a parameter in the methods
- * of {@link Routes.Builder}.
+ * Provides the description of the API.
  *
  * @author Alejandro Hernández
  */

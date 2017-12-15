@@ -17,22 +17,30 @@ package com.liferay.apio.architect.application.internal.endpoint;
 import com.google.gson.JsonObject;
 
 import com.liferay.apio.architect.alias.BinaryFunction;
+import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.documentation.APIDescription;
+import com.liferay.apio.architect.documentation.APITitle;
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.endpoint.RootEndpoint;
 import com.liferay.apio.architect.error.ApioDeveloperError;
 import com.liferay.apio.architect.function.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.identifier.RootIdentifier;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.routes.Routes;
+import com.liferay.apio.architect.routes.CollectionRoutes;
+import com.liferay.apio.architect.routes.ItemRoutes;
+import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.url.ServerURL;
-import com.liferay.apio.architect.wiring.osgi.manager.CollectionResourceManager;
+import com.liferay.apio.architect.wiring.osgi.manager.CollectionRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.ItemRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.NestedCollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
+import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.ReusableNestedCollectionRouterManager;
 
 import java.io.InputStream;
 
@@ -53,6 +61,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.ResponseBuilder;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -64,14 +73,30 @@ import org.osgi.service.component.annotations.Reference;
 @Component(immediate = true)
 public class RootEndpointImpl implements RootEndpoint {
 
+	@Activate
+	public void activate() {
+		RequestFunction<Optional<APITitle>> apiTitleRequestFunction =
+			httpServletRequest -> _providerManager.provideOptional(
+				APITitle.class, httpServletRequest);
+
+		RequestFunction<Optional<APIDescription>>
+			apiDescriptionRequestFunction =
+				httpServletRequest -> _providerManager.provideOptional(
+					APIDescription.class, httpServletRequest);
+
+		_documentation = new Documentation(
+			apiTitleRequestFunction, apiDescriptionRequestFunction);
+	}
+
 	@Override
 	public <T> Try<SingleModel<T>> addCollectionItem(
 		String name, Map<String, Object> body) {
 
-		Try<Routes<T>> routesTry = _getRoutesTry(name);
+		Try<CollectionRoutes<T>> collectionRoutesTry = _getCollectionRoutesTry(
+			name);
 
-		return routesTry.map(
-			Routes::getCreateItemFunctionOptional
+		return collectionRoutesTry.map(
+			CollectionRoutes::getCreateItemFunctionOptional
 		).map(
 			Optional::get
 		).mapFailMatching(
@@ -79,8 +104,6 @@ public class RootEndpointImpl implements RootEndpoint {
 			_getNotAllowedExceptionSupplier("POST", name)
 		).map(
 			function -> function.apply(_httpServletRequest)
-		).map(
-			function -> function.apply(new RootIdentifier() {})
 		).map(
 			function -> function.apply(body)
 		);
@@ -90,10 +113,11 @@ public class RootEndpointImpl implements RootEndpoint {
 	public <T> Try<SingleModel<T>> addNestedCollectionItem(
 		String name, String id, String nestedName, Map<String, Object> body) {
 
-		Try<Routes<T>> routesTry = _getRoutesTry(nestedName);
+		Try<NestedCollectionRoutes<T>> nestedCollectionRoutesTry =
+			_getNestedCollectionRoutesTry(name, nestedName);
 
-		return routesTry.map(
-			Routes::getCreateItemFunctionOptional
+		return nestedCollectionRoutesTry.map(
+			NestedCollectionRoutes::getNestedCreateItemFunctionOptional
 		).map(
 			Optional::get
 		).map(
@@ -122,10 +146,10 @@ public class RootEndpointImpl implements RootEndpoint {
 
 	@Override
 	public Response deleteCollectionItem(String name, String id) {
-		Try<Routes<Object>> routesTry = _getRoutesTry(name);
+		Try<ItemRoutes<Object>> itemRoutesTry = _getItemRoutesTry(name);
 
-		routesTry.map(
-			Routes::getDeleteConsumerOptional
+		itemRoutesTry.map(
+			ItemRoutes::getDeleteConsumerOptional
 		).map(
 			Optional::get
 		).mapFailMatching(
@@ -148,11 +172,11 @@ public class RootEndpointImpl implements RootEndpoint {
 		String name, String id, String binaryId) {
 
 		Optional<Class<Object>> modelClassOptional =
-			_collectionResourceManager.getModelClassOptional(name);
+			_representableManager.getModelClassOptional(name);
 
 		Optional<BinaryFunction<Object>> binaryFunctionOptional =
 			modelClassOptional.flatMap(
-				_collectionResourceManager::getRepresentorOptional
+				_representableManager::getRepresentorOptional
 			).map(
 				Representor::getBinaryFunctions
 			).map(
@@ -174,10 +198,10 @@ public class RootEndpointImpl implements RootEndpoint {
 	public <T> Try<SingleModel<T>> getCollectionItemSingleModelTry(
 		String name, String id) {
 
-		Try<Routes<T>> routesTry = _getRoutesTry(name);
+		Try<ItemRoutes<T>> itemRoutesTry = _getItemRoutesTry(name);
 
-		return routesTry.map(
-			Routes::getItemFunctionOptional
+		return itemRoutesTry.map(
+			ItemRoutes::getItemFunctionOptional
 		).map(
 			Optional::get
 		).mapFailMatching(
@@ -192,10 +216,11 @@ public class RootEndpointImpl implements RootEndpoint {
 
 	@Override
 	public <T> Try<Page<T>> getCollectionPageTry(String name) {
-		Try<Routes<T>> routesTry = _getRoutesTry(name);
+		Try<CollectionRoutes<T>> collectionRoutesTry = _getCollectionRoutesTry(
+			name);
 
-		return routesTry.map(
-			Routes::getGetPageFunctionOptional
+		return collectionRoutesTry.map(
+			CollectionRoutes::getGetPageFunctionOptional
 		).map(
 			Optional::get
 		).mapFailMatching(
@@ -204,20 +229,18 @@ public class RootEndpointImpl implements RootEndpoint {
 			function -> function.apply(_httpServletRequest)
 		).map(
 			function -> function.apply(new Path())
-		).map(
-			function -> function.apply(new RootIdentifier() {})
 		);
 	}
 
 	@Override
 	public Documentation getDocumentation() {
-		return _collectionResourceManager.getDocumentation();
+		return _documentation;
 	}
 
 	@Override
 	public String getHome() {
-		List<String> rootCollectionResourceNames =
-			_collectionResourceManager.getRootCollectionResourceNames();
+		List<String> resourceNames =
+			_collectionRouterManager.getResourceNames();
 
 		Optional<ServerURL> optional = _providerManager.provideOptional(
 			ServerURL.class, _httpServletRequest);
@@ -227,7 +250,7 @@ public class RootEndpointImpl implements RootEndpoint {
 
 		JsonObject resourcesJsonObject = new JsonObject();
 
-		rootCollectionResourceNames.forEach(
+		resourceNames.forEach(
 			name -> {
 				String url = serverURL.get() + "/p/" + name;
 
@@ -249,10 +272,11 @@ public class RootEndpointImpl implements RootEndpoint {
 	public <T> Try<Page<T>> getNestedCollectionPageTry(
 		String name, String id, String nestedName) {
 
-		Try<Routes<T>> routesTry = _getRoutesTry(nestedName);
+		Try<NestedCollectionRoutes<T>> nestedCollectionRoutesTry =
+			_getNestedCollectionRoutesTry(name, nestedName);
 
-		return routesTry.map(
-			Routes::getGetPageFunctionOptional
+		return nestedCollectionRoutesTry.map(
+			NestedCollectionRoutes::getNestedGetPageFunctionOptional
 		).map(
 			Optional::get
 		).map(
@@ -274,10 +298,10 @@ public class RootEndpointImpl implements RootEndpoint {
 	public <T> Try<SingleModel<T>> updateCollectionItem(
 		String name, String id, Map<String, Object> body) {
 
-		Try<Routes<T>> routesTry = _getRoutesTry(name);
+		Try<ItemRoutes<T>> itemRoutesTry = _getItemRoutesTry(name);
 
-		return routesTry.map(
-			Routes::getUpdateItemFunctionOptional
+		return itemRoutesTry.map(
+			ItemRoutes::getUpdateItemFunctionOptional
 		).map(
 			Optional::get
 		).mapFailMatching(
@@ -292,6 +316,18 @@ public class RootEndpointImpl implements RootEndpoint {
 		);
 	}
 
+	private <T> Try<CollectionRoutes<T>> _getCollectionRoutesTry(String name) {
+		Try<Optional<CollectionRoutes<T>>> optionalTry = Try.success(
+			_collectionRouterManager.getCollectionRoutesOptional(name));
+
+		return optionalTry.map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class,
+			() -> new NotFoundException("No resource found for path " + name)
+		);
+	}
+
 	private <T> Predicate<RelatedCollection<T, ?>>
 		_getFilterRelatedCollectionPredicate(String nestedName) {
 
@@ -301,7 +337,7 @@ public class RootEndpointImpl implements RootEndpoint {
 			String relatedClassName = relatedModelClass.getName();
 
 			Optional<Class<Object>> optional =
-				_collectionResourceManager.getModelClassOptional(nestedName);
+				_representableManager.getModelClassOptional(nestedName);
 
 			return optional.map(
 				Class::getName
@@ -318,7 +354,7 @@ public class RootEndpointImpl implements RootEndpoint {
 
 		return parentSingleModel -> {
 			Optional<Representor<T, Identifier>> optional =
-				_collectionResourceManager.getRepresentorOptional(
+				_representableManager.getRepresentorOptional(
 					parentSingleModel.getModelClass());
 
 			return optional.map(
@@ -349,6 +385,18 @@ public class RootEndpointImpl implements RootEndpoint {
 		);
 	}
 
+	private <T> Try<ItemRoutes<T>> _getItemRoutesTry(String name) {
+		Try<Optional<ItemRoutes<T>>> optionalTry = Try.success(
+			_itemRouterManager.getItemRoutesOptional(name));
+
+		return optionalTry.map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class,
+			() -> new NotFoundException("No resource found for path " + name)
+		);
+	}
+
 	private <T, S> ThrowableFunction<Function<Identifier, Page<S>>,
 		Try<Optional<Page<S>>>> _getNestedCollectionPageTryFunction(
 			String name, String id, String nestedName) {
@@ -365,6 +413,23 @@ public class RootEndpointImpl implements RootEndpoint {
 		};
 	}
 
+	private <T> Try<NestedCollectionRoutes<T>> _getNestedCollectionRoutesTry(
+		String name, String nestedName) {
+
+		Try<Optional<NestedCollectionRoutes<T>>> optionalTry = Try.success(
+			_nestedCollectionRouterManager.getNestedCollectionRoutesOptional(
+				name, nestedName));
+
+		return optionalTry.map(
+			Optional::get
+		).recoverWith(
+			__ -> _getReusableNestedCollectionRoutesTry(nestedName)
+		).mapFailMatching(
+			NoSuchElementException.class,
+			() -> new NotFoundException("No resource found for path " + name)
+		);
+	}
+
 	private Supplier<NotAllowedException> _getNotAllowedExceptionSupplier(
 		String method, String path) {
 
@@ -378,25 +443,38 @@ public class RootEndpointImpl implements RootEndpoint {
 		return () -> new NotFoundException("No endpoint found at path " + name);
 	}
 
-	private <T> Try<Routes<T>> _getRoutesTry(String name) {
-		Try<Optional<Routes<T>>> optionalTry = Try.success(
-			_collectionResourceManager.getRoutesOptional(name));
+	private <T> Try<NestedCollectionRoutes<T>>
+		_getReusableNestedCollectionRoutesTry(String name) {
 
-		return optionalTry.map(
-			Optional::get
-		).mapFailMatching(
-			NoSuchElementException.class,
-			() -> new NotFoundException("No resource found for path " + name)
-		);
+		Try<Optional<NestedCollectionRoutes<T>>> optionalTry = Try.success(
+			_reusableNestedCollectionRouterManager.
+				getNestedCollectionRoutesOptional(name));
+
+		return optionalTry.map(Optional::get);
 	}
 
 	@Reference
-	private CollectionResourceManager _collectionResourceManager;
+	private CollectionRouterManager _collectionRouterManager;
+
+	private Documentation _documentation;
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
 
 	@Reference
+	private ItemRouterManager _itemRouterManager;
+
+	@Reference
+	private NestedCollectionRouterManager _nestedCollectionRouterManager;
+
+	@Reference
 	private ProviderManager _providerManager;
+
+	@Reference
+	private RepresentableManager _representableManager;
+
+	@Reference
+	private ReusableNestedCollectionRouterManager
+		_reusableNestedCollectionRouterManager;
 
 }

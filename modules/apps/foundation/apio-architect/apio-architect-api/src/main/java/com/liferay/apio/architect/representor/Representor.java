@@ -40,8 +40,7 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 /**
- * Holds information about the metadata supported for a {@link
- * com.liferay.apio.architect.resource.CollectionResource}.
+ * Holds information about the metadata supported for a resource.
  *
  * <p>
  * Instances of this interface should always be created by using a {@link
@@ -218,9 +217,8 @@ public class Representor<T, U extends Identifier> {
 
 			/**
 			 * Adds information about the bidirectional relation of a linked
-			 * model in the resource and a collection of {@link
-			 * com.liferay.apio.architect.resource.CollectionResource} items in
-			 * the related resource.
+			 * model in the resource and a collection of items in the related
+			 * resource.
 			 *
 			 * @param  key the relation's name in the resource
 			 * @param  relatedKey the relation's name in the related resource

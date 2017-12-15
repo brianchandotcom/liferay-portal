@@ -1024,7 +1024,7 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 
 	protected void upgradeExpandoStorageAdapter() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb1 = new StringBundler(6);
+			StringBundler sb1 = new StringBundler(5);
 
 			sb1.append("select DDMStructure.*, DDMStorageLink.* from ");
 			sb1.append("DDMStorageLink inner join DDMStructure on ");

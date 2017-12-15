@@ -11,15 +11,18 @@
  * Prints the DDM form date field.
  */
 {template .render}
-	{@param displayValue: string}
 	{@param label: string}
 	{@param name: string}
 	{@param readOnly: bool}
-	{@param? required: bool}
 	{@param showLabel: bool}
-	{@param? tip: string}
 	{@param value: string}
 	{@param visible: bool}
+	{@param? formattedValue: string}
+	{@param? predefinedValue: string}
+	{@param? required: bool}
+	{@param? tip: string}
+
+	{let $displayValue: $formattedValue ? $formattedValue : $predefinedValue /}
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-date" data-fieldname="{$name}">
 		{if $showLabel}

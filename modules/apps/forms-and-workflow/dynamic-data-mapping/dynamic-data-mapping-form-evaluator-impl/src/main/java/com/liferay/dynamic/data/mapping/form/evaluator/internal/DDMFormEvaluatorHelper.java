@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.GetVal
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.JumpPageFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.SetEnabledFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.SetInvalidFunction;
+import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.SetOptionsFunction;
 import com.liferay.dynamic.data.mapping.form.evaluator.internal.functions.SetPropertyFunction;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
@@ -444,6 +445,10 @@ public class DDMFormEvaluatorHelper {
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"setInvalid",
 			new SetInvalidFunction(_ddmFormFieldEvaluationResultsMap));
+		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
+			"setOptions",
+			new SetOptionsFunction(
+				_ddmFormFieldEvaluationResultsMap, _locale, _jsonFactory));
 		_ddmExpressionFunctionRegistry.registerDDMExpressionFunction(
 			"setRequired",
 			new SetPropertyFunction(

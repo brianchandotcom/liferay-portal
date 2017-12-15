@@ -1,0 +1,26 @@
+[
+	{
+		"actions": [
+			{
+				"action": "calculate",
+				"expression": "([field0]+2)*[field1]",
+				"target": "field2"
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "field1"
+					},
+					{
+						"type": "integer",
+						"value": "0"
+					}
+				],
+				"operator": "greater-than"
+			}
+		]
+	}
+]

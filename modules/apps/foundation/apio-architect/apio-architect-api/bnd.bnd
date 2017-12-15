@@ -27,6 +27,7 @@ Export-Package:\
 	com.liferay.apio.architect.request,\
 	com.liferay.apio.architect.resource,\
 	com.liferay.apio.architect.response.control,\
+	com.liferay.apio.architect.router,\
 	com.liferay.apio.architect.routes,\
 	com.liferay.apio.architect.single.model,\
 	com.liferay.apio.architect.supplier,\

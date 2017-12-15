@@ -1,0 +1,8 @@
+[
+	{
+		"actions": [
+			"setVisible('Field1', true)"
+		],
+		"condition": "getValue('Field1') > getValue('Field2') AND getValue('Field1') >= getValue('Field2') AND getValue('Field1') < getValue('Field2') AND getValue('Field1') <= getValue('Field2')"
+	}
+]

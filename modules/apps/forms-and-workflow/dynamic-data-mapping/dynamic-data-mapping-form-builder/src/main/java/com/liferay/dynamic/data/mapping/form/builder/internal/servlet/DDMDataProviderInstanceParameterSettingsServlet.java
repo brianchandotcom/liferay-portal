@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -107,6 +108,9 @@ public class DDMDataProviderInstanceParameterSettingsServlet
 
 			return;
 		}
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+		response.setStatus(HttpServletResponse.SC_OK);
 
 		ServletResponseUtil.write(
 			response, parametersJSONObject.toJSONString());

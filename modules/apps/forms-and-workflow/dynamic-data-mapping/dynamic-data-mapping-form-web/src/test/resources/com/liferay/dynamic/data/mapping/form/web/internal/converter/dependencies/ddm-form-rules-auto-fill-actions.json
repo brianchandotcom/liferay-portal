@@ -1,0 +1,8 @@
+[
+	{
+		"actions": [
+			"call('c36fcb8c-7418-e6c8-cb66-68c2bba6333c', 'zipCode=TypeYourZipCode', 'YourCity=city;YourNeighborhood=neighborhood;YourState=state;YourStreet=street')"
+		],
+		"condition": "equals(getValue('Field1'), 91765)"
+	}
+]

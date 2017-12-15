@@ -9,6 +9,20 @@
 	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderInstanceFinderImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceFinder" parent="basePersistence" />
 	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMDataProviderInstanceLinkLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMDataProviderInstanceLinkLocalService" />
 	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMDataProviderInstanceLinkPersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMDataProviderInstanceLinkPersistence" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceLocalService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMFormInstancePersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersistence" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMFormInstanceFinderImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMFormInstanceRecordPersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMFormInstanceRecordFinderImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordFinder" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordVersionLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordVersionServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMFormInstanceRecordVersionPersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence" parent="basePersistence" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceVersionLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceVersionServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionService" />
+	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMFormInstanceVersionPersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMStorageLinkLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMStorageLinkLocalService" />
 	<bean class="com.liferay.dynamic.data.mapping.service.persistence.impl.DDMStorageLinkPersistenceImpl" id="com.liferay.dynamic.data.mapping.service.persistence.DDMStorageLinkPersistence" parent="basePersistence" />
 	<bean class="com.liferay.dynamic.data.mapping.service.impl.DDMStructureLocalServiceImpl" id="com.liferay.dynamic.data.mapping.service.DDMStructureLocalService" />

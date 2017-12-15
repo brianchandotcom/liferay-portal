@@ -58,6 +58,14 @@ public class CheckboxMultipleDDMFormFieldTemplateContextContributor
 			GetterUtil.getBoolean(ddmFormField.getProperty("inline")));
 		parameters.put(
 			"options", getOptions(ddmFormField, ddmFormFieldRenderingContext));
+
+		List<String> predefinedValue = getValue(
+			GetterUtil.getString(ddmFormField.getPredefinedValue(), "[]"));
+
+		if ((predefinedValue != null) && !predefinedValue.isEmpty()) {
+			parameters.put("predefinedValue", predefinedValue);
+		}
+
 		parameters.put(
 			"showAsSwitcher",
 			GetterUtil.getBoolean(ddmFormField.getProperty("showAsSwitcher")));

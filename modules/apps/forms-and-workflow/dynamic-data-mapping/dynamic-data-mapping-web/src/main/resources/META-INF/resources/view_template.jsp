@@ -116,7 +116,7 @@ TemplateSearchTerms templateSearchTerms = (TemplateSearchTerms)templateSearch.ge
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="ddmTemplates"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			rowChecker="<%= new DDMTemplateRowChecker(renderResponse) %>"
 			searchContainer="<%= templateSearch %>"
 		>
 			<liferay-ui:search-container-results>

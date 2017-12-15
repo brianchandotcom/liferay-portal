@@ -42,10 +42,10 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<div class="info-bar-item">
 				<c:choose>
 					<c:when test="<%= active %>">
-						<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+						<span class="label label-info label-lg"><%= LanguageUtil.get(request, "published") %></span>
 					</c:when>
 					<c:otherwise>
-						<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+						<span class="label label-lg label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -77,8 +77,8 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 
 <div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 	<c:if test="<%= workflowDefinition != null %>">
-		<div class="sidenav-menu-slider">
-			<div class="sidebar sidebar-default sidenav-menu">
+		<div class="lfr-portal-workflow-sidenav">
+			<div class="sidebar sidebar-light">
 				<div class="sidebar-header">
 					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 				</div>

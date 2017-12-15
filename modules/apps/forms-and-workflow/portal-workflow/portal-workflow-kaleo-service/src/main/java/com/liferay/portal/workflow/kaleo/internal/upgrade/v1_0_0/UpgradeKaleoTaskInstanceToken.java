@@ -67,7 +67,7 @@ public class UpgradeKaleoTaskInstanceToken extends UpgradeProcess {
 	protected long getKaleoInstanceTokenId(long kaleoInstanceTokenId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(7);
 
 		sb.append("select KaleoNode.type_, ");
 		sb.append("KaleoInstanceToken.kaleoInstanceTokenId from KaleoNode ");

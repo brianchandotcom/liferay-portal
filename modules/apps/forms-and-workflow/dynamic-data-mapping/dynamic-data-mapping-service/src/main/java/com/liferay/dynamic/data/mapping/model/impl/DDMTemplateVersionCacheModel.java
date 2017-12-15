@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMTemplateVersion;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -119,7 +118,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		ddmTemplateVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			ddmTemplateVersionImpl.setUserName(StringPool.BLANK);
+			ddmTemplateVersionImpl.setUserName("");
 		}
 		else {
 			ddmTemplateVersionImpl.setUserName(userName);
@@ -137,35 +136,35 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		ddmTemplateVersionImpl.setTemplateId(templateId);
 
 		if (version == null) {
-			ddmTemplateVersionImpl.setVersion(StringPool.BLANK);
+			ddmTemplateVersionImpl.setVersion("");
 		}
 		else {
 			ddmTemplateVersionImpl.setVersion(version);
 		}
 
 		if (name == null) {
-			ddmTemplateVersionImpl.setName(StringPool.BLANK);
+			ddmTemplateVersionImpl.setName("");
 		}
 		else {
 			ddmTemplateVersionImpl.setName(name);
 		}
 
 		if (description == null) {
-			ddmTemplateVersionImpl.setDescription(StringPool.BLANK);
+			ddmTemplateVersionImpl.setDescription("");
 		}
 		else {
 			ddmTemplateVersionImpl.setDescription(description);
 		}
 
 		if (language == null) {
-			ddmTemplateVersionImpl.setLanguage(StringPool.BLANK);
+			ddmTemplateVersionImpl.setLanguage("");
 		}
 		else {
 			ddmTemplateVersionImpl.setLanguage(language);
 		}
 
 		if (script == null) {
-			ddmTemplateVersionImpl.setScript(StringPool.BLANK);
+			ddmTemplateVersionImpl.setScript("");
 		}
 		else {
 			ddmTemplateVersionImpl.setScript(script);
@@ -175,7 +174,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		ddmTemplateVersionImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			ddmTemplateVersionImpl.setStatusByUserName(StringPool.BLANK);
+			ddmTemplateVersionImpl.setStatusByUserName("");
 		}
 		else {
 			ddmTemplateVersionImpl.setStatusByUserName(statusByUserName);
@@ -235,7 +234,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -250,35 +249,35 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		objectOutput.writeLong(templateId);
 
 		if (version == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(version);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (language == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(language);
 		}
 
 		if (script == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(script);
@@ -289,7 +288,7 @@ public class DDMTemplateVersionCacheModel implements CacheModel<DDMTemplateVersi
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

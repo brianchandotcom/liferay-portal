@@ -1,0 +1,8 @@
+[
+	{
+		"actions": [
+			"calculate('field2', (getValue('field0')+2)*getValue('field1'))"
+		],
+		"condition": "getValue('field1') > 0"
+	}
+]

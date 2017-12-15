@@ -23,6 +23,10 @@ AUI.add(
 						value: ''
 					},
 
+					predefinedValue: {
+						value: ''
+					},
+
 					type: {
 						value: 'numeric'
 					}
@@ -49,6 +53,17 @@ AUI.add(
 
 					getChangeEventName: function() {
 						return 'input';
+					},
+
+					getTemplateContext: function() {
+						var instance = this;
+
+						return A.merge(
+							NumericField.superclass.getTemplateContext.apply(instance, arguments),
+							{
+								predefinedValue: instance.get('predefinedValue')
+							}
+						);
 					},
 
 					getValue: function() {

@@ -29,64 +29,42 @@ import java.lang.reflect.Type;
 public class GenericUtil {
 
 	/**
-	 * Returns the class of the parameterized class's first type argument.
-	 *
-	 * @param  clazz the parameterized class
-	 * @return the class of the parameterized class's first type argument
-	 */
-	public static <S> Try<Class<S>> getFirstGenericTypeArgumentTry(
-		Class<?> clazz) {
-
-		return getGenericTypeArgumentTry(clazz, 0);
-	}
-
-	/**
 	 * Returns the class of the first type argument in the {@code Type}.
 	 *
 	 * @param  type the type
+	 * @param  interfaceClass the interface class
 	 * @return the class of the type's first type argument
 	 */
-	public static <S> Try<Class<S>> getFirstGenericTypeArgumentTry(Type type) {
-		return getGenericTypeArgumentTry(type, 0);
+	public static <S> Try<Class<S>> getFirstGenericTypeArgumentFromTypeTry(
+		Type type, Class<?> interfaceClass) {
+
+		return getGenericTypeArgumentFromTypeTry(type, interfaceClass, 0);
 	}
 
 	/**
-	 * Returns the class of the parameterized class's n-th type argument.
+	 * Returns the class of the parameterized class's first type argument.
 	 *
 	 * @param  clazz the parameterized class
-	 * @param  position the n-th type argument's position in the parameterized
-	 *         class
-	 * @return the class of the parameterized class's n-th type argument
+	 * @param  interfaceClass the interface class
+	 * @return the class of the parameterized class's first type argument
 	 */
-	public static <S> Try<Class<S>> getGenericTypeArgumentTry(
-		Class<?> clazz, int position) {
+	public static <S> Try<Class<S>> getFirstGenericTypeArgumentTry(
+		Class<?> clazz, Class<?> interfaceClass) {
 
-		Type[] genericInterfaces = clazz.getGenericInterfaces();
-
-		Try<Class<S>> classTry = Try.fail(
-			new IllegalArgumentException(
-				"Class " + clazz + " does not implement any interfaces"));
-
-		for (Type genericInterface : genericInterfaces) {
-			classTry = classTry.recoverWith(
-				throwable -> getGenericTypeArgumentTry(
-					genericInterface, position));
-		}
-
-		return classTry.recoverWith(
-			throwable -> getGenericTypeArgumentTry(
-				clazz.getSuperclass(), position));
+		return getGenericTypeArgumentTry(clazz, interfaceClass, 0);
 	}
 
 	/**
 	 * Returns the class of the n-th type argument in the {@code Type}.
 	 *
 	 * @param  type the type
+	 * @param  interfaceClass the interface class
 	 * @param  position the type's n-th type argument
 	 * @return the class of the type's n-th type argument
 	 */
-	public static <S> Try<Class<S>> getGenericTypeArgumentTry(
-		Type type, int position) {
+	@SuppressWarnings("unchecked")
+	public static <S> Try<Class<S>> getGenericTypeArgumentFromTypeTry(
+		Type type, Class<?> interfaceClass, int position) {
 
 		Try<Type> typeTry = Try.success(type);
 
@@ -94,6 +72,14 @@ public class GenericUtil {
 			ParameterizedType.class::isInstance
 		).map(
 			ParameterizedType.class::cast
+		).filter(
+			parameterizedType -> {
+				Type rawType = parameterizedType.getRawType();
+
+				String typeName = rawType.getTypeName();
+
+				return typeName.equals(interfaceClass.getTypeName());
+			}
 		).map(
 			ParameterizedType::getActualTypeArguments
 		).filter(
@@ -117,6 +103,35 @@ public class GenericUtil {
 		).map(
 			typeArgument -> (Class<S>)typeArgument
 		);
+	}
+
+	/**
+	 * Returns the class of the parameterized class's n-th type argument.
+	 *
+	 * @param  clazz the parameterized class
+	 * @param  interfaceClass the interface class
+	 * @param  position the n-th type argument's position in the parameterized
+	 *         class
+	 * @return the class of the parameterized class's n-th type argument
+	 */
+	public static <S> Try<Class<S>> getGenericTypeArgumentTry(
+		Class<?> clazz, Class<?> interfaceClass, int position) {
+
+		Type[] genericInterfaces = clazz.getGenericInterfaces();
+
+		Try<Class<S>> classTry = Try.fail(
+			new IllegalArgumentException(
+				"Class " + clazz + " does not implement any interfaces"));
+
+		for (Type genericInterface : genericInterfaces) {
+			classTry = classTry.recoverWith(
+				throwable -> getGenericTypeArgumentFromTypeTry(
+					genericInterface, interfaceClass, position));
+		}
+
+		return classTry.recoverWith(
+			throwable -> getGenericTypeArgumentTry(
+				clazz.getSuperclass(), interfaceClass, position));
 	}
 
 }

@@ -15,12 +15,14 @@
 package com.liferay.apio.architect.sample.liferay.portal.internal.resource;
 
 import com.liferay.apio.architect.identifier.LongIdentifier;
-import com.liferay.apio.architect.identifier.RootIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.apio.architect.representor.Representable;
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.routes.Routes;
+import com.liferay.apio.architect.router.CollectionRouter;
+import com.liferay.apio.architect.router.ItemRouter;
+import com.liferay.apio.architect.routes.CollectionRoutes;
+import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.sample.liferay.portal.website.WebSite;
 import com.liferay.apio.architect.sample.liferay.portal.website.WebSiteService;
 import com.liferay.portal.kernel.model.Company;
@@ -40,13 +42,35 @@ import org.osgi.service.component.annotations.Reference;
  * @author Victor Oliveira
  * @author Alejandro Hernández
  */
-@Component(immediate = true)
+@Component(
+	immediate = true,
+	service = {CollectionRouter.class, ItemRouter.class, Representable.class}
+)
 public class WebSiteCollectionResource
-	implements CollectionResource<WebSite, LongIdentifier> {
+	implements CollectionRouter<WebSite>, ItemRouter<WebSite, LongIdentifier>,
+			   Representable<WebSite, LongIdentifier> {
+
+	@Override
+	public CollectionRoutes<WebSite> collectionRoutes(
+		CollectionRoutes.Builder<WebSite> builder) {
+
+		return builder.addGetter(
+			this::_getPageItems, Company.class
+		).build();
+	}
 
 	@Override
 	public String getName() {
 		return "web-sites";
+	}
+
+	@Override
+	public ItemRoutes<WebSite> itemRoutes(
+		ItemRoutes.Builder<WebSite, LongIdentifier> builder) {
+
+		return builder.addGetter(
+			this::_getWebSite
+		).build();
 	}
 
 	@Override
@@ -64,19 +88,8 @@ public class WebSiteCollectionResource
 		).build();
 	}
 
-	@Override
-	public Routes<WebSite> routes(
-		Routes.Builder<WebSite, LongIdentifier> builder) {
-
-		return builder.addCollectionPageGetter(
-			this::_getPageItems, RootIdentifier.class, Company.class
-		).addCollectionPageItemGetter(
-			this::_getWebSite
-		).build();
-	}
-
 	private PageItems<WebSite> _getPageItems(
-		Pagination pagination, RootIdentifier rootIdentifier, Company company) {
+		Pagination pagination, Company company) {
 
 		return _webSiteService.getPageItems(pagination, company.getCompanyId());
 	}

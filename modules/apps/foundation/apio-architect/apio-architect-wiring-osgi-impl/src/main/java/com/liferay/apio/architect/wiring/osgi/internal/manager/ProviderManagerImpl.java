@@ -65,14 +65,14 @@ public class ProviderManagerImpl
 	protected void setServiceReference(
 		ServiceReference<Provider> serviceReference) {
 
-		addService(serviceReference);
+		addService(serviceReference, Provider.class);
 	}
 
 	@SuppressWarnings("unused")
 	protected void unsetServiceReference(
 		ServiceReference<Provider> serviceReference) {
 
-		removeService(serviceReference);
+		removeService(serviceReference, Provider.class);
 	}
 
 }

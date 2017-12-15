@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,9 +66,7 @@ public class SelectDDMFormFieldTemplateContextContributor
 			"dataSourceType",
 			GetterUtil.getString(
 				ddmFormField.getProperty("dataSourceType"), "manual"));
-		parameters.put(
-			"multiple",
-			ddmFormField.isMultiple() ? "multiple" : StringPool.BLANK);
+		parameters.put("multiple", ddmFormField.isMultiple());
 
 		DDMFormFieldOptions ddmFormFieldOptions =
 			ddmFormFieldOptionsFactory.create(
@@ -89,6 +86,9 @@ public class SelectDDMFormFieldTemplateContextContributor
 			"chooseAnOption",
 			LanguageUtil.get(resourceBundle, "choose-an-option"));
 		stringsMap.put(
+			"chooseOptions",
+			LanguageUtil.get(resourceBundle, "choose-options"));
+		stringsMap.put(
 			"dynamicallyLoadedData",
 			LanguageUtil.get(resourceBundle, "dynamically-loaded-data"));
 		stringsMap.put(
@@ -97,11 +97,18 @@ public class SelectDDMFormFieldTemplateContextContributor
 
 		parameters.put("strings", stringsMap);
 
-		parameters.put(
-			"value",
-			getValue(
+		List<String> value = getValue(
+			GetterUtil.getString(
+				ddmFormFieldRenderingContext.getValue(), "[]"));
+
+		if (value.isEmpty()) {
+			value = getValue(
 				GetterUtil.getString(
-					ddmFormFieldRenderingContext.getValue(), "[]")));
+					ddmFormFieldRenderingContext.getProperty("predefinedValue"),
+					"[]"));
+		}
+
+		parameters.put("value", value);
 
 		return parameters;
 	}

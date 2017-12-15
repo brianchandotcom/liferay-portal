@@ -1530,8 +1530,8 @@ public class DDMStructureLocalServiceImpl
 
 		structureVersion.setGroupId(structure.getGroupId());
 		structureVersion.setCompanyId(structure.getCompanyId());
-		structureVersion.setUserId(structure.getUserId());
-		structureVersion.setUserName(structure.getUserName());
+		structureVersion.setUserId(user.getUserId());
+		structureVersion.setUserName(user.getFullName());
 		structureVersion.setCreateDate(structure.getModifiedDate());
 		structureVersion.setStructureId(structure.getStructureId());
 		structureVersion.setVersion(version);

@@ -116,7 +116,7 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	<aui:input bean="<%= workflowTask %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
 </div>
 
-<div class="hide" id="<%= randomId %>updateComments">
+<div class="hide task-content" id="<%= randomId %>updateComments">
 	<aui:input cols="55" name="comment" placeholder="comment" rows="1" type="textarea" />
 </div>
 

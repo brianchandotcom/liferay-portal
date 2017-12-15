@@ -41,7 +41,8 @@ public class WorkflowTaskAssigneesSupplierTest {
 		List<WorkflowTaskAssignee> workflowTaskAssignees =
 			workflowTaskAssigneesSupplier.get();
 
-		Assert.assertTrue(workflowTaskAssignees.isEmpty());
+		Assert.assertTrue(
+			workflowTaskAssignees.toString(), workflowTaskAssignees.isEmpty());
 	}
 
 	@Test

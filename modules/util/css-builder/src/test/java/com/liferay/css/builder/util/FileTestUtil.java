@@ -14,10 +14,8 @@
 
 package com.liferay.css.builder.util;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -28,6 +26,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+
+import org.junit.Assert;
 
 /**
  * @author Andrea Di Giorgi
@@ -85,6 +85,30 @@ public class FileTestUtil {
 			});
 	}
 
+	public static File createFile(File dir, String fileName)
+		throws IOException {
+
+		File file = new File(dir, fileName);
+
+		File parentDir = file.getParentFile();
+
+		Assert.assertTrue(
+			"Unable to create " + parentDir,
+			parentDir.exists() || parentDir.mkdirs());
+
+		Assert.assertTrue("Unable to create " + file, file.createNewFile());
+
+		return file;
+	}
+
+	public static void createFiles(File dir, String... fileNames)
+		throws IOException {
+
+		for (String fileName : fileNames) {
+			createFile(dir, fileName);
+		}
+	}
+
 	public static String read(Class<?> clazz, String name) throws IOException {
 		ByteArrayOutputStream byteArrayOutputStream =
 			new ByteArrayOutputStream();
@@ -104,8 +128,7 @@ public class FileTestUtil {
 	public static String read(Path path) throws IOException {
 		String s = new String(Files.readAllBytes(path), StandardCharsets.UTF_8);
 
-		return StringUtil.replace(
-			s, StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE);
+		return s.replace("\r\n", "\n");
 	}
 
 }

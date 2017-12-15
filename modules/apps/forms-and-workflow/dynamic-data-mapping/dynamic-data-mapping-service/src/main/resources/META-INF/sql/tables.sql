@@ -34,6 +34,80 @@ create table DDMDataProviderInstanceLink (
 	structureId LONG
 );
 
+create table DDMFormInstance (
+	uuid_ VARCHAR(75) null,
+	formInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	versionUserId LONG,
+	versionUserName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	structureId LONG,
+	version VARCHAR(75) null,
+	name STRING null,
+	description STRING null,
+	settings_ TEXT null,
+	lastPublishDate DATE null
+);
+
+create table DDMFormInstanceRecord (
+	uuid_ VARCHAR(75) null,
+	formInstanceRecordId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	versionUserId LONG,
+	versionUserName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	formInstanceId LONG,
+	formInstanceVersion VARCHAR(75) null,
+	storageId LONG,
+	version VARCHAR(75) null,
+	lastPublishDate DATE null
+);
+
+create table DDMFormInstanceRecordVersion (
+	formInstanceRecordVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	formInstanceId LONG,
+	formInstanceVersion VARCHAR(75) null,
+	formInstanceRecordId LONG,
+	version VARCHAR(75) null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null,
+	storageId LONG
+);
+
+create table DDMFormInstanceVersion (
+	formInstanceVersionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	formInstanceId LONG,
+	structureVersionId LONG,
+	name STRING null,
+	description STRING null,
+	settings_ TEXT null,
+	version VARCHAR(75) null,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
+);
+
 create table DDMStorageLink (
 	uuid_ VARCHAR(75) null,
 	storageLinkId LONG not null primary key,

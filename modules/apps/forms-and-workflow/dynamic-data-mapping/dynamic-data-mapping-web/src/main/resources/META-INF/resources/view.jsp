@@ -34,6 +34,14 @@ OrderByComparator<DDMStructure> orderByComparator = DDMUtil.getStructureOrderByC
 structureSearch.setOrderByCol(ddmDisplayContext.getOrderByCol());
 structureSearch.setOrderByComparator(orderByComparator);
 structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
+
+if (ddmDisplay.getDescription(locale) != null) {
+	portletDisplay.setDescription(ddmDisplay.getDescription(locale));
+}
+
+if (ddmDisplay.getTitle(locale) != null) {
+	renderResponse.setTitle(ddmDisplay.getTitle(locale));
+}
 %>
 
 <c:if test="<%= showBackURL && ddmDisplay.isShowBackURLInTitleBar() %>">
@@ -41,8 +49,6 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<%
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(ddmDisplay.getViewStructuresBackURL(liferayPortletRequest, liferayPortletResponse));
-
-	renderResponse.setTitle(ddmDisplay.getTitle(locale));
 	%>
 
 </c:if>
@@ -76,7 +82,7 @@ structureSearch.setOrderByType(ddmDisplayContext.getOrderByType());
 	<div class="container-fluid-1280" id="<portlet:namespace />entriesContainer">
 		<liferay-ui:search-container
 			id="ddmStructures"
-			rowChecker="<%= new EmptyOnClickRowChecker(renderResponse) %>"
+			rowChecker="<%= new DDMStructureRowChecker(renderResponse) %>"
 			searchContainer="<%= structureSearch %>"
 		>
 			<liferay-ui:search-container-results>

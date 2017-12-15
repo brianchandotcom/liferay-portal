@@ -162,7 +162,13 @@ $sidebar-z-index: 1000;
 		display: none;
 	}
 
-	#field-type-menu-content span {
-		margin: 0 6px;
+	#field-type-menu-content {
+		span {
+			margin: 0 6px;
+		}
+
+		> div {
+			display: inline;
+		}
 	}
 }

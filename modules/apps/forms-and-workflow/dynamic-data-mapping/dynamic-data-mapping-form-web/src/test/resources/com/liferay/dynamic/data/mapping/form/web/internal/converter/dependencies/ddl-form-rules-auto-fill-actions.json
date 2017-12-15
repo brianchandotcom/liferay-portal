@@ -1,0 +1,34 @@
+[
+	{
+		"actions": [
+			{
+				"action": "auto-fill",
+				"ddmDataProviderInstanceUUID": "c36fcb8c-7418-e6c8-cb66-68c2bba6333c",
+				"inputs": {
+					"zipCode": "TypeYourZipCode"
+				},
+				"outputs": {
+					"city": "YourCity",
+					"neighborhood": "YourNeighborhood",
+					"state": "YourState",
+					"street": "YourStreet"
+				}
+			}
+		],
+		"conditions": [
+			{
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field1"
+					},
+					{
+						"type": "integer",
+						"value": "91765"
+					}
+				],
+				"operator": "equals-to"
+			}
+		]
+	}
+]

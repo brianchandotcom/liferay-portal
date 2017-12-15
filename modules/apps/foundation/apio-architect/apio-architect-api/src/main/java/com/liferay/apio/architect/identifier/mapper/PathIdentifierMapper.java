@@ -26,8 +26,8 @@ import com.liferay.apio.architect.uri.Path;
  * <p>
  * Instances of {@code PathIdentifierMapper} should only be created for
  * identifiers used as a single model's identifier. The identifier's class can
- * then be provided as a parameter in the {@code addCollectionPageItemGetter}
- * methods of {@link com.liferay.apio.architect.routes.Routes.Builder}.
+ * then be provided as a parameter in the methods of the different routes
+ * builders.
  * </p>
  *
  * @author Alejandro Hernández

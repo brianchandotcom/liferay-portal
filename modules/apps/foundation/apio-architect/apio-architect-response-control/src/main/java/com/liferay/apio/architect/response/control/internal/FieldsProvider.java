@@ -23,7 +23,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -32,8 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide {@link Fields} as a parameter in the methods of {@link
- * com.liferay.apio.architect.routes.Routes.Builder}.
+ * Lets consumers use the {@code fields} affordance in order to select which
+ * fields must be included in representations.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -74,41 +73,19 @@ public class FieldsProvider implements Provider<Fields> {
 				entry -> Arrays.asList(entry.getValue()[0].split(",")))
 		);
 
-		return new FieldsImpl(fieldsMap);
-	}
+		return types -> field -> {
+			Stream<String> typesStream = types.stream();
 
-	public static class FieldsImpl implements Fields {
-
-		public FieldsImpl(Map<String, List<String>> fieldsMap) {
-			_fieldsMap = fieldsMap;
-		}
-
-		@Override
-		public Predicate<String> getFieldsPredicate(List<String> types) {
-			return field -> {
-				Stream<String> stream = types.stream();
-
-				List<String> fields = stream.map(
-					_fieldsMap::get
-				).filter(
-					Objects::nonNull
-				).flatMap(
-					List::stream
-				).collect(
-					Collectors.toList()
-				);
-
-				if (fields.isEmpty() || fields.contains(field)) {
-					return true;
-				}
-				else {
-					return false;
-				}
-			};
-		}
-
-		private final Map<String, List<String>> _fieldsMap;
-
+			return typesStream.map(
+				fieldsMap::get
+			).filter(
+				Objects::nonNull
+			).flatMap(
+				List::stream
+			).anyMatch(
+				field::equals
+			);
+		};
 	}
 
 	private static final String _REGEXP = "fields\\[([A-Z|a-z]+)]";

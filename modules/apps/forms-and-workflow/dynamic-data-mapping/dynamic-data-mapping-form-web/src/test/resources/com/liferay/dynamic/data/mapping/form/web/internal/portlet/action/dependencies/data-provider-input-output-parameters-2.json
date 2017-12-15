@@ -1,0 +1,32 @@
+{
+	"inputs": [
+		{
+			"label": "A",
+			"name": "A",
+			"required": true,
+			"type": "number"
+		},
+		{
+			"label": "B",
+			"name": "B",
+			"required": false,
+			"type": "text"
+		},
+		{
+			"label": "C",
+			"name": "C",
+			"required": true,
+			"type": "text"
+		}
+	],
+	"outputs": [
+		{
+			"name": "d",
+			"type": "text"
+		},
+		{
+			"name": "e",
+			"type": "number"
+		}
+	]
+}

@@ -14,46 +14,59 @@
 
 package com.liferay.apio.architect.pagination;
 
-import aQute.bnd.annotation.ProviderType;
-
 /**
- * Defines pagination for a collection endpoint. An instance of this interface
- * is handed to resources that handle pagination parameters.
+ * Defines pagination for a collection endpoint. An instance of this class is
+ * handed to resources that handle pagination parameters.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  * @see    Page
  */
-@ProviderType
-public interface Pagination {
+public class Pagination {
+
+	public Pagination(int itemsPerPage, int pageNumber) {
+		_itemsPerPage = itemsPerPage;
+		_pageNumber = pageNumber;
+	}
 
 	/**
 	 * Returns the position of the requested page's last element.
 	 *
 	 * @return the position of the requested page's last element
 	 */
-	public int getEndPosition();
+	public int getEndPosition() {
+		return _pageNumber * _itemsPerPage;
+	}
 
 	/**
 	 * Returns the selected number of items per page.
 	 *
 	 * @return the selected number of items per page
 	 */
-	public int getItemsPerPage();
+	public int getItemsPerPage() {
+		return _itemsPerPage;
+	}
 
 	/**
 	 * Returns the requested page's number.
 	 *
 	 * @return the requested page's number
 	 */
-	public int getPageNumber();
+	public int getPageNumber() {
+		return _pageNumber;
+	}
 
 	/**
 	 * Returns the position of the requested page's first element.
 	 *
 	 * @return the position of the requested page's first element
 	 */
-	public int getStartPosition();
+	public int getStartPosition() {
+		return (_pageNumber - 1) * _itemsPerPage;
+	}
+
+	private final int _itemsPerPage;
+	private final int _pageNumber;
 
 }

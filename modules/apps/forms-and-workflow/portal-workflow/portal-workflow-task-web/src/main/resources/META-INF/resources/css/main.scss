@@ -331,6 +331,10 @@
 	height: 10.5em;
 	margin-bottom: 2em;
 	overflow-y: auto;
+
+	textarea {
+		height: 7.5em;
+	}
 }
 
 .task-button {

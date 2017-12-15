@@ -15,12 +15,14 @@
 package com.liferay.apio.architect.sample.internal.resource;
 
 import com.liferay.apio.architect.identifier.LongIdentifier;
-import com.liferay.apio.architect.identifier.RootIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
+import com.liferay.apio.architect.representor.Representable;
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.routes.Routes;
+import com.liferay.apio.architect.router.CollectionRouter;
+import com.liferay.apio.architect.router.ItemRouter;
+import com.liferay.apio.architect.routes.CollectionRoutes;
+import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.sample.internal.model.Person;
 
 import java.time.Instant;
@@ -41,13 +43,41 @@ import org.osgi.service.component.annotations.Component;
  *
  * @author Alejandro Hernández
  */
-@Component(immediate = true)
+@Component(
+	immediate = true,
+	service = {CollectionRouter.class, ItemRouter.class, Representable.class}
+)
 public class PersonCollectionResource
-	implements CollectionResource<Person, LongIdentifier> {
+	implements CollectionRouter<Person>, ItemRouter<Person, LongIdentifier>,
+			   Representable<Person, LongIdentifier> {
+
+	@Override
+	public CollectionRoutes<Person> collectionRoutes(
+		CollectionRoutes.Builder<Person> builder) {
+
+		return builder.addGetter(
+			this::_getPageItems
+		).addCreator(
+			this::_addPerson
+		).build();
+	}
 
 	@Override
 	public String getName() {
 		return "people";
+	}
+
+	@Override
+	public ItemRoutes<Person> itemRoutes(
+		ItemRoutes.Builder<Person, LongIdentifier> builder) {
+
+		return builder.addGetter(
+			this::_getPerson
+		).addRemover(
+			this::_deletePerson
+		).addUpdater(
+			this::_updatePerson
+		).build();
 	}
 
 	@Override
@@ -77,26 +107,7 @@ public class PersonCollectionResource
 		).build();
 	}
 
-	@Override
-	public Routes<Person> routes(
-		Routes.Builder<Person, LongIdentifier> builder) {
-
-		return builder.addCollectionPageGetter(
-			this::_getPageItems, RootIdentifier.class
-		).addCollectionPageItemCreator(
-			this::_addPerson, RootIdentifier.class
-		).addCollectionPageItemGetter(
-			this::_getPerson
-		).addCollectionPageItemRemover(
-			this::_deletePerson
-		).addCollectionPageItemUpdater(
-			this::_updatePerson
-		).build();
-	}
-
-	private Person _addPerson(
-		RootIdentifier rootIdentifier, Map<String, Object> body) {
-
+	private Person _addPerson(Map<String, Object> body) {
 		String address = (String)body.get("address");
 		String avatar = (String)body.get("image");
 
@@ -117,9 +128,7 @@ public class PersonCollectionResource
 		Person.deletePerson(personLongIdentifier.getId());
 	}
 
-	private PageItems<Person> _getPageItems(
-		Pagination pagination, RootIdentifier rootIdentifier) {
-
+	private PageItems<Person> _getPageItems(Pagination pagination) {
 		List<Person> persons = Person.getPeople(
 			pagination.getStartPosition(), pagination.getEndPosition());
 		int count = Person.getPeopleCount();

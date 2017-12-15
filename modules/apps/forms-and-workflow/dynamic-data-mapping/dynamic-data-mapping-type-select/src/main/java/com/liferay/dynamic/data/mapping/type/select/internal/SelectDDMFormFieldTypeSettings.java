@@ -23,6 +23,7 @@ import com.liferay.dynamic.data.mapping.annotations.DDMFormLayoutRow;
 import com.liferay.dynamic.data.mapping.annotations.DDMFormRule;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldTypeSettings;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
+import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 
 /**
  * @author Marcellus Tavares
@@ -37,6 +38,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 		),
 		@DDMFormRule(
 			actions = {
+				"setOptions('predefinedValue', getValue('options'))",
 				"setRequired('ddmDataProviderInstanceId', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('ddmDataProviderInstanceOutput', equals(getValue('dataSourceType'), \"data-provider\"))",
 				"setRequired('options', equals(getValue('dataSourceType'), \"manual\"))",
@@ -130,5 +132,16 @@ public interface SelectDDMFormFieldTypeSettings
 		properties = {"showLabel=false"}, type = "options"
 	)
 	public DDMFormFieldOptions options();
+
+	@DDMFormField(
+		label = "%predefined-value",
+		properties = {
+			"placeholder=%enter-a-default-value",
+			"tooltip=%enter-a-default-value-that-is-submitted-if-no-other-value-is-entered"
+		},
+		type = "select"
+	)
+	@Override
+	public LocalizedValue predefinedValue();
 
 }

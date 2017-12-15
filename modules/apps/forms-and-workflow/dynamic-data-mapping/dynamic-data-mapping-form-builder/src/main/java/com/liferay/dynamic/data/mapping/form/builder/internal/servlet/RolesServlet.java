@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.RoleService;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.IOException;
 
@@ -59,6 +60,9 @@ public class RolesServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		JSONArray jsonArray = getRolesJSONArray();
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+		response.setStatus(HttpServletResponse.SC_OK);
 
 		ServletResponseUtil.write(response, jsonArray.toJSONString());
 	}

@@ -118,7 +118,10 @@ public class SelectDDMFormFieldTypeSettingsTest
 
 		actions = ddmFormRule1.getActions();
 
-		Assert.assertEquals(actions.toString(), 7, actions.size());
+		Assert.assertEquals(actions.toString(), 8, actions.size());
+		Assert.assertTrue(
+			actions.contains(
+				"setOptions('predefinedValue', getValue('options'))"));
 		Assert.assertTrue(
 			actions.contains(
 				"setRequired('ddmDataProviderInstanceId', equals(getValue(" +

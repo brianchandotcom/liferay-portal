@@ -11,22 +11,22 @@
  * Prints the DDM form select field.
  */
 {template .render}
+	{@param name: string}
+	{@param options: list<[label: string, value: string]>}
+	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
+	{@param value: list<?>}
+	{@param visible: bool}
 	{@param? badgeCloseIcon: html}
 	{@param? dir: string}
 	{@param? label: string}
-	{@param? multiple: ?}
-	{@param name: string}
+	{@param? multiple: bool}
 	{@param? open: bool}
-	{@param options: list<[label: string, value: string]>}
 	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? selectCaretDoubleIcon: html}
 	{@param? selectSearchIcon: html}
 	{@param? showLabel: bool}
-	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
 	{@param? tip: string}
-	{@param value: list<?>}
-	{@param visible: bool}
 
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
@@ -42,18 +42,19 @@
 
 				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}">
 					{if $multiple}
-						{if length($value) == 0}
-							<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
-						{else}
+						{if $value and length($value) > 0}
 							<ul class="multiple-badge-list">
-								{foreach $currentValue in $value}
+								{foreach $option in $options}
 									{call .badge_item}
 										{param badgeCloseIcon: $badgeCloseIcon /}
-										{param value: $currentValue.value /}
-										{param label: $currentValue.label /}
+										{param option: $option /}
+										{param readOnly: $readOnly /}
+										{param value: $value /}
 									{/call}
 								{/foreach}
 							</ul>
+						{else}
+							<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
 						{/if}
 					{else}
 						{if $value and length($value) > 0}
@@ -96,24 +97,34 @@
  * Prints the badge item.
  */
 {template .badge_item}
+	{@param option: [label: string, value: string]}
+	{@param value: list<?>}
 	{@param? badgeCloseIcon: html}
-	{@param? label: string}
-	{@param value: string}
+	{@param? readOnly: bool}
 
-	<li>
-		<span class="badge badge-default badge-sm multiple-badge" data-original-title="{$label}" title="{$label}">
-			{$label}
-			<a class="trigger-badge-item-close" data-badge-value="{$value}" href="javascript:void(0)">{$badgeCloseIcon}</a>
-		</span>
-	</li>
+	{if $value}
+		{foreach $currentValue in $value}
+			{if $option.value == $currentValue.value}
+				<li>
+					<span class="badge badge-default badge-sm multiple-badge" data-original-title="{$option.label}" title="{$option.label}">
+						{$option.label}
+						{if not $readOnly}
+							<a class="trigger-badge-item-close" data-badge-value="{$option.value}" href="javascript:void(0)">{$badgeCloseIcon}</a>
+						{/if}
+					</span>
+				</li>
+			{/if}
+		{/foreach}
+	{/if}
+
 {/template}
 
 /**
  * Prints the select label.
  */
 {template .select_label}
-	{@param? label: string}
 	{@param name: string}
+	{@param? label: string}
 	{@param? readOnly: bool}
 	{@param? required: bool}
 	{@param? tip: string}
@@ -133,13 +144,13 @@
  * Prints hidden select tag.
  */
 {template .hidden_select}
-	{@param? dir: string}
-	{@param? multiple: ?}
 	{@param name: string}
 	{@param options: list<[label: string, value: string]>}
-	{@param? readOnly: bool}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
 	{@param value: list<?>}
+	{@param? dir: string}
+	{@param? multiple: bool}
+	{@param? readOnly: bool}
 
 	<select class="form-control hide" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
 		{if not $readOnly}
@@ -162,9 +173,9 @@
  * Prints the DDM form hidden select options.
  */
 {template .select_hidden_options}
-	{@param? dir: string}
 	{@param option: [label: string, value: string]}
 	{@param values: list<?>}
+	{@param? dir: string}
 
 	{let $selected kind="attributes"}
 		{if $values}
@@ -183,15 +194,15 @@
  * Prints the DDM form select field UI itens.
  */
 {template .select_options}
-	{@param? multiple: ?}
 	{@param options: list<[label: string, value: string]>}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
 	{@param value: list<?>}
+	{@param? multiple: bool}
 
 	<ul class="results-chosen">
 		{if length($options) > 0}
 			{foreach $option in $options}
-				{let $selected kind="attributes"}
+				{let $selected kind="text"}
 					{if $value}
 						{foreach $currentValue in $value}
 							{if $currentValue.value == $option.value}
@@ -201,9 +212,9 @@
 					{/if}
 				{/let}
 
-				<li class="select-option-item {if $selected}option-selected{/if}" data-option-index="{index($option)}" data-option-selected="{if $selected}true{/if}" data-option-value="{$option.value}">
+				<li class="select-option-item {if $selected == 'selected'}option-selected{/if}" data-option-index="{index($option)}" data-option-selected="{if $selected == 'selected'}true{/if}" data-option-value="{$option.value}">
 					{if $multiple}
-						<input type="checkbox" value="" {if $selected}checked{/if}>
+						<input type="checkbox" value="" {if $selected == 'selected'}checked{/if}>
 					{/if}
 					<span title="{$option.label}">
 						{$option.label}

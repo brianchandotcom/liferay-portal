@@ -24,7 +24,7 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Lets resources provide {@link Pagination} as a parameter in the methods of
- * {@link Routes.Builder}.
+ * the different routes builders.
  *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
@@ -42,7 +42,7 @@ public class PaginationProvider implements Provider<Pagination> {
 		int pageNumber = _getAsInt(
 			httpServletRequest.getParameter("page"), _PAGE_NUMBER_DEFAULT);
 
-		return new DefaultPagination(itemsPerPage, pageNumber);
+		return new Pagination(itemsPerPage, pageNumber);
 	}
 
 	private int _getAsInt(String parameterValue, int defaultValue) {
@@ -51,13 +51,7 @@ public class PaginationProvider implements Provider<Pagination> {
 		return stringTry.map(
 			Integer::parseInt
 		).filter(
-			integer -> {
-				if (integer > 0) {
-					return true;
-				}
-
-				return false;
-			}
+			integer -> integer > 0
 		).orElse(
 			defaultValue
 		);
@@ -66,37 +60,5 @@ public class PaginationProvider implements Provider<Pagination> {
 	private static final int _ITEMS_PER_PAGE_DEFAULT = 30;
 
 	private static final int _PAGE_NUMBER_DEFAULT = 1;
-
-	private static class DefaultPagination implements Pagination {
-
-		public DefaultPagination(int itemsPerPage, int pageNumber) {
-			_itemsPerPage = itemsPerPage;
-			_pageNumber = pageNumber;
-		}
-
-		@Override
-		public int getEndPosition() {
-			return _pageNumber * _itemsPerPage;
-		}
-
-		@Override
-		public int getItemsPerPage() {
-			return _itemsPerPage;
-		}
-
-		@Override
-		public int getPageNumber() {
-			return _pageNumber;
-		}
-
-		@Override
-		public int getStartPosition() {
-			return (_pageNumber - 1) * _itemsPerPage;
-		}
-
-		private final int _itemsPerPage;
-		private final int _pageNumber;
-
-	}
 
 }

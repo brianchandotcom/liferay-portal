@@ -197,6 +197,11 @@ gradle.beforeProject {
 					deleteLiferayHome = false
 				}
 			}
+
+			if (project.path.startsWith(":test:") && _getRootDir(projectDir, ".gitrepo")) {
+				configurations.compile.transitive = true
+				configurations.compileClasspath.transitive = true
+			}
 		}
 
 		pluginManager.withPlugin("org.ysb33r.gradletest") {

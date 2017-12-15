@@ -53,6 +53,9 @@ public class NumericDDMFormFieldTemplateContextContributor
 		Locale locale = ddmFormFieldRenderingContext.getLocale();
 
 		parameters.put("placeholder", getValueString(placeholder, locale));
+		parameters.put(
+			"predefinedValue",
+			getValueString(ddmFormField.getPredefinedValue(), locale));
 
 		LocalizedValue tooltip = (LocalizedValue)ddmFormField.getProperty(
 			"tooltip");

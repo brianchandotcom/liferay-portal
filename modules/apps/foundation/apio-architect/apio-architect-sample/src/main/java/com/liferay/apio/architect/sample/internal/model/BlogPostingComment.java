@@ -167,12 +167,10 @@ public class BlogPostingComment {
 
 		Optional<BlogPostingComment> newBlogPostingCommentOptional =
 			oldBlogPostingCommentOptional.map(
-				blogPostingComment -> {
-					return new BlogPostingComment(
-						blogPostingComment.getAuthorId(), blogPostingCommentId,
-						blogPostingComment.getBlogPostingId(), content,
-						blogPostingComment.getCreateDate(), new Date());
-				});
+				blogPostingComment -> new BlogPostingComment(
+					blogPostingComment.getAuthorId(), blogPostingCommentId,
+					blogPostingComment.getBlogPostingId(), content,
+					blogPostingComment.getCreateDate(), new Date()));
 
 		newBlogPostingCommentOptional.ifPresent(
 			blogPostingComment -> {
@@ -256,7 +254,7 @@ public class BlogPostingComment {
 	}
 
 	private static Map<Long, Map<Long, BlogPostingComment>>
-		_blogPostingComments = _blogPostingComments = new HashMap<>();
+		_blogPostingComments = new HashMap<>();
 	private static final AtomicLong _count = new AtomicLong(0);
 
 	static {

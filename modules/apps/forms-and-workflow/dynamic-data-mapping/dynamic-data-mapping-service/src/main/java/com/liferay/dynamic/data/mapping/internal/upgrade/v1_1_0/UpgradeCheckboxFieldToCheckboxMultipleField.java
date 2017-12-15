@@ -179,7 +179,7 @@ public class UpgradeCheckboxFieldToCheckboxMultipleField
 	protected void updateRecords(DDMForm ddmForm, long recordSetId)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(7);
+		StringBundler sb = new StringBundler(5);
 
 		sb.append("select DDLRecordVersion.ddmStorageId, DDMContent.data_ ");
 		sb.append("from DDLRecordVersion inner join DDLRecordSet on ");

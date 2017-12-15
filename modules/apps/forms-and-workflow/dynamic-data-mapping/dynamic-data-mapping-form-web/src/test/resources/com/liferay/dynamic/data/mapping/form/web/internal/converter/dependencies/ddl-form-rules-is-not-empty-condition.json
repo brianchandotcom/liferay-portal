@@ -1,0 +1,22 @@
+[
+	{
+		"actions": [
+			{
+				"action": "show",
+				"target": "Field1"
+			}
+		],
+		"conditions": [
+			{
+
+				"operands": [
+					{
+						"type": "field",
+						"value": "Field0"
+					}
+				],
+				"operator": "not-is-empty"
+			}
+		]
+	}
+]

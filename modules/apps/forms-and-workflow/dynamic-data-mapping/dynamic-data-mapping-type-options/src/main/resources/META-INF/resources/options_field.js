@@ -319,7 +319,9 @@ AUI.add(
 
 						options.forEach(
 							function(option) {
-								option.set('generationLocked', !editable);
+								if (option.getValue()) {
+									option.set('generationLocked', !editable);
+								}
 							}
 						);
 					},

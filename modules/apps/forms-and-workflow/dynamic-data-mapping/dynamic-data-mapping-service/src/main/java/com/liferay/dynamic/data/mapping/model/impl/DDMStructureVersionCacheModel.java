@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -119,7 +118,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		ddmStructureVersionImpl.setUserId(userId);
 
 		if (userName == null) {
-			ddmStructureVersionImpl.setUserName(StringPool.BLANK);
+			ddmStructureVersionImpl.setUserName("");
 		}
 		else {
 			ddmStructureVersionImpl.setUserName(userName);
@@ -135,7 +134,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		ddmStructureVersionImpl.setStructureId(structureId);
 
 		if (version == null) {
-			ddmStructureVersionImpl.setVersion(StringPool.BLANK);
+			ddmStructureVersionImpl.setVersion("");
 		}
 		else {
 			ddmStructureVersionImpl.setVersion(version);
@@ -144,28 +143,28 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		ddmStructureVersionImpl.setParentStructureId(parentStructureId);
 
 		if (name == null) {
-			ddmStructureVersionImpl.setName(StringPool.BLANK);
+			ddmStructureVersionImpl.setName("");
 		}
 		else {
 			ddmStructureVersionImpl.setName(name);
 		}
 
 		if (description == null) {
-			ddmStructureVersionImpl.setDescription(StringPool.BLANK);
+			ddmStructureVersionImpl.setDescription("");
 		}
 		else {
 			ddmStructureVersionImpl.setDescription(description);
 		}
 
 		if (definition == null) {
-			ddmStructureVersionImpl.setDefinition(StringPool.BLANK);
+			ddmStructureVersionImpl.setDefinition("");
 		}
 		else {
 			ddmStructureVersionImpl.setDefinition(definition);
 		}
 
 		if (storageType == null) {
-			ddmStructureVersionImpl.setStorageType(StringPool.BLANK);
+			ddmStructureVersionImpl.setStorageType("");
 		}
 		else {
 			ddmStructureVersionImpl.setStorageType(storageType);
@@ -176,7 +175,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		ddmStructureVersionImpl.setStatusByUserId(statusByUserId);
 
 		if (statusByUserName == null) {
-			ddmStructureVersionImpl.setStatusByUserName(StringPool.BLANK);
+			ddmStructureVersionImpl.setStatusByUserName("");
 		}
 		else {
 			ddmStructureVersionImpl.setStatusByUserName(statusByUserName);
@@ -241,7 +240,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -252,7 +251,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		objectOutput.writeLong(structureId);
 
 		if (version == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(version);
@@ -261,28 +260,28 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		objectOutput.writeLong(parentStructureId);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (definition == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(definition);
 		}
 
 		if (storageType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(storageType);
@@ -295,7 +294,7 @@ public class DDMStructureVersionCacheModel implements CacheModel<DDMStructureVer
 		objectOutput.writeLong(statusByUserId);
 
 		if (statusByUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(statusByUserName);

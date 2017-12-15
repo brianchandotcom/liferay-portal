@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -313,8 +312,7 @@ public class TemplateHandlerRegistryImpl implements TemplateHandlerRegistry {
 
 			for (Locale locale : LanguageUtil.getAvailableLocales(groupId)) {
 				ResourceBundle resourceBundle =
-					resourceBundleLoader.loadResourceBundle(
-						LocaleUtil.toLanguageId(locale));
+					resourceBundleLoader.loadResourceBundle(locale);
 
 				map.put(locale, LanguageUtil.get(resourceBundle, key));
 			}

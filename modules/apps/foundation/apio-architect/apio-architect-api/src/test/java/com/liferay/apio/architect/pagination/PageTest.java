@@ -36,21 +36,7 @@ public class PageTest {
 	@Before
 	public void setUp() {
 		_pageItems = new PageItems<>(Collections.singleton("apio"), 10);
-
-		_pagination = Mockito.mock(Pagination.class);
-
-		Mockito.when(
-			_pagination.getItemsPerPage()
-		).thenReturn(
-			1
-		);
-
-		Mockito.when(
-			_pagination.getPageNumber()
-		).thenReturn(
-			4
-		);
-
+		_pagination = Mockito.spy(new Pagination(1, 4));
 		_path = new Path("name", "id");
 
 		_page = new Page<>(String.class, _pageItems, _pagination, _path);
@@ -94,13 +80,14 @@ public class PageTest {
 		assertThat(_page.getTotalCount(), is(equalTo(10)));
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test
 	public void testHasNextReturnsFalseWhenIsLast() {
-		Mockito.when(
-			_pagination.getPageNumber()
-		).thenReturn(
+		Mockito.doReturn(
 			10
-		);
+		).when(
+			_pagination
+		).getPageNumber();
 
 		_path = new Path("name", "id");
 
@@ -115,13 +102,14 @@ public class PageTest {
 		assertThat(_page.hasNext(), is(true));
 	}
 
+	@SuppressWarnings("ResultOfMethodCallIgnored")
 	@Test
 	public void testHasPreviousReturnsFalseWhenIsFirst() {
-		Mockito.when(
-			_pagination.getPageNumber()
-		).thenReturn(
+		Mockito.doReturn(
 			1
-		);
+		).when(
+			_pagination
+		).getPageNumber();
 
 		_path = new Path("name", "id");
 

@@ -22,8 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * Lets resources provide {@link APITitle} as a parameter in the methods of
- * {@link Routes.Builder}.
+ * Provides the title of the API.
  *
  * @author Alejandro Hernández
  */

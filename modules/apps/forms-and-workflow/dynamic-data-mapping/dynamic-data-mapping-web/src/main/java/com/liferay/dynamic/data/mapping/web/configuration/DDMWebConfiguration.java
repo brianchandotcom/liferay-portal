@@ -37,7 +37,7 @@ public interface DDMWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "true", description = "autogenerate-structure-key-description",
-		required = false
+		name = "autogenerate-structure-key", required = false
 	)
 	public boolean autogenerateStructureKey();
 
@@ -50,7 +50,7 @@ public interface DDMWebConfiguration {
 	 */
 	@Meta.AD(
 		deflt = "true", description = "autogenerate-template-key-description",
-		required = false
+		name = "autogenerate-template-key", required = false
 	)
 	public boolean autogenerateTemplateKey();
 

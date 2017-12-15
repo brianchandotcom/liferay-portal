@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.Map;
@@ -28,6 +27,6 @@ import java.util.function.Function;
  * @author Alejandro Hernández
  */
 @FunctionalInterface
-public interface CreateItemFunction<T> extends RequestFunction
-	<Function<Identifier, Function<Map<String, Object>, SingleModel<T>>>> {
+public interface CreateItemFunction<T>
+	extends RequestFunction<Function<Map<String, Object>, SingleModel<T>>> {
 }

@@ -40,7 +40,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
@@ -465,7 +464,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -561,7 +560,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -573,7 +572,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -604,7 +603,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -616,7 +615,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getVersionUserName() {
 		if (_versionUserName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _versionUserName;
@@ -659,7 +658,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getClassName() {
 		if (getClassNameId() <= 0) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		return PortalUtil.getClassName(getClassNameId());
@@ -737,7 +736,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getTemplateKey() {
 		if (_templateKey == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _templateKey;
@@ -763,7 +762,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getVersion() {
 		if (_version == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _version;
@@ -779,7 +778,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -878,7 +877,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -981,7 +980,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getType() {
 		if (_type == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _type;
@@ -1007,7 +1006,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getMode() {
 		if (_mode == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _mode;
@@ -1033,7 +1032,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getLanguage() {
 		if (_language == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _language;
@@ -1059,7 +1058,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getScript() {
 		if (_script == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _script;
@@ -1132,7 +1131,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 	@Override
 	public String getSmallImageURL() {
 		if (_smallImageURL == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _smallImageURL;
@@ -1219,7 +1218,7 @@ public class DDMTemplateModelImpl extends BaseModelImpl<DDMTemplate>
 		String xml = getName();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

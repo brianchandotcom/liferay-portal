@@ -21,7 +21,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -118,7 +117,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		DDMStructureImpl ddmStructureImpl = new DDMStructureImpl();
 
 		if (uuid == null) {
-			ddmStructureImpl.setUuid(StringPool.BLANK);
+			ddmStructureImpl.setUuid("");
 		}
 		else {
 			ddmStructureImpl.setUuid(uuid);
@@ -130,7 +129,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		ddmStructureImpl.setUserId(userId);
 
 		if (userName == null) {
-			ddmStructureImpl.setUserName(StringPool.BLANK);
+			ddmStructureImpl.setUserName("");
 		}
 		else {
 			ddmStructureImpl.setUserName(userName);
@@ -139,7 +138,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		ddmStructureImpl.setVersionUserId(versionUserId);
 
 		if (versionUserName == null) {
-			ddmStructureImpl.setVersionUserName(StringPool.BLANK);
+			ddmStructureImpl.setVersionUserName("");
 		}
 		else {
 			ddmStructureImpl.setVersionUserName(versionUserName);
@@ -163,42 +162,42 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		ddmStructureImpl.setClassNameId(classNameId);
 
 		if (structureKey == null) {
-			ddmStructureImpl.setStructureKey(StringPool.BLANK);
+			ddmStructureImpl.setStructureKey("");
 		}
 		else {
 			ddmStructureImpl.setStructureKey(structureKey);
 		}
 
 		if (version == null) {
-			ddmStructureImpl.setVersion(StringPool.BLANK);
+			ddmStructureImpl.setVersion("");
 		}
 		else {
 			ddmStructureImpl.setVersion(version);
 		}
 
 		if (name == null) {
-			ddmStructureImpl.setName(StringPool.BLANK);
+			ddmStructureImpl.setName("");
 		}
 		else {
 			ddmStructureImpl.setName(name);
 		}
 
 		if (description == null) {
-			ddmStructureImpl.setDescription(StringPool.BLANK);
+			ddmStructureImpl.setDescription("");
 		}
 		else {
 			ddmStructureImpl.setDescription(description);
 		}
 
 		if (definition == null) {
-			ddmStructureImpl.setDefinition(StringPool.BLANK);
+			ddmStructureImpl.setDefinition("");
 		}
 		else {
 			ddmStructureImpl.setDefinition(definition);
 		}
 
 		if (storageType == null) {
-			ddmStructureImpl.setStorageType(StringPool.BLANK);
+			ddmStructureImpl.setStorageType("");
 		}
 		else {
 			ddmStructureImpl.setStorageType(storageType);
@@ -262,7 +261,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -277,7 +276,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -286,7 +285,7 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		objectOutput.writeLong(versionUserId);
 
 		if (versionUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(versionUserName);
@@ -300,42 +299,42 @@ public class DDMStructureCacheModel implements CacheModel<DDMStructure>,
 		objectOutput.writeLong(classNameId);
 
 		if (structureKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(structureKey);
 		}
 
 		if (version == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(version);
 		}
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (definition == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(definition);
 		}
 
 		if (storageType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(storageType);

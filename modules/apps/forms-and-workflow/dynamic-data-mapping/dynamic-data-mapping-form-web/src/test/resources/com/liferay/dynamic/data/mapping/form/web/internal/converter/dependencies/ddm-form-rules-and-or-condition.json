@@ -1,0 +1,28 @@
+[
+	{
+		"actions": [
+			"setVisible('Field2', true)"
+		],
+		"condition": "not(equals(getValue('Field1'), 'Joe')) OR not(contains(getValue('Field1'), 'Blogs'))"
+	},
+	{
+		"actions": [
+			"setEnabled('Field3', true)"
+		],
+		"condition": "contains(getValue('Field1'), getValue('Field2')) AND contains(getValue('Field2'), 4)"
+	},
+	{
+		"actions": [
+			"setEnabled('Field3', true)",
+			"setVisible('Field4', true)"
+		],
+		"condition": "equals(getValue('Field1'), getValue('Field2')) OR contains(getValue('Field2'), 4) OR equals(5, 3)"
+	},
+	{
+		"actions": [
+			"setEnabled('Field3', true)",
+			"setVisible('Field4', true)"
+		],
+		"condition": "contains(getValue('Field2'), '4') OR equals(5.3, 5.3)"
+	}
+]

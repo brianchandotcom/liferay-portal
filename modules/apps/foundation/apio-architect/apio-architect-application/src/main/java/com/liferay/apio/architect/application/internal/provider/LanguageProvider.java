@@ -28,7 +28,14 @@ import org.osgi.service.component.annotations.Component;
 
 /**
  * Lets resources provide the requested {@link Language} as a parameter in the
- * methods of {@link Routes.Builder}.
+ * methods of any of the routes builders.
+ *
+ * <p>
+ * This provider is mandatory in order to use {@link
+ * com.liferay.apio.architect.representor.Representor.Builder.FirstStep#addLocalizedString(
+ * String, BiFunction)} when declaring a {@link
+ * com.liferay.apio.architect.representor.Representor}.
+ * </p>
  *
  * @author Alejandro Hernández
  */

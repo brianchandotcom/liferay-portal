@@ -16,6 +16,7 @@ package com.liferay.message.boards.internal.verify;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -27,6 +28,7 @@ import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyUUID;
 
@@ -48,6 +50,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Override
 	protected void doVerify() throws Exception {
+		verifyAuditedModels();
 		verifyStatisticsForCategories();
 		verifyStatisticsForThreads();
 		verifyAssetsForMessages();
@@ -147,6 +150,14 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void verifyAuditedModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyAuditedModel.verify(
+				new MBDiscussionVerifiableModel(),
+				new MBThreadFlagVerifiableModel());
+		}
+	}
+
 	protected void verifyStatisticsForCategories() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (_log.isDebugEnabled()) {
@@ -206,7 +217,8 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void verifyUUIDModels() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
-				new MBBanVerifiableModel(), new MBThreadFlagVerifiableModel());
+				new MBBanVerifiableModel(), new MBDiscussionVerifiableModel(),
+				new MBThreadFlagVerifiableModel());
 		}
 	}
 
@@ -221,5 +233,8 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	@Reference
 	private MBThreadLocalService _mbThreadLocalService;
+
+	private final VerifyAuditedModel _verifyAuditedModel =
+		new VerifyAuditedModel();
 
 }

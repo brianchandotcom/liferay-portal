@@ -135,7 +135,7 @@ public class RPCResponseTest {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
 			if (!cancelled) {
-				Assert.assertTrue(logRecords.isEmpty());
+				Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 				return;
 			}

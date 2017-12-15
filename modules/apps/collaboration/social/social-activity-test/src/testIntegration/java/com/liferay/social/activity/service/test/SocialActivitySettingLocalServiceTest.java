@@ -60,18 +60,22 @@ public class SocialActivitySettingLocalServiceTest
 			SocialConfigurationUtil.getActivityDefinitions(TEST_MODEL);
 
 		Assert.assertNotNull(defaultActivityDefinitions);
-		Assert.assertFalse(defaultActivityDefinitions.isEmpty());
+		Assert.assertFalse(
+			defaultActivityDefinitions.toString(),
+			defaultActivityDefinitions.isEmpty());
 
 		List<SocialActivityDefinition> activityDefinitions =
 			SocialActivitySettingLocalServiceUtil.getActivityDefinitions(
 				group.getGroupId(), TEST_MODEL);
 
 		Assert.assertNotNull(activityDefinitions);
-		Assert.assertFalse(activityDefinitions.isEmpty());
+		Assert.assertFalse(
+			activityDefinitions.toString(), activityDefinitions.isEmpty());
 		Assert.assertEquals(
 			activityDefinitions.toString(), defaultActivityDefinitions.size(),
 			activityDefinitions.size());
 		Assert.assertTrue(
+			activityDefinitions.toString(),
 			activityDefinitions.contains(defaultActivityDefinition));
 	}
 

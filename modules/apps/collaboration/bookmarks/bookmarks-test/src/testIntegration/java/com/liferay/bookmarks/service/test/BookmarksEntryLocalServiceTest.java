@@ -82,7 +82,9 @@ public class BookmarksEntryLocalServiceTest {
 			actualBookmarksEntries.toString(),
 			initialBookmarksEntries.size() + 1, actualBookmarksEntries.size());
 
-		Assert.assertTrue(actualBookmarksEntries.contains(entry));
+		Assert.assertTrue(
+			actualBookmarksEntries.toString(),
+			actualBookmarksEntries.contains(entry));
 	}
 
 	@DeleteAfterTestRun

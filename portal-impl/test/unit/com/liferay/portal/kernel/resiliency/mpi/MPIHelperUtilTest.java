@@ -291,7 +291,7 @@ public class MPIHelperUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -306,7 +306,7 @@ public class MPIHelperUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -360,7 +360,7 @@ public class MPIHelperUtilTest {
 			Assert.assertTrue(
 				MPIHelperUtil.registerSPIProvider(mockSPIProvider2));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Register SPI provider, duplicate name, with log
 
@@ -391,7 +391,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(
 				MPIHelperUtil.registerSPIProvider(mockSPIProvider3));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Get SPI provider
 
@@ -407,8 +407,12 @@ public class MPIHelperUtilTest {
 
 			Assert.assertEquals(
 				spiProviders.toString(), 2, spiProviders.size());
-			Assert.assertTrue(spiProviders.contains(mockSPIProvider1));
-			Assert.assertTrue(spiProviders.contains(mockSPIProvider2));
+			Assert.assertTrue(
+				spiProviders.toString(),
+				spiProviders.contains(mockSPIProvider1));
+			Assert.assertTrue(
+				spiProviders.toString(),
+				spiProviders.contains(mockSPIProvider2));
 
 			// Unregister SPI provider, null name
 
@@ -449,7 +453,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider3));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister SPI provider, mismatch instance, with log
 
@@ -473,7 +477,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(
 				MPIHelperUtil.unregisterSPIProvider(
 					new MockSPIProvider(name2)));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister SPI provider, concurrent remove failure, with log
 
@@ -542,7 +546,7 @@ public class MPIHelperUtilTest {
 					oldSPIProviderContainers);
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister SPI provider, with no SPI, with log
 
@@ -564,7 +568,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertTrue(
 				MPIHelperUtil.unregisterSPIProvider(mockSPIProvider1));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister SPI provider, with SPI, fail on stop, with log
 
@@ -631,7 +635,7 @@ public class MPIHelperUtilTest {
 			Assert.assertFalse(mockSPI1.stopped);
 			Assert.assertFalse(mockSPI2.destroyed);
 			Assert.assertTrue(mockSPI2.stopped);
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister SPI provider, with SPI, fail on catch, without log
 
@@ -668,7 +672,7 @@ public class MPIHelperUtilTest {
 				Assert.assertSame(runtimeException, re);
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister SPI provider, with SPI, success, with log
 
@@ -731,7 +735,7 @@ public class MPIHelperUtilTest {
 			Assert.assertTrue(mockSPI1.stopped);
 			Assert.assertTrue(mockSPI2.destroyed);
 			Assert.assertTrue(mockSPI2.stopped);
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -766,7 +770,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
 			Assert.assertFalse(MPIHelperUtil.registerSPI(mockSPI1));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Null SPI provider name
 
@@ -815,7 +819,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.registerSPI(mockSPI1));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Successful register, with log
 
@@ -879,7 +883,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertTrue(MPIHelperUtil.registerSPI(mockSPI2));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Duplicate register, with log
 
@@ -901,7 +905,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
 			Assert.assertFalse(MPIHelperUtil.registerSPI(mockSPI2));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Bad SPI impl
 
@@ -981,7 +985,7 @@ public class MPIHelperUtilTest {
 
 			spis = MPIHelperUtil.getSPIs("name2");
 
-			Assert.assertTrue(spis.isEmpty());
+			Assert.assertTrue(spis.toString(), spis.isEmpty());
 
 			// Unregister thread local shortcut, with log
 
@@ -1029,7 +1033,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
 			Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister no such SPI provider, with log
 
@@ -1063,7 +1067,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister no such SPI, with log
 
@@ -1099,7 +1103,7 @@ public class MPIHelperUtilTest {
 
 			Assert.assertFalse(MPIHelperUtil.unregisterSPI(mockSPI1));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister success, with log
 
@@ -1122,7 +1126,7 @@ public class MPIHelperUtilTest {
 			logRecords = captureHandler.resetLogLevel(Level.OFF);
 
 			Assert.assertTrue(MPIHelperUtil.unregisterSPI(mockSPI1));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Unregister fail on getting configuration
 

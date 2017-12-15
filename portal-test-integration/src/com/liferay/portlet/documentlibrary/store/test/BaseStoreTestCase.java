@@ -359,8 +359,10 @@ public abstract class BaseStoreTestCase {
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
-		Assert.assertTrue(fileNamesSet.contains(fileName1));
-		Assert.assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName1));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName2));
 	}
 
 	@Test
@@ -382,8 +384,10 @@ public abstract class BaseStoreTestCase {
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
-		Assert.assertTrue(fileNamesSet.contains(fileName1));
-		Assert.assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName1));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName2));
 	}
 
 	@Test
@@ -412,8 +416,10 @@ public abstract class BaseStoreTestCase {
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
-		Assert.assertTrue(fileNamesSet.contains(fileName1));
-		Assert.assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName1));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName2));
 
 		fileNames = store.getFileNames(companyId, repositoryId, subdirName);
 
@@ -458,8 +464,10 @@ public abstract class BaseStoreTestCase {
 
 		Set<String> fileNamesSet = SetUtil.fromArray(fileNames);
 
-		Assert.assertTrue(fileNamesSet.contains(fileName1));
-		Assert.assertTrue(fileNamesSet.contains(fileName2));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName1));
+		Assert.assertTrue(
+			fileNamesSet.toString(), fileNamesSet.contains(fileName2));
 	}
 
 	@Test

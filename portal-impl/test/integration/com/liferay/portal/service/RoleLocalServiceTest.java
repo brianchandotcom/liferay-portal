@@ -280,7 +280,7 @@ public class RoleLocalServiceTest {
 			companyId, keyword, excludedRoleNames, roleTypes, 0, groupId,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		Assert.assertTrue(roles.isEmpty());
+		Assert.assertTrue(roles.toString(), roles.isEmpty());
 
 		keyword = team.getName();
 
@@ -318,7 +318,7 @@ public class RoleLocalServiceTest {
 			organization.getGroupId(), excludedRoleIds);
 
 		Assert.assertNotNull(roles);
-		Assert.assertTrue(roles.isEmpty());
+		Assert.assertTrue(roles.toString(), roles.isEmpty());
 	}
 
 	@Test(expected = NoSuchGroupException.class)
@@ -442,7 +442,7 @@ public class RoleLocalServiceTest {
 		Map<Team, Role> teamRoleMap, Team team, boolean hasTeam) {
 
 		Assert.assertNotNull(teamRoleMap);
-		Assert.assertFalse(teamRoleMap.isEmpty());
+		Assert.assertFalse(teamRoleMap.toString(), teamRoleMap.isEmpty());
 
 		if (hasTeam) {
 			Assert.assertTrue(teamRoleMap.containsKey(team));

@@ -91,7 +91,9 @@ public class FormNavigatorEntryConfigurationRetrieverTest {
 				formNavigatorEntryConfigurationRetriever.
 					getFormNavigatorEntryKeys("form1", "general", "add").get();
 
-			Assert.assertTrue(formNavigatorEntryKeys.isEmpty());
+			Assert.assertTrue(
+				formNavigatorEntryKeys.toString(),
+				formNavigatorEntryKeys.isEmpty());
 		}
 
 	}

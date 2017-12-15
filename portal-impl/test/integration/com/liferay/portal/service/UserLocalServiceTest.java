@@ -58,8 +58,8 @@ public class UserLocalServiceTest {
 		List<User> users = UserLocalServiceUtil.getNoAnnouncementsDeliveries(
 			"general");
 
-		Assert.assertFalse(users.contains(user1));
-		Assert.assertTrue(users.contains(user2));
+		Assert.assertFalse(users.toString(), users.contains(user1));
+		Assert.assertTrue(users.toString(), users.contains(user2));
 	}
 
 	@Test
@@ -72,7 +72,7 @@ public class UserLocalServiceTest {
 
 		List<User> users = UserLocalServiceUtil.getNoContacts();
 
-		Assert.assertTrue(users.contains(user));
+		Assert.assertTrue(users.toString(), users.contains(user));
 	}
 
 	@Test
@@ -85,7 +85,7 @@ public class UserLocalServiceTest {
 
 		List<User> users = UserLocalServiceUtil.getNoGroups();
 
-		Assert.assertTrue(users.contains(user));
+		Assert.assertTrue(users.toString(), users.contains(user));
 	}
 
 	@DeleteAfterTestRun

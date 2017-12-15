@@ -83,7 +83,9 @@ public class TeamFinderTest {
 
 		Assert.assertEquals(
 			userOrUserGroupTeams1.toString(), 1, userOrUserGroupTeams1.size());
-		Assert.assertTrue(userOrUserGroupTeams1.contains(userTeam));
+		Assert.assertTrue(
+			userOrUserGroupTeams1.toString(),
+			userOrUserGroupTeams1.contains(userTeam));
 
 		Team groupTeam = TeamLocalServiceUtil.addTeam(
 			_user.getUserId(), _group.getGroupId(),
@@ -98,8 +100,12 @@ public class TeamFinderTest {
 
 		Assert.assertEquals(
 			userOrUserGroupTeams2.toString(), 2, userOrUserGroupTeams2.size());
-		Assert.assertTrue(userOrUserGroupTeams2.contains(userTeam));
-		Assert.assertTrue(userOrUserGroupTeams2.contains(groupTeam));
+		Assert.assertTrue(
+			userOrUserGroupTeams2.toString(),
+			userOrUserGroupTeams2.contains(userTeam));
+		Assert.assertTrue(
+			userOrUserGroupTeams2.toString(),
+			userOrUserGroupTeams2.contains(groupTeam));
 	}
 
 	@DeleteAfterTestRun

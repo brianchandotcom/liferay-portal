@@ -66,6 +66,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 				getExternalRepositoryClassNames();
 
 		Assert.assertTrue(
+			externalRepositoryClassNames.toString(),
 			externalRepositoryClassNames.contains(
 				_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME));
 	}
@@ -122,6 +123,7 @@ public class RepositoryClassDefinitionCatalogImplTest {
 			repositoryClassDefinitionCatalog.getExternalRepositoryClassNames();
 
 		Assert.assertTrue(
+			externalRepositoryClassNames.toString(),
 			externalRepositoryClassNames.contains(
 				_EXTERNAL_REPOSITORY_DEFINER_CLASS_NAME));
 	}

@@ -117,7 +117,7 @@ public class GroupFinderTest {
 		List<Long> groups = GroupFinderUtil.findByActiveGroupIds(
 			TestPropsValues.getUserId());
 
-		Assert.assertFalse(groups.isEmpty());
+		Assert.assertFalse(groups.toString(), groups.isEmpty());
 	}
 
 	@Test
@@ -167,7 +167,7 @@ public class GroupFinderTest {
 			GroupConstants.DEFAULT_PARENT_GROUP_ID, null, null, params, true,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
-		Assert.assertTrue(groups.contains(group));
+		Assert.assertTrue(groups.toString(), groups.contains(group));
 	}
 
 	@Test
@@ -182,7 +182,7 @@ public class GroupFinderTest {
 			TestPropsValues.getCompanyId(), groupParams, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, new GroupNameComparator(true));
 
-		Assert.assertFalse(groups.isEmpty());
+		Assert.assertFalse(groups.toString(), groups.isEmpty());
 	}
 
 	@Test
@@ -255,7 +255,7 @@ public class GroupFinderTest {
 
 		groups = findByLayouts(childGroup1.getGroupId());
 
-		Assert.assertTrue(groups.isEmpty());
+		Assert.assertTrue(groups.toString(), groups.isEmpty());
 	}
 
 	@Test

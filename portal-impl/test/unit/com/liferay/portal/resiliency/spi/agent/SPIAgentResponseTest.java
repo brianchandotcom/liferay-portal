@@ -403,8 +403,10 @@ public class SPIAgentResponseTest {
 		Assert.assertEquals(
 			requestAttributeNames.toString(), 2, requestAttributeNames.size());
 		Assert.assertTrue(
+			requestAttributeNames.toString(),
 			requestAttributeNames.contains(RequestAttributes.ATTRIBUTE_1));
 		Assert.assertTrue(
+			requestAttributeNames.toString(),
 			requestAttributeNames.contains(RequestAttributes.ATTRIBUTE_3));
 
 		Assert.assertEquals(

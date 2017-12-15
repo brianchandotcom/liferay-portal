@@ -289,7 +289,7 @@ public class ZipReaderImplTest {
 		List<String> entries = zipReader.getFolderEntries("");
 
 		Assert.assertNotNull(entries);
-		Assert.assertTrue(entries.isEmpty());
+		Assert.assertTrue(entries.toString(), entries.isEmpty());
 
 		entries = zipReader.getFolderEntries("/");
 
@@ -320,7 +320,7 @@ public class ZipReaderImplTest {
 		List<String> entries = zipReader.getFolderEntries("foo");
 
 		Assert.assertNotNull(entries);
-		Assert.assertTrue(entries.isEmpty());
+		Assert.assertTrue(entries.toString(), entries.isEmpty());
 
 		zipReader.close();
 	}

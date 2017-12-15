@@ -43,18 +43,18 @@ public class MapUtilTest {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(
 				new String[] {"one"});
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 
 			map = MapUtil.toLinkedHashMap(new String[] {"one:two:three:four"});
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 		}
 
 		@Test
 		public void shouldReturnEmptyMapWithParamsNull() {
 			Map<String, Object> map = MapUtil.toLinkedHashMap(null);
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 		}
 
 		@Test
@@ -66,7 +66,7 @@ public class MapUtilTest {
 				Map<String, Object> map = MapUtil.toLinkedHashMap(
 					new String[] {"one:1:" + Object.class.getName()});
 
-				Assert.assertTrue(map.isEmpty());
+				Assert.assertTrue(map.toString(), map.isEmpty());
 
 				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
@@ -90,7 +90,7 @@ public class MapUtilTest {
 		public void shouldReturnEmptyMapWithParamsZeroLength() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 		}
 
 		@Test
@@ -98,7 +98,7 @@ public class MapUtilTest {
 			Map<String, String> map = MapUtil.toLinkedHashMap(
 				new String[0], ",");
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 
 			map = MapUtil.toLinkedHashMap(new String[] {"one,1"}, ",");
 
@@ -115,7 +115,7 @@ public class MapUtilTest {
 		public void shouldReturnMapWithDelimiterDefault() {
 			Map<String, String> map = MapUtil.toLinkedHashMap(new String[0]);
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 
 			map = MapUtil.toLinkedHashMap(new String[] {"one:1"});
 
@@ -346,7 +346,7 @@ public class MapUtilTest {
 		public void shouldReturnEmptyMapWithZeroLength() {
 			Map<String, String> map = MapUtil.fromArray(new String[0]);
 
-			Assert.assertTrue(map.isEmpty());
+			Assert.assertTrue(map.toString(), map.isEmpty());
 		}
 
 		@Test

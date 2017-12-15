@@ -49,7 +49,7 @@ public class LocalFabricAgentTest {
 		Collection<? extends FabricWorker<?>> fabricWorkers =
 			fabricAgent.getFabricWorkers();
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 
 		try {
 			fabricWorkers.clear();
@@ -68,7 +68,7 @@ public class LocalFabricAgentTest {
 		Collection<? extends FabricWorker<?>> fabricWorkers =
 			fabricAgent.getFabricWorkers();
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 
 		final String result = "Test result";
 
@@ -84,7 +84,8 @@ public class LocalFabricAgentTest {
 			});
 
 		Assert.assertEquals(fabricWorkers.toString(), 1, fabricWorkers.size());
-		Assert.assertTrue(fabricWorkers.contains(fabricWorker));
+		Assert.assertTrue(
+			fabricWorkers.toString(), fabricWorkers.contains(fabricWorker));
 
 		DefaultNoticeableFuture<String> defaultNoticeableFuture =
 			(DefaultNoticeableFuture<String>)
@@ -94,7 +95,7 @@ public class LocalFabricAgentTest {
 
 		Assert.assertEquals(result, defaultNoticeableFuture.get());
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 
 		final ProcessException processException = new ProcessException(
 			"Test exception");
@@ -111,7 +112,8 @@ public class LocalFabricAgentTest {
 			});
 
 		Assert.assertEquals(fabricWorkers.toString(), 1, fabricWorkers.size());
-		Assert.assertTrue(fabricWorkers.contains(fabricWorker));
+		Assert.assertTrue(
+			fabricWorkers.toString(), fabricWorkers.contains(fabricWorker));
 
 		defaultNoticeableFuture =
 			(DefaultNoticeableFuture<String>)
@@ -128,7 +130,7 @@ public class LocalFabricAgentTest {
 			Assert.assertSame(processException, ee.getCause());
 		}
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 	}
 
 }

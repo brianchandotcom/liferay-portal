@@ -3029,7 +3029,7 @@ public class CalendarBookingLocalServiceTest {
 		List<MailMessage> mailMessages = MailServiceTestUtil.getMailMessages(
 			"Subject", subject);
 
-		Assert.assertFalse(mailMessages.isEmpty());
+		Assert.assertFalse(mailMessages.toString(), mailMessages.isEmpty());
 
 		MailMessage mailMessage = mailMessages.get(0);
 

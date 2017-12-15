@@ -151,7 +151,8 @@ public class TikaSafeRandomizerBumperTest {
 						logRecord.getMessage());
 				}
 				else {
-					Assert.assertTrue(logRecords.isEmpty());
+					Assert.assertTrue(
+						logRecords.toString(), logRecords.isEmpty());
 				}
 			}
 			else {
@@ -159,7 +160,7 @@ public class TikaSafeRandomizerBumperTest {
 
 				List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-				Assert.assertTrue(logRecords.isEmpty());
+				Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			}
 		}
 	}

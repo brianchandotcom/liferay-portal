@@ -1080,16 +1080,22 @@ public class UploadServletRequestTest {
 			for (Map.Entry<String, List<String>> entry :
 					regularParameters.entrySet()) {
 
-				Assert.assertTrue(parameterNamesList.contains(entry.getKey()));
+				Assert.assertTrue(
+					parameterNamesList.toString(),
+					parameterNamesList.contains(entry.getKey()));
 			}
 
 			for (Map.Entry<String, FileItem[]> entry :
 					fileParameters.entrySet()) {
 
-				Assert.assertTrue(parameterNamesList.contains(entry.getKey()));
+				Assert.assertTrue(
+					parameterNamesList.toString(),
+					parameterNamesList.contains(entry.getKey()));
 			}
 
-			Assert.assertTrue(parameterNamesList.contains(parameter));
+			Assert.assertTrue(
+				parameterNamesList.toString(),
+				parameterNamesList.contains(parameter));
 		}
 
 	}
@@ -1162,7 +1168,9 @@ public class UploadServletRequestTest {
 				List<String> parameterValuesList = ListUtil.fromArray(
 					parameterValues);
 
-				Assert.assertFalse(parameterValuesList.contains(key));
+				Assert.assertFalse(
+					parameterValuesList.toString(),
+					parameterValuesList.contains(key));
 			}
 		}
 

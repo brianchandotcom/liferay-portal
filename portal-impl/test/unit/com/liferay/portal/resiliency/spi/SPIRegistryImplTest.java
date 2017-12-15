@@ -191,9 +191,12 @@ public class SPIRegistryImplTest {
 			List<String> portletIds = Arrays.asList(
 				_portletIds.remove(mockSPI));
 
-			Assert.assertTrue(portletIds.contains("portlet1"));
-			Assert.assertTrue(portletIds.contains("portlet3"));
-			Assert.assertTrue(portletIds.contains("portlet4"));
+			Assert.assertTrue(
+				portletIds.toString(), portletIds.contains("portlet1"));
+			Assert.assertTrue(
+				portletIds.toString(), portletIds.contains("portlet3"));
+			Assert.assertTrue(
+				portletIds.toString(), portletIds.contains("portlet4"));
 
 			Assert.assertEquals(logRecords.toString(), 2, logRecords.size());
 
@@ -222,11 +225,14 @@ public class SPIRegistryImplTest {
 
 			portletIds = Arrays.asList(_portletIds.remove(mockSPI));
 
-			Assert.assertTrue(portletIds.contains("portlet1"));
-			Assert.assertTrue(portletIds.contains("portlet3"));
-			Assert.assertTrue(portletIds.contains("portlet4"));
+			Assert.assertTrue(
+				portletIds.toString(), portletIds.contains("portlet1"));
+			Assert.assertTrue(
+				portletIds.toString(), portletIds.contains("portlet3"));
+			Assert.assertTrue(
+				portletIds.toString(), portletIds.contains("portlet4"));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Hash failure
 

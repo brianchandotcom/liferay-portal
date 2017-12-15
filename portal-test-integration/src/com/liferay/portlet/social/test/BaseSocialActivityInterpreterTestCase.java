@@ -103,7 +103,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	protected void checkInterpret(long time) throws Exception {
 		List<SocialActivity> activities = getActivities();
 
-		Assert.assertFalse(activities.isEmpty());
+		Assert.assertFalse(activities.toString(), activities.isEmpty());
 
 		Map<String, String> entryTitles = new HashMap<>();
 
@@ -148,7 +148,7 @@ public abstract class BaseSocialActivityInterpreterTestCase {
 	protected void checkLinks() throws Exception {
 		List<SocialActivity> activities = getActivities();
 
-		Assert.assertFalse(activities.isEmpty());
+		Assert.assertFalse(activities.toString(), activities.isEmpty());
 
 		SocialActivityInterpreter activityInterpreter =
 			getActivityInterpreter();

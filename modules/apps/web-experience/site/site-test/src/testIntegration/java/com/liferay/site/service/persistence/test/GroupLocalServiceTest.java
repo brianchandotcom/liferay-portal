@@ -72,7 +72,7 @@ public class GroupLocalServiceTest {
 	public void testGetStagedSites() {
 		List<Group> groups = GroupLocalServiceUtil.getStagedSites();
 
-		Assert.assertTrue(groups.isEmpty());
+		Assert.assertTrue(groups.toString(), groups.isEmpty());
 	}
 
 	private void _assertDescendantGroups(

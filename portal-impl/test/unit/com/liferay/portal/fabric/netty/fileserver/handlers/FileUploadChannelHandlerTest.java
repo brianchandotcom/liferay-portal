@@ -480,7 +480,7 @@ public class FileUploadChannelHandlerTest {
 				}
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			Assert.assertSame(channelPipeline.first(), channelPipeline.last());
 		}
 

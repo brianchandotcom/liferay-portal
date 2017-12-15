@@ -67,7 +67,7 @@ public class ProcessCallableAssignmentFabricAgentSelectorTest
 			new ArrayList<>(Arrays.asList(fabricAgent1)),
 			new ExceptionProcessCallable(null));
 
-		Assert.assertTrue(fabricAgents.isEmpty());
+		Assert.assertTrue(fabricAgents.toString(), fabricAgents.isEmpty());
 	}
 
 }

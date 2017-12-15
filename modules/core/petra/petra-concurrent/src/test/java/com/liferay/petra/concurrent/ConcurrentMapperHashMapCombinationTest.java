@@ -81,7 +81,7 @@ public class ConcurrentMapperHashMapCombinationTest {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertTrue(concurrentMap.isEmpty());
+		Assert.assertTrue(concurrentMap.toString(), concurrentMap.isEmpty());
 	}
 
 	@Test
@@ -147,7 +147,9 @@ public class ConcurrentMapperHashMapCombinationTest {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertTrue(concurrentReferenceMap.isEmpty());
+		Assert.assertTrue(
+			concurrentReferenceMap.toString(),
+			concurrentReferenceMap.isEmpty());
 	}
 
 	@Rule

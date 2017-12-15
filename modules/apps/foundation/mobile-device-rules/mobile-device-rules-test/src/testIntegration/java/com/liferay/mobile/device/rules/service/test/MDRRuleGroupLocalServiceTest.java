@@ -96,10 +96,12 @@ public class MDRRuleGroupLocalServiceTest {
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		if (includeGlobalGroup) {
-			Assert.assertTrue(ruleGroups.contains(_ruleGroup));
+			Assert.assertTrue(
+				ruleGroups.toString(), ruleGroups.contains(_ruleGroup));
 		}
 		else {
-			Assert.assertFalse(ruleGroups.contains(_ruleGroup));
+			Assert.assertFalse(
+				ruleGroups.toString(), ruleGroups.contains(_ruleGroup));
 		}
 	}
 

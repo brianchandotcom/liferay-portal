@@ -424,7 +424,7 @@ public class ConstantsBeanFactoryImplTest {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertTrue(constantsBeans.isEmpty());
+		Assert.assertTrue(constantsBeans.toString(), constantsBeans.isEmpty());
 	}
 
 	public static class Constants {

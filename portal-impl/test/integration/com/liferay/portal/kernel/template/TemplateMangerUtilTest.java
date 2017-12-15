@@ -85,6 +85,7 @@ public class TemplateMangerUtilTest {
 			TemplateManagerUtil.getTemplateManagerNames();
 
 		Assert.assertTrue(
+			templateManagerNames.toString(),
 			templateManagerNames.contains(
 				TestTemplateManager.TEST_TEMPLATE_MANAGER_NAME));
 	}

@@ -159,12 +159,13 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		List<AssetTag> assetTags = importedAssetEntry.getTags();
 
-		Assert.assertFalse(assetTags.isEmpty());
+		Assert.assertFalse(assetTags.toString(), assetTags.isEmpty());
 
 		List<AssetCategory> assetCategories =
 			importedAssetEntry.getCategories();
 
-		Assert.assertFalse(assetCategories.isEmpty());
+		Assert.assertFalse(
+			assetCategories.toString(), assetCategories.isEmpty());
 
 		assetEntry = fetchAssetEntry(stagedModel, stagingGroup);
 
@@ -194,11 +195,12 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		assetTags = importedAssetEntry.getTags();
 
-		Assert.assertFalse(assetTags.isEmpty());
+		Assert.assertFalse(assetTags.toString(), assetTags.isEmpty());
 
 		assetCategories = importedAssetEntry.getCategories();
 
-		Assert.assertFalse(assetCategories.isEmpty());
+		Assert.assertFalse(
+			assetCategories.toString(), assetCategories.isEmpty());
 	}
 
 	@Test
@@ -1091,7 +1093,9 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 			}
 		}
 
-		Assert.assertTrue(importedRatingsEntries.isEmpty());
+		Assert.assertTrue(
+			importedRatingsEntries.toString(),
+			importedRatingsEntries.isEmpty());
 	}
 
 	@DeleteAfterTestRun

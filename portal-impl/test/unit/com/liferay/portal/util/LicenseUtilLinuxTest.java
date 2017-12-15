@@ -31,8 +31,12 @@ public class LicenseUtilLinuxTest extends BaseLicenseUtilTestCase {
 	@Override
 	protected void testMacAddresses(Set<String> macAddresses) {
 		Assert.assertEquals(macAddresses.toString(), 2, macAddresses.size());
-		Assert.assertTrue(macAddresses.contains("5c:26:0a:33:b3:d5"));
-		Assert.assertTrue(macAddresses.contains("00:24:d7:82:96:f4"));
+		Assert.assertTrue(
+			macAddresses.toString(),
+			macAddresses.contains("5c:26:0a:33:b3:d5"));
+		Assert.assertTrue(
+			macAddresses.toString(),
+			macAddresses.contains("00:24:d7:82:96:f4"));
 	}
 
 }

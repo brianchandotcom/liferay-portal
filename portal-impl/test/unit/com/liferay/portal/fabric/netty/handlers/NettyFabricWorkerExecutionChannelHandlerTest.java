@@ -626,7 +626,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
-			Assert.assertTrue(loadedInputPaths.isEmpty());
+			Assert.assertTrue(
+				loadedInputPaths.toString(), loadedInputPaths.isEmpty());
 
 			ProcessConfig loadedProcessConfig = loadedPaths.toProcessConfig(
 				processConfig);
@@ -656,11 +657,12 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
-			Assert.assertTrue(loadedInputPaths.isEmpty());
+			Assert.assertTrue(
+				loadedInputPaths.toString(), loadedInputPaths.isEmpty());
 
 			ProcessConfig loadedProcessConfig = loadedPaths.toProcessConfig(
 				processConfig);
@@ -830,7 +832,8 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
-			Assert.assertTrue(loadedInputPaths.isEmpty());
+			Assert.assertTrue(
+				loadedInputPaths.toString(), loadedInputPaths.isEmpty());
 
 			ProcessConfig loadedProcessConfig = loadedPaths.toProcessConfig(
 				processConfig);
@@ -861,11 +864,12 @@ public class NettyFabricWorkerExecutionChannelHandlerTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			Map<Path, Path> loadedInputPaths = loadedPaths.getInputPaths();
 
-			Assert.assertTrue(loadedInputPaths.isEmpty());
+			Assert.assertTrue(
+				loadedInputPaths.toString(), loadedInputPaths.isEmpty());
 
 			ProcessConfig loadedProcessConfig = loadedPaths.toProcessConfig(
 				processConfig);

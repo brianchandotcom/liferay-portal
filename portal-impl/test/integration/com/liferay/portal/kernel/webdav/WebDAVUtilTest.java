@@ -52,7 +52,9 @@ public class WebDAVUtilTest {
 	public void testGetStorageTokens() {
 		Collection<String> storageTokens = WebDAVUtil.getStorageTokens();
 
-		Assert.assertTrue(storageTokens.contains(TestWebDAVStorage.TOKEN));
+		Assert.assertTrue(
+			storageTokens.toString(),
+			storageTokens.contains(TestWebDAVStorage.TOKEN));
 	}
 
 }

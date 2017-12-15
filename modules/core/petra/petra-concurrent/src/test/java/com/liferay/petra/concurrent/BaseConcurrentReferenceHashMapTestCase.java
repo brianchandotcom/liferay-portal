@@ -57,7 +57,8 @@ public abstract class BaseConcurrentReferenceHashMapTestCase {
 		Object testValue2 = new Object();
 
 		Assert.assertFalse(concurrentMap.containsKey(testKey));
-		Assert.assertTrue(finalizeActions.isEmpty());
+		Assert.assertTrue(
+			finalizeActions.toString(), finalizeActions.isEmpty());
 		Assert.assertNull(concurrentMap.put(testKey, testValue1));
 		Assert.assertTrue(concurrentMap.containsKey(testKey));
 		Assert.assertSame(testValue1, concurrentMap.get(testKey));
@@ -102,8 +103,9 @@ public abstract class BaseConcurrentReferenceHashMapTestCase {
 		ReflectionTestUtil.invoke(
 			FinalizeManager.class, "_pollingCleanup", new Class<?>[0]);
 
-		Assert.assertTrue(finalizeActions.isEmpty());
-		Assert.assertTrue(concurrentMap.isEmpty());
+		Assert.assertTrue(
+			finalizeActions.toString(), finalizeActions.isEmpty());
+		Assert.assertTrue(concurrentMap.toString(), concurrentMap.isEmpty());
 	}
 
 }

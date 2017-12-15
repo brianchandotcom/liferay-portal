@@ -187,7 +187,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertTrue(fabricAgents.isEmpty());
+			Assert.assertTrue(fabricAgents.toString(), fabricAgents.isEmpty());
 		}
 
 		// With log
@@ -237,7 +237,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertTrue(fabricAgents.isEmpty());
+			Assert.assertTrue(fabricAgents.toString(), fabricAgents.isEmpty());
 		}
 	}
 
@@ -357,7 +357,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertTrue(fabricAgents.isEmpty());
+			Assert.assertTrue(fabricAgents.toString(), fabricAgents.isEmpty());
 		}
 
 		// With log
@@ -402,7 +402,7 @@ public class NettyFabricAgentRegistrationChannelHandlerTest {
 
 			fabricAgents = fabricAgentRegistry.getFabricAgents();
 
-			Assert.assertTrue(fabricAgents.isEmpty());
+			Assert.assertTrue(fabricAgents.toString(), fabricAgents.isEmpty());
 		}
 	}
 

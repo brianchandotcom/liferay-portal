@@ -123,7 +123,7 @@ public class ObjectDecodeChannelInboundHandlerTest {
 
 		Map<String, ChannelHandler> map = channelPipeline.toMap();
 
-		Assert.assertTrue(map.isEmpty());
+		Assert.assertTrue(map.toString(), map.isEmpty());
 
 		AnnotatedObjectDecoder annotatedObjectDecoder =
 			new AnnotatedObjectDecoder();

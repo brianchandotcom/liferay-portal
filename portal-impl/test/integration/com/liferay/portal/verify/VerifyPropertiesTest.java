@@ -337,7 +337,8 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 			List<LoggingEvent> loggingEvents =
 				captureAppender.getLoggingEvents();
 
-			Assert.assertTrue(loggingEvents.isEmpty());
+			Assert.assertTrue(
+				loggingEvents.toString(), loggingEvents.isEmpty());
 		}
 	}
 
@@ -348,7 +349,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		Set<String> propertyNames = portalProperties.stringPropertyNames();
 
-		Assert.assertFalse(propertyNames.isEmpty());
+		Assert.assertFalse(propertyNames.toString(), propertyNames.isEmpty());
 
 		Iterator<String> iterator = propertyNames.iterator();
 
@@ -360,7 +361,7 @@ public class VerifyPropertiesTest extends BaseVerifyProcessTestCase {
 
 		Set<String> propertyNames = systemProperties.stringPropertyNames();
 
-		Assert.assertFalse(propertyNames.isEmpty());
+		Assert.assertFalse(propertyNames.toString(), propertyNames.isEmpty());
 
 		Iterator<String> iterator = propertyNames.iterator();
 

@@ -1481,7 +1481,7 @@ public class TableMapperTest {
 		Map<String, TableMapper<?, ?>> tableMappers =
 			TableMapperFactory.tableMappers;
 
-		Assert.assertTrue(tableMappers.isEmpty());
+		Assert.assertTrue(tableMappers.toString(), tableMappers.isEmpty());
 
 		// Create
 
@@ -1521,11 +1521,11 @@ public class TableMapperTest {
 
 		TableMapperFactory.removeTableMapper(_TABLE_NAME);
 
-		Assert.assertTrue(tableMappers.isEmpty());
+		Assert.assertTrue(tableMappers.toString(), tableMappers.isEmpty());
 
 		TableMapperFactory.removeTableMapper(_TABLE_NAME);
 
-		Assert.assertTrue(tableMappers.isEmpty());
+		Assert.assertTrue(tableMappers.toString(), tableMappers.isEmpty());
 	}
 
 	@Test
@@ -1600,7 +1600,7 @@ public class TableMapperTest {
 
 		tableMapper.destroy();
 
-		Assert.assertTrue(portalCaches.isEmpty());
+		Assert.assertTrue(portalCaches.toString(), portalCaches.isEmpty());
 	}
 
 	private static final String _COMPANY_COLUMN_NAME = "companyId";

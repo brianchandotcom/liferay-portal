@@ -147,7 +147,7 @@ public class SPIAgentSerializableTest {
 				SPIAgentSerializable.extractDistributedRequestAttributes(
 					mockHttpServletRequest, Direction.DUPLEX);
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			Assert.assertEquals(
 				distributedRequestAttributes.toString(), 1,
 				distributedRequestAttributes.size());
@@ -242,7 +242,7 @@ public class SPIAgentSerializableTest {
 		Map<String, List<String>> headers =
 			SPIAgentSerializable.extractRequestHeaders(mockHttpServletRequest);
 
-		Assert.assertTrue(headers.isEmpty());
+		Assert.assertTrue(headers.toString(), headers.isEmpty());
 
 		String emptyHeaderName = "emptyHeaderName";
 
@@ -264,7 +264,7 @@ public class SPIAgentSerializableTest {
 			StringUtil.toLowerCase(emptyHeaderName));
 
 		Assert.assertNotNull(emptyHeaders);
-		Assert.assertTrue(emptyHeaders.isEmpty());
+		Assert.assertTrue(emptyHeaders.toString(), emptyHeaders.isEmpty());
 
 		List<String> actualHeaderValues = headers.get(
 			StringUtil.toLowerCase(headerName));
@@ -340,7 +340,7 @@ public class SPIAgentSerializableTest {
 				SPIAgentSerializable.extractSessionAttributes(
 					mockHttpServletRequest);
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			Assert.assertEquals(
 				sessionAttributes.toString(), 2, sessionAttributes.size());
 			Assert.assertEquals(
@@ -362,7 +362,7 @@ public class SPIAgentSerializableTest {
 
 			Assert.assertNull(
 				mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			Assert.assertEquals(
 				sessionAttributes.toString(), 2, sessionAttributes.size());
 			Assert.assertEquals(
@@ -374,7 +374,9 @@ public class SPIAgentSerializableTest {
 					portletSessionAttributesName1);
 
 			Assert.assertNotNull(portletSessionAttributes);
-			Assert.assertTrue(portletSessionAttributes.isEmpty());
+			Assert.assertTrue(
+				portletSessionAttributes.toString(),
+				portletSessionAttributes.isEmpty());
 
 			// Without log, with nonempty portlet session
 
@@ -400,7 +402,7 @@ public class SPIAgentSerializableTest {
 
 			Assert.assertNull(
 				mockHttpServletRequest.getAttribute(WebKeys.PORTLET_SESSION));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			Assert.assertEquals(
 				sessionAttributes.toString(), 2, sessionAttributes.size());
 			Assert.assertEquals(

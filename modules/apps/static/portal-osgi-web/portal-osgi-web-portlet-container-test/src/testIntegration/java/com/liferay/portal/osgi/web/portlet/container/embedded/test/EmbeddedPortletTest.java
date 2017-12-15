@@ -110,7 +110,9 @@ public class EmbeddedPortletTest {
 			List<Portlet> explicitlyAddedPortlets =
 				_layoutTypePortlet.getExplicitlyAddedPortlets();
 
-			Assert.assertFalse(explicitlyAddedPortlets.contains(portlet));
+			Assert.assertFalse(
+				explicitlyAddedPortlets.toString(),
+				explicitlyAddedPortlets.contains(portlet));
 		}
 
 		@Test
@@ -132,7 +134,8 @@ public class EmbeddedPortletTest {
 
 			List<Portlet> allPortlets = _layoutTypePortlet.getAllPortlets();
 
-			Assert.assertTrue(allPortlets.contains(portlet));
+			Assert.assertTrue(
+				allPortlets.toString(), allPortlets.contains(portlet));
 		}
 
 		@Test
@@ -155,7 +158,9 @@ public class EmbeddedPortletTest {
 			List<Portlet> embeddedPortlets =
 				_layoutTypePortlet.getEmbeddedPortlets();
 
-			Assert.assertTrue(embeddedPortlets.contains(portlet));
+			Assert.assertTrue(
+				embeddedPortlets.toString(),
+				embeddedPortlets.contains(portlet));
 		}
 
 		@Test
@@ -237,7 +242,9 @@ public class EmbeddedPortletTest {
 
 			List<Portlet> allPortlets = _layoutTypePortlet.getAllPortlets();
 
-			Assert.assertFalse(allPortlets.contains(_testNonembeddedPortlet));
+			Assert.assertFalse(
+				allPortlets.toString(),
+				allPortlets.contains(_testNonembeddedPortlet));
 		}
 
 		@Test
@@ -253,6 +260,7 @@ public class EmbeddedPortletTest {
 				_layoutTypePortlet.getEmbeddedPortlets();
 
 			Assert.assertFalse(
+				embeddedPortlets.toString(),
 				embeddedPortlets.contains(_testNonembeddedPortlet));
 		}
 
@@ -271,6 +279,7 @@ public class EmbeddedPortletTest {
 				_layoutTypePortlet.getExplicitlyAddedPortlets();
 
 			Assert.assertFalse(
+				explicitlyAddedPortlets.toString(),
 				explicitlyAddedPortlets.contains(_testNonembeddedPortlet));
 		}
 

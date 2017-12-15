@@ -152,7 +152,8 @@ public class QuartzSchedulerEngineTest {
 		schedulerResponses = _quartzSchedulerEngine.getScheduledJobs(
 			_MEMORY_TEST_GROUP_NAME, StorageType.MEMORY);
 
-		Assert.assertTrue(schedulerResponses.isEmpty());
+		Assert.assertTrue(
+			schedulerResponses.toString(), schedulerResponses.isEmpty());
 
 		// Delete by job name and group name
 

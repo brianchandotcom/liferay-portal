@@ -72,7 +72,7 @@ public class ThemeDeployerTest extends BaseDeployerTestCase {
 			getRootDir(), displayName, pluginPackage);
 
 		Assert.assertNotNull(filterMap);
-		Assert.assertFalse(filterMap.isEmpty());
+		Assert.assertFalse(filterMap.toString(), filterMap.isEmpty());
 
 		return filterMap;
 	}

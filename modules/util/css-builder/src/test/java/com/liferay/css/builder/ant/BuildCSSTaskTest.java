@@ -54,8 +54,8 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			Path baseDirPath, boolean generateSourceMap, Path importDirPath,
-			String include, String outputDirName, int precision,
+			Path baseDirPath, String dirName, boolean generateSourceMap,
+			Path importDirPath, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
@@ -63,13 +63,13 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 
 		project.setProperty(
 			"build.css.base.dir", String.valueOf(baseDirPath.toAbsolutePath()));
+		project.setProperty("build.css.dir.names", dirName);
 		project.setProperty(
 			"build.css.generate.source.maps",
 			String.valueOf(generateSourceMap));
 		project.setProperty(
 			"build.css.import.dir",
 			String.valueOf(importDirPath.toAbsolutePath()));
-		project.setProperty("build.css.includes", include);
 		project.setProperty(
 			"build.css.output.dir.name", String.valueOf(outputDirName));
 		project.setProperty("build.css.precision", String.valueOf(precision));

@@ -7,9 +7,9 @@
 	<target name="build-css">
 		<build-css
 			baseDir="${build.css.base.dir}"
+			dirNames="${build.css.dir.names}"
 			generateSourceMap="${build.css.generate.source.maps}"
 			importDir="${build.css.import.dir}"
-			includes="${build.css.includes}"
 			outputDirName="${build.css.output.dir.name}"
 			precision="${build.css.precision}"
 			rtlExcludedPathRegexps="${build.css.rtl.excluded.path.regexps}"

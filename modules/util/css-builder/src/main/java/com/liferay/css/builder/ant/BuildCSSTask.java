@@ -57,12 +57,8 @@ public class BuildCSSTask extends Task {
 		_cssBuilderArgs.setBaseDir(baseDir);
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setIncludes(String)}
-	 */
-	@Deprecated
 	public void setDirNames(String dirNames) {
-		setIncludes(dirNames);
+		_cssBuilderArgs.setDirNames(dirNames);
 	}
 
 	/**
@@ -79,10 +75,6 @@ public class BuildCSSTask extends Task {
 
 	public void setImportDir(File importDir) {
 		_cssBuilderArgs.setImportDir(importDir);
-	}
-
-	public void setIncludes(String includes) {
-		_cssBuilderArgs.setIncludes(includes);
 	}
 
 	public void setOutputDirName(String outputDirName) {

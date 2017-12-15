@@ -24,5 +24,7 @@
 
 	__CONFIG__.namespace = 'Liferay';
 
+	__CONFIG__.explainResolutions = Liferay.EXPLAIN_RESOLUTIONS;
+
 	__CONFIG__.exposeGlobal = Liferay.EXPOSE_GLOBAL;
 }());

@@ -82,9 +82,9 @@ public class FileUtil {
 		FileSystem fileSystem = baseDirPath.getFileSystem();
 
 		final List<PathMatcher> includePathMatchers = _getPathMatchers(
-			fileSystem, includes);
+			fileSystem, baseDirPath, includes);
 		final List<PathMatcher> excludePathMatchers = _getPathMatchers(
-			fileSystem, excludes);
+			fileSystem, baseDirPath, excludes);
 
 		Files.walkFileTree(
 			baseDirPath,
@@ -93,6 +93,8 @@ public class FileUtil {
 				@Override
 				public FileVisitResult visitFile(
 					Path path, BasicFileAttributes basicFileAttributes) {
+
+					path = path.toAbsolutePath();
 
 					for (PathMatcher pathMatcher : excludePathMatchers) {
 						if (pathMatcher.matches(path)) {
@@ -159,20 +161,39 @@ public class FileUtil {
 		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
 	}
 
+	private static void _addPathMatcher(
+		List<PathMatcher> pathMatchers, FileSystem fileSystem, String pattern) {
+
+		if (File.separatorChar == '\\') {
+			pattern = pattern.replace("/", "\\\\");
+		}
+
+		PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + pattern);
+
+		pathMatchers.add(pathMatcher);
+	}
+
 	private static List<PathMatcher> _getPathMatchers(
-		FileSystem fileSystem, String... patterns) {
+		FileSystem fileSystem, Path baseDirPath, String... patterns) {
 
 		List<PathMatcher> pathMatchers = new ArrayList<>(patterns.length);
 
+		String patternPrefix = baseDirPath.toAbsolutePath() + File.separator;
+
+		if (File.separatorChar != '/') {
+			patternPrefix = patternPrefix.replace(File.separatorChar, '/');
+		}
+
 		for (String pattern : patterns) {
-			if (File.separatorChar == '\\') {
-				pattern = pattern.replace("/", "\\\\");
+			if (pattern.startsWith("**/")) {
+				String absolutePattern = patternPrefix + pattern.substring(3);
+
+				_addPathMatcher(pathMatchers, fileSystem, absolutePattern);
 			}
 
-			PathMatcher pathMatcher = fileSystem.getPathMatcher(
-				"glob:" + pattern);
+			String absolutePattern = patternPrefix + pattern;
 
-			pathMatchers.add(pathMatcher);
+			_addPathMatcher(pathMatchers, fileSystem, absolutePattern);
 		}
 
 		return pathMatchers;

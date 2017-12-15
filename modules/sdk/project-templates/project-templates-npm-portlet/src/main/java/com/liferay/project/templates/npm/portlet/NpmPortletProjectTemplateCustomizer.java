@@ -31,18 +31,19 @@ public class NpmPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
-	public void beforeGenerateProject(
+	public void onAfterGenerateProject(
+		File destinationDir,
+		ArchetypeGenerationResult archetypeGenerationResult) {
+	}
+
+	@Override
+	public void onBeforeGenerateProject(
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
 		properties.put("packageJsonVersion", "1.0.0");
-	}
-
-	@Override
-	public void postGenerateProject(
-		File destinationDir, ArchetypeGenerationResult result) {
 	}
 
 }

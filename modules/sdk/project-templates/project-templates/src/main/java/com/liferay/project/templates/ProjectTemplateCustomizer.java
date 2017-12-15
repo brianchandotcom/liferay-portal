@@ -24,11 +24,12 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  */
 public interface ProjectTemplateCustomizer {
 
-	public void beforeGenerateProject(
+	public void onAfterGenerateProject(
+		File destinationDir,
+		ArchetypeGenerationResult archetypeGenerationResult);
+
+	public void onBeforeGenerateProject(
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest);
-
-	public void postGenerateProject(
-		File destinationDir, ArchetypeGenerationResult result);
 
 }

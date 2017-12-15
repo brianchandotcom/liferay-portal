@@ -33,18 +33,13 @@ public class SoyPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
-	public void beforeGenerateProject(
-		ProjectTemplatesArgs projectTemplatesArgs,
-		ArchetypeGenerationRequest archetypeGenerationRequest) {
+	public void onAfterGenerateProject(
+		File destinationDir,
+		ArchetypeGenerationResult archetypeGenerationResult) {
 
-		_projectTemplateArgs = projectTemplatesArgs;
-	}
+		if ((archetypeGenerationResult.getCause() == null) &&
+			_projectTemplateArgs.isGradle()) {
 
-	@Override
-	public void postGenerateProject(
-		File destinationDir, ArchetypeGenerationResult result) {
-
-		if ((result.getCause() == null) && _projectTemplateArgs.isGradle()) {
 			Path projectPath = destinationDir.toPath();
 
 			Path gulpfileJs = projectPath.resolve("gulpfile.js");
@@ -54,10 +49,18 @@ public class SoyPortletProjectTemplateCustomizer
 					Files.delete(gulpfileJs);
 				}
 				catch (IOException ioe) {
-					result.setCause(ioe);
+					archetypeGenerationResult.setCause(ioe);
 				}
 			}
 		}
+	}
+
+	@Override
+	public void onBeforeGenerateProject(
+		ProjectTemplatesArgs projectTemplatesArgs,
+		ArchetypeGenerationRequest archetypeGenerationRequest) {
+
+		_projectTemplateArgs = projectTemplatesArgs;
 	}
 
 	private ProjectTemplatesArgs _projectTemplateArgs;

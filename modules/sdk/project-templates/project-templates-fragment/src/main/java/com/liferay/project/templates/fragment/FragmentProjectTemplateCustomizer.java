@@ -31,7 +31,13 @@ public class FragmentProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
-	public void beforeGenerateProject(
+	public void onAfterGenerateProject(
+		File destinationDir,
+		ArchetypeGenerationResult archetypeGenerationResult) {
+	}
+
+	@Override
+	public void onBeforeGenerateProject(
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
@@ -43,11 +49,6 @@ public class FragmentProjectTemplateCustomizer
 
 		properties.put("hostBundleSymbolicName", hostBundleSymbolicName);
 		properties.put("hostBundleVersion", hostBundleVersion);
-	}
-
-	@Override
-	public void postGenerateProject(
-		File destinationDir, ArchetypeGenerationResult result) {
 	}
 
 }

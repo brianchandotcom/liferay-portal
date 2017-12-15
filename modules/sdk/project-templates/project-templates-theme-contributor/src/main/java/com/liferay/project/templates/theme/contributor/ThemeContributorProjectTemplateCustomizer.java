@@ -31,7 +31,13 @@ public class ThemeContributorProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
-	public void beforeGenerateProject(
+	public void onAfterGenerateProject(
+		File destinationDir,
+		ArchetypeGenerationResult archetypeGenerationResult) {
+	}
+
+	@Override
+	public void onBeforeGenerateProject(
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
@@ -40,11 +46,6 @@ public class ThemeContributorProjectTemplateCustomizer
 		String contributorType = projectTemplatesArgs.getContributorType();
 
 		properties.put("contributorType", contributorType);
-	}
-
-	@Override
-	public void postGenerateProject(
-		File destinationDir, ArchetypeGenerationResult result) {
 	}
 
 }

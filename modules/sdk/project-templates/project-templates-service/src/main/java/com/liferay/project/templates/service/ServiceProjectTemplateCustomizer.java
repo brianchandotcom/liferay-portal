@@ -31,7 +31,13 @@ public class ServiceProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
-	public void beforeGenerateProject(
+	public void onAfterGenerateProject(
+		File destinationDir,
+		ArchetypeGenerationResult archetypeGenerationResult) {
+	}
+
+	@Override
+	public void onBeforeGenerateProject(
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
@@ -41,11 +47,6 @@ public class ServiceProjectTemplateCustomizer
 
 		properties.put("serviceClass", service);
 		properties.put("serviceWrapperClass", service);
-	}
-
-	@Override
-	public void postGenerateProject(
-		File destinationDir, ArchetypeGenerationResult result) {
 	}
 
 }

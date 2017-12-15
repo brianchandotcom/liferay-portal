@@ -133,23 +133,23 @@ public class Archetyper {
 					null, null));
 
 		if (projectTemplateCustomizer != null) {
-			projectTemplateCustomizer.beforeGenerateProject(
+			projectTemplateCustomizer.onBeforeGenerateProject(
 				projectTemplatesArgs, archetypeGenerationRequest);
 		}
 
 		ArchetypeManager archetypeManager = _createArchetypeManager(
 			archetypesDir);
 
-		ArchetypeGenerationResult result =
+		ArchetypeGenerationResult archetypeGenerationResult =
 			archetypeManager.generateProjectFromArchetype(
 				archetypeGenerationRequest);
 
 		if (projectTemplateCustomizer != null) {
-			projectTemplateCustomizer.postGenerateProject(
-				destinationDir, result);
+			projectTemplateCustomizer.onAfterGenerateProject(
+				destinationDir, archetypeGenerationResult);
 		}
 
-		return result;
+		return archetypeGenerationResult;
 	}
 
 	private ArchetypeArtifactManager _createArchetypeArtifactManager(

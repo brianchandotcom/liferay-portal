@@ -14,6 +14,8 @@
 
 package com.liferay.lcs.messaging;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +38,7 @@ public class ServerMetricsMessage extends MetricsMessage {
 		_currentThreadsMetrics = currentThreadsMetrics;
 	}
 
+	@JsonProperty("jdbcConnectionPoolsMetrics")
 	public void setJDBCConnectionPoolsMetrics(
 		Map<String, Map<String, Object>> jdbcConnectionPoolsMetrics) {
 

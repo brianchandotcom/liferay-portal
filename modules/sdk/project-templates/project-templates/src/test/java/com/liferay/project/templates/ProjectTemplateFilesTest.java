@@ -636,6 +636,50 @@ public class ProjectTemplateFilesTest {
 		}
 	}
 
+	private void _testProjectTemplateCustomizer(
+			String projectTemplateDirName, Path projectTemplateDirPath)
+		throws IOException {
+
+		Path projectTemplateCustomizerPath = projectTemplateDirPath.resolve(
+			"src/main/resources/META-INF/services" +
+				"/com.liferay.project.templates.ProjectTemplateCustomizer");
+
+		if (Files.notExists(projectTemplateCustomizerPath)) {
+			return;
+		}
+
+		StringBuffer sb = new StringBuffer();
+
+		sb.append("com.liferay.");
+		sb.append(projectTemplateDirName.replace('-', '.'));
+		sb.append(".internal.");
+
+		Matcher matcher = _projectTemplateDirNameSeparatorPattern.matcher(
+			projectTemplateDirName.substring(
+				FileTestUtil.PROJECT_TEMPLATE_DIR_PREFIX.length()));
+
+		while (matcher.find()) {
+			String initial = matcher.group(1);
+
+			matcher.appendReplacement(sb, initial.toUpperCase());
+		}
+
+		matcher.appendTail(sb);
+
+		sb.append("ProjectTemplateCustomizer");
+
+		String className = sb.toString();
+
+		Assert.assertEquals(
+			"Incorrect " + projectTemplateCustomizerPath, className,
+			FileUtil.read(projectTemplateCustomizerPath));
+
+		Path path = projectTemplateDirPath.resolve(
+			"src/main/java/" + className.replace('.', '/') + ".java");
+
+		Assert.assertTrue("Missing " + path, Files.exists(path));
+	}
+
 	private void _testProjectTemplateFiles(
 			Path projectTemplateDirPath, DocumentBuilder documentBuilder)
 		throws Exception {
@@ -656,6 +700,8 @@ public class ProjectTemplateFilesTest {
 		_testGradleWrapper(archetypeResourcesDirPath);
 		_testMavenWrapper(archetypeResourcesDirPath);
 		_testPomXml(archetypeResourcesDirPath, documentBuilder);
+		_testProjectTemplateCustomizer(
+			projectTemplateDirName, projectTemplateDirPath);
 
 		final AtomicBoolean requireAuthorProperty = new AtomicBoolean();
 		final Set<String> archetypeResourcePropertyNames = new HashSet<>();
@@ -854,6 +900,8 @@ public class ProjectTemplateFilesTest {
 
 	private static final Pattern _pomXmlExecutionIdPattern = Pattern.compile(
 		"[a-z]+(?:-[a-z]+)*");
+	private static final Pattern _projectTemplateDirNameSeparatorPattern =
+		Pattern.compile("(?:^|-)(\\w)");
 	private static final Set<String> _textFileExtensions = new HashSet<>(
 		Arrays.asList(
 			"bnd", "gradle", "java", "js", "json", "jsp", "jspf", "properties",

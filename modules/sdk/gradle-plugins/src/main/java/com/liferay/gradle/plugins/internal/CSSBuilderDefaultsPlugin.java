@@ -73,7 +73,7 @@ public class CSSBuilderDefaultsPlugin
 		File docrootDir = project.file("docroot");
 
 		if (docrootDir.exists()) {
-			buildCSSTask.setDocrootDir(docrootDir);
+			buildCSSTask.setBaseDir(docrootDir);
 		}
 
 		String generateSourceMap = GradleUtil.getProperty(

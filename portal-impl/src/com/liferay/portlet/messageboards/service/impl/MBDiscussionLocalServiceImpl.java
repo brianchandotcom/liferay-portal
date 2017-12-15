@@ -22,7 +22,10 @@ import com.liferay.portlet.messageboards.service.base.MBDiscussionLocalServiceBa
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl}
  */
+@Deprecated
 public class MBDiscussionLocalServiceImpl
 	extends MBDiscussionLocalServiceBaseImpl {
 

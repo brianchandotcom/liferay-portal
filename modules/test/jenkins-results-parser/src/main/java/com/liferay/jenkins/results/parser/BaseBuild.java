@@ -1698,11 +1698,28 @@ public abstract class BaseBuild implements Build {
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				Dom4JUtil.getNewAnchorElement(
-					getBuildURL() + "testReport", "Test Report")),
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				toJenkinsReportDateString(
-					new Date(getStartTime()), getJenkinsReportTimeZoneName())),
+					getBuildURL() + "testReport", "Test Report")));
+
+		getStartTime();
+
+		if (startTime == null) {
+			Dom4JUtil.addToElement(
+				buildInfoElement,
+				Dom4JUtil.getNewElement(
+					cellElementTagName, null, "",
+					getJenkinsReportTimeZoneName()));
+		}
+		else {
+			Dom4JUtil.addToElement(
+				buildInfoElement,
+				Dom4JUtil.getNewElement(
+					cellElementTagName, null,
+					toJenkinsReportDateString(
+						new Date(startTime), getJenkinsReportTimeZoneName())));
+		}
+
+		Dom4JUtil.addToElement(
+			buildInfoElement,
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				JenkinsResultsParserUtil.toDurationString(getDuration())));
@@ -2319,9 +2336,14 @@ public abstract class BaseBuild implements Build {
 		}
 
 		protected void addTimelineData(BaseBuild build) {
-			int endIndex = _getIndex(
-				build.getStartTime() + build.getDuration());
-			int startIndex = _getIndex(build.getStartTime());
+			Long buildStartTime = build.getStartTime();
+
+			if (buildStartTime == null) {
+				return;
+			}
+
+			int endIndex = _getIndex(buildStartTime + build.getDuration());
+			int startIndex = _getIndex(buildStartTime);
 
 			_timeline[startIndex]._invocationsCount++;
 

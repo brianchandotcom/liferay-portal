@@ -14,6 +14,7 @@
 
 package com.liferay.project.templates.internal;
 
+import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.WorkspaceUtil;
@@ -35,8 +36,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.ServiceLoader;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -153,11 +156,35 @@ public class Archetyper {
 
 		archetypeGenerationRequest.setVersion("1.0.0");
 
+		ArchetypeArtifactManager archetypeArtifactManager =
+			_createArchetypeArtifactManager(archetypesDir);
+
+		ProjectTemplateCustomizer projectTemplateCustomizer =
+			_getProjectTemplateCustomizer(
+				archetypeArtifactManager.getArchetypeFile(
+					archetypeGenerationRequest.getArchetypeGroupId(),
+					archetypeGenerationRequest.getArchetypeArtifactId(),
+					archetypeGenerationRequest.getArchetypeVersion(), null,
+					null, null));
+
+		if (projectTemplateCustomizer != null) {
+			projectTemplateCustomizer.beforeGenerateProject(
+				projectTemplatesArgs, archetypeGenerationRequest);
+		}
+
 		ArchetypeManager archetypeManager = _createArchetypeManager(
 			archetypesDir);
 
-		return archetypeManager.generateProjectFromArchetype(
-			archetypeGenerationRequest);
+		ArchetypeGenerationResult result =
+			archetypeManager.generateProjectFromArchetype(
+				archetypeGenerationRequest);
+
+		if (projectTemplateCustomizer != null) {
+			projectTemplateCustomizer.postGenerateProject(
+				destinationDir, result);
+		}
+
+		return result;
 	}
 
 	private ArchetypeArtifactManager _createArchetypeArtifactManager(
@@ -252,6 +279,28 @@ public class Archetyper {
 		defaultVelocityComponent.initialize();
 
 		return defaultVelocityComponent;
+	}
+
+	private ProjectTemplateCustomizer _getProjectTemplateCustomizer(
+			File archetypeFile)
+		throws MalformedURLException {
+
+		URI uri = archetypeFile.toURI();
+
+		URL[] urls = {uri.toURL()};
+
+		URLClassLoader loader = new URLClassLoader(urls);
+
+		ServiceLoader<ProjectTemplateCustomizer> ptc = ServiceLoader.load(
+			ProjectTemplateCustomizer.class, loader);
+
+		Iterator<ProjectTemplateCustomizer> services = ptc.iterator();
+
+		if (services.hasNext()) {
+			return services.next();
+		}
+
+		return null;
 	}
 
 	private void _setProperty(

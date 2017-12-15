@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import com.liferay.jenkins.results.parser.LegacyDataArchive.Status;
-
 import java.io.File;
 import java.io.IOException;
 
@@ -79,109 +77,6 @@ public class LegacyDataArchivePortalVersion {
 
 	public File getPortalVersionTestDirectory() {
 		return _portalVersionTestDirectory;
-	}
-
-	protected List<Element> getReadMeElements() {
-		ArrayList<Element> readMeElements = new ArrayList<>();
-
-		readMeElements.add(
-			Dom4JUtil.getNewElement("h2", null, getPortalVersion()));
-
-		Element testCommitElement = Dom4JUtil.getNewElement("p", null);
-
-		readMeElements.add(testCommitElement);
-
-		Dom4JUtil.getNewElement("span", testCommitElement, "Last Commit in ");
-
-		File testDirectory = getPortalVersionTestDirectory();
-
-		Dom4JUtil.getNewAnchorElement(
-			_legacyGitWorkingDirectory.getGitHubFileURL(
-				"master", _legacyGitWorkingDirectory.getRemote("upstream"),
-				testDirectory, false),
-			testCommitElement, "Test");
-
-		Dom4JUtil.getNewElement("span", testCommitElement, " Folder:");
-
-		Commit testCommit = getLatestTestCommit();
-
-		Dom4JUtil.getNewAnchorElement(
-			testCommit.getGitHubCommitURL(), testCommitElement,
-			testCommit.getAbbreviatedSHA());
-
-		Dom4JUtil.getNewElement(
-			"span", testCommitElement, testCommit.getMessage());
-
-		List<LegacyDataArchive> missingLegacyDataArchives = new ArrayList<>();
-		List<LegacyDataArchive> staleLegacyDataArchives = new ArrayList<>();
-		List<LegacyDataArchive> updatedLegacyDataArchives = new ArrayList<>();
-
-		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				getLegacyDataArchiveGroups()) {
-
-			for (LegacyDataArchive legacyDataArchive :
-					legacyDataArchiveGroup.getLegacyDataArchives()) {
-
-				Status status = legacyDataArchive.getStatus(); //COSTLY
-
-				if (status == Status.MISSING) {
-					missingLegacyDataArchives.add(legacyDataArchive);
-				}
-				else if (status == Status.STALE) {
-					staleLegacyDataArchives.add(legacyDataArchive);
-				}
-				else if (status == Status.UPDATED) {
-					updatedLegacyDataArchives.add(legacyDataArchive);
-				}
-			}
-		}
-
-		if (!updatedLegacyDataArchives.isEmpty()) {
-			LegacyDataReadMeCommitGroupElement
-				legacyDataReadMeCommitGroupElement =
-					new LegacyDataReadMeCommitGroupElement(Status.UPDATED);
-
-			for (LegacyDataArchive legacyDataArchive :
-					updatedLegacyDataArchives) {
-
-				legacyDataReadMeCommitGroupElement.addLegacyDataArchive(
-					legacyDataArchive);
-			}
-
-			readMeElements.add(legacyDataReadMeCommitGroupElement);
-		}
-
-		if (!staleLegacyDataArchives.isEmpty()) {
-			LegacyDataReadMeCommitGroupElement
-				legacyDataReadMeCommitGroupElement =
-					new LegacyDataReadMeCommitGroupElement(Status.STALE);
-
-			for (LegacyDataArchive legacyDataArchive :
-					staleLegacyDataArchives) {
-
-				legacyDataReadMeCommitGroupElement.addLegacyDataArchive(
-					legacyDataArchive);
-			}
-
-			readMeElements.add(legacyDataReadMeCommitGroupElement);
-		}
-
-		if (!missingLegacyDataArchives.isEmpty()) {
-			LegacyDataReadMeCommitGroupElement
-				legacyDataReadMeCommitGroupElement =
-					new LegacyDataReadMeCommitGroupElement(Status.MISSING);
-
-			for (LegacyDataArchive legacyDataArchive :
-					missingLegacyDataArchives) {
-
-				legacyDataReadMeCommitGroupElement.addLegacyDataArchive(
-					legacyDataArchive);
-			}
-
-			readMeElements.add(legacyDataReadMeCommitGroupElement);
-		}
-
-		return readMeElements;
 	}
 
 	private List<String> _getDataArchiveTypes() {

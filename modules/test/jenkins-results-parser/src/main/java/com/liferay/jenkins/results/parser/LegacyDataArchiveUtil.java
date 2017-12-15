@@ -24,8 +24,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
-import org.dom4j.Element;
-
 /**
  * @author Michael Hashimoto
  */
@@ -89,8 +87,6 @@ public class LegacyDataArchiveUtil {
 			}
 		}
 
-		_commitReadmeFile();
-
 		GitWorkingDirectory.Remote upstreamRemote =
 			_legacyGitWorkingDirectory.getRemote("upstream");
 
@@ -123,46 +119,6 @@ public class LegacyDataArchiveUtil {
 
 	public List<String> getPortalVersions() {
 		return _portalVersions;
-	}
-
-	protected Element getReadMeElement() {
-		Element readMeElement = Dom4JUtil.getNewElement("div");
-
-		Dom4JUtil.getNewElement(
-			"h1", readMeElement, "Legacy Database Archives");
-
-		for (LegacyDataArchivePortalVersion legacyDataArchivePortalVersion :
-				_legacyDataArchivePortalVersions) {
-
-			List<Element> readMeElements =
-				legacyDataArchivePortalVersion.getReadMeElements();
-
-			Dom4JUtil.addToElement(readMeElement, readMeElements.toArray());
-		}
-
-		return readMeElement;
-	}
-
-	private void _commitReadmeFile() {
-		Element readMeElement = getReadMeElement();
-
-		try {
-			File readmeFile = new File(
-				_legacyGitWorkingDirectory.getWorkingDirectory(), "README.md");
-
-			JenkinsResultsParserUtil.write(
-				readmeFile, Dom4JUtil.format(readMeElement, true));
-
-			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
-				readmeFile.getCanonicalPath());
-
-			_legacyGitWorkingDirectory.commitStagedFilesToCurrentBranch(
-				JenkinsResultsParserUtil.combine(
-					"archive:ignore Update README.md to show changes."));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException(ioe);
-		}
 	}
 
 	private Properties _getBuildProperties() {

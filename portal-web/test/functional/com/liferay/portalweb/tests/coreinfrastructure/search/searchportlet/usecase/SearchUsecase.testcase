@@ -1255,6 +1255,10 @@
 		</execute>
 
 		<for list="Type Facet,Search Results,Search Bar" param="portletName">
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Search Page" />
+			</execute>
+
 			<execute macro="Portlet#addPG">
 				<var name="portletName" value="${portletName}" />
 			</execute>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.npm.metaljs.portlet;
+package com.liferay.project.templates.service.wrapper.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class NpmMetaljsPortletProjectTemplateCustomizer
+public class ServiceWrapperProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -43,7 +43,9 @@ public class NpmMetaljsPortletProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put("packageJsonVersion", "1.0.0");
+		String service = projectTemplatesArgs.getService();
+
+		properties.put("serviceWrapperClass", service);
 	}
 
 }

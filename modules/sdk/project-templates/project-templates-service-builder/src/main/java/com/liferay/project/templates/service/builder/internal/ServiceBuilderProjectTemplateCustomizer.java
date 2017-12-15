@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.project.templates.npm.isomorphic.portlet;
+package com.liferay.project.templates.service.builder.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.WorkspaceUtil;
 
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Path;
 
 import java.util.Properties;
 
@@ -27,7 +31,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class NpmIsomorphicPortletProjectTemplateCustomizer
+public class ServiceBuilderProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -41,9 +45,39 @@ public class NpmIsomorphicPortletProjectTemplateCustomizer
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
+		String artifactId = archetypeGenerationRequest.getArtifactId();
+
+		String apiPath = ":" + artifactId + "-api";
+
+		File destinationDir = new File(
+			archetypeGenerationRequest.getOutputDirectory());
+
+		try {
+			File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
+
+			if (workspaceDir != null) {
+				Path destinationDirPath = destinationDir.toPath();
+				Path workspaceDirPath = workspaceDir.toPath();
+
+				destinationDirPath = destinationDirPath.toAbsolutePath();
+				workspaceDirPath = workspaceDirPath.toAbsolutePath();
+
+				Path relativePath = workspaceDirPath.relativize(
+					destinationDirPath);
+
+				String path = relativePath.toString();
+
+				path = path.replace(File.separatorChar, ':');
+
+				apiPath = ":" + path + ":" + artifactId + apiPath;
+			}
+		}
+		catch (IOException ioe) {
+		}
+
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put("packageJsonVersion", "1.0.0");
+		properties.put("apiPath", apiPath);
 	}
 
 }

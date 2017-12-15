@@ -1,1 +1,1 @@
-com.liferay.project.templates.service.ServiceProjectTemplateCustomizer
+com.liferay.project.templates.service.internal.ServiceProjectTemplateCustomizer

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.npm.react.portlet;
+package com.liferay.project.templates.npm.billboardjs.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class NpmReactPortletProjectTemplateCustomizer
+public class NpmBillboardjsPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override

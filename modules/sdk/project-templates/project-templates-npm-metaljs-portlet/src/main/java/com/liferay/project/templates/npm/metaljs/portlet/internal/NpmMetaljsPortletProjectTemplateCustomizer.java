@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.npm.vuejs.portlet;
+package com.liferay.project.templates.npm.metaljs.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class NpmVuejsPortletProjectTemplateCustomizer
+public class NpmMetaljsPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override

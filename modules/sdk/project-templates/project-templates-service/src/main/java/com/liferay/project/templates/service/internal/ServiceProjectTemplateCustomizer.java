@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.theme.contributor;
+package com.liferay.project.templates.service.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class ThemeContributorProjectTemplateCustomizer
+public class ServiceProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -43,9 +43,10 @@ public class ThemeContributorProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		String contributorType = projectTemplatesArgs.getContributorType();
+		String service = projectTemplatesArgs.getService();
 
-		properties.put("contributorType", contributorType);
+		properties.put("serviceClass", service);
+		properties.put("serviceWrapperClass", service);
 	}
 
 }

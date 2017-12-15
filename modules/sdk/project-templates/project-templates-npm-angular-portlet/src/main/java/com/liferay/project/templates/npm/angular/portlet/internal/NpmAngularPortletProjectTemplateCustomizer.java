@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.fragment;
+package com.liferay.project.templates.npm.angular.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class FragmentProjectTemplateCustomizer
+public class NpmAngularPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -43,12 +43,7 @@ public class FragmentProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		String hostBundleSymbolicName =
-			projectTemplatesArgs.getHostBundleSymbolicName();
-		String hostBundleVersion = projectTemplatesArgs.getHostBundleVersion();
-
-		properties.put("hostBundleSymbolicName", hostBundleSymbolicName);
-		properties.put("hostBundleVersion", hostBundleVersion);
+		properties.put("packageJsonVersion", "1.0.0");
 	}
 
 }

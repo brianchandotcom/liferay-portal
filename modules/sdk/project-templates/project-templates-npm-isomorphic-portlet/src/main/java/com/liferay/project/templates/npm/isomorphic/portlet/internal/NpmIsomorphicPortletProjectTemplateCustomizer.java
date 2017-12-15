@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.service;
+package com.liferay.project.templates.npm.isomorphic.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class ServiceProjectTemplateCustomizer
+public class NpmIsomorphicPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -43,10 +43,7 @@ public class ServiceProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		String service = projectTemplatesArgs.getService();
-
-		properties.put("serviceClass", service);
-		properties.put("serviceWrapperClass", service);
+		properties.put("packageJsonVersion", "1.0.0");
 	}
 
 }

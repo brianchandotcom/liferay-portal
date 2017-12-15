@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.npm.jquery.portlet;
+package com.liferay.project.templates.fragment.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class NpmJqueryPortletProjectTemplateCustomizer
+public class FragmentProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -43,7 +43,12 @@ public class NpmJqueryPortletProjectTemplateCustomizer
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put("packageJsonVersion", "1.0.0");
+		String hostBundleSymbolicName =
+			projectTemplatesArgs.getHostBundleSymbolicName();
+		String hostBundleVersion = projectTemplatesArgs.getHostBundleVersion();
+
+		properties.put("hostBundleSymbolicName", hostBundleSymbolicName);
+		properties.put("hostBundleVersion", hostBundleVersion);
 	}
 
 }

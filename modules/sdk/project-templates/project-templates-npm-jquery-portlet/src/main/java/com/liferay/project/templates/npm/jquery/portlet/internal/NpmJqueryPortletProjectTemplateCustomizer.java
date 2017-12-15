@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.project.templates.npm.angular.portlet;
+package com.liferay.project.templates.npm.jquery.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
@@ -27,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class NpmAngularPortletProjectTemplateCustomizer
+public class NpmJqueryPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override

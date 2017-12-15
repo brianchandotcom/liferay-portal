@@ -12,16 +12,12 @@
  * details.
  */
 
-package com.liferay.project.templates.service.builder;
+package com.liferay.project.templates.theme.contributor.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
-import com.liferay.project.templates.WorkspaceUtil;
 
 import java.io.File;
-import java.io.IOException;
-
-import java.nio.file.Path;
 
 import java.util.Properties;
 
@@ -31,7 +27,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class ServiceBuilderProjectTemplateCustomizer
+public class ThemeContributorProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
@@ -45,39 +41,11 @@ public class ServiceBuilderProjectTemplateCustomizer
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
-		String artifactId = archetypeGenerationRequest.getArtifactId();
-
-		String apiPath = ":" + artifactId + "-api";
-
-		File destinationDir = new File(
-			archetypeGenerationRequest.getOutputDirectory());
-
-		try {
-			File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
-
-			if (workspaceDir != null) {
-				Path destinationDirPath = destinationDir.toPath();
-				Path workspaceDirPath = workspaceDir.toPath();
-
-				destinationDirPath = destinationDirPath.toAbsolutePath();
-				workspaceDirPath = workspaceDirPath.toAbsolutePath();
-
-				Path relativePath = workspaceDirPath.relativize(
-					destinationDirPath);
-
-				String path = relativePath.toString();
-
-				path = path.replace(File.separatorChar, ':');
-
-				apiPath = ":" + path + ":" + artifactId + apiPath;
-			}
-		}
-		catch (IOException ioe) {
-		}
-
 		Properties properties = archetypeGenerationRequest.getProperties();
 
-		properties.put("apiPath", apiPath);
+		String contributorType = projectTemplatesArgs.getContributorType();
+
+		properties.put("contributorType", contributorType);
 	}
 
 }

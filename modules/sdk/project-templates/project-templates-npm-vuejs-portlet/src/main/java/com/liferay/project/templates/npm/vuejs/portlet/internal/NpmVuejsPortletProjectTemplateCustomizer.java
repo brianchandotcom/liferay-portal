@@ -12,16 +12,14 @@
  * details.
  */
 
-package com.liferay.project.templates.soy.portlet;
+package com.liferay.project.templates.npm.vuejs.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 
 import java.io.File;
-import java.io.IOException;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.Properties;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -29,30 +27,13 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 /**
  * @author Gregory Amerson
  */
-public class SoyPortletProjectTemplateCustomizer
+public class NpmVuejsPortletProjectTemplateCustomizer
 	implements ProjectTemplateCustomizer {
 
 	@Override
 	public void onAfterGenerateProject(
 		File destinationDir,
 		ArchetypeGenerationResult archetypeGenerationResult) {
-
-		if ((archetypeGenerationResult.getCause() == null) &&
-			_projectTemplateArgs.isGradle()) {
-
-			Path projectPath = destinationDir.toPath();
-
-			Path gulpfileJs = projectPath.resolve("gulpfile.js");
-
-			if (Files.exists(gulpfileJs)) {
-				try {
-					Files.delete(gulpfileJs);
-				}
-				catch (IOException ioe) {
-					archetypeGenerationResult.setCause(ioe);
-				}
-			}
-		}
 	}
 
 	@Override
@@ -60,9 +41,9 @@ public class SoyPortletProjectTemplateCustomizer
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
-		_projectTemplateArgs = projectTemplatesArgs;
-	}
+		Properties properties = archetypeGenerationRequest.getProperties();
 
-	private ProjectTemplatesArgs _projectTemplateArgs;
+		properties.put("packageJsonVersion", "1.0.0");
+	}
 
 }

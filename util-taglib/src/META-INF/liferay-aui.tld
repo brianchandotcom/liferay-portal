@@ -539,7 +539,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description><![CDATA[Whether to validate fields on blur method or not. The default value is <code>true</code>.]]></description>
+			<description><![CDATA[Whether to validate fields when they lose focus. The default value is <code>true</code>.]]></description>
 			<name>validateOnBlur</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

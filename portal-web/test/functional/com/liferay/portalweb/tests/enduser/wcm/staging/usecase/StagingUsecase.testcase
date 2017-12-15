@@ -171,7 +171,6 @@
 		</execute>
 
 		<execute macro="Staging#configurePublishToLive">
-			<var name="checkPageName" value="Staging Test Page" />
 			<var name="uncheckContentNameList" value="Blogs" />
 		</execute>
 

@@ -91,11 +91,6 @@ public class CSSBuilder implements AutoCloseable {
 	public CSSBuilder(CSSBuilderArgs cssBuilderArgs) throws Exception {
 		_cssBuilderArgs = cssBuilderArgs;
 
-		if (_cssBuilderArgs.getBaseDir() == null) {
-			_cssBuilderArgs.setBaseDir(
-				new File(System.getProperty("user.dir")));
-		}
-
 		File importDir = _cssBuilderArgs.getImportDir();
 
 		if (importDir != null) {
@@ -113,10 +108,6 @@ public class CSSBuilder implements AutoCloseable {
 		else {
 			_cleanImportDir = false;
 			_importDirName = null;
-		}
-
-		if (_cssBuilderArgs.getDirNames() == null) {
-			_cssBuilderArgs.setDirNames("");
 		}
 
 		List<String> rtlExcludedPathRegexps =

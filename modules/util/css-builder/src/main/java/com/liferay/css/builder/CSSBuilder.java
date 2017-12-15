@@ -34,6 +34,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.List;
@@ -263,16 +264,11 @@ public class CSSBuilder implements AutoCloseable {
 	}
 
 	private String[] _getScssFiles(String baseDir) throws IOException {
-		String[] fragments = {"**/_*.scss"};
 		String[] includes = {"**/*.scss"};
 
-		Stream<String[]> stream = Stream.of(fragments, _EXCLUDES);
+		String[] excludes = Arrays.copyOf(_EXCLUDES, _EXCLUDES.length + 1);
 
-		String[] excludes = stream.flatMap(
-			Stream::of
-		).toArray(
-			String[]::new
-		);
+		excludes[excludes.length - 1] = "**/_*.scss";
 
 		return FileUtil.getFilesFromDirectory(baseDir, includes, excludes);
 	}

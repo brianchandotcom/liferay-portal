@@ -47,6 +47,51 @@
 		<reference entity="SystemEvent" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
+	<entity human-name="message boards discussion" local-service="true" name="MBDiscussion" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="discussionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="threadId" type="long" />
+		<column name="lastPublishDate" type="Date" />
+
+		<!-- Finder methods -->
+
+		<finder name="ClassNameId" return-type="Collection">
+			<finder-column name="classNameId" />
+		</finder>
+		<finder name="ThreadId" return-type="MBDiscussion" unique="true">
+			<finder-column name="threadId" />
+		</finder>
+		<finder name="C_C" return-type="MBDiscussion" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+
+		<!-- References -->
+
+		<reference entity="ClassName" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+		<reference entity="MBMessage" package-path="com.liferay.portlet.messageboards" />
+		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
+	</entity>
 	<entity human-name="message boards mailing list" local-service="true" name="MBMailingList" remote-service="false" uuid="true">
 
 		<!-- PK fields -->

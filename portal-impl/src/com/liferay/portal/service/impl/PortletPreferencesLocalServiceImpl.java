@@ -225,8 +225,10 @@ public class PortletPreferencesLocalServiceImpl
 
 		String defaultPreferences = PortletConstants.DEFAULT_PREFERENCES;
 
+		String portletName = PortletIdCodec.decodePortletName(portletId);
+
 		Portlet portlet = portletLocalService.fetchPortletById(
-			companyId, PortletIdCodec.decodePortletName(portletId));
+			companyId, portletName);
 
 		if (portlet != null) {
 			defaultPreferences = portlet.getDefaultPreferences();
@@ -243,7 +245,7 @@ public class PortletPreferencesLocalServiceImpl
 			new PortletPreferencesSettings(
 				_getStrictPreferences(
 					companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
-					PortletKeys.PREFS_PLID_SHARED, portletId,
+					PortletKeys.PREFS_PLID_SHARED, portletName,
 					defaultPreferences),
 				companyConfigurationBeanSettings);
 
@@ -255,7 +257,7 @@ public class PortletPreferencesLocalServiceImpl
 			new PortletPreferencesSettings(
 				_getStrictPreferences(
 					companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
-					PortletKeys.PREFS_PLID_SHARED, portletId,
+					PortletKeys.PREFS_PLID_SHARED, portletName,
 					defaultPreferences),
 				groupConfigurationBeanSettings);
 

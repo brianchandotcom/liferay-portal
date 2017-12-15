@@ -81,42 +81,6 @@ public class LegacyDataArchivePortalVersion {
 		return _portalVersionTestDirectory;
 	}
 
-	public boolean hasMissingArchives() {
-		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				_legacyDataArchiveGroups) {
-
-			if (legacyDataArchiveGroup.hasMissingArchives()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean hasStaleArchives() {
-		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				_legacyDataArchiveGroups) {
-
-			if (legacyDataArchiveGroup.hasStaleArchives()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public boolean hasUpdatedArchives() {
-		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-				_legacyDataArchiveGroups) {
-
-			if (legacyDataArchiveGroup.hasUpdatedArchives()) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
 	protected List<Element> getReadMeElements() {
 		ArrayList<Element> readMeElements = new ArrayList<>();
 
@@ -148,55 +112,73 @@ public class LegacyDataArchivePortalVersion {
 		Dom4JUtil.getNewElement(
 			"span", testCommitElement, testCommit.getMessage());
 
-		List<LegacyDataArchiveGroup> legacyDataArchiveGroups =
-			getLegacyDataArchiveGroups();
+		List<LegacyDataArchive> missingLegacyDataArchives = new ArrayList<>();
+		List<LegacyDataArchive> staleLegacyDataArchives = new ArrayList<>();
+		List<LegacyDataArchive> updatedLegacyDataArchives = new ArrayList<>();
 
-		if (hasUpdatedArchives()) {
-			readMeElements.add(
-				Dom4JUtil.getNewElement("h4", null, "Updated Data Archives:"));
+		for (LegacyDataArchiveGroup legacyDataArchiveGroup :
+				getLegacyDataArchiveGroups()) {
 
-			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-					legacyDataArchiveGroups) {
+			for (LegacyDataArchive legacyDataArchive :
+					legacyDataArchiveGroup.getLegacyDataArchives()) {
 
-				if (legacyDataArchiveGroup.getStatus() != Status.UPDATED) {
-					continue;
+				Status status = legacyDataArchive.getStatus(); //COSTLY
+
+				if (status == Status.MISSING) {
+					missingLegacyDataArchives.add(legacyDataArchive);
 				}
-
-				readMeElements.add(
-					legacyDataArchiveGroup.getLegacyDataReadMeSummaryElement());
+				else if (status == Status.STALE) {
+					staleLegacyDataArchives.add(legacyDataArchive);
+				}
+				else if (status == Status.UPDATED) {
+					updatedLegacyDataArchives.add(legacyDataArchive);
+				}
 			}
 		}
 
-		if (hasStaleArchives()) {
-			readMeElements.add(
-				Dom4JUtil.getNewElement("h4", null, "Stale Data Archives:"));
+		if (!updatedLegacyDataArchives.isEmpty()) {
+			LegacyDataReadMeCommitGroupElement
+				legacyDataReadMeCommitGroupElement =
+					new LegacyDataReadMeCommitGroupElement(Status.UPDATED);
 
-			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-					legacyDataArchiveGroups) {
+			for (LegacyDataArchive legacyDataArchive :
+					updatedLegacyDataArchives) {
 
-				if (legacyDataArchiveGroup.getStatus() != Status.STALE) {
-					continue;
-				}
-
-				readMeElements.add(
-					legacyDataArchiveGroup.getLegacyDataReadMeSummaryElement());
+				legacyDataReadMeCommitGroupElement.addLegacyDataArchive(
+					legacyDataArchive);
 			}
+
+			readMeElements.add(legacyDataReadMeCommitGroupElement);
 		}
 
-		if (hasMissingArchives()) {
-			readMeElements.add(
-				Dom4JUtil.getNewElement("h4", null, "Missing Data Archives:"));
+		if (!staleLegacyDataArchives.isEmpty()) {
+			LegacyDataReadMeCommitGroupElement
+				legacyDataReadMeCommitGroupElement =
+					new LegacyDataReadMeCommitGroupElement(Status.STALE);
 
-			for (LegacyDataArchiveGroup legacyDataArchiveGroup :
-					legacyDataArchiveGroups) {
+			for (LegacyDataArchive legacyDataArchive :
+					staleLegacyDataArchives) {
 
-				if (legacyDataArchiveGroup.getStatus() != Status.MISSING) {
-					continue;
-				}
-
-				readMeElements.add(
-					legacyDataArchiveGroup.getLegacyDataReadMeSummaryElement());
+				legacyDataReadMeCommitGroupElement.addLegacyDataArchive(
+					legacyDataArchive);
 			}
+
+			readMeElements.add(legacyDataReadMeCommitGroupElement);
+		}
+
+		if (!missingLegacyDataArchives.isEmpty()) {
+			LegacyDataReadMeCommitGroupElement
+				legacyDataReadMeCommitGroupElement =
+					new LegacyDataReadMeCommitGroupElement(Status.MISSING);
+
+			for (LegacyDataArchive legacyDataArchive :
+					missingLegacyDataArchives) {
+
+				legacyDataReadMeCommitGroupElement.addLegacyDataArchive(
+					legacyDataArchive);
+			}
+
+			readMeElements.add(legacyDataReadMeCommitGroupElement);
 		}
 
 		return readMeElements;

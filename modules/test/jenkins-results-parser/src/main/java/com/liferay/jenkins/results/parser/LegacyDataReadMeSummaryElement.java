@@ -14,6 +14,8 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,45 +27,117 @@ import org.dom4j.tree.DefaultElement;
  */
 public class LegacyDataReadMeSummaryElement extends DefaultElement {
 
-	public LegacyDataReadMeSummaryElement() {
+	public LegacyDataReadMeSummaryElement(
+		String summaryID, Commit commit, LegacyDataArchive.Status status,
+		String dataArchiveType) {
+
 		super("details");
 
 		_summaryElement = Dom4JUtil.getNewElement("summary", this);
 		_unorderedListElement = Dom4JUtil.getNewElement("ul", this);
+		_status = status;
+		_summaryContentElement = _getSummaryContentElement(
+			commit, dataArchiveType);
+
+		addAttribute("id", summaryID);
+
+		_updateSummaryElement();
 	}
 
-	public void addLineItem(Element element) {
+	public void addLegacyDataArchive(LegacyDataArchive legacyDataArchive) {
 		_lineItemElements.add(
-			Dom4JUtil.getNewElement("li", _unorderedListElement, element));
+			Dom4JUtil.getNewElement(
+				"li", _unorderedListElement,
+				_getLegacyDataArchiveElement(legacyDataArchive)));
 
-		updateSummaryElement();
+		_updateSummaryElement();
 	}
 
-	public void setSummaryContent(Element summaryContentElement) {
-		_summaryContentElement = summaryContentElement;
+	private Element _getLegacyDataArchiveElement(
+		LegacyDataArchive legacyDataArchive) {
 
-		updateSummaryElement();
-	}
+		File legacyDataArchiveFile =
+			legacyDataArchive.getLegacyDataArchiveFile();
+		GitWorkingDirectory legacyGitWorkingDirectory =
+			legacyDataArchive.getLegacyGitWorkingDirectory();
 
-	protected void updateSummaryElement() {
-		if (_summaryElement != null) {
-			remove(_summaryElement);
+		if (_status == LegacyDataArchive.Status.STALE) {
+			return Dom4JUtil.getNewAnchorElement(
+				legacyGitWorkingDirectory.getGitHubFileURL(
+					"master", legacyGitWorkingDirectory.getRemote("upstream"),
+					legacyDataArchiveFile, false),
+				JenkinsResultsParserUtil.getPathRelativeTo(
+					legacyDataArchiveFile,
+					legacyGitWorkingDirectory.getWorkingDirectory()));
+		}
+		else if (_status == LegacyDataArchive.Status.UPDATED) {
+			LegacyDataArchiveUtil legacyDataArchiveUtil =
+				legacyDataArchive.getLegacyDataArchiveUtil();
+
+			GitWorkingDirectory.Branch dataArchiveBranch =
+				legacyDataArchiveUtil.getDataArchiveBranch();
+
+			return Dom4JUtil.getNewAnchorElement(
+				legacyGitWorkingDirectory.getGitHubFileURL(
+					dataArchiveBranch.getName(),
+					legacyGitWorkingDirectory.getRemote("upstream"),
+					legacyDataArchiveFile, false),
+				JenkinsResultsParserUtil.getPathRelativeTo(
+					legacyDataArchiveFile,
+					legacyGitWorkingDirectory.getWorkingDirectory()));
 		}
 
-		_summaryElement = Dom4JUtil.getNewElement(
-			"summary", null,
-			Dom4JUtil.getNewElement(
-				"b", null,
-				JenkinsResultsParserUtil.combine(
-					"(", Integer.toString(_lineItemElements.size()), ") ")),
-			_summaryContentElement.clone());
+		return Dom4JUtil.getNewElement(
+			"span", null,
+			JenkinsResultsParserUtil.getPathRelativeTo(
+				legacyDataArchiveFile,
+				legacyGitWorkingDirectory.getWorkingDirectory()));
+	}
 
-		add(_summaryElement);
+	private Element _getSummaryContentElement(
+		Commit commit, String dataArchiveType) {
+
+		Element summaryContentElement = Dom4JUtil.getNewElement("span");
+
+		if (commit != null) {
+			Dom4JUtil.getNewAnchorElement(
+				commit.getGitHubCommitURL(), summaryContentElement,
+				commit.getAbbreviatedSHA());
+
+			Dom4JUtil.getNewElement(
+				"span", summaryContentElement, commit.getMessage());
+		}
+		else {
+			Dom4JUtil.getNewElement(
+				"span", summaryContentElement, dataArchiveType);
+		}
+
+		return summaryContentElement;
+	}
+
+	private Element _getSummaryCountElement() {
+		return Dom4JUtil.getNewElement(
+			"b", null,
+			JenkinsResultsParserUtil.combine(
+				"(", Integer.toString(_lineItemElements.size()), ") "));
+	}
+
+	private void _updateSummaryElement() {
+		_summaryElement.remove(_summaryCountElement);
+		_summaryElement.remove(_summaryContentElement);
+
+		_summaryCountElement = _getSummaryCountElement();
+		_summaryContentElement = (Element)_summaryContentElement.clone();
+
+		_summaryElement.add(_summaryCountElement);
+		_summaryElement.add(_summaryContentElement);
 	}
 
 	private final List<Element> _lineItemElements = new ArrayList<>();
+	private final LegacyDataArchive.Status _status;
 	private Element _summaryContentElement;
-	private Element _summaryElement;
+	private Element _summaryCountElement;
+	private final Element _summaryElement;
 	private final Element _unorderedListElement;
 
 }

@@ -33,8 +33,20 @@ public class LegacyDataArchive {
 		return null;
 	}
 
+	public String getDataArchiveType() {
+		return _dataArchiveType;
+	}
+
 	public File getLegacyDataArchiveFile() {
 		return _legacyDataArchiveFile;
+	}
+
+	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
+		return _legacyDataArchiveUtil;
+	}
+
+	public GitWorkingDirectory getLegacyGitWorkingDirectory() {
+		return _legacyGitWorkingDirectory;
 	}
 
 	public Status getStatus() {
@@ -129,7 +141,7 @@ public class LegacyDataArchive {
 		_legacyGitWorkingDirectory =
 			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
 
-		String dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+		_dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
 		String portalVersion =
 			_legacyDataArchivePortalVersion.getPortalVersion();
 		File legacyDataWorkingDirectory =
@@ -138,9 +150,11 @@ public class LegacyDataArchive {
 		_legacyDataArchiveFile = new File(
 			JenkinsResultsParserUtil.combine(
 				legacyDataWorkingDirectory.toString(), "/", portalVersion,
-				"/data-archive/", dataArchiveType, "-", _databaseName, ".zip"));
+				"/data-archive/", _dataArchiveType, "-", _databaseName,
+				".zip"));
 	}
 
+	private final String _dataArchiveType;
 	private final String _databaseName;
 	private final File _legacyDataArchiveFile;
 	private final LegacyDataArchiveGroup _legacyDataArchiveGroup;

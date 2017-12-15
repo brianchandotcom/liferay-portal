@@ -746,8 +746,8 @@ public class GitWorkingDirectory {
 		}
 
 		return JenkinsResultsParserUtil.combine(
-			"https://github.com:", getGitHubUserName(branchRemote), "/",
-			getRepositoryName(), "/tree/", branchName, relativePath);
+			"https://github.com/", getGitHubUserName(branchRemote), "/",
+			getRepositoryName(), "/tree/", branchName, "/", relativePath);
 	}
 
 	public Remote getRemote(String name) {

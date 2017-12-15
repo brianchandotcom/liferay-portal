@@ -74,7 +74,9 @@ public class ConfigurationTemporarySwapperTest {
 					Assert.assertTrue(persistenceManager.exists(_pid));
 				}
 
-				Assert.assertFalse(persistenceManager.exists(_pid));
+				Assert.assertFalse(
+					String.valueOf(persistenceManager.load(_pid)),
+					persistenceManager.exists(_pid));
 			});
 	}
 

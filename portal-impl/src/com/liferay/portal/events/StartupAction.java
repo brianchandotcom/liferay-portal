@@ -53,7 +53,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.plugin.PluginPackageIndexer;
 import com.liferay.portal.tools.DBUpgrader;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.util.MBMessageIndexer;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.ServiceRegistration;
@@ -154,7 +153,6 @@ public class StartupAction extends SimpleAction {
 
 				@Override
 				public void dependenciesFulfilled() {
-					IndexerRegistryUtil.register(new MBMessageIndexer());
 					IndexerRegistryUtil.register(new PluginPackageIndexer());
 				}
 

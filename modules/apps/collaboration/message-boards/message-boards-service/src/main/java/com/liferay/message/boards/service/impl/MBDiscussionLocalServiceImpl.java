@@ -52,22 +52,6 @@ public class MBDiscussionLocalServiceImpl
 		return discussion;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #addDiscussion(long, long,
-	 *             long, long, long, ServiceContext)}
-	 */
-	@Deprecated
-	@Override
-	public MBDiscussion addDiscussion(
-			long userId, long classNameId, long classPK, long threadId,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addDiscussion(
-			userId, serviceContext.getScopeGroupId(), classNameId, classPK,
-			threadId, serviceContext);
-	}
-
 	@Override
 	public MBDiscussion fetchDiscussion(long discussionId) {
 		return mbDiscussionPersistence.fetchByPrimaryKey(discussionId);

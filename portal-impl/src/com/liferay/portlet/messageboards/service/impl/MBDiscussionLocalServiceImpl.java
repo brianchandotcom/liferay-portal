@@ -51,10 +51,9 @@ public class MBDiscussionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		throw new UnsupportedOperationException(
-			"This class is deprecated and replaced by " +
-				"com.liferay.message.boards.service.impl." +
-					"MBDiscussionLocalServiceImpl");
+		return mbDiscussionLocalService.addDiscussion(
+			userId, serviceContext.getScopeGroupId(), classNameId, classPK,
+			threadId, serviceContext);
 	}
 
 	@Override

@@ -34,14 +34,13 @@ import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.summary.SummaryBuilderFactory;
 import com.liferay.portal.search.web.constants.SearchPortletParameterNames;
 import com.liferay.portal.search.web.facet.SearchFacet;
-import com.liferay.portal.search.web.facet.util.SearchFacetTracker;
 import com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFacet;
+import com.liferay.portal.search.web.internal.facet.SearchFacetTracker;
 import com.liferay.portal.search.web.internal.portlet.SearchPortletSearchResultPreferences;
 import com.liferay.portal.search.web.internal.search.request.SearchRequestImpl;
 import com.liferay.portal.search.web.internal.search.request.SearchResponseImpl;
@@ -70,7 +69,8 @@ public class SearchDisplayContext {
 			FacetedSearcherManager facetedSearcherManager,
 			IndexSearchPropsValues indexSearchPropsValues,
 			PortletURLFactory portletURLFactory,
-			SummaryBuilderFactory summaryBuilderFactory)
+			SummaryBuilderFactory summaryBuilderFactory,
+			SearchFacetTracker searchFacetTracker)
 		throws PortletException {
 
 		_renderRequest = renderRequest;
@@ -78,6 +78,7 @@ public class SearchDisplayContext {
 		_indexSearchPropsValues = indexSearchPropsValues;
 		_portletURLFactory = portletURLFactory;
 		_summaryBuilderFactory = summaryBuilderFactory;
+		_searchFacetTracker = searchFacetTracker;
 
 		ThemeDisplaySupplier themeDisplaySupplier =
 			new PortletRequestThemeDisplaySupplier(renderRequest);
@@ -175,15 +176,8 @@ public class SearchDisplayContext {
 		}
 
 		_enabledSearchFacets = ListUtil.filter(
-			SearchFacetTracker.getSearchFacets(),
-			new PredicateFilter<SearchFacet>() {
-
-				@Override
-				public boolean filter(SearchFacet searchFacet) {
-					return isDisplayFacet(searchFacet.getClassName());
-				}
-
-			});
+			getSearchFacets(),
+			searchFacet -> isDisplayFacet(searchFacet.getClassName()));
 
 		return _enabledSearchFacets;
 	}
@@ -307,6 +301,10 @@ public class SearchDisplayContext {
 
 	public SearchContext getSearchContext() {
 		return _searchContext;
+	}
+
+	public List<SearchFacet> getSearchFacets() {
+		return _searchFacetTracker.getSearchFacets();
 	}
 
 	public SearchResultPreferences getSearchResultPreferences() {
@@ -466,7 +464,7 @@ public class SearchDisplayContext {
 	}
 
 	public boolean isShowMenu() {
-		for (SearchFacet searchFacet : SearchFacetTracker.getSearchFacets()) {
+		for (SearchFacet searchFacet : getSearchFacets()) {
 			if (isDisplayFacet(searchFacet.getClassName())) {
 				return true;
 			}
@@ -623,6 +621,7 @@ public class SearchDisplayContext {
 	private String _searchConfiguration;
 	private final SearchContainer<Document> _searchContainer;
 	private final SearchContext _searchContext;
+	private final SearchFacetTracker _searchFacetTracker;
 	private final SearchResultPreferences _searchResultPreferences;
 	private String _searchScopePreferenceString;
 	private final SummaryBuilderFactory _summaryBuilderFactory;

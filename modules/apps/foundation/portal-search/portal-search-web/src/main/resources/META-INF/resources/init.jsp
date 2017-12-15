@@ -62,7 +62,6 @@ page import="com.liferay.portal.kernel.xml.Element" %><%@
 page import="com.liferay.portal.search.web.constants.SearchPortletKeys" %><%@
 page import="com.liferay.portal.search.web.constants.SearchPortletParameterNames" %><%@
 page import="com.liferay.portal.search.web.facet.SearchFacet" %><%@
-page import="com.liferay.portal.search.web.facet.util.SearchFacetTracker" %><%@
 page import="com.liferay.portal.search.web.facet.util.comparator.SearchFacetComparator" %><%@
 page import="com.liferay.portal.search.web.internal.display.context.SearchDisplayContext" %><%@
 page import="com.liferay.portal.search.web.internal.display.context.SearchDisplayContextFactoryUtil" %><%@

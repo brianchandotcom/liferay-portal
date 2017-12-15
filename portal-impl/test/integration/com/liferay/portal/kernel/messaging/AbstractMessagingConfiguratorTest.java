@@ -112,7 +112,8 @@ public class AbstractMessagingConfiguratorTest {
 
 				String destinationName = destination.getName();
 
-				Assert.assertTrue(destinationName.contains("plugintest"));
+				Assert.assertTrue(
+					destinationName, destinationName.contains("plugintest"));
 
 				if (destinationName.equals("liferay/plugintest1")) {
 					Assert.assertEquals(
@@ -196,7 +197,8 @@ public class AbstractMessagingConfiguratorTest {
 
 				String destinationName = destination.getName();
 
-				Assert.assertTrue(destinationName.contains("portaltest"));
+				Assert.assertTrue(
+					destinationName, destinationName.contains("portaltest"));
 
 				if (destinationName.equals("liferay/portaltest1")) {
 					Assert.assertEquals(

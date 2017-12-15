@@ -545,9 +545,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 		json = invokerResult.toJSONString();
 
 		Assert.assertEquals(2, StringUtil.count(json, "\"array\":[1,2,3]"));
-		Assert.assertFalse(json.contains("\"secret\""));
-		Assert.assertTrue(json.contains("\"new1\":{"));
-		Assert.assertTrue(json.contains("\"new2\":\"world\""));
+		Assert.assertFalse(json, json.contains("\"secret\""));
+		Assert.assertTrue(json, json.contains("\"new1\":{"));
+		Assert.assertTrue(json, json.contains("\"new2\":\"world\""));
 	}
 
 	@Test
@@ -573,9 +573,9 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		json = invokerResult.toJSONString();
 
-		Assert.assertTrue(json.contains("\"array\":[1,2,3]"));
-		Assert.assertFalse(json.contains("\"secret\""));
-		Assert.assertTrue(json.contains("\"new\":\"world\""));
+		Assert.assertTrue(json, json.contains("\"array\":[1,2,3]"));
+		Assert.assertFalse(json, json.contains("\"secret\""));
+		Assert.assertTrue(json, json.contains("\"new\":\"world\""));
 	}
 
 	@Test
@@ -982,7 +982,7 @@ public class JSONWebServiceInvokerTest extends BaseJSONWebServiceTestCase {
 
 		String jsonResult = toJSON(invokerResult);
 
-		Assert.assertFalse(jsonResult.contains("secret"));
+		Assert.assertFalse(jsonResult, jsonResult.contains("secret"));
 	}
 
 	protected JSONWebServiceAction prepareInvokerAction(String content)

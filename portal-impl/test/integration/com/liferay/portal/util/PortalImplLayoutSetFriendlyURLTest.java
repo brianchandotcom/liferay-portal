@@ -67,7 +67,7 @@ public class PortalImplLayoutSetFriendlyURLTest
 			String friendlyURL = PortalUtil.getLayoutSetFriendlyURL(
 				layout.getLayoutSet(), themeDisplay);
 
-			Assert.assertFalse(friendlyURL.contains(LOCALHOST));
+			Assert.assertFalse(friendlyURL, friendlyURL.contains(LOCALHOST));
 		}
 		finally {
 			field.set(null, value);

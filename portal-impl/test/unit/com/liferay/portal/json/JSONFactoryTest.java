@@ -275,20 +275,23 @@ public class JSONFactoryTest {
 
 	protected void checkJSONPrimitiveArrays(String json) {
 		Assert.assertTrue(
-			json.contains("\"doubleArray\":" + _DOUBLE_ARRAY_STRING));
-		Assert.assertTrue(json.contains("\"longArray\":" + _LONG_ARRAY_STRING));
+			json, json.contains("\"doubleArray\":" + _DOUBLE_ARRAY_STRING));
 		Assert.assertTrue(
-			json.contains("\"integerArray\":" + _INTEGER_ARRAY_STRING));
+			json, json.contains("\"longArray\":" + _LONG_ARRAY_STRING));
+		Assert.assertTrue(
+			json, json.contains("\"integerArray\":" + _INTEGER_ARRAY_STRING));
 	}
 
 	protected void checkJSONPrimitives(String json) {
-		Assert.assertTrue(json.contains("\"longValue\":" + _LONG_VALUE));
-		Assert.assertTrue(json.contains("\"integerValue\":" + _INTEGER_VALUE));
-		Assert.assertTrue(json.contains("\"doubleValue\":" + _DOUBLE_VALUE));
+		Assert.assertTrue(json, json.contains("\"longValue\":" + _LONG_VALUE));
+		Assert.assertTrue(
+			json, json.contains("\"integerValue\":" + _INTEGER_VALUE));
+		Assert.assertTrue(
+			json, json.contains("\"doubleValue\":" + _DOUBLE_VALUE));
 	}
 
 	protected void checkJSONSerializableArgument(String json) {
-		Assert.assertTrue(json.contains("serializable"));
+		Assert.assertTrue(json, json.contains("serializable"));
 	}
 
 	protected void checkPrimitiveArrays(FooBean3 fooBean3) {

@@ -47,7 +47,7 @@ public class UpgradeProcessTest {
 
 		String sql = alterColumnName.getSQL(_TABLE_NAME);
 
-		Assert.assertTrue(sql.contains(_NEW_COLUMN));
+		Assert.assertTrue(sql, sql.contains(_NEW_COLUMN));
 	}
 
 	@Test

@@ -719,7 +719,7 @@ public class DefaultExportImportContentProcessorTest {
 
 		sb.append(StringPool.CLOSE_BRACKET);
 
-		Assert.assertTrue(content.contains(sb.toString()));
+		Assert.assertTrue(content, content.contains(sb.toString()));
 	}
 
 	protected void exportImportLayouts(boolean privateLayout) throws Exception {

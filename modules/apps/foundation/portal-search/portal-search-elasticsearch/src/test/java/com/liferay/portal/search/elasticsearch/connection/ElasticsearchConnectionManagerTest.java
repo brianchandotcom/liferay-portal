@@ -136,6 +136,7 @@ public class ElasticsearchConnectionManagerTest {
 			String message = mome.getMessage();
 
 			Assert.assertTrue(
+				message,
 				message.contains(String.valueOf(OperationMode.REMOTE)));
 		}
 

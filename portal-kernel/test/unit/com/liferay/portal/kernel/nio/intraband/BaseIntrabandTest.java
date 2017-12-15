@@ -1020,7 +1020,9 @@ public class BaseIntrabandTest {
 
 			String requestDatagramString = requestDatagram.toString();
 
-			Assert.assertTrue(requestDatagramString.contains("dataChunk=null"));
+			Assert.assertTrue(
+				requestDatagramString,
+				requestDatagramString.contains("dataChunk=null"));
 		}
 
 		Assert.assertSame(sendingQueue, channelContext.getSendingQueue());

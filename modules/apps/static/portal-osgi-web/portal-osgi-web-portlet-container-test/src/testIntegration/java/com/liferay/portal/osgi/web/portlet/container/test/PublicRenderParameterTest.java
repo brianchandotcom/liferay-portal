@@ -137,6 +137,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 		String portletURLString = portletURL.toString();
 
 		Assert.assertTrue(
+			portletURLString,
 			portletURLString.contains(
 				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
 
@@ -195,6 +196,7 @@ public class PublicRenderParameterTest extends BasePortletContainerTestCase {
 		String portletURLString = portletURL.toString();
 
 		Assert.assertTrue(
+			portletURLString,
 			portletURLString.contains(
 				PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE));
 

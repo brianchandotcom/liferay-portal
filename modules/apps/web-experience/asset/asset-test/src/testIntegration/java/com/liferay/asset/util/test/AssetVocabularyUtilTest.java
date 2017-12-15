@@ -96,6 +96,7 @@ public class AssetVocabularyUtilTest {
 				vocabularies, _group.getGroupId(), _LOCALE);
 
 		Assert.assertTrue(
+			unambiguousCompanyVocabularyTitle,
 			unambiguousCompanyVocabularyTitle.contains(
 				_companyGroup.getDescriptiveName(_LOCALE)));
 

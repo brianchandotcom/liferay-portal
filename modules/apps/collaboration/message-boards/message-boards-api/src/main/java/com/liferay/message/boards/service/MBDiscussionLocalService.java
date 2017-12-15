@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -63,6 +64,9 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link MBDiscussionLocalServiceUtil} to access the message boards discussion local service. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public MBDiscussion addDiscussion(long userId, long groupId,
+		long classNameId, long classPK, long threadId,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Adds the message boards discussion to the database. Also notifies the appropriate model listeners.
@@ -168,6 +172,12 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchDiscussion(long discussionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBDiscussion fetchMBDiscussion(long discussionId);
 
 	/**
@@ -182,7 +192,18 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 		java.lang.String uuid, long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchThreadDiscussion(long threadId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getDiscussion(long discussionId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getDiscussion(java.lang.String className, long classPK)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -273,6 +294,16 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion getThreadDiscussion(long threadId)
+		throws PortalException;
+
+	public void subscribeDiscussion(long userId, long groupId,
+		java.lang.String className, long classPK) throws PortalException;
+
+	public void unsubscribeDiscussion(long userId, java.lang.String className,
+		long classPK) throws PortalException;
 
 	/**
 	* Updates the message boards discussion in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

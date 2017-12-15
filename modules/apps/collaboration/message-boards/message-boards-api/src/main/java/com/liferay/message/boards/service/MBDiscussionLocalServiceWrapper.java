@@ -33,6 +33,16 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		_mbDiscussionLocalService = mbDiscussionLocalService;
 	}
 
+	@Override
+	public com.liferay.message.boards.model.MBDiscussion addDiscussion(
+		long userId, long groupId, long classNameId, long classPK,
+		long threadId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbDiscussionLocalService.addDiscussion(userId, groupId,
+			classNameId, classPK, threadId, serviceContext);
+	}
+
 	/**
 	* Adds the message boards discussion to the database. Also notifies the appropriate model listeners.
 	*
@@ -179,6 +189,18 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	}
 
 	@Override
+	public com.liferay.message.boards.model.MBDiscussion fetchDiscussion(
+		long discussionId) {
+		return _mbDiscussionLocalService.fetchDiscussion(discussionId);
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBDiscussion fetchDiscussion(
+		java.lang.String className, long classPK) {
+		return _mbDiscussionLocalService.fetchDiscussion(className, classPK);
+	}
+
+	@Override
 	public com.liferay.message.boards.model.MBDiscussion fetchMBDiscussion(
 		long discussionId) {
 		return _mbDiscussionLocalService.fetchMBDiscussion(discussionId);
@@ -199,8 +221,28 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	}
 
 	@Override
+	public com.liferay.message.boards.model.MBDiscussion fetchThreadDiscussion(
+		long threadId) {
+		return _mbDiscussionLocalService.fetchThreadDiscussion(threadId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _mbDiscussionLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBDiscussion getDiscussion(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbDiscussionLocalService.getDiscussion(discussionId);
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBDiscussion getDiscussion(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbDiscussionLocalService.getDiscussion(className, classPK);
 	}
 
 	@Override
@@ -318,6 +360,29 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _mbDiscussionLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.message.boards.model.MBDiscussion getThreadDiscussion(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _mbDiscussionLocalService.getThreadDiscussion(threadId);
+	}
+
+	@Override
+	public void subscribeDiscussion(long userId, long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbDiscussionLocalService.subscribeDiscussion(userId, groupId,
+			className, classPK);
+	}
+
+	@Override
+	public void unsubscribeDiscussion(long userId, java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_mbDiscussionLocalService.unsubscribeDiscussion(userId, className,
+			classPK);
 	}
 
 	/**

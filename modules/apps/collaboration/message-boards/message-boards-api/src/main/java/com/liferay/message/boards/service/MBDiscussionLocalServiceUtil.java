@@ -41,6 +41,15 @@ public class MBDiscussionLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.message.boards.model.MBDiscussion addDiscussion(
+		long userId, long groupId, long classNameId, long classPK,
+		long threadId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addDiscussion(userId, groupId, classNameId, classPK,
+			threadId, serviceContext);
+	}
 
 	/**
 	* Adds the message boards discussion to the database. Also notifies the appropriate model listeners.
@@ -175,6 +184,16 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.message.boards.model.MBDiscussion fetchDiscussion(
+		long discussionId) {
+		return getService().fetchDiscussion(discussionId);
+	}
+
+	public static com.liferay.message.boards.model.MBDiscussion fetchDiscussion(
+		java.lang.String className, long classPK) {
+		return getService().fetchDiscussion(className, classPK);
+	}
+
 	public static com.liferay.message.boards.model.MBDiscussion fetchMBDiscussion(
 		long discussionId) {
 		return getService().fetchMBDiscussion(discussionId);
@@ -192,8 +211,25 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().fetchMBDiscussionByUuidAndGroupId(uuid, groupId);
 	}
 
+	public static com.liferay.message.boards.model.MBDiscussion fetchThreadDiscussion(
+		long threadId) {
+		return getService().fetchThreadDiscussion(threadId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.message.boards.model.MBDiscussion getDiscussion(
+		long discussionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDiscussion(discussionId);
+	}
+
+	public static com.liferay.message.boards.model.MBDiscussion getDiscussion(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDiscussion(className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -300,6 +336,24 @@ public class MBDiscussionLocalServiceUtil {
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	public static com.liferay.message.boards.model.MBDiscussion getThreadDiscussion(
+		long threadId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getThreadDiscussion(threadId);
+	}
+
+	public static void subscribeDiscussion(long userId, long groupId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().subscribeDiscussion(userId, groupId, className, classPK);
+	}
+
+	public static void unsubscribeDiscussion(long userId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsubscribeDiscussion(userId, className, classPK);
 	}
 
 	/**

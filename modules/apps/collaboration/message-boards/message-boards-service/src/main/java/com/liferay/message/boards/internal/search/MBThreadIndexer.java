@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.internal.search;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBThread;
-import com.liferay.message.boards.kernel.service.MBCategoryLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBCategoryLocalService;
+import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
+import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -34,12 +34,12 @@ import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -48,13 +48,13 @@ import java.util.Locale;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Eudaldo Alonso
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.internal.search.MBThreadIndexer}
  */
-@Deprecated
-@OSGiBeanProperties
+@Component(immediate = true, service = Indexer.class)
 public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 	public static final String CLASS_NAME = MBThread.class.getName();
@@ -126,7 +126,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 		Document document = getBaseModelDocument(CLASS_NAME, mbThread);
 
 		MBDiscussion discussion =
-			MBDiscussionLocalServiceUtil.fetchThreadDiscussion(
+			mbDiscussionLocalService.fetchThreadDiscussion(
 				mbThread.getThreadId());
 
 		if (discussion == null) {
@@ -163,7 +163,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		MBThread thread = MBThreadLocalServiceUtil.getThread(classPK);
+		MBThread thread = mbThreadLocalService.getThread(classPK);
 
 		doReindex(thread);
 	}
@@ -181,7 +181,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			MBCategoryLocalServiceUtil.getActionableDynamicQuery();
+			mbCategoryLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -205,7 +205,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 		throws PortalException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			GroupLocalServiceUtil.getActionableDynamicQuery();
+			groupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -225,7 +225,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 	protected void reindexRoot(final long companyId) throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
-			GroupLocalServiceUtil.getActionableDynamicQuery();
+			groupLocalService.getActionableDynamicQuery();
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setPerformActionMethod(
@@ -248,7 +248,7 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-			MBThreadLocalServiceUtil.getIndexableActionableDynamicQuery();
+			mbThreadLocalService.getIndexableActionableDynamicQuery();
 
 		indexableActionableDynamicQuery.setAddCriteriaMethod(
 			new ActionableDynamicQuery.AddCriteriaMethod() {
@@ -295,6 +295,18 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 
 		indexableActionableDynamicQuery.performActions();
 	}
+
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected MBCategoryLocalService mbCategoryLocalService;
+
+	@Reference
+	protected MBDiscussionLocalService mbDiscussionLocalService;
+
+	@Reference
+	protected MBThreadLocalService mbThreadLocalService;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		MBThreadIndexer.class);

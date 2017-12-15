@@ -1701,7 +1701,7 @@ public abstract class BaseBuild implements Build {
 					getBuildURL() + "testReport", "Test Report")),
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
-				JenkinsResultsParserUtil.toDateString(
+				toJenkinsReportDateString(
 					new Date(getStartTime()), getJenkinsReportTimeZoneName())),
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
@@ -2222,6 +2222,21 @@ public abstract class BaseBuild implements Build {
 				System.out.println(getBuildMessage());
 			}
 		}
+	}
+
+	protected String toJenkinsReportDateString(Date date, String timeZoneName) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		return JenkinsResultsParserUtil.toDateString(
+			date, buildProperties.getProperty("jenkins.report.date.format"),
+			timeZoneName);
 	}
 
 	protected void writeArchiveFile(String content, String path)

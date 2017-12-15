@@ -406,14 +406,15 @@ public class FragmentEntryServiceHttp {
 	public static com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
 		HttpPrincipal httpPrincipal, long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js)
+		java.lang.String js,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
 					"updateFragmentEntry", _updateFragmentEntryParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fragmentEntryId, name, css, html, js);
+					fragmentEntryId, name, css, html, js, serviceContext);
 
 			Object returnObj = null;
 
@@ -478,6 +479,7 @@ public class FragmentEntryServiceHttp {
 		};
 	private static final Class<?>[] _updateFragmentEntryParameterTypes11 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
-			java.lang.String.class, java.lang.String.class
+			java.lang.String.class, java.lang.String.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

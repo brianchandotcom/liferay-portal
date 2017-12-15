@@ -14,11 +14,11 @@
 
 package com.liferay.message.boards.service.impl;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portlet.messageboards.service.base.MBDiscussionLocalServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
@@ -32,7 +32,7 @@ public class MBDiscussionLocalServiceImpl
 			long threadId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
+		User user = userLocalService.getUser(userId);
 
 		long discussionId = counterLocalService.increment();
 

@@ -304,11 +304,11 @@ public class JSLoaderModulesServlet extends HttpServlet {
 		printWriter.println("\n};");
 
 		printWriter.println(
-			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
-
-		printWriter.println(
 			"Liferay.EXPLAIN_RESOLUTIONS = " + _details.explainResolutions() +
 				";\n");
+
+		printWriter.println(
+			"Liferay.EXPOSE_GLOBAL = " + _details.exposeGlobal() + ";\n");
 
 		printWriter.println("}());");
 

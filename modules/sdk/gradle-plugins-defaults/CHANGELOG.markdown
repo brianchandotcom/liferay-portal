@@ -2597,7 +2597,7 @@ read-only sub-repositories.
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.68.
 
-## 5.2.22 - 2017-12-14
+## 5.2.22 - 2017-12-15
 
 ### Fixed
 - [LPS-61099]: Fix configuration exceptions for OSGi modules in

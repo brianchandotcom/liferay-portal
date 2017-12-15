@@ -76,7 +76,7 @@ public abstract class BaseCSSBuilderTestCase {
 		Files.createDirectories(outputDirPath);
 
 		executeCSSBuilder(
-			_baseDirPath, false, _importDirPath, "/css",
+			_baseDirPath, "/css", false, _importDirPath,
 			String.valueOf(outputDirPath.toAbsolutePath()), 6, new String[0],
 			"jni");
 
@@ -95,7 +95,7 @@ public abstract class BaseCSSBuilderTestCase {
 		FileTestUtil.changeContentInPath(fragmentChangePath, "brown", "khaki");
 
 		executeCSSBuilder(
-			_baseDirPath, false, _importDirPath, "/css", ".sass-cache/", 6,
+			_baseDirPath, "/css", false, _importDirPath, ".sass-cache/", 6,
 			new String[0], "jni");
 
 		Path cssPath = _baseDirPath.resolve(
@@ -106,7 +106,7 @@ public abstract class BaseCSSBuilderTestCase {
 		FileTestUtil.changeContentInPath(fragmentChangePath, "khaki", "brown");
 
 		executeCSSBuilder(
-			_baseDirPath, false, _importDirPath, "/css", ".sass-cache/", 6,
+			_baseDirPath, "/css", false, _importDirPath, ".sass-cache/", 6,
 			new String[0], "jni");
 
 		css = FileTestUtil.read(cssPath);
@@ -138,8 +138,8 @@ public abstract class BaseCSSBuilderTestCase {
 	public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	protected abstract void executeCSSBuilder(
-			Path baseDirPath, boolean generateSourceMap, Path importDirPath,
-			String include, String outputDirName, int precision,
+			Path baseDirPath, String dirName, boolean generateSourceMap,
+			Path importDirPath, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception;
 
@@ -162,7 +162,7 @@ public abstract class BaseCSSBuilderTestCase {
 		throws Exception {
 
 		executeCSSBuilder(
-			_baseDirPath, false, importDirPath, "/css", ".sass-cache/", 6,
+			_baseDirPath, "/css", false, importDirPath, ".sass-cache/", 6,
 			new String[0], sassCompilerClassName);
 
 		String expectedTestContent = FileTestUtil.read(

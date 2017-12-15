@@ -38,13 +38,13 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			Path baseDirPath, boolean generateSourceMap, Path importDirPath,
-			String include, String outputDirName, int precision,
+			Path baseDirPath, String dirName, boolean generateSourceMap,
+			Path importDirPath, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		_preparePomXml(
-			baseDirPath, generateSourceMap, importDirPath, include,
+			baseDirPath, generateSourceMap, importDirPath, dirName,
 			outputDirName, precision, rtlExcludedPathRegexps,
 			sassCompilerClassName);
 
@@ -56,7 +56,7 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 
 	private static void _preparePomXml(
 			Path baseDirPath, boolean generateSourceMap, Path importDirPath,
-			String include, String outputDirName, int precision,
+			String dirName, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws IOException {
 
@@ -66,10 +66,10 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 		content = _replace(
 			content, "[$CSS_BUILDER_VERSION$]", _CSS_BUILDER_VERSION);
 
-		content = _replace(content, "[$CSS_BUILDER_INCLUDES$]", include);
 		content = _replace(
 			content, "[$CSS_BUILDER_BASE_DIR$]",
 			String.valueOf(baseDirPath.toAbsolutePath()));
+		content = _replace(content, "[$CSS_BUILDER_DIR_NAMES$]", dirName);
 		content = _replace(
 			content, "[$CSS_BUILDER_GENERATE_SOURCE_MAP$]",
 			String.valueOf(generateSourceMap));

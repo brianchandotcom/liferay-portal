@@ -115,8 +115,8 @@ public class CSSBuilder implements AutoCloseable {
 			_importDirName = null;
 		}
 
-		if (_cssBuilderArgs.getIncludes() == null) {
-			_cssBuilderArgs.setIncludes("");
+		if (_cssBuilderArgs.getDirNames() == null) {
+			_cssBuilderArgs.setDirNames("");
 		}
 
 		List<String> rtlExcludedPathRegexps =
@@ -150,7 +150,7 @@ public class CSSBuilder implements AutoCloseable {
 			throw new IOException("Directory " + baseDir + " does not exist");
 		}
 
-		for (String dirName : _cssBuilderArgs.getIncludes()) {
+		for (String dirName : _cssBuilderArgs.getDirNames()) {
 			List<String> sassFileNames = _collectSassFiles(dirName, baseDir);
 
 			fileNames.addAll(sassFileNames);
@@ -195,7 +195,7 @@ public class CSSBuilder implements AutoCloseable {
 
 		List<String> fileNames = new ArrayList<>();
 
-		String basedir = new File(baseDir, dirName).toString();
+		String basedir = String.valueOf(new File(baseDir, dirName));
 
 		String[] scssFiles = _getScssFiles(basedir);
 

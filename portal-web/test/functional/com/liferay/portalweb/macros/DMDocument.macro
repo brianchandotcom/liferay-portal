@@ -951,25 +951,20 @@
 	</command>
 
 	<command name="deleteCP">
-		<var name="key_dmDocumentTitle" value="${dmDocumentTitle}" />
-
-		<execute function="Click" locator1="DocumentsAndMedia#ICON_DOCUMENT_VERTICAL_ELLIPSIS" />
-
 		<if>
 			<isset var="recycleBinDisabled" />
 			<then>
-				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
-					<var name="key_menuItem" value="Delete" />
+				<execute macro="LexiconEntry#delete">
+					<var name="rowEntry" value="${dmDocumenTitle}" />
 				</execute>
-
-				<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
-
-				<execute macro="Alert#viewSuccessMessage" />
 			</then>
 			<else>
-				<execute macro="PortletEntry#clickMoveToRecycleBin" />
+				<execute macro="LexiconEntry#gotoEntryMenuItem">
+					<var name="menuItem" value="Move to the Recycle Bin" />
+					<var name="rowEntry" value="${dmDocumentTitle}" />
+				</execute>
 
-				<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+				<execute macro="Alert#viewSuccessMessage" />
 			</else>
 		</if>
 	</command>

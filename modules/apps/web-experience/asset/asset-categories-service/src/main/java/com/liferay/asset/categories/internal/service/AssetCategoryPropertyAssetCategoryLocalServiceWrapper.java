@@ -67,6 +67,10 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 			userId, groupId, parentCategoryId, titleMap, descriptionMap,
 			vocabularyId, categoryProperties, serviceContext);
 
+		if (categoryProperties == null) {
+			return assetCategory;
+		}
+
 		// Properties
 
 		for (int i = 0; i < categoryProperties.length; i++) {
@@ -145,61 +149,65 @@ public class AssetCategoryPropertyAssetCategoryLocalServiceWrapper
 
 		oldCategoryProperties = ListUtil.copy(oldCategoryProperties);
 
-		for (int i = 0; i < categoryProperties.length; i++) {
-			String[] categoryProperty = StringUtil.split(
-				categoryProperties[i],
-				AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
+		if (categoryProperties != null) {
+			for (int i = 0; i < categoryProperties.length; i++) {
+				String[] categoryProperty = StringUtil.split(
+					categoryProperties[i],
+					AssetCategoryConstants.PROPERTY_KEY_VALUE_SEPARATOR);
 
-			if (categoryProperty.length <= 1) {
-				categoryProperty = StringUtil.split(
-					categoryProperties[i], CharPool.COLON);
-			}
-
-			String key = StringPool.BLANK;
-
-			if (categoryProperty.length > 0) {
-				key = GetterUtil.getString(categoryProperty[0]);
-			}
-
-			String value = StringPool.BLANK;
-
-			if (categoryProperty.length > 1) {
-				value = GetterUtil.getString(categoryProperty[1]);
-			}
-
-			if (Validator.isNotNull(key)) {
-				boolean addCategoryProperty = true;
-
-				AssetCategoryProperty oldCategoryProperty = null;
-
-				Iterator<AssetCategoryProperty> iterator =
-					oldCategoryProperties.iterator();
-
-				while (iterator.hasNext()) {
-					oldCategoryProperty = iterator.next();
-
-					if ((categoryId == oldCategoryProperty.getCategoryId()) &&
-						key.equals(oldCategoryProperty.getKey())) {
-
-						addCategoryProperty = false;
-
-						if (!value.equals(oldCategoryProperty.getValue())) {
-							_assetCategoryPropertyLocalService.
-								updateCategoryProperty(
-									userId,
-									oldCategoryProperty.getCategoryPropertyId(),
-									key, value);
-						}
-
-						iterator.remove();
-
-						break;
-					}
+				if (categoryProperty.length <= 1) {
+					categoryProperty = StringUtil.split(
+						categoryProperties[i], CharPool.COLON);
 				}
 
-				if (addCategoryProperty) {
-					_assetCategoryPropertyLocalService.addCategoryProperty(
-						userId, categoryId, key, value);
+				String key = StringPool.BLANK;
+
+				if (categoryProperty.length > 0) {
+					key = GetterUtil.getString(categoryProperty[0]);
+				}
+
+				String value = StringPool.BLANK;
+
+				if (categoryProperty.length > 1) {
+					value = GetterUtil.getString(categoryProperty[1]);
+				}
+
+				if (Validator.isNotNull(key)) {
+					boolean addCategoryProperty = true;
+
+					AssetCategoryProperty oldCategoryProperty = null;
+
+					Iterator<AssetCategoryProperty> iterator =
+						oldCategoryProperties.iterator();
+
+					while (iterator.hasNext()) {
+						oldCategoryProperty = iterator.next();
+
+						if ((categoryId ==
+								oldCategoryProperty.getCategoryId()) &&
+							key.equals(oldCategoryProperty.getKey())) {
+
+							addCategoryProperty = false;
+
+							if (!value.equals(oldCategoryProperty.getValue())) {
+								_assetCategoryPropertyLocalService.
+									updateCategoryProperty(
+										userId,
+										oldCategoryProperty.
+											getCategoryPropertyId(),
+										key, value);
+							}
+
+							iterator.remove();
+
+							break;
+						}
+					}
+
+					if (addCategoryProperty) {
+						_assetCategoryPropertyLocalService.addCategoryProperty(
+							userId, categoryId, key, value);
+					}
 				}
 			}
 		}

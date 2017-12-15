@@ -1911,21 +1911,21 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 
 	<macrodef name="prepare-jboss-module-file">
 		<sequential>
-			<var name="module-file" unset="true" />
+			<var name="module.file.path" unset="true" />
 
 			<if>
 				<not>
 					<available file="${app.server.lib.global.dir}/module.xml" />
 				</not>
 				<then>
-					<var name="module-file" value="tools/servers/jboss/modules/module.xml" />
+					<var name="module.file.path" value="tools/servers/jboss/modules/module.xml" />
 				</then>
 				<else>
-					<var name="module-file" value="${app.server.lib.global.dir}/module.xml" />
+					<var name="module.file.path" value="${app.server.lib.global.dir}/module.xml" />
 				</else>
 			</if>
 
-			<loadfile property="module-file-contents" srcFile="${module-file}">
+			<loadfile property="module.file.content" srcFile="${module.file.path}">
 				<filterchain>
 					<filterreader classname="org.apache.tools.ant.filters.LineContains">
 						<param type="contains" value="resource-root" />
@@ -1934,7 +1934,7 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 				</filterchain>
 			</loadfile>
 
-			<antelope:stringutil property="petra.jar.list" string="${module-file-contents}">
+			<antelope:stringutil property="petra.jar.list" string="${module.file.content}">
 				<antelope:replace regex="\s*&lt;resource-root path=&quot;" replacement="" />
 			</antelope:stringutil>
 
@@ -1950,7 +1950,7 @@ logExceptionsOnly=B&quot;false&quot;</echo>
 						</not>
 						<then>
 							<var name="regex" value="\s*&lt;resource-root path=&quot;@{petra.jar}&quot;\s/&gt;[\n\r]" />
-							<replaceregexp file="${module-file}" match="${regex}" replace="" />
+							<replaceregexp file="${module.file.path}" match="${regex}" replace="" />
 						</then>
 					</if>
 				</sequential>

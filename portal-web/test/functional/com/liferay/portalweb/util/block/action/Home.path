@@ -100,12 +100,12 @@
 </tr>
 <tr>
 	<td>USER_NAME_HEADER</td>
-	<td>//div[@id='heading']//span[@class='site-name'] | //div[@id='heading']//div[contains(@class,'site-name')]</td>
+	<td>//a[contains(@title,'Go to')]/h1 | //div[@id='heading']//div[contains(@class,'site-name')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SITE_NAME_LOGO</td>
-	<td>//h1[@class='site-title']/a/img</td>
+	<td>//a[contains(@title,'Go to')]/img</td>
 	<td></td>
 </tr>
 <tr>
@@ -328,7 +328,7 @@
 </tr>
 <tr>
 	<td>PAGE_NAVIGATION_BAR</td>
-	<td>//nav[@id='navigation']</td>
+	<td>//div[@id='navigationCollapse']</td>
 	<td></td>
 </tr>
 <tr>

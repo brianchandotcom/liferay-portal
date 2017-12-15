@@ -764,6 +764,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Long getStartTime() {
+		if (startTime != null) {
+			return startTime;
+		}
+
 		JSONObject buildJSONObject = getBuildJSONObject("timestamp");
 
 		if (buildJSONObject == null) {
@@ -772,11 +776,11 @@ public abstract class BaseBuild implements Build {
 
 		long timestamp = buildJSONObject.getLong("timestamp");
 
-		if (timestamp == 0) {
-			return null;
+		if (timestamp != 0) {
+			startTime = timestamp;
 		}
 
-		return timestamp;
+		return startTime;
 	}
 
 	@Override
@@ -2271,7 +2275,7 @@ public abstract class BaseBuild implements Build {
 	protected String repositoryName;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
-	protected long startTime;
+	protected Long startTime;
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 

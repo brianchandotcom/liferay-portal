@@ -19,16 +19,24 @@
 			<var name="userScreenName" value="test" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="Account Settings" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="Account Settings" />
 		</execute>
 
 		<execute macro="User#editDetailsViaMyAccount">
 			<var name="userScreenNameEdit" value="administrator" />
 		</execute>
 
-		<execute macro="Page#gotoMyAccount">
-			<var name="portletName" value="Account Settings" />
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="My Account" />
+			<var name="panel" value="User" />
+			<var name="portlet" value="Account Settings" />
 		</execute>
 
 		<execute macro="User#editPasswordViaMyAccount">
@@ -84,16 +92,24 @@
 
 				<execute macro="DMDocument#tearDownCP" />
 
-				<execute macro="Page#gotoMyAccount">
-					<var name="portletName" value="Account Settings" />
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="My Account" />
+					<var name="panel" value="User" />
+					<var name="portlet" value="Account Settings" />
 				</execute>
 
 				<execute macro="User#editDetailsViaMyAccount">
 					<var name="userScreenNameEdit" value="test" />
 				</execute>
 
-				<execute macro="Page#gotoMyAccount">
-					<var name="portletName" value="Account Settings" />
+				<execute macro="Navigator#openURL" />
+
+				<execute macro="ProductMenu#gotoPortlet">
+					<var name="category" value="My Account" />
+					<var name="panel" value="User" />
+					<var name="portlet" value="Account Settings" />
 				</execute>
 
 				<execute macro="User#editPasswordViaMyAccount">

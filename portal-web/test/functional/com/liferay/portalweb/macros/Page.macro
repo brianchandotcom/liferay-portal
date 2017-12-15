@@ -414,18 +414,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoMyAccount">
-		<description message="Navigate to My Account > ${portletName}." />
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="My Account" />
-			<var name="panel" value="User" />
-			<var name="portlet" value="${portletName}" />
-		</execute>
-	</command>
-
 	<command name="gotoPagePanelPortlet">
 		<var name="key_portletName" value="${portletName}" />
 

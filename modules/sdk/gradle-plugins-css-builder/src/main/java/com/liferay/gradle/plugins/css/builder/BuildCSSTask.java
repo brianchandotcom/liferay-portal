@@ -363,18 +363,7 @@ public class BuildCSSTask extends JavaExec {
 			"sass.append.css.import.timestamps=" +
 				isAppendCssImportTimestamps());
 
-		List<String> dirNames = getDirNames();
-
-		if (dirNames.size() == 1) {
-			args.add("sass.dir=/" + _removeLeadingSlash(dirNames.get(0)));
-		}
-		else {
-			for (int i = 0; i < dirNames.size(); i++) {
-				String dirName = dirNames.get(i);
-
-				args.add("sass.dir." + i + "=/" + _removeLeadingSlash(dirName));
-			}
-		}
+		args.add("sass.dir=" + _getDirNamesArg());
 
 		String docrootDirName = FileUtil.getAbsolutePath(getBaseDir());
 
@@ -402,6 +391,25 @@ public class BuildCSSTask extends JavaExec {
 		}
 
 		return args;
+	}
+
+	private String _getDirNamesArg() {
+		StringBuilder sb = new StringBuilder();
+
+		boolean first = true;
+
+		for (String dirName : getDirNames()) {
+			if (!first) {
+				sb.append(',');
+			}
+
+			first = false;
+
+			sb.append('/');
+			sb.append(_removeLeadingSlash(dirName));
+		}
+
+		return sb.toString();
 	}
 
 	private String _removeLeadingSlash(String path) {

@@ -33,10 +33,6 @@ public class CSSBuilderArgs {
 
 	public static final String BASE_DIR_NAME = "src/META-INF/resources";
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #INCLUDE}
-	 */
-	@Deprecated
 	public static final String DIR_NAME = "/";
 
 	/**
@@ -44,8 +40,6 @@ public class CSSBuilderArgs {
 	 */
 	@Deprecated
 	public static final String DOCROOT_DIR_NAME = BASE_DIR_NAME;
-
-	public static final String INCLUDE = "/";
 
 	public static final String OUTPUT_DIR_NAME = ".sass-cache/";
 
@@ -55,12 +49,8 @@ public class CSSBuilderArgs {
 		return _baseDir;
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #getIncludes()}
-	 */
-	@Deprecated
 	public List<String> getDirNames() {
-		return getIncludes();
+		return _dirNames;
 	}
 
 	/**
@@ -73,10 +63,6 @@ public class CSSBuilderArgs {
 
 	public File getImportDir() {
 		return _importDir;
-	}
-
-	public List<String> getIncludes() {
-		return _includes;
 	}
 
 	public String getOutputDirName() {
@@ -121,20 +107,12 @@ public class CSSBuilderArgs {
 		_baseDir = baseDir;
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setIncludes(String)}
-	 */
-	@Deprecated
 	public void setDirNames(String dirNames) {
-		setIncludes(dirNames);
+		setDirNames(_split(dirNames));
 	}
 
-	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setIncludes(String[])}
-	 */
-	@Deprecated
 	public void setDirNames(String[] dirNames) {
-		setIncludes(dirNames);
+		_dirNames = Arrays.asList(dirNames);
 	}
 
 	/**
@@ -151,14 +129,6 @@ public class CSSBuilderArgs {
 
 	public void setImportDir(File importDir) {
 		_importDir = importDir;
-	}
-
-	public void setIncludes(String includes) {
-		setIncludes(_split(includes));
-	}
-
-	public void setIncludes(String[] includes) {
-		_includes = Arrays.asList(includes);
 	}
 
 	public void setOutputDirName(String outputDirName) {
@@ -214,6 +184,12 @@ public class CSSBuilderArgs {
 	private File _baseDir = new File(BASE_DIR_NAME);
 
 	@Parameter(
+		description = "The name of the directories, relative to base directory, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
+		names = {"dir-names", "sass.dir"}
+	)
+	private List<String> _dirNames = Arrays.asList(DIR_NAME);
+
+	@Parameter(
 		arity = 1,
 		description = "Whether to generate source maps for easier debugging.",
 		names = {"generate-source-map", "sass.generate.source.map"}
@@ -234,12 +210,6 @@ public class CSSBuilderArgs {
 		}
 	)
 	private File _importDir;
-
-	@Parameter(
-		description = "The name of the directories, relative to base directory, which contain the SCSS files to compile. All sub-directories are searched for SCSS files as well.",
-		names = {"includes", "sass.dir"}
-	)
-	private List<String> _includes = Arrays.asList(INCLUDE);
 
 	@Parameter(
 		description = "The name of the sub-directories where the SCSS files are compiled to. For each directory that contains SCSS files, a sub-directory with this name is created.",

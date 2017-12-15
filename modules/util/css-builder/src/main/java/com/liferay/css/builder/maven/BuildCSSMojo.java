@@ -108,12 +108,10 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @deprecated As of 2.1.0, replaced by {@link #setIncludes(String)}
 	 * @parameter
 	 */
-	@Deprecated
 	public void setDirNames(String dirNames) {
-		setIncludes(dirNames);
+		_cssBuilderArgs.setDirNames(dirNames);
 	}
 
 	/**
@@ -143,13 +141,6 @@ public class BuildCSSMojo extends AbstractMojo {
 	 */
 	public void setImportDir(File importDir) {
 		_cssBuilderArgs.setImportDir(importDir);
-	}
-
-	/**
-	 * @parameter
-	 */
-	public void setIncludes(String includes) {
-		_cssBuilderArgs.setIncludes(includes);
 	}
 
 	/**

@@ -42,16 +42,15 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			Path docrootDirPath, boolean generateSourceMap,
-			Path portalCommonPath, String dirName, String outputDirName,
-			int precision, String[] rtlExcludedPathRegexps,
-			String sassCompilerClassName)
+			Path docrootDirPath, String dirName, boolean generateSourceMap,
+			Path portalCommonPath, String outputDirName, int precision,
+			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		List<String> args = new ArrayList<>();
 
-		args.add("includes" + _separator + dirName);
 		args.add("base-dir" + _separator + docrootDirPath.toAbsolutePath());
+		args.add("dir-names" + _separator + dirName);
 		args.add("generate-source-map" + _separator + generateSourceMap);
 		args.add("output-dir" + _separator + outputDirName);
 		args.add("import-dir" + _separator + portalCommonPath.toAbsolutePath());

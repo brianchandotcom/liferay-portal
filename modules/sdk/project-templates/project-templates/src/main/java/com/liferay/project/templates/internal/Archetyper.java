@@ -16,10 +16,10 @@ package com.liferay.project.templates.internal;
 
 import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.WorkspaceUtil;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
 import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.internal.util.WorkspaceUtil;
 
 import java.io.File;
 

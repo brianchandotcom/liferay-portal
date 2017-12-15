@@ -18,7 +18,6 @@ import aQute.bnd.osgi.Constants;
 
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 import com.liferay.project.templates.util.XMLTestUtil;

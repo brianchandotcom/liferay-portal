@@ -25,7 +25,7 @@
 		</execute>
 
 		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
+			<var name="deleteLiferayHome" value="true" />
 		</execute>
 
 		<execute macro="SignIn#signIn" />
@@ -41,7 +41,7 @@
 		</execute>
 
 		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
+			<var name="deleteLiferayHome" value="true" />
 		</execute>
 
 		<execute macro="SignIn#signIn" />

@@ -95,22 +95,44 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 			<%
 			row.setCssClass("entry-card lfr-asset-item " + row.getCssClass());
+
+			String imagePreviewURL = fragmentEntry.getImagePreviewURL(themeDisplay);
 			%>
 
 			<liferay-ui:search-container-column-text>
-				<liferay-frontend:icon-vertical-card
-					actionJsp="/fragment_entry_action.jsp"
-					actionJspServletContext="<%= application %>"
-					cssClass="entry-display-style"
-					icon="page"
-					resultRow="<%= row %>"
-					rowChecker="<%= searchContainer.getRowChecker() %>"
-					title="<%= fragmentEntry.getName() %>"
-				>
-					<liferay-frontend:vertical-card-header>
-						<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
-					</liferay-frontend:vertical-card-header>
-				</liferay-frontend:icon-vertical-card>
+				<c:choose>
+					<c:when test="<%= Validator.isNotNull(imagePreviewURL) %>">
+						<liferay-frontend:vertical-card
+							actionJsp="/fragment_entry_action.jsp"
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							imageCSSClass="aspect-ratio-bg-contain"
+							imageUrl="<%= imagePreviewURL %>"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= fragmentEntry.getName() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+						</liferay-frontend:vertical-card>
+					</c:when>
+					<c:otherwise>
+						<liferay-frontend:icon-vertical-card
+							actionJsp="/fragment_entry_action.jsp"
+							actionJspServletContext="<%= application %>"
+							cssClass="entry-display-style"
+							icon="page"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+							title="<%= fragmentEntry.getName() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+							</liferay-frontend:vertical-card-header>
+						</liferay-frontend:icon-vertical-card>
+					</c:otherwise>
+				</c:choose>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 

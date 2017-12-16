@@ -172,6 +172,12 @@ public class LayoutPageTemplateFragmentWrapper
 	}
 
 	@Override
+	public java.lang.String getCss()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragment.getCss();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _layoutPageTemplateFragment.getExpandoBridge();
 	}
@@ -194,6 +200,18 @@ public class LayoutPageTemplateFragmentWrapper
 	@Override
 	public long getGroupId() {
 		return _layoutPageTemplateFragment.getGroupId();
+	}
+
+	@Override
+	public java.lang.String getHtml()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragment.getHtml();
+	}
+
+	@Override
+	public java.lang.String getJs()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateFragment.getJs();
 	}
 
 	/**

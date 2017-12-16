@@ -7,6 +7,7 @@
 	{@param fragmentCollection: [
 		fragmentEntries: list<[
 			fragmentEntryId: string,
+			imagePreviewURL: string,
 			name: string
 		]>,
 		fragmentCollectionId: string,
@@ -40,7 +41,11 @@
 						<div class="card-body">
 							<div class="card-row">
 								<div class="flex-col flex-col-expand">
-									{$fragmentEntry.name}
+									{if $fragmentEntry.imagePreviewURL}
+										<img class="aspect-ratio-item-fluid" src="{$fragmentEntry.imagePreviewURL}" />
+									{else}
+										{$fragmentEntry.name}
+									{/if}
 								</div>
 
 								<div class="flex-col">

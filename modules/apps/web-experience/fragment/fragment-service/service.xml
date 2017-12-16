@@ -77,6 +77,7 @@
 		<column name="css" type="String" />
 		<column name="html" type="String" />
 		<column name="js" type="String" />
+		<column name="htmlPreviewEntryId" type="long" />
 
 		<!-- Order -->
 
@@ -109,6 +110,7 @@
 		<!-- References -->
 
 		<reference entity="FragmentCollection" package-path="com.liferay.fragment" />
+		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>

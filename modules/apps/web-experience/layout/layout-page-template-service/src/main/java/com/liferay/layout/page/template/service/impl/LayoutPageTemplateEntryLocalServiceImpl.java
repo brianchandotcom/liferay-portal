@@ -73,13 +73,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 
-		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
-
-		// Resources
-
-		resourceLocalService.addModelResources(
-			layoutPageTemplateEntry, serviceContext);
-
 		// Layout Page Template Fragments
 
 		if (fragmentEntries != null) {
@@ -94,21 +87,20 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			}
 		}
 
-		// HTML preview entry
+		// HTML preview
 
-		HtmlPreviewEntry htmlPreviewEntry =
-			_htmlPreviewEntryLocalService.addHtmlPreviewEntry(
-				userId, groupId,
-				classNameLocalService.getClassNameId(
-					LayoutPageTemplateEntry.class),
-				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-				layoutPageTemplateEntry.getContent(), ContentTypes.IMAGE_PNG,
-				serviceContext);
+		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
+			layoutPageTemplateEntry, serviceContext);
 
 		layoutPageTemplateEntry.setHtmlPreviewEntryId(
 			htmlPreviewEntry.getHtmlPreviewEntryId());
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
+
+		// Resources
+
+		resourceLocalService.addModelResources(
+			layoutPageTemplateEntry, serviceContext);
 
 		return layoutPageTemplateEntry;
 	}
@@ -136,7 +128,7 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateEntry.getGroupId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
-		// HTML preview entry
+		// HTML preview
 
 		_htmlPreviewEntryLocalService.deleteHtmlPreviewEntry(
 			layoutPageTemplateEntry.getHtmlPreviewEntryId());
@@ -249,33 +241,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			}
 		}
 
-		// HTML preview entry
+		// HTML preview
 
-		HtmlPreviewEntry htmlPreviewEntry =
-			_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
-				layoutPageTemplateEntry.getHtmlPreviewEntryId());
-
-		if (htmlPreviewEntry == null) {
-			htmlPreviewEntry =
-				_htmlPreviewEntryLocalService.addHtmlPreviewEntry(
-					userId, layoutPageTemplateEntry.getGroupId(),
-					classNameLocalService.getClassNameId(
-						LayoutPageTemplateEntry.class),
-					layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
-					layoutPageTemplateEntry.getContent(),
-					ContentTypes.IMAGE_PNG, serviceContext);
-
-			layoutPageTemplateEntry.setHtmlPreviewEntryId(
-				htmlPreviewEntry.getHtmlPreviewEntryId());
-
-			layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
-		}
-		else {
-			_htmlPreviewEntryLocalService.updateHtmlPreviewEntry(
-				layoutPageTemplateEntry.getHtmlPreviewEntryId(),
-				layoutPageTemplateEntry.getContent(), ContentTypes.IMAGE_PNG,
-				serviceContext);
-		}
+		_updateHtmlPreviewEntry(layoutPageTemplateEntry, serviceContext);
 
 		return layoutPageTemplateEntry;
 	}
@@ -292,6 +260,32 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		if (layoutPageTemplateEntry != null) {
 			throw new DuplicateLayoutPageTemplateEntryException(name);
 		}
+	}
+
+	private HtmlPreviewEntry _updateHtmlPreviewEntry(
+			LayoutPageTemplateEntry layoutPageTemplateEntry,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		HtmlPreviewEntry htmlPreviewEntry =
+			_htmlPreviewEntryLocalService.fetchHtmlPreviewEntry(
+				layoutPageTemplateEntry.getHtmlPreviewEntryId());
+
+		if (htmlPreviewEntry == null) {
+			return _htmlPreviewEntryLocalService.addHtmlPreviewEntry(
+				layoutPageTemplateEntry.getUserId(),
+				layoutPageTemplateEntry.getGroupId(),
+				classNameLocalService.getClassNameId(
+					LayoutPageTemplateEntry.class),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId(),
+				layoutPageTemplateEntry.getContent(), ContentTypes.IMAGE_PNG,
+				serviceContext);
+		}
+
+		return _htmlPreviewEntryLocalService.updateHtmlPreviewEntry(
+			layoutPageTemplateEntry.getHtmlPreviewEntryId(),
+			layoutPageTemplateEntry.getContent(), ContentTypes.IMAGE_PNG,
+			serviceContext);
 	}
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)

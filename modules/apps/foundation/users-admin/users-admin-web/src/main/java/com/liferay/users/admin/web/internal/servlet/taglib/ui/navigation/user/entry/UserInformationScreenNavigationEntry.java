@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.web.servlet.taglib.ui;
+package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;

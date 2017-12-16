@@ -114,14 +114,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntryPersistence.remove(layoutPageTemplateEntry);
 
-		// Resources
-
-		resourceLocalService.deleteResource(
-			layoutPageTemplateEntry.getCompanyId(),
-			LayoutPageTemplateEntry.class.getName(),
-			ResourceConstants.SCOPE_INDIVIDUAL,
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
-
 		// Layout page template fragments
 
 		_layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplateEntry(
@@ -132,6 +124,14 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		_htmlPreviewEntryLocalService.deleteHtmlPreviewEntry(
 			layoutPageTemplateEntry.getHtmlPreviewEntryId());
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			layoutPageTemplateEntry.getCompanyId(),
+			LayoutPageTemplateEntry.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL,
+			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		return layoutPageTemplateEntry;
 	}

@@ -26,6 +26,7 @@
 
 		<execute macro="Portlet#startServer">
 			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
 		</execute>
 
 		<execute macro="SignIn#signIn" />
@@ -42,6 +43,7 @@
 
 		<execute macro="Portlet#startServer">
 			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
 		</execute>
 
 		<execute macro="SignIn#signIn" />

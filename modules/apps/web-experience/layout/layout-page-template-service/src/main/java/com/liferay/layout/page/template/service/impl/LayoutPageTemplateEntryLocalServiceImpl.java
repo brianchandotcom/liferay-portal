@@ -73,6 +73,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			layoutPageTemplateCollectionId);
 		layoutPageTemplateEntry.setName(name);
 
+		// HTML preview
+
+		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
+			layoutPageTemplateEntry, serviceContext);
+
+		layoutPageTemplateEntry.setHtmlPreviewEntryId(
+			htmlPreviewEntry.getHtmlPreviewEntryId());
+
+		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
+
 		// Layout Page Template Fragments
 
 		if (fragmentEntries != null) {
@@ -86,16 +96,6 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 						serviceContext);
 			}
 		}
-
-		// HTML preview
-
-		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
-			layoutPageTemplateEntry, serviceContext);
-
-		layoutPageTemplateEntry.setHtmlPreviewEntryId(
-			htmlPreviewEntry.getHtmlPreviewEntryId());
-
-		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 
 		// Resources
 

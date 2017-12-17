@@ -230,6 +230,12 @@ public class HtmlPreviewEntryWrapper implements HtmlPreviewEntry,
 		return _htmlPreviewEntry.getHtmlPreviewEntryId();
 	}
 
+	@Override
+	public java.lang.String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _htmlPreviewEntry.getImagePreviewURL(themeDisplay);
+	}
+
 	/**
 	* Returns the modified date of this html preview entry.
 	*

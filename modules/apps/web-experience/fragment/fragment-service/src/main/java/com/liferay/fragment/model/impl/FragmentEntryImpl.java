@@ -14,32 +14,43 @@
 
 package com.liferay.fragment.model.impl;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.html.preview.model.HtmlPreviewEntry;
+import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
- * The extended model implementation for the FragmentEntry service. Represents a
- * row in the &quot;FragmentEntry&quot; database table, with each column mapped
- * to a property of this class.
- *
- * <p>
- * Helper methods and all application logic should be put in this class.
- * Whenever methods are added, rerun ServiceBuilder to copy their definitions
- * into the {@link com.liferay.fragment.model.FragmentEntry} interface.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
  */
-@ProviderType
 public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a fragment
-	 * entry model instance should use the {@link
-	 * com.liferay.fragment.model.FragmentEntry} interface instead.
-	 */
-	public FragmentEntryImpl() {
+	@Override
+	public String getContent() {
+		StringBundler sb = new StringBundler(7);
+
+		sb.append("<html><head><style>");
+		sb.append(getCss());
+		sb.append("</style><script>");
+		sb.append(getJs());
+		sb.append("</script></head><body>");
+		sb.append(getHtml());
+		sb.append("</body></html>");
+
+		return sb.toString();
+	}
+
+	@Override
+	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
+		if (getHtmlPreviewEntryId() <= 0) {
+			return StringPool.BLANK;
+		}
+
+		HtmlPreviewEntry htmlPreviewEntry =
+			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
+				getHtmlPreviewEntryId());
+
+		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
 	}
 
 }

@@ -22,5 +22,6 @@ create table FragmentEntry (
 	name VARCHAR(75) null,
 	css STRING null,
 	html STRING null,
-	js STRING null
+	js STRING null,
+	htmlPreviewEntryId LONG
 );

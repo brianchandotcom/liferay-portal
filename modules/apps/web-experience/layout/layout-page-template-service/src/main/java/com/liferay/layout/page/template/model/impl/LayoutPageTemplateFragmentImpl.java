@@ -17,13 +17,9 @@ package com.liferay.layout.page.template.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Jürgen Kappler
  */
 @ProviderType
 public class LayoutPageTemplateFragmentImpl
 	extends LayoutPageTemplateFragmentBaseImpl {
-
-	public LayoutPageTemplateFragmentImpl() {
-	}
-
 }

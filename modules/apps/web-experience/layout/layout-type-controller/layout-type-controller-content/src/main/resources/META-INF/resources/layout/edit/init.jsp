@@ -15,3 +15,7 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
+%>

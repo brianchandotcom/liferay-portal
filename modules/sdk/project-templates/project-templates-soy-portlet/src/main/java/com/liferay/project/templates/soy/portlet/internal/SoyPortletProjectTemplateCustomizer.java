@@ -43,7 +43,10 @@ public class SoyPortletProjectTemplateCustomizer
 
 			Path destinationDirPath = destinationDir.toPath();
 
-			Path gulpfileJsPath = destinationDirPath.resolve("gulpfile.js");
+			Path projectPath = destinationDirPath.resolve(
+				_projectTemplateArgs.getName());
+
+			Path gulpfileJsPath = projectPath.resolve("gulpfile.js");
 
 			try {
 				Files.deleteIfExists(gulpfileJsPath);

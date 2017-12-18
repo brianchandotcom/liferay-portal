@@ -96,7 +96,7 @@
 <!--LOGGING_TABLE-->
 <tr>
 	<td>LOGGING_TABLE_LOGGER_NAME</td>
-	<td>//tr[@class='level-info']//span[contains(.,'${key_loggerName}')]</td>
+	<td>//abbr[contains(.,'${key_loggerName}')]</td>
 	<td></td>
 </tr>
 <tr>

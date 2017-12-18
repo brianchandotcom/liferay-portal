@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Security SSO CAS API
+Bundle-SymbolicName: com.liferay.portal.security.sso.cas.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.security.sso.cas.configuration,\
+	com.liferay.portal.security.sso.cas.constants
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Security Frameworks

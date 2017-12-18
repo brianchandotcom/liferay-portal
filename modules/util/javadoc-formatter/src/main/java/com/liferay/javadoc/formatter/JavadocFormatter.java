@@ -820,18 +820,18 @@ public class JavadocFormatter {
 	}
 
 	private void _addParamElement(
-			Element executableElement, JavaParameter javaParameter,
-			List<DocletTag> paramDocletTags)
+			Element executableElement, String parameterName,
+			String parameterValue, List<DocletTag> paramDocletTags)
 		throws Exception {
-
-		String name = javaParameter.getName();
 
 		String value = null;
 
 		for (DocletTag paramDocletTag : paramDocletTags) {
 			String curValue = paramDocletTag.getValue();
 
-			if (curValue.equals(name) || curValue.startsWith(name + " ")) {
+			if (curValue.equals(parameterName) ||
+				curValue.startsWith(parameterName + " ")) {
+
 				value = curValue;
 
 				break;
@@ -840,11 +840,11 @@ public class JavadocFormatter {
 
 		Element paramElement = executableElement.addElement("param");
 
-		Dom4jDocUtil.add(paramElement, "name", name);
-		Dom4jDocUtil.add(paramElement, "type", _getTypeValue(javaParameter));
+		Dom4jDocUtil.add(paramElement, "name", parameterName);
+		Dom4jDocUtil.add(paramElement, "type", parameterValue);
 
 		if (value != null) {
-			value = value.substring(name.length());
+			value = value.substring(parameterName.length());
 
 			Dom4jDocUtil.add(paramElement, "required", true);
 		}
@@ -867,7 +867,9 @@ public class JavadocFormatter {
 		List<JavaParameter> javaParameters = javaExecutable.getParameters();
 
 		for (JavaParameter javaParameter : javaParameters) {
-			_addParamElement(executableElement, javaParameter, paramDocletTags);
+			_addParamElement(
+				executableElement, javaParameter.getName(),
+				_getTypeValue(javaParameter), paramDocletTags);
 		}
 	}
 

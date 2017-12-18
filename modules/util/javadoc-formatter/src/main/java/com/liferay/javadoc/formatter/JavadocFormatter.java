@@ -874,7 +874,8 @@ public class JavadocFormatter {
 				javaClass.getTypeParameters()) {
 
 			_addParamElement(
-				classElement, typeParameter.getName(), null, paramDocletTags);
+				classElement, "<" + typeParameter.getName() + ">", null,
+				paramDocletTags);
 		}
 	}
 

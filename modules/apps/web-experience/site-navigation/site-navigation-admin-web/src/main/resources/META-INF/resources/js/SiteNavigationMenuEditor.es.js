@@ -1,11 +1,13 @@
 import State, {Config} from 'metal-state';
 import {addClasses, dom, removeClasses} from 'metal-dom';
 import {Drag, DragDrop} from 'metal-drag-drop';
+import position from 'metal-position';
 
 /**
  *	Site navigation menu editor component.
  */
 class SiteNavigationMenuEditor extends State {
+
 	/**
 	 * @inheritDoc
 	 */
@@ -15,14 +17,14 @@ class SiteNavigationMenuEditor extends State {
 		this.setState(config);
 
 		this._dragDrop = new DragDrop({
-			cloneContainer: document.body,
-			constrain: this.menuContainerSelector,
 			dragPlaceholder: Drag.Placeholder.CLONE,
 			handles: '.sticker',
 			sources: this.menuItemSelector,
 			targets: [this.menuContainerSelector, this.menuItemSelector].join(),
 		});
 
+		this._dragDrop.on(DragDrop.Events.DRAG, this._handleDragItem.bind(this));
+		this._dragDrop.on(Drag.Events.START, this._handleDragStart.bind(this));
 		this._dragDrop.on(DragDrop.Events.END, this._handleDropItem.bind(this));
 
 		dom.on(
@@ -54,6 +56,81 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
+	 * This is called when user drags the item across the container.
+	 *
+	 * @param {!object} data Drag event data
+	 * @param {!Event} event Drag event
+	 * @private
+	 */
+	_handleDragItem(data, event) {
+		const placeholder = data.placeholder;
+		const source = data.source;
+		const target = data.target;
+
+		if (!target ||
+			(target == source) ||
+			source.parentNode.contains(target)) {
+
+			return;
+		}
+
+		const placeholderRegion = position.getRegion(placeholder);
+		const targetRegion = position.getRegion(target);
+
+		if (!target.dataset.sitenavigationmenuitemid) {
+			return;
+		}
+
+		const nested = (placeholderRegion.right - targetRegion.right) >
+					   		placeholderRegion.width / 3;
+
+		removeClasses(source.parentNode, 'ml-5');
+
+		let newParentId = target.dataset.parentsitenavigationmenuitemid;
+
+	 	if (placeholderRegion.top < targetRegion.top) {
+			target.parentNode.insertBefore(source.parentNode, target);
+		}
+		else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
+			target.parentNode.insertBefore(
+				source.parentNode, target.nextSibling);
+		}
+		else if (nested && (placeholderRegion.bottom > targetRegion.bottom)) {
+			target.parentNode.insertBefore(
+				source.parentNode, target.nextSibling);
+
+			newParentId = target.dataset.sitenavigationmenuitemid;
+
+			addClasses(source.parentNode, 'ml-5');
+		}
+
+		source.setAttribute("drag-parentid", newParentId);
+
+	 	let children = Array.prototype.slice.call(
+	 		target.parentNode.querySelectorAll(
+	 			".container-item," + this.menuItemSelector));
+		const order = children.reduce(
+			(acc, value, idx) => {
+				return value == source.parentNode ? idx : acc
+			}, 0);
+
+	 	source.setAttribute("drag-order", order);
+	}
+
+	/**
+	 * This is called when user starts to drag the item across the container.
+	 *
+	 * @param {!object} data Drag event data
+	 * @param {!Event} event Drag event
+	 * @private
+	 */
+	_handleDragStart(data, event) {
+		const item = event.target.getActiveDrag();
+
+		addClasses(item.parentNode, 'item-dragging');
+	}
+
+	/**
 	 * This is called when user drops the item on the container.
 	 *
 	 * @param {!object} data Drop event data
@@ -65,10 +142,7 @@ class SiteNavigationMenuEditor extends State {
 
 		if (
 			data.source &&
-			data.target &&
-			data.source.dataset.sitenavigationmenuitemid &&
-			data.source.dataset.sitenavigationmenuitemid !==
-				data.target.dataset.sitenavigationmenuitemid
+			data.source.dataset.sitenavigationmenuitemid
 		) {
 			const formData = new FormData();
 
@@ -78,7 +152,11 @@ class SiteNavigationMenuEditor extends State {
 			);
 			formData.append(
 				`${this.namespace}parentSiteNavigationMenuItemId`,
-				data.target.dataset.sitenavigationmenuitemid
+				data.source.getAttribute('drag-parentid')
+			);
+			formData.append(
+				`${this.namespace}order`,
+				data.source.getAttribute('drag-order')
 			);
 
 			fetch(this.editSiteNavigationMenuItemParentURL, {
@@ -95,6 +173,9 @@ class SiteNavigationMenuEditor extends State {
 					}
 				}
 			);
+		}
+		else {
+			removeClasses(data.source.parentNode, 'item-dragging');
 		}
 	}
 }

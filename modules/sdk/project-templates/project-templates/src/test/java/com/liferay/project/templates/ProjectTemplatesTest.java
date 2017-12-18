@@ -19,7 +19,6 @@ import aQute.bnd.main.bnd;
 import com.liferay.maven.executor.MavenExecutor;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.internal.util.WorkspaceUtil;
 import com.liferay.project.templates.util.FileTestUtil;
 import com.liferay.project.templates.util.StringTestUtil;
 

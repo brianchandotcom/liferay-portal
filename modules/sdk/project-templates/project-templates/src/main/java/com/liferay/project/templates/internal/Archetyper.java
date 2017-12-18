@@ -14,12 +14,13 @@
 
 package com.liferay.project.templates.internal;
 
+import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplates;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.WorkspaceUtil;
 import com.liferay.project.templates.internal.util.FileUtil;
 import com.liferay.project.templates.internal.util.ReflectionUtil;
 import com.liferay.project.templates.internal.util.Validator;
-import com.liferay.project.templates.internal.util.WorkspaceUtil;
 
 import java.io.File;
 
@@ -35,8 +36,10 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.util.ServiceLoader;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
@@ -76,10 +79,6 @@ public class Archetyper {
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
-		String contributorType = projectTemplatesArgs.getContributorType();
-		String hostBundleSymbolicName =
-			projectTemplatesArgs.getHostBundleSymbolicName();
-		String hostBundleVersion = projectTemplatesArgs.getHostBundleVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
 
 		File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
@@ -90,7 +89,6 @@ public class Archetyper {
 			projectType = WorkspaceUtil.WORKSPACE;
 		}
 
-		String service = projectTemplatesArgs.getService();
 		String template = projectTemplatesArgs.getTemplate();
 
 		ArchetypeGenerationRequest archetypeGenerationRequest =
@@ -113,51 +111,45 @@ public class Archetyper {
 
 		Properties properties = new Properties();
 
-		if (template.equals("service-builder")) {
-			String apiPath = ":" + artifactId + "-api";
-
-			if (workspaceDir != null) {
-				Path destinationDirPath = destinationDir.toPath();
-				Path workspaceDirPath = workspaceDir.toPath();
-
-				destinationDirPath = destinationDirPath.toAbsolutePath();
-				workspaceDirPath = workspaceDirPath.toAbsolutePath();
-
-				Path relativePath = workspaceDirPath.relativize(
-					destinationDirPath);
-
-				String path = relativePath.toString();
-
-				path = path.replace(File.separatorChar, ':');
-
-				apiPath = ":" + path + ":" + artifactId + apiPath;
-			}
-
-			_setProperty(properties, "apiPath", apiPath);
-		}
-
 		_setProperty(properties, "author", author);
 		_setProperty(properties, "buildType", "gradle");
 		_setProperty(properties, "className", className);
-		_setProperty(properties, "contributorType", contributorType);
-		_setProperty(
-			properties, "hostBundleSymbolicName", hostBundleSymbolicName);
-		_setProperty(properties, "hostBundleVersion", hostBundleVersion);
 		_setProperty(properties, "package", packageName);
-		_setProperty(properties, "packageJsonVersion", "1.0.0");
 		_setProperty(properties, "projectType", projectType);
-		_setProperty(properties, "serviceClass", service);
-		_setProperty(properties, "serviceWrapperClass", service);
 
 		archetypeGenerationRequest.setProperties(properties);
 
 		archetypeGenerationRequest.setVersion("1.0.0");
 
+		ArchetypeArtifactManager archetypeArtifactManager =
+			_createArchetypeArtifactManager(archetypesDir);
+
+		ProjectTemplateCustomizer projectTemplateCustomizer =
+			_getProjectTemplateCustomizer(
+				archetypeArtifactManager.getArchetypeFile(
+					archetypeGenerationRequest.getArchetypeGroupId(),
+					archetypeGenerationRequest.getArchetypeArtifactId(),
+					archetypeGenerationRequest.getArchetypeVersion(), null,
+					null, null));
+
+		if (projectTemplateCustomizer != null) {
+			projectTemplateCustomizer.onBeforeGenerateProject(
+				projectTemplatesArgs, archetypeGenerationRequest);
+		}
+
 		ArchetypeManager archetypeManager = _createArchetypeManager(
 			archetypesDir);
 
-		return archetypeManager.generateProjectFromArchetype(
-			archetypeGenerationRequest);
+		ArchetypeGenerationResult archetypeGenerationResult =
+			archetypeManager.generateProjectFromArchetype(
+				archetypeGenerationRequest);
+
+		if (projectTemplateCustomizer != null) {
+			projectTemplateCustomizer.onAfterGenerateProject(
+				destinationDir, archetypeGenerationResult);
+		}
+
+		return archetypeGenerationResult;
 	}
 
 	private ArchetypeArtifactManager _createArchetypeArtifactManager(
@@ -252,6 +244,27 @@ public class Archetyper {
 		defaultVelocityComponent.initialize();
 
 		return defaultVelocityComponent;
+	}
+
+	private ProjectTemplateCustomizer _getProjectTemplateCustomizer(
+			File archetypeFile)
+		throws MalformedURLException {
+
+		URI uri = archetypeFile.toURI();
+
+		URLClassLoader urlClassLoader = new URLClassLoader(
+			new URL[] {uri.toURL()});
+
+		ServiceLoader<ProjectTemplateCustomizer> serviceLoader =
+			ServiceLoader.load(ProjectTemplateCustomizer.class, urlClassLoader);
+
+		Iterator<ProjectTemplateCustomizer> iterator = serviceLoader.iterator();
+
+		if (iterator.hasNext()) {
+			return iterator.next();
+		}
+
+		return null;
 	}
 
 	private void _setProperty(

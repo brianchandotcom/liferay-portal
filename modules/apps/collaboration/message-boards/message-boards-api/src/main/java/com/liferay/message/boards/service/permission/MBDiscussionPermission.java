@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.service.permission;
+package com.liferay.message.boards.service.permission;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceUtil;
-import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionCheckerUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
-import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.workflow.WorkflowInstance;
 import com.liferay.portal.kernel.workflow.permission.WorkflowPermissionUtil;
@@ -33,18 +32,20 @@ import com.liferay.portal.util.PropsValues;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Charles May
  * @author Roberto Díaz
  * @author Sergio González
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.service.permission.MBDiscussionPermission}
  */
-@Deprecated
-@OSGiBeanProperties(
+@Component(
+	immediate = true,
 	property = {
-		"model.class.name=com.liferay.message.boards.kernel.model.MBDiscussion"
-	}
+		"model.class.name=com.liferay.message.boards.model.MBDiscussion"
+	},
+	service = BaseModelPermissionChecker.class
 )
 public class MBDiscussionPermission implements BaseModelPermissionChecker {
 
@@ -78,8 +79,8 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 		PermissionChecker permissionChecker, long companyId, long groupId,
 		String className, long classPK, String actionId) {
 
-		MBDiscussion mbDiscussion =
-			MBDiscussionLocalServiceUtil.fetchDiscussion(className, classPK);
+		MBDiscussion mbDiscussion = _mbDiscussionLocalService.fetchDiscussion(
+			className, classPK);
 
 		if (mbDiscussion == null) {
 			return false;
@@ -117,7 +118,7 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		MBMessage message = MBMessageLocalServiceUtil.getMessage(messageId);
+		MBMessage message = _mbMessageLocalService.getMessage(messageId);
 
 		return contains(permissionChecker, message, actionId);
 	}
@@ -163,12 +164,29 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		MBDiscussion mbDiscussion =
-			MBDiscussionLocalServiceUtil.getMBDiscussion(primaryKey);
+		MBDiscussion mbDiscussion = _mbDiscussionLocalService.getMBDiscussion(
+			primaryKey);
 
 		check(
 			permissionChecker, mbDiscussion.getCompanyId(), groupId,
 			mbDiscussion.getClassName(), mbDiscussion.getClassPK(), actionId);
 	}
+
+	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMBMessageLocalService(
+		MBMessageLocalService mbMessageLocalService) {
+
+		_mbMessageLocalService = mbMessageLocalService;
+	}
+
+	private MBDiscussionLocalService _mbDiscussionLocalService;
+	private MBMessageLocalService _mbMessageLocalService;
 
 }

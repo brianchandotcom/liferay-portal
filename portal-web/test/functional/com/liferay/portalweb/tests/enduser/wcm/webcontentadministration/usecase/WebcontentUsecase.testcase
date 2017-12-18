@@ -2667,6 +2667,72 @@
 		</execute>
 	</command>
 
+	<command name="UndeployWebContentDisplayModuleViaGogoShell" priority="5">
+		<description message="This is a use case for LPS-71941." />
+
+		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#UndeployWebContentDisplayModuleViaGogoShell" />
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Gogo Shell" />
+		</execute>
+
+		<execute macro="GogoShell#inputGogoShellStopModuleCommand">
+			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+		</execute>
+
+		<execute macro="GogoShell#viewModuleStatus">
+			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+			<var name="moduleStatus" value="Resolved" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#PORTLET_CONTENT" value1="This portlet has been undeployed." />
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Gogo Shell" />
+		</execute>
+
+		<execute macro="GogoShell#inputGogoShellStartModuleCommand">
+			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+		</execute>
+
+		<execute macro="GogoShell#viewModuleStatus">
+			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+			<var name="moduleStatus" value="Active" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+	</command>
+
 	<command name="UseStructureAndTemplateFromParentSiteHierarchy" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 

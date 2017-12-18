@@ -33,6 +33,10 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ResourceActionsUtil {
 
+	public static void check(Portlet portlet) {
+		getResourceActions().check(portlet);
+	}
+
 	public static void check(String portletName) {
 		getResourceActions().check(portletName);
 	}

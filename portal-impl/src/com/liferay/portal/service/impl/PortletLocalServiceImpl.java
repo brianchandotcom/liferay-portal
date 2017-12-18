@@ -330,6 +330,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		_checkValidPortletId(portlet.getPortletId());
 
+		ResourceActionsUtil.check(portlet);
+
 		_portletsMap.put(portlet.getPortletId(), portlet);
 
 		if (eagerDestroy) {
@@ -339,8 +341,6 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		}
 
 		clearCache();
-
-		ResourceActionsUtil.check(portlet.getPortletId());
 
 		PortletCategory portletCategory = (PortletCategory)WebAppPool.get(
 			portlet.getCompanyId(), WebKeys.PORTLET_CATEGORY);

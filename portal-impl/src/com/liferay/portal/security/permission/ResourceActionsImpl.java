@@ -107,6 +107,19 @@ public class ResourceActionsImpl implements ResourceActions {
 	}
 
 	@Override
+	public void check(Portlet portlet) {
+		String portletName = portlet.getPortletId();
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			portletName, _getPortletResourceActions(portletName, portlet));
+
+		for (String modelName : getPortletModelResources(portletName)) {
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, getModelResourceActions(modelName));
+		}
+	}
+
+	@Override
 	public void check(String portletName) {
 		ResourceActionLocalServiceUtil.checkResourceActions(
 			portletName, getPortletResourceActions(portletName));
@@ -415,6 +428,14 @@ public class ResourceActionsImpl implements ResourceActions {
 	public List<String> getPortletResourceActions(String name) {
 		name = PortletIdCodec.decodePortletName(name);
 
+		Portlet portlet = portletLocalService.getPortletById(name);
+
+		return _getPortletResourceActions(name, portlet);
+	}
+
+	private List<String> _getPortletResourceActions(
+		String name, Portlet portlet) {
+
 		PortletResourceActionsBag portletResourceActionsBag =
 			_getPortletResourceActionsBag(name);
 
@@ -426,10 +447,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		synchronized (this) {
-			portletActions = _getPortletMimeTypeActions(name);
+			portletActions = _getPortletMimeTypeActions(name, portlet);
 
 			if (!name.equals(PortletKeys.PORTAL)) {
-				_checkPortletActions(name, portletActions);
+				_checkPortletActions(portlet, portletActions);
 			}
 
 			Set<String> groupDefaultActions =
@@ -890,10 +911,10 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 	}
 
-	private Set<String> _getPortletMimeTypeActions(String name) {
-		Set<String> actions = new LinkedHashSet<>();
+	private Set<String> _getPortletMimeTypeActions(
+		String name, Portlet portlet) {
 
-		Portlet portlet = portletLocalService.getPortletById(name);
+		Set<String> actions = new LinkedHashSet<>();
 
 		if (portlet != null) {
 			Map<String, Set<String>> portletModes = portlet.getPortletModes();
@@ -1354,7 +1375,9 @@ public class ResourceActionsImpl implements ResourceActions {
 
 		_readSupportsActions(portletResourceElement, portletActions);
 
-		portletActions.addAll(_getPortletMimeTypeActions(name));
+		Portlet portlet = portletLocalService.getPortletById(name);
+
+		portletActions.addAll(_getPortletMimeTypeActions(name, portlet));
 
 		if (!name.equals(PortletKeys.PORTAL)) {
 			_checkPortletActions(name, portletActions);

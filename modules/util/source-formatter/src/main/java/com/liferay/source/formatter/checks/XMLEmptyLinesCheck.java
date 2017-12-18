@@ -47,10 +47,6 @@ public class XMLEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = _fixMissingEmptyLinesAroundComments(content);
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
 		Matcher matcher = _redundantEmptyLinePattern.matcher(content);
 
 		if (matcher.find()) {

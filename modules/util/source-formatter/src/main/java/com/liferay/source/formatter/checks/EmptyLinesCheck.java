@@ -403,10 +403,6 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
 		matcher = _missingEmptyLinePattern9.matcher(content);
 
 		while (matcher.find()) {

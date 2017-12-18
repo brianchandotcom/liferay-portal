@@ -531,20 +531,20 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		return new DDMFormRule(condition, action);
 	}
 
+	/**
+	 * Create a DDM form rule action as a call function, e.g.
+	 * <pre>
+	 * call(
+	 * 	'getCPInstanceOptionsValues',
+	 * 	concat(
+	 * 		'cpDefinitionId=56698', ';', '56703=', getValue('56703'), ';',
+	 * 		'56706=', getValue('56706')),
+	 * 	'56703=color;56706=size')
+	 * </pre>
+	 */
 	protected String createDDMFormRuleAction(
 		DDMForm ddmForm, long cpDefinitionId) {
 
-		/*
-		 * The action is a call function. Example:
-		 *
-		 *call(
-		 * 'getCPInstanceOptionsValues',
-		 *  concat(
-		 * 	'cpDefinitionId=56698', ';','56703=', getValue('56703'), ';',
-		 * 	'56706=', getValue('56706')),
-		 * '56703=color;56706=size'
-		 *)
-		 */
 		String callFunctionStatement =
 			"call('getCPInstanceOptionsValues', concat(%s), '%s')";
 
@@ -554,14 +554,15 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 			createDDMFormRuleOutputMapping(ddmForm));
 	}
 
+	/**
+	 * Create a DDM form rule condition. The rule action will contain a
+	 * 'nonEmpty' statement for each field using 'OR` operator, e.g.
+	 * <pre>
+	 * 	not(isEmpty(getValue('{sizeFieldName}'))) OR
+	 * 	not(isEmpty(getValue('{colorFieldName}')))
+	 * </pre>
+	 */
 	protected String createDDMFormRuleCondition(DDMForm ddmForm) {
-
-		/*
-		 * The rule action will contains a 'notEmpty' statement for each field
-		 * using 'OR' operator.
-		 * Ex: not(isEmpty(getValue('{sizeFieldName}')))
-		 *  	OR not(isEmpty(getValue('{colorFieldName}')))
-		 */
 		String notEmptyStatement = "not(isEmpty(getValue('%s')))";
 
 		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.util;
 
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.File;
 
 import java.io.IOException;
@@ -21,7 +22,19 @@ import java.io.InputStream;
 
 import java.nio.charset.Charset;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.tika.config.TikaConfig;
+import org.apache.tika.mime.MediaType;
+import org.apache.tika.parser.CompositeParser;
+import org.apache.tika.parser.Parser;
+import org.apache.tika.parser.ocr.TesseractOCRConfig;
+import org.apache.tika.parser.ocr.TesseractOCRParser;
+
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -29,6 +42,41 @@ import org.junit.Test;
  * @see    MimeTypesImplTest
  */
 public class FileImplExtractTest {
+
+	@Before
+	public void setUp() throws Exception {
+		Class<?> clazz = Class.forName(
+			"com.liferay.portal.util.FileImpl$TikaConfigHolder");
+
+		TikaConfig tikaConfig = ReflectionTestUtil.getFieldValue(
+			clazz, "_tikaConfig");
+
+		CompositeParser compositeParser =
+			(CompositeParser)tikaConfig.getParser();
+
+		Map<MediaType, Parser> parsers = compositeParser.getParsers();
+
+		Set<Map.Entry<MediaType, Parser>> entrySet = parsers.entrySet();
+
+		Iterator<Map.Entry<MediaType, Parser>> iterator = entrySet.iterator();
+
+		while (iterator.hasNext()) {
+			Map.Entry<MediaType, Parser> next = iterator.next();
+
+			Parser parser = next.getValue();
+
+			if (parser instanceof TesseractOCRParser) {
+				TesseractOCRParser tesseractOCRParser =
+					(TesseractOCRParser)parser;
+
+				if (tesseractOCRParser.hasTesseract(new TesseractOCRConfig())) {
+					iterator.remove();
+				}
+			}
+		}
+
+		compositeParser.setParsers(parsers);
+	}
 
 	@Test
 	public void testDoc() {

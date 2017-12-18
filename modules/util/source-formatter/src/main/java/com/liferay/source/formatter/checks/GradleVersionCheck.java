@@ -42,10 +42,6 @@ public class GradleVersionCheck extends BaseFileCheck {
 			_checkDefaultVersion(
 				fileName, content, name, version, matcher.start());
 
-			if (isSubrepository() || isReadOnly(absolutePath)) {
-				continue;
-			}
-
 			if (absolutePath.contains("/modules/apps/")) {
 				content = _fixMicroVersion(
 					fileName, content, matcher.group(1), name, version);

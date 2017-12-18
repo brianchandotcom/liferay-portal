@@ -40,6 +40,18 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 	}
 
 	@Override
+	public CommerceAddress getBillingAddress() throws PortalException {
+		long billingAddressId = getBillingAddressId();
+
+		if (billingAddressId > 0) {
+			return CommerceAddressLocalServiceUtil.getCommerceAddress(
+				getBillingAddressId());
+		}
+
+		return null;
+	}
+
+	@Override
 	public List<CommerceOrderItem> getCommerceOrderItems() {
 		return CommerceOrderItemLocalServiceUtil.getCommerceOrderItems(
 			getCommerceOrderId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);

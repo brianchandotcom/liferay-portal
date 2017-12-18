@@ -51,7 +51,8 @@ public class DefaultMailTemplateContextBuilder
 		put(
 			placeholder,
 			new EscapableLocalizableFunction(
-				locale -> escapableObject.getOriginalValue()));
+				locale -> escapableObject.getOriginalValue(),
+				escapableObject.isEscape()));
 
 		return this;
 	}

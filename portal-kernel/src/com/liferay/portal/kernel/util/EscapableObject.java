@@ -48,6 +48,10 @@ public class EscapableObject<T> implements Serializable {
 		return _originalValue;
 	}
 
+	public boolean isEscape() {
+		return _escape;
+	}
+
 	@Override
 	public String toString() {
 		return _originalValue.toString();

@@ -433,45 +433,6 @@ public class ResourceActionsImpl implements ResourceActions {
 		return _getPortletResourceActions(name, portlet);
 	}
 
-	private List<String> _getPortletResourceActions(
-		String name, Portlet portlet) {
-
-		PortletResourceActionsBag portletResourceActionsBag =
-			_getPortletResourceActionsBag(name);
-
-		Set<String> portletActions =
-			portletResourceActionsBag.getPortletActions();
-
-		if (!portletActions.isEmpty()) {
-			return new ArrayList<>(portletActions);
-		}
-
-		synchronized (this) {
-			portletActions = _getPortletMimeTypeActions(name, portlet);
-
-			if (!name.equals(PortletKeys.PORTAL)) {
-				_checkPortletActions(portlet, portletActions);
-			}
-
-			Set<String> groupDefaultActions =
-				portletResourceActionsBag.getGroupDefaultActions();
-
-			_checkPortletGroupDefaultActions(groupDefaultActions);
-
-			Set<String> guestDefaultActions =
-				portletResourceActionsBag.getGuestDefaultActions();
-
-			_checkPortletGuestDefaultActions(guestDefaultActions);
-
-			Set<String> layoutManagerActions =
-				portletResourceActionsBag.getLayoutManagerActions();
-
-			_checkPortletLayoutManagerActions(layoutManagerActions);
-		}
-
-		return new ArrayList<>(portletActions);
-	}
-
 	@Override
 	public List<String> getPortletResourceGroupDefaultActions(String name) {
 
@@ -947,6 +908,45 @@ public class ResourceActionsImpl implements ResourceActions {
 		}
 
 		return actions;
+	}
+
+	private List<String> _getPortletResourceActions(
+		String name, Portlet portlet) {
+
+		PortletResourceActionsBag portletResourceActionsBag =
+			_getPortletResourceActionsBag(name);
+
+		Set<String> portletActions =
+			portletResourceActionsBag.getPortletActions();
+
+		if (!portletActions.isEmpty()) {
+			return new ArrayList<>(portletActions);
+		}
+
+		synchronized (this) {
+			portletActions = _getPortletMimeTypeActions(name, portlet);
+
+			if (!name.equals(PortletKeys.PORTAL)) {
+				_checkPortletActions(portlet, portletActions);
+			}
+
+			Set<String> groupDefaultActions =
+				portletResourceActionsBag.getGroupDefaultActions();
+
+			_checkPortletGroupDefaultActions(groupDefaultActions);
+
+			Set<String> guestDefaultActions =
+				portletResourceActionsBag.getGuestDefaultActions();
+
+			_checkPortletGuestDefaultActions(guestDefaultActions);
+
+			Set<String> layoutManagerActions =
+				portletResourceActionsBag.getLayoutManagerActions();
+
+			_checkPortletLayoutManagerActions(layoutManagerActions);
+		}
+
+		return new ArrayList<>(portletActions);
 	}
 
 	private PortletResourceActionsBag _getPortletResourceActionsBag(

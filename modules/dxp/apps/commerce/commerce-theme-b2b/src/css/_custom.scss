@@ -1,0 +1,54 @@
+@import "portlet_decorator";
+
+@import "partials/application-bar";
+@import "partials/btn";
+@import "partials/footer";
+@import "partials/nav";
+@import "partials/sidenav";
+
+#wrapper {
+	padding-top: 0;
+}
+
+.b2b-wrapper {
+	background-color: $brand-bg-color;
+}
+
+.header {
+	padding: 20px;
+
+	@include media-breakpoint-up(sm) {
+		padding: 40px 20px;
+	}
+}
+
+#content {
+	margin-bottom: 40px;
+
+	@include media-breakpoint-up(sm) {
+		padding-left: 40px;
+		padding-right: 40px;
+	}
+}
+
+.user-avatar-image {
+	display: none;
+}
+
+.portlet-title-text {
+	margin-bottom: 40px;
+}
+
+.link-brand-underline {
+	position: relative;
+
+	&:after {
+		background-color: $brand-color-primary;
+		bottom: 0;
+		content: '';
+		height: 3px;
+		left: 0;
+		position: absolute;
+		right: 0;
+	}
+}

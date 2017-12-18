@@ -1,0 +1,51 @@
+.nav-b2b {
+	padding: 20px 0 60px;
+	position: relative;
+
+	&:after {
+		background-color: #565455;
+		bottom: 0;
+		content: '';
+		height: 1px;
+		left: 50px;
+		position: absolute;
+		width: 36px;
+	}
+
+	.nav-link {
+		text-transform: uppercase;
+	}
+
+	.active {
+		> .lexicon-icon {
+			fill: $brand-color-primary;
+		}
+	}
+}
+
+.nav-sub-b2b {
+	margin-left: 35px;
+	margin-top: 40px;
+
+	.lexicon-icon {
+		padding-bottom: 5px;
+	}
+}
+
+.nav-underline-brand {
+	.nav-item .nav-link {
+		color: $brand-color-secondary-light;
+		padding: 1rem;
+
+		&.active {
+			color: $brand-color-secondary;
+
+			&:after {
+				background-color: $brand-color-primary;
+				height: 4px;
+				left: 0;
+				right: 0;
+			}
+		}
+	}
+}

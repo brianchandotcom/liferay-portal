@@ -1,0 +1,22 @@
+.btn-brand {
+	background-color: $brand-color-primary;
+	border-radius: 0;
+
+	&, &, &:hover, &:focus, &:active, .active {
+		color: #FFF;
+	}
+}
+
+.btn-shadow {
+	background-color: #FFF;
+	border-radius: 5px;
+	box-shadow: 0 3px 8px 2px rgba(0, 0, 0, 0.05);
+
+	&, &, &:hover, &:focus, &:active, .active {
+		color: $brand-color-secondary;
+	}
+
+	.lexicon-icon {
+		fill: $brand-color-primary;
+	}
+}

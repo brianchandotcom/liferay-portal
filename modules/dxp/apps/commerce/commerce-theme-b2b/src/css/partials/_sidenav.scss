@@ -1,0 +1,41 @@
+.sidenav-b2b {
+	background-color: $sidenav-b2b-color-bg;
+	max-width: $sidenav-b2b-width;
+	min-height: calc(100vh - $application-bar-height);
+	overflow: hidden;
+	padding-bottom: 60px;
+	padding-left: 0;
+	padding-right: 0;
+	transition: all 0.2s ease-in-out;
+
+	@include media-breakpoint-down(sm) {
+		bottom: 0;
+		position: absolute;
+		top: 0;
+		z-index: 1033;
+	}
+
+	&, a, .active {
+		color: #FFF;
+		font-size: 14px;
+	}
+
+	.sidenav-body {
+		width: $sidenav-b2b-width;
+		overflow: hidden;
+	}
+}
+
+.sidenav-icon {
+	display: none;
+}
+
+.sidenav-b2b-close {
+	.sidenav-b2b {
+		max-width: $sidenav-b2b-close-width;
+	}
+
+	.sidenav-icon {
+		display: inline-block;
+	}
+}

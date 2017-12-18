@@ -1,0 +1,29 @@
+.footer {
+	background-color: $brand-color-secondary;
+	color: $brand-color-secondary-light;
+	padding: 40px;
+	margin-left: -15px;
+	margin-right: -15px;
+
+	.portlet-title-text, h2 {
+		color: #FFF;
+		text-transform: uppercase;
+		font-size: 20px;
+	}
+
+	.nav-pills > li.active > a {
+		background-color: transparent;
+		color: $brand-color-secondary-light;
+	}
+
+	.social-set {
+		> li {
+			margin-top: 15px;
+		}
+
+		.lexicon-icon {
+			color: #FFF;
+			font-size: 20px;
+		}
+	}
+}

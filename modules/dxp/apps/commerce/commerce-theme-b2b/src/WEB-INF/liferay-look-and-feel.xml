@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE look-and-feel PUBLIC "-//Liferay//DTD Look and Feel 7.0.0//EN" "http://www.liferay.com/dtd/liferay-look-and-feel_7_0_0.dtd">
+
+<look-and-feel>
+	<compatibility>
+		<version>7.1.0+</version>
+	</compatibility>
+	<theme id="commerce-theme-b2b" name="Commerce Theme b2b">
+		<template-extension>ftl</template-extension>
+		<settings>
+			<setting configurable="true" key="demo-mode" type="checkbox" value="false" />
+			<setting configurable="false" key="show-maximize-minimize-application-links" type="checkbox" value="false" />
+			<setting configurable="false" key="show-site-name-default" value="false" />
+		</settings>
+		<portlet-decorator id="barebone" name="Barebone">
+			<default-portlet-decorator>true</default-portlet-decorator>
+			<portlet-decorator-css-class>portlet-barebone</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="borderless" name="Borderless">
+			<portlet-decorator-css-class>portlet-borderless</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="decorate" name="Decorate">
+			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="card" name="Card">
+			<portlet-decorator-css-class>portlet-card</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="card-inverse" name="Card inverse">
+			<portlet-decorator-css-class>portlet-card-inverse</portlet-decorator-css-class>
+		</portlet-decorator>
+	</theme>
+</look-and-feel>

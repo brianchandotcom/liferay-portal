@@ -1,0 +1,113 @@
+.application-bar-b2b {
+	align-items: center;
+	background-color: #FFF;
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+	min-height: $application-bar-height;
+	padding: 0;
+	position: relative;
+
+	.navbar-title {
+		border-right: 1px solid #EEE;
+		font-weight: 600;
+		padding-right: 15px;
+		text-align: center;
+		width: $sidenav-b2b-width;
+	}
+}
+
+.application-bar-search {
+	flex: auto;
+
+	@include media-breakpoint-up(sm) {
+		padding: 0 40px 0 20px;
+	}
+
+	.fieldset > div {
+		display: flex;
+		flex-wrap: nowrap;
+
+		.lexicon-icon {
+			color: #000;
+		}
+
+		.input-text-wrapper {
+			flex-direction: column;
+			flex-grow: 1;
+		}
+
+		.field-wrapper {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.search-input {
+			border-color: transparent;
+		}
+	}
+
+	.form-group, .lfr-ddm-field-group, .portlet {
+		margin-bottom: 0;
+	}
+}
+
+.application-bar-primary {
+	align-items: center;
+	background-color: $brand-color-primary;
+	display: flex;
+	flex-wrap: nowrap;
+	min-height: $application-bar-height;
+	padding: 10px;
+
+	@include media-breakpoint-up(sm) {
+		padding: 10px 20px;
+	}
+
+	.lexicon-icon {
+		@include media-breakpoint-down(md) {
+			display: none;
+		}
+	}
+}
+
+.application-bar-secondary {
+	align-items: center;
+	background-color: $brand-color-secondary;
+	color: #FFF;
+	display: flex;
+	display: flex;
+	flex-wrap: nowrap;
+	min-height: $application-bar-height;
+	padding: 10px;
+
+	@include media-breakpoint-up(sm) {
+		padding: 10px 20px;
+	}
+
+	a {
+		color: #FFF;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.application-bar-ticket {
+		margin-right: 20px;
+
+		> span {
+			@include media-breakpoint-down(lg) {
+				display: none;
+			}
+		}
+
+		@include media-breakpoint-up(sm) {
+			margin-right: 50px;
+		}
+
+		@include media-breakpoint-up(lg) {
+			margin-right: 180px;
+		}
+	}
+}

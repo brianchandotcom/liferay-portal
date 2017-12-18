@@ -39,6 +39,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.exportimport.xstream.ConverterAdapter;
+import com.liferay.exportimport.xstream.TimestampConverter;
 import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
@@ -2720,6 +2721,24 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
 		_xStreamConfigurators = xStreamConfigurators;
+
+		try {
+			Class<?> timestampClass = classLoader.loadClass(
+				"com.sybase.jdbc4.tds.SybTimestamp");
+
+			_xStream.alias("sql-timestamp", timestampClass);
+		}
+		catch (ClassNotFoundException cnfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to load class com.sybase.jdbc4.tds.SybTimestamp. " +
+						"Check if Sybase's driver is deployed");
+			}
+		}
+
+		_xStream.registerConverter(
+			new ConverterAdapter(new TimestampConverter()),
+			XStream.PRIORITY_VERY_HIGH);
 
 		if (xStreamConfigurators.isEmpty()) {
 			return;

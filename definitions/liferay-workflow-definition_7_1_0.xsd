@@ -306,12 +306,12 @@
 	</xs:element>
 	<xs:element name="workflow-definition">
 		<xs:complexType>
-			<xs:choice maxOccurs="unbounded" minOccurs="0">
+			<xs:sequence>
 				<xs:element name="name" type="xs:string" />
 				<xs:element minOccurs="0" name="description" type="xs:string" />
 				<xs:element name="version" type="xs:int" />
-				<xs:group ref="nodes-group" />
-			</xs:choice>
+				<xs:group ref="nodes-group" maxOccurs="unbounded" />
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 	<xs:group name="actions-group">

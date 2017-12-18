@@ -59,7 +59,7 @@ public class WebSphereDeploymentExtension implements DeploymentExtension {
 				PropsValues.AUTO_DEPLOY_WEBSPHERE_WSADMIN_APP_MANAGER_QUERY)) {
 
 			if (_log.isInfoEnabled()) {
-				StringBundler sb = new StringBundler();
+				StringBundler sb = new StringBundler(4);
 
 				sb.append("Do not install the plugin with wsadmin since the ");
 				sb.append("property \"");

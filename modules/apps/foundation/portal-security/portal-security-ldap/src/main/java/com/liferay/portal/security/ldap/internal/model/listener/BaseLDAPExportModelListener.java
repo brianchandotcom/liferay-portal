@@ -14,6 +14,7 @@
 
 package com.liferay.portal.security.ldap.internal.model.listener;
 
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.User;
@@ -28,6 +29,7 @@ import com.liferay.portal.security.ldap.internal.UserImportTransactionThreadLoca
 import java.io.Serializable;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Callable;
 
 /**
@@ -47,25 +49,43 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 			return;
 		}
 
-		Callable<Void> callable = new Callable<Void>() {
+		Callable<Void> callable = () -> {
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
 
-			@Override
-			public Void call() throws Exception {
-				ServiceContext serviceContext =
-					ServiceContextThreadLocal.getServiceContext();
+			Map<String, Serializable> expandoBridgeAttributes = null;
 
-				Map<String, Serializable> expandoBridgeAttributes = null;
-
-				if (serviceContext != null) {
-					expandoBridgeAttributes =
-						serviceContext.getExpandoBridgeAttributes();
-				}
-
-				userExporter.exportUser(user, expandoBridgeAttributes);
-
-				return null;
+			if (serviceContext != null) {
+				expandoBridgeAttributes =
+					serviceContext.getExpandoBridgeAttributes();
 			}
 
+			boolean oldPasswordModified =
+				PasswordModificationThreadLocal.isPasswordModified();
+
+			if (oldPasswordModified) {
+				String lastPasswordUnencrypted = _lastPasswordUnencrypted.get();
+				String newPasswordUnencrypted =
+					PasswordModificationThreadLocal.getPasswordUnencrypted();
+
+				boolean newPasswordModified = !Objects.equals(
+					lastPasswordUnencrypted, newPasswordUnencrypted);
+
+				_lastPasswordUnencrypted.set(newPasswordUnencrypted);
+
+				PasswordModificationThreadLocal.setPasswordModified(
+					newPasswordModified);
+			}
+
+			try {
+				userExporter.exportUser(user, expandoBridgeAttributes);
+			}
+			finally {
+				PasswordModificationThreadLocal.setPasswordModified(
+					oldPasswordModified);
+			}
+
+			return null;
 		};
 
 		if (ldapSettings.isPasswordPolicyEnabled(user.getCompanyId()) &&
@@ -77,5 +97,10 @@ public abstract class BaseLDAPExportModelListener<T extends BaseModel<T>>
 			TransactionCommitCallbackUtil.registerCallback(callable);
 		}
 	}
+
+	private static final CentralizedThreadLocal<String>
+		_lastPasswordUnencrypted = new CentralizedThreadLocal<>(
+			BaseLDAPExportModelListener.class.getName() +
+				"._lastPasswordUnencrypted");
 
 }

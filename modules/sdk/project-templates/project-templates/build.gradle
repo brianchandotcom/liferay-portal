@@ -4,6 +4,7 @@ import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import org.gradle.execution.ProjectConfigurer
 
 task cleanProjectTemplateTests(type: Delete)
+task uploadProjectTemplateArchives
 task writeProjectTemplateVersions
 
 File mavenWrapperPropertiesFile = file("src/main/resources/maven-wrapper/.mvn/wrapper/maven-wrapper.properties")
@@ -156,6 +157,12 @@ test {
 	systemProperty "test.debug.bundle.diffs", System.properties["test.debug.bundle.diffs"]
 
 	systemProperties projectTemplateTokens
+}
+
+uploadProjectTemplateArchives {
+	dependsOn projectTemplateProjects.collect {
+		"${it.path}:uploadArchives"
+	}
 }
 
 writeProjectTemplateVersions {

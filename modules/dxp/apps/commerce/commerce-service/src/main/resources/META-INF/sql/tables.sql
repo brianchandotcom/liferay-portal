@@ -34,6 +34,21 @@ create table CPDefinitionInventory (
 	multipleCartQuantity INTEGER
 );
 
+create table CPLQualificationTypeRel (
+	uuid_ VARCHAR(75) null,
+	CPLQualificationTypeRelId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commercePriceListId LONG,
+	CPriceListQualificationType VARCHAR(75) null,
+	order_ INTEGER,
+	lastPublishDate DATE null
+);
+
 create table CommerceAddress (
 	commerceAddressId LONG not null primary key,
 	groupId LONG,

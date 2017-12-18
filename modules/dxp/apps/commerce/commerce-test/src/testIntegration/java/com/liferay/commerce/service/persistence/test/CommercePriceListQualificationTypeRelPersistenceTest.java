@@ -258,7 +258,7 @@ public class CommercePriceListQualificationTypeRelPersistenceTest {
 	}
 
 	protected OrderByComparator<CommercePriceListQualificationTypeRel> getOrderByComparator() {
-		return OrderByComparatorFactoryUtil.create("CommercePriceListQualificationTypeRel",
+		return OrderByComparatorFactoryUtil.create("CPLQualificationTypeRel",
 			"uuid", true, "commercePriceListQualificationTypeRelId", true,
 			"groupId", true, "companyId", true, "userId", true, "userName",
 			true, "createDate", true, "modifiedDate", true,

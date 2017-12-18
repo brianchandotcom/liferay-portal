@@ -237,7 +237,7 @@
 		<property name="statusByUserName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="statusDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.commerce.model.impl.CommercePriceListQualificationTypeRelImpl" table="CommercePriceListQualificationTypeRel">
+	<class name="com.liferay.commerce.model.impl.CommercePriceListQualificationTypeRelImpl" table="CPLQualificationTypeRel">
 		<id column="CPLQualificationTypeRelId" name="commercePriceListQualificationTypeRelId" type="long">
 			<generator class="assigned" />
 		</id>

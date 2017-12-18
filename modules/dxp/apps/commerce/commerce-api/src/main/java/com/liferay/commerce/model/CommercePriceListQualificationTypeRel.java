@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the CommercePriceListQualificationTypeRel service. Represents a row in the &quot;CommercePriceListQualificationTypeRel&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CommercePriceListQualificationTypeRel service. Represents a row in the &quot;CPLQualificationTypeRel&quot; database table, with each column mapped to a property of this class.
  *
  * @author Alessio Antonio Rendina
  * @see CommercePriceListQualificationTypeRelModel

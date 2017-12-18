@@ -7,6 +7,11 @@ create unique index IX_34D62DF1 on CPDefinitionInventory (CPDefinitionId);
 create index IX_51AED1D6 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_274DD5D8 on CPDefinitionInventory (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create unique index IX_7CC21117 on CPLQualificationTypeRel (CPriceListQualificationType[$COLUMN_LENGTH:75$], commercePriceListId);
+create index IX_566A7482 on CPLQualificationTypeRel (commercePriceListId);
+create index IX_F3C1E4E9 on CPLQualificationTypeRel (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_732091AB on CPLQualificationTypeRel (uuid_[$COLUMN_LENGTH:75$], groupId);
+
 create index IX_6DCF2DAB on CommerceAddress (addressUserId);
 create index IX_CD76FE87 on CommerceAddress (commerceCountryId);
 create index IX_71C5A9DD on CommerceAddress (commerceRegionId);

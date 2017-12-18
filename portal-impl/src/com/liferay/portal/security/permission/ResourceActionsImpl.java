@@ -110,24 +110,12 @@ public class ResourceActionsImpl implements ResourceActions {
 	public void check(Portlet portlet) {
 		String portletName = portlet.getPortletId();
 
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			portletName, _getPortletResourceActions(portletName, portlet));
-
-		for (String modelName : getPortletModelResources(portletName)) {
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				modelName, getModelResourceActions(modelName));
-		}
+		_check(portletName, _getPortletResourceActions(portletName, portlet));
 	}
 
 	@Override
 	public void check(String portletName) {
-		ResourceActionLocalServiceUtil.checkResourceActions(
-			portletName, getPortletResourceActions(portletName));
-
-		for (String modelName : getPortletModelResources(portletName)) {
-			ResourceActionLocalServiceUtil.checkResourceActions(
-				modelName, getModelResourceActions(modelName));
-		}
+		_check(portletName, getPortletResourceActions(portletName));
 	}
 
 	@Override
@@ -721,6 +709,18 @@ public class ResourceActionsImpl implements ResourceActions {
 
 	@BeanReference(type = RoleLocalService.class)
 	protected RoleLocalService roleLocalService;
+
+	private void _check(
+		String portletName, List<String> portletResourceActions) {
+
+		ResourceActionLocalServiceUtil.checkResourceActions(
+			portletName, portletResourceActions);
+
+		for (String modelName : getPortletModelResources(portletName)) {
+			ResourceActionLocalServiceUtil.checkResourceActions(
+				modelName, getModelResourceActions(modelName));
+		}
+	}
 
 	private void _checkGuestUnsupportedActions(
 		Set<String> guestUnsupportedActions, Set<String> guestDefaultActions) {

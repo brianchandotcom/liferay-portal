@@ -14,6 +14,8 @@
 
 package com.liferay.layout.page.template.internal.model.listener;
 
+import com.liferay.fragment.model.FragmentCollection;
+import com.liferay.fragment.service.FragmentCollectionLocalService;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -36,6 +38,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
+
+			// Layout Page Template Collections
+
 			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
 				_layoutPageTemplateCollectionLocalService.
 					getLayoutPageTemplateCollections(
@@ -50,11 +55,25 @@ public class GroupModelListener extends BaseModelListener<Group> {
 						layoutPageTemplateCollection.
 							getLayoutPageTemplateCollectionId());
 			}
+
+			// Fragments
+
+			List<FragmentCollection> fragmentCollections =
+				_fragmentCollectionLocalService.getFragmentCollections(
+					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			for (FragmentCollection fragmentCollection : fragmentCollections) {
+				_fragmentCollectionLocalService.deleteFragmentCollection(
+					fragmentCollection);
+			}
 		}
 		catch (Exception e) {
 			throw new ModelListenerException(e);
 		}
 	}
+
+	@Reference(unbind = "-")
+	private FragmentCollectionLocalService _fragmentCollectionLocalService;
 
 	@Reference(unbind = "-")
 	private LayoutPageTemplateCollectionLocalService

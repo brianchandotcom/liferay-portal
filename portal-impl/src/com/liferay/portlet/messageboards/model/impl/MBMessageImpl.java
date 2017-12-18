@@ -19,7 +19,6 @@ import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.message.boards.kernel.constants.MBConstants;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBThread;
@@ -230,7 +229,7 @@ public class MBMessageImpl extends MBMessageBaseImpl {
 	@Override
 	public String getWorkflowClassName() {
 		if (isDiscussion()) {
-			return MBDiscussion.class.getName();
+			return "com.liferay.message.boards.model.MBDiscussion";
 		}
 		else {
 			return MBMessage.class.getName();

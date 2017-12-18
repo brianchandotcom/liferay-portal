@@ -17,15 +17,15 @@ package com.liferay.message.boards.internal.service;
 import com.liferay.message.boards.kernel.exception.DiscussionMaxCommentsException;
 import com.liferay.message.boards.kernel.exception.MessageBodyException;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
-import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceWrapper;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.message.boards.service.persistence.MBDiscussionPersistence;
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -155,9 +155,8 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 		if (parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 			long classNameId = _classNameLocalService.getClassNameId(className);
 
-			MBDiscussion discussion = ModelAdapterUtil.adapt(
-				MBDiscussion.class,
-				_mbDiscussionPersistence.fetchByC_C(classNameId, classPK));
+			MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
+				classNameId, classPK);
 
 			if (discussion == null) {
 				_mbDiscussionLocalService.addDiscussion(
@@ -177,9 +176,8 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
-		MBDiscussion discussion = ModelAdapterUtil.adapt(
-			MBDiscussion.class,
-			_mbDiscussionPersistence.fetchByC_C(classNameId, classPK));
+		MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
+			classNameId, classPK);
 
 		if (discussion == null) {
 			if (_log.isInfoEnabled()) {
@@ -233,9 +231,8 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 		MBMessage message = null;
 
-		MBDiscussion discussion = ModelAdapterUtil.adapt(
-			MBDiscussion.class,
-			_mbDiscussionPersistence.fetchByC_C(classNameId, classPK));
+		MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
+			classNameId, classPK);
 
 		if (discussion != null) {
 			message = _mbMessageLocalService.getFirstMessage(
@@ -284,9 +281,8 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 		super.getDiscussionMessagesCount(classNameId, classPK, status);
 
-		MBDiscussion discussion = ModelAdapterUtil.adapt(
-			MBDiscussion.class,
-			_mbDiscussionPersistence.fetchByC_C(classNameId, classPK));
+		MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
+			classNameId, classPK);
 
 		if (discussion == null) {
 			return 0;
@@ -315,13 +311,15 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 	}
 
 	@Override
-	public List<MBDiscussion> getDiscussions(String className) {
+	public List<com.liferay.message.boards.kernel.model.MBDiscussion>
+		getDiscussions(String className) {
+
 		super.getDiscussions(className);
 
 		long classNameId = _classNameLocalService.getClassNameId(className);
 
 		return ModelAdapterUtil.adapt(
-			MBDiscussion.class,
+			com.liferay.message.boards.kernel.model.MBDiscussion.class,
 			_mbDiscussionPersistence.findByClassNameId(classNameId));
 	}
 

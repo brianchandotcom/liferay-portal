@@ -35,7 +35,6 @@ import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateCompar
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +78,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
@@ -759,6 +757,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage fetchFirstMessage(long threadId, long parentMessageId)
+		throws PortalException {
+
+		return mbMessagePersistence.fetchByT_P_First(
+			threadId, parentMessageId, null);
+	}
+
+	@Override
 	public List<MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end) {
 
@@ -891,6 +897,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage getFirstMessage(long threadId, long parentMessageId)
+		throws PortalException {
+
+		return mbMessagePersistence.findByT_P_First(
+			threadId, parentMessageId, null);
+	}
+
+	@Override
 	public List<MBMessage> getGroupMessages(
 		long groupId, int status, int start, int end) {
 
@@ -967,22 +981,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public MBMessage getMessage(long messageId) throws PortalException {
 		return mbMessagePersistence.findByPrimaryKey(messageId);
-	}
-
-	@Override
-	public MBMessage getFirstMessage(long threadId, long parentMessageId)
-		throws PortalException {
-
-		return mbMessagePersistence.findByT_P_First(
-			threadId, parentMessageId, null);
-	}
-
-	@Override
-	public MBMessage fetchFirstMessage(long threadId, long parentMessageId)
-		throws PortalException {
-
-		return mbMessagePersistence.fetchByT_P_First(
-			threadId, parentMessageId, null);
 	}
 
 	@Override

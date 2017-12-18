@@ -16,7 +16,7 @@ package com.liferay.asset.tags.validator.internal;
 
 import com.liferay.asset.kernel.exception.AssetTagException;
 import com.liferay.asset.kernel.validator.AssetEntryValidator;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.User;

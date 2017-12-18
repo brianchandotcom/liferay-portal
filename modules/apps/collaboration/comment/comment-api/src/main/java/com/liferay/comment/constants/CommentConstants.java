@@ -12,16 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.kernel.comment;
+package com.liferay.comment.constants;
 
-import com.liferay.message.boards.kernel.model.MBDiscussion;
+import com.liferay.message.boards.model.MBDiscussion;
 
 /**
  * @author Adolfo Pérez
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.comment.constants.CommentConstants}
  */
-@Deprecated
 public class CommentConstants {
 
 	public static Class<?> getDiscussionClass() {

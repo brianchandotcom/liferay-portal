@@ -15,7 +15,7 @@
 package com.liferay.css.builder.ant;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.css.builder.util.StringTestUtil;
 
 import java.io.File;
 
@@ -54,29 +54,28 @@ public class BuildCSSTaskTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			String dirName, Path docrootDirPath, boolean generateSourceMap,
-			String outputDirName, Path portalCommonPath, int precision,
+			Path baseDirPath, String dirName, boolean generateSourceMap,
+			Path importDirPath, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		Project project = buildFileRule.getProject();
 
-		project.setProperty("build.css.dir.names", dirName);
 		project.setProperty(
-			"build.docroot.dir",
-			String.valueOf(docrootDirPath.toAbsolutePath()));
+			"build.css.base.dir", String.valueOf(baseDirPath.toAbsolutePath()));
+		project.setProperty("build.css.dir.names", dirName);
 		project.setProperty(
 			"build.css.generate.source.maps",
 			String.valueOf(generateSourceMap));
 		project.setProperty(
-			"build.css.output.dir.name", String.valueOf(outputDirName));
+			"build.css.import.dir",
+			String.valueOf(importDirPath.toAbsolutePath()));
 		project.setProperty(
-			"build.css.portal.common.path",
-			String.valueOf(portalCommonPath.toAbsolutePath()));
+			"build.css.output.dir.name", String.valueOf(outputDirName));
 		project.setProperty("build.css.precision", String.valueOf(precision));
 		project.setProperty(
 			"build.css.rtl.excluded.path.regexps",
-			StringUtil.merge(rtlExcludedPathRegexps));
+			StringTestUtil.merge(rtlExcludedPathRegexps));
 		project.setProperty(
 			"build.css.sass.compiler.class.name", sassCompilerClassName);
 

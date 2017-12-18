@@ -15,16 +15,18 @@
 package com.liferay.css.builder.internal.util;
 
 import com.liferay.css.builder.CSSBuilder;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.File;
 import java.io.IOException;
 
 import java.net.URL;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystem;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.PathMatcher;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
@@ -33,7 +35,8 @@ import java.nio.file.attribute.FileTime;
 import java.security.CodeSource;
 import java.security.ProtectionDomain;
 
-import org.apache.tools.ant.DirectoryScanner;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -69,17 +72,53 @@ public class FileUtil {
 	}
 
 	public static String[] getFilesFromDirectory(
-		String baseDir, String[] includes, String[] excludes) {
+			String baseDir, String[] includes, String[] excludes)
+		throws IOException {
 
-		DirectoryScanner directoryScanner = new DirectoryScanner();
+		final List<String> fileNames = new ArrayList<>();
 
-		directoryScanner.setBasedir(baseDir);
-		directoryScanner.setExcludes(excludes);
-		directoryScanner.setIncludes(includes);
+		final Path baseDirPath = Paths.get(baseDir);
 
-		directoryScanner.scan();
+		FileSystem fileSystem = baseDirPath.getFileSystem();
 
-		return directoryScanner.getIncludedFiles();
+		final List<PathMatcher> includePathMatchers = _getPathMatchers(
+			fileSystem, baseDirPath, includes);
+		final List<PathMatcher> excludePathMatchers = _getPathMatchers(
+			fileSystem, baseDirPath, excludes);
+
+		Files.walkFileTree(
+			baseDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult visitFile(
+					Path path, BasicFileAttributes basicFileAttributes) {
+
+					path = path.toAbsolutePath();
+
+					for (PathMatcher pathMatcher : excludePathMatchers) {
+						if (pathMatcher.matches(path)) {
+							return FileVisitResult.CONTINUE;
+						}
+					}
+
+					for (PathMatcher pathMatcher : includePathMatchers) {
+						if (pathMatcher.matches(path)) {
+							String fileName = String.valueOf(
+								baseDirPath.relativize(path));
+
+							fileNames.add(fileName);
+
+							break;
+						}
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+
+		return fileNames.toArray(new String[0]);
 	}
 
 	public static File getJarFile() throws Exception {
@@ -119,7 +158,45 @@ public class FileUtil {
 
 		Path path = Paths.get(file.toURI());
 
-		Files.write(path, content.getBytes(StringPool.UTF8));
+		Files.write(path, content.getBytes(StandardCharsets.UTF_8));
+	}
+
+	private static void _addPathMatcher(
+		List<PathMatcher> pathMatchers, FileSystem fileSystem, String pattern) {
+
+		if (File.separatorChar == '\\') {
+			pattern = pattern.replace("/", "\\\\");
+		}
+
+		PathMatcher pathMatcher = fileSystem.getPathMatcher("glob:" + pattern);
+
+		pathMatchers.add(pathMatcher);
+	}
+
+	private static List<PathMatcher> _getPathMatchers(
+		FileSystem fileSystem, Path baseDirPath, String... patterns) {
+
+		List<PathMatcher> pathMatchers = new ArrayList<>(patterns.length);
+
+		String patternPrefix = baseDirPath.toAbsolutePath() + File.separator;
+
+		if (File.separatorChar != '/') {
+			patternPrefix = patternPrefix.replace(File.separatorChar, '/');
+		}
+
+		for (String pattern : patterns) {
+			if (pattern.startsWith("**/")) {
+				String absolutePattern = patternPrefix + pattern.substring(3);
+
+				_addPathMatcher(pathMatchers, fileSystem, absolutePattern);
+			}
+
+			String absolutePattern = patternPrefix + pattern;
+
+			_addPathMatcher(pathMatchers, fileSystem, absolutePattern);
+		}
+
+		return pathMatchers;
 	}
 
 }

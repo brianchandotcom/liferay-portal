@@ -29,6 +29,8 @@ String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, local
 
 Map<String, Object> data = new HashMap<String, Object>();
 
+data.put("order", siteNavigationMenuItem.getOrder());
+data.put("parentSiteNavigationMenuItemId", siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 data.put("siteNavigationMenuItemId", siteNavigationMenuItemId);
 data.put("title", title);
 

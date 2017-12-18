@@ -3144,6 +3144,10 @@ to version 2.3.49.
 ## 3.5.69 - 2017-12-19
 
 ### Changed
+- [LPS-76018]: Update the [Liferay Gradle Plugins Javadoc Formatter] dependency
+to version 1.0.20.
+- [LPS-76018]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.26.
 - [LPS-76475]: Update the [Liferay CSS Builder] dependency to version 2.1.0.
 - [LPS-76475]: Update the [Liferay Gradle Plugins CSS Builder] dependency to
 version 2.2.0.

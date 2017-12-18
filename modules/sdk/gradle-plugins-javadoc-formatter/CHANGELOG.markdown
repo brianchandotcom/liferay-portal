@@ -30,6 +30,12 @@
 - [LPS-76018]: Update the [Liferay Javadoc Formatter] dependency to version
 1.0.24.
 
+## 1.0.20 - 2017-12-19
+
+### Changed
+- [LPS-76018]: Update the [Liferay Javadoc Formatter] dependency to version
+1.0.26.
+
 [Liferay Javadoc Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/util/javadoc-formatter
 [LPS-69271]: https://issues.liferay.com/browse/LPS-69271
 [LPS-73855]: https://issues.liferay.com/browse/LPS-73855

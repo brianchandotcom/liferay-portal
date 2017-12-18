@@ -134,12 +134,12 @@ Parse.Simple.Base.Rule.prototype = {
                     if (best.index == 0) { break; }
                 }
             }
-                
+
             var pos = best ? best.index : tail.length;
             if (pos > 0) {
                 this.fallback.apply(node, tail.substring(0, pos), options);
             }
-            
+
             if (!best) { break; }
 
             if (!rule.build) { rule = new this.constructor(rule); }
@@ -170,7 +170,7 @@ Parse.Simple.Base.Rule.prototype = {
             }
             node.appendChild(document.createTextNode(data));
         }
-    }    
+    }
 };
 
 Parse.Simple.Base.Rule.prototype.constructor = Parse.Simple.Base.Rule;
@@ -185,7 +185,7 @@ Parse.Simple.Creole = function(options) {
     rx.interwikiPrefix = '[\\w.]+:';
     rx.interwikiLink = rx.interwikiPrefix + rx.link;
     rx.img = '\\{\\{((?!\\{)[^|}\\n]*(?:}(?!})[^|}\\n]*)*)' +
-             (options && options.strict ? '' : '(?:') + 
+             (options && options.strict ? '' : '(?:') +
              '\\|([^}~\\n]*((}(?!})|~.)[^}~\\n]*)*)' +
              (options && options.strict ? '' : ')?') +
              '}}';
@@ -204,7 +204,7 @@ Parse.Simple.Creole = function(options) {
         hr: { tag: 'hr', regex: /(^|\n)\s*----\s*(\n|$)/ },
 
         br: { tag: 'br', regex: /\\\\/ },
-        
+
         preBlock: { tag: 'pre', capture: 2,
             regex: /(^|\n)\{\{\{\n((.*\n)*?)\}\}\}(\n|$)/,
             replaceRegex: /^ ([ \t]*\}\}\})/gm,
@@ -279,14 +279,14 @@ Parse.Simple.Creole = function(options) {
         namedLink: { regex: '\\[\\[(' + rx.link + ')\\|(' + rx.linkText + ')\\]\\]',
             build: function(node, r, options) {
                 var link = document.createElement('a');
-                
+
                 link.href = options && options.linkFormat
                     ? formatLink(r[1].replace(/~(.)/g, '$1'), options.linkFormat)
                     : r[1].replace(/~(.)/g, '$1');
 link.setAttribute('data-cke-saved-href', link.href);
 
                 this.apply(link, r[2], options);
-                
+
                 node.appendChild(link);
             } },
 
@@ -309,6 +309,7 @@ link.setAttribute('data-cke-saved-href', link.href);
         if (!options) { options = {}; }
         options.isPlainUri = true;
         g.namedUri.build.call(this, node, Array(r[0], r[1], r[1]), options);
+        options.isPlainUri = false;
     };
     g.unnamedLink.build = function(node, r, options) {
         g.namedLink.build.call(this, node, Array(r[0], r[1], r[1]), options);
@@ -316,13 +317,13 @@ link.setAttribute('data-cke-saved-href', link.href);
     g.namedInterwikiLink = { regex: '\\[\\[(' + rx.interwikiLink + ')\\|(' + rx.linkText + ')\\]\\]',
         build: function(node, r, options) {
                 var link = document.createElement('a');
-                
+
                 var m, f;
                 if (options && options.interwiki) {
                 m = r[1].match(/(.*?):(.*)/);
                 f = options.interwiki[m[1]];
             }
-            
+
             if (typeof f == 'undefined') {
                 if (!g.namedLink.apply) {
                     g.namedLink = new this.constructor(g.namedLink);
@@ -331,9 +332,9 @@ link.setAttribute('data-cke-saved-href', link.href);
             }
 
             link.href = formatLink(m[2].replace(/~(.)/g, '$1'), f);
-            
+
             this.apply(link, r[2], options);
-            
+
             node.appendChild(link);
         }
     };

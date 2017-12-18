@@ -42,6 +42,8 @@ public class SybaseDumpTransactionLogTestCallback
 
 		if (_thread != null) {
 			_thread.interrupt();
+
+			_thread.join();
 		}
 	}
 
@@ -78,28 +80,25 @@ public class SybaseDumpTransactionLogTestCallback
 			if (ArrayUtil.contains(sybaseDumps, SybaseDump.METHOD)) {
 				_dumpTransactionLog();
 
-				_thread = new Thread() {
-
-					public void run() {
+				_thread = new Thread(
+					() -> {
 						while (true) {
 							try {
-								_dumpTransactionLog();
-
 								Thread.sleep(10000);
-							}
-							catch (Exception e) {
-								String message = e.getMessage();
 
-								if (!message.contains("sleep interrupted")) {
-									throw new RuntimeException(e);
-								}
+								_dumpTransactionLog();
+							}
+							catch (InterruptedException ie) {
+								break;
+							}
+							catch (SQLException sqle) {
+								throw new RuntimeException(sqle);
 							}
 						}
-					};
+					},
+					"Sybase-dumpTransactionLog-thread");
 
-				};
-
-				_thread.setName("Sybase-dumpTransactionLog-thread");
+				_thread.setDaemon(true);
 
 				_thread.start();
 			}

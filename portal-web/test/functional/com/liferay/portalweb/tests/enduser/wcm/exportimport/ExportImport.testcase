@@ -624,7 +624,7 @@
 		</execute>
 
 		<execute macro="Page#changeCurrentTheme">
-			<var name="themeName" value="Standard" />
+			<var name="themeName" value="User Profile" />
 		</execute>
 
 		<execute macro="LAR#configureExportSiteCP">
@@ -669,7 +669,7 @@
 
 		<execute macro="Page#viewCurrentTheme">
 			<var name="page" value="Public Pages" />
-			<var name="themeName" value="Standard" />
+			<var name="themeName" value="User Profile" />
 		</execute>
 	</command>
 

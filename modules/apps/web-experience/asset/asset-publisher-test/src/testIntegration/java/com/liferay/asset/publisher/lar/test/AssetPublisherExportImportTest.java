@@ -73,11 +73,9 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.test.ServiceTestUtil;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 
 import java.io.Serializable;
 
@@ -90,10 +88,8 @@ import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Ignore;
 import org.junit.Rule;
@@ -120,21 +116,6 @@ public class AssetPublisherExportImportTest
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(
-			AssetPublisherHelper.class.getName());
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
-
 	@Override
 	public String getPortletId() throws Exception {
 		return PortletIdCodec.encode(
@@ -149,7 +130,6 @@ public class AssetPublisherExportImportTest
 
 		super.setUp();
 
-		_assetPublisherHelper = _serviceTracker.getService();
 		_permissionChecker = PermissionCheckerFactoryUtil.create(
 			TestPropsValues.getUser());
 	}
@@ -1278,10 +1258,9 @@ public class AssetPublisherExportImportTest
 		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(assetVocabulary);
 	}
 
-	private static ServiceTracker<AssetPublisherHelper, AssetPublisherHelper>
-		_serviceTracker;
-
+	@Inject
 	private AssetPublisherHelper _assetPublisherHelper;
+
 	private PermissionChecker _permissionChecker;
 
 }

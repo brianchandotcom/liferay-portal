@@ -48,11 +48,9 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.test.randomizerbumpers.TikaSafeRandomizerBumper;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceTracker;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.model.TrashEntry;
 import com.liferay.trash.service.TrashEntryLocalServiceUtil;
@@ -66,10 +64,8 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -90,24 +86,8 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
 
-	@BeforeClass
-	public static void setUpClass() {
-		Registry registry = RegistryUtil.getRegistry();
-
-		_serviceTracker = registry.trackServices(TrashHelper.class.getName());
-
-		_serviceTracker.open();
-	}
-
-	@AfterClass
-	public static void tearDownClass() {
-		_serviceTracker.close();
-	}
-
 	@Before
 	public void setUp() throws Exception {
-		_trashHelper = _serviceTracker.getService();
-
 		deleteTrashEntries();
 	}
 
@@ -391,14 +371,13 @@ public class TrashEntryLocalServiceCheckEntriesTest {
 
 	private static final int _NOT_EXPIRED_TRASH_ENTRIES_COUNT = 4;
 
-	private static ServiceTracker<TrashHelper, TrashHelper> _serviceTracker;
-
 	@DeleteAfterTestRun
 	private final List<Company> _companies = new ArrayList<>();
 
 	@DeleteAfterTestRun
 	private final List<Group> _groups = new ArrayList<>();
 
+	@Inject
 	private TrashHelper _trashHelper;
 
 }

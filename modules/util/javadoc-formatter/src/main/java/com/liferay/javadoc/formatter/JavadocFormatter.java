@@ -44,6 +44,7 @@ import com.thoughtworks.qdox.model.JavaMethod;
 import com.thoughtworks.qdox.model.JavaModel;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.JavaType;
+import com.thoughtworks.qdox.model.JavaTypeVariable;
 import com.thoughtworks.qdox.model.expression.AnnotationValue;
 
 import java.io.BufferedReader;
@@ -315,6 +316,8 @@ public class JavadocFormatter {
 			_addDocletElements(parentElement, javaClass, "author");
 		}
 
+		_addParamElements(
+			parentElement, javaClass, javaClass.getTagsByName("param"));
 		_addDocletElements(parentElement, javaClass, "version");
 		_addDocletElements(parentElement, javaClass, "see");
 		_addDocletElements(parentElement, javaClass, "since");
@@ -841,7 +844,10 @@ public class JavadocFormatter {
 		Element paramElement = executableElement.addElement("param");
 
 		Dom4jDocUtil.add(paramElement, "name", parameterName);
-		Dom4jDocUtil.add(paramElement, "type", parameterValue);
+
+		if (parameterValue != null) {
+			Dom4jDocUtil.add(paramElement, "type", parameterValue);
+		}
 
 		if (value != null) {
 			value = value.substring(parameterName.length());
@@ -857,6 +863,19 @@ public class JavadocFormatter {
 		Element commentElement = paramElement.addElement("comment");
 
 		commentElement.addCDATA(value);
+	}
+
+	private void _addParamElements(
+			Element classElement, JavaClass javaClass,
+			List<DocletTag> paramDocletTags)
+		throws Exception {
+
+		for (JavaTypeVariable<?> typeParameter :
+				javaClass.getTypeParameters()) {
+
+			_addParamElement(
+				classElement, typeParameter.getName(), null, paramDocletTags);
+		}
 	}
 
 	private void _addParamElements(
@@ -1432,8 +1451,8 @@ public class JavadocFormatter {
 		String docletTags = _addDocletTags(
 			rootElement,
 			new String[] {
-				"author", "version", "see", "since", "serial", "deprecated",
-				"review"
+				"author", "version", "param", "see", "since", "serial",
+				"deprecated", "review"
 			},
 			indent + " * ", _hasPublicModifier(javaClass));
 

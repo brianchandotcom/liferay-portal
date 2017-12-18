@@ -37,8 +37,11 @@ import java.util.Objects;
  *
  * @author Brian Wing Shun Chan
  * @see MBDiscussion
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBDiscussionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBDiscussionWrapper implements MBDiscussion,
 	ModelWrapper<MBDiscussion> {

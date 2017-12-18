@@ -29,8 +29,11 @@ import com.liferay.message.boards.kernel.service.MBDiscussionLocalServiceUtil;
  * @author Brian Wing Shun Chan
  * @see MBDiscussionImpl
  * @see MBDiscussion
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBDiscussionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public abstract class MBDiscussionBaseImpl extends MBDiscussionModelImpl
 	implements MBDiscussion {

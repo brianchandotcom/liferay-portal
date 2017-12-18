@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.service.persistence.BasePersistence;
  * @author Brian Wing Shun Chan
  * @see com.liferay.portlet.messageboards.service.persistence.impl.MBDiscussionPersistenceImpl
  * @see MBDiscussionUtil
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.model.impl.MBDiscussionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public interface MBDiscussionPersistence extends BasePersistence<MBDiscussion> {
 	/*

@@ -219,6 +219,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.compareTo(commerceOrder);
 	}
 
+	@Override
+	public CommerceAddress getBillingAddress()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getBillingAddress();
+	}
+
 	/**
 	* Returns the billing address ID of this commerce order.
 	*

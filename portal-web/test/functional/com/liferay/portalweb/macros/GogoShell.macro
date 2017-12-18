@@ -1,0 +1,46 @@
+<definition>
+	<command name="inputGogoShellListModuleCommand">
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="lb ${moduleJarName}" />
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
+	<command name="inputGogoShellStartModuleCommand">
+		<execute macro="GogoShell#inputGogoShellListModuleCommand">
+			<var name="moduleJarName" value="${moduleJarName}" />
+		</execute>
+
+		<var method="selenium#getText(GogoShell#OUTPUT_FIELD)" name="GogoOutput" />
+
+		<var method="StringUtil#stripBetween('${GogoOutput}', 'START', 'Name   ')" name="partialGogoOutput" />
+
+		<var method="StringUtil#extractFirst('${partialGogoOutput}', '|Resolved')" name="moduleId" />
+
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="start ${moduleId}" />
+
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
+	<command name="inputGogoShellStopModuleCommand">
+		<execute macro="GogoShell#inputGogoShellListModuleCommand">
+			<var name="moduleJarName" value="${moduleJarName}" />
+		</execute>
+
+		<var method="selenium#getText(GogoShell#OUTPUT_FIELD)" name="GogoOutput" />
+
+		<var method="StringUtil#stripBetween('${GogoOutput}', 'START', 'Name   ')" name="partialGogoOutput" />
+
+		<var method="StringUtil#extractFirst('${partialGogoOutput}', '|Active')" name="moduleId" />
+
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="stop ${moduleId}" />
+
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
+	<command name="viewModuleStatus">
+		<execute macro="GogoShell#inputGogoShellListModuleCommand" >
+			<var name="moduleJarName" value="${moduleJarName}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="GogoShell#OUTPUT_FIELD" value1="${moduleStatus}" />
+	</command>
+</definition>

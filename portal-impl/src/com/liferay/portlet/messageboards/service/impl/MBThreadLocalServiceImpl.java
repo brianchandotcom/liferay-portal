@@ -498,7 +498,11 @@ public class MBThreadLocalServiceImpl extends MBThreadLocalServiceBaseImpl {
 			return;
 		}
 
-		MBThread thread = mbThreadPersistence.findByPrimaryKey(threadId);
+		MBThread thread = mbThreadPersistence.fetchByPrimaryKey(threadId);
+
+		if (thread == null) {
+			return;
+		}
 
 		thread.setModifiedDate(thread.getModifiedDate());
 		thread.setViewCount(thread.getViewCount() + increment);

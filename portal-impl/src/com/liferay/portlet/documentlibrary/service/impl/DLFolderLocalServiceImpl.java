@@ -1084,9 +1084,11 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 			return;
 		}
 
-		DLFolder dlFolder = dlFolderPersistence.findByPrimaryKey(folderId);
+		DLFolder dlFolder = dlFolderPersistence.fetchByPrimaryKey(folderId);
 
-		if (lastPostDate.before(dlFolder.getLastPostDate())) {
+		if ((dlFolder == null) ||
+			lastPostDate.before(dlFolder.getLastPostDate())) {
+
 			return;
 		}
 

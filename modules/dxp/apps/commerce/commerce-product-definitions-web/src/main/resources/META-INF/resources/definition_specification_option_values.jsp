@@ -167,12 +167,12 @@ PortletURL portletURL = cpDefinitionSpecificationOptionValueDisplayContext.getPo
 </aui:form>
 
 <liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification-option-value") %>' url="javascript:;" />
+	<liferay-frontend:add-menu-item id="addCommerceProductDefinitionSpecificationOptionValue" title='<%= LanguageUtil.get(request, "add-specification-value") %>' url="javascript:;" />
 </liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteCPDefinitionSpecificationOptionValues() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-specification-option-values") %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-specification-values") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

@@ -185,7 +185,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "catalog"));
 
 <aui:script>
 	function <portlet:namespace />deleteCPSpecificationOptions() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-specification-options") %>')) {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-specifications") %>')) {
 			var form = AUI.$(document.<portlet:namespace />fm);
 
 			form.attr('method', 'post');

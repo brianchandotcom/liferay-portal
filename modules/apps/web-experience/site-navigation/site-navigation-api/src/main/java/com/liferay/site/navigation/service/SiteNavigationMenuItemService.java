@@ -79,7 +79,7 @@ public interface SiteNavigationMenuItemService extends BaseService {
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		ServiceContext serviceContext) throws PortalException;
+		int order, ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,

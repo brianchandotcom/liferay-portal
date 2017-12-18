@@ -130,12 +130,13 @@ public class SiteNavigationMenuItemServiceSoap {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItemSoap updateSiteNavigationMenuItem(
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
+		int order,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.site.navigation.model.SiteNavigationMenuItem returnValue =
 				SiteNavigationMenuItemServiceUtil.updateSiteNavigationMenuItem(siteNavigationMenuId,
-					parentSiteNavigationMenuItemId, serviceContext);
+					parentSiteNavigationMenuItemId, order, serviceContext);
 
 			return com.liferay.site.navigation.model.SiteNavigationMenuItemSoap.toSoapModel(returnValue);
 		}

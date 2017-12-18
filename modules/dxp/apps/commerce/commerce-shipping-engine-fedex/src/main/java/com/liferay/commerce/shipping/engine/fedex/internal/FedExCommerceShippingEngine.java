@@ -64,6 +64,12 @@ import org.osgi.service.component.annotations.Reference;
 public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Override
+	public String getCommerceShippingOptionLabel(String name, Locale locale) {
+		return FedExCommerceShippingOptionHelper.getCommerceShippingOptionLabel(
+			name, _getResourceBundle(locale));
+	}
+
+	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
 			CommerceCart commerceCart, Locale locale)
 		throws CommerceShippingEngineException {

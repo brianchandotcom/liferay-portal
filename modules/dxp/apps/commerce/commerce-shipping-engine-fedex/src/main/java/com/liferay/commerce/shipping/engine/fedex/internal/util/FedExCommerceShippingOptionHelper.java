@@ -99,6 +99,14 @@ import org.apache.axis.types.PositiveInteger;
  */
 public class FedExCommerceShippingOptionHelper {
 
+	public static String getCommerceShippingOptionLabel(
+		String name, ResourceBundle resourceBundle) {
+
+		return ResourceBundleUtil.getString(
+			resourceBundle,
+			FedExCommerceShippingEngineConstants.getServiceTypeLabel(name));
+	}
+
 	public FedExCommerceShippingOptionHelper(
 			CommerceCart commerceCart,
 			CommerceCurrencyLocalService commerceCurrencyLocalService,
@@ -203,9 +211,8 @@ public class FedExCommerceShippingOptionHelper {
 				continue;
 			}
 
-			String label = ResourceBundleUtil.getString(
-				_resourceBundle,
-				FedExCommerceShippingEngineConstants.getServiceTypeLabel(name));
+			String label = getCommerceShippingOptionLabel(
+				name, _resourceBundle);
 			double amount = MathUtil.sum(amounts.toArray(new Double[0]));
 
 			commerceShippingOptions.add(

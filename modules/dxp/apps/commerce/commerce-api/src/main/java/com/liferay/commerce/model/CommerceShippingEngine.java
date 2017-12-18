@@ -32,6 +32,8 @@ import javax.portlet.RenderResponse;
 @ProviderType
 public interface CommerceShippingEngine {
 
+	public String getCommerceShippingOptionLabel(String name, Locale locale);
+
 	public List<CommerceShippingOption> getCommerceShippingOptions(
 			CommerceCart commerceCart, Locale locale)
 		throws CommerceShippingEngineException;

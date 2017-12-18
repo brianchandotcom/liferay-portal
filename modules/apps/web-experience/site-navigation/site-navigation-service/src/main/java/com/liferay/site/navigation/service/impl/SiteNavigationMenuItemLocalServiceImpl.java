@@ -14,15 +14,19 @@
 
 package com.liferay.site.navigation.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuItemLocalServiceBaseImpl;
+import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderComparator;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Pavel Savinov
@@ -56,6 +60,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		siteNavigationMenuItem.setType(type);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 
+		int childCount =
+			siteNavigationMenuItemPersistence.
+				countByParentSiteNavigationMenuItemId(
+					parentSiteNavigationMenuItemId);
+
+		siteNavigationMenuItem.setOrder(childCount);
+
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
 
 		return siteNavigationMenuItem;
@@ -84,7 +95,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		return siteNavigationMenuItemPersistence.
 			findByParentSiteNavigationMenuItemId(
-				parentSiteNavigationMenuItemId);
+				parentSiteNavigationMenuItemId, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, new SiteNavigationMenuItemOrderComparator());
 	}
 
 	@Override
@@ -100,7 +112,71 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId) {
 
 		return siteNavigationMenuItemPersistence.findByS_P(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId);
+			siteNavigationMenuId, parentSiteNavigationMenuItemId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			new SiteNavigationMenuItemOrderComparator());
+	}
+
+	@Override
+	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
+			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+			int order, ServiceContext serviceContext)
+		throws PortalException {
+
+		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
+
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			getSiteNavigationMenuItem(siteNavigationMenuItemId);
+
+		long oldParentSiteNavigationMenuItemId =
+			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
+
+		List<SiteNavigationMenuItem> children = getSiteNavigationMenuItems(
+			siteNavigationMenuItem.getSiteNavigationMenuId(),
+			parentSiteNavigationMenuItemId);
+
+		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(
+			parentSiteNavigationMenuItemId);
+		siteNavigationMenuItem.setOrder(order);
+
+		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
+
+		Stream<SiteNavigationMenuItem> stream = children.stream();
+
+		children = stream.filter(
+			item -> item.getSiteNavigationMenuItemId() !=
+				siteNavigationMenuItemId).collect(Collectors.toList());
+
+		int index = 0;
+
+		for (SiteNavigationMenuItem childSiteNavigationMenuItem : children) {
+			childSiteNavigationMenuItem.setOrder(
+				index == order ? ++index : index);
+
+			siteNavigationMenuItemPersistence.update(
+				childSiteNavigationMenuItem);
+
+			index++;
+		}
+
+		if (parentSiteNavigationMenuItemId !=
+				oldParentSiteNavigationMenuItemId) {
+
+			List<SiteNavigationMenuItem> oldChildren =
+				getSiteNavigationMenuItems(
+					siteNavigationMenuItem.getSiteNavigationMenuId(),
+					oldParentSiteNavigationMenuItemId);
+
+			index = 0;
+
+			for (SiteNavigationMenuItem child : oldChildren) {
+				child.setOrder(index++);
+
+				siteNavigationMenuItemPersistence.update(child);
+			}
+		}
+
+		return siteNavigationMenuItem;
 	}
 
 	@Override

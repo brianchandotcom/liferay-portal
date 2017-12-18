@@ -61,6 +61,8 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 		long parentSiteNavigationMenuItemId = ParamUtil.getLong(
 			actionRequest, "parentSiteNavigationMenuItemId");
 
+		int order = ParamUtil.getInteger(actionRequest, "order");
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
@@ -68,7 +70,7 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
 					siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-					serviceContext);
+					order, serviceContext);
 
 			String redirect = _getRedirect(
 				actionRequest, siteNavigationMenuItem);

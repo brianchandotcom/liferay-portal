@@ -18,16 +18,15 @@
 			FROM
 				CommerceCountry
 			WHERE
-				(
-					CommerceCountry.commerceCountryId IN
-						(
-							SELECT
-								commerceCountryId
-							FROM
-								CommerceWarehouse
-							WHERE
-								CommerceWarehouse.groupId = ?
-					))
+				CommerceCountry.commerceCountryId IN
+					(
+						SELECT
+							commerceCountryId
+						FROM
+							CommerceWarehouse
+						WHERE
+							CommerceWarehouse.groupId = ?
+					)
 			ORDER BY
 				CommerceCountry.priority
 		]]>
@@ -88,17 +87,16 @@
 			FROM
 				CommerceWarehouse
 			WHERE
-				(
-					CommerceWarehouse.commerceWarehouseId IN
-						(
-							SELECT
-								commerceWarehouseId
-							FROM
-								CommerceWarehouseItem
-							WHERE
-								(CommerceWarehouseItem.CPInstanceId = ?) AND
-								(CommerceWarehouseItem.quantity >= ?)
-					))
+				CommerceWarehouse.commerceWarehouseId IN
+					(
+						SELECT
+							commerceWarehouseId
+						FROM
+							CommerceWarehouseItem
+						WHERE
+							(CommerceWarehouseItem.CPInstanceId = ?) AND
+							(CommerceWarehouseItem.quantity >= ?)
+					)
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByG_N_D_S_C_Z_C">

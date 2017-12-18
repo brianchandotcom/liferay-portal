@@ -19,7 +19,9 @@
 				COUNT(DISTINCT CPDefinition.CPDefinitionId) AS COUNT_VALUE
 			FROM
 				CPDefinition
-			LEFT JOIN CPDefinitionLocalization ON
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
 				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
 				(CPDefinitionLocalization.languageId = ?)
 			WHERE
@@ -34,7 +36,9 @@
 				CPDefinition.*
 			FROM
 				CPDefinition
-			LEFT JOIN CPDefinitionLocalization ON
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
 				CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId
 			WHERE
 				(CPDefinition.expirationDate < ?)  AND
@@ -48,7 +52,9 @@
 				CPDefinition.*
 			FROM
 				CPDefinition
-			LEFT JOIN CPDefinitionLocalization ON
+			LEFT JOIN
+				CPDefinitionLocalization
+			ON
 				(CPDefinition.CPDefinitionId = CPDefinitionLocalization.CPDefinitionId) AND
 				(CPDefinitionLocalization.languageId = ?)
 			WHERE

@@ -82,17 +82,16 @@ public class CPInstanceOptionsValuesDataProvider implements DDMDataProvider {
 			 * Extract the filters and the outputs based on fields that were
 			 * filled or not in the data provider request
 			 * Ex:
-			 *	If we have size and color as product options,
-			 *	In this case, we will have four possible states as follow:
-			 *	1 - Size and Color both empty -> It won't do any query and it
-			 *		will return an empty result.
-			 *	2 - Size filled and Color empty -> It'll assume that size will
-			 *		compose the query filter and color will be the output. So,
-			 *		it will return all colors for the specified size
-			 *	3 - Size empty and Color filled - the same approach that item 2
-			 *	4 - Size and Color both filled - the same approach that item 1
+			 * If we have size and color as product options,
+			 * In this case, we will have four possible states as follow:
+			 * 1 - Size and Color both empty -> It won't do any query and it
+			 * 	will return an empty result.
+			 * 2 - Size filled and Color empty -> It'll assume that size will
+			 * 	compose the query filter and color will be the output. So,
+			 * 	it will return all colors for the specified size
+			 * 3 - Size empty and Color filled - the same approach that item 2
+			 * 4 - Size and Color both filled - the same approach that item 1
 			 */
-
 			Map<String, String> parameters =
 				ddmDataProviderRequest.getParameters();
 

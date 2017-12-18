@@ -538,14 +538,13 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		 * The action is a call function. Example:
 		 *
 		 *call(
-		 *	'getCPInstanceOptionsValues',
-		 *	 concat(
-		 *		'cpDefinitionId=56698', ';','56703=', getValue('56703'), ';',
-		 *		'56706=', getValue('56706')),
-		 *	'56703=color;56706=size'
+		 * 'getCPInstanceOptionsValues',
+		 *  concat(
+		 * 	'cpDefinitionId=56698', ';','56703=', getValue('56703'), ';',
+		 * 	'56706=', getValue('56706')),
+		 * '56703=color;56706=size'
 		 *)
 		 */
-
 		String callFunctionStatement =
 			"call('getCPInstanceOptionsValues', concat(%s), '%s')";
 
@@ -563,7 +562,6 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		 * Ex: not(isEmpty(getValue('{sizeFieldName}')))
 		 *  	OR not(isEmpty(getValue('{colorFieldName}')))
 		 */
-
 		String notEmptyStatement = "not(isEmpty(getValue('%s')))";
 
 		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();

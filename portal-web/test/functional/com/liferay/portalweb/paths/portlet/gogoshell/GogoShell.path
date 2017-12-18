@@ -1,0 +1,29 @@
+<html>
+<head>
+<title>GogoShell</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">GogoShell</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>COMMAND_FIELD</td>
+	<td>//div/input</td>
+	<td></td>
+</tr>
+<tr>
+	<td>EXECUTE_BUTTON</td>
+	<td>//div[2]/button</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OUTPUT_FIELD</td>
+	<td>//pre</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

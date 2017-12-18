@@ -438,7 +438,9 @@ public class ValidatorTest {
 			"test-@liferay.com", "test/@liferay.com", "test=@liferay.com",
 			"test?@liferay.com", "test^@liferay.com", "test_@liferay.com",
 			"test`@liferay.com", "test{@liferay.com", "test|@liferay.com",
-			"test{@liferay.com", "test~@liferay.com", "test@liferay"
+			"test{@liferay.com", "test~@liferay.com", "test@liferay",
+			"test@liferay-abc.com", "test@liferay-abc-def.com",
+			"test@liferay_abc.com", "test@liferay.abc.com"
 		};
 
 		testValidEmailAddreses(validEmailAddresses, true);

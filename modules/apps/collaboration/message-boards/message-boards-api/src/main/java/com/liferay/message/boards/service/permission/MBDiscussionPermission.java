@@ -17,6 +17,7 @@ package com.liferay.message.boards.service.permission;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.service.MBBanLocalService;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -78,6 +79,10 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, long companyId, long groupId,
 		String className, long classPK, String actionId) {
+
+		if (_mbBanLocalService.hasBan(groupId, permissionChecker.getUserId())) {
+			return false;
+		}
 
 		MBDiscussion mbDiscussion = _mbDiscussionLocalService.fetchDiscussion(
 			className, classPK);
@@ -173,6 +178,11 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMBBanLocalService(MBBanLocalService mbBanLocalService) {
+		_mbBanLocalService = mbBanLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMBDiscussionLocalService(
 		MBDiscussionLocalService mbDiscussionLocalService) {
 
@@ -186,7 +196,8 @@ public class MBDiscussionPermission implements BaseModelPermissionChecker {
 		_mbMessageLocalService = mbMessageLocalService;
 	}
 
-	private MBDiscussionLocalService _mbDiscussionLocalService;
-	private MBMessageLocalService _mbMessageLocalService;
+	private static MBBanLocalService _mbBanLocalService;
+	private static MBDiscussionLocalService _mbDiscussionLocalService;
+	private static MBMessageLocalService _mbMessageLocalService;
 
 }

@@ -46,6 +46,7 @@ public class SiteNavigationMenuItemSoap implements Serializable {
 		soapModel.setParentSiteNavigationMenuItemId(model.getParentSiteNavigationMenuItemId());
 		soapModel.setType(model.getType());
 		soapModel.setTypeSettings(model.getTypeSettings());
+		soapModel.setOrder(model.getOrder());
 
 		return soapModel;
 	}
@@ -190,6 +191,14 @@ public class SiteNavigationMenuItemSoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
+	public int getOrder() {
+		return _order;
+	}
+
+	public void setOrder(int order) {
+		_order = order;
+	}
+
 	private long _siteNavigationMenuItemId;
 	private long _groupId;
 	private long _companyId;
@@ -201,4 +210,5 @@ public class SiteNavigationMenuItemSoap implements Serializable {
 	private long _parentSiteNavigationMenuItemId;
 	private String _type;
 	private String _typeSettings;
+	private int _order;
 }

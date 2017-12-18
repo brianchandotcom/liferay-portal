@@ -184,7 +184,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-		long parentSiteNavigationMenuItemId,
+		long parentSiteNavigationMenuItemId, int order,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -194,7 +194,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					siteNavigationMenuId, parentSiteNavigationMenuItemId,
-					serviceContext);
+					order, serviceContext);
 
 			Object returnObj = null;
 
@@ -269,7 +269,7 @@ public class SiteNavigationMenuItemServiceHttp {
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuItemParameterTypes4 =
 		new Class[] {
-			long.class, long.class,
+			long.class, long.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuItemParameterTypes5 =

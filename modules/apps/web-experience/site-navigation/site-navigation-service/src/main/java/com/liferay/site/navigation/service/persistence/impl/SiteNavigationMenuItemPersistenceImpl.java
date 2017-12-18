@@ -1732,6 +1732,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("type", "type_");
+			dbColumnNames.put("order", "order_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2116,6 +2117,7 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 		siteNavigationMenuItemImpl.setType(siteNavigationMenuItem.getType());
 		siteNavigationMenuItemImpl.setTypeSettings(siteNavigationMenuItem.getTypeSettings());
+		siteNavigationMenuItemImpl.setOrder(siteNavigationMenuItem.getOrder());
 
 		return siteNavigationMenuItemImpl;
 	}
@@ -2542,6 +2544,6 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No SiteNavigationMenuItem exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(SiteNavigationMenuItemPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"type"
+				"type", "order"
 			});
 }

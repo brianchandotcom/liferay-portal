@@ -27,5 +27,6 @@
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="order" type="int" />
 	</model>
 </model-hints>

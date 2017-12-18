@@ -65,7 +65,7 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{siteNavigationMenuItemId=");
 		sb.append(siteNavigationMenuItemId);
@@ -89,6 +89,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		sb.append(type);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
+		sb.append(", order=");
+		sb.append(order);
 		sb.append("}");
 
 		return sb.toString();
@@ -141,6 +143,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 			siteNavigationMenuItemImpl.setTypeSettings(typeSettings);
 		}
 
+		siteNavigationMenuItemImpl.setOrder(order);
+
 		siteNavigationMenuItemImpl.resetOriginalValues();
 
 		return siteNavigationMenuItemImpl;
@@ -164,6 +168,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		parentSiteNavigationMenuItemId = objectInput.readLong();
 		type = objectInput.readUTF();
 		typeSettings = objectInput.readUTF();
+
+		order = objectInput.readInt();
 	}
 
 	@Override
@@ -204,6 +210,8 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		else {
 			objectOutput.writeUTF(typeSettings);
 		}
+
+		objectOutput.writeInt(order);
 	}
 
 	public long siteNavigationMenuItemId;
@@ -217,4 +225,5 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 	public long parentSiteNavigationMenuItemId;
 	public String type;
 	public String typeSettings;
+	public int order;
 }

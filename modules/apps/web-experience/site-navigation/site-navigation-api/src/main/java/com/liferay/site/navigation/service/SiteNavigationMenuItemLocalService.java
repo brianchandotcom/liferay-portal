@@ -244,6 +244,10 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getSiteNavigationMenuItemsCount();
 
+	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
+		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+		int order, ServiceContext serviceContext) throws PortalException;
+
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(long userId,
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
 		ServiceContext serviceContext) throws PortalException;

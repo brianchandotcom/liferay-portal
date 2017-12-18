@@ -294,6 +294,16 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
+		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+		int order,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(siteNavigationMenuItemId,
+			parentSiteNavigationMenuItemId, order, serviceContext);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long userId, long siteNavigationMenuItemId,
 		long parentSiteNavigationMenuItemId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

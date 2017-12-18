@@ -278,6 +278,16 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
+		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+		int order,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSiteNavigationMenuItem(siteNavigationMenuItemId,
+			parentSiteNavigationMenuItemId, order, serviceContext);
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long userId, long siteNavigationMenuItemId,
 		long parentSiteNavigationMenuItemId,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)

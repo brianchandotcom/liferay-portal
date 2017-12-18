@@ -266,7 +266,6 @@
 		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 		<reference entity="MBCategory" package-path="com.liferay.portlet.messageboards" />
-		<reference entity="MBDiscussion" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
 		<reference entity="RatingsStats" package-path="com.liferay.portlet.ratings" />
 	</entity>

@@ -15,7 +15,6 @@
 		<description message="Ensures that a fix pack can be reverted." />
 
 		<property name="skip.install-patch" value="true" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="SignOut#signOut" />
 

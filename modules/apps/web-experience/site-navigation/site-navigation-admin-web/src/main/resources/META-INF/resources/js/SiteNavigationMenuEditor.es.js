@@ -69,7 +69,11 @@ class SiteNavigationMenuEditor extends State {
 		const source = data.source;
 		const target = data.target;
 
-		if (!target || target == source || source.parentNode.contains(target)) {
+		if (
+			!target ||
+			target === source ||
+			source.parentNode.contains(target)
+		) {
 			return;
 		}
 
@@ -116,7 +120,7 @@ class SiteNavigationMenuEditor extends State {
 			)
 		);
 		const order = children.reduce((acc, value, idx) => {
-			return value == source.parentNode ? idx : acc;
+			return value === source.parentNode ? idx : acc;
 		}, 0);
 
 		source.setAttribute('drag-order', order);

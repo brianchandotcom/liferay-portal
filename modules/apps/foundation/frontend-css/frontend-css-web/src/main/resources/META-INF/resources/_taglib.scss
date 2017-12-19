@@ -1,12 +1,12 @@
 @import "taglib/add_menu";
 @import "taglib/alert";
-@import "taglib/asset_metadata";
 @import "taglib/app_view_common";
 @import "taglib/app_view_entry";
 @import "taglib/app_view_search_entry";
 @import "taglib/app_view_toolbar";
 @import "taglib/asset_categories_summary";
 @import "taglib/asset_links";
+@import "taglib/asset_metadata";
 @import "taglib/calendar";
 @import "taglib/captcha";
 @import "taglib/categorization_filter";
@@ -17,6 +17,7 @@
 @import "taglib/discussion";
 @import "taglib/drop_here_info";
 @import "taglib/empty_result_message";
+@import "taglib/field_wrapper";
 @import "taglib/flags";
 @import "taglib/form_navigator";
 @import "taglib/header";
@@ -27,10 +28,9 @@
 @import "taglib/input_date";
 @import "taglib/input_localized";
 @import "taglib/input_move_boxes";
+@import "taglib/input_repeat";
 @import "taglib/input_search";
 @import "taglib/input_time";
-@import "taglib/field_wrapper";
-@import "taglib/input_repeat";
 @import "taglib/logo_selector";
 @import "taglib/management_bar";
 @import "taglib/map";

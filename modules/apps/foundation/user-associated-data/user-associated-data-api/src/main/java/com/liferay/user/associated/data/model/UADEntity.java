@@ -14,8 +14,6 @@
 
 package com.liferay.user.associated.data.model;
 
-import java.net.URL;
-
 import java.util.List;
 
 /**
@@ -25,7 +23,7 @@ public interface UADEntity {
 
 	public List<UADEntity> getChildUADEntities();
 
-	public URL getEditURL();
+	public String getEditURL();
 
 	public String getUADEntityId();
 

@@ -78,6 +78,18 @@ public abstract class LineBreakCheck extends BaseFileCheck {
 						lineCount);
 				}
 			}
+
+			x = line.indexOf(" -> ");
+
+			if ((x != -1) && (getLevel(line, "{", "}") == 0)) {
+				int y = line.indexOf(CharPool.QUOTE);
+
+				if ((y == -1) || (x < y)) {
+					addMessage(
+						fileName, "There should be a line break after '->'",
+						lineCount);
+				}
+			}
 		}
 	}
 

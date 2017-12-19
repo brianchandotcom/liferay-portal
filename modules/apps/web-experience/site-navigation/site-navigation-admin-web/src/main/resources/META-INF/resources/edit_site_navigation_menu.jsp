@@ -194,7 +194,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 						'<portlet:namespace />',
 						{
 							redirect: '<%= currentURL %>',
-							siteNavigationMenuItemId: currentTarget.attr('data-siteNavigationMenuItemId')
+							siteNavigationMenuItemId: currentTarget.attr('data-site-navigation-menu-item-id')
 						}
 					);
 

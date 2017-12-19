@@ -76,7 +76,7 @@ class SiteNavigationMenuEditor extends State {
 		const placeholderRegion = position.getRegion(placeholder);
 		const targetRegion = position.getRegion(target);
 
-		if (!target.dataset.sitenavigationmenuitemid) {
+		if (!target.dataset.siteNavigationMenuItemId) {
 			return;
 		}
 
@@ -86,7 +86,7 @@ class SiteNavigationMenuEditor extends State {
 
 		removeClasses(source.parentNode, 'ml-5');
 
-		let newParentId = target.dataset.parentsitenavigationmenuitemid;
+		let newParentId = target.dataset.parentSiteNavigationMenuItemId;
 
 		if (placeholderRegion.top < targetRegion.top) {
 			target.parentNode.insertBefore(source.parentNode, target);
@@ -103,7 +103,7 @@ class SiteNavigationMenuEditor extends State {
 				target.nextSibling
 			);
 
-			newParentId = target.dataset.sitenavigationmenuitemid;
+			newParentId = target.dataset.siteNavigationMenuItemId;
 
 			addClasses(source.parentNode, 'ml-5');
 		}
@@ -145,12 +145,12 @@ class SiteNavigationMenuEditor extends State {
 	_handleDropItem(data, event) {
 		event.preventDefault();
 
-		if (data.source && data.source.dataset.sitenavigationmenuitemid) {
+		if (data.source && data.source.dataset.siteNavigationMenuItemId) {
 			const formData = new FormData();
 
 			formData.append(
 				`${this.namespace}siteNavigationMenuItemId`,
-				data.source.dataset.sitenavigationmenuitemid
+				data.source.dataset.siteNavigationMenuItemId
 			);
 			formData.append(
 				`${this.namespace}parentSiteNavigationMenuItemId`,

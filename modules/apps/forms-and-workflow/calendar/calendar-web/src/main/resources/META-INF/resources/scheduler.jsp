@@ -221,4 +221,14 @@ String viewCalendarBookingURL = ParamUtil.getString(request, "viewCalendarBookin
 			views: views
 		}
 	);
+
+	var destroySchedulers = function(event) {
+		if (event.portletId === '<%= portletDisplay.getId() %>') {
+			window.<portlet:namespace />scheduler.destroy();
+
+			Liferay.detach('destroyPortlet', destroySchedulers);
+		}
+	};
+
+	Liferay.on('destroyPortlet', destroySchedulers);
 </aui:script>

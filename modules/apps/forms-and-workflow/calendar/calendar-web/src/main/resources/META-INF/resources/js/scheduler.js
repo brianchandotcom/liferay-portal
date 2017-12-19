@@ -159,6 +159,12 @@ AUI.add(
 
 						clearInterval(instance._currentTimeInterval);
 
+						instance.get('views').forEach(
+							function(item) {
+								item.destroy();
+							}
+						);
+
 						Scheduler.superclass.destructor.apply(instance, arguments);
 					},
 

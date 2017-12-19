@@ -5290,7 +5290,7 @@ go]]></replacevalue>
 			<and>
 				<available file="${liferay.home}/osgi/marketplace" />
 				<not>
-					<isset property="deploy.latest.marketplace.app.disabled" />
+					<equals arg1="${deploy.latest.marketplace.app.disabled}" arg2="true" />
 				</not>
 			</and>
 			<then>
@@ -8741,7 +8741,7 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					<and>
 						<equals arg1="${enable.ext.environment}" arg2="true" />
 						<not>
-							<isset property="test.ignore.tomcat.ext.environment" />
+							<equals arg1="${test.ignore.tomcat.ext.environment}" arg2="true" />
 						</not>
 					</and>
 					<then>

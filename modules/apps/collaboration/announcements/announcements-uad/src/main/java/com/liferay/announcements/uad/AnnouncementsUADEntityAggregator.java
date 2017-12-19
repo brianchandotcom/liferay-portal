@@ -14,6 +14,7 @@
 
 package com.liferay.announcements.uad;
 
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.user.associated.data.model.UADEntity;
 import com.liferay.user.associated.data.model.UADEntityAggregator;
 import com.liferay.user.associated.data.model.impl.UADEntityAggregatorImpl;
@@ -28,11 +29,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntity"},
+	property = {
+		"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_UAD_ENTITY
+	},
 	service = UADEntityAggregator.class
 )
-public class AnnouncementsUADEntityAggregator
-	extends UADEntityAggregatorImpl {
+public class AnnouncementsUADEntityAggregator extends UADEntityAggregatorImpl {
 
 	@Override
 	public List<UADEntity> getUADEntities(long userId) {

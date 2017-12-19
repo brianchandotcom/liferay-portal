@@ -48,13 +48,13 @@ public class AnnouncementsUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 
 	@Override
 	protected List<UADEntity> getUADEntities(long userId) {
-		return _announcementsUADEntityAggregatorImpl.getUADEntities(userId);
+		return _announcementsUADEntityAggregator.getUADEntities(userId);
 	}
 
 	@Reference(
 		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_UAD_ENTITY + ")",
 		unbind = "-"
 	)
-	private UADEntityAggregator _announcementsUADEntityAggregatorImpl;
+	private UADEntityAggregator _announcementsUADEntityAggregator;
 
 }

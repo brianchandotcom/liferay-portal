@@ -48,6 +48,10 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 		{
 			"com.liferay.message.boards.kernel.model.MBStatsUser",
 			"com.liferay.message.boards.model.MBStatsUser"
+		},
+		{
+			"com.liferay.message.boards.kernel.model.MBThreadFlag",
+			"com.liferay.message.boards.model.MBThreadFlag"
 		}
 	};
 

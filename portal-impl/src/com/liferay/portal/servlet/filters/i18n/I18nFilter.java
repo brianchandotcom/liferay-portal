@@ -192,7 +192,7 @@ public class I18nFilter extends BasePortalFilter {
 		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
 			WebKeys.VIRTUAL_HOST_LAYOUT_SET);
 
-		if ((layoutSet != null) &&
+		if ((layoutSet != null) && !layoutSet.isPrivateLayout() &&
 			requestURI.startsWith(
 				PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING)) {
 

@@ -154,6 +154,20 @@
 		</execute>
 	</command>
 
+	<command name="ImportOldSchemaVerion" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Site Templates" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="failureExpected" value="true" />
+			<var name="larFileName" value="class-site-template-7.0.lar" />
+			<var name="uploadFrom" value="dependencies" />
+		</execute>
+	</command>
+
 	<command name="PortletPreferencesPersistWithSiteTemplateWhenSamePortletAddedOnSecondPage" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />

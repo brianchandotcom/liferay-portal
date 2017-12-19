@@ -409,7 +409,15 @@
 
 				<execute function="AssertClickNoError" locator1="Button#IMPORT" value1="Import" />
 
-				<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+				<if>
+					<isset var="failureExpected" />
+					<then>
+						<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Failed" />
+					</then>
+					<else>
+						<execute function="AssertTextEquals" locator1="ExportImport#CURRENT_AND_PREVIOUS_STATUS_1" value1="Successful" />
+					</else>
+				</if>
 
 				<execute function="SelectFrame" value1="relative=top" />
 			</else>
@@ -675,6 +683,7 @@
 
 		<execute macro="LAR#_selectImportFile">
 			<var name="cannotImport" value="${cannotImport}" />
+			<var name="failureExpected" value="${failureExpected}" />
 			<var name="importPermissions" value="${importPermissions}" />
 			<var name="larFileName" value="${larFileName}" />
 			<var name="mirrorWithOverwriting" value="${mirrorWithOverwriting}" />

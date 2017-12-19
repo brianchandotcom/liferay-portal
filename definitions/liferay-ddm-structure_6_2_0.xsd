@@ -27,16 +27,16 @@
 	<xs:element name="entry">
 		<xs:complexType>
 			<xs:simpleContent>
-		      <xs:extension base="xs:string">
-		       	<xs:attribute name="name" type="entry-name" />
-		      </xs:extension>
-		    </xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="name" type="entry-name" />
+				</xs:extension>
+			</xs:simpleContent>
 		</xs:complexType>
 	</xs:element>
 	<xs:element name="meta-data">
 		<xs:complexType>
 			<xs:choice>
-				<xs:element ref="entry" maxOccurs="unbounded" />
+				<xs:element maxOccurs="unbounded" ref="entry" />
 			</xs:choice>
 			<xs:attribute name="locale" type="xs:string" use="required" />
 		</xs:complexType>
@@ -44,7 +44,7 @@
 	<xs:element name="root">
 		<xs:complexType>
 			<xs:choice>
-				<xs:element ref="dynamic-element" maxOccurs="unbounded" />
+				<xs:element maxOccurs="unbounded" ref="dynamic-element" />
 			</xs:choice>
 			<xs:attribute name="available-locales" type="xs:string" use="required" />
 			<xs:attribute name="default-locale" type="xs:string" use="required" />
@@ -52,8 +52,8 @@
 	</xs:element>
 	<xs:group name="dynamic-element-group">
 		<xs:sequence>
-			<xs:element ref="dynamic-element" minOccurs="0" maxOccurs="unbounded" />
-			<xs:element ref="meta-data" maxOccurs="unbounded" />
+			<xs:element maxOccurs="unbounded" minOccurs="0" ref="dynamic-element" />
+			<xs:element maxOccurs="unbounded" ref="meta-data" />
 		</xs:sequence>
 	</xs:group>
 	<xs:simpleType name="data-type">

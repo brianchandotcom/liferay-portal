@@ -14,8 +14,6 @@
 
 package com.liferay.user.associated.data.model;
 
-import java.net.URL;
-
 import java.util.List;
 
 /**
@@ -40,7 +38,7 @@ public abstract class BaseUADEntity implements UADEntity {
 	}
 
 	@Override
-	public abstract URL getEditURL();
+	public abstract String getEditURL();
 
 	@Override
 	public String getUADEntityId() {

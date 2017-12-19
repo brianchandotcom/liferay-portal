@@ -17,8 +17,6 @@ package com.liferay.announcements.uad;
 import com.liferay.user.associated.data.model.BaseUADEntity;
 import com.liferay.user.associated.data.model.UADEntity;
 
-import java.net.URL;
-
 import java.util.List;
 
 /**
@@ -34,7 +32,7 @@ public class AnnouncementsUADEntity extends BaseUADEntity {
 	}
 
 	@Override
-	public URL getEditURL() {
+	public String getEditURL() {
 		return null;
 	}
 

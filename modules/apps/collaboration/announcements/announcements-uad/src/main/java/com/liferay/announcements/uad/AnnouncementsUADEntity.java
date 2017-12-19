@@ -14,6 +14,7 @@
 
 package com.liferay.announcements.uad;
 
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.user.associated.data.model.BaseUADEntity;
 
 /**
@@ -21,10 +22,10 @@ import com.liferay.user.associated.data.model.BaseUADEntity;
  */
 public class AnnouncementsUADEntity extends BaseUADEntity {
 
-	public AnnouncementsUADEntity(
-		long userId, String uadEntityId, String uadRegistryKey) {
-
-		super(userId, uadEntityId, uadRegistryKey);
+	public AnnouncementsUADEntity(long userId, String uadEntityId) {
+		super(
+			userId, uadEntityId,
+			AnnouncementsUADConstants.ANNOUNCEMENTS_UAD_ENTITY);
 	}
 
 	@Override

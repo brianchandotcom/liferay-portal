@@ -41,7 +41,7 @@ public class AnnouncementsUADEntityAggregator extends BaseUADEntityAggregator {
 		List<UADEntity> announcementsUADEntities = new ArrayList<>();
 
 		UADEntity announcementsUADEntity = new AnnouncementsUADEntity(
-			0, "testEntityId", AnnouncementsUADEntity.class.getName());
+			0, "testEntityId");
 
 		announcementsUADEntities.add(announcementsUADEntity);
 
@@ -50,9 +50,7 @@ public class AnnouncementsUADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Override
 	public UADEntity getUADEntity(String uadEntityId) {
-		return new AnnouncementsUADEntity(
-			0, uadEntityId,
-			"com.liferay.announcements.uad.AnnouncementsUADEntity");
+		return new AnnouncementsUADEntity(0, uadEntityId);
 	}
 
 }

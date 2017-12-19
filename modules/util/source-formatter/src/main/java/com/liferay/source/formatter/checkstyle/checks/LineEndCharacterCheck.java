@@ -46,7 +46,7 @@ public class LineEndCharacterCheck extends BaseCheck {
 			}
 		}
 
-		if (!_isAtLineEnd(detailAST)) {
+		if (_isAtLineEnd(detailAST)) {
 			log(detailAST.getLineNo(), _MSG_INCORRECT_END_LINE_CHARACTER, "(");
 		}
 	}

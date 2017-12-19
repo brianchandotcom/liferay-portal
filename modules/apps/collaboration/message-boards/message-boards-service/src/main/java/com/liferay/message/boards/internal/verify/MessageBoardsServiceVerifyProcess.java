@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyAuditedModel;
+import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.VerifyUUID;
 
@@ -51,6 +52,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	@Override
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
+		verifyGroupedModels();
 		verifyStatisticsForCategories();
 		verifyStatisticsForThreads();
 		verifyAssetsForMessages();
@@ -158,6 +160,14 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		}
 	}
 
+	protected void verifyGroupedModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyGroupedModel.verify(
+				new MBDiscussionVerifiableModel(),
+				new MBThreadFlagVerifiableModel());
+		}
+	}
+
 	protected void verifyStatisticsForCategories() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			if (_log.isDebugEnabled()) {
@@ -236,5 +246,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 
 	private final VerifyAuditedModel _verifyAuditedModel =
 		new VerifyAuditedModel();
+	private final VerifyGroupedModel _verifyGroupedModel =
+		new VerifyGroupedModel();
 
 }

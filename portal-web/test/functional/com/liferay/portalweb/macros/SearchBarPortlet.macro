@@ -26,9 +26,51 @@
 		<execute macro="IFrame#closeFrame" />
 	</command>
 
+	<command name="configureScopePG">
+		<execute macro="Portlet#gotoPortletOptions">
+			<var name="portletName" value="Search Bar" />
+			<var name="portletOption" value="Configuration" />
+		</execute>
+
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="Let the User Choose" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="SelectFrame" locator1="IFrame#CONFIGURATION" />
+
+				<execute function="Select" locator1="Select#SCOPE_CONFIGURATION" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (All Sites|Let the User Choose|This Site)." />
+			</else>
+		</if>
+
+		<execute macro="PortletEntry#save" />
+
+		<execute macro="IFrame#closeFrame" />
+	</command>
+
 	<command name="searchPG">
 		<execute function="Type" locator1="SearchBar#SEARCH_FIELD" value1="${searchTerm}" />
 
 		<execute function="KeyPress" locator1="SearchBar#SEARCH_FIELD" value1="\RETURN" />
+	</command>
+
+	<command name="selectScopeInputPG">
+		<if>
+			<or>
+				<equals arg1="${searchScope}" arg2="All Sites" />
+				<equals arg1="${searchScope}" arg2="This Site" />
+			</or>
+			<then>
+				<execute function="Select" locator1="Select#SCOPE" value1="${searchScope}" />
+			</then>
+			<else>
+				<fail message="Invalid search scope. Must be (All Sites|This Site)." />
+			</else>
+		</if>
 	</command>
 </definition>

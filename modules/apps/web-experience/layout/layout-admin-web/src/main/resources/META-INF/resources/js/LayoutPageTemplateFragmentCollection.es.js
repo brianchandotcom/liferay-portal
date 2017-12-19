@@ -47,6 +47,7 @@ LayoutPageTemplateFragmentCollection.STATE = {
 		fragmentEntries: Config.arrayOf(
 			Config.shapeOf({
 				fragmentEntryId: Config.string().required(),
+				imagePreviewURL: Config.string(),
 				name: Config.string().required(),
 			}).required()
 		).required(),

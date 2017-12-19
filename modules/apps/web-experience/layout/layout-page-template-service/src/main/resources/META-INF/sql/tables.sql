@@ -19,7 +19,8 @@ create table LayoutPageTemplateEntry (
 	createDate DATE null,
 	modifiedDate DATE null,
 	layoutPageTemplateCollectionId LONG,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	htmlPreviewEntryId LONG
 );
 
 create table LayoutPageTemplateFragment (

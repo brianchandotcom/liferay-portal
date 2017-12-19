@@ -70,6 +70,7 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		attributes.put("layoutPageTemplateCollectionId",
 			getLayoutPageTemplateCollectionId());
 		attributes.put("name", getName());
+		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
 
 		return attributes;
 	}
@@ -131,6 +132,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 		if (name != null) {
 			setName(name);
 		}
+
+		Long htmlPreviewEntryId = (Long)attributes.get("htmlPreviewEntryId");
+
+		if (htmlPreviewEntryId != null) {
+			setHtmlPreviewEntryId(htmlPreviewEntryId);
+		}
 	}
 
 	@Override
@@ -151,6 +158,12 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public long getCompanyId() {
 		return _layoutPageTemplateEntry.getCompanyId();
+	}
+
+	@Override
+	public java.lang.String getContent()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _layoutPageTemplateEntry.getContent();
 	}
 
 	/**
@@ -176,6 +189,22 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public long getGroupId() {
 		return _layoutPageTemplateEntry.getGroupId();
+	}
+
+	/**
+	* Returns the html preview entry ID of this layout page template entry.
+	*
+	* @return the html preview entry ID of this layout page template entry
+	*/
+	@Override
+	public long getHtmlPreviewEntryId() {
+		return _layoutPageTemplateEntry.getHtmlPreviewEntryId();
+	}
+
+	@Override
+	public java.lang.String getImagePreviewURL(
+		com.liferay.portal.kernel.theme.ThemeDisplay themeDisplay) {
+		return _layoutPageTemplateEntry.getImagePreviewURL(themeDisplay);
 	}
 
 	/**
@@ -337,6 +366,16 @@ public class LayoutPageTemplateEntryWrapper implements LayoutPageTemplateEntry,
 	@Override
 	public void setGroupId(long groupId) {
 		_layoutPageTemplateEntry.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the html preview entry ID of this layout page template entry.
+	*
+	* @param htmlPreviewEntryId the html preview entry ID of this layout page template entry
+	*/
+	@Override
+	public void setHtmlPreviewEntryId(long htmlPreviewEntryId) {
+		_layoutPageTemplateEntry.setHtmlPreviewEntryId(htmlPreviewEntryId);
 	}
 
 	/**

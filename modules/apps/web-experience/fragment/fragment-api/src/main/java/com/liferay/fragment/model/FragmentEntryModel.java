@@ -266,6 +266,20 @@ public interface FragmentEntryModel extends BaseModel<FragmentEntry>,
 	 */
 	public void setJs(String js);
 
+	/**
+	 * Returns the html preview entry ID of this fragment entry.
+	 *
+	 * @return the html preview entry ID of this fragment entry
+	 */
+	public long getHtmlPreviewEntryId();
+
+	/**
+	 * Sets the html preview entry ID of this fragment entry.
+	 *
+	 * @param htmlPreviewEntryId the html preview entry ID of this fragment entry
+	 */
+	public void setHtmlPreviewEntryId(long htmlPreviewEntryId);
+
 	@Override
 	public boolean isNew();
 

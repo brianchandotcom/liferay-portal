@@ -16,9 +16,36 @@ package com.liferay.html.preview.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
+import com.liferay.document.library.kernel.util.DLUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.StringPool;
+
 /**
  * @author Pavel Savinov
  */
 @ProviderType
 public class HtmlPreviewEntryImpl extends HtmlPreviewEntryBaseImpl {
+
+	@Override
+	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
+		try {
+			FileEntry fileEntry = DLAppLocalServiceUtil.getFileEntry(
+				getFileEntryId());
+
+			return DLUtil.getImagePreviewURL(fileEntry, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error("Unable to get html preview entry image url ", e);
+		}
+
+		return StringPool.BLANK;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		HtmlPreviewEntryImpl.class);
+
 }

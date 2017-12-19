@@ -16,14 +16,42 @@ package com.liferay.layout.page.template.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
- * @author Brian Wing Shun Chan
+ * @author Jürgen Kappler
  */
 @ProviderType
 public class LayoutPageTemplateFragmentImpl
 	extends LayoutPageTemplateFragmentBaseImpl {
 
-	public LayoutPageTemplateFragmentImpl() {
+	@Override
+	public String getCss() throws PortalException {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.getFragmentEntry(
+				getFragmentEntryId());
+
+		return fragmentEntry.getCss();
+	}
+
+	@Override
+	public String getHtml() throws PortalException {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.getFragmentEntry(
+				getFragmentEntryId());
+
+		return fragmentEntry.getHtml();
+	}
+
+	@Override
+	public String getJs() throws PortalException {
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.getFragmentEntry(
+				getFragmentEntryId());
+
+		return fragmentEntry.getJs();
 	}
 
 }

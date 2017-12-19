@@ -26,6 +26,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="layoutPageTemplateCollectionId" type="long" />
 		<field name="name" type="String" />
+		<field name="htmlPreviewEntryId" type="long" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateFragment">
 		<field name="layoutPageTemplateFragmentId" type="long" />

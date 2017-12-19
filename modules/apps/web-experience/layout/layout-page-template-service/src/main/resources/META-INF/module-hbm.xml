@@ -30,6 +30,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="layoutPageTemplateCollectionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="htmlPreviewEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl" table="LayoutPageTemplateFragment">
 		<id name="layoutPageTemplateFragmentId" type="long">

@@ -168,14 +168,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
-			String js)
+			String js, ServiceContext serviceContext)
 		throws PortalException {
 
 		FragmentEntryPermission.check(
 			getPermissionChecker(), fragmentEntryId, ActionKeys.UPDATE);
 
 		return fragmentEntryLocalService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js);
+			fragmentEntryId, name, css, html, js, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

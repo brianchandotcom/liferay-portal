@@ -136,6 +136,9 @@ public class LayoutPageTemplateDisplayContext {
 
 				fragmentEntryJSONObject.put(
 					"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+				fragmentEntryJSONObject.put(
+					"imagePreviewURL",
+					fragmentEntry.getImagePreviewURL(themeDisplay));
 				fragmentEntryJSONObject.put("name", fragmentEntry.getName());
 
 				fragmentEntriesJSONArray.put(fragmentEntryJSONObject);
@@ -465,6 +468,9 @@ public class LayoutPageTemplateDisplayContext {
 
 			jsonObject.put(
 				"fragmentEntryId", fragmentEntry.getFragmentEntryId());
+			jsonObject.put(
+				"imagePreviewURL",
+				fragmentEntry.getImagePreviewURL(themeDisplay));
 			jsonObject.put("name", fragmentEntry.getName());
 
 			jsonArray.put(jsonObject);

@@ -19,7 +19,7 @@ class SiteNavigationMenuEditor extends State {
 			dragPlaceholder: Drag.Placeholder.CLONE,
 			handles: '.sticker',
 			sources: this.menuItemSelector,
-			targets: [this.menuContainerSelector, this.menuItemSelector].join(),
+			targets: `${this.menuContainerSelector} ${this.menuItemSelector}`,
 		});
 
 		this._dragDrop.on(
@@ -103,7 +103,7 @@ class SiteNavigationMenuEditor extends State {
 		source.dataset.parentId = newParentId;
 
 		const children = Array.from(target.parentNode.querySelectorAll(
-			'.container-item,' + this.menuItemSelector
+			`.container-item, ${this.menuItemSelector}`
 		));
 		const order = children.reduce((acc, value, idx) => {
 			return value === source.parentNode ? idx : acc;

@@ -114,6 +114,11 @@ public class UpdateLanguageAction extends Action {
 		if (isGroupFriendlyURL(layout.getGroup(), layout, layoutURL, locale)) {
 			if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 0) {
 				redirect = layoutURL;
+
+				if (themeDisplay.isI18n()) {
+					redirect = redirect.substring(
+						themeDisplay.getI18nPath().length());
+				}
 			}
 			else {
 				redirect = PortalUtil.getGroupFriendlyURL(

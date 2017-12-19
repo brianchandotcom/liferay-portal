@@ -7,7 +7,6 @@ import position from 'metal-position';
  *	Site navigation menu editor component.
  */
 class SiteNavigationMenuEditor extends State {
-
 	/**
 	 * @inheritDoc
 	 */
@@ -23,7 +22,10 @@ class SiteNavigationMenuEditor extends State {
 			targets: [this.menuContainerSelector, this.menuItemSelector].join(),
 		});
 
-		this._dragDrop.on(DragDrop.Events.DRAG, this._handleDragItem.bind(this));
+		this._dragDrop.on(
+			DragDrop.Events.DRAG,
+			this._handleDragItem.bind(this)
+		);
 		this._dragDrop.on(Drag.Events.START, this._handleDragStart.bind(this));
 		this._dragDrop.on(DragDrop.Events.END, this._handleDropItem.bind(this));
 
@@ -67,10 +69,7 @@ class SiteNavigationMenuEditor extends State {
 		const source = data.source;
 		const target = data.target;
 
-		if (!target ||
-			(target == source) ||
-			source.parentNode.contains(target)) {
-
+		if (!target || target == source || source.parentNode.contains(target)) {
 			return;
 		}
 
@@ -81,40 +80,46 @@ class SiteNavigationMenuEditor extends State {
 			return;
 		}
 
-		const nested = (placeholderRegion.right - targetRegion.right) >
-					   		placeholderRegion.width / 3;
+		const nested =
+			placeholderRegion.right - targetRegion.right >
+			placeholderRegion.width / 3;
 
 		removeClasses(source.parentNode, 'ml-5');
 
 		let newParentId = target.dataset.parentsitenavigationmenuitemid;
 
-	 	if (placeholderRegion.top < targetRegion.top) {
+		if (placeholderRegion.top < targetRegion.top) {
 			target.parentNode.insertBefore(source.parentNode, target);
 		}
 		else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
 			target.parentNode.insertBefore(
-				source.parentNode, target.nextSibling);
+				source.parentNode,
+				target.nextSibling
+			);
 		}
-		else if (nested && (placeholderRegion.bottom > targetRegion.bottom)) {
+		else if (nested && placeholderRegion.bottom > targetRegion.bottom) {
 			target.parentNode.insertBefore(
-				source.parentNode, target.nextSibling);
+				source.parentNode,
+				target.nextSibling
+			);
 
 			newParentId = target.dataset.sitenavigationmenuitemid;
 
 			addClasses(source.parentNode, 'ml-5');
 		}
 
-		source.setAttribute("drag-parentid", newParentId);
+		source.setAttribute('drag-parentid', newParentId);
 
-	 	let children = Array.prototype.slice.call(
-	 		target.parentNode.querySelectorAll(
-	 			".container-item," + this.menuItemSelector));
-		const order = children.reduce(
-			(acc, value, idx) => {
-				return value == source.parentNode ? idx : acc
-			}, 0);
+		let children = Array.prototype.slice.call(
+			target.parentNode.querySelectorAll(
+				'.container-item,' + this.menuItemSelector
+			)
+		);
+		const order = children.reduce((acc, value, idx) => {
+			return value == source.parentNode ? idx : acc;
+		}, 0);
 
-	 	source.setAttribute("drag-order", order);
+		source.setAttribute('drag-order', order);
 	}
 
 	/**
@@ -140,10 +145,7 @@ class SiteNavigationMenuEditor extends State {
 	_handleDropItem(data, event) {
 		event.preventDefault();
 
-		if (
-			data.source &&
-			data.source.dataset.sitenavigationmenuitemid
-		) {
+		if (data.source && data.source.dataset.sitenavigationmenuitemid) {
 			const formData = new FormData();
 
 			formData.append(
@@ -163,16 +165,14 @@ class SiteNavigationMenuEditor extends State {
 				body: formData,
 				credentials: 'include',
 				method: 'POST',
-			}).then(
-				() => {
-					if (Liferay.SPA) {
-						Liferay.SPA.app.navigate(window.location.href);
-					}
-					else {
-						window.location.reload();
-					}
+			}).then(() => {
+				if (Liferay.SPA) {
+					Liferay.SPA.app.navigate(window.location.href);
 				}
-			);
+				else {
+					window.location.reload();
+				}
+			});
 		}
 		else {
 			removeClasses(data.source.parentNode, 'item-dragging');

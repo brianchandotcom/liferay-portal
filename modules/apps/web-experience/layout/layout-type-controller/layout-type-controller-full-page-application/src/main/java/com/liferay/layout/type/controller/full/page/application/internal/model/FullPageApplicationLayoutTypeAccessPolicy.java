@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.link.to.page.internal.access.policy;
+package com.liferay.layout.type.controller.full.page.application.internal.model;
 
-import com.liferay.portal.kernel.model.LayoutConstants;
+import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pavel Sivanov
+ * @author Eudaldo Alonso
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT},
+	property = {"layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION},
 	service = LayoutTypeAccessPolicy.class
 )
-public class LinkToPageLayoutTypeAccessPolicy
+public class FullPageApplicationLayoutTypeAccessPolicy
 	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
 }

@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.full.page.application.internal.access.policy;
+package com.liferay.layout.type.controller.content.internal.model;
 
-import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
+import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
+import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + FullPageApplicationLayoutTypeControllerConstants.LAYOUT_TYPE_FULL_PAGE_APPLICATION},
+	property = {"layout.type=" + ContentLayoutTypeControllerConstants.LAYOUT_TYPE_CONTENT},
 	service = LayoutTypeAccessPolicy.class
 )
-public class FullPageApplicationLayoutTypeAccessPolicy
-	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
+public class ContentLayoutTypeAccessPolicy
+	extends DefaultLayoutTypeAccessPolicyImpl {
 }

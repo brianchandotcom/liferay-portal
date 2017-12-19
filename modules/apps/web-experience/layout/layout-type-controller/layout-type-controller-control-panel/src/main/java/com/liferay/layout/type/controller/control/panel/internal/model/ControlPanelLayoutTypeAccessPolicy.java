@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.control.panel.internal.access.policy;
+package com.liferay.layout.type.controller.control.panel.internal.model;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;

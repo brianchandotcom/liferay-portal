@@ -12,22 +12,22 @@
  * details.
  */
 
-package com.liferay.layout.type.controller.shared.portlet.internal.access.policy;
+package com.liferay.layout.type.controller.link.to.page.internal.model;
 
-import com.liferay.layout.type.controller.shared.portlet.internal.constants.SharedPortletLayoutTypeControllerConstants;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Leonardo Barros
+ * @author Pavel Sivanov
  */
 @Component(
 	immediate = true,
-	property = {"layout.type=" + SharedPortletLayoutTypeControllerConstants.LAYOUT_TYPE_SHARED_PORTLET},
+	property = {"layout.type=" + LayoutConstants.TYPE_LINK_TO_LAYOUT},
 	service = LayoutTypeAccessPolicy.class
 )
-public class SharedPortletLayoutTypeAccessPolicy
+public class LinkToPageLayoutTypeAccessPolicy
 	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
 }

@@ -5284,8 +5284,15 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-latest-marketplace-apps">
+		<get-testcase-property property.name="deploy.latest.marketplace.app.disabled" />
+
 		<if>
-			<available file="${liferay.home}/osgi/marketplace" />
+			<and>
+				<available file="${liferay.home}/osgi/marketplace" />
+				<not>
+					<isset property="deploy.latest.marketplace.app.disabled" />
+				</not>
+			</and>
 			<then>
 				<for param="app.file.path">
 					<path>

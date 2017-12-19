@@ -14,8 +14,17 @@
 
 package com.liferay.portlet;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
+
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 /**
  * @author Brian Wing Shun Chan
@@ -53,6 +62,12 @@ public class CacheControlImpl implements CacheControl {
 	public void setETag(String eTag) {
 		_eTag = eTag;
 
+		if (eTag == null) {
+			_removeETag();
+
+			return;
+		}
+
 		_mimeResponseImpl.setProperty(MimeResponse.ETAG, eTag);
 	}
 
@@ -83,6 +98,65 @@ public class CacheControlImpl implements CacheControl {
 	@Override
 	public boolean useCachedContent() {
 		return _useCachedContent;
+	}
+
+	private void _removeETag() {
+		HttpServletResponse httpServletResponse =
+			_mimeResponseImpl.getHttpServletResponse();
+
+		while (httpServletResponse instanceof HttpServletResponseWrapper) {
+			HttpServletResponseWrapper httpServletResponseWrapper =
+				(HttpServletResponseWrapper)httpServletResponse;
+
+			ServletResponse servletResponse =
+				httpServletResponseWrapper.getResponse();
+
+			httpServletResponse = (HttpServletResponse)servletResponse;
+		}
+
+		Map<String, Collection<String>> headers = new HashMap<>();
+
+		Collection<String> headerNames = httpServletResponse.getHeaderNames();
+
+		for (String headerName : headerNames) {
+			if (!headerName.equals(MimeResponse.ETAG)) {
+				headers.put(
+					headerName, httpServletResponse.getHeaders(headerName));
+			}
+		}
+
+		String characterEncoding = httpServletResponse.getCharacterEncoding();
+		String contentType = httpServletResponse.getContentType();
+		Locale locale = httpServletResponse.getLocale();
+		int status = httpServletResponse.getStatus();
+
+		httpServletResponse.reset();
+
+		for (Map.Entry<String, Collection<String>> headerEntry :
+				headers.entrySet()) {
+
+			String headerName = headerEntry.getKey();
+
+			for (String header : headerEntry.getValue()) {
+				httpServletResponse.addHeader(headerName, header);
+			}
+		}
+
+		if (characterEncoding != null) {
+			httpServletResponse.setCharacterEncoding(characterEncoding);
+		}
+
+		if (contentType != null) {
+			httpServletResponse.setContentType(contentType);
+		}
+
+		if (locale != null) {
+			httpServletResponse.setLocale(locale);
+		}
+
+		if (status != HttpServletResponse.SC_OK) {
+			httpServletResponse.setStatus(status);
+		}
 	}
 
 	private String _eTag;

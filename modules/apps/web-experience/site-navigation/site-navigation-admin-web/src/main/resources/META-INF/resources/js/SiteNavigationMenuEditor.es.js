@@ -46,18 +46,6 @@ class SiteNavigationMenuEditor extends State {
 	}
 
 	/**
-	 * This is called when user clicks on menu item.
-	 *
-	 * @param {!Event} event Click event data
-	 * @private
-	 */
-	_handleItemClick(event) {
-		removeClasses(document.querySelectorAll('.selected'), 'selected');
-
-		addClasses(event.delegateTarget, 'selected');
-	}
-
-	/**
 	 * This is called when user drags the item across the container.
 	 *
 	 * @param {!object} data Drag event data
@@ -181,6 +169,18 @@ class SiteNavigationMenuEditor extends State {
 		else {
 			removeClasses(data.source.parentNode, 'item-dragging');
 		}
+	}
+
+	/**
+	 * This is called when user clicks on menu item.
+	 *
+	 * @param {!Event} event Click event data
+	 * @private
+	 */
+	_handleItemClick(event) {
+		removeClasses(document.querySelectorAll('.selected'), 'selected');
+
+		addClasses(event.delegateTarget, 'selected');
 	}
 }
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.service.registry;
+package com.liferay.user.associated.data.registry;
 
 import aQute.bnd.annotation.ProviderType;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.service.registry.impl;
+package com.liferay.user.associated.data.registry.impl;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -22,7 +22,7 @@ import com.liferay.user.associated.data.model.UADEntity;
 import com.liferay.user.associated.data.model.UADEntityAggregator;
 import com.liferay.user.associated.data.model.UADEntityAnonymizer;
 import com.liferay.user.associated.data.model.UADEntityExporter;
-import com.liferay.user.associated.data.service.registry.UADRegistry;
+import com.liferay.user.associated.data.registry.UADRegistry;
 
 import java.util.Collection;
 import java.util.HashMap;

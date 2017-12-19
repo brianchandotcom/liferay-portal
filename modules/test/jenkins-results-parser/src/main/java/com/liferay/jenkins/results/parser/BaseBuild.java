@@ -764,6 +764,10 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Long getStartTime() {
+		if (startTime != null) {
+			return startTime;
+		}
+
 		JSONObject buildJSONObject = getBuildJSONObject("timestamp");
 
 		if (buildJSONObject == null) {
@@ -772,11 +776,11 @@ public abstract class BaseBuild implements Build {
 
 		long timestamp = buildJSONObject.getLong("timestamp");
 
-		if (timestamp == 0) {
-			return null;
+		if (timestamp != 0) {
+			startTime = timestamp;
 		}
 
-		return timestamp;
+		return startTime;
 	}
 
 	@Override
@@ -1694,11 +1698,28 @@ public abstract class BaseBuild implements Build {
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				Dom4JUtil.getNewAnchorElement(
-					getBuildURL() + "testReport", "Test Report")),
-			Dom4JUtil.getNewElement(
-				cellElementTagName, null,
-				JenkinsResultsParserUtil.toDateString(
-					new Date(getStartTime()), getJenkinsReportTimeZoneName())),
+					getBuildURL() + "testReport", "Test Report")));
+
+		getStartTime();
+
+		if (startTime == null) {
+			Dom4JUtil.addToElement(
+				buildInfoElement,
+				Dom4JUtil.getNewElement(
+					cellElementTagName, null, "",
+					getJenkinsReportTimeZoneName()));
+		}
+		else {
+			Dom4JUtil.addToElement(
+				buildInfoElement,
+				Dom4JUtil.getNewElement(
+					cellElementTagName, null,
+					toJenkinsReportDateString(
+						new Date(startTime), getJenkinsReportTimeZoneName())));
+		}
+
+		Dom4JUtil.addToElement(
+			buildInfoElement,
 			Dom4JUtil.getNewElement(
 				cellElementTagName, null,
 				JenkinsResultsParserUtil.toDurationString(getDuration())));
@@ -2220,6 +2241,21 @@ public abstract class BaseBuild implements Build {
 		}
 	}
 
+	protected String toJenkinsReportDateString(Date date, String timeZoneName) {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		return JenkinsResultsParserUtil.toDateString(
+			date, buildProperties.getProperty("jenkins.report.date.format"),
+			timeZoneName);
+	}
+
 	protected void writeArchiveFile(String content, String path)
 		throws IOException {
 
@@ -2271,7 +2307,7 @@ public abstract class BaseBuild implements Build {
 	protected String repositoryName;
 	protected List<SlaveOfflineRule> slaveOfflineRules =
 		SlaveOfflineRule.getSlaveOfflineRules();
-	protected long startTime;
+	protected Long startTime;
 	protected long statusModifiedTime;
 	protected Element upstreamJobFailureMessageElement;
 
@@ -2300,9 +2336,14 @@ public abstract class BaseBuild implements Build {
 		}
 
 		protected void addTimelineData(BaseBuild build) {
-			int endIndex = _getIndex(
-				build.getStartTime() + build.getDuration());
-			int startIndex = _getIndex(build.getStartTime());
+			Long buildStartTime = build.getStartTime();
+
+			if (buildStartTime == null) {
+				return;
+			}
+
+			int endIndex = _getIndex(buildStartTime + build.getDuration());
+			int startIndex = _getIndex(buildStartTime);
 
 			_timeline[startIndex]._invocationsCount++;
 

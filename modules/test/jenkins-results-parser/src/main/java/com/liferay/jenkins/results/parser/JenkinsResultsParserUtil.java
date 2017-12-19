@@ -1015,7 +1015,13 @@ public class JenkinsResultsParserUtil {
 	}
 
 	public static String toDateString(Date date, String timeZoneName) {
-		SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy h:mm:ss a z");
+		return toDateString(date, "MMM dd, yyyy h:mm:ss a z", timeZoneName);
+	}
+
+	public static String toDateString(
+		Date date, String format, String timeZoneName) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 
 		if (timeZoneName != null) {
 			sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName));

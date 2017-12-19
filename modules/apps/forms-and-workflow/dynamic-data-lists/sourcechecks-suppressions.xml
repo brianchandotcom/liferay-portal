@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="CSSImportsCheck" files="modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-form-web/src/main/resources/META-INF/resources/admin/css/main\.scss" />
+</suppressions>

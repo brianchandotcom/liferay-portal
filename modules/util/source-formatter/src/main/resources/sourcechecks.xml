@@ -171,6 +171,7 @@
 		<check name="CSSCommentsCheck" />
 		<check name="CSSEmptyLinesCheck" />
 		<check name="CSSHexColorsCheck" />
+		<check name="CSSImportsCheck" />
 		<check name="CSSPropertiesOrderCheck" />
 		<check name="CSSWhitespaceCheck" />
 	</source-processor>

@@ -15,6 +15,7 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.user.associated.data.model.UADEntity;
+import com.liferay.user.associated.data.model.UADEntityAggregator;
 import com.liferay.user.associated.data.model.UADEntityAnonymizer;
 import com.liferay.user.associated.data.model.impl.UADEntityAnonymizerImpl;
 
@@ -28,10 +29,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntityImpl"},
+	property = {"model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntity"},
 	service = UADEntityAnonymizer.class
 )
-public class AnnouncementsUADEntityAnonymizerImpl
+public class AnnouncementsUADEntityAnonymizer
 	extends UADEntityAnonymizerImpl {
 
 	@Override
@@ -49,10 +50,9 @@ public class AnnouncementsUADEntityAnonymizerImpl
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntityImpl)",
+		target = "(model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntity)",
 		unbind = "-"
 	)
-	private AnnouncementsUADEntityAggregatorImpl
-		_announcementsUADEntityAggregatorImpl;
+	private UADEntityAggregator _announcementsUADEntityAggregatorImpl;
 
 }

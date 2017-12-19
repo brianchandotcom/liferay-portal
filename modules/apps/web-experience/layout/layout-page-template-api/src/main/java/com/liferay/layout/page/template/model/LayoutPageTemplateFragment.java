@@ -56,4 +56,16 @@ public interface LayoutPageTemplateFragment
 				return LayoutPageTemplateFragment.class;
 			}
 		};
+
+	public java.lang.String getCss()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public com.liferay.fragment.model.FragmentEntry getFragmentEntry()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String getHtml()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
+	public java.lang.String getJs()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

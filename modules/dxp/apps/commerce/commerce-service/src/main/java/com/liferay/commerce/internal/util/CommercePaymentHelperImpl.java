@@ -158,7 +158,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 
 		String cancelURL = sb.toString();
 
-		String paymentURL = null;
+		String output = null;
 
 		String content = null;
 		int status = CommerceOrderPaymentConstants.STATUS_PENDING;
@@ -169,7 +169,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 					commerceOrder, cancelURL, returnURL, serviceContext);
 
 			content = startPayment.getContent();
-			paymentURL = startPayment.getURL();
+			output = startPayment.getOutput();
 		}
 		catch (CommercePaymentEngineException cpee) {
 			content = _getContent(cpee);
@@ -180,7 +180,7 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			commerceOrder.getCommerceOrderId(), status, content,
 			serviceContext);
 
-		return paymentURL;
+		return output;
 	}
 
 	private CommercePaymentEngine _getCommercePaymentEngine(

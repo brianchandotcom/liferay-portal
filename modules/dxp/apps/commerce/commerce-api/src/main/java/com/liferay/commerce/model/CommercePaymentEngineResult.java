@@ -29,17 +29,17 @@ public class CommercePaymentEngineResult {
 
 	public static class StartPayment extends CommercePaymentEngineResult {
 
-		public StartPayment(String content, String url) {
+		public StartPayment(String content, String output) {
 			super(content);
 
-			_url = url;
+			_output = output;
 		}
 
-		public String getURL() {
-			return _url;
+		public String getOutput() {
+			return _output;
 		}
 
-		private final String _url;
+		private final String _output;
 
 	}
 

@@ -16,19 +16,17 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderConfirmationCheckoutStepDisplayContext;
+import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommercePaymentHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -109,12 +107,8 @@ public class OrderConfirmationCommerceCheckoutStep
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceOrder.class.getName(), actionRequest);
 
-		String paymentURL = _commercePaymentHelper.startPayment(
-			commerceOrder, serviceContext);
-
-		if (Validator.isNotNull(paymentURL)) {
-			actionRequest.setAttribute(WebKeys.REDIRECT, paymentURL);
-		}
+		_actionHelper.startPayment(
+			commerceOrder, actionRequest, actionResponse, serviceContext);
 	}
 
 	@Override
@@ -147,13 +141,13 @@ public class OrderConfirmationCommerceCheckoutStep
 	}
 
 	@Reference
+	private ActionHelper _actionHelper;
+
+	@Reference
 	private CommerceOrderPaymentLocalService _commerceOrderPaymentLocalService;
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CommercePaymentHelper _commercePaymentHelper;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

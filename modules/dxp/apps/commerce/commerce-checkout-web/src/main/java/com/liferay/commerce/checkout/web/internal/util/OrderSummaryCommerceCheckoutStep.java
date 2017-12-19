@@ -17,6 +17,7 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
+import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceCartBillingAddressException;
 import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
@@ -27,7 +28,6 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommerceOrderService;
-import com.liferay.commerce.util.CommercePaymentHelper;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -41,8 +41,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -176,7 +174,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 	protected void startPayment(
 			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortalException {
+		throws Exception {
 
 		long commerceCartId = ParamUtil.getLong(
 			actionRequest, "commerceCartId");
@@ -195,18 +193,15 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 		serviceContext.setAttribute("redirect", redirect);
 
-		String paymentURL = _commercePaymentHelper.startPayment(
-			commerceOrder, serviceContext);
-
-		if (Validator.isNotNull(paymentURL)) {
-			redirect = paymentURL;
-		}
-
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+		_actionHelper.startPayment(
+			commerceOrder, actionRequest, actionResponse, serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		OrderSummaryCommerceCheckoutStep.class);
+
+	@Reference
+	private ActionHelper _actionHelper;
 
 	@Reference
 	private CommerceCartService _commerceCartService;
@@ -216,9 +211,6 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
-
-	@Reference
-	private CommercePaymentHelper _commercePaymentHelper;
 
 	@Reference
 	private CommercePriceCalculator _commercePriceCalculator;

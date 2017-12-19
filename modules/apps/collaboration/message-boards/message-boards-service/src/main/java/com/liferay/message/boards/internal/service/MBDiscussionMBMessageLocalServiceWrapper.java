@@ -316,11 +316,9 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 		super.getDiscussions(className);
 
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
 		return ModelAdapterUtil.adapt(
 			com.liferay.message.boards.kernel.model.MBDiscussion.class,
-			_mbDiscussionPersistence.findByClassNameId(classNameId));
+			_mbDiscussionLocalService.getDiscussions(className));
 	}
 
 	protected String getDiscussionMessageSubject(String subject, String body)

@@ -19,7 +19,10 @@ import com.liferay.message.boards.service.base.MBDiscussionLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.subscription.service.SubscriptionLocalService;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -87,6 +90,13 @@ public class MBDiscussionLocalServiceImpl
 	}
 
 	@Override
+	public List<MBDiscussion> getDiscussions(String className) {
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return mbDiscussionPersistence.findByClassNameId(classNameId);
+	}
+
+	@Override
 	public MBDiscussion getThreadDiscussion(long threadId)
 		throws PortalException {
 
@@ -98,7 +108,7 @@ public class MBDiscussionLocalServiceImpl
 			long userId, long groupId, String className, long classPK)
 		throws PortalException {
 
-		_subscriptionLocalService.addSubscription(
+		subscriptionLocalService.addSubscription(
 			userId, groupId, className, classPK);
 	}
 
@@ -107,8 +117,7 @@ public class MBDiscussionLocalServiceImpl
 			long userId, String className, long classPK)
 		throws PortalException {
 
-		_subscriptionLocalService.deleteSubscription(
-			userId, className, classPK);
+		subscriptionLocalService.deleteSubscription(userId, className, classPK);
 	}
 
 	@ServiceReference(type = SubscriptionLocalService.class)

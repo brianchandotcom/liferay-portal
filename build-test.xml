@@ -1853,31 +1853,7 @@ sendPasswordCaptchaEnabled=&quot;false&quot;</echo>
 
 	<macrodef name="prepare-elasticsearch-configuration" >
 		<sequential>
-			<echo file="${liferay.home}/osgi/config/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">additionalConfigurations=&quot;
-    cluster.routing.allocation.disk.threshold_enabled:\ false
-    cluster.service.slow_task_logging_threshold:\ 1800s
-    index.indexing.slowlog.threshold.index.warn:\ 1800s
-    index.search.slowlog.threshold.fetch.warn:\ 1800s
-    index.search.slowlog.threshold.query.warn:\ 1800s
-    monitor.jvm.gc.old.warn:\ 1800s
-    monitor.jvm.gc.young.warn:\ 1800s
-    threadpool.bulk.size:\ 1
-    threadpool.fetch_shard_started.size:\ 1
-    threadpool.fetch_shard_store.size:\ 1
-    threadpool.flush.size:\ 1
-    threadpool.force_merge.size:\ 1
-    threadpool.generic.size:\ 1
-    threadpool.get.size:\ 1
-    threadpool.index.size:\ 1
-    threadpool.listener.size:\ 1
-    threadpool.management.size:\ 1
-    threadpool.percolate.size:\ 1
-    threadpool.refresh.size:\ 1
-    threadpool.search.size:\ 1
-    threadpool.snapshot.size:\ 1
-    threadpool.suggest.size:\ 1
-    threadpool.warmer.size:\ 1
-    transport.local.workers:\ 1&quot;
+			<echo file="${liferay.home}/osgi/config/com.liferay.portal.search.elasticsearch.configuration.ElasticsearchConfiguration.config">additionalConfigurations=&quot;cluster.routing.allocation.disk.threshold_enabled:\ false\ncluster.service.slow_task_logging_threshold:\ 1800s\nindex.indexing.slowlog.threshold.index.warn:\ 1800s\nindex.search.slowlog.threshold.fetch.warn:\ 1800s\nindex.search.slowlog.threshold.query.warn:\ 1800s\nmonitor.jvm.gc.old.warn:\ 1800s\nmonitor.jvm.gc.young.warn:\ 1800s\nthreadpool.bulk.size:\ 1\nthreadpool.fetch_shard_started.size:\ 1\nthreadpool.fetch_shard_store.size:\ 1\nthreadpool.flush.size:\ 1\nthreadpool.force_merge.size:\ 1\nthreadpool.generic.size:\ 1\nthreadpool.get.size:\ 1\nthreadpool.index.size:\ 1\nthreadpool.listener.size:\ 1\nthreadpool.management.size:\ 1\nthreadpool.percolate.size:\ 1\nthreadpool.refresh.size:\ 1\nthreadpool.search.size:\ 1\nthreadpool.snapshot.size:\ 1\nthreadpool.suggest.size:\ 1\nthreadpool.warmer.size:\ 1\ntransport.local.workers:\ 1&quot;
 httpEnabled=B&quot;false&quot;
 logExceptionsOnly=B&quot;false&quot;</echo>
 		</sequential>

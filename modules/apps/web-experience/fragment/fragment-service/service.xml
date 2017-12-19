@@ -155,5 +155,6 @@
 		<exception>DuplicateFragmentEntry</exception>
 		<exception>FragmentCollectionName</exception>
 		<exception>FragmentEntryName</exception>
+		<exception>RequiredFragmentEntry</exception>
 	</exceptions>
 </service-builder>

@@ -1,9 +1,5 @@
 Bundle-Name: Liferay Portal Security SSO Token
 Bundle-SymbolicName: com.liferay.portal.security.sso.token
 Bundle-Version: 3.0.10
-Export-Package:\
-	com.liferay.portal.security.sso.token.constants,\
-	com.liferay.portal.security.sso.token.events,\
-	com.liferay.portal.security.sso.token.security.auth
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks

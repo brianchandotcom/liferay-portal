@@ -11,7 +11,7 @@ dependencies {
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.document.library.repository.authorization.api", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.document.library.repository.external", version: "1.1.0"
+	provided group: "com.liferay", name: "com.liferay.document.library.repository.external.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.10.0"

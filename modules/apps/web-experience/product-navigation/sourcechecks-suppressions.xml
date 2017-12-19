@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+
+<suppressions>
+	<suppress checks="CSSImportsCheck" files="modules/apps/web-experience/product-navigation/product-navigation-product-menu-theme-contributor/src/main/resources/META-INF/resources/product_navigation_product_menu\.scss" />
+</suppressions>

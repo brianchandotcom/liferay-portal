@@ -16,44 +16,37 @@ package com.liferay.announcements.uad;
 
 import com.liferay.user.associated.data.model.UADEntity;
 import com.liferay.user.associated.data.model.UADEntityAggregator;
-import com.liferay.user.associated.data.model.impl.UADEntityAggregatorImpl;
+import com.liferay.user.associated.data.model.UADEntityExporter;
+import com.liferay.user.associated.data.model.impl.UADEntityExporterImpl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author William Newbury
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntityImpl"},
-	service = UADEntityAggregator.class
+	property = {"model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntity"},
+	service = UADEntityExporter.class
 )
-public class AnnouncementsUADEntityAggregatorImpl
-	extends UADEntityAggregatorImpl {
+public class AnnouncementsUADEntityExporter extends UADEntityExporterImpl {
 
 	@Override
-	public List<UADEntity> getUADEntities(long userId) {
-		List<UADEntity> announcementsUADEntities = new ArrayList<>();
-
-		AnnouncementsUADEntityImpl announcementsUADEntity =
-			new AnnouncementsUADEntityImpl(
-				0, "testEntityId", AnnouncementsUADEntityImpl.class.getName(),
-				new ArrayList<UADEntity>());
-
-		announcementsUADEntities.add(announcementsUADEntity);
-
-		return announcementsUADEntities;
+	public void export(UADEntity uadEntity) {
 	}
 
 	@Override
-	public UADEntity getUADEntity(String uadEntityId) {
-		return new AnnouncementsUADEntityImpl(
-			0, uadEntityId,
-			"com.liferay.announcements.uad.AnnouncementsUADEntityImpl",
-			new ArrayList<UADEntity>());
+	protected List<UADEntity> getUADEntities(long userId) {
+		return _announcementsUADEntityAggregator.getUADEntities(userId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.announcements.uad.AnnouncementsUADEntity)",
+		unbind = "-"
+	)
+	private UADEntityAggregator _announcementsUADEntityAggregator;
 
 }

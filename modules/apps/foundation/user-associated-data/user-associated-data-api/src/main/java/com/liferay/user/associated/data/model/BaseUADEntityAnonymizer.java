@@ -12,17 +12,14 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model.impl;
-
-import com.liferay.user.associated.data.model.UADEntity;
-import com.liferay.user.associated.data.model.UADEntityAnonymizer;
+package com.liferay.user.associated.data.model;
 
 import java.util.List;
 
 /**
  * @author William Newbury
  */
-public abstract class UADEntityAnonymizerImpl implements UADEntityAnonymizer {
+public abstract class BaseUADEntityAnonymizer implements UADEntityAnonymizer {
 
 	@Override
 	public abstract void autoAnonymize(UADEntity uadEntity);

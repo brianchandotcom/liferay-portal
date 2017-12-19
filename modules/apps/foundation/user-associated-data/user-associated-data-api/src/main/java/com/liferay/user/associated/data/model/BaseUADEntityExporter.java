@@ -12,29 +12,25 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model.impl;
-
-import com.liferay.user.associated.data.model.UADEntity;
-import com.liferay.user.associated.data.model.UADEntityAggregator;
+package com.liferay.user.associated.data.model;
 
 import java.util.List;
 
 /**
  * @author William Newbury
  */
-public abstract class UADEntityAggregatorImpl implements UADEntityAggregator {
+public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
-	public long count(long userId) {
-		List<UADEntity> userIdUADEntities = getUADEntities(userId);
+	public abstract void export(UADEntity uadEntity);
 
-		return userIdUADEntities.size();
+	@Override
+	public void exportAll(long userId) {
+		for (UADEntity uadEntity : getUADEntities(userId)) {
+			export(uadEntity);
+		}
 	}
 
-	@Override
-	public abstract List<UADEntity> getUADEntities(long userId);
-
-	@Override
-	public abstract UADEntity getUADEntity(String uadEntityId);
+	protected abstract List<UADEntity> getUADEntities(long userId);
 
 }

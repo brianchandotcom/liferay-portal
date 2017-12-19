@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model.impl;
-
-import com.liferay.user.associated.data.model.UADEntity;
+package com.liferay.user.associated.data.model;
 
 import java.net.URL;
 
@@ -23,9 +21,9 @@ import java.util.List;
 /**
  * @author William Newbury
  */
-public abstract class UADEntityImpl implements UADEntity {
+public abstract class BaseUADEntity implements UADEntity {
 
-	public UADEntityImpl(
+	public BaseUADEntity(
 		long userId, String uadEntityId, String uadRegistryKey,
 		List<UADEntity> childUADEntities) {
 

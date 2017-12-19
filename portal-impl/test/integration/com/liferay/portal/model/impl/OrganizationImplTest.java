@@ -98,9 +98,12 @@ public class OrganizationImplTest {
 
 		List<Organization> organizations = _organization1.getDescendants();
 
-		Assert.assertTrue(organizations.contains(_organization2));
-		Assert.assertTrue(organizations.contains(_organization3));
-		Assert.assertTrue(organizations.contains(_organization4));
+		Assert.assertTrue(
+			organizations.toString(), organizations.contains(_organization2));
+		Assert.assertTrue(
+			organizations.toString(), organizations.contains(_organization3));
+		Assert.assertTrue(
+			organizations.toString(), organizations.contains(_organization4));
 		Assert.assertTrue(!organizations.contains(_organization1));
 	}
 

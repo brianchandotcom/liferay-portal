@@ -363,7 +363,7 @@ public class ResourcesImporterTest {
 
 		Map<Locale, String> descriptionMap = journalArticle.getDescriptionMap();
 
-		Assert.assertFalse(descriptionMap.isEmpty());
+		Assert.assertFalse(descriptionMap.toString(), descriptionMap.isEmpty());
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			JournalArticle.class.getName(),

@@ -163,7 +163,7 @@ public class DeclarativeServiceDependencyManagerTest {
 			sb.append(
 				"\n\t\t{name: declarativeServiceTestReference, target: null}");
 
-			Assert.assertTrue(message.contains(sb.toString()));
+			Assert.assertTrue(message, message.contains(sb.toString()));
 
 			Assert.assertEquals(Level.WARN, loggingEvent.getLevel());
 

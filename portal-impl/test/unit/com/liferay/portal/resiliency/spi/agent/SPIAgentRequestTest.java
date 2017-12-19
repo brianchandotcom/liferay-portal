@@ -282,7 +282,9 @@ public class SPIAgentRequestTest {
 			populatedFileParameters.size());
 		Assert.assertSame(
 			fileItems, populatedFileParameters.get(fileParameter));
-		Assert.assertTrue(populatedRegularParameters.isEmpty());
+		Assert.assertTrue(
+			populatedRegularParameters.toString(),
+			populatedRegularParameters.isEmpty());
 		Assert.assertEquals(-1, populateHttpServletRequest.getContentLength());
 		Assert.assertNull(populateHttpServletRequest.getContentType());
 		Assert.assertNull(populateHttpServletRequest.getInputStream());
@@ -352,7 +354,9 @@ public class SPIAgentRequestTest {
 		populatedRegularParameters =
 			uploadServletRequestImpl.getRegularParameterMap();
 
-		Assert.assertTrue(populatedFileParameters.isEmpty());
+		Assert.assertTrue(
+			populatedFileParameters.toString(),
+			populatedFileParameters.isEmpty());
 		Assert.assertEquals(
 			populatedRegularParameters.toString(), 1,
 			populatedRegularParameters.size());
@@ -500,10 +504,13 @@ public class SPIAgentRequestTest {
 
 		Assert.assertEquals(headerNames.toString(), 3, headerNames.size());
 		Assert.assertTrue(
+			headerNames.toString(),
 			headerNames.contains(StringUtil.toLowerCase(_HEADER_NAME_1)));
 		Assert.assertTrue(
+			headerNames.toString(),
 			headerNames.contains(StringUtil.toLowerCase(_HEADER_NAME_2)));
 		Assert.assertTrue(
+			headerNames.toString(),
 			headerNames.contains(StringUtil.toLowerCase(_HEADER_NAME_3)));
 
 		List<String> headers = ListUtil.fromEnumeration(
@@ -523,12 +530,12 @@ public class SPIAgentRequestTest {
 		headers = ListUtil.fromEnumeration(
 			populatedHttpServletRequest.getHeaders(_HEADER_NAME_3));
 
-		Assert.assertTrue(headers.isEmpty());
+		Assert.assertTrue(headers.toString(), headers.isEmpty());
 
 		headers = ListUtil.fromEnumeration(
 			populatedHttpServletRequest.getHeaders(_HEADER_NAME_4));
 
-		Assert.assertTrue(headers.isEmpty());
+		Assert.assertTrue(headers.toString(), headers.isEmpty());
 
 		// Parameters
 
@@ -569,9 +576,15 @@ public class SPIAgentRequestTest {
 
 		Assert.assertEquals(
 			parameterNames.toString(), 3, parameterNames.size());
-		Assert.assertTrue(parameterNames.contains(_PARAMETER_NAME_1));
-		Assert.assertTrue(parameterNames.contains(_PARAMETER_NAME_2));
-		Assert.assertTrue(parameterNames.contains(_PARAMETER_NAME_3));
+		Assert.assertTrue(
+			parameterNames.toString(),
+			parameterNames.contains(_PARAMETER_NAME_1));
+		Assert.assertTrue(
+			parameterNames.toString(),
+			parameterNames.contains(_PARAMETER_NAME_2));
+		Assert.assertTrue(
+			parameterNames.toString(),
+			parameterNames.contains(_PARAMETER_NAME_3));
 
 		parameter1 = populatedHttpServletRequest.getParameterValues(
 			_PARAMETER_NAME_1);
@@ -629,8 +642,12 @@ public class SPIAgentRequestTest {
 
 		Assert.assertEquals(
 			attributeNames.toString(), 2, attributeNames.size());
-		Assert.assertTrue(attributeNames.contains(_SESSION_ATTRIBUTE_NAME_1));
-		Assert.assertTrue(attributeNames.contains(_SESSION_ATTRIBUTE_NAME_2));
+		Assert.assertTrue(
+			attributeNames.toString(),
+			attributeNames.contains(_SESSION_ATTRIBUTE_NAME_1));
+		Assert.assertTrue(
+			attributeNames.toString(),
+			attributeNames.contains(_SESSION_ATTRIBUTE_NAME_2));
 
 		Assert.assertEquals(
 			_SESSION_ATTRIBUTE_VALUE_1,

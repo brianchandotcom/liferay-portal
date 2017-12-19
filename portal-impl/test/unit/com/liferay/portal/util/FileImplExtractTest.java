@@ -89,11 +89,11 @@ public class FileImplExtractTest {
 	public void testDocx() {
 		String text = extractText("test-2007.docx");
 
-		Assert.assertTrue(text.contains("Extract test."));
+		Assert.assertTrue(text, text.contains("Extract test."));
 
 		text = extractText("test-2010.docx");
 
-		Assert.assertTrue(text.contains("Extract test."));
+		Assert.assertTrue(text, text.contains("Extract test."));
 	}
 
 	@Test
@@ -139,7 +139,7 @@ public class FileImplExtractTest {
 	public void testPptx() {
 		String text = extractText("test-2010.pptx");
 
-		Assert.assertTrue(text.contains("Extract test."));
+		Assert.assertTrue(text, text.contains("Extract test."));
 	}
 
 	@Test
@@ -179,7 +179,7 @@ public class FileImplExtractTest {
 	public void testXlsx() {
 		String text = extractText("test-2010.xlsx");
 
-		Assert.assertTrue(text.contains("Extract test."));
+		Assert.assertTrue(text, text.contains("Extract test."));
 	}
 
 	@Test

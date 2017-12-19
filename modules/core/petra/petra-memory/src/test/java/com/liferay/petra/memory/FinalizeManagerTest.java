@@ -197,7 +197,8 @@ public class FinalizeManagerTest {
 
 		reference1.clear();
 
-		Assert.assertTrue(finalizeActions.isEmpty());
+		Assert.assertTrue(
+			finalizeActions.toString(), finalizeActions.isEmpty());
 	}
 
 	@Test

@@ -167,7 +167,7 @@ public class SelectorIntrabandTest {
 
 			pollingThread.join();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -228,7 +228,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Receive ACK response, with ACK request
 
@@ -298,7 +298,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Receive response, with request, with replied completion handler
 
@@ -398,7 +398,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Receive request, requires ACK, no datagram receive handler,
 			// with log
@@ -453,7 +453,7 @@ public class SelectorIntrabandTest {
 				Jdk14LogImplAdvice.waitUntilIsWarnEnableCalled();
 			}
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			// Receive request, with datagram receive handler,
 
@@ -987,7 +987,7 @@ public class SelectorIntrabandTest {
 			Assert.assertSame(
 				attachment, recordCompletionHandler.getAttachment());
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 
 		// Callback timeout, completion handler causes NPE

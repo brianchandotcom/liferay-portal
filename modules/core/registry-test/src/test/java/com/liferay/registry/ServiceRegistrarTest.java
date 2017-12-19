@@ -61,7 +61,7 @@ public class ServiceRegistrarTest {
 
 			services = registry.getServices(Foo.class, null);
 
-			Assert.assertTrue(services.isEmpty());
+			Assert.assertTrue(services.toString(), services.isEmpty());
 		}
 		finally {
 			if (serviceRegistration1 != null) {

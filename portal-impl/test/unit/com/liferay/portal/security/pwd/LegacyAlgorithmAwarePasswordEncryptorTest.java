@@ -234,6 +234,7 @@ public class LegacyAlgorithmAwarePasswordEncryptorTest {
 				algorithm, "password", null);
 
 			Assert.assertTrue(
+				algorithm,
 				algorithm.contains(getAlgorithmHeader(newEncryptedPassword)));
 			Assert.assertEquals(
 				newEncryptedPassword,

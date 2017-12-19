@@ -70,6 +70,7 @@ public class TemplateResourceLoaderUtilTest {
 			TemplateResourceLoaderUtil.getTemplateResourceLoaderNames();
 
 		Assert.assertTrue(
+			templateResourceLoaderNames.toString(),
 			templateResourceLoaderNames.contains(
 				TestTemplateResourceLoader.TEST_TEMPLATE_RESOURCE_LOADER_NAME));
 	}

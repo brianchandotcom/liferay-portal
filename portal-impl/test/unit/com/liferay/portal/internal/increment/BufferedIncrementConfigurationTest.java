@@ -84,7 +84,7 @@ public class BufferedIncrementConfigurationTest {
 		try (CaptureHandler captureHandler = _testInvalidSetting(Level.OFF)) {
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 

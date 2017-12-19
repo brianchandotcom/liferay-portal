@@ -242,7 +242,7 @@ public class DocumentLibraryConvertProcessTest {
 			fileEntries = ((MBMessage)object).getAttachmentsFileEntries(0, 1);
 		}
 
-		Assert.assertFalse(fileEntries.isEmpty());
+		Assert.assertFalse(fileEntries.toString(), fileEntries.isEmpty());
 
 		FileEntry fileEntry = fileEntries.get(0);
 

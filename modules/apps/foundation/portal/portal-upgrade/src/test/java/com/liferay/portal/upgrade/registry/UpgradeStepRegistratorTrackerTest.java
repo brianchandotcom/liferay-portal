@@ -55,7 +55,7 @@ public class UpgradeStepRegistratorTrackerTest {
 			UpgradeStepRegistratorTracker.createUpgradeInfos(
 				"0.0.0", "1.0.0", 0);
 
-		Assert.assertTrue(upgradeInfos.isEmpty());
+		Assert.assertTrue(upgradeInfos.toString(), upgradeInfos.isEmpty());
 	}
 
 	@Test

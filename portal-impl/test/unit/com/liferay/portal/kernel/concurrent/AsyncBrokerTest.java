@@ -56,7 +56,7 @@ public class AsyncBrokerTest {
 
 		Map<String, NoticeableFuture<String>> map = asyncBroker.getOpenBids();
 
-		Assert.assertTrue(map.isEmpty());
+		Assert.assertTrue(map.toString(), map.isEmpty());
 
 		try {
 			map.clear();
@@ -73,7 +73,7 @@ public class AsyncBrokerTest {
 
 		noticeableFuture.cancel(true);
 
-		Assert.assertTrue(map.isEmpty());
+		Assert.assertTrue(map.toString(), map.isEmpty());
 	}
 
 	@NewEnv(type = NewEnv.Type.CLASSLOADER)
@@ -118,7 +118,9 @@ public class AsyncBrokerTest {
 			defaultNoticeableFutures.toString(), 1,
 			defaultNoticeableFutures.size());
 		Assert.assertTrue(noticeableFuture.cancel(true));
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 
 		boolean[] newMarker = new boolean[1];
 
@@ -130,7 +132,9 @@ public class AsyncBrokerTest {
 		Assert.assertSame(noticeableFuture, asyncBroker.post(_KEY, newMarker));
 		Assert.assertFalse(Arrays.toString(newMarker), newMarker[0]);
 		Assert.assertTrue(noticeableFuture.cancel(true));
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 
 		DefaultNoticeableFuture<String> defaultNoticeableFuture =
 			new DefaultNoticeableFuture<>();
@@ -144,7 +148,9 @@ public class AsyncBrokerTest {
 			defaultNoticeableFutures.toString(), 1,
 			defaultNoticeableFutures.size());
 		Assert.assertTrue(defaultNoticeableFuture.cancel(true));
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 	}
 
 	@Test
@@ -155,7 +161,9 @@ public class AsyncBrokerTest {
 			ReflectionTestUtil.getFieldValue(
 				asyncBroker, "_defaultNoticeableFutures");
 
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 
 		Assert.assertNull(asyncBroker.take(_KEY));
 
@@ -166,7 +174,9 @@ public class AsyncBrokerTest {
 			defaultNoticeableFutures.size());
 		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
 		Assert.assertSame(noticeableFuture, asyncBroker.take(_KEY));
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 		Assert.assertNull(asyncBroker.take(_KEY));
 		Assert.assertTrue(noticeableFuture.cancel(true));
 	}
@@ -179,7 +189,9 @@ public class AsyncBrokerTest {
 			ReflectionTestUtil.getFieldValue(
 				asyncBroker, "_defaultNoticeableFutures");
 
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 
 		Exception exception = new Exception();
 
@@ -202,7 +214,9 @@ public class AsyncBrokerTest {
 			Assert.assertSame(exception, ee.getCause());
 		}
 
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 		Assert.assertFalse(asyncBroker.takeWithException(_KEY, exception));
 	}
 
@@ -214,7 +228,9 @@ public class AsyncBrokerTest {
 			ReflectionTestUtil.getFieldValue(
 				asyncBroker, "_defaultNoticeableFutures");
 
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 
 		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 
@@ -226,7 +242,9 @@ public class AsyncBrokerTest {
 		Assert.assertSame(noticeableFuture, defaultNoticeableFutures.get(_KEY));
 		Assert.assertTrue(asyncBroker.takeWithResult(_KEY, _VALUE));
 		Assert.assertEquals(_VALUE, noticeableFuture.get());
-		Assert.assertTrue(defaultNoticeableFutures.isEmpty());
+		Assert.assertTrue(
+			defaultNoticeableFutures.toString(),
+			defaultNoticeableFutures.isEmpty());
 		Assert.assertFalse(asyncBroker.takeWithResult(_KEY, _VALUE));
 	}
 

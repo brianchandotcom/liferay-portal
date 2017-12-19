@@ -36,7 +36,7 @@ public class AssetTagNamesFacetTest {
 
 		List<TermCollector> termCollectors = facetCollector.getTermCollectors();
 
-		Assert.assertTrue(termCollectors.isEmpty());
+		Assert.assertTrue(termCollectors.toString(), termCollectors.isEmpty());
 	}
 
 }

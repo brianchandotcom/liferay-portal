@@ -1156,23 +1156,31 @@ public class UploadPortletRequestTest {
 			for (Map.Entry<String, List<String>> entry :
 					regularParameters.entrySet()) {
 
-				Assert.assertTrue(parameterNamesList.contains(entry.getKey()));
+				Assert.assertTrue(
+					parameterNamesList.toString(),
+					parameterNamesList.contains(entry.getKey()));
 			}
 
 			for (Map.Entry<String, FileItem[]> entry :
 					fileParameters.entrySet()) {
 
-				Assert.assertFalse(parameterNamesList.contains(entry.getKey()));
+				Assert.assertFalse(
+					parameterNamesList.toString(),
+					parameterNamesList.contains(entry.getKey()));
 
 				String fileParameter = entry.getKey();
 
 				fileParameter = fileParameter.substring(
 					_portletNamespace.length(), fileParameter.length());
 
-				Assert.assertTrue(parameterNamesList.contains(fileParameter));
+				Assert.assertTrue(
+					parameterNamesList.toString(),
+					parameterNamesList.contains(fileParameter));
 			}
 
-			Assert.assertTrue(parameterNamesList.contains(parameter));
+			Assert.assertTrue(
+				parameterNamesList.toString(),
+				parameterNamesList.contains(parameter));
 		}
 
 	}
@@ -1249,7 +1257,9 @@ public class UploadPortletRequestTest {
 				List<String> parameterValuesList = ListUtil.fromArray(
 					parameterValues);
 
-				Assert.assertFalse(parameterValuesList.contains(key));
+				Assert.assertFalse(
+					parameterValuesList.toString(),
+					parameterValuesList.contains(key));
 			}
 		}
 

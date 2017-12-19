@@ -235,8 +235,12 @@ public class LocalizationImplTest {
 		List<Locale> modifiedLocales = LocalizationUtil.getModifiedLocales(
 			oldLocalizationMap, newLocalizationMap);
 
-		Assert.assertTrue(modifiedLocales.contains(LocaleUtil.getDefault()));
-		Assert.assertTrue(modifiedLocales.contains(LocaleUtil.GERMANY));
+		Assert.assertTrue(
+			modifiedLocales.toString(),
+			modifiedLocales.contains(LocaleUtil.getDefault()));
+		Assert.assertTrue(
+			modifiedLocales.toString(),
+			modifiedLocales.contains(LocaleUtil.GERMANY));
 	}
 
 	@Test

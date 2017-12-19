@@ -151,7 +151,7 @@ public class NestableFlushEventListenerTest {
 
 			List<?> results = query.list();
 
-			Assert.assertFalse(results.isEmpty());
+			Assert.assertFalse(results.toString(), results.isEmpty());
 		}
 		finally {
 			transaction.commit();
@@ -290,7 +290,7 @@ public class NestableFlushEventListenerTest {
 
 			List<?> results = query.list();
 
-			Assert.assertFalse(results.isEmpty());
+			Assert.assertFalse(results.toString(), results.isEmpty());
 
 			return super.toCacheModel();
 		}

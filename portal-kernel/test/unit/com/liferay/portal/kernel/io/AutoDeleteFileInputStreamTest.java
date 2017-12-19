@@ -92,7 +92,7 @@ public class AutoDeleteFileInputStreamTest {
 		Set<String> files = ReflectionTestUtil.getFieldValue(
 			Class.forName("java.io.DeleteOnExitHook"), "files");
 
-		Assert.assertTrue(files.contains(tempFile.getPath()));
+		Assert.assertTrue(files.toString(), files.contains(tempFile.getPath()));
 	}
 
 }

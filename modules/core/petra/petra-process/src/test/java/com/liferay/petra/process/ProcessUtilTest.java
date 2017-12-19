@@ -95,12 +95,16 @@ public class ProcessUtilTest {
 			}
 
 			Assert.assertTrue(
+				messageRecords.toString(),
 				messageRecords.contains(Echo.buildMessage(false, 0)));
 			Assert.assertTrue(
+				messageRecords.toString(),
 				messageRecords.contains(Echo.buildMessage(false, 1)));
 			Assert.assertTrue(
+				messageRecords.toString(),
 				messageRecords.contains(Echo.buildMessage(true, 0)));
 			Assert.assertTrue(
+				messageRecords.toString(),
 				messageRecords.contains(Echo.buildMessage(true, 1)));
 		}
 

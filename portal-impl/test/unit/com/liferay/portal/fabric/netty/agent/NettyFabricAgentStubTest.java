@@ -201,7 +201,8 @@ public class NettyFabricAgentStubTest {
 			nettyFabricAgentStub.getFabricWorkers();
 
 		Assert.assertEquals(fabricWorkers.toString(), 1, fabricWorkers.size());
-		Assert.assertTrue(fabricWorkers.contains(fabricWorker));
+		Assert.assertTrue(
+			fabricWorkers.toString(), fabricWorkers.contains(fabricWorker));
 
 		NoticeableFuture<String> noticeableFuture =
 			fabricWorker.getProcessNoticeableFuture();
@@ -212,7 +213,7 @@ public class NettyFabricAgentStubTest {
 			(NettyFabricWorkerStub<String>)
 				nettyFabricAgentStub.takeNettyStubFabricWorker(id);
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 
 		Map<Path, Path> outputPathMap = ReflectionTestUtil.getFieldValue(
 			nettyFabricWorkerStub, "_outputPathMap");
@@ -279,7 +280,8 @@ public class NettyFabricAgentStubTest {
 			Collection<? extends FabricWorker<?>> fabricWorkers =
 				nettyFabricAgentStub.getFabricWorkers();
 
-			Assert.assertTrue(fabricWorkers.isEmpty());
+			Assert.assertTrue(
+				fabricWorkers.toString(), fabricWorkers.isEmpty());
 		}
 		finally {
 			channelPipeline.removeFirst();
@@ -323,7 +325,8 @@ public class NettyFabricAgentStubTest {
 			Collection<? extends FabricWorker<?>> fabricWorkers =
 				nettyFabricAgentStub.getFabricWorkers();
 
-			Assert.assertTrue(fabricWorkers.isEmpty());
+			Assert.assertTrue(
+				fabricWorkers.toString(), fabricWorkers.isEmpty());
 		}
 		finally {
 			channelPipeline.removeFirst();
@@ -376,7 +379,8 @@ public class NettyFabricAgentStubTest {
 			Collection<? extends FabricWorker<?>> fabricWorkers =
 				nettyFabricAgentStub.getFabricWorkers();
 
-			Assert.assertTrue(fabricWorkers.isEmpty());
+			Assert.assertTrue(
+				fabricWorkers.toString(), fabricWorkers.isEmpty());
 		}
 		finally {
 			channelPipeline.removeFirst();
@@ -415,7 +419,7 @@ public class NettyFabricAgentStubTest {
 		Collection<? extends FabricWorker<?>> fabricWorkers =
 			nettyFabricAgentStub.getFabricWorkers();
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 	}
 
 	@Test
@@ -446,7 +450,7 @@ public class NettyFabricAgentStubTest {
 		Collection<? extends FabricWorker<?>> fabricWorkers =
 			nettyFabricAgentStub.getFabricWorkers();
 
-		Assert.assertTrue(fabricWorkers.isEmpty());
+		Assert.assertTrue(fabricWorkers.toString(), fabricWorkers.isEmpty());
 	}
 
 	@Test

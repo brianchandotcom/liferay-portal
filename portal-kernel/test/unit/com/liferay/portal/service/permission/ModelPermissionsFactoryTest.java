@@ -167,7 +167,7 @@ public class ModelPermissionsFactoryTest extends PowerMockito {
 
 		Collection<String> roleNames = modelPermissions.getRoleNames();
 
-		Assert.assertTrue(roleNames.isEmpty());
+		Assert.assertTrue(roleNames.toString(), roleNames.isEmpty());
 	}
 
 	@Test

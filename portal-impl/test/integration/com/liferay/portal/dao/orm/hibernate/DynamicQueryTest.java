@@ -102,7 +102,9 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
+		Assert.assertTrue(
+			dynamicQueryClassNames.toString(),
+			dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
@@ -126,7 +128,9 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
+		Assert.assertTrue(
+			dynamicQueryClassNames.toString(),
+			dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
@@ -154,7 +158,9 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
+		Assert.assertTrue(
+			dynamicQueryClassNames.toString(),
+			dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test
@@ -206,7 +212,9 @@ public class DynamicQueryTest {
 		List<ClassName> dynamicQueryClassNames =
 			ClassNameLocalServiceUtil.dynamicQuery(dynamicQuery);
 
-		Assert.assertTrue(dynamicQueryClassNames.isEmpty());
+		Assert.assertTrue(
+			dynamicQueryClassNames.toString(),
+			dynamicQueryClassNames.isEmpty());
 	}
 
 	@Test

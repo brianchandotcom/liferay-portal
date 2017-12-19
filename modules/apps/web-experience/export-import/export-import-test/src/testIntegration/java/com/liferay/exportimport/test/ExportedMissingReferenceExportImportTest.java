@@ -208,7 +208,9 @@ public class ExportedMissingReferenceExportImportTest
 		List<Element> missingReferenceElements =
 			missingReferencesElement.elements();
 
-		Assert.assertFalse(missingReferenceElements.isEmpty());
+		Assert.assertFalse(
+			missingReferenceElements.toString(),
+			missingReferenceElements.isEmpty());
 	}
 
 	@Override

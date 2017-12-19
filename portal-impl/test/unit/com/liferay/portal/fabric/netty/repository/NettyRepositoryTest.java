@@ -177,7 +177,7 @@ public class NettyRepositoryTest {
 			_nettyRepository.dispose(false);
 
 			Assert.assertTrue(Files.notExists(localFilePath));
-			Assert.assertTrue(pathMap.isEmpty());
+			Assert.assertTrue(pathMap.toString(), pathMap.isEmpty());
 			Assert.assertTrue(Files.exists(_repositoryPath));
 
 			_nettyRepository.dispose(true);
@@ -186,7 +186,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -306,11 +306,11 @@ public class NettyRepositoryTest {
 			Assert.assertTrue(Files.notExists(tempFilePath));
 			Assert.assertTrue(Files.exists(localFilePath1));
 			Assert.assertTrue(Files.exists(localFilePath2));
-			Assert.assertTrue(pathMap.isEmpty());
+			Assert.assertTrue(pathMap.toString(), pathMap.isEmpty());
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -405,7 +405,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -476,7 +476,7 @@ public class NettyRepositoryTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -796,7 +796,7 @@ public class NettyRepositoryTest {
 					Assert.assertSame(exception, throwable.getCause());
 				}
 
-				Assert.assertTrue(logRecords.isEmpty());
+				Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			}
 		}
 	}

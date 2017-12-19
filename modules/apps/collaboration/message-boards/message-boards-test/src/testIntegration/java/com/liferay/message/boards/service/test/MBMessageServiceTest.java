@@ -212,8 +212,10 @@ public class MBMessageServiceTest {
 
 					String message = loggingEvent.getRenderedMessage();
 
-					Assert.assertTrue(message.contains("Your server command"));
 					Assert.assertTrue(
+						message, message.contains("Your server command"));
+					Assert.assertTrue(
+						message,
 						message.contains(
 							"encountered a deadlock situation. Please re-run " +
 								"your command."));

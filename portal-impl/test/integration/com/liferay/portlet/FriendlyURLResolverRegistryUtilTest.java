@@ -53,7 +53,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 			FriendlyURLResolverRegistryUtil.
 				getFriendlyURLResolversAsCollection();
 
-		Assert.assertFalse(collection.isEmpty());
+		Assert.assertFalse(collection.toString(), collection.isEmpty());
 
 		FriendlyURLResolver friendlyURLResolver =
 			FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(
@@ -89,7 +89,7 @@ public class FriendlyURLResolverRegistryUtilTest {
 				FriendlyURLResolverRegistryUtil.
 					getFriendlyURLResolversAsCollection();
 
-			Assert.assertFalse(collection.isEmpty());
+			Assert.assertFalse(collection.toString(), collection.isEmpty());
 
 			FriendlyURLResolver friendlyURLResolver =
 				FriendlyURLResolverRegistryUtil.getFriendlyURLResolver(

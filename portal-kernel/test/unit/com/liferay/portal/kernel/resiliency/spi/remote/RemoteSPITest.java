@@ -439,8 +439,11 @@ public class RemoteSPITest {
 		Assert.assertEquals(
 			exceptionTypes.toString(), 2, exceptionTypes.size());
 		Assert.assertTrue(
+			exceptionTypes.toString(),
 			exceptionTypes.contains(ClassNotFoundException.class));
-		Assert.assertTrue(exceptionTypes.contains(IOException.class));
+		Assert.assertTrue(
+			exceptionTypes.toString(),
+			exceptionTypes.contains(IOException.class));
 
 		// Write object
 
@@ -481,7 +484,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -568,7 +571,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 
 		unexported();
@@ -611,7 +614,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 
 		Assert.assertNull(future.get());
@@ -730,7 +733,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 
 		unexported();
@@ -753,7 +756,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 
 		unexported();
@@ -815,7 +818,7 @@ public class RemoteSPITest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 

@@ -97,7 +97,8 @@ public class AssetEntryServiceTest {
 
 		AssetEntry assetEntry = assetEntries.get(0);
 
-		Assert.assertTrue(assetEntries.contains(assetEntry));
+		Assert.assertTrue(
+			assetEntries.toString(), assetEntries.contains(assetEntry));
 	}
 
 	@Test

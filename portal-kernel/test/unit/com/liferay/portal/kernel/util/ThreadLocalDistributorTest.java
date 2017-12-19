@@ -118,7 +118,7 @@ public class ThreadLocalDistributorTest {
 
 			threadLocalDistributor.afterPropertiesSet();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			threadLocals = ReflectionTestUtil.getFieldValue(
 				threadLocalDistributor, "_threadLocals");

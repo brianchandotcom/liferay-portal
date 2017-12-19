@@ -139,8 +139,10 @@ public class SPIAgentFactoryUtilTest {
 		Assert.assertEquals(
 			spiAgentClassNames.toString(), 2, spiAgentClassNames.size());
 		Assert.assertTrue(
+			spiAgentClassNames.toString(),
 			spiAgentClassNames.contains(BadMockSPIAgent.class.getName()));
 		Assert.assertTrue(
+			spiAgentClassNames.toString(),
 			spiAgentClassNames.contains(MockSPIAgent.class.getName()));
 
 		// Individual unregister and register

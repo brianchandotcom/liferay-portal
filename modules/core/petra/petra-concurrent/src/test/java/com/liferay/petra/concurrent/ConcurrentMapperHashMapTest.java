@@ -120,8 +120,9 @@ public class ConcurrentMapperHashMapTest {
 		Set<Map.Entry<Key, Value>> entrySet = _concurrentMap.entrySet();
 
 		Assert.assertSame(entrySet, _concurrentMap.entrySet());
-		Assert.assertTrue(entrySet.isEmpty());
-		Assert.assertFalse(entrySet.contains(new Object()));
+		Assert.assertTrue(entrySet.toString(), entrySet.isEmpty());
+		Assert.assertFalse(
+			entrySet.toString(), entrySet.contains(new Object()));
 		Assert.assertFalse(entrySet.remove(new Object()));
 
 		Assert.assertNull(_concurrentMap.put(_testKey, _testValue));
@@ -130,12 +131,14 @@ public class ConcurrentMapperHashMapTest {
 
 		Assert.assertEquals(entrySet.toString(), 1, entrySet.size());
 		Assert.assertTrue(
+			entrySet.toString(),
 			entrySet.contains(
 				new SimpleEntry<Key, Value>(_testKey, _testValue)));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY, Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertFalse(
+			entrySet.toString(),
 			entrySet.contains(
 				new SimpleEntry<Key, Value>(_testKey, new Value(""))));
 
@@ -194,7 +197,7 @@ public class ConcurrentMapperHashMapTest {
 
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
-		Assert.assertTrue(entrySet.contains(entry));
+		Assert.assertTrue(entrySet.toString(), entrySet.contains(entry));
 
 		_assertEventQueue(
 			Event.UNMAP_KEY_FOR_QUERY, Event.MAP_KEY_FOR_QUERY,
@@ -213,8 +216,8 @@ public class ConcurrentMapperHashMapTest {
 
 		iterator.remove();
 
-		Assert.assertTrue(entrySet.isEmpty());
-		Assert.assertFalse(entrySet.contains(entry));
+		Assert.assertTrue(entrySet.toString(), entrySet.isEmpty());
+		Assert.assertFalse(entrySet.toString(), entrySet.contains(entry));
 
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY, Event.MAP_KEY_FOR_QUERY);
 
@@ -226,7 +229,7 @@ public class ConcurrentMapperHashMapTest {
 
 		entrySet.clear();
 
-		Assert.assertTrue(entrySet.isEmpty());
+		Assert.assertTrue(entrySet.toString(), entrySet.isEmpty());
 	}
 
 	@Test
@@ -258,8 +261,8 @@ public class ConcurrentMapperHashMapTest {
 		Set<Key> keySet = _concurrentMap.keySet();
 
 		Assert.assertSame(keySet, _concurrentMap.keySet());
-		Assert.assertTrue(keySet.isEmpty());
-		Assert.assertFalse(keySet.contains(_testKey));
+		Assert.assertTrue(keySet.toString(), keySet.isEmpty());
+		Assert.assertFalse(keySet.toString(), keySet.contains(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
@@ -276,7 +279,7 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.UNMAP_KEY_FOR_QUERY);
 
 		Assert.assertEquals(keySetString, 1, keySet.size());
-		Assert.assertTrue(keySet.contains(_testKey));
+		Assert.assertTrue(keySet.toString(), keySet.contains(_testKey));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
@@ -307,14 +310,14 @@ public class ConcurrentMapperHashMapTest {
 
 		Assert.assertEquals(_testKey, key);
 		Assert.assertFalse(iterator.hasNext());
-		Assert.assertTrue(keySet.contains(key));
+		Assert.assertTrue(keySet.toString(), keySet.contains(key));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
 		iterator.remove();
 
-		Assert.assertTrue(keySet.isEmpty());
-		Assert.assertFalse(keySet.contains(key));
+		Assert.assertTrue(keySet.toString(), keySet.isEmpty());
+		Assert.assertFalse(keySet.toString(), keySet.contains(key));
 
 		_assertEventQueue(Event.MAP_KEY_FOR_QUERY);
 
@@ -706,8 +709,8 @@ public class ConcurrentMapperHashMapTest {
 		Collection<Value> values = _concurrentMap.values();
 
 		Assert.assertSame(values, _concurrentMap.values());
-		Assert.assertTrue(values.isEmpty());
-		Assert.assertFalse(values.contains(new Value("")));
+		Assert.assertTrue(values.toString(), values.isEmpty());
+		Assert.assertFalse(values.toString(), values.contains(new Value("")));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
@@ -721,11 +724,11 @@ public class ConcurrentMapperHashMapTest {
 		_assertEventQueue(Event.UNMAP_VALUE_FOR_QUERY);
 
 		Assert.assertEquals(valuesString, 1, values.size());
-		Assert.assertTrue(values.contains(_testValue));
+		Assert.assertTrue(values.toString(), values.contains(_testValue));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
-		Assert.assertFalse(values.contains(_testValue2));
+		Assert.assertFalse(values.toString(), values.contains(_testValue2));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
@@ -751,14 +754,14 @@ public class ConcurrentMapperHashMapTest {
 
 		Assert.assertSame(_testValue, value);
 		Assert.assertFalse(iterator.hasNext());
-		Assert.assertTrue(values.contains(value));
+		Assert.assertTrue(values.toString(), values.contains(value));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 
 		iterator.remove();
 
-		Assert.assertTrue(values.isEmpty());
-		Assert.assertFalse(values.contains(value));
+		Assert.assertTrue(values.toString(), values.isEmpty());
+		Assert.assertFalse(values.toString(), values.contains(value));
 
 		_assertEventQueue(Event.MAP_VALUE_FOR_QUERY);
 

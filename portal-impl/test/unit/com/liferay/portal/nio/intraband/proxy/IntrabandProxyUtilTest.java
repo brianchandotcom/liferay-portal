@@ -319,9 +319,11 @@ public class IntrabandProxyUtilTest {
 
 		Assert.assertEquals(idMethods.toString(), 2, idMethods.size());
 		Assert.assertTrue(
+			idMethods.toString(),
 			idMethods.contains(
 				TestExtractMethodsClass5.class.getMethod("getId1")));
 		Assert.assertTrue(
+			idMethods.toString(),
 			idMethods.contains(
 				TestExtractMethodsClass5.class.getMethod("getId2")));
 
@@ -985,7 +987,7 @@ public class IntrabandProxyUtilTest {
 					templateStub, "_syncSend",
 					new Class<?>[] {Serializer.class}, new Serializer()));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			rpcResponseReference.set(null);
 
@@ -996,7 +998,7 @@ public class IntrabandProxyUtilTest {
 				ReflectionTestUtil.invoke(
 					templateStub, "_syncSend",
 					new Class<?>[] {Serializer.class}, new Serializer()));
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 	}
 
@@ -2068,7 +2070,7 @@ public class IntrabandProxyUtilTest {
 			}
 
 			if (!proxyClassesDumpEnabled || !logEnabled) {
-				Assert.assertTrue(logRecords.isEmpty());
+				Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 			}
 		}
 
@@ -2090,6 +2092,7 @@ public class IntrabandProxyUtilTest {
 			String message = throwable.getMessage();
 
 			Assert.assertTrue(
+				message,
 				message.contains(
 					"duplicate class definition for name: \"" +
 						Type.getInternalName(TestClass.class) + "\""));

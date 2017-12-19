@@ -203,7 +203,8 @@ public class ComboServletStaticURLGeneratorTest {
 
 		comboServletStaticURLGenerator.generate(_toList(portlet));
 
-		Assert.assertTrue(visitedURLs.contains("/css/main.css"));
+		Assert.assertTrue(
+			visitedURLs.toString(), visitedURLs.contains("/css/main.css"));
 	}
 
 	@Test
@@ -309,7 +310,7 @@ public class ComboServletStaticURLGeneratorTest {
 		List<String> urls = comboServletStaticURLGenerator.generate(
 			_toList(portlet));
 
-		Assert.assertTrue(urls.isEmpty());
+		Assert.assertTrue(urls.toString(), urls.isEmpty());
 	}
 
 	@Test

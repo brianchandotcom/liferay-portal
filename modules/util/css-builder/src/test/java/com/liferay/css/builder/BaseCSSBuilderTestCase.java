@@ -112,7 +112,7 @@ public abstract class BaseCSSBuilderTestCase {
 
 		css = FileTestUtil.read(cssPath);
 
-		Assert.assertTrue(css.contains("brown"));
+		Assert.assertTrue(css, css.contains("brown"));
 	}
 
 	@Test

@@ -79,7 +79,8 @@ public class NamespaceServletRequestTest {
 
 		Assert.assertEquals(
 			attributeNames.toString(), 1, attributeNames.size());
-		Assert.assertTrue(attributeNames.contains(attributeName));
+		Assert.assertTrue(
+			attributeNames.toString(), attributeNames.contains(attributeName));
 
 		Assert.assertEquals(
 			attributeValue, dynamicServletRequest.getAttribute(attributeName));

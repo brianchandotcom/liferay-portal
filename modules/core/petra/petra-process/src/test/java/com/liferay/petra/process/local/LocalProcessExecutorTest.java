@@ -844,13 +844,15 @@ public class LocalProcessExecutorTest {
 
 		String message = processLog.getMessage();
 
-		Assert.assertTrue(message.contains("Invoked generic process callable"));
+		Assert.assertTrue(
+			message, message.contains("Invoked generic process callable"));
 
 		processLog = processLogs.remove(0);
 
 		message = processLog.getMessage();
 
-		Assert.assertTrue(message.contains("Invoked generic process callable"));
+		Assert.assertTrue(
+			message, message.contains("Invoked generic process callable"));
 
 		// Severe level
 

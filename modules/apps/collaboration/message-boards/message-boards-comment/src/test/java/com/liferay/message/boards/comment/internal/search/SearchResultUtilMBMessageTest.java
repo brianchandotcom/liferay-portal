@@ -103,7 +103,9 @@ public class SearchResultUtilMBMessageTest
 		List<RelatedSearchResult<Comment>> commentRelatedSearchResults =
 			searchResult.getCommentRelatedSearchResults();
 
-		Assert.assertTrue(commentRelatedSearchResults.isEmpty());
+		Assert.assertTrue(
+			commentRelatedSearchResults.toString(),
+			commentRelatedSearchResults.isEmpty());
 
 		verifyZeroInteractions(_mbMessageLocalService);
 

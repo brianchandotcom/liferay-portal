@@ -38,8 +38,12 @@ public class LicenseUtilAixTest extends BaseLicenseUtilTestCase {
 	@Override
 	protected void testMacAddresses(Set<String> macAddresses) {
 		Assert.assertEquals(macAddresses.toString(), 2, macAddresses.size());
-		Assert.assertTrue(macAddresses.contains("66:da:90:6b:f1:17"));
-		Assert.assertTrue(macAddresses.contains("66:da:90:6b:f1:18"));
+		Assert.assertTrue(
+			macAddresses.toString(),
+			macAddresses.contains("66:da:90:6b:f1:17"));
+		Assert.assertTrue(
+			macAddresses.toString(),
+			macAddresses.contains("66:da:90:6b:f1:18"));
 	}
 
 }

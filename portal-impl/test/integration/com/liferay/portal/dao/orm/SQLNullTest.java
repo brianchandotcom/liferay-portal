@@ -525,7 +525,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -552,10 +552,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isOracle()) {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -583,10 +583,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isOracle()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -613,7 +613,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -643,10 +643,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isSybase()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -674,10 +674,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isSybase()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -708,10 +708,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isSybase()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -738,7 +738,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -764,7 +764,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertFalse(list.isEmpty());
+			Assert.assertFalse(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -790,7 +790,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -819,7 +819,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -846,10 +846,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isSybase()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -876,7 +876,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -897,7 +897,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertFalse(list.isEmpty());
+			Assert.assertFalse(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -918,7 +918,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -950,7 +950,7 @@ public class SQLNullTest {
 
 			List<Object> list = sqlQuery.list();
 
-			Assert.assertTrue(list.isEmpty());
+			Assert.assertTrue(list.toString(), list.isEmpty());
 		}
 		finally {
 			_sessionFactory.closeSession(session);
@@ -977,10 +977,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isSybase()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {
@@ -1014,10 +1014,10 @@ public class SQLNullTest {
 			List<Object> list = sqlQuery.list();
 
 			if (isSybase()) {
-				Assert.assertFalse(list.isEmpty());
+				Assert.assertFalse(list.toString(), list.isEmpty());
 			}
 			else {
-				Assert.assertTrue(list.isEmpty());
+				Assert.assertTrue(list.toString(), list.isEmpty());
 			}
 		}
 		finally {

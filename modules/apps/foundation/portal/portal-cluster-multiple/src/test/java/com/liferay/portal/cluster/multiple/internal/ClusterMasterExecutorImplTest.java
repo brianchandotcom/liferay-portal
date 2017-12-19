@@ -209,7 +209,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 		clusterMasterExecutorImpl.deactivate();
 
-		Assert.assertTrue(clusterEventListeners.isEmpty());
+		Assert.assertTrue(
+			clusterEventListeners.toString(), clusterEventListeners.isEmpty());
 
 		// Test 2, destory when cluster link is disabled
 
@@ -277,7 +278,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 		}
 
 		// Test 3, execute with exception
@@ -501,7 +502,8 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 
 					List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-					Assert.assertTrue(logRecords.isEmpty());
+					Assert.assertTrue(
+						logRecords.toString(), logRecords.isEmpty());
 				}
 			}
 

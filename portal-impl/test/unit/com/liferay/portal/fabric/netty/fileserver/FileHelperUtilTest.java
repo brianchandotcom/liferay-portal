@@ -721,7 +721,7 @@ public class FileHelperUtilTest {
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			try (FileSystem fileSystem = FileSystems.newFileSystem(
 					zipFilePath, null)) {
@@ -736,7 +736,7 @@ public class FileHelperUtilTest {
 				FileHelperUtil.unzip(
 					zipFilePath, FileHelperUtil.TEMP_DIR_PATH));
 
-			Assert.assertTrue(logRecords.isEmpty());
+			Assert.assertTrue(logRecords.toString(), logRecords.isEmpty());
 
 			FileServerTestUtil.assertFileEquals(folderPath, unzipFolderPath);
 		}

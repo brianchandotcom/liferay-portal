@@ -58,8 +58,8 @@ public class JSONIncludesManagerTest {
 
 		String json = JSONFactoryUtil.looseSerialize(four);
 
-		Assert.assertTrue(json.contains("nuMber"));
-		Assert.assertTrue(json.contains("vaLue"));
+		Assert.assertTrue(json, json.contains("nuMber"));
+		Assert.assertTrue(json, json.contains("vaLue"));
 	}
 
 	@Test

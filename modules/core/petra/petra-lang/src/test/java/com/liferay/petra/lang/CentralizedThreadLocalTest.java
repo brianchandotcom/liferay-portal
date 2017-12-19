@@ -251,12 +251,15 @@ public class CentralizedThreadLocalTest {
 		Map<CentralizedThreadLocal<?>, Object> longLivedThreadLocals =
 			CentralizedThreadLocal.getLongLivedThreadLocals();
 
-		Assert.assertTrue(longLivedThreadLocals.isEmpty());
+		Assert.assertTrue(
+			longLivedThreadLocals.toString(), longLivedThreadLocals.isEmpty());
 
 		Map<CentralizedThreadLocal<?>, Object> shortLivedThreadLocals =
 			CentralizedThreadLocal.getShortLivedThreadLocals();
 
-		Assert.assertTrue(shortLivedThreadLocals.isEmpty());
+		Assert.assertTrue(
+			shortLivedThreadLocals.toString(),
+			shortLivedThreadLocals.isEmpty());
 
 		// Trigger registration
 
@@ -272,7 +275,9 @@ public class CentralizedThreadLocalTest {
 		shortLivedThreadLocals =
 			CentralizedThreadLocal.getShortLivedThreadLocals();
 
-		Assert.assertTrue(shortLivedThreadLocals.isEmpty());
+		Assert.assertTrue(
+			shortLivedThreadLocals.toString(),
+			shortLivedThreadLocals.isEmpty());
 
 		shortLivedCentralizedThreadLocal.set("shortLive");
 
@@ -298,12 +303,15 @@ public class CentralizedThreadLocalTest {
 		longLivedThreadLocals =
 			CentralizedThreadLocal.getLongLivedThreadLocals();
 
-		Assert.assertTrue(longLivedThreadLocals.isEmpty());
+		Assert.assertTrue(
+			longLivedThreadLocals.toString(), longLivedThreadLocals.isEmpty());
 
 		shortLivedThreadLocals =
 			CentralizedThreadLocal.getShortLivedThreadLocals();
 
-		Assert.assertTrue(shortLivedThreadLocals.isEmpty());
+		Assert.assertTrue(
+			shortLivedThreadLocals.toString(),
+			shortLivedThreadLocals.isEmpty());
 
 		// Set threadlocals
 

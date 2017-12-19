@@ -104,7 +104,8 @@ public class SPISynchronousQueueUtilTest {
 
 		SPISynchronousQueueUtil.destroySynchronousQueue(spiUUID);
 
-		Assert.assertTrue(synchronizerRegistry.isEmpty());
+		Assert.assertTrue(
+			synchronizerRegistry.toString(), synchronizerRegistry.isEmpty());
 	}
 
 }

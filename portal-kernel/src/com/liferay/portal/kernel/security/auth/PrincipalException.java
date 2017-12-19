@@ -173,7 +173,7 @@ public class PrincipalException extends PortalException {
 				String.format(
 					"User %s must have %s permission for %s %s", userId,
 					StringUtil.merge(actionIds, ","), resourceName,
-					(resourceId == 0) ? "" : 0),
+					(resourceId == 0) ? "" : resourceId),
 				cause);
 
 			this.userId = userId;

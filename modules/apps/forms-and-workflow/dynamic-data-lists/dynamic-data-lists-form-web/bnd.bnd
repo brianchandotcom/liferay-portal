@@ -1,8 +1,0 @@
-Bundle-Name: Liferay Dynamic Data Lists Form Web
-Bundle-SymbolicName: com.liferay.dynamic.data.lists.form.web
-Bundle-Version: 2.0.6
-Liferay-JS-Config: /META-INF/resources/admin/js/config.js
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Dynamic Data Lists
-Web-ContextPath: /dynamic-data-lists-form-web
--dsannotations-options: inherit

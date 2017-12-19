@@ -23,5 +23,4 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
-	testIntegrationCompile project(":apps:forms-and-workflow:dynamic-data-lists:dynamic-data-lists-form-web")
 }

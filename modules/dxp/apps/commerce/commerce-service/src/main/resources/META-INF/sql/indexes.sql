@@ -67,11 +67,6 @@ create index IX_2C5B7A3E on CommercePriceList (groupId, status);
 create index IX_FCE28706 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_554D1708 on CommercePriceList (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create unique index IX_90700B64 on CommercePriceListQualificationTypeRel (CPriceListQualificationType[$COLUMN_LENGTH:75$], commercePriceListId);
-create unique index IX_97EB41A0 on CommercePriceListQualificationTypeRel (commercePriceListId, CPriceListQualificationType[$COLUMN_LENGTH:75$]);
-create index IX_2C45336 on CommercePriceListQualificationTypeRel (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_10942F38 on CommercePriceListQualificationTypeRel (uuid_[$COLUMN_LENGTH:75$], groupId);
-
 create index IX_49C93338 on CommerceRegion (commerceCountryId, active_);
 create index IX_3BC85C89 on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_DBA0714B on CommerceRegion (uuid_[$COLUMN_LENGTH:75$], groupId);
@@ -91,5 +86,5 @@ create unique index IX_5D3847C2 on CommerceTierPriceEntry (uuid_[$COLUMN_LENGTH:
 
 create index IX_4500A0CA on CommerceWarehouse (groupId, commerceCountryId);
 
-create unique index IX_A8811A01 on CommerceWarehouseItem (CPInstanceId, commerceWarehouseId);
+create index IX_B905F012 on CommerceWarehouseItem (CPInstanceId);
 create unique index IX_8FBE7F43 on CommerceWarehouseItem (commerceWarehouseId, CPInstanceId);

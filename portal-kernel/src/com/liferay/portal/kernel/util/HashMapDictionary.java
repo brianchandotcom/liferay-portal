@@ -64,6 +64,11 @@ public class HashMapDictionary<K, V> extends Dictionary<K, V> {
 		return _map.size();
 	}
 
+	@Override
+	public String toString() {
+		return _map.toString();
+	}
+
 	private final Map<K, V> _map = new HashMap<>();
 
 }

@@ -232,6 +232,11 @@ public class MBDiscussionLocalServiceUtil {
 		return getService().getDiscussion(className, classPK);
 	}
 
+	public static java.util.List<com.liferay.message.boards.model.MBDiscussion> getDiscussions(
+		java.lang.String className) {
+		return getService().getDiscussions(className);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return getService().getExportActionableDynamicQuery(portletDataContext);

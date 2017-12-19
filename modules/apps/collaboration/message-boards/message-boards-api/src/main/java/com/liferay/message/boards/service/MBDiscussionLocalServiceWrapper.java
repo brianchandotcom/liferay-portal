@@ -246,6 +246,12 @@ public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService
 	}
 
 	@Override
+	public java.util.List<com.liferay.message.boards.model.MBDiscussion> getDiscussions(
+		java.lang.String className) {
+		return _mbDiscussionLocalService.getDiscussions(className);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
 		return _mbDiscussionLocalService.getExportActionableDynamicQuery(portletDataContext);

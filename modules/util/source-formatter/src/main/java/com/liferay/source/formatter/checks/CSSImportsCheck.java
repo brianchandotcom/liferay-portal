@@ -31,6 +31,10 @@ public class CSSImportsCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
+		if (isSubrepository() || isReadOnly(absolutePath)) {
+			return content;
+		}
+
 		Matcher matcher = _importsPattern.matcher(content);
 
 		while (matcher.find()) {

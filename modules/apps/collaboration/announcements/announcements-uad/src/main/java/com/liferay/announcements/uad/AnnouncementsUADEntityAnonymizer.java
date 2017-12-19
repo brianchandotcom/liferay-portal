@@ -15,10 +15,10 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.user.associated.data.model.BaseUADEntityAnonymizer;
 import com.liferay.user.associated.data.model.UADEntity;
 import com.liferay.user.associated.data.model.UADEntityAggregator;
 import com.liferay.user.associated.data.model.UADEntityAnonymizer;
-import com.liferay.user.associated.data.model.impl.UADEntityAnonymizerImpl;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = UADEntityAnonymizer.class
 )
-public class AnnouncementsUADEntityAnonymizer extends UADEntityAnonymizerImpl {
+public class AnnouncementsUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 
 	@Override
 	public void autoAnonymize(UADEntity uadEntity) {

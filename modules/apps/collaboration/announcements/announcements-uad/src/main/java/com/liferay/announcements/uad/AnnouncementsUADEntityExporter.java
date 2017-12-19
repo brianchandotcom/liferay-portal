@@ -15,10 +15,10 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.user.associated.data.model.BaseUADEntityExporter;
 import com.liferay.user.associated.data.model.UADEntity;
 import com.liferay.user.associated.data.model.UADEntityAggregator;
 import com.liferay.user.associated.data.model.UADEntityExporter;
-import com.liferay.user.associated.data.model.impl.UADEntityExporterImpl;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = UADEntityExporter.class
 )
-public class AnnouncementsUADEntityExporter extends UADEntityExporterImpl {
+public class AnnouncementsUADEntityExporter extends BaseUADEntityExporter {
 
 	@Override
 	public void export(UADEntity uadEntity) {

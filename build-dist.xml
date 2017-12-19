@@ -2839,15 +2839,12 @@ this task.
 			<replacevalue></replacevalue>
 		</replace>
 
-		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
-			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:weld:2.0"/>]]></replacetoken>
-			<replacevalue></replacevalue>
-		</replace>
-
-		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
-			<replacetoken><![CDATA[<subsystem xmlns="urn:jboss:domain:weld:3.0"/>]]></replacetoken>
-			<replacevalue></replacevalue>
-		</replace>
+		<replaceregexp
+			file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml"
+			flags="g"
+			match="&lt;subsystem xmlns=&quot;urn:jboss:domain:weld:\d\.\d&quot;\/&gt;"
+			replace=""
+		/>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
 			<replacetoken><![CDATA[</extensions>]]></replacetoken>
@@ -2868,17 +2865,15 @@ this task.
 		</replace>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">
-			<replacetoken><![CDATA[<security-domains>]]></replacetoken>
-			<replacevalue>
-				<![CDATA[
-					<security-domains>
-						<security-domain name="PortalRealm">
-							<authentication>
-								<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
-							</authentication>
-						</security-domain>
-				]]>
-			</replacevalue>
+			<replacetoken><![CDATA[">
+            <security-domains>]]></replacetoken>
+			<replacevalue><![CDATA[">
+            <security-domains>
+				<security-domain name="PortalRealm">
+					<authentication>
+						<login-module code="com.liferay.portal.security.jaas.PortalLoginModule" flag="required" />
+					</authentication>
+				</security-domain>]]></replacevalue>
 		</replace>
 
 		<replace file="${app.server.wildfly.dir}/standalone/configuration/standalone.xml">

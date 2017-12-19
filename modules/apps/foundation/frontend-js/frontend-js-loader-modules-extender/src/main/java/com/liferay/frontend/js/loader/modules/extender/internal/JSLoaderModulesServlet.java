@@ -313,7 +313,7 @@ public class JSLoaderModulesServlet extends HttpServlet {
 			}
 		}
 
-		for (JSPackage jsPackage : _npmRegistry.getJSPackages()) {
+		for (JSPackage jsPackage : _npmRegistry.getResolvedJSPackages()) {
 			printWriter.write(delimiter);
 			printWriter.write("\"");
 			printWriter.write(jsPackage.getResolvedId());

@@ -110,7 +110,7 @@ class SiteNavigationMenuEditor extends State {
 
 		source.setAttribute('drag-parentid', newParentId);
 
-		let children = Array.prototype.slice.call(
+		const children = Array.prototype.slice.call(
 			target.parentNode.querySelectorAll(
 				'.container-item,' + this.menuItemSelector
 			)

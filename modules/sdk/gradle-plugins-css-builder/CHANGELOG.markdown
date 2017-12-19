@@ -55,7 +55,7 @@
 ### Changed
 - [LPS-75633]: Update the [Liferay CSS Builder] dependency to version 2.0.2.
 
-## 2.2.0 - 2017-12-15
+## 2.2.0 - 2017-12-19
 
 ### Changed
 - [LPS-76475]: Replace the `docrootDir`, `portalCommonDir`, `portalCommonFile`,

@@ -2603,7 +2603,7 @@ read-only sub-repositories.
 - [LPS-61099]: Fix configuration exceptions for OSGi modules in
 sub-repositories.
 
-## 5.2.23 - 2017-12-15
+## 5.2.23 - 2017-12-19
 
 ### Changed
 - [LPS-76475]: Update the [Liferay Gradle Plugins] dependency to version 3.5.69.

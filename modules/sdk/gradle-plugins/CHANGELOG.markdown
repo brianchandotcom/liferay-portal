@@ -3141,7 +3141,7 @@ to version 2.3.49.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.520.
 
-## 3.5.69 - 2017-12-15
+## 3.5.69 - 2017-12-19
 
 ### Changed
 - [LPS-76475]: Update the [Liferay CSS Builder] dependency to version 2.1.0.

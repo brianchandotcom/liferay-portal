@@ -1156,7 +1156,7 @@
 
 		<execute macro="FormFields#viewRepeatableTextMultilineField">
 			<var name="fieldHelpText" value="Set the allowed file extensions for template images. A file extension of * will permit all file extensions." />
-			<var name="fieldLabel" value="Small image extensions" />
+			<var name="fieldLabel" value="Small Image Extensions" />
 			<var name="fieldName" value="smallImageExtensions" />
 			<var name="repeatableFieldNumber" value="4" />
 		</execute>
@@ -1168,14 +1168,14 @@
 
 		<execute macro="FormFields#viewRepeatableTextMultilineField">
 			<var name="fieldHelpText" value="Set the allowed file extensions for template images. A file extension of * will permit all file extensions." />
-			<var name="fieldLabel" value="Small image extensions" />
+			<var name="fieldLabel" value="Small Image Extensions" />
 			<var name="fieldName" value="smallImageExtensions" />
 			<var name="repeatableFieldNumber" value="5" />
 		</execute>
 
 		<execute macro="FormFields#viewTextField">
 			<var name="fieldHelpText" value="Set the maximum file size for template images in bytes. A value of 0 can be used to indicate unlimited file size." />
-			<var name="fieldLabel" value="Small image max size" />
+			<var name="fieldLabel" value="Small Image Maximum Size" />
 			<var name="fieldName" value="smallImageMaxSize" />
 		</execute>
 
@@ -1267,11 +1267,20 @@
 		</execute>
 
 		<execute macro="FormFields#viewCheckboxLabel">
+			<var name="fieldLabel" value="Explain Module Resolutions" />
+			<var name="fieldName" value="explainResolutions" />
+		</execute>
+
+		<execute macro="FormFields#viewCheckboxLabel">
 			<var name="fieldLabel" value="Expose Global" />
 			<var name="fieldName" value="exposeGlobal" />
 		</execute>
 
-		<for list="applyVersioning,exposeGlobal" param="fieldName">
+		<for list="applyVersioning,explainResolutions,exposeGlobal" param="fieldName">
+			<execute macro="FormFields#enableCheckbox">
+				<var name="fieldName" value="${fieldName}" />
+			</execute>
+
 			<execute macro="FormFields#viewCheckboxChecked">
 				<var name="fieldName" value="${fieldName}" />
 			</execute>

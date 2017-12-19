@@ -1716,6 +1716,11 @@ public class JavadocFormatter {
 
 			List<String> modifiers = javaClass.getModifiers();
 
+			if (modifiers.isEmpty()) {
+				return _getAdjustedLineNumber(
+					javaModel.getLineNumber(), javaModel);
+			}
+
 			String modifier = modifiers.get(0);
 
 			for (int i = javaClass.getLineNumber() - 1; i < lines.length; i++) {

@@ -24,9 +24,9 @@ import java.util.List;
 /**
  * @author William Newbury
  */
-public class AnnouncementsUADEntityImpl extends UADEntityImpl {
+public class AnnouncementsUADEntity extends UADEntityImpl {
 
-	public AnnouncementsUADEntityImpl(
+	public AnnouncementsUADEntity(
 		long userId, String uadEntityId, String uadRegistryKey,
 		List<UADEntity> childUADEntities) {
 

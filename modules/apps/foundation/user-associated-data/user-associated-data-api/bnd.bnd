@@ -3,4 +3,4 @@ Bundle-SymbolicName: com.liferay.user.associated.data.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.user.associated.data.model,\
-	com.liferay.user.associated.data.service.registry
+	com.liferay.user.associated.data.registry

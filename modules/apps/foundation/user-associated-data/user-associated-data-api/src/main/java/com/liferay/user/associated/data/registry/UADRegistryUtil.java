@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.service.registry;
+package com.liferay.user.associated.data.registry;
 
 import com.liferay.user.associated.data.model.UADEntityAggregator;
 import com.liferay.user.associated.data.model.UADEntityAnonymizer;

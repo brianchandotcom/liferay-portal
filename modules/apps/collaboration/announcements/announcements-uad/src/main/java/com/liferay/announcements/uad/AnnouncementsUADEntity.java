@@ -14,8 +14,8 @@
 
 package com.liferay.announcements.uad;
 
+import com.liferay.user.associated.data.model.BaseUADEntity;
 import com.liferay.user.associated.data.model.UADEntity;
-import com.liferay.user.associated.data.model.impl.UADEntityImpl;
 
 import java.net.URL;
 
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * @author William Newbury
  */
-public class AnnouncementsUADEntity extends UADEntityImpl {
+public class AnnouncementsUADEntity extends BaseUADEntity {
 
 	public AnnouncementsUADEntity(
 		long userId, String uadEntityId, String uadRegistryKey,

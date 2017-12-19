@@ -15,21 +15,34 @@
 package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
+import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.web.constants.UserFormConstants;
 
+import java.io.IOException;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pei-Jung Lan
  */
 public abstract class BaseUserScreenNavigationEntry
 	implements ScreenNavigationEntry<User> {
+
+	public abstract String getActionCommandName();
+
+	public abstract String getJspPath();
 
 	@Override
 	public String getLabel(Locale locale) {
@@ -41,6 +54,20 @@ public abstract class BaseUserScreenNavigationEntry
 		return UserFormConstants.SCREEN_NAVIGATION_KEY_USERS;
 	}
 
+	@Override
+	public void render(HttpServletRequest request, HttpServletResponse response)
+		throws IOException {
+
+		if (getJspPath() == null) {
+			return;
+		}
+
+		request.setAttribute("actionCommandName", getActionCommandName());
+		request.setAttribute("jspPath", getJspPath());
+
+		jspRenderer.renderJSP(request, response, "/edit_user_navigation.jsp");
+	}
+
 	protected ResourceBundle getResourceBundle(Locale locale) {
 		ResourceBundle bundleResourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -48,5 +75,11 @@ public abstract class BaseUserScreenNavigationEntry
 		return new AggregateResourceBundle(
 			bundleResourceBundle, PortalUtil.getResourceBundle(locale));
 	}
+
+	@Reference
+	protected JSPRenderer jspRenderer;
+
+	@Reference
+	protected Portal portal;
 
 }

@@ -249,6 +249,8 @@ public class PageRatingsPortletDataHandler extends BasePortletDataHandler {
 					manifestSummary.addModelDeletionCount(
 						stagedModelType, modelDeletionCount);
 
+					manifestSummary.addModelAdditionCount(stagedModelType, 0);
+
 					return manifestSummary.getModelAdditionCount(
 						stagedModelType);
 				}

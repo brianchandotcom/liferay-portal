@@ -1,4 +1,5 @@
 <definition component-name="support-qa">
+	<property name="deploy.latest.marketplace.app.disabled" value="true" />
 	<property name="portal.fixpack.release" value="true" />
 	<property name="test.ignore.tomcat.ext.environment" value="true" />
 	<property name="testray.main.component.name" value="Patching Tool" />

@@ -5224,14 +5224,23 @@ go]]></replacevalue>
 					</then>
 				</if>
 
-				<delete failonerror="false" includeemptydirs="true">
-					<fileset dir="${test.app.server.liferay.home}/data">
-						<exclude name="hypersonic/lportal.properties" if:true="${keep.hypersonicdb}" />
-						<exclude name="hypersonic/lportal.script" if:true="${keep.hypersonicdb}" />
-					</fileset>
-				</delete>
+				<if>
+					<not>
+						<equals arg1="${keep.cached.app.server.data}" arg2="true" />
+					</not>
+					<then>
+						<delete failonerror="false" includeemptydirs="true">
+							<fileset dir="${test.app.server.liferay.home}/data">
+								<exclude name="hypersonic/lportal.properties" if:true="${keep.hypersonicdb}" />
+								<exclude name="hypersonic/lportal.script" if:true="${keep.hypersonicdb}" />
+							</fileset>
+						</delete>
+					</then>
+				</if>
+
 				<delete dir="${test.app.server.liferay.home}/logs" />
 				<delete dir="${test.app.server.liferay.home}/osgi/state" />
+				<delete dir="${test.app.server.liferay.home}/work" />
 
 				<delete file="${test.app.server.liferay.home}/portal-setup-wizard.properties" />
 			</then>
@@ -5275,8 +5284,15 @@ go]]></replacevalue>
 	</target>
 
 	<target name="deploy-latest-marketplace-apps">
+		<get-testcase-property property.name="deploy.latest.marketplace.app.disabled" />
+
 		<if>
-			<available file="${liferay.home}/osgi/marketplace" />
+			<and>
+				<available file="${liferay.home}/osgi/marketplace" />
+				<not>
+					<equals arg1="${deploy.latest.marketplace.app.disabled}" arg2="true" />
+				</not>
+			</and>
 			<then>
 				<for param="app.file.path">
 					<path>
@@ -8719,8 +8735,15 @@ ANT_OPTS=${env.ANT_OPTS}</echo>
 					]]>
 				</beanshell>
 
+				<get-testcase-property property.name="test.ignore.tomcat.ext.environment" />
+
 				<if>
-					<equals arg1="${enable.ext.environment}" arg2="true" />
+					<and>
+						<equals arg1="${enable.ext.environment}" arg2="true" />
+						<not>
+							<equals arg1="${test.ignore.tomcat.ext.environment}" arg2="true" />
+						</not>
+					</and>
 					<then>
 						<replace file="${app.server.dir}/conf/Catalina/localhost/ROOT.xml">
 							<replacetoken><![CDATA[</Context>]]></replacetoken>

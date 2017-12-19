@@ -1,5 +1,7 @@
 <definition component-name="support-qa">
+	<property name="deploy.latest.marketplace.app.disabled" value="true" />
 	<property name="portal.fixpack.release" value="true" />
+	<property name="test.ignore.tomcat.ext.environment" value="true" />
 	<property name="testray.main.component.name" value="Patching Tool" />
 
 	<var method="TestPropsUtil#get('test.build.fix.pack.zip.url')" name="testBuildFixPackZipURL" />
@@ -13,7 +15,6 @@
 		<description message="Ensures that a fix pack can be reverted." />
 
 		<property name="skip.install-patch" value="true" />
-		<property name="test.assert.warning.exceptions" value="true" />
 
 		<execute macro="SignOut#signOut" />
 
@@ -24,7 +25,8 @@
 		</execute>
 
 		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
+			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
 		</execute>
 
 		<execute macro="SignIn#signIn" />
@@ -40,7 +42,8 @@
 		</execute>
 
 		<execute macro="Portlet#startServer">
-			<var name="deleteLiferayHome" value="false" />
+			<var name="deleteLiferayHome" value="true" />
+			<var name="keepCachedAppServerData" value="true" />
 		</execute>
 
 		<execute macro="SignIn#signIn" />

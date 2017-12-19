@@ -354,6 +354,12 @@
 			<then>
 				<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server -Ddelete.liferay.home=false" />
 			</then>
+			<elseif>
+				<equals arg1="${keepCachedAppServerData}" arg2="true" />
+				<then>
+					<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server -Dkeep.cached.app.server.data=true" />
+				</then>
+			</elseif>
 			<else>
 				<execute function="AntCommand" locator1="build-test.xml" value1="start-app-server" />
 			</else>

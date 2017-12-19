@@ -15,8 +15,11 @@
 package com.liferay.layout.type.controller.full.page.application.internal.access.policy;
 
 import com.liferay.layout.type.controller.full.page.application.internal.constants.FullPageApplicationLayoutTypeControllerConstants;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
-import com.liferay.portal.kernel.model.impl.ModificationDeniedLayoutTypeAccessPolicyImpl;
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,5 +32,20 @@ import org.osgi.service.component.annotations.Component;
 	service = LayoutTypeAccessPolicy.class
 )
 public class FullPageApplicationLayoutTypeAccessPolicy
-	extends ModificationDeniedLayoutTypeAccessPolicyImpl {
+	extends DefaultLayoutTypeAccessPolicyImpl {
+
+	@Override
+	protected boolean isAccessGrantedByPortletOnPage(
+		Layout layout, Portlet portlet) {
+
+		String ppid = layout.getTypeSettingsProperty(
+			"fullPageApplicationPortlet");
+
+		if (StringUtil.equalsIgnoreCase(portlet.getPortletId(), ppid)) {
+			return true;
+		}
+
+		return false;
+	}
+
 }

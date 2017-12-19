@@ -14,14 +14,10 @@
 
 package com.liferay.user.associated.data.model;
 
-import java.util.List;
-
 /**
  * @author William Newbury
  */
 public interface UADEntity {
-
-	public List<UADEntity> getChildUADEntities();
 
 	public String getEditURL();
 
@@ -30,7 +26,5 @@ public interface UADEntity {
 	public String getUADRegistryKey();
 
 	public long getUserId();
-
-	public void setChildUADEntities(List<UADEntity> childUADEntities);
 
 }

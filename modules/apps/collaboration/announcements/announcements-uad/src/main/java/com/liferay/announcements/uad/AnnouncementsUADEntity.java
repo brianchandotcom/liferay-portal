@@ -15,9 +15,6 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.user.associated.data.model.BaseUADEntity;
-import com.liferay.user.associated.data.model.UADEntity;
-
-import java.util.List;
 
 /**
  * @author William Newbury
@@ -25,10 +22,9 @@ import java.util.List;
 public class AnnouncementsUADEntity extends BaseUADEntity {
 
 	public AnnouncementsUADEntity(
-		long userId, String uadEntityId, String uadRegistryKey,
-		List<UADEntity> childUADEntities) {
+		long userId, String uadEntityId, String uadRegistryKey) {
 
-		super(userId, uadEntityId, uadRegistryKey, childUADEntities);
+		super(userId, uadEntityId, uadRegistryKey);
 	}
 
 	@Override

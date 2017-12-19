@@ -41,8 +41,7 @@ public class AnnouncementsUADEntityAggregator extends BaseUADEntityAggregator {
 		List<UADEntity> announcementsUADEntities = new ArrayList<>();
 
 		UADEntity announcementsUADEntity = new AnnouncementsUADEntity(
-			0, "testEntityId", AnnouncementsUADEntity.class.getName(),
-			new ArrayList<UADEntity>());
+			0, "testEntityId", AnnouncementsUADEntity.class.getName());
 
 		announcementsUADEntities.add(announcementsUADEntity);
 
@@ -53,8 +52,7 @@ public class AnnouncementsUADEntityAggregator extends BaseUADEntityAggregator {
 	public UADEntity getUADEntity(String uadEntityId) {
 		return new AnnouncementsUADEntity(
 			0, uadEntityId,
-			"com.liferay.announcements.uad.AnnouncementsUADEntity",
-			new ArrayList<UADEntity>());
+			"com.liferay.announcements.uad.AnnouncementsUADEntity");
 	}
 
 }

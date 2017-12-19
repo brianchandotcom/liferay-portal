@@ -14,27 +14,18 @@
 
 package com.liferay.user.associated.data.model;
 
-import java.util.List;
-
 /**
  * @author William Newbury
  */
 public abstract class BaseUADEntity implements UADEntity {
 
 	public BaseUADEntity(
-		long userId, String uadEntityId, String uadRegistryKey,
-		List<UADEntity> childUADEntities) {
+		long userId, String uadEntityId, String uadRegistryKey) {
 
 		_userId = userId;
 
 		_uadEntityId = uadEntityId;
 		_uadRegistryKey = uadRegistryKey;
-		_childUADEntities = childUADEntities;
-	}
-
-	@Override
-	public List<UADEntity> getChildUADEntities() {
-		return _childUADEntities;
 	}
 
 	@Override
@@ -55,12 +46,6 @@ public abstract class BaseUADEntity implements UADEntity {
 		return _userId;
 	}
 
-	@Override
-	public void setChildUADEntities(List<UADEntity> childUADEntities) {
-		_childUADEntities = childUADEntities;
-	}
-
-	private List<UADEntity> _childUADEntities;
 	private final String _uadEntityId;
 	private final String _uadRegistryKey;
 	private final long _userId;

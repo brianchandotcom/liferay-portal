@@ -175,6 +175,9 @@ public interface MBDiscussionLocalService extends BaseLocalService,
 	public MBDiscussion fetchDiscussion(long discussionId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public MBDiscussion fetchDiscussion(long classNameId, long classPK);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public MBDiscussion fetchDiscussion(java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

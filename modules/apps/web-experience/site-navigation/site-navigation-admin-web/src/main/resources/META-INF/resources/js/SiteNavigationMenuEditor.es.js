@@ -100,7 +100,7 @@ class SiteNavigationMenuEditor extends State {
 			addClasses(source.parentNode, 'ml-5');
 		}
 
-		source.setAttribute('drag-parentid', newParentId);
+		source.dataset.parentId = newParentId;
 
 		const children = Array.prototype.slice.call(
 			target.parentNode.querySelectorAll(
@@ -111,7 +111,7 @@ class SiteNavigationMenuEditor extends State {
 			return value === source.parentNode ? idx : acc;
 		}, 0);
 
-		source.setAttribute('drag-order', order);
+		source.dataset.dragOrder = order;
 	}
 
 	/**
@@ -146,11 +146,11 @@ class SiteNavigationMenuEditor extends State {
 			);
 			formData.append(
 				`${this.namespace}parentSiteNavigationMenuItemId`,
-				data.source.getAttribute('drag-parentid')
+				data.source.dataset.parentId
 			);
 			formData.append(
 				`${this.namespace}order`,
-				data.source.getAttribute('drag-order')
+				data.source.dataset.dragOrder
 			);
 
 			fetch(this.editSiteNavigationMenuItemParentURL, {

@@ -1028,8 +1028,8 @@ public abstract class BaseBuild implements Build {
 						message, "jenkins", "Build Reinvoked",
 						reinvokeRule.notificationRecipients);
 				}
-				catch (
-					InterruptedException | IOException | TimeoutException e) {
+				catch (InterruptedException | IOException |
+					   TimeoutException e) {
 
 					throw new RuntimeException(
 						"Unable to send reinvoke notification", e);

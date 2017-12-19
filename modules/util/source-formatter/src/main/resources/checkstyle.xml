@@ -129,6 +129,9 @@
 			<message key="variable.name.reserved" value="{0} name ending with ''{1}'' is reserved for object ''{2}''" />
 			<message key="variable.rename" value="Rename {0} ''{1}'' to ''{2}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.LineEndCharacterCheck">
+			<message key="end.line.character.incorrect" value="Line should not end with ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.LocalPattern">
 			<message key="pattern.local" value="Create a global variable for Pattern ''{0}''" />
 		</module>

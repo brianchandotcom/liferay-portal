@@ -100,12 +100,12 @@ public class DummyFolderWithMissingDummyPortletDataHandler
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		List<DummyFolder> dummyFolders = (
-			(DummyFolderStagedModelRepository)
-				_dummyFolderStagedModelRepository
-		).getDummyFolders(
-			portletDataContext.getScopeGroupId()
-		);
+		DummyFolderStagedModelRepository dummyFolderStagedModelRepository =
+			(DummyFolderStagedModelRepository)_dummyFolderStagedModelRepository;
+
+		List<DummyFolder> dummyFolders =
+			dummyFolderStagedModelRepository.getDummyFolders(
+				portletDataContext.getScopeGroupId());
 
 		for (DummyFolder dummyFolder : dummyFolders) {
 			Element dummyFolderElement =

@@ -101,12 +101,12 @@ public class DummyFolderWithMissingLayoutPortletDataHandler
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
-		List<DummyFolder> dummyFolders = (
-			(DummyFolderStagedModelRepository)
-				_dummyFolderStagedModelRepository
-		).getDummyFolders(
-			portletDataContext.getScopeGroupId()
-		);
+		DummyFolderStagedModelRepository dummyFolderStagedModelRepository =
+			(DummyFolderStagedModelRepository)_dummyFolderStagedModelRepository;
+
+		List<DummyFolder> dummyFolders =
+			dummyFolderStagedModelRepository.getDummyFolders(
+				portletDataContext.getScopeGroupId());
 
 		List<Layout> layouts = _layoutLocalService.getLayouts(
 			portletDataContext.getScopeGroupId(), false);

@@ -17,114 +17,113 @@ package com.liferay.jenkins.results.parser;
 import java.io.File;
 import java.io.IOException;
 
-import java.util.List;
-
 /**
  * @author Michael Hashimoto
  */
 public class LegacyDataArchive {
 
-	public LegacyDataArchive(
-		LegacyDataArchiveUtil legacyDataArchiveUtil,
-		String legacyDataArchiveType, String databaseName,
-		String portalVersion) {
+	public Commit getCommit() {
+		if (_legacyDataArchiveFile.exists()) {
+			String gitLog = _legacyGitWorkingDirectory.log(
+				1, _legacyDataArchiveFile);
 
-		_legacyDataArchiveBranch = legacyDataArchiveUtil;
-		_legacyDataArchiveType = legacyDataArchiveType;
-		_databaseName = databaseName;
-		_portalVersion = portalVersion;
-
-		File legacyDataWorkingDirectory =
-			legacyDataArchiveUtil.getLegacyDataWorkingDirectory();
-
-		_committedLegacyDataArchiveFile = new File(
-			JenkinsResultsParserUtil.combine(
-				legacyDataWorkingDirectory.toString(), "/", _portalVersion,
-				"/data-archive/", _legacyDataArchiveType, "-", _databaseName,
-				".zip"));
-
-		File generatedLegacyDataArchiveDirectory =
-			legacyDataArchiveUtil.getGeneratedLegacyDataArchiveDirectory();
-
-		_generatedLegacyDataArchiveFile = new File(
-			JenkinsResultsParserUtil.combine(
-				generatedLegacyDataArchiveDirectory.toString(), "/",
-				_portalVersion, "/", _legacyDataArchiveType, "-", _databaseName,
-				".zip"));
-
-		_commit = _getCommit();
-	}
-
-	public String getLegacyDataArchiveType() {
-		return _legacyDataArchiveType;
-	}
-
-	public String getPortalVersion() {
-		return _portalVersion;
-	}
-
-	public boolean isUpdated() {
-		if (_commit == null) {
-			return false;
-		}
-
-		List<Commit> latestLegacyDataArchiveCommits =
-			_legacyDataArchiveBranch.getLatestLegacyDataArchiveCommits();
-
-		for (Commit latestLegacyDataArchiveCommit :
-				latestLegacyDataArchiveCommits) {
-
-			if (_commit.equals(latestLegacyDataArchiveCommit)) {
-				return true;
-			}
-		}
-
-		return false;
-	}
-
-	public void updateLegacyDataArchive() throws IOException {
-		if (_generatedLegacyDataArchiveFile.exists()) {
-			JenkinsResultsParserUtil.copy(
-				_generatedLegacyDataArchiveFile,
-				_committedLegacyDataArchiveFile);
-
-			String committedLegacyDataArchiveFilePath =
-				_committedLegacyDataArchiveFile.getCanonicalPath();
-			File legacyDataWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyDataWorkingDirectory();
-
-			committedLegacyDataArchiveFilePath =
-				committedLegacyDataArchiveFilePath.replaceAll(
-					legacyDataWorkingDirectory + "/", "");
-
-			GitWorkingDirectory legacyDataGitWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyDataGitWorkingDirectory();
-
-			legacyDataGitWorkingDirectory.stageFileInCurrentBranch(
-				committedLegacyDataArchiveFilePath);
-		}
-	}
-
-	private Commit _getCommit() {
-		if (_committedLegacyDataArchiveFile.exists()) {
-			GitWorkingDirectory legacyDataGitWorkingDirectory =
-				_legacyDataArchiveBranch.getLegacyDataGitWorkingDirectory();
-
-			String gitLog = legacyDataGitWorkingDirectory.log(
-				1, _committedLegacyDataArchiveFile);
-
-			return CommitFactory.newCommit(gitLog);
+			return CommitFactory.newCommit(gitLog, _legacyGitWorkingDirectory);
 		}
 
 		return null;
 	}
 
-	private Commit _commit;
-	private final File _committedLegacyDataArchiveFile;
+	public String getDataArchiveType() {
+		return _dataArchiveType;
+	}
+
+	public File getLegacyDataArchiveFile() {
+		return _legacyDataArchiveFile;
+	}
+
+	public LegacyDataArchiveUtil getLegacyDataArchiveUtil() {
+		return _legacyDataArchiveUtil;
+	}
+
+	public GitWorkingDirectory getLegacyGitWorkingDirectory() {
+		return _legacyGitWorkingDirectory;
+	}
+
+	public boolean isUpdated() {
+		Commit commit = getCommit();
+
+		if (commit == null) {
+			return false;
+		}
+
+		Commit latestTestCommit =
+			_legacyDataArchivePortalVersion.getLatestTestCommit();
+
+		String commitMessage = commit.getMessage();
+
+		if (commitMessage.contains(latestTestCommit.getAbbreviatedSHA())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public void stageLegacyDataArchive() throws IOException {
+		String dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+		File generatedArchiveDirectory =
+			_legacyDataArchiveUtil.getGeneratedArchiveDirectory();
+		String portalVersion =
+			_legacyDataArchivePortalVersion.getPortalVersion();
+
+		File generatedArchiveFile = new File(
+			JenkinsResultsParserUtil.combine(
+				generatedArchiveDirectory.toString(), "/", portalVersion, "/",
+				dataArchiveType, "-", _databaseName, ".zip"));
+
+		if (generatedArchiveFile.exists()) {
+			JenkinsResultsParserUtil.copy(
+				generatedArchiveFile, _legacyDataArchiveFile);
+
+			_legacyGitWorkingDirectory.stageFileInCurrentBranch(
+				_legacyDataArchiveFile.getCanonicalPath());
+		}
+	}
+
+	protected LegacyDataArchive(
+		LegacyDataArchiveGroup legacyDataArchiveGroup, String databaseName) {
+
+		_legacyDataArchiveGroup = legacyDataArchiveGroup;
+		_databaseName = databaseName;
+
+		_legacyDataArchivePortalVersion =
+			_legacyDataArchiveGroup.getLegacyDataArchivePortalVersion();
+
+		_legacyDataArchiveUtil =
+			_legacyDataArchivePortalVersion.getLegacyDataArchiveUtil();
+
+		_legacyGitWorkingDirectory =
+			_legacyDataArchiveUtil.getLegacyGitWorkingDirectory();
+
+		_dataArchiveType = _legacyDataArchiveGroup.getDataArchiveType();
+		String portalVersion =
+			_legacyDataArchivePortalVersion.getPortalVersion();
+		File legacyDataWorkingDirectory =
+			_legacyGitWorkingDirectory.getWorkingDirectory();
+
+		_legacyDataArchiveFile = new File(
+			JenkinsResultsParserUtil.combine(
+				legacyDataWorkingDirectory.toString(), "/", portalVersion,
+				"/data-archive/", _dataArchiveType, "-", _databaseName,
+				".zip"));
+	}
+
+	private final String _dataArchiveType;
 	private final String _databaseName;
-	private final File _generatedLegacyDataArchiveFile;
-	private final LegacyDataArchiveUtil _legacyDataArchiveBranch;
-	private final String _legacyDataArchiveType;
-	private final String _portalVersion;
+	private final File _legacyDataArchiveFile;
+	private final LegacyDataArchiveGroup _legacyDataArchiveGroup;
+	private final LegacyDataArchivePortalVersion
+		_legacyDataArchivePortalVersion;
+	private final LegacyDataArchiveUtil _legacyDataArchiveUtil;
+	private final GitWorkingDirectory _legacyGitWorkingDirectory;
 
 }

@@ -712,6 +712,44 @@ public class GitWorkingDirectory {
 		return _gitDirectory;
 	}
 
+	public String getGitHubFileURL(Branch branch, File file) {
+		return getGitHubFileURL(
+			branch.getName(), branch.getRemote(), file, true);
+	}
+
+	public String getGitHubFileURL(
+		String branchName, Remote branchRemote, File file, boolean verify) {
+
+		String relativePath = JenkinsResultsParserUtil.getPathRelativeTo(
+			file, getWorkingDirectory());
+
+		String remoteURL = branchRemote.getRemoteURL();
+
+		if (!remoteURL.contains("git@github.com:")) {
+			throw new RuntimeException(
+				remoteURL + " does not point to a GitHub repository");
+		}
+
+		if (verify) {
+			String command = JenkinsResultsParserUtil.combine(
+				"git cat-file -e ", branchRemote.getName(), "/", branchName,
+				" ", relativePath);
+
+			ExecutionResult executionResult = executeBashCommands(command);
+
+			if (executionResult.getExitValue() != 0) {
+				throw new RuntimeException(
+					JenkinsResultsParserUtil.combine(
+						relativePath, " does not exist in ",
+						branchRemote.getName(), "/", branchName));
+			}
+		}
+
+		return JenkinsResultsParserUtil.combine(
+			"https://github.com/", getGitHubUserName(branchRemote), "/",
+			getRepositoryName(), "/tree/", branchName, "/", relativePath);
+	}
+
 	public Remote getRemote(String name) {
 		Map<String, Remote> remotes = getRemotes();
 

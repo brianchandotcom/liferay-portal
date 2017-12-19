@@ -380,7 +380,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)
-	protected Tokenizer tokenizer;
+	protected volatile Tokenizer tokenizer;
 
 	private static final long _GLOBAL_GROUP_ID = 0;
 

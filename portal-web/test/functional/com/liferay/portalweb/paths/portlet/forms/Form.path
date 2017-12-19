@@ -123,7 +123,7 @@
 </tr>
 <tr>
 	<td>ADD_COLUMN_LINE</td>
-	<td>xpath=(//div[@class='layout-row-container-row'][${key_rowNumber}]//div[contains(@class,'layout-builder-resize-col') and contains(@class,'dd-drop')])[${key_columnLineNumber}]</td>
+	<td>xpath=(//div[@class='layout-row-container-row'][${key_rowNumber}]//div[contains(@class,'layout-builder-resize-col-breakpoint-line')])[${key_columnLineNumber}]</td>
 	<td></td>
 </tr>
 <tr>

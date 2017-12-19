@@ -1,0 +1,3 @@
+Bundle-Name: Liferay User Associated Data Service
+Bundle-SymbolicName: com.liferay.user.associated.data.service
+Bundle-Version: 1.0.0

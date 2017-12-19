@@ -16,8 +16,8 @@ package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.BaseCSSBuilderTestCase;
 import com.liferay.css.builder.util.FileTestUtil;
+import com.liferay.css.builder.util.StringTestUtil;
 import com.liferay.maven.executor.MavenExecutor;
-import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 
@@ -38,25 +38,25 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			String dirName, Path docrootDirPath, boolean generateSourceMap,
-			String outputDirName, Path portalCommonPath, int precision,
+			Path baseDirPath, String dirName, boolean generateSourceMap,
+			Path importDirPath, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		_preparePomXml(
-			dirName, docrootDirPath, generateSourceMap, outputDirName,
-			portalCommonPath, precision, rtlExcludedPathRegexps,
+			baseDirPath, generateSourceMap, importDirPath, dirName,
+			outputDirName, precision, rtlExcludedPathRegexps,
 			sassCompilerClassName);
 
 		MavenExecutor.Result result = mavenExecutor.execute(
-			docrootDirPath.toFile(), "css-builder:build");
+			baseDirPath.toFile(), "css-builder:build");
 
 		Assert.assertEquals(result.output, 0, result.exitCode);
 	}
 
 	private static void _preparePomXml(
-			String dirName, Path docrootDirPath, boolean generateSourceMap,
-			String outputDirName, Path portalCommonPath, int precision,
+			Path baseDirPath, boolean generateSourceMap, Path importDirPath,
+			String dirName, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws IOException {
 
@@ -66,28 +66,28 @@ public class BuildCSSMojoTest extends BaseCSSBuilderTestCase {
 		content = _replace(
 			content, "[$CSS_BUILDER_VERSION$]", _CSS_BUILDER_VERSION);
 
-		content = _replace(content, "[$CSS_BUILDER_DIR_NAMES$]", dirName);
 		content = _replace(
-			content, "[$CSS_BUILDER_DOCROOT_DIR_NAME$]",
-			String.valueOf(docrootDirPath.toAbsolutePath()));
+			content, "[$CSS_BUILDER_BASE_DIR$]",
+			String.valueOf(baseDirPath.toAbsolutePath()));
+		content = _replace(content, "[$CSS_BUILDER_DIR_NAMES$]", dirName);
 		content = _replace(
 			content, "[$CSS_BUILDER_GENERATE_SOURCE_MAP$]",
 			String.valueOf(generateSourceMap));
 		content = _replace(
 			content, "[$CSS_BUILDER_OUTPUT_DIR_NAME$]", outputDirName);
 		content = _replace(
-			content, "[$CSS_BUILDER_PORTAL_COMMON_PATH$]",
-			String.valueOf(portalCommonPath.toAbsolutePath()));
+			content, "[$CSS_BUILDER_IMPORT_DIR$]",
+			String.valueOf(importDirPath.toAbsolutePath()));
 		content = _replace(
 			content, "[$CSS_BUILDER_PRECISION$]", String.valueOf(precision));
 		content = _replace(
 			content, "[$CSS_BUILDER_RTL_EXCLUDED_PATH_REGEXPS$]",
-			StringUtil.merge(rtlExcludedPathRegexps));
+			StringTestUtil.merge(rtlExcludedPathRegexps));
 		content = _replace(
 			content, "[$CSS_BUILDER_SASS_COMPILER_CLASS_NAME$]",
 			sassCompilerClassName);
 
-		Path pomXmlPath = docrootDirPath.resolve("pom.xml");
+		Path pomXmlPath = baseDirPath.resolve("pom.xml");
 
 		Files.write(pomXmlPath, content.getBytes(StandardCharsets.UTF_8));
 	}

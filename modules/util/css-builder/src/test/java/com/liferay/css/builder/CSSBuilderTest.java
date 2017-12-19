@@ -14,8 +14,7 @@
 
 package com.liferay.css.builder;
 
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.css.builder.util.StringTestUtil;
 
 import java.nio.file.Path;
 
@@ -34,7 +33,7 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 	@Parameters(name = "{0}")
 	public static String[] getSeparators() {
-		return new String[] {StringPool.EQUAL, StringPool.SPACE};
+		return new String[] {"=", " "};
 	}
 
 	public CSSBuilderTest(String separator) {
@@ -43,27 +42,23 @@ public class CSSBuilderTest extends BaseCSSBuilderTestCase {
 
 	@Override
 	protected void executeCSSBuilder(
-			String dirName, Path docrootDirPath, boolean generateSourceMap,
-			String outputDirName, Path portalCommonPath, int precision,
+			Path docrootDirPath, String dirName, boolean generateSourceMap,
+			Path portalCommonPath, String outputDirName, int precision,
 			String[] rtlExcludedPathRegexps, String sassCompilerClassName)
 		throws Exception {
 
 		List<String> args = new ArrayList<>();
 
-		args.add("sass.dir" + _separator + dirName);
+		args.add("base-dir" + _separator + docrootDirPath.toAbsolutePath());
+		args.add("dir-names" + _separator + dirName);
+		args.add("generate-source-map" + _separator + generateSourceMap);
+		args.add("output-dir" + _separator + outputDirName);
+		args.add("import-dir" + _separator + portalCommonPath.toAbsolutePath());
+		args.add("precision" + _separator + precision);
 		args.add(
-			"sass.docroot.dir" + _separator + docrootDirPath.toAbsolutePath());
-		args.add("sass.generate.source.map" + _separator + generateSourceMap);
-		args.add("sass.output.dir" + _separator + outputDirName);
-		args.add(
-			"sass.portal.common.path" + _separator +
-				portalCommonPath.toAbsolutePath());
-		args.add("sass.precision" + _separator + precision);
-		args.add(
-			"sass.rtl.excluded.path.regexps" + _separator +
-				StringUtil.merge(rtlExcludedPathRegexps));
-		args.add(
-			"sass.compiler.class.name" + _separator + sassCompilerClassName);
+			"rtl-excluded-path-regexps" + _separator +
+				StringTestUtil.merge(rtlExcludedPathRegexps));
+		args.add("compiler" + _separator + sassCompilerClassName);
 
 		CSSBuilder.main(args.toArray(new String[0]));
 	}

@@ -16,7 +16,6 @@ package com.liferay.css.builder.maven;
 
 import com.liferay.css.builder.CSSBuilder;
 import com.liferay.css.builder.CSSBuilderArgs;
-import com.liferay.portal.kernel.util.ArrayUtil;
 
 import java.io.File;
 
@@ -60,16 +59,16 @@ public class BuildCSSMojo extends AbstractMojo {
 				String artifactId = componentDependency.getArtifactId();
 
 				if (artifactId.equals("com.liferay.frontend.css.common") &&
-					(_cssBuilderArgs.getPortalCommonPath() == null)) {
+					(_cssBuilderArgs.getImportDir() == null)) {
 
 					Artifact artifact = _resolveArtifact(componentDependency);
 
-					_cssBuilderArgs.setPortalCommonPath(artifact.getFile());
+					_cssBuilderArgs.setImportDir(artifact.getFile());
 				}
 			}
 
 			if (_buildContext.isIncremental()) {
-				Scanner scanner = _buildContext.newScanner(_baseDir);
+				Scanner scanner = _buildContext.newScanner(_projectBaseDir);
 
 				String[] includes = {"", "**/*.scss"};
 
@@ -79,7 +78,7 @@ public class BuildCSSMojo extends AbstractMojo {
 
 				String[] includedFiles = scanner.getIncludedFiles();
 
-				if (ArrayUtil.isNotEmpty(includedFiles)) {
+				if ((includedFiles != null) && (includedFiles.length > 0)) {
 					_execute();
 				}
 			}
@@ -102,6 +101,13 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
+	 */
+	public void setBaseDir(File baseDir) {
+		_cssBuilderArgs.setBaseDir(baseDir);
+	}
+
+	/**
 	 * @parameter
 	 */
 	public void setDirNames(String dirNames) {
@@ -109,16 +115,18 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="${project.build.directory}/${project.build.finalName}"
+	 * @deprecated As of 2.1.0, replaced by {@link #setBaseDir(File)}
+	 * @parameter
 	 */
+	@Deprecated
 	public void setDocrootDirName(String docrootDirName) {
-		File docrootDir = new File(docrootDirName);
+		File baseDir = new File(docrootDirName);
 
-		if (!docrootDir.isAbsolute()) {
-			docrootDir = new File(_baseDir, docrootDirName);
+		if (!baseDir.isAbsolute()) {
+			baseDir = new File(_projectBaseDir, docrootDirName);
 		}
 
-		_cssBuilderArgs.setDocrootDir(docrootDir);
+		setBaseDir(baseDir);
 	}
 
 	/**
@@ -129,6 +137,13 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @parameter
+	 */
+	public void setImportDir(File importDir) {
+		_cssBuilderArgs.setImportDir(importDir);
+	}
+
+	/**
 	 * @parameter default-value=".sass-cache/"
 	 */
 	public void setOutputDirName(String outputDirName) {
@@ -136,10 +151,12 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
+	 * @deprecated As of 2.1.0, replaced by {@link #setImportDir(File)}
 	 * @parameter
 	 */
+	@Deprecated
 	public void setPortalCommonPath(File portalCommonPath) {
-		_cssBuilderArgs.setPortalCommonPath(portalCommonPath);
+		setImportDir(portalCommonPath);
 	}
 
 	/**
@@ -195,12 +212,6 @@ public class BuildCSSMojo extends AbstractMojo {
 	}
 
 	/**
-	 * @parameter default-value="${project.basedir}"
-	 * @readonly
-	 */
-	private File _baseDir;
-
-	/**
 	 * @component
 	 */
 	private BuildContext _buildContext;
@@ -220,6 +231,12 @@ public class BuildCSSMojo extends AbstractMojo {
 	 * @readonly
 	 */
 	private MavenProject _project;
+
+	/**
+	 * @parameter default-value="${project.basedir}"
+	 * @readonly
+	 */
+	private File _projectBaseDir;
 
 	/**
 	 * @component

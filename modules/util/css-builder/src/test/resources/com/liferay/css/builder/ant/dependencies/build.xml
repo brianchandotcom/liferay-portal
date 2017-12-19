@@ -6,11 +6,11 @@
 
 	<target name="build-css">
 		<build-css
+			baseDir="${build.css.base.dir}"
 			dirNames="${build.css.dir.names}"
-			docrootDir="${build.docroot.dir}"
 			generateSourceMap="${build.css.generate.source.maps}"
+			importDir="${build.css.import.dir}"
 			outputDirName="${build.css.output.dir.name}"
-			portalCommonPath="${build.css.portal.common.path}"
 			precision="${build.css.precision}"
 			rtlExcludedPathRegexps="${build.css.rtl.excluded.path.regexps}"
 			sassCompilerClassName="${build.css.sass.compiler.class.name}"

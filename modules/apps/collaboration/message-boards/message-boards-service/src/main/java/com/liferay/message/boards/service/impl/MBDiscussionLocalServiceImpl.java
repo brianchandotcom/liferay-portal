@@ -62,6 +62,11 @@ public class MBDiscussionLocalServiceImpl
 	}
 
 	@Override
+	public MBDiscussion fetchDiscussion(long classNameId, long classPK) {
+		return mbDiscussionPersistence.fetchByC_C(classNameId, classPK);
+	}
+
+	@Override
 	public MBDiscussion fetchDiscussion(String className, long classPK) {
 		long classNameId = classNameLocalService.getClassNameId(className);
 

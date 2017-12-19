@@ -26,7 +26,6 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
 import com.liferay.message.boards.model.MBDiscussion;
 import com.liferay.message.boards.service.MBDiscussionLocalService;
-import com.liferay.message.boards.service.persistence.MBDiscussionPersistence;
 import com.liferay.petra.model.adapter.util.ModelAdapterUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -155,7 +154,7 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 		if (parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
 			long classNameId = _classNameLocalService.getClassNameId(className);
 
-			MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
+			MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
 				classNameId, classPK);
 
 			if (discussion == null) {
@@ -174,10 +173,8 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 		super.deleteDiscussionMessages(className, classPK);
 
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
-		MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
-			classNameId, classPK);
+		MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
+			className, classPK);
 
 		if (discussion == null) {
 			if (_log.isInfoEnabled()) {
@@ -201,7 +198,7 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 			_mbThreadLocalService.deleteThread(message.getThreadId());
 		}
 
-		_mbDiscussionPersistence.remove(discussion);
+		_mbDiscussionLocalService.deleteMBDiscussion(discussion);
 	}
 
 	@Override
@@ -227,12 +224,10 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 		super.getDiscussionMessageDisplay(
 			userId, groupId, className, classPK, status, comparator);
 
-		long classNameId = _classNameLocalService.getClassNameId(className);
-
 		MBMessage message = null;
 
-		MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
-			classNameId, classPK);
+		MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
+			className, classPK);
 
 		if (discussion != null) {
 			message = _mbMessageLocalService.getFirstMessage(
@@ -281,7 +276,7 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 		super.getDiscussionMessagesCount(classNameId, classPK, status);
 
-		MBDiscussion discussion = _mbDiscussionPersistence.fetchByC_C(
+		MBDiscussion discussion = _mbDiscussionLocalService.fetchDiscussion(
 			classNameId, classPK);
 
 		if (discussion == null) {
@@ -369,9 +364,6 @@ public class MBDiscussionMBMessageLocalServiceWrapper
 
 	@Reference
 	private MBDiscussionLocalService _mbDiscussionLocalService;
-
-	@Reference
-	private MBDiscussionPersistence _mbDiscussionPersistence;
 
 	@Reference
 	private MBMessageLocalService _mbMessageLocalService;

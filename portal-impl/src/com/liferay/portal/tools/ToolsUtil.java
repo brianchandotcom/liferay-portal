@@ -355,6 +355,10 @@ public class ToolsUtil {
 					int y = afterImportsContent.lastIndexOf(
 						CharPool.NEW_LINE, x);
 
+					if (y == -1) {
+						y = 0;
+					}
+
 					String s = afterImportsContent.substring(y, x + 1);
 
 					if (isInsideQuotes(s, x - y)) {

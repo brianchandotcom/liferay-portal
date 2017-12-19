@@ -34,7 +34,6 @@ public class VerifyProcessSuite extends VerifyProcess {
 		verify(new VerifyRole());
 
 		verify(new VerifyAuditedModel());
-		verify(new VerifyGroupedModel());
 		verify(new VerifyLayout());
 		verify(new VerifyRatings());
 		verify(new VerifyResourceActions());

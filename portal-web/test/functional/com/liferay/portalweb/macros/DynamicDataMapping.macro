@@ -291,7 +291,7 @@
 			<var name="fieldName" value="${fieldName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter only alphanumeric characters." />
+		<execute function="AssertTextEquals" locator1="DDMEditStructure#SETTINGS_CELL_EDITOR_FIELD_ALERT" value1="Please enter only alphanumeric characters or underscore." />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

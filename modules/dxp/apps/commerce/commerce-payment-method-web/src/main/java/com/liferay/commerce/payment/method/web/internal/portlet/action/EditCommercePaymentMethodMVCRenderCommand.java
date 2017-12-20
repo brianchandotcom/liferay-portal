@@ -17,7 +17,7 @@ package com.liferay.commerce.payment.method.web.internal.portlet.action;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
-import com.liferay.commerce.service.CommercePaymentMethodLocalService;
+import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
@@ -61,15 +61,15 @@ public class EditCommercePaymentMethodMVCRenderCommand
 
 		try {
 			CommercePaymentMethodsDisplayContext
-				commerceCurrenciesDisplayContext =
+				commercePaymentMethodsDisplayContext =
 					new CommercePaymentMethodsDisplayContext(
 						_commercePaymentEngineRegistry,
-						_commercePaymentMethodLocalService, renderRequest,
+						_commercePaymentMethodService, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceCurrenciesDisplayContext);
+				commercePaymentMethodsDisplayContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
@@ -99,8 +99,7 @@ public class EditCommercePaymentMethodMVCRenderCommand
 	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
 
 	@Reference
-	private CommercePaymentMethodLocalService
-		_commercePaymentMethodLocalService;
+	private CommercePaymentMethodService _commercePaymentMethodService;
 
 	@Reference
 	private Portal _portal;

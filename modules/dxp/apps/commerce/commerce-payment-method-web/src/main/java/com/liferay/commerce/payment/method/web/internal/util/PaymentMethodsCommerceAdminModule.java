@@ -17,6 +17,7 @@ package com.liferay.commerce.payment.method.web.internal.util;
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
 import com.liferay.commerce.service.CommercePaymentMethodLocalService;
+import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -113,9 +114,8 @@ public class PaymentMethodsCommerceAdminModule implements CommerceAdminModule {
 
 		CommercePaymentMethodsDisplayContext commerceCurrenciesDisplayContext =
 			new CommercePaymentMethodsDisplayContext(
-				_commercePaymentEngineRegistry,
-				_commercePaymentMethodLocalService, renderRequest,
-				renderResponse);
+				_commercePaymentEngineRegistry, _commercePaymentMethodService,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
@@ -136,6 +136,9 @@ public class PaymentMethodsCommerceAdminModule implements CommerceAdminModule {
 	@Reference
 	private CommercePaymentMethodLocalService
 		_commercePaymentMethodLocalService;
+
+	@Reference
+	private CommercePaymentMethodService _commercePaymentMethodService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -1,5 +1,7 @@
 import com.liferay.gradle.plugins.defaults.tasks.ReplaceRegexTask
 
+apply plugin: "com.gradle.plugin-publish"
+
 task updateReadme(type: ReplaceRegexTask)
 
 dependencies {
@@ -24,4 +26,8 @@ updateReadme {
 
 uploadArchives {
 	dependsOn updateReadme
+}
+
+pluginBundle {
+	tags = ["java", "style"]
 }

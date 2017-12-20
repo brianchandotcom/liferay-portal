@@ -623,7 +623,7 @@
 
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="AssertElementPresent" locator1="SitePages#SITE_NAME" value1="${siteName}" />
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -639,7 +639,7 @@
 
 		<var name="key_siteName" value="Site Name" />
 
-		<execute function="AssertElementPresent" locator1="SitePages#SITE_NAME" value1="Site Name" />
+		<execute function="AssertElementPresent" locator1="ProductMenu#PRODUCT_MENU_PANEL_SITE_ADMINISTRATION_SITE_NAME" />
 
 		<execute macro="Permissions#removePermissionViaAPI">
 			<var name="resourceAction" value="VIEW" />

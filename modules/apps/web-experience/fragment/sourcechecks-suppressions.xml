@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="CSSImportsCheck" files="modules/apps/web-experience/fragment/fragment-web/src/main/resources/META-INF/resources/css/main\.scss" />
-</suppressions>

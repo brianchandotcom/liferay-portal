@@ -94,13 +94,6 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
-	public void testGetDataPortletPreferences() {
-		Assert.assertArrayEquals(
-			getDataPortletPreferences(),
-			portletDataHandler.getDataPortletPreferences());
-	}
-
-	@Test
 	public void testDeleteData() throws Exception {
 		initContext();
 
@@ -116,7 +109,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		Assert.assertEquals(0, getStagedModels().size());
 
 		for (String preferenceKey :
-			portletDataHandler.getDataPortletPreferences()) {
+				portletDataHandler.getDataPortletPreferences()) {
 
 			String portletPreference = portletPreferences.getValue(
 				preferenceKey, StringPool.BLANK);
@@ -215,6 +208,13 @@ public abstract class BasePortletDataHandlerTestCase {
 		}
 
 		Assert.assertEquals(exportedUuidSet, importedUuidSet);
+	}
+
+	@Test
+	public void testGetDataPortletPreferences() {
+		Assert.assertArrayEquals(
+			getDataPortletPreferences(),
+			portletDataHandler.getDataPortletPreferences());
 	}
 
 	@Test
@@ -658,6 +658,7 @@ public abstract class BasePortletDataHandlerTestCase {
 						actualControl.isDisabled())) {
 
 					contains = true;
+
 					break;
 				}
 			}

@@ -23,39 +23,25 @@ CommerceShippingMethodsDisplayContext commerceShippingMethodsDisplayContext = (C
 
 CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayContext.getCommerceShippingMethod();
 
-long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
-
 String title = LanguageUtil.format(request, "edit-x", commerceShippingMethod.getName(locale), false);
 
 Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
+String selectedScreenNavigationEntryKey = commerceShippingMethodsDisplayContext.getSelectedScreenNavigationEntryKey();
+
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ShippingMethodsCommerceAdminModule.KEY), redirect, data);
-PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
+PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedScreenNavigationEntryKey), StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
 
 <%@ include file="/breadcrumb.jspf" %>
 
-<portlet:actionURL name="editCommerceShippingMethod" var="editCommerceShippingMethodActionURL" />
-
-<aui:form action="<%= editCommerceShippingMethodActionURL %>" cssClass="container-fluid-1280" method="post" name="fm" onSubmit='<%= "event.preventDefault(); " + renderResponse.getNamespace() + "saveCommerceShippingMethod();" %>'>
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingMethodId <= 0) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
-	<aui:input name="engineKey" type="hidden" value="<%= commerceShippingMethod.getEngineKey() %>" />
-
-	<liferay-ui:form-navigator
-		formModelBean="<%= commerceShippingMethod %>"
-		id="<%= CommerceShippingFormNavigatorConstants.FORM_NAVIGATOR_ID_COMMERCE_SHIPPING_METHOD %>"
-		markupView="lexicon"
-	/>
-</aui:form>
-
-<aui:script>
-	function <portlet:namespace />saveCommerceShippingMethod() {
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
+<liferay-frontend:screen-navigation
+	key="<%= CommerceShippingScreenNavigationConstants.SCREEN_NAVIGATION_KEY_COMMERCE_SHIPPING_METHOD %>"
+	modelBean="<%= commerceShippingMethod %>"
+	portletURL="<%= currentURLObj %>"
+/>

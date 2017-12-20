@@ -16,7 +16,7 @@ package com.liferay.commerce.shipping.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.NoSuchShippingMethodException;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -64,7 +64,7 @@ public class EditCommerceShippingMethodMVCRenderCommand
 				commerceCurrenciesDisplayContext =
 					new CommerceShippingMethodsDisplayContext(
 						_commerceShippingEngineRegistry,
-						_commerceShippingMethodLocalService, renderRequest,
+						_commerceShippingMethodService, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
@@ -99,8 +99,7 @@ public class EditCommerceShippingMethodMVCRenderCommand
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
 
 	@Reference
-	private CommerceShippingMethodLocalService
-		_commerceShippingMethodLocalService;
+	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
 	private Portal _portal;

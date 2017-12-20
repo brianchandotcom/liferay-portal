@@ -78,10 +78,8 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public CommerceShippingMethod addCommerceShippingMethod(
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		java.lang.String engineKey,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String engineKey, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new commerce shipping method with the primary key. Does not add the commerce shipping method to the database.
@@ -189,6 +187,10 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 		long commerceShippingMethodId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingMethod fetchCommerceShippingMethod(long groupId,
+		java.lang.String engineKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
@@ -250,6 +252,9 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public CommerceShippingMethod setActive(long commerceShippingMethodId,
+		boolean active) throws PortalException;
+
 	/**
 	* Updates the commerce shipping method in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -263,7 +268,5 @@ public interface CommerceShippingMethodLocalService extends BaseLocalService,
 	public CommerceShippingMethod updateCommerceShippingMethod(
 		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		double priority, boolean active) throws PortalException;
 }

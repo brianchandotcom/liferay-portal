@@ -65,10 +65,39 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceShippingMethodServiceSoap {
+	public static com.liferay.commerce.model.CommerceShippingMethodSoap createCommerceShippingMethod(
+		long commerceShippingMethodId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceShippingMethod returnValue = CommerceShippingMethodServiceUtil.createCommerceShippingMethod(commerceShippingMethodId);
+
+			return com.liferay.commerce.model.CommerceShippingMethodSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteCommerceShippingMethod(
 		long commerceShippingMethodId) throws RemoteException {
 		try {
 			CommerceShippingMethodServiceUtil.deleteCommerceShippingMethod(commerceShippingMethodId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShippingMethodSoap fetchCommerceShippingMethod(
+		long groupId, java.lang.String engineKey) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceShippingMethod returnValue = CommerceShippingMethodServiceUtil.fetchCommerceShippingMethod(groupId,
+					engineKey);
+
+			return com.liferay.commerce.model.CommerceShippingMethodSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -83,6 +112,21 @@ public class CommerceShippingMethodServiceSoap {
 			com.liferay.commerce.model.CommerceShippingMethod returnValue = CommerceShippingMethodServiceUtil.getCommerceShippingMethod(commerceShippingMethodId);
 
 			return com.liferay.commerce.model.CommerceShippingMethodSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShippingMethodSoap[] getCommerceShippingMethods(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceShippingMethod> returnValue =
+				CommerceShippingMethodServiceUtil.getCommerceShippingMethods(groupId);
+
+			return com.liferay.commerce.model.CommerceShippingMethodSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -114,6 +158,22 @@ public class CommerceShippingMethodServiceSoap {
 					active);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceShippingMethodSoap setActive(
+		long commerceShippingMethodId, boolean active)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceShippingMethod returnValue = CommerceShippingMethodServiceUtil.setActive(commerceShippingMethodId,
+					active);
+
+			return com.liferay.commerce.model.CommerceShippingMethodSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

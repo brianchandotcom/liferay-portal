@@ -4,6 +4,9 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceAddressLocalServiceImpl" id="com.liferay.commerce.service.CommerceAddressLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAddressServiceImpl" id="com.liferay.commerce.service.CommerceAddressService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceAddressPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceAddressPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceAddressRestrictionLocalServiceImpl" id="com.liferay.commerce.service.CommerceAddressRestrictionLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceAddressRestrictionServiceImpl" id="com.liferay.commerce.service.CommerceAddressRestrictionService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceAddressRestrictionPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAvailabilityRangeLocalServiceImpl" id="com.liferay.commerce.service.CommerceAvailabilityRangeLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceAvailabilityRangeServiceImpl" id="com.liferay.commerce.service.CommerceAvailabilityRangeService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceAvailabilityRangePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence" parent="basePersistence" />

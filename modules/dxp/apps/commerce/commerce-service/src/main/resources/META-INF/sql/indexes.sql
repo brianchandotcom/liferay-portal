@@ -18,6 +18,8 @@ create index IX_71C5A9DD on CommerceAddress (commerceRegionId);
 create index IX_B2D4128D on CommerceAddress (groupId, addressUserId, defaultBilling);
 create index IX_F3EF45C0 on CommerceAddress (groupId, addressUserId, defaultShipping);
 
+create unique index IX_495311F8 on CommerceAddressRestriction (classNameId, classPK, commerceCountryId);
+
 create index IX_DC0A8E5D on CommerceAvailabilityRange (groupId);
 create index IX_A7FBA1A1 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_FD921C63 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], groupId);

@@ -50,14 +50,13 @@ public class CommerceShippingMethodLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.io.File imageFile, java.lang.String engineKey, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingMethodLocalService.addCommerceShippingMethod(nameMap,
-			descriptionMap, imageFile, engineKey, engineParameterMap, priority,
-			active, serviceContext);
+			descriptionMap, imageFile, engineKey, priority, active,
+			serviceContext);
 	}
 
 	/**
@@ -209,6 +208,13 @@ public class CommerceShippingMethodLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceShippingMethod fetchCommerceShippingMethod(
+		long groupId, java.lang.String engineKey) {
+		return _commerceShippingMethodLocalService.fetchCommerceShippingMethod(groupId,
+			engineKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _commerceShippingMethodLocalService.getActionableDynamicQuery();
 	}
@@ -296,6 +302,14 @@ public class CommerceShippingMethodLocalServiceWrapper
 		return _commerceShippingMethodLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceShippingMethod setActive(
+		long commerceShippingMethodId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceShippingMethodLocalService.setActive(commerceShippingMethodId,
+			active);
+	}
+
 	/**
 	* Updates the commerce shipping method in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -313,14 +327,10 @@ public class CommerceShippingMethodLocalServiceWrapper
 		long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceShippingMethodLocalService.updateCommerceShippingMethod(commerceShippingMethodId,
-			nameMap, descriptionMap, imageFile, engineParameterMap, priority,
-			active, serviceContext);
+			nameMap, descriptionMap, imageFile, priority, active);
 	}
 
 	@Override

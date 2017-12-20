@@ -56,15 +56,13 @@ public class CommerceShippingMethodLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceShippingMethod addCommerceShippingMethod(
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile, java.lang.String engineKey,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
+		java.io.File imageFile, java.lang.String engineKey, double priority,
+		boolean active,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceShippingMethod(nameMap, descriptionMap,
-			imageFile, engineKey, engineParameterMap, priority, active,
-			serviceContext);
+			imageFile, engineKey, priority, active, serviceContext);
 	}
 
 	/**
@@ -203,6 +201,11 @@ public class CommerceShippingMethodLocalServiceUtil {
 		return getService().fetchCommerceShippingMethod(commerceShippingMethodId);
 	}
 
+	public static com.liferay.commerce.model.CommerceShippingMethod fetchCommerceShippingMethod(
+		long groupId, java.lang.String engineKey) {
+		return getService().fetchCommerceShippingMethod(groupId, engineKey);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -279,6 +282,12 @@ public class CommerceShippingMethodLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.commerce.model.CommerceShippingMethod setActive(
+		long commerceShippingMethodId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceShippingMethodId, active);
+	}
+
 	/**
 	* Updates the commerce shipping method in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -294,15 +303,11 @@ public class CommerceShippingMethodLocalServiceUtil {
 		long commerceShippingMethodId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		java.io.File imageFile,
-		java.util.Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		java.io.File imageFile, double priority, boolean active)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceShippingMethod(commerceShippingMethodId,
-			nameMap, descriptionMap, imageFile, engineParameterMap, priority,
-			active, serviceContext);
+			nameMap, descriptionMap, imageFile, priority, active);
 	}
 
 	public static CommerceShippingMethodLocalService getService() {

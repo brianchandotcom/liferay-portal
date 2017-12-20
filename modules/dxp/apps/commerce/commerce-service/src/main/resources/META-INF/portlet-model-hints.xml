@@ -35,6 +35,18 @@
 		<field name="defaultBilling" type="boolean" />
 		<field name="defaultShipping" type="boolean" />
 	</model>
+	<model name="com.liferay.commerce.model.CommerceAddressRestriction">
+		<field name="commerceAddressRestrictionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="commerceCountryId" type="long" />
+	</model>
 	<model name="com.liferay.commerce.model.CommerceAvailabilityRange">
 		<field name="uuid" type="String" />
 		<field name="commerceAvailabilityRangeId" type="long" />

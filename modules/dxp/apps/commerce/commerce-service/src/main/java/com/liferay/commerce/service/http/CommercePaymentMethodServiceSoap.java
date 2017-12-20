@@ -65,6 +65,20 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommercePaymentMethodServiceSoap {
+	public static com.liferay.commerce.model.CommercePaymentMethodSoap createCommercePaymentMethod(
+		long commercePaymentMethodId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommercePaymentMethod returnValue = CommercePaymentMethodServiceUtil.createCommercePaymentMethod(commercePaymentMethodId);
+
+			return com.liferay.commerce.model.CommercePaymentMethodSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static void deleteCommercePaymentMethod(long commercePaymentMethodId)
 		throws RemoteException {
 		try {
@@ -92,11 +106,43 @@ public class CommercePaymentMethodServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommercePaymentMethodSoap[] getCommercePaymentMethods(
+		long groupId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommercePaymentMethod> returnValue =
+				CommercePaymentMethodServiceUtil.getCommercePaymentMethods(groupId);
+
+			return com.liferay.commerce.model.CommercePaymentMethodSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommercePaymentMethodSoap[] getCommercePaymentMethods(
 		long groupId, boolean active) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommercePaymentMethod> returnValue =
 				CommercePaymentMethodServiceUtil.getCommercePaymentMethods(groupId,
 					active);
+
+			return com.liferay.commerce.model.CommercePaymentMethodSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommercePaymentMethodSoap[] getCommercePaymentMethods(
+		long groupId, long commerceCountryId, boolean active)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommercePaymentMethod> returnValue =
+				CommercePaymentMethodServiceUtil.getCommercePaymentMethods(groupId,
+					commerceCountryId, active);
 
 			return com.liferay.commerce.model.CommercePaymentMethodSoap.toSoapModels(returnValue);
 		}
@@ -114,6 +160,21 @@ public class CommercePaymentMethodServiceSoap {
 					active);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommercePaymentMethodSoap setActive(
+		long commercePaymentMethodId, boolean active) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommercePaymentMethod returnValue = CommercePaymentMethodServiceUtil.setActive(commercePaymentMethodId,
+					active);
+
+			return com.liferay.commerce.model.CommercePaymentMethodSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

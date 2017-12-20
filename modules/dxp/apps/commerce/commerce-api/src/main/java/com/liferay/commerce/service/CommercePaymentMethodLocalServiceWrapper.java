@@ -258,6 +258,13 @@ public class CommercePaymentMethodLocalServiceWrapper
 			active);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, long commerceCountryId, boolean active) {
+		return _commercePaymentMethodLocalService.getCommercePaymentMethods(groupId,
+			commerceCountryId, active);
+	}
+
 	/**
 	* Returns the number of commerce payment methods.
 	*
@@ -294,6 +301,14 @@ public class CommercePaymentMethodLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commercePaymentMethodLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommercePaymentMethod setActive(
+		long commercePaymentMethodId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commercePaymentMethodLocalService.setActive(commercePaymentMethodId,
+			active);
 	}
 
 	/**

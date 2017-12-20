@@ -67,6 +67,9 @@ public interface CommercePaymentMethodService extends BaseService {
 		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommercePaymentMethod createCommercePaymentMethod(
+		long commercePaymentMethodId) throws PortalException;
+
 	public void deleteCommercePaymentMethod(long commercePaymentMethodId)
 		throws PortalException;
 
@@ -75,8 +78,15 @@ public interface CommercePaymentMethodService extends BaseService {
 		long commercePaymentMethodId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId,
 		boolean active);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId,
+		long commerceCountryId, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommercePaymentMethodsCount(long groupId, boolean active);
@@ -87,6 +97,9 @@ public interface CommercePaymentMethodService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommercePaymentMethod setActive(long commercePaymentMethodId,
+		boolean active) throws PortalException;
 
 	public CommercePaymentMethod updateCommercePaymentMethod(
 		long commercePaymentMethodId, Map<Locale, java.lang.String> nameMap,

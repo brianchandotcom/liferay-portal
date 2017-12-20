@@ -21,6 +21,7 @@ import com.liferay.commerce.service.CommercePriceEntryLocalService;
 import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
+import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CommerceCartItemFinder;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
@@ -501,6 +502,44 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	public void setCommerceAddressPersistence(
 		CommerceAddressPersistence commerceAddressPersistence) {
 		this.commerceAddressPersistence = commerceAddressPersistence;
+	}
+
+	/**
+	 * Returns the commerce address restriction local service.
+	 *
+	 * @return the commerce address restriction local service
+	 */
+	public com.liferay.commerce.service.CommerceAddressRestrictionLocalService getCommerceAddressRestrictionLocalService() {
+		return commerceAddressRestrictionLocalService;
+	}
+
+	/**
+	 * Sets the commerce address restriction local service.
+	 *
+	 * @param commerceAddressRestrictionLocalService the commerce address restriction local service
+	 */
+	public void setCommerceAddressRestrictionLocalService(
+		com.liferay.commerce.service.CommerceAddressRestrictionLocalService commerceAddressRestrictionLocalService) {
+		this.commerceAddressRestrictionLocalService = commerceAddressRestrictionLocalService;
+	}
+
+	/**
+	 * Returns the commerce address restriction persistence.
+	 *
+	 * @return the commerce address restriction persistence
+	 */
+	public CommerceAddressRestrictionPersistence getCommerceAddressRestrictionPersistence() {
+		return commerceAddressRestrictionPersistence;
+	}
+
+	/**
+	 * Sets the commerce address restriction persistence.
+	 *
+	 * @param commerceAddressRestrictionPersistence the commerce address restriction persistence
+	 */
+	public void setCommerceAddressRestrictionPersistence(
+		CommerceAddressRestrictionPersistence commerceAddressRestrictionPersistence) {
+		this.commerceAddressRestrictionPersistence = commerceAddressRestrictionPersistence;
 	}
 
 	/**
@@ -1584,6 +1623,10 @@ public abstract class CommercePriceEntryLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceAddressLocalService commerceAddressLocalService;
 	@BeanReference(type = CommerceAddressPersistence.class)
 	protected CommerceAddressPersistence commerceAddressPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceAddressRestrictionLocalService.class)
+	protected com.liferay.commerce.service.CommerceAddressRestrictionLocalService commerceAddressRestrictionLocalService;
+	@BeanReference(type = CommerceAddressRestrictionPersistence.class)
+	protected CommerceAddressRestrictionPersistence commerceAddressRestrictionPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityRangeLocalService.class)
 	protected com.liferay.commerce.service.CommerceAvailabilityRangeLocalService commerceAvailabilityRangeLocalService;
 	@BeanReference(type = CommerceAvailabilityRangePersistence.class)

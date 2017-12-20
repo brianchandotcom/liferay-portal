@@ -3,6 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.model.CommerceAddress" />
+	<import class="com.liferay.commerce.model.CommerceAddressRestriction" />
 	<import class="com.liferay.commerce.model.CommerceAvailabilityRange" />
 	<import class="com.liferay.commerce.model.CommerceCart" />
 	<import class="com.liferay.commerce.model.CommerceCartItem" />
@@ -48,6 +49,20 @@
 		<property name="phoneNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="defaultBilling" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="defaultShipping" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="com.liferay.commerce.model.impl.CommerceAddressRestrictionImpl" table="CommerceAddressRestriction">
+		<id name="commerceAddressRestrictionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="classNameId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceAvailabilityRangeImpl" table="CommerceAvailabilityRange">
 		<id name="commerceAvailabilityRangeId" type="long">

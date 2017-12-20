@@ -55,6 +55,12 @@ public class CommercePaymentMethodServiceUtil {
 			serviceContext);
 	}
 
+	public static com.liferay.commerce.model.CommercePaymentMethod createCommercePaymentMethod(
+		long commercePaymentMethodId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().createCommercePaymentMethod(commercePaymentMethodId);
+	}
+
 	public static void deleteCommercePaymentMethod(long commercePaymentMethodId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommercePaymentMethod(commercePaymentMethodId);
@@ -67,8 +73,19 @@ public class CommercePaymentMethodServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId) {
+		return getService().getCommercePaymentMethods(groupId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
 		long groupId, boolean active) {
 		return getService().getCommercePaymentMethods(groupId, active);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, long commerceCountryId, boolean active) {
+		return getService()
+				   .getCommercePaymentMethods(groupId, commerceCountryId, active);
 	}
 
 	public static int getCommercePaymentMethodsCount(long groupId,
@@ -83,6 +100,12 @@ public class CommercePaymentMethodServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommercePaymentMethod setActive(
+		long commercePaymentMethodId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commercePaymentMethodId, active);
 	}
 
 	public static com.liferay.commerce.model.CommercePaymentMethod updateCommercePaymentMethod(

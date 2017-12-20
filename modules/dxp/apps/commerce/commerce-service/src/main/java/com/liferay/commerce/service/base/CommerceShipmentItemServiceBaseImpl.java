@@ -19,6 +19,7 @@ import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.persistence.CPDefinitionAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CPDefinitionInventoryPersistence;
 import com.liferay.commerce.service.persistence.CommerceAddressPersistence;
+import com.liferay.commerce.service.persistence.CommerceAddressRestrictionPersistence;
 import com.liferay.commerce.service.persistence.CommerceAvailabilityRangePersistence;
 import com.liferay.commerce.service.persistence.CommerceCartItemFinder;
 import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
@@ -135,6 +136,63 @@ public abstract class CommerceShipmentItemServiceBaseImpl
 	public void setCommerceAddressPersistence(
 		CommerceAddressPersistence commerceAddressPersistence) {
 		this.commerceAddressPersistence = commerceAddressPersistence;
+	}
+
+	/**
+	 * Returns the commerce address restriction local service.
+	 *
+	 * @return the commerce address restriction local service
+	 */
+	public com.liferay.commerce.service.CommerceAddressRestrictionLocalService getCommerceAddressRestrictionLocalService() {
+		return commerceAddressRestrictionLocalService;
+	}
+
+	/**
+	 * Sets the commerce address restriction local service.
+	 *
+	 * @param commerceAddressRestrictionLocalService the commerce address restriction local service
+	 */
+	public void setCommerceAddressRestrictionLocalService(
+		com.liferay.commerce.service.CommerceAddressRestrictionLocalService commerceAddressRestrictionLocalService) {
+		this.commerceAddressRestrictionLocalService = commerceAddressRestrictionLocalService;
+	}
+
+	/**
+	 * Returns the commerce address restriction remote service.
+	 *
+	 * @return the commerce address restriction remote service
+	 */
+	public com.liferay.commerce.service.CommerceAddressRestrictionService getCommerceAddressRestrictionService() {
+		return commerceAddressRestrictionService;
+	}
+
+	/**
+	 * Sets the commerce address restriction remote service.
+	 *
+	 * @param commerceAddressRestrictionService the commerce address restriction remote service
+	 */
+	public void setCommerceAddressRestrictionService(
+		com.liferay.commerce.service.CommerceAddressRestrictionService commerceAddressRestrictionService) {
+		this.commerceAddressRestrictionService = commerceAddressRestrictionService;
+	}
+
+	/**
+	 * Returns the commerce address restriction persistence.
+	 *
+	 * @return the commerce address restriction persistence
+	 */
+	public CommerceAddressRestrictionPersistence getCommerceAddressRestrictionPersistence() {
+		return commerceAddressRestrictionPersistence;
+	}
+
+	/**
+	 * Sets the commerce address restriction persistence.
+	 *
+	 * @param commerceAddressRestrictionPersistence the commerce address restriction persistence
+	 */
+	public void setCommerceAddressRestrictionPersistence(
+		CommerceAddressRestrictionPersistence commerceAddressRestrictionPersistence) {
+		this.commerceAddressRestrictionPersistence = commerceAddressRestrictionPersistence;
 	}
 
 	/**
@@ -1577,6 +1635,12 @@ public abstract class CommerceShipmentItemServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceAddressService commerceAddressService;
 	@BeanReference(type = CommerceAddressPersistence.class)
 	protected CommerceAddressPersistence commerceAddressPersistence;
+	@BeanReference(type = com.liferay.commerce.service.CommerceAddressRestrictionLocalService.class)
+	protected com.liferay.commerce.service.CommerceAddressRestrictionLocalService commerceAddressRestrictionLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceAddressRestrictionService.class)
+	protected com.liferay.commerce.service.CommerceAddressRestrictionService commerceAddressRestrictionService;
+	@BeanReference(type = CommerceAddressRestrictionPersistence.class)
+	protected CommerceAddressRestrictionPersistence commerceAddressRestrictionPersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityRangeLocalService.class)
 	protected com.liferay.commerce.service.CommerceAvailabilityRangeLocalService commerceAvailabilityRangeLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceAvailabilityRangeService.class)

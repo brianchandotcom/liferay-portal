@@ -223,6 +223,10 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId,
 		boolean active);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId,
+		long commerceCountryId, boolean active);
+
 	/**
 	* Returns the number of commerce payment methods.
 	*
@@ -248,6 +252,9 @@ public interface CommercePaymentMethodLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	public CommercePaymentMethod setActive(long commercePaymentMethodId,
+		boolean active) throws PortalException;
 
 	/**
 	* Updates the commerce payment method in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

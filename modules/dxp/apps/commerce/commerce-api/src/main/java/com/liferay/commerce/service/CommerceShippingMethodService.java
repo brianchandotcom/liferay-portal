@@ -62,17 +62,26 @@ public interface CommerceShippingMethodService extends BaseService {
 	public CommerceShippingMethod addCommerceShippingMethod(
 		Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		java.lang.String engineKey,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		java.lang.String engineKey, double priority, boolean active,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CommerceShippingMethod createCommerceShippingMethod(
+		long commerceShippingMethodId) throws PortalException;
 
 	public void deleteCommerceShippingMethod(long commerceShippingMethodId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShippingMethod fetchCommerceShippingMethod(long groupId,
+		java.lang.String engineKey);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceShippingMethod getCommerceShippingMethod(
 		long commerceShippingMethodId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
@@ -88,10 +97,11 @@ public interface CommerceShippingMethodService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public CommerceShippingMethod setActive(long commerceShippingMethodId,
+		boolean active) throws PortalException;
+
 	public CommerceShippingMethod updateCommerceShippingMethod(
 		long commerceShippingMethodId, Map<Locale, java.lang.String> nameMap,
 		Map<Locale, java.lang.String> descriptionMap, File imageFile,
-		Map<java.lang.String, java.lang.String> engineParameterMap,
-		double priority, boolean active, ServiceContext serviceContext)
-		throws PortalException;
+		double priority, boolean active) throws PortalException;
 }

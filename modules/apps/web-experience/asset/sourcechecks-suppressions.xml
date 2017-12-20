@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-
-<suppressions>
-	<suppress checks="JavaFinderImplCustomSQLCheck" files="modules/apps/web-experience/asset/asset-category-property-service/src/main/java/com/liferay/asset/category/property/service/persistence/impl/AssetCategoryPropertyFinderImpl\.java" />
-</suppressions>

@@ -189,3 +189,11 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+
+<aui:script use="aui-base">
+	var currentImage = A.one('.lfr-preview-file-image-current');
+
+	if (currentImage && (currentImage.get('complete') || currentImage.get('naturalWidth'))) {
+		currentImage.setStyle('background-image', 'none');
+	}
+</aui:script>

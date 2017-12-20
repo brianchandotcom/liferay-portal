@@ -28,7 +28,9 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		_checkTables(fileName, content);
+		if (!isSubrepository() && !isReadOnly(absolutePath)) {
+			_checkTables(fileName, content);
+		}
 
 		return content;
 	}

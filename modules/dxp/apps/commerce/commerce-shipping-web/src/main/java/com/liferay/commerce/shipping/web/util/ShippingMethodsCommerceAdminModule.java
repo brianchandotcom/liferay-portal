@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.shipping.web.internal.util;
+package com.liferay.commerce.shipping.web.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -115,7 +116,7 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 			commerceShippingMethodsDisplayContext =
 				new CommerceShippingMethodsDisplayContext(
 					_commerceShippingEngineRegistry,
-					_commerceShippingMethodLocalService, renderRequest,
+					_commerceShippingMethodService, renderRequest,
 					renderResponse);
 
 		renderRequest.setAttribute(
@@ -138,6 +139,9 @@ public class ShippingMethodsCommerceAdminModule implements CommerceAdminModule {
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

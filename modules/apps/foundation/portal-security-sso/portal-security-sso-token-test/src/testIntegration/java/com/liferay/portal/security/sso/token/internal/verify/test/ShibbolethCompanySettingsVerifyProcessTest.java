@@ -21,9 +21,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.security.sso.token.constants.LegacyTokenPropsKeys;
-import com.liferay.portal.security.sso.token.constants.TokenConfigurationKeys;
-import com.liferay.portal.security.sso.token.constants.TokenConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.verify.test.BaseCompanySettingsVerifyProcessTestCase;
 
@@ -50,7 +47,12 @@ public class ShibbolethCompanySettingsVerifyProcessTest
 	protected void doVerify(
 		PortletPreferences portletPreferences, Settings settings) {
 
-		for (String key : LegacyTokenPropsKeys.SHIBBOLETH_KEYS) {
+		String[] shibbolethKeys = {
+			"shibboleth.auth.enabled", "shibboleth.import.from.ldap",
+			"shibboleth.logout.url", "shibboleth.user.header"
+		};
+
+		for (String key : shibbolethKeys) {
 			Assert.assertTrue(
 				Validator.isNull(
 					portletPreferences.getValue(key, StringPool.BLANK)));
@@ -58,25 +60,21 @@ public class ShibbolethCompanySettingsVerifyProcessTest
 
 		Assert.assertTrue(
 			GetterUtil.getBoolean(
-				settings.getValue(
-					TokenConfigurationKeys.AUTH_ENABLED, StringPool.FALSE)));
+				settings.getValue("enabled", StringPool.FALSE)));
 		Assert.assertFalse(
 			GetterUtil.getBoolean(
-				settings.getValue(
-					TokenConfigurationKeys.IMPORT_FROM_LDAP, StringPool.TRUE)));
+				settings.getValue("importFromLDAP", StringPool.TRUE)));
 		Assert.assertEquals(
 			"/test/shibboleth/url",
-			settings.getValue(
-				TokenConfigurationKeys.LOGOUT_REDIRECT_URL, StringPool.BLANK));
+			settings.getValue("logoutRedirectURL", StringPool.BLANK));
 		Assert.assertEquals(
 			"testShibboleth",
-			settings.getValue(
-				TokenConfigurationKeys.USER_HEADER, StringPool.BLANK));
+			settings.getValue("userTokenName", StringPool.BLANK));
 	}
 
 	@Override
 	protected String getSettingsId() {
-		return TokenConstants.SERVICE_NAME;
+		return "com.liferay.portal.security.sso.token";
 	}
 
 	@Override
@@ -86,13 +84,10 @@ public class ShibbolethCompanySettingsVerifyProcessTest
 
 	@Override
 	protected void populateLegacyProperties(UnicodeProperties properties) {
-		properties.put(LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED, "true");
-		properties.put(
-			LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP, "false");
-		properties.put(
-			LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL, "/test/shibboleth/url");
-		properties.put(
-			LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER, "testShibboleth");
+		properties.put("shibboleth.auth.enabled", "true");
+		properties.put("shibboleth.import.from.ldap", "false");
+		properties.put("shibboleth.logout.url", "/test/shibboleth/url");
+		properties.put("shibboleth.user.header", "testShibboleth");
 	}
 
 }

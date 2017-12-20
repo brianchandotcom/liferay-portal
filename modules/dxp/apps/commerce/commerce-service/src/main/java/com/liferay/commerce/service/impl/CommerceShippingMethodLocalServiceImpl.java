@@ -16,12 +16,10 @@ package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.exception.CommerceShippingMethodEngineKeyException;
 import com.liferay.commerce.exception.CommerceShippingMethodNameException;
-import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceShippingMethodLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -44,9 +42,8 @@ public class CommerceShippingMethodLocalServiceImpl
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			File imageFile, String engineKey,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			File imageFile, String engineKey, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce shipping method
@@ -88,11 +85,6 @@ public class CommerceShippingMethodLocalServiceImpl
 			imageLocalService.updateImage(
 				commerceShippingMethod.getImageId(), imageFile);
 		}
-
-		// Commerce shipping engine
-
-		updateCommerceShippingEngineConfiguration(
-			engineKey, engineParameterMap, serviceContext);
 
 		return commerceShippingMethod;
 	}
@@ -144,6 +136,13 @@ public class CommerceShippingMethodLocalServiceImpl
 	}
 
 	@Override
+	public CommerceShippingMethod fetchCommerceShippingMethod(
+		long groupId, String engineKey) {
+
+		return commerceShippingMethodPersistence.fetchByG_E(groupId, engineKey);
+	}
+
+	@Override
 	public List<CommerceShippingMethod> getCommerceShippingMethods(
 		long groupId) {
 
@@ -163,11 +162,26 @@ public class CommerceShippingMethodLocalServiceImpl
 	}
 
 	@Override
+	public CommerceShippingMethod setActive(
+			long commerceShippingMethodId, boolean active)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodPersistence.findByPrimaryKey(
+				commerceShippingMethodId);
+
+		commerceShippingMethod.setActive(active);
+
+		commerceShippingMethodPersistence.update(commerceShippingMethod);
+
+		return commerceShippingMethod;
+	}
+
+	@Override
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, File imageFile, double priority,
+			boolean active)
 		throws PortalException {
 
 		// Commerce shipping method
@@ -199,33 +213,7 @@ public class CommerceShippingMethodLocalServiceImpl
 				commerceShippingMethod.getImageId(), imageFile);
 		}
 
-		// Commerce shipping engine
-
-		updateCommerceShippingEngineConfiguration(
-			commerceShippingMethod.getEngineKey(), engineParameterMap,
-			serviceContext);
-
 		return commerceShippingMethod;
-	}
-
-	protected void updateCommerceShippingEngineConfiguration(
-			String key, Map<String, String> parameterMap,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		CommerceShippingEngine commerceShippingEngine =
-			_commerceShippingEngineRegistry.getCommerceShippingEngine(key);
-
-		try {
-			commerceShippingEngine.updateConfiguration(
-				parameterMap, serviceContext);
-		}
-		catch (PortalException pe) {
-			throw pe;
-		}
-		catch (Exception e) {
-			throw new SystemException(e);
-		}
 	}
 
 	protected void validate(Map<Locale, String> nameMap, String engineKey)

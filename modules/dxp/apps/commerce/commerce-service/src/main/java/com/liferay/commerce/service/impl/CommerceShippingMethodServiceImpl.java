@@ -37,9 +37,8 @@ public class CommerceShippingMethodServiceImpl
 	@Override
 	public CommerceShippingMethod addCommerceShippingMethod(
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
-			File imageFile, String engineKey,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			File imageFile, String engineKey, double priority, boolean active,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -47,8 +46,27 @@ public class CommerceShippingMethodServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 
 		return commerceShippingMethodLocalService.addCommerceShippingMethod(
-			nameMap, descriptionMap, imageFile, engineKey, engineParameterMap,
-			priority, active, serviceContext);
+			nameMap, descriptionMap, imageFile, engineKey, priority, active,
+			serviceContext);
+	}
+
+	@Override
+	public CommerceShippingMethod createCommerceShippingMethod(
+			long commerceShippingMethodId)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.fetchCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		if (commerceShippingMethod != null) {
+			CommercePermission.check(
+				getPermissionChecker(), commerceShippingMethod.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		}
+
+		return commerceShippingMethodLocalService.createCommerceShippingMethod(
+			commerceShippingMethodId);
 	}
 
 	@Override
@@ -68,12 +86,32 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
+	public CommerceShippingMethod fetchCommerceShippingMethod(
+		long groupId, String engineKey) {
+
+		return commerceShippingMethodLocalService.fetchCommerceShippingMethod(
+			groupId, engineKey);
+	}
+
+	@Override
 	public CommerceShippingMethod getCommerceShippingMethod(
 			long commerceShippingMethodId)
 		throws PortalException {
 
 		return commerceShippingMethodLocalService.getCommerceShippingMethod(
 			commerceShippingMethodId);
+	}
+
+	@Override
+	public List<CommerceShippingMethod> getCommerceShippingMethods(long groupId)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+
+		return commerceShippingMethodLocalService.getCommerceShippingMethods(
+			groupId);
 	}
 
 	@Override
@@ -92,11 +130,29 @@ public class CommerceShippingMethodServiceImpl
 	}
 
 	@Override
+	public CommerceShippingMethod setActive(
+			long commerceShippingMethodId, boolean active)
+		throws PortalException {
+
+		CommerceShippingMethod commerceShippingMethod =
+			commerceShippingMethodLocalService.fetchCommerceShippingMethod(
+				commerceShippingMethodId);
+
+		if (commerceShippingMethod != null) {
+			CommercePermission.check(
+				getPermissionChecker(), commerceShippingMethod.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
+		}
+
+		return commerceShippingMethodLocalService.setActive(
+			commerceShippingMethodId, active);
+	}
+
+	@Override
 	public CommerceShippingMethod updateCommerceShippingMethod(
 			long commerceShippingMethodId, Map<Locale, String> nameMap,
-			Map<Locale, String> descriptionMap, File imageFile,
-			Map<String, String> engineParameterMap, double priority,
-			boolean active, ServiceContext serviceContext)
+			Map<Locale, String> descriptionMap, File imageFile, double priority,
+			boolean active)
 		throws PortalException {
 
 		CommerceShippingMethod commerceShippingMethod =
@@ -109,8 +165,7 @@ public class CommerceShippingMethodServiceImpl
 
 		return commerceShippingMethodLocalService.updateCommerceShippingMethod(
 			commerceShippingMethod.getCommerceShippingMethodId(), nameMap,
-			descriptionMap, imageFile, engineParameterMap, priority, active,
-			serviceContext);
+			descriptionMap, imageFile, priority, active);
 	}
 
 }

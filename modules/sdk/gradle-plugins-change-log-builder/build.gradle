@@ -1,6 +1,12 @@
+apply plugin: "com.gradle.plugin-publish"
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.util", version: "1.0.29"
 	compile group: "org.eclipse.jgit", name: "org.eclipse.jgit", version: "4.1.1.201511131810-r"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
+}
+
+pluginBundle {
+	tags = ["changelog", "docs", "documentation", "git"]
 }

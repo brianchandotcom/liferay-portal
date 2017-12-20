@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.apio.architect.wiring.osgi.internal.manager;
+package com.liferay.apio.architect.wiring.osgi.internal.manager.util;
 
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.wiring.osgi.internal.manager.service.tracker.customizer.BaseServiceTrackerCustomizer;
+import com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass;
+import com.liferay.apio.architect.wiring.osgi.internal.service.tracker.customizer.ServiceRegistrationServiceTrackerCustomizer;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 
 import java.util.Dictionary;
@@ -58,23 +59,25 @@ public class ManagerUtil {
 
 		return new ServiceTracker<>(
 			bundleContext, clazz,
-			(BaseServiceTrackerCustomizer<T>)serviceReference -> {
-				Dictionary<String, Object> properties = getProperties(
-					serviceReference);
+			(ServiceRegistrationServiceTrackerCustomizer<T>)
+				serviceReference -> {
+					Dictionary<String, Object> properties = getProperties(
+						serviceReference);
 
-				T t = null;
+					T t = null;
 
-				try {
-					t = bundleContext.getService(serviceReference);
-				}
-				catch (Exception e) {
-					return null;
-				}
+					try {
+						t = bundleContext.getService(serviceReference);
+					}
+					catch (Exception e) {
+						return null;
+					}
 
-				biConsumer.accept(properties, t);
+					biConsumer.accept(properties, t);
 
-				return bundleContext.registerService(classes, t, properties);
-			});
+					return bundleContext.registerService(
+						classes, t, properties);
+				});
 	}
 
 	/**

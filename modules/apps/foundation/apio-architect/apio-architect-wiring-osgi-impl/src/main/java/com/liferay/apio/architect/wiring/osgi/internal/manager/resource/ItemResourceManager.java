@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.apio.architect.wiring.osgi.internal.manager;
+package com.liferay.apio.architect.wiring.osgi.internal.manager.resource;
 
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.ManagerUtil.createServiceTracker;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.ManagerUtil.getTypeParamOrFail;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.ResourceClass.ITEM_IDENTIFIER_CLASS;
-import static com.liferay.apio.architect.wiring.osgi.internal.manager.ResourceClass.MODEL_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass.ITEM_IDENTIFIER_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.resource.ResourceClass.MODEL_CLASS;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.createServiceTracker;
+import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
 import com.liferay.apio.architect.representor.Representable;
-import com.liferay.apio.architect.resource.CollectionResource;
-import com.liferay.apio.architect.router.CollectionRouter;
+import com.liferay.apio.architect.resource.ItemResource;
 import com.liferay.apio.architect.router.ItemRouter;
 
 import org.osgi.framework.BundleContext;
@@ -32,32 +31,30 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Allow developers to register its resources as a {@link CollectionResource}
- * instead of implement an register each of the enclosing interfaces separately.
+ * Allow developers to register its resources as a {@link ItemResource} instead
+ * of implement an register each of the enclosing interfaces separately.
  *
  * @author Alejandro Hernández
  * @review
  */
 @Component(immediate = true)
-public class CollectionResourceManager {
+public class ItemResourceManager {
 
 	@Activate
 	protected void activate(BundleContext bundleContext) {
-		String[] classes = {
-			CollectionRouter.class.getName(), ItemRouter.class.getName(),
-			Representable.class.getName()
-		};
+		String[] classes =
+			{ItemRouter.class.getName(), Representable.class.getName()};
 
 		_serviceTracker = createServiceTracker(
-			bundleContext, CollectionResource.class, classes,
+			bundleContext, ItemResource.class, classes,
 			(properties, service) -> {
 				Class<?> modelClass = getTypeParamOrFail(
-					service, CollectionResource.class, 0);
+					service, ItemResource.class, 0);
 
 				properties.put(MODEL_CLASS.getName(), modelClass);
 
 				Class<?> identifierClass = getTypeParamOrFail(
-					service, CollectionResource.class, 1);
+					service, ItemResource.class, 1);
 
 				properties.put(
 					ITEM_IDENTIFIER_CLASS.getName(), identifierClass);
@@ -71,7 +68,7 @@ public class CollectionResourceManager {
 		_serviceTracker.close();
 	}
 
-	private ServiceTracker<CollectionResource, ServiceRegistration<?>>
+	private ServiceTracker<ItemResource, ServiceRegistration<?>>
 		_serviceTracker;
 
 }

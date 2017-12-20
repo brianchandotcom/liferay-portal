@@ -126,9 +126,9 @@ public class BlogPostingNestedCollectionResource
 			"aggregateRating", AggregateRating.class,
 			this::_getAggregateRatingOptional
 		).addLinkedModel(
-			"creator", User.class, this::_getUserOptional
-		).addLinkedModel(
 			"author", User.class, this::_getUserOptional
+		).addLinkedModel(
+			"creator", User.class, this::_getUserOptional
 		).addRelatedCollection(
 			"comment", Comment.class, CommentableIdentifier::create
 		).addString(

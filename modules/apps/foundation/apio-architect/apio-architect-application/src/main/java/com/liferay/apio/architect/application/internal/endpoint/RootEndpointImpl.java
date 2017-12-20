@@ -35,12 +35,13 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.url.ServerURL;
-import com.liferay.apio.architect.wiring.osgi.manager.CollectionRouterManager;
-import com.liferay.apio.architect.wiring.osgi.manager.ItemRouterManager;
-import com.liferay.apio.architect.wiring.osgi.manager.NestedCollectionRouterManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
-import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
-import com.liferay.apio.architect.wiring.osgi.manager.ReusableNestedCollectionRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.router.CollectionRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRouterManager;
+import com.liferay.apio.architect.wiring.osgi.manager.router.ReusableNestedCollectionRouterManager;
 
 import java.io.InputStream;
 
@@ -172,7 +173,7 @@ public class RootEndpointImpl implements RootEndpoint {
 		String name, String id, String binaryId) {
 
 		Optional<Class<Object>> modelClassOptional =
-			_representableManager.getModelClassOptional(name);
+			_modelClassManager.getModelClassOptional(name);
 
 		Optional<BinaryFunction<Object>> binaryFunctionOptional =
 			modelClassOptional.flatMap(
@@ -337,7 +338,7 @@ public class RootEndpointImpl implements RootEndpoint {
 			String relatedClassName = relatedModelClass.getName();
 
 			Optional<Class<Object>> optional =
-				_representableManager.getModelClassOptional(nestedName);
+				_modelClassManager.getModelClassOptional(nestedName);
 
 			return optional.map(
 				Class::getName
@@ -463,6 +464,9 @@ public class RootEndpointImpl implements RootEndpoint {
 
 	@Reference
 	private ItemRouterManager _itemRouterManager;
+
+	@Reference
+	private ModelClassManager _modelClassManager;
 
 	@Reference
 	private NestedCollectionRouterManager _nestedCollectionRouterManager;

@@ -3,4 +3,6 @@ Bundle-SymbolicName: com.liferay.apio.architect.wiring.osgi.api
 Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.apio.architect.wiring.osgi.manager,\
+	com.liferay.apio.architect.wiring.osgi.manager.representable,\
+	com.liferay.apio.architect.wiring.osgi.manager.router,\
 	com.liferay.apio.architect.wiring.osgi.util

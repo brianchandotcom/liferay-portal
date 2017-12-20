@@ -19,7 +19,7 @@ import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.identifier.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.uri.Path;
-import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 
 import java.util.Optional;
 
@@ -45,8 +45,7 @@ public class PathLongIdentifierMapper
 	public <U> Path map(LongIdentifier longIdentifier, Class<U> modelClass) {
 		String className = modelClass.getName();
 
-		Optional<String> optional = _representableManager.getNameOptional(
-			className);
+		Optional<String> optional = _nameManager.getNameOptional(className);
 
 		String name = optional.orElseThrow(
 			() -> new UnresolvableURI(className));
@@ -63,6 +62,6 @@ public class PathLongIdentifierMapper
 	}
 
 	@Reference
-	private RepresentableManager _representableManager;
+	private NameManager _nameManager;
 
 }

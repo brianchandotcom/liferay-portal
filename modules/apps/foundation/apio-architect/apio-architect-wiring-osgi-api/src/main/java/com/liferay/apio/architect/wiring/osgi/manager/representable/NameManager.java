@@ -12,33 +12,30 @@
  * details.
  */
 
-package com.liferay.apio.architect.wiring.osgi.manager;
+package com.liferay.apio.architect.wiring.osgi.manager.representable;
 
 import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 
 import java.util.Optional;
 
 /**
- * Provides methods to retrieve the routes information provided by the different
- * {@link com.liferay.apio.architect.router.ReusableNestedCollectionRouter}
+ * Provides methods to retrieve information about the resource names provided by
+ * the different {@link com.liferay.apio.architect.representor.Representable}
  * instances.
  *
  * @author Alejandro Hernández
- * @see    com.liferay.apio.architect.router.ReusableNestedCollectionRouter
+ * @see    com.liferay.apio.architect.representor.Representable
  */
 @ProviderType
-public interface ReusableNestedCollectionRouterManager {
+public interface NameManager {
 
 	/**
-	 * Returns the nested collection routes for the reusable nested collection
-	 * resource's name.
+	 * Returns the name of a collection resource that matches the specified
+	 * class name.
 	 *
-	 * @param  name the reusable nested collection resource's name
-	 * @return the nested collection routes
+	 * @param  className the collection resource's class name
+	 * @return the collection resource's name
 	 */
-	public <T> Optional<NestedCollectionRoutes<T>>
-		getNestedCollectionRoutesOptional(String name);
+	public Optional<String> getNameOptional(String className);
 
 }

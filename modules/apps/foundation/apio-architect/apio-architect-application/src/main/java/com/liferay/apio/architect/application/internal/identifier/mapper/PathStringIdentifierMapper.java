@@ -18,7 +18,7 @@ import com.liferay.apio.architect.error.ApioDeveloperError.UnresolvableURI;
 import com.liferay.apio.architect.identifier.StringIdentifier;
 import com.liferay.apio.architect.identifier.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.uri.Path;
-import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 
 import java.util.Optional;
 
@@ -49,8 +49,7 @@ public class PathStringIdentifierMapper
 
 		String className = modelClass.getName();
 
-		Optional<String> optional = _representableManager.getNameOptional(
-			className);
+		Optional<String> optional = _nameManager.getNameOptional(className);
 
 		String name = optional.orElseThrow(
 			() -> new UnresolvableURI(className));
@@ -59,6 +58,6 @@ public class PathStringIdentifierMapper
 	}
 
 	@Reference
-	private RepresentableManager _representableManager;
+	private NameManager _nameManager;
 
 }

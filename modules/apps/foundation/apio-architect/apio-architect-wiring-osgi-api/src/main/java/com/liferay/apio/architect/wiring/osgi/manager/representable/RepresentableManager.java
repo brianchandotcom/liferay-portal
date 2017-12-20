@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.apio.architect.wiring.osgi.manager;
+package com.liferay.apio.architect.wiring.osgi.manager.representable;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -31,23 +31,6 @@ import java.util.Optional;
  */
 @ProviderType
 public interface RepresentableManager {
-
-	/**
-	 * Returns the resource name's model class.
-	 *
-	 * @param  name the resource name
-	 * @return the resource name's model class
-	 */
-	public <T> Optional<Class<T>> getModelClassOptional(String name);
-
-	/**
-	 * Returns the name of a collection resource that matches the specified
-	 * class name.
-	 *
-	 * @param  className the collection resource's class name
-	 * @return the collection resource's name
-	 */
-	public Optional<String> getNameOptional(String className);
 
 	/**
 	 * Returns the representor of the collection resource's model class, if that

@@ -14,46 +14,31 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager;
 
-import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
-import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
-import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
-
 import com.liferay.apio.architect.converter.ExceptionConverter;
 import com.liferay.apio.architect.error.APIError;
+import com.liferay.apio.architect.wiring.osgi.internal.manager.base.SimpleBaseManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ExceptionConverterManager;
 
 import java.util.Optional;
 
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
 public class ExceptionConverterManagerImpl
-	extends BaseManager<ExceptionConverter>
+	extends SimpleBaseManager<ExceptionConverter>
 	implements ExceptionConverterManager {
+
+	public ExceptionConverterManagerImpl() {
+		super(ExceptionConverter.class);
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T extends Exception> Optional<APIError> convert(T exception) {
 		return _convert(exception, (Class<T>)exception.getClass());
-	}
-
-	@Reference(cardinality = MULTIPLE, policy = DYNAMIC, policyOption = GREEDY)
-	protected void setServiceReference(
-		ServiceReference<ExceptionConverter> serviceReference) {
-
-		addService(serviceReference, ExceptionConverter.class);
-	}
-
-	@SuppressWarnings("unused")
-	protected void unsetServiceReference(
-		ServiceReference<ExceptionConverter> serviceReference) {
-
-		removeService(serviceReference, ExceptionConverter.class);
 	}
 
 	@SuppressWarnings("unchecked")

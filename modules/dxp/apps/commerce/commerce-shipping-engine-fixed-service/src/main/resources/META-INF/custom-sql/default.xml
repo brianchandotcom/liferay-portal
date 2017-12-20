@@ -21,7 +21,8 @@
 					(CShippingFixedOptionRel.zip = ?) OR
 					(CShippingFixedOptionRel.zip IS NULL)
 				) AND
-				(? BETWEEN CShippingFixedOptionRel.weightFrom AND CShippingFixedOptionRel.weightTo)
+				(CShippingFixedOptionRel.weightFrom >= ?) AND
+				(CShippingFixedOptionRel.weightTo <= ?)
 		]]>
 	</sql>
 </custom-sql>

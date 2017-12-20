@@ -87,6 +87,7 @@ public class CShippingFixedOptionRelFinderImpl
 			qPos.add(commerceRegionId);
 			qPos.add(zip);
 			qPos.add(weight);
+			qPos.add(weight);
 
 			return (List<CShippingFixedOptionRel>)QueryUtil.list(
 				q, getDialect(), start, end);

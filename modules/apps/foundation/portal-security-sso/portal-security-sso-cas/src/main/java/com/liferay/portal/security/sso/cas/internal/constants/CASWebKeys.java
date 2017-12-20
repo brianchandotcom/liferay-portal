@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.cas.constants;
+package com.liferay.portal.security.sso.cas.internal.constants;
 
 /**
  * @author Michael C. Han

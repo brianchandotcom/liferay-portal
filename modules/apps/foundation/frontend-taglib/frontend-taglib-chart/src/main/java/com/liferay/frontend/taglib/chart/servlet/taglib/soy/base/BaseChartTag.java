@@ -36,7 +36,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 
 	@Override
 	public int doStartTag() {
-		setTemplateNamespace(_moduleBaseName + ".render");
+		setTemplateNamespace("Chart.render");
 
 		_outputStylesheetLink();
 
@@ -52,7 +52,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		}
 
 		return npmResolver.resolveModuleName(
-			"metal-charts/lib/" + _moduleBaseName);
+			"clay-charts/lib/" + _moduleBaseName);
 	}
 
 	public void setColumns(Object columns) {
@@ -92,7 +92,7 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 		}
 
 		String cssPath = npmResolver.resolveModuleName(
-			"metal-charts/lib/css/main.css");
+			"clay-charts/lib/css/main.css");
 
 		StringBundler sb = new StringBundler(5);
 

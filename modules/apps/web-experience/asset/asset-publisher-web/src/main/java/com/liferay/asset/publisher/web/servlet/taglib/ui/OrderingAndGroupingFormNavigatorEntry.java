@@ -64,16 +64,12 @@ public class OrderingAndGroupingFormNavigatorEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String portletResource = portletDisplay.getPortletResource();
-
 		Portlet portlet = _portletLocalService.getPortletById(
-			themeDisplay.getCompanyId(), portletResource);
-
-		String rootPortletId = portlet.getRootPortletId();
+			themeDisplay.getCompanyId(), portletDisplay.getPortletResource());
 
 		AssetPublisherCustomizer assetPublisherCustomizer =
 			assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
-				rootPortletId);
+				portlet.getRootPortletId());
 
 		if (assetPublisherCustomizer == null) {
 			return true;

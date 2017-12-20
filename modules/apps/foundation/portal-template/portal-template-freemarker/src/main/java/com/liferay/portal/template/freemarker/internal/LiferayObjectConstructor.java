@@ -39,15 +39,20 @@ public class LiferayObjectConstructor implements TemplateMethodModelEx {
 		}
 
 		Class<?> clazz = null;
+		String className = String.valueOf(arguments.get(0));
 
 		try {
-			String className = String.valueOf(arguments.get(0));
-
 			clazz = Class.forName(
 				className, true, ClassLoaderUtil.getContextClassLoader());
 		}
 		catch (Exception e) {
-			throw new TemplateModelException(e.getMessage());
+			try {
+				clazz = Class.forName(
+					className, true, ClassLoaderUtil.getPortalClassLoader());
+			}
+			catch (Exception e2) {
+				throw new TemplateModelException(e2.getMessage());
+			}
 		}
 
 		BeansWrapper beansWrapper = FreeMarkerManager.getBeansWrapper();

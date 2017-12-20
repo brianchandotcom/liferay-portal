@@ -134,7 +134,8 @@ public abstract class BaseChartTag extends TemplateRendererTag {
 			String svg = StringUtil.read(url.openStream());
 
 			outputData.setData(
-				_OUTPUT_SVG_KEY, WebKeys.PAGE_BODY_TOP, new StringBundler(svg));
+				_OUTPUT_SVG_KEY, WebKeys.PAGE_BODY_BOTTOM,
+				new StringBundler(svg));
 		}
 		catch (IOException ioe) {
 		}

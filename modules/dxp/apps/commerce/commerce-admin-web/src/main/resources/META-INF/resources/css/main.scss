@@ -14,4 +14,10 @@
 			}
 		}
 	}
+
+	.commerce-shipping-method-description, .commerce-shipping-method-name {
+		.input-localized-content {
+			display: none;
+		}
+	}
 }

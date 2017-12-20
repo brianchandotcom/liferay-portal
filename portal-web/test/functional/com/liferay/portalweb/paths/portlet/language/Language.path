@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>SELECT_LANGUAGE</td>
-	<td>//a[span/*[name()='svg'][@message='${key_language}']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='${key_language}']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,52 +26,52 @@
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_CHINESE</td>
-	<td>//a[span/*[name()='svg'][@message='中文']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='中文']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_ENGLISH</td>
-	<td>//a[span/*[name()='svg'][@message='English']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='English']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_FINNISH</td>
-	<td>//a[span/*[name()='svg'][@message='suomi']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='suomi']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_FRENCH</td>
-	<td>//a[span/*[name()='svg'][@message='français']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='français']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_GERMAN</td>
-	<td>//a[span/*[name()='svg'][@message='Deutsch']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='Deutsch']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_HEBREW</td>
-	<td>//a[span/*[name()='svg'][@message='עברית']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='עברית']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_HUNGARIAN</td>
-	<td>//a[span/*[name()='svg'][@message='magyar']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='magyar']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_JAPANESE</td>
-	<td>//a[span/*[name()='svg'][@message='日本語']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='日本語']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_PORTUGUESE</td>
-	<td>//a[span/*[name()='svg'][@message='português']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='português']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_SPANISH</td>
-	<td>//a[span/*[name()='svg'][@message='español']]</td>
+	<td>xpath=(//a | //span)[*[name()='svg'][@message='español']]</td>
 	<td></td>
 </tr>
 <tr>

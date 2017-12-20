@@ -19,10 +19,10 @@
 <c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.EXPORT_IMPORT_PORTLET_INFO) %>">
 
 	<%
-	PortletURL portletURL = PortletURLFactoryUtil.create(request, ExportImportPortletKeys.EXPORT_IMPORT, PortletRequest.ACTION_PHASE);
+	PortletURL portletURL = PortletURLFactoryUtil.create(request, ExportImportPortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE);
 
-	portletURL.setParameter(ActionRequest.ACTION_NAME, "exportImportEntity");
-	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
+	portletURL.setParameter("mvcPath", "/import_portlet.jsp");
+	portletURL.setParameter("portletResource", ExportImportPortletKeys.ENTITY_SET);
 	%>
 
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "import-entity") %>' url="<%= portletURL.toString() %>" />

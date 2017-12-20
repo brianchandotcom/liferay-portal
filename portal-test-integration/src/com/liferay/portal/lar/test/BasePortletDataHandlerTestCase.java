@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
+import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
@@ -138,8 +139,9 @@ public abstract class BasePortletDataHandlerTestCase {
 		List<StagedModel> exportedStagedModels = getStagedModels();
 
 		for (StagedModel stagedModel : exportedStagedModels) {
-			Element element = rootElement.element(
-				stagedModel.getModelClass().getSimpleName());
+			Class<?> modelClass = stagedModel.getModelClass();
+
+			Element element = rootElement.element(modelClass.getSimpleName());
 
 			List<Node> stagedModelNodes = element.content();
 
@@ -147,7 +149,9 @@ public abstract class BasePortletDataHandlerTestCase {
 
 			for (Node node : stagedModelNodes) {
 				if (node instanceof Element) {
-					String uuid = ((Element)node).attribute("uuid").getValue();
+					Attribute uuidAttribute = ((Element)node).attribute("uuid");
+
+					String uuid = uuidAttribute.getValue();
 
 					if (stagedModel.getUuid().equals(uuid)) {
 						contains = true;

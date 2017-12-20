@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>SELECT_LANGUAGE</td>
-	<td>//a[span/*[name()='svg'][@message='${key_language}']]</td>
+	<td>//a[*[name()='svg'][@message='${key_language}']] | //span[*[name()='svg'][@message='${key_language}']]</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,52 +26,52 @@
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_CHINESE</td>
-	<td>//a[span/*[name()='svg'][@message='中文']]</td>
+	<td>//a[*[name()='svg'][@message='中文']] | //span[*[name()='svg'][@message='中文']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_ENGLISH</td>
-	<td>//a[span/*[name()='svg'][@message='English']]</td>
+	<td>//a[*[name()='svg'][@message='English']] | //span[*[name()='svg'][@message='English']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_FINNISH</td>
-	<td>//a[span/*[name()='svg'][@message='suomi']]</td>
+	<td>//a[*[name()='svg'][@message='suomi']] | //span[*[name()='svg'][@message='suomi]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_FRENCH</td>
-	<td>//a[span/*[name()='svg'][@message='français']]</td>
+	<td>//a[*[name()='svg'][@message='français']] | //span[*[name()='svg'][@message='français']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_GERMAN</td>
-	<td>//a[span/*[name()='svg'][@message='Deutsch']]</td>
+	<td>//a[*[name()='svg'][@message='Deutsch']] | //span[*[name()='svg'][@message='Deutsch']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_HEBREW</td>
-	<td>//a[span/*[name()='svg'][@message='עברית']]</td>
+	<td>//a[*[name()='svg'][@message='עברית']] | //span[*[name()='svg'][@message='עברית']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_HUNGARIAN</td>
-	<td>//a[span/*[name()='svg'][@message='magyar']]</td>
+	<td>//a[*[name()='svg'][@message='magyar']] | //span[*[name()='svg'][@message='magyar']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_JAPANESE</td>
-	<td>//a[span/*[name()='svg'][@message='日本語']]</td>
+	<td>//a[*[name()='svg'][@message='日本語']] | //span[*[name()='svg'][@message='日本語']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_PORTUGUESE</td>
-	<td>//a[span/*[name()='svg'][@message='português']]</td>
+	<td>//a[*[name()='svg'][@message='português']] | //span[*[name()='svg'][@message='português']]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>LANGUAGE_MENU_SPANISH</td>
-	<td>//a[span/*[name()='svg'][@message='español']]</td>
+	<td>//a[*[name()='svg'][@message='español']] | //span[*[name()='svg'][@message='español']]</td>
 	<td></td>
 </tr>
 <tr>

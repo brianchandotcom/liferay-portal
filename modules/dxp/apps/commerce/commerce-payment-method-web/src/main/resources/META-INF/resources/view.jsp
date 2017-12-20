@@ -73,9 +73,10 @@ SearchContainer<CommercePaymentMethod> commercePaymentMethodSearchContainer = co
 			</c:choose>
 
 			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
+			PortletURL rowURL = renderResponse.createActionURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "editCommercePaymentMethod");
+			rowURL.setParameter(Constants.CMD, Constants.EDIT);
+			rowURL.setParameter("javax.portlet.action", "editCommercePaymentMethod");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("commercePaymentMethodId", String.valueOf(commercePaymentMethod.getCommercePaymentMethodId()));
 			rowURL.setParameter("engineKey", commercePaymentMethod.getEngineKey());

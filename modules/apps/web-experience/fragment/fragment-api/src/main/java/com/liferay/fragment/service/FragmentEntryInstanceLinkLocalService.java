@@ -71,6 +71,10 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
 		FragmentEntryInstanceLink fragmentEntryInstanceLink);
 
+	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
+		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
+		int position);
+
 	/**
 	* Creates a new fragment entry instance link with the primary key. Does not add the fragment entry instance link to the database.
 	*
@@ -79,6 +83,9 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 	*/
 	public FragmentEntryInstanceLink createFragmentEntryInstanceLink(
 		long fragmentEntryInstanceLinkId);
+
+	public List<FragmentEntryInstanceLink> deleteByLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateEntryId);
 
 	/**
 	* Deletes the fragment entry instance link from the database. Also notifies the appropriate model listeners.
@@ -199,6 +206,10 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<FragmentEntryInstanceLink> getFragmentEntryInstanceLinks(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<FragmentEntryInstanceLink> getFragmentEntryInstanceLinks(
+		long groupId, long layoutPageTemplateEntryId);
 
 	/**
 	* Returns the number of fragment entry instance links.

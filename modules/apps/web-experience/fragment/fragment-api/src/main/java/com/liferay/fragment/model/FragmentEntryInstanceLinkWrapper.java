@@ -116,6 +116,12 @@ public class FragmentEntryInstanceLinkWrapper
 	}
 
 	@Override
+	public java.lang.String getCss()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryInstanceLink.getCss();
+	}
+
+	@Override
 	public ExpandoBridge getExpandoBridge() {
 		return _fragmentEntryInstanceLink.getExpandoBridge();
 	}
@@ -148,6 +154,18 @@ public class FragmentEntryInstanceLinkWrapper
 	@Override
 	public long getGroupId() {
 		return _fragmentEntryInstanceLink.getGroupId();
+	}
+
+	@Override
+	public java.lang.String getHtml()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryInstanceLink.getHtml();
+	}
+
+	@Override
+	public java.lang.String getJs()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryInstanceLink.getJs();
 	}
 
 	/**

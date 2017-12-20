@@ -46,6 +46,14 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 		return _fragmentEntryInstanceLinkLocalService.addFragmentEntryInstanceLink(fragmentEntryInstanceLink);
 	}
 
+	@Override
+	public com.liferay.fragment.model.FragmentEntryInstanceLink addFragmentEntryInstanceLink(
+		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
+		int position) {
+		return _fragmentEntryInstanceLinkLocalService.addFragmentEntryInstanceLink(groupId,
+			layoutPageTemplateEntryId, fragmentEntryId, position);
+	}
+
 	/**
 	* Creates a new fragment entry instance link with the primary key. Does not add the fragment entry instance link to the database.
 	*
@@ -56,6 +64,13 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 	public com.liferay.fragment.model.FragmentEntryInstanceLink createFragmentEntryInstanceLink(
 		long fragmentEntryInstanceLinkId) {
 		return _fragmentEntryInstanceLinkLocalService.createFragmentEntryInstanceLink(fragmentEntryInstanceLinkId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryInstanceLink> deleteByLayoutPageTemplateEntry(
+		long groupId, long layoutPageTemplateEntryId) {
+		return _fragmentEntryInstanceLinkLocalService.deleteByLayoutPageTemplateEntry(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**
@@ -221,6 +236,13 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 		int start, int end) {
 		return _fragmentEntryInstanceLinkLocalService.getFragmentEntryInstanceLinks(start,
 			end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryInstanceLink> getFragmentEntryInstanceLinks(
+		long groupId, long layoutPageTemplateEntryId) {
+		return _fragmentEntryInstanceLinkLocalService.getFragmentEntryInstanceLinks(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**

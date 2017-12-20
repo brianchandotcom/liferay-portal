@@ -63,9 +63,14 @@ public class CacheControlImpl implements CacheControl {
 		_eTag = eTag;
 
 		if (eTag == null) {
-			_removeETag();
+			HttpServletResponse httpServletResponse =
+				_mimeResponseImpl.getHttpServletResponse();
 
-			return;
+			if (httpServletResponse.getHeader(MimeResponse.ETAG) != null) {
+				_removeETag();
+
+				return;
+			}
 		}
 
 		_mimeResponseImpl.setProperty(MimeResponse.ETAG, eTag);

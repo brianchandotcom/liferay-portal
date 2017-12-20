@@ -96,6 +96,10 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testDeleteData() throws Exception {
+		if (!isDeleteDataTested()) {
+			return;
+		}
+
 		initContext();
 
 		PortletPreferences portletPreferences = new PortletPreferencesImpl();
@@ -121,6 +125,10 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testExportImportData() throws Exception {
+		if (!isExportImportDataTested()) {
+			return;
+		}
+
 		initContext();
 
 		addStagedModels();
@@ -223,6 +231,10 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testGetExportConfigurationControls() throws Exception {
+		if (!isGetExportConfigurationControlsTested()) {
+			return;
+		}
+
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(portletId);
 
 		initContext();
@@ -299,6 +311,10 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testGetExportModelCount() throws Exception {
+		if (!isGetExportModelCountTested()) {
+			return;
+		}
+
 		initContext();
 
 		addStagedModels();
@@ -619,6 +635,10 @@ public abstract class BasePortletDataHandlerTestCase {
 		return dataLevel.equals(DataLevel.SITE);
 	}
 
+	protected boolean isDeleteDataTested() {
+		return false;
+	}
+
 	protected boolean isDisplayPortlet() {
 		if (isDataPortletInstanceLevel() &&
 			!ArrayUtil.isEmpty(
@@ -627,6 +647,18 @@ public abstract class BasePortletDataHandlerTestCase {
 			return true;
 		}
 
+		return false;
+	}
+
+	protected boolean isExportImportDataTested() {
+		return false;
+	}
+
+	protected boolean isGetExportConfigurationControlsTested() {
+		return false;
+	}
+
+	protected boolean isGetExportModelCountTested() {
 		return false;
 	}
 

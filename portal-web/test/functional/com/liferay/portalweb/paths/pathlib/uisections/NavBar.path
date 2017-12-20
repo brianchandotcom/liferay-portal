@@ -139,6 +139,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>METADATA_SETS</td>
+	<td>//ul[contains(@class,'navbar-nav')]/li/a[contains(.,'Metadata Sets')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>MINE</td>
 	<td>//*[@data-qa-id='navigation']//a[contains(.,'Mine')] | //div[contains(@class,'navbar-default')]//a/span[contains(.,'Mine')]</td>
 	<td></td>

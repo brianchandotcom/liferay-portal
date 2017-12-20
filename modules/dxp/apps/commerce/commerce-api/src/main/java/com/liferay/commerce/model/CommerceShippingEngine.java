@@ -17,14 +17,9 @@ package com.liferay.commerce.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.exception.CommerceShippingEngineException;
-import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Andrea Di Giorgi
@@ -41,13 +36,5 @@ public interface CommerceShippingEngine {
 	public String getDescription(Locale locale);
 
 	public String getName(Locale locale);
-
-	public void renderConfiguration(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception;
-
-	public void updateConfiguration(
-			Map<String, String> parameterMap, ServiceContext serviceContext)
-		throws Exception;
 
 }

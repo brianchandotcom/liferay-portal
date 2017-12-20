@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal.connection;
 
+import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.search.elasticsearch.internal.index.LiferayDocumentTypeFactory;
 
 import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
@@ -59,7 +60,8 @@ public class LiferayIndexCreationHelper implements IndexCreationHelper {
 
 	protected LiferayDocumentTypeFactory getLiferayDocumentTypeFactory() {
 		return new LiferayDocumentTypeFactory(
-			_indicesAdminClientSupplier.getIndicesAdminClient());
+			_indicesAdminClientSupplier.getIndicesAdminClient(),
+			new JSONFactoryImpl());
 	}
 
 	private final IndicesAdminClientSupplier _indicesAdminClientSupplier;

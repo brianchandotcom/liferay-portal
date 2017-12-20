@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.checkout.web.internal.display.context;
 
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommercePaymentMethod;
@@ -54,14 +55,19 @@ public class PaymentMethodCheckoutStepDisplayContext {
 		return _commerceCart;
 	}
 
-	public List<CommercePaymentMethod> getCommercePaymentMethods() {
+	public List<CommercePaymentMethod> getCommercePaymentMethods()
+		throws PortalException {
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		CommerceAddress commerceAddress = _commerceCart.getBillingAddress();
+
 		List<CommercePaymentMethod> commercePaymentMethods =
 			_commercePaymentMethodService.getCommercePaymentMethods(
-				_commerceCart.getGroupId(), true);
+				_commerceCart.getGroupId(),
+				commerceAddress.getCommerceCountryId(), true);
 
 		return ListUtil.sort(
 			commercePaymentMethods,

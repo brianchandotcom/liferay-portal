@@ -406,7 +406,7 @@ public class SecurityPortletContainerWrapper implements PortletContainer {
 		if (_log.isWarnEnabled()) {
 			_log.warn(
 				String.format(
-					"User %s is not allowed to serve resource for % on %",
+					"User %s is not allowed to serve resource for %s on %s",
 					PortalUtil.getUserId(request), url,
 					portlet.getPortletId()));
 		}

@@ -16,40 +16,25 @@ package com.liferay.commerce.shipping.engine.fedex.internal;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
 import com.liferay.commerce.exception.CommerceShippingEngineException;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
-import com.liferay.commerce.shipping.engine.fedex.internal.configuration.FedExCommerceShippingEngineGroupServiceConfiguration;
-import com.liferay.commerce.shipping.engine.fedex.internal.constants.FedExCommerceShippingEngineConstants;
+import com.liferay.commerce.service.CommerceAddressRestrictionService;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fedex.internal.util.FedExCommerceShippingOptionHelper;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
-import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.ModifiableSettings;
-import com.liferay.portal.kernel.settings.ParameterMapSettingsLocator;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.ResourceBundle;
-
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
-
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -58,10 +43,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	immediate = true, property = "commerce.shipping.engine.key=fedex",
+	immediate = true,
+	property = "commerce.shipping.engine.key=" + FedExCommerceShippingEngine.KEY,
 	service = CommerceShippingEngine.class
 )
 public class FedExCommerceShippingEngine implements CommerceShippingEngine {
+
+	public static final String KEY = "fedex";
 
 	@Override
 	public String getCommerceShippingOptionLabel(String name, Locale locale) {
@@ -75,6 +63,18 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 		throws CommerceShippingEngineException {
 
 		try {
+			CommerceAddress commerceAddress = commerceCart.getShippingAddress();
+
+			boolean restricted =
+				_commerceAddressRestrictionService.
+					isCommerceShippingMethodRestricted(
+						_getCommerceShippingMethodId(commerceCart),
+						commerceAddress.getCommerceCountryId());
+
+			if (restricted) {
+				return Collections.emptyList();
+			}
+
 			FedExCommerceShippingOptionHelper
 				fedExCommerceShippingOptionsHelper =
 					new FedExCommerceShippingOptionHelper(
@@ -109,58 +109,16 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 		return LanguageUtil.get(resourceBundle, "fedex");
 	}
 
-	@Override
-	public void renderConfiguration(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws Exception {
+	private long _getCommerceShippingMethodId(CommerceCart commerceCart) {
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodService.fetchCommerceShippingMethod(
+				commerceCart.getGroupId(), KEY);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		FedExCommerceShippingEngineGroupServiceConfiguration
-			fedExCommerceShippingEngineGroupServiceConfiguration =
-				_configurationProvider.getConfiguration(
-					FedExCommerceShippingEngineGroupServiceConfiguration.class,
-					new ParameterMapSettingsLocator(
-						renderRequest.getParameterMap(),
-						new GroupServiceSettingsLocator(
-							themeDisplay.getScopeGroupId(),
-							FedExCommerceShippingEngineConstants.
-								SERVICE_NAME)));
-
-		renderRequest.setAttribute(
-			FedExCommerceShippingEngineGroupServiceConfiguration.class.
-				getName(),
-			fedExCommerceShippingEngineGroupServiceConfiguration);
-
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			renderRequest);
-		HttpServletResponse httpServletResponse =
-			_portal.getHttpServletResponse(renderResponse);
-
-		_jspRenderer.renderJSP(
-			_servletContext, httpServletRequest, httpServletResponse,
-			"/configuration.jsp");
-	}
-
-	@Override
-	public void updateConfiguration(
-			Map<String, String> parameterMap, ServiceContext serviceContext)
-		throws Exception {
-
-		Settings settings = _settingsFactory.getSettings(
-			new GroupServiceSettingsLocator(
-				serviceContext.getScopeGroupId(),
-				FedExCommerceShippingEngineConstants.SERVICE_NAME));
-
-		ModifiableSettings modifiableSettings =
-			settings.getModifiableSettings();
-
-		for (Map.Entry<String, String> entry : parameterMap.entrySet()) {
-			modifiableSettings.setValue(entry.getKey(), entry.getValue());
+		if (commerceShippingMethod == null) {
+			return 0;
 		}
 
-		modifiableSettings.store();
+		return commerceShippingMethod.getCommerceShippingMethodId();
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {
@@ -169,10 +127,17 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 	}
 
 	@Reference
+	private CommerceAddressRestrictionService
+		_commerceAddressRestrictionService;
+
+	@Reference
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
 	private CommerceShippingHelper _commerceShippingHelper;
+
+	@Reference
+	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
 	private CommerceShippingOriginLocatorRegistry
@@ -183,19 +148,5 @@ public class FedExCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Reference
 	private CPMeasurementUnitLocalService _cpMeasurementUnitLocalService;
-
-	@Reference
-	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private Portal _portal;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.shipping.engine.fedex)"
-	)
-	private ServletContext _servletContext;
-
-	@Reference
-	private SettingsFactory _settingsFactory;
 
 }

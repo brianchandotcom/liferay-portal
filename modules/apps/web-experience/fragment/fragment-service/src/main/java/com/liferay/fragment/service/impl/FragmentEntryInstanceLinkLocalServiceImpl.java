@@ -17,25 +17,8 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.service.base.FragmentEntryInstanceLinkLocalServiceBaseImpl;
 
 /**
- * The implementation of the fragment entry instance link local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
- * @see FragmentEntryInstanceLinkLocalServiceBaseImpl
- * @see com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil
+ * @author Eudaldo Alonso
  */
 public class FragmentEntryInstanceLinkLocalServiceImpl
 	extends FragmentEntryInstanceLinkLocalServiceBaseImpl {
-
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil} to access the fragment entry instance link local service.
-	 */
 }

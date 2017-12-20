@@ -16,6 +16,7 @@ package com.liferay.portal.service.test;
 
 import com.liferay.petra.executor.PortalExecutorManager;
 import com.liferay.portal.kernel.concurrent.ThreadPoolExecutor;
+import com.liferay.portal.kernel.executor.PortalExecutorManagerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseDestination;
@@ -336,12 +337,9 @@ public class ServiceTestUtil {
 
 		messageBus.replace(baseDestination, false);
 
-		Registry registry = RegistryUtil.getRegistry();
-
-		ExecutorService executorService = registry.callService(
-			PortalExecutorManager.class,
-			portalExecutorManager -> portalExecutorManager.getPortalExecutor(
-				oldDestination.getName(), false));
+		ExecutorService executorService =
+			PortalExecutorManagerUtil.getPortalExecutor(
+				oldDestination.getName());
 
 		if (executorService == null) {
 			return;

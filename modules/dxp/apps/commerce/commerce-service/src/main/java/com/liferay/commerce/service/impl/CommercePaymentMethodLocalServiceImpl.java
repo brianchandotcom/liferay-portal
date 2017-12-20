@@ -113,6 +113,13 @@ public class CommercePaymentMethodLocalServiceImpl
 			imageLocalService.deleteImage(commercePaymentMethod.getImageId());
 		}
 
+		// Commerce address restrictions
+
+		commerceAddressRestrictionLocalService.
+			deleteCommerceAddressRestrictions(
+				CommercePaymentMethod.class.getName(),
+				commercePaymentMethod.getCommercePaymentMethodId());
+
 		return commercePaymentMethod;
 	}
 

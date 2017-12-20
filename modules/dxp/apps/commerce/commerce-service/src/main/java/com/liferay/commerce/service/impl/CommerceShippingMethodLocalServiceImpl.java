@@ -104,6 +104,13 @@ public class CommerceShippingMethodLocalServiceImpl
 			imageLocalService.deleteImage(commerceShippingMethod.getImageId());
 		}
 
+		// Commerce address restrictions
+
+		commerceAddressRestrictionLocalService.
+			deleteCommerceAddressRestrictions(
+				CommerceShippingMethod.class.getName(),
+				commerceShippingMethod.getCommerceShippingMethodId());
+
 		return commerceShippingMethod;
 	}
 

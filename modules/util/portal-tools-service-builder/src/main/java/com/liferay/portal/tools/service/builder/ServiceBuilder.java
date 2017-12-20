@@ -4141,7 +4141,19 @@ public class ServiceBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append(_SQL_CREATE_TABLE);
-		sb.append(entityMapping.getTable());
+
+		String tableName = entityMapping.getTable();
+
+		if (tableName.length() > _TABLE_NAME_MAX_LENGTH) {
+			throw new ServiceBuilderException(
+				StringBundler.concat(
+					"Unable to create entity mapping \"", tableName,
+					"\" because table name exceeds ",
+					String.valueOf(_TABLE_NAME_MAX_LENGTH), " characters"));
+		}
+
+		sb.append(tableName);
+
 		sb.append(" (\n");
 
 		for (Entity entity : entities) {
@@ -4151,6 +4163,16 @@ public class ServiceBuilder {
 				EntityColumn col = pkList.get(i);
 
 				String colName = col.getName();
+
+				if (colName.length() > _COLUMN_NAME_MAX_LENGTH) {
+					throw new ServiceBuilderException(
+						StringBundler.concat(
+							"Unable to create entity mapping \"", tableName,
+							"\" because column name \"", colName, "\" exceeds ",
+							String.valueOf(_COLUMN_NAME_MAX_LENGTH),
+							" characters"));
+				}
+
 				String colType = col.getType();
 
 				sb.append("\t");
@@ -4252,13 +4274,35 @@ public class ServiceBuilder {
 		StringBundler sb = new StringBundler();
 
 		sb.append(_SQL_CREATE_TABLE);
-		sb.append(entity.getTable());
+
+		String tableName = entity.getTable();
+
+		if (tableName.length() > _TABLE_NAME_MAX_LENGTH) {
+			throw new ServiceBuilderException(
+				StringBundler.concat(
+					"Unable to create entity \"", tableName,
+					"\" because table name exceeds ",
+					String.valueOf(_TABLE_NAME_MAX_LENGTH), " characters"));
+		}
+
+		sb.append(tableName);
+
 		sb.append(" (\n");
 
 		for (int i = 0; i < regularColList.size(); i++) {
 			EntityColumn col = regularColList.get(i);
 
 			String colName = col.getName();
+
+			if (colName.length() > _COLUMN_NAME_MAX_LENGTH) {
+				throw new ServiceBuilderException(
+					StringBundler.concat(
+						"Unable to create entity \"", tableName,
+						"\" because column name \"", colName, "\" exceeds ",
+						String.valueOf(_COLUMN_NAME_MAX_LENGTH),
+						" characters"));
+			}
+
 			String colType = col.getType();
 			String colIdType = col.getIdType();
 
@@ -6044,6 +6088,8 @@ public class ServiceBuilder {
 		entity.setResolved();
 	}
 
+	private static final int _COLUMN_NAME_MAX_LENGTH = 30;
+
 	private static final int _DEFAULT_COLUMN_MAX_LENGTH = 75;
 
 	private static final int _SESSION_TYPE_LOCAL = 1;
@@ -6053,6 +6099,8 @@ public class ServiceBuilder {
 	private static final String _SPRING_NAMESPACE_BEANS = "beans";
 
 	private static final String _SQL_CREATE_TABLE = "create table ";
+
+	private static final int _TABLE_NAME_MAX_LENGTH = 30;
 
 	private static final String _TMP_DIR = System.getProperty("java.io.tmpdir");
 

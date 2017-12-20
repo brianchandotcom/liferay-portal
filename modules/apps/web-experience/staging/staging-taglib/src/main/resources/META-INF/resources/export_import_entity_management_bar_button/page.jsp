@@ -16,7 +16,11 @@
 
 <%@ include file="/export_import_entity_management_bar_button/init.jsp" %>
 
-<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroup(), ActionKeys.EXPORT_IMPORT_PORTLET_INFO) %>">
+<%
+scopeGroup = themeDisplay.getScopeGroup();
+%>
+
+<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, scopeGroup, ActionKeys.EXPORT_IMPORT_PORTLET_INFO) && (Objects.equals(cmd, Constants.EXPORT) || (Objects.equals(cmd, Constants.PUBLISH) && (scopeGroup.isStagingGroup() || scopeGroup.isStagedRemotely()) && scopeGroup.isStagedPortlet(portletDisplay.getId()))) %>">
 
 	<%
 	String taglibURL = "javascript:Liferay.fire('" + renderResponse.getNamespace() + cmd + "'); void(0);";
@@ -25,17 +29,19 @@
 	<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="import-export" label="<%= cmd %>" />
 
 	<%
-	PortletURL portletURL = PortletURLFactoryUtil.create(request, ExportImportPortletKeys.EXPORT_IMPORT, PortletRequest.ACTION_PHASE);
+	PortletURL portletURL = PortletURLFactoryUtil.create(request, ExportImportPortletKeys.ENTITY_SET, PortletRequest.ACTION_PHASE);
 
 	portletURL.setParameter(ActionRequest.ACTION_NAME, "exportImportEntity");
 	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
 	portletURL.setParameter("cmd", cmd);
+	portletURL.setParameter("backURL", themeDisplay.getURLCurrent());
+	portletURL.setParameter("portletId", portletDisplay.getId());
 	%>
 
 	<aui:script use="liferay-export-import-management-bar-button">
 		var exportImportManagementBarButton = new Liferay.ExportImportManagementBarButton(
 			{
-				actionNamespace: '<%= PortalUtil.getPortletNamespace(ExportImportPortletKeys.EXPORT_IMPORT) %>',
+				actionNamespace: '<%= PortalUtil.getPortletNamespace(ExportImportPortletKeys.ENTITY_SET) %>',
 				cmd: '<%= cmd %>',
 				exportImportEntityUrl: '<%= portletURL.toString() %>',
 				namespace: '<portlet:namespace />',

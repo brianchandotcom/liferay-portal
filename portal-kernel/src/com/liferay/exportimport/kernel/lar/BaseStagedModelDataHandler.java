@@ -857,16 +857,12 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			PortletDataContext portletDataContext, T stagedModel)
 		throws PortletDataException {
 
-		if (!portletDataContext.isInitialPublication() &&
-			(stagedModel instanceof WorkflowedModel)) {
+		if (stagedModel instanceof TrashedModel) {
+			TrashedModel trashedModel = (TrashedModel)stagedModel;
 
-			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
-
-			if (!ArrayUtil.contains(
-					getExportableStatuses(), workflowedModel.getStatus())) {
-
+			if (trashedModel.isInTrash()) {
 				PortletDataException pde = new PortletDataException(
-					PortletDataException.STATUS_UNAVAILABLE);
+					PortletDataException.STATUS_IN_TRASH);
 
 				pde.setStagedModelDisplayName(getDisplayName(stagedModel));
 				pde.setStagedModelClassName(stagedModel.getModelClassName());
@@ -877,12 +873,16 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 			}
 		}
 
-		if (stagedModel instanceof TrashedModel) {
-			TrashedModel trashedModel = (TrashedModel)stagedModel;
+		if (!portletDataContext.isInitialPublication() &&
+			(stagedModel instanceof WorkflowedModel)) {
 
-			if (trashedModel.isInTrash()) {
+			WorkflowedModel workflowedModel = (WorkflowedModel)stagedModel;
+
+			if (!ArrayUtil.contains(
+					getExportableStatuses(), workflowedModel.getStatus())) {
+
 				PortletDataException pde = new PortletDataException(
-					PortletDataException.STATUS_IN_TRASH);
+					PortletDataException.STATUS_UNAVAILABLE);
 
 				pde.setStagedModelDisplayName(getDisplayName(stagedModel));
 				pde.setStagedModelClassName(stagedModel.getModelClassName());

@@ -18,7 +18,10 @@ import com.liferay.gradle.util.Validator;
 
 import java.io.File;
 
+import java.util.Map;
 import java.util.regex.Pattern;
+
+import org.dm.gradle.plugins.bundle.BundleExtension;
 
 import org.gradle.api.Action;
 import org.gradle.api.Project;
@@ -130,6 +133,20 @@ public class GradlePluginsDefaultsUtil {
 
 				});
 		}
+	}
+
+	public static String getBundleInstruction(Project project, String key) {
+		Map<String, String> bundleInstructions = getBundleInstructions(project);
+
+		return bundleInstructions.get(key);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Map<String, String> getBundleInstructions(Project project) {
+		BundleExtension bundleExtension = GradleUtil.getExtension(
+			project, BundleExtension.class);
+
+		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
 	public static boolean isPrivateProject(Project project) {

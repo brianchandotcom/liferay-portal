@@ -13,6 +13,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <portlet:defineObjects />
 
+#if ($version == "7.1")
 <%
 String bootstrapRequire = (String)renderRequest.getAttribute(${className}WebKeys.BOOTSTRAP_REQUIRE);
 %>
+#end

@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.shipping.engine.fixed">
+	<author>Alessio Antonio Rendina</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="true" name="CommerceShippingFixedOption" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceShippingFixedOptionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceShippingMethodId" type="long" />
+		<column localized="true" name="name" type="String" />
+		<column localized="true" name="description" type="String" />
+		<column name="amount" type="double" />
+		<column name="priority" type="double" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="priority" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceShippingMethodId" return-type="Collection">
+			<finder-column name="commerceShippingMethodId" />
+		</finder>
+	</entity>
+	<entity local-service="true" name="CShippingFixedOptionRel" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="CShippingFixedOptionRelId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceShippingMethodId" type="long" />
+		<column name="commerceShippingFixedOptionId" type="long" />
+		<column name="commerceWarehouseId" type="long" />
+		<column name="commerceCountryId" type="long" />
+		<column name="commerceRegionId" type="long" />
+		<column name="zip" type="String" />
+		<column name="weightFrom" type="double" />
+		<column name="weightTo" type="double" />
+		<column name="fixedPrice" type="double" />
+		<column name="rateUnitWeightPrice" type="double" />
+		<column name="ratePercentage" type="double" />
+
+		<!-- Order -->
+
+		<order by="asc">
+			<order-column name="commerceCountryId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceShippingMethodId" return-type="Collection">
+			<finder-column name="commerceShippingMethodId" />
+		</finder>
+		<finder name="CommerceShippingFixedOptionId" return-type="Collection">
+			<finder-column name="commerceShippingFixedOptionId" />
+		</finder>
+	</entity>
+</service-builder>

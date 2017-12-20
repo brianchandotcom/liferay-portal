@@ -19,6 +19,8 @@
 <%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 
+<%@ page import="java.util.Objects" %>
+
 <%
 String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:export-import-entity-management-bar-button:cmd"));
 String searchContainerId = GetterUtil.getString(request.getAttribute("liferay-staging:export-import-entity-management-bar-button:searchContainerId"));

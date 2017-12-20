@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Shipping Engine Fixed Web
+Bundle-SymbolicName: com.liferay.commerce.shipping.engine.fixed.web
+Bundle-Version: 1.0.0
+Web-ContextPath: /commerce-shipping-engine-fixed-web

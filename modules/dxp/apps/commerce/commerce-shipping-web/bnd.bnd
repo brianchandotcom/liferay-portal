@@ -1,4 +1,7 @@
 Bundle-Name: Liferay Commerce Shipping Web
 Bundle-SymbolicName: com.liferay.commerce.shipping.web
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.commerce.shipping.web.servlet.taglib.ui,\
+	com.liferay.commerce.shipping.web.util
 Web-ContextPath: /commerce-shipping-web

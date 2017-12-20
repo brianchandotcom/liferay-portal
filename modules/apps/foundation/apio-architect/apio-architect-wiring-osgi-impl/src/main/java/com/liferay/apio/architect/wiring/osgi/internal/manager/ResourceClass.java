@@ -34,15 +34,17 @@ public enum ResourceClass {
 	 *         ServiceReference}'s properties
 	 */
 	public String getName() {
-		switch (this) {
-			case ITEM_IDENTIFIER_CLASS:
-				return "apio.architect.item.identifier.class";
-			case MODEL_CLASS:
-				return "apio.architect.model.class";
-			case PARENT_IDENTIFIER_CLASS:
-				return "apio.architect.parent.identifier.class";
-			case PARENT_MODEL_CLASS:
-				return "apio.architect.parent.model.class";
+		if (this == ITEM_IDENTIFIER_CLASS) {
+			return "apio.architect.item.identifier.class";
+		}
+		else if (this == MODEL_CLASS) {
+			return "apio.architect.model.class";
+		}
+		else if (this == PARENT_IDENTIFIER_CLASS) {
+			return "apio.architect.parent.identifier.class";
+		}
+		else if (this == PARENT_MODEL_CLASS) {
+			return "apio.architect.parent.model.class";
 		}
 
 		throw new IllegalArgumentException();

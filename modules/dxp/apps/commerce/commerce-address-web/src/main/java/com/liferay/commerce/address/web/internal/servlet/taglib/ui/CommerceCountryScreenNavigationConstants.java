@@ -19,9 +19,11 @@ package com.liferay.commerce.address.web.internal.servlet.taglib.ui;
  */
 public class CommerceCountryScreenNavigationConstants {
 
-	public static final String CATEGORY_KEY_COUNTRY_DETAILS = "details";
+	public static final String CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS =
+		"details";
 
-	public static final String CATEGORY_KEY_COUNTRY_REGIONS = "regions";
+	public static final String CATEGORY_KEY_COMMERCE_COUNTRY_REGIONS =
+		"regions";
 
 	public static final String SCREEN_NAVIGATION_KEY_COMMERCE_COUNTRY_GENERAL =
 		"commerce.country.general";

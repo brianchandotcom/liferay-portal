@@ -48,13 +48,13 @@ public class CommerceCountryDetailsScreenNavigationEntry
 	@Override
 	public String getCategoryKey() {
 		return CommerceCountryScreenNavigationConstants.
-			CATEGORY_KEY_COUNTRY_DETAILS;
+			CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS;
 	}
 
 	@Override
 	public String getEntryKey() {
 		return CommerceCountryScreenNavigationConstants.
-			CATEGORY_KEY_COUNTRY_DETAILS;
+			CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS;
 	}
 
 	@Override

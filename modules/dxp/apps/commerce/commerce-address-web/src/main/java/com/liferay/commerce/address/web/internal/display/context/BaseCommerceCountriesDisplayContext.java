@@ -110,7 +110,7 @@ public abstract class BaseCommerceCountriesDisplayContext<T> {
 
 	public String getScreenNavigationCategoryKey() {
 		return CommerceCountryScreenNavigationConstants.
-			CATEGORY_KEY_COUNTRY_DETAILS;
+			CATEGORY_KEY_COMMERCE_COUNTRY_DETAILS;
 	}
 
 	public abstract SearchContainer<T> getSearchContainer()

@@ -16,9 +16,9 @@ package com.liferay.commerce.address.web.internal.display.context;
 
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.address.web.internal.servlet.taglib.ui.CommerceCountryScreenNavigationConstants;
-import com.liferay.commerce.address.web.internal.util.CommerceAddressUtil;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -87,7 +87,7 @@ public class CommerceRegionsDisplayContext
 		return ParamUtil.getString(
 			renderRequest, "screenNavigationCategoryKey",
 			CommerceCountryScreenNavigationConstants.
-				CATEGORY_KEY_COUNTRY_REGIONS);
+				CATEGORY_KEY_COMMERCE_COUNTRY_REGIONS);
 	}
 
 	@Override
@@ -119,7 +119,7 @@ public class CommerceRegionsDisplayContext
 		String orderByType = getOrderByType();
 
 		OrderByComparator<CommerceRegion> orderByComparator =
-			CommerceAddressUtil.getCommerceRegionOrderByComparator(
+			CommerceUtil.getCommerceRegionOrderByComparator(
 				orderByCol, orderByType);
 
 		searchContainer.setOrderByCol(orderByCol);

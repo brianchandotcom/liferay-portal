@@ -15,9 +15,9 @@
 package com.liferay.commerce.address.web.internal.display.context;
 
 import com.liferay.commerce.address.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.address.web.internal.util.CommerceAddressUtil;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.service.CommerceCountryService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -87,7 +87,7 @@ public class CommerceCountriesDisplayContext
 		String orderByType = getOrderByType();
 
 		OrderByComparator<CommerceCountry> orderByComparator =
-			CommerceAddressUtil.getCommerceCountryOrderByComparator(
+			CommerceUtil.getCommerceCountryOrderByComparator(
 				orderByCol, orderByType);
 
 		searchContainer.setOrderByCol(orderByCol);

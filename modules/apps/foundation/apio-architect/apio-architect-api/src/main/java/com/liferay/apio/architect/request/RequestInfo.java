@@ -19,7 +19,6 @@ import com.liferay.apio.architect.response.control.Embedded;
 import com.liferay.apio.architect.response.control.Fields;
 import com.liferay.apio.architect.url.ServerURL;
 
-import java.util.Optional;
 import java.util.function.Function;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,25 +44,21 @@ public class RequestInfo {
 	}
 
 	/**
-	 * Returns the information about embedded resources, if present. Returns
-	 * {@code Optional#empty()} otherwise.
+	 * Returns the information about embedded resources.
 	 *
-	 * @return the information about embedded resources, if present; {@code
-	 *         Optional#empty()} otherwise
+	 * @return the information about embedded resources
 	 */
-	public Optional<Embedded> getEmbeddedOptional() {
-		return Optional.ofNullable(_embedded);
+	public Embedded getEmbedded() {
+		return _embedded;
 	}
 
 	/**
-	 * Returns the information about selected fields, if present. Returns {@code
-	 * Optional#empty()} otherwise.
+	 * Returns the information about selected fields.
 	 *
-	 * @return the information about selected fields, if present; {@code
-	 *         Optional#empty()} otherwise
+	 * @return the information about selected fields
 	 */
-	public Optional<Fields> getFieldsOptional() {
-		return Optional.ofNullable(_fields);
+	public Fields getFields() {
+		return _fields;
 	}
 
 	/**
@@ -80,14 +75,12 @@ public class RequestInfo {
 	}
 
 	/**
-	 * Returns the information about the language, if present. Returns {@code
-	 * Optional#empty()} otherwise.
+	 * Returns the information about the language
 	 *
-	 * @return the information about the language, if present; {@code
-	 *         Optional#empty()} otherwise
+	 * @return the information about the language
 	 */
-	public Optional<Language> getLanguageOptional() {
-		return Optional.ofNullable(_language);
+	public Language getLanguage() {
+		return _language;
 	}
 
 	/**
@@ -116,6 +109,52 @@ public class RequestInfo {
 			return new HttpServletRequestStep();
 		}
 
+		public class BuildStep {
+
+			/**
+			 * Constructs and returns a {@link RequestInfo} instance with the
+			 * information provided to the builder.
+			 *
+			 * @return the {@code RequestInfo} instance
+			 */
+			public RequestInfo build() {
+				return new RequestInfo(Builder.this);
+			}
+
+		}
+
+		public class EmbeddedStep {
+
+			/**
+			 * Adds information about embedded resources to the builder.
+			 *
+			 * @param  embedded the information about embedded resources
+			 * @return the builder's next step
+			 */
+			public FieldsStep embedded(Embedded embedded) {
+				_embedded = embedded;
+
+				return new FieldsStep();
+			}
+
+		}
+
+		public class FieldsStep {
+
+			/**
+			 * Adds information about selected fields to the builder.
+			 *
+			 * @param  fields the information about selected fields
+			 * @return the builder's next step
+			 */
+			public LanguageStep fields(Fields fields) {
+				_fields = fields;
+
+				return new LanguageStep();
+			}
+
+		}
+
 		public class HttpServletRequestStep {
 
 			/**
@@ -134,41 +173,7 @@ public class RequestInfo {
 
 		}
 
-		public class OptionalStep {
-
-			/**
-			 * Constructs and returns a {@link RequestInfo} instance with the
-			 * information provided to the builder.
-			 *
-			 * @return the {@code RequestInfo} instance
-			 */
-			public RequestInfo build() {
-				return new RequestInfo(Builder.this);
-			}
-
-			/**
-			 * Adds information about embedded resources to the builder.
-			 *
-			 * @param  embedded the information about embedded resources
-			 * @return the builder's next step
-			 */
-			public OptionalStep embedded(Embedded embedded) {
-				_embedded = embedded;
-
-				return this;
-			}
-
-			/**
-			 * Adds information about selected fields to the builder.
-			 *
-			 * @param  fields the information about selected fields
-			 * @return the builder's next step
-			 */
-			public OptionalStep fields(Fields fields) {
-				_fields = fields;
-
-				return this;
-			}
+		public class LanguageStep {
 
 			/**
 			 * Adds information about the language to the builder.
@@ -176,10 +181,10 @@ public class RequestInfo {
 			 * @param  language the request's selected language
 			 * @return the builder's next step
 			 */
-			public OptionalStep language(Language language) {
+			public BuildStep language(Language language) {
 				_language = language;
 
-				return this;
+				return new BuildStep();
 			}
 
 		}
@@ -192,10 +197,10 @@ public class RequestInfo {
 			 * @param  serverURL the server URL
 			 * @return the builder's next step
 			 */
-			public OptionalStep serverURL(ServerURL serverURL) {
+			public EmbeddedStep serverURL(ServerURL serverURL) {
 				_serverURL = serverURL;
 
-				return new OptionalStep();
+				return new EmbeddedStep();
 			}
 
 		}

@@ -29,9 +29,9 @@ public class LanguageTest {
 
 	@Test
 	public void testGetPreferredLocaleReturnOnlyPreferredLocaleByDefault() {
-		Language language = () -> Locale.US;
+		Language language = Locale::getDefault;
 
-		assertThat(language.getLocales(), contains(Locale.US));
+		assertThat(language.getLocales(), contains(Locale.getDefault()));
 	}
 
 }

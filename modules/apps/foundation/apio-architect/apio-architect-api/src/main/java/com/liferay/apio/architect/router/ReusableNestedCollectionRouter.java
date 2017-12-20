@@ -16,7 +16,6 @@ package com.liferay.apio.architect.router;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
 
@@ -46,7 +45,7 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
  * @review
  */
 @ConsumerType
-public interface ReusableNestedCollectionRouter<T, U extends Identifier> {
+public interface ReusableNestedCollectionRouter<T, U> {
 
 	/**
 	 * Creates the {@link NestedCollectionRoutes} supported by the nested

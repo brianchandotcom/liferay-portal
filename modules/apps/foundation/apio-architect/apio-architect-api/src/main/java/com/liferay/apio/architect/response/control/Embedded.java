@@ -23,20 +23,15 @@ import java.util.function.Predicate;
  * interface is handed to {@code javax.ws.rs.ext.MessageBodyWriter} to decide
  * which resources to embed.
  *
+ * <p>
+ * Instances of this interface act as the predicate that can be used to test if
+ * a relation must be embedded
+ * </p>
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface Embedded {
-
-	/**
-	 * Returns the predicate that can be used to test if a relation must be
-	 * embedded.
-	 *
-	 * @return the predicate that can be used to test if a relation must be
-	 *         embedded
-	 */
-	public Predicate<String> getEmbeddedPredicate();
-
+public interface Embedded extends Predicate<String> {
 }

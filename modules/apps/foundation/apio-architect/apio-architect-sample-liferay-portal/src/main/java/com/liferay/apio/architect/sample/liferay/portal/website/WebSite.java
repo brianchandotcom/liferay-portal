@@ -16,7 +16,6 @@ package com.liferay.apio.architect.sample.liferay.portal.website;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.language.Language;
 
 /**
@@ -53,6 +52,6 @@ public interface WebSite {
 	 *
 	 * @return the website's identifier
 	 */
-	public LongIdentifier getWebSiteLongIdentifier();
+	public Long getWebSiteId();
 
 }

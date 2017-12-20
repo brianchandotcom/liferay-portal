@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.sample.liferay.portal.internal.resource;
 
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -42,7 +41,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebSiteCollectionResource
-	implements CollectionResource<WebSite, LongIdentifier> {
+	implements CollectionResource<WebSite, Long> {
 
 	@Override
 	public CollectionRoutes<WebSite> collectionRoutes(
@@ -60,7 +59,7 @@ public class WebSiteCollectionResource
 
 	@Override
 	public ItemRoutes<WebSite> itemRoutes(
-		ItemRoutes.Builder<WebSite, LongIdentifier> builder) {
+		ItemRoutes.Builder<WebSite, Long> builder) {
 
 		return builder.addGetter(
 			this::_getWebSite
@@ -68,13 +67,13 @@ public class WebSiteCollectionResource
 	}
 
 	@Override
-	public Representor<WebSite, LongIdentifier> representor(
-		Representor.Builder<WebSite, LongIdentifier> builder) {
+	public Representor<WebSite, Long> representor(
+		Representor.Builder<WebSite, Long> builder) {
 
 		return builder.types(
 			"WebSite"
 		).identifier(
-			WebSite::getWebSiteLongIdentifier
+			WebSite::getWebSiteId
 		).addLocalizedString(
 			"name", WebSite::getName
 		).addString(
@@ -88,13 +87,11 @@ public class WebSiteCollectionResource
 		return _webSiteService.getPageItems(pagination, company.getCompanyId());
 	}
 
-	private WebSite _getWebSite(LongIdentifier webSiteLongIdentifier) {
-		Optional<WebSite> optional = _webSiteService.getWebSite(
-			webSiteLongIdentifier.getId());
+	private WebSite _getWebSite(Long webSiteId) {
+		Optional<WebSite> optional = _webSiteService.getWebSite(webSiteId);
 
 		return optional.orElseThrow(
-			() -> new NotFoundException(
-				"Unable to get website " + webSiteLongIdentifier.getId()));
+			() -> new NotFoundException("Unable to get website " + webSiteId));
 	}
 
 	@Reference

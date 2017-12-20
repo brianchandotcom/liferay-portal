@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.sample.liferay.portal.internal.website;
 
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.sample.liferay.portal.website.WebSite;
 import com.liferay.portal.kernel.model.Group;
@@ -39,8 +38,8 @@ public class WebSiteImpl implements WebSite {
 	}
 
 	@Override
-	public LongIdentifier getWebSiteLongIdentifier() {
-		return _group::getGroupId;
+	public Long getWebSiteId() {
+		return _group.getGroupId();
 	}
 
 	private final Group _group;

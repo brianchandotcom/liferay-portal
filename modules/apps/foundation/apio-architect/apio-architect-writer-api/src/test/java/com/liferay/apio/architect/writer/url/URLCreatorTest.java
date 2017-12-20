@@ -92,7 +92,14 @@ public class URLCreatorTest {
 
 	@Test
 	public void testCreateCollectionURL() {
-		String url = URLCreator.createCollectionURL(
+		String url = URLCreator.createCollectionURL(_serverURL, "resource");
+
+		assertThat(url, is(equalTo("www.liferay.com/p/resource")));
+	}
+
+	@Test
+	public void testCreateNestedCollectionURL() {
+		String url = URLCreator.createNestedCollectionURL(
 			_serverURL, _path, "related");
 
 		assertThat(url, is(equalTo("www.liferay.com/p/name/id/related")));

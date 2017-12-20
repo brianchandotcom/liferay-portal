@@ -23,7 +23,6 @@ import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
 import com.liferay.apio.architect.function.TetraFunction;
 import com.liferay.apio.architect.function.TriFunction;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -51,7 +50,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class NestedCollectionRoutes<T> {
 
-	public NestedCollectionRoutes(Builder<T, ? extends Identifier> builder) {
+	public NestedCollectionRoutes(Builder<T, ?> builder) {
 		_nestedCreateItemFunction = builder._nestedCreateItemFunction;
 		_nestedGetPageFunction = builder._nestedGetPageFunction;
 	}
@@ -89,7 +88,7 @@ public class NestedCollectionRoutes<T> {
 	 * com.liferay.apio.architect.router.NestedCollectionRouter}.
 	 */
 	@SuppressWarnings("unused")
-	public static class Builder<T, U extends Identifier> {
+	public static class Builder<T, U> {
 
 		public Builder(
 			Class<T> modelClass, Class<U> identifierClass,
@@ -107,7 +106,7 @@ public class NestedCollectionRoutes<T> {
 		 * @param  biFunction the creator function that adds the collection item
 		 * @return the updated builder
 		 */
-		public <V extends Identifier> Builder<T, U> addCreator(
+		public <V> Builder<T, U> addCreator(
 			BiFunction<V, Map<String, Object>, T> biFunction) {
 
 			_nestedCreateItemFunction =
@@ -139,7 +138,7 @@ public class NestedCollectionRoutes<T> {
 		 *         sixth parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C, D, V extends Identifier> Builder<T, U> addCreator(
+		public <A, B, C, D, V> Builder<T, U> addCreator(
 			HexaFunction<V, Map<String, Object>, A, B, C, D, T> hexaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
@@ -176,7 +175,7 @@ public class NestedCollectionRoutes<T> {
 		 *         fifth parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C, V extends Identifier> Builder<T, U> addCreator(
+		public <A, B, C, V> Builder<T, U> addCreator(
 			PentaFunction<V, Map<String, Object>, A, B, C, T> pentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
@@ -209,7 +208,7 @@ public class NestedCollectionRoutes<T> {
 		 *         fourth parameter
 		 * @return the updated builder
 		 */
-		public <A, B, V extends Identifier> Builder<T, U> addCreator(
+		public <A, B, V> Builder<T, U> addCreator(
 			TetraFunction<V, Map<String, Object>, A, B, T> tetraFunction,
 			Class<A> aClass, Class<B> bClass) {
 
@@ -239,7 +238,7 @@ public class NestedCollectionRoutes<T> {
 		 *         third parameter
 		 * @return the updated builder
 		 */
-		public <A, V extends Identifier> Builder<T, U> addCreator(
+		public <A, V> Builder<T, U> addCreator(
 			TriFunction<V, Map<String, Object>, A, T> triFunction,
 			Class<A> aClass) {
 
@@ -266,7 +265,7 @@ public class NestedCollectionRoutes<T> {
 		 * @param  biFunction the function that calculates the page
 		 * @return the updated builder
 		 */
-		public <V extends Identifier> Builder<T, U> addGetter(
+		public <V> Builder<T, U> addGetter(
 			BiFunction<Pagination, V, PageItems<T>> biFunction) {
 
 			_nestedGetPageFunction =
@@ -298,7 +297,7 @@ public class NestedCollectionRoutes<T> {
 		 * @param  dClass the class of the page function's fifth parameter
 		 * @return the updated builder
 		 */
-		public <V extends Identifier, A, B, C, D> Builder<T, U> addGetter(
+		public <V, A, B, C, D> Builder<T, U> addGetter(
 			HexaFunction<Pagination, V, A, B, C, D, PageItems<T>> hexaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
@@ -335,7 +334,7 @@ public class NestedCollectionRoutes<T> {
 		 * @param  cClass the class of the page function's fourth parameter
 		 * @return the updated builder
 		 */
-		public <V extends Identifier, A, B, C> Builder<T, U> addGetter(
+		public <V, A, B, C> Builder<T, U> addGetter(
 			PentaFunction<Pagination, V, A, B, C, PageItems<T>> pentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
@@ -368,7 +367,7 @@ public class NestedCollectionRoutes<T> {
 		 * @param  bClass the class of the page function's third parameter
 		 * @return the updated builder
 		 */
-		public <V extends Identifier, A, B> Builder<T, U> addGetter(
+		public <V, A, B> Builder<T, U> addGetter(
 			TetraFunction<Pagination, V, A, B, PageItems<T>> tetraFunction,
 			Class<A> aClass, Class<B> bClass) {
 
@@ -399,7 +398,7 @@ public class NestedCollectionRoutes<T> {
 		 * @param  aClass the class of the page function's second parameter
 		 * @return the updated builder
 		 */
-		public <V extends Identifier, A> Builder<T, U> addGetter(
+		public <V, A> Builder<T, U> addGetter(
 			TriFunction<Pagination, V, A, PageItems<T>> triFunction,
 			Class<A> aClass) {
 
@@ -433,8 +432,8 @@ public class NestedCollectionRoutes<T> {
 		}
 
 		@SuppressWarnings("unchecked")
-		private <V> V _getIdentifier(Identifier identifier) {
-			Class<? extends Identifier> clazz = identifier.getClass();
+		private <V> V _getIdentifier(Object identifier) {
+			Class<?> clazz = identifier.getClass();
 
 			if (!_identifierClass.isAssignableFrom(clazz)) {
 				throw new MustUseSameIdentifier(clazz, _identifierClass);

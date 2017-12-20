@@ -90,7 +90,7 @@ dependencies {
 
 Now you're ready to create your first Apio Architect resource!
 
-Create a new Java class and annotate it with `@Component` to expose it as an OSGi component. Then implement the [`CollectionResource`](https://github.com/liferay/com-liferay-apio-architect/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/CollectionResource.java) class of `apio-api`. You must provide two type arguments: the type of the model you want to expose, and the type of the identifier that uses that model. For example, if your model's type uses a `long` as an internal identifier, then use [`LongIdentifier`](https://github.com/liferay/com-liferay-apio-architect/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/identifier/LongIdentifier.java).
+Create a new Java class and annotate it with `@Component` to expose it as an OSGi component. Then implement the [`CollectionResource`](https://github.com/liferay/com-liferay-apio-architect/blob/master/apio-architect-api/src/main/java/com/liferay/apio/architect/resource/CollectionResource.java) class of `apio-api`. You must provide two type arguments: the type of the model you want to expose, and the type of the identifier that uses that model. For example, if your model's type uses a `long` as an internal identifier, then use `Long`.
 
 Now you must implement three methods:
 

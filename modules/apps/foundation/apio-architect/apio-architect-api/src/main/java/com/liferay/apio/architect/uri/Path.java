@@ -23,11 +23,6 @@ package com.liferay.apio.architect.uri;
  */
 public class Path {
 
-	public Path() {
-		_name = "";
-		_id = "";
-	}
-
 	public Path(String name, String id) {
 		_name = name;
 		_id = id;

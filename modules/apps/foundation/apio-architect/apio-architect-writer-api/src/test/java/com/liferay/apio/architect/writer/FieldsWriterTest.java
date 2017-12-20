@@ -24,12 +24,9 @@ import static org.hamcrest.Matchers.hasEntry;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.collection.IsMapWithSize.aMapWithSize;
-import static org.hamcrest.collection.IsMapWithSize.anEmptyMap;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 
-import com.liferay.apio.architect.identifier.StringIdentifier;
-import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.request.RequestInfo;
@@ -42,6 +39,7 @@ import com.liferay.apio.architect.uri.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
@@ -69,23 +67,21 @@ public class FieldsWriterTest {
 		);
 
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.empty()
+			__ -> string -> true
 		);
 
 		Mockito.when(
-			_requestInfo.getEmbeddedOptional()
+			_requestInfo.getEmbedded()
 		).thenReturn(
-			Optional.empty()
+			__ -> false
 		);
 
-		Language language = Mockito.mock(Language.class);
-
 		Mockito.when(
-			_requestInfo.getLanguageOptional()
+			_requestInfo.getLanguage()
 		).thenReturn(
-			Optional.of(language)
+			Locale::getDefault
 		);
 
 		_fieldsWriter = new FieldsWriter<>(
@@ -133,9 +129,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteBinariesWithFieldsFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "binary2"::equals)
+			list -> "binary2"::equals
 		);
 
 		Map<String, String> binaries = new HashMap<>();
@@ -161,9 +157,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteBooleanFieldsWithFieldsFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "boolean2"::equals)
+			list -> "boolean2"::equals
 		);
 
 		Map<String, Boolean> booleans = new HashMap<>();
@@ -191,9 +187,9 @@ public class FieldsWriterTest {
 			Function.class);
 
 		Mockito.when(
-			_requestInfo.getEmbeddedOptional()
+			_requestInfo.getEmbedded()
 		).thenReturn(
-			Optional.of(() -> "first.embedded2"::equals)
+			"first.embedded2"::equals
 		);
 
 		Mockito.when(
@@ -261,9 +257,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteEmbeddedRelatedModelsWithFieldsFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "embedded2"::equals)
+			list -> "embedded2"::equals
 		);
 
 		List<String> linkedRelatedModelURLs = new ArrayList<>();
@@ -394,9 +390,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteLinkedRelatedModelsWithFieldsFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "linked2"::equals)
+			list -> "linked2"::equals
 		);
 
 		List<String> linkedRelatedModelsURLs = new ArrayList<>();
@@ -446,9 +442,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteLinksWithFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "link2"::equals)
+			list -> "link2"::equals
 		);
 
 		Map<String, String> links = new HashMap<>();
@@ -457,21 +453,6 @@ public class FieldsWriterTest {
 
 		assertThat(links, is(aMapWithSize(1)));
 		assertThat(links, hasEntry("link2", "community.liferay.com"));
-	}
-
-	@Test
-	public void testWriteLocalizedStringFailsIfNoLanguageIsProvided() {
-		Mockito.when(
-			_requestInfo.getLanguageOptional()
-		).thenReturn(
-			Optional.empty()
-		);
-
-		Map<String, String> localizedStrings = new HashMap<>();
-
-		_fieldsWriter.writeLocalizedStringFields(localizedStrings::put);
-
-		assertThat(localizedStrings, is(anEmptyMap()));
 	}
 
 	@Test
@@ -490,9 +471,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteLocalizedStringFieldsWithFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "localizedString2"::equals)
+			list -> "localizedString2"::equals
 		);
 
 		Map<String, String> localizedStrings = new HashMap<>();
@@ -518,9 +499,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteNumberFieldsWithFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "number2"::equals)
+			list -> "number2"::equals
 		);
 
 		Map<String, Number> numbers = new HashMap<>();
@@ -572,9 +553,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteRelatedCollectionsWithFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "relatedCollection2"::equals)
+			list -> "relatedCollection2"::equals
 		);
 
 		List<String> relatedCollectionURLs = new ArrayList<>();
@@ -652,9 +633,9 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteStringFieldsWithFilter() {
 		Mockito.when(
-			_requestInfo.getFieldsOptional()
+			_requestInfo.getFields()
 		).thenReturn(
-			Optional.of(list -> "string2"::equals)
+			list -> "string2"::equals
 		);
 
 		Map<String, String> strings = new HashMap<>();
@@ -674,7 +655,7 @@ public class FieldsWriterTest {
 		assertThat(types, contains("Type 1", "Type 2"));
 	}
 
-	private FieldsWriter<RootModel, StringIdentifier> _fieldsWriter;
+	private FieldsWriter<RootModel, String> _fieldsWriter;
 	private final RequestInfo _requestInfo = Mockito.mock(RequestInfo.class);
 
 }

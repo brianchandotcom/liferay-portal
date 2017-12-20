@@ -16,7 +16,6 @@ package com.liferay.apio.architect.router;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
 
@@ -40,7 +39,7 @@ import com.liferay.apio.architect.routes.ItemRoutes.Builder;
  * @review
  */
 @ConsumerType
-public interface ItemRouter<T, U extends Identifier> {
+public interface ItemRouter<T, U> {
 
 	/**
 	 * Creates the {@link ItemRoutes} supported by the item resource. Use the

@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -43,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true)
 public class PersonCollectionResource
-	implements CollectionResource<Person, LongIdentifier> {
+	implements CollectionResource<Person, Long> {
 
 	@Override
 	public CollectionRoutes<Person> collectionRoutes(
@@ -63,7 +62,7 @@ public class PersonCollectionResource
 
 	@Override
 	public ItemRoutes<Person> itemRoutes(
-		ItemRoutes.Builder<Person, LongIdentifier> builder) {
+		ItemRoutes.Builder<Person, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPerson
@@ -75,13 +74,13 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public Representor<Person, LongIdentifier> representor(
-		Representor.Builder<Person, LongIdentifier> builder) {
+	public Representor<Person, Long> representor(
+		Representor.Builder<Person, Long> builder) {
 
 		return builder.types(
 			"Person"
 		).identifier(
-			person -> person::getPersonId
+			Person::getPersonId
 		).addDate(
 			"birthDate", Person::getBirthDate
 		).addString(
@@ -118,8 +117,8 @@ public class PersonCollectionResource
 			address, avatar, birthDate, email, firstName, jobTitle, lastName);
 	}
 
-	private void _deletePerson(LongIdentifier personLongIdentifier) {
-		Person.deletePerson(personLongIdentifier.getId());
+	private void _deletePerson(Long personId) {
+		Person.deletePerson(personId);
 	}
 
 	private PageItems<Person> _getPageItems(Pagination pagination) {
@@ -130,18 +129,14 @@ public class PersonCollectionResource
 		return new PageItems<>(persons, count);
 	}
 
-	private Person _getPerson(LongIdentifier personLongIdentifier) {
-		Optional<Person> optional = Person.getPerson(
-			personLongIdentifier.getId());
+	private Person _getPerson(Long personId) {
+		Optional<Person> optional = Person.getPerson(personId);
 
 		return optional.orElseThrow(
-			() -> new NotFoundException(
-				"Unable to get person " + personLongIdentifier.getId()));
+			() -> new NotFoundException("Unable to get person " + personId));
 	}
 
-	private Person _updatePerson(
-		LongIdentifier personLongIdentifier, Map<String, Object> body) {
-
+	private Person _updatePerson(Long personId, Map<String, Object> body) {
 		String address = (String)body.get("address");
 		String avatar = (String)body.get("image");
 
@@ -156,11 +151,10 @@ public class PersonCollectionResource
 
 		Optional<Person> optional = Person.updatePerson(
 			address, avatar, birthDate, email, firstName, jobTitle, lastName,
-			personLongIdentifier.getId());
+			personId);
 
 		return optional.orElseThrow(
-			() -> new NotFoundException(
-				"Unable to get person " + personLongIdentifier.getId()));
+			() -> new NotFoundException("Unable to get person " + personId));
 	}
 
 }

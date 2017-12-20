@@ -22,6 +22,7 @@ import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.writer.DocumentationWriter;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -53,6 +54,12 @@ public class MockDocumentationWriter {
 				null
 			).serverURL(
 				() -> "localhost"
+			).embedded(
+				__ -> false
+			).fields(
+				__ -> string -> true
+			).language(
+				Locale::getDefault
 			).build());
 	}
 

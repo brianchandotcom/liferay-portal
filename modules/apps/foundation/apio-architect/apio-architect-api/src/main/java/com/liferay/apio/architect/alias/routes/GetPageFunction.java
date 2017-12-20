@@ -16,9 +16,6 @@ package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
 import com.liferay.apio.architect.pagination.Page;
-import com.liferay.apio.architect.uri.Path;
-
-import java.util.function.Function;
 
 /**
  * Defines a type alias for a function that can be used to get a collection
@@ -27,6 +24,5 @@ import java.util.function.Function;
  * @author Alejandro Hernández
  */
 @FunctionalInterface
-public interface GetPageFunction<T>
-	extends RequestFunction<Function<Path, Page<T>>> {
+public interface GetPageFunction<T> extends RequestFunction<Page<T>> {
 }

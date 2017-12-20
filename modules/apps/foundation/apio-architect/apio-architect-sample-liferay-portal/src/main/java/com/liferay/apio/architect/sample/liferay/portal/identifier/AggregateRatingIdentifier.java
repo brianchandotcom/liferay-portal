@@ -16,7 +16,6 @@ package com.liferay.apio.architect.sample.liferay.portal.identifier;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.kernel.model.ClassedModel;
 
 /**
@@ -30,7 +29,7 @@ import com.liferay.portal.kernel.model.ClassedModel;
  * @author Alejandro Hernández
  */
 @ProviderType
-public interface AggregateRatingIdentifier extends Identifier {
+public interface AggregateRatingIdentifier {
 
 	/**
 	 * Creates and returns a new aggregate rating identifier from a class name

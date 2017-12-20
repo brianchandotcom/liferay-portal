@@ -16,14 +16,12 @@ package com.liferay.apio.architect.wiring.osgi.manager;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Optional;
 
 /**
- * Provides methods to map a {@link Path} to an {@code Identifier}, and vice
- * versa.
+ * Provides methods to map a {@link Path} to an identifier, and vice versa.
  *
  * @author Alejandro Hernández
  */
@@ -31,31 +29,30 @@ import java.util.Optional;
 public interface PathIdentifierMapperManager {
 
 	/**
-	 * Converts a {@code Path} to its equivalent {@code Identifier} of type
-	 * {@code T}, if a valid {@link
-	 * com.liferay.apio.architect.identifier.mapper.PathIdentifierMapper} can be
-	 * found. Returns {@code Optional#empty()} otherwise.
+	 * Converts a {@code Path} to its equivalent identifier of type {@code T},
+	 * if a valid {@link
+	 * com.liferay.apio.architect.uri.mapper.PathIdentifierMapper} can be found.
+	 * Returns {@code Optional#empty()} otherwise.
 	 *
-	 * @param  clazz the class of the desired {@code Identifier}
+	 * @param  clazz the class of the desired identifier
 	 * @param  path the {@code Path}
-	 * @return the {@code Identifier}, if a valid {@code PathIdentifierMapper}
-	 *         is present; {@code Optional#empty()} otherwise
+	 * @return the identifier, if a valid {@code PathIdentifierMapper} is
+	 *         present; {@code Optional#empty()} otherwise
 	 */
-	public <T extends Identifier> Optional<T> map(Class<T> clazz, Path path);
+	public <T> Optional<T> map(Class<T> clazz, Path path);
 
 	/**
-	 * Converts an {@code Identifier} to its equivalent {@code Path}, if a valid
-	 * {@code PathIdentifierMapper} can be found. Returns {@code
-	 * Optional#empty()} otherwise.
+	 * Converts an identifier to its equivalent {@code Path}, if a valid {@code
+	 * PathIdentifierMapper} can be found. Returns {@code Optional#empty()}
+	 * otherwise.
 	 *
-	 * @param  identifier the {@code Identifier}
-	 * @param  modelClass the class of the model identified by the {@code
-	 *         Identifier}
+	 * @param  identifier the identifier
+	 * @param  identifierClass the class of the identifier
+	 * @param  modelClass the class of the model identified by the identifier
 	 * @return the {@code Path}, if a valid {@code PathIdentifierMapper} is
 	 *         present; {@code Optional#empty()} otherwise
 	 */
-	public <T extends Identifier, U> Optional<Path> map(
-		T identifier, Class<? extends Identifier> identifierClass,
-		Class<U> modelClass);
+	public <T, U> Optional<Path> map(
+		T identifier, Class<?> identifierClass, Class<U> modelClass);
 
 }

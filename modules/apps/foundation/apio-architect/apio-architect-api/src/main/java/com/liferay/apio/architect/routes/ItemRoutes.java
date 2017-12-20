@@ -27,7 +27,6 @@ import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
 import com.liferay.apio.architect.function.TetraFunction;
 import com.liferay.apio.architect.function.TriFunction;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
@@ -56,7 +55,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ItemRoutes<T> {
 
-	public ItemRoutes(Builder<T, ? extends Identifier> builder) {
+	public ItemRoutes(Builder<T, ?> builder) {
 		_deleteItemConsumer = builder._deleteItemConsumer;
 		_singleModelFunction = builder._singleModelFunction;
 		_updateItemFunction = builder._updateItemFunction;
@@ -103,14 +102,14 @@ public class ItemRoutes<T> {
 	 * com.liferay.apio.architect.router.ItemRouter}.
 	 */
 	@SuppressWarnings("unused")
-	public static class Builder<T, U extends Identifier> {
+	public static class Builder<T, U> {
 
 		public Builder(
 			Class<T> modelClass, Class<U> identifierClass,
 			RequestFunction<Function<Class<?>, Optional<?>>>
 				provideClassFunction,
-			Supplier<BiFunction<Class<? extends Identifier>, Path,
-				Optional<? extends Identifier>>> identifierFunctionSupplier) {
+			Supplier<BiFunction<Class<?>, Path,
+				Optional<?>>> identifierFunctionSupplier) {
 
 			_modelClass = modelClass;
 			_identifierClass = identifierClass;
@@ -531,14 +530,11 @@ public class ItemRoutes<T> {
 		}
 
 		@SuppressWarnings("unchecked")
-		private <V extends Identifier> V _convertIdentifier(
-			Path path, Class<V> identifierClass) {
-
-			Optional<? extends Identifier> optional =
-				_identifierFunctionSupplier.get(
-				).apply(
-					identifierClass, path
-				);
+		private <V> V _convertIdentifier(Path path, Class<V> identifierClass) {
+			Optional<?> optional = _identifierFunctionSupplier.get(
+			).apply(
+				identifierClass, path
+			);
 
 			return optional.map(
 				convertedIdentifier -> (V)convertedIdentifier
@@ -566,8 +562,8 @@ public class ItemRoutes<T> {
 
 		private DeleteItemConsumer _deleteItemConsumer;
 		private final Class<U> _identifierClass;
-		private final Supplier<BiFunction<Class<? extends Identifier>, Path,
-			Optional<? extends Identifier>>> _identifierFunctionSupplier;
+		private final Supplier<BiFunction<Class<?>, Path,
+			Optional<?>>> _identifierFunctionSupplier;
 		private final Class<T> _modelClass;
 		private final RequestFunction<Function<Class<?>, Optional<?>>>
 			_provideClassFunction;

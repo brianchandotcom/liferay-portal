@@ -14,8 +14,6 @@
 
 package com.liferay.apio.architect.related;
 
-import com.liferay.apio.architect.identifier.Identifier;
-
 import java.util.function.Function;
 
 /**
@@ -26,8 +24,7 @@ import java.util.function.Function;
 public class RelatedCollection<T, S> {
 
 	public RelatedCollection(
-		String key, Class<S> modelClass,
-		Function<T, Identifier> identifierFunction) {
+		String key, Class<S> modelClass, Function<T, ?> identifierFunction) {
 
 		_key = key;
 		_modelClass = modelClass;
@@ -40,7 +37,7 @@ public class RelatedCollection<T, S> {
 	 *
 	 * @return the function that calculates the related collection's identifier
 	 */
-	public Function<T, Identifier> getIdentifierFunction() {
+	public Function<T, ?> getIdentifierFunction() {
 		return _identifierFunction;
 	}
 
@@ -62,7 +59,7 @@ public class RelatedCollection<T, S> {
 		return _modelClass;
 	}
 
-	private final Function<T, Identifier> _identifierFunction;
+	private final Function<T, ?> _identifierFunction;
 	private final String _key;
 	private final Class<S> _modelClass;
 

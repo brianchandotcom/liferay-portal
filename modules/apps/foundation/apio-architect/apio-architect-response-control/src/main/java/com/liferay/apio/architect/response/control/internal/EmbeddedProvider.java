@@ -18,8 +18,6 @@ import com.liferay.apio.architect.provider.Provider;
 import com.liferay.apio.architect.response.control.Embedded;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,25 +39,10 @@ public class EmbeddedProvider implements Provider<Embedded> {
 		String embedded = httpServletRequest.getParameter("embedded");
 
 		if (embedded != null) {
-			return () -> Arrays.asList(_pattern.split(embedded))::contains;
+			return Arrays.asList(_pattern.split(embedded))::contains;
 		}
 
-		return () -> __ -> false;
-	}
-
-	public static class EmbeddedImpl implements Embedded {
-
-		public EmbeddedImpl(List<String> embedded) {
-			_embedded = embedded;
-		}
-
-		@Override
-		public Predicate<String> getEmbeddedPredicate() {
-			return _embedded::contains;
-		}
-
-		private final List<String> _embedded;
-
+		return __ -> false;
 	}
 
 	private static final Pattern _pattern = Pattern.compile("\\s*,\\s*");

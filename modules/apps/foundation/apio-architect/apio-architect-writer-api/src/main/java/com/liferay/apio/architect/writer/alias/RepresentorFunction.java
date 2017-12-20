@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.writer.alias;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.representor.Representor;
 
 import java.util.Optional;
@@ -27,7 +26,6 @@ import java.util.function.Function;
  * @author Alejandro Hernández
  */
 @FunctionalInterface
-public interface RepresentorFunction extends
-	Function
-		<Class<?>, Optional<? extends Representor<?, ? extends Identifier>>> {
+public interface RepresentorFunction
+	extends Function<Class<?>, Optional<? extends Representor<?, ?>>> {
 }

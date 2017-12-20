@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.model.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -22,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Leonardo Barros
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class ModificationDeniedLayoutTypeAccessPolicyImpl
 	extends DefaultLayoutTypeAccessPolicyImpl {
 
@@ -56,23 +59,25 @@ public class ModificationDeniedLayoutTypeAccessPolicyImpl
 
 	@Override
 	public boolean isViewLayoutAllowed(
-		PermissionChecker permissionChecker, Layout layout) {
+			PermissionChecker permissionChecker, Layout layout)
+		throws PortalException {
 
-		return true;
+		return super.isViewLayoutAllowed(permissionChecker, layout);
 	}
 
 	@Override
 	protected boolean hasAccessPermission(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
+			HttpServletRequest request, Layout layout, Portlet portlet)
+		throws PortalException {
 
-		return true;
+		return super.hasAccessPermission(request, layout, portlet);
 	}
 
 	@Override
 	protected boolean isAccessAllowedToLayoutPortlet(
 		HttpServletRequest request, Layout layout, Portlet portlet) {
 
-		return true;
+		return super.isAccessAllowedToLayoutPortlet(request, layout, portlet);
 	}
 
 }

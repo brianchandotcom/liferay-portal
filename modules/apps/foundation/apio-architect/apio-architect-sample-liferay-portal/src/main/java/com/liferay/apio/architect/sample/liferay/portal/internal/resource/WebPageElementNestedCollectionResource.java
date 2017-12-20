@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.sample.liferay.portal.internal.resource;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -66,13 +65,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class WebPageElementNestedCollectionResource
-	implements NestedCollectionResource
-		<JournalArticle, LongIdentifier, WebSite, LongIdentifier> {
+	implements NestedCollectionResource <JournalArticle, Long, WebSite, Long> {
 
 	@Override
 	public NestedCollectionRoutes<JournalArticle> collectionRoutes(
-		NestedCollectionRoutes.Builder<JournalArticle, LongIdentifier>
-			builder) {
+		NestedCollectionRoutes.Builder<JournalArticle, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -88,7 +85,7 @@ public class WebPageElementNestedCollectionResource
 
 	@Override
 	public ItemRoutes<JournalArticle> itemRoutes(
-		ItemRoutes.Builder<JournalArticle, LongIdentifier> builder) {
+		ItemRoutes.Builder<JournalArticle, Long> builder) {
 
 		return builder.addGetter(
 			this::_getJournalArticle
@@ -100,16 +97,16 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	@Override
-	public Representor<JournalArticle, LongIdentifier> representor(
-		Representor.Builder<JournalArticle, LongIdentifier> builder) {
+	public Representor<JournalArticle, Long> representor(
+		Representor.Builder<JournalArticle, Long> builder) {
 
 		return builder.types(
 			"WebPageElement"
 		).identifier(
-			journalArticle -> journalArticle::getId
+			JournalArticle::getFolderId
 		).addBidirectionalModel(
 			"webSite", "webPageElements", WebSite.class,
-			this::_getWebSiteOptional, WebSite::getWebSiteLongIdentifier
+			this::_getWebSiteOptional, WebSite::getWebSiteId
 		).addDate(
 			"dateCreated", JournalArticle::getCreateDate
 		).addDate(
@@ -132,7 +129,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _addJournalArticle(
-		LongIdentifier groupLongIdentifier, Map<String, Object> body) {
+		Long groupId, Map<String, Object> body) {
 
 		String folderIdString = (String)body.get("folder");
 		String title = (String)body.get("title");
@@ -190,25 +187,23 @@ public class WebPageElementNestedCollectionResource
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setScopeGroupId(groupLongIdentifier.getId());
+		serviceContext.setScopeGroupId(groupId);
 
 		Try<JournalArticle> journalArticleTry = Try.fromFallible(() ->
 			_journalArticleService.addArticle(
-				groupLongIdentifier.getId(), folderId, 0, 0, null, true,
-				titleMap, descriptionMap, content, ddmStructureKey,
-				ddmTemplateKey, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute, 0, 0, 0, 0,
-				0, true, 0, 0, 0, 0, 0, true, true, null, serviceContext));
+				groupId, folderId, 0, 0, null, true, titleMap, descriptionMap,
+				content, ddmStructureKey, ddmTemplateKey, null,
+				displayDateMonth, displayDateDay, displayDateYear,
+				displayDateHour, displayDateMinute, 0, 0, 0, 0, 0, true, 0, 0,
+				0, 0, 0, true, true, null, serviceContext));
 
 		return journalArticleTry.getUnchecked();
 	}
 
-	private void _deleteJournalArticle(
-		LongIdentifier journalArticleLongIdentifier) {
-
+	private void _deleteJournalArticle(Long journalArticleId) {
 		try {
 			JournalArticle article = _journalArticleService.getArticle(
-				journalArticleLongIdentifier.getId());
+				journalArticleId);
 
 			_journalArticleService.deleteArticle(
 				article.getGroupId(), article.getArticleId(),
@@ -221,17 +216,14 @@ public class WebPageElementNestedCollectionResource
 		}
 	}
 
-	private JournalArticle _getJournalArticle(
-		LongIdentifier journalArticleLongIdentifier) {
-
+	private JournalArticle _getJournalArticle(Long journalArticleId) {
 		try {
-			return _journalArticleService.getArticle(
-				journalArticleLongIdentifier.getId());
+			return _journalArticleService.getArticle(journalArticleId);
 		}
 		catch (NoSuchArticleException nsae) {
 			throw new NotFoundException(
 				"Unable to get article " +
-					journalArticleLongIdentifier.getId(),
+					journalArticleId,
 				nsae);
 		}
 		catch (PortalException pe) {
@@ -240,14 +232,13 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private PageItems<JournalArticle> _getPageItems(
-		Pagination pagination, LongIdentifier groupLongIdentifier) {
+		Pagination pagination, Long groupId) {
 
 		List<JournalArticle> journalArticles =
 			_journalArticleService.getArticles(
-				groupLongIdentifier.getId(), 0, pagination.getStartPosition(),
+				groupId, 0, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
-		int count = _journalArticleService.getArticlesCount(
-			groupLongIdentifier.getId(), 0);
+		int count = _journalArticleService.getArticlesCount(groupId, 0);
 
 		return new PageItems<>(journalArticles, count);
 	}
@@ -273,7 +264,7 @@ public class WebPageElementNestedCollectionResource
 	}
 
 	private JournalArticle _updateJournalArticle(
-		LongIdentifier journalArticleLongIdentifier, Map<String, Object> body) {
+		Long journalArticleId, Map<String, Object> body) {
 
 		String userIdString = (String)body.get("user");
 		String groupIdString = (String)body.get("group");
@@ -332,9 +323,9 @@ public class WebPageElementNestedCollectionResource
 
 		Try<JournalArticle> journalArticleTry = Try.fromFallible(() ->
 			_journalArticleService.updateArticle(
-				userId, groupId, folderId,
-				String.valueOf(journalArticleLongIdentifier.getId()), version,
-				titleMap, descriptionMap, content, null, serviceContext));
+				userId, groupId, folderId, String.valueOf(journalArticleId),
+				version, titleMap, descriptionMap, content, null,
+				serviceContext));
 
 		return journalArticleTry.getUnchecked();
 	}

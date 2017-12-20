@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.sample.liferay.portal.internal.resource;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.liferay.portal.context.CurrentUser;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -64,7 +63,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class CommentNestedCollectionResource
-	implements ItemResource<Comment, LongIdentifier>,
+	implements ItemResource<Comment, Long>,
 			   ReusableNestedCollectionRouter<Comment, CommentableIdentifier> {
 
 	@Override
@@ -86,7 +85,7 @@ public class CommentNestedCollectionResource
 
 	@Override
 	public ItemRoutes<Comment> itemRoutes(
-		ItemRoutes.Builder<Comment, LongIdentifier> builder) {
+		ItemRoutes.Builder<Comment, Long> builder) {
 
 		return builder.addGetter(
 			this::_getComment
@@ -98,13 +97,13 @@ public class CommentNestedCollectionResource
 	}
 
 	@Override
-	public Representor<Comment, LongIdentifier> representor(
-		Representor.Builder<Comment, LongIdentifier> builder) {
+	public Representor<Comment, Long> representor(
+		Representor.Builder<Comment, Long> builder) {
 
 		return builder.types(
 			"Comment"
 		).identifier(
-			comment -> comment::getCommentId
+			Comment::getCommentId
 		).addLinkedModel(
 			"author", User.class, this::_getUserOptional
 		).addString(
@@ -139,18 +138,16 @@ public class CommentNestedCollectionResource
 		).getUnchecked();
 	}
 
-	private void _deleteComment(LongIdentifier commentLongIdentifier) {
+	private void _deleteComment(Long commentId) {
 		try {
-			_commentManager.deleteComment(commentLongIdentifier.getId());
+			_commentManager.deleteComment(commentId);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private Comment _getComment(LongIdentifier commentLongIdentifier) {
-		long commentId = commentLongIdentifier.getId();
-
+	private Comment _getComment(Long commentId) {
 		return _commentManager.fetchComment(commentId);
 	}
 
@@ -187,15 +184,15 @@ public class CommentNestedCollectionResource
 	}
 
 	private PageItems<Comment> _getPageItems(
-		Pagination pagination, CommentableIdentifier commentLongIdentifier,
+		Pagination pagination, CommentableIdentifier commentableIdentifier,
 		CurrentUser currentUser) {
 
 		List<Comment> comments = new ArrayList<>();
 
 		DiscussionCommentIterator discussionCommentIterator =
 			_getDiscussionCommentIterator(
-				commentLongIdentifier.getClassName(),
-				commentLongIdentifier.getClassPK(), pagination, currentUser);
+				commentableIdentifier.getClassName(),
+				commentableIdentifier.getClassPK(), pagination, currentUser);
 
 		int i = pagination.getEndPosition() - pagination.getStartPosition();
 
@@ -209,8 +206,8 @@ public class CommentNestedCollectionResource
 		}
 
 		int count = _commentManager.getCommentsCount(
-			commentLongIdentifier.getClassName(),
-			commentLongIdentifier.getClassPK());
+			commentableIdentifier.getClassName(),
+			commentableIdentifier.getClassPK());
 
 		return new PageItems<>(comments, count);
 	}
@@ -229,10 +226,8 @@ public class CommentNestedCollectionResource
 		}
 	}
 
-	private Comment _updateComment(
-		LongIdentifier commentLongIdentifier, Map<String, Object> body) {
-
-		Comment comment = _getComment(commentLongIdentifier);
+	private Comment _updateComment(Long commentId, Map<String, Object> body) {
+		Comment comment = _getComment(commentId);
 
 		String content = (String)body.get("text");
 
@@ -246,8 +241,8 @@ public class CommentNestedCollectionResource
 		Try<Long> commentIdLongTry = Try.fromFallible(
 			() -> _commentManager.updateComment(
 				comment.getUserId(), comment.getClassName(),
-				comment.getClassPK(), commentLongIdentifier.getId(),
-				StringPool.BLANK, content, createServiceContextFunction));
+				comment.getClassPK(), commentId, StringPool.BLANK, content,
+				createServiceContextFunction));
 
 		return commentIdLongTry.map(
 			_commentManager::fetchComment

@@ -14,9 +14,6 @@
 
 package com.liferay.apio.architect.request;
 
-import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
-import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
-
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -72,31 +69,9 @@ public class RequestInfoTest {
 			requestInfo.getHttpServletRequest(),
 			is(equalTo(_httpServletRequest)));
 		assertThat(requestInfo.getServerURL(), is(equalTo(_serverURL)));
-		assertThat(
-			requestInfo.getEmbeddedOptional(),
-			is(optionalWithValue(equalTo(_embedded))));
-		assertThat(
-			requestInfo.getFieldsOptional(),
-			is(optionalWithValue(equalTo(_fields))));
-		assertThat(
-			requestInfo.getLanguageOptional(),
-			is(optionalWithValue(equalTo(_language))));
-	}
-
-	@Test
-	public void testBuildingRequestInfoWithoutOptionalsReturnEmpty() {
-		RequestInfo requestInfo = RequestInfo.create(
-			builder -> builder.httpHeaders(
-				_httpHeaders
-			).httpServletRequest(
-				_httpServletRequest
-			).serverURL(
-				_serverURL
-			).build());
-
-		assertThat(requestInfo.getEmbeddedOptional(), is(emptyOptional()));
-		assertThat(requestInfo.getFieldsOptional(), is(emptyOptional()));
-		assertThat(requestInfo.getLanguageOptional(), is(emptyOptional()));
+		assertThat(requestInfo.getEmbedded(), is(equalTo(_embedded)));
+		assertThat(requestInfo.getFields(), is(equalTo(_fields)));
+		assertThat(requestInfo.getLanguage(), is(equalTo(_language)));
 	}
 
 	private Embedded _embedded;

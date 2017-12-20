@@ -16,7 +16,6 @@ package com.liferay.apio.architect.resource;
 
 import aQute.bnd.annotation.ConsumerType;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 
 /**
@@ -54,7 +53,6 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
  * @review
  */
 @ConsumerType
-public interface NestedCollectionResource
-	<T, U extends Identifier, V, W extends Identifier> extends
-		ItemResource<T, U>, NestedCollectionRouter<T, V, W> {
+public interface NestedCollectionResource <T, U, V, W>
+	extends ItemResource<T, U>, NestedCollectionRouter<T, V, W> {
 }

@@ -14,36 +14,30 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager;
 
-import static org.osgi.service.component.annotations.ReferenceCardinality.MULTIPLE;
-import static org.osgi.service.component.annotations.ReferencePolicy.DYNAMIC;
-import static org.osgi.service.component.annotations.ReferencePolicyOption.GREEDY;
-
-import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.identifier.mapper.PathIdentifierMapper;
 import com.liferay.apio.architect.uri.Path;
+import com.liferay.apio.architect.uri.mapper.PathIdentifierMapper;
+import com.liferay.apio.architect.wiring.osgi.internal.manager.base.SimpleBaseManager;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 
 import java.util.Optional;
 
-import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Hernández
  */
 @Component(immediate = true)
 public class PathIdentifierMapperManagerImpl
-	extends BaseManager<PathIdentifierMapper>
+	extends SimpleBaseManager<PathIdentifierMapper>
 	implements PathIdentifierMapperManager {
+
+	public PathIdentifierMapperManagerImpl() {
+		super(PathIdentifierMapper.class);
+	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T extends Identifier> Optional<T> map(Class<T> clazz, Path path) {
-		if (Identifier.class == clazz) {
-			return Optional.of((T)new Identifier() {});
-		}
-
+	public <T> Optional<T> map(Class<T> clazz, Path path) {
 		Optional<PathIdentifierMapper> optional = getServiceOptional(clazz);
 
 		return optional.map(
@@ -56,13 +50,8 @@ public class PathIdentifierMapperManagerImpl
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <T extends Identifier, U> Optional<Path> map(
-		T identifier, Class<? extends Identifier> identifierClass,
-		Class<U> modelClass) {
-
-		if (Identifier.class == identifierClass) {
-			return Optional.of(new Path());
-		}
+	public <T, U> Optional<Path> map(
+		T identifier, Class<?> identifierClass, Class<U> modelClass) {
 
 		Optional<PathIdentifierMapper> optional = getServiceOptional(
 			identifierClass);
@@ -74,20 +63,6 @@ public class PathIdentifierMapperManagerImpl
 			pathIdentifierMapper ->
 				pathIdentifierMapper.map(identifier, modelClass)
 		);
-	}
-
-	@Reference(cardinality = MULTIPLE, policy = DYNAMIC, policyOption = GREEDY)
-	protected void setServiceReference(
-		ServiceReference<PathIdentifierMapper> serviceReference) {
-
-		addService(serviceReference, PathIdentifierMapper.class);
-	}
-
-	@SuppressWarnings("unused")
-	protected void unsetServiceReference(
-		ServiceReference<PathIdentifierMapper> serviceReference) {
-
-		removeService(serviceReference, PathIdentifierMapper.class);
 	}
 
 }

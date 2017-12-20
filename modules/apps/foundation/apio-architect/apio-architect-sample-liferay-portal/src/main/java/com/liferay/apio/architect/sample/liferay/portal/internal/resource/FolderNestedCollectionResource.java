@@ -16,7 +16,6 @@ package com.liferay.apio.architect.sample.liferay.portal.internal.resource;
 
 import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -52,12 +51,11 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class FolderNestedCollectionResource
-	implements NestedCollectionResource
-		<DLFolder, LongIdentifier, WebSite, LongIdentifier> {
+	implements NestedCollectionResource <DLFolder, Long, WebSite, Long> {
 
 	@Override
 	public NestedCollectionRoutes<DLFolder> collectionRoutes(
-		NestedCollectionRoutes.Builder<DLFolder, LongIdentifier> builder) {
+		NestedCollectionRoutes.Builder<DLFolder, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -73,7 +71,7 @@ public class FolderNestedCollectionResource
 
 	@Override
 	public ItemRoutes<DLFolder> itemRoutes(
-		ItemRoutes.Builder<DLFolder, LongIdentifier> builder) {
+		ItemRoutes.Builder<DLFolder, Long> builder) {
 
 		return builder.addGetter(
 			this::_getDLFolder
@@ -85,16 +83,16 @@ public class FolderNestedCollectionResource
 	}
 
 	@Override
-	public Representor<DLFolder, LongIdentifier> representor(
-		Representor.Builder<DLFolder, LongIdentifier> builder) {
+	public Representor<DLFolder, Long> representor(
+		Representor.Builder<DLFolder, Long> builder) {
 
 		return builder.types(
 			"Folder"
 		).identifier(
-			dlFolder -> dlFolder::getFolderId
+			DLFolder::getFolderId
 		).addBidirectionalModel(
 			"webSite", "folders", WebSite.class, this::_getWebSiteOptional,
-			WebSite::getWebSiteLongIdentifier
+			WebSite::getWebSiteId
 		).addDate(
 			"dateCreated", DLFolder::getCreateDate
 		).addDate(
@@ -108,9 +106,7 @@ public class FolderNestedCollectionResource
 		).build();
 	}
 
-	private DLFolder _addDLFolder(
-		LongIdentifier groupLongIdentifier, Map<String, Object> body) {
-
+	private DLFolder _addDLFolder(Long groupId, Map<String, Object> body) {
 		long parentFolderId = 0;
 
 		String name = (String)body.get("name");
@@ -120,8 +116,7 @@ public class FolderNestedCollectionResource
 		}
 
 		Try<DLFolder> dlFolderTry = Try.fromFallible(
-			() -> _dlFolderService.getFolder(
-				groupLongIdentifier.getId(), parentFolderId, name));
+			() -> _dlFolderService.getFolder(groupId, parentFolderId, name));
 
 		if (dlFolderTry.isSuccess()) {
 			throw new BadRequestException(
@@ -136,28 +131,28 @@ public class FolderNestedCollectionResource
 
 		dlFolderTry = Try.fromFallible(
 			() -> _dlFolderService.addFolder(
-				groupLongIdentifier.getId(), groupLongIdentifier.getId(), false,
-				parentFolderId, name, description, new ServiceContext()));
+				groupId, groupId, false, parentFolderId, name, description,
+				new ServiceContext()));
 
 		return dlFolderTry.getUnchecked();
 	}
 
-	private void _deleteDLFolder(LongIdentifier dlFolderLongIdentifier) {
+	private void _deleteDLFolder(Long dlFolderId) {
 		try {
-			_dlFolderService.deleteFolder(dlFolderLongIdentifier.getId());
+			_dlFolderService.deleteFolder(dlFolderId);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private DLFolder _getDLFolder(LongIdentifier dlFolderLongIdentifier) {
+	private DLFolder _getDLFolder(Long dlFolderId) {
 		try {
-			return _dlFolderService.getFolder(dlFolderLongIdentifier.getId());
+			return _dlFolderService.getFolder(dlFolderId);
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
 			throw new NotFoundException(
-				"Unable to get folder " + dlFolderLongIdentifier.getId(), e);
+				"Unable to get folder " + dlFolderId, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -165,14 +160,13 @@ public class FolderNestedCollectionResource
 	}
 
 	private PageItems<DLFolder> _getPageItems(
-		Pagination pagination, LongIdentifier groupLongIdentifier) {
+		Pagination pagination, Long groupId) {
 
 		try {
 			List<DLFolder> dlFolders = _dlFolderService.getFolders(
-				groupLongIdentifier.getId(), 0, pagination.getStartPosition(),
+				groupId, 0, pagination.getStartPosition(),
 				pagination.getEndPosition(), null);
-			int count = _dlFolderService.getFoldersCount(
-				groupLongIdentifier.getId(), 0);
+			int count = _dlFolderService.getFoldersCount(groupId, 0);
 
 			return new PageItems<>(dlFolders, count);
 		}
@@ -195,9 +189,9 @@ public class FolderNestedCollectionResource
 	}
 
 	private DLFolder _updateDLFolder(
-		LongIdentifier dlFolderLongIdentifier, Map<String, Object> body) {
+		Long dlFolderId, Map<String, Object> body) {
 
-		DLFolder dlFolder = _getDLFolder(dlFolderLongIdentifier);
+		DLFolder dlFolder = _getDLFolder(dlFolderId);
 
 		String name = (String)body.get("name");
 		String description = (String)body.get("description");
@@ -208,10 +202,9 @@ public class FolderNestedCollectionResource
 
 		Try<DLFolder> dlFolderTry = Try.fromFallible(
 			() -> _dlFolderService.updateFolder(
-				dlFolderLongIdentifier.getId(), dlFolder.getParentFolderId(),
-				name, description, dlFolder.getDefaultFileEntryTypeId(),
-				new ArrayList<>(), dlFolder.getRestrictionType(),
-				new ServiceContext()));
+				dlFolderId, dlFolder.getParentFolderId(), name, description,
+				dlFolder.getDefaultFileEntryTypeId(), new ArrayList<>(),
+				dlFolder.getRestrictionType(), new ServiceContext()));
 
 		return dlFolderTry.getUnchecked();
 	}

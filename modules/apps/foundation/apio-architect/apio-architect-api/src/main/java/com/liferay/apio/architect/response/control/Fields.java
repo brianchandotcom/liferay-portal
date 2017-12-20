@@ -17,6 +17,7 @@ package com.liferay.apio.architect.response.control;
 import aQute.bnd.annotation.ProviderType;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
@@ -24,20 +25,16 @@ import java.util.function.Predicate;
  * is handed to {@code javax.ws.rs.ext.MessageBodyWriter} to decide which
  * resource fields to write.
  *
+ * <p>
+ * Instances of this interface act as a function that receive the resource's
+ * list of types and return the predicate to test if a certain field should be
+ * added to the representation.
+ * </p>
+ *
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
  */
 @ProviderType
-public interface Fields {
-
-	/**
-	 * Returns the predicate for the list of types to test if a certain field
-	 * should be added to the representation.
-	 *
-	 * @param  types the resource's list of types
-	 * @return the predicate for the list of types
-	 */
-	public Predicate<String> getFieldsPredicate(List<String> types);
-
+public interface Fields extends Function<List<String>, Predicate<String>> {
 }

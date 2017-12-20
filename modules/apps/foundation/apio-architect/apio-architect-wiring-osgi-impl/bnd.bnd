@@ -1,3 +1,4 @@
 Bundle-Name: Liferay Apio Architect Wiring OSGi Impl
 Bundle-SymbolicName: com.liferay.apio.architect.wiring.osgi.impl
 Bundle-Version: 1.0.0
+-dsannotations-options: inherit

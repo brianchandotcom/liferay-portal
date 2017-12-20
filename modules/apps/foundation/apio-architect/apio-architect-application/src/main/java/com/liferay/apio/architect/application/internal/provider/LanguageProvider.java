@@ -33,8 +33,8 @@ import org.osgi.service.component.annotations.Component;
  * <p>
  * This provider is mandatory in order to use {@link
  * com.liferay.apio.architect.representor.Representor.Builder.FirstStep#addLocalizedString(
- * String, BiFunction)} when declaring a {@link
- * com.liferay.apio.architect.representor.Representor}.
+ * String, java.util.function.BiFunction)} (String, BiFunction)} when declaring
+ * a {@link com.liferay.apio.architect.representor.Representor}.
  * </p>
  *
  * @author Alejandro Hernández

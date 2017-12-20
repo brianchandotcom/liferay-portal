@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.sample.liferay.portal.internal.resource;
 
 import com.liferay.apio.architect.functional.Try;
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -62,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PersonCollectionResource
-	implements CollectionResource<User, LongIdentifier> {
+	implements CollectionResource<User, Long> {
 
 	@Override
 	public CollectionRoutes<User> collectionRoutes(
@@ -81,9 +80,7 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public ItemRoutes<User> itemRoutes(
-		ItemRoutes.Builder<User, LongIdentifier> builder) {
-
+	public ItemRoutes<User> itemRoutes(ItemRoutes.Builder<User, Long> builder) {
 		return builder.addGetter(
 			this::_getUser
 		).addRemover(
@@ -94,13 +91,13 @@ public class PersonCollectionResource
 	}
 
 	@Override
-	public Representor<User, LongIdentifier> representor(
-		Representor.Builder<User, LongIdentifier> builder) {
+	public Representor<User, Long> representor(
+		Representor.Builder<User, Long> builder) {
 
 		return builder.types(
 			"Person"
 		).identifier(
-			user -> user::getUserId
+			User::getUserId
 		).addDate(
 			"birthDate", PersonCollectionResource::_getBirthday
 		).addString(
@@ -193,9 +190,9 @@ public class PersonCollectionResource
 		return userTry.getUnchecked();
 	}
 
-	private void _deleteUser(LongIdentifier userLongIdentifier) {
+	private void _deleteUser(Long userId) {
 		try {
-			_userLocalService.deleteUser(userLongIdentifier.getId());
+			_userLocalService.deleteUser(userId);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
@@ -214,23 +211,20 @@ public class PersonCollectionResource
 		return new PageItems<>(users, count);
 	}
 
-	private User _getUser(LongIdentifier userLongIdentifier) {
+	private User _getUser(Long userId) {
 		try {
-			return _userLocalService.getUserById(userLongIdentifier.getId());
+			return _userLocalService.getUserById(userId);
 		}
 		catch (NoSuchUserException | PrincipalException e) {
-			throw new NotFoundException(
-				"Unable to get user " + userLongIdentifier.getId(), e);
+			throw new NotFoundException("Unable to get user " + userId, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);
 		}
 	}
 
-	private User _updateUser(
-		LongIdentifier userLongIdentifier, Map<String, Object> body) {
-
-		User user = _getUser(userLongIdentifier);
+	private User _updateUser(Long userId, Map<String, Object> body) {
+		User user = _getUser(userId);
 
 		String password = (String)body.get("password");
 		String screenName = (String)body.get("alternateName");

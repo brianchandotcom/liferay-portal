@@ -28,7 +28,8 @@ import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
-import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 import com.liferay.apio.architect.writer.SingleModelWriter;
 
@@ -43,6 +44,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -120,14 +122,23 @@ public class SingleModelMessageBodyWriter<T>
 			).serverURL(
 				getServerURL()
 			).embedded(
-				_providerManager.provideOrNull(
-					Embedded.class, _httpServletRequest)
+				_providerManager.provideOptional(
+					Embedded.class, _httpServletRequest
+				).orElse(
+					__ -> false
+				)
 			).fields(
-				_providerManager.provideOrNull(
-					Fields.class, _httpServletRequest)
+				_providerManager.provideOptional(
+					Fields.class, _httpServletRequest
+				).orElse(
+					__ -> string -> true
+				)
 			).language(
-				_providerManager.provideOrNull(
-					Language.class, _httpServletRequest)
+				_providerManager.provideOptional(
+					Language.class, _httpServletRequest
+				).orElse(
+					Locale::getDefault
+				)
 			).build());
 
 		SingleModelWriter<T> singleModelWriter = SingleModelWriter.create(
@@ -138,7 +149,7 @@ public class SingleModelMessageBodyWriter<T>
 			).pathFunction(
 				_pathIdentifierMapperManager::map
 			).resourceNameFunction(
-				_representableManager::getNameOptional
+				_nameManager::getNameOptional
 			).representorFunction(
 				_representableManager::getRepresentorOptional
 			).requestInfo(
@@ -199,6 +210,9 @@ public class SingleModelMessageBodyWriter<T>
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Reference
+	private NameManager _nameManager;
 
 	@Reference
 	private PathIdentifierMapperManager _pathIdentifierMapperManager;

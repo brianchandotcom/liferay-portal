@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.sample.internal.resource;
 
-import com.liferay.apio.architect.identifier.LongIdentifier;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
 import com.liferay.apio.architect.representor.Representor;
@@ -43,12 +42,11 @@ import org.osgi.service.component.annotations.Component;
 @Component(immediate = true)
 public class BlogPostingCommentNestedCollectionResource implements
 	NestedCollectionResource
-		<BlogPostingComment, LongIdentifier, BlogPosting, LongIdentifier> {
+		<BlogPostingComment, Long, BlogPosting, Long> {
 
 	@Override
 	public NestedCollectionRoutes<BlogPostingComment> collectionRoutes(
-		NestedCollectionRoutes.Builder<BlogPostingComment, LongIdentifier>
-			builder) {
+		NestedCollectionRoutes.Builder<BlogPostingComment, Long> builder) {
 
 		return builder.addGetter(
 			this::_getPageItems
@@ -64,7 +62,7 @@ public class BlogPostingCommentNestedCollectionResource implements
 
 	@Override
 	public ItemRoutes<BlogPostingComment> itemRoutes(
-		ItemRoutes.Builder<BlogPostingComment, LongIdentifier> builder) {
+		ItemRoutes.Builder<BlogPostingComment, Long> builder) {
 
 		return builder.addGetter(
 			this::_getBlogPostingComment
@@ -76,13 +74,13 @@ public class BlogPostingCommentNestedCollectionResource implements
 	}
 
 	@Override
-	public Representor<BlogPostingComment, LongIdentifier> representor(
-		Representor.Builder<BlogPostingComment, LongIdentifier> builder) {
+	public Representor<BlogPostingComment, Long> representor(
+		Representor.Builder<BlogPostingComment, Long> builder) {
 
 		return builder.types(
 			"Comment"
 		).identifier(
-			blogPostingComment -> blogPostingComment::getBlogPostingCommentId
+			BlogPostingComment::getBlogPostingCommentId
 		).addDate(
 			"dateCreated", BlogPostingComment::getCreateDate
 		).addDate(
@@ -97,62 +95,55 @@ public class BlogPostingCommentNestedCollectionResource implements
 	}
 
 	private BlogPostingComment _addBlogPostingComment(
-		LongIdentifier blogPostLongIdentifier, Map<String, Object> body) {
+		Long blogPostId, Map<String, Object> body) {
 
 		Long authorId = (Long)body.get("author");
 		String content = (String)body.get("text");
 
 		return BlogPostingComment.addBlogPostingComment(
-			authorId, blogPostLongIdentifier.getId(), content);
+			authorId, blogPostId, content);
 	}
 
-	private void _deleteBlogPostingComment(
-		LongIdentifier blogPostingCommentLongIdentifier) {
-
-		BlogPostingComment.deleteBlogPostingComment(
-			blogPostingCommentLongIdentifier.getId());
+	private void _deleteBlogPostingComment(Long blogPostingCommentId) {
+		BlogPostingComment.deleteBlogPostingComment(blogPostingCommentId);
 	}
 
 	private BlogPostingComment _getBlogPostingComment(
-		LongIdentifier blogPostingCommentLongIdentifier) {
+		Long blogPostingCommentId) {
 
 		Optional<BlogPostingComment> optional =
 			BlogPostingComment.getBlogPostingCommentOptional(
-				blogPostingCommentLongIdentifier.getId());
+				blogPostingCommentId);
 
 		return optional.orElseThrow(
 			() -> new NotFoundException(
-				"Unable to get blog posting comment " +
-					blogPostingCommentLongIdentifier.getId()));
+				"Unable to get blog posting comment " + blogPostingCommentId));
 	}
 
 	private PageItems<BlogPostingComment> _getPageItems(
-		Pagination pagination, LongIdentifier blogPostLongIdentifier) {
+		Pagination pagination, Long blogPostId) {
 
 		List<BlogPostingComment> blogsEntries =
 			BlogPostingComment.getBlogPostingComments(
-				blogPostLongIdentifier.getId(), pagination.getStartPosition(),
+				blogPostId, pagination.getStartPosition(),
 				pagination.getEndPosition());
-		int count = BlogPostingComment.getBlogPostingCommentsCount(
-			blogPostLongIdentifier.getId());
+		int count = BlogPostingComment.getBlogPostingCommentsCount(blogPostId);
 
 		return new PageItems<>(blogsEntries, count);
 	}
 
 	private BlogPostingComment _updateBlogPostingComment(
-		LongIdentifier blogPostingCommentLongIdentifier,
-		Map<String, Object> body) {
+		Long blogPostingCommentId, Map<String, Object> body) {
 
 		String content = (String)body.get("text");
 
 		Optional<BlogPostingComment> optional =
 			BlogPostingComment.updateBlogPostingComment(
-				blogPostingCommentLongIdentifier.getId(), content);
+				blogPostingCommentId, content);
 
 		return optional.orElseThrow(
 			() -> new NotFoundException(
-				"Unable to get blog posting comment " +
-					blogPostingCommentLongIdentifier.getId()));
+				"Unable to get blog posting comment " + blogPostingCommentId));
 	}
 
 }

@@ -43,17 +43,4 @@ public interface ProviderManager {
 	public <T> Optional<T> provideOptional(
 		Class<T> clazz, HttpServletRequest httpServletRequest);
 
-	/**
-	 * Returns an instance of type {@code T} if a valid {@link
-	 * com.liferay.apio.architect.provider.Provider} exists. Returns {@code
-	 * null} otherwise.
-	 *
-	 * @param  clazz the type class to provide
-	 * @param  httpServletRequest the current request
-	 * @return the instance of {@code T}, if a valid {@code Provider} exists;
-	 *         {@code null} otherwise
-	 */
-	public <T> T provideOrNull(
-		Class<T> clazz, HttpServletRequest httpServletRequest);
-
 }

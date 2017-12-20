@@ -16,12 +16,12 @@ package com.liferay.apio.architect.writer;
 
 import static com.liferay.apio.architect.writer.url.URLCreator.createCollectionPageURL;
 import static com.liferay.apio.architect.writer.url.URLCreator.createCollectionURL;
+import static com.liferay.apio.architect.writer.url.URLCreator.createNestedCollectionURL;
 import static com.liferay.apio.architect.writer.util.WriterUtil.getFieldsWriter;
 import static com.liferay.apio.architect.writer.util.WriterUtil.getPathOptional;
 
 import com.google.gson.JsonObject;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
@@ -165,10 +165,10 @@ public class PageWriter<T> {
 
 			/**
 			 * Adds information to the builder about the function that converts
-			 * an {@link Identifier} to a {@link Path}.
+			 * an identifier to a {@link Path}.
 			 *
-			 * @param  pathFunction the function to map an {@code Identifier} to
-			 *         a {@code Path}
+			 * @param  pathFunction the function to map an identifier to a
+			 *         {@code Path}
 			 * @return the updated builder
 			 */
 			public ResourceNameFunctionStep pathFunction(
@@ -251,20 +251,26 @@ public class PageWriter<T> {
 	}
 
 	private Optional<String> _getCollectionURLOptional() {
-		Path path = _page.getPath();
-
 		Class<T> modelClass = _page.getModelClass();
 
 		Optional<String> optional = _resourceNameFunction.apply(
 			modelClass.getName());
 
 		return optional.map(
-			name -> createCollectionURL(
-				_requestInfo.getServerURL(), path, name));
+			name -> {
+				Optional<Path> pathOptional = _page.getPathOptional();
+
+				if (pathOptional.isPresent()) {
+					return createNestedCollectionURL(
+						_requestInfo.getServerURL(), pathOptional.get(), name);
+				}
+
+				return createCollectionURL(_requestInfo.getServerURL(), name);
+			});
 	}
 
 	private void _writeItem(SingleModel<T> singleModel) {
-		Optional<FieldsWriter<T, Identifier>> optional = getFieldsWriter(
+		Optional<FieldsWriter<T, ?>> optional = getFieldsWriter(
 			singleModel, null, _requestInfo, _pathFunction,
 			_representorFunction);
 
@@ -272,7 +278,7 @@ public class PageWriter<T> {
 			return;
 		}
 
-		FieldsWriter<T, Identifier> fieldsWriter = optional.get();
+		FieldsWriter<T, ?> fieldsWriter = optional.get();
 
 		JSONObjectBuilder itemJsonObjectBuilder = new JSONObjectBuilder();
 
@@ -344,7 +350,7 @@ public class PageWriter<T> {
 		SingleModel<V> singleModel, FunctionalList<String> embeddedPathElements,
 		JSONObjectBuilder itemJsonObjectBuilder) {
 
-		Optional<FieldsWriter<V, Identifier>> optional = getFieldsWriter(
+		Optional<FieldsWriter<V, ?>> optional = getFieldsWriter(
 			singleModel, embeddedPathElements, _requestInfo, _pathFunction,
 			_representorFunction);
 
@@ -352,7 +358,7 @@ public class PageWriter<T> {
 			return;
 		}
 
-		FieldsWriter<V, Identifier> fieldsWriter = optional.get();
+		FieldsWriter<V, ?> fieldsWriter = optional.get();
 
 		fieldsWriter.writeBooleanFields(
 			(field, value) ->

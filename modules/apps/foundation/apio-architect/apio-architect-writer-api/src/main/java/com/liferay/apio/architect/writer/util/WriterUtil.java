@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.writer.util;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
@@ -47,12 +46,12 @@ public class WriterUtil {
 	 * @param  representorFunction the function to get the {@link Representor}
 	 * @return the {@code FieldsWriter} for the model
 	 */
-	public static <T> Optional<FieldsWriter<T, Identifier>> getFieldsWriter(
+	public static <T> Optional<FieldsWriter<T, ?>> getFieldsWriter(
 		SingleModel<T> singleModel, FunctionalList<String> embeddedPathElements,
 		RequestInfo requestInfo, PathFunction pathFunction,
 		RepresentorFunction representorFunction) {
 
-		Optional<Representor<T, Identifier>> representorOptional =
+		Optional<Representor<T, ?>> representorOptional =
 			getRepresentorOptional(
 				singleModel.getModelClass(), representorFunction);
 
@@ -82,7 +81,7 @@ public class WriterUtil {
 		SingleModel<T> singleModel, PathFunction pathFunction,
 		RepresentorFunction representorFunction) {
 
-		Optional<Representor<T, Identifier>> optional = getRepresentorOptional(
+		Optional<Representor<T, ?>> optional = getRepresentorOptional(
 			singleModel.getModelClass(), representorFunction);
 
 		return optional.flatMap(
@@ -102,14 +101,13 @@ public class WriterUtil {
 	 *         Optional#empty()} otherwise
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T, V extends Identifier> Optional<Representor<T, V>>
-		getRepresentorOptional(
-			Class<T> modelClass, RepresentorFunction representorFunction) {
+	public static <T> Optional<Representor<T, ?>> getRepresentorOptional(
+		Class<T> modelClass, RepresentorFunction representorFunction) {
 
-		Optional<? extends Representor<?, ? extends Identifier>> optional =
+		Optional<? extends Representor<?, ?>> optional =
 			representorFunction.apply(modelClass);
 
-		return optional.map(representor -> (Representor<T, V>)representor);
+		return optional.map(representor -> (Representor<T, ?>)representor);
 	}
 
 	private WriterUtil() {

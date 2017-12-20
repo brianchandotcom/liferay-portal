@@ -15,19 +15,18 @@
 package com.liferay.apio.architect.writer.alias;
 
 import com.liferay.apio.architect.function.TriFunction;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Optional;
 
 /**
- * Defines a type alias for a function that receives an {@link Identifier}, the
+ * Defines a type alias for a function that receives an identifier, the
  * identifier's class, and the identifier's model class. The function returns an
  * optional {@link Path} for the identifier.
  *
  * @author Alejandro Hernández
  */
 @FunctionalInterface
-public interface PathFunction extends TriFunction
-	<Identifier, Class<? extends Identifier>, Class<?>, Optional<Path>> {
+public interface PathFunction
+	extends TriFunction<Object, Class<?>, Class<?>, Optional<Path>> {
 }

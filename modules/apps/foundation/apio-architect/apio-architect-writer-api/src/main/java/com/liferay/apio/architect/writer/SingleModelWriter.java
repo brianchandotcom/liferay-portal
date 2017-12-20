@@ -19,7 +19,6 @@ import static com.liferay.apio.architect.writer.util.WriterUtil.getPathOptional;
 
 import com.google.gson.JsonObject;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
@@ -76,7 +75,7 @@ public class SingleModelWriter<T> {
 	 *         {@code Optional#empty()} otherwise
 	 */
 	public Optional<String> write() {
-		Optional<FieldsWriter<T, Identifier>> optional = getFieldsWriter(
+		Optional<FieldsWriter<T, ?>> optional = getFieldsWriter(
 			_singleModel, null, _requestInfo, _pathFunction,
 			_representorFunction);
 
@@ -84,7 +83,7 @@ public class SingleModelWriter<T> {
 			return Optional.empty();
 		}
 
-		FieldsWriter<T, Identifier> fieldsWriter = optional.get();
+		FieldsWriter<T, ?> fieldsWriter = optional.get();
 
 		_singleModelMessageMapper.onStart(
 			_jsonObjectBuilder, _singleModel.getModel(),
@@ -185,11 +184,10 @@ public class SingleModelWriter<T> {
 
 			/**
 			 * Adds information to the builder about the function that converts
-			 * an {@link Identifier} to a {@link
-			 * com.liferay.apio.architect.uri.Path}.
+			 * an identifier to a {@link com.liferay.apio.architect.uri.Path}.
 			 *
-			 * @param  pathFunction the function that converts an {@code
-			 *         Identifier} to a {@code Path}
+			 * @param  pathFunction the function that converts an identifier to
+			 *         a {@code Path}
 			 * @return the updated builder
 			 */
 			public ResourceNameFunctionStep pathFunction(
@@ -294,7 +292,7 @@ public class SingleModelWriter<T> {
 		SingleModel<V> singleModel,
 		FunctionalList<String> embeddedPathElements) {
 
-		Optional<FieldsWriter<V, Identifier>> optional = getFieldsWriter(
+		Optional<FieldsWriter<V, ?>> optional = getFieldsWriter(
 			singleModel, embeddedPathElements, _requestInfo, _pathFunction,
 			_representorFunction);
 
@@ -302,7 +300,7 @@ public class SingleModelWriter<T> {
 			return;
 		}
 
-		FieldsWriter<V, Identifier> fieldsWriter = optional.get();
+		FieldsWriter<V, ?> fieldsWriter = optional.get();
 
 		fieldsWriter.writeBooleanFields(
 			(field, value) ->

@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Represents a page in a collection. Writers can use instances of this
@@ -30,6 +31,12 @@ import java.util.Collection;
  */
 @ProviderType
 public class Page<T> {
+
+	public Page(
+		Class<T> modelClass, PageItems<T> pageItems, Pagination pagination) {
+
+		this(modelClass, pageItems, pagination, null);
+	}
 
 	public Page(
 		Class<T> modelClass, PageItems<T> pageItems, Pagination pagination,
@@ -89,12 +96,13 @@ public class Page<T> {
 	}
 
 	/**
-	 * Returns the identifier.
+	 * Returns the page path, if present. Returns {@code Optional#empty()}
+	 * otherwise.
 	 *
-	 * @return the identifier
+	 * @return the path, if present; {@code Optional#empty()} otherwise
 	 */
-	public Path getPath() {
-		return _path;
+	public Optional<Path> getPathOptional() {
+		return Optional.ofNullable(_path);
 	}
 
 	/**

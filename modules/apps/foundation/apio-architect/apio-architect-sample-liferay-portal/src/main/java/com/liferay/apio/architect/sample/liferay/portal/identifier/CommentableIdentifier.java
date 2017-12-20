@@ -16,7 +16,6 @@ package com.liferay.apio.architect.sample.liferay.portal.identifier;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.portal.kernel.model.ClassedModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 
@@ -33,7 +32,7 @@ import com.liferay.portal.kernel.model.GroupedModel;
  * @author Alejandro Hernández
  */
 @ProviderType
-public interface CommentableIdentifier extends Identifier {
+public interface CommentableIdentifier {
 
 	/**
 	 * Creates and returns a new commentable identifier from a class name, class

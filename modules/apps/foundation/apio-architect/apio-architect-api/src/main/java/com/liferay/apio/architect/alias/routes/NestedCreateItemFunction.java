@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.alias.routes;
 
 import com.liferay.apio.architect.alias.RequestFunction;
-import com.liferay.apio.architect.identifier.Identifier;
 import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.Map;
@@ -29,5 +28,5 @@ import java.util.function.Function;
  */
 @FunctionalInterface
 public interface NestedCreateItemFunction<T> extends RequestFunction
-	<Function<Identifier, Function<Map<String, Object>, SingleModel<T>>>> {
+	<Function<Object, Function<Map<String, Object>, SingleModel<T>>>> {
 }

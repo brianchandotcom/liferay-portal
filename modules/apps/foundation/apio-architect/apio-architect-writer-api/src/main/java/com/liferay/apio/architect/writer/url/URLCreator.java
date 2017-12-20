@@ -70,11 +70,22 @@ public final class URLCreator {
 	 * Returns the URL for a collection.
 	 *
 	 * @param  serverURL the server URL
-	 * @param  path the single resource's {@link Path}
 	 * @param  name the resource's name
 	 * @return the collection URL
 	 */
-	public static String createCollectionURL(
+	public static String createCollectionURL(ServerURL serverURL, String name) {
+		return serverURL.get() + "/p/" + name;
+	}
+
+	/**
+	 * Returns the URL for a nested collection.
+	 *
+	 * @param  serverURL the server URL
+	 * @param  path the single resource's {@link Path}
+	 * @param  name the nested resource's name
+	 * @return the collection URL
+	 */
+	public static String createNestedCollectionURL(
 		ServerURL serverURL, Path path, String name) {
 
 		return String.join("/", serverURL.get(), "p", path.asURI(), name);

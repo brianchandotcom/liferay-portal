@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.test.resource;
 
-import com.liferay.apio.architect.identifier.StringIdentifier;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.test.resource.model.FirstEmbeddedModel;
 import com.liferay.apio.architect.test.resource.model.RootModel;
@@ -42,16 +41,16 @@ public class MockRepresentorCreator {
 	 *
 	 * @return the mock {@code Representor} for {@code FirstEmbeddedModel}
 	 */
-	public static Representor<FirstEmbeddedModel, StringIdentifier>
+	public static Representor<FirstEmbeddedModel, String>
 		createFirstEmbeddedModelRepresentor() {
 
-		Representor.Builder<FirstEmbeddedModel, StringIdentifier> builder =
-			new Representor.Builder<>(StringIdentifier.class);
+		Representor.Builder<FirstEmbeddedModel, String> builder =
+			new Representor.Builder<>(String.class);
 
 		return builder.types(
 			"Type"
 		).identifier(
-			model -> model::getId
+			FirstEmbeddedModel::getId
 		).addBinary(
 			"binary", __ -> null
 		).addBoolean(
@@ -68,7 +67,7 @@ public class MockRepresentorCreator {
 			"number", __ -> 42
 		).addRelatedCollection(
 			"relatedCollection", SecondEmbeddedModel.class,
-			model -> (StringIdentifier)model::getId
+			FirstEmbeddedModel::getId
 		).addString(
 			"string", __ -> "A string"
 		).build();
@@ -80,17 +79,17 @@ public class MockRepresentorCreator {
 	 * @param  activateNulls whether to add {@code null} empty values
 	 * @return the mock {@code Representor} for {@code RootModel}
 	 */
-	public static Representor<RootModel, StringIdentifier>
+	public static Representor<RootModel, String>
 		createRootModelRepresentor(boolean activateNulls) {
 
-		Representor.Builder<RootModel, StringIdentifier> builder =
-			new Representor.Builder<>(StringIdentifier.class);
+		Representor.Builder<RootModel, String> builder =
+			new Representor.Builder<>(String.class);
 
-		Representor.Builder<RootModel, StringIdentifier>.FirstStep
-			firstStepBuilder = builder.types(
+		Representor.Builder<RootModel, String>.FirstStep firstStepBuilder =
+			builder.types(
 				"Type 1", "Type 2"
 			).identifier(
-				model -> model::getId
+				RootModel::getId
 			).addBinary(
 				"binary1", __ -> null
 			).addBinary(
@@ -128,11 +127,9 @@ public class MockRepresentorCreator {
 			).addNumber(
 				"number2", __ -> 42
 			).addRelatedCollection(
-				"relatedCollection1", FirstEmbeddedModel.class,
-				model -> (StringIdentifier)model::getId
+				"relatedCollection1", FirstEmbeddedModel.class, RootModel::getId
 			).addRelatedCollection(
-				"relatedCollection2", FirstEmbeddedModel.class,
-				model -> (StringIdentifier)model::getId
+				"relatedCollection2", FirstEmbeddedModel.class, RootModel::getId
 			).addString(
 				"string1", __ -> "Live long and prosper"
 			).addString(
@@ -167,16 +164,16 @@ public class MockRepresentorCreator {
 	 *
 	 * @return the mock {@code Representor} for {@code SecondEmbeddedModel}
 	 */
-	public static Representor<SecondEmbeddedModel, StringIdentifier>
+	public static Representor<SecondEmbeddedModel, String>
 		createSecondEmbeddedModelRepresentor() {
 
-		Representor.Builder<SecondEmbeddedModel, StringIdentifier> builder =
-			new Representor.Builder<>(StringIdentifier.class);
+		Representor.Builder<SecondEmbeddedModel, String> builder =
+			new Representor.Builder<>(String.class);
 
 		return builder.types(
 			"Type"
 		).identifier(
-			model -> model::getId
+			SecondEmbeddedModel::getId
 		).addBinary(
 			"binary", __ -> null
 		).addBoolean(
@@ -193,7 +190,7 @@ public class MockRepresentorCreator {
 			"number", __ -> 2017
 		).addRelatedCollection(
 			"relatedCollection", ThirdEmbeddedModel.class,
-			model -> (StringIdentifier)model::getId
+			SecondEmbeddedModel::getId
 		).addString(
 			"string", __ -> "A string"
 		).build();
@@ -204,16 +201,16 @@ public class MockRepresentorCreator {
 	 *
 	 * @return the mock {@code Representor} for {@code ThirdEmbeddedModel}
 	 */
-	public static Representor<ThirdEmbeddedModel, StringIdentifier>
+	public static Representor<ThirdEmbeddedModel, String>
 		createThirdEmbeddedModelRepresentor() {
 
-		Representor.Builder<ThirdEmbeddedModel, StringIdentifier> builder =
-			new Representor.Builder<>(StringIdentifier.class);
+		Representor.Builder<ThirdEmbeddedModel, String> builder =
+			new Representor.Builder<>(String.class);
 
 		return builder.types(
 			"Type"
 		).identifier(
-			model -> model::getId
+			ThirdEmbeddedModel::getId
 		).build();
 	}
 

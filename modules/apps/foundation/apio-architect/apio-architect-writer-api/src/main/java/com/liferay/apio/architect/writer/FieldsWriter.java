@@ -15,17 +15,14 @@
 package com.liferay.apio.architect.writer;
 
 import static com.liferay.apio.architect.writer.url.URLCreator.createBinaryURL;
-import static com.liferay.apio.architect.writer.url.URLCreator.createCollectionURL;
+import static com.liferay.apio.architect.writer.url.URLCreator.createNestedCollectionURL;
 import static com.liferay.apio.architect.writer.url.URLCreator.createSingleURL;
 
-import com.liferay.apio.architect.identifier.Identifier;
-import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
-import com.liferay.apio.architect.response.control.Embedded;
 import com.liferay.apio.architect.response.control.Fields;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
@@ -47,7 +44,7 @@ import java.util.stream.Stream;
  *
  * @author Alejandro Hernández
  */
-public class FieldsWriter<T, U extends Identifier> {
+public class FieldsWriter<T, U> {
 
 	/**
 	 * Returns the {@link SingleModel} version of a {@link RelatedModel}.
@@ -82,26 +79,6 @@ public class FieldsWriter<T, U extends Identifier> {
 	}
 
 	/**
-	 * Returns the {@link Embedded} predicate from the internal {@link
-	 * RequestInfo}. If no {@code Embedded} information is provided to the
-	 * {@code RequestInfo}, this method returns an always-unsuccessful
-	 * predicate.
-	 *
-	 * @return the {@code Embedded} predicate, if {@code Embedded} information
-	 *         exists; an always-unsuccessful predicate otherwise
-	 */
-	public Predicate<String> getEmbeddedPredicate() {
-		Optional<Embedded> embeddedOptional =
-			_requestInfo.getEmbeddedOptional();
-
-		return embeddedOptional.map(
-			Embedded::getEmbeddedPredicate
-		).orElseGet(
-			() -> field -> false
-		);
-	}
-
-	/**
 	 * Returns the {@link Fields} predicate from the internal {@link
 	 * RequestInfo}. If no {@code Fields} information is provided to the {@code
 	 * RequestInfo}, this method returns an always-successful predicate.
@@ -110,13 +87,9 @@ public class FieldsWriter<T, U extends Identifier> {
 	 *         exists; an always-successful predicate otherwise
 	 */
 	public Predicate<String> getFieldsPredicate() {
-		Optional<Fields> optional = _requestInfo.getFieldsOptional();
+		Fields fields = _requestInfo.getFields();
 
-		return optional.map(
-			fields -> fields.getFieldsPredicate(_representor.getTypes())
-		).orElseGet(
-			() -> field -> true
-		);
+		return fields.apply(_representor.getTypes());
 	}
 
 	/**
@@ -245,20 +218,11 @@ public class FieldsWriter<T, U extends Identifier> {
 	public void writeLocalizedStringFields(
 		BiConsumer<String, String> biConsumer) {
 
-		Optional<Language> languageOptional =
-			_requestInfo.getLanguageOptional();
-
-		if (!languageOptional.isPresent()) {
-			return;
-		}
-
-		Language language = languageOptional.get();
-
 		writeFields(
 			Representor::getLocalizedStringFunctions,
 			writeField(
 				biFunction -> biFunction.apply(
-					_singleModel.getModel(), language),
+					_singleModel.getModel(), _requestInfo.getLanguage()),
 				biConsumer));
 	}
 
@@ -294,7 +258,7 @@ public class FieldsWriter<T, U extends Identifier> {
 			return;
 		}
 
-		String url = createCollectionURL(
+		String url = createNestedCollectionURL(
 			_requestInfo.getServerURL(), _path, resourceName);
 
 		FunctionalList<String> embeddedPathElements = new FunctionalList<>(
@@ -367,7 +331,7 @@ public class FieldsWriter<T, U extends Identifier> {
 					return;
 				}
 
-				Predicate<String> embeddedPredicate = getEmbeddedPredicate();
+				Predicate<String> embedded = _requestInfo.getEmbedded();
 
 				SingleModel<V> singleModel = singleModelOptional.get();
 
@@ -378,7 +342,7 @@ public class FieldsWriter<T, U extends Identifier> {
 				String embeddedPath = String.join(
 					".", stream.collect(Collectors.toList()));
 
-				if (embeddedPredicate.test(embeddedPath)) {
+				if (embedded.test(embeddedPath)) {
 					embeddedURLBiConsumer.accept(url, embeddedPathElements);
 					modelBiConsumer.accept(singleModel, embeddedPathElements);
 				}

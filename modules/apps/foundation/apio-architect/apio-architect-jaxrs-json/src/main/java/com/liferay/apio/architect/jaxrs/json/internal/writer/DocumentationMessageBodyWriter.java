@@ -20,8 +20,11 @@ import static org.osgi.service.component.annotations.ReferencePolicyOption.GREED
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.error.ApioDeveloperError;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveDocumentationMessageMapper;
+import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.message.json.DocumentationMessageMapper;
 import com.liferay.apio.architect.request.RequestInfo;
+import com.liferay.apio.architect.response.control.Embedded;
+import com.liferay.apio.architect.response.control.Fields;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
 import com.liferay.apio.architect.writer.DocumentationWriter;
@@ -37,6 +40,7 @@ import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -105,6 +109,24 @@ public class DocumentationMessageBodyWriter
 				_httpServletRequest
 			).serverURL(
 				getServerURL()
+			).embedded(
+				_providerManager.provideOptional(
+					Embedded.class, _httpServletRequest
+				).orElse(
+					__ -> false
+				)
+			).fields(
+				_providerManager.provideOptional(
+					Fields.class, _httpServletRequest
+				).orElse(
+					__ -> string -> true
+				)
+			).language(
+				_providerManager.provideOptional(
+					Language.class, _httpServletRequest
+				).orElse(
+					Locale::getDefault
+				)
 			).build());
 
 		DocumentationWriter documentationWriter = DocumentationWriter.create(

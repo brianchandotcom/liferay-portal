@@ -244,13 +244,13 @@ public class CollectionRoutes<T> {
 			BiFunction<Pagination, A, PageItems<T>> biFunction,
 			Class<A> aClass) {
 
-			_getPageFunction = httpServletRequest -> path -> {
+			_getPageFunction = httpServletRequest -> {
 				Pagination pagination = _provideClass(
 					httpServletRequest, Pagination.class);
 				A a = _provideClass(httpServletRequest, aClass);
 
 				return biFunction.andThen(
-					items -> new Page<>(_modelClass, items, pagination, path)
+					items -> new Page<>(_modelClass, items, pagination)
 				).apply(
 					pagination, a
 				);
@@ -269,12 +269,12 @@ public class CollectionRoutes<T> {
 		public Builder<T> addGetter(
 			Function<Pagination, PageItems<T>> function) {
 
-			_getPageFunction = httpServletRequest -> path -> {
+			_getPageFunction = httpServletRequest -> {
 				Pagination pagination = _provideClass(
 					httpServletRequest, Pagination.class);
 
 				return function.andThen(
-					items -> new Page<>(_modelClass, items, pagination, path)
+					items -> new Page<>(_modelClass, items, pagination)
 				).apply(
 					pagination
 				);
@@ -299,7 +299,7 @@ public class CollectionRoutes<T> {
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
 
-			_getPageFunction = httpServletRequest -> path -> {
+			_getPageFunction = httpServletRequest -> {
 				Pagination pagination = _provideClass(
 					httpServletRequest, Pagination.class);
 				A a = _provideClass(httpServletRequest, aClass);
@@ -308,7 +308,7 @@ public class CollectionRoutes<T> {
 				D d = _provideClass(httpServletRequest, dClass);
 
 				return pentaFunction.andThen(
-					items -> new Page<>(_modelClass, items, pagination, path)
+					items -> new Page<>(_modelClass, items, pagination)
 				).apply(
 					pagination, a, b, c, d
 				);
@@ -331,7 +331,7 @@ public class CollectionRoutes<T> {
 			TetraFunction<Pagination, A, B, C, PageItems<T>> tetraFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
-			_getPageFunction = httpServletRequest -> path -> {
+			_getPageFunction = httpServletRequest -> {
 				Pagination pagination = _provideClass(
 					httpServletRequest, Pagination.class);
 
@@ -340,7 +340,7 @@ public class CollectionRoutes<T> {
 				C c = _provideClass(httpServletRequest, cClass);
 
 				return tetraFunction.andThen(
-					items -> new Page<>(_modelClass, items, pagination, path)
+					items -> new Page<>(_modelClass, items, pagination)
 				).apply(
 					pagination, a, b, c
 				);
@@ -361,7 +361,7 @@ public class CollectionRoutes<T> {
 			TriFunction<Pagination, A, B, PageItems<T>> triFunction,
 			Class<A> aClass, Class<B> bClass) {
 
-			_getPageFunction = httpServletRequest -> path -> {
+			_getPageFunction = httpServletRequest -> {
 				Pagination pagination = _provideClass(
 					httpServletRequest, Pagination.class);
 
@@ -369,7 +369,7 @@ public class CollectionRoutes<T> {
 				B b = _provideClass(httpServletRequest, bClass);
 
 				return triFunction.andThen(
-					items -> new Page<>(_modelClass, items, pagination, path)
+					items -> new Page<>(_modelClass, items, pagination)
 				).apply(
 					pagination, a, b
 				);

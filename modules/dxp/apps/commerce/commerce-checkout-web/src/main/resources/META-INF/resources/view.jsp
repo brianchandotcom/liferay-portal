@@ -75,7 +75,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 				<aui:button cssClass="btn-lg btn-primary" href="<%= previousStepURL %>" type="cancel" value="previous" />
 			</c:if>
 
-			<aui:button cssClass="btn-lg" primary="<%= false %>" type="submit" value="next" />
+			<aui:button cssClass="btn-lg" name="nextCheckoutStepButton" primary="<%= false %>" type="submit" value="next" />
 		</aui:button-row>
 	</c:if>
 </aui:form>

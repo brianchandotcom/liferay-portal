@@ -125,8 +125,6 @@ import javax.xml.parsers.DocumentBuilder;
 import nebula.plugin.extraconfigurations.OptionalBasePlugin;
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
-import org.dm.gradle.plugins.bundle.BundleExtension;
-
 import org.gradle.StartParameter;
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
@@ -649,7 +647,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 
 				@Override
 				public String call() throws Exception {
-					return _getBundleInstruction(
+					return GradlePluginsDefaultsUtil.getBundleInstruction(
 						project, Constants.BUNDLE_SYMBOLICNAME);
 				}
 
@@ -1427,7 +1425,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _applyPlugins(Project project) {
-		if (Validator.isNotNull(_getBundleInstruction(project, "Main-Class"))) {
+		if (Validator.isNotNull(
+				GradlePluginsDefaultsUtil.getBundleInstruction(
+					project, "Main-Class"))) {
+
 			GradleUtil.applyPlugin(project, ApplicationPlugin.class);
 		}
 
@@ -1505,8 +1506,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			Constants.BUNDLE_VERSION);
 
 		if (Validator.isNotNull(bundleVersion)) {
-			Map<String, String> bundleInstructions = _getBundleInstructions(
-				project);
+			Map<String, String> bundleInstructions =
+				GradlePluginsDefaultsUtil.getBundleInstructions(project);
 
 			bundleInstructions.put(Constants.BUNDLE_VERSION, bundleVersion);
 
@@ -1828,8 +1829,8 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureBundleInstructions(Project project) {
-		Map<String, String> bundleInstructions = _getBundleInstructions(
-			project);
+		Map<String, String> bundleInstructions =
+			GradlePluginsDefaultsUtil.getBundleInstructions(project);
 
 		String projectPath = project.getPath();
 
@@ -3060,7 +3061,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTaskJavadocFilter(Javadoc javadoc) {
-		String exportPackage = _getBundleInstruction(
+		String exportPackage = GradlePluginsDefaultsUtil.getBundleInstruction(
 			javadoc.getProject(), Constants.EXPORT_PACKAGE);
 
 		if (Validator.isNull(exportPackage)) {
@@ -3287,7 +3288,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	}
 
 	private void _configureTasksJspC(Project project) {
-		String fragmentHost = _getBundleInstruction(
+		String fragmentHost = GradlePluginsDefaultsUtil.getBundleInstruction(
 			project, Constants.FRAGMENT_HOST);
 
 		if (Validator.isNotNull(fragmentHost)) {
@@ -3584,21 +3585,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		catch (IOException ioe) {
 			throw new UncheckedIOException(ioe);
 		}
-	}
-
-	private String _getBundleInstruction(Project project, String key) {
-		Map<String, String> bundleInstructions = _getBundleInstructions(
-			project);
-
-		return bundleInstructions.get(key);
-	}
-
-	@SuppressWarnings("unchecked")
-	private Map<String, String> _getBundleInstructions(Project project) {
-		BundleExtension bundleExtension = GradleUtil.getExtension(
-			project, BundleExtension.class);
-
-		return (Map<String, String>)bundleExtension.getInstructions();
 	}
 
 	private GitRepo _getGitRepo(File dir) {

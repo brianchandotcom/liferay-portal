@@ -268,15 +268,18 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 </aui:script>
 
 <c:if test="<%= cpDefinition == null %>">
-	<aui:script sandbox="<%= true %>">
+	<aui:script sandbox="<%= true %>" use="aui-base">
 		var form = $(document.<portlet:namespace />fm);
 
 		var titleInput = form.fm('titleMapAsXML');
 		var urlInput = form.fm('urlTitleMapAsXML');
+		var urlTitleInputLocalized = Liferay.component('<portlet:namespace />urlTitleMapAsXML');
 
 		var onTitleInput = _.debounce(
 			function(event) {
 				urlInput.val(titleInput.val());
+
+				urlTitleInputLocalized.updateInputLanguage(titleInput.val());
 			},
 			200
 		);

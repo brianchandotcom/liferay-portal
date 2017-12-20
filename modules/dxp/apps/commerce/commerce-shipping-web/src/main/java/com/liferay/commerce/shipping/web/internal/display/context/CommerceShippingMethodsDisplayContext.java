@@ -16,8 +16,9 @@ package com.liferay.commerce.shipping.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
-import com.liferay.commerce.service.CommerceShippingMethodLocalService;
-import com.liferay.commerce.shipping.web.internal.util.ShippingMethodsCommerceAdminModule;
+import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
+import com.liferay.commerce.shipping.web.util.ShippingMethodsCommerceAdminModule;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -28,6 +29,8 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,19 +43,38 @@ import javax.portlet.RenderResponse;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CommerceShippingMethodsDisplayContext {
 
 	public CommerceShippingMethodsDisplayContext(
 		CommerceShippingEngineRegistry commerceShippingEngineRegistry,
-		CommerceShippingMethodLocalService commerceShippingMethodLocalService,
+		CommerceShippingMethodService commerceShippingMethodService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceShippingEngineRegistry = commerceShippingEngineRegistry;
-		_commerceShippingMethodLocalService =
-			commerceShippingMethodLocalService;
+		_commerceShippingMethodService = commerceShippingMethodService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
+	}
+
+	public List<Locale> getAvailableLocales() throws PortalException {
+		CommerceShippingMethod commerceShippingMethod =
+			getCommerceShippingMethod();
+
+		if (commerceShippingMethod == null) {
+			return Collections.emptyList();
+		}
+
+		List<Locale> availableLocales = new ArrayList<>();
+
+		for (String languageId :
+				commerceShippingMethod.getAvailableLanguageIds()) {
+
+			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+		}
+
+		return availableLocales;
 	}
 
 	public CommerceShippingEngine getCommerceShippingEngine()
@@ -90,7 +112,7 @@ public class CommerceShippingMethodsDisplayContext {
 
 		if (commerceShippingMethodId > 0) {
 			_commerceShippingMethod =
-				_commerceShippingMethodLocalService.getCommerceShippingMethod(
+				_commerceShippingMethodService.getCommerceShippingMethod(
 					commerceShippingMethodId);
 		}
 		else if (Validator.isNotNull(engineKey)) {
@@ -114,11 +136,20 @@ public class CommerceShippingMethodsDisplayContext {
 		}
 
 		portletURL.setParameter("navigation", getNavigation());
+		portletURL.setParameter(
+			"screenNavigationEntryKey", getScreenNavigationEntryKey());
 
 		return portletURL;
 	}
 
-	public SearchContainer<CommerceShippingMethod> getSearchContainer() {
+	public String getScreenNavigationEntryKey() {
+		return CommerceShippingScreenNavigationConstants.
+			ENTRY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+	}
+
+	public SearchContainer<CommerceShippingMethod> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -146,14 +177,12 @@ public class CommerceShippingMethodsDisplayContext {
 		List<CommerceShippingMethod> results;
 
 		if (active != null) {
-			results =
-				_commerceShippingMethodLocalService.getCommerceShippingMethods(
-					themeDisplay.getScopeGroupId(), active);
+			results = _commerceShippingMethodService.getCommerceShippingMethods(
+				themeDisplay.getScopeGroupId(), active);
 		}
 		else {
-			results =
-				_commerceShippingMethodLocalService.getCommerceShippingMethods(
-					themeDisplay.getScopeGroupId());
+			results = _commerceShippingMethodService.getCommerceShippingMethods(
+				themeDisplay.getScopeGroupId());
 		}
 
 		if ((active == null) || !active) {
@@ -166,8 +195,15 @@ public class CommerceShippingMethodsDisplayContext {
 		return _searchContainer;
 	}
 
+	public String getSelectedScreenNavigationEntryKey() {
+		return ParamUtil.getString(
+			_renderRequest, "screenNavigationEntryKey",
+			getScreenNavigationEntryKey());
+	}
+
 	protected List<CommerceShippingMethod> addDefaultCommerceShippingMethods(
-		List<CommerceShippingMethod> commerceShippingMethods) {
+			List<CommerceShippingMethod> commerceShippingMethods)
+		throws PortalException {
 
 		commerceShippingMethods = ListUtil.copy(commerceShippingMethods);
 
@@ -194,14 +230,15 @@ public class CommerceShippingMethodsDisplayContext {
 	}
 
 	protected CommerceShippingMethod getDefaultCommerceShippingMethod(
-		String engineKey) {
+			String engineKey)
+		throws PortalException {
 
 		CommerceShippingEngine commerceShippingEngine =
 			_commerceShippingEngineRegistry.getCommerceShippingEngine(
 				engineKey);
 
 		CommerceShippingMethod commerceShippingMethod =
-			_commerceShippingMethodLocalService.createCommerceShippingMethod(0);
+			_commerceShippingMethodService.createCommerceShippingMethod(0);
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
@@ -222,8 +259,7 @@ public class CommerceShippingMethodsDisplayContext {
 	private final CommerceShippingEngineRegistry
 		_commerceShippingEngineRegistry;
 	private CommerceShippingMethod _commerceShippingMethod;
-	private final CommerceShippingMethodLocalService
-		_commerceShippingMethodLocalService;
+	private final CommerceShippingMethodService _commerceShippingMethodService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommerceShippingMethod> _searchContainer;

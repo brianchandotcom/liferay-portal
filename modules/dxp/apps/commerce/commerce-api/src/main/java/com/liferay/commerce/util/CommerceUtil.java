@@ -14,15 +14,22 @@
 
 package com.liferay.commerce.util;
 
+import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
+import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.util.comparator.CommerceAddressRestrictionCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceCountryPriorityComparator;
 import com.liferay.commerce.util.comparator.CommercePriceEntryCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListDisplayDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListPriorityComparator;
+import com.liferay.commerce.util.comparator.CommerceRegionNameComparator;
+import com.liferay.commerce.util.comparator.CommerceRegionPriorityComparator;
 import com.liferay.commerce.util.comparator.CommerceTierPriceEntryCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseCityComparator;
 import com.liferay.commerce.util.comparator.CommerceWarehouseItemQuantityComparator;
@@ -40,6 +47,46 @@ import java.util.Objects;
  * @author Alessio Antonio Rendina
  */
 public class CommerceUtil {
+
+	public static OrderByComparator<CommerceAddressRestriction>
+		getCommerceAddressRestrictionOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceAddressRestriction> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator =
+				new CommerceAddressRestrictionCreateDateComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CommerceCountry>
+		getCommerceCountryOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceCountry> orderByComparator = null;
+
+		if (orderByCol.equals("priority")) {
+			orderByComparator = new CommerceCountryPriorityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
 
 	public static OrderByComparator<CommercePriceEntry>
 		getCommercePriceEntryOrderByComparator(
@@ -129,6 +176,29 @@ public class CommerceUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<CommerceRegion>
+		getCommerceRegionOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceRegion> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CommerceRegionNameComparator(orderByAsc);
+		}
+		else if (orderByCol.equals("priority")) {
+			orderByComparator = new CommerceRegionPriorityComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public static OrderByComparator<CommerceTierPriceEntry>

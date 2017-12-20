@@ -19,7 +19,7 @@ import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.representor.Representor;
-import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 
 import java.util.List;
 import java.util.Optional;

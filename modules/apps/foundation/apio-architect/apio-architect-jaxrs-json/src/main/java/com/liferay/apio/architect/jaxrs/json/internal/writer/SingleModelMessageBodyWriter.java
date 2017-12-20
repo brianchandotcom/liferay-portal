@@ -28,7 +28,8 @@ import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
-import com.liferay.apio.architect.wiring.osgi.manager.RepresentableManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.RepresentableManager;
 import com.liferay.apio.architect.wiring.osgi.util.GenericUtil;
 import com.liferay.apio.architect.writer.SingleModelWriter;
 
@@ -138,7 +139,7 @@ public class SingleModelMessageBodyWriter<T>
 			).pathFunction(
 				_pathIdentifierMapperManager::map
 			).resourceNameFunction(
-				_representableManager::getNameOptional
+				_nameManager::getNameOptional
 			).representorFunction(
 				_representableManager::getRepresentorOptional
 			).requestInfo(
@@ -199,6 +200,9 @@ public class SingleModelMessageBodyWriter<T>
 
 	@Context
 	private HttpServletRequest _httpServletRequest;
+
+	@Reference
+	private NameManager _nameManager;
 
 	@Reference
 	private PathIdentifierMapperManager _pathIdentifierMapperManager;

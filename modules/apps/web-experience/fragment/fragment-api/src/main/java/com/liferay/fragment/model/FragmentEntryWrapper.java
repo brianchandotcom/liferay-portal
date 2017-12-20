@@ -177,7 +177,8 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
-	public java.lang.String getContent() {
+	public java.lang.String getContent()
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntry.getContent();
 	}
 

@@ -73,9 +73,10 @@ SearchContainer<CommerceShippingMethod> commerceShippingMethodSearchContainer = 
 			</c:choose>
 
 			<%
-			PortletURL rowURL = renderResponse.createRenderURL();
+			PortletURL rowURL = renderResponse.createActionURL();
 
-			rowURL.setParameter("mvcRenderCommandName", "editCommerceShippingMethod");
+			rowURL.setParameter(Constants.CMD, Constants.EDIT);
+			rowURL.setParameter("javax.portlet.action", "editCommerceShippingMethod");
 			rowURL.setParameter("redirect", currentURL);
 			rowURL.setParameter("commerceShippingMethodId", String.valueOf(commerceShippingMethod.getCommerceShippingMethodId()));
 			rowURL.setParameter("engineKey", commerceShippingMethod.getEngineKey());

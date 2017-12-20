@@ -20,34 +20,33 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 CommerceShippingMethod commerceShippingMethod = (CommerceShippingMethod)row.getObject();
-
-long commerceShippingMethodId = commerceShippingMethod.getCommerceShippingMethodId();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcRenderCommandName" value="editCommerceShippingMethod" />
+		<portlet:actionURL name="editCommerceShippingMethod" var="editURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingMethodId) %>" />
+			<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingMethod.getCommerceShippingMethodId()) %>" />
 			<portlet:param name="engineKey" value="<%= commerceShippingMethod.getEngineKey() %>" />
-		</portlet:renderURL>
+		</portlet:actionURL>
 
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editURL %>"
 		/>
 
-		<c:if test="<%= commerceShippingMethodId > 0 %>">
-			<portlet:actionURL name="editCommerceShippingMethod" var="deleteURL">
-				<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingMethod.getCommerceShippingMethodId()) %>" />
-			</portlet:actionURL>
+		<portlet:actionURL name="editCommerceShippingMethod" var="setActiveURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingMethod.getCommerceShippingMethodId()) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!commerceShippingMethod.getActive()) %>" />
+			<portlet:param name="engineKey" value="<%= commerceShippingMethod.getEngineKey() %>" />
+		</portlet:actionURL>
 
-			<liferay-ui:icon-delete
-				url="<%= deleteURL %>"
-			/>
-		</c:if>
+		<liferay-ui:icon
+			message='<%= (commerceShippingMethod.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			url="<%= setActiveURL %>"
+		/>
 	</c:if>
 </liferay-ui:icon-menu>

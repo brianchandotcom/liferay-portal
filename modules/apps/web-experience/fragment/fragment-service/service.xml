@@ -110,16 +110,16 @@
 		<!-- References -->
 
 		<reference entity="FragmentCollection" package-path="com.liferay.fragment" />
-		<reference entity="FragmentLayoutTemplateLink" package-path="com.liferay.fragment" />
+		<reference entity="FragmentEntryInstanceLink" package-path="com.liferay.fragment" />
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="FragmentLayoutTemplateLink" remote-service="false">
+	<entity local-service="true" name="FragmentEntryInstanceLink" remote-service="false">
 
 		<!-- PK fields -->
 
-		<column name="fragmentLayoutTemplateLinkId" primary="true" type="long" />
+		<column name="fragmentEntryInstanceLinkId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

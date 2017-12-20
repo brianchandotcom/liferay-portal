@@ -14,10 +14,14 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.servlet.Header;
+import com.liferay.portal.kernel.servlet.MetaInfoCacheServletResponse;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.CacheControl;
 import javax.portlet.MimeResponse;
@@ -110,6 +114,16 @@ public class CacheControlImpl implements CacheControl {
 			_mimeResponseImpl.getHttpServletResponse();
 
 		while (httpServletResponse instanceof HttpServletResponseWrapper) {
+			if (httpServletResponse instanceof MetaInfoCacheServletResponse) {
+				MetaInfoCacheServletResponse metaInfoCacheServletResponse =
+					(MetaInfoCacheServletResponse)httpServletResponse;
+
+				Map<String, Set<Header>> headers =
+					metaInfoCacheServletResponse.getHeaders();
+
+				headers.remove(MimeResponse.ETAG);
+			}
+
 			HttpServletResponseWrapper httpServletResponseWrapper =
 				(HttpServletResponseWrapper)httpServletResponse;
 

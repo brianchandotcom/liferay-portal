@@ -417,6 +417,7 @@
 	</source-processor>
 	<source-processor name="SQLSourceProcessor">
 		<check name="SQLEmptyLinesCheck" />
+		<check name="SQLLongNamesCheck" />
 		<check name="SQLStylingCheck" />
 		<check name="WhitespaceCheck" />
 	</source-processor>

@@ -14,6 +14,7 @@
 
 package com.liferay.bookmarks.internal.exportimport.data.handler;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.BookmarksFolder;
@@ -64,6 +65,11 @@ public class BookmarksPortletDataHandler extends BasePortletDataHandler {
 	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
+	}
+
+	@Override
+	public String getServiceName() {
+		return BookmarksConstants.SERVICE_NAME;
 	}
 
 	@Override

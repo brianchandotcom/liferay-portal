@@ -168,6 +168,11 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 					<include name="solrconfig.xml" />
 				</fileset>
 			</copy>
+
+			<replace file="${solr.dir}/server/solr/liferay/conf/solrconfig.xml">
+				<replacetoken><![CDATA[<maxWarmingSearchers>2</maxWarmingSearchers>]]></replacetoken>
+				<replacevalue><![CDATA[<maxWarmingSearchers>5</maxWarmingSearchers>]]></replacevalue>
+			</replace>
 		</sequential>
 	</macrodef>
 

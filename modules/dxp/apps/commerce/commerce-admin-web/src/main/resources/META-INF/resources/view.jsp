@@ -24,46 +24,9 @@ NavigableMap<String, CommerceAdminModule> commerceAdminModules = commerceAdminMo
 String selectedCommerceAdminModuleKey = ParamUtil.getString(request, "commerceAdminModuleKey", commerceAdminModules.firstKey());
 
 CommerceAdminModule selectedCommerceAdminModule = commerceAdminModules.get(selectedCommerceAdminModuleKey);
-
-PortletURL searchURL = selectedCommerceAdminModule.getSearchURL(renderRequest, renderResponse);
 %>
 
-<aui:nav-bar cssClass='<%= (searchURL != null) ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		for (Map.Entry<String, CommerceAdminModule> entry : commerceAdminModules.entrySet()) {
-			String commerceAdminModuleKey = entry.getKey();
-			CommerceAdminModule commerceAdminModule = entry.getValue();
-
-			PortletURL commerceAdminModuleURL = renderResponse.createRenderURL();
-
-			commerceAdminModuleURL.setParameter("commerceAdminModuleKey", commerceAdminModuleKey);
-		%>
-
-			<aui:nav-item
-				href="<%= commerceAdminModuleURL.toString() %>"
-				label="<%= commerceAdminModule.getLabel(locale) %>"
-				selected="<%= commerceAdminModuleKey.equals(selectedCommerceAdminModuleKey) %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</aui:nav>
-
-	<c:if test="<%= searchURL != null %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-				<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<liferay-util:include page="/navbar.jsp" servletContext="<%= application %>" />
 
 <%
 selectedCommerceAdminModule.render(renderRequest, renderResponse);

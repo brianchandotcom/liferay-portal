@@ -16,7 +16,6 @@ package com.liferay.users.admin.web.portlet.action;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
-import com.liferay.announcements.kernel.model.AnnouncementsEntryConstants;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.asset.kernel.exception.AssetTagException;
@@ -96,7 +95,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
-import com.liferay.portlet.announcements.model.impl.AnnouncementsDeliveryImpl;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
@@ -196,8 +194,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest);
 		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
 		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
-		List<AnnouncementsDelivery> announcementsDeliveries =
-			getAnnouncementsDeliveries(actionRequest);
 		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -210,7 +206,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
 			userGroupIds, addresses, emailAddresses, phones, websites,
-			announcementsDeliveries, sendEmail, serviceContext);
+			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);
 
 		if (!userGroupRoles.isEmpty()) {
 			for (UserGroupRole userGroupRole : userGroupRoles) {
@@ -227,7 +223,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				birthdayDay, birthdayYear, smsSn, facebookSn, jabberSn, skypeSn,
 				twitterSn, jobTitle, groupIds, organizationIds, roleIds,
 				userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
-				websites, announcementsDeliveries, serviceContext);
+				websites, null, serviceContext);
 		}
 
 		long publicLayoutSetPrototypeId = ParamUtil.getLong(
@@ -474,43 +470,25 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 	}
 
+	/**
+	* @deprecated As of 2.5.0, with no direct replacement
+	*/
+	@Deprecated
 	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
 		ActionRequest actionRequest) {
 
-		List<AnnouncementsDelivery> announcementsDeliveries = new ArrayList<>();
-
-		for (String type : AnnouncementsEntryConstants.TYPES) {
-			boolean email = ParamUtil.getBoolean(
-				actionRequest, "announcementsType" + type + "Email");
-			boolean sms = ParamUtil.getBoolean(
-				actionRequest, "announcementsType" + type + "Sms");
-
-			AnnouncementsDelivery announcementsDelivery =
-				new AnnouncementsDeliveryImpl();
-
-			announcementsDelivery.setType(type);
-			announcementsDelivery.setEmail(email);
-			announcementsDelivery.setSms(sms);
-
-			announcementsDeliveries.add(announcementsDelivery);
-		}
-
-		return announcementsDeliveries;
+		return null;
 	}
 
+	/**
+	* @deprecated As of 2.5.0, with no direct replacement
+	*/
+	@Deprecated
 	protected List<AnnouncementsDelivery> getAnnouncementsDeliveries(
 			ActionRequest actionRequest, User user)
 		throws Exception {
 
-		if (actionRequest.getParameter(
-				"announcementsType" + AnnouncementsEntryConstants.TYPES[0] +
-					"Email") == null) {
-
-			return _announcementsDeliveryLocalService.getUserDeliveries(
-				user.getUserId());
-		}
-
-		return getAnnouncementsDeliveries(actionRequest);
+		return null;
 	}
 
 	protected long getListTypeId(
@@ -526,11 +504,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		return listType.getListTypeId();
 	}
 
-	@Reference(unbind = "-")
+	/**
+	* @deprecated As of 2.5.0, with no direct replacement
+	*/
+	@Deprecated
 	protected void setAnnouncementsDeliveryLocalService(
 		AnnouncementsDeliveryLocalService announcementsDeliveryLocalService) {
-
-		_announcementsDeliveryLocalService = announcementsDeliveryLocalService;
 	}
 
 	@Reference(unbind = "-")
@@ -693,8 +672,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, user.getPhones());
 		List<Website> websites = UsersAdminUtil.getWebsites(
 			actionRequest, user.getWebsites());
-		List<AnnouncementsDelivery> announcementsDeliveries =
-			getAnnouncementsDeliveries(actionRequest, user);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
@@ -708,7 +685,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, organizationIds,
 			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, announcementsDeliveries, serviceContext);
+			phones, websites, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;
@@ -831,8 +808,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		return dynamicActionRequest;
 	}
 
-	private AnnouncementsDeliveryLocalService
-		_announcementsDeliveryLocalService;
 	private DLAppLocalService _dlAppLocalService;
 	private ListTypeLocalService _listTypeLocalService;
 	private UserService _userService;

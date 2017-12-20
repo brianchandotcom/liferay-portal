@@ -72,6 +72,48 @@
 			<finder-column name="defaultShipping" />
 		</finder>
 	</entity>
+	<entity local-service="true" name="CommerceAddressRestriction" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceAddressRestrictionId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
+		<column name="commerceCountryId" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="C_C_C" return-type="CommerceAddressRestriction" unique="true">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+			<finder-column name="commerceCountryId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceAvailabilityRange" remote-service="true" uuid="true">
 
 		<!-- PK fields -->

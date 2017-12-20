@@ -18,14 +18,21 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
+import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
 import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author Jürgen Kappler
@@ -56,6 +63,18 @@ public class LayoutPageTemplateEntryImpl
 			jsSB.append(layoutPageTemplateFragment.getJs());
 		}
 
+		Optional<ServiceContext> serviceContextOptional = Optional.ofNullable(
+			ServiceContextThreadLocal.getServiceContext());
+
+		ServiceContext serviceContext = serviceContextOptional.orElse(
+			new ServiceContext());
+
+		String html = SanitizerUtil.sanitize(
+			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+			serviceContext.getUserId(), LayoutPageTemplateEntry.class.getName(),
+			getPrimaryKey(), ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+			htmlSB.toString(), null);
+
 		StringBundler sb = new StringBundler(7);
 
 		sb.append("<html><head><style>");
@@ -63,7 +82,7 @@ public class LayoutPageTemplateEntryImpl
 		sb.append("</style><script>");
 		sb.append(jsSB.toString());
 		sb.append("</script></head><body>");
-		sb.append(htmlSB.toString());
+		sb.append(html);
 		sb.append("</body></html>");
 
 		return sb.toString();

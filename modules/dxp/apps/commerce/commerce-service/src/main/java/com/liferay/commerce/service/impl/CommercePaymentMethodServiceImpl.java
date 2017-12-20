@@ -52,6 +52,25 @@ public class CommercePaymentMethodServiceImpl
 	}
 
 	@Override
+	public CommercePaymentMethod createCommercePaymentMethod(
+			long commercePaymentMethodId)
+		throws PortalException {
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodLocalService.fetchCommercePaymentMethod(
+				commercePaymentMethodId);
+
+		if (commercePaymentMethod != null) {
+			CommercePermission.check(
+				getPermissionChecker(), commercePaymentMethod.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+		}
+
+		return commercePaymentMethodLocalService.createCommercePaymentMethod(
+			commercePaymentMethodId);
+	}
+
+	@Override
 	public void deleteCommercePaymentMethod(long commercePaymentMethodId)
 		throws PortalException {
 
@@ -77,6 +96,12 @@ public class CommercePaymentMethodServiceImpl
 	}
 
 	@Override
+	public List<CommercePaymentMethod> getCommercePaymentMethods(long groupId) {
+		return commercePaymentMethodLocalService.getCommercePaymentMethods(
+			groupId);
+	}
+
+	@Override
 	public List<CommercePaymentMethod> getCommercePaymentMethods(
 		long groupId, boolean active) {
 
@@ -85,9 +110,36 @@ public class CommercePaymentMethodServiceImpl
 	}
 
 	@Override
+	public List<CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, long commerceCountryId, boolean active) {
+
+		return commercePaymentMethodLocalService.getCommercePaymentMethods(
+			groupId, commerceCountryId, active);
+	}
+
+	@Override
 	public int getCommercePaymentMethodsCount(long groupId, boolean active) {
 		return commercePaymentMethodLocalService.getCommercePaymentMethodsCount(
 			groupId, active);
+	}
+
+	@Override
+	public CommercePaymentMethod setActive(
+			long commercePaymentMethodId, boolean active)
+		throws PortalException {
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodLocalService.fetchCommercePaymentMethod(
+				commercePaymentMethodId);
+
+		if (commercePaymentMethod != null) {
+			CommercePermission.check(
+				getPermissionChecker(), commercePaymentMethod.getGroupId(),
+				CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS);
+		}
+
+		return commercePaymentMethodLocalService.setActive(
+			commercePaymentMethodId, active);
 	}
 
 	@Override

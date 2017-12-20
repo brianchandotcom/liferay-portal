@@ -30,6 +30,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.File;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -156,8 +157,51 @@ public class CommercePaymentMethodLocalServiceImpl
 	}
 
 	@Override
+	public List<CommercePaymentMethod> getCommercePaymentMethods(
+		long groupId, long commerceCountryId, boolean active) {
+
+		List<CommercePaymentMethod> filteredCommercePaymentMethods =
+			new ArrayList<>();
+
+		List<CommercePaymentMethod> commercePaymentMethods =
+			commercePaymentMethodPersistence.findByG_A(groupId, active);
+
+		for (CommercePaymentMethod commercePaymentMethod :
+				commercePaymentMethods) {
+
+			boolean restricted =
+				commerceAddressRestrictionLocalService.
+					isCommercePaymentMethodRestricted(
+						commercePaymentMethod.getCommercePaymentMethodId(),
+						commerceCountryId);
+
+			if (!restricted) {
+				filteredCommercePaymentMethods.add(commercePaymentMethod);
+			}
+		}
+
+		return filteredCommercePaymentMethods;
+	}
+
+	@Override
 	public int getCommercePaymentMethodsCount(long groupId, boolean active) {
 		return commercePaymentMethodPersistence.countByG_A(groupId, active);
+	}
+
+	@Override
+	public CommercePaymentMethod setActive(
+			long commercePaymentMethodId, boolean active)
+		throws PortalException {
+
+		CommercePaymentMethod commercePaymentMethod =
+			commercePaymentMethodPersistence.findByPrimaryKey(
+				commercePaymentMethodId);
+
+		commercePaymentMethod.setActive(active);
+
+		commercePaymentMethodPersistence.update(commercePaymentMethod);
+
+		return commercePaymentMethod;
 	}
 
 	@Override

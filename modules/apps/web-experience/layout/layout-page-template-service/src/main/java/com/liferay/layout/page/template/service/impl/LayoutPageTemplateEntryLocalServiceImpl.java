@@ -15,14 +15,13 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateEntryLocalServiceBaseImpl;
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -83,17 +82,16 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 
-		// Layout Page Template Fragments
+		// Fragment entry instance links
 
 		if (fragmentEntries != null) {
 			int position = 0;
 
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				_layoutPageTemplateFragmentLocalService.
-					addLayoutPageTemplateFragment(
-						userId, groupId, layoutPageTemplateEntryId,
-						fragmentEntry.getFragmentEntryId(), position++,
-						serviceContext);
+				_fragmentEntryInstanceLinkLocalService.
+					addFragmentEntryInstanceLink(
+						groupId, layoutPageTemplateEntryId,
+						fragmentEntry.getFragmentEntryId(), position++);
 			}
 		}
 
@@ -114,9 +112,9 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntryPersistence.remove(layoutPageTemplateEntry);
 
-		// Layout page template fragments
+		// Fragment entry instance links
 
-		_layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplateEntry(
+		_fragmentEntryInstanceLinkLocalService.deleteByLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getGroupId(),
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
@@ -223,21 +221,20 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		layoutPageTemplateEntryPersistence.update(layoutPageTemplateEntry);
 
-		// Layout page template fragments
+		// Fragment entry instance links
 
-		_layoutPageTemplateFragmentLocalService.deleteByLayoutPageTemplateEntry(
+		_fragmentEntryInstanceLinkLocalService.deleteByLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getGroupId(), layoutPageTemplateEntryId);
 
 		if (fragmentEntries != null) {
 			int position = 0;
 
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				_layoutPageTemplateFragmentLocalService.
-					addLayoutPageTemplateFragment(
-						userId, layoutPageTemplateEntry.getGroupId(),
+				_fragmentEntryInstanceLinkLocalService.
+					addFragmentEntryInstanceLink(
+						layoutPageTemplateEntry.getGroupId(),
 						layoutPageTemplateEntryId,
-						fragmentEntry.getFragmentEntryId(), position++,
-						serviceContext);
+						fragmentEntry.getFragmentEntryId(), position++);
 			}
 		}
 
@@ -309,11 +306,11 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			serviceContext);
 	}
 
+	@ServiceReference(type = FragmentEntryInstanceLinkLocalService.class)
+	private FragmentEntryInstanceLinkLocalService
+		_fragmentEntryInstanceLinkLocalService;
+
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;
-
-	@BeanReference(type = LayoutPageTemplateFragmentLocalService.class)
-	private LayoutPageTemplateFragmentLocalService
-		_layoutPageTemplateFragmentLocalService;
 
 }

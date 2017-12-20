@@ -26,16 +26,41 @@ long commercePaymentMethodId = commercePaymentMethod.getCommercePaymentMethodId(
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_PAYMENT_METHODS) %>">
-		<portlet:renderURL var="editURL">
-			<portlet:param name="mvcRenderCommandName" value="editCommercePaymentMethod" />
+		<portlet:actionURL name="editCommercePaymentMethod" var="editURL">
+			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.EDIT %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="commercePaymentMethodId" value="<%= String.valueOf(commercePaymentMethodId) %>" />
 			<portlet:param name="engineKey" value="<%= commercePaymentMethod.getEngineKey() %>" />
-		</portlet:renderURL>
+		</portlet:actionURL>
 
 		<liferay-ui:icon
 			message="edit"
 			url="<%= editURL %>"
+		/>
+
+		<portlet:actionURL name="editCommercePaymentMethod" var="setActiveURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commercePaymentMethodId" value="<%= String.valueOf(commercePaymentMethodId) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!commercePaymentMethod.getActive()) %>" />
+			<portlet:param name="engineKey" value="<%= commercePaymentMethod.getEngineKey() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= (commercePaymentMethod.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			url="<%= setActiveURL %>"
+		/>
+
+		<portlet:actionURL name="editCommercePaymentMethod" var="viewRestrictionsURL">
+			<portlet:param name="<%= Constants.CMD %>" value="viewRestrictions" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commercePaymentMethodId" value="<%= String.valueOf(commercePaymentMethodId) %>" />
+			<portlet:param name="engineKey" value="<%= commercePaymentMethod.getEngineKey() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="restrictions"
+			url="<%= viewRestrictionsURL %>"
 		/>
 
 		<c:if test="<%= commercePaymentMethodId > 0 %>">

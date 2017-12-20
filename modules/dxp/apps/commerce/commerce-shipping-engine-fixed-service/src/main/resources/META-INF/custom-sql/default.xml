@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CShippingFixedOptionRelFinder.findByC_C_C_Z_W">
+		<![CDATA[
+			SELECT
+				CShippingFixedOptionRel.*
+			FROM
+				CShippingFixedOptionRel
+			WHERE
+				(CShippingFixedOptionRel.commerceShippingFixedOptionId = ?) AND
+				(
+					(CShippingFixedOptionRel.commerceCountryId = ?) OR
+					(CShippingFixedOptionRel.commerceCountryId = 0)
+				) AND
+				(
+					(CShippingFixedOptionRel.commerceRegionId = ?) OR
+					(CShippingFixedOptionRel.commerceRegionId = 0)
+				) AND
+				(
+					(CShippingFixedOptionRel.zip = ?) OR
+					(CShippingFixedOptionRel.zip IS NULL)
+				) AND
+				(? BETWEEN CShippingFixedOptionRel.weightFrom AND CShippingFixedOptionRel.weightTo)
+		]]>
+	</sql>
+</custom-sql>

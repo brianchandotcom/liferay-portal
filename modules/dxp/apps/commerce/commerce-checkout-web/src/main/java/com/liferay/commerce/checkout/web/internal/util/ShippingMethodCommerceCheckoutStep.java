@@ -200,8 +200,7 @@ public class ShippingMethodCommerceCheckoutStep
 
 		throw new CommerceCartShippingMethodException(
 			"Unable to get amount of option \"" + shippingOptionName +
-				"\" for shipping method " +
-					commerceShippingMethod.getCommerceShippingMethodId());
+				"\" for shipping method " + commerceShippingMethodId);
 	}
 
 	protected void updateCommerceCartShippingMethod(ActionRequest actionRequest)

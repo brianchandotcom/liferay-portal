@@ -95,6 +95,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		<div class="container-fluid-1280">
 			<div class="row">
 				<div class="col-md-9 pt-3 site-navigation-menu-container">
+					<div class="hide" data-site-navigation-menu-item-id="0"></div>
 
 					<%
 					for (SiteNavigationMenuItem siteNavigationMenuItem : siteNavigationMenuItems) {

@@ -108,61 +108,6 @@
 		<reference entity="Resource" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 	</entity>
-	<entity local-service="true" name="LayoutPageTemplateFragment" remote-service="false">
-
-		<!-- PK fields -->
-
-		<column name="layoutPageTemplateFragmentId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="layoutPageTemplateEntryId" type="long" />
-		<column name="fragmentEntryId" type="long" />
-		<column name="position" type="int" />
-
-		<!-- Order -->
-
-		<order by="asc">
-			<order-column name="layoutPageTemplateFragmentId" />
-		</order>
-
-		<!-- Finder methods -->
-
-		<finder name="GroupId" return-type="Collection">
-			<finder-column name="groupId" />
-		</finder>
-		<finder name="G_L" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="layoutPageTemplateEntryId" />
-		</finder>
-		<finder name="G_F" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="fragmentEntryId" />
-		</finder>
-		<finder name="G_L_F" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="layoutPageTemplateEntryId" />
-			<finder-column name="fragmentEntryId" />
-		</finder>
-
-		<!-- References -->
-
-		<reference entity="LayoutPageTemplateEntry" package-path="com.liferay.layout.page.template" />
-		<reference entity="Resource" package-path="com.liferay.portal" />
-		<reference entity="User" package-path="com.liferay.portal" />
-	</entity>
 	<exceptions>
 		<exception>DuplicateLayoutPageTemplateCollection</exception>
 		<exception>DuplicateLayoutPageTemplateEntry</exception>

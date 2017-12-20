@@ -71,7 +71,7 @@ public class CacheControlImpl implements CacheControl {
 				_mimeResponseImpl.getHttpServletResponse();
 
 			if (httpServletResponse.getHeader(MimeResponse.ETAG) != null) {
-				_removeETag();
+				_removeETag(httpServletResponse);
 
 				return;
 			}
@@ -109,10 +109,7 @@ public class CacheControlImpl implements CacheControl {
 		return _useCachedContent;
 	}
 
-	private void _removeETag() {
-		HttpServletResponse httpServletResponse =
-			_mimeResponseImpl.getHttpServletResponse();
-
+	private void _removeETag(HttpServletResponse httpServletResponse) {
 		while (httpServletResponse instanceof HttpServletResponseWrapper) {
 			if (httpServletResponse instanceof MetaInfoCacheServletResponse) {
 				MetaInfoCacheServletResponse metaInfoCacheServletResponse =

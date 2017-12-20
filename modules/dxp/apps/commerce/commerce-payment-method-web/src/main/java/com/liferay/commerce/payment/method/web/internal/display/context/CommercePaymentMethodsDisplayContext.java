@@ -17,7 +17,7 @@ package com.liferay.commerce.payment.method.web.internal.display.context;
 import com.liferay.commerce.model.CommercePaymentEngine;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.payment.method.web.internal.util.PaymentMethodsCommerceAdminModule;
-import com.liferay.commerce.service.CommercePaymentMethodLocalService;
+import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,11 +45,11 @@ public class CommercePaymentMethodsDisplayContext {
 
 	public CommercePaymentMethodsDisplayContext(
 		CommercePaymentEngineRegistry commercePaymentEngineRegistry,
-		CommercePaymentMethodLocalService commercePaymentMethodLocalService,
+		CommercePaymentMethodService commercePaymentMethodService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commercePaymentEngineRegistry = commercePaymentEngineRegistry;
-		_commercePaymentMethodLocalService = commercePaymentMethodLocalService;
+		_commercePaymentMethodService = commercePaymentMethodService;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 	}
@@ -89,7 +89,7 @@ public class CommercePaymentMethodsDisplayContext {
 
 		if (commercePaymentMethodId > 0) {
 			_commercePaymentMethod =
-				_commercePaymentMethodLocalService.getCommercePaymentMethod(
+				_commercePaymentMethodService.getCommercePaymentMethod(
 					commercePaymentMethodId);
 		}
 		else if (Validator.isNotNull(engineKey)) {
@@ -116,7 +116,9 @@ public class CommercePaymentMethodsDisplayContext {
 		return portletURL;
 	}
 
-	public SearchContainer<CommercePaymentMethod> getSearchContainer() {
+	public SearchContainer<CommercePaymentMethod> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -144,14 +146,12 @@ public class CommercePaymentMethodsDisplayContext {
 		List<CommercePaymentMethod> results;
 
 		if (active != null) {
-			results =
-				_commercePaymentMethodLocalService.getCommercePaymentMethods(
-					themeDisplay.getScopeGroupId(), active);
+			results = _commercePaymentMethodService.getCommercePaymentMethods(
+				themeDisplay.getScopeGroupId(), active);
 		}
 		else {
-			results =
-				_commercePaymentMethodLocalService.getCommercePaymentMethods(
-					themeDisplay.getScopeGroupId());
+			results = _commercePaymentMethodService.getCommercePaymentMethods(
+				themeDisplay.getScopeGroupId());
 		}
 
 		if ((active == null) || !active) {
@@ -165,7 +165,8 @@ public class CommercePaymentMethodsDisplayContext {
 	}
 
 	protected List<CommercePaymentMethod> addDefaultCommercePaymentMethods(
-		List<CommercePaymentMethod> commercePaymentMethods) {
+			List<CommercePaymentMethod> commercePaymentMethods)
+		throws PortalException {
 
 		commercePaymentMethods = ListUtil.copy(commercePaymentMethods);
 
@@ -192,13 +193,14 @@ public class CommercePaymentMethodsDisplayContext {
 	}
 
 	protected CommercePaymentMethod getDefaultCommercePaymentMethod(
-		String engineKey) {
+			String engineKey)
+		throws PortalException {
 
 		CommercePaymentEngine commercePaymentEngine =
 			_commercePaymentEngineRegistry.getCommercePaymentEngine(engineKey);
 
 		CommercePaymentMethod commercePaymentMethod =
-			_commercePaymentMethodLocalService.createCommercePaymentMethod(0);
+			_commercePaymentMethodService.createCommercePaymentMethod(0L);
 
 		Locale locale = LocaleUtil.getSiteDefault();
 
@@ -218,8 +220,7 @@ public class CommercePaymentMethodsDisplayContext {
 
 	private final CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
 	private CommercePaymentMethod _commercePaymentMethod;
-	private final CommercePaymentMethodLocalService
-		_commercePaymentMethodLocalService;
+	private final CommercePaymentMethodService _commercePaymentMethodService;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private SearchContainer<CommercePaymentMethod> _searchContainer;

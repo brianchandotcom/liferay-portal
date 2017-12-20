@@ -12,9 +12,25 @@
 
 		<execute function="AssertClick" locator1="ListGroupItem#INDEPENDENT_MODULES_LINK" value1="Independent Modules" />
 
-		<execute macro="Breadcrumb#viewActiveEntry">
-			<var name="breadcrumbName" value="Independent Modules" />
-		</execute>
+		<!-- LPS-70260 -->
+
+		<if>
+			<condition function="IsElementPresent" locator1="ListGroupItem#INDEPENDENT_MODULES_LINK" value1="Independent Modules" />
+			<then>
+				<execute macro="AppManager#selectAppCP">
+					<var name="appName" value="Independent Modules" />
+				</execute>
+			</then>
+		</if>
+
+		<if>
+			<condition function="IsElementPresent" locator1="AppManager#BREADCRUMB_2_LINK" />
+			<then>
+				<execute function="AssertVisible" locator1="AppManager#BREADCRUMB_2_LINK">
+					<var name="key_breadCrumb" value="Independent Modules" />
+				</execute>
+			</then>
+		</if>
 
 		<var name="key_itemName" value="${appName}" />
 

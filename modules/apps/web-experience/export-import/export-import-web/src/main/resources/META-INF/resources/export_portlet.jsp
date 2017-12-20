@@ -89,7 +89,7 @@ portletURL.setParameter("portletResource", portletResource);
 				<div class="container-fluid-1280">
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
-							<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" required="<%= true %>" showRequiredLabel="<%= false %>" size="50" value='<%= StringUtil.replace(selPortlet.getDisplayName(), ' ', '_') + "-" + Time.getShortTimestamp() + ".portlet.lar" %>' />
+							<aui:input label="export-the-selected-data-to-the-given-lar-file-name" name="exportFileName" required="<%= true %>" showRequiredLabel="<%= false %>" size="50" value="<%= ExportImportHelperUtil.getPortletExportFileName(selPortlet) %>" />
 						</aui:fieldset>
 
 						<%

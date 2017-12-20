@@ -272,6 +272,8 @@ public interface ExportImportHelper {
 			final StagedModelType stagedModelType)
 		throws PortalException;
 
+	public String getPortletExportFileName(Portlet portlet);
+
 	public ZipWriter getPortletZipWriter(String portletId);
 
 	public String getSelectedLayoutsJSON(

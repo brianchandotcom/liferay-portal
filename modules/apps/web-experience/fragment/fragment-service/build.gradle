@@ -1,3 +1,6 @@
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
 buildService {
 	apiDir = "../fragment-api/src/main/java"
 	testDir = "../fragment-test/src/testIntegration/java"

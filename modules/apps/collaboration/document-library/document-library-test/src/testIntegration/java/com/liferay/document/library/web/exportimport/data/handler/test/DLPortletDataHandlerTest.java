@@ -363,8 +363,28 @@ public class DLPortletDataHandlerTest extends BasePortletDataHandlerTestCase {
 	}
 
 	@Override
+	protected boolean isDeleteDataTested() {
+		return true;
+	}
+
+	@Override
 	protected boolean isDisplayPortlet() {
 		return super.isDisplayPortlet();
+	}
+
+	@Override
+	protected boolean isExportImportDataTested() {
+		return true;
+	}
+
+	@Override
+	protected boolean isGetExportConfigurationControlsTested() {
+		return true;
+	}
+
+	@Override
+	protected boolean isGetExportModelCountTested() {
+		return true;
 	}
 
 }

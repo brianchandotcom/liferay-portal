@@ -22,6 +22,9 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public class ExportImportPortletKeys {
 
+	public static final String ENTITY_SET =
+		"com_liferay_exportimport_web_portlet_EntitySetPortlet";
+
 	public static final String EXPORT =
 		"com_liferay_exportimport_web_portlet_ExportPortlet";
 

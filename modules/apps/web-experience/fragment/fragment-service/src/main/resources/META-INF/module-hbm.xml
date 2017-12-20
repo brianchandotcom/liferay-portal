@@ -4,6 +4,7 @@
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.fragment.model.FragmentCollection" />
 	<import class="com.liferay.fragment.model.FragmentEntry" />
+	<import class="com.liferay.fragment.model.FragmentEntryInstanceLink" />
 	<class name="com.liferay.fragment.model.impl.FragmentCollectionImpl" table="FragmentCollection">
 		<id name="fragmentCollectionId" type="long">
 			<generator class="assigned" />
@@ -33,5 +34,14 @@
 		<property name="html" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="js" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="htmlPreviewEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl" table="FragmentEntryInstanceLink">
+		<id name="fragmentEntryInstanceLinkId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fragmentEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="layoutPageTemplateEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="position" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 </hibernate-mapping>

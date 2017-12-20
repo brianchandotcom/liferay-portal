@@ -18,13 +18,19 @@ import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.dynamic.data.mapping.storage.StorageType;
 import com.liferay.dynamic.data.mapping.util.BaseDDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
+import com.liferay.dynamic.data.mapping.util.DDMDisplayTabItem;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -35,6 +41,21 @@ import org.osgi.service.component.annotations.Component;
 	service = DDMDisplay.class
 )
 public class DLDDMDisplay extends BaseDDMDisplay {
+
+	@Override
+	public DDMDisplayTabItem getDefaultTabItem() {
+		return _defaultTabItem;
+	}
+
+	@Override
+	public String getDescription(Locale locale) {
+		ResourceBundle resourceBundle = getResourceBundle(locale);
+
+		return LanguageUtil.get(
+			resourceBundle,
+			JavaConstants.JAVAX_PORTLET_DESCRIPTION.concat(
+				StringPool.PERIOD).concat(PortletKeys.DOCUMENT_LIBRARY_ADMIN));
+	}
 
 	@Override
 	public String getPortletId() {
@@ -59,15 +80,37 @@ public class DLDDMDisplay extends BaseDDMDisplay {
 	}
 
 	@Override
+	public List<DDMDisplayTabItem> getTabItems() {
+		return Arrays.asList(
+			_documentsAndMediaDDMDisplayTabItem,
+			_documentTypesDDMDisplayTabItem, getDefaultTabItem());
+	}
+
+	@Override
 	public String getTitle(Locale locale) {
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "metadata-sets");
+		return LanguageUtil.get(resourceBundle, "documents-and-media");
 	}
 
 	@Override
 	public boolean isShowBackURLInTitleBar() {
-		return true;
+		return false;
 	}
+
+	private final DDMDisplayTabItem _defaultTabItem =
+		(liferayPortletRequest, liferayPortletResponse) -> {
+			ResourceBundle resourceBundle = getResourceBundle(
+				liferayPortletRequest.getLocale());
+
+			return LanguageUtil.get(resourceBundle, "metadata-sets");
+		};
+
+	@Reference
+	private DocumentsAndMediaDDMDisplayTabItem
+		_documentsAndMediaDDMDisplayTabItem;
+
+	@Reference
+	private DocumentTypesDDMDisplayTabItem _documentTypesDDMDisplayTabItem;
 
 }

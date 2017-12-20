@@ -110,15 +110,7 @@
 	</command>
 
 	<command name="gotoMetadataSets">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertElementPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="Metadata Sets">
-			<var name="key_menuItem" value="Metadata Sets" />
-		</execute>
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Metadata Sets">
-			<var name="key_menuItem" value="Metadata Sets" />
-		</execute>
+		<execute function="AssertClick" locator1="NavBar#METADATA_SETS" value1="Metadata Sets" />
 	</command>
 
 	<command name="gotoRelatedAssetPG">

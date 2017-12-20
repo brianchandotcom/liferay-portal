@@ -116,8 +116,9 @@ public class UpdateLanguageAction extends Action {
 				redirect = layoutURL;
 
 				if (themeDisplay.isI18n()) {
-					redirect = redirect.substring(
-						themeDisplay.getI18nPath().length());
+					String i18nPath = themeDisplay.getI18nPath();
+
+					redirect = redirect.substring(i18nPath.length());
 				}
 			}
 			else {

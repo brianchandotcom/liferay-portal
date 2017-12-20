@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption">
+		<field name="commerceShippingFixedOptionId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceShippingMethodId" type="long" />
+		<field localized="true" name="name" type="String" />
+		<field localized="true" name="description" type="String" />
+		<field name="amount" type="double" />
+		<field name="priority" type="double" />
+	</model>
+	<model name="com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel">
+		<field name="CShippingFixedOptionRelId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="commerceShippingMethodId" type="long" />
+		<field name="commerceShippingFixedOptionId" type="long" />
+		<field name="commerceWarehouseId" type="long" />
+		<field name="commerceCountryId" type="long" />
+		<field name="commerceRegionId" type="long" />
+		<field name="zip" type="String" />
+		<field name="weightFrom" type="double" />
+		<field name="weightTo" type="double" />
+		<field name="fixedPrice" type="double" />
+		<field name="rateUnitWeightPrice" type="double" />
+		<field name="ratePercentage" type="double" />
+	</model>
+</model-hints>

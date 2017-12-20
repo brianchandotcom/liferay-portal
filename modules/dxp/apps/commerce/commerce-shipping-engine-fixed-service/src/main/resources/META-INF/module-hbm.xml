@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" />
+	<import class="com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel" />
+	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionImpl" table="CommerceShippingFixedOption">
+		<id name="commerceShippingFixedOptionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="amount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelImpl" table="CShippingFixedOptionRel">
+		<id name="CShippingFixedOptionRelId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="commerceShippingMethodId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceShippingFixedOptionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceWarehouseId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="commerceRegionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="weightFrom" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="weightTo" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="fixedPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="rateUnitWeightPrice" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="ratePercentage" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+</hibernate-mapping>

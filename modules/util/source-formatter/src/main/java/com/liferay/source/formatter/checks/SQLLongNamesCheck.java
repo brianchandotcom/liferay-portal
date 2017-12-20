@@ -47,6 +47,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Column name '", columnName, "' should not exceed ",
 						String.valueOf(_MAX_NAME_LENGTH), " characters"),
+					"oracle_naming_rules.markdown",
 					startLineCount +
 						getLineCount(tableContent, matcher.start()));
 			}
@@ -65,6 +66,7 @@ public class SQLLongNamesCheck extends BaseFileCheck {
 					StringBundler.concat(
 						"Table name '", tableName, "' should not exceed ",
 						String.valueOf(_MAX_NAME_LENGTH), " characters"),
+					"oracle_naming_rules.markdown",
 					getLineCount(content, matcher.start()));
 			}
 

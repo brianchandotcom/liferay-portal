@@ -19,6 +19,12 @@ package com.liferay.users.admin.web.constants;
  */
 public class UsersAdminWebKeys {
 
+	public static final String ACTION_COMMAND_NAME = "ACTION_COMMAND_NAME";
+
+	public static final String JSP_PATH = "JSP_PATH";
+
+	public static final String SELECTED_USER = "SELECTED_USER";
+
 	public static final String STATUS = "STATUS";
 
 }

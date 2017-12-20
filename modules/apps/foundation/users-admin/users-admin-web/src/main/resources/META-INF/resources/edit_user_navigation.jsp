@@ -17,12 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String actionCommandName = (String)request.getAttribute("actionCommandName");
-String jspPath = (String)request.getAttribute("jspPath");
+String actionCommandName = (String)request.getAttribute(UsersAdminWebKeys.ACTION_COMMAND_NAME);
+String jspPath = (String)request.getAttribute(UsersAdminWebKeys.JSP_PATH);
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-request.setAttribute("user.selUser", selUser);
+request.setAttribute(UsersAdminWebKeys.SELECTED_USER, selUser);
 %>
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />

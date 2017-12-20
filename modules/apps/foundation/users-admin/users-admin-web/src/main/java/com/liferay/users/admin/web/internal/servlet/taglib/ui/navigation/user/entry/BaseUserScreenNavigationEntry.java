@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.web.constants.UserFormConstants;
+import com.liferay.users.admin.web.constants.UsersAdminWebKeys;
 
 import java.io.IOException;
 
@@ -62,8 +63,9 @@ public abstract class BaseUserScreenNavigationEntry
 			return;
 		}
 
-		request.setAttribute("actionCommandName", getActionCommandName());
-		request.setAttribute("jspPath", getJspPath());
+		request.setAttribute(
+			UsersAdminWebKeys.ACTION_COMMAND_NAME, getActionCommandName());
+		request.setAttribute(UsersAdminWebKeys.JSP_PATH, getJspPath());
 
 		jspRenderer.renderJSP(request, response, "/edit_user_navigation.jsp");
 	}

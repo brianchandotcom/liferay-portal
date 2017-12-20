@@ -178,6 +178,9 @@ entriesSearchContainer.setResults(entriesResults);
 
 	<liferay-frontend:management-bar-action-buttons>
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
+
+		<liferay-staging:export-import-entity-management-bar-button cmd="<%= Constants.EXPORT %>" />
+		<liferay-staging:export-import-entity-management-bar-button cmd="<%= Constants.PUBLISH %>" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
@@ -220,6 +223,8 @@ entriesSearchContainer.setResults(entriesResults);
 				<%@ include file="/blogs_admin/entry_search_columns.jspf" %>
 			</liferay-ui:search-container-row>
 
+			<liferay-staging:export-import-entity-search-container-mapping />
+
 			<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 		</liferay-ui:search-container>
 	</aui:form>
@@ -233,6 +238,8 @@ entriesSearchContainer.setResults(entriesResults);
 
 	<liferay-frontend:add-menu>
 		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-blog-entry") %>' url="<%= addEntryURL %>" />
+
+		<liferay-staging:import-entity />
 	</liferay-frontend:add-menu>
 </c:if>
 

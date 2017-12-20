@@ -19,6 +19,8 @@
 <%
 PaymentMethodCheckoutStepDisplayContext paymentMethodCheckoutStepDisplayContext = (PaymentMethodCheckoutStepDisplayContext)request.getAttribute(CommerceCheckoutWebKeys.COMMERCE_CHECKOUT_STEP_DISPLAY_CONTEXT);
 
+List<CommercePaymentMethod> commercePaymentMethods = paymentMethodCheckoutStepDisplayContext.getCommercePaymentMethods();
+
 CommerceCart commerceCart = paymentMethodCheckoutStepDisplayContext.getCommerceCart();
 
 long commercePaymentMethodId = BeanParamUtil.getLong(commerceCart, request, "commercePaymentMethodId");
@@ -30,46 +32,65 @@ long commercePaymentMethodId = BeanParamUtil.getLong(commerceCart, request, "com
 	<liferay-ui:error exception="<%= CommerceCartPaymentMethodException.class %>" message="please-select-a-valid-payment-method" />
 
 	<div class="row text-center" id="commercePaymentMethodsContainer">
-
-		<%
-		for (CommercePaymentMethod commercePaymentMethod : paymentMethodCheckoutStepDisplayContext.getCommercePaymentMethods()) {
-		%>
-
-			<div class="col-md-3 mx-auto">
-				<div class="radio radio-card radio-middle-left">
-					<label>
-						<aui:input
-							checked="<%= commercePaymentMethod.getCommercePaymentMethodId() == commercePaymentMethodId %>"
-							label=""
-							name="commercePaymentMethodId"
-							type="radio"
-							value="<%= commercePaymentMethod.getCommercePaymentMethodId() %>"
-						/>
-
-						<h4 class="font-weight-bold text-uppercase"><%= commercePaymentMethod.getName(locale) %></h4>
-					</label>
+		<c:choose>
+			<c:when test="<%= commercePaymentMethods.isEmpty() %>">
+				<div class="alert alert-info mx-auto">
+					<liferay-ui:message key="there-are-no-available-payment-methods" />
 				</div>
+			</c:when>
+			<c:otherwise>
 
-				<div class="card card-commerce">
-					<div class="card-body">
+				<%
+				for (CommercePaymentMethod commercePaymentMethod : commercePaymentMethods) {
+				%>
 
-						<%
-						String thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
-						%>
+					<div class="col-md-3 mx-auto">
+						<div class="radio radio-card radio-middle-left">
+							<label>
+								<aui:input
+									checked="<%= commercePaymentMethod.getCommercePaymentMethodId() == commercePaymentMethodId %>"
+									label=""
+									name="commercePaymentMethodId"
+									type="radio"
+									value="<%= commercePaymentMethod.getCommercePaymentMethodId() %>"
+								/>
 
-						<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
-							<img class="w-25" src="<%= thumbnailSrc %>" />
-						</c:if>
+								<h4 class="font-weight-bold text-uppercase"><%= commercePaymentMethod.getName(locale) %></h4>
+							</label>
+						</div>
+
+						<div class="card card-commerce">
+							<div class="card-body">
+
+								<%
+								String thumbnailSrc = commercePaymentMethod.getImageURL(themeDisplay);
+								%>
+
+								<c:if test="<%= Validator.isNotNull(thumbnailSrc) %>">
+									<img class="w-25" src="<%= thumbnailSrc %>" />
+								</c:if>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
 
-		<%
-		}
-		%>
+				<%
+				}
+				%>
 
+			</c:otherwise>
+		</c:choose>
 	</div>
 </aui:fieldset>
+
+<c:if test="<%= commercePaymentMethods.isEmpty() %>">
+	<aui:script>
+		var A = AUI();
+
+		var nextCheckoutStepButton = A.one('#<portlet:namespace />nextCheckoutStepButton');
+
+		nextCheckoutStepButton.attr('disabled', true);
+	</aui:script>
+</c:if>
 
 <aui:script>
 	$('.col-md-3').click(

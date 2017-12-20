@@ -254,7 +254,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_ELLIPSIS</td>
-	<td>//div[contains(@class,'sidebar-header')]//*[contains(@class,'lexicon-icon-ellipsis-v')]</td>
+	<td>//div[contains(@class,'sidebar-header')]//a[*[contains(@class,'lexicon-icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

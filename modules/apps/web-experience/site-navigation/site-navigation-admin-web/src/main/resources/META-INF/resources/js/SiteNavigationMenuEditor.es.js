@@ -81,7 +81,8 @@ class SiteNavigationMenuEditor extends State {
 		let newParentId = target.dataset.parentSiteNavigationMenuItemId;
 
 		if (placeholderRegion.top < targetRegion.top) {
-			target.parentNode.insertBefore(source.parentNode, target);
+			target.parentNode.parentNode.insertBefore(
+				source.parentNode, target.parentNode);
 		}
 		else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
 			target.parentNode.insertBefore(
@@ -102,9 +103,16 @@ class SiteNavigationMenuEditor extends State {
 
 		source.dataset.parentId = newParentId;
 
-		const children = Array.from(target.parentNode.querySelectorAll(
-			`.container-item, ${this.menuItemSelector}`
-		));
+		const parent = document.querySelector(
+			`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
+
+		const children = Array.from(parent.querySelectorAll(`.container-item`))
+			.filter(
+				(node) =>
+					(node === source.parentNode) ||
+					(Array.from(parent.children).indexOf(node) != -1)
+			);
+
 		const order = children.reduce((acc, value, idx) => {
 			return value === source.parentNode ? idx : acc;
 		}, 0);

@@ -17,9 +17,9 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
+<%@ page import="com.liferay.fragment.model.FragmentEntryInstanceLink" %><%@
+page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
-page import="com.liferay.layout.page.template.model.LayoutPageTemplateFragment" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalServiceUtil" %><%@
 page import="com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys" %><%@

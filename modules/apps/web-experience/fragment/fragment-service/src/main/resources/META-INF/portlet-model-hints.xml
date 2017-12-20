@@ -39,4 +39,11 @@
 		</field>
 		<field name="htmlPreviewEntryId" type="long" />
 	</model>
+	<model name="com.liferay.fragment.model.FragmentEntryInstanceLink">
+		<field name="fragmentEntryInstanceLinkId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="fragmentEntryId" type="long" />
+		<field name="layoutPageTemplateEntryId" type="long" />
+		<field name="position" type="int" />
+	</model>
 </model-hints>

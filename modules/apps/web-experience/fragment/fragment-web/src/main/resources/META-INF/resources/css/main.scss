@@ -1,9 +1,8 @@
-@import "mixins";
-@import "./AceEditor";
+@import "AceEditor";
 @import "FragmentEditor";
 @import "FragmentNameEditor";
 @import "FragmentPreview";
-@import "./SourceEditor";
+@import "SourceEditor";
 
 .fragment-submit-buttons {
 	position: absolute;

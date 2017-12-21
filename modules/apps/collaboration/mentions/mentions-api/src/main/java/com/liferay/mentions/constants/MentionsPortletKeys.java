@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mentions.web.constants;
+package com.liferay.mentions.constants;
 
 /**
  * @author Sergio González

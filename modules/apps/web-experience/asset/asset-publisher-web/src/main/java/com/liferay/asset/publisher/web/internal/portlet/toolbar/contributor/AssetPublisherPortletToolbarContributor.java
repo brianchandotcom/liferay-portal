@@ -20,7 +20,7 @@ import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayCont
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.util.AssetHelper;
-import com.liferay.asset.util.impl.AssetPublisherAddItemHolder;
+import com.liferay.asset.util.AssetPublisherAddItemHolder;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

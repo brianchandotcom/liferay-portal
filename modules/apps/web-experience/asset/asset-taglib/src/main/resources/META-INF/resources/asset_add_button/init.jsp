@@ -21,7 +21,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.asset.constants.AssetWebKeys" %><%@
 page import="com.liferay.asset.util.AssetHelper" %><%@
-page import="com.liferay.asset.util.impl.AssetPublisherAddItemHolder" %><%@
+page import="com.liferay.asset.util.AssetPublisherAddItemHolder" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Group" %><%@
 page import="com.liferay.portal.kernel.model.Layout" %><%@

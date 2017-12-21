@@ -34,7 +34,7 @@ import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.display.context.AssetEntryResult;
 import com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
-import com.liferay.asset.util.impl.AssetUtil;
+import com.liferay.asset.util.AssetHelper;
 import com.liferay.dynamic.data.mapping.util.DDMIndexer;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
@@ -359,7 +359,7 @@ public class AssetPublisherUtil {
 		throws Exception {
 
 		if (isSearchWithIndex(portletName, assetEntryQuery)) {
-			return AssetUtil.searchAssetEntries(
+			return _assetHelper.searchAssetEntries(
 				assetEntryQuery, getAssetCategoryIds(portletPreferences),
 				getAssetTagNames(portletPreferences), attributes, companyId,
 				assetEntryQuery.getKeywords(), layout, locale, scopeGroupId,
@@ -1633,6 +1633,11 @@ public class AssetPublisherUtil {
 	}
 
 	@Reference(unbind = "-")
+	protected void setAssetHelper(AssetHelper assetHelper) {
+		_assetHelper = assetHelper;
+	}
+
+	@Reference(unbind = "-")
 	protected void setAssetTagLocalService(
 		AssetTagLocalService assetTagLocalService) {
 
@@ -1906,6 +1911,7 @@ public class AssetPublisherUtil {
 	private static AssetCategoryLocalService _assetCategoryLocalService;
 	private static AssetEntryLocalService _assetEntryLocalService;
 	private static AssetEntryService _assetEntryService;
+	private static AssetHelper _assetHelper;
 	private static AssetPublisherPortletInstanceConfiguration
 		_assetPublisherPortletInstanceConfiguration;
 	private static AssetPublisherWebConfiguration

@@ -19,7 +19,10 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutWebKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -99,6 +102,35 @@ public class LayoutSiteNavigationMenuItemType
 
 		_jspRenderer.renderJSP(
 			_servletContext, request, response, "/add_layout.jsp");
+	}
+
+	@Override
+	public void renderEditPage(
+			HttpServletRequest request, HttpServletResponse response,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws IOException {
+
+		request.setAttribute(
+			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
+			_itemSelector);
+
+		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+		typeSettingsProperties.fastLoad(
+			siteNavigationMenuItem.getTypeSettings());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+			typeSettingsProperties.get("layoutUuid"),
+			themeDisplay.getScopeGroupId(),
+			GetterUtil.getBoolean(typeSettingsProperties.get("privateLayout")));
+
+		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response, "/edit_layout.jsp");
 	}
 
 	@Reference

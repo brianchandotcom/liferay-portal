@@ -147,8 +147,9 @@ public class PortalResiliencyAction extends Action {
 		else if (lifecycle == SPIAgent.Lifecycle.RESOURCE) {
 			portletContainer.serveResource(request, response, portlet);
 		}
-
-		throw new IllegalArgumentException("Unkown lifecycle " + lifecycle);
+		else {
+			throw new IllegalArgumentException("Unkown lifecycle " + lifecycle);
+		}
 	}
 
 }

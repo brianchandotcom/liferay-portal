@@ -3,7 +3,7 @@
 		"analyzer": {
 			"kuromoji_liferay_custom": {
 				"filter": [
-					"cjk_width",
+					"ja_stop",
 					"kuromoji_baseform",
 					"pos_filter"
 				],

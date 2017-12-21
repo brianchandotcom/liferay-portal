@@ -384,6 +384,12 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getLinks(entryId, typeId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
+		long classNameId, long classPK) {
+		return _assetLinkLocalService.getLinks(classNameId, classPK);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

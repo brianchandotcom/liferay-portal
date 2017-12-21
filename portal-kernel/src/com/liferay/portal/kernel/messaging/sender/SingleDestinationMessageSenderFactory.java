@@ -16,7 +16,9 @@ package com.liferay.portal.kernel.messaging.sender;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public interface SingleDestinationMessageSenderFactory {
 
 	public SingleDestinationMessageSender createSingleDestinationMessageSender(

@@ -83,13 +83,10 @@ public class FragmentEntryServiceSoap {
 		}
 	}
 
-	public static com.liferay.fragment.model.FragmentEntrySoap[] deleteFragmentEntries(
-		long[] fragmentEntriesIds) throws RemoteException {
+	public static void deleteFragmentEntries(long[] fragmentEntriesIds)
+		throws RemoteException {
 		try {
-			java.util.List<com.liferay.fragment.model.FragmentEntry> returnValue =
-				FragmentEntryServiceUtil.deleteFragmentEntries(fragmentEntriesIds);
-
-			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModels(returnValue);
+			FragmentEntryServiceUtil.deleteFragmentEntries(fragmentEntriesIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

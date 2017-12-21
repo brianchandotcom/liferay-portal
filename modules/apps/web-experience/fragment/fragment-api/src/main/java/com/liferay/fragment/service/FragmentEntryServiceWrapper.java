@@ -44,10 +44,9 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntry> deleteFragmentEntries(
-		long[] fragmentEntriesIds)
+	public void deleteFragmentEntries(long[] fragmentEntriesIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryService.deleteFragmentEntries(fragmentEntriesIds);
+		_fragmentEntryService.deleteFragmentEntries(fragmentEntriesIds);
 	}
 
 	@Override

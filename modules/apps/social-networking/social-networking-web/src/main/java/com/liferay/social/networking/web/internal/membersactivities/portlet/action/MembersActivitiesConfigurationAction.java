@@ -36,7 +36,7 @@ public class MembersActivitiesConfigurationAction
 
 	@Override
 	public String getJspPath(HttpServletRequest request) {
-		return "/configuration.jsp";
+		return "/members_activities/configuration.jsp";
 	}
 
 	@Override

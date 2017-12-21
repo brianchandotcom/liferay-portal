@@ -109,61 +109,59 @@ public class Deserializer {
 
 		byte tcByte = buffer[index++];
 
-		switch (tcByte) {
-			case SerializationConstants.TC_BOOLEAN:
-				return (T)Boolean.valueOf(readBoolean());
-
-			case SerializationConstants.TC_BYTE:
-				return (T)Byte.valueOf(readByte());
-
-			case SerializationConstants.TC_CHARACTER:
-				return (T)Character.valueOf(readChar());
-
-			case SerializationConstants.TC_CLASS:
-				String contextName = readString();
-				String className = readString();
-
-				ClassLoader classLoader = ClassLoaderPool.getClassLoader(
-					contextName);
-
-				return (T)ClassResolverUtil.resolve(className, classLoader);
-
-			case SerializationConstants.TC_DOUBLE:
-				return (T)Double.valueOf(readDouble());
-
-			case SerializationConstants.TC_FLOAT:
-				return (T)Float.valueOf(readFloat());
-
-			case SerializationConstants.TC_INTEGER:
-				return (T)Integer.valueOf(readInt());
-
-			case SerializationConstants.TC_LONG:
-				return (T)Long.valueOf(readLong());
-
-			case SerializationConstants.TC_NULL:
-				return null;
-
-			case SerializationConstants.TC_SHORT:
-				return (T)Short.valueOf(readShort());
-
-			case SerializationConstants.TC_STRING:
-				return (T)readString();
-
-			case SerializationConstants.TC_OBJECT:
-				try {
-					ObjectInputStream objectInpputStream =
-						new ProtectedAnnotatedObjectInputStream(
-							new BufferInputStream());
-
-					return (T)objectInpputStream.readObject();
-				}
-				catch (IOException ioe) {
-					throw new RuntimeException(ioe);
-				}
-
-			default :
-				throw new IllegalStateException("Unkown TC code " + tcByte);
+		if (tcByte == SerializationConstants.TC_BOOLEAN) {
+			return (T)Boolean.valueOf(readBoolean());
 		}
+		else if (tcByte == SerializationConstants.TC_BYTE) {
+			return (T)Byte.valueOf(readByte());
+		}
+		else if (tcByte == SerializationConstants.TC_CHARACTER) {
+			return (T)Character.valueOf(readChar());
+		}
+		else if (tcByte == SerializationConstants.TC_CLASS) {
+			String contextName = readString();
+			String className = readString();
+
+			ClassLoader classLoader = ClassLoaderPool.getClassLoader(
+				contextName);
+
+			return (T)ClassResolverUtil.resolve(className, classLoader);
+		}
+		else if (tcByte == SerializationConstants.TC_DOUBLE) {
+			return (T)Double.valueOf(readDouble());
+		}
+		else if (tcByte == SerializationConstants.TC_FLOAT) {
+			return (T)Float.valueOf(readFloat());
+		}
+		else if (tcByte == SerializationConstants.TC_INTEGER) {
+			return (T)Integer.valueOf(readInt());
+		}
+		else if (tcByte == SerializationConstants.TC_LONG) {
+			return (T)Long.valueOf(readLong());
+		}
+		else if (tcByte == SerializationConstants.TC_NULL) {
+			return null;
+		}
+		else if (tcByte == SerializationConstants.TC_SHORT) {
+			return (T)Short.valueOf(readShort());
+		}
+		else if (tcByte == SerializationConstants.TC_STRING) {
+			return (T)readString();
+		}
+		else if (tcByte == SerializationConstants.TC_OBJECT) {
+			try {
+				ObjectInputStream objectInpputStream =
+					new ProtectedAnnotatedObjectInputStream(
+						new BufferInputStream());
+
+				return (T)objectInpputStream.readObject();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException(ioe);
+			}
+		}
+
+		throw new IllegalStateException("Unkown TC code " + tcByte);
 	}
 
 	public short readShort() {

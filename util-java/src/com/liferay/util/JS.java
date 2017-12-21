@@ -94,24 +94,17 @@ public class JS {
 		for (int i = 0; i < name.length(); i++) {
 			char c = name.charAt(i);
 
-			switch (c) {
-				case CharPool.SPACE:
+			if ((c == CharPool.DASH) || (c == CharPool.PERIOD) ||
+				(c == CharPool.SPACE)) {
 
-				case CharPool.DASH:
+				if (sb == null) {
+					sb = new StringBuilder(name.length() - 1);
 
-				case CharPool.PERIOD:
-					if (sb == null) {
-						sb = new StringBuilder(name.length() - 1);
-
-						sb.append(name, index, i);
-					}
-
-					break;
-
-				default:
-					if (sb != null) {
-						sb.append(c);
-					}
+					sb.append(name, index, i);
+				}
+			}
+			else if (sb != null) {
+				sb.append(c);
 			}
 		}
 

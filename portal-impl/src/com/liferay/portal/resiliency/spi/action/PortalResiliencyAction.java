@@ -96,76 +96,59 @@ public class PortalResiliencyAction extends Action {
 		SPIAgent.Lifecycle lifecycle = (SPIAgent.Lifecycle)request.getAttribute(
 			WebKeys.SPI_AGENT_LIFECYCLE);
 
-		switch (lifecycle) {
-			case ACTION :
+		if (lifecycle == SPIAgent.Lifecycle.ACTION) {
 
-				// Action and event requests can make a transient change to a
-				// layout's type settings. The fix should be done via a regular
-				// request attribute, but to avoid a massive refactor, the SPI
-				// simply sends back the modified layout type settings to the
-				// MPI.
+			// Action and event requests can make a transient change to a
+			// layout's type settings. The fix should be done via a regular
+			// request attribute, but to avoid a massive refactor, the SPI
+			// simply sends back the modified layout type settings to the MPI
 
-				Layout requestLayout = (Layout)request.getAttribute(
-					WebKeys.LAYOUT);
+			Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
 
-				String typeSettings = requestLayout.getTypeSettings();
+			String typeSettings = requestLayout.getTypeSettings();
 
-				ActionResult actionResult = portletContainer.processAction(
-					request, response, portlet);
+			ActionResult actionResult = portletContainer.processAction(
+				request, response, portlet);
 
-				String newTypeSettings = requestLayout.getTypeSettings();
+			String newTypeSettings = requestLayout.getTypeSettings();
 
-				if (!newTypeSettings.equals(typeSettings)) {
-					request.setAttribute(
-						WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS,
-						newTypeSettings);
-				}
-
+			if (!newTypeSettings.equals(typeSettings)) {
 				request.setAttribute(
-					WebKeys.SPI_AGENT_ACTION_RESULT, actionResult);
+					WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS, newTypeSettings);
+			}
 
-				break;
-
-			case EVENT :
-				requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
-
-				typeSettings = requestLayout.getTypeSettings();
-
-				Layout layout = (Layout)request.getAttribute(
-					WebKeys.SPI_AGENT_LAYOUT);
-
-				Event event = (Event)request.getAttribute(
-					WebKeys.SPI_AGENT_EVENT);
-
-				List<Event> events = portletContainer.processEvent(
-					request, response, portlet, layout, event);
-
-				newTypeSettings = requestLayout.getTypeSettings();
-
-				if (!newTypeSettings.equals(typeSettings)) {
-					request.setAttribute(
-						WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS,
-						newTypeSettings);
-				}
-
-				request.setAttribute(WebKeys.SPI_AGENT_EVENT_RESULT, events);
-
-				break;
-
-			case RENDER :
-				portletContainer.render(request, response, portlet);
-
-				break;
-
-			case RESOURCE :
-				portletContainer.serveResource(request, response, portlet);
-
-				break;
-
-			default :
-				throw new IllegalArgumentException(
-					"Unkown lifecycle " + lifecycle);
+			request.setAttribute(WebKeys.SPI_AGENT_ACTION_RESULT, actionResult);
 		}
+		else if (lifecycle == SPIAgent.Lifecycle.EVENT) {
+			Layout requestLayout = (Layout)request.getAttribute(WebKeys.LAYOUT);
+
+			String typeSettings = requestLayout.getTypeSettings();
+
+			Layout layout = (Layout)request.getAttribute(
+				WebKeys.SPI_AGENT_LAYOUT);
+
+			Event event = (Event)request.getAttribute(WebKeys.SPI_AGENT_EVENT);
+
+			List<Event> events = portletContainer.processEvent(
+				request, response, portlet, layout, event);
+
+			String newTypeSettings = requestLayout.getTypeSettings();
+
+			if (!newTypeSettings.equals(typeSettings)) {
+				request.setAttribute(
+					WebKeys.SPI_AGENT_LAYOUT_TYPE_SETTINGS, newTypeSettings);
+			}
+
+			request.setAttribute(WebKeys.SPI_AGENT_EVENT_RESULT, events);
+		}
+		else if (lifecycle == SPIAgent.Lifecycle.RENDER) {
+			portletContainer.render(request, response, portlet);
+		}
+		else if (lifecycle == SPIAgent.Lifecycle.RESOURCE) {
+			portletContainer.serveResource(request, response, portlet);
+		}
+
+		throw new IllegalArgumentException("Unkown lifecycle " + lifecycle);
 	}
 
 }

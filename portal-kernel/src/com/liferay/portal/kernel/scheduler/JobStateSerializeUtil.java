@@ -47,15 +47,13 @@ public class JobStateSerializeUtil {
 	}
 
 	public static Map<String, Object> serialize(JobState jobState) {
-		switch (JobState.VERSION) {
-			case 1:
-				return _serialize_1(jobState);
-
-			default:
-				throw new IllegalStateException(
-					"Unable to serialize field for job state with version " +
-						JobState.VERSION);
+		if (JobState.VERSION == 1) {
+			return _serialize_1(jobState);
 		}
+
+		throw new IllegalStateException(
+			"Unable to serialize field for job state with version " +
+				JobState.VERSION);
 	}
 
 	private static JobState _deserialize_1(Map<String, Object> jobStateMap) {

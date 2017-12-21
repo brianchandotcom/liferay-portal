@@ -70,21 +70,15 @@ public class DayAndPosition implements Cloneable, Serializable {
 	 *         <code>false</code> otherwise
 	 */
 	public static boolean isValidDayOfWeek(int d) {
-		switch (d) {
+		if ((d == NO_WEEKDAY) || (d == Calendar.SUNDAY) ||
+			(d == Calendar.MONDAY) || (d == Calendar.TUESDAY) ||
+			(d == Calendar.WEDNESDAY) || (d == Calendar.THURSDAY) ||
+			(d == Calendar.FRIDAY) || (d == Calendar.SATURDAY)) {
 
-			case NO_WEEKDAY :
-			case Calendar.SUNDAY :
-			case Calendar.MONDAY :
-			case Calendar.TUESDAY :
-			case Calendar.WEDNESDAY :
-			case Calendar.THURSDAY :
-			case Calendar.FRIDAY :
-			case Calendar.SATURDAY :
-				return true;
-
-			default :
-				return false;
+			return true;
 		}
+
+		return false;
 	}
 
 	/**

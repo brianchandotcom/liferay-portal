@@ -15,9 +15,11 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
+import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
+import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.PortletIdCodec;
+import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -62,18 +64,19 @@ public class OrderingAndGroupingFormNavigatorEntry
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		String rootPortletId = PortletIdCodec.decodePortletName(
-			portletDisplay.getPortletName());
+		Portlet portlet = _portletLocalService.getPortletById(
+			themeDisplay.getCompanyId(), portletDisplay.getPortletResource());
 
-		if (rootPortletId.equals(
-				AssetPublisherPortletKeys.HIGHEST_RATED_ASSETS) ||
-			rootPortletId.equals(
-				AssetPublisherPortletKeys.MOST_VIEWED_ASSETS)) {
+		AssetPublisherCustomizer assetPublisherCustomizer =
+			assetPublisherCustomizerRegistry.getAssetPublisherCustomizer(
+				portlet.getRootPortletId());
 
-			return false;
+		if (assetPublisherCustomizer == null) {
+			return true;
 		}
 
-		return true;
+		return assetPublisherCustomizer.isOrderingAndGroupingEnabled(
+			serviceContext.getRequest());
 	}
 
 	@Override
@@ -89,5 +92,11 @@ public class OrderingAndGroupingFormNavigatorEntry
 	protected String getJspPath() {
 		return "/configuration/ordering_and_grouping.jsp";
 	}
+
+	@Reference
+	protected AssetPublisherCustomizerRegistry assetPublisherCustomizerRegistry;
+
+	@Reference
+	private PortletLocalService _portletLocalService;
 
 }

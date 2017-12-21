@@ -38,6 +38,7 @@ public class LineEndCharacterCheck extends BaseCheck {
 			if ((parentAST.getType() == TokenTypes.ANNOTATION) ||
 				(parentAST.getType() == TokenTypes.CTOR_CALL) ||
 				(parentAST.getType() == TokenTypes.CTOR_DEF) ||
+				(parentAST.getType() == TokenTypes.ENUM_CONSTANT_DEF) ||
 				(parentAST.getType() == TokenTypes.LITERAL_NEW) ||
 				(parentAST.getType() == TokenTypes.METHOD_DEF) ||
 				(parentAST.getType() == TokenTypes.SUPER_CTOR_CALL)) {

@@ -26,6 +26,7 @@ int displayActivityCounterNameIndexCount = displayActivityCounterNames.length;
 if (displayActivityCounterNameIndexCount == 0) {
 	displayActivityCounterNameIndexCount = 1;
 }
+
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -67,7 +68,8 @@ if (displayActivityCounterNameIndexCount == 0) {
 						{
 							contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
 							namespace: '<portlet:namespace />',
-							url: '<liferay-portlet:renderURL portletName="<%= SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /><liferay-portlet:param name="index" value="<%= String.valueOf(displayActivityCounterNameIndexCount) %>" /></liferay-portlet:renderURL>'
+							url: '<liferay-portlet:renderURL portletName="<%= SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>',
+							urlNamespace: '<%= "_" + SocialGroupStatisticsPortletKeys.SOCIAL_GROUP_STATISTICS + "_" %>'
 						}
 					).render();
 				</aui:script>

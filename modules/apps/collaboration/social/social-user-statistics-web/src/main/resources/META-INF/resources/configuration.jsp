@@ -24,6 +24,7 @@ int displayActivityCounterNameCount = socialUserStatisticsPortletInstanceConfigu
 if (displayActivityCounterNameCount == 0) {
 	displayActivityCounterNameCount = 1;
 }
+
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -74,12 +75,14 @@ if (displayActivityCounterNameCount == 0) {
 					</aui:fieldset>
 				</div>
 
+
 				<aui:script use="liferay-auto-fields">
 					var autoFields = new Liferay.AutoFields(
 						{
 							contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
 							namespace: '<portlet:namespace />',
-							url: '<liferay-portlet:renderURL portletName="<%= SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="index" value="<%= String.valueOf(displayActivityCounterNameCount) %>" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>'
+							url: '<liferay-portlet:renderURL portletName="<%= SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>'
+							urlNamespace: '<%= "_" + SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS + "_" %>'
 						}
 					).render();
 				</aui:script>

@@ -18,7 +18,9 @@ import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class SingleDestinationMessageSenderFactoryUtil {
 
 	public static SingleDestinationMessageSender
@@ -48,10 +50,6 @@ public class SingleDestinationMessageSenderFactoryUtil {
 			getSynchronousMessageSender(mode);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
 	protected SingleDestinationMessageSenderFactory
 		getSingleDestinationMessageSenderFactory() {
 

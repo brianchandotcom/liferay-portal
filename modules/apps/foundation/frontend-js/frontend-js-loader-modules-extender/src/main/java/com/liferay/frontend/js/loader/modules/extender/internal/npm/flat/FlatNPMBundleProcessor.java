@@ -16,6 +16,7 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm.flat;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundle;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSBundleProcessor;
+import com.liferay.frontend.js.loader.modules.extender.npm.JSModuleAlias;
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackageDependency;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -31,11 +32,15 @@ import java.io.IOException;
 
 import java.net.URL;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -76,6 +81,69 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		_processNodePackages(flatJSBundle);
 
 		return flatJSBundle;
+	}
+
+	private String _canonicalizePath(String path) {
+		String[] parts = path.split(StringPool.SLASH);
+		List<String> processedParts = new ArrayList<>();
+
+		int parents = 0;
+
+		for (int i = parts.length - 1; i >= 0; i--) {
+			String part = parts[i];
+
+			if (part.equals(".")) {
+				continue;
+			}
+			else if (part.equals("..")) {
+				parents++;
+			}
+			else {
+				if (parents > 0) {
+					parents--;
+				}
+				else {
+					processedParts.add(part);
+				}
+			}
+		}
+
+		Collections.reverse(processedParts);
+
+		StringBundler sb = new StringBundler(2 * processedParts.size() - 1);
+
+		for (String processedPart : processedParts) {
+			if (sb.length() != 0) {
+				sb.append(StringPool.SLASH);
+			}
+
+			sb.append(processedPart);
+		}
+
+		return sb.toString();
+	}
+
+	private JSONObject _getJSONObject(
+		FlatJSBundle flatJSBundle, String location) {
+
+		JSONObject jsonObject = null;
+
+		try {
+			String content = _getResourceContent(flatJSBundle, location);
+
+			if (content != null) {
+				jsonObject = _jsonFactory.createJSONObject(content);
+			}
+		}
+		catch (Exception e) {
+			_log.error(
+				StringBundler.concat(
+					"Unable to parse ", String.valueOf(flatJSBundle), ": ",
+					location),
+				e);
+		}
+
+		return jsonObject;
 	}
 
 	/**
@@ -188,6 +256,84 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		}
 	}
 
+	private void _processModuleAliases(
+		FlatJSPackage flatJSPackage, String location) {
+
+		FlatJSBundle flatJSBundle = flatJSPackage.getJSBundle();
+
+		Enumeration<URL> urls = flatJSBundle.findEntries(
+			location, "package.json", true);
+
+		Set<String> processedFolders = new HashSet<>();
+
+		while (urls.hasMoreElements()) {
+			URL url = urls.nextElement();
+
+			String filePath = url.getPath();
+
+			filePath = filePath.substring(location.length() + 1);
+
+			if (filePath.equals("/package.json")) {
+				continue;
+			}
+
+			JSONObject jsonObject = _getJSONObject(flatJSBundle, url.getPath());
+
+			if (jsonObject == null) {
+				continue;
+			}
+
+			String main = jsonObject.getString("main");
+
+			if (main != null) {
+				String folderPath = filePath.substring(
+					0, filePath.lastIndexOf(StringPool.SLASH));
+
+				String alias = folderPath.substring(1);
+
+				if (main.startsWith(StringPool.PERIOD)) {
+					main = _canonicalizePath(alias + StringPool.SLASH + main);
+				}
+
+				main = ModuleNameUtil.toModuleName(main);
+
+				JSModuleAlias jsModuleAlias = new JSModuleAlias(
+					flatJSPackage, main, alias);
+
+				flatJSPackage.addJSModuleAlias(jsModuleAlias);
+
+				processedFolders.add(folderPath);
+			}
+		}
+
+		urls = flatJSBundle.findEntries(location, "index.js", true);
+
+		if (urls != null) {
+			while (urls.hasMoreElements()) {
+				URL url = urls.nextElement();
+
+				String folderPath = url.getPath();
+
+				folderPath = folderPath.substring(location.length() + 1);
+
+				folderPath = folderPath.substring(
+					0, folderPath.lastIndexOf(StringPool.SLASH));
+
+				if (folderPath.isEmpty()) {
+					continue;
+				}
+
+				String alias = folderPath.substring(1);
+
+				if (!processedFolders.contains(folderPath)) {
+					flatJSPackage.addJSModuleAlias(
+						new JSModuleAlias(
+							flatJSPackage, alias + "/index", alias));
+				}
+			}
+		}
+	}
+
 	/**
 	 * Processes the modules of a package and adds them to their {@link
 	 * FlatJSPackage} descriptor.
@@ -263,7 +409,13 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 
 			String location = path.substring(1, path.length() - 13);
 
-			_processPackage(flatJSBundle, location, false);
+			String[] parts = location.split(StringPool.SLASH);
+
+			String lastFolder = parts[parts.length - 2];
+
+			if (lastFolder.equals("node_modules")) {
+				_processPackage(flatJSBundle, location, false);
+			}
 		}
 	}
 
@@ -322,6 +474,10 @@ public class FlatNPMBundleProcessor implements JSBundleProcessor {
 		_processDependencies(flatJSPackage, jsonObject, "peerDependencies");
 
 		_processModules(flatJSPackage, location);
+
+		if (!root) {
+			_processModuleAliases(flatJSPackage, location);
+		}
 
 		flatJSBundle.addJSPackage(flatJSPackage);
 	}

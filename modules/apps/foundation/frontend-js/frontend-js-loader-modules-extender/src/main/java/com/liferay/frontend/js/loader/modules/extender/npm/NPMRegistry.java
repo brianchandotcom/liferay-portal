@@ -31,6 +31,8 @@ public interface NPMRegistry {
 
 	public Collection<JSModule> getResolvedJSModules();
 
+	public Collection<JSPackage> getResolvedJSPackages();
+
 	public JSPackage resolveJSPackageDependency(
 		JSPackageDependency jsPackageDependency);
 

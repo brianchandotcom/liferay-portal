@@ -18,6 +18,10 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Provides utility methods to manipulate module names.
  *
@@ -114,9 +118,16 @@ public class ModuleNameUtil {
 	 * </p>
 	 *
 	 * @param  moduleName the module's name
-	 * @return the package name
+	 * @return the package name or null if the moduleName is a reserved one
+	 * @review
 	 */
 	public static String getPackageName(String moduleName) {
+		if (isReservedModuleName(moduleName) ||
+			moduleName.startsWith(StringPool.PERIOD)) {
+
+			return null;
+		}
+
 		int i = moduleName.indexOf(StringPool.SLASH);
 
 		if ((moduleName.charAt(0) == CharPool.AT) && (i != -1)) {
@@ -162,6 +173,10 @@ public class ModuleNameUtil {
 		return moduleName.substring(i + 1);
 	}
 
+	public static boolean isReservedModuleName(String moduleName) {
+		return _reservedModuleNames.contains(moduleName);
+	}
+
 	/**
 	 * Returns the file name implementing the module.
 	 *
@@ -187,5 +202,8 @@ public class ModuleNameUtil {
 
 		return fileName.substring(0, i);
 	}
+
+	private static final Set<String> _reservedModuleNames = new HashSet<>(
+		Arrays.asList("require", "exports", "module"));
 
 }

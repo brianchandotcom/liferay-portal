@@ -136,10 +136,10 @@ public class UnavailableComponentScanner {
 				sb.append("}");
 				sb.append(".\n");
 
-				for (Map.Entry<
-						ComponentDeclaration,
-						List<ComponentDependencyDeclaration>> entry :
-							unavailableComponentDeclarations.entrySet()) {
+				for (Map.Entry
+						<ComponentDeclaration,
+							List<ComponentDependencyDeclaration>> entry :
+								unavailableComponentDeclarations.entrySet()) {
 
 					sb.append("\tComponent with ID ");
 

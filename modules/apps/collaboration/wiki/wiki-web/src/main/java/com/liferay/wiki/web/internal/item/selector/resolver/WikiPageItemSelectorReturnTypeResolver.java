@@ -22,8 +22,8 @@ import com.liferay.wiki.model.WikiPage;
 /**
  * @author Roberto Díaz
  */
-public interface WikiPageItemSelectorReturnTypeResolver<
-	T extends ItemSelectorReturnType, S>
+public interface WikiPageItemSelectorReturnTypeResolver
+	<T extends ItemSelectorReturnType, S>
 		extends ItemSelectorReturnTypeResolver<T, WikiPage> {
 
 	public String getTitle(WikiPage page, ThemeDisplay themeDisplay)

@@ -20,6 +20,10 @@
 	<aui:validator name="required" />
 </aui:input>
 
+<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden">
+	<aui:validator name="required" />
+</aui:input>
+
 <p class="text-default">
 	<span class="hide" id="<portlet:namespace />layoutItemRemove" role="button">
 		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
@@ -51,6 +55,7 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 	var layoutItemRemove = $('#<portlet:namespace />layoutItemRemove');
 	var layoutNameInput = $('#<portlet:namespace />layoutNameInput');
 	var layoutUuid = $('#<portlet:namespace />layoutUuid');
+	var privateLayout = $('#<portlet:namespace />privateLayout');
 
 	$('#<portlet:namespace />chooseLayout').on(
 		'click',
@@ -64,6 +69,7 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 
 							if (selectedItem) {
 								layoutUuid.val(selectedItem.id);
+								privateLayout.val(selectedItem.privateLayout);
 
 								layoutNameInput.html(selectedItem.name);
 

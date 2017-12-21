@@ -14,6 +14,10 @@
 
 package com.liferay.site.navigation.admin.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -23,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
+import com.liferay.site.navigation.admin.web.internal.handler.SiteNavigationMenuExceptionRequestHandler;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
@@ -52,27 +57,36 @@ public class AddSiteNavigationMenuMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
 
-		SiteNavigationMenu siteNavigationMenu =
-			_siteNavigationMenuService.addSiteNavigationMenu(
-				themeDisplay.getScopeGroupId(), name, serviceContext);
+			SiteNavigationMenu siteNavigationMenu =
+				_siteNavigationMenuService.addSiteNavigationMenu(
+					serviceContext.getScopeGroupId(), name, serviceContext);
 
-		hideDefaultSuccessMessage(actionRequest);
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String redirect = _getRedirect(
-			actionRequest, siteNavigationMenu.getSiteNavigationMenuId());
+			jsonObject.put(
+				"redirectURL",
+				_getRedirectURL(
+					actionRequest,
+					siteNavigationMenu.getSiteNavigationMenuId()));
 
-		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse, jsonObject);
+		}
+		catch (PortalException pe) {
+			hideDefaultSuccessMessage(actionRequest);
+
+			_siteNavigationMenuExceptionRequestHandler.handlePortalException(
+				actionRequest, actionResponse, pe);
+		}
 	}
 
-	private String _getRedirect(
+	private String _getRedirectURL(
 		ActionRequest actionRequest, long siteNavigationMenuId) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
@@ -91,6 +105,10 @@ public class AddSiteNavigationMenuMVCActionCommand
 
 		return redirectURL.toString();
 	}
+
+	@Reference
+	private SiteNavigationMenuExceptionRequestHandler
+		_siteNavigationMenuExceptionRequestHandler;
 
 	@Reference
 	private SiteNavigationMenuService _siteNavigationMenuService;

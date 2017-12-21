@@ -12,18 +12,14 @@
  * details.
  */
 
-package com.liferay.portal.monitoring;
+package com.liferay.portal.monitoring.internal.constants;
 
 /**
  * @author Michael C. Han
- * @author Brian Wing Shun Chan
  */
-public interface MonitorNames {
+public class MonitoringWebKeys {
 
-	public static final String PORTAL = "com.liferay.monitoring.Portal";
-
-	public static final String PORTLET = "com.liferay.monitoring.Portlet";
-
-	public static final String SERVICE = "com.liferay.monitoring.Service";
+	public static final String PORTAL_REQUEST_DATA_SAMPLE =
+		"PORTAL_REQUEST_DATA_SAMPLE";
 
 }

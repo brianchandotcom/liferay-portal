@@ -23,8 +23,8 @@ import com.liferay.portal.kernel.servlet.taglib.BaseDynamicInclude;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.monitoring.configuration.MonitoringConfiguration;
-import com.liferay.portal.monitoring.constants.MonitoringWebKeys;
+import com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration;
+import com.liferay.portal.monitoring.internal.constants.MonitoringWebKeys;
 
 import java.util.Map;
 
@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Michael C. Han
  */
 @Component(
-	configurationPid = "com.liferay.portal.monitoring.configuration.MonitoringConfiguration",
+	configurationPid = "com.liferay.portal.monitoring.internal.configuration.MonitoringConfiguration",
 	enabled = false, immediate = true, service = DynamicInclude.class
 )
 public class MonitoringTopHeadDynamicInclude extends BaseDynamicInclude {

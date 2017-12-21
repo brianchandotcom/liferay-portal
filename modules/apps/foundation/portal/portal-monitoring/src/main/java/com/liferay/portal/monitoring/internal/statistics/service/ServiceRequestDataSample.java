@@ -15,8 +15,8 @@
 package com.liferay.portal.monitoring.internal.statistics.service;
 
 import com.liferay.portal.kernel.monitoring.MethodSignature;
-import com.liferay.portal.monitoring.MonitorNames;
 import com.liferay.portal.monitoring.internal.BaseDataSample;
+import com.liferay.portal.monitoring.internal.MonitorNames;
 
 /**
  * @author Michael C. Han

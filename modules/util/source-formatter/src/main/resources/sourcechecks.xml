@@ -82,7 +82,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-instance-lifecycle" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-jmx" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-messaging" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-monitoring" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-output-stream-container" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-spring-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-upgrade" />

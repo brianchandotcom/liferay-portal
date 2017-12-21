@@ -110,6 +110,9 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		request.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
@@ -119,13 +122,12 @@ public class LayoutSiteNavigationMenuItemType
 		typeSettingsProperties.fastLoad(
 			siteNavigationMenuItem.getTypeSettings());
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		String layoutUuid = typeSettingsProperties.get("layoutUuid");
+		boolean privateLayout = GetterUtil.getBoolean(
+			typeSettingsProperties.get("privateLayout"));
 
 		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			typeSettingsProperties.get("layoutUuid"),
-			themeDisplay.getScopeGroupId(),
-			GetterUtil.getBoolean(typeSettingsProperties.get("privateLayout")));
+			layoutUuid, themeDisplay.getScopeGroupId(), privateLayout);
 
 		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
 

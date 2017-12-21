@@ -1,3 +1,4 @@
+Bundle-Description: The Baseline Gradle plugin lets you verify that the OSGi semantic versioning rules are obeyed by your OSGi bundle.
 Bundle-Name: Liferay Gradle Plugins Baseline
 Bundle-SymbolicName: com.liferay.gradle.plugins.baseline
 Bundle-Version: 1.1.10

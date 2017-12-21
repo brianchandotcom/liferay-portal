@@ -1,3 +1,4 @@
+Bundle-Description: The Soy Gradle plugin lets you compile Closure Templates into JavaScript functions. It also lets you use a custom localization mechanism in the generated .soy.js files by replacing "goog.getMsg" definitions with a different function call (e.g., "Liferay.Language.get").
 Bundle-Name: Liferay Gradle Plugins Soy
 Bundle-SymbolicName: com.liferay.gradle.plugins.soy
 Bundle-Version: 3.1.5

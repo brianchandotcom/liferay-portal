@@ -14,8 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
-
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
@@ -27,7 +25,9 @@ public class LineEndCharacterCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.LPAREN, TokenTypes.TYPECAST};
+		return new int[] {
+			TokenTypes.GENERIC_START, TokenTypes.LPAREN, TokenTypes.TYPECAST
+		};
 	}
 
 	@Override
@@ -47,17 +47,22 @@ public class LineEndCharacterCheck extends BaseCheck {
 		}
 
 		if (_isAtLineEnd(detailAST)) {
-			log(detailAST.getLineNo(), _MSG_INCORRECT_END_LINE_CHARACTER, "(");
+			log(
+				detailAST.getLineNo(), _MSG_INCORRECT_END_LINE_CHARACTER,
+				detailAST.getText());
 		}
 	}
 
 	private boolean _isAtLineEnd(DetailAST detailAST) {
 		FileContents fileContents = getFileContents();
 
-		String line = fileContents.getLine(
-			DetailASTUtil.getStartLine(detailAST) - 1);
+		String line = fileContents.getLine(detailAST.getLineNo() - 1);
 
-		if ((detailAST.getColumnNo() + 1) == line.length()) {
+		String text = detailAST.getText();
+
+		if (line.endsWith(text) &&
+			((detailAST.getColumnNo() + text.length()) == line.length())) {
+
 			return true;
 		}
 

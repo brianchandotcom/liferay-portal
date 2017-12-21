@@ -38,14 +38,15 @@ public class LiferayObjectConstructor implements TemplateMethodModelEx {
 					"the class to instantiate");
 		}
 
-		Class<?> clazz = null;
 		String className = String.valueOf(arguments.get(0));
+
+		Class<?> clazz = null;
 
 		try {
 			clazz = Class.forName(
 				className, true, ClassLoaderUtil.getContextClassLoader());
 		}
-		catch (Exception e) {
+		catch (Exception e1) {
 			try {
 				clazz = Class.forName(
 					className, true, ClassLoaderUtil.getPortalClassLoader());

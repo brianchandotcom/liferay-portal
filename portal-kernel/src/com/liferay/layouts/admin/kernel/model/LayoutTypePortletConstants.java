@@ -110,7 +110,7 @@ public class LayoutTypePortletConstants
 			return true;
 		}
 
-		return true;
+		return false;
 	}
 
 	private static final Set<String> _typeSettingsIds = SetUtil.fromArray(

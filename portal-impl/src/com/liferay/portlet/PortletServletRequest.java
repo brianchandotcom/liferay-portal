@@ -139,7 +139,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 
 	@Override
 	public Enumeration<String> getAttributeNames() {
-		return _request.getAttributeNames();
+		return _portletRequest.getAttributeNames();
 	}
 
 	@Override

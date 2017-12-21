@@ -320,8 +320,11 @@ public class PortletRequestDispatcherImpl
 			oldPortletRequestDispatcherRequest =
 				portletRequestImpl.getPortletRequestDispatcherRequest();
 
+			PortletServletRequest portletServletRequest =
+				(PortletServletRequest)servletRequest;
+
 			HttpServletRequest httpServletRequest =
-				(HttpServletRequest)servletRequest;
+				(HttpServletRequest)portletServletRequest.getRequest();
 
 			if (_path != null) {
 				int pos = _path.indexOf(CharPool.QUESTION);
@@ -334,9 +337,6 @@ public class PortletRequestDispatcherImpl
 						toParameterMap(queryString));
 				}
 			}
-
-			PortletServletRequest portletServletRequest =
-				(PortletServletRequest)servletRequest;
 
 			servletRequest = new PortletServletRequest(
 				httpServletRequest, portletRequest,

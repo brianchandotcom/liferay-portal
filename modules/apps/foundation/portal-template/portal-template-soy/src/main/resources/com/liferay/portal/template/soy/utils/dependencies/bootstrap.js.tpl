@@ -12,6 +12,17 @@ Liferay.Loader.require.apply(
 						Liferay.component('$ID', null);
 					}
 				);
+			},
+			function(error) {
+				console.error('Unable to load ' + $MODULES);
+
+				Liferay.fire(
+					'soyComponentLoadingError',
+					{
+						error: error,
+						modules: $MODULES
+					}
+				);
 			}
 		]
 	)

@@ -35,6 +35,8 @@ import javax.servlet.http.HttpServletRequest;
 @ProviderType
 public interface ResourceActions {
 
+	public void check(Portlet portlet);
+
 	public void check(String portletName);
 
 	public void checkAction(String name, String actionId)

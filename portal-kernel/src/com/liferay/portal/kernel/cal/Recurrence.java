@@ -238,29 +238,15 @@ public class Recurrence implements Serializable {
 		reduce_constant_length_field(Calendar.MINUTE, dtStart, candidate);
 		reduce_constant_length_field(Calendar.HOUR_OF_DAY, dtStart, candidate);
 
-		switch (minInterval) {
-
-			case DAILY :
-
-				// No more adjustments needed
-
-				break;
-
-			case WEEKLY :
-				reduce_constant_length_field(
-					Calendar.DAY_OF_WEEK, dtStart, candidate);
-
-				break;
-
-			case MONTHLY :
-				reduce_day_of_month(dtStart, candidate);
-
-				break;
-
-			case YEARLY :
-				reduce_day_of_year(dtStart, candidate);
-
-				break;
+		if (minInterval == WEEKLY) {
+			reduce_constant_length_field(
+				Calendar.DAY_OF_WEEK, dtStart, candidate);
+		}
+		else if (minInterval == MONTHLY) {
+			reduce_day_of_month(dtStart, candidate);
+		}
+		else if (minInterval == YEARLY) {
+			reduce_day_of_year(dtStart, candidate);
 		}
 
 		return candidate;
@@ -907,32 +893,27 @@ public class Recurrence implements Serializable {
 	 * @return int
 	 */
 	protected int getRecurrenceCount(Calendar candidate) {
-		switch (frequency) {
-
-			case NO_RECURRENCE :
-				return 0;
-
-			case DAILY :
-				return (int)(getDayNumber(candidate) - getDayNumber(dtStart));
-
-			case WEEKLY :
-				Calendar tempCand = (Calendar)candidate.clone();
-
-				tempCand.setFirstDayOfWeek(dtStart.getFirstDayOfWeek());
-
-				return (int)(getWeekNumber(tempCand) - getWeekNumber(dtStart));
-
-			case MONTHLY :
-				return
-					(int)(getMonthNumber(candidate) - getMonthNumber(dtStart));
-
-			case YEARLY :
-				return
-					candidate.get(Calendar.YEAR) - dtStart.get(Calendar.YEAR);
-
-			default :
-				throw new IllegalStateException("bad frequency internally...");
+		if (frequency == NO_RECURRENCE) {
+			return 0;
 		}
+		else if (frequency == DAILY) {
+			return (int)(getDayNumber(candidate) - getDayNumber(dtStart));
+		}
+		else if (frequency == WEEKLY) {
+			Calendar tempCand = (Calendar)candidate.clone();
+
+			tempCand.setFirstDayOfWeek(dtStart.getFirstDayOfWeek());
+
+			return (int)(getWeekNumber(tempCand) - getWeekNumber(dtStart));
+		}
+		else if (frequency == MONTHLY) {
+			return (int)(getMonthNumber(candidate) - getMonthNumber(dtStart));
+		}
+		else if (frequency == YEARLY) {
+			return candidate.get(Calendar.YEAR) - dtStart.get(Calendar.YEAR);
+		}
+
+		throw new IllegalStateException("bad frequency internally...");
 	}
 
 	/**

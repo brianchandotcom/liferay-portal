@@ -182,42 +182,33 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		for (int i = 0; i < match.length(); i++) {
 			char c = match.charAt(i);
 
-			switch (c) {
-				case CharPool.CLOSE_PARENTHESIS:
-					if (count <= 1) {
-						return new String[0];
-					}
+			if (c == CharPool.CLOSE_PARENTHESIS) {
+				if (count <= 1) {
+					return new String[0];
+				}
 
-					count--;
+				count--;
+			}
+			else if (c == CharPool.OPEN_PARENTHESIS) {
+				count++;
+			}
+			else if ((c == CharPool.QUOTE) && (count <= 1)) {
+				while (i < match.length()) {
+					i++;
 
-					break;
+					if (match.charAt(i) == CharPool.QUOTE) {
+						String languageKey = sb.toString();
 
-				case CharPool.OPEN_PARENTHESIS:
-					count++;
-
-					break;
-
-				case CharPool.QUOTE:
-					if (count > 1) {
-						break;
-					}
-
-					while (i < match.length()) {
-						i++;
-
-						if (match.charAt(i) == CharPool.QUOTE) {
-							String languageKey = sb.toString();
-
-							if (match.startsWith("names")) {
-								return StringUtil.split(languageKey);
-							}
-							else {
-								return new String[] {languageKey};
-							}
+						if (match.startsWith("names")) {
+							return StringUtil.split(languageKey);
 						}
-
-						sb.append(match.charAt(i));
+						else {
+							return new String[] {languageKey};
+						}
 					}
+
+					sb.append(match.charAt(i));
+				}
 			}
 		}
 

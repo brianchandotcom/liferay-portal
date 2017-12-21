@@ -250,7 +250,6 @@
 		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStopWatchCheck" />
 		<check name="JavaStylingCheck" />
-		<check name="JavaSwitchCheck" />
 		<check name="JavaSystemExceptionCheck" />
 		<check name="JavaTermDividersCheck" />
 		<check name="JavaTermMetadataLineBreakCheck" />
@@ -306,6 +305,7 @@
 		<check name="JavaProviderTypeAnnotationCheck" />
 		<check name="JavaServiceUtilCheck" />
 		<check name="JavaStringBundlerInitialCapacityCheck" />
+		<check name="JavaSwitchCheck" />
 		<check name="JavaSystemEventAnnotationCheck" />
 		<check name="JavaTestMethodAnnotationsCheck" />
 		<check name="JavaUnsafeCastingCheck" />

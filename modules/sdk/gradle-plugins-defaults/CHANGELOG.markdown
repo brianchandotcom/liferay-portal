@@ -2619,8 +2619,8 @@ sub-repositories.
 - [LPS-76221]: Update the [Liferay Gradle Plugins] dependency to version 3.5.71.
 
 ### Removed
-- [LPS-76221]: Remove the default configuration of the `translate` property for
-all `BuildLangTask` instances.
+- [LPS-76221]: Remove the `translate` property's default configuration for all
+`BuildLangTask` instances.
 
 ## 5.2.26 - 2017-12-20
 

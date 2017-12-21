@@ -58,15 +58,15 @@
 ## 2.2.0 - 2017-12-19
 
 ### Changed
-- [LPS-76475]: Replace the `docrootDir`, `portalCommonDir`, `portalCommonFile`,
-and `portalCommonPath` properties of `BuildCSSTask` with `baseDir`, `importDir`,
-`importFile`, and `importPath`. The previous properties are still available, but
-they are deprecated.
+- [LPS-76475]: Replace the `BuildCSSTask`'s `docrootDir`, `portalCommonDir`,
+`portalCommonFile`, and `portalCommonPath` properties with `baseDir`,
+`importDir`, `importFile`, and `importPath`. The previous properties are still
+available, but they are deprecated.
 - [LPS-76475]: Update the [Liferay CSS Builder] dependency to version 2.1.0.
 
 ### Fixed
-- [LPS-76475]: Fix invocation of [Liferay CSS Builder] if the `dirNames`
-property of `BuildCSSTask` contains more than one value.
+- [LPS-76475]: Fix invocation of the [Liferay CSS Builder] if the
+`BuildCSSTask`'s `dirNames` property contains more than one value.
 
 [Liferay CSS Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/css-builder
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

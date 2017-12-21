@@ -132,6 +132,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>NOT_STAGED_ASSET_MESSAGE</td>
+	<td>//div[contains(@class,'lfr-portlet-message-staging-alert')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>

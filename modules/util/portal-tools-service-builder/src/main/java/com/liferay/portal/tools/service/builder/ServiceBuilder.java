@@ -4162,13 +4162,13 @@ public class ServiceBuilder {
 			for (int i = 0; i < pkList.size(); i++) {
 				EntityColumn col = pkList.get(i);
 
-				String colName = col.getName();
+				String colDBName = col.getDBName();
 
-				if (colName.length() > _COLUMN_NAME_MAX_LENGTH) {
+				if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {
 					throw new ServiceBuilderException(
 						StringBundler.concat(
 							"Unable to create entity mapping \"", tableName,
-							"\" because column name \"", colName, "\" exceeds ",
+							"\" because column name \"", colDBName, "\" exceeds ",
 							String.valueOf(_COLUMN_NAME_MAX_LENGTH),
 							" characters"));
 				}
@@ -4176,7 +4176,7 @@ public class ServiceBuilder {
 				String colType = col.getType();
 
 				sb.append("\t");
-				sb.append(col.getDBName());
+				sb.append(colDBName);
 				sb.append(" ");
 
 				if (StringUtil.equalsIgnoreCase(colType, "boolean")) {
@@ -4199,7 +4199,8 @@ public class ServiceBuilder {
 					sb.append("TEXT");
 				}
 				else if (colType.equals("String")) {
-					int maxLength = getMaxLength(entity.getName(), colName);
+					int maxLength = getMaxLength(
+						entity.getName(), col.getName());
 
 					if (col.isLocalized()) {
 						maxLength = 4000;
@@ -4294,11 +4295,13 @@ public class ServiceBuilder {
 
 			String colName = col.getName();
 
-			if (colName.length() > _COLUMN_NAME_MAX_LENGTH) {
+			String colDBName = col.getDBName();
+
+			if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {
 				throw new ServiceBuilderException(
 					StringBundler.concat(
 						"Unable to create entity \"", tableName,
-						"\" because column name \"", colName, "\" exceeds ",
+						"\" because column name \"", colDBName, "\" exceeds ",
 						String.valueOf(_COLUMN_NAME_MAX_LENGTH),
 						" characters"));
 			}
@@ -4307,7 +4310,7 @@ public class ServiceBuilder {
 			String colIdType = col.getIdType();
 
 			sb.append("\t");
-			sb.append(col.getDBName());
+			sb.append(colDBName);
 			sb.append(" ");
 
 			if (StringUtil.equalsIgnoreCase(colType, "boolean")) {

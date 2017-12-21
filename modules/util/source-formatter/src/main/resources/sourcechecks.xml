@@ -242,6 +242,7 @@
 		<check name="JavaStaticBlockCheck" />
 		<check name="JavaStopWatchCheck" />
 		<check name="JavaStylingCheck" />
+		<check name="JavaSwitchCheck" />
 		<check name="JavaSystemExceptionCheck" />
 		<check name="JavaTermDividersCheck" />
 		<check name="JavaTermMetadataLineBreakCheck" />

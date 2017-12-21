@@ -1356,17 +1356,27 @@ public class LayoutStagedModelDataHandler
 
 			// Archived setups
 
-			_portletImportController.importPortletPreferences(
-				portletDataContext, portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), null, portletElement, false,
-				importPortletControlsMap.get(
-					PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
-				importPortletControlsMap.get(
-					PortletDataHandlerKeys.PORTLET_DATA),
-				importPortletControlsMap.get(
-					PortletDataHandlerKeys.PORTLET_SETUP),
-				importPortletControlsMap.get(
-					PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
+			try {
+				_portletImportController.importPortletPreferences(
+					portletDataContext, portletDataContext.getCompanyId(),
+					portletDataContext.getGroupId(), null, portletElement,
+					false,
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS),
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_DATA),
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_SETUP),
+					importPortletControlsMap.get(
+						PortletDataHandlerKeys.PORTLET_USER_PREFERENCES));
+			}
+			catch (Throwable t) {
+				throw t;
+			}
+			finally {
+				_portletImportController.resetPortletScope(
+					portletDataContext, portletPreferencesGroupId);
+			}
 		}
 	}
 

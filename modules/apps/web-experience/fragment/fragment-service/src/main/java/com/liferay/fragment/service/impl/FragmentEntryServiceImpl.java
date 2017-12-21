@@ -26,7 +26,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,31 +49,15 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<FragmentEntry> deleteFragmentEntries(long[] fragmentEntriesIds)
+	public void deleteFragmentEntries(long[] fragmentEntriesIds)
 		throws PortalException {
 
-		List<FragmentEntry> undeletableFragmentEntries = new ArrayList<>();
-
 		for (long fragmentEntryId : fragmentEntriesIds) {
-			try {
-				FragmentEntryPermission.check(
-					getPermissionChecker(), fragmentEntryId, ActionKeys.DELETE);
+			FragmentEntryPermission.check(
+				getPermissionChecker(), fragmentEntryId, ActionKeys.DELETE);
 
-				fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-
-				FragmentEntry fragmentEntry =
-					fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
-
-				undeletableFragmentEntries.add(fragmentEntry);
-			}
+			fragmentEntryLocalService.deleteFragmentEntry(fragmentEntryId);
 		}
-
-		return undeletableFragmentEntries;
 	}
 
 	@Override

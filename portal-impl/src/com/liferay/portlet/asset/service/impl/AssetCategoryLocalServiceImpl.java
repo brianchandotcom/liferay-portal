@@ -365,14 +365,7 @@ public class AssetCategoryLocalServiceImpl
 	@Override
 	@ThreadLocalCachable
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
-		AssetEntry entry = assetEntryPersistence.fetchByC_C(
-			classNameId, classPK);
-
-		if (entry == null) {
-			return Collections.emptyList();
-		}
-
-		return assetEntryPersistence.getAssetCategories(entry.getEntryId());
+		return assetCategoryFinder.findByC_C(classNameId, classPK);
 	}
 
 	@Override

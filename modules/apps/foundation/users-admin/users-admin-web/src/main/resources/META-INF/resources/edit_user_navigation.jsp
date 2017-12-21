@@ -27,13 +27,13 @@ request.setAttribute(UsersAdminWebKeys.SELECTED_USER, selUser);
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
 
-<portlet:renderURL var="viewUsersRenderURL">
-	<portlet:param name="mvcRenderCommandName" value="/users_admin/view" />
-</portlet:renderURL>
+<portlet:renderURL var="viewUsersRenderURL" />
 
 <%
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(viewUsersRenderURL.toString());
+if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(viewUsersRenderURL.toString());
+}
 %>
 
 <aui:form action="<%= actionCommandURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
@@ -47,7 +47,9 @@ portletDisplay.setURLBack(viewUsersRenderURL.toString());
 			<aui:button-row>
 				<aui:button primary="<%= true %>" type="submit" />
 
-				<aui:button href="<%= viewUsersRenderURL.toString() %>" type="cancel" />
+				<c:if test="<%= !portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT) %>">
+					<aui:button href="<%= viewUsersRenderURL.toString() %>" type="cancel" />
+				</c:if>
 			</aui:button-row>
 		</aui:fieldset>
 	</aui:fieldset-group>

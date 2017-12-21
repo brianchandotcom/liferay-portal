@@ -72,9 +72,7 @@ public class UpgradePortletId extends UpgradeProcess {
 
 			String typeSettingId = entry.getKey();
 
-			if (!LayoutTypePortletConstants.isLayoutTemplateColumnName(
-					typeSettingId) &&
-				!LayoutTypePortletConstants.isTypeSettingsPortletIdColumnName(
+			if (!LayoutTypePortletConstants.isTypeSettingWithPortletIds(
 					typeSettingId)) {
 
 				continue;

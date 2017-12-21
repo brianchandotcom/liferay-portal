@@ -103,10 +103,10 @@ public class LayoutTypePortletConstants
 		return true;
 	}
 
-	public static boolean isTypeSettingsPortletIdColumnName(
-		String typeSettingId) {
+	public static boolean isTypeSettingWithPortletIds(String typeSettingId) {
+		if (isLayoutTemplateColumnName(typeSettingId) ||
+			DEFAULT_ASSET_PUBLISHER_PORTLET_ID.equals(typeSettingId)) {
 
-		if (_typeSettingsPortletIds.contains(typeSettingId)) {
 			return true;
 		}
 
@@ -132,7 +132,5 @@ public class LayoutTypePortletConstants
 			STATIC_PORTLET_REGULAR_SITE_SELECTOR, STATIC_PORTLET_USER_SELECTOR,
 			TARGET, URL
 		});
-	private static final Set<String> _typeSettingsPortletIds =
-		SetUtil.fromArray(new String[] {DEFAULT_ASSET_PUBLISHER_PORTLET_ID});
 
 }

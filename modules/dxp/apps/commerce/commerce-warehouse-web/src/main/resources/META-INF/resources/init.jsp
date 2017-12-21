@@ -21,7 +21,8 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceGeocoderException" %><%@
@@ -61,6 +62,8 @@ page import="java.util.Map" %>
 <portlet:defineObjects />
 
 <%
+String commerceAdminModuleKey = WarehousesCommerceAdminModule.KEY;
+
 String lifecycle = (String)request.getAttribute(liferayPortletRequest.LIFECYCLE_PHASE);
 
 PortletURL catalogURLObj = PortalUtil.getControlPanelPortletURL(request, CPPortletKeys.CP_DEFINITIONS, lifecycle);

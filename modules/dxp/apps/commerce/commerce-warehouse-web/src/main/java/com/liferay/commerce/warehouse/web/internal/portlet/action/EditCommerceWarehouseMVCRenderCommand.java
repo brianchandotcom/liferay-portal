@@ -69,9 +69,12 @@ public class EditCommerceWarehouseMVCRenderCommand implements MVCRenderCommand {
 					_commerceCountryService, _commerceWarehouseService,
 					httpServletRequest);
 
-			httpServletRequest.setAttribute(
+			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceWarehousesDisplayContext);
+
+			renderRequest.setAttribute(
+				"commerceAdminServletContext", _commerceAdminServletContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
@@ -91,6 +94,11 @@ public class EditCommerceWarehouseMVCRenderCommand implements MVCRenderCommand {
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
+	)
+	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceCountryService _commerceCountryService;

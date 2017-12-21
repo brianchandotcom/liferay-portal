@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute("commerceAdminServletContext");
+
 CommerceShippingMethodsDisplayContext commerceShippingMethodsDisplayContext = (CommerceShippingMethodsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceShippingMethod commerceShippingMethod = commerceShippingMethodsDisplayContext.getCommerceShippingMethod();
@@ -31,12 +33,16 @@ data.put("direction-right", StringPool.TRUE);
 
 String selectedScreenNavigationEntryKey = commerceShippingMethodsDisplayContext.getSelectedScreenNavigationEntryKey();
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ShippingMethodsCommerceAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, currentURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, selectedScreenNavigationEntryKey), StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
+	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
+</liferay-util:include>
 
 <%@ include file="/breadcrumb.jspf" %>
 

@@ -71,6 +71,9 @@ public class EditCommerceShippingMethodMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceCurrenciesDisplayContext);
 
+			renderRequest.setAttribute(
+				"commerceAdminServletContext", _commerceAdminServletContext);
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -94,6 +97,11 @@ public class EditCommerceShippingMethodMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
+	)
+	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;

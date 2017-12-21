@@ -66,6 +66,9 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceRegionsDisplayContext);
 
+			renderRequest.setAttribute(
+				"commerceAdminServletContext", _commerceAdminServletContext);
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -92,6 +95,11 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ActionHelper _actionHelper;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
+	)
+	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceRegionService _commerceRegionService;

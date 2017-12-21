@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute("commerceAdminServletContext");
+
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CommerceCountry commerceCountry = commerceRegionsDisplayContext.getCommerceCountry();
@@ -49,7 +51,7 @@ data.put("direction-right", StringPool.TRUE);
 
 String screenNavigationCategoryKey = commerceRegionsDisplayContext.getScreenNavigationCategoryKey();
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CountriesCommerceAdminModule.KEY), countriesURL, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), countriesURL, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, editCountryURL.toString(), data);
 
 editCountryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategoryKey);
@@ -59,6 +61,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
+	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
+</liferay-util:include>
 
 <%@ include file="/breadcrumb.jspf" %>
 

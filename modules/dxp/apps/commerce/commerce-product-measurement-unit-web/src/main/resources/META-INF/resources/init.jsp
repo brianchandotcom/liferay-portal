@@ -21,7 +21,8 @@
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
+taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
+taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.commerce.product.constants.CPActionKeys" %><%@
 page import="com.liferay.commerce.product.exception.CPMeasurementUnitKeyException" %><%@
@@ -52,3 +53,7 @@ page import="java.util.Map" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+String commerceAdminModuleKey = CPMeasurementUnitAdminModule.KEY;
+%>

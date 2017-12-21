@@ -70,6 +70,9 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceAvailabilityRangeDisplayContext);
 
+			renderRequest.setAttribute(
+				"commerceAdminServletContext", _commerceAdminServletContext);
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -93,6 +96,11 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
+	)
+	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceAvailabilityRangeService _commerceAvailabilityRangeService;

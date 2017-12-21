@@ -72,6 +72,9 @@ public class ViewCommerceAddressRestrictionMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commercePaymentMethodRestrictionsDisplayContext);
 
+			renderRequest.setAttribute(
+				"commerceAdminServletContext", _commerceAdminServletContext);
+
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -99,6 +102,11 @@ public class ViewCommerceAddressRestrictionMVCRenderCommand
 	@Reference
 	private CommerceAddressRestrictionService
 		_commerceAddressRestrictionService;
+
+	@Reference(
+		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
+	)
+	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommercePaymentMethodService _commercePaymentMethodService;

@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute("commerceAdminServletContext");
+
 CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasurementUnitsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CPMeasurementUnit cpMeasurementUnit = cpMeasurementUnitsDisplayContext.getCPMeasurementUnit();
@@ -44,11 +46,15 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, CPMeasurementUnitAdminModule.KEY), redirect, data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
+	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
+</liferay-util:include>
 
 <%@ include file="/breadcrumb.jspf" %>
 

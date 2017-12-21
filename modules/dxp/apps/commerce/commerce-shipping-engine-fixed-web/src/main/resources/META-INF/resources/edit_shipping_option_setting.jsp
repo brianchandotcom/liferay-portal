@@ -19,6 +19,8 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute("commerceAdminServletContext");
+
 CShippingFixedOptionRelsDisplayContext cShippingFixedOptionRelsDisplayContext = (CShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 CShippingFixedOptionRel cShippingFixedOptionRel = cShippingFixedOptionRelsDisplayContext.getCShippingFixedOptionRel();
@@ -47,12 +49,16 @@ data.put("direction-right", StringPool.TRUE);
 
 String screenNavigationEntryKey = cShippingFixedOptionRelsDisplayContext.getScreenNavigationEntryKey();
 
-PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, ShippingMethodsCommerceAdminModule.KEY), shippingMethodsURL.toString(), data);
+PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), shippingMethodsURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationEntryKey), redirect, data);
 PortalUtil.addPortletBreadcrumbEntry(request, title, StringPool.BLANK, data);
 
 renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 %>
+
+<liferay-util:include page="/navbar.jsp" servletContext="<%= commerceAdminServletContext %>">
+	<liferay-util:param name="commerceAdminModuleKey" value="<%= commerceAdminModuleKey %>" />
+</liferay-util:include>
 
 <%@ include file="/breadcrumb.jspf" %>
 

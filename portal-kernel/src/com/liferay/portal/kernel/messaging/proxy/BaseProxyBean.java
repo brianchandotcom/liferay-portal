@@ -15,11 +15,12 @@
 package com.liferay.portal.kernel.messaging.proxy;
 
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSender;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactoryUtil;
 import com.liferay.portal.kernel.messaging.sender.SingleDestinationSynchronousMessageSender;
 import com.liferay.portal.kernel.messaging.sender.SynchronousMessageSender;
+import com.liferay.portal.kernel.util.ServiceProxyFactory;
 
 /**
  * @author Micha Kiener
@@ -37,11 +38,7 @@ public abstract class BaseProxyBean {
 	}
 
 	public void send(ProxyRequest proxyRequest) {
-		SingleDestinationMessageSender singleDestinationMessageSender =
-			SingleDestinationMessageSenderFactoryUtil.
-				createSingleDestinationMessageSender(_destinationName);
-
-		singleDestinationMessageSender.send(buildMessage(proxyRequest));
+		_messageBus.sendMessage(_destinationName, buildMessage(proxyRequest));
 	}
 
 	public void setDestinationName(String destinationName) {
@@ -84,16 +81,12 @@ public abstract class BaseProxyBean {
 			return proxyRequest.execute(this);
 		}
 
-		SingleDestinationSynchronousMessageSender
-			singleDestinationSynchronousMessageSender =
-				SingleDestinationMessageSenderFactoryUtil.
-					createSingleDestinationSynchronousMessageSender(
-						_synchronousDestinationName,
-						_synchronousMessageSenderMode);
+		SynchronousMessageSender synchronousMessageSender =
+			_getSynchronousMessageSender();
 
 		ProxyResponse proxyResponse =
-			(ProxyResponse)singleDestinationSynchronousMessageSender.send(
-				buildMessage(proxyRequest));
+			(ProxyResponse)synchronousMessageSender.send(
+				_synchronousDestinationName, buildMessage(proxyRequest));
 
 		if (proxyResponse == null) {
 			return proxyRequest.execute(this);
@@ -119,6 +112,30 @@ public abstract class BaseProxyBean {
 
 		return message;
 	}
+
+	private SynchronousMessageSender _getSynchronousMessageSender() {
+		if (_synchronousMessageSenderMode ==
+				SynchronousMessageSender.Mode.DEFAULT) {
+
+			return _defaultSynchronousMessageSender;
+		}
+
+		return _directSynchronousMessageSender;
+	}
+
+	private static volatile SynchronousMessageSender
+		_defaultSynchronousMessageSender =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				SynchronousMessageSender.class, BaseProxyBean.class,
+				"_defaultSynchronousMessageSender", "(mode=DEFAULT)", true);
+	private static volatile SynchronousMessageSender
+		_directSynchronousMessageSender =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				SynchronousMessageSender.class, BaseProxyBean.class,
+				"_directSynchronousMessageSender", "(mode=DIRECT)", true);
+	private static volatile MessageBus _messageBus =
+		ServiceProxyFactory.newServiceTrackedInstance(
+			MessageBus.class, BaseProxyBean.class, "_messageBus", true);
 
 	private String _destinationName;
 	private String _synchronousDestinationName;

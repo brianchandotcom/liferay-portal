@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -69,12 +70,51 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 
 		_portletName = portletName;
 
+		String className = LiferayPortletConfig.class.getName();
+
+		_containerRuntimeOptionPrefix = className.concat(_portletName);
+
 		_resourceBundles = new ConcurrentHashMap<>();
 	}
 
 	@Override
 	public Map<String, String[]> getContainerRuntimeOptions() {
-		return _portletApp.getContainerRuntimeOptions();
+		Map<String, String[]> portletAppContainerRuntimeOptions =
+			_portletApp.getContainerRuntimeOptions();
+
+		Map<String, String[]> containerRuntimeOptions = new HashMap<>();
+
+		String className = LiferayPortletConfig.class.getName();
+
+		for (Map.Entry<String, String[]> portletAppContainerRuntimeOption :
+				portletAppContainerRuntimeOptions.entrySet()) {
+
+			String name = portletAppContainerRuntimeOption.getKey();
+
+			if (!name.startsWith(className)) {
+				containerRuntimeOptions.put(
+					name, portletAppContainerRuntimeOption.getValue());
+			}
+		}
+
+		// PLT 8.4: If the deployment descriptor contains
+		// <container-runtime-option> elements of the same name defined at both
+		// the portlet and the portlet application levels, the returned Map
+		// contains a the value defined at the portlet level.
+
+		for (Map.Entry<String, String[]> portletAppContainerRuntimeOption :
+				portletAppContainerRuntimeOptions.entrySet()) {
+
+			String name = portletAppContainerRuntimeOption.getKey();
+
+			if (name.startsWith(_containerRuntimeOptionPrefix)) {
+				containerRuntimeOptions.put(
+					name.substring(_containerRuntimeOptionPrefix.length()),
+					portletAppContainerRuntimeOption.getValue());
+			}
+		}
+
+		return Collections.unmodifiableMap(containerRuntimeOptions);
 	}
 
 	@Override
@@ -231,6 +271,7 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		return javaxQNames;
 	}
 
+	private final String _containerRuntimeOptionPrefix;
 	private final boolean _copyRequestParameters;
 	private final Portlet _portlet;
 	private final PortletApp _portletApp;

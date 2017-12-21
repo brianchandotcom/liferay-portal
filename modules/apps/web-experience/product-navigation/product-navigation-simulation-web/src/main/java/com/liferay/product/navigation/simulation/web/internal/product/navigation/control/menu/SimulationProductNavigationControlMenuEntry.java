@@ -16,6 +16,8 @@ package com.liferay.product.navigation.simulation.web.internal.product.navigatio
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.application.list.PanelCategory;
+import com.liferay.application.list.constants.PanelCategoryKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -32,7 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.simulation.application.list.SimulationPanelCategory;
+import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationConstants;
 import com.liferay.product.navigation.simulation.constants.ProductNavigationSimulationPortletKeys;
 import com.liferay.taglib.aui.IconTag;
 import com.liferay.taglib.aui.ScriptTag;
@@ -168,7 +170,7 @@ public class SimulationProductNavigationControlMenuEntry
 		}
 
 		List<PanelApp> panelApps = _panelAppRegistry.getPanelApps(
-			SimulationPanelCategory.SIMULATION,
+			ProductNavigationSimulationConstants.SIMULATION_PANEL_CATEGORY_KEY,
 			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup());
 
 		if (panelApps.isEmpty()) {
@@ -178,9 +180,11 @@ public class SimulationProductNavigationControlMenuEntry
 		return super.isShow(request);
 	}
 
-	@Reference(unbind = "-")
-	public void setSimulationPanelCategory(
-		SimulationPanelCategory simulationPanelCategory) {
+	@Reference(
+		target = "(panel.category.key=" + PanelCategoryKeys.HIDDEN + ")",
+		unbind = "-"
+	)
+	public void setPanelCategory(PanelCategory panelCategory) {
 	}
 
 	@Reference(unbind = "-")

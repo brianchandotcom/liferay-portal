@@ -180,7 +180,7 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 			Liferay.on('destroyPortlet', handlePortletDestroy);
 		</aui:script>
 
-		<aui:script use="aui-base">
+		<aui:script use="aui-base,aui-parse-content">
 			var sidebar = A.one('#<portlet:namespace />sidebar');
 			var sidebarBody = A.one('#<portlet:namespace />sidebarBody');
 			var sidebarTitle = A.one('#<portlet:namespace />sidebarTitle');

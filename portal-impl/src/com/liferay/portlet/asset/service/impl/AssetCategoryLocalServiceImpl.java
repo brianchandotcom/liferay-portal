@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.exception.DuplicateCategoryException;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.model.AssetCategoryConstants;
 import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.portal.kernel.cache.thread.local.ThreadLocalCachable;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ModelHintsUtil;
@@ -362,6 +363,7 @@ public class AssetCategoryLocalServiceImpl
 	}
 
 	@Override
+	@ThreadLocalCachable
 	public List<AssetCategory> getCategories(long classNameId, long classPK) {
 		return assetCategoryFinder.findByC_C(classNameId, classPK);
 	}

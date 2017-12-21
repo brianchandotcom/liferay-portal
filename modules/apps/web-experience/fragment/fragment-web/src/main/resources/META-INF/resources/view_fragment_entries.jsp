@@ -23,6 +23,8 @@ portletDisplay.setURLBack(fragmentDisplayContext.getFragmentCollectionsRedirect(
 renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 %>
 
+<liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="one-or-more-fragment-entries-could-not-be-deleted.-please-check-if-they-are-used-in-page-templates" />
+
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<portlet:renderURL var="mainURL" />
 
@@ -83,8 +85,6 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 </portlet:actionURL>
 
 <aui:form action="<%= deleteFragmentEntriesURL %>" cssClass="container-fluid-1280" name="fm">
-	<liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="one-or-more-fragment-entries-could-not-be-deleted.-please-check-if-they-are-used-in-page-templates" />
-
 	<liferay-ui:search-container
 		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"

@@ -95,6 +95,18 @@
 		</execute>
 	</command>
 
+	<command name="DeleteHistory" priority="3">
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Sites Directory" />
+		</execute>
+
+		<execute macro="Staging#deleteHistory" />
+
+		<execute macro="Portlet#viewNoSpecificPG">
+			<var name="portletName" value="Sites Directory" />
+		</execute>
+	</command>
+
 	<command name="EnableAndDeleteSitePageVariationPage" priority="4">
 		<execute macro="Staging#addSitePagesVariationPG">
 			<var name="copySitePagesVariationName" value="Main Variation" />

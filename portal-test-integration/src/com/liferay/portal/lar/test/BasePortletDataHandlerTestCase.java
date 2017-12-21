@@ -440,7 +440,8 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	@Test
 	public void testValidateSchemaVersion() throws Exception {
-		Assert.assertTrue(portletDataHandler.validateSchemaVersion("1.0.0"));
+		Assert.assertTrue(
+			portletDataHandler.validateSchemaVersion(getSchemaVersion()));
 	}
 
 	protected void addBooleanParameter(
@@ -581,6 +582,10 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	protected abstract String getPortletId();
+
+	protected String getSchemaVersion() {
+		return "1.0.0";
+	}
 
 	protected List<StagedModel> getStagedModels() {
 		return new ArrayList<>();

@@ -58,6 +58,10 @@ public class GradleDependenciesCheck extends BaseFileCheck {
 		int x = dependencies.indexOf("\n");
 		int y = dependencies.lastIndexOf("\n");
 
+		if (x == y) {
+			return content;
+		}
+
 		dependencies = dependencies.substring(x, y + 1);
 
 		Matcher matcher = _incorrectWhitespacePattern.matcher(dependencies);

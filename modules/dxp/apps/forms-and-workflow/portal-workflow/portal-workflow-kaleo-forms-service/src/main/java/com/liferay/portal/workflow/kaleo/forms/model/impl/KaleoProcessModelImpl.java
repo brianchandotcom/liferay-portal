@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessModel;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessSoap;
@@ -314,7 +313,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -410,7 +409,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -422,7 +421,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -500,7 +499,7 @@ public class KaleoProcessModelImpl extends BaseModelImpl<KaleoProcess>
 	@Override
 	public String getWorkflowDefinitionName() {
 		if (_workflowDefinitionName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _workflowDefinitionName;

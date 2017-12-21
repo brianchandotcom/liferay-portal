@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpSession;
 import com.liferay.saml.persistence.model.SamlSpSessionModel;
@@ -317,7 +316,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -328,7 +327,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -369,7 +368,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getSamlSpSessionKey() {
 		if (_samlSpSessionKey == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _samlSpSessionKey;
@@ -394,7 +393,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getAssertionXml() {
 		if (_assertionXml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _assertionXml;
@@ -409,7 +408,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getJSessionId() {
 		if (_jSessionId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _jSessionId;
@@ -434,7 +433,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getNameIdFormat() {
 		if (_nameIdFormat == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdFormat;
@@ -449,7 +448,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getNameIdNameQualifier() {
 		if (_nameIdNameQualifier == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdNameQualifier;
@@ -464,7 +463,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getNameIdSPNameQualifier() {
 		if (_nameIdSPNameQualifier == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdSPNameQualifier;
@@ -479,7 +478,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getNameIdValue() {
 		if (_nameIdValue == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdValue;
@@ -504,7 +503,7 @@ public class SamlSpSessionModelImpl extends BaseModelImpl<SamlSpSession>
 	@Override
 	public String getSessionIndex() {
 		if (_sessionIndex == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sessionIndex;

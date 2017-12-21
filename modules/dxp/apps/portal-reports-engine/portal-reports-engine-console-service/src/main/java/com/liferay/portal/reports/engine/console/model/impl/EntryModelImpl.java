@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.model.Entry;
 import com.liferay.portal.reports.engine.console.model.EntryModel;
 import com.liferay.portal.reports.engine.console.model.EntrySoap;
@@ -439,7 +438,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -451,7 +450,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -506,7 +505,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getFormat() {
 		if (_format == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _format;
@@ -578,7 +577,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getRecurrence() {
 		if (_recurrence == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _recurrence;
@@ -594,7 +593,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getEmailNotifications() {
 		if (_emailNotifications == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _emailNotifications;
@@ -610,7 +609,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getEmailDelivery() {
 		if (_emailDelivery == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _emailDelivery;
@@ -626,7 +625,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getPortletId() {
 		if (_portletId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _portletId;
@@ -642,7 +641,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getPageURL() {
 		if (_pageURL == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _pageURL;
@@ -658,7 +657,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getReportParameters() {
 		if (_reportParameters == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _reportParameters;
@@ -674,7 +673,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getStatus() {
 		if (_status == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _status;
@@ -690,7 +689,7 @@ public class EntryModelImpl extends BaseModelImpl<Entry> implements EntryModel {
 	@Override
 	public String getErrorMessage() {
 		if (_errorMessage == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _errorMessage;

@@ -21,7 +21,6 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -112,7 +111,7 @@ public class OAuthApplicationCacheModel implements CacheModel<OAuthApplication>,
 		oAuthApplicationImpl.setUserId(userId);
 
 		if (userName == null) {
-			oAuthApplicationImpl.setUserName(StringPool.BLANK);
+			oAuthApplicationImpl.setUserName("");
 		}
 		else {
 			oAuthApplicationImpl.setUserName(userName);
@@ -133,28 +132,28 @@ public class OAuthApplicationCacheModel implements CacheModel<OAuthApplication>,
 		}
 
 		if (name == null) {
-			oAuthApplicationImpl.setName(StringPool.BLANK);
+			oAuthApplicationImpl.setName("");
 		}
 		else {
 			oAuthApplicationImpl.setName(name);
 		}
 
 		if (description == null) {
-			oAuthApplicationImpl.setDescription(StringPool.BLANK);
+			oAuthApplicationImpl.setDescription("");
 		}
 		else {
 			oAuthApplicationImpl.setDescription(description);
 		}
 
 		if (consumerKey == null) {
-			oAuthApplicationImpl.setConsumerKey(StringPool.BLANK);
+			oAuthApplicationImpl.setConsumerKey("");
 		}
 		else {
 			oAuthApplicationImpl.setConsumerKey(consumerKey);
 		}
 
 		if (consumerSecret == null) {
-			oAuthApplicationImpl.setConsumerSecret(StringPool.BLANK);
+			oAuthApplicationImpl.setConsumerSecret("");
 		}
 		else {
 			oAuthApplicationImpl.setConsumerSecret(consumerSecret);
@@ -165,14 +164,14 @@ public class OAuthApplicationCacheModel implements CacheModel<OAuthApplication>,
 		oAuthApplicationImpl.setShareableAccessToken(shareableAccessToken);
 
 		if (callbackURI == null) {
-			oAuthApplicationImpl.setCallbackURI(StringPool.BLANK);
+			oAuthApplicationImpl.setCallbackURI("");
 		}
 		else {
 			oAuthApplicationImpl.setCallbackURI(callbackURI);
 		}
 
 		if (websiteURL == null) {
-			oAuthApplicationImpl.setWebsiteURL(StringPool.BLANK);
+			oAuthApplicationImpl.setWebsiteURL("");
 		}
 		else {
 			oAuthApplicationImpl.setWebsiteURL(websiteURL);
@@ -217,7 +216,7 @@ public class OAuthApplicationCacheModel implements CacheModel<OAuthApplication>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -227,28 +226,28 @@ public class OAuthApplicationCacheModel implements CacheModel<OAuthApplication>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
 		}
 
 		if (consumerKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(consumerKey);
 		}
 
 		if (consumerSecret == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(consumerSecret);
@@ -261,14 +260,14 @@ public class OAuthApplicationCacheModel implements CacheModel<OAuthApplication>,
 		objectOutput.writeBoolean(shareableAccessToken);
 
 		if (callbackURI == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(callbackURI);
 		}
 
 		if (websiteURL == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(websiteURL);

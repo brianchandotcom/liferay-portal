@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.exception.NoSuchKaleoProcessLinkException;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
@@ -305,7 +304,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		msg.append("kaleoProcessId=");
 		msg.append(kaleoProcessId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchKaleoProcessLinkException(msg.toString());
 	}
@@ -356,7 +355,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		msg.append("kaleoProcessId=");
 		msg.append(kaleoProcessId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchKaleoProcessLinkException(msg.toString());
 	}
@@ -637,7 +636,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 			msg.append(", workflowTaskName=");
 			msg.append(workflowTaskName);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -704,7 +703,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 			if (workflowTaskName == null) {
 				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_1);
 			}
-			else if (workflowTaskName.equals(StringPool.BLANK)) {
+			else if (workflowTaskName.equals("")) {
 				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_3);
 			}
 			else {
@@ -814,7 +813,7 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 			if (workflowTaskName == null) {
 				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_1);
 			}
-			else if (workflowTaskName.equals(StringPool.BLANK)) {
+			else if (workflowTaskName.equals("")) {
 				query.append(_FINDER_COLUMN_KPI_WTN_WORKFLOWTASKNAME_3);
 			}
 			else {
@@ -1348,12 +1347,12 @@ public class KaleoProcessLinkPersistenceImpl extends BasePersistenceImpl<KaleoPr
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
 
@@ -98,7 +97,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		sharepointOAuth2TokenEntryImpl.setUserId(userId);
 
 		if (userName == null) {
-			sharepointOAuth2TokenEntryImpl.setUserName(StringPool.BLANK);
+			sharepointOAuth2TokenEntryImpl.setUserName("");
 		}
 		else {
 			sharepointOAuth2TokenEntryImpl.setUserName(userName);
@@ -112,14 +111,14 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		}
 
 		if (accessToken == null) {
-			sharepointOAuth2TokenEntryImpl.setAccessToken(StringPool.BLANK);
+			sharepointOAuth2TokenEntryImpl.setAccessToken("");
 		}
 		else {
 			sharepointOAuth2TokenEntryImpl.setAccessToken(accessToken);
 		}
 
 		if (configurationPid == null) {
-			sharepointOAuth2TokenEntryImpl.setConfigurationPid(StringPool.BLANK);
+			sharepointOAuth2TokenEntryImpl.setConfigurationPid("");
 		}
 		else {
 			sharepointOAuth2TokenEntryImpl.setConfigurationPid(configurationPid);
@@ -134,7 +133,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		}
 
 		if (refreshToken == null) {
-			sharepointOAuth2TokenEntryImpl.setRefreshToken(StringPool.BLANK);
+			sharepointOAuth2TokenEntryImpl.setRefreshToken("");
 		}
 		else {
 			sharepointOAuth2TokenEntryImpl.setRefreshToken(refreshToken);
@@ -166,7 +165,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -175,14 +174,14 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		objectOutput.writeLong(createDate);
 
 		if (accessToken == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(accessToken);
 		}
 
 		if (configurationPid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(configurationPid);
@@ -191,7 +190,7 @@ public class SharepointOAuth2TokenEntryCacheModel implements CacheModel<Sharepoi
 		objectOutput.writeLong(expirationDate);
 
 		if (refreshToken == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(refreshToken);

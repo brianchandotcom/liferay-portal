@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 
 import java.io.Externalizable;
@@ -101,7 +100,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 		KaleoProcessImpl kaleoProcessImpl = new KaleoProcessImpl();
 
 		if (uuid == null) {
-			kaleoProcessImpl.setUuid(StringPool.BLANK);
+			kaleoProcessImpl.setUuid("");
 		}
 		else {
 			kaleoProcessImpl.setUuid(uuid);
@@ -113,7 +112,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 		kaleoProcessImpl.setUserId(userId);
 
 		if (userName == null) {
-			kaleoProcessImpl.setUserName(StringPool.BLANK);
+			kaleoProcessImpl.setUserName("");
 		}
 		else {
 			kaleoProcessImpl.setUserName(userName);
@@ -137,7 +136,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 		kaleoProcessImpl.setDDMTemplateId(DDMTemplateId);
 
 		if (workflowDefinitionName == null) {
-			kaleoProcessImpl.setWorkflowDefinitionName(StringPool.BLANK);
+			kaleoProcessImpl.setWorkflowDefinitionName("");
 		}
 		else {
 			kaleoProcessImpl.setWorkflowDefinitionName(workflowDefinitionName);
@@ -177,7 +176,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -192,7 +191,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -206,7 +205,7 @@ public class KaleoProcessCacheModel implements CacheModel<KaleoProcess>,
 		objectOutput.writeLong(DDMTemplateId);
 
 		if (workflowDefinitionName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(workflowDefinitionName);

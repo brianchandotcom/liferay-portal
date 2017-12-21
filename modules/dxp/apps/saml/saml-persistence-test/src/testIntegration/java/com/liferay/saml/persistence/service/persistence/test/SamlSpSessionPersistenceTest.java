@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -193,36 +192,36 @@ public class SamlSpSessionPersistenceTest {
 
 	@Test
 	public void testCountBySamlSpSessionKey() throws Exception {
-		_persistence.countBySamlSpSessionKey(StringPool.BLANK);
+		_persistence.countBySamlSpSessionKey("");
 
-		_persistence.countBySamlSpSessionKey(StringPool.NULL);
+		_persistence.countBySamlSpSessionKey("null");
 
 		_persistence.countBySamlSpSessionKey((String)null);
 	}
 
 	@Test
 	public void testCountByJSessionId() throws Exception {
-		_persistence.countByJSessionId(StringPool.BLANK);
+		_persistence.countByJSessionId("");
 
-		_persistence.countByJSessionId(StringPool.NULL);
+		_persistence.countByJSessionId("null");
 
 		_persistence.countByJSessionId((String)null);
 	}
 
 	@Test
 	public void testCountByNameIdValue() throws Exception {
-		_persistence.countByNameIdValue(StringPool.BLANK);
+		_persistence.countByNameIdValue("");
 
-		_persistence.countByNameIdValue(StringPool.NULL);
+		_persistence.countByNameIdValue("null");
 
 		_persistence.countByNameIdValue((String)null);
 	}
 
 	@Test
 	public void testCountBySessionIndex() throws Exception {
-		_persistence.countBySessionIndex(StringPool.BLANK);
+		_persistence.countBySessionIndex("");
 
-		_persistence.countBySessionIndex(StringPool.NULL);
+		_persistence.countBySessionIndex("null");
 
 		_persistence.countBySessionIndex((String)null);
 	}

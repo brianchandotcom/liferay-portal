@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 import com.liferay.saml.persistence.model.SamlIdpSpConnectionModel;
@@ -355,7 +354,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -366,7 +365,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -407,7 +406,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getSamlSpEntityId() {
 		if (_samlSpEntityId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _samlSpEntityId;
@@ -442,7 +441,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getAttributeNames() {
 		if (_attributeNames == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _attributeNames;
@@ -503,7 +502,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getMetadataUrl() {
 		if (_metadataUrl == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metadataUrl;
@@ -518,7 +517,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getMetadataXml() {
 		if (_metadataXml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metadataXml;
@@ -543,7 +542,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -558,7 +557,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getNameIdAttribute() {
 		if (_nameIdAttribute == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdAttribute;
@@ -573,7 +572,7 @@ public class SamlIdpSpConnectionModelImpl extends BaseModelImpl<SamlIdpSpConnect
 	@Override
 	public String getNameIdFormat() {
 		if (_nameIdFormat == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdFormat;

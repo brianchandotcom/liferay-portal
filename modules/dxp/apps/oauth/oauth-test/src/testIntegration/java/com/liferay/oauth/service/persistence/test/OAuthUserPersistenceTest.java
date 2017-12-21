@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -183,9 +182,9 @@ public class OAuthUserPersistenceTest {
 
 	@Test
 	public void testCountByAccessToken() throws Exception {
-		_persistence.countByAccessToken(StringPool.BLANK);
+		_persistence.countByAccessToken("");
 
-		_persistence.countByAccessToken(StringPool.NULL);
+		_persistence.countByAccessToken("null");
 
 		_persistence.countByAccessToken((String)null);
 	}

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.model.Source;
 
 import java.io.Externalizable;
@@ -104,7 +103,7 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 		SourceImpl sourceImpl = new SourceImpl();
 
 		if (uuid == null) {
-			sourceImpl.setUuid(StringPool.BLANK);
+			sourceImpl.setUuid("");
 		}
 		else {
 			sourceImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 		sourceImpl.setUserId(userId);
 
 		if (userName == null) {
-			sourceImpl.setUserName(StringPool.BLANK);
+			sourceImpl.setUserName("");
 		}
 		else {
 			sourceImpl.setUserName(userName);
@@ -144,35 +143,35 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 		}
 
 		if (name == null) {
-			sourceImpl.setName(StringPool.BLANK);
+			sourceImpl.setName("");
 		}
 		else {
 			sourceImpl.setName(name);
 		}
 
 		if (driverClassName == null) {
-			sourceImpl.setDriverClassName(StringPool.BLANK);
+			sourceImpl.setDriverClassName("");
 		}
 		else {
 			sourceImpl.setDriverClassName(driverClassName);
 		}
 
 		if (driverUrl == null) {
-			sourceImpl.setDriverUrl(StringPool.BLANK);
+			sourceImpl.setDriverUrl("");
 		}
 		else {
 			sourceImpl.setDriverUrl(driverUrl);
 		}
 
 		if (driverUserName == null) {
-			sourceImpl.setDriverUserName(StringPool.BLANK);
+			sourceImpl.setDriverUserName("");
 		}
 		else {
 			sourceImpl.setDriverUserName(driverUserName);
 		}
 
 		if (driverPassword == null) {
-			sourceImpl.setDriverPassword(StringPool.BLANK);
+			sourceImpl.setDriverPassword("");
 		}
 		else {
 			sourceImpl.setDriverPassword(driverPassword);
@@ -209,7 +208,7 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -224,7 +223,7 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -235,35 +234,35 @@ public class SourceCacheModel implements CacheModel<Source>, Externalizable {
 		objectOutput.writeLong(lastPublishDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (driverClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(driverClassName);
 		}
 
 		if (driverUrl == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(driverUrl);
 		}
 
 		if (driverUserName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(driverUserName);
 		}
 
 		if (driverPassword == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(driverPassword);

@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.model.SourceModel;
@@ -337,7 +336,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -433,7 +432,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -445,7 +444,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -500,7 +499,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -599,7 +598,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getDriverClassName() {
 		if (_driverClassName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _driverClassName;
@@ -615,7 +614,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getDriverUrl() {
 		if (_driverUrl == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _driverUrl;
@@ -631,7 +630,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getDriverUserName() {
 		if (_driverUserName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _driverUserName;
@@ -647,7 +646,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 	@Override
 	public String getDriverPassword() {
 		if (_driverPassword == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _driverPassword;
@@ -705,7 +704,7 @@ public class SourceModelImpl extends BaseModelImpl<Source>
 		String xml = getName();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

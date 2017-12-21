@@ -21,7 +21,6 @@ import com.liferay.oauth.model.OAuthUser;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Externalizable;
 import java.io.IOException;
@@ -100,7 +99,7 @@ public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
 		oAuthUserImpl.setUserId(userId);
 
 		if (userName == null) {
-			oAuthUserImpl.setUserName(StringPool.BLANK);
+			oAuthUserImpl.setUserName("");
 		}
 		else {
 			oAuthUserImpl.setUserName(userName);
@@ -123,14 +122,14 @@ public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
 		oAuthUserImpl.setOAuthApplicationId(oAuthApplicationId);
 
 		if (accessToken == null) {
-			oAuthUserImpl.setAccessToken(StringPool.BLANK);
+			oAuthUserImpl.setAccessToken("");
 		}
 		else {
 			oAuthUserImpl.setAccessToken(accessToken);
 		}
 
 		if (accessSecret == null) {
-			oAuthUserImpl.setAccessSecret(StringPool.BLANK);
+			oAuthUserImpl.setAccessSecret("");
 		}
 		else {
 			oAuthUserImpl.setAccessSecret(accessSecret);
@@ -167,7 +166,7 @@ public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -179,14 +178,14 @@ public class OAuthUserCacheModel implements CacheModel<OAuthUser>,
 		objectOutput.writeLong(oAuthApplicationId);
 
 		if (accessToken == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(accessToken);
 		}
 
 		if (accessSecret == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(accessSecret);

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.DefinitionModel;
@@ -338,7 +337,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -434,7 +433,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -446,7 +445,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -492,7 +491,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -591,7 +590,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -705,7 +704,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public String getReportName() {
 		if (_reportName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _reportName;
@@ -721,7 +720,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 	@Override
 	public String getReportParameters() {
 		if (_reportParameters == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _reportParameters;
@@ -801,7 +800,7 @@ public class DefinitionModelImpl extends BaseModelImpl<Definition>
 		String xml = getName();
 
 		if (xml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 
 		Locale defaultLocale = LocaleUtil.getSiteDefault();

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 import com.liferay.portal.resiliency.spi.model.SPIDefinitionModel;
 import com.liferay.portal.resiliency.spi.model.SPIDefinitionSoap;
@@ -401,7 +400,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -413,7 +412,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -457,7 +456,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -483,7 +482,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getConnectorAddress() {
 		if (_connectorAddress == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _connectorAddress;
@@ -532,7 +531,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -548,7 +547,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getJvmArguments() {
 		if (_jvmArguments == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _jvmArguments;
@@ -564,7 +563,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getPortletIds() {
 		if (_portletIds == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _portletIds;
@@ -580,7 +579,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getServletContextNames() {
 		if (_servletContextNames == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _servletContextNames;
@@ -596,7 +595,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _typeSettings;
@@ -635,7 +634,7 @@ public class SPIDefinitionModelImpl extends BaseModelImpl<SPIDefinition>
 	@Override
 	public String getStatusMessage() {
 		if (_statusMessage == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _statusMessage;

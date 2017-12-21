@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 
 import java.io.Externalizable;
@@ -111,7 +110,7 @@ public class AuditEventCacheModel implements CacheModel<AuditEvent>,
 		auditEventImpl.setUserId(userId);
 
 		if (userName == null) {
-			auditEventImpl.setUserName(StringPool.BLANK);
+			auditEventImpl.setUserName("");
 		}
 		else {
 			auditEventImpl.setUserName(userName);
@@ -125,49 +124,49 @@ public class AuditEventCacheModel implements CacheModel<AuditEvent>,
 		}
 
 		if (eventType == null) {
-			auditEventImpl.setEventType(StringPool.BLANK);
+			auditEventImpl.setEventType("");
 		}
 		else {
 			auditEventImpl.setEventType(eventType);
 		}
 
 		if (className == null) {
-			auditEventImpl.setClassName(StringPool.BLANK);
+			auditEventImpl.setClassName("");
 		}
 		else {
 			auditEventImpl.setClassName(className);
 		}
 
 		if (classPK == null) {
-			auditEventImpl.setClassPK(StringPool.BLANK);
+			auditEventImpl.setClassPK("");
 		}
 		else {
 			auditEventImpl.setClassPK(classPK);
 		}
 
 		if (message == null) {
-			auditEventImpl.setMessage(StringPool.BLANK);
+			auditEventImpl.setMessage("");
 		}
 		else {
 			auditEventImpl.setMessage(message);
 		}
 
 		if (clientHost == null) {
-			auditEventImpl.setClientHost(StringPool.BLANK);
+			auditEventImpl.setClientHost("");
 		}
 		else {
 			auditEventImpl.setClientHost(clientHost);
 		}
 
 		if (clientIP == null) {
-			auditEventImpl.setClientIP(StringPool.BLANK);
+			auditEventImpl.setClientIP("");
 		}
 		else {
 			auditEventImpl.setClientIP(clientIP);
 		}
 
 		if (serverName == null) {
-			auditEventImpl.setServerName(StringPool.BLANK);
+			auditEventImpl.setServerName("");
 		}
 		else {
 			auditEventImpl.setServerName(serverName);
@@ -176,14 +175,14 @@ public class AuditEventCacheModel implements CacheModel<AuditEvent>,
 		auditEventImpl.setServerPort(serverPort);
 
 		if (sessionID == null) {
-			auditEventImpl.setSessionID(StringPool.BLANK);
+			auditEventImpl.setSessionID("");
 		}
 		else {
 			auditEventImpl.setSessionID(sessionID);
 		}
 
 		if (additionalInfo == null) {
-			auditEventImpl.setAdditionalInfo(StringPool.BLANK);
+			auditEventImpl.setAdditionalInfo("");
 		}
 		else {
 			auditEventImpl.setAdditionalInfo(additionalInfo);
@@ -226,7 +225,7 @@ public class AuditEventCacheModel implements CacheModel<AuditEvent>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -235,49 +234,49 @@ public class AuditEventCacheModel implements CacheModel<AuditEvent>,
 		objectOutput.writeLong(createDate);
 
 		if (eventType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(eventType);
 		}
 
 		if (className == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(className);
 		}
 
 		if (classPK == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(classPK);
 		}
 
 		if (message == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(message);
 		}
 
 		if (clientHost == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(clientHost);
 		}
 
 		if (clientIP == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(clientIP);
 		}
 
 		if (serverName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(serverName);
@@ -286,14 +285,14 @@ public class AuditEventCacheModel implements CacheModel<AuditEvent>,
 		objectOutput.writeInt(serverPort);
 
 		if (sessionID == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sessionID);
 		}
 
 		if (additionalInfo == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(additionalInfo);

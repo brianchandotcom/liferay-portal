@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.reports.engine.console.model.Definition;
 
 import java.io.Externalizable;
@@ -105,7 +104,7 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		DefinitionImpl definitionImpl = new DefinitionImpl();
 
 		if (uuid == null) {
-			definitionImpl.setUuid(StringPool.BLANK);
+			definitionImpl.setUuid("");
 		}
 		else {
 			definitionImpl.setUuid(uuid);
@@ -117,7 +116,7 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		definitionImpl.setUserId(userId);
 
 		if (userName == null) {
-			definitionImpl.setUserName(StringPool.BLANK);
+			definitionImpl.setUserName("");
 		}
 		else {
 			definitionImpl.setUserName(userName);
@@ -138,14 +137,14 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		}
 
 		if (name == null) {
-			definitionImpl.setName(StringPool.BLANK);
+			definitionImpl.setName("");
 		}
 		else {
 			definitionImpl.setName(name);
 		}
 
 		if (description == null) {
-			definitionImpl.setDescription(StringPool.BLANK);
+			definitionImpl.setDescription("");
 		}
 		else {
 			definitionImpl.setDescription(description);
@@ -154,14 +153,14 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		definitionImpl.setSourceId(sourceId);
 
 		if (reportName == null) {
-			definitionImpl.setReportName(StringPool.BLANK);
+			definitionImpl.setReportName("");
 		}
 		else {
 			definitionImpl.setReportName(reportName);
 		}
 
 		if (reportParameters == null) {
-			definitionImpl.setReportParameters(StringPool.BLANK);
+			definitionImpl.setReportParameters("");
 		}
 		else {
 			definitionImpl.setReportParameters(reportParameters);
@@ -206,7 +205,7 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -221,7 +220,7 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -231,14 +230,14 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (description == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(description);
@@ -247,14 +246,14 @@ public class DefinitionCacheModel implements CacheModel<Definition>,
 		objectOutput.writeLong(sourceId);
 
 		if (reportName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(reportName);
 		}
 
 		if (reportParameters == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(reportParameters);

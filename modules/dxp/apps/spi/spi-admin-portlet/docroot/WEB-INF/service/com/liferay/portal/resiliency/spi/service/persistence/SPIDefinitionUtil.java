@@ -1025,7 +1025,7 @@ public class SPIDefinitionUtil {
 
 	public static SPIDefinitionPersistence getPersistence() {
 		if (_persistence == null) {
-			_persistence = (SPIDefinitionPersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.resiliency.spi.service.ClpSerializer.getServletContextName(),
+			_persistence = (SPIDefinitionPersistence)PortletBeanLocatorUtil.locate(com.liferay.portal.resiliency.spi.service.ServletContextUtil.getServletContextName(),
 					SPIDefinitionPersistence.class.getName());
 
 			ReferenceRegistry.registerReference(SPIDefinitionUtil.class,

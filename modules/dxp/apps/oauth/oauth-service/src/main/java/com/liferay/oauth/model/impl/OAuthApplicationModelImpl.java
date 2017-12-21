@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -398,7 +397,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -414,7 +413,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -458,7 +457,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -484,7 +483,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getDescription() {
 		if (_description == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _description;
@@ -500,7 +499,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getConsumerKey() {
 		if (_consumerKey == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _consumerKey;
@@ -526,7 +525,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getConsumerSecret() {
 		if (_consumerSecret == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _consumerSecret;
@@ -581,7 +580,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getCallbackURI() {
 		if (_callbackURI == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _callbackURI;
@@ -597,7 +596,7 @@ public class OAuthApplicationModelImpl extends BaseModelImpl<OAuthApplication>
 	@Override
 	public String getWebsiteURL() {
 		if (_websiteURL == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _websiteURL;

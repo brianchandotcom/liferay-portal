@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.audit.storage.model.AuditEvent;
 import com.liferay.portal.security.audit.storage.model.AuditEventModel;
 
@@ -324,7 +323,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -335,7 +334,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -362,7 +361,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getEventType() {
 		if (_eventType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _eventType;
@@ -377,7 +376,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getClassName() {
 		if (_className == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _className;
@@ -392,7 +391,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getClassPK() {
 		if (_classPK == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _classPK;
@@ -407,7 +406,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getMessage() {
 		if (_message == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _message;
@@ -422,7 +421,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getClientHost() {
 		if (_clientHost == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _clientHost;
@@ -437,7 +436,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getClientIP() {
 		if (_clientIP == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _clientIP;
@@ -452,7 +451,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getServerName() {
 		if (_serverName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _serverName;
@@ -477,7 +476,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getSessionID() {
 		if (_sessionID == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _sessionID;
@@ -492,7 +491,7 @@ public class AuditEventModelImpl extends BaseModelImpl<AuditEvent>
 	@Override
 	public String getAdditionalInfo() {
 		if (_additionalInfo == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _additionalInfo;

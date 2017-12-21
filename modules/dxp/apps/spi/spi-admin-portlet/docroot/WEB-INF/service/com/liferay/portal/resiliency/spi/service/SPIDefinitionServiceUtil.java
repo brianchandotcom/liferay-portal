@@ -17,7 +17,6 @@ package com.liferay.portal.resiliency.spi.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.service.InvokableService;
 import com.liferay.portal.kernel.util.ReferenceRegistry;
 
 /**
@@ -91,12 +90,6 @@ public class SPIDefinitionServiceUtil {
 		return getService().getSPIDefinitions();
 	}
 
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static void startSPI(long spiDefinitionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().startSPI(spiDefinitionId);
@@ -145,15 +138,8 @@ public class SPIDefinitionServiceUtil {
 
 	public static SPIDefinitionService getService() {
 		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
+			_service = (SPIDefinitionService)PortletBeanLocatorUtil.locate(ServletContextUtil.getServletContextName(),
 					SPIDefinitionService.class.getName());
-
-			if (invokableService instanceof SPIDefinitionService) {
-				_service = (SPIDefinitionService)invokableService;
-			}
-			else {
-				_service = new SPIDefinitionServiceClp(invokableService);
-			}
 
 			ReferenceRegistry.registerReference(SPIDefinitionServiceUtil.class,
 				"_service");

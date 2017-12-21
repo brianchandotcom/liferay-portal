@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
@@ -152,9 +151,9 @@ public class KaleoProcessLinkPersistenceTest {
 
 	@Test
 	public void testCountByKPI_WTN() throws Exception {
-		_persistence.countByKPI_WTN(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByKPI_WTN(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByKPI_WTN(0L, StringPool.NULL);
+		_persistence.countByKPI_WTN(0L, "null");
 
 		_persistence.countByKPI_WTN(0L, (String)null);
 	}

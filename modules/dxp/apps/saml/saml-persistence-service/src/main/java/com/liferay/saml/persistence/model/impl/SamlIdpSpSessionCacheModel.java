@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 
@@ -102,7 +101,7 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 		samlIdpSpSessionImpl.setUserId(userId);
 
 		if (userName == null) {
-			samlIdpSpSessionImpl.setUserName(StringPool.BLANK);
+			samlIdpSpSessionImpl.setUserName("");
 		}
 		else {
 			samlIdpSpSessionImpl.setUserName(userName);
@@ -125,21 +124,21 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 		samlIdpSpSessionImpl.setSamlIdpSsoSessionId(samlIdpSsoSessionId);
 
 		if (samlSpEntityId == null) {
-			samlIdpSpSessionImpl.setSamlSpEntityId(StringPool.BLANK);
+			samlIdpSpSessionImpl.setSamlSpEntityId("");
 		}
 		else {
 			samlIdpSpSessionImpl.setSamlSpEntityId(samlSpEntityId);
 		}
 
 		if (nameIdFormat == null) {
-			samlIdpSpSessionImpl.setNameIdFormat(StringPool.BLANK);
+			samlIdpSpSessionImpl.setNameIdFormat("");
 		}
 		else {
 			samlIdpSpSessionImpl.setNameIdFormat(nameIdFormat);
 		}
 
 		if (nameIdValue == null) {
-			samlIdpSpSessionImpl.setNameIdValue(StringPool.BLANK);
+			samlIdpSpSessionImpl.setNameIdValue("");
 		}
 		else {
 			samlIdpSpSessionImpl.setNameIdValue(nameIdValue);
@@ -177,7 +176,7 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -189,21 +188,21 @@ public class SamlIdpSpSessionCacheModel implements CacheModel<SamlIdpSpSession>,
 		objectOutput.writeLong(samlIdpSsoSessionId);
 
 		if (samlSpEntityId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(samlSpEntityId);
 		}
 
 		if (nameIdFormat == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(nameIdFormat);
 		}
 
 		if (nameIdValue == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(nameIdValue);

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcessLink;
 
 import java.io.Externalizable;
@@ -86,7 +85,7 @@ public class KaleoProcessLinkCacheModel implements CacheModel<KaleoProcessLink>,
 		kaleoProcessLinkImpl.setKaleoProcessId(kaleoProcessId);
 
 		if (workflowTaskName == null) {
-			kaleoProcessLinkImpl.setWorkflowTaskName(StringPool.BLANK);
+			kaleoProcessLinkImpl.setWorkflowTaskName("");
 		}
 		else {
 			kaleoProcessLinkImpl.setWorkflowTaskName(workflowTaskName);
@@ -117,7 +116,7 @@ public class KaleoProcessLinkCacheModel implements CacheModel<KaleoProcessLink>,
 		objectOutput.writeLong(kaleoProcessId);
 
 		if (workflowTaskName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(workflowTaskName);

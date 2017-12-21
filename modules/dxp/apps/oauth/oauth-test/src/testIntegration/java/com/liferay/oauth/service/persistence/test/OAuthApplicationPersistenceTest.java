@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -207,27 +206,27 @@ public class OAuthApplicationPersistenceTest {
 
 	@Test
 	public void testCountByConsumerKey() throws Exception {
-		_persistence.countByConsumerKey(StringPool.BLANK);
+		_persistence.countByConsumerKey("");
 
-		_persistence.countByConsumerKey(StringPool.NULL);
+		_persistence.countByConsumerKey("null");
 
 		_persistence.countByConsumerKey((String)null);
 	}
 
 	@Test
 	public void testCountByC_N() throws Exception {
-		_persistence.countByC_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByC_N(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByC_N(0L, StringPool.NULL);
+		_persistence.countByC_N(0L, "null");
 
 		_persistence.countByC_N(0L, (String)null);
 	}
 
 	@Test
 	public void testCountByU_N() throws Exception {
-		_persistence.countByU_N(RandomTestUtil.nextLong(), StringPool.BLANK);
+		_persistence.countByU_N(RandomTestUtil.nextLong(), "");
 
-		_persistence.countByU_N(0L, StringPool.NULL);
+		_persistence.countByU_N(0L, "null");
 
 		_persistence.countByU_N(0L, (String)null);
 	}

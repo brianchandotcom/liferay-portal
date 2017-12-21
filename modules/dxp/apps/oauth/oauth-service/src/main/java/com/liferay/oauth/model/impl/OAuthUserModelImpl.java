@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 
@@ -293,7 +292,7 @@ public class OAuthUserModelImpl extends BaseModelImpl<OAuthUser>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -339,7 +338,7 @@ public class OAuthUserModelImpl extends BaseModelImpl<OAuthUser>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -355,7 +354,7 @@ public class OAuthUserModelImpl extends BaseModelImpl<OAuthUser>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -422,7 +421,7 @@ public class OAuthUserModelImpl extends BaseModelImpl<OAuthUser>
 	@Override
 	public String getAccessToken() {
 		if (_accessToken == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _accessToken;
@@ -448,7 +447,7 @@ public class OAuthUserModelImpl extends BaseModelImpl<OAuthUser>
 	@Override
 	public String getAccessSecret() {
 		if (_accessSecret == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _accessSecret;

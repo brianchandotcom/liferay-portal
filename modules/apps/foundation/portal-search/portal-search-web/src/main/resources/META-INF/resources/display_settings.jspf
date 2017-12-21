@@ -23,7 +23,7 @@
 <aui:fieldset cssClass="facet-configuration-container" label="facets">
 
 	<%
-	List<SearchFacet> searchFacets = ListUtil.copy(SearchFacetTracker.getSearchFacets());
+	List<SearchFacet> searchFacets = ListUtil.copy(searchDisplayContext.getSearchFacets());
 
 	for (SearchFacet searchFacet : searchFacets) {
 		searchFacet.init(company.getCompanyId(), searchDisplayContext.getSearchConfiguration());

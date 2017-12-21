@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.search.web.facet.util;
+package com.liferay.portal.search.web.internal.facet;
 
 import com.liferay.portal.search.web.facet.SearchFacet;
 
@@ -31,7 +31,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 @Component(immediate = true, service = SearchFacetTracker.class)
 public class SearchFacetTracker {
 
-	public static List<SearchFacet> getSearchFacets() {
+	public List<SearchFacet> getSearchFacets() {
 		return _searchFacets;
 	}
 
@@ -49,7 +49,7 @@ public class SearchFacetTracker {
 		_searchFacets.remove(searchFacet);
 	}
 
-	private static final List<SearchFacet> _searchFacets =
+	private final List<SearchFacet> _searchFacets =
 		new CopyOnWriteArrayList<>();
 
 }

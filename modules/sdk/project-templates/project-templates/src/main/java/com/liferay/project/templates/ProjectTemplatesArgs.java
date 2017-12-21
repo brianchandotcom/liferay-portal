@@ -56,6 +56,10 @@ public class ProjectTemplatesArgs {
 		return _hostBundleVersion;
 	}
 
+	public String getLiferayVersion() {
+		return _liferayVersion;
+	}
+
 	public String getName() {
 		return _name;
 	}
@@ -114,6 +118,10 @@ public class ProjectTemplatesArgs {
 
 	public void setHostBundleVersion(String hostBundleVersion) {
 		_hostBundleVersion = hostBundleVersion;
+	}
+
+	public void setLiferayVersion(String version) {
+		_liferayVersion = version;
 	}
 
 	public void setMaven(boolean maven) {
@@ -201,6 +209,12 @@ public class ProjectTemplatesArgs {
 		names = "--host-bundle-version"
 	)
 	private String _hostBundleVersion;
+
+	@Parameter(
+		description = "The version of Liferay to target when creating the project.",
+		names = "--liferayVersion"
+	)
+	private String _liferayVersion = "7.0";
 
 	@Parameter(
 		description = "Print the list of available project templates.",

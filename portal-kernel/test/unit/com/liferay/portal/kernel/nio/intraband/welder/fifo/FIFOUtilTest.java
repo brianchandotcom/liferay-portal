@@ -14,6 +14,7 @@
 
 package com.liferay.portal.kernel.nio.intraband.welder.fifo;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.test.CaptureHandler;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.rule.NewEnv;
 import com.liferay.portal.kernel.test.rule.NewEnvTestRule;
 import com.liferay.portal.kernel.util.OSDetector;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.File;
 import java.io.IOException;

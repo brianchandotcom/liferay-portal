@@ -16,6 +16,7 @@ package com.liferay.product.navigation.simulation.web.internal.product.navigatio
 
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.PanelAppRegistry;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.test;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.lang.reflect.Constructor;

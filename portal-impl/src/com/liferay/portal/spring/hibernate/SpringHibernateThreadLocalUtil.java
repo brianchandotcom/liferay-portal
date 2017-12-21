@@ -15,7 +15,7 @@
 package com.liferay.portal.spring.hibernate;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;

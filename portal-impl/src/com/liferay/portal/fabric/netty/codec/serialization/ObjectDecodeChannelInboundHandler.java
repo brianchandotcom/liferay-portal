@@ -14,7 +14,7 @@
 
 package com.liferay.portal.fabric.netty.codec.serialization;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;

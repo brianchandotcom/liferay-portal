@@ -14,11 +14,11 @@
 
 package com.liferay.portal.cache.ehcache.multiple.internal.distribution;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.cache.PortalCacheReplicator;
 import com.liferay.portal.cache.ehcache.event.EhcachePortalCacheListenerAdapter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Serializable;

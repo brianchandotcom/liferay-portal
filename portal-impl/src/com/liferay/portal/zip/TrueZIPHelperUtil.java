@@ -14,7 +14,7 @@
 
 package com.liferay.portal.zip;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.lang.reflect.Field;
 

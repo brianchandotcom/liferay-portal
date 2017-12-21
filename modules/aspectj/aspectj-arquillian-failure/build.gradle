@@ -26,5 +26,7 @@ dependencies {
 	compile group: "org.aspectj", name: "aspectjrt", version: "1.8.9"
 	compile group: "org.aspectj", name: "aspectjweaver", version: "1.8.9"
 
+	provided group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.1.0"
+	provided group: "com.liferay", name: "com.liferay.petra.process", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.51.0"
 }

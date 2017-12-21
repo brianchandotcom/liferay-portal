@@ -14,7 +14,7 @@
 
 package com.liferay.ant.heap.dump;
 
-import com.liferay.portal.kernel.process.EchoOutputProcessor;
+import com.liferay.petra.process.EchoOutputProcessor;
 import com.liferay.portal.kernel.util.HeapUtil;
 
 import java.io.File;

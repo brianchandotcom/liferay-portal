@@ -5,7 +5,8 @@ clean {
 }
 
 dependencies {
-	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.51.0"
+	provided group: "com.liferay", name: "com.liferay.petra.process", version: "1.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
 	provided group: "org.apache.ant", name: "ant", transitive: false, version: "1.9.4"
 }
 

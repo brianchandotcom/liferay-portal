@@ -14,18 +14,23 @@
 
 package com.liferay.portal.kernel.util;
 
+import com.liferay.petra.process.CollectorOutputProcessor;
+import com.liferay.petra.process.OutputProcessor;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessUtil;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portal.kernel.concurrent.FutureConverter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.process.CollectorOutputProcessor;
-import com.liferay.portal.kernel.process.OutputProcessor;
-import com.liferay.portal.kernel.process.ProcessUtil;
+
+import java.io.InputStream;
 
 import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.concurrent.Future;
 
 /**
@@ -42,14 +47,83 @@ public class HeapUtil {
 		return _PROCESS_ID;
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #heapDump(boolean, boolean,
+	 *             String, OutputProcessor)
+	 */
+	@Deprecated
 	public static <O, E> Future<ObjectValuePair<O, E>> heapDump(
+		boolean live, boolean binary, String file,
+		com.liferay.portal.kernel.process.OutputProcessor<O, E>
+			outputProcessor) {
+
+		return heapDump(_PROCESS_ID, live, binary, file, outputProcessor);
+	}
+
+	public static <O, E> Future<Entry<O, E>> heapDump(
 		boolean live, boolean binary, String file,
 		OutputProcessor<O, E> outputProcessor) {
 
 		return heapDump(_PROCESS_ID, live, binary, file, outputProcessor);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #heapDump(int, boolean,
+	 *             boolean, String, OutputProcessor)
+	 */
+	@Deprecated
 	public static <O, E> Future<ObjectValuePair<O, E>> heapDump(
+		int processId, boolean live, boolean binary, String file,
+		com.liferay.portal.kernel.process.OutputProcessor<O, E>
+			outputProcessor) {
+
+		OutputProcessor<O, E> petraOutputProcessor =
+			new OutputProcessor<O, E>() {
+
+				@Override
+				public E processStdErr(InputStream stdErrInputStream)
+					throws ProcessException {
+
+					try {
+						return outputProcessor.processStdErr(stdErrInputStream);
+					}
+					catch (
+						com.liferay.portal.kernel.process.ProcessException
+							pe) {
+
+						throw new ProcessException(pe);
+					}
+				}
+
+				@Override
+				public O processStdOut(InputStream stdOutInputStream)
+					throws ProcessException {
+
+					try {
+						return outputProcessor.processStdOut(stdOutInputStream);
+					}
+					catch (
+						com.liferay.portal.kernel.process.ProcessException
+							pe) {
+
+						throw new ProcessException(pe);
+					}
+				}
+
+			};
+
+		return new FutureConverter<ObjectValuePair<O, E>, Entry<O, E>>(
+			heapDump(processId, live, binary, file, petraOutputProcessor)) {
+
+			@Override
+			protected ObjectValuePair<O, E> convert(Entry<O, E> entry) {
+				return new ObjectValuePair<>(entry.getKey(), entry.getValue());
+			}
+
+		};
+	}
+
+	public static <O, E> Future<Entry<O, E>> heapDump(
 		int processId, boolean live, boolean binary, String file,
 		OutputProcessor<O, E> outputProcessor) {
 
@@ -92,20 +166,20 @@ public class HeapUtil {
 	}
 
 	private static void _checkJMap(int processId) throws Exception {
-		Future<ObjectValuePair<byte[], byte[]>> future = ProcessUtil.execute(
+		Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
 			CollectorOutputProcessor.INSTANCE, "jmap", "-histo:live",
 			String.valueOf(processId));
 
-		ObjectValuePair<byte[], byte[]> objectValuePair = future.get();
+		Entry<byte[], byte[]> entry = future.get();
 
-		String stdOutString = new String(objectValuePair.getKey());
+		String stdOutString = new String(entry.getKey());
 
 		if (!stdOutString.contains("#instances")) {
 			throw new IllegalStateException(
 				"JMap cannot connect to process ID " + processId);
 		}
 
-		byte[] stdErrBytes = objectValuePair.getValue();
+		byte[] stdErrBytes = entry.getValue();
 
 		if (stdErrBytes.length != 0) {
 			throw new IllegalStateException(
@@ -114,19 +188,19 @@ public class HeapUtil {
 	}
 
 	private static void _checkJPS(int processId) throws Exception {
-		Future<ObjectValuePair<byte[], byte[]>> future = ProcessUtil.execute(
+		Future<Entry<byte[], byte[]>> future = ProcessUtil.execute(
 			CollectorOutputProcessor.INSTANCE, "jps");
 
-		ObjectValuePair<byte[], byte[]> objectValuePair = future.get();
+		Entry<byte[], byte[]> entry = future.get();
 
-		String stdOutString = new String(objectValuePair.getKey());
+		String stdOutString = new String(entry.getKey());
 
 		if (!stdOutString.contains(String.valueOf(processId))) {
 			throw new IllegalStateException(
 				"JPS cannot detect expected process ID " + processId);
 		}
 
-		byte[] stdErrBytes = objectValuePair.getValue();
+		byte[] stdErrBytes = entry.getValue();
 
 		if (stdErrBytes.length != 0) {
 			throw new IllegalStateException(

@@ -14,13 +14,12 @@
 
 package com.liferay.aspectj.arquillian.failure;
 
-import com.liferay.portal.kernel.concurrent.NoticeableFuture;
+import com.liferay.petra.concurrent.NoticeableFuture;
+import com.liferay.petra.process.EchoOutputProcessor;
+import com.liferay.petra.process.OutputProcessor;
+import com.liferay.petra.process.ProcessException;
+import com.liferay.petra.process.ProcessUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncBufferedReader;
-import com.liferay.portal.kernel.process.EchoOutputProcessor;
-import com.liferay.portal.kernel.process.OutputProcessor;
-import com.liferay.portal.kernel.process.ProcessException;
-import com.liferay.portal.kernel.process.ProcessUtil;
-import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -32,6 +31,7 @@ import java.io.Reader;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -50,16 +50,14 @@ public class ArquillianFailureAspect {
 	)
 	public void logTomcatJStack(Exception e1) {
 		try {
-			NoticeableFuture<ObjectValuePair<List<String>, String>>
-				jpsNoticeableFuture = ProcessUtil.execute(
-					new StringOutputProcessor(), "jps", "-ml");
+			NoticeableFuture<Entry<List<String>, String>> jpsNoticeableFuture =
+				ProcessUtil.execute(new StringOutputProcessor(), "jps", "-ml");
 
-			ObjectValuePair<List<String>, String> objectValuePair =
-				jpsNoticeableFuture.get();
+			Entry<List<String>, String> entry = jpsNoticeableFuture.get();
 
 			String pid = null;
 
-			for (String line : objectValuePair.getKey()) {
+			for (String line : entry.getKey()) {
 				if (line.endsWith(_TOMCAT_PROCESS_KEY)) {
 					pid = line.substring(
 						0, line.length() - _TOMCAT_PROCESS_KEY.length());
@@ -68,7 +66,7 @@ public class ArquillianFailureAspect {
 				}
 			}
 
-			List<String> lines = objectValuePair.getKey();
+			List<String> lines = entry.getKey();
 
 			StringBundler sb = new StringBundler(lines.size() * 2 + 3);
 
@@ -80,7 +78,7 @@ public class ArquillianFailureAspect {
 			}
 
 			sb.append("errors:\n");
-			sb.append(objectValuePair.getValue());
+			sb.append(entry.getValue());
 
 			System.out.println(sb.toString());
 
@@ -90,8 +88,8 @@ public class ArquillianFailureAspect {
 
 			System.out.println("jstack for pid: " + pid);
 
-			NoticeableFuture<ObjectValuePair<Void, Void>>
-				jstackNoticeableFuture = ProcessUtil.execute(
+			NoticeableFuture<Entry<Void, Void>> jstackNoticeableFuture =
+				ProcessUtil.execute(
 					EchoOutputProcessor.INSTANCE, "jstack", "-l", pid);
 
 			jstackNoticeableFuture.get();

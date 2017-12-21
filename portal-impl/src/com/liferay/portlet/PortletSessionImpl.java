@@ -79,6 +79,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 			throw new IllegalArgumentException();
 		}
 
+		if (_invalidated) {
+			throw new IllegalStateException();
+		}
+
 		if (scope == PORTLET_SCOPE) {
 			name = scopePrefix.concat(name);
 		}
@@ -130,6 +134,10 @@ public class PortletSessionImpl implements LiferayPortletSession {
 
 	@Override
 	public long getCreationTime() {
+		if (_invalidated) {
+			throw new IllegalStateException();
+		}
+
 		return session.getCreationTime();
 	}
 

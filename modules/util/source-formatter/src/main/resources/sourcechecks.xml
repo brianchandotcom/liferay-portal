@@ -38,7 +38,6 @@
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-service" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-validator" />
 			<property name="allowedExportPackageDirName" value="journal-content-asset-addon-entry/journal-content-asset-addon-entry-common" />
-			<property name="allowedExportPackageDirName" value="journal-content-web" />
 			<property name="allowedExportPackageDirName" value="journal-service" />
 			<property name="allowedExportPackageDirName" value="journal-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/chat/chat-service" />

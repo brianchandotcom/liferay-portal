@@ -69,6 +69,7 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 
 							if (selectedItem) {
 								layoutUuid.val(selectedItem.id);
+
 								privateLayout.val(selectedItem.privateLayout);
 
 								layoutNameInput.html(selectedItem.name);

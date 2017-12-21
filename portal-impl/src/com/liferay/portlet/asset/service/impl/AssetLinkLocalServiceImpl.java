@@ -433,10 +433,7 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<AssetLink> getLinks(long classNameId, long classPK) {
-		List<AssetLink> assetLinks = assetLinkFinder.findByC_C(
-			classNameId, classPK);
-
-		return assetLinks;
+		return assetLinkFinder.findByC_C(classNameId, classPK);
 	}
 
 	/**

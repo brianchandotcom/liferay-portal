@@ -50,13 +50,14 @@ public class AssetLinkFinderImpl
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(classNameId);
+
 			qPos.add(classPK);
+
 			qPos.add(classNameId);
+
 			qPos.add(classPK);
 
-			List<AssetLink> links = q.list();
-
-			return links;
+			return q.list();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

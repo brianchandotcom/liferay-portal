@@ -19,6 +19,7 @@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Portlet" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.UnicodeProperties" %><%@
 page import="com.liferay.site.navigation.constants.SiteNavigationWebKeys" %><%@
 page import="com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationWebKeys" %><%@

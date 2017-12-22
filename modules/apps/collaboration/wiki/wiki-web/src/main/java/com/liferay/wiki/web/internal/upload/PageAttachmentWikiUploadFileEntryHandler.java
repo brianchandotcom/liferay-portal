@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.wiki.exception.WikiAttachmentMimeTypeException;
@@ -60,10 +61,12 @@ public class PageAttachmentWikiUploadFileEntryHandler
 			ActionKeys.ADD_ATTACHMENT);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
+		String[] mimeTypes = ParamUtil.getParameterValues(
+			uploadPortletRequest, "mimeTypes");
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);
 
-		_validateFile(uploadPortletRequest, contentType);
+		_validateFile(fileName, mimeTypes, contentType);
 
 		try (InputStream inputStream =
 				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
@@ -75,11 +78,8 @@ public class PageAttachmentWikiUploadFileEntryHandler
 	}
 
 	private void _validateFile(
-			UploadPortletRequest uploadPortletRequest, String contentType)
+			String fileName, String[] mimeTypes, String contentType)
 		throws PortalException {
-
-		String[] mimeTypes = ParamUtil.getParameterValues(
-			uploadPortletRequest, "mimeTypes");
 
 		if (ArrayUtil.isEmpty(mimeTypes)) {
 			return;
@@ -92,7 +92,9 @@ public class PageAttachmentWikiUploadFileEntryHandler
 		}
 
 		throw new WikiAttachmentMimeTypeException(
-			contentType + " is not a valid document type");
+			StringBundler.concat(
+				"Invalid MIME type ", contentType, " for file name ",
+				fileName));
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";

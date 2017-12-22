@@ -19,15 +19,12 @@ import com.liferay.blogs.exception.EntryImageNameException;
 import com.liferay.blogs.exception.EntryImageSizeException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -59,7 +56,9 @@ public class ImageBlogsUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_checkPermission(themeDisplay);
+		portletResourcePermission.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			ActionKeys.ADD_ENTRY);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
@@ -98,21 +97,8 @@ public class ImageBlogsUploadFileEntryHandler
 	@Reference
 	protected BlogsEntryLocalService blogsLocalService;
 
-	private void _checkPermission(ThemeDisplay themeDisplay)
-		throws PortalException {
-
-		PermissionChecker permissionChecker =
-			themeDisplay.getPermissionChecker();
-
-		if (!ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, BlogsPermission.RESOURCE_NAME,
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY)) {
-
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, BlogsPermission.RESOURCE_NAME,
-				themeDisplay.getScopeGroupId(), ActionKeys.ADD_ENTRY);
-		}
-	}
+	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
+	protected PortletResourcePermission portletResourcePermission;
 
 	private void _validateFile(String fileName, long size)
 		throws PortalException {

@@ -30,20 +30,17 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.service.permission.PortletPermissionUtil;
 import com.liferay.portal.kernel.service.permission.TeamPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.service.base.PermissionServiceBaseImpl;
-import com.liferay.registry.Filter;
-import com.liferay.registry.Registry;
-import com.liferay.registry.RegistryUtil;
-import com.liferay.registry.ServiceReference;
-import com.liferay.registry.ServiceTracker;
-import com.liferay.registry.ServiceTrackerCustomizer;
+import com.liferay.registry.collections.ServiceTrackerCollections;
+import com.liferay.registry.collections.ServiceTrackerMap;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Provides the remote service for checking permissions.
@@ -52,22 +49,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Raymond Augé
  */
 public class PermissionServiceImpl extends PermissionServiceBaseImpl {
-
-	@Override
-	public void afterPropertiesSet() {
-		super.afterPropertiesSet();
-
-		Registry registry = RegistryUtil.getRegistry();
-
-		Filter filter = registry.getFilter(
-			"(&(model.class.name=*)(objectClass=" +
-				BaseModelPermissionChecker.class.getName() + "))");
-
-		_serviceTracker = registry.trackServices(
-			filter, new BaseModelPermissionCheckerServiceTrackerCustomizer());
-
-		_serviceTracker.open();
-	}
 
 	/**
 	 * Checks to see if the group has permission to the service.
@@ -116,8 +97,30 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 			actionId = ActionKeys.MANAGE_TEAMS;
 		}
 
+		ModelResourcePermission<?> modelResourcePermission =
+			_modelPermissions.getService(className);
+
+		if (modelResourcePermission != null) {
+			PortletResourcePermission portletResourcePermission =
+				modelResourcePermission.getPortletResourcePermission();
+
+			if (portletResourcePermission == null) {
+				modelResourcePermission.check(
+					permissionChecker, classPK, actionId);
+
+				return true;
+			}
+			else {
+				ModelResourcePermissionHelper.check(
+					modelResourcePermission, permissionChecker, groupId,
+					classPK, actionId);
+
+				return true;
+			}
+		}
+
 		BaseModelPermissionChecker baseModelPermissionChecker =
-			_baseModelPermissionCheckers.get(className);
+			_baseModelPermissionCheckers.getService(className);
 
 		if (baseModelPermissionChecker != null) {
 			baseModelPermissionChecker.checkBaseModel(
@@ -221,56 +224,12 @@ public class PermissionServiceImpl extends PermissionServiceBaseImpl {
 		}
 	}
 
-	private final Map<String, BaseModelPermissionChecker>
-		_baseModelPermissionCheckers = new ConcurrentHashMap<>();
-	private ServiceTracker
-		<BaseModelPermissionChecker, BaseModelPermissionChecker>
-			_serviceTracker;
-
-	private class BaseModelPermissionCheckerServiceTrackerCustomizer
-		implements
-			ServiceTrackerCustomizer
-				<BaseModelPermissionChecker, BaseModelPermissionChecker> {
-
-		@Override
-		public BaseModelPermissionChecker addingService(
-			ServiceReference<BaseModelPermissionChecker> serviceReference) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			BaseModelPermissionChecker baseModelPermissionChecker =
-				registry.getService(serviceReference);
-
-			String modelClassName = GetterUtil.getString(
-				serviceReference.getProperty("model.class.name"));
-
-			_baseModelPermissionCheckers.put(
-				modelClassName, baseModelPermissionChecker);
-
-			return baseModelPermissionChecker;
-		}
-
-		@Override
-		public void modifiedService(
-			ServiceReference<BaseModelPermissionChecker> serviceReference,
-			BaseModelPermissionChecker baseModelPermissionChecker) {
-		}
-
-		@Override
-		public void removedService(
-			ServiceReference<BaseModelPermissionChecker> serviceReference,
-			BaseModelPermissionChecker baseModelPermissionChecker) {
-
-			Registry registry = RegistryUtil.getRegistry();
-
-			registry.ungetService(serviceReference);
-
-			String modelClassName = GetterUtil.getString(
-				serviceReference.getProperty("model.class.name"));
-
-			_baseModelPermissionCheckers.remove(modelClassName);
-		}
-
-	}
+	private static final ServiceTrackerMap<String, BaseModelPermissionChecker>
+		_baseModelPermissionCheckers =
+			ServiceTrackerCollections.openSingleValueMap(
+				BaseModelPermissionChecker.class, "model.class.name");
+	private static final ServiceTrackerMap<String, ModelResourcePermission>
+		_modelPermissions = ServiceTrackerCollections.openSingleValueMap(
+			ModelResourcePermission.class, "model.class.name");
 
 }

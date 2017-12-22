@@ -16,8 +16,9 @@ package com.liferay.bookmarks.social;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -35,7 +36,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS},
+	property = {
+		"javax.portlet.name=" + BookmarksPortletKeys.BOOKMARKS,
+		"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
+	},
 	service = SocialActivityInterpreter.class
 )
 public class BookmarksFolderActivityInterpreter
@@ -92,9 +96,9 @@ public class BookmarksFolderActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		return BookmarksFolderPermissionChecker.contains(
-			permissionChecker, activity.getGroupId(), activity.getClassPK(),
-			actionId);
+		return ModelResourcePermissionHelper.contains(
+			_folderModelResourcePermission, permissionChecker,
+			activity.getGroupId(), activity.getClassPK(), actionId);
 	}
 
 	@Reference(
@@ -111,6 +115,12 @@ public class BookmarksFolderActivityInterpreter
 
 	private static final String[] _CLASS_NAMES =
 		{BookmarksFolder.class.getName()};
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private ModelResourcePermission<BookmarksFolder>
+		_folderModelResourcePermission;
 
 	private ResourceBundleLoader _resourceBundleLoader;
 

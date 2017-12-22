@@ -16,13 +16,16 @@ package com.liferay.portal.security.service.access.policy.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.security.service.access.policy.constants.SAPActionKeys;
+import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.base.SAPEntryServiceBaseImpl;
-import com.liferay.portal.security.service.access.policy.service.permission.SAPEntryPermission;
-import com.liferay.portal.security.service.access.policy.service.permission.SAPPermission;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,8 +43,8 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SAPPermission.check(
-			getPermissionChecker(), SAPActionKeys.ACTION_ADD_SAP_ENTRY);
+		_portletResourcePermission.check(
+			getPermissionChecker(), null, SAPActionKeys.ACTION_ADD_SAP_ENTRY);
 
 		return sapEntryLocalService.addSAPEntry(
 			getUserId(), allowedServiceSignatures, defaultSAPEntry, enabled,
@@ -50,7 +53,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry deleteSAPEntry(long sapEntryId) throws PortalException {
-		SAPEntryPermission.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.DELETE);
 
 		return sapEntryLocalService.deleteSAPEntry(sapEntryId);
@@ -58,7 +61,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException {
-		SAPEntryPermission.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), sapEntry, ActionKeys.DELETE);
 
 		return sapEntryLocalService.deleteSAPEntry(sapEntry);
@@ -71,7 +74,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 		SAPEntry sapEntry = sapEntryPersistence.fetchByC_N(companyId, name);
 
 		if (sapEntry != null) {
-			SAPEntryPermission.check(
+			_entryModelResourcePermission.check(
 				getPermissionChecker(), sapEntry, ActionKeys.VIEW);
 		}
 
@@ -100,7 +103,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry getSAPEntry(long sapEntryId) throws PortalException {
-		SAPEntryPermission.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.VIEW);
 
 		return sapEntryPersistence.findByPrimaryKey(sapEntryId);
@@ -112,7 +115,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 		SAPEntry sapEntry = sapEntryPersistence.findByC_N(companyId, name);
 
-		SAPEntryPermission.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), sapEntry, ActionKeys.VIEW);
 
 		return sapEntry;
@@ -125,12 +128,23 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		SAPEntryPermission.check(
+		_entryModelResourcePermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.UPDATE);
 
 		return sapEntryLocalService.updateSAPEntry(
 			sapEntryId, allowedServiceSignatures, defaultSAPEntry, enabled,
 			name, titleMap, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<SAPEntry>
+		_entryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				SAPEntryServiceImpl.class, "_entryModelResourcePermission",
+				SAPEntry.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				SAPEntryServiceImpl.class, "_portletResourcePermission",
+				SAPConstants.RESOURCE_NAME);
 
 }

@@ -14,31 +14,26 @@
 
 package com.liferay.bookmarks.service.permission;
 
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.exception.NoSuchFolderException;
 import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 1.2.0, with no direct replacement
  */
 @Component(
 	immediate = true,
 	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"}
 )
+@Deprecated
 public class BookmarksEntryPermissionChecker
 	implements BaseModelPermissionChecker {
 
@@ -47,22 +42,15 @@ public class BookmarksEntryPermissionChecker
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, entry, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, BookmarksEntry.class.getName(),
-				entry.getEntryId(), actionId);
-		}
+		_entryModelResourcePermission.check(permissionChecker, entry, actionId);
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, entryId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, BookmarksEntry.class.getName(), entryId,
-				actionId);
-		}
+		_entryModelResourcePermission.check(
+			permissionChecker, entryId, actionId);
 	}
 
 	public static boolean contains(
@@ -70,67 +58,16 @@ public class BookmarksEntryPermissionChecker
 			String actionId)
 		throws PortalException {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, entry.getGroupId(),
-			BookmarksEntry.class.getName(), entry.getEntryId(),
-			BookmarksPortletKeys.BOOKMARKS, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		if (actionId.equals(ActionKeys.VIEW) &&
-			PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-
-			long folderId = entry.getFolderId();
-
-			if (folderId == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
-				if (!BookmarksResourcePermissionChecker.contains(
-						permissionChecker, entry.getGroupId(), actionId)) {
-
-					return false;
-				}
-			}
-			else {
-				try {
-					BookmarksFolder folder =
-						_bookmarksFolderLocalService.getFolder(folderId);
-
-					if (!BookmarksFolderPermissionChecker.contains(
-							permissionChecker, folder, ActionKeys.ACCESS) &&
-						!BookmarksFolderPermissionChecker.contains(
-							permissionChecker, folder, ActionKeys.VIEW)) {
-
-						return false;
-					}
-				}
-				catch (NoSuchFolderException nsfe) {
-					if (!entry.isInTrash()) {
-						throw nsfe;
-					}
-				}
-			}
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				entry.getCompanyId(), BookmarksEntry.class.getName(),
-				entry.getEntryId(), entry.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			entry.getGroupId(), BookmarksEntry.class.getName(),
-			entry.getEntryId(), actionId);
+		return _entryModelResourcePermission.contains(
+			permissionChecker, entry, actionId);
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(entryId);
-
-		return contains(permissionChecker, entry, actionId);
+		return _entryModelResourcePermission.contains(
+			permissionChecker, entryId, actionId);
 	}
 
 	@Override
@@ -139,24 +76,29 @@ public class BookmarksEntryPermissionChecker
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_entryModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference(unbind = "-")
 	protected void setBookmarksEntryLocalService(
 		BookmarksEntryLocalService bookmarksEntryLocalService) {
-
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
 	}
 
-	@Reference(unbind = "-")
 	protected void setBookmarksFolderLocalService(
 		BookmarksFolderLocalService bookmarksFolderLocalService) {
-
-		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private static BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private static BookmarksFolderLocalService _bookmarksFolderLocalService;
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
+
+		_entryModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<BookmarksEntry>
+		_entryModelResourcePermission;
 
 }

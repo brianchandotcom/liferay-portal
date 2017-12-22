@@ -16,7 +16,6 @@ package com.liferay.bookmarks.web.internal.portlet.configuration.icon;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
 import com.liferay.bookmarks.web.internal.portlet.action.ActionUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
@@ -25,6 +24,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -34,6 +34,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -105,7 +106,7 @@ public class FolderPermissionsPortletConfigurationIcon
 		try {
 			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
 
-			if (!BookmarksFolderPermissionChecker.contains(
+			if (!_folderModelResourcePermission.contains(
 					permissionChecker, folder, ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -127,5 +128,11 @@ public class FolderPermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
+	)
+	private ModelResourcePermission<BookmarksFolder>
+		_folderModelResourcePermission;
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.blogs.web.internal.portlet.configuration.icon;
 
+import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;
-import com.liferay.blogs.service.permission.BlogsPermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigura
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -37,6 +38,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Sergio González
@@ -108,8 +110,8 @@ public class PermissionsPortletConfigurationIcon
 			themeDisplay.getPermissionChecker();
 
 		try {
-			if (!BlogsPermission.contains(
-					permissionChecker, themeDisplay.getScopeGroupId(),
+			if (!_portletResourcePermission.contains(
+					permissionChecker, themeDisplay.getScopeGroup(),
 					ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -131,5 +133,8 @@ public class PermissionsPortletConfigurationIcon
 	public boolean isUseDialog() {
 		return true;
 	}
+
+	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
+	private PortletResourcePermission _portletResourcePermission;
 
 }

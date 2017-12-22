@@ -36,23 +36,6 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.PERMISSIONS) %>">
-		<liferay-security:permissionsURL
-			modelResource="<%= FragmentEntry.class.getName() %>"
-			modelResourceDescription="<%= fragmentEntry.getName() %>"
-			resourcePrimKey="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>"
-			var="fragmentEntryPermissionsURL"
-			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
-		/>
-
-		<liferay-ui:icon
-			message="permissions"
-			method="get"
-			url="<%= fragmentEntryPermissionsURL %>"
-			useDialog="<%= true %>"
-		/>
-	</c:if>
-
 	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
 		<portlet:actionURL name="updateFragmentEntry" var="updateFragmentEntryURL">
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
@@ -72,6 +55,23 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 			data="<%= updateFragmentEntryData %>"
 			message="rename"
 			url="javascript:;"
+		/>
+	</c:if>
+
+	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.PERMISSIONS) %>">
+		<liferay-security:permissionsURL
+			modelResource="<%= FragmentEntry.class.getName() %>"
+			modelResourceDescription="<%= fragmentEntry.getName() %>"
+			resourcePrimKey="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>"
+			var="fragmentEntryPermissionsURL"
+			windowState="<%= LiferayWindowState.POP_UP.toString() %>"
+		/>
+
+		<liferay-ui:icon
+			message="permissions"
+			method="get"
+			url="<%= fragmentEntryPermissionsURL %>"
+			useDialog="<%= true %>"
 		/>
 	</c:if>
 

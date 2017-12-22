@@ -105,7 +105,8 @@ public class LayoutTypePortletConstants
 
 	public static boolean isTypeSettingWithPortletIds(String typeSettingId) {
 		if (isLayoutTemplateColumnName(typeSettingId) ||
-			DEFAULT_ASSET_PUBLISHER_PORTLET_ID.equals(typeSettingId)) {
+			DEFAULT_ASSET_PUBLISHER_PORTLET_ID.equals(typeSettingId) ||
+			PANEL_SELECTED_PORTLETS.equals(typeSettingId)) {
 
 			return true;
 		}

@@ -20,11 +20,11 @@
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 %>
 
-<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= selLayout.getUuid() %>">
+<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
 
-<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= selLayout.isPrivateLayout() %>">
+<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
 
@@ -33,7 +33,14 @@ Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 	</span>
 	<span id="<portlet:namespace />layoutNameInput">
-		<span class="text-muted"><%= selLayout.getName(locale) %></span>
+		<c:choose>
+			<c:when test="<%= selLayout != null %>">
+				<%= selLayout.getName(locale) %>
+			</c:when>
+			<c:otherwise>
+				<span class="text-muted"><liferay-ui:message key="none" /></span>
+			</c:otherwise>
+		</c:choose>
 	</span>
 </p>
 
@@ -54,7 +61,9 @@ layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelecto
 
 PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, layoutItemSelectorCriterion);
 
-itemSelectorURL.setParameter("layoutUuid", selLayout.getUuid());
+if (selLayout != null) {
+	itemSelectorURL.setParameter("layoutUuid", selLayout.getUuid());
+}
 %>
 
 <aui:script use="liferay-item-selector-dialog">
@@ -75,6 +84,7 @@ itemSelectorURL.setParameter("layoutUuid", selLayout.getUuid());
 
 							if (selectedItem) {
 								layoutUuid.val(selectedItem.id);
+
 								privateLayout.val(selectedItem.privateLayout);
 
 								layoutNameInput.html(selectedItem.name);

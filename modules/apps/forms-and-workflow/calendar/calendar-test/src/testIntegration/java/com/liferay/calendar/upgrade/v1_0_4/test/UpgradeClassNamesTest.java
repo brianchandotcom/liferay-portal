@@ -53,6 +53,15 @@ public class UpgradeClassNamesTest {
 	public static final LiferayIntegrationTestRule liferayIntegrationTestRule =
 		new LiferayIntegrationTestRule();
 
+	public ClassName addClassName(String value) {
+		ClassName className = ClassNameLocalServiceUtil.createClassName(
+			CounterLocalServiceUtil.increment());
+
+		className.setValue(value);
+
+		return ClassNameLocalServiceUtil.addClassName(className);
+	}
+
 	@Before
 	public void setUp() throws Exception {
 		setUpUpgradeCalendarResource();
@@ -60,7 +69,7 @@ public class UpgradeClassNamesTest {
 
 	@Test
 	public void testChangeCalEventClassNameIdInVocabularies() throws Exception {
-		_calEventClassName = ClassNameLocalServiceUtil.addClassName(
+		_calEventClassName = addClassName(
 			"com.liferay.portlet.calendar.model.CalEvent");
 
 		addAssetVocabulary(_calEventClassName.getClassNameId());

@@ -195,6 +195,7 @@
 	</source-processor>
 	<source-processor name="HTMLSourceProcessor">
 		<check name="WhitespaceCheck" />
+		<check name="XMLTagAttributesCheck" />
 	</source-processor>
 	<source-processor name="JavaSourceProcessor">
 		<check name="CopyrightCheck">

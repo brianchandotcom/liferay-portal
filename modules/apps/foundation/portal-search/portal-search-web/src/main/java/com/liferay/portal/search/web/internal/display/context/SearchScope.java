@@ -48,7 +48,7 @@ public enum SearchScope {
 		new HashMap<>();
 
 	static {
-		for (SearchScope searchScope : SearchScope.values()) {
+		for (SearchScope searchScope : values()) {
 			_searchScopes.put(searchScope._parameterString, searchScope);
 		}
 	}

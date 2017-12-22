@@ -1207,6 +1207,34 @@ public class AssetEntryLocalServiceImpl extends AssetEntryLocalServiceBaseImpl {
 
 		AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
 
+		if (searchContext.isAndSearch()) {
+			if (ArrayUtil.isNotEmpty(searchContext.getAssetCategoryIds())) {
+				assetEntryQuery.setAnyCategoryIds(
+					searchContext.getAssetCategoryIds());
+			}
+
+			for (String assetTagName : searchContext.getAssetTagNames()) {
+				long[] allAssetTagIds = getTagIds(
+					searchContext.getGroupIds(), assetTagName);
+
+				assetEntryQuery.addAllTagIdsArray(allAssetTagIds);
+			}
+		}
+		else {
+			if (ArrayUtil.isNotEmpty(searchContext.getAssetCategoryIds())) {
+				assetEntryQuery.setAllCategoryIds(
+					searchContext.getAssetCategoryIds());
+			}
+
+			if (ArrayUtil.isNotEmpty(searchContext.getAssetTagNames())) {
+				String assetTagNames = StringUtil.merge(
+					searchContext.getAssetTagNames());
+
+				assetEntryQuery.setAnyTagIds(
+					getTagIds(searchContext.getGroupIds(), assetTagNames));
+			}
+		}
+
 		assetEntryQuery.setClassNameIds(getClassNameIds(companyId, className));
 
 		QueryConfig queryConfig = searchContext.getQueryConfig();

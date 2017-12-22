@@ -15,7 +15,7 @@
 package com.liferay.upload.web.internal;
 
 import com.liferay.portal.kernel.editor.EditorConstants;
-import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
+import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.upload.AttachmentElementReplacer;
@@ -25,6 +25,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alejandro Tardín
@@ -39,7 +40,7 @@ public class HTMLImageAttachmentElementReplacer
 
 	@Override
 	public String replace(String originalImgHtmlElement, FileEntry fileEntry) {
-		String fileEntryURL = PortletFileRepositoryUtil.getPortletFileEntryURL(
+		String fileEntryURL = _portletFileRepository.getPortletFileEntryURL(
 			null, fileEntry, StringPool.BLANK);
 
 		Element image = _parseImgTag(originalImgHtmlElement);
@@ -48,6 +49,13 @@ public class HTMLImageAttachmentElementReplacer
 		image.removeAttr(EditorConstants.ATTRIBUTE_DATA_IMAGE_ID);
 
 		return image.toString();
+	}
+
+	@Reference(unbind = "-")
+	protected void setPortletFileRepository(
+		PortletFileRepository portletFileRepository) {
+
+		_portletFileRepository = portletFileRepository;
 	}
 
 	private Element _parseImgTag(String originalImgTag) {
@@ -62,5 +70,7 @@ public class HTMLImageAttachmentElementReplacer
 
 		return document.body().child(0);
 	}
+
+	private PortletFileRepository _portletFileRepository;
 
 }

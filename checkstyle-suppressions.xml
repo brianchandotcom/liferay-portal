@@ -32,6 +32,7 @@
 	<suppress checks="JSONNaming" files="portal-impl/src/com/liferay/portal/action/JSONServiceAction\.java" />
 	<suppress checks="JSONNaming" files="portal-kernel/src/com/liferay/portal/kernel/backgroundtask/display/BaseBackgroundTaskDisplay\.java" />
 	<suppress checks="JSONNaming" files="util-java/src/com/liferay/util/Autocomplete\.java" />
+	<suppress checks="LineEndCharacterCheck" files="portal-kernel/src/com/liferay/portal/kernel/util/HeapUtil\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/events/EventsProcessorUtil\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/template/AbstractTemplate\.java" />
 	<suppress checks="MethodName" files="portal-impl/src/com/liferay/portal/util/HttpImpl\.java" />

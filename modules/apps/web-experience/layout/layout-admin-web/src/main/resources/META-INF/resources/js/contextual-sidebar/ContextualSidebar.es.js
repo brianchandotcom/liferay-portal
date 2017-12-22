@@ -14,9 +14,12 @@ class ContextualSidebar extends Component {
 	created() {
 		document.body.classList.add('has-contextual-sidebar');
 
-		this._productMenu = $('.product-menu-toggle');
+		this._productMenuToggle = $('.product-menu-toggle');
+		this._productMenu = $(this._productMenuToggle.data('target'));
+
 		this._handleOpenProductMenu = this._handleOpenProductMenu.bind(this);
-		this._productMenu.on('show', this._handleOpenProductMenu);
+
+		this._productMenu.on('openStart.lexicon.sidenav', this._handleOpenProductMenu);
 	}
 
 	/**
@@ -25,7 +28,14 @@ class ContextualSidebar extends Component {
 	disposed() {
 		document.body.classList.remove('has-contextual-sidebar');
 
-		this._productMenu.off('show', this._handleOpenProductMenu);
+		this._productMenu.off('openStart.lexicon.sidenav', this._handleOpenProductMenu);
+	}
+
+	/**
+	 * Disallow setting element display to none
+	 * @inheritDoc
+	 */
+	syncVisible() {
 	}
 
 	/**
@@ -35,7 +45,7 @@ class ContextualSidebar extends Component {
 		if (this.visible) {
 			document.body.classList.add('contextual-sidebar-visible');
 
-			this._productMenu.sideNavigation('hide');
+			this._productMenuToggle.sideNavigation('hide');
 		} else {
 			document.body.classList.remove('contextual-sidebar-visible');
 		}

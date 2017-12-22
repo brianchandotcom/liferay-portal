@@ -25,7 +25,8 @@ public class HTMLSourceProcessor extends BaseSourceProcessor {
 	protected List<String> doGetFileNames() throws Exception {
 		return getFileNames(
 			new String[] {
-				"**/jenkins-results-parser/src/test/resources/dependencies/**"
+				"**/jenkins-results-parser/src/test/resources/dependencies/**",
+				"**/lib/versions.html"
 			},
 			getIncludes());
 	}

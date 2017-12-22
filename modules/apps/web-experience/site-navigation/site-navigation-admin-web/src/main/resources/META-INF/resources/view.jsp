@@ -198,7 +198,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		Liferay.Util.openSimpleInputModal(
 			{
 				dialogTitle: '<liferay-ui:message key="add-menu" />',
-				formSubmitURL: '<%= addSiteNavigationMenuURL.toString() %>',
+				formSubmitURL: '<%= addSiteNavigationMenuURL %>',
 				mainFieldLabel: '<liferay-ui:message key="name" />',
 				mainFieldName: 'name',
 				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
@@ -219,7 +219,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 			Liferay.Util.openSimpleInputModal(
 				{
-					dialogTitle: '<%= LanguageUtil.get(request, "rename-site-navigation-menu") %>',
+					dialogTitle: '<liferay-ui:message key="rename-site-navigation-menu" />',
 					formSubmitURL: data.formSubmitUrl,
 					idFieldName: 'id',
 					idFieldValue: data.idFieldValue,
@@ -245,7 +245,10 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 
 	addNavigationMenuMenuItem.addEventListener('click', handleAddNavigationMenuMenuItemClick);
 
-	$('#<portlet:namespace />deleteSelectedSiteNavigationMenus').on(
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+
+	dom.on(
+		'#<portlet:namespace />deleteSelectedSiteNavigationMenus',
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
@@ -253,6 +256,4 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			}
 		}
 	);
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

@@ -19,7 +19,6 @@ import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -110,9 +109,6 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		request.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
@@ -123,11 +119,13 @@ public class LayoutSiteNavigationMenuItemType
 			siteNavigationMenuItem.getTypeSettings());
 
 		String layoutUuid = typeSettingsProperties.get("layoutUuid");
+		long groupId = GetterUtil.getLong(
+			typeSettingsProperties.get("groupId"));
 		boolean privateLayout = GetterUtil.getBoolean(
 			typeSettingsProperties.get("privateLayout"));
 
 		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, themeDisplay.getScopeGroupId(), privateLayout);
+			layoutUuid, groupId, privateLayout);
 
 		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
 

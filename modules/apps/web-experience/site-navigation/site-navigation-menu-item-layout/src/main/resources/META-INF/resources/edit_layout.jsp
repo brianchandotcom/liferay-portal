@@ -20,6 +20,10 @@
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
 %>
 
+<aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout != null) ? selLayout.getGroupId() : StringPool.BLANK %>">
+	<aui:validator name="required" />
+</aui:input>
+
 <aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
@@ -67,6 +71,7 @@ if (selLayout != null) {
 %>
 
 <aui:script use="liferay-item-selector-dialog">
+	var groupId = $('#<portlet:namespace />groupId');
 	var layoutItemRemove = $('#<portlet:namespace />layoutItemRemove');
 	var layoutNameInput = $('#<portlet:namespace />layoutNameInput');
 	var layoutUuid = $('#<portlet:namespace />layoutUuid');
@@ -83,6 +88,8 @@ if (selLayout != null) {
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
+								groupId.val(selectedItem.groupId);
+
 								layoutUuid.val(selectedItem.id);
 
 								privateLayout.val(selectedItem.privateLayout);

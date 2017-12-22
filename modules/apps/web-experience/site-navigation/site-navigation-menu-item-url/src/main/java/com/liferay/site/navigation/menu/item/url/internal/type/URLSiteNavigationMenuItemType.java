@@ -77,7 +77,7 @@ public class URLSiteNavigationMenuItemType
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/add_url.jsp");
+			_servletContext, request, response, "/edit_url.jsp");
 	}
 
 	@Override

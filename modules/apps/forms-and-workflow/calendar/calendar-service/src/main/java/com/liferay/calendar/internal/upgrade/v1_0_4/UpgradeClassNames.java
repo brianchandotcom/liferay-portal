@@ -183,9 +183,10 @@ public class UpgradeClassNames extends UpgradeKernelPackage {
 
 				String newSettings = StringUtil.replace(
 					oldSettings, String.valueOf(calEventClassNameId),
-						String.valueOf(calBookingClassNameId));
+					String.valueOf(calBookingClassNameId));
 
 				ps3.setString(1, newSettings);
+
 				ps3.setLong(2, vocabularyId);
 
 				ps3.execute();

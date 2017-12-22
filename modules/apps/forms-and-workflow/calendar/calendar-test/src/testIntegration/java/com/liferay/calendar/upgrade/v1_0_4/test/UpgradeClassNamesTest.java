@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ResourcePermissionTestUtil;
+import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -189,46 +190,18 @@ public class UpgradeClassNamesTest {
 	protected void addAssetVocabulary(long classNameId) throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		long companyId = group.getCompanyId();
-		long groupId = group.getGroupId();
-
-		long pk = CounterLocalServiceUtil.increment();
-		long userId = TestPropsValues.getUserId();
-
-		_assetVocabulary =
-			AssetVocabularyLocalServiceUtil.createAssetVocabulary(pk);
-
-		_assetVocabulary.setUuid(RandomTestUtil.randomString());
-
-		_assetVocabulary.setGroupId(groupId);
-
-		_assetVocabulary.setCompanyId(companyId);
-
-		_assetVocabulary.setUserId(userId);
-
-		_assetVocabulary.setUserName(RandomTestUtil.randomString());
-
-		_assetVocabulary.setCreateDate(RandomTestUtil.nextDate());
-
-		_assetVocabulary.setModifiedDate(RandomTestUtil.nextDate());
-
-		_assetVocabulary.setName(RandomTestUtil.randomString());
-
-		_assetVocabulary.setTitle(RandomTestUtil.randomString());
-
-		_assetVocabulary.setDescription(RandomTestUtil.randomString());
-
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("multiValued=true\nselectedClassNameIds=");
 		sb.append(classNameId);
 		sb.append(":-1");
 
-		_assetVocabulary.setSettings(sb.toString());
-
-		_assetVocabulary.setLastPublishDate(RandomTestUtil.nextDate());
-
-		AssetVocabularyLocalServiceUtil.addAssetVocabulary(_assetVocabulary);
+		_assetVocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
+			TestPropsValues.getUserId(), group.getGroupId(),
+			RandomTestUtil.randomString(),
+			RandomTestUtil.randomLocaleStringMap(),
+			RandomTestUtil.randomLocaleStringMap(), sb.toString(),
+			ServiceContextTestUtil.getServiceContext());
 	}
 
 	protected ResourcePermission addResourcePermission(

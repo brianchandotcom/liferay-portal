@@ -19,11 +19,17 @@
 <%
 SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)request.getAttribute(SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
 
-UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+String name = StringPool.BLANK;
 
-typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+if (siteNavigationMenuItem != null) {
+	UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+
+	typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+
+	name = typeSettingsProperties.get("name");
+}
 %>
 
-<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name" value='<%= typeSettingsProperties.get("name") %>'>
+<aui:input label="name" name="TypeSettingsProperties--name--" placeholder="name" value="<%= name %>">
 	<aui:validator name="required" />
 </aui:input>

@@ -197,8 +197,9 @@ public class ModularDLContentLocalServiceWrapper
 				_dlContentLocalService.getContent(
 					companyId, repositoryId, path));
 		}
-		catch (com.liferay.
-			document.library.content.exception.NoSuchContentException nsce) {
+		catch (
+			com.liferay.document.library.content.exception.
+				NoSuchContentException nsce) {
 
 			throw new NoSuchContentException(nsce.getMessage());
 		}
@@ -215,8 +216,9 @@ public class ModularDLContentLocalServiceWrapper
 				_dlContentLocalService.getContent(
 					companyId, repositoryId, path, version));
 		}
-		catch (com.liferay.
-			document.library.content.exception.NoSuchContentException nsce) {
+		catch (
+			com.liferay.document.library.content.exception.
+				NoSuchContentException nsce) {
 
 			throw new NoSuchContentException(nsce.getMessage());
 		}

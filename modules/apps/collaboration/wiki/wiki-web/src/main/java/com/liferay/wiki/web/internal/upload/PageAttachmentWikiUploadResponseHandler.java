@@ -45,12 +45,11 @@ public class PageAttachmentWikiUploadResponseHandler
 			portletRequest, pe);
 
 		if (pe instanceof WikiAttachmentMimeTypeException) {
-			int errorType =
-				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION;
-
 			JSONObject errorJSONObject = JSONFactoryUtil.createJSONObject();
 
-			errorJSONObject.put("errorType", errorType);
+			errorJSONObject.put(
+				"errorType",
+				ServletResponseConstants.SC_FILE_EXTENSION_EXCEPTION);
 
 			jsonObject.put("error", errorJSONObject);
 		}

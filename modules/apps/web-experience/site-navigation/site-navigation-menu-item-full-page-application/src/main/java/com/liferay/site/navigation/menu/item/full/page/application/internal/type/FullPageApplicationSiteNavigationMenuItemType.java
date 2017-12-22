@@ -102,7 +102,7 @@ public class FullPageApplicationSiteNavigationMenuItemType
 
 		_jspRenderer.renderJSP(
 			_servletContext, request, response,
-			"/add_full_page_application.jsp");
+			"/edit_full_page_application.jsp");
 	}
 
 	@Override

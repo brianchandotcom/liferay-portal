@@ -16,16 +16,35 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden">
+<%
+Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
+%>
+
+<aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout != null) ? selLayout.getGroupId() : StringPool.BLANK %>">
+	<aui:validator name="required" />
+</aui:input>
+
+<aui:input id="layoutUuid" name="TypeSettingsProperties--layoutUuid--" type="hidden" value="<%= (selLayout != null) ? selLayout.getUuid() : StringPool.BLANK %>">
+	<aui:validator name="required" />
+</aui:input>
+
+<aui:input id="privateLayout" name="TypeSettingsProperties--privateLayout--" type="hidden" value="<%= (selLayout != null) ? selLayout.isPrivateLayout() : StringPool.BLANK %>">
 	<aui:validator name="required" />
 </aui:input>
 
 <p class="text-default">
-	<span class="hide" id="<portlet:namespace />layoutItemRemove" role="button">
+	<span id="<portlet:namespace />layoutItemRemove" role="button">
 		<aui:icon cssClass="icon-monospaced" image="times" markupView="lexicon" />
 	</span>
 	<span id="<portlet:namespace />layoutNameInput">
-		<span class="text-muted"><liferay-ui:message key="none" /></span>
+		<c:choose>
+			<c:when test="<%= selLayout != null %>">
+				<%= selLayout.getName(locale) %>
+			</c:when>
+			<c:otherwise>
+				<span class="text-muted"><liferay-ui:message key="none" /></span>
+			</c:otherwise>
+		</c:choose>
 	</span>
 </p>
 
@@ -45,12 +64,18 @@ desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
 layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(desiredItemSelectorReturnTypes);
 
 PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortletURLFactoryUtil.create(renderRequest), eventName, layoutItemSelectorCriterion);
+
+if (selLayout != null) {
+	itemSelectorURL.setParameter("layoutUuid", selLayout.getUuid());
+}
 %>
 
 <aui:script use="liferay-item-selector-dialog">
+	var groupId = $('#<portlet:namespace />groupId');
 	var layoutItemRemove = $('#<portlet:namespace />layoutItemRemove');
 	var layoutNameInput = $('#<portlet:namespace />layoutNameInput');
 	var layoutUuid = $('#<portlet:namespace />layoutUuid');
+	var privateLayout = $('#<portlet:namespace />privateLayout');
 
 	$('#<portlet:namespace />chooseLayout').on(
 		'click',
@@ -63,7 +88,11 @@ PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(RequestBackedPortle
 							var selectedItem = event.newVal;
 
 							if (selectedItem) {
+								groupId.val(selectedItem.groupId);
+
 								layoutUuid.val(selectedItem.id);
+
+								privateLayout.val(selectedItem.privateLayout);
 
 								layoutNameInput.html(selectedItem.name);
 

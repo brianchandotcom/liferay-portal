@@ -1,4 +1,4 @@
-import CardsTreeView from 'journal-web/js/CardsTreeView.es';
+import CardsTreeView from 'frontend-taglib/cards_treeview/CardsTreeview.es';
 import Component from 'metal-component';
 import Soy from 'metal-soy';
 import { Config } from 'metal-state';

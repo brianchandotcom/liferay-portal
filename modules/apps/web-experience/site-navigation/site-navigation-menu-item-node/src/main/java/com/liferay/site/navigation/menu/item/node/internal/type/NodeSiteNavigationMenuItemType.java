@@ -82,7 +82,7 @@ public class NodeSiteNavigationMenuItemType
 		throws IOException {
 
 		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/add_node.jsp");
+			_servletContext, request, response, "/edit_node.jsp");
 	}
 
 	@Override

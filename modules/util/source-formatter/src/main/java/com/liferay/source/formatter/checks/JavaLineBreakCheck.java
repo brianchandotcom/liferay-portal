@@ -78,7 +78,9 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		content = _fixIncorrectCatchStatementLineBreaks(content);
+		if (!isSubrepository() && !isReadOnly(absolutePath)) {
+			content = _fixIncorrectCatchStatementLineBreaks(content);
+		}
 
 		content = _fixIncorrectLineBreaksInsideChains(content, fileName);
 

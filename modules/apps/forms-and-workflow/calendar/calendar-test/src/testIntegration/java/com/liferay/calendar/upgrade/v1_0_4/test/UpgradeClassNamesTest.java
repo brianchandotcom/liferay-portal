@@ -69,18 +69,6 @@ public class UpgradeClassNamesTest {
 	}
 
 	@Test
-	public void testChangeCalEventClassNameIdInVocabularies() throws Exception {
-		_calEventClassName = addClassName(
-			"com.liferay.portlet.calendar.model.CalEvent");
-
-		addAssetVocabulary(_calEventClassName.getClassNameId());
-
-		_upgradeProcess.upgrade();
-
-		assertNewClassNameIdExists();
-	}
-
-	@Test
 	public void testDeletesDuplicatedOldResourcePermissions() throws Exception {
 		long companyId = RandomTestUtil.randomLong();
 		String primKey = RandomTestUtil.randomString();
@@ -185,6 +173,18 @@ public class UpgradeClassNamesTest {
 		assertNewResourcePermissionExists();
 
 		assertOldPermissionExists();
+	}
+
+	@Test
+	public void testUpdateCalEventClassNameIdInVocabularies() throws Exception {
+		_calEventClassName = addClassName(
+			"com.liferay.portlet.calendar.model.CalEvent");
+
+		addAssetVocabulary(_calEventClassName.getClassNameId());
+
+		_upgradeProcess.upgrade();
+
+		assertNewClassNameIdExists();
 	}
 
 	protected void addAssetVocabulary(long classNameId) throws Exception {

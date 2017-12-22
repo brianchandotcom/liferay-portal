@@ -88,8 +88,7 @@ public class HeapUtil {
 						return outputProcessor.processStdErr(stdErrInputStream);
 					}
 					catch (
-						com.liferay.portal.kernel.process.ProcessException
-							pe) {
+						com.liferay.portal.kernel.process.ProcessException pe) {
 
 						throw new ProcessException(pe);
 					}
@@ -103,8 +102,7 @@ public class HeapUtil {
 						return outputProcessor.processStdOut(stdOutInputStream);
 					}
 					catch (
-						com.liferay.portal.kernel.process.ProcessException
-							pe) {
+						com.liferay.portal.kernel.process.ProcessException pe) {
 
 						throw new ProcessException(pe);
 					}

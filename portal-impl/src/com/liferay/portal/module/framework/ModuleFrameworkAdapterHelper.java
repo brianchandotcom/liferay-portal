@@ -14,13 +14,13 @@
 
 package com.liferay.portal.module.framework;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ClassLoaderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
 import com.liferay.portal.util.FileImpl;
 import com.liferay.portal.util.PropsValues;
@@ -100,8 +100,44 @@ public class ModuleFrameworkAdapterHelper {
 	 */
 	@Deprecated
 	public Object execute(String methodName, Object... parameters) {
-		Class<?>[] parameterTypes = ReflectionUtil.getParameterTypes(
-			parameters);
+		if (parameters == null) {
+			return exec(methodName, null, parameters);
+		}
+
+		Class<?>[] parameterTypes = new Class<?>[parameters.length];
+
+		for (int i = 0; i < parameters.length; i++) {
+			if (parameters[i] == null) {
+				parameterTypes[i] = null;
+			}
+			else if (parameters[i] instanceof Boolean) {
+				parameterTypes[i] = Boolean.TYPE;
+			}
+			else if (parameters[i] instanceof Byte) {
+				parameterTypes[i] = Byte.TYPE;
+			}
+			else if (parameters[i] instanceof Character) {
+				parameterTypes[i] = Character.TYPE;
+			}
+			else if (parameters[i] instanceof Double) {
+				parameterTypes[i] = Double.TYPE;
+			}
+			else if (parameters[i] instanceof Float) {
+				parameterTypes[i] = Float.TYPE;
+			}
+			else if (parameters[i] instanceof Integer) {
+				parameterTypes[i] = Integer.TYPE;
+			}
+			else if (parameters[i] instanceof Long) {
+				parameterTypes[i] = Long.TYPE;
+			}
+			else if (parameters[i] instanceof Short) {
+				parameterTypes[i] = Short.TYPE;
+			}
+			else {
+				parameterTypes[i] = parameters[i].getClass();
+			}
+		}
 
 		return exec(methodName, parameterTypes, parameters);
 	}

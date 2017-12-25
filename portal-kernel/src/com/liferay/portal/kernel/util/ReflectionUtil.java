@@ -31,7 +31,10 @@ import java.util.function.Consumer;
  * @author Brian Wing Shun Chan
  * @author Miguel Pastor
  * @author Shuyang Zhou
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.petra.reflect.ReflectionUtil}
  */
+@Deprecated
 public class ReflectionUtil {
 
 	public static Object arrayClone(Object array) {

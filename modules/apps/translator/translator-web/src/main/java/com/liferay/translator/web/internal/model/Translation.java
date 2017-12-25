@@ -14,7 +14,7 @@
 
 package com.liferay.translator.web.internal.model;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;

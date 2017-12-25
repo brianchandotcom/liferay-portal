@@ -29,7 +29,9 @@ public class SelfReferenceCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CLASS_DEF};
+		return new int[] {
+			TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF
+		};
 	}
 
 	@Override
@@ -111,7 +113,10 @@ public class SelfReferenceCheck extends BaseCheck {
 		DetailAST parentAST = methodCallAST.getParent();
 
 		while (true) {
-			if (parentAST.getType() == TokenTypes.CLASS_DEF) {
+			if ((parentAST.getType() == TokenTypes.CLASS_DEF) ||
+				(parentAST.getType() == TokenTypes.ENUM_DEF) ||
+				(parentAST.getType() == TokenTypes.INTERFACE_DEF)) {
+
 				DetailAST nameAST = parentAST.findFirstToken(TokenTypes.IDENT);
 
 				if (className.equals(nameAST.getText())) {

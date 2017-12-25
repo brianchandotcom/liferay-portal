@@ -31,7 +31,10 @@ public class ConcatCheck extends BaseCheck {
 
 	@Override
 	public int[] getDefaultTokens() {
-		return new int[] {TokenTypes.CLASS_DEF, TokenTypes.PLUS};
+		return new int[] {
+			TokenTypes.CLASS_DEF, TokenTypes.ENUM_DEF, TokenTypes.INTERFACE_DEF,
+			TokenTypes.PLUS
+		};
 	}
 
 	public void setMaxLineLength(int maxLineLength) {
@@ -40,7 +43,7 @@ public class ConcatCheck extends BaseCheck {
 
 	@Override
 	protected void doVisitToken(DetailAST detailAST) {
-		if (detailAST.getType() == TokenTypes.CLASS_DEF) {
+		if (detailAST.getType() != TokenTypes.PLUS) {
 			List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
 				detailAST, "StringBundler", "concat");
 

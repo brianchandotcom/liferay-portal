@@ -47,14 +47,6 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 	<aui:input name="cpOptionId" type="hidden" value="<%= cpOptionId %>" />
 	<aui:input name="cpOptionValueId" type="hidden" value="<%= cpOptionValueId %>" />
 
-	<liferay-frontend:translation-manager
-		availableLocales="<%= availableLocales %>"
-		changeableDefaultLanguage="<%= true %>"
-		componentId='<%= renderResponse.getNamespace() + "optionValuesTranslationManager" %>'
-		defaultLanguageId="<%= defaultLanguageId %>"
-		id="optionValuesTranslationManager"
-	/>
-
 	<div class="lfr-form-content">
 		<liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="product-option-value-details" />
 
@@ -100,31 +92,3 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 		</c:if>
 	</div>
 </aui:form>
-
-<aui:script use="aui-base">
-	function afterDeletingAvailableLocale(event) {
-		var titleInputLocalized = Liferay.component('<portlet:namespace />optionValueTitle');
-
-		var locale = event.locale;
-
-		titleInputLocalized.removeInputLanguage(locale);
-	}
-
-	function afterEditingLocaleChange(event) {
-		var titleInputLocalized = Liferay.component('<portlet:namespace />optionValueTitle');
-
-		var editingLocale = event.newVal;
-		var items = titleInputLocalized.get('items');
-		var selectedIndex = items.indexOf(editingLocale);
-
-		titleInputLocalized.set('selected', selectedIndex);
-		titleInputLocalized.selectFlag(editingLocale);
-	}
-
-	var translationManager = Liferay.component('<portlet:namespace />optionValuesTranslationManager');
-
-	if (translationManager) {
-		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
-		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
-	}
-</aui:script>

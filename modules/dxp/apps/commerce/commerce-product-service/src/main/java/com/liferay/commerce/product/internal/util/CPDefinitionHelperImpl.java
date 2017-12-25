@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.util.FacetFactory;
-import com.liferay.portal.kernel.service.GroupService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -195,7 +194,7 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 			return StringPool.BLANK;
 		}
 
-		Group group = _groupService.getGroup(themeDisplay.getScopeGroupId());
+		Group group = themeDisplay.getScopeGroup();
 
 		String currentSiteURL =
 			_portal.getPortalURL(themeDisplay) +
@@ -286,9 +285,6 @@ public class CPDefinitionHelperImpl implements CPDefinitionHelper {
 
 	@Reference
 	private FacetFactory _facetFactory;
-
-	@Reference
-	private GroupService _groupService;
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
  */
 public interface FragmentEntryProcessor {
 
-	public boolean validateFragmentEntryHtml(String html)
-		throws PortalException;
+	public void validateFragmentEntryHtml(String html) throws PortalException;
 
 }

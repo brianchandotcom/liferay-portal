@@ -55,11 +55,11 @@ public class FragmentEntryInstanceLinkLocalServiceUtil {
 	}
 
 	public static com.liferay.fragment.model.FragmentEntryInstanceLink addFragmentEntryInstanceLink(
-		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
+		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
 		int position) {
 		return getService()
-				   .addFragmentEntryInstanceLink(groupId,
-			layoutPageTemplateEntryId, fragmentEntryId, position);
+				   .addFragmentEntryInstanceLink(groupId, fragmentEntryId,
+			layoutPageTemplateEntryId, position);
 	}
 
 	/**

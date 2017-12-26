@@ -47,7 +47,7 @@ public class CPDefinitionModifiedDateComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

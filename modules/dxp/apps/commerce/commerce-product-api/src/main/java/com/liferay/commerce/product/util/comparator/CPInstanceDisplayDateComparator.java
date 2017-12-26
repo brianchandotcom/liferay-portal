@@ -47,7 +47,7 @@ public class CPInstanceDisplayDateComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

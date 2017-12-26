@@ -55,7 +55,7 @@ public class CPSpecificationOptionTitleComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

@@ -48,7 +48,7 @@ public class CPOptionTitleComparator extends OrderByComparator<CPOption> {
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

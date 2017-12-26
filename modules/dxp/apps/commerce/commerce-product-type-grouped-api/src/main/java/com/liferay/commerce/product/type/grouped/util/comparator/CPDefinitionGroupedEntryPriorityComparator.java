@@ -52,7 +52,7 @@ public class CPDefinitionGroupedEntryPriorityComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

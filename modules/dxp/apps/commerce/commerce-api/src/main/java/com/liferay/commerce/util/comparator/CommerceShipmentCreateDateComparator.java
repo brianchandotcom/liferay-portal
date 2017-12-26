@@ -51,7 +51,7 @@ public class CommerceShipmentCreateDateComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

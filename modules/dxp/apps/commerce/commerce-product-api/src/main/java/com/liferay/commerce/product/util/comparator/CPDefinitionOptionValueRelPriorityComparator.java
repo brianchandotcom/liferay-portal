@@ -50,7 +50,7 @@ public class CPDefinitionOptionValueRelPriorityComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

@@ -52,7 +52,7 @@ public class CommerceWarehouseNameComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

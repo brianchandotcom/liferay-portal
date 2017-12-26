@@ -51,7 +51,7 @@ public class CPDefinitionTitleComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

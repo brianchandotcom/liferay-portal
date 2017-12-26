@@ -49,7 +49,7 @@ public class CPDefinitionLinkPriorityComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

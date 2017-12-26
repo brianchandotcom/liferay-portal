@@ -61,7 +61,7 @@ public class CommerceWarehouseItemWarehouseNameComparator
 				return value;
 			}
 			else {
-				return -value;
+				return Math.negateExact(value);
 			}
 		}
 		catch (PortalException pe) {

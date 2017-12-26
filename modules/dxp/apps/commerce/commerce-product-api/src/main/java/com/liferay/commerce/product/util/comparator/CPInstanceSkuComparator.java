@@ -48,7 +48,7 @@ public class CPInstanceSkuComparator extends OrderByComparator<CPInstance> {
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

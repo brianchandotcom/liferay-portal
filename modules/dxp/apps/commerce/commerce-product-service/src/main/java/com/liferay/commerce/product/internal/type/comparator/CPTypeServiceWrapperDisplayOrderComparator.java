@@ -54,7 +54,7 @@ public class CPTypeServiceWrapperDisplayOrderComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

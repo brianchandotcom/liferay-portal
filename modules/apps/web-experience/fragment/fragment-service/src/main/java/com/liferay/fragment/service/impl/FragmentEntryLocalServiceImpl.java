@@ -15,7 +15,6 @@
 package com.liferay.fragment.service.impl;
 
 import com.liferay.fragment.exception.DuplicateFragmentEntryException;
-import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.exception.RequiredFragmentEntryException;
 import com.liferay.fragment.model.FragmentEntry;
@@ -237,9 +236,7 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	protected void validateContent(String html) throws PortalException {
-		if (!_fragmentEntryProcessorRegistry.validateFragmentEntryHtml(html)) {
-			throw new FragmentEntryContentException("invalid-fragment-html");
-		}
+		_fragmentEntryProcessorRegistry.validateFragmentEntryHtml(html);
 	}
 
 	private HtmlPreviewEntry _updateHtmlPreviewEntry(

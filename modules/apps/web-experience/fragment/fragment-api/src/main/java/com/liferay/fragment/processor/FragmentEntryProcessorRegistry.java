@@ -48,22 +48,16 @@ public class FragmentEntryProcessorRegistry {
 		_fragmentEntryProcessors.remove(fragmentEntryProcessor);
 	}
 
-	public boolean validateFragmentEntryHtml(String html)
-		throws PortalException {
-
+	public void validateFragmentEntryHtml(String html) throws PortalException {
 		if (Validator.isNull(html)) {
-			return true;
+			return;
 		}
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_fragmentEntryProcessors) {
 
-			if (!fragmentEntryProcessor.validateFragmentEntryHtml(html)) {
-				return false;
-			}
+			fragmentEntryProcessor.validateFragmentEntryHtml(html);
 		}
-
-		return true;
 	}
 
 	private final List<FragmentEntryProcessor> _fragmentEntryProcessors =

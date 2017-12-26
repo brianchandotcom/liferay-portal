@@ -15,7 +15,10 @@
 package com.liferay.source.formatter.checks;
 
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.tools.ToolsUtil;
+import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -33,17 +36,40 @@ public class JavaLogStringBundlerCheck extends BaseFileCheck {
 	protected String doProcess(
 		String fileName, String absolutePath, String content) {
 
-		Matcher matcher = _logPattern.matcher(content);
+		Matcher matcher1 = _logPattern.matcher(content);
 
-		if (matcher.find()) {
-			return StringUtil.replaceFirst(
-				content, "sb", "sb.toString()", matcher.start());
+		while (matcher1.find()) {
+			if (ToolsUtil.isInsideQuotes(content, matcher1.start())) {
+				continue;
+			}
+
+			List<String> parametersList = JavaSourceUtil.getParameterList(
+				matcher1.group());
+
+			String firstParameter = StringUtil.trim(parametersList.get(0));
+
+			Matcher matcher2 = _sbPattern.matcher(firstParameter);
+
+			if (matcher2.find()) {
+				String sbVariableName = matcher2.group(2);
+
+				String newFirstParameter = StringUtil.replaceFirst(
+					firstParameter, sbVariableName,
+					sbVariableName + ".toString()", matcher2.start(2));
+
+				return StringUtil.replaceFirst(
+					content, firstParameter, newFirstParameter,
+					matcher1.start());
+			}
 		}
 
 		return content;
 	}
 
 	private final Pattern _logPattern = Pattern.compile(
-		"_log\\.(debug|error|fatal|info|trace|warn)\\(sb[\\),]");
+		"_log\\.(debug|error|fatal|info|trace|warn)\\((.+?)\\);\n",
+		Pattern.DOTALL);
+	private final Pattern _sbPattern = Pattern.compile(
+		"^(.*\\+\\s+)?(_?(sb|\\w*SB)([0-9]*)?)(\\w\\+.+)?$", Pattern.DOTALL);
 
 }

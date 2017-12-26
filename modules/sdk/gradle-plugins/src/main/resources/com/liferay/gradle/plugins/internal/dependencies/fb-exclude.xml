@@ -3,6 +3,39 @@
 <FindBugsFilter>
 	<Match>
 		<Or>
+			<Class name="~.+\.model\..+Soap" />
+			<Class name="~.+\.model\.impl\..+ModelImpl" />
+		</Or>
+		<Or>
+			<And>
+				<Method name="~get.+Date" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Method name="~set.+Date" />
+				<Bug pattern="EI_EXPOSE_REP2" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
+		<Class name="~.+\.model\.impl\..+ModelImpl" />
+		<Or>
+			<And>
+				<Method name="equals" />
+				<Bug pattern="EQ_UNUSUAL" />
+			</And>
+			<And>
+				<Field name="TABLE_COLUMNS_MAP" type="java.util.Map" />
+				<Bug pattern="MS_MUTABLE_COLLECTION" />
+			</And>
+			<And>
+				<Method name="getDefaultLanguageId" />
+				<Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
+		<Or>
 			<Class name="~.+\.model\..+Wrapper" />
 			<Class name="~.+\.model\.impl\..+ModelImpl" />
 		</Or>

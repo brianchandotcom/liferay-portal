@@ -118,6 +118,7 @@
 		<exception>DuplicateFragmentCollection</exception>
 		<exception>DuplicateFragmentEntry</exception>
 		<exception>FragmentCollectionName</exception>
+		<exception>FragmentEntryContent</exception>
 		<exception>FragmentEntryName</exception>
 	</exceptions>
 </service-builder>

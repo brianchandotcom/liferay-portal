@@ -17,6 +17,7 @@ package com.liferay.fragment.service.impl;
 import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
@@ -42,6 +43,42 @@ public class FragmentEntryLocalServiceImpl
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Fragment entry
+
+		User user = userLocalService.getUser(userId);
+
+		validate(groupId, 0, name);
+
+		long fragmentEntryId = counterLocalService.increment();
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
+			fragmentEntryId);
+
+		fragmentEntry.setGroupId(groupId);
+		fragmentEntry.setCompanyId(user.getCompanyId());
+		fragmentEntry.setUserId(user.getUserId());
+		fragmentEntry.setUserName(user.getFullName());
+		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
+		fragmentEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+		fragmentEntry.setName(name);
+
+		fragmentEntryPersistence.update(fragmentEntry);
+
+		// Resources
+
+		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
+
+		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
 			String css, String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -49,7 +86,8 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, name);
+		validate(groupId, 0, name);
+		validateContent(html);
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -173,7 +211,7 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		validate(fragmentEntry.getGroupId(), name);
+		validate(fragmentEntry.getGroupId(), fragmentEntryId, name);
 
 		fragmentEntry.setName(name);
 
@@ -189,9 +227,9 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		if (!Objects.equals(fragmentEntry.getName(), name)) {
-			validate(fragmentEntry.getGroupId(), name);
-		}
+		validate(fragmentEntry.getGroupId(), fragmentEntryId, name);
+
+		validateContent(html);
 
 		fragmentEntry.setModifiedDate(new Date());
 		fragmentEntry.setName(name);
@@ -206,18 +244,30 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntry;
 	}
 
-	protected void validate(long groupId, String name) throws PortalException {
+	protected void validate(long groupId, long fragmentEntryId, String name)
+		throws PortalException {
+
 		if (Validator.isNull(name)) {
 			throw new FragmentEntryNameException(
 				"Name must not be null for group " + groupId);
 		}
 
+		if (fragmentEntryId <= 0) {
+			return;
+		}
+
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_N(
 			groupId, name);
 
-		if (fragmentEntry != null) {
+		if ((fragmentEntry != null) &&
+			(fragmentEntry.getFragmentEntryId() != fragmentEntryId)) {
+
 			throw new DuplicateFragmentEntryException(name);
 		}
+	}
+
+	protected void validateContent(String html) throws PortalException {
+		_fragmentEntryProcessorRegistry.validateFragmentEntryHtml(html);
 	}
 
 	private HtmlPreviewEntry _updateHtmlPreviewEntry(
@@ -241,6 +291,9 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getContent(),
 			ContentTypes.IMAGE_PNG, serviceContext);
 	}
+
+	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;

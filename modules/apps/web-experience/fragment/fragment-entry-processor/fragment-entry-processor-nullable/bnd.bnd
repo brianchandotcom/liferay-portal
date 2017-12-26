@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Fragment Entry Processor Nullable
+Bundle-SymbolicName: com.liferay.fragment.entry.processor.nullable
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Fragment

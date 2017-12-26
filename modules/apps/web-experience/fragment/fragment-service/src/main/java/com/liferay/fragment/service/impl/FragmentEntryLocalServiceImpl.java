@@ -18,7 +18,7 @@ import com.liferay.fragment.exception.DuplicateFragmentEntryException;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.processor.FragmentEntryProcessorUtil;
+import com.liferay.fragment.processor.FragmentEntryProcessorRegistry;
 import com.liferay.fragment.service.base.FragmentEntryLocalServiceBaseImpl;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalService;
@@ -223,7 +223,7 @@ public class FragmentEntryLocalServiceImpl
 			throw new DuplicateFragmentEntryException(name);
 		}
 
-		if (!_fragmentEntryProcessorUtil.validateFragmentEntryHtml(html)) {
+		if (!_fragmentEntryProcessorRegistry.validateFragmentEntryHtml(html)) {
 			throw new FragmentEntryContentException("invalid-fragment-html");
 		}
 	}
@@ -250,8 +250,8 @@ public class FragmentEntryLocalServiceImpl
 			ContentTypes.IMAGE_PNG, serviceContext);
 	}
 
-	@ServiceReference(type = FragmentEntryProcessorUtil.class)
-	private FragmentEntryProcessorUtil _fragmentEntryProcessorUtil;
+	@ServiceReference(type = FragmentEntryProcessorRegistry.class)
+	private FragmentEntryProcessorRegistry _fragmentEntryProcessorRegistry;
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;

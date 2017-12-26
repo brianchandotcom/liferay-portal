@@ -14,11 +14,14 @@
 
 package com.liferay.portal.workflow;
 
-import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
-import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
+import java.util.List;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
+
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalServiceUtil;
+import com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -41,13 +44,13 @@ public class WorkflowLinkAdvice {
 			boolean active = (Boolean)arguments[4];
 
 			if (!active) {
-				int workflowDefinitionLinksCount =
+				List<WorkflowDefinitionLink> workflowDefinitionLinks =
 					WorkflowDefinitionLinkLocalServiceUtil.
-						getWorkflowDefinitionLinksCount(
+						getWorkflowDefinitionLinks(
 							companyId, name, version);
 
-				if (workflowDefinitionLinksCount >= 1) {
-					throw new RequiredWorkflowDefinitionException();
+				if (!workflowDefinitionLinks.isEmpty()) {
+					throw new RequiredWorkflowDefinitionException(workflowDefinitionLinks);
 				}
 			}
 		}

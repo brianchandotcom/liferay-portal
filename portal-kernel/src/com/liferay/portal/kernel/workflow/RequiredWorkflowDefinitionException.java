@@ -14,6 +14,10 @@
 
 package com.liferay.portal.kernel.workflow;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.model.WorkflowDefinitionLink;
+
 /**
  * @author Marcellus Tavares
  */
@@ -21,7 +25,7 @@ public class RequiredWorkflowDefinitionException extends WorkflowException {
 
 	public RequiredWorkflowDefinitionException() {
 	}
-
+	
 	public RequiredWorkflowDefinitionException(String msg) {
 		super(msg);
 	}
@@ -33,5 +37,15 @@ public class RequiredWorkflowDefinitionException extends WorkflowException {
 	public RequiredWorkflowDefinitionException(Throwable cause) {
 		super(cause);
 	}
+	
+	public RequiredWorkflowDefinitionException(List<WorkflowDefinitionLink> workflowDefinitionLinks) {
+		this._workflowDefinitionLinks = workflowDefinitionLinks;
+	}
+	
+	public List<WorkflowDefinitionLink> getWorkflowDefinitionLinks() {
+		return _workflowDefinitionLinks;
+	}
+	
+	private List<WorkflowDefinitionLink> _workflowDefinitionLinks;
 
 }

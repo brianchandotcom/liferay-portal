@@ -18,17 +18,15 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
-import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAdminPortletKeys;
 import com.liferay.site.navigation.admin.web.internal.handler.SiteNavigationMenuExceptionRequestHandler;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuService;
 
 import javax.portlet.ActionRequest;
@@ -39,17 +37,17 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Jürgen Kappler
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-		"mvc.command.name=/navigation_menu/add_site_navigation_menu"
+		"mvc.command.name=/navigation_menu/update_site_navigation_menu"
 	},
 	service = MVCActionCommand.class
 )
-public class AddSiteNavigationMenuMVCActionCommand
+public class UpdateSiteNavigationMEnuMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -57,23 +55,21 @@ public class AddSiteNavigationMenuMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
+		long siteNavigationMenuId = ParamUtil.getLong(
+			actionRequest, "siteNavigationMenuId");
+
 		String name = ParamUtil.getString(actionRequest, "name");
 
-		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			actionRequest);
 
-			SiteNavigationMenu siteNavigationMenu =
-				_siteNavigationMenuService.addSiteNavigationMenu(
-					serviceContext.getScopeGroupId(), name, serviceContext);
+		try {
+			_siteNavigationMenuService.updateSiteNavigationMenu(
+				siteNavigationMenuId, name, serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-			jsonObject.put(
-				"redirectURL",
-				_getRedirectURL(
-					actionRequest,
-					siteNavigationMenu.getSiteNavigationMenuId()));
+			jsonObject.put("redirectURL", getRedirectURL(actionResponse));
 
 			JSONPortletResponseUtil.writeJSON(
 				actionRequest, actionResponse, jsonObject);
@@ -86,25 +82,19 @@ public class AddSiteNavigationMenuMVCActionCommand
 		}
 	}
 
-	private String _getRedirectURL(
-		ActionRequest actionRequest, long siteNavigationMenuId) {
+	protected String getRedirectURL(ActionResponse actionResponse) {
+		LiferayPortletResponse liferayPortletResponse =
+			_portal.getLiferayPortletResponse(actionResponse);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		String redirect = ParamUtil.getString(actionRequest, "redirect");
+		portletURL.setParameter("mvcPath", "/view.jsp");
 
-		PortletURL redirectURL = PortletURLFactoryUtil.create(
-			actionRequest, SiteNavigationAdminPortletKeys.SITE_NAVIGATION_ADMIN,
-			themeDisplay.getPlid(), ActionRequest.RENDER_PHASE);
-
-		redirectURL.setParameter("mvcPath", "/edit_site_navigation_menu.jsp");
-		redirectURL.setParameter("redirect", redirect);
-		redirectURL.setParameter(
-			"siteNavigationMenuId", String.valueOf(siteNavigationMenuId));
-
-		return redirectURL.toString();
+		return portletURL.toString();
 	}
+
+	@Reference
+	private Portal _portal;
 
 	@Reference
 	private SiteNavigationMenuExceptionRequestHandler

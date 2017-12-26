@@ -248,6 +248,27 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 		return layoutPageTemplateEntry;
 	}
 
+	@Override
+	public LayoutPageTemplateEntry updateLayoutPageTemplateEntry(
+			long layoutPageTemplateEntryId, String name)
+		throws PortalException {
+
+		LayoutPageTemplateEntry layoutPageTemplateEntry =
+			layoutPageTemplateEntryPersistence.findByPrimaryKey(
+				layoutPageTemplateEntryId);
+
+		if (Objects.equals(layoutPageTemplateEntry.getName(), name)) {
+			return layoutPageTemplateEntry;
+		}
+
+		validate(layoutPageTemplateEntry.getGroupId(), name);
+
+		layoutPageTemplateEntry.setName(name);
+
+		return layoutPageTemplateEntryLocalService.
+			updateLayoutPageTemplateEntry(layoutPageTemplateEntry);
+	}
+
 	protected void validate(long groupId, String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new LayoutPageTemplateEntryNameException(

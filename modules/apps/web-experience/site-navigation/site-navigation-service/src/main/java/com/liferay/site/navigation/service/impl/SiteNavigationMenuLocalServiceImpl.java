@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
@@ -37,6 +39,8 @@ public class SiteNavigationMenuLocalServiceImpl
 			long userId, long groupId, String name,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		validate(name);
 
 		// Site navigation menu
 
@@ -150,6 +154,8 @@ public class SiteNavigationMenuLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		validate(name);
+
 		User user = userLocalService.getUser(userId);
 
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
@@ -162,6 +168,12 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenu.setName(name);
 
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);
+	}
+
+	protected void validate(String name) throws PortalException {
+		if (Validator.isNull(name)) {
+			throw new SiteNavigationMenuNameException();
+		}
 	}
 
 }

@@ -155,7 +155,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 	<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
 </portlet:actionURL>
 
-<aui:script>
+<aui:script require="metal-dom/src/all/dom as dom">
 	function handleAddLayoutPageTemplateEntryMenuItemClick(event) {
 		event.preventDefault();
 
@@ -172,8 +172,35 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 		);
 	}
 
+	var updateLayoutPageTemplateEntryMenuItemClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.<portlet:namespace />update-layout-page-template-action-option > a',
+		function(event) {
+			var data = event.delegateTarget.dataset;
+
+			event.preventDefault();
+
+			Liferay.Util.openSimpleInputModal(
+				{
+					dialogTitle: '<liferay-ui:message key="rename-layout-page-template" />',
+					formSubmitURL: data.formSubmitUrl,
+					idFieldName: 'layoutPageTemplateEntryId',
+					idFieldValue: data.idFieldValue,
+					mainFieldLabel: '<liferay-ui:message key="name" />',
+					mainFieldName: 'name',
+					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+					mainFieldValue: data.mainFieldValue,
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+	);
+
 	function handleDestroyPortlet() {
 		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
+		updateLayoutPageTemplateEntryMenuItemClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);
 	}
@@ -182,7 +209,10 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 
 	addLayoutPageTemplateEntryMenuItem.addEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
 
-	$('#<portlet:namespace />deleteSelectedLayoutPageTemplateEntries').on(
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+
+	dom.on(
+		'#<portlet:namespace />deleteSelectedLayoutPageTemplateEntries',
 		'click',
 		function() {
 			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
@@ -190,6 +220,4 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 			}
 		}
 	);
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

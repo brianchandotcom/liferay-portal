@@ -260,6 +260,42 @@ public class CommerceTierPriceEntryLocalServiceImpl
 		return searchContext;
 	}
 
+	protected List<CommerceTierPriceEntry> getCommerceTierPriceEntries(
+			Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceTierPriceEntry> commerceTierPriceEntries = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commerceTierPriceEntryId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceTierPriceEntry commerceTierPriceEntry =
+				fetchCommerceTierPriceEntry(commerceTierPriceEntryId);
+
+			if (commerceTierPriceEntry == null) {
+				commerceTierPriceEntries = null;
+
+				Indexer<CommerceTierPriceEntry> indexer =
+					IndexerRegistryUtil.getIndexer(
+						CommerceTierPriceEntry.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceTierPriceEntries != null) {
+				commerceTierPriceEntries.add(commerceTierPriceEntry);
+			}
+		}
+
+		return commerceTierPriceEntries;
+	}
+
 	protected BaseModelSearchResult<CommerceTierPriceEntry>
 			searchCommerceTierPriceEntries(SearchContext searchContext)
 		throws PortalException {
@@ -268,23 +304,11 @@ public class CommerceTierPriceEntryLocalServiceImpl
 			IndexerRegistryUtil.nullSafeGetIndexer(
 				CommerceTierPriceEntry.class);
 
-		List<CommerceTierPriceEntry> commerceTierPriceEntries =
-			new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CommerceTierPriceEntry commerceTierPriceEntry =
-					getCommerceTierPriceEntry(classPK);
-
-				commerceTierPriceEntries.add(commerceTierPriceEntry);
-			}
+			List<CommerceTierPriceEntry> commerceTierPriceEntries =
+				getCommerceTierPriceEntries(hits);
 
 			if (commerceTierPriceEntries != null) {
 				return new BaseModelSearchResult<>(

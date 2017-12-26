@@ -382,6 +382,42 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 		return searchContext;
 	}
 
+	protected List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+			new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long cpDefinitionOptionValueRelId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+				fetchCPDefinitionOptionValueRel(cpDefinitionOptionValueRelId);
+
+			if (cpDefinitionOptionValueRel == null) {
+				cpDefinitionOptionValueRels = null;
+
+				Indexer<CPDefinitionOptionValueRel> indexer =
+					IndexerRegistryUtil.getIndexer(
+						CPDefinitionOptionValueRel.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (cpDefinitionOptionValueRels != null) {
+				cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
+			}
+		}
+
+		return cpDefinitionOptionValueRels;
+	}
+
 	protected void reindexCPDefinition(
 			CPDefinitionOptionRel cpDefinitionOptionRel)
 		throws PortalException {
@@ -402,23 +438,11 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 			IndexerRegistryUtil.nullSafeGetIndexer(
 				CPDefinitionOptionValueRel.class);
 
-		List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-			new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-					getCPDefinitionOptionValueRel(classPK);
-
-				cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
-			}
+			List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+				getCPDefinitionOptionValueRels(hits);
 
 			if (cpDefinitionOptionValueRels != null) {
 				return new BaseModelSearchResult<>(

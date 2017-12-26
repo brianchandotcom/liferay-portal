@@ -389,6 +389,40 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		return searchContext;
 	}
 
+	protected List<CPDefinitionOptionRel> getCPDefinitionOptionRels(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long cpDefinitionOptionRelId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				fetchCPDefinitionOptionRel(cpDefinitionOptionRelId);
+
+			if (cpDefinitionOptionRel == null) {
+				cpDefinitionOptionRels = null;
+
+				Indexer<CPDefinitionOptionRel> indexer =
+					IndexerRegistryUtil.getIndexer(CPDefinitionOptionRel.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (cpDefinitionOptionRels != null) {
+				cpDefinitionOptionRels.add(cpDefinitionOptionRel);
+			}
+		}
+
+		return cpDefinitionOptionRels;
+	}
+
 	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
@@ -405,22 +439,11 @@ public class CPDefinitionOptionRelLocalServiceImpl
 		Indexer<CPDefinitionOptionRel> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CPDefinitionOptionRel.class);
 
-		List<CPDefinitionOptionRel> cpDefinitionOptionRels = new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CPDefinitionOptionRel cpDefinitionOptionRel =
-					getCPDefinitionOptionRel(classPK);
-
-				cpDefinitionOptionRels.add(cpDefinitionOptionRel);
-			}
+			List<CPDefinitionOptionRel> cpDefinitionOptionRels =
+				getCPDefinitionOptionRels(hits);
 
 			if (cpDefinitionOptionRels != null) {
 				return new BaseModelSearchResult<>(

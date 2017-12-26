@@ -820,6 +820,38 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		}
 	}
 
+	protected List<CPInstance> getCPInstances(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CPInstance> cpInstances = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long cpInstanceId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPInstance cpInstance = fetchCPInstance(cpInstanceId);
+
+			if (cpInstance == null) {
+				cpInstances = null;
+
+				Indexer<CPInstance> indexer = IndexerRegistryUtil.getIndexer(
+					CPInstance.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (cpInstances != null) {
+				cpInstances.add(cpInstance);
+			}
+		}
+
+		return cpInstances;
+	}
+
 	protected void reindexCPDefinition(long cpDefinitionId)
 		throws PortalException {
 
@@ -836,21 +868,10 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 		Indexer<CPInstance> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPInstance.class);
 
-		List<CPInstance> cpInstances = new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CPInstance cpInstance = getCPInstance(classPK);
-
-				cpInstances.add(cpInstance);
-			}
+			List<CPInstance> cpInstances = getCPInstances(hits);
 
 			if (cpInstances != null) {
 				return new BaseModelSearchResult<>(

@@ -480,6 +480,40 @@ public class CommercePriceListLocalServiceImpl
 		indexer.reindex(CommercePriceList.class.getName(), commercePriceListId);
 	}
 
+	protected List<CommercePriceList> getCommercePriceLists(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommercePriceList> commercePriceLists = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commercePriceListId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommercePriceList commercePriceList = fetchCommercePriceList(
+				commercePriceListId);
+
+			if (commercePriceList == null) {
+				commercePriceLists = null;
+
+				Indexer<CommercePriceList> indexer =
+					IndexerRegistryUtil.getIndexer(CommercePriceList.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commercePriceLists != null) {
+				commercePriceLists.add(commercePriceList);
+			}
+		}
+
+		return commercePriceLists;
+	}
+
 	protected BaseModelSearchResult<CommercePriceList> searchCommercePriceLists(
 			SearchContext searchContext)
 		throws PortalException {
@@ -487,22 +521,11 @@ public class CommercePriceListLocalServiceImpl
 		Indexer<CommercePriceList> indexer =
 			IndexerRegistryUtil.nullSafeGetIndexer(CommercePriceList.class);
 
-		List<CommercePriceList> commercePriceLists = new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CommercePriceList commercePriceList = getCommercePriceList(
-					classPK);
-
-				commercePriceLists.add(commercePriceList);
-			}
+			List<CommercePriceList> commercePriceLists = getCommercePriceLists(
+				hits);
 
 			if (commercePriceLists != null) {
 				return new BaseModelSearchResult<>(

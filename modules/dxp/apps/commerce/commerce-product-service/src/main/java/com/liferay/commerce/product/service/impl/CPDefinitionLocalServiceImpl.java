@@ -1212,6 +1212,38 @@ public class CPDefinitionLocalServiceImpl
 		}
 	}
 
+	protected List<CPDefinition> getCPDefinitions(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CPDefinition> cpDefinitions = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long cpDefinitionId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPDefinition cpDefinition = fetchCPDefinition(cpDefinitionId);
+
+			if (cpDefinition == null) {
+				cpDefinitions = null;
+
+				Indexer<CPDefinition> indexer = IndexerRegistryUtil.getIndexer(
+					CPDefinition.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (cpDefinitions != null) {
+				cpDefinitions.add(cpDefinition);
+			}
+		}
+
+		return cpDefinitions;
+	}
+
 	protected BaseModelSearchResult<CPDefinition> searchCPDefinitions(
 			SearchContext searchContext)
 		throws PortalException {
@@ -1219,21 +1251,10 @@ public class CPDefinitionLocalServiceImpl
 		Indexer<CPDefinition> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPDefinition.class);
 
-		List<CPDefinition> cpDefinitions = new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CPDefinition cpDefinition = getCPDefinition(classPK);
-
-				cpDefinitions.add(cpDefinition);
-			}
+			List<CPDefinition> cpDefinitions = getCPDefinitions(hits);
 
 			if (cpDefinitions != null) {
 				return new BaseModelSearchResult<>(

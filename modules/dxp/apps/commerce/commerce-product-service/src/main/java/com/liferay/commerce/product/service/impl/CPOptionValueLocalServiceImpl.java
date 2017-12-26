@@ -257,6 +257,38 @@ public class CPOptionValueLocalServiceImpl
 		return searchContext;
 	}
 
+	protected List<CPOptionValue> getCPOptionValues(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CPOptionValue> cpOptionValues = new ArrayList<>(documents.size());
+
+		for (Document document : documents) {
+			long cpOptionValueId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CPOptionValue cpOptionValue = fetchCPOptionValue(cpOptionValueId);
+
+			if (cpOptionValue == null) {
+				cpOptionValues = null;
+
+				Indexer<CPOptionValue> indexer = IndexerRegistryUtil.getIndexer(
+					CPOptionValue.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (cpOptionValues != null) {
+				cpOptionValues.add(cpOptionValue);
+			}
+		}
+
+		return cpOptionValues;
+	}
+
 	protected void reindexCPOption(long cpOptionId) throws PortalException {
 		Indexer<CPOption> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPOption.class);
@@ -271,21 +303,10 @@ public class CPOptionValueLocalServiceImpl
 		Indexer<CPOptionValue> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			CPOptionValue.class);
 
-		List<CPOptionValue> cpOptionValues = new ArrayList<>();
-
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
 
-			Document[] documents = hits.getDocs();
-
-			for (Document document : documents) {
-				long classPK = GetterUtil.getLong(
-					document.get(Field.ENTRY_CLASS_PK));
-
-				CPOptionValue cpOptionValue = getCPOptionValue(classPK);
-
-				cpOptionValues.add(cpOptionValue);
-			}
+			List<CPOptionValue> cpOptionValues = getCPOptionValues(hits);
 
 			if (cpOptionValues != null) {
 				return new BaseModelSearchResult<>(

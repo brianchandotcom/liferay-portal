@@ -267,7 +267,7 @@
 		</execute>
 
 		<execute macro="AssetPublisherPortlet#configureDisplaySettings">
-			<var name="displaySettings" value="Comments,Comment Ratings,Enable Social Bookmarks,Flags,Print,Ratings,Related Assets" />
+			<var name="displaySettings" value="Comments,Comment Ratings,Flags,Print,Ratings,Related Assets" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

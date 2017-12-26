@@ -59,7 +59,7 @@ public class LCSPortletStateAdvisor {
 
 			if ((message != null) && message.contains("Not authorized")) {
 				if (_log.isWarnEnabled()) {
-					StringBundler sb = new StringBundler();
+					StringBundler sb = new StringBundler(8);
 
 					sb.append("OAuth credentials may be invalid. If ");
 					sb.append("credentials were revoked, the LCS portlet ");

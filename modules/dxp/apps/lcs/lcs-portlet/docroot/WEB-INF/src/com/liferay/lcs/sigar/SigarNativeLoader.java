@@ -142,7 +142,7 @@ public class SigarNativeLoader {
 	}
 
 	private static File _getTargetDirectory() {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(5);
 
 		sb.append(PropsUtil.get("liferay.home"));
 		sb.append(File.separator);

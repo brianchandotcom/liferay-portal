@@ -77,11 +77,11 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 	}
 
 	@Test
@@ -97,7 +97,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 
 		Assert.assertEquals("Fragment Entry", fragmentEntry.getName());
 	}
@@ -115,7 +115,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			StringPool.BLANK, null, null, null, serviceContext);
+			StringPool.BLANK, serviceContext);
 	}
 
 	@Test(expected = FragmentEntryNameException.class)
@@ -131,7 +131,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			null, null, null, null, serviceContext);
+			null, serviceContext);
 	}
 
 	@Test
@@ -151,11 +151,11 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 1", null, null, null, serviceContext);
+			"Fragment Entry 1", serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 2", null, null, null, serviceContext);
+			"Fragment Entry 2", serviceContext);
 
 		List<FragmentEntry> actualFragmentEntries =
 			FragmentEntryServiceUtil.fetchFragmentEntries(
@@ -179,7 +179,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 
 		FragmentEntryServiceUtil.deleteFragmentEntry(
 			fragmentEntry.getFragmentEntryId());

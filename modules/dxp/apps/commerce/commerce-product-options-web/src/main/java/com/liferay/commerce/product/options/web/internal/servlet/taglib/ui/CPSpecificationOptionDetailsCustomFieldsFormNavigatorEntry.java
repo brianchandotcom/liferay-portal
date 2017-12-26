@@ -16,6 +16,8 @@ package com.liferay.commerce.product.options.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.model.CPSpecificationOption;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -76,6 +78,9 @@ public class CPSpecificationOptionDetailsCustomFieldsFormNavigatorEntry
 					classPK, null);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return hasCustomAttributesAvailable;
@@ -85,5 +90,8 @@ public class CPSpecificationOptionDetailsCustomFieldsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/specification_option/custom_fields.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CPSpecificationOptionDetailsCustomFieldsFormNavigatorEntry.class);
 
 }

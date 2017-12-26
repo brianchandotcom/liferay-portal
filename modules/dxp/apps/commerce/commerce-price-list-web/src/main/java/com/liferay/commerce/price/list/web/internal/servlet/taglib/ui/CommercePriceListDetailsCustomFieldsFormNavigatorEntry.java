@@ -16,6 +16,8 @@ package com.liferay.commerce.price.list.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
@@ -74,6 +76,9 @@ public class CommercePriceListDetailsCustomFieldsFormNavigatorEntry
 					classPK, null);
 		}
 		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
 		}
 
 		return hasCustomAttributesAvailable;
@@ -83,5 +88,8 @@ public class CommercePriceListDetailsCustomFieldsFormNavigatorEntry
 	protected String getJspPath() {
 		return "/price_list/custom_fields.jsp";
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommercePriceListDetailsCustomFieldsFormNavigatorEntry.class);
 
 }

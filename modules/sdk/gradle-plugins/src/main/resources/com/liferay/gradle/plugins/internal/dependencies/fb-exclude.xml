@@ -56,6 +56,19 @@
 		</Or>
 	</Match>
 	<Match>
+		<Class name="~.+\.search\..+Searcher" />
+		<Or>
+			<And>
+				<Method name="getSearchClassNames" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Field name="CLASS_NAMES" type="java.lang.String[]" />
+				<Bug pattern="MS_PKGPROTECT" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
 		<Class name="~.+\.util\.comparator\..+Comparator" />
 		<Or>
 			<And>

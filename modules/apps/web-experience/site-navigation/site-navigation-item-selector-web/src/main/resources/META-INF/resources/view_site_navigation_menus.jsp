@@ -42,3 +42,114 @@ String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplaySty
 		/>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
+
+<aui:form action="<%= siteNavigationItemSelectorViewDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" name="selectSiteNavigationMenuFm">
+	<liferay-ui:search-container
+		id="siteNavigationMenus"
+		searchContainer="<%= siteNavigationItemSelectorViewDisplayContext.getSearchContainer() %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.site.navigation.model.SiteNavigationMenu"
+			keyProperty="siteNavigationMenuId"
+			modelVar="siteNavigationMenu"
+		>
+
+			<%
+			Map<String, Object> data = new HashMap<String, Object>();
+
+			data.put("id", siteNavigationMenu.getSiteNavigationMenuId());
+			data.put("name", siteNavigationMenu.getName());
+			%>
+
+			<c:choose>
+				<c:when test='<%= displayStyle.equals("descriptive") %>'>
+					<liferay-ui:search-container-column-user
+						cssClass="user-icon-lg"
+						showDetails="<%= false %>"
+						userId="<%= siteNavigationMenu.getUserId() %>"
+					/>
+
+					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+
+						<%
+						Date createDate = siteNavigationMenu.getCreateDate();
+
+						String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
+						%>
+
+						<h4>
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+							</aui:a>
+						</h4>
+
+						<h5 class="text-default">
+							<liferay-ui:message arguments="<%= new String[] {siteNavigationMenu.getUserName(), createDateDescription} %>" key="x-created-x-ago" />
+						</h5>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:when test='<%= displayStyle.equals("icon") %>'>
+
+					<%
+					row.setCssClass("entry-card lfr-asset-item");
+					%>
+
+					<liferay-ui:search-container-column-text>
+						<liferay-frontend:icon-vertical-card
+							icon="list"
+							resultRow="<%= row %>"
+							rowChecker="<%= searchContainer.getRowChecker() %>"
+						>
+							<liferay-frontend:vertical-card-header>
+								<div class="row">
+									<h5 class="col text-truncate">
+										<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+											<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+										</aui:a>
+									</h5>
+								</div>
+							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-sticker-bottom>
+								<liferay-ui:user-portrait
+									cssClass="sticker sticker-bottom user-icon-lg"
+									userId="<%= siteNavigationMenu.getUserId() %>"
+								/>
+							</liferay-frontend:vertical-card-sticker-bottom>
+						</liferay-frontend:icon-vertical-card>
+					</liferay-ui:search-container-column-text>
+				</c:when>
+				<c:otherwise>
+					<liferay-ui:search-container-column-text
+						cssClass="table-cell-content"
+						name="title"
+						orderable="<%= false %>"
+						truncate="<%= true %>"
+					>
+						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+							<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+						</aui:a>
+					</liferay-ui:search-container-column-text>
+
+					<liferay-ui:search-container-column-text
+						name="author"
+						orderable="<%= false %>"
+						property="userName"
+					/>
+
+					<liferay-ui:search-container-column-date
+						name="create-date"
+						orderable="<%= false %>"
+						property="createDate"
+					/>
+				</c:otherwise>
+			</c:choose>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
+	</liferay-ui:search-container>
+</aui:form>
+
+<aui:script use="aui-base">
+	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectSiteNavigationMenuFm', '<%= HtmlUtil.escapeJS(siteNavigationItemSelectorViewDisplayContext.getItemSelectedEventName()) %>');
+</aui:script>

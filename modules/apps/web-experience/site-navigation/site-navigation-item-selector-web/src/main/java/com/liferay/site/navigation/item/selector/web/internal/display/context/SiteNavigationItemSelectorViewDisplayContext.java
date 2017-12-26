@@ -14,12 +14,23 @@
 
 package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
+import com.liferay.site.navigation.util.comparator.SiteNavigationMenuCreateDateComparator;
+import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameComparator;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -61,7 +72,21 @@ public class SiteNavigationItemSelectorViewDisplayContext {
 	}
 
 	public String[] getDisplayViews() {
-		return new String[] {"list", "icon", "descriptive"};
+		return new String[] {"icon", "descriptive", "list"};
+	}
+
+	public String getItemSelectedEventName() {
+		return _itemSelectedEventName;
+	}
+
+	public String getKeywords() {
+		if (Validator.isNotNull(_keywords)) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(_request, "keywords");
+
+		return _keywords;
 	}
 
 	public String getOrderByCol() throws Exception {
@@ -110,13 +135,97 @@ public class SiteNavigationItemSelectorViewDisplayContext {
 		return _portletURL;
 	}
 
+	public SearchContainer getSearchContainer() throws Exception {
+		if (_searchContainer != null) {
+			return _searchContainer;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		SearchContainer searchContainer = new SearchContainer(
+			_liferayPortletRequest, getPortletURL(), null,
+			"there-are-no-navigation-menus");
+
+		if (Validator.isNotNull(getKeywords())) {
+			searchContainer.setSearch(true);
+		}
+
+		OrderByComparator<SiteNavigationMenu> orderByComparator =
+			_getOrderByComparator(getOrderByCol(), getOrderByType());
+
+		searchContainer.setOrderByCol(getOrderByCol());
+		searchContainer.setOrderByComparator(orderByComparator);
+		searchContainer.setOrderByType(getOrderByType());
+
+		EmptyOnClickRowChecker emptyOnClickRowChecker =
+			new EmptyOnClickRowChecker(_liferayPortletResponse);
+
+		searchContainer.setRowChecker(emptyOnClickRowChecker);
+
+		List<SiteNavigationMenu> menus = null;
+		int menusCount = 0;
+
+		if (Validator.isNotNull(getKeywords())) {
+			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+				themeDisplay.getScopeGroupId(), getKeywords(),
+				searchContainer.getStart(), searchContainer.getEnd(),
+				orderByComparator);
+
+			menusCount =
+				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+					themeDisplay.getScopeGroupId(), getKeywords());
+		}
+		else {
+			menus = SiteNavigationMenuServiceUtil.getSiteNavigationMenus(
+				themeDisplay.getScopeGroupId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
+
+			menusCount =
+				SiteNavigationMenuServiceUtil.getSiteNavigationMenusCount(
+					themeDisplay.getScopeGroupId());
+		}
+
+		searchContainer.setResults(menus);
+		searchContainer.setTotal(menusCount);
+
+		_searchContainer = searchContainer;
+
+		return _searchContainer;
+	}
+
+	private OrderByComparator<SiteNavigationMenu> _getOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<SiteNavigationMenu> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new SiteNavigationMenuCreateDateComparator(
+				orderByAsc);
+		}
+		else if (orderByCol.equals("name")) {
+			orderByComparator = new SiteNavigationMenuNameComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
 	private String _displayStyle;
 	private final String _itemSelectedEventName;
+	private String _keywords;
 	private final LiferayPortletRequest _liferayPortletRequest;
 	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletURL _portletURL;
 	private final HttpServletRequest _request;
+	private SearchContainer _searchContainer;
 
 }

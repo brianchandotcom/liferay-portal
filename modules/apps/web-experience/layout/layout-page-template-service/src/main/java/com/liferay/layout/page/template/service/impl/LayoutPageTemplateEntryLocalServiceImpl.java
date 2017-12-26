@@ -90,8 +90,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
 				_fragmentEntryInstanceLinkLocalService.
 					addFragmentEntryInstanceLink(
-						groupId, layoutPageTemplateEntryId,
-						fragmentEntry.getFragmentEntryId(), position++);
+						groupId, fragmentEntry.getFragmentEntryId(),
+						layoutPageTemplateEntryId, position++);
 			}
 		}
 
@@ -233,8 +233,8 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 				_fragmentEntryInstanceLinkLocalService.
 					addFragmentEntryInstanceLink(
 						layoutPageTemplateEntry.getGroupId(),
-						layoutPageTemplateEntryId,
-						fragmentEntry.getFragmentEntryId(), position++);
+						fragmentEntry.getFragmentEntryId(),
+						layoutPageTemplateEntryId, position++);
 			}
 		}
 

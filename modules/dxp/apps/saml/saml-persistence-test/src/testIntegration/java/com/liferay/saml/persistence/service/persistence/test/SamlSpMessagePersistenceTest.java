@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -163,9 +164,9 @@ public class SamlSpMessagePersistenceTest {
 
 	@Test
 	public void testCountBySIEI_SIRK() throws Exception {
-		_persistence.countBySIEI_SIRK("", "");
+		_persistence.countBySIEI_SIRK(StringPool.BLANK, StringPool.BLANK);
 
-		_persistence.countBySIEI_SIRK("null", "null");
+		_persistence.countBySIEI_SIRK(StringPool.NULL, StringPool.NULL);
 
 		_persistence.countBySIEI_SIRK((String)null, (String)null);
 	}

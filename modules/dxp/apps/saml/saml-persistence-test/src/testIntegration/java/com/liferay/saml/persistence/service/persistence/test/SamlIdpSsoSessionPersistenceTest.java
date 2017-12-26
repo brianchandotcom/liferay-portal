@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -167,9 +168,9 @@ public class SamlIdpSsoSessionPersistenceTest {
 
 	@Test
 	public void testCountBySamlIdpSsoSessionKey() throws Exception {
-		_persistence.countBySamlIdpSsoSessionKey("");
+		_persistence.countBySamlIdpSsoSessionKey(StringPool.BLANK);
 
-		_persistence.countBySamlIdpSsoSessionKey("null");
+		_persistence.countBySamlIdpSsoSessionKey(StringPool.NULL);
 
 		_persistence.countBySamlIdpSsoSessionKey((String)null);
 	}

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpMessage;
 import com.liferay.saml.persistence.model.SamlSpMessageModel;
@@ -224,7 +225,7 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 	@Override
 	public String getSamlIdpEntityId() {
 		if (_samlIdpEntityId == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 		else {
 			return _samlIdpEntityId;
@@ -249,7 +250,7 @@ public class SamlSpMessageModelImpl extends BaseModelImpl<SamlSpMessage>
 	@Override
 	public String getSamlIdpResponseKey() {
 		if (_samlIdpResponseKey == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 		else {
 			return _samlIdpResponseKey;

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.IntegerWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.OrderByComparatorFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
@@ -158,9 +159,9 @@ public class SamlSpAuthRequestPersistenceTest {
 
 	@Test
 	public void testCountBySIEI_SSARK() throws Exception {
-		_persistence.countBySIEI_SSARK("", "");
+		_persistence.countBySIEI_SSARK(StringPool.BLANK, StringPool.BLANK);
 
-		_persistence.countBySIEI_SSARK("null", "null");
+		_persistence.countBySIEI_SSARK(StringPool.NULL, StringPool.NULL);
 
 		_persistence.countBySIEI_SSARK((String)null, (String)null);
 	}

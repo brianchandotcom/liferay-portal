@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlIdpSpConnection;
 
@@ -117,7 +118,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		samlIdpSpConnectionImpl.setUserId(userId);
 
 		if (userName == null) {
-			samlIdpSpConnectionImpl.setUserName("");
+			samlIdpSpConnectionImpl.setUserName(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setUserName(userName);
@@ -138,7 +139,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		}
 
 		if (samlSpEntityId == null) {
-			samlIdpSpConnectionImpl.setSamlSpEntityId("");
+			samlIdpSpConnectionImpl.setSamlSpEntityId(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setSamlSpEntityId(samlSpEntityId);
@@ -147,7 +148,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		samlIdpSpConnectionImpl.setAssertionLifetime(assertionLifetime);
 
 		if (attributeNames == null) {
-			samlIdpSpConnectionImpl.setAttributeNames("");
+			samlIdpSpConnectionImpl.setAttributeNames(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setAttributeNames(attributeNames);
@@ -158,14 +159,14 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		samlIdpSpConnectionImpl.setEnabled(enabled);
 
 		if (metadataUrl == null) {
-			samlIdpSpConnectionImpl.setMetadataUrl("");
+			samlIdpSpConnectionImpl.setMetadataUrl(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setMetadataUrl(metadataUrl);
 		}
 
 		if (metadataXml == null) {
-			samlIdpSpConnectionImpl.setMetadataXml("");
+			samlIdpSpConnectionImpl.setMetadataXml(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setMetadataXml(metadataXml);
@@ -180,21 +181,21 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		}
 
 		if (name == null) {
-			samlIdpSpConnectionImpl.setName("");
+			samlIdpSpConnectionImpl.setName(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setName(name);
 		}
 
 		if (nameIdAttribute == null) {
-			samlIdpSpConnectionImpl.setNameIdAttribute("");
+			samlIdpSpConnectionImpl.setNameIdAttribute(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setNameIdAttribute(nameIdAttribute);
 		}
 
 		if (nameIdFormat == null) {
-			samlIdpSpConnectionImpl.setNameIdFormat("");
+			samlIdpSpConnectionImpl.setNameIdFormat(StringPool.BLANK);
 		}
 		else {
 			samlIdpSpConnectionImpl.setNameIdFormat(nameIdFormat);
@@ -243,7 +244,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -253,7 +254,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		objectOutput.writeLong(modifiedDate);
 
 		if (samlSpEntityId == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(samlSpEntityId);
@@ -262,7 +263,7 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		objectOutput.writeInt(assertionLifetime);
 
 		if (attributeNames == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(attributeNames);
@@ -275,14 +276,14 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		objectOutput.writeBoolean(enabled);
 
 		if (metadataUrl == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(metadataUrl);
 		}
 
 		if (metadataXml == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(metadataXml);
@@ -291,21 +292,21 @@ public class SamlIdpSpConnectionCacheModel implements CacheModel<SamlIdpSpConnec
 		objectOutput.writeLong(metadataUpdatedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (nameIdAttribute == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(nameIdAttribute);
 		}
 
 		if (nameIdFormat == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(nameIdFormat);

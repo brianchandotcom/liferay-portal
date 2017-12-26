@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 
@@ -119,7 +120,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		samlSpIdpConnectionImpl.setUserId(userId);
 
 		if (userName == null) {
-			samlSpIdpConnectionImpl.setUserName("");
+			samlSpIdpConnectionImpl.setUserName(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setUserName(userName);
@@ -140,7 +141,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		}
 
 		if (samlIdpEntityId == null) {
-			samlSpIdpConnectionImpl.setSamlIdpEntityId("");
+			samlSpIdpConnectionImpl.setSamlIdpEntityId(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setSamlIdpEntityId(samlIdpEntityId);
@@ -153,14 +154,14 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		samlSpIdpConnectionImpl.setLdapImportEnabled(ldapImportEnabled);
 
 		if (metadataUrl == null) {
-			samlSpIdpConnectionImpl.setMetadataUrl("");
+			samlSpIdpConnectionImpl.setMetadataUrl(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setMetadataUrl(metadataUrl);
 		}
 
 		if (metadataXml == null) {
-			samlSpIdpConnectionImpl.setMetadataXml("");
+			samlSpIdpConnectionImpl.setMetadataXml(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setMetadataXml(metadataXml);
@@ -175,14 +176,14 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		}
 
 		if (name == null) {
-			samlSpIdpConnectionImpl.setName("");
+			samlSpIdpConnectionImpl.setName(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setName(name);
 		}
 
 		if (nameIdFormat == null) {
-			samlSpIdpConnectionImpl.setNameIdFormat("");
+			samlSpIdpConnectionImpl.setNameIdFormat(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setNameIdFormat(nameIdFormat);
@@ -191,7 +192,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		samlSpIdpConnectionImpl.setSignAuthnRequest(signAuthnRequest);
 
 		if (userAttributeMappings == null) {
-			samlSpIdpConnectionImpl.setUserAttributeMappings("");
+			samlSpIdpConnectionImpl.setUserAttributeMappings(StringPool.BLANK);
 		}
 		else {
 			samlSpIdpConnectionImpl.setUserAttributeMappings(userAttributeMappings);
@@ -243,7 +244,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -253,7 +254,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		objectOutput.writeLong(modifiedDate);
 
 		if (samlIdpEntityId == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(samlIdpEntityId);
@@ -270,14 +271,14 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		objectOutput.writeBoolean(ldapImportEnabled);
 
 		if (metadataUrl == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(metadataUrl);
 		}
 
 		if (metadataXml == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(metadataXml);
@@ -286,14 +287,14 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		objectOutput.writeLong(metadataUpdatedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (nameIdFormat == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(nameIdFormat);
@@ -302,7 +303,7 @@ public class SamlSpIdpConnectionCacheModel implements CacheModel<SamlSpIdpConnec
 		objectOutput.writeBoolean(signAuthnRequest);
 
 		if (userAttributeMappings == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(userAttributeMappings);

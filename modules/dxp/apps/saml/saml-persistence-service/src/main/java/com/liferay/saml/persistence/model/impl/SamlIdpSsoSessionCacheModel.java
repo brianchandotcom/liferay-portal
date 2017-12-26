@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlIdpSsoSession;
 
@@ -95,7 +96,7 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 		samlIdpSsoSessionImpl.setUserId(userId);
 
 		if (userName == null) {
-			samlIdpSsoSessionImpl.setUserName("");
+			samlIdpSsoSessionImpl.setUserName(StringPool.BLANK);
 		}
 		else {
 			samlIdpSsoSessionImpl.setUserName(userName);
@@ -116,7 +117,7 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 		}
 
 		if (samlIdpSsoSessionKey == null) {
-			samlIdpSsoSessionImpl.setSamlIdpSsoSessionKey("");
+			samlIdpSsoSessionImpl.setSamlIdpSsoSessionKey(StringPool.BLANK);
 		}
 		else {
 			samlIdpSsoSessionImpl.setSamlIdpSsoSessionKey(samlIdpSsoSessionKey);
@@ -150,7 +151,7 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -160,7 +161,7 @@ public class SamlIdpSsoSessionCacheModel implements CacheModel<SamlIdpSsoSession
 		objectOutput.writeLong(modifiedDate);
 
 		if (samlIdpSsoSessionKey == null) {
-			objectOutput.writeUTF("");
+			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
 			objectOutput.writeUTF(samlIdpSsoSessionKey);

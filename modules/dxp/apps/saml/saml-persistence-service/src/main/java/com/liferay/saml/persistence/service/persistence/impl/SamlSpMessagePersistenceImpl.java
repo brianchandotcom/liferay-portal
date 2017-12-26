@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -303,7 +304,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		msg.append("expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append("}");
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchSpMessageException(msg.toString());
 	}
@@ -354,7 +355,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		msg.append("expirationDate=");
 		msg.append(expirationDate);
 
-		msg.append("}");
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 		throw new NoSuchSpMessageException(msg.toString());
 	}
@@ -657,7 +658,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 			msg.append(", samlIdpResponseKey=");
 			msg.append(samlIdpResponseKey);
 
-			msg.append("}");
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -723,7 +724,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 			if (samlIdpEntityId == null) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_1);
 			}
-			else if (samlIdpEntityId.equals("")) {
+			else if (samlIdpEntityId.equals(StringPool.BLANK)) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_3);
 			}
 			else {
@@ -737,7 +738,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 			if (samlIdpResponseKey == null) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_1);
 			}
-			else if (samlIdpResponseKey.equals("")) {
+			else if (samlIdpResponseKey.equals(StringPool.BLANK)) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_3);
 			}
 			else {
@@ -861,7 +862,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 			if (samlIdpEntityId == null) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_1);
 			}
-			else if (samlIdpEntityId.equals("")) {
+			else if (samlIdpEntityId.equals(StringPool.BLANK)) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPENTITYID_3);
 			}
 			else {
@@ -875,7 +876,7 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 			if (samlIdpResponseKey == null) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_1);
 			}
-			else if (samlIdpResponseKey.equals("")) {
+			else if (samlIdpResponseKey.equals(StringPool.BLANK)) {
 				query.append(_FINDER_COLUMN_SIEI_SIRK_SAMLIDPRESPONSEKEY_3);
 			}
 			else {
@@ -1381,12 +1382,12 @@ public class SamlSpMessagePersistenceImpl extends BasePersistenceImpl<SamlSpMess
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(",");
+			query.append(StringPool.COMMA);
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(")");
+		query.append(StringPool.CLOSE_PARENTHESIS);
 
 		String sql = query.toString();
 

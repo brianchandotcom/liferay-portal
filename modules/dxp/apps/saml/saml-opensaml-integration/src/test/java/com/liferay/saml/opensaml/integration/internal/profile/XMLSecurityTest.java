@@ -223,7 +223,7 @@ public class XMLSecurityTest extends BaseSamlTestCase {
 
 		String authnRequestXML = OpenSamlUtil.marshall(authnRequest);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE ");
 		sb.append("saml2p:AuthnRequest [\n<!ENTITY % remote SYSTEM ");

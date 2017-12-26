@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 import com.liferay.saml.persistence.model.SamlSpAuthRequestModel;
@@ -226,7 +227,7 @@ public class SamlSpAuthRequestModelImpl extends BaseModelImpl<SamlSpAuthRequest>
 	@Override
 	public String getSamlIdpEntityId() {
 		if (_samlIdpEntityId == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 		else {
 			return _samlIdpEntityId;
@@ -251,7 +252,7 @@ public class SamlSpAuthRequestModelImpl extends BaseModelImpl<SamlSpAuthRequest>
 	@Override
 	public String getSamlSpAuthRequestKey() {
 		if (_samlSpAuthRequestKey == null) {
-			return "";
+			return StringPool.BLANK;
 		}
 		else {
 			return _samlSpAuthRequestKey;

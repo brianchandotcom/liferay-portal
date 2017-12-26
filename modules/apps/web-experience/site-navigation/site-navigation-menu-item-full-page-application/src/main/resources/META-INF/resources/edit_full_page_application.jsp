@@ -19,11 +19,15 @@
 <%
 SiteNavigationMenuItem siteNavigationMenuItem = (SiteNavigationMenuItem)request.getAttribute(SiteNavigationWebKeys.SITE_NAVIGATION_MENU_ITEM);
 
-UnicodeProperties typeSettingsProperties = new UnicodeProperties();
+String selectedFullPageApplicationPortlet = StringPool.BLANK;
 
-typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+if (siteNavigationMenuItem != null) {
+	UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
-String selectedFullPageApplicationPortlet = typeSettingsProperties.get("fullPageApplicationPortlet");
+	typeSettingsProperties.fastLoad(siteNavigationMenuItem.getTypeSettings());
+
+	selectedFullPageApplicationPortlet = typeSettingsProperties.get("fullPageApplicationPortlet");
+}
 %>
 
 <aui:select label='<%= LanguageUtil.get(resourceBundle, "application") %>' name="TypeSettingsProperties--fullPageApplicationPortlet--">

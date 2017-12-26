@@ -177,13 +177,13 @@ public class LayoutPageTemplateEntryServiceTest {
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 1", null, null, null, serviceContext);
+				"Fragment Entry 1", serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 2", null, null, null, serviceContext);
+				"Fragment Entry 2", serviceContext);
 
 		List<FragmentEntry> layoutPageTemplateFragmentEntries =
 			new ArrayList<>();
@@ -304,13 +304,13 @@ public class LayoutPageTemplateEntryServiceTest {
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 1", null, null, null, serviceContext);
+				"Fragment Entry 1", serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 2", null, null, null, serviceContext);
+				"Fragment Entry 2", serviceContext);
 
 		List<FragmentEntry> layoutPageTemplateFragmentEntries =
 			new ArrayList<>();

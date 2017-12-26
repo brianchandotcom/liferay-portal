@@ -695,6 +695,10 @@ public class FedExCommerceShippingOptionHelper {
 				_getRequestedPackageLineItemsOneItemPerPackage(
 					commerceCartItems);
 		}
+		else {
+			throw new IllegalArgumentException(
+				"Invalid packing type " + packingType);
+		}
 
 		requestedShipment.setDropoffType(
 			DropoffType.fromValue(

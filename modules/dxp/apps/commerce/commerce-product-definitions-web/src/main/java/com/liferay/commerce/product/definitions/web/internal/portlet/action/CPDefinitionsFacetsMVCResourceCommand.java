@@ -142,7 +142,8 @@ public class CPDefinitionsFacetsMVCResourceCommand
 				}
 			}
 		}
-		else {
+
+		if (facet == null) {
 			facet = new FacetImpl(indexFieldName, searchContext);
 
 			searchContext.addFacet(facet);

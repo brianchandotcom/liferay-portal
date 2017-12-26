@@ -30,7 +30,7 @@ public class FragmentEntryInstanceLinkLocalServiceImpl
 
 	@Override
 	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
-		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
+		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
 		int position) {
 
 		long fragmentEntryInstanceLinkId = counterLocalService.increment();
@@ -40,9 +40,9 @@ public class FragmentEntryInstanceLinkLocalServiceImpl
 				fragmentEntryInstanceLinkId);
 
 		fragmentEntryInstanceLink.setGroupId(groupId);
-		fragmentEntryInstanceLink.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryInstanceLink.setLayoutPageTemplateEntryId(
 			layoutPageTemplateEntryId);
+		fragmentEntryInstanceLink.setFragmentEntryId(fragmentEntryId);
 		fragmentEntryInstanceLink.setPosition(position);
 
 		fragmentEntryInstanceLinkPersistence.update(fragmentEntryInstanceLink);
@@ -51,8 +51,18 @@ public class FragmentEntryInstanceLinkLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentEntryInstanceLink> deleteByLayoutPageTemplateEntry(
-		long groupId, long layoutPageTemplateEntryId) {
+	public FragmentEntryInstanceLink deleteFragmentEntryInstanceLink(
+		FragmentEntryInstanceLink fragmentEntryInstanceLink) {
+
+		fragmentEntryInstanceLinkPersistence.remove(fragmentEntryInstanceLink);
+
+		return fragmentEntryInstanceLink;
+	}
+
+	@Override
+	public List<FragmentEntryInstanceLink>
+		deleteLayoutPageTemplateEntryFragmentEntryInstanceLinks(
+			long groupId, long layoutPageTemplateEntryId) {
 
 		List<FragmentEntryInstanceLink> deletedFragmentEntryInstanceLinks =
 			new ArrayList<>();
@@ -74,15 +84,6 @@ public class FragmentEntryInstanceLinkLocalServiceImpl
 		}
 
 		return deletedFragmentEntryInstanceLinks;
-	}
-
-	@Override
-	public FragmentEntryInstanceLink deleteFragmentEntryInstanceLink(
-		FragmentEntryInstanceLink fragmentEntryInstanceLink) {
-
-		fragmentEntryInstanceLinkPersistence.remove(fragmentEntryInstanceLink);
-
-		return fragmentEntryInstanceLink;
 	}
 
 	@Override

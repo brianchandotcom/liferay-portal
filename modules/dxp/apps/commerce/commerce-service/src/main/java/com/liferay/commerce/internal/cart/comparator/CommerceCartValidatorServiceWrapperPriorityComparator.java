@@ -18,13 +18,15 @@ import com.liferay.commerce.cart.CommerceCartValidator;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceCartValidatorServiceWrapperPriorityComparator
-	implements Comparator<ServiceWrapper<CommerceCartValidator>> {
+	implements Comparator<ServiceWrapper<CommerceCartValidator>>, Serializable {
 
 	public CommerceCartValidatorServiceWrapperPriorityComparator() {
 		this(true);

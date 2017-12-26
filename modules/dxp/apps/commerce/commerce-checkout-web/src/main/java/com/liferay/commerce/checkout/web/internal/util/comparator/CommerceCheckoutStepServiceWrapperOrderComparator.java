@@ -18,13 +18,15 @@ import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Marco Leo
  */
 public class CommerceCheckoutStepServiceWrapperOrderComparator
-	implements Comparator<ServiceWrapper<CommerceCheckoutStep>> {
+	implements Comparator<ServiceWrapper<CommerceCheckoutStep>>, Serializable {
 
 	public CommerceCheckoutStepServiceWrapperOrderComparator() {
 		this(true);

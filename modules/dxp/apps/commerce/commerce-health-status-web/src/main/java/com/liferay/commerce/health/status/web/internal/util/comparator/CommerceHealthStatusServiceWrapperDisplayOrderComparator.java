@@ -18,13 +18,15 @@ import com.liferay.commerce.health.status.web.util.CommerceHealthStatus;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceHealthStatusServiceWrapperDisplayOrderComparator
-	implements Comparator<ServiceWrapper<CommerceHealthStatus>> {
+	implements Comparator<ServiceWrapper<CommerceHealthStatus>>, Serializable {
 
 	public CommerceHealthStatusServiceWrapperDisplayOrderComparator() {
 		this(true);

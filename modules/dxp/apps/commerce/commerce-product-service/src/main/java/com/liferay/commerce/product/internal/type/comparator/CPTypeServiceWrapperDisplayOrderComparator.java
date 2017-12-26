@@ -18,13 +18,15 @@ import com.liferay.commerce.product.type.CPType;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Marco Leo
  */
 public class CPTypeServiceWrapperDisplayOrderComparator
-	implements Comparator<ServiceWrapper<CPType>> {
+	implements Comparator<ServiceWrapper<CPType>>, Serializable {
 
 	public CPTypeServiceWrapperDisplayOrderComparator() {
 		this(true);

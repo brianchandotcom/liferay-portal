@@ -16,13 +16,15 @@ package com.liferay.commerce.util.comparator;
 
 import com.liferay.commerce.model.CommerceShippingOption;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Andrea Di Giorgi
  */
 public class CommerceShippingOptionLabelComparator
-	implements Comparator<CommerceShippingOption> {
+	implements Comparator<CommerceShippingOption>, Serializable {
 
 	@Override
 	public int compare(

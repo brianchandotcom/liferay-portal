@@ -18,13 +18,16 @@ import com.liferay.commerce.price.CommercePriceListQualificationType;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Marco Leo
  */
 public class CommercePriceListQualificationTypeOrderComparator
-	implements Comparator<ServiceWrapper<CommercePriceListQualificationType>> {
+	implements Comparator<ServiceWrapper<CommercePriceListQualificationType>>,
+			   Serializable {
 
 	public CommercePriceListQualificationTypeOrderComparator() {
 		this(true);

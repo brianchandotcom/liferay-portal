@@ -70,18 +70,17 @@ String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplaySty
 					/>
 
 					<liferay-ui:search-container-column-text colspan="<%= 2 %>">
+						<h4>
+							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
+								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
+							</aui:a>
+						</h4>
 
 						<%
 						Date createDate = siteNavigationMenu.getCreateDate();
 
 						String createDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
 						%>
-
-						<h4>
-							<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
-								<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
-							</aui:a>
-						</h4>
 
 						<h5 class="text-default">
 							<liferay-ui:message arguments="<%= new String[] {siteNavigationMenu.getUserName(), createDateDescription} %>" key="x-created-x-ago" />

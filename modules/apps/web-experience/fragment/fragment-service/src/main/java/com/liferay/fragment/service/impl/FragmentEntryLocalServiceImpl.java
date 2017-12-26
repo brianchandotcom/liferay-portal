@@ -44,6 +44,42 @@ public class FragmentEntryLocalServiceImpl
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		// Fragment entry
+
+		User user = userLocalService.getUser(userId);
+
+		validate(groupId, 0, name);
+
+		long fragmentEntryId = counterLocalService.increment();
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.create(
+			fragmentEntryId);
+
+		fragmentEntry.setGroupId(groupId);
+		fragmentEntry.setCompanyId(user.getCompanyId());
+		fragmentEntry.setUserId(user.getUserId());
+		fragmentEntry.setUserName(user.getFullName());
+		fragmentEntry.setCreateDate(serviceContext.getCreateDate(new Date()));
+		fragmentEntry.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
+		fragmentEntry.setName(name);
+
+		fragmentEntryPersistence.update(fragmentEntry);
+
+		// Resources
+
+		resourceLocalService.addModelResources(fragmentEntry, serviceContext);
+
+		return fragmentEntry;
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
+			long userId, long groupId, long fragmentCollectionId, String name,
 			String css, String html, String js, ServiceContext serviceContext)
 		throws PortalException {
 

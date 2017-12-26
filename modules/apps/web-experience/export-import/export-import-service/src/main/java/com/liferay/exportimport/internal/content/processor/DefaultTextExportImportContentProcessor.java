@@ -1507,14 +1507,16 @@ public class DefaultTextExportImportContentProcessor
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
-				StringBundler sb = new StringBundler(5);
+				StringBundler sb = new StringBundler(8);
 
-				sb.append(
-					"Unable to validate referenced page because it cannot be");
-				sb.append("found with the following parameters: ");
-				sb.append("groupId " + groupId);
-				sb.append(", layoutId " + layoutId);
-				sb.append(", privateLayout " + privateLayout);
+				sb.append("Unable to validate referenced page because it ");
+				sb.append("cannot be found with the following parameters: ");
+				sb.append("groupId ");
+				sb.append(groupId);
+				sb.append(", layoutId ");
+				sb.append(layoutId);
+				sb.append(", privateLayout ");
+				sb.append(privateLayout);
 
 				throw new NoSuchLayoutException(sb.toString());
 			}

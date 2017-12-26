@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpAuthRequest;
 
@@ -98,14 +97,14 @@ public class SamlSpAuthRequestCacheModel implements CacheModel<SamlSpAuthRequest
 		}
 
 		if (samlIdpEntityId == null) {
-			samlSpAuthRequestImpl.setSamlIdpEntityId(StringPool.BLANK);
+			samlSpAuthRequestImpl.setSamlIdpEntityId("");
 		}
 		else {
 			samlSpAuthRequestImpl.setSamlIdpEntityId(samlIdpEntityId);
 		}
 
 		if (samlSpAuthRequestKey == null) {
-			samlSpAuthRequestImpl.setSamlSpAuthRequestKey(StringPool.BLANK);
+			samlSpAuthRequestImpl.setSamlSpAuthRequestKey("");
 		}
 		else {
 			samlSpAuthRequestImpl.setSamlSpAuthRequestKey(samlSpAuthRequestKey);
@@ -135,14 +134,14 @@ public class SamlSpAuthRequestCacheModel implements CacheModel<SamlSpAuthRequest
 		objectOutput.writeLong(createDate);
 
 		if (samlIdpEntityId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(samlIdpEntityId);
 		}
 
 		if (samlSpAuthRequestKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(samlSpAuthRequestKey);

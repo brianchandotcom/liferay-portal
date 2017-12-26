@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpSession;
 
@@ -112,7 +111,7 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		samlSpSessionImpl.setUserId(userId);
 
 		if (userName == null) {
-			samlSpSessionImpl.setUserName(StringPool.BLANK);
+			samlSpSessionImpl.setUserName("");
 		}
 		else {
 			samlSpSessionImpl.setUserName(userName);
@@ -133,56 +132,56 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		}
 
 		if (samlSpSessionKey == null) {
-			samlSpSessionImpl.setSamlSpSessionKey(StringPool.BLANK);
+			samlSpSessionImpl.setSamlSpSessionKey("");
 		}
 		else {
 			samlSpSessionImpl.setSamlSpSessionKey(samlSpSessionKey);
 		}
 
 		if (assertionXml == null) {
-			samlSpSessionImpl.setAssertionXml(StringPool.BLANK);
+			samlSpSessionImpl.setAssertionXml("");
 		}
 		else {
 			samlSpSessionImpl.setAssertionXml(assertionXml);
 		}
 
 		if (jSessionId == null) {
-			samlSpSessionImpl.setJSessionId(StringPool.BLANK);
+			samlSpSessionImpl.setJSessionId("");
 		}
 		else {
 			samlSpSessionImpl.setJSessionId(jSessionId);
 		}
 
 		if (nameIdFormat == null) {
-			samlSpSessionImpl.setNameIdFormat(StringPool.BLANK);
+			samlSpSessionImpl.setNameIdFormat("");
 		}
 		else {
 			samlSpSessionImpl.setNameIdFormat(nameIdFormat);
 		}
 
 		if (nameIdNameQualifier == null) {
-			samlSpSessionImpl.setNameIdNameQualifier(StringPool.BLANK);
+			samlSpSessionImpl.setNameIdNameQualifier("");
 		}
 		else {
 			samlSpSessionImpl.setNameIdNameQualifier(nameIdNameQualifier);
 		}
 
 		if (nameIdSPNameQualifier == null) {
-			samlSpSessionImpl.setNameIdSPNameQualifier(StringPool.BLANK);
+			samlSpSessionImpl.setNameIdSPNameQualifier("");
 		}
 		else {
 			samlSpSessionImpl.setNameIdSPNameQualifier(nameIdSPNameQualifier);
 		}
 
 		if (nameIdValue == null) {
-			samlSpSessionImpl.setNameIdValue(StringPool.BLANK);
+			samlSpSessionImpl.setNameIdValue("");
 		}
 		else {
 			samlSpSessionImpl.setNameIdValue(nameIdValue);
 		}
 
 		if (sessionIndex == null) {
-			samlSpSessionImpl.setSessionIndex(StringPool.BLANK);
+			samlSpSessionImpl.setSessionIndex("");
 		}
 		else {
 			samlSpSessionImpl.setSessionIndex(sessionIndex);
@@ -227,7 +226,7 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -237,56 +236,56 @@ public class SamlSpSessionCacheModel implements CacheModel<SamlSpSession>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (samlSpSessionKey == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(samlSpSessionKey);
 		}
 
 		if (assertionXml == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(assertionXml);
 		}
 
 		if (jSessionId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(jSessionId);
 		}
 
 		if (nameIdFormat == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(nameIdFormat);
 		}
 
 		if (nameIdNameQualifier == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(nameIdNameQualifier);
 		}
 
 		if (nameIdSPNameQualifier == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(nameIdSPNameQualifier);
 		}
 
 		if (nameIdValue == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(nameIdValue);
 		}
 
 		if (sessionIndex == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(sessionIndex);

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlSpIdpConnection;
 import com.liferay.saml.persistence.model.SamlSpIdpConnectionModel;
@@ -365,7 +364,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -376,7 +375,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -417,7 +416,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getSamlIdpEntityId() {
 		if (_samlIdpEntityId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _samlIdpEntityId;
@@ -513,7 +512,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getMetadataUrl() {
 		if (_metadataUrl == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metadataUrl;
@@ -528,7 +527,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getMetadataXml() {
 		if (_metadataXml == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _metadataXml;
@@ -553,7 +552,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -568,7 +567,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getNameIdFormat() {
 		if (_nameIdFormat == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdFormat;
@@ -598,7 +597,7 @@ public class SamlSpIdpConnectionModelImpl extends BaseModelImpl<SamlSpIdpConnect
 	@Override
 	public String getUserAttributeMappings() {
 		if (_userAttributeMappings == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userAttributeMappings;

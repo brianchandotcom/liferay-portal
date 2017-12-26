@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import com.liferay.saml.persistence.model.SamlIdpSpSession;
 import com.liferay.saml.persistence.model.SamlIdpSpSessionModel;
@@ -269,7 +268,7 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -280,7 +279,7 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -353,7 +352,7 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	@Override
 	public String getSamlSpEntityId() {
 		if (_samlSpEntityId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _samlSpEntityId;
@@ -378,7 +377,7 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	@Override
 	public String getNameIdFormat() {
 		if (_nameIdFormat == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdFormat;
@@ -393,7 +392,7 @@ public class SamlIdpSpSessionModelImpl extends BaseModelImpl<SamlIdpSpSession>
 	@Override
 	public String getNameIdValue() {
 		if (_nameIdValue == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _nameIdValue;

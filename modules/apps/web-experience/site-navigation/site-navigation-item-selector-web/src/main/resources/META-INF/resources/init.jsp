@@ -32,6 +32,8 @@ page import="com.liferay.site.navigation.item.selector.web.internal.display.cont
 page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />

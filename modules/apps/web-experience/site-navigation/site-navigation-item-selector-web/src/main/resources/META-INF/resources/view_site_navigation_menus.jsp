@@ -31,7 +31,12 @@ String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplaySty
 
 	<liferay-frontend:management-bar-filters>
 		<liferay-frontend:management-bar-navigation label="all">
-			<liferay-frontend:management-bar-filter-item active="<%= true %>" label="all" url="<%= siteNavigationItemSelectorViewDisplayContext.getPortletURL().toString() %>" />
+
+			<%
+			PortletURL portletURL = siteNavigationItemSelectorViewDisplayContext.getPortletURL();
+			%>
+
+			<liferay-frontend:management-bar-filter-item active="<%= true %>" label="all" url="<%= portletURL.toString() %>" />
 		</liferay-frontend:management-bar-navigation>
 
 		<liferay-frontend:management-bar-sort

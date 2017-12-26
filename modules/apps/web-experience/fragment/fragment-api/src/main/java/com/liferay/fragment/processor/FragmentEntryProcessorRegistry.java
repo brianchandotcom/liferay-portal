@@ -15,7 +15,6 @@
 package com.liferay.fragment.processor;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -49,10 +48,6 @@ public class FragmentEntryProcessorRegistry {
 	}
 
 	public void validateFragmentEntryHtml(String html) throws PortalException {
-		if (Validator.isNull(html)) {
-			return;
-		}
-
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_fragmentEntryProcessors) {
 

@@ -226,7 +226,7 @@ public class ShippingMethodCommerceCheckoutStep
 		int pos = commerceShippingOptionKey.indexOf(
 			COMMERCE_SHIPPING_OPTION_KEY_SEPARATOR);
 
-		long commerceShippingMethodId = Long.valueOf(
+		long commerceShippingMethodId = Long.parseLong(
 			commerceShippingOptionKey.substring(0, pos));
 		String shippingOptionName = commerceShippingOptionKey.substring(
 			pos + 1);

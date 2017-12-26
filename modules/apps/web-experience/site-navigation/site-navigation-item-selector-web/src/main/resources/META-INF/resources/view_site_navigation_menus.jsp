@@ -15,3 +15,30 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplayStyle();
+%>
+
+<liferay-frontend:management-bar searchContainerId="siteNavigationMenus">
+	<liferay-frontend:management-bar-buttons>
+		<liferay-frontend:management-bar-display-buttons
+			displayViews="<%= siteNavigationItemSelectorViewDisplayContext.getDisplayViews() %>"
+			portletURL="<%= siteNavigationItemSelectorViewDisplayContext.getPortletURL() %>"
+			selectedDisplayStyle="<%= displayStyle %>"
+		/>
+	</liferay-frontend:management-bar-buttons>
+
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-navigation label="all">
+			<liferay-frontend:management-bar-filter-item active="<%= true %>" label="all" url="<%= siteNavigationItemSelectorViewDisplayContext.getPortletURL().toString() %>" />
+		</liferay-frontend:management-bar-navigation>
+
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= siteNavigationItemSelectorViewDisplayContext.getOrderByCol() %>"
+			orderByType="<%= siteNavigationItemSelectorViewDisplayContext.getOrderByType() %>"
+			orderColumns="<%= siteNavigationItemSelectorViewDisplayContext.getOrderColumns() %>"
+			portletURL="<%= siteNavigationItemSelectorViewDisplayContext.getPortletURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>

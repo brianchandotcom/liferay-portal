@@ -17,12 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = fragmentDisplayContext.getEditFragmentEntryRedirect();
-
 FragmentEntry fragmentEntry = fragmentDisplayContext.getFragmentEntry();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(fragmentDisplayContext.getEditFragmentEntryRedirect());
 
 renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 %>
@@ -39,8 +37,24 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
 </portlet:actionURL>
 
+<liferay-ui:error exception="<%= FragmentEntryContentException.class %>">
+
+	<%
+	FragmentEntryContentException fece = (FragmentEntryContentException)errorException;
+	%>
+
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(fece.getMessage()) %>">
+			<%= fece.getMessage() %>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="invalid-fragment-html" />
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:error>
+
 <aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="fragmentEntryId" type="hidden" value="<%= fragmentDisplayContext.getFragmentEntryId() %>" />
 	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
 	<aui:input name="cssContent" type="hidden" value="" />
@@ -73,9 +87,9 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 					jsInput.value = event.js;
 				}
 			},
-			initialCSS: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getCss() : StringPool.BLANK) %>',
-			initialHTML: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getHtml() : StringPool.BLANK) %>',
-			initialJS: '<%= HtmlUtil.escapeJS((fragmentEntry != null) ? fragmentEntry.getJs() : StringPool.BLANK) %>',
+			initialCSS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getCssContent()) %>',
+			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
+			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
 			namespace: '<portlet:namespace />',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},

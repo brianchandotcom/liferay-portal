@@ -217,6 +217,10 @@ public class FragmentEntryLocalServiceImpl
 				"Name must not be null for group " + groupId);
 		}
 
+		if (fragmentEntryId <= 0) {
+			return;
+		}
+
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_N(
 			groupId, name);
 

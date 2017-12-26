@@ -142,7 +142,7 @@ public class ZipWriterImpl implements ZipWriter {
 		File.setDefaultArchiveDetector(
 			new DefaultArchiveDetector(
 				ArchiveDetector.ALL, "lar|" + ArchiveDetector.ALL.getSuffixes(),
-				new ZipDriver()));
+				new ZipDriver(StringPool.UTF8)));
 
 		TrueZIPHelperUtil.initialize();
 	}

@@ -15,13 +15,10 @@
 package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.NoSuchTierPriceEntryException;
 import com.liferay.commerce.price.list.web.internal.display.context.CommerceTierPriceEntryDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
 import com.liferay.commerce.service.CommerceTierPriceEntryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,32 +50,18 @@ public class EditCommerceTierPriceEntryMVCRenderCommand
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
 
-			CommerceTierPriceEntryDisplayContext
-				commerceTierPriceEntryDisplayContext =
-					new CommerceTierPriceEntryDisplayContext(
-						_commercePriceListActionHelper,
-						_commerceTierPriceEntryService, httpServletRequest);
+		CommerceTierPriceEntryDisplayContext
+			commerceTierPriceEntryDisplayContext =
+				new CommerceTierPriceEntryDisplayContext(
+					_commercePriceListActionHelper,
+					_commerceTierPriceEntryService, httpServletRequest);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceTierPriceEntryDisplayContext);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchTierPriceEntryException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT,
+			commerceTierPriceEntryDisplayContext);
 
 		return "/edit_tier_price_entry.jsp";
 	}

@@ -16,7 +16,6 @@ package com.liferay.commerce.price.list.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.exception.NoSuchPriceListException;
 import com.liferay.commerce.price.CommercePriceListQualificationTypeRegistry;
 import com.liferay.commerce.price.list.web.internal.display.context.CommercePriceListDisplayContext;
 import com.liferay.commerce.price.list.web.portlet.action.CommercePriceListActionHelper;
@@ -24,8 +23,6 @@ import com.liferay.commerce.service.CommercePriceListQualificationTypeRelService
 import com.liferay.commerce.service.CommercePriceListService;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -56,34 +53,18 @@ public class EditCommercePriceListMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			renderRequest);
 
-			CommercePriceListDisplayContext commercePriceListDisplayContext =
-				new CommercePriceListDisplayContext(
-					_commercePriceListActionHelper, _commerceCurrencyService,
-					_commercePriceListQualificationTypeRegistry,
-					_commercePriceListQualificationTypeRelService,
-					_commercePriceListService, httpServletRequest,
-					_itemSelector);
+		CommercePriceListDisplayContext commercePriceListDisplayContext =
+			new CommercePriceListDisplayContext(
+				_commercePriceListActionHelper, _commerceCurrencyService,
+				_commercePriceListQualificationTypeRegistry,
+				_commercePriceListQualificationTypeRelService,
+				_commercePriceListService, httpServletRequest, _itemSelector);
 
-			renderRequest.setAttribute(
-				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commercePriceListDisplayContext);
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchPriceListException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(renderRequest, e.getClass());
-
-				return "/error.jsp";
-			}
-			else {
-				throw new PortletException(e);
-			}
-		}
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_CONTEXT, commercePriceListDisplayContext);
 
 		return "/edit_price_list_screen_navigation.jsp";
 	}

@@ -48,10 +48,10 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntryInstanceLink addFragmentEntryInstanceLink(
-		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
+		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
 		int position) {
 		return _fragmentEntryInstanceLinkLocalService.addFragmentEntryInstanceLink(groupId,
-			fragmentEntryId, layoutPageTemplateEntryId, position);
+			layoutPageTemplateEntryId, fragmentEntryId, position);
 	}
 
 	/**
@@ -64,13 +64,6 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 	public com.liferay.fragment.model.FragmentEntryInstanceLink createFragmentEntryInstanceLink(
 		long fragmentEntryInstanceLinkId) {
 		return _fragmentEntryInstanceLinkLocalService.createFragmentEntryInstanceLink(fragmentEntryInstanceLinkId);
-	}
-
-	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntryInstanceLink> deleteByLayoutPageTemplateEntry(
-		long groupId, long layoutPageTemplateEntryId) {
-		return _fragmentEntryInstanceLinkLocalService.deleteByLayoutPageTemplateEntry(groupId,
-			layoutPageTemplateEntryId);
 	}
 
 	/**
@@ -97,6 +90,13 @@ public class FragmentEntryInstanceLinkLocalServiceWrapper
 		long fragmentEntryInstanceLinkId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryInstanceLinkLocalService.deleteFragmentEntryInstanceLink(fragmentEntryInstanceLinkId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntryInstanceLink> deleteLayoutPageTemplateEntryFragmentEntryInstanceLinks(
+		long groupId, long layoutPageTemplateEntryId) {
+		return _fragmentEntryInstanceLinkLocalService.deleteLayoutPageTemplateEntryFragmentEntryInstanceLinks(groupId,
+			layoutPageTemplateEntryId);
 	}
 
 	/**

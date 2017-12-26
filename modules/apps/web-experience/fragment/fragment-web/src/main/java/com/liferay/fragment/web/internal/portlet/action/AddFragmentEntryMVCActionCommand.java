@@ -59,9 +59,6 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "fragmentCollectionId");
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		String css = ParamUtil.getString(actionRequest, "cssContent");
-		String js = ParamUtil.getString(actionRequest, "jsContent");
-		String html = ParamUtil.getString(actionRequest, "htmlContent");
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -70,7 +67,7 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			FragmentEntry fragmentEntry =
 				_fragmentEntryService.addFragmentEntry(
 					serviceContext.getScopeGroupId(), fragmentCollectionId,
-					name, css, html, js, serviceContext);
+					name, serviceContext);
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 

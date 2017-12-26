@@ -62,6 +62,11 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 	}
 
 	@Override
+	public boolean equals(Object object) {
+		return super.equals(object);
+	}
+
+	@Override
 	public String[] getAvailableLanguageIds() {
 		Set<String> availableLanguageIds = new TreeSet<>();
 
@@ -219,6 +224,11 @@ public class CPDefinitionImpl extends CPDefinitionBaseImpl {
 			getCPDefinitionId());
 
 		return _urlTitleMap;
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
 	}
 
 	@Override

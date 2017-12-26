@@ -17,10 +17,9 @@ package com.liferay.site.navigation.item.selector.web.internal.display.context;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -32,6 +31,8 @@ import com.liferay.site.navigation.util.comparator.SiteNavigationMenuNameCompara
 
 import java.util.List;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,14 +43,10 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationItemSelectorViewDisplayContext {
 
 	public SiteNavigationItemSelectorViewDisplayContext(
-			LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse,
 			HttpServletRequest request, PortletURL portletURL,
 			String itemSelectedEventName)
 		throws PortalException {
 
-		_liferayPortletRequest = liferayPortletRequest;
-		_liferayPortletResponse = liferayPortletResponse;
 		_request = request;
 		_portletURL = portletURL;
 		_itemSelectedEventName = itemSelectedEventName;
@@ -144,7 +141,7 @@ public class SiteNavigationItemSelectorViewDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		SearchContainer searchContainer = new SearchContainer(
-			_liferayPortletRequest, getPortletURL(), null,
+			_getPortletRequest(), getPortletURL(), null,
 			"there-are-no-navigation-menus");
 
 		if (Validator.isNotNull(getKeywords())) {
@@ -159,7 +156,7 @@ public class SiteNavigationItemSelectorViewDisplayContext {
 		searchContainer.setOrderByType(getOrderByType());
 
 		EmptyOnClickRowChecker emptyOnClickRowChecker =
-			new EmptyOnClickRowChecker(_liferayPortletResponse);
+			new EmptyOnClickRowChecker(_getPortletResponse());
 
 		searchContainer.setRowChecker(emptyOnClickRowChecker);
 
@@ -217,11 +214,19 @@ public class SiteNavigationItemSelectorViewDisplayContext {
 		return orderByComparator;
 	}
 
+	private PortletRequest _getPortletRequest() {
+		return (PortletRequest)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_REQUEST);
+	}
+
+	private PortletResponse _getPortletResponse() {
+		return (PortletResponse)_request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_RESPONSE);
+	}
+
 	private String _displayStyle;
 	private final String _itemSelectedEventName;
 	private String _keywords;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private String _orderByCol;
 	private String _orderByType;
 	private final PortletURL _portletURL;

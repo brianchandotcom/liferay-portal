@@ -17,12 +17,8 @@ package com.liferay.site.navigation.item.selector.web.internal;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationItemSelectorCriterion;
@@ -36,8 +32,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletRequest;
-import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 
 import javax.servlet.RequestDispatcher;
@@ -104,23 +98,10 @@ public class SiteNavigationMenusItemSelectorView
 
 		ServletContext servletContext = getServletContext();
 
-		PortletRequest portletRequest = (PortletRequest)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_REQUEST);
-
-		LiferayPortletRequest liferayPortletRequest =
-			_portal.getLiferayPortletRequest(portletRequest);
-
-		PortletResponse portletResponse = (PortletResponse)request.getAttribute(
-			JavaConstants.JAVAX_PORTLET_RESPONSE);
-
-		LiferayPortletResponse liferayPortletResponse =
-			_portal.getLiferayPortletResponse(portletResponse);
-
 		try {
 			SiteNavigationItemSelectorViewDisplayContext
 				siteNavigationItemSelectorViewDisplayContext =
 					new SiteNavigationItemSelectorViewDisplayContext(
-						liferayPortletRequest, liferayPortletResponse,
 						(HttpServletRequest)request, portletURL,
 						itemSelectedEventName);
 
@@ -146,9 +127,6 @@ public class SiteNavigationMenusItemSelectorView
 				new ItemSelectorReturnType[] {
 					new UUIDItemSelectorReturnType()
 				}));
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.site.navigation.item.selector.web)"

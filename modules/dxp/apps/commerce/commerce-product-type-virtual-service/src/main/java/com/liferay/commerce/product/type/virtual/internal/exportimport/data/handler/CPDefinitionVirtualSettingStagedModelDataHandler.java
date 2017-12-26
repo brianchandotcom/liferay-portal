@@ -25,7 +25,6 @@ import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Map;
@@ -148,24 +147,6 @@ public class CPDefinitionVirtualSettingStagedModelDataHandler
 				getTermsOfUseJournalArticleResourcePrimKey(),
 			cpDefinitionVirtualSetting.
 				getTermsOfUseJournalArticleResourcePrimKey());
-
-		Element cpDefinitionVirtualSettingElement =
-			portletDataContext.getImportDataStagedModelElement(
-				cpDefinitionVirtualSetting);
-
-		String termsOfUseJournalArticleId =
-			cpDefinitionVirtualSettingElement.attributeValue(
-				"terms-of-use-journal-article-id");
-
-		if (Validator.isNotNull(termsOfUseJournalArticleId)) {
-			Map<String, String> articleArticleIds =
-				(Map<String, String>)portletDataContext.getNewPrimaryKeysMap(
-					JournalArticle.class + ".articleId");
-
-			termsOfUseJournalArticleId = MapUtil.getString(
-				articleArticleIds, termsOfUseJournalArticleId,
-				termsOfUseJournalArticleId);
-		}
 
 		CPDefinitionVirtualSetting importedCPDefinitionVirtualSetting =
 			(CPDefinitionVirtualSetting)cpDefinitionVirtualSetting.clone();

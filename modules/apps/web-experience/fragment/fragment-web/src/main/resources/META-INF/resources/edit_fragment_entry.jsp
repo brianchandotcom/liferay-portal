@@ -17,12 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = fragmentDisplayContext.getEditFragmentEntryRedirect();
-
 FragmentEntry fragmentEntry = fragmentDisplayContext.getFragmentEntry();
 
 portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
+portletDisplay.setURLBack(fragmentDisplayContext.getEditFragmentEntryRedirect());
 
 renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 %>
@@ -56,7 +54,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 </liferay-ui:error>
 
 <aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="fragmentEntryId" type="hidden" value="<%= fragmentDisplayContext.getFragmentEntryId() %>" />
 	<aui:input name="fragmentCollectionId" type="hidden" value="<%= fragmentDisplayContext.getFragmentCollectionId() %>" />
 	<aui:input name="cssContent" type="hidden" value="" />

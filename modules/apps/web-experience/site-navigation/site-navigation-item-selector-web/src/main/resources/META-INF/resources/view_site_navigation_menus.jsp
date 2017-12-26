@@ -20,7 +20,9 @@
 String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 
-<liferay-frontend:management-bar searchContainerId="siteNavigationMenus">
+<liferay-frontend:management-bar
+	searchContainerId="siteNavigationMenus"
+>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-display-buttons
 			displayViews="<%= siteNavigationItemSelectorViewDisplayContext.getDisplayViews() %>"

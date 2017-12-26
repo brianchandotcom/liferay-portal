@@ -3,10 +3,89 @@
 <FindBugsFilter>
 	<Match>
 		<Or>
+			<Class name="~.+\.model\..+Soap" />
+			<Class name="~.+\.model\.impl\..+ModelImpl" />
+		</Or>
+		<Or>
+			<And>
+				<Method name="~get.+Date" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Method name="~set.+Date" />
+				<Bug pattern="EI_EXPOSE_REP2" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
+		<Class name="~.+\.model\.impl\..+ModelImpl" />
+		<Or>
+			<And>
+				<Method name="equals" />
+				<Bug pattern="EQ_UNUSUAL" />
+			</And>
+			<And>
+				<Field name="TABLE_COLUMNS_MAP" type="java.util.Map" />
+				<Bug pattern="MS_MUTABLE_COLLECTION" />
+			</And>
+			<And>
+				<Method name="getDefaultLanguageId" />
+				<Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
+		<Or>
 			<Class name="~.+\.model\..+Wrapper" />
 			<Class name="~.+\.model\.impl\..+ModelImpl" />
 		</Or>
 		<Method name="clone" />
 		<Bug pattern="CN_IDIOM_NO_SUPER_CALL" />
+	</Match>
+	<Match>
+		<Class name="~.+\.exportimport\.data\.handler\..+StagedModelDataHandler" />
+		<Or>
+			<And>
+				<Method name="getClassNames" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Field name="CLASS_NAMES" type="java.lang.String[]" />
+				<Bug pattern="MS_PKGPROTECT" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
+		<Class name="~.+\.search\..+Searcher" />
+		<Or>
+			<And>
+				<Method name="getSearchClassNames" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Field name="CLASS_NAMES" type="java.lang.String[]" />
+				<Bug pattern="MS_PKGPROTECT" />
+			</And>
+		</Or>
+	</Match>
+	<Match>
+		<Or>
+			<Class name="~.+\.service\.permission\..+Permission" />
+			<Class name="~.+\.taglib\.internal\.servlet\.ServletContextUtil" />
+		</Or>
+		<Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+	</Match>
+	<Match>
+		<Class name="~.+\.util\.comparator\..+Comparator" />
+		<Or>
+			<And>
+				<Method name="getOrderByFields" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Field name="ORDER_BY_FIELDS" type="java.lang.String[]" />
+				<Bug pattern="MS_PKGPROTECT" />
+			</And>
+		</Or>
 	</Match>
 </FindBugsFilter>

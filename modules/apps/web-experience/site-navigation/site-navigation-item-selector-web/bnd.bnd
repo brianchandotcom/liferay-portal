@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Site Navigation Item Selector Web
+Bundle-SymbolicName: com.liferay.site.navigation.item.selector.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Site Navigation
+Web-ContextPath: /site-navigation-item-selector-web

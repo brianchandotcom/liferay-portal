@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.model.CompanyConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.Source;
@@ -160,19 +159,18 @@ public class DefinitionStagedModelDataHandler
 		Element attachmentElement = definitionElement.element("attachment");
 
 		String fileName = null;
-		InputStream inputStream = null;
+		String binPath = null;
 
-		try {
-			if (attachmentElement != null) {
-				String binPath = attachmentElement.attributeValue("bin-path");
-				String fullFileName = attachmentElement.attributeValue(
-					"full-file-name");
+		if (attachmentElement != null) {
+			binPath = attachmentElement.attributeValue("bin-path");
+			String fullFileName = attachmentElement.attributeValue(
+				"full-file-name");
 
-				fileName = FileUtil.getShortFileName(fullFileName);
+			fileName = FileUtil.getShortFileName(fullFileName);
+		}
 
-				inputStream = portletDataContext.getZipEntryAsInputStream(
-					binPath);
-			}
+		try (InputStream inputStream =
+				portletDataContext.getZipEntryAsInputStream(binPath)) {
 
 			Definition importedDefinition = null;
 
@@ -211,9 +209,6 @@ public class DefinitionStagedModelDataHandler
 
 			portletDataContext.importClassedModel(
 				definition, importedDefinition);
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream);
 		}
 	}
 

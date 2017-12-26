@@ -107,7 +107,7 @@ public class CPAssetCategoriesNavigationDisplayContext {
 			(ThemeDisplay)_httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		long[] groupIds = new long[0];
+		long[] groupIds = null;
 
 		try {
 			groupIds = _portal.getCurrentAndAncestorSiteGroupIds(

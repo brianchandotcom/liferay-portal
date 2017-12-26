@@ -14,10 +14,11 @@
 
 package com.liferay.apio.architect.routes;
 
-import com.liferay.apio.architect.alias.RequestFunction;
+import static com.liferay.apio.architect.routes.RoutesBuilderUtil.provide;
+
+import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.routes.NestedCreateItemFunction;
 import com.liferay.apio.architect.alias.routes.NestedGetPageFunction;
-import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveProvider;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustUseSameIdentifier;
 import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
@@ -31,9 +32,6 @@ import com.liferay.apio.architect.single.model.SingleModel;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
-import java.util.function.Function;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Holds information about the routes supported for a {@link
@@ -92,12 +90,11 @@ public class NestedCollectionRoutes<T> {
 
 		public Builder(
 			Class<T> modelClass, Class<U> identifierClass,
-			RequestFunction<Function<Class<?>, Optional<?>>>
-				provideClassFunction) {
+			ProvideFunction provideFunction) {
 
 			_modelClass = modelClass;
 			_identifierClass = identifierClass;
-			_provideClassFunction = provideClassFunction;
+			_provideFunction = provideFunction;
 		}
 
 		/**
@@ -110,15 +107,11 @@ public class NestedCollectionRoutes<T> {
 			BiFunction<V, Map<String, Object>, T> biFunction) {
 
 			_nestedCreateItemFunction =
-				httpServletRequest -> identifier -> body -> {
-					V v = _getIdentifier(identifier);
-
-					return biFunction.andThen(
-						t -> new SingleModel<>(t, _modelClass)
-					).apply(
-						v, body
-					);
-				};
+				httpServletRequest -> identifier -> body -> biFunction.andThen(
+					t -> new SingleModel<>(t, _modelClass)
+				).apply(
+					_getIdentifier(identifier), body
+				);
 
 			return this;
 		}
@@ -144,20 +137,14 @@ public class NestedCollectionRoutes<T> {
 			Class<D> dClass) {
 
 			_nestedCreateItemFunction =
-				httpServletRequest -> identifier -> body -> {
-					A a = _provideClass(httpServletRequest, aClass);
-					B b = _provideClass(httpServletRequest, bClass);
-					C c = _provideClass(httpServletRequest, cClass);
-					D d = _provideClass(httpServletRequest, dClass);
-
-					V v = _getIdentifier(identifier);
-
-					return hexaFunction.andThen(
+				httpServletRequest -> identifier -> body -> provide(
+					_provideFunction, httpServletRequest, aClass, bClass,
+					cClass, dClass,
+					a -> b -> c -> d -> hexaFunction.andThen(
 						t -> new SingleModel<>(t, _modelClass)
 					).apply(
-						v, body, a, b, c, d
-					);
-				};
+						_getIdentifier(identifier), body, a, b, c, d
+					));
 
 			return this;
 		}
@@ -180,19 +167,14 @@ public class NestedCollectionRoutes<T> {
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
 			_nestedCreateItemFunction =
-				httpServletRequest -> identifier -> body -> {
-					A a = _provideClass(httpServletRequest, aClass);
-					B b = _provideClass(httpServletRequest, bClass);
-					C c = _provideClass(httpServletRequest, cClass);
-
-					V v = _getIdentifier(identifier);
-
-					return pentaFunction.andThen(
+				httpServletRequest -> identifier -> body -> provide(
+					_provideFunction, httpServletRequest, aClass, bClass,
+					cClass,
+					a -> b -> c -> pentaFunction.andThen(
 						t -> new SingleModel<>(t, _modelClass)
 					).apply(
-						v, body, a, b, c
-					);
-				};
+						_getIdentifier(identifier), body, a, b, c
+					));
 
 			return this;
 		}
@@ -213,18 +195,13 @@ public class NestedCollectionRoutes<T> {
 			Class<A> aClass, Class<B> bClass) {
 
 			_nestedCreateItemFunction =
-				httpServletRequest -> identifier -> body -> {
-					A a = _provideClass(httpServletRequest, aClass);
-					B b = _provideClass(httpServletRequest, bClass);
-
-					V v = _getIdentifier(identifier);
-
-					return tetraFunction.andThen(
+				httpServletRequest -> identifier -> body -> provide(
+					_provideFunction, httpServletRequest, aClass, bClass,
+					a -> b -> tetraFunction.andThen(
 						t -> new SingleModel<>(t, _modelClass)
 					).apply(
-						v, body, a, b
-					);
-				};
+						_getIdentifier(identifier), body, a, b
+					));
 
 			return this;
 		}
@@ -243,17 +220,13 @@ public class NestedCollectionRoutes<T> {
 			Class<A> aClass) {
 
 			_nestedCreateItemFunction =
-				httpServletRequest -> identifier -> body -> {
-					A a = _provideClass(httpServletRequest, aClass);
-
-					V v = _getIdentifier(identifier);
-
-					return triFunction.andThen(
+				httpServletRequest -> identifier -> body -> provide(
+					_provideFunction, httpServletRequest, aClass,
+					a -> triFunction.andThen(
 						t -> new SingleModel<>(t, _modelClass)
 					).apply(
-						v, body, a
-					);
-				};
+						_getIdentifier(identifier), body, a
+					));
 
 			return this;
 		}
@@ -269,19 +242,14 @@ public class NestedCollectionRoutes<T> {
 			BiFunction<Pagination, V, PageItems<T>> biFunction) {
 
 			_nestedGetPageFunction =
-				httpServletRequest -> path -> identifier -> {
-					Pagination pagination = _provideClass(
-						httpServletRequest, Pagination.class);
-
-					V v = _getIdentifier(identifier);
-
-					return biFunction.andThen(
+				httpServletRequest -> path -> identifier -> provide(
+					_provideFunction, httpServletRequest, Pagination.class,
+					pagination -> biFunction.andThen(
 						items -> new Page<>(
 							_modelClass, items, pagination, path)
 					).apply(
-						pagination, v
-					);
-				};
+						pagination, _getIdentifier(identifier)
+					));
 
 			return this;
 		}
@@ -303,23 +271,15 @@ public class NestedCollectionRoutes<T> {
 			Class<D> dClass) {
 
 			_nestedGetPageFunction =
-				httpServletRequest -> path -> identifier -> {
-					Pagination pagination = _provideClass(
-						httpServletRequest, Pagination.class);
-					A a = _provideClass(httpServletRequest, aClass);
-					B b = _provideClass(httpServletRequest, bClass);
-					C c = _provideClass(httpServletRequest, cClass);
-					D d = _provideClass(httpServletRequest, dClass);
-
-					V v = _getIdentifier(identifier);
-
-					return hexaFunction.andThen(
+				httpServletRequest -> path -> identifier -> provide(
+					_provideFunction, httpServletRequest, Pagination.class,
+					aClass, bClass, cClass, dClass,
+					pagination -> a -> b -> c -> d -> hexaFunction.andThen(
 						items -> new Page<>(
 							_modelClass, items, pagination, path)
 					).apply(
-						pagination, v, a, b, c, d
-					);
-				};
+						pagination, _getIdentifier(identifier), a, b, c, d
+					));
 
 			return this;
 		}
@@ -339,22 +299,15 @@ public class NestedCollectionRoutes<T> {
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
 			_nestedGetPageFunction =
-				httpServletRequest -> path -> identifier -> {
-					Pagination pagination = _provideClass(
-						httpServletRequest, Pagination.class);
-					A a = _provideClass(httpServletRequest, aClass);
-					B b = _provideClass(httpServletRequest, bClass);
-					C c = _provideClass(httpServletRequest, cClass);
-
-					V v = _getIdentifier(identifier);
-
-					return pentaFunction.andThen(
+				httpServletRequest -> path -> identifier -> provide(
+					_provideFunction, httpServletRequest, Pagination.class,
+					aClass, bClass, cClass,
+					pagination -> a -> b -> c -> pentaFunction.andThen(
 						items -> new Page<>(
 							_modelClass, items, pagination, path)
 					).apply(
-						pagination, v, a, b, c
-					);
-				};
+						pagination, _getIdentifier(identifier), a, b, c
+					));
 
 			return this;
 		}
@@ -372,21 +325,15 @@ public class NestedCollectionRoutes<T> {
 			Class<A> aClass, Class<B> bClass) {
 
 			_nestedGetPageFunction =
-				httpServletRequest -> path -> identifier -> {
-					Pagination pagination = _provideClass(
-						httpServletRequest, Pagination.class);
-					A a = _provideClass(httpServletRequest, aClass);
-					B b = _provideClass(httpServletRequest, bClass);
-
-					V v = _getIdentifier(identifier);
-
-					return tetraFunction.andThen(
+				httpServletRequest -> path -> identifier -> provide(
+					_provideFunction, httpServletRequest, Pagination.class,
+					aClass, bClass,
+					pagination -> a -> b -> tetraFunction.andThen(
 						items -> new Page<>(
 							_modelClass, items, pagination, path)
 					).apply(
-						pagination, v, a, b
-					);
-				};
+						pagination, _getIdentifier(identifier), a, b
+					));
 
 			return this;
 		}
@@ -403,20 +350,15 @@ public class NestedCollectionRoutes<T> {
 			Class<A> aClass) {
 
 			_nestedGetPageFunction =
-				httpServletRequest -> path -> identifier -> {
-					Pagination pagination = _provideClass(
-						httpServletRequest, Pagination.class);
-					A a = _provideClass(httpServletRequest, aClass);
-
-					V v = _getIdentifier(identifier);
-
-					return triFunction.andThen(
+				httpServletRequest -> path -> identifier -> provide(
+					_provideFunction, httpServletRequest, Pagination.class,
+					aClass,
+					pagination -> a -> triFunction.andThen(
 						items -> new Page<>(
 							_modelClass, items, pagination, path)
 					).apply(
-						pagination, v, a
-					);
-				};
+						pagination, _getIdentifier(identifier), a
+					));
 
 			return this;
 		}
@@ -442,29 +384,11 @@ public class NestedCollectionRoutes<T> {
 			return (V)identifier;
 		}
 
-		@SuppressWarnings("unchecked")
-		private <V> V _provideClass(
-			HttpServletRequest httpServletRequest, Class<V> clazz) {
-
-			Optional<?> optional = _provideClassFunction.apply(
-				httpServletRequest
-			).apply(
-				clazz
-			);
-
-			return optional.map(
-				provided -> (V)provided
-			).orElseThrow(
-				() -> new MustHaveProvider(clazz)
-			);
-		}
-
 		private final Class<U> _identifierClass;
 		private final Class<T> _modelClass;
 		private NestedCreateItemFunction<T> _nestedCreateItemFunction;
 		private NestedGetPageFunction<T> _nestedGetPageFunction;
-		private final RequestFunction<Function<Class<?>, Optional<?>>>
-			_provideClassFunction;
+		private final ProvideFunction _provideFunction;
 
 	}
 

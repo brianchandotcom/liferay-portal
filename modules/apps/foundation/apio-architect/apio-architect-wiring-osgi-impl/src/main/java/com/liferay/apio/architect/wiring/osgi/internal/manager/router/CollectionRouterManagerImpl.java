@@ -14,7 +14,7 @@
 
 package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
-import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.router.CollectionRouter;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
@@ -27,7 +27,6 @@ import com.liferay.apio.architect.wiring.osgi.manager.router.CollectionRouterMan
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -88,11 +87,11 @@ public class CollectionRouterManagerImpl
 		ServiceReference<CollectionRouter> serviceReference,
 		Class<?> modelClass) {
 
-		RequestFunction<Function<Class<?>, Optional<?>>> provideClassFunction =
+		ProvideFunction provideFunction =
 			httpServletRequest -> clazz -> _providerManager.provideOptional(
 				clazz, httpServletRequest);
 
-		Builder builder = new Builder<>(modelClass, provideClassFunction);
+		Builder builder = new Builder<>(modelClass, provideFunction);
 
 		return collectionRouter.collectionRoutes(builder);
 	}

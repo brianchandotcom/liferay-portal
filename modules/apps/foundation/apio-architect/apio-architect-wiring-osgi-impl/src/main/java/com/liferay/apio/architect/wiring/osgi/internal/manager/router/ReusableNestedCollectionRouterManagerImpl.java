@@ -16,7 +16,7 @@ package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
-import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.router.ReusableNestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
@@ -26,7 +26,6 @@ import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassMa
 import com.liferay.apio.architect.wiring.osgi.manager.router.ReusableNestedCollectionRouterManager;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
@@ -72,12 +71,12 @@ public class ReusableNestedCollectionRouterManagerImpl
 			reusableNestedCollectionRouter,
 			ReusableNestedCollectionRouter.class, 1);
 
-		RequestFunction<Function<Class<?>, Optional<?>>> provideClassFunction =
+		ProvideFunction provideFunction =
 			httpServletRequest -> clazz -> _providerManager.provideOptional(
 				clazz, httpServletRequest);
 
 		Builder builder = new Builder<>(
-			modelClass, identifierClass, provideClassFunction);
+			modelClass, identifierClass, provideFunction);
 
 		return reusableNestedCollectionRouter.collectionRoutes(builder);
 	}

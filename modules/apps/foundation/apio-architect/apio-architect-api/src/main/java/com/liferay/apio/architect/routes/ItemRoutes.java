@@ -14,14 +14,16 @@
 
 package com.liferay.apio.architect.routes;
 
-import com.liferay.apio.architect.alias.RequestFunction;
+import static com.liferay.apio.architect.routes.RoutesBuilderUtil.provide;
+import static com.liferay.apio.architect.routes.RoutesBuilderUtil.provideConsumer;
+
+import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.alias.routes.DeleteItemConsumer;
 import com.liferay.apio.architect.alias.routes.GetItemFunction;
 import com.liferay.apio.architect.alias.routes.UpdateItemFunction;
 import com.liferay.apio.architect.consumer.PentaConsumer;
 import com.liferay.apio.architect.consumer.TetraConsumer;
 import com.liferay.apio.architect.consumer.TriConsumer;
-import com.liferay.apio.architect.error.ApioDeveloperError;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHavePathIdentifierMapper;
 import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
@@ -37,8 +39,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Holds information about the routes supported for a {@link
@@ -106,14 +106,13 @@ public class ItemRoutes<T> {
 
 		public Builder(
 			Class<T> modelClass, Class<U> identifierClass,
-			RequestFunction<Function<Class<?>, Optional<?>>>
-				provideClassFunction,
+			ProvideFunction provideFunction,
 			Supplier<BiFunction<Class<?>, Path,
 				Optional<?>>> identifierFunctionSupplier) {
 
 			_modelClass = modelClass;
 			_identifierClass = identifierClass;
-			_provideClassFunction = provideClassFunction;
+			_provideFunction = provideFunction;
 			_identifierFunctionSupplier = identifierFunctionSupplier;
 		}
 
@@ -127,17 +126,13 @@ public class ItemRoutes<T> {
 		public <A> ItemRoutes.Builder<T, U> addGetter(
 			BiFunction<U, A, T> biFunction, Class<A> aClass) {
 
-			_singleModelFunction = httpServletRequest -> path -> {
-				A a = _provideClass(httpServletRequest, aClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return biFunction.andThen(
+			_singleModelFunction = httpServletRequest -> path -> provide(
+				_provideFunction, httpServletRequest, aClass,
+				a -> biFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, a
-				);
-			};
+					_convertIdentifier(path, _identifierClass), a
+				));
 
 			return this;
 		}
@@ -173,20 +168,14 @@ public class ItemRoutes<T> {
 			PentaFunction<U, A, B, C, D, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass) {
 
-			_singleModelFunction = httpServletRequest -> path -> {
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-				C c = _provideClass(httpServletRequest, cClass);
-				D d = _provideClass(httpServletRequest, dClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return pentaFunction.andThen(
+			_singleModelFunction = httpServletRequest -> path -> provide(
+				_provideFunction, httpServletRequest, aClass, bClass, cClass,
+				dClass,
+				a -> b -> c -> d -> pentaFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, a, b, c, d
-				);
-			};
+					_convertIdentifier(path, _identifierClass), a, b, c, d
+				));
 
 			return this;
 		}
@@ -204,19 +193,13 @@ public class ItemRoutes<T> {
 			TetraFunction<U, A, B, C, T> tetraFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass) {
 
-			_singleModelFunction = httpServletRequest -> path -> {
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-				C c = _provideClass(httpServletRequest, cClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return tetraFunction.andThen(
+			_singleModelFunction = httpServletRequest -> path -> provide(
+				_provideFunction, httpServletRequest, aClass, bClass, cClass,
+				a -> b -> c -> tetraFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, a, b, c
-				);
-			};
+					_convertIdentifier(path, _identifierClass), a, b, c
+				));
 
 			return this;
 		}
@@ -233,18 +216,13 @@ public class ItemRoutes<T> {
 			TriFunction<U, A, B, T> triFunction, Class<A> aClass,
 			Class<B> bClass) {
 
-			_singleModelFunction = httpServletRequest -> path -> {
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return triFunction.andThen(
+			_singleModelFunction = httpServletRequest -> path -> provide(
+				_provideFunction, httpServletRequest, aClass, bClass,
+				a -> b -> triFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, a, b
-				);
-			};
+					_convertIdentifier(path, _identifierClass), a, b
+				));
 
 			return this;
 		}
@@ -260,12 +238,10 @@ public class ItemRoutes<T> {
 		public <A> ItemRoutes.Builder<T, U> addRemover(
 			BiConsumer<U, A> biConsumer, Class<A> aClass) {
 
-			_deleteItemConsumer = httpServletRequest -> path -> {
-				U u = _convertIdentifier(path, _identifierClass);
-				A a = _provideClass(httpServletRequest, aClass);
-
-				biConsumer.accept(u, a);
-			};
+			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
+				_provideFunction, httpServletRequest, aClass,
+				a -> biConsumer.accept(
+					_convertIdentifier(path, _identifierClass), a));
 
 			return this;
 		}
@@ -277,11 +253,8 @@ public class ItemRoutes<T> {
 		 * @return the updated builder
 		 */
 		public ItemRoutes.Builder<T, U> addRemover(Consumer<U> consumer) {
-			_deleteItemConsumer = httpServletRequest -> path -> {
-				U u = _convertIdentifier(path, _identifierClass);
-
-				consumer.accept(u);
-			};
+			_deleteItemConsumer = httpServletRequest -> path -> consumer.accept(
+				_convertIdentifier(path, _identifierClass));
 
 			return this;
 		}
@@ -304,15 +277,11 @@ public class ItemRoutes<T> {
 			PentaConsumer<U, A, B, C, D> pentaConsumer, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass) {
 
-			_deleteItemConsumer = httpServletRequest -> path -> {
-				U u = _convertIdentifier(path, _identifierClass);
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-				C c = _provideClass(httpServletRequest, cClass);
-				D d = _provideClass(httpServletRequest, dClass);
-
-				pentaConsumer.accept(u, a, b, c, d);
-			};
+			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
+				_provideFunction, httpServletRequest, aClass, bClass, cClass,
+				dClass,
+				a -> b -> c -> d -> pentaConsumer.accept(
+					_convertIdentifier(path, _identifierClass), a, b, c, d));
 
 			return this;
 		}
@@ -333,14 +302,10 @@ public class ItemRoutes<T> {
 			TetraConsumer<U, A, B, C> tetraConsumer, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass) {
 
-			_deleteItemConsumer = httpServletRequest -> path -> {
-				U u = _convertIdentifier(path, _identifierClass);
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-				C c = _provideClass(httpServletRequest, cClass);
-
-				tetraConsumer.accept(u, a, b, c);
-			};
+			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
+				_provideFunction, httpServletRequest, aClass, bClass, cClass,
+				a -> b -> c -> tetraConsumer.accept(
+					_convertIdentifier(path, _identifierClass), a, b, c));
 
 			return this;
 		}
@@ -359,13 +324,10 @@ public class ItemRoutes<T> {
 			TriConsumer<U, A, B> triConsumer, Class<A> aClass,
 			Class<B> bClass) {
 
-			_deleteItemConsumer = httpServletRequest -> path -> {
-				U u = _convertIdentifier(path, _identifierClass);
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-
-				triConsumer.accept(u, a, b);
-			};
+			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
+				_provideFunction, httpServletRequest, aClass, bClass,
+				a -> b -> triConsumer.accept(
+					_convertIdentifier(path, _identifierClass), a, b));
 
 			return this;
 		}
@@ -379,15 +341,12 @@ public class ItemRoutes<T> {
 		public ItemRoutes.Builder<T, U> addUpdater(
 			BiFunction<U, Map<String, Object>, T> biFunction) {
 
-			_updateItemFunction = httpServletRequest -> path -> body -> {
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return biFunction.andThen(
+			_updateItemFunction =
+				httpServletRequest -> path -> body -> biFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, body
+					_convertIdentifier(path, _identifierClass), body
 				);
-			};
 
 			return this;
 		}
@@ -411,20 +370,14 @@ public class ItemRoutes<T> {
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
 
-			_updateItemFunction = httpServletRequest -> path -> body -> {
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-				C c = _provideClass(httpServletRequest, cClass);
-				D d = _provideClass(httpServletRequest, dClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return hexaFunction.andThen(
+			_updateItemFunction = httpServletRequest -> path -> body -> provide(
+				_provideFunction, httpServletRequest, aClass, bClass, cClass,
+				dClass,
+				a -> b -> c -> d -> hexaFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, body, a, b, c, d
-				);
-			};
+					_convertIdentifier(path, _identifierClass), body, a, b, c, d
+				));
 
 			return this;
 		}
@@ -441,23 +394,17 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C> ItemRoutes.Builder<T, U> addUpdater(
+		public <A, B, C> Builder<T, U> addUpdater(
 			PentaFunction<U, Map<String, Object>, A, B, C, T> pentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
-			_updateItemFunction = httpServletRequest -> path -> body -> {
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-				C c = _provideClass(httpServletRequest, cClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return pentaFunction.andThen(
+			_updateItemFunction = httpServletRequest -> path -> body -> provide(
+				_provideFunction, httpServletRequest, aClass, bClass, cClass,
+				a -> b -> c -> pentaFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, body, a, b, c
-				);
-			};
+					_convertIdentifier(path, _identifierClass), body, a, b, c
+				));
 
 			return this;
 		}
@@ -476,18 +423,13 @@ public class ItemRoutes<T> {
 			TetraFunction<U, Map<String, Object>, A, B, T> tetraFunction,
 			Class<A> aClass, Class<B> bClass) {
 
-			_updateItemFunction = httpServletRequest -> path -> body -> {
-				A a = _provideClass(httpServletRequest, aClass);
-				B b = _provideClass(httpServletRequest, bClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return tetraFunction.andThen(
+			_updateItemFunction = httpServletRequest -> path -> body -> provide(
+				_provideFunction, httpServletRequest, aClass, bClass,
+				a -> b -> tetraFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, body, a, b
-				);
-			};
+					_convertIdentifier(path, _identifierClass), body, a, b
+				));
 
 			return this;
 		}
@@ -504,17 +446,13 @@ public class ItemRoutes<T> {
 			TriFunction<U, Map<String, Object>, A, T> triFunction,
 			Class<A> aClass) {
 
-			_updateItemFunction = httpServletRequest -> path -> body -> {
-				A a = _provideClass(httpServletRequest, aClass);
-
-				U u = _convertIdentifier(path, _identifierClass);
-
-				return triFunction.andThen(
+			_updateItemFunction = httpServletRequest -> path -> body -> provide(
+				_provideFunction, httpServletRequest, aClass,
+				a -> triFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					u, body, a
-				);
-			};
+					_convertIdentifier(path, _identifierClass), body, a
+				));
 
 			return this;
 		}
@@ -543,30 +481,12 @@ public class ItemRoutes<T> {
 			);
 		}
 
-		@SuppressWarnings("unchecked")
-		private <V> V _provideClass(
-			HttpServletRequest httpServletRequest, Class<V> clazz) {
-
-			Optional<?> optional = _provideClassFunction.apply(
-				httpServletRequest
-			).apply(
-				clazz
-			);
-
-			return optional.map(
-				provided -> (V)provided
-			).orElseThrow(
-				() -> new ApioDeveloperError.MustHaveProvider(clazz)
-			);
-		}
-
 		private DeleteItemConsumer _deleteItemConsumer;
 		private final Class<U> _identifierClass;
 		private final Supplier<BiFunction<Class<?>, Path,
 			Optional<?>>> _identifierFunctionSupplier;
 		private final Class<T> _modelClass;
-		private final RequestFunction<Function<Class<?>, Optional<?>>>
-			_provideClassFunction;
+		private final ProvideFunction _provideFunction;
 		private GetItemFunction<T> _singleModelFunction;
 		private UpdateItemFunction<T> _updateItemFunction;
 

@@ -19,7 +19,7 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.resource.R
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getGenericClassFromPropertyOrElse;
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
-import com.liferay.apio.architect.alias.RequestFunction;
+import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
@@ -31,7 +31,6 @@ import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRou
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 
 import java.util.Optional;
-import java.util.function.Function;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -117,12 +116,12 @@ public class NestedCollectionRouterManagerImpl
 			() -> getTypeParamOrFail(
 				nestedCollectionRouter, NestedCollectionRouter.class, 2));
 
-		RequestFunction<Function<Class<?>, Optional<?>>> provideClassFunction =
+		ProvideFunction provideFunction =
 			httpServletRequest -> clazz -> _providerManager.provideOptional(
 				clazz, httpServletRequest);
 
 		Builder builder = new Builder<>(
-			modelClass, identifierClass, provideClassFunction);
+			modelClass, identifierClass, provideFunction);
 
 		return nestedCollectionRouter.collectionRoutes(builder);
 	}

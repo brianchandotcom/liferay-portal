@@ -185,19 +185,17 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry 2", null, null, null, serviceContext);
 
-		List<FragmentEntry> fragmentEntryInstanceLinkEntries =
-			new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		fragmentEntryInstanceLinkEntries.add(fragmentEntry1);
-		fragmentEntryInstanceLinkEntries.add(fragmentEntry2);
+		fragmentEntries.add(fragmentEntry1);
+		fragmentEntries.add(fragmentEntry2);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", fragmentEntryInstanceLinkEntries,
-				serviceContext);
+				"Layout Page Template Entry", fragmentEntries, serviceContext);
 
 		List<FragmentEntryInstanceLink> actualLayoutPageTemplateEntriesCount =
 			FragmentEntryInstanceLinkLocalServiceUtil.
@@ -312,19 +310,17 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry 2", null, null, null, serviceContext);
 
-		List<FragmentEntry> fragmentEntryInstanceLinkEntries =
-			new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		fragmentEntryInstanceLinkEntries.add(fragmentEntry1);
-		fragmentEntryInstanceLinkEntries.add(fragmentEntry2);
+		fragmentEntries.add(fragmentEntry1);
+		fragmentEntries.add(fragmentEntry2);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", fragmentEntryInstanceLinkEntries,
-				serviceContext);
+				"Layout Page Template Entry", fragmentEntries, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), "New name",

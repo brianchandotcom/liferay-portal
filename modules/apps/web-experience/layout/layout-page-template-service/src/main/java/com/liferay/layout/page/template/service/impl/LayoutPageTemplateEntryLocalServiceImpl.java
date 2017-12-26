@@ -114,9 +114,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Fragment entry instance links
 
-		_fragmentEntryInstanceLinkLocalService.deleteByLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getGroupId(),
-			layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
+		_fragmentEntryInstanceLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryInstanceLinks(
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
 		// HTML preview
 
@@ -223,8 +224,10 @@ public class LayoutPageTemplateEntryLocalServiceImpl
 
 		// Fragment entry instance links
 
-		_fragmentEntryInstanceLinkLocalService.deleteByLayoutPageTemplateEntry(
-			layoutPageTemplateEntry.getGroupId(), layoutPageTemplateEntryId);
+		_fragmentEntryInstanceLinkLocalService.
+			deleteLayoutPageTemplateEntryFragmentEntryInstanceLinks(
+				layoutPageTemplateEntry.getGroupId(),
+				layoutPageTemplateEntryId);
 
 		if (fragmentEntries != null) {
 			int position = 0;

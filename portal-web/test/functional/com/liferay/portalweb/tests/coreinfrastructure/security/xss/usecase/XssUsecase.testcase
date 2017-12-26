@@ -231,7 +231,7 @@
 		<execute function="AssertElementNotPresent" locator1="//body[.='XSS']" />
 	</command>
 
-	<command name="ViewMobileDeviceRulesNoXSS">
+	<command name="ViewMobileDeviceRulesNoXSS" priority="5">
 		<description message="This is a use case for LPS-42750." />
 
 		<execute macro="ProductMenu#gotoPortlet">

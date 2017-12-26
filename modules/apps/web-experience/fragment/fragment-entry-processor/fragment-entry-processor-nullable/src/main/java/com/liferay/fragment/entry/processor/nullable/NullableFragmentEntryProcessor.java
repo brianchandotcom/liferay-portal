@@ -17,7 +17,11 @@ package com.liferay.fragment.entry.processor.nullable;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -30,7 +34,13 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Override
 	public void validateFragmentEntryHtml(String html) throws PortalException {
 		if (Validator.isNull(html)) {
-			throw new FragmentEntryContentException();
+			ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+				"content.Language", getClass());
+
+			String message = LanguageUtil.get(
+				resourceBundle, "html-content-cannot-be-empty");
+
+			throw new FragmentEntryContentException(message);
 		}
 	}
 

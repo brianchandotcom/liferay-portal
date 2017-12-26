@@ -58,6 +58,7 @@ public class USACommerceRegionsStarter implements CommerceRegionsStarter {
 		return JSONFactoryUtil.createJSONArray(regionsJSON);
 	}
 
+	@Override
 	public void start(ServiceContext serviceContext) throws Exception {
 		CommerceCountry commerceCountry = getCommerceCountry(
 			serviceContext.getScopeGroupId());

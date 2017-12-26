@@ -813,7 +813,7 @@
 
 		<!-- PK fields -->
 
-		<column name="CommerceTierPriceEntryId" primary="true" type="long" />
+		<column name="commerceTierPriceEntryId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

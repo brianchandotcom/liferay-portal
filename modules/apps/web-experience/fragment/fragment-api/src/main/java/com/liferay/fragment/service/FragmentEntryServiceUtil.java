@@ -51,10 +51,9 @@ public class FragmentEntryServiceUtil {
 			html, js, serviceContext);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry> deleteFragmentEntries(
-		long[] fragmentEntriesIds)
+	public static void deleteFragmentEntries(long[] fragmentEntriesIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteFragmentEntries(fragmentEntriesIds);
+		getService().deleteFragmentEntries(fragmentEntriesIds);
 	}
 
 	public static com.liferay.fragment.model.FragmentEntry deleteFragmentEntry(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.model;
+package com.liferay.fragment.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -21,29 +21,28 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the LayoutPageTemplateFragment service. Represents a row in the &quot;LayoutPageTemplateFragment&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the FragmentEntryInstanceLink service. Represents a row in the &quot;FragmentEntryInstanceLink&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see LayoutPageTemplateFragmentModel
- * @see com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl
- * @see com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentModelImpl
+ * @see FragmentEntryInstanceLinkModel
+ * @see com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl
+ * @see com.liferay.fragment.model.impl.FragmentEntryInstanceLinkModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl")
+@ImplementationClassName("com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl")
 @ProviderType
-public interface LayoutPageTemplateFragment
-	extends LayoutPageTemplateFragmentModel, PersistedModel {
+public interface FragmentEntryInstanceLink
+	extends FragmentEntryInstanceLinkModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.layout.page.template.model.impl.LayoutPageTemplateFragmentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.fragment.model.impl.FragmentEntryInstanceLinkImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<LayoutPageTemplateFragment, Long> LAYOUT_PAGE_TEMPLATE_FRAGMENT_ID_ACCESSOR =
-		new Accessor<LayoutPageTemplateFragment, Long>() {
+	public static final Accessor<FragmentEntryInstanceLink, Long> FRAGMENT_ENTRY_INSTANCE_LINK_ID_ACCESSOR =
+		new Accessor<FragmentEntryInstanceLink, Long>() {
 			@Override
-			public Long get(
-				LayoutPageTemplateFragment layoutPageTemplateFragment) {
-				return layoutPageTemplateFragment.getLayoutPageTemplateFragmentId();
+			public Long get(FragmentEntryInstanceLink fragmentEntryInstanceLink) {
+				return fragmentEntryInstanceLink.getFragmentEntryInstanceLinkId();
 			}
 
 			@Override
@@ -52,8 +51,8 @@ public interface LayoutPageTemplateFragment
 			}
 
 			@Override
-			public Class<LayoutPageTemplateFragment> getTypeClass() {
-				return LayoutPageTemplateFragment.class;
+			public Class<FragmentEntryInstanceLink> getTypeClass() {
+				return FragmentEntryInstanceLink.class;
 			}
 		};
 

@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +11,32 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.fragment.exception;
 
-<%
-List<FragmentEntryInstanceLink> fragmentEntryInstanceLinks = (List<FragmentEntryInstanceLink>)request.getAttribute(ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS);
-%>
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+
+/**
+ * @author Brian Wing Shun Chan
+ */
+@ProviderType
+public class NoSuchEntryInstanceLinkException extends NoSuchModelException {
+
+	public NoSuchEntryInstanceLinkException() {
+	}
+
+	public NoSuchEntryInstanceLinkException(String msg) {
+		super(msg);
+	}
+
+	public NoSuchEntryInstanceLinkException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public NoSuchEntryInstanceLinkException(Throwable cause) {
+		super(cause);
+	}
+
+}

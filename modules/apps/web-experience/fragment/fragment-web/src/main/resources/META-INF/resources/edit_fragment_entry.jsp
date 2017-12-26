@@ -39,7 +39,21 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
 </portlet:actionURL>
 
-<liferay-ui:error exception="<%= FragmentEntryContentException.class %>" message="invalid-fragment-html" />
+<liferay-ui:error exception="<%= FragmentEntryContentException.class %>">
+
+	<%
+	FragmentEntryContentException fece = (FragmentEntryContentException)errorException;
+	%>
+
+	<c:choose>
+		<c:when test="<%= Validator.isNotNull(fece.getMessage()) %>">
+			<%= fece.getMessage() %>
+		</c:when>
+		<c:otherwise>
+			<liferay-ui:message key="invalid-fragment-html" />
+		</c:otherwise>
+	</c:choose>
+</liferay-ui:error>
 
 <aui:form action="<%= editFragmentEntryURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="fm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />

@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 /**
  * @author Pavel Savinov
  */
-@Component(immediate = true, service = FragmentEntryProcessorUtil.class)
-public class FragmentEntryProcessorUtil {
+@Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
+public class FragmentEntryProcessorRegistry {
 
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,

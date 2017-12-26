@@ -42,4 +42,17 @@
 		<Method name="clone" />
 		<Bug pattern="CN_IDIOM_NO_SUPER_CALL" />
 	</Match>
+	<Match>
+		<Class name="~.+\.util\.comparator\..+Comparator" />
+		<Or>
+			<And>
+				<Method name="getOrderByFields" />
+				<Bug pattern="EI_EXPOSE_REP" />
+			</And>
+			<And>
+				<Field name="ORDER_BY_FIELDS" type="java.lang.String[]" />
+				<Bug pattern="MS_PKGPROTECT" />
+			</And>
+		</Or>
+	</Match>
 </FindBugsFilter>

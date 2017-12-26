@@ -50,30 +50,30 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler query = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-			query.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
-			query.append("WHERE ");
-			query.append("ShoppingItem.groupId = ? AND (");
+			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
+			sb.append("WHERE ");
+			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
-					query.append("ShoppingItem.categoryId = ? ");
+					sb.append("ShoppingItem.categoryId = ? ");
 
 					if ((i + 1) < categoryIds.length) {
-						query.append("OR ");
+						sb.append("OR ");
 					}
 				}
 
-				query.append(") AND ");
+				sb.append(") AND ");
 			}
 
-			query.append("ShoppingItem.featured = ? AND ");
-			query.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.featured = ? AND ");
+			sb.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -127,31 +127,31 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler query = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-			query.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
-			query.append("WHERE ");
-			query.append("ShoppingItem.groupId = ? AND (");
+			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
+			sb.append("WHERE ");
+			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
-					query.append("ShoppingItem.categoryId = ? ");
+					sb.append("ShoppingItem.categoryId = ? ");
 
 					if ((i + 1) < categoryIds.length) {
-						query.append("OR ");
+						sb.append("OR ");
 					}
 				}
 
-				query.append(") AND ");
+				sb.append(") AND ");
 			}
 
-			query.append("(ShoppingItem.name LIKE ? OR ");
-			query.append("ShoppingItem.description LIKE ? OR ");
-			query.append("ShoppingItem.properties LIKE ?))");
+			sb.append("(ShoppingItem.name LIKE ? OR ");
+			sb.append("ShoppingItem.description LIKE ? OR ");
+			sb.append("ShoppingItem.properties LIKE ?))");
 
-			String sql = CustomSQLUtil.replaceOrderBy(query.toString(), obc);
+			String sql = CustomSQLUtil.replaceOrderBy(sb.toString(), obc);
 
 			keywords = '%' + keywords + '%';
 
@@ -200,30 +200,30 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler query = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-			query.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
-			query.append("WHERE ");
-			query.append("ShoppingItem.groupId = ? AND (");
+			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
+			sb.append("WHERE ");
+			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
-					query.append("ShoppingItem.categoryId = ? ");
+					sb.append("ShoppingItem.categoryId = ? ");
 
 					if ((i + 1) < categoryIds.length) {
-						query.append("OR ");
+						sb.append("OR ");
 					}
 				}
 
-				query.append(") AND ");
+				sb.append(") AND ");
 			}
 
-			query.append("ShoppingItem.sale = ? AND ");
-			query.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.sale = ? AND ");
+			sb.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
@@ -281,30 +281,30 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler query = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-			query.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
-			query.append("WHERE ");
-			query.append("ShoppingItem.groupId = ? AND (");
+			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
+			sb.append("WHERE ");
+			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
-					query.append("ShoppingItem.categoryId = ? ");
+					sb.append("ShoppingItem.categoryId = ? ");
 
 					if ((i + 1) < categoryIds.length) {
-						query.append("OR ");
+						sb.append("OR ");
 					}
 				}
 
-				query.append(") AND ");
+				sb.append(") AND ");
 			}
 
-			query.append("ShoppingItem.featured = ? AND ");
-			query.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.featured = ? AND ");
+			sb.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
 			q.addEntity("ShoppingItem", ShoppingItemImpl.class);
 
@@ -349,31 +349,31 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler query = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-			query.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
-			query.append("WHERE ");
-			query.append("ShoppingItem.groupId = ? AND (");
+			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
+			sb.append("WHERE ");
+			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
-					query.append("ShoppingItem.categoryId = ? ");
+					sb.append("ShoppingItem.categoryId = ? ");
 
 					if ((i + 1) < categoryIds.length) {
-						query.append("OR ");
+						sb.append("OR ");
 					}
 				}
 
-				query.append(") AND ");
+				sb.append(") AND ");
 			}
 
-			query.append("(ShoppingItem.name LIKE ? OR ");
-			query.append("ShoppingItem.description LIKE ? OR ");
-			query.append("ShoppingItem.properties LIKE ?))");
+			sb.append("(ShoppingItem.name LIKE ? OR ");
+			sb.append("ShoppingItem.description LIKE ? OR ");
+			sb.append("ShoppingItem.properties LIKE ?))");
 
-			String sql = CustomSQLUtil.replaceOrderBy(query.toString(), obc);
+			String sql = CustomSQLUtil.replaceOrderBy(sb.toString(), obc);
 
 			keywords = '%' + keywords + '%';
 
@@ -417,30 +417,30 @@ public class ShoppingItemFinderImpl
 		try {
 			session = openSession();
 
-			StringBundler query = new StringBundler();
+			StringBundler sb = new StringBundler();
 
-			query.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
-			query.append("WHERE ");
-			query.append("ShoppingItem.groupId = ? AND (");
+			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
+			sb.append("WHERE ");
+			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
-				query.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(StringPool.OPEN_PARENTHESIS);
 
 				for (int i = 0; i < categoryIds.length; i++) {
-					query.append("ShoppingItem.categoryId = ? ");
+					sb.append("ShoppingItem.categoryId = ? ");
 
 					if ((i + 1) < categoryIds.length) {
-						query.append("OR ");
+						sb.append("OR ");
 					}
 				}
 
-				query.append(") AND ");
+				sb.append(") AND ");
 			}
 
-			query.append("ShoppingItem.sale = ? AND ");
-			query.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.sale = ? AND ");
+			sb.append("ShoppingItem.smallImage = ?");
 
-			SQLQuery q = session.createSynchronizedSQLQuery(query.toString());
+			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
 			q.addEntity("ShoppingItem", ShoppingItemImpl.class);
 

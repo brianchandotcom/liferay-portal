@@ -142,7 +142,7 @@ public class BaseCmisSearchQueryBuilder implements CMISSearchQueryBuilder {
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("CMIS query " + sb);
+			_log.debug("CMIS query " + sb.toString());
 		}
 
 		return sb.toString();

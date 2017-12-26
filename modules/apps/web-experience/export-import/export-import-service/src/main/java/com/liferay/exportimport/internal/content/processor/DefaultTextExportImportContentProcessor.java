@@ -1046,11 +1046,11 @@ public class DefaultTextExportImportContentProcessor
 			}
 		}
 
-		StringBundler siteAdminURL = new StringBundler(3);
+		StringBundler sb = new StringBundler(3);
 
-		siteAdminURL.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
-		siteAdminURL.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
-		siteAdminURL.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
+		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
 		content = StringUtil.replace(
 			content, _DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
@@ -1131,7 +1131,7 @@ public class DefaultTextExportImportContentProcessor
 			content, _DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 		content = StringUtil.replace(
-			content, _DATA_HANDLER_SITE_ADMIN_URL, siteAdminURL.toString());
+			content, _DATA_HANDLER_SITE_ADMIN_URL, sb.toString());
 
 		return content;
 	}
@@ -1507,17 +1507,18 @@ public class DefaultTextExportImportContentProcessor
 				groupId, privateLayout, layoutId);
 
 			if (layout == null) {
-				StringBundler exceptionMessage = new StringBundler(5);
+				StringBundler sb = new StringBundler(8);
 
-				exceptionMessage.append(
-					"Unable to validate referenced page because it cannot be");
-				exceptionMessage.append(
-					"found with the following parameters: ");
-				exceptionMessage.append("groupId " + groupId);
-				exceptionMessage.append(", layoutId " + layoutId);
-				exceptionMessage.append(", privateLayout " + privateLayout);
+				sb.append("Unable to validate referenced page because it ");
+				sb.append("cannot be found with the following parameters: ");
+				sb.append("groupId ");
+				sb.append(groupId);
+				sb.append(", layoutId ");
+				sb.append(layoutId);
+				sb.append(", privateLayout ");
+				sb.append(privateLayout);
 
-				throw new NoSuchLayoutException(exceptionMessage.toString());
+				throw new NoSuchLayoutException(sb.toString());
 			}
 		}
 	}

@@ -140,10 +140,10 @@ public class TemplateProcessor implements ColumnProcessor {
 				portlet, columnId, columnCount, columnPos);
 
 			if (_portletAjaxRender && (portlet.getRenderWeight() < 1)) {
-				StringBundler renderResult = portletRenderer.renderAjax(
+				StringBundler renderResultSB = portletRenderer.renderAjax(
 					_request, _response);
 
-				sb.append(renderResult);
+				sb.append(renderResultSB);
 			}
 			else {
 				Integer renderWeight = portlet.getRenderWeight();

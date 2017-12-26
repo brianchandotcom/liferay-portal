@@ -69,6 +69,13 @@
 		</Or>
 	</Match>
 	<Match>
+		<Or>
+			<Class name="~.+\.service\.permission\..+Permission" />
+			<Class name="~.+\.taglib\.internal\.servlet\.ServletContextUtil" />
+		</Or>
+		<Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+	</Match>
+	<Match>
 		<Class name="~.+\.util\.comparator\..+Comparator" />
 		<Or>
 			<And>

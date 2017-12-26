@@ -54,7 +54,7 @@ public class DQLQueryBuilder {
 			SearchContext searchContext, Query query)
 		throws SearchException {
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("SELECT COUNT(r_object_id) AS num_hits FROM ");
 		sb.append(Constants.DM_DOCUMENT);

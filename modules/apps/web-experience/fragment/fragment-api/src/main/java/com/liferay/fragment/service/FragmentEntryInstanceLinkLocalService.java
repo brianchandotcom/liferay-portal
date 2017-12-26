@@ -72,7 +72,7 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 		FragmentEntryInstanceLink fragmentEntryInstanceLink);
 
 	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
-		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
+		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
 		int position);
 
 	/**
@@ -83,9 +83,6 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 	*/
 	public FragmentEntryInstanceLink createFragmentEntryInstanceLink(
 		long fragmentEntryInstanceLinkId);
-
-	public List<FragmentEntryInstanceLink> deleteByLayoutPageTemplateEntry(
-		long groupId, long layoutPageTemplateEntryId);
 
 	/**
 	* Deletes the fragment entry instance link from the database. Also notifies the appropriate model listeners.
@@ -107,6 +104,9 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public FragmentEntryInstanceLink deleteFragmentEntryInstanceLink(
 		long fragmentEntryInstanceLinkId) throws PortalException;
+
+	public List<FragmentEntryInstanceLink> deleteLayoutPageTemplateEntryFragmentEntryInstanceLinks(
+		long groupId, long layoutPageTemplateEntryId);
 
 	/**
 	* @throws PortalException

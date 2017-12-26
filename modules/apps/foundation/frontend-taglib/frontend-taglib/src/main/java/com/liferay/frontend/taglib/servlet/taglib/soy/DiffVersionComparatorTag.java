@@ -44,7 +44,7 @@ import javax.portlet.RenderResponse;
 /**
  * @author Robert Frampton
  */
-public class DiffVersionComparatorSoyTag extends TemplateRendererTag {
+public class DiffVersionComparatorTag extends TemplateRendererTag {
 
 	public JSONObject createDiffVersionJSONObject(DiffVersion diffVersion,
 		PortletURL sourceURL, PortletURL targetURL) throws PortalException {
@@ -174,7 +174,7 @@ public class DiffVersionComparatorSoyTag extends TemplateRendererTag {
 
 	@Override
 	public String getModule() {
-		return "frontend-taglib/diff_version_comparator_soy/DiffVersionComparator.es";
+		return "frontend-taglib/diff_version_comparator/DiffVersionComparator.es";
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {
@@ -242,7 +242,7 @@ public class DiffVersionComparatorSoyTag extends TemplateRendererTag {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		DiffVersionComparatorSoyTag.class);
+		DiffVersionComparatorTag.class);
 
 	private static final String[] languageKeys = {
 		"added", "deleted", "first-version", "format-changes", "last-version",

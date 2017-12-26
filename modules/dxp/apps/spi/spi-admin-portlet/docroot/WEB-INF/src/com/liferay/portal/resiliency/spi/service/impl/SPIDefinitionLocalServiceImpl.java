@@ -53,7 +53,7 @@ import com.liferay.portal.resiliency.spi.exception.InvalidSPIDefinitionConnector
 import com.liferay.portal.resiliency.spi.exception.SPIDefinitionActiveException;
 import com.liferay.portal.resiliency.spi.model.SPIDefinition;
 import com.liferay.portal.resiliency.spi.monitor.SPIDefinitionMonitorUtil;
-import com.liferay.portal.resiliency.spi.service.ClpSerializer;
+import com.liferay.portal.resiliency.spi.service.ServletContextUtil;
 import com.liferay.portal.resiliency.spi.service.base.SPIDefinitionLocalServiceBaseImpl;
 import com.liferay.portal.resiliency.spi.util.SPIAdminConstants;
 import com.liferay.portal.resiliency.spi.util.SPIConfigurationTemplate;
@@ -322,7 +322,7 @@ public class SPIDefinitionLocalServiceImpl
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, 0, sb.toString(),
-				new String[] {ClpSerializer.getServletContextName()},
+				new String[] {ServletContextUtil.getServletContextName()},
 				StartSPIBackgroundTaskExecutor.class, taskContextMap,
 				new ServiceContext());
 
@@ -411,7 +411,7 @@ public class SPIDefinitionLocalServiceImpl
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
 				userId, 0, taskName.toString(),
-				new String[] {ClpSerializer.getServletContextName()},
+				new String[] {ServletContextUtil.getServletContextName()},
 				StopSPIBackgroundTaskExecutor.class, taskContextMap,
 				new ServiceContext());
 

@@ -240,9 +240,6 @@ public class FragmentEntryLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = FragmentEntryProcessorUtil.class)
-	private FragmentEntryProcessorUtil _fragmentEntryProcessorUtil;
-
 	private HtmlPreviewEntry _updateHtmlPreviewEntry(
 			FragmentEntry fragmentEntry, ServiceContext serviceContext)
 		throws PortalException {
@@ -264,6 +261,9 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getContent(),
 			ContentTypes.IMAGE_PNG, serviceContext);
 	}
+
+	@ServiceReference(type = FragmentEntryProcessorUtil.class)
+	private FragmentEntryProcessorUtil _fragmentEntryProcessorUtil;
 
 	@ServiceReference(type = HtmlPreviewEntryLocalService.class)
 	private HtmlPreviewEntryLocalService _htmlPreviewEntryLocalService;

@@ -16,7 +16,6 @@ package com.liferay.site.navigation.item.selector.web.internal.display.context;
 
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
@@ -43,9 +42,8 @@ import javax.servlet.http.HttpServletRequest;
 public class SiteNavigationItemSelectorViewDisplayContext {
 
 	public SiteNavigationItemSelectorViewDisplayContext(
-			HttpServletRequest request, PortletURL portletURL,
-			String itemSelectedEventName)
-		throws PortalException {
+		HttpServletRequest request, PortletURL portletURL,
+		String itemSelectedEventName) {
 
 		_request = request;
 		_portletURL = portletURL;

@@ -98,21 +98,16 @@ public class SiteNavigationMenusItemSelectorView
 
 		ServletContext servletContext = getServletContext();
 
-		try {
-			SiteNavigationItemSelectorViewDisplayContext
-				siteNavigationItemSelectorViewDisplayContext =
-					new SiteNavigationItemSelectorViewDisplayContext(
-						(HttpServletRequest)request, portletURL,
-						itemSelectedEventName);
+		SiteNavigationItemSelectorViewDisplayContext
+			siteNavigationItemSelectorViewDisplayContext =
+				new SiteNavigationItemSelectorViewDisplayContext(
+					(HttpServletRequest)request, portletURL,
+					itemSelectedEventName);
 
-			request.setAttribute(
-				SiteNavigationItemSelectorWebKeys.
-					SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT,
-				siteNavigationItemSelectorViewDisplayContext);
-		}
-		catch (Exception e) {
-			throw new ServletException(e);
-		}
+		request.setAttribute(
+			SiteNavigationItemSelectorWebKeys.
+				SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			siteNavigationItemSelectorViewDisplayContext);
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(

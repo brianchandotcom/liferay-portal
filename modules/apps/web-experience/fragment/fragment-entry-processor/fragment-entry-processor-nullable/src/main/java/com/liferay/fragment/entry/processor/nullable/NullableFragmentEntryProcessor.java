@@ -14,8 +14,10 @@
 
 package com.liferay.fragment.entry.processor.nullable;
 
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.Validator;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -27,6 +29,9 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
 	public void validateFragmentEntryHtml(String html) throws PortalException {
+		if (Validator.isNull(html)) {
+			throw new FragmentEntryContentException();
+		}
 	}
 
 }

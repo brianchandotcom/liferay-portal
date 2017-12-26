@@ -35,31 +35,33 @@
 		</a>
 
 		<div class="collapse" id="{$panelId}">
-			<ul class="nav">
-				{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
-					<li class="card card-horizontal nav-item">
-						<div class="card-body">
-							<div class="card-row">
-								<div class="flex-col flex-col-expand">
-									{if $fragmentEntry.imagePreviewURL}
-										<img class="aspect-ratio-item-fluid" src="{$fragmentEntry.imagePreviewURL}" />
-									{else}
-										{$fragmentEntry.name}
-									{/if}
-								</div>
+			{foreach $fragmentEntry in $fragmentCollection.fragmentEntries}
+				<div class="card">
+					{if $fragmentEntry.imagePreviewURL}
+						<div class="aspect-ratio aspect-ratio-16-to-9 card-item-first">
+							<img alt="thumbnail" class="aspect-ratio-item-center-middle aspect-ratio-item-fluid" src="{$fragmentEntry.imagePreviewURL}" />
+						</div>
+					{/if}
 
-								<div class="flex-col">
-									<button class="btn btn-link" data-fragment-entry-id="{$fragmentEntry.fragmentEntryId}" data-onclick="{$_handleEntryClick}">
-										<svg class="lexicon-icon collapse-icon-open">
-											<use xlink:href="{$spritemap}#plus"></use>
-										</svg>
-									</button>
+					<div class="card-body">
+						<div class="card-row">
+							<div class="flex-col flex-col-expand">
+								<div class="card-title text-truncate" title="{$fragmentEntry.name}">
+									{$fragmentEntry.name}
 								</div>
 							</div>
+
+							<div class="flex-col">
+								<button class="btn btn-link" data-fragment-entry-id="{$fragmentEntry.fragmentEntryId}" data-onclick="{$_handleEntryClick}">
+									<svg class="lexicon-icon collapse-icon-open">
+										<use xlink:href="{$spritemap}#plus"></use>
+									</svg>
+								</button>
+							</div>
 						</div>
-					</li>
-				{/foreach}
-			</ul>
+					</div>
+				</div>
+			{/foreach}
 		</div>
 	</ul>
 {/template}

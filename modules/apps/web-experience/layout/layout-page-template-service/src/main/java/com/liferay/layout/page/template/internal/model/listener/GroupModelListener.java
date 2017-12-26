@@ -12,10 +12,12 @@
  * details.
  */
 
-package com.liferay.fragment.internal.model.listener;
+package com.liferay.layout.page.template.internal.model.listener;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.service.FragmentCollectionLocalService;
+import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
+import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.model.BaseModelListener;
@@ -28,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Eudaldo Alonso
+ * @author Jürgen Kappler
  */
 @Component(immediate = true, service = ModelListener.class)
 public class GroupModelListener extends BaseModelListener<Group> {
@@ -36,6 +38,26 @@ public class GroupModelListener extends BaseModelListener<Group> {
 	@Override
 	public void onBeforeRemove(Group group) throws ModelListenerException {
 		try {
+
+			// Layout Page Template Collections
+
+			List<LayoutPageTemplateCollection> layoutPageTemplateCollections =
+				_layoutPageTemplateCollectionLocalService.
+					getLayoutPageTemplateCollections(
+						group.getGroupId(), QueryUtil.ALL_POS,
+						QueryUtil.ALL_POS);
+
+			for (LayoutPageTemplateCollection layoutPageTemplateCollection :
+					layoutPageTemplateCollections) {
+
+				_layoutPageTemplateCollectionLocalService.
+					deleteLayoutPageTemplateCollection(
+						layoutPageTemplateCollection.
+							getLayoutPageTemplateCollectionId());
+			}
+
+			// Fragments
+
 			List<FragmentCollection> fragmentCollections =
 				_fragmentCollectionLocalService.getFragmentCollections(
 					group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
@@ -52,5 +74,9 @@ public class GroupModelListener extends BaseModelListener<Group> {
 
 	@Reference(unbind = "-")
 	private FragmentCollectionLocalService _fragmentCollectionLocalService;
+
+	@Reference(unbind = "-")
+	private LayoutPageTemplateCollectionLocalService
+		_layoutPageTemplateCollectionLocalService;
 
 }

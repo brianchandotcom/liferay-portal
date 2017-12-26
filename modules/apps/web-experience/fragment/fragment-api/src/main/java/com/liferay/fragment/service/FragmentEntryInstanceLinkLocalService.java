@@ -72,7 +72,7 @@ public interface FragmentEntryInstanceLinkLocalService extends BaseLocalService,
 		FragmentEntryInstanceLink fragmentEntryInstanceLink);
 
 	public FragmentEntryInstanceLink addFragmentEntryInstanceLink(
-		long groupId, long layoutPageTemplateEntryId, long fragmentEntryId,
+		long groupId, long fragmentEntryId, long layoutPageTemplateEntryId,
 		int position);
 
 	/**

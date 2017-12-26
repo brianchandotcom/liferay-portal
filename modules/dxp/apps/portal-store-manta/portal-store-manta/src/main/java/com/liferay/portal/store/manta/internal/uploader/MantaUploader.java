@@ -98,30 +98,22 @@ public class MantaUploader {
 	protected void createPartFiles(File file, int count, List<File> partFiles)
 		throws IOException {
 
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-
 		long partSize = (file.length() / count) + 1;
 
-		try {
-			inputStream = new FileInputStream(file);
-
+		try (InputStream inputStream = new FileInputStream(file)) {
 			for (int i = 0; i < count; i++) {
 				File partFile = FileUtil.createTempFile();
 
 				partFiles.add(partFile);
 
-				outputStream = new FileOutputStream(partFile);
+				try (OutputStream outputStream = new FileOutputStream(
+						partFile)) {
 
-				StreamUtil.transfer(
-					inputStream, outputStream, StreamUtil.BUFFER_SIZE, false,
-					partSize);
-
-				outputStream.close();
+					StreamUtil.transfer(
+						inputStream, outputStream, StreamUtil.BUFFER_SIZE,
+						false, partSize);
+				}
 			}
-		}
-		finally {
-			StreamUtil.cleanUp(inputStream, outputStream);
 		}
 	}
 

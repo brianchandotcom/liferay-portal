@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.fragment.constants,\
 	com.liferay.fragment.exception,\
 	com.liferay.fragment.model,\
+	com.liferay.fragment.processor,\
 	com.liferay.fragment.service,\
 	com.liferay.fragment.service.persistence,\
 	com.liferay.fragment.util.comparator

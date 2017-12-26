@@ -16,6 +16,7 @@ package com.liferay.fragment.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.exception.DuplicateFragmentEntryException;
+import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.exception.FragmentEntryNameException;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
@@ -77,11 +78,11 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 	}
 
 	@Test
@@ -97,13 +98,13 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 
 		Assert.assertEquals("Fragment Entry", fragmentEntry.getName());
 	}
 
-	@Test(expected = FragmentEntryNameException.class)
-	public void testAddFragmentEntryWithEmptyName() throws Exception {
+	@Test(expected = FragmentEntryContentException.class)
+	public void testAddFragmentEntryWithEmptyHTML() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
 				_group.getGroupId(), TestPropsValues.getUserId());
@@ -119,6 +120,22 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test(expected = FragmentEntryNameException.class)
+	public void testAddFragmentEntryWithEmptyName() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			StringPool.BLANK, serviceContext);
+	}
+
+	@Test(expected = FragmentEntryNameException.class)
 	public void testAddFragmentEntryWithNullName() throws Exception {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(
@@ -131,7 +148,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			null, null, null, null, serviceContext);
+			null, serviceContext);
 	}
 
 	@Test
@@ -151,11 +168,11 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 1", null, null, null, serviceContext);
+			"Fragment Entry 1", serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 2", null, null, null, serviceContext);
+			"Fragment Entry 2", serviceContext);
 
 		List<FragmentEntry> actualFragmentEntries =
 			FragmentEntryServiceUtil.fetchFragmentEntries(
@@ -179,7 +196,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", serviceContext);
 
 		FragmentEntryServiceUtil.deleteFragmentEntry(
 			fragmentEntry.getFragmentEntryId());

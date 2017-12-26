@@ -127,8 +127,6 @@ String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplaySty
 					<liferay-ui:search-container-column-text
 						cssClass="table-cell-content"
 						name="title"
-						orderable="<%= false %>"
-						truncate="<%= true %>"
 					>
 						<aui:a cssClass="selector-button" data="<%= data %>" href="javascript:;">
 							<%= HtmlUtil.escape(siteNavigationMenu.getName()) %>
@@ -137,13 +135,11 @@ String displayStyle = siteNavigationItemSelectorViewDisplayContext.getDisplaySty
 
 					<liferay-ui:search-container-column-text
 						name="author"
-						orderable="<%= false %>"
 						property="userName"
 					/>
 
 					<liferay-ui:search-container-column-date
 						name="create-date"
-						orderable="<%= false %>"
 						property="createDate"
 					/>
 				</c:otherwise>

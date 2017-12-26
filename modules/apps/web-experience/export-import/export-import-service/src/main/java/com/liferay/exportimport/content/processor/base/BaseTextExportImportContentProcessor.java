@@ -1051,11 +1051,11 @@ public class BaseTextExportImportContentProcessor
 			}
 		}
 
-		StringBundler siteAdminURL = new StringBundler(3);
+		StringBundler sb = new StringBundler(3);
 
-		siteAdminURL.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
-		siteAdminURL.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
-		siteAdminURL.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
+		sb.append(VirtualLayoutConstants.CANONICAL_URL_SEPARATOR);
+		sb.append(GroupConstants.CONTROL_PANEL_FRIENDLY_URL);
+		sb.append(PropsValues.CONTROL_PANEL_LAYOUT_FRIENDLY_URL);
 
 		content = StringUtil.replace(
 			content, DATA_HANDLER_COMPANY_SECURE_URL, companySecurePortalURL);
@@ -1136,7 +1136,7 @@ public class BaseTextExportImportContentProcessor
 			content, DATA_HANDLER_PUBLIC_SERVLET_MAPPING,
 			PropsValues.LAYOUT_FRIENDLY_URL_PUBLIC_SERVLET_MAPPING);
 		content = StringUtil.replace(
-			content, DATA_HANDLER_SITE_ADMIN_URL, siteAdminURL.toString());
+			content, DATA_HANDLER_SITE_ADMIN_URL, sb.toString());
 
 		return content;
 	}

@@ -39,7 +39,7 @@ public class Element {
 		_name = name;
 		_text = _formatText(text);
 		_elementStack = parentElement._elementStack;
-		_stringBundler = parentElement._stringBundler;
+		_sb = parentElement._sb;
 
 		_appendChildElement();
 	}
@@ -60,10 +60,10 @@ public class Element {
 		_name = name;
 		_text = _formatText(text);
 		_elementStack = new LinkedList<>();
-		_stringBundler = new StringBundler();
+		_sb = new StringBundler();
 
 		if (addHeader) {
-			_stringBundler.append(_XML_HEADER);
+			_sb.append(_XML_HEADER);
 		}
 
 		_openElement(this);
@@ -74,11 +74,11 @@ public class Element {
 			throw new IllegalStateException("Element is closed");
 		}
 
-		_stringBundler.append(StringPool.SPACE);
-		_stringBundler.append(name);
-		_stringBundler.append(_EQUAL_QUOTE);
-		_stringBundler.append(value);
-		_stringBundler.append(StringPool.QUOTE);
+		_sb.append(StringPool.SPACE);
+		_sb.append(name);
+		_sb.append(_EQUAL_QUOTE);
+		_sb.append(value);
+		_sb.append(StringPool.QUOTE);
 	}
 
 	public Element addElement(String name) {
@@ -147,7 +147,7 @@ public class Element {
 		if (_xmlString == null) {
 			_flushPendingOpenElements();
 
-			_xmlString = _stringBundler.toString();
+			_xmlString = _sb.toString();
 		}
 
 		return _xmlString;
@@ -184,19 +184,19 @@ public class Element {
 	private void _closeElement(Element element) {
 		_closeOpenTag(element);
 
-		_stringBundler.append(_CLOSE_PRE);
-		_stringBundler.append(element._name);
-		_stringBundler.append(_CLOSE_POST);
+		_sb.append(_CLOSE_PRE);
+		_sb.append(element._name);
+		_sb.append(_CLOSE_POST);
 
 		element._elementClosed = true;
 	}
 
 	private void _closeOpenTag(Element element) {
 		if (element._openTagClosed == false) {
-			_stringBundler.append(_OPEN_POST);
+			_sb.append(_OPEN_POST);
 
 			if (element._text != null) {
-				_stringBundler.append(element._text);
+				_sb.append(element._text);
 			}
 
 			element._openTagClosed = true;
@@ -214,7 +214,7 @@ public class Element {
 	}
 
 	private void _openElement(Element element) {
-		_stringBundler.append(_OPEN_PRE).append(element._name);
+		_sb.append(_OPEN_PRE).append(element._name);
 
 		_elementStack.addLast(element);
 	}
@@ -237,7 +237,7 @@ public class Element {
 	private final String _name;
 	private boolean _openTagClosed;
 	private Element _parentElement;
-	private final StringBundler _stringBundler;
+	private final StringBundler _sb;
 	private final String _text;
 	private String _xmlString;
 

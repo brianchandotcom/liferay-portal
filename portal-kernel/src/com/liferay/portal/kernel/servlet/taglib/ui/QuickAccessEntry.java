@@ -27,7 +27,7 @@ public class QuickAccessEntry {
 			return _label;
 		}
 
-		return _body.toString();
+		return _bodySB.toString();
 	}
 
 	public String getData() {
@@ -54,8 +54,8 @@ public class QuickAccessEntry {
 		return _url;
 	}
 
-	public void setBody(StringBundler body) {
-		_body = body;
+	public void setBody(StringBundler bodySB) {
+		_bodySB = bodySB;
 	}
 
 	public void setData(String data) {
@@ -78,7 +78,7 @@ public class QuickAccessEntry {
 		_url = url;
 	}
 
-	private StringBundler _body;
+	private StringBundler _bodySB;
 	private String _data;
 	private String _id;
 	private String _label;

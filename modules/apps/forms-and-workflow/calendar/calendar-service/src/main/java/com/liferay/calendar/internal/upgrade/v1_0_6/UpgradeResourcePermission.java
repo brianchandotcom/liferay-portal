@@ -139,14 +139,14 @@ public class UpgradeResourcePermission extends UpgradeProcess {
 							return;
 						}
 
-						StringBundler sbUpdate = new StringBundler(3);
+						StringBundler updateSB = new StringBundler(3);
 
-						sbUpdate.append("update CalendarResource set ");
-						sbUpdate.append("resourceBlockId = ? where ");
-						sbUpdate.append("calendarResourceId = ?");
+						updateSB.append("update CalendarResource set ");
+						updateSB.append("resourceBlockId = ? where ");
+						updateSB.append("calendarResourceId = ?");
 
 						try (PreparedStatement ps = connection.prepareStatement(
-								sbUpdate.toString())) {
+								updateSB.toString())) {
 
 							ps.setLong(1, _newResourceBlockId);
 							ps.setLong(2, calendarResourceId);

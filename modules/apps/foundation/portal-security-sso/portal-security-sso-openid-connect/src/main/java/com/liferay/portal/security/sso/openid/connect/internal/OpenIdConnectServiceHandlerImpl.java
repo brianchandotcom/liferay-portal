@@ -279,12 +279,12 @@ public class OpenIdConnectServiceHandlerImpl
 
 	protected URI getLoginRedirectURI(HttpServletRequest httpServletRequest) {
 		try {
-			StringBundler loginURL = new StringBundler(2);
+			StringBundler sb = new StringBundler(2);
 
-			loginURL.append(_portal.getPortalURL(httpServletRequest));
-			loginURL.append(OpenIdConnectConstants.REDIRECT_URL_PATTERN);
+			sb.append(_portal.getPortalURL(httpServletRequest));
+			sb.append(OpenIdConnectConstants.REDIRECT_URL_PATTERN);
 
-			return new URI(loginURL.toString());
+			return new URI(sb.toString());
 		}
 		catch (URISyntaxException urise) {
 			throw new SystemException(

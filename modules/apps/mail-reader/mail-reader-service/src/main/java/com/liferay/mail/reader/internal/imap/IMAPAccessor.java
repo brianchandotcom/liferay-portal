@@ -473,20 +473,20 @@ public class IMAPAccessor {
 					MessageLocalServiceUtil.getMessage(
 						folderId, remoteMessageId);
 
-				StringBundler bodyPlain = new StringBundler();
-				StringBundler bodyHtml = new StringBundler();
+				StringBundler bodyPlainSB = new StringBundler();
+				StringBundler bodyHtmlSB = new StringBundler();
 				List<MailFile> mailFiles = new ArrayList<>();
 
 				getParts(
-					_user.getUserId(), bodyPlain, bodyHtml, StringPool.BLANK,
-					jxMessage, mailFiles);
+					_user.getUserId(), bodyPlainSB, bodyHtmlSB,
+					StringPool.BLANK, jxMessage, mailFiles);
 
-				if (bodyHtml.length() == 0) {
-					if (bodyPlain.length() == 0) {
-						bodyHtml.append("&nbsp;");
+				if (bodyHtmlSB.length() == 0) {
+					if (bodyPlainSB.length() == 0) {
+						bodyHtmlSB.append("&nbsp;");
 					}
 					else {
-						bodyHtml = bodyPlain;
+						bodyHtmlSB = bodyPlainSB;
 					}
 				}
 
@@ -505,7 +505,7 @@ public class IMAPAccessor {
 				}
 
 				MessageLocalServiceUtil.updateContent(
-					message.getMessageId(), bodyHtml.toString(), flags);
+					message.getMessageId(), bodyHtmlSB.toString(), flags);
 			}
 		}
 		catch (MessagingException me) {
@@ -986,7 +986,7 @@ public class IMAPAccessor {
 	}
 
 	protected void getParts(
-			long userId, StringBundler bodyPlain, StringBundler bodyHtml,
+			long userId, StringBundler bodyPlainSB, StringBundler bodyHtmlSB,
 			String contentPath, Part part, List<MailFile> mailFiles)
 		throws IOException, MessagingException {
 
@@ -1000,7 +1000,7 @@ public class IMAPAccessor {
 				Part curPart = multipart.getBodyPart(i);
 
 				getParts(
-					userId, bodyPlain, bodyHtml,
+					userId, bodyPlainSB, bodyHtmlSB,
 					contentPath.concat(StringPool.PERIOD).concat(
 						String.valueOf(i)),
 					curPart, mailFiles);
@@ -1010,11 +1010,11 @@ public class IMAPAccessor {
 			String contentType = StringUtil.toLowerCase(part.getContentType());
 
 			if (contentType.startsWith(ContentTypes.TEXT_PLAIN)) {
-				bodyPlain.append(
+				bodyPlainSB.append(
 					content.toString().replaceAll("\r\n", "<br />"));
 			}
 			else if (contentType.startsWith(ContentTypes.TEXT_HTML)) {
-				bodyHtml.append(
+				bodyHtmlSB.append(
 					HtmlContentUtil.getInlineHtml(content.toString()));
 			}
 			//else if (contentType.startsWith(ContentTypes.MESSAGE_RFC822)) {

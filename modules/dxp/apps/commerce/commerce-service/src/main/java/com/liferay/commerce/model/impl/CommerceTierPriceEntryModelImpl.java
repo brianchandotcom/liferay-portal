@@ -74,7 +74,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	public static final String TABLE_NAME = "CommerceTierPriceEntry";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "CommerceTierPriceEntryId", Types.BIGINT },
+			{ "commerceTierPriceEntryId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -90,7 +90,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	static {
 		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("CommerceTierPriceEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceTierPriceEntryId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -103,7 +103,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,CommerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DOUBLE,minQuantity INTEGER,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceTierPriceEntry (uuid_ VARCHAR(75) null,commerceTierPriceEntryId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commercePriceEntryId LONG,price DOUBLE,minQuantity INTEGER,lastPublishDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceTierPriceEntry";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceTierPriceEntry.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceTierPriceEntry.createDate DESC";
@@ -184,7 +184,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@Override
 	public long getPrimaryKey() {
-		return _CommerceTierPriceEntryId;
+		return _commerceTierPriceEntryId;
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _CommerceTierPriceEntryId;
+		return _commerceTierPriceEntryId;
 	}
 
 	@Override
@@ -217,7 +217,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CommerceTierPriceEntryId", getCommerceTierPriceEntryId());
+		attributes.put("commerceTierPriceEntryId", getCommerceTierPriceEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -243,11 +243,11 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 			setUuid(uuid);
 		}
 
-		Long CommerceTierPriceEntryId = (Long)attributes.get(
-				"CommerceTierPriceEntryId");
+		Long commerceTierPriceEntryId = (Long)attributes.get(
+				"commerceTierPriceEntryId");
 
-		if (CommerceTierPriceEntryId != null) {
-			setCommerceTierPriceEntryId(CommerceTierPriceEntryId);
+		if (commerceTierPriceEntryId != null) {
+			setCommerceTierPriceEntryId(commerceTierPriceEntryId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -338,12 +338,12 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 	@JSON
 	@Override
 	public long getCommerceTierPriceEntryId() {
-		return _CommerceTierPriceEntryId;
+		return _commerceTierPriceEntryId;
 	}
 
 	@Override
-	public void setCommerceTierPriceEntryId(long CommerceTierPriceEntryId) {
-		_CommerceTierPriceEntryId = CommerceTierPriceEntryId;
+	public void setCommerceTierPriceEntryId(long commerceTierPriceEntryId) {
+		_commerceTierPriceEntryId = commerceTierPriceEntryId;
 	}
 
 	@JSON
@@ -664,7 +664,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 			commerceTierPriceEntryCacheModel.uuid = null;
 		}
 
-		commerceTierPriceEntryCacheModel.CommerceTierPriceEntryId = getCommerceTierPriceEntryId();
+		commerceTierPriceEntryCacheModel.commerceTierPriceEntryId = getCommerceTierPriceEntryId();
 
 		commerceTierPriceEntryCacheModel.groupId = getGroupId();
 
@@ -722,7 +722,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", CommerceTierPriceEntryId=");
+		sb.append(", commerceTierPriceEntryId=");
 		sb.append(getCommerceTierPriceEntryId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -762,7 +762,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CommerceTierPriceEntryId</column-name><column-value><![CDATA[");
+			"<column><column-name>commerceTierPriceEntryId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceTierPriceEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -817,7 +817,7 @@ public class CommerceTierPriceEntryModelImpl extends BaseModelImpl<CommerceTierP
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _CommerceTierPriceEntryId;
+	private long _commerceTierPriceEntryId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

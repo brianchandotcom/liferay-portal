@@ -54,6 +54,9 @@ public interface CPDefinition extends CPDefinitionModel, PersistedModel {
 			}
 		};
 
+	@Override
+	public boolean equals(java.lang.Object object);
+
 	public java.util.List<CPDefinitionOptionRel> getCPDefinitionOptionRels();
 
 	public java.util.List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues();

@@ -126,27 +126,27 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	/**
 	 * Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key for the new commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
 	 * @return the new commerce tier price entry
 	 */
 	@Override
 	public CommerceTierPriceEntry createCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) {
-		return commerceTierPriceEntryPersistence.create(CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) {
+		return commerceTierPriceEntryPersistence.create(commerceTierPriceEntryId);
 	}
 
 	/**
 	 * Deletes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	 * @return the commerce tier price entry that was removed
 	 * @throws PortalException if a commerce tier price entry with the primary key could not be found
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceTierPriceEntry deleteCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) throws PortalException {
-		return commerceTierPriceEntryPersistence.remove(CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) throws PortalException {
+		return commerceTierPriceEntryPersistence.remove(commerceTierPriceEntryId);
 	}
 
 	/**
@@ -249,8 +249,8 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 
 	@Override
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) {
-		return commerceTierPriceEntryPersistence.fetchByPrimaryKey(CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) {
+		return commerceTierPriceEntryPersistence.fetchByPrimaryKey(commerceTierPriceEntryId);
 	}
 
 	/**
@@ -269,14 +269,14 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 	/**
 	 * Returns the commerce tier price entry with the primary key.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	 * @return the commerce tier price entry
 	 * @throws PortalException if a commerce tier price entry with the primary key could not be found
 	 */
 	@Override
 	public CommerceTierPriceEntry getCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) throws PortalException {
-		return commerceTierPriceEntryPersistence.findByPrimaryKey(CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) throws PortalException {
+		return commerceTierPriceEntryPersistence.findByPrimaryKey(commerceTierPriceEntryId);
 	}
 
 	@Override
@@ -288,7 +288,7 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(CommerceTierPriceEntry.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CommerceTierPriceEntryId");
+			"commerceTierPriceEntryId");
 
 		return actionableDynamicQuery;
 	}
@@ -302,7 +302,7 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 		indexableActionableDynamicQuery.setModelClass(CommerceTierPriceEntry.class);
 
 		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CommerceTierPriceEntryId");
+			"commerceTierPriceEntryId");
 
 		return indexableActionableDynamicQuery;
 	}
@@ -314,7 +314,7 @@ public abstract class CommerceTierPriceEntryLocalServiceBaseImpl
 		actionableDynamicQuery.setModelClass(CommerceTierPriceEntry.class);
 
 		actionableDynamicQuery.setPrimaryKeyPropertyName(
-			"CommerceTierPriceEntryId");
+			"commerceTierPriceEntryId");
 	}
 
 	@Override

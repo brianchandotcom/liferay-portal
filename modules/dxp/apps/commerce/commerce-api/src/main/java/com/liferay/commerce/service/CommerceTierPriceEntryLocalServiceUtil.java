@@ -65,13 +65,13 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	/**
 	* Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	*
-	* @param CommerceTierPriceEntryId the primary key for the new commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
 	* @return the new commerce tier price entry
 	*/
 	public static com.liferay.commerce.model.CommerceTierPriceEntry createCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) {
+		long commerceTierPriceEntryId) {
 		return getService()
-				   .createCommerceTierPriceEntry(CommerceTierPriceEntryId);
+				   .createCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
 	public static void deleteCommerceTierPriceEntries(long commercePriceEntryId)
@@ -95,15 +95,15 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	/**
 	* Deletes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry that was removed
 	* @throws PortalException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceTierPriceEntry deleteCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId)
+		long commerceTierPriceEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .deleteCommerceTierPriceEntry(CommerceTierPriceEntryId);
+				   .deleteCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
 	/**
@@ -194,8 +194,8 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceTierPriceEntry fetchCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) {
-		return getService().fetchCommerceTierPriceEntry(CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) {
+		return getService().fetchCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
 	/**
@@ -295,14 +295,14 @@ public class CommerceTierPriceEntryLocalServiceUtil {
 	/**
 	* Returns the commerce tier price entry with the primary key.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry
 	* @throws PortalException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static com.liferay.commerce.model.CommerceTierPriceEntry getCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId)
+		long commerceTierPriceEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceTierPriceEntry(CommerceTierPriceEntryId);
+		return getService().getCommerceTierPriceEntry(commerceTierPriceEntryId);
 	}
 
 	/**

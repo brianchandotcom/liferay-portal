@@ -241,18 +241,18 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where uuid = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry[] findByUuid_PrevAndNext(
-		long CommerceTierPriceEntryId, java.lang.String uuid,
+		long commerceTierPriceEntryId, java.lang.String uuid,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByUuid_PrevAndNext(CommerceTierPriceEntryId, uuid,
+				   .findByUuid_PrevAndNext(commerceTierPriceEntryId, uuid,
 			orderByComparator);
 	}
 
@@ -480,7 +480,7 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -488,11 +488,11 @@ public class CommerceTierPriceEntryUtil {
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry[] findByUuid_C_PrevAndNext(
-		long CommerceTierPriceEntryId, java.lang.String uuid, long companyId,
+		long commerceTierPriceEntryId, java.lang.String uuid, long companyId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByUuid_C_PrevAndNext(CommerceTierPriceEntryId, uuid,
+				   .findByUuid_C_PrevAndNext(commerceTierPriceEntryId, uuid,
 			companyId, orderByComparator);
 	}
 
@@ -642,18 +642,18 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where groupId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry[] findByGroupId_PrevAndNext(
-		long CommerceTierPriceEntryId, long groupId,
+		long commerceTierPriceEntryId, long groupId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByGroupId_PrevAndNext(CommerceTierPriceEntryId,
+				   .findByGroupId_PrevAndNext(commerceTierPriceEntryId,
 			groupId, orderByComparator);
 	}
 
@@ -806,18 +806,18 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where companyId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry[] findByCompanyId_PrevAndNext(
-		long CommerceTierPriceEntryId, long companyId,
+		long commerceTierPriceEntryId, long companyId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByCompanyId_PrevAndNext(CommerceTierPriceEntryId,
+				   .findByCompanyId_PrevAndNext(commerceTierPriceEntryId,
 			companyId, orderByComparator);
 	}
 
@@ -980,18 +980,18 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param commercePriceEntryId the commerce price entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry[] findByCommercePriceEntryId_PrevAndNext(
-		long CommerceTierPriceEntryId, long commercePriceEntryId,
+		long commerceTierPriceEntryId, long commercePriceEntryId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
 		return getPersistence()
-				   .findByCommercePriceEntryId_PrevAndNext(CommerceTierPriceEntryId,
+				   .findByCommercePriceEntryId_PrevAndNext(commerceTierPriceEntryId,
 			commercePriceEntryId, orderByComparator);
 	}
 
@@ -1037,23 +1037,23 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	*
-	* @param CommerceTierPriceEntryId the primary key for the new commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
 	* @return the new commerce tier price entry
 	*/
-	public static CommerceTierPriceEntry create(long CommerceTierPriceEntryId) {
-		return getPersistence().create(CommerceTierPriceEntryId);
+	public static CommerceTierPriceEntry create(long commerceTierPriceEntryId) {
+		return getPersistence().create(commerceTierPriceEntryId);
 	}
 
 	/**
 	* Removes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry that was removed
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
-	public static CommerceTierPriceEntry remove(long CommerceTierPriceEntryId)
+	public static CommerceTierPriceEntry remove(long commerceTierPriceEntryId)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
-		return getPersistence().remove(CommerceTierPriceEntryId);
+		return getPersistence().remove(commerceTierPriceEntryId);
 	}
 
 	public static CommerceTierPriceEntry updateImpl(
@@ -1064,25 +1064,25 @@ public class CommerceTierPriceEntryUtil {
 	/**
 	* Returns the commerce tier price entry with the primary key or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry findByPrimaryKey(
-		long CommerceTierPriceEntryId)
+		long commerceTierPriceEntryId)
 		throws com.liferay.commerce.exception.NoSuchTierPriceEntryException {
-		return getPersistence().findByPrimaryKey(CommerceTierPriceEntryId);
+		return getPersistence().findByPrimaryKey(commerceTierPriceEntryId);
 	}
 
 	/**
 	* Returns the commerce tier price entry with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry, or <code>null</code> if a commerce tier price entry with the primary key could not be found
 	*/
 	public static CommerceTierPriceEntry fetchByPrimaryKey(
-		long CommerceTierPriceEntryId) {
-		return getPersistence().fetchByPrimaryKey(CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) {
+		return getPersistence().fetchByPrimaryKey(commerceTierPriceEntryId);
 	}
 
 	public static java.util.Map<java.io.Serializable, CommerceTierPriceEntry> fetchByPrimaryKeys(

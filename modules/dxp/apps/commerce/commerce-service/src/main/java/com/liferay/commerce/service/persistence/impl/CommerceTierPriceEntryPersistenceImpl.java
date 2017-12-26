@@ -405,7 +405,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where uuid = &#63;.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce tier price entry
@@ -413,10 +413,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 */
 	@Override
 	public CommerceTierPriceEntry[] findByUuid_PrevAndNext(
-		long CommerceTierPriceEntryId, String uuid,
+		long commerceTierPriceEntryId, String uuid,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(CommerceTierPriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(commerceTierPriceEntryId);
 
 		Session session = null;
 
@@ -1246,7 +1246,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1255,10 +1255,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 */
 	@Override
 	public CommerceTierPriceEntry[] findByUuid_C_PrevAndNext(
-		long CommerceTierPriceEntryId, String uuid, long companyId,
+		long commerceTierPriceEntryId, String uuid, long companyId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(CommerceTierPriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(commerceTierPriceEntryId);
 
 		Session session = null;
 
@@ -1798,7 +1798,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where groupId = &#63;.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce tier price entry
@@ -1806,10 +1806,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 */
 	@Override
 	public CommerceTierPriceEntry[] findByGroupId_PrevAndNext(
-		long CommerceTierPriceEntryId, long groupId,
+		long commerceTierPriceEntryId, long groupId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(CommerceTierPriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(commerceTierPriceEntryId);
 
 		Session session = null;
 
@@ -2311,7 +2311,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where companyId = &#63;.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce tier price entry
@@ -2319,10 +2319,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 */
 	@Override
 	public CommerceTierPriceEntry[] findByCompanyId_PrevAndNext(
-		long CommerceTierPriceEntryId, long companyId,
+		long commerceTierPriceEntryId, long companyId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(CommerceTierPriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(commerceTierPriceEntryId);
 
 		Session session = null;
 
@@ -2837,7 +2837,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	 * @param commercePriceEntryId the commerce price entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next commerce tier price entry
@@ -2845,10 +2845,10 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	 */
 	@Override
 	public CommerceTierPriceEntry[] findByCommercePriceEntryId_PrevAndNext(
-		long CommerceTierPriceEntryId, long commercePriceEntryId,
+		long commerceTierPriceEntryId, long commercePriceEntryId,
 		OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException {
-		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(CommerceTierPriceEntryId);
+		CommerceTierPriceEntry commerceTierPriceEntry = findByPrimaryKey(commerceTierPriceEntryId);
 
 		Session session = null;
 
@@ -3208,15 +3208,15 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key for the new commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
 	 * @return the new commerce tier price entry
 	 */
 	@Override
-	public CommerceTierPriceEntry create(long CommerceTierPriceEntryId) {
+	public CommerceTierPriceEntry create(long commerceTierPriceEntryId) {
 		CommerceTierPriceEntry commerceTierPriceEntry = new CommerceTierPriceEntryImpl();
 
 		commerceTierPriceEntry.setNew(true);
-		commerceTierPriceEntry.setPrimaryKey(CommerceTierPriceEntryId);
+		commerceTierPriceEntry.setPrimaryKey(commerceTierPriceEntryId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -3230,14 +3230,14 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Removes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	 * @return the commerce tier price entry that was removed
 	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	 */
 	@Override
-	public CommerceTierPriceEntry remove(long CommerceTierPriceEntryId)
+	public CommerceTierPriceEntry remove(long commerceTierPriceEntryId)
 		throws NoSuchTierPriceEntryException {
-		return remove((Serializable)CommerceTierPriceEntryId);
+		return remove((Serializable)commerceTierPriceEntryId);
 	}
 
 	/**
@@ -3587,14 +3587,14 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entry with the primary key or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	 * @return the commerce tier price entry
 	 * @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	 */
 	@Override
 	public CommerceTierPriceEntry findByPrimaryKey(
-		long CommerceTierPriceEntryId) throws NoSuchTierPriceEntryException {
-		return findByPrimaryKey((Serializable)CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) throws NoSuchTierPriceEntryException {
+		return findByPrimaryKey((Serializable)commerceTierPriceEntryId);
 	}
 
 	/**
@@ -3648,13 +3648,13 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	/**
 	 * Returns the commerce tier price entry with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	 * @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	 * @return the commerce tier price entry, or <code>null</code> if a commerce tier price entry with the primary key could not be found
 	 */
 	@Override
 	public CommerceTierPriceEntry fetchByPrimaryKey(
-		long CommerceTierPriceEntryId) {
-		return fetchByPrimaryKey((Serializable)CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId) {
+		return fetchByPrimaryKey((Serializable)commerceTierPriceEntryId);
 	}
 
 	@Override
@@ -3973,7 +3973,7 @@ public class CommerceTierPriceEntryPersistenceImpl extends BasePersistenceImpl<C
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_COMMERCETIERPRICEENTRY = "SELECT commerceTierPriceEntry FROM CommerceTierPriceEntry commerceTierPriceEntry";
-	private static final String _SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE_PKS_IN = "SELECT commerceTierPriceEntry FROM CommerceTierPriceEntry commerceTierPriceEntry WHERE CommerceTierPriceEntryId IN (";
+	private static final String _SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE_PKS_IN = "SELECT commerceTierPriceEntry FROM CommerceTierPriceEntry commerceTierPriceEntry WHERE commerceTierPriceEntryId IN (";
 	private static final String _SQL_SELECT_COMMERCETIERPRICEENTRY_WHERE = "SELECT commerceTierPriceEntry FROM CommerceTierPriceEntry commerceTierPriceEntry WHERE ";
 	private static final String _SQL_COUNT_COMMERCETIERPRICEENTRY = "SELECT COUNT(commerceTierPriceEntry) FROM CommerceTierPriceEntry commerceTierPriceEntry";
 	private static final String _SQL_COUNT_COMMERCETIERPRICEENTRY_WHERE = "SELECT COUNT(commerceTierPriceEntry) FROM CommerceTierPriceEntry commerceTierPriceEntry WHERE ";

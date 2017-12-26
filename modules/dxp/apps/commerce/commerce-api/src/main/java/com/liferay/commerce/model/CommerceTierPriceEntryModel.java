@@ -92,9 +92,9 @@ public interface CommerceTierPriceEntryModel extends BaseModel<CommerceTierPrice
 	/**
 	 * Sets the commerce tier price entry ID of this commerce tier price entry.
 	 *
-	 * @param CommerceTierPriceEntryId the commerce tier price entry ID of this commerce tier price entry
+	 * @param commerceTierPriceEntryId the commerce tier price entry ID of this commerce tier price entry
 	 */
-	public void setCommerceTierPriceEntryId(long CommerceTierPriceEntryId);
+	public void setCommerceTierPriceEntryId(long commerceTierPriceEntryId);
 
 	/**
 	 * Returns the group ID of this commerce tier price entry.

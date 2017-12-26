@@ -89,11 +89,11 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	/**
 	* Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	*
-	* @param CommerceTierPriceEntryId the primary key for the new commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
 	* @return the new commerce tier price entry
 	*/
 	public CommerceTierPriceEntry createCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId);
 
 	public void deleteCommerceTierPriceEntries(long commercePriceEntryId)
 		throws PortalException;
@@ -114,13 +114,13 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	/**
 	* Deletes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry that was removed
 	* @throws PortalException if a commerce tier price entry with the primary key could not be found
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceTierPriceEntry deleteCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) throws PortalException;
+		long commerceTierPriceEntryId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -190,7 +190,7 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry fetchCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId);
 
 	/**
 	* Returns the commerce tier price entry matching the UUID and group.
@@ -270,13 +270,13 @@ public interface CommerceTierPriceEntryLocalService extends BaseLocalService,
 	/**
 	* Returns the commerce tier price entry with the primary key.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry
 	* @throws PortalException if a commerce tier price entry with the primary key could not be found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceTierPriceEntry getCommerceTierPriceEntry(
-		long CommerceTierPriceEntryId) throws PortalException;
+		long commerceTierPriceEntryId) throws PortalException;
 
 	/**
 	* Returns the commerce tier price entry matching the UUID and group.

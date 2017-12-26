@@ -51,7 +51,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 		CommerceTierPriceEntryCacheModel commerceTierPriceEntryCacheModel = (CommerceTierPriceEntryCacheModel)obj;
 
-		if (CommerceTierPriceEntryId == commerceTierPriceEntryCacheModel.CommerceTierPriceEntryId) {
+		if (commerceTierPriceEntryId == commerceTierPriceEntryCacheModel.commerceTierPriceEntryId) {
 			return true;
 		}
 
@@ -60,7 +60,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CommerceTierPriceEntryId);
+		return HashUtil.hash(0, commerceTierPriceEntryId);
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", CommerceTierPriceEntryId=");
-		sb.append(CommerceTierPriceEntryId);
+		sb.append(", commerceTierPriceEntryId=");
+		sb.append(commerceTierPriceEntryId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -107,7 +107,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 			commerceTierPriceEntryImpl.setUuid(uuid);
 		}
 
-		commerceTierPriceEntryImpl.setCommerceTierPriceEntryId(CommerceTierPriceEntryId);
+		commerceTierPriceEntryImpl.setCommerceTierPriceEntryId(commerceTierPriceEntryId);
 		commerceTierPriceEntryImpl.setGroupId(groupId);
 		commerceTierPriceEntryImpl.setCompanyId(companyId);
 		commerceTierPriceEntryImpl.setUserId(userId);
@@ -154,7 +154,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 
-		CommerceTierPriceEntryId = objectInput.readLong();
+		commerceTierPriceEntryId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -183,7 +183,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(CommerceTierPriceEntryId);
+		objectOutput.writeLong(commerceTierPriceEntryId);
 
 		objectOutput.writeLong(groupId);
 
@@ -210,7 +210,7 @@ public class CommerceTierPriceEntryCacheModel implements CacheModel<CommerceTier
 	}
 
 	public String uuid;
-	public long CommerceTierPriceEntryId;
+	public long commerceTierPriceEntryId;
 	public long groupId;
 	public long companyId;
 	public long userId;

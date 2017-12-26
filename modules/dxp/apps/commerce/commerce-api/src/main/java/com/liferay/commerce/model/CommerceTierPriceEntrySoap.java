@@ -95,7 +95,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _CommerceTierPriceEntryId;
+		return _commerceTierPriceEntryId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -111,11 +111,11 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 	}
 
 	public long getCommerceTierPriceEntryId() {
-		return _CommerceTierPriceEntryId;
+		return _commerceTierPriceEntryId;
 	}
 
-	public void setCommerceTierPriceEntryId(long CommerceTierPriceEntryId) {
-		_CommerceTierPriceEntryId = CommerceTierPriceEntryId;
+	public void setCommerceTierPriceEntryId(long commerceTierPriceEntryId) {
+		_commerceTierPriceEntryId = commerceTierPriceEntryId;
 	}
 
 	public long getGroupId() {
@@ -199,7 +199,7 @@ public class CommerceTierPriceEntrySoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _CommerceTierPriceEntryId;
+	private long _commerceTierPriceEntryId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

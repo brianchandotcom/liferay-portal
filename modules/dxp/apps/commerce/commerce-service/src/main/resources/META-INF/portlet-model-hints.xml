@@ -310,7 +310,7 @@
 	</model>
 	<model name="com.liferay.commerce.model.CommerceTierPriceEntry">
 		<field name="uuid" type="String" />
-		<field name="CommerceTierPriceEntryId" type="long" />
+		<field name="commerceTierPriceEntryId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

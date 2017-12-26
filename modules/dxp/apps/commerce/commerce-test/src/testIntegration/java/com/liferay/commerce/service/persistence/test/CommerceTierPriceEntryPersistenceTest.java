@@ -255,7 +255,7 @@ public class CommerceTierPriceEntryPersistenceTest {
 
 	protected OrderByComparator<CommerceTierPriceEntry> getOrderByComparator() {
 		return OrderByComparatorFactoryUtil.create("CommerceTierPriceEntry",
-			"uuid", true, "CommerceTierPriceEntryId", true, "groupId", true,
+			"uuid", true, "commerceTierPriceEntryId", true, "groupId", true,
 			"companyId", true, "userId", true, "userName", true, "createDate",
 			true, "modifiedDate", true, "commercePriceEntryId", true, "price",
 			true, "minQuantity", true, "lastPublishDate", true);
@@ -396,7 +396,7 @@ public class CommerceTierPriceEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"CommerceTierPriceEntryId",
+				"commerceTierPriceEntryId",
 				newCommerceTierPriceEntry.getCommerceTierPriceEntryId()));
 
 		List<CommerceTierPriceEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -415,7 +415,7 @@ public class CommerceTierPriceEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.add(RestrictionsFactoryUtil.eq(
-				"CommerceTierPriceEntryId", RandomTestUtil.nextLong()));
+				"commerceTierPriceEntryId", RandomTestUtil.nextLong()));
 
 		List<CommerceTierPriceEntry> result = _persistence.findWithDynamicQuery(dynamicQuery);
 
@@ -431,12 +431,12 @@ public class CommerceTierPriceEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CommerceTierPriceEntryId"));
+				"commerceTierPriceEntryId"));
 
 		Object newCommerceTierPriceEntryId = newCommerceTierPriceEntry.getCommerceTierPriceEntryId();
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"CommerceTierPriceEntryId",
+				"commerceTierPriceEntryId",
 				new Object[] { newCommerceTierPriceEntryId }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);
@@ -455,10 +455,10 @@ public class CommerceTierPriceEntryPersistenceTest {
 				_dynamicQueryClassLoader);
 
 		dynamicQuery.setProjection(ProjectionFactoryUtil.property(
-				"CommerceTierPriceEntryId"));
+				"commerceTierPriceEntryId"));
 
 		dynamicQuery.add(RestrictionsFactoryUtil.in(
-				"CommerceTierPriceEntryId",
+				"commerceTierPriceEntryId",
 				new Object[] { RandomTestUtil.nextLong() }));
 
 		List<Object> result = _persistence.findWithDynamicQuery(dynamicQuery);

@@ -148,14 +148,14 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where uuid = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry[] findByUuid_PrevAndNext(
-		long CommerceTierPriceEntryId, java.lang.String uuid,
+		long commerceTierPriceEntryId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
 
@@ -344,7 +344,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -352,7 +352,7 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry[] findByUuid_C_PrevAndNext(
-		long CommerceTierPriceEntryId, java.lang.String uuid, long companyId,
+		long commerceTierPriceEntryId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
 
@@ -479,14 +479,14 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where groupId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry[] findByGroupId_PrevAndNext(
-		long CommerceTierPriceEntryId, long groupId,
+		long commerceTierPriceEntryId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
 
@@ -612,14 +612,14 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where companyId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry[] findByCompanyId_PrevAndNext(
-		long CommerceTierPriceEntryId, long companyId,
+		long commerceTierPriceEntryId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
 
@@ -749,14 +749,14 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Returns the commerce tier price entries before and after the current commerce tier price entry in the ordered set where commercePriceEntryId = &#63;.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the current commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the current commerce tier price entry
 	* @param commercePriceEntryId the commerce price entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry[] findByCommercePriceEntryId_PrevAndNext(
-		long CommerceTierPriceEntryId, long commercePriceEntryId,
+		long commerceTierPriceEntryId, long commercePriceEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<CommerceTierPriceEntry> orderByComparator)
 		throws NoSuchTierPriceEntryException;
 
@@ -793,19 +793,19 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Creates a new commerce tier price entry with the primary key. Does not add the commerce tier price entry to the database.
 	*
-	* @param CommerceTierPriceEntryId the primary key for the new commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key for the new commerce tier price entry
 	* @return the new commerce tier price entry
 	*/
-	public CommerceTierPriceEntry create(long CommerceTierPriceEntryId);
+	public CommerceTierPriceEntry create(long commerceTierPriceEntryId);
 
 	/**
 	* Removes the commerce tier price entry with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry that was removed
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
-	public CommerceTierPriceEntry remove(long CommerceTierPriceEntryId)
+	public CommerceTierPriceEntry remove(long commerceTierPriceEntryId)
 		throws NoSuchTierPriceEntryException;
 
 	public CommerceTierPriceEntry updateImpl(
@@ -814,21 +814,21 @@ public interface CommerceTierPriceEntryPersistence extends BasePersistence<Comme
 	/**
 	* Returns the commerce tier price entry with the primary key or throws a {@link NoSuchTierPriceEntryException} if it could not be found.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry
 	* @throws NoSuchTierPriceEntryException if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry findByPrimaryKey(
-		long CommerceTierPriceEntryId) throws NoSuchTierPriceEntryException;
+		long commerceTierPriceEntryId) throws NoSuchTierPriceEntryException;
 
 	/**
 	* Returns the commerce tier price entry with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param CommerceTierPriceEntryId the primary key of the commerce tier price entry
+	* @param commerceTierPriceEntryId the primary key of the commerce tier price entry
 	* @return the commerce tier price entry, or <code>null</code> if a commerce tier price entry with the primary key could not be found
 	*/
 	public CommerceTierPriceEntry fetchByPrimaryKey(
-		long CommerceTierPriceEntryId);
+		long commerceTierPriceEntryId);
 
 	@Override
 	public java.util.Map<java.io.Serializable, CommerceTierPriceEntry> fetchByPrimaryKeys(

@@ -319,7 +319,7 @@ create table CommerceShippingMethod (
 
 create table CommerceTierPriceEntry (
 	uuid_ VARCHAR(75) null,
-	CommerceTierPriceEntryId LONG not null primary key,
+	commerceTierPriceEntryId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

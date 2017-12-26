@@ -62,7 +62,7 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("CommerceTierPriceEntryId", getCommerceTierPriceEntryId());
+		attributes.put("commerceTierPriceEntryId", getCommerceTierPriceEntryId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -85,11 +85,11 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 			setUuid(uuid);
 		}
 
-		Long CommerceTierPriceEntryId = (Long)attributes.get(
-				"CommerceTierPriceEntryId");
+		Long commerceTierPriceEntryId = (Long)attributes.get(
+				"commerceTierPriceEntryId");
 
-		if (CommerceTierPriceEntryId != null) {
-			setCommerceTierPriceEntryId(CommerceTierPriceEntryId);
+		if (commerceTierPriceEntryId != null) {
+			setCommerceTierPriceEntryId(commerceTierPriceEntryId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -362,11 +362,11 @@ public class CommerceTierPriceEntryWrapper implements CommerceTierPriceEntry,
 	/**
 	* Sets the commerce tier price entry ID of this commerce tier price entry.
 	*
-	* @param CommerceTierPriceEntryId the commerce tier price entry ID of this commerce tier price entry
+	* @param commerceTierPriceEntryId the commerce tier price entry ID of this commerce tier price entry
 	*/
 	@Override
-	public void setCommerceTierPriceEntryId(long CommerceTierPriceEntryId) {
-		_commerceTierPriceEntry.setCommerceTierPriceEntryId(CommerceTierPriceEntryId);
+	public void setCommerceTierPriceEntryId(long commerceTierPriceEntryId) {
+		_commerceTierPriceEntry.setCommerceTierPriceEntryId(commerceTierPriceEntryId);
 	}
 
 	/**

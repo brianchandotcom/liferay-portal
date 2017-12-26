@@ -288,7 +288,7 @@ public class SecureFilter extends BasePortalFilter {
 			}
 
 			if (_log.isDebugEnabled()) {
-				_log.debug("Redirect to " + sb);
+				_log.debug("Redirect to " + sb.toString());
 			}
 
 			response.sendRedirect(sb.toString());

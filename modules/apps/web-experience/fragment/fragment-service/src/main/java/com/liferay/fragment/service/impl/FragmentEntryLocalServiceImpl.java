@@ -52,7 +52,8 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, 0, name, html);
+		validate(groupId, 0, name);
+		validateContent(html);
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -184,9 +185,7 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		validate(
-			fragmentEntry.getGroupId(), fragmentEntryId, name,
-			fragmentEntry.getHtml());
+		validate(fragmentEntry.getGroupId(), fragmentEntryId, name);
 
 		fragmentEntry.setName(name);
 
@@ -202,7 +201,9 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		validate(fragmentEntry.getGroupId(), fragmentEntryId, name, html);
+		validate(fragmentEntry.getGroupId(), fragmentEntryId, name);
+
+		validateContent(html);
 
 		fragmentEntry.setModifiedDate(new Date());
 		fragmentEntry.setName(name);
@@ -217,8 +218,7 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntry;
 	}
 
-	protected void validate(
-			long groupId, long fragmentEntryId, String name, String html)
+	protected void validate(long groupId, long fragmentEntryId, String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -234,7 +234,9 @@ public class FragmentEntryLocalServiceImpl
 
 			throw new DuplicateFragmentEntryException(name);
 		}
+	}
 
+	protected void validateContent(String html) throws PortalException {
 		if (!_fragmentEntryProcessorRegistry.validateFragmentEntryHtml(html)) {
 			throw new FragmentEntryContentException("invalid-fragment-html");
 		}

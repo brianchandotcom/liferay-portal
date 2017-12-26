@@ -16,7 +16,9 @@ package com.liferay.commerce.item.selector.web.internal.search;
 
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -31,15 +33,15 @@ public class CommercePriceListItemSelectorChecker
 
 		super(renderResponse);
 
-		_checkedCommercePriceListIds = checkedCommercePriceListIds;
+		_checkedCommercePriceListIds = SetUtil.fromArray(
+			checkedCommercePriceListIds);
 	}
 
 	@Override
 	public boolean isChecked(Object obj) {
 		CommercePriceList commercePriceList = (CommercePriceList)obj;
 
-		return ArrayUtil.contains(
-			_checkedCommercePriceListIds,
+		return _checkedCommercePriceListIds.contains(
 			commercePriceList.getCommercePriceListId());
 	}
 
@@ -48,6 +50,6 @@ public class CommercePriceListItemSelectorChecker
 		return isChecked(obj);
 	}
 
-	private final long[] _checkedCommercePriceListIds;
+	private final Set<Long> _checkedCommercePriceListIds;
 
 }

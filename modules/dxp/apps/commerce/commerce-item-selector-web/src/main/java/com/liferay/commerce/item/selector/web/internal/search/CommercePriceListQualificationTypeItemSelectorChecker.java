@@ -16,7 +16,9 @@ package com.liferay.commerce.item.selector.web.internal.search;
 
 import com.liferay.commerce.price.CommercePriceListQualificationType;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -32,8 +34,8 @@ public class CommercePriceListQualificationTypeItemSelectorChecker
 
 		super(renderResponse);
 
-		_checkedCommercePriceListQualificationTypeKeys =
-			checkedCommercePriceListQualificationTypeKeys;
+		_checkedCommercePriceListQualificationTypeKeys = SetUtil.fromArray(
+			checkedCommercePriceListQualificationTypeKeys);
 	}
 
 	@Override
@@ -41,8 +43,7 @@ public class CommercePriceListQualificationTypeItemSelectorChecker
 		CommercePriceListQualificationType commercePriceListQualificationType =
 			(CommercePriceListQualificationType)obj;
 
-		return ArrayUtil.contains(
-			_checkedCommercePriceListQualificationTypeKeys,
+		return _checkedCommercePriceListQualificationTypeKeys.contains(
 			commercePriceListQualificationType.getKey());
 	}
 
@@ -51,6 +52,6 @@ public class CommercePriceListQualificationTypeItemSelectorChecker
 		return isChecked(obj);
 	}
 
-	private final String[] _checkedCommercePriceListQualificationTypeKeys;
+	private final Set<String> _checkedCommercePriceListQualificationTypeKeys;
 
 }

@@ -16,7 +16,9 @@ package com.liferay.commerce.product.item.selector.web.internal.search;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -31,27 +33,27 @@ public class CPDefinitionItemSelectorChecker extends EmptyOnClickRowChecker {
 
 		super(renderResponse);
 
-		_checkedCPDefinitionIds = checkedCPDefinitionIds;
-		_disabledCPDefinitionIds = disabledCPDefinitionIds;
+		_checkedCPDefinitionIds = SetUtil.fromArray(checkedCPDefinitionIds);
+		_disabledCPDefinitionIds = SetUtil.fromArray(disabledCPDefinitionIds);
 	}
 
 	@Override
 	public boolean isChecked(Object obj) {
 		CPDefinition cpDefinition = (CPDefinition)obj;
 
-		return ArrayUtil.contains(
-			_checkedCPDefinitionIds, cpDefinition.getCPDefinitionId());
+		return _checkedCPDefinitionIds.contains(
+			cpDefinition.getCPDefinitionId());
 	}
 
 	@Override
 	public boolean isDisabled(Object obj) {
 		CPDefinition cpDefinition = (CPDefinition)obj;
 
-		return ArrayUtil.contains(
-			_disabledCPDefinitionIds, cpDefinition.getCPDefinitionId());
+		return _disabledCPDefinitionIds.contains(
+			cpDefinition.getCPDefinitionId());
 	}
 
-	private final long[] _checkedCPDefinitionIds;
-	private final long[] _disabledCPDefinitionIds;
+	private final Set<Long> _checkedCPDefinitionIds;
+	private final Set<Long> _disabledCPDefinitionIds;
 
 }

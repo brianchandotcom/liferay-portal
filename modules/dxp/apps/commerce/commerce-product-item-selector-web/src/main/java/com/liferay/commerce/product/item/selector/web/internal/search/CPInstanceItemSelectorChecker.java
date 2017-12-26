@@ -16,7 +16,9 @@ package com.liferay.commerce.product.item.selector.web.internal.search;
 
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -30,15 +32,14 @@ public class CPInstanceItemSelectorChecker extends EmptyOnClickRowChecker {
 
 		super(renderResponse);
 
-		_checkedCPInstanceIds = checkedCPInstanceIds;
+		_checkedCPInstanceIds = SetUtil.fromArray(checkedCPInstanceIds);
 	}
 
 	@Override
 	public boolean isChecked(Object obj) {
 		CPInstance cpInstance = (CPInstance)obj;
 
-		return ArrayUtil.contains(
-			_checkedCPInstanceIds, cpInstance.getCPInstanceId());
+		return _checkedCPInstanceIds.contains(cpInstance.getCPInstanceId());
 	}
 
 	@Override
@@ -46,6 +47,6 @@ public class CPInstanceItemSelectorChecker extends EmptyOnClickRowChecker {
 		return isChecked(obj);
 	}
 
-	private final long[] _checkedCPInstanceIds;
+	private final Set<Long> _checkedCPInstanceIds;
 
 }

@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.util.KeyValuePair;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -70,14 +72,14 @@ public class CommerceShippingEngineException extends PortalException {
 					"be set: " +
 						StringUtil.merge(keys, StringPool.COMMA_AND_SPACE));
 
-			_keys = keys;
+			_keys = Collections.unmodifiableList(Arrays.asList(keys));
 		}
 
-		public String[] getKeys() {
+		public List<String> getKeys() {
 			return _keys;
 		}
 
-		private final String[] _keys;
+		private final List<String> _keys;
 
 	}
 

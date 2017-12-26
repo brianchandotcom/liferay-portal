@@ -15,12 +15,8 @@
 package com.liferay.site.navigation.item.selector.internal.handler;
 
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
-import com.liferay.item.selector.ItemSelectorCriterion;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
-import com.liferay.item.selector.ItemSelectorView;
 import com.liferay.site.navigation.item.selector.criterion.SiteNavigationItemSelectorCriterion;
-
-import java.util.List;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -40,17 +36,6 @@ public class SiteNavigationItemSelectorCriterionHandler
 		getItemSelectorCriterionClass() {
 
 		return SiteNavigationItemSelectorCriterion.class;
-	}
-
-	@Override
-	public List<ItemSelectorView<SiteNavigationItemSelectorCriterion>>
-		getItemSelectorViews(ItemSelectorCriterion itemSelectorCriterion) {
-
-		List<ItemSelectorView<SiteNavigationItemSelectorCriterion>>
-			itemSelectorViews = super.getItemSelectorViews(
-				itemSelectorCriterion);
-
-		return itemSelectorViews;
 	}
 
 	@Activate

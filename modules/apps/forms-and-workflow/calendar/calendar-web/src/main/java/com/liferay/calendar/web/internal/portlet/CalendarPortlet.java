@@ -73,6 +73,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSetPrototype;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
@@ -98,6 +99,7 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -112,6 +114,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.File;
 import java.io.IOException;
@@ -134,6 +137,7 @@ import java.util.TimeZone;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
@@ -542,9 +546,21 @@ public class CalendarPortlet extends MVCPortlet {
 
 		String redirect = getRedirect(actionRequest, actionResponse);
 
-		redirect = _http.setParameter(
-			redirect, actionResponse.getNamespace() + "calendarBookingId",
-			calendarBooking.getCalendarBookingId());
+		int workflowAction = ParamUtil.getInteger(
+			actionRequest, "workflowAction",
+			WorkflowConstants.ACTION_SAVE_DRAFT);
+
+		if ((calendarBooking != null) &&
+			(workflowAction == WorkflowConstants.ACTION_SAVE_DRAFT)) {
+
+			redirect = getSaveAndContinueRedirect(
+				actionRequest, calendarBooking, redirect);
+		}
+		else {
+			redirect = _http.setParameter(
+				redirect, actionResponse.getNamespace() + "calendarBookingId",
+				calendarBooking.getCalendarBookingId());
+		}
 
 		actionRequest.setAttribute(WebKeys.REDIRECT, redirect);
 	}
@@ -1108,6 +1124,31 @@ public class CalendarPortlet extends MVCPortlet {
 			portletRequest, "reminderType1");
 
 		return new String[] {firstReminderType, secondReminderType};
+	}
+
+	protected String getSaveAndContinueRedirect(
+			ActionRequest actionRequest, CalendarBooking calendarBooking,
+			String redirect)
+		throws Exception {
+
+		PortletConfig portletConfig = (PortletConfig)actionRequest.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, portletConfig.getPortletName(),
+			PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter("mvcPath", "/edit_calendar_booking.jsp");
+
+		portletURL.setParameter("redirect", redirect, false);
+		portletURL.setParameter(
+			"groupId", String.valueOf(calendarBooking.getGroupId()), false);
+		portletURL.setParameter(
+			"calendarBookingId",
+			String.valueOf(calendarBooking.getCalendarBookingId()), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		return portletURL.toString();
 	}
 
 	protected TimeZone getTimeZone(PortletRequest portletRequest) {

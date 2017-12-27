@@ -15,6 +15,7 @@
 
 	<command name="listModuleStatus">
 		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="lb ${moduleName}" />
+
 		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
 	</command>
 

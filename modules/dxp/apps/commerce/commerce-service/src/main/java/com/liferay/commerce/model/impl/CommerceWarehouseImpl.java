@@ -18,9 +18,13 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
 import com.liferay.commerce.service.CommerceRegionLocalServiceUtil;
+import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
@@ -53,6 +57,13 @@ public class CommerceWarehouseImpl extends CommerceWarehouseBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<CommerceWarehouseItem> getCommerceWarehouseItems() {
+		return CommerceWarehouseItemLocalServiceUtil.
+			getCommerceWarehouseItemsByCommerceWarehouseId(
+				getCommerceWarehouseId());
 	}
 
 	@Override

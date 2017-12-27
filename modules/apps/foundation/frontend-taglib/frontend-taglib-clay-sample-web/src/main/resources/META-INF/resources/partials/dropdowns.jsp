@@ -156,8 +156,8 @@
 		<clay:dropdown-menu
 			buttonLabel="Done"
 			items="<%= inputItems %>"
-			searchable="<%= true %>"
 			label="Inputs"
+			searchable="<%= true %>"
 		/>
 	</div>
 

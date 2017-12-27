@@ -175,12 +175,10 @@ item6.put("rating", "90");
 item6.put("releaseDate", "May 25th 1983");
 item6.put("status", "Watched");
 item6.put("title", "Movie Title VI");
-
-System.out.println(items);
 %>
 
 <clay:table
-    items="<%= items %>"
-    schema="<%= schema %>"
-    showActionsMenu="<%= true %>"
+	items="<%= items %>"
+	schema="<%= schema %>"
+	showActionsMenu="<%= true %>"
 />

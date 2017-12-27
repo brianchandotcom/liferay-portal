@@ -22,4 +22,5 @@ public class StripeTag extends AlertTag {
 	public StripeTag() {
 		super("ClayStripe");
 	}
+
 }

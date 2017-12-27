@@ -74,12 +74,12 @@ public class ManagementToolbarTag extends BaseClayTag {
 		putValue("sortingOrder", sortingOrder);
 	}
 
-	public void setTotalItems(int totalItems) {
-		putValue("totalItems", totalItems);
-	}
-
 	public void setSpritemap(String spritemap) {
 		putValue("spritemap", spritemap);
+	}
+
+	public void setTotalItems(int totalItems) {
+		putValue("totalItems", totalItems);
 	}
 
 	public void setViewTypes(Object viewTypes) {

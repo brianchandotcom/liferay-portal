@@ -39,6 +39,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>PROGRESS_BAR_COLOR</td>
+	<td>//tr/td[contains(.,'${key_imageName}')]//following-sibling::td[2]/div[contains(.,'${key_percentAdapted}')]//div[contains(@class,'progress-bar')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>STATE</td>
 	<td>//a[contains(.,'${key_imageName}')]/../..//td[contains(@class,'lfr-state-column') and contains(.,'${key_imageState}')]</td>
 	<td></td>

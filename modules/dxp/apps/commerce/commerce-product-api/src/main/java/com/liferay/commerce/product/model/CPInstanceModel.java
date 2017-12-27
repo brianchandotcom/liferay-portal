@@ -272,6 +272,27 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	public void setManufacturerPartNumber(String manufacturerPartNumber);
 
 	/**
+	 * Returns the purchasable of this cp instance.
+	 *
+	 * @return the purchasable of this cp instance
+	 */
+	public boolean getPurchasable();
+
+	/**
+	 * Returns <code>true</code> if this cp instance is purchasable.
+	 *
+	 * @return <code>true</code> if this cp instance is purchasable; <code>false</code> otherwise
+	 */
+	public boolean isPurchasable();
+
+	/**
+	 * Sets whether this cp instance is purchasable.
+	 *
+	 * @param purchasable the purchasable of this cp instance
+	 */
+	public void setPurchasable(boolean purchasable);
+
+	/**
 	 * Returns the ddm content of this cp instance.
 	 *
 	 * @return the ddm content of this cp instance
@@ -369,6 +390,27 @@ public interface CPInstanceModel extends BaseModel<CPInstance>, ShardedModel,
 	 * @param price the price of this cp instance
 	 */
 	public void setPrice(double price);
+
+	/**
+	 * Returns the published of this cp instance.
+	 *
+	 * @return the published of this cp instance
+	 */
+	public boolean getPublished();
+
+	/**
+	 * Returns <code>true</code> if this cp instance is published.
+	 *
+	 * @return <code>true</code> if this cp instance is published; <code>false</code> otherwise
+	 */
+	public boolean isPublished();
+
+	/**
+	 * Sets whether this cp instance is published.
+	 *
+	 * @param published the published of this cp instance
+	 */
+	public void setPublished(boolean published);
 
 	/**
 	 * Returns the display date of this cp instance.

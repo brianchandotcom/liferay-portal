@@ -67,10 +67,10 @@ public class CPDefinitionServiceHttp {
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
 		boolean shippable, boolean freeShipping, boolean shipSeparately,
 		double shippingExtraPrice, double width, double height, double depth,
-		double weight, java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		double weight, java.lang.String ddmStructureKey, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -83,10 +83,10 @@ public class CPDefinitionServiceHttp {
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					productTypeName, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
-					height, depth, weight, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					height, depth, weight, ddmStructureKey, published,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
@@ -121,10 +121,10 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		java.lang.String productTypeName, boolean ignoreSKUCombinations,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		java.lang.String ddmStructureKey, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -136,10 +136,11 @@ public class CPDefinitionServiceHttp {
 					titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 					metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 					productTypeName, ignoreSKUCombinations, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					published, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -641,10 +642,10 @@ public class CPDefinitionServiceHttp {
 		boolean ignoreSKUCombinations, boolean shippable, boolean freeShipping,
 		boolean shipSeparately, double shippingExtraPrice, double width,
 		double height, double depth, double weight,
-		java.lang.String ddmStructureKey, int displayDateMonth,
-		int displayDateDay, int displayDateYear, int displayDateHour,
-		int displayDateMinute, int expirationDateMonth, int expirationDateDay,
-		int expirationDateYear, int expirationDateHour,
+		java.lang.String ddmStructureKey, boolean published,
+		int displayDateMonth, int displayDateDay, int displayDateYear,
+		int displayDateHour, int displayDateMinute, int expirationDateMonth,
+		int expirationDateDay, int expirationDateYear, int expirationDateHour,
 		int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -657,10 +658,10 @@ public class CPDefinitionServiceHttp {
 					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 					metaDescriptionMap, ignoreSKUCombinations, shippable,
 					freeShipping, shipSeparately, shippingExtraPrice, width,
-					height, depth, weight, ddmStructureKey, displayDateMonth,
-					displayDateDay, displayDateYear, displayDateHour,
-					displayDateMinute, expirationDateMonth, expirationDateDay,
-					expirationDateYear, expirationDateHour,
+					height, depth, weight, ddmStructureKey, published,
+					displayDateMonth, displayDateDay, displayDateYear,
+					displayDateHour, displayDateMinute, expirationDateMonth,
+					expirationDateDay, expirationDateYear, expirationDateHour,
 					expirationDateMinute, neverExpire, serviceContext);
 
 			Object returnObj = null;
@@ -695,10 +696,10 @@ public class CPDefinitionServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> metaKeywordsMap,
 		java.util.Map<java.util.Locale, java.lang.String> metaDescriptionMap,
 		boolean ignoreSKUCombinations, java.lang.String ddmStructureKey,
-		int displayDateMonth, int displayDateDay, int displayDateYear,
-		int displayDateHour, int displayDateMinute, int expirationDateMonth,
-		int expirationDateDay, int expirationDateYear, int expirationDateHour,
-		int expirationDateMinute, boolean neverExpire,
+		boolean published, int displayDateMonth, int displayDateDay,
+		int displayDateYear, int displayDateHour, int displayDateMinute,
+		int expirationDateMonth, int expirationDateDay, int expirationDateYear,
+		int expirationDateHour, int expirationDateMinute, boolean neverExpire,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -709,10 +710,11 @@ public class CPDefinitionServiceHttp {
 					cpDefinitionId, titleMap, shortDescriptionMap,
 					descriptionMap, urlTitleMap, metaTitleMap, metaKeywordsMap,
 					metaDescriptionMap, ignoreSKUCombinations, ddmStructureKey,
-					displayDateMonth, displayDateDay, displayDateYear,
-					displayDateHour, displayDateMinute, expirationDateMonth,
-					expirationDateDay, expirationDateYear, expirationDateHour,
-					expirationDateMinute, neverExpire, serviceContext);
+					published, displayDateMonth, displayDateDay,
+					displayDateYear, displayDateHour, displayDateMinute,
+					expirationDateMonth, expirationDateDay, expirationDateYear,
+					expirationDateHour, expirationDateMinute, neverExpire,
+					serviceContext);
 
 			Object returnObj = null;
 
@@ -914,18 +916,18 @@ public class CPDefinitionServiceHttp {
 			java.util.Map.class, java.lang.String.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, double.class,
 			double.class, double.class, double.class, double.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _addCPDefinitionParameterTypes1 = new Class[] {
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.lang.String.class, boolean.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteAssetCategoryCPDefinitionParameterTypes2 =
@@ -979,18 +981,18 @@ public class CPDefinitionServiceHttp {
 			java.util.Map.class, java.util.Map.class, boolean.class,
 			boolean.class, boolean.class, boolean.class, double.class,
 			double.class, double.class, double.class, double.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionParameterTypes18 = new Class[] {
 			long.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, java.util.Map.class,
 			java.util.Map.class, java.util.Map.class, boolean.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			java.lang.String.class, boolean.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			boolean.class,
+			int.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateCPDefinitionCategorizationParameterTypes19 =

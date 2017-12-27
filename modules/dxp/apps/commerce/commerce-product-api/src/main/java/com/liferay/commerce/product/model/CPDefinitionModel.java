@@ -419,6 +419,27 @@ public interface CPDefinitionModel extends BaseModel<CPDefinition>, ShardedModel
 	public void setDDMStructureKey(String DDMStructureKey);
 
 	/**
+	 * Returns the published of this cp definition.
+	 *
+	 * @return the published of this cp definition
+	 */
+	public boolean getPublished();
+
+	/**
+	 * Returns <code>true</code> if this cp definition is published.
+	 *
+	 * @return <code>true</code> if this cp definition is published; <code>false</code> otherwise
+	 */
+	public boolean isPublished();
+
+	/**
+	 * Sets whether this cp definition is published.
+	 *
+	 * @param published the published of this cp definition
+	 */
+	public void setPublished(boolean published);
+
+	/**
 	 * Returns the display date of this cp definition.
 	 *
 	 * @return the display date of this cp definition

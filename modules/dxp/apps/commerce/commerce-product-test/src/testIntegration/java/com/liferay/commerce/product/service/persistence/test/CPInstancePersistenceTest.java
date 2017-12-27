@@ -147,6 +147,8 @@ public class CPInstancePersistenceTest {
 
 		newCPInstance.setManufacturerPartNumber(RandomTestUtil.randomString());
 
+		newCPInstance.setPurchasable(RandomTestUtil.randomBoolean());
+
 		newCPInstance.setDDMContent(RandomTestUtil.randomString());
 
 		newCPInstance.setWidth(RandomTestUtil.nextDouble());
@@ -160,6 +162,8 @@ public class CPInstancePersistenceTest {
 		newCPInstance.setCost(RandomTestUtil.nextDouble());
 
 		newCPInstance.setPrice(RandomTestUtil.nextDouble());
+
+		newCPInstance.setPublished(RandomTestUtil.randomBoolean());
 
 		newCPInstance.setDisplayDate(RandomTestUtil.nextDate());
 
@@ -204,6 +208,8 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getGtin());
 		Assert.assertEquals(existingCPInstance.getManufacturerPartNumber(),
 			newCPInstance.getManufacturerPartNumber());
+		Assert.assertEquals(existingCPInstance.getPurchasable(),
+			newCPInstance.getPurchasable());
 		Assert.assertEquals(existingCPInstance.getDDMContent(),
 			newCPInstance.getDDMContent());
 		AssertUtils.assertEquals(existingCPInstance.getWidth(),
@@ -218,6 +224,8 @@ public class CPInstancePersistenceTest {
 			newCPInstance.getCost());
 		AssertUtils.assertEquals(existingCPInstance.getPrice(),
 			newCPInstance.getPrice());
+		Assert.assertEquals(existingCPInstance.getPublished(),
+			newCPInstance.getPublished());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPInstance.getDisplayDate()),
 			Time.getShortTimestamp(newCPInstance.getDisplayDate()));
@@ -362,11 +370,11 @@ public class CPInstancePersistenceTest {
 			"CPInstanceId", true, "groupId", true, "companyId", true, "userId",
 			true, "userName", true, "createDate", true, "modifiedDate", true,
 			"CPDefinitionId", true, "sku", true, "gtin", true,
-			"manufacturerPartNumber", true, "width", true, "height", true,
-			"depth", true, "weight", true, "cost", true, "price", true,
-			"displayDate", true, "expirationDate", true, "lastPublishDate",
-			true, "status", true, "statusByUserId", true, "statusByUserName",
-			true, "statusDate", true);
+			"manufacturerPartNumber", true, "purchasable", true, "width", true,
+			"height", true, "depth", true, "weight", true, "cost", true,
+			"price", true, "published", true, "displayDate", true,
+			"expirationDate", true, "lastPublishDate", true, "status", true,
+			"statusByUserId", true, "statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -613,6 +621,8 @@ public class CPInstancePersistenceTest {
 
 		cpInstance.setManufacturerPartNumber(RandomTestUtil.randomString());
 
+		cpInstance.setPurchasable(RandomTestUtil.randomBoolean());
+
 		cpInstance.setDDMContent(RandomTestUtil.randomString());
 
 		cpInstance.setWidth(RandomTestUtil.nextDouble());
@@ -626,6 +636,8 @@ public class CPInstancePersistenceTest {
 		cpInstance.setCost(RandomTestUtil.nextDouble());
 
 		cpInstance.setPrice(RandomTestUtil.nextDouble());
+
+		cpInstance.setPublished(RandomTestUtil.randomBoolean());
 
 		cpInstance.setDisplayDate(RandomTestUtil.nextDate());
 

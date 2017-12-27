@@ -46,6 +46,7 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setSku(model.getSku());
 		soapModel.setGtin(model.getGtin());
 		soapModel.setManufacturerPartNumber(model.getManufacturerPartNumber());
+		soapModel.setPurchasable(model.getPurchasable());
 		soapModel.setDDMContent(model.getDDMContent());
 		soapModel.setWidth(model.getWidth());
 		soapModel.setHeight(model.getHeight());
@@ -53,6 +54,7 @@ public class CPInstanceSoap implements Serializable {
 		soapModel.setWeight(model.getWeight());
 		soapModel.setCost(model.getCost());
 		soapModel.setPrice(model.getPrice());
+		soapModel.setPublished(model.getPublished());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -208,6 +210,18 @@ public class CPInstanceSoap implements Serializable {
 		_manufacturerPartNumber = manufacturerPartNumber;
 	}
 
+	public boolean getPurchasable() {
+		return _purchasable;
+	}
+
+	public boolean isPurchasable() {
+		return _purchasable;
+	}
+
+	public void setPurchasable(boolean purchasable) {
+		_purchasable = purchasable;
+	}
+
 	public String getDDMContent() {
 		return _DDMContent;
 	}
@@ -262,6 +276,18 @@ public class CPInstanceSoap implements Serializable {
 
 	public void setPrice(double price) {
 		_price = price;
+	}
+
+	public boolean getPublished() {
+		return _published;
+	}
+
+	public boolean isPublished() {
+		return _published;
+	}
+
+	public void setPublished(boolean published) {
+		_published = published;
 	}
 
 	public Date getDisplayDate() {
@@ -332,6 +358,7 @@ public class CPInstanceSoap implements Serializable {
 	private String _sku;
 	private String _gtin;
 	private String _manufacturerPartNumber;
+	private boolean _purchasable;
 	private String _DDMContent;
 	private double _width;
 	private double _height;
@@ -339,6 +366,7 @@ public class CPInstanceSoap implements Serializable {
 	private double _weight;
 	private double _cost;
 	private double _price;
+	private boolean _published;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

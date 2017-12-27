@@ -163,6 +163,8 @@ public class CPDefinitionPersistenceTest {
 
 		newCPDefinition.setDDMStructureKey(RandomTestUtil.randomString());
 
+		newCPDefinition.setPublished(RandomTestUtil.randomBoolean());
+
 		newCPDefinition.setDisplayDate(RandomTestUtil.nextDate());
 
 		newCPDefinition.setExpirationDate(RandomTestUtil.nextDate());
@@ -225,6 +227,8 @@ public class CPDefinitionPersistenceTest {
 			newCPDefinition.getWeight());
 		Assert.assertEquals(existingCPDefinition.getDDMStructureKey(),
 			newCPDefinition.getDDMStructureKey());
+		Assert.assertEquals(existingCPDefinition.getPublished(),
+			newCPDefinition.getPublished());
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCPDefinition.getDisplayDate()),
 			Time.getShortTimestamp(newCPDefinition.getDisplayDate()));
@@ -348,10 +352,10 @@ public class CPDefinitionPersistenceTest {
 			"availableIndividually", true, "ignoreSKUCombinations", true,
 			"shippable", true, "freeShipping", true, "shipSeparately", true,
 			"shippingExtraPrice", true, "width", true, "height", true, "depth",
-			true, "weight", true, "DDMStructureKey", true, "displayDate", true,
-			"expirationDate", true, "lastPublishDate", true, "status", true,
-			"statusByUserId", true, "statusByUserName", true, "statusDate",
-			true, "defaultLanguageId", true);
+			true, "weight", true, "DDMStructureKey", true, "published", true,
+			"displayDate", true, "expirationDate", true, "lastPublishDate",
+			true, "status", true, "statusByUserId", true, "statusByUserName",
+			true, "statusDate", true, "defaultLanguageId", true);
 	}
 
 	@Test
@@ -606,6 +610,8 @@ public class CPDefinitionPersistenceTest {
 		cpDefinition.setWeight(RandomTestUtil.nextDouble());
 
 		cpDefinition.setDDMStructureKey(RandomTestUtil.randomString());
+
+		cpDefinition.setPublished(RandomTestUtil.randomBoolean());
 
 		cpDefinition.setDisplayDate(RandomTestUtil.nextDate());
 

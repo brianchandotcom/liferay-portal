@@ -102,6 +102,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			{ "depth", Types.DOUBLE },
 			{ "weight", Types.DOUBLE },
 			{ "DDMStructureKey", Types.VARCHAR },
+			{ "published", Types.BOOLEAN },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "lastPublishDate", Types.TIMESTAMP },
@@ -134,6 +135,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("depth", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("DDMStructureKey", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -144,7 +146,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		TABLE_COLUMNS_MAP.put("defaultLanguageId", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CPDefinition (uuid_ VARCHAR(75) null,CPDefinitionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,productTypeName VARCHAR(75) null,availableIndividually BOOLEAN,ignoreSKUCombinations BOOLEAN,shippable BOOLEAN,freeShipping BOOLEAN,shipSeparately BOOLEAN,shippingExtraPrice DOUBLE,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,DDMStructureKey VARCHAR(75) null,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,defaultLanguageId VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table CPDefinition";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpDefinition.displayDate DESC, cpDefinition.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPDefinition.displayDate DESC, CPDefinition.createDate DESC";
@@ -200,6 +202,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		model.setDepth(soapModel.getDepth());
 		model.setWeight(soapModel.getWeight());
 		model.setDDMStructureKey(soapModel.getDDMStructureKey());
+		model.setPublished(soapModel.getPublished());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -292,6 +295,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
+		attributes.put("published", getPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -429,6 +433,12 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 		if (DDMStructureKey != null) {
 			setDDMStructureKey(DDMStructureKey);
+		}
+
+		Boolean published = (Boolean)attributes.get("published");
+
+		if (published != null) {
+			setPublished(published);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -1153,6 +1163,23 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@JSON
 	@Override
+	public boolean getPublished() {
+		return _published;
+	}
+
+	@JSON
+	@Override
+	public boolean isPublished() {
+		return _published;
+	}
+
+	@Override
+	public void setPublished(boolean published) {
+		_published = published;
+	}
+
+	@JSON
+	@Override
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -1555,6 +1582,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		cpDefinitionImpl.setDepth(getDepth());
 		cpDefinitionImpl.setWeight(getWeight());
 		cpDefinitionImpl.setDDMStructureKey(getDDMStructureKey());
+		cpDefinitionImpl.setPublished(getPublished());
 		cpDefinitionImpl.setDisplayDate(getDisplayDate());
 		cpDefinitionImpl.setExpirationDate(getExpirationDate());
 		cpDefinitionImpl.setLastPublishDate(getLastPublishDate());
@@ -1737,6 +1765,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 			cpDefinitionCacheModel.DDMStructureKey = null;
 		}
 
+		cpDefinitionCacheModel.published = getPublished();
+
 		Date displayDate = getDisplayDate();
 
 		if (displayDate != null) {
@@ -1798,7 +1828,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1840,6 +1870,8 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getWeight());
 		sb.append(", DDMStructureKey=");
 		sb.append(getDDMStructureKey());
+		sb.append(", published=");
+		sb.append(getPublished());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
@@ -1863,7 +1895,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(88);
+		StringBundler sb = new StringBundler(91);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPDefinition");
@@ -1950,6 +1982,10 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 		sb.append(getDDMStructureKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>published</column-name><column-value><![CDATA[");
+		sb.append(getPublished());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
 		sb.append(getDisplayDate());
 		sb.append("]]></column-value></column>");
@@ -2017,6 +2053,7 @@ public class CPDefinitionModelImpl extends BaseModelImpl<CPDefinition>
 	private double _depth;
 	private double _weight;
 	private String _DDMStructureKey;
+	private boolean _published;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

@@ -90,6 +90,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			{ "sku", Types.VARCHAR },
 			{ "gtin", Types.VARCHAR },
 			{ "manufacturerPartNumber", Types.VARCHAR },
+			{ "purchasable", Types.BOOLEAN },
 			{ "DDMContent", Types.CLOB },
 			{ "width", Types.DOUBLE },
 			{ "height", Types.DOUBLE },
@@ -97,6 +98,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			{ "weight", Types.DOUBLE },
 			{ "cost", Types.DOUBLE },
 			{ "price", Types.DOUBLE },
+			{ "published", Types.BOOLEAN },
 			{ "displayDate", Types.TIMESTAMP },
 			{ "expirationDate", Types.TIMESTAMP },
 			{ "lastPublishDate", Types.TIMESTAMP },
@@ -120,6 +122,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("sku", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("gtin", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("manufacturerPartNumber", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("purchasable", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("DDMContent", Types.CLOB);
 		TABLE_COLUMNS_MAP.put("width", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("height", Types.DOUBLE);
@@ -127,6 +130,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("weight", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("cost", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
+		TABLE_COLUMNS_MAP.put("published", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("displayDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("expirationDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
@@ -136,7 +140,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DOUBLE,price DOUBLE,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CPInstance (uuid_ VARCHAR(75) null,CPInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,CPDefinitionId LONG,sku VARCHAR(75) null,gtin VARCHAR(75) null,manufacturerPartNumber VARCHAR(75) null,purchasable BOOLEAN,DDMContent TEXT null,width DOUBLE,height DOUBLE,depth DOUBLE,weight DOUBLE,cost DOUBLE,price DOUBLE,published BOOLEAN,displayDate DATE null,expirationDate DATE null,lastPublishDate DATE null,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CPInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY cpInstance.displayDate DESC, cpInstance.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CPInstance.displayDate DESC, CPInstance.createDate DESC";
@@ -186,6 +190,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setSku(soapModel.getSku());
 		model.setGtin(soapModel.getGtin());
 		model.setManufacturerPartNumber(soapModel.getManufacturerPartNumber());
+		model.setPurchasable(soapModel.getPurchasable());
 		model.setDDMContent(soapModel.getDDMContent());
 		model.setWidth(soapModel.getWidth());
 		model.setHeight(soapModel.getHeight());
@@ -193,6 +198,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		model.setWeight(soapModel.getWeight());
 		model.setCost(soapModel.getCost());
 		model.setPrice(soapModel.getPrice());
+		model.setPublished(soapModel.getPublished());
 		model.setDisplayDate(soapModel.getDisplayDate());
 		model.setExpirationDate(soapModel.getExpirationDate());
 		model.setLastPublishDate(soapModel.getLastPublishDate());
@@ -276,6 +282,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		attributes.put("sku", getSku());
 		attributes.put("gtin", getGtin());
 		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
+		attributes.put("purchasable", getPurchasable());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
@@ -283,6 +290,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		attributes.put("weight", getWeight());
 		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
+		attributes.put("published", getPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -372,6 +380,12 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
+		Boolean purchasable = (Boolean)attributes.get("purchasable");
+
+		if (purchasable != null) {
+			setPurchasable(purchasable);
+		}
+
 		String DDMContent = (String)attributes.get("DDMContent");
 
 		if (DDMContent != null) {
@@ -412,6 +426,12 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		Boolean published = (Boolean)attributes.get("published");
+
+		if (published != null) {
+			setPublished(published);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -694,6 +714,23 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@JSON
 	@Override
+	public boolean getPurchasable() {
+		return _purchasable;
+	}
+
+	@JSON
+	@Override
+	public boolean isPurchasable() {
+		return _purchasable;
+	}
+
+	@Override
+	public void setPurchasable(boolean purchasable) {
+		_purchasable = purchasable;
+	}
+
+	@JSON
+	@Override
 	public String getDDMContent() {
 		if (_DDMContent == null) {
 			return "";
@@ -772,6 +809,23 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	@Override
 	public void setPrice(double price) {
 		_price = price;
+	}
+
+	@JSON
+	@Override
+	public boolean getPublished() {
+		return _published;
+	}
+
+	@JSON
+	@Override
+	public boolean isPublished() {
+		return _published;
+	}
+
+	@Override
+	public void setPublished(boolean published) {
+		_published = published;
 	}
 
 	@JSON
@@ -1154,6 +1208,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceImpl.setSku(getSku());
 		cpInstanceImpl.setGtin(getGtin());
 		cpInstanceImpl.setManufacturerPartNumber(getManufacturerPartNumber());
+		cpInstanceImpl.setPurchasable(getPurchasable());
 		cpInstanceImpl.setDDMContent(getDDMContent());
 		cpInstanceImpl.setWidth(getWidth());
 		cpInstanceImpl.setHeight(getHeight());
@@ -1161,6 +1216,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceImpl.setWeight(getWeight());
 		cpInstanceImpl.setCost(getCost());
 		cpInstanceImpl.setPrice(getPrice());
+		cpInstanceImpl.setPublished(getPublished());
 		cpInstanceImpl.setDisplayDate(getDisplayDate());
 		cpInstanceImpl.setExpirationDate(getExpirationDate());
 		cpInstanceImpl.setLastPublishDate(getLastPublishDate());
@@ -1338,6 +1394,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 			cpInstanceCacheModel.manufacturerPartNumber = null;
 		}
 
+		cpInstanceCacheModel.purchasable = getPurchasable();
+
 		cpInstanceCacheModel.DDMContent = getDDMContent();
 
 		String DDMContent = cpInstanceCacheModel.DDMContent;
@@ -1357,6 +1415,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		cpInstanceCacheModel.cost = getCost();
 
 		cpInstanceCacheModel.price = getPrice();
+
+		cpInstanceCacheModel.published = getPublished();
 
 		Date displayDate = getDisplayDate();
 
@@ -1411,7 +1471,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1437,6 +1497,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getGtin());
 		sb.append(", manufacturerPartNumber=");
 		sb.append(getManufacturerPartNumber());
+		sb.append(", purchasable=");
+		sb.append(getPurchasable());
 		sb.append(", DDMContent=");
 		sb.append(getDDMContent());
 		sb.append(", width=");
@@ -1451,6 +1513,8 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getCost());
 		sb.append(", price=");
 		sb.append(getPrice());
+		sb.append(", published=");
+		sb.append(getPublished());
 		sb.append(", displayDate=");
 		sb.append(getDisplayDate());
 		sb.append(", expirationDate=");
@@ -1472,7 +1536,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(82);
+		StringBundler sb = new StringBundler(88);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.product.model.CPInstance");
@@ -1527,6 +1591,10 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(getManufacturerPartNumber());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>purchasable</column-name><column-value><![CDATA[");
+		sb.append(getPurchasable());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>DDMContent</column-name><column-value><![CDATA[");
 		sb.append(getDDMContent());
 		sb.append("]]></column-value></column>");
@@ -1553,6 +1621,10 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 		sb.append(
 			"<column><column-name>price</column-name><column-value><![CDATA[");
 		sb.append(getPrice());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>published</column-name><column-value><![CDATA[");
+		sb.append(getPublished());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>displayDate</column-name><column-value><![CDATA[");
@@ -1613,6 +1685,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private String _originalSku;
 	private String _gtin;
 	private String _manufacturerPartNumber;
+	private boolean _purchasable;
 	private String _DDMContent;
 	private double _width;
 	private double _height;
@@ -1620,6 +1693,7 @@ public class CPInstanceModelImpl extends BaseModelImpl<CPInstance>
 	private double _weight;
 	private double _cost;
 	private double _price;
+	private boolean _published;
 	private Date _displayDate;
 	private Date _originalDisplayDate;
 	private Date _expirationDate;

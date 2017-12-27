@@ -65,7 +65,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(53);
+		StringBundler sb = new StringBundler(57);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -91,6 +91,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(gtin);
 		sb.append(", manufacturerPartNumber=");
 		sb.append(manufacturerPartNumber);
+		sb.append(", purchasable=");
+		sb.append(purchasable);
 		sb.append(", DDMContent=");
 		sb.append(DDMContent);
 		sb.append(", width=");
@@ -105,6 +107,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sb.append(cost);
 		sb.append(", price=");
 		sb.append(price);
+		sb.append(", published=");
+		sb.append(published);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -184,6 +188,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			cpInstanceImpl.setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
+		cpInstanceImpl.setPurchasable(purchasable);
+
 		if (DDMContent == null) {
 			cpInstanceImpl.setDDMContent("");
 		}
@@ -197,6 +203,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cpInstanceImpl.setWeight(weight);
 		cpInstanceImpl.setCost(cost);
 		cpInstanceImpl.setPrice(price);
+		cpInstanceImpl.setPublished(published);
 
 		if (displayDate == Long.MIN_VALUE) {
 			cpInstanceImpl.setDisplayDate(null);
@@ -260,6 +267,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		sku = objectInput.readUTF();
 		gtin = objectInput.readUTF();
 		manufacturerPartNumber = objectInput.readUTF();
+
+		purchasable = objectInput.readBoolean();
 		DDMContent = objectInput.readUTF();
 
 		width = objectInput.readDouble();
@@ -273,6 +282,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		cost = objectInput.readDouble();
 
 		price = objectInput.readDouble();
+
+		published = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -335,6 +346,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 			objectOutput.writeUTF(manufacturerPartNumber);
 		}
 
+		objectOutput.writeBoolean(purchasable);
+
 		if (DDMContent == null) {
 			objectOutput.writeUTF("");
 		}
@@ -353,6 +366,8 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 		objectOutput.writeDouble(cost);
 
 		objectOutput.writeDouble(price);
+
+		objectOutput.writeBoolean(published);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -383,6 +398,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public String sku;
 	public String gtin;
 	public String manufacturerPartNumber;
+	public boolean purchasable;
 	public String DDMContent;
 	public double width;
 	public double height;
@@ -390,6 +406,7 @@ public class CPInstanceCacheModel implements CacheModel<CPInstance>,
 	public double weight;
 	public double cost;
 	public double price;
+	public boolean published;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

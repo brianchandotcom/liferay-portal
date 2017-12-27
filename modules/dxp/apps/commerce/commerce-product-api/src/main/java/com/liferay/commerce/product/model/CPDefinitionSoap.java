@@ -54,6 +54,7 @@ public class CPDefinitionSoap implements Serializable {
 		soapModel.setDepth(model.getDepth());
 		soapModel.setWeight(model.getWeight());
 		soapModel.setDDMStructureKey(model.getDDMStructureKey());
+		soapModel.setPublished(model.getPublished());
 		soapModel.setDisplayDate(model.getDisplayDate());
 		soapModel.setExpirationDate(model.getExpirationDate());
 		soapModel.setLastPublishDate(model.getLastPublishDate());
@@ -294,6 +295,18 @@ public class CPDefinitionSoap implements Serializable {
 		_DDMStructureKey = DDMStructureKey;
 	}
 
+	public boolean getPublished() {
+		return _published;
+	}
+
+	public boolean isPublished() {
+		return _published;
+	}
+
+	public void setPublished(boolean published) {
+		_published = published;
+	}
+
 	public Date getDisplayDate() {
 		return _displayDate;
 	}
@@ -378,6 +391,7 @@ public class CPDefinitionSoap implements Serializable {
 	private double _depth;
 	private double _weight;
 	private String _DDMStructureKey;
+	private boolean _published;
 	private Date _displayDate;
 	private Date _expirationDate;
 	private Date _lastPublishDate;

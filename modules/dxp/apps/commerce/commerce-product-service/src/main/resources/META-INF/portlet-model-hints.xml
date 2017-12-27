@@ -58,6 +58,9 @@
 			<validator name="number" />
 		</field>
 		<field name="DDMStructureKey" type="String" />
+		<field name="published" type="boolean">
+			<hint name="default-value">true</hint>
+		</field>
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />
 		<field name="lastPublishDate" type="Date" />
@@ -221,6 +224,9 @@
 		</field>
 		<field name="gtin" type="String" />
 		<field name="manufacturerPartNumber" type="String" />
+		<field name="purchasable" type="boolean">
+			<hint name="default-value">true</hint>
+		</field>
 		<field name="DDMContent" type="String">
 			<hint-collection name="CLOB" />
 		</field>
@@ -241,6 +247,9 @@
 		</field>
 		<field name="price" type="double">
 			<validator name="number" />
+		</field>
+		<field name="published" type="boolean">
+			<hint name="default-value">true</hint>
 		</field>
 		<field name="displayDate" type="Date" />
 		<field name="expirationDate" type="Date" />

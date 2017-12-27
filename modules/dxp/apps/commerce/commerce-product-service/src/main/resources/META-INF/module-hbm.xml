@@ -67,6 +67,7 @@
 		<property name="depth" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="DDMStructureKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />
@@ -220,6 +221,7 @@
 		<property name="sku" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="gtin" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="manufacturerPartNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="purchasable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="DDMContent" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="width" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="height" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
@@ -227,6 +229,7 @@
 		<property name="weight" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="cost" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="price" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+		<property name="published" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property name="displayDate" type="org.hibernate.type.TimestampType" />
 		<property name="expirationDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastPublishDate" type="org.hibernate.type.TimestampType" />

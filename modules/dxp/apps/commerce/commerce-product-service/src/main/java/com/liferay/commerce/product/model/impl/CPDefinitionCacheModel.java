@@ -65,7 +65,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(57);
+		StringBundler sb = new StringBundler(59);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -107,6 +107,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		sb.append(weight);
 		sb.append(", DDMStructureKey=");
 		sb.append(DDMStructureKey);
+		sb.append(", published=");
+		sb.append(published);
 		sb.append(", displayDate=");
 		sb.append(displayDate);
 		sb.append(", expirationDate=");
@@ -189,6 +191,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 		else {
 			cpDefinitionImpl.setDDMStructureKey(DDMStructureKey);
 		}
+
+		cpDefinitionImpl.setPublished(published);
 
 		if (displayDate == Long.MIN_VALUE) {
 			cpDefinitionImpl.setDisplayDate(null);
@@ -276,6 +280,8 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 
 		weight = objectInput.readDouble();
 		DDMStructureKey = objectInput.readUTF();
+
+		published = objectInput.readBoolean();
 		displayDate = objectInput.readLong();
 		expirationDate = objectInput.readLong();
 		lastPublishDate = objectInput.readLong();
@@ -350,6 +356,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 			objectOutput.writeUTF(DDMStructureKey);
 		}
 
+		objectOutput.writeBoolean(published);
 		objectOutput.writeLong(displayDate);
 		objectOutput.writeLong(expirationDate);
 		objectOutput.writeLong(lastPublishDate);
@@ -395,6 +402,7 @@ public class CPDefinitionCacheModel implements CacheModel<CPDefinition>,
 	public double depth;
 	public double weight;
 	public String DDMStructureKey;
+	public boolean published;
 	public long displayDate;
 	public long expirationDate;
 	public long lastPublishDate;

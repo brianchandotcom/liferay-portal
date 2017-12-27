@@ -80,6 +80,7 @@ public class CPDefinitionWrapper implements CPDefinition,
 		attributes.put("depth", getDepth());
 		attributes.put("weight", getWeight());
 		attributes.put("DDMStructureKey", getDDMStructureKey());
+		attributes.put("published", getPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -214,6 +215,12 @@ public class CPDefinitionWrapper implements CPDefinition,
 
 		if (DDMStructureKey != null) {
 			setDDMStructureKey(DDMStructureKey);
+		}
+
+		Boolean published = (Boolean)attributes.get("published");
+
+		if (published != null) {
+			setPublished(published);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -622,6 +629,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns the published of this cp definition.
+	*
+	* @return the published of this cp definition
+	*/
+	@Override
+	public boolean getPublished() {
+		return _cpDefinition.getPublished();
+	}
+
+	/**
 	* Returns the shippable of this cp definition.
 	*
 	* @return the shippable of this cp definition
@@ -1007,6 +1024,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	}
 
 	/**
+	* Returns <code>true</code> if this cp definition is published.
+	*
+	* @return <code>true</code> if this cp definition is published; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPublished() {
+		return _cpDefinition.isPublished();
+	}
+
+	/**
 	* Returns <code>true</code> if this cp definition is scheduled.
 	*
 	* @return <code>true</code> if this cp definition is scheduled; <code>false</code> otherwise
@@ -1251,6 +1278,16 @@ public class CPDefinitionWrapper implements CPDefinition,
 	@Override
 	public void setProductTypeName(java.lang.String productTypeName) {
 		_cpDefinition.setProductTypeName(productTypeName);
+	}
+
+	/**
+	* Sets whether this cp definition is published.
+	*
+	* @param published the published of this cp definition
+	*/
+	@Override
+	public void setPublished(boolean published) {
+		_cpDefinition.setPublished(published);
 	}
 
 	/**

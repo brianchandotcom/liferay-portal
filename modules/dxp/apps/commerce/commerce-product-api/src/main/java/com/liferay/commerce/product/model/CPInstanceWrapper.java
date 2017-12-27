@@ -71,6 +71,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("sku", getSku());
 		attributes.put("gtin", getGtin());
 		attributes.put("manufacturerPartNumber", getManufacturerPartNumber());
+		attributes.put("purchasable", getPurchasable());
 		attributes.put("DDMContent", getDDMContent());
 		attributes.put("width", getWidth());
 		attributes.put("height", getHeight());
@@ -78,6 +79,7 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 		attributes.put("weight", getWeight());
 		attributes.put("cost", getCost());
 		attributes.put("price", getPrice());
+		attributes.put("published", getPublished());
 		attributes.put("displayDate", getDisplayDate());
 		attributes.put("expirationDate", getExpirationDate());
 		attributes.put("lastPublishDate", getLastPublishDate());
@@ -164,6 +166,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 			setManufacturerPartNumber(manufacturerPartNumber);
 		}
 
+		Boolean purchasable = (Boolean)attributes.get("purchasable");
+
+		if (purchasable != null) {
+			setPurchasable(purchasable);
+		}
+
 		String DDMContent = (String)attributes.get("DDMContent");
 
 		if (DDMContent != null) {
@@ -204,6 +212,12 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 
 		if (price != null) {
 			setPrice(price);
+		}
+
+		Boolean published = (Boolean)attributes.get("published");
+
+		if (published != null) {
+			setPublished(published);
 		}
 
 		Date displayDate = (Date)attributes.get("displayDate");
@@ -443,6 +457,26 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _cpInstance.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the published of this cp instance.
+	*
+	* @return the published of this cp instance
+	*/
+	@Override
+	public boolean getPublished() {
+		return _cpInstance.getPublished();
+	}
+
+	/**
+	* Returns the purchasable of this cp instance.
+	*
+	* @return the purchasable of this cp instance
+	*/
+	@Override
+	public boolean getPurchasable() {
+		return _cpInstance.getPurchasable();
 	}
 
 	/**
@@ -719,6 +753,26 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	}
 
 	/**
+	* Returns <code>true</code> if this cp instance is published.
+	*
+	* @return <code>true</code> if this cp instance is published; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPublished() {
+		return _cpInstance.isPublished();
+	}
+
+	/**
+	* Returns <code>true</code> if this cp instance is purchasable.
+	*
+	* @return <code>true</code> if this cp instance is purchasable; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPurchasable() {
+		return _cpInstance.isPurchasable();
+	}
+
+	/**
 	* Returns <code>true</code> if this cp instance is scheduled.
 	*
 	* @return <code>true</code> if this cp instance is scheduled; <code>false</code> otherwise
@@ -933,6 +987,26 @@ public class CPInstanceWrapper implements CPInstance, ModelWrapper<CPInstance> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_cpInstance.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets whether this cp instance is published.
+	*
+	* @param published the published of this cp instance
+	*/
+	@Override
+	public void setPublished(boolean published) {
+		_cpInstance.setPublished(published);
+	}
+
+	/**
+	* Sets whether this cp instance is purchasable.
+	*
+	* @param purchasable the purchasable of this cp instance
+	*/
+	@Override
+	public void setPurchasable(boolean purchasable) {
+		_cpInstance.setPurchasable(purchasable);
 	}
 
 	/**

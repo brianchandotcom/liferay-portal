@@ -6529,6 +6529,7 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 		cpInstanceImpl.setSku(cpInstance.getSku());
 		cpInstanceImpl.setGtin(cpInstance.getGtin());
 		cpInstanceImpl.setManufacturerPartNumber(cpInstance.getManufacturerPartNumber());
+		cpInstanceImpl.setPurchasable(cpInstance.isPurchasable());
 		cpInstanceImpl.setDDMContent(cpInstance.getDDMContent());
 		cpInstanceImpl.setWidth(cpInstance.getWidth());
 		cpInstanceImpl.setHeight(cpInstance.getHeight());
@@ -6536,6 +6537,7 @@ public class CPInstancePersistenceImpl extends BasePersistenceImpl<CPInstance>
 		cpInstanceImpl.setWeight(cpInstance.getWeight());
 		cpInstanceImpl.setCost(cpInstance.getCost());
 		cpInstanceImpl.setPrice(cpInstance.getPrice());
+		cpInstanceImpl.setPublished(cpInstance.isPublished());
 		cpInstanceImpl.setDisplayDate(cpInstance.getDisplayDate());
 		cpInstanceImpl.setExpirationDate(cpInstance.getExpirationDate());
 		cpInstanceImpl.setLastPublishDate(cpInstance.getLastPublishDate());

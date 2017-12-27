@@ -374,6 +374,16 @@ public class EmbeddedElasticsearchConnection
 		return client;
 	}
 
+	protected Node createEmbeddedElasticsearchNode(Settings settings) {
+		NodeBuilder nodeBuilder = new NodeBuilder();
+
+		nodeBuilder.settings(settings);
+
+		nodeBuilder.local(true);
+
+		return nodeBuilder.build();
+	}
+
 	protected EmbeddedElasticsearchPluginManager
 		createEmbeddedElasticsearchPluginManager(
 			String name, Settings settings) {
@@ -397,13 +407,7 @@ public class EmbeddedElasticsearchConnection
 		System.setProperty("jna.tmpdir", _jnaTmpDirName);
 
 		try {
-			NodeBuilder nodeBuilder = new NodeBuilder();
-
-			nodeBuilder.settings(settings);
-
-			nodeBuilder.local(true);
-
-			Node node = nodeBuilder.build();
+			Node node = createEmbeddedElasticsearchNode(settings);
 
 			if (elasticsearchConfiguration.syncSearch()) {
 				Injector injector = node.injector();

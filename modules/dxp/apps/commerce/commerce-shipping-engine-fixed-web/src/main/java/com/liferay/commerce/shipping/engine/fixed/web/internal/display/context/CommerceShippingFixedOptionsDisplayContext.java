@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
@@ -48,7 +49,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 	}
 
 	public String getEditURL(String functionName, boolean isNew, String url) {
-		StringBuilder sb = new StringBuilder(11);
+		StringBundler sb = new StringBundler(11);
 
 		sb.append("javascript:");
 		sb.append(renderResponse.getNamespace());

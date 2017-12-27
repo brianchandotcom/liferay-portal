@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -128,7 +129,7 @@ public class CommerceWarehouseItemsDisplayContext {
 
 		RenderResponse renderResponse = cpRequestHelper.getRenderResponse();
 
-		StringBuilder sb = new StringBuilder(10);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append(renderResponse.getNamespace());
 		sb.append("updateCommerceWarehouseItem");

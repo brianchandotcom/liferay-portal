@@ -82,7 +82,9 @@
 			<var name="entryTitle" value="Blogs Entry Title" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="//div[contains(@class,'entry-content')]/p/img[contains(@src,'Document_1.jpg')]" />
+		<execute macro="BlogsEntry#viewInlineImage">
+			<var name="uploadFileName" value="Document_1" />
+		</execute>
 	</command>
 
 	<command name="AddWebContentArticleWithImageViaURL" priority="4">

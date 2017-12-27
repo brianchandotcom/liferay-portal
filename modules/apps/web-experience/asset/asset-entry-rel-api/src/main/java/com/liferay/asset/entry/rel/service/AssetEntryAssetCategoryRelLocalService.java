@@ -71,6 +71,9 @@ public interface AssetEntryAssetCategoryRelLocalService extends BaseLocalService
 	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel);
 
+	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
+		long entryId, long categoryId);
+
 	/**
 	* Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	*
@@ -100,6 +103,8 @@ public interface AssetEntryAssetCategoryRelLocalService extends BaseLocalService
 	@Indexable(type = IndexableType.DELETE)
 	public AssetEntryAssetCategoryRel deleteAssetEntryAssetCategoryRel(
 		long assetEntryAssetCategoryRelId) throws PortalException;
+
+	public void deleteAssetEntryAssetCategoryRelByCategoryId(long categoryId);
 
 	/**
 	* @throws PortalException
@@ -199,6 +204,14 @@ public interface AssetEntryAssetCategoryRelLocalService extends BaseLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRels(
 		int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByCategoryId(
+		long categoryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByEntryId(
+		long entryId);
 
 	/**
 	* Returns the number of asset entry asset category rels.

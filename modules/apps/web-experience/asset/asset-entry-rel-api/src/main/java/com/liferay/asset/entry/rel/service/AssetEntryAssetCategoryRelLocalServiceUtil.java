@@ -54,6 +54,11 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 				   .addAssetEntryAssetCategoryRel(assetEntryAssetCategoryRel);
 	}
 
+	public static com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
+		long entryId, long categoryId) {
+		return getService().addAssetEntryAssetCategoryRel(entryId, categoryId);
+	}
+
 	/**
 	* Creates a new asset entry asset category rel with the primary key. Does not add the asset entry asset category rel to the database.
 	*
@@ -90,6 +95,11 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteAssetEntryAssetCategoryRel(assetEntryAssetCategoryRelId);
+	}
+
+	public static void deleteAssetEntryAssetCategoryRelByCategoryId(
+		long categoryId) {
+		getService().deleteAssetEntryAssetCategoryRelByCategoryId(categoryId);
 	}
 
 	/**
@@ -217,6 +227,17 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRels(
 		int start, int end) {
 		return getService().getAssetEntryAssetCategoryRels(start, end);
+	}
+
+	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByCategoryId(
+		long categoryId) {
+		return getService()
+				   .getAssetEntryAssetCategoryRelsByCategoryId(categoryId);
+	}
+
+	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByEntryId(
+		long entryId) {
+		return getService().getAssetEntryAssetCategoryRelsByEntryId(entryId);
 	}
 
 	/**

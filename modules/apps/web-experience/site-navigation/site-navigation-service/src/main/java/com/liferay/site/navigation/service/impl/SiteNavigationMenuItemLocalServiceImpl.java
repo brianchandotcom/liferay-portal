@@ -37,7 +37,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	@Override
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(
 			long userId, long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuItemId, String type,
+			long parentSiteNavigationMenuItemId, String type, int order,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException {
 
@@ -59,17 +59,29 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			parentSiteNavigationMenuItemId);
 		siteNavigationMenuItem.setType(type);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
-
-		int childCount =
-			siteNavigationMenuItemPersistence.
-				countByParentSiteNavigationMenuItemId(
-					parentSiteNavigationMenuItemId);
-
-		siteNavigationMenuItem.setOrder(childCount);
+		siteNavigationMenuItem.setOrder(order);
 
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
 
 		return siteNavigationMenuItem;
+	}
+
+	@Override
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(
+			long userId, long groupId, long siteNavigationMenuId,
+			long parentSiteNavigationMenuItemId, String type,
+			String typeSettings, ServiceContext serviceContext)
+		throws PortalException {
+
+		int siteNavigationMenuItemCount =
+			siteNavigationMenuItemPersistence.
+				countByParentSiteNavigationMenuItemId(
+					parentSiteNavigationMenuItemId);
+
+		return addSiteNavigationMenuItem(
+			userId, groupId, siteNavigationMenuId,
+			parentSiteNavigationMenuItemId, type, siteNavigationMenuItemCount,
+			typeSettings, serviceContext);
 	}
 
 	@Override

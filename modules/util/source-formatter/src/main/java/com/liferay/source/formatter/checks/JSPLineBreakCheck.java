@@ -50,7 +50,9 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
-		content = _fixRedundantLineBreaks(content);
+		if (!isSubrepository() && !isReadOnly(absolutePath)) {
+			content = _fixRedundantLineBreaks(content);
+		}
 
 		return fixRedundantCommaInsideArray(content);
 	}

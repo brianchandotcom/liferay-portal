@@ -253,10 +253,11 @@
 		</execute>
 
 		<execute macro="DMDocument#addCP">
-			<var name="dmDocumentDescription" value="DM Document Description" />
 			<var name="dmDocumentFile" value="Document_1.doc" />
 			<var name="dmDocumentTitle" value="Potato Document" />
 		</execute>
+
+		<var method="DateUtil#getFormattedDate(0,'MMM d YYYY')" name="currentDate" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Search Page" />
@@ -280,14 +281,19 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchBarPortlet#viewSearchResults">
+			<var name="entryDate" value="${currentDate}" />
 			<var name="searchAssetTitle" value="Potato Blog" />
 			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchAssetSummary" value="This is a blog about Potatoes" />
+			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchBarPortlet#viewSearchResults">
+			<var name="entryDate" value="${currentDate}" />
 			<var name="searchAssetTitle" value="Potato Document" />
 			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Potato" />
 		</execute>
 
 		<execute macro="SearchBarPortlet#selectScopeInputPG">
@@ -303,9 +309,11 @@
 			<var name="searchAssetType" value="Blogs Entry" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchBarPortlet#viewSearchResults">
+			<var name="entryDate" value="${currentDate}" />
 			<var name="searchAssetTitle" value="Potato Document" />
 			<var name="searchAssetType" value="Document" />
+			<var name="searchTerm" value="Potato" />
 		</execute>
 	</command>
 

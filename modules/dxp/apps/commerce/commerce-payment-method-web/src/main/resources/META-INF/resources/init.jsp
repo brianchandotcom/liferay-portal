@@ -24,7 +24,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
+<%@ page import="com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys" %><%@
+page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommercePaymentMethodNameException" %><%@
 page import="com.liferay.commerce.model.CommerceAddressRestriction" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@

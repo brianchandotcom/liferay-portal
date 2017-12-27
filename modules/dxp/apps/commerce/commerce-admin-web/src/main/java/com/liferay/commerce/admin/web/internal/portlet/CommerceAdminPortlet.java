@@ -15,7 +15,7 @@
 package com.liferay.commerce.admin.web.internal.portlet;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.admin.web.internal.constants.CommerceAdminWebKeys;
+import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.admin.web.internal.util.CommerceAdminModuleRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 

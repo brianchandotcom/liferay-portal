@@ -15,6 +15,7 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -81,7 +82,8 @@ public class EditCShippingFixedOptionRelMVCRenderCommand
 				cShippingFixedOptionRelsDisplayContext);
 
 			renderRequest.setAttribute(
-				"commerceAdminServletContext", _commerceAdminServletContext);
+				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
+				_commerceAdminServletContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);

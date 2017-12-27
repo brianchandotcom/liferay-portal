@@ -15,6 +15,7 @@
 package com.liferay.commerce.product.measurement.unit.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.product.exception.NoSuchCPMeasurementUnitException;
 import com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
@@ -67,7 +68,8 @@ public class EditCPMeasurementUnitMVCRenderCommand implements MVCRenderCommand {
 				cpMeasurementUnitsDisplayContext);
 
 			renderRequest.setAttribute(
-				"commerceAdminServletContext", _commerceAdminServletContext);
+				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
+				_commerceAdminServletContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);

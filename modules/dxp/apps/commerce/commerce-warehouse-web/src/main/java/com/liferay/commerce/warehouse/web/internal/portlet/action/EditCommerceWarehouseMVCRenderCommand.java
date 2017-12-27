@@ -15,6 +15,7 @@
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.exception.NoSuchWarehouseException;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseService;
@@ -74,7 +75,8 @@ public class EditCommerceWarehouseMVCRenderCommand implements MVCRenderCommand {
 				commerceWarehousesDisplayContext);
 
 			renderRequest.setAttribute(
-				"commerceAdminServletContext", _commerceAdminServletContext);
+				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
+				_commerceAdminServletContext);
 
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}

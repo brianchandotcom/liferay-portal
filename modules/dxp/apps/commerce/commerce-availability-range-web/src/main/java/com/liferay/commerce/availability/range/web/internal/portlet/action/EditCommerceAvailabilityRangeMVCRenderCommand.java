@@ -15,6 +15,7 @@
 package com.liferay.commerce.availability.range.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.availability.range.web.internal.display.context.CommerceAvailabilityRangeDisplayContext;
 import com.liferay.commerce.exception.NoSuchAvailabilityRangeException;
 import com.liferay.commerce.service.CommerceAvailabilityRangeService;
@@ -71,7 +72,8 @@ public class EditCommerceAvailabilityRangeMVCRenderCommand
 				commerceAvailabilityRangeDisplayContext);
 
 			renderRequest.setAttribute(
-				"commerceAdminServletContext", _commerceAdminServletContext);
+				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
+				_commerceAdminServletContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);

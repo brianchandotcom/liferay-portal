@@ -15,6 +15,7 @@
 package com.liferay.commerce.payment.method.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.exception.NoSuchPaymentMethodException;
 import com.liferay.commerce.payment.method.web.internal.display.context.CommercePaymentMethodsDisplayContext;
 import com.liferay.commerce.service.CommercePaymentMethodService;
@@ -72,7 +73,8 @@ public class EditCommercePaymentMethodMVCRenderCommand
 				commercePaymentMethodsDisplayContext);
 
 			renderRequest.setAttribute(
-				"commerceAdminServletContext", _commerceAdminServletContext);
+				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
+				_commerceAdminServletContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);

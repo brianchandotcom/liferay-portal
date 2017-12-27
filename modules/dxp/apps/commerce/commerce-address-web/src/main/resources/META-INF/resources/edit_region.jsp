@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute("commerceAdminServletContext");
+ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
 
 CommerceRegionsDisplayContext commerceRegionsDisplayContext = (CommerceRegionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 

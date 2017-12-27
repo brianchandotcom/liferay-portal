@@ -193,27 +193,9 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long userId, long siteNavigationMenuItemId,
-			long parentSiteNavigationMenuItemId, ServiceContext serviceContext)
-		throws PortalException {
-
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
-				siteNavigationMenuItemId);
-
-		return updateSiteNavigationMenuItem(
-			userId, siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-			siteNavigationMenuItem.getTypeSettings(), serviceContext);
-	}
-
-	@Override
-	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long userId, long siteNavigationMenuItemId,
-			long parentSiteNavigationMenuItemId, String typeSettings,
+			long userId, long siteNavigationMenuItemId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException {
-
-		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		User user = userLocalService.getUser(userId);
 
@@ -225,8 +207,6 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		siteNavigationMenuItem.setUserId(userId);
 		siteNavigationMenuItem.setUserName(user.getFullName());
-		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(
-			parentSiteNavigationMenuItemId);
 		siteNavigationMenuItem.setTypeSettings(typeSettings);
 
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);

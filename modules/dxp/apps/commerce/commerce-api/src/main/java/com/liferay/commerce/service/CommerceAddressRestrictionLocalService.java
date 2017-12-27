@@ -106,6 +106,8 @@ public interface CommerceAddressRestrictionLocalService extends BaseLocalService
 	public CommerceAddressRestriction deleteCommerceAddressRestriction(
 		long commerceAddressRestrictionId) throws PortalException;
 
+	public void deleteCommerceAddressRestrictions(long commerceCountryId);
+
 	public void deleteCommerceAddressRestrictions(java.lang.String className,
 		long classPK);
 

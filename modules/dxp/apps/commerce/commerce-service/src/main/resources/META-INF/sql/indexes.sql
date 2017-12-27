@@ -19,6 +19,7 @@ create index IX_B2D4128D on CommerceAddress (groupId, addressUserId, defaultBill
 create index IX_F3EF45C0 on CommerceAddress (groupId, addressUserId, defaultShipping);
 
 create unique index IX_495311F8 on CommerceAddressRestriction (classNameId, classPK, commerceCountryId);
+create index IX_69DBF5AD on CommerceAddressRestriction (commerceCountryId);
 
 create index IX_DC0A8E5D on CommerceAvailabilityRange (groupId);
 create index IX_A7FBA1A1 on CommerceAvailabilityRange (uuid_[$COLUMN_LENGTH:75$], companyId);

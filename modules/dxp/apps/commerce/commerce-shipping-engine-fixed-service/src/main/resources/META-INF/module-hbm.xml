@@ -3,7 +3,7 @@
 
 <hibernate-mapping auto-import="false" default-lazy="false">
 	<import class="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" />
-	<import class="com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel" />
+	<import class="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" />
 	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionImpl" table="CommerceShippingFixedOption">
 		<id name="commerceShippingFixedOptionId" type="long">
 			<generator class="assigned" />
@@ -20,8 +20,8 @@
 		<property name="amount" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 	</class>
-	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelImpl" table="CShippingFixedOptionRel">
-		<id name="CShippingFixedOptionRelId" type="long">
+	<class name="com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl" table="CShippingFixedOptionRel">
+		<id column="CShippingFixedOptionRelId" name="commerceShippingFixedOptionRelId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

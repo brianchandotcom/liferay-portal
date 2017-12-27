@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.shipping.engine.fixed.util;
 
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
-import com.liferay.commerce.shipping.engine.fixed.util.comparator.CShippingFixedOptionRelCommerceCountryIdComparator;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionPriorityComparator;
+import com.liferay.commerce.shipping.engine.fixed.util.comparator.CommerceShippingFixedOptionRelCommerceCountryIdComparator;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
@@ -45,8 +45,8 @@ public class CommerceShippingEngineFixedUtil {
 		return orderByComparator;
 	}
 
-	public static OrderByComparator<CShippingFixedOptionRel>
-		getCShippingFixedOptionRelOrderByComparator(
+	public static OrderByComparator<CommerceShippingFixedOptionRel>
+		getCommerceShippingFixedOptionRelOrderByComparator(
 			String orderByCol, String orderByType) {
 
 		boolean orderByAsc = false;
@@ -55,11 +55,12 @@ public class CommerceShippingEngineFixedUtil {
 			orderByAsc = true;
 		}
 
-		OrderByComparator<CShippingFixedOptionRel> orderByComparator = null;
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator =
+			null;
 
 		if (orderByCol.equals("country")) {
 			orderByComparator =
-				new CShippingFixedOptionRelCommerceCountryIdComparator(
+				new CommerceShippingFixedOptionRelCommerceCountryIdComparator(
 					orderByAsc);
 		}
 

@@ -94,6 +94,11 @@ public class CommerceAddressRestrictionLocalServiceWrapper
 	}
 
 	@Override
+	public void deleteCommerceAddressRestrictions(long commerceCountryId) {
+		_commerceAddressRestrictionLocalService.deleteCommerceAddressRestrictions(commerceCountryId);
+	}
+
+	@Override
 	public void deleteCommerceAddressRestrictions(java.lang.String className,
 		long classPK) {
 		_commerceAddressRestrictionLocalService.deleteCommerceAddressRestrictions(className,

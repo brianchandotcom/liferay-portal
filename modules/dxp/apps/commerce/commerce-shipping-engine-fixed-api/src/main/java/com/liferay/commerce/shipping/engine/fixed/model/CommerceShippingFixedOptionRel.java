@@ -21,28 +21,29 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.util.Accessor;
 
 /**
- * The extended model interface for the CShippingFixedOptionRel service. Represents a row in the &quot;CShippingFixedOptionRel&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CommerceShippingFixedOptionRel service. Represents a row in the &quot;CShippingFixedOptionRel&quot; database table, with each column mapped to a property of this class.
  *
  * @author Alessio Antonio Rendina
- * @see CShippingFixedOptionRelModel
- * @see com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelImpl
- * @see com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelModelImpl
+ * @see CommerceShippingFixedOptionRelModel
+ * @see com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl
+ * @see com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelImpl")
+@ImplementationClassName("com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl")
 @ProviderType
-public interface CShippingFixedOptionRel extends CShippingFixedOptionRelModel,
-	PersistedModel {
+public interface CommerceShippingFixedOptionRel
+	extends CommerceShippingFixedOptionRelModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CShippingFixedOptionRel, Long> C_SHIPPING_FIXED_OPTION_REL_ID_ACCESSOR =
-		new Accessor<CShippingFixedOptionRel, Long>() {
+	public static final Accessor<CommerceShippingFixedOptionRel, Long> COMMERCE_SHIPPING_FIXED_OPTION_REL_ID_ACCESSOR =
+		new Accessor<CommerceShippingFixedOptionRel, Long>() {
 			@Override
-			public Long get(CShippingFixedOptionRel cShippingFixedOptionRel) {
-				return cShippingFixedOptionRel.getCShippingFixedOptionRelId();
+			public Long get(
+				CommerceShippingFixedOptionRel commerceShippingFixedOptionRel) {
+				return commerceShippingFixedOptionRel.getCommerceShippingFixedOptionRelId();
 			}
 
 			@Override
@@ -51,8 +52,8 @@ public interface CShippingFixedOptionRel extends CShippingFixedOptionRelModel,
 			}
 
 			@Override
-			public Class<CShippingFixedOptionRel> getTypeClass() {
-				return CShippingFixedOptionRel.class;
+			public Class<CommerceShippingFixedOptionRel> getTypeClass() {
+				return CommerceShippingFixedOptionRel.class;
 			}
 		};
 

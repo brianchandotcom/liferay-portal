@@ -15,8 +15,8 @@
 		<field name="amount" type="double" />
 		<field name="priority" type="double" />
 	</model>
-	<model name="com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel">
-		<field name="CShippingFixedOptionRelId" type="long" />
+	<model name="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel">
+		<field name="commerceShippingFixedOptionRelId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

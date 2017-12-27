@@ -16,9 +16,9 @@ package com.liferay.commerce.shipping.engine.fixed.service.base;
 
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
-import com.liferay.commerce.shipping.engine.fixed.service.persistence.CShippingFixedOptionRelFinder;
-import com.liferay.commerce.shipping.engine.fixed.service.persistence.CShippingFixedOptionRelPersistence;
 import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence;
+import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
+import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -114,79 +114,79 @@ public abstract class CommerceShippingFixedOptionServiceBaseImpl
 	}
 
 	/**
-	 * Returns the c shipping fixed option rel local service.
+	 * Returns the commerce shipping fixed option rel local service.
 	 *
-	 * @return the c shipping fixed option rel local service
+	 * @return the commerce shipping fixed option rel local service
 	 */
-	public com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelLocalService getCShippingFixedOptionRelLocalService() {
-		return cShippingFixedOptionRelLocalService;
+	public com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService getCommerceShippingFixedOptionRelLocalService() {
+		return commerceShippingFixedOptionRelLocalService;
 	}
 
 	/**
-	 * Sets the c shipping fixed option rel local service.
+	 * Sets the commerce shipping fixed option rel local service.
 	 *
-	 * @param cShippingFixedOptionRelLocalService the c shipping fixed option rel local service
+	 * @param commerceShippingFixedOptionRelLocalService the commerce shipping fixed option rel local service
 	 */
-	public void setCShippingFixedOptionRelLocalService(
-		com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelLocalService cShippingFixedOptionRelLocalService) {
-		this.cShippingFixedOptionRelLocalService = cShippingFixedOptionRelLocalService;
+	public void setCommerceShippingFixedOptionRelLocalService(
+		com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService commerceShippingFixedOptionRelLocalService) {
+		this.commerceShippingFixedOptionRelLocalService = commerceShippingFixedOptionRelLocalService;
 	}
 
 	/**
-	 * Returns the c shipping fixed option rel remote service.
+	 * Returns the commerce shipping fixed option rel remote service.
 	 *
-	 * @return the c shipping fixed option rel remote service
+	 * @return the commerce shipping fixed option rel remote service
 	 */
-	public com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService getCShippingFixedOptionRelService() {
-		return cShippingFixedOptionRelService;
+	public com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService getCommerceShippingFixedOptionRelService() {
+		return commerceShippingFixedOptionRelService;
 	}
 
 	/**
-	 * Sets the c shipping fixed option rel remote service.
+	 * Sets the commerce shipping fixed option rel remote service.
 	 *
-	 * @param cShippingFixedOptionRelService the c shipping fixed option rel remote service
+	 * @param commerceShippingFixedOptionRelService the commerce shipping fixed option rel remote service
 	 */
-	public void setCShippingFixedOptionRelService(
-		com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService cShippingFixedOptionRelService) {
-		this.cShippingFixedOptionRelService = cShippingFixedOptionRelService;
+	public void setCommerceShippingFixedOptionRelService(
+		com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService commerceShippingFixedOptionRelService) {
+		this.commerceShippingFixedOptionRelService = commerceShippingFixedOptionRelService;
 	}
 
 	/**
-	 * Returns the c shipping fixed option rel persistence.
+	 * Returns the commerce shipping fixed option rel persistence.
 	 *
-	 * @return the c shipping fixed option rel persistence
+	 * @return the commerce shipping fixed option rel persistence
 	 */
-	public CShippingFixedOptionRelPersistence getCShippingFixedOptionRelPersistence() {
-		return cShippingFixedOptionRelPersistence;
+	public CommerceShippingFixedOptionRelPersistence getCommerceShippingFixedOptionRelPersistence() {
+		return commerceShippingFixedOptionRelPersistence;
 	}
 
 	/**
-	 * Sets the c shipping fixed option rel persistence.
+	 * Sets the commerce shipping fixed option rel persistence.
 	 *
-	 * @param cShippingFixedOptionRelPersistence the c shipping fixed option rel persistence
+	 * @param commerceShippingFixedOptionRelPersistence the commerce shipping fixed option rel persistence
 	 */
-	public void setCShippingFixedOptionRelPersistence(
-		CShippingFixedOptionRelPersistence cShippingFixedOptionRelPersistence) {
-		this.cShippingFixedOptionRelPersistence = cShippingFixedOptionRelPersistence;
+	public void setCommerceShippingFixedOptionRelPersistence(
+		CommerceShippingFixedOptionRelPersistence commerceShippingFixedOptionRelPersistence) {
+		this.commerceShippingFixedOptionRelPersistence = commerceShippingFixedOptionRelPersistence;
 	}
 
 	/**
-	 * Returns the c shipping fixed option rel finder.
+	 * Returns the commerce shipping fixed option rel finder.
 	 *
-	 * @return the c shipping fixed option rel finder
+	 * @return the commerce shipping fixed option rel finder
 	 */
-	public CShippingFixedOptionRelFinder getCShippingFixedOptionRelFinder() {
-		return cShippingFixedOptionRelFinder;
+	public CommerceShippingFixedOptionRelFinder getCommerceShippingFixedOptionRelFinder() {
+		return commerceShippingFixedOptionRelFinder;
 	}
 
 	/**
-	 * Sets the c shipping fixed option rel finder.
+	 * Sets the commerce shipping fixed option rel finder.
 	 *
-	 * @param cShippingFixedOptionRelFinder the c shipping fixed option rel finder
+	 * @param commerceShippingFixedOptionRelFinder the commerce shipping fixed option rel finder
 	 */
-	public void setCShippingFixedOptionRelFinder(
-		CShippingFixedOptionRelFinder cShippingFixedOptionRelFinder) {
-		this.cShippingFixedOptionRelFinder = cShippingFixedOptionRelFinder;
+	public void setCommerceShippingFixedOptionRelFinder(
+		CommerceShippingFixedOptionRelFinder commerceShippingFixedOptionRelFinder) {
+		this.commerceShippingFixedOptionRelFinder = commerceShippingFixedOptionRelFinder;
 	}
 
 	/**
@@ -394,14 +394,14 @@ public abstract class CommerceShippingFixedOptionServiceBaseImpl
 	protected CommerceShippingFixedOptionService commerceShippingFixedOptionService;
 	@BeanReference(type = CommerceShippingFixedOptionPersistence.class)
 	protected CommerceShippingFixedOptionPersistence commerceShippingFixedOptionPersistence;
-	@BeanReference(type = com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelLocalService.class)
-	protected com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelLocalService cShippingFixedOptionRelLocalService;
-	@BeanReference(type = com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService.class)
-	protected com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService cShippingFixedOptionRelService;
-	@BeanReference(type = CShippingFixedOptionRelPersistence.class)
-	protected CShippingFixedOptionRelPersistence cShippingFixedOptionRelPersistence;
-	@BeanReference(type = CShippingFixedOptionRelFinder.class)
-	protected CShippingFixedOptionRelFinder cShippingFixedOptionRelFinder;
+	@BeanReference(type = com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService.class)
+	protected com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService commerceShippingFixedOptionRelLocalService;
+	@BeanReference(type = com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService.class)
+	protected com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService commerceShippingFixedOptionRelService;
+	@BeanReference(type = CommerceShippingFixedOptionRelPersistence.class)
+	protected CommerceShippingFixedOptionRelPersistence commerceShippingFixedOptionRelPersistence;
+	@BeanReference(type = CommerceShippingFixedOptionRelFinder.class)
+	protected CommerceShippingFixedOptionRelFinder commerceShippingFixedOptionRelFinder;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)

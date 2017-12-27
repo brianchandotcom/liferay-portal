@@ -21,16 +21,16 @@ import aQute.bnd.annotation.ProviderType;
  * @generated
  */
 @ProviderType
-public interface CShippingFixedOptionRelFinder {
-	public java.util.List<com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel> findByC_C_C_Z_W(
+public interface CommerceShippingFixedOptionRelFinder {
+	public com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel fetchByC_C_C_Z_W_First(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weight);
 
-	public com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel fetchByC_C_C_Z_W_First(
+	public java.util.List<com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel> findByC_C_C_Z_W(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weight);
 
-	public java.util.List<com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel> findByC_C_C_Z_W(
+	public java.util.List<com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel> findByC_C_C_Z_W(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weight, int start,
 		int end);

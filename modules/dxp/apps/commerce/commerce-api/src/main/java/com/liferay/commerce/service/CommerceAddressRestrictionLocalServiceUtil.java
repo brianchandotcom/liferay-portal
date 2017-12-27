@@ -101,6 +101,10 @@ public class CommerceAddressRestrictionLocalServiceUtil {
 				   .deleteCommerceAddressRestriction(commerceAddressRestrictionId);
 	}
 
+	public static void deleteCommerceAddressRestrictions(long commerceCountryId) {
+		getService().deleteCommerceAddressRestrictions(commerceCountryId);
+	}
+
 	public static void deleteCommerceAddressRestrictions(
 		java.lang.String className, long classPK) {
 		getService().deleteCommerceAddressRestrictions(className, classPK);

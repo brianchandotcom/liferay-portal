@@ -23,19 +23,19 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.shipping.engine.fixed.service.http.CShippingFixedOptionRelServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.commerce.shipping.engine.fixed.service.http.CommerceShippingFixedOptionRelServiceSoap}.
  *
  * @author Alessio Antonio Rendina
- * @see com.liferay.commerce.shipping.engine.fixed.service.http.CShippingFixedOptionRelServiceSoap
+ * @see com.liferay.commerce.shipping.engine.fixed.service.http.CommerceShippingFixedOptionRelServiceSoap
  * @generated
  */
 @ProviderType
-public class CShippingFixedOptionRelSoap implements Serializable {
-	public static CShippingFixedOptionRelSoap toSoapModel(
-		CShippingFixedOptionRel model) {
-		CShippingFixedOptionRelSoap soapModel = new CShippingFixedOptionRelSoap();
+public class CommerceShippingFixedOptionRelSoap implements Serializable {
+	public static CommerceShippingFixedOptionRelSoap toSoapModel(
+		CommerceShippingFixedOptionRel model) {
+		CommerceShippingFixedOptionRelSoap soapModel = new CommerceShippingFixedOptionRelSoap();
 
-		soapModel.setCShippingFixedOptionRelId(model.getCShippingFixedOptionRelId());
+		soapModel.setCommerceShippingFixedOptionRelId(model.getCommerceShippingFixedOptionRelId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -57,9 +57,9 @@ public class CShippingFixedOptionRelSoap implements Serializable {
 		return soapModel;
 	}
 
-	public static CShippingFixedOptionRelSoap[] toSoapModels(
-		CShippingFixedOptionRel[] models) {
-		CShippingFixedOptionRelSoap[] soapModels = new CShippingFixedOptionRelSoap[models.length];
+	public static CommerceShippingFixedOptionRelSoap[] toSoapModels(
+		CommerceShippingFixedOptionRel[] models) {
+		CommerceShippingFixedOptionRelSoap[] soapModels = new CommerceShippingFixedOptionRelSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -68,15 +68,15 @@ public class CShippingFixedOptionRelSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CShippingFixedOptionRelSoap[][] toSoapModels(
-		CShippingFixedOptionRel[][] models) {
-		CShippingFixedOptionRelSoap[][] soapModels = null;
+	public static CommerceShippingFixedOptionRelSoap[][] toSoapModels(
+		CommerceShippingFixedOptionRel[][] models) {
+		CommerceShippingFixedOptionRelSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CShippingFixedOptionRelSoap[models.length][models[0].length];
+			soapModels = new CommerceShippingFixedOptionRelSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new CShippingFixedOptionRelSoap[0][0];
+			soapModels = new CommerceShippingFixedOptionRelSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -86,34 +86,35 @@ public class CShippingFixedOptionRelSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CShippingFixedOptionRelSoap[] toSoapModels(
-		List<CShippingFixedOptionRel> models) {
-		List<CShippingFixedOptionRelSoap> soapModels = new ArrayList<CShippingFixedOptionRelSoap>(models.size());
+	public static CommerceShippingFixedOptionRelSoap[] toSoapModels(
+		List<CommerceShippingFixedOptionRel> models) {
+		List<CommerceShippingFixedOptionRelSoap> soapModels = new ArrayList<CommerceShippingFixedOptionRelSoap>(models.size());
 
-		for (CShippingFixedOptionRel model : models) {
+		for (CommerceShippingFixedOptionRel model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CShippingFixedOptionRelSoap[soapModels.size()]);
+		return soapModels.toArray(new CommerceShippingFixedOptionRelSoap[soapModels.size()]);
 	}
 
-	public CShippingFixedOptionRelSoap() {
+	public CommerceShippingFixedOptionRelSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _CShippingFixedOptionRelId;
+		return _commerceShippingFixedOptionRelId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCShippingFixedOptionRelId(pk);
+		setCommerceShippingFixedOptionRelId(pk);
 	}
 
-	public long getCShippingFixedOptionRelId() {
-		return _CShippingFixedOptionRelId;
+	public long getCommerceShippingFixedOptionRelId() {
+		return _commerceShippingFixedOptionRelId;
 	}
 
-	public void setCShippingFixedOptionRelId(long CShippingFixedOptionRelId) {
-		_CShippingFixedOptionRelId = CShippingFixedOptionRelId;
+	public void setCommerceShippingFixedOptionRelId(
+		long commerceShippingFixedOptionRelId) {
+		_commerceShippingFixedOptionRelId = commerceShippingFixedOptionRelId;
 	}
 
 	public long getGroupId() {
@@ -253,7 +254,7 @@ public class CShippingFixedOptionRelSoap implements Serializable {
 		_ratePercentage = ratePercentage;
 	}
 
-	private long _CShippingFixedOptionRelId;
+	private long _commerceShippingFixedOptionRelId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

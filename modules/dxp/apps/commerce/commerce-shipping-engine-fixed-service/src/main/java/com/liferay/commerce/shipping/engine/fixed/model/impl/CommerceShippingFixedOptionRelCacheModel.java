@@ -16,7 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
@@ -30,14 +30,14 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing CShippingFixedOptionRel in entity cache.
+ * The cache model class for representing CommerceShippingFixedOptionRel in entity cache.
  *
  * @author Alessio Antonio Rendina
- * @see CShippingFixedOptionRel
+ * @see CommerceShippingFixedOptionRel
  * @generated
  */
 @ProviderType
-public class CShippingFixedOptionRelCacheModel implements CacheModel<CShippingFixedOptionRel>,
+public class CommerceShippingFixedOptionRelCacheModel implements CacheModel<CommerceShippingFixedOptionRel>,
 	Externalizable {
 	@Override
 	public boolean equals(Object obj) {
@@ -45,13 +45,14 @@ public class CShippingFixedOptionRelCacheModel implements CacheModel<CShippingFi
 			return true;
 		}
 
-		if (!(obj instanceof CShippingFixedOptionRelCacheModel)) {
+		if (!(obj instanceof CommerceShippingFixedOptionRelCacheModel)) {
 			return false;
 		}
 
-		CShippingFixedOptionRelCacheModel cShippingFixedOptionRelCacheModel = (CShippingFixedOptionRelCacheModel)obj;
+		CommerceShippingFixedOptionRelCacheModel commerceShippingFixedOptionRelCacheModel =
+			(CommerceShippingFixedOptionRelCacheModel)obj;
 
-		if (CShippingFixedOptionRelId == cShippingFixedOptionRelCacheModel.CShippingFixedOptionRelId) {
+		if (commerceShippingFixedOptionRelId == commerceShippingFixedOptionRelCacheModel.commerceShippingFixedOptionRelId) {
 			return true;
 		}
 
@@ -60,15 +61,15 @@ public class CShippingFixedOptionRelCacheModel implements CacheModel<CShippingFi
 
 	@Override
 	public int hashCode() {
-		return HashUtil.hash(0, CShippingFixedOptionRelId);
+		return HashUtil.hash(0, commerceShippingFixedOptionRelId);
 	}
 
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(37);
 
-		sb.append("{CShippingFixedOptionRelId=");
-		sb.append(CShippingFixedOptionRelId);
+		sb.append("{commerceShippingFixedOptionRelId=");
+		sb.append(commerceShippingFixedOptionRelId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -109,62 +110,64 @@ public class CShippingFixedOptionRelCacheModel implements CacheModel<CShippingFi
 	}
 
 	@Override
-	public CShippingFixedOptionRel toEntityModel() {
-		CShippingFixedOptionRelImpl cShippingFixedOptionRelImpl = new CShippingFixedOptionRelImpl();
+	public CommerceShippingFixedOptionRel toEntityModel() {
+		CommerceShippingFixedOptionRelImpl commerceShippingFixedOptionRelImpl = new CommerceShippingFixedOptionRelImpl();
 
-		cShippingFixedOptionRelImpl.setCShippingFixedOptionRelId(CShippingFixedOptionRelId);
-		cShippingFixedOptionRelImpl.setGroupId(groupId);
-		cShippingFixedOptionRelImpl.setCompanyId(companyId);
-		cShippingFixedOptionRelImpl.setUserId(userId);
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionRelId(commerceShippingFixedOptionRelId);
+		commerceShippingFixedOptionRelImpl.setGroupId(groupId);
+		commerceShippingFixedOptionRelImpl.setCompanyId(companyId);
+		commerceShippingFixedOptionRelImpl.setUserId(userId);
 
 		if (userName == null) {
-			cShippingFixedOptionRelImpl.setUserName("");
+			commerceShippingFixedOptionRelImpl.setUserName("");
 		}
 		else {
-			cShippingFixedOptionRelImpl.setUserName(userName);
+			commerceShippingFixedOptionRelImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			cShippingFixedOptionRelImpl.setCreateDate(null);
+			commerceShippingFixedOptionRelImpl.setCreateDate(null);
 		}
 		else {
-			cShippingFixedOptionRelImpl.setCreateDate(new Date(createDate));
+			commerceShippingFixedOptionRelImpl.setCreateDate(new Date(
+					createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			cShippingFixedOptionRelImpl.setModifiedDate(null);
+			commerceShippingFixedOptionRelImpl.setModifiedDate(null);
 		}
 		else {
-			cShippingFixedOptionRelImpl.setModifiedDate(new Date(modifiedDate));
+			commerceShippingFixedOptionRelImpl.setModifiedDate(new Date(
+					modifiedDate));
 		}
 
-		cShippingFixedOptionRelImpl.setCommerceShippingMethodId(commerceShippingMethodId);
-		cShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(commerceShippingFixedOptionId);
-		cShippingFixedOptionRelImpl.setCommerceWarehouseId(commerceWarehouseId);
-		cShippingFixedOptionRelImpl.setCommerceCountryId(commerceCountryId);
-		cShippingFixedOptionRelImpl.setCommerceRegionId(commerceRegionId);
+		commerceShippingFixedOptionRelImpl.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceShippingFixedOptionRelImpl.setCommerceShippingFixedOptionId(commerceShippingFixedOptionId);
+		commerceShippingFixedOptionRelImpl.setCommerceWarehouseId(commerceWarehouseId);
+		commerceShippingFixedOptionRelImpl.setCommerceCountryId(commerceCountryId);
+		commerceShippingFixedOptionRelImpl.setCommerceRegionId(commerceRegionId);
 
 		if (zip == null) {
-			cShippingFixedOptionRelImpl.setZip("");
+			commerceShippingFixedOptionRelImpl.setZip("");
 		}
 		else {
-			cShippingFixedOptionRelImpl.setZip(zip);
+			commerceShippingFixedOptionRelImpl.setZip(zip);
 		}
 
-		cShippingFixedOptionRelImpl.setWeightFrom(weightFrom);
-		cShippingFixedOptionRelImpl.setWeightTo(weightTo);
-		cShippingFixedOptionRelImpl.setFixedPrice(fixedPrice);
-		cShippingFixedOptionRelImpl.setRateUnitWeightPrice(rateUnitWeightPrice);
-		cShippingFixedOptionRelImpl.setRatePercentage(ratePercentage);
+		commerceShippingFixedOptionRelImpl.setWeightFrom(weightFrom);
+		commerceShippingFixedOptionRelImpl.setWeightTo(weightTo);
+		commerceShippingFixedOptionRelImpl.setFixedPrice(fixedPrice);
+		commerceShippingFixedOptionRelImpl.setRateUnitWeightPrice(rateUnitWeightPrice);
+		commerceShippingFixedOptionRelImpl.setRatePercentage(ratePercentage);
 
-		cShippingFixedOptionRelImpl.resetOriginalValues();
+		commerceShippingFixedOptionRelImpl.resetOriginalValues();
 
-		return cShippingFixedOptionRelImpl;
+		return commerceShippingFixedOptionRelImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		CShippingFixedOptionRelId = objectInput.readLong();
+		commerceShippingFixedOptionRelId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
 
@@ -200,7 +203,7 @@ public class CShippingFixedOptionRelCacheModel implements CacheModel<CShippingFi
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(CShippingFixedOptionRelId);
+		objectOutput.writeLong(commerceShippingFixedOptionRelId);
 
 		objectOutput.writeLong(groupId);
 
@@ -246,7 +249,7 @@ public class CShippingFixedOptionRelCacheModel implements CacheModel<CShippingFi
 		objectOutput.writeDouble(ratePercentage);
 	}
 
-	public long CShippingFixedOptionRelId;
+	public long commerceShippingFixedOptionRelId;
 	public long groupId;
 	public long companyId;
 	public long userId;

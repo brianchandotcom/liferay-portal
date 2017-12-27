@@ -173,6 +173,13 @@ public class CommerceAddressRestrictionPersistenceTest {
 	}
 
 	@Test
+	public void testCountByCommerceCountryId() throws Exception {
+		_persistence.countByCommerceCountryId(RandomTestUtil.nextLong());
+
+		_persistence.countByCommerceCountryId(0L);
+	}
+
+	@Test
 	public void testCountByC_C() throws Exception {
 		_persistence.countByC_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());

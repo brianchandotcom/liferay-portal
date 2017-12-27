@@ -116,6 +116,180 @@ public class CommerceAddressRestrictionUtil {
 	}
 
 	/**
+	* Returns all the commerce address restrictions where commerceCountryId = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @return the matching commerce address restrictions
+	*/
+	public static List<CommerceAddressRestriction> findByCommerceCountryId(
+		long commerceCountryId) {
+		return getPersistence().findByCommerceCountryId(commerceCountryId);
+	}
+
+	/**
+	* Returns a range of all the commerce address restrictions where commerceCountryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceAddressRestrictionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param start the lower bound of the range of commerce address restrictions
+	* @param end the upper bound of the range of commerce address restrictions (not inclusive)
+	* @return the range of matching commerce address restrictions
+	*/
+	public static List<CommerceAddressRestriction> findByCommerceCountryId(
+		long commerceCountryId, int start, int end) {
+		return getPersistence()
+				   .findByCommerceCountryId(commerceCountryId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce address restrictions where commerceCountryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceAddressRestrictionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param start the lower bound of the range of commerce address restrictions
+	* @param end the upper bound of the range of commerce address restrictions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching commerce address restrictions
+	*/
+	public static List<CommerceAddressRestriction> findByCommerceCountryId(
+		long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
+		return getPersistence()
+				   .findByCommerceCountryId(commerceCountryId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the commerce address restrictions where commerceCountryId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceAddressRestrictionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param start the lower bound of the range of commerce address restrictions
+	* @param end the upper bound of the range of commerce address restrictions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching commerce address restrictions
+	*/
+	public static List<CommerceAddressRestriction> findByCommerceCountryId(
+		long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCommerceCountryId(commerceCountryId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first commerce address restriction in the ordered set where commerceCountryId = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce address restriction
+	* @throws NoSuchAddressRestrictionException if a matching commerce address restriction could not be found
+	*/
+	public static CommerceAddressRestriction findByCommerceCountryId_First(
+		long commerceCountryId,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchAddressRestrictionException {
+		return getPersistence()
+				   .findByCommerceCountryId_First(commerceCountryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first commerce address restriction in the ordered set where commerceCountryId = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
+	*/
+	public static CommerceAddressRestriction fetchByCommerceCountryId_First(
+		long commerceCountryId,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
+		return getPersistence()
+				   .fetchByCommerceCountryId_First(commerceCountryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce address restriction in the ordered set where commerceCountryId = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce address restriction
+	* @throws NoSuchAddressRestrictionException if a matching commerce address restriction could not be found
+	*/
+	public static CommerceAddressRestriction findByCommerceCountryId_Last(
+		long commerceCountryId,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchAddressRestrictionException {
+		return getPersistence()
+				   .findByCommerceCountryId_Last(commerceCountryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last commerce address restriction in the ordered set where commerceCountryId = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching commerce address restriction, or <code>null</code> if a matching commerce address restriction could not be found
+	*/
+	public static CommerceAddressRestriction fetchByCommerceCountryId_Last(
+		long commerceCountryId,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator) {
+		return getPersistence()
+				   .fetchByCommerceCountryId_Last(commerceCountryId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the commerce address restrictions before and after the current commerce address restriction in the ordered set where commerceCountryId = &#63;.
+	*
+	* @param commerceAddressRestrictionId the primary key of the current commerce address restriction
+	* @param commerceCountryId the commerce country ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next commerce address restriction
+	* @throws NoSuchAddressRestrictionException if a commerce address restriction with the primary key could not be found
+	*/
+	public static CommerceAddressRestriction[] findByCommerceCountryId_PrevAndNext(
+		long commerceAddressRestrictionId, long commerceCountryId,
+		OrderByComparator<CommerceAddressRestriction> orderByComparator)
+		throws com.liferay.commerce.exception.NoSuchAddressRestrictionException {
+		return getPersistence()
+				   .findByCommerceCountryId_PrevAndNext(commerceAddressRestrictionId,
+			commerceCountryId, orderByComparator);
+	}
+
+	/**
+	* Removes all the commerce address restrictions where commerceCountryId = &#63; from the database.
+	*
+	* @param commerceCountryId the commerce country ID
+	*/
+	public static void removeByCommerceCountryId(long commerceCountryId) {
+		getPersistence().removeByCommerceCountryId(commerceCountryId);
+	}
+
+	/**
+	* Returns the number of commerce address restrictions where commerceCountryId = &#63;.
+	*
+	* @param commerceCountryId the commerce country ID
+	* @return the number of matching commerce address restrictions
+	*/
+	public static int countByCommerceCountryId(long commerceCountryId) {
+		return getPersistence().countByCommerceCountryId(commerceCountryId);
+	}
+
+	/**
 	* Returns all the commerce address restrictions where classNameId = &#63; and classPK = &#63;.
 	*
 	* @param classNameId the class name ID

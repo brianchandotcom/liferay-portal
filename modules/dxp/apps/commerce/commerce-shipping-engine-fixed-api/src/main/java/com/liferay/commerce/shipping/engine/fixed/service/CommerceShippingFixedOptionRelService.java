@@ -16,7 +16,7 @@ package com.liferay.commerce.shipping.engine.fixed.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,30 +33,30 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.util.List;
 
 /**
- * Provides the remote service interface for CShippingFixedOptionRel. Methods of this
+ * Provides the remote service interface for CommerceShippingFixedOptionRel. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Alessio Antonio Rendina
- * @see CShippingFixedOptionRelServiceUtil
- * @see com.liferay.commerce.shipping.engine.fixed.service.base.CShippingFixedOptionRelServiceBaseImpl
- * @see com.liferay.commerce.shipping.engine.fixed.service.impl.CShippingFixedOptionRelServiceImpl
+ * @see CommerceShippingFixedOptionRelServiceUtil
+ * @see com.liferay.commerce.shipping.engine.fixed.service.base.CommerceShippingFixedOptionRelServiceBaseImpl
+ * @see com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=commerce", "json.web.service.context.path=CShippingFixedOptionRel"}, service = CShippingFixedOptionRelService.class)
+	"json.web.service.context.name=commerce", "json.web.service.context.path=CommerceShippingFixedOptionRel"}, service = CommerceShippingFixedOptionRelService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CShippingFixedOptionRelService extends BaseService {
+public interface CommerceShippingFixedOptionRelService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CShippingFixedOptionRelServiceUtil} to access the c shipping fixed option rel remote service. Add custom service methods to {@link com.liferay.commerce.shipping.engine.fixed.service.impl.CShippingFixedOptionRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CommerceShippingFixedOptionRelServiceUtil} to access the commerce shipping fixed option rel remote service. Add custom service methods to {@link com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CShippingFixedOptionRel addCShippingFixedOptionRel(
+	public CommerceShippingFixedOptionRel addCommerceShippingFixedOptionRel(
 		long commerceShippingMethodId, long commerceShippingFixedOptionId,
 		long commerceWarehouseId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weightFrom,
@@ -64,43 +64,43 @@ public interface CShippingFixedOptionRelService extends BaseService {
 		double ratePercentage, ServiceContext serviceContext)
 		throws PortalException;
 
-	public void deleteCShippingFixedOptionRel(long cShippingFixedOptionRelId)
-		throws PortalException;
+	public void deleteCommerceShippingFixedOptionRel(
+		long commerceShippingFixedOptionRelId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CShippingFixedOptionRel fetchCShippingFixedOptionRel(
-		long cShippingFixedOptionRelId);
+	public CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
+		long commerceShippingFixedOptionRelId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CShippingFixedOptionRel fetchCShippingFixedOptionRel(
+	public CommerceShippingFixedOptionRel fetchCommerceShippingFixedOptionRel(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, java.lang.String zip, double weight);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CShippingFixedOptionRel> getCommerceShippingMethodFixedOptionRels(
+	public List<CommerceShippingFixedOptionRel> getCommerceShippingFixedOptionRels(
+		long commerceShippingFixedOptionId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingFixedOptionRel> getCommerceShippingFixedOptionRels(
+		long commerceShippingFixedOptionId, int start, int end,
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceShippingFixedOptionRelsCount(
+		long commerceShippingFixedOptionId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceShippingFixedOptionRel> getCommerceShippingMethodFixedOptionRels(
 		long commerceShippingMethodId, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CShippingFixedOptionRel> getCommerceShippingMethodFixedOptionRels(
+	public List<CommerceShippingFixedOptionRel> getCommerceShippingMethodFixedOptionRels(
 		long commerceShippingMethodId, int start, int end,
-		OrderByComparator<CShippingFixedOptionRel> orderByComparator);
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceShippingMethodFixedOptionRelsCount(
 		long commerceShippingMethodId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CShippingFixedOptionRel> getCShippingFixedOptionRels(
-		long commerceShippingFixedOptionId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CShippingFixedOptionRel> getCShippingFixedOptionRels(
-		long commerceShippingFixedOptionId, int start, int end,
-		OrderByComparator<CShippingFixedOptionRel> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCShippingFixedOptionRelsCount(
-		long commerceShippingFixedOptionId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -109,8 +109,8 @@ public interface CShippingFixedOptionRelService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public CShippingFixedOptionRel updateCShippingFixedOptionRel(
-		long cShippingFixedOptionRelId, long commerceWarehouseId,
+	public CommerceShippingFixedOptionRel updateCommerceShippingFixedOptionRel(
+		long commerceShippingFixedOptionRelId, long commerceWarehouseId,
 		long commerceCountryId, long commerceRegionId, java.lang.String zip,
 		double weightFrom, double weightTo, double fixedPrice,
 		double rateUnitWeightPrice, double ratePercentage)

@@ -4,8 +4,8 @@
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService" />
 	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CShippingFixedOptionRelLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelLocalService" />
-	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CShippingFixedOptionRelServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService" />
-	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CShippingFixedOptionRelPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CShippingFixedOptionRelPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CShippingFixedOptionRelFinderImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CShippingFixedOptionRelFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelLocalServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelLocalService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.impl.CommerceShippingFixedOptionRelServiceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelPersistenceImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.shipping.engine.fixed.service.persistence.impl.CommerceShippingFixedOptionRelFinderImpl" id="com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder" parent="basePersistence" />
 </beans>

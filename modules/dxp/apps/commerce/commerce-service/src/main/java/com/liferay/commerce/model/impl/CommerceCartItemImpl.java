@@ -42,4 +42,9 @@ public class CommerceCartItemImpl extends CommerceCartItemBaseImpl {
 			getCPDefinitionId());
 	}
 
+	@Override
+	public CPInstance getCPInstance() throws PortalException {
+		return CPInstanceLocalServiceUtil.getCPInstance(getCPInstanceId());
+	}
+
 }

@@ -63,6 +63,12 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 	 */
 	public SiteNavigationMenuItem addSiteNavigationMenuItem(long userId,
 		long groupId, long siteNavigationMenuId,
+		long parentSiteNavigationMenuItemId, java.lang.String type, int order,
+		java.lang.String typeSettings, ServiceContext serviceContext)
+		throws PortalException;
+
+	public SiteNavigationMenuItem addSiteNavigationMenuItem(long userId,
+		long groupId, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId, java.lang.String type,
 		java.lang.String typeSettings, ServiceContext serviceContext)
 		throws PortalException;
@@ -246,16 +252,11 @@ public interface SiteNavigationMenuItemLocalService extends BaseLocalService,
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
-		int order, ServiceContext serviceContext) throws PortalException;
+		int order) throws PortalException;
 
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(long userId,
-		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+		long siteNavigationMenuItemId, java.lang.String typeSettings,
 		ServiceContext serviceContext) throws PortalException;
-
-	public SiteNavigationMenuItem updateSiteNavigationMenuItem(long userId,
-		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
-		java.lang.String typeSettings, ServiceContext serviceContext)
-		throws PortalException;
 
 	/**
 	* Updates the site navigation menu item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

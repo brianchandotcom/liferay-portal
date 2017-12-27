@@ -19,9 +19,12 @@ import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
+import com.liferay.wiki.exception.WikiAttachmentMimeTypeException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
@@ -33,6 +36,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
+ * @author Roberto Díaz
  * @author Alejandro Tardín
  */
 @Component(service = PageAttachmentWikiUploadFileEntryHandler.class)
@@ -57,8 +61,12 @@ public class PageAttachmentWikiUploadFileEntryHandler
 			ActionKeys.ADD_ATTACHMENT);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
+		String[] mimeTypes = ParamUtil.getParameterValues(
+			uploadPortletRequest, "mimeTypes");
 		String contentType = uploadPortletRequest.getContentType(
 			_PARAMETER_NAME);
+
+		_validateFile(fileName, mimeTypes, contentType);
 
 		try (InputStream inputStream =
 				uploadPortletRequest.getFileAsStream(_PARAMETER_NAME)) {
@@ -67,6 +75,26 @@ public class PageAttachmentWikiUploadFileEntryHandler
 				page.getNodeId(), page.getTitle(), fileName, inputStream,
 				contentType);
 		}
+	}
+
+	private void _validateFile(
+			String fileName, String[] mimeTypes, String contentType)
+		throws PortalException {
+
+		if (ArrayUtil.isEmpty(mimeTypes)) {
+			return;
+		}
+
+		for (String mimeType : mimeTypes) {
+			if (mimeType.equals(contentType)) {
+				return;
+			}
+		}
+
+		throw new WikiAttachmentMimeTypeException(
+			StringBundler.concat(
+				"Invalid MIME type ", contentType, " for file name ",
+				fileName));
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";

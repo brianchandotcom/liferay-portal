@@ -324,6 +324,7 @@
 		<exception>PageTitle</exception>
 		<exception>PageVersion</exception>
 		<exception>RequiredNode</exception>
+		<exception>WikiAttachmentMimeType</exception>
 		<exception>WikiFormat</exception>
 	</exceptions>
 </service-builder>

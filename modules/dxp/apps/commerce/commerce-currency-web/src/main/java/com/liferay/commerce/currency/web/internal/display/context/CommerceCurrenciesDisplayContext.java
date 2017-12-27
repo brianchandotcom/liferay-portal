@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.NavigableMap;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -107,7 +106,7 @@ public class CommerceCurrenciesDisplayContext {
 		return _primaryCommerceCurrency;
 	}
 
-	public NavigableMap<String, RoundingType> getRoundingTypes() {
+	public List<RoundingType> getRoundingTypes() {
 		return _roundingTypeServicesTracker.getRoundingTypes();
 	}
 

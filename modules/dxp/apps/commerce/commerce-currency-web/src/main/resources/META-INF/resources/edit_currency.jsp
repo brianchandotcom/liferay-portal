@@ -25,7 +25,7 @@ CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext = (CommerceCur
 
 CommerceCurrency commerceCurrency = commerceCurrenciesDisplayContext.getCommerceCurrency();
 CommerceCurrency primaryCommerceCurrency = commerceCurrenciesDisplayContext.getPrimaryCommerceCurrency();
-Map<String, RoundingType> roundingTypes = commerceCurrenciesDisplayContext.getRoundingTypes();
+List<RoundingType> roundingTypes = commerceCurrenciesDisplayContext.getRoundingTypes();
 
 String roundingTypeName = BeanParamUtil.getString(commerceCurrency, request, "roundingType");
 
@@ -75,13 +75,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				<aui:select name="roundingType" showEmptyOption="<%= true %>">
 
 					<%
-					for (Map.Entry<String, RoundingType> entry : roundingTypes.entrySet()) {
-						String curRoundingTypeName = entry.getKey();
-						RoundingType curRoundingType = entry.getValue();
+					for (RoundingType roundingType : roundingTypes) {
+						String curRoundingTypeName = roundingType.getName();
 					%>
 
 						<aui:option
-							label="<%= curRoundingType.getLabel(locale) %>"
+							label="<%= roundingType.getLabel(locale) %>"
 							selected="<%= curRoundingTypeName.equals(roundingTypeName) %>"
 							value="<%= curRoundingTypeName %>"
 						/>

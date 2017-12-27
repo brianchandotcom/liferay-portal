@@ -203,8 +203,7 @@ public class CommerceCartValidatorRegistryImpl
 				commerceCartValidators) {
 
 			CommerceCartValidatorResult commerceCartValidatorResult =
-				commerceCartValidator.validate(
-					cpInstance, commerceCart, quantity);
+				commerceCartValidator.validate(cpInstance, quantity);
 
 			if (!commerceCartValidatorResult.isValid() &&
 				commerceCartValidatorResult.hasMessageResult()) {

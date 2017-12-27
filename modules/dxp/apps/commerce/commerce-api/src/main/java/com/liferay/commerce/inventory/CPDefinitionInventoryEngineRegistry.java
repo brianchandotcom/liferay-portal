@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.inventory;
 
-import java.util.Map;
+import com.liferay.commerce.model.CPDefinitionInventory;
+
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
@@ -22,9 +24,11 @@ import java.util.Map;
 public interface CPDefinitionInventoryEngineRegistry {
 
 	public CPDefinitionInventoryEngine getCPDefinitionInventoryEngine(
+		CPDefinitionInventory cpDefinitionInventory);
+
+	public CPDefinitionInventoryEngine getCPDefinitionInventoryEngine(
 		String key);
 
-	public Map<String, CPDefinitionInventoryEngine>
-		getCPDefinitionInventoryEngines();
+	public List<CPDefinitionInventoryEngine> getCPDefinitionInventoryEngines();
 
 }

@@ -14,11 +14,48 @@
 
 package com.liferay.commerce.inventory;
 
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Locale;
+
 /**
  * @author Alessio Antonio Rendina
  */
 public interface CPDefinitionInventoryEngine {
 
-	public String getName();
+	public boolean allowBackOrder(CPInstance cpInstance) throws PortalException;
+
+	public String[] getAllowedCartQuantities(CPInstance cpInstance)
+		throws PortalException;
+
+	public String getAvailabilityRange(CPInstance cpInstance, Locale locale)
+		throws PortalException;
+
+	public String getKey();
+
+	public String getLabel(Locale locale);
+
+	public int getMaxCartQuantity(CPInstance cpInstance) throws PortalException;
+
+	public int getMinCartQuantity(CPInstance cpInstance) throws PortalException;
+
+	public int getMinStockQuantity(CPInstance cpInstance)
+		throws PortalException;
+
+	public int getMultipleCartQuantity(CPInstance cpInstance)
+		throws PortalException;
+
+	public int getStockQuantity(CPInstance cpInstance);
+
+	public boolean isDisplayAvailability(CPInstance cpInstance)
+		throws PortalException;
+
+	public boolean isDisplayStockQuantity(CPInstance cpInstance)
+		throws PortalException;
+
+	public int updateStockQuantity(CommerceOrderItem commerceOrderItem)
+		throws PortalException;
 
 }

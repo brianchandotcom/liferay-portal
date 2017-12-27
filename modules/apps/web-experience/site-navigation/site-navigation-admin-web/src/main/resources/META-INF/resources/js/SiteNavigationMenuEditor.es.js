@@ -106,15 +106,15 @@ class SiteNavigationMenuEditor extends State {
 		const parent = document.querySelector(
 			`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
 
-		const children = Array.from(parent.querySelectorAll(`.container-item`))
+		const children = Array.from(parent.querySelectorAll('.container-item'))
 			.filter(
 				(node) =>
 					(node === source.parentNode) ||
 					(Array.from(parent.children).indexOf(node) != -1)
 			);
 
-		const order = children.reduce((acc, value, idx) => {
-			return value === source.parentNode ? idx : acc;
+		const order = children.reduce((previousValue, currentValue, index) => {
+			return currentValue === source.parentNode ? index : previousValue;
 		}, 0);
 
 		source.dataset.dragOrder = order;

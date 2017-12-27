@@ -16,6 +16,7 @@ package com.liferay.commerce.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -30,6 +31,10 @@ import javax.portlet.RenderResponse;
  */
 @ProviderType
 public interface CommerceShippingOriginLocator {
+
+	public CommerceWarehouse getClosestCommerceWarehouse(
+			CommerceAddress commerceAddress, long cpInstanceId, int quantity)
+		throws PortalException;
 
 	public String getDescription(Locale locale);
 

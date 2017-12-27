@@ -16,6 +16,10 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceAvailabilityRange;
+import com.liferay.commerce.service.CommerceAvailabilityRangeLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alessio Antonio Rendina
  */
@@ -24,6 +28,14 @@ public class CPDefinitionAvailabilityRangeImpl
 	extends CPDefinitionAvailabilityRangeBaseImpl {
 
 	public CPDefinitionAvailabilityRangeImpl() {
+	}
+
+	@Override
+	public CommerceAvailabilityRange getCommerceAvailabilityRange()
+		throws PortalException {
+
+		return CommerceAvailabilityRangeLocalServiceUtil.
+			getCommerceAvailabilityRange(getCommerceAvailabilityRangeId());
 	}
 
 }

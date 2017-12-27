@@ -222,32 +222,32 @@ AUI.add(
 
 						link = link || instance.get('links').item(instance.get('currentIndex'));
 
-						var file = itemData.file;
+						var itemFile = itemData.file;
 
-						var imageURL = file.url;
+						var itemFileURL = itemFile.url;
 
 						var image = instance._getCurrentImage();
 
-						if (!file.mimeType.match(/image.*/)) {
+						if (!itemFile.mimeType.match(/image.*/)) {
 							image.attr('src', Liferay.ThemeDisplay.getPathThemeImages() + '/file_system/large/default.png');
 						}
 						else {
-							image.attr('src', imageURL);
+							image.attr('src', itemFileURL);
 						}
 
 						var returnType = link.attr('data-returnType');
 
-						if (file.resolvedValue) {
-							link.setData('value', file.resolvedValue);
+						if (itemFile.resolvedValue) {
+							link.setData('value', itemFile.resolvedValue);
 						}
 						else {
 							var imageValue = {
-								fileEntryId: file.fileEntryId,
-								groupId: file.groupId,
-								title: file.title,
-								type: file.type,
-								url: imageURL,
-								uuid: file.uuid
+								fileEntryId: itemFile.fileEntryId,
+								groupId: itemFile.groupId,
+								title: itemFile.title,
+								type: itemFile.type,
+								url: itemFileURL,
+								uuid: itemFile.uuid
 							};
 
 							link.setData('value', JSON.stringify(imageValue));

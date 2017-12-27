@@ -21,25 +21,25 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 ServletContext commerceAdminServletContext = (ServletContext)request.getAttribute(CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT);
 
-CShippingFixedOptionRelsDisplayContext cShippingFixedOptionRelsDisplayContext = (CShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDisplayContext = (CommerceShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CShippingFixedOptionRel cShippingFixedOptionRel = cShippingFixedOptionRelsDisplayContext.getCShippingFixedOptionRel();
+CommerceShippingFixedOptionRel commerceShippingFixedOptionRel = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptionRel();
 
-long commerceCountryId = cShippingFixedOptionRelsDisplayContext.getCommerceCountryId();
-long commerceRegionId = cShippingFixedOptionRelsDisplayContext.getCommerceRegionId();
-long commerceShippingMethodId = cShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId();
+long commerceCountryId = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountryId();
+long commerceRegionId = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegionId();
+long commerceShippingMethodId = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId();
 
-long cShippingFixedOptionRelId = 0;
+long commerceShippingFixedOptionRelId = 0;
 
-if (cShippingFixedOptionRel != null) {
-	cShippingFixedOptionRelId = cShippingFixedOptionRel.getCShippingFixedOptionRelId();
+if (commerceShippingFixedOptionRel != null) {
+	commerceShippingFixedOptionRelId = commerceShippingFixedOptionRel.getCommerceShippingFixedOptionRelId();
 }
 
 PortletURL shippingMethodsURL = renderResponse.createRenderURL();
 
 shippingMethodsURL.setParameter("commerceAdminModuleKey", ShippingMethodsCommerceAdminModule.KEY);
 
-String localizedKey = (cShippingFixedOptionRel == null) ? "add-shipping-option-setting" : "edit-shipping-option-setting";
+String localizedKey = (commerceShippingFixedOptionRel == null) ? "add-shipping-option-setting" : "edit-shipping-option-setting";
 
 String title = LanguageUtil.get(request, localizedKey);
 
@@ -47,7 +47,7 @@ Map<String, Object> data = new HashMap<>();
 
 data.put("direction-right", StringPool.TRUE);
 
-String screenNavigationEntryKey = cShippingFixedOptionRelsDisplayContext.getScreenNavigationEntryKey();
+String screenNavigationEntryKey = commerceShippingFixedOptionRelsDisplayContext.getScreenNavigationEntryKey();
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, commerceAdminModuleKey), shippingMethodsURL.toString(), data);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, screenNavigationEntryKey), redirect, data);
@@ -62,23 +62,23 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 
 <%@ include file="/breadcrumb.jspf" %>
 
-<portlet:actionURL name="editCShippingFixedOptionRel" var="editCShippingFixedOptionRelActionURL" />
+<portlet:actionURL name="editCommerceShippingFixedOptionRel" var="editCommerceShippingFixedOptionRelActionURL" />
 
-<aui:form action="<%= editCShippingFixedOptionRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (cShippingFixedOptionRel == null) ? Constants.ADD : Constants.UPDATE %>" />
+<aui:form action="<%= editCommerceShippingFixedOptionRelActionURL %>" cssClass="container-fluid-1280" method="post" name="fm">
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (commerceShippingFixedOptionRel == null) ? Constants.ADD : Constants.UPDATE %>" />
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
-	<aui:input name="cShippingFixedOptionRelId" type="hidden" value="<%= cShippingFixedOptionRelId %>" />
+	<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
 	<div class="lfr-form-content">
-		<aui:model-context bean="<%= cShippingFixedOptionRel %>" model="<%= CShippingFixedOptionRel.class %>" />
+		<aui:model-context bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
 				<aui:select label="shipping-option" name="commerceShippingFixedOptionId" required="<%= true %>">
 
 					<%
-					List<CommerceShippingFixedOption> commerceShippingFixedOptions = cShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
+					List<CommerceShippingFixedOption> commerceShippingFixedOptions = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
 
 					for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptions) {
 					%>
@@ -97,7 +97,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				<aui:select label="warehouse" name="commerceWarehouseId" showEmptyOption="<%= true %>">
 
 					<%
-					List<CommerceWarehouse> commerceWarehouses = cShippingFixedOptionRelsDisplayContext.getCommerceWarehouses();
+					List<CommerceWarehouse> commerceWarehouses = commerceShippingFixedOptionRelsDisplayContext.getCommerceWarehouses();
 
 					for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
 					%>
@@ -116,14 +116,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
 
 					<%
-					List<CommerceCountry> commerceCountries = cShippingFixedOptionRelsDisplayContext.getCommerceCountries();
+					List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
 
 					for (CommerceCountry commerceCountry : commerceCountries) {
 					%>
 
 						<aui:option
 							label="<%= commerceCountry.getName(languageId) %>"
-							selected="<%= (cShippingFixedOptionRel != null) && (cShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
+							selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
 							value="<%= commerceCountry.getCommerceCountryId() %>"
 						/>
 
@@ -136,14 +136,14 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 				<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
 
 					<%
-					List<CommerceRegion> commerceRegions = cShippingFixedOptionRelsDisplayContext.getCommerceRegions();
+					List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
 
 					for (CommerceRegion commerceRegion : commerceRegions) {
 					%>
 
 						<aui:option
 							label="<%= commerceRegion.getName() %>"
-							selected="<%= (cShippingFixedOptionRel != null) && (cShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
+							selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
 							value="<%= commerceRegion.getCommerceRegionId() %>"
 						/>
 

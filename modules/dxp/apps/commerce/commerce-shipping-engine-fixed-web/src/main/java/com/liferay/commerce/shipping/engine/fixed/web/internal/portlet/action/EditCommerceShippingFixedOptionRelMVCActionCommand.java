@@ -15,9 +15,9 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchCShippingFixedOptionRelException;
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
-import com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService;
+import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionRelException;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -42,37 +42,39 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommerceAdminPortletKeys.COMMERCE_ADMIN,
-		"mvc.command.name=editCShippingFixedOptionRel"
+		"mvc.command.name=editCommerceShippingFixedOptionRel"
 	},
 	service = MVCActionCommand.class
 )
-public class EditCShippingFixedOptionRelMVCActionCommand
+public class EditCommerceShippingFixedOptionRelMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteCShippingFixedOptionRels(ActionRequest actionRequest)
+	protected void deleteCommerceShippingFixedOptionRels(
+			ActionRequest actionRequest)
 		throws PortalException {
 
-		long[] deleteCShippingFixedOptionRelIds = null;
+		long[] deleteCommerceShippingFixedOptionRelIds = null;
 
-		long cShippingFixedOptionRelId = ParamUtil.getLong(
-			actionRequest, "cShippingFixedOptionRelId");
+		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
+			actionRequest, "commerceShippingFixedOptionRelId");
 
-		if (cShippingFixedOptionRelId > 0) {
-			deleteCShippingFixedOptionRelIds =
-				new long[] {cShippingFixedOptionRelId};
+		if (commerceShippingFixedOptionRelId > 0) {
+			deleteCommerceShippingFixedOptionRelIds =
+				new long[] {commerceShippingFixedOptionRelId};
 		}
 		else {
-			deleteCShippingFixedOptionRelIds = StringUtil.split(
+			deleteCommerceShippingFixedOptionRelIds = StringUtil.split(
 				ParamUtil.getString(
-					actionRequest, "deleteCShippingFixedOptionRelIds"),
+					actionRequest, "deleteCommerceShippingFixedOptionRelIds"),
 				0L);
 		}
 
-		for (long deleteCShippingFixedOptionRelId :
-				deleteCShippingFixedOptionRelIds) {
+		for (long deleteCommerceShippingFixedOptionRelId :
+				deleteCommerceShippingFixedOptionRelIds) {
 
-			_cShippingFixedOptionRelService.deleteCShippingFixedOptionRel(
-				deleteCShippingFixedOptionRelId);
+			_commerceShippingFixedOptionRelService.
+				deleteCommerceShippingFixedOptionRel(
+					deleteCommerceShippingFixedOptionRelId);
 		}
 	}
 
@@ -85,14 +87,14 @@ public class EditCShippingFixedOptionRelMVCActionCommand
 
 		try {
 			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
-				updateCShippingFixedOptionRel(actionRequest);
+				updateCommerceShippingFixedOptionRel(actionRequest);
 			}
 			else if (cmd.equals(Constants.DELETE)) {
-				deleteCShippingFixedOptionRels(actionRequest);
+				deleteCommerceShippingFixedOptionRels(actionRequest);
 			}
 		}
 		catch (Exception e) {
-			if (e instanceof NoSuchCShippingFixedOptionRelException ||
+			if (e instanceof NoSuchShippingFixedOptionRelException ||
 				e instanceof PrincipalException) {
 
 				SessionErrors.add(actionRequest, e.getClass());
@@ -103,11 +105,12 @@ public class EditCShippingFixedOptionRelMVCActionCommand
 		}
 	}
 
-	protected void updateCShippingFixedOptionRel(ActionRequest actionRequest)
+	protected void updateCommerceShippingFixedOptionRel(
+			ActionRequest actionRequest)
 		throws PortalException {
 
-		long cShippingFixedOptionRelId = ParamUtil.getLong(
-			actionRequest, "cShippingFixedOptionRelId");
+		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
+			actionRequest, "commerceShippingFixedOptionRelId");
 
 		long commerceShippingMethodId = ParamUtil.getLong(
 			actionRequest, "commerceShippingMethodId");
@@ -134,24 +137,27 @@ public class EditCShippingFixedOptionRelMVCActionCommand
 			actionRequest, "ratePercentage");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			CShippingFixedOptionRel.class.getName(), actionRequest);
+			CommerceShippingFixedOptionRel.class.getName(), actionRequest);
 
-		if (cShippingFixedOptionRelId > 0) {
-			_cShippingFixedOptionRelService.updateCShippingFixedOptionRel(
-				cShippingFixedOptionRelId, commerceWarehouseId,
-				commerceCountryId, commerceRegionId, zip, weightFrom, weightTo,
-				fixedPrice, rateUnitWeightPrice, ratePercentage);
+		if (commerceShippingFixedOptionRelId > 0) {
+			_commerceShippingFixedOptionRelService.
+				updateCommerceShippingFixedOptionRel(
+					commerceShippingFixedOptionRelId, commerceWarehouseId,
+					commerceCountryId, commerceRegionId, zip, weightFrom,
+					weightTo, fixedPrice, rateUnitWeightPrice, ratePercentage);
 		}
 		else {
-			_cShippingFixedOptionRelService.addCShippingFixedOptionRel(
-				commerceShippingMethodId, commerceShippingFixedOptionId,
-				commerceWarehouseId, commerceCountryId, commerceRegionId, zip,
-				weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
-				ratePercentage, serviceContext);
+			_commerceShippingFixedOptionRelService.
+				addCommerceShippingFixedOptionRel(
+					commerceShippingMethodId, commerceShippingFixedOptionId,
+					commerceWarehouseId, commerceCountryId, commerceRegionId,
+					zip, weightFrom, weightTo, fixedPrice, rateUnitWeightPrice,
+					ratePercentage, serviceContext);
 		}
 	}
 
 	@Reference
-	private CShippingFixedOptionRelService _cShippingFixedOptionRelService;
+	private CommerceShippingFixedOptionRelService
+		_commerceShippingFixedOptionRelService;
 
 }

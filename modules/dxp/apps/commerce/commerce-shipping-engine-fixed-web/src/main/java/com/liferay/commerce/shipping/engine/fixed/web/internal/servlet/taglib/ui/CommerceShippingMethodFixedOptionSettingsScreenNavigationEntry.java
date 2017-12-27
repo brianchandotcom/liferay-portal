@@ -19,10 +19,10 @@ import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.service.CommerceWarehouseService;
-import com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.web.internal.ByWeightCommerceShippingEngine;
-import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CShippingFixedOptionRelsDisplayContext;
+import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionRelsDisplayContext;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -108,18 +108,19 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 			(RenderResponse)httpServletRequest.getAttribute(
 				JavaConstants.JAVAX_PORTLET_RESPONSE);
 
-		CShippingFixedOptionRelsDisplayContext
-			cShippingFixedOptionRelsDisplayContext =
-				new CShippingFixedOptionRelsDisplayContext(
+		CommerceShippingFixedOptionRelsDisplayContext
+			commerceShippingFixedOptionRelsDisplayContext =
+				new CommerceShippingFixedOptionRelsDisplayContext(
 					_commerceCountryService, _commerceRegionService,
 					_commerceShippingMethodService,
 					_commerceShippingFixedOptionService,
-					_commerceWarehouseService, _cShippingFixedOptionRelService,
-					renderRequest, renderResponse);
+					_commerceWarehouseService,
+					_commerceShippingFixedOptionRelService, renderRequest,
+					renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			cShippingFixedOptionRelsDisplayContext);
+			commerceShippingFixedOptionRelsDisplayContext);
 
 		_jspRenderer.renderJSP(
 			_servletContext, httpServletRequest, httpServletResponse,
@@ -133,6 +134,10 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 	private CommerceRegionService _commerceRegionService;
 
 	@Reference
+	private CommerceShippingFixedOptionRelService
+		_commerceShippingFixedOptionRelService;
+
+	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 
@@ -141,9 +146,6 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 
 	@Reference
 	private CommerceWarehouseService _commerceWarehouseService;
-
-	@Reference
-	private CShippingFixedOptionRelService _cShippingFixedOptionRelService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

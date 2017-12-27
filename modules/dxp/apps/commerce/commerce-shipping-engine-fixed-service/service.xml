@@ -42,11 +42,11 @@
 			<finder-column name="commerceShippingMethodId" />
 		</finder>
 	</entity>
-	<entity local-service="true" name="CShippingFixedOptionRel" remote-service="true">
+	<entity local-service="true" name="CommerceShippingFixedOptionRel" remote-service="true" table="CShippingFixedOptionRel">
 
 		<!-- PK fields -->
 
-		<column name="CShippingFixedOptionRelId" primary="true" type="long" />
+		<column db-name="CShippingFixedOptionRelId" name="commerceShippingFixedOptionRelId" primary="true" type="long" />
 
 		<!-- Group instance -->
 

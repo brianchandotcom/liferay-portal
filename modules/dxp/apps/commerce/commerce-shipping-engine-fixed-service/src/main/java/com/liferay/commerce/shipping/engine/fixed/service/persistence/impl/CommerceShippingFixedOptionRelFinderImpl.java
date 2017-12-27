@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.shipping.engine.fixed.service.persistence.impl;
 
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
-import com.liferay.commerce.shipping.engine.fixed.model.impl.CShippingFixedOptionRelImpl;
-import com.liferay.commerce.shipping.engine.fixed.service.persistence.CShippingFixedOptionRelFinder;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.model.impl.CommerceShippingFixedOptionRelImpl;
+import com.liferay.commerce.shipping.engine.fixed.service.persistence.CommerceShippingFixedOptionRelFinder;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -29,32 +29,33 @@ import java.util.List;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CShippingFixedOptionRelFinderImpl
-	extends CShippingFixedOptionRelFinderBaseImpl
-	implements CShippingFixedOptionRelFinder {
+public class CommerceShippingFixedOptionRelFinderImpl
+	extends CommerceShippingFixedOptionRelFinderBaseImpl
+	implements CommerceShippingFixedOptionRelFinder {
 
 	public static final String FIND_BY_C_C_C_Z_W =
-		CShippingFixedOptionRelFinder.class.getName() + ".findByC_C_C_Z_W";
+		CommerceShippingFixedOptionRelFinder.class.getName() +
+			".findByC_C_C_Z_W";
 
 	@Override
-	public CShippingFixedOptionRel fetchByC_C_C_Z_W_First(
+	public CommerceShippingFixedOptionRel fetchByC_C_C_Z_W_First(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, String zip, double weight) {
 
-		List<CShippingFixedOptionRel> cShippingFixedOptionRels =
+		List<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRels =
 			findByC_C_C_Z_W(
 				commerceShippingFixedOptionId, commerceCountryId,
 				commerceRegionId, zip, weight);
 
-		if (!cShippingFixedOptionRels.isEmpty()) {
-			return cShippingFixedOptionRels.get(0);
+		if (!commerceShippingFixedOptionRels.isEmpty()) {
+			return commerceShippingFixedOptionRels.get(0);
 		}
 
 		return null;
 	}
 
 	@Override
-	public List<CShippingFixedOptionRel> findByC_C_C_Z_W(
+	public List<CommerceShippingFixedOptionRel> findByC_C_C_Z_W(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, String zip, double weight) {
 
@@ -64,7 +65,7 @@ public class CShippingFixedOptionRelFinderImpl
 	}
 
 	@Override
-	public List<CShippingFixedOptionRel> findByC_C_C_Z_W(
+	public List<CommerceShippingFixedOptionRel> findByC_C_C_Z_W(
 		long commerceShippingFixedOptionId, long commerceCountryId,
 		long commerceRegionId, String zip, double weight, int start, int end) {
 
@@ -78,7 +79,8 @@ public class CShippingFixedOptionRelFinderImpl
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity(
-				"CShippingFixedOptionRel", CShippingFixedOptionRelImpl.class);
+				"CommerceShippingFixedOptionRel",
+				CommerceShippingFixedOptionRelImpl.class);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -89,7 +91,7 @@ public class CShippingFixedOptionRelFinderImpl
 			qPos.add(weight);
 			qPos.add(weight);
 
-			return (List<CShippingFixedOptionRel>)QueryUtil.list(
+			return (List<CommerceShippingFixedOptionRel>)QueryUtil.list(
 				q, getDialect(), start, end);
 		}
 		catch (Exception e) {

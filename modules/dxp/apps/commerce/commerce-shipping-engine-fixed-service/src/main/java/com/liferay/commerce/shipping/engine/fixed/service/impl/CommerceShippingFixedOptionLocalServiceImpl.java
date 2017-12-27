@@ -75,8 +75,9 @@ public class CommerceShippingFixedOptionLocalServiceImpl
 
 		// Commerce shipping fixed option rels
 
-		cShippingFixedOptionRelLocalService.deleteCShippingFixedOptionRels(
-			commerceShippingFixedOption.getCommerceShippingFixedOptionId());
+		commerceShippingFixedOptionRelLocalService.
+			deleteCommerceShippingFixedOptionRels(
+				commerceShippingFixedOption.getCommerceShippingFixedOptionId());
 
 		return commerceShippingFixedOption;
 	}

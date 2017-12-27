@@ -22,9 +22,9 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
-import com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.util.CommerceShippingEngineFixedUtil;
 import com.liferay.commerce.util.CommerceUtil;
@@ -44,17 +44,18 @@ import javax.portlet.RenderResponse;
 /**
  * @author Alessio Antonio Rendina
  */
-public class CShippingFixedOptionRelsDisplayContext
+public class CommerceShippingFixedOptionRelsDisplayContext
 	extends BaseCommerceShippingFixedOptionDisplayContext
-		<CShippingFixedOptionRel> {
+		<CommerceShippingFixedOptionRel> {
 
-	public CShippingFixedOptionRelsDisplayContext(
+	public CommerceShippingFixedOptionRelsDisplayContext(
 		CommerceCountryService commerceCountryService,
 		CommerceRegionService commerceRegionService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		CommerceWarehouseService commerceWarehouseService,
-		CShippingFixedOptionRelService cShippingFixedOptionRelService,
+		CommerceShippingFixedOptionRelService
+			commerceShippingFixedOptionRelService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		super(commerceShippingMethodService, renderRequest, renderResponse);
@@ -64,7 +65,8 @@ public class CShippingFixedOptionRelsDisplayContext
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;
 		_commerceWarehouseService = commerceWarehouseService;
-		_cShippingFixedOptionRelService = cShippingFixedOptionRelService;
+		_commerceShippingFixedOptionRelService =
+			commerceShippingFixedOptionRelService;
 
 		setDefaultOrderByCol("country");
 	}
@@ -80,11 +82,12 @@ public class CShippingFixedOptionRelsDisplayContext
 	public long getCommerceCountryId() {
 		long commerceCountryId = 0;
 
-		CShippingFixedOptionRel cShippingFixedOptionRel =
-			getCShippingFixedOptionRel();
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			getCommerceShippingFixedOptionRel();
 
-		if (cShippingFixedOptionRel != null) {
-			commerceCountryId = cShippingFixedOptionRel.getCommerceCountryId();
+		if (commerceShippingFixedOptionRel != null) {
+			commerceCountryId =
+				commerceShippingFixedOptionRel.getCommerceCountryId();
 		}
 
 		return commerceCountryId;
@@ -93,11 +96,12 @@ public class CShippingFixedOptionRelsDisplayContext
 	public long getCommerceRegionId() {
 		long commerceRegionId = 0;
 
-		CShippingFixedOptionRel cShippingFixedOptionRel =
-			getCShippingFixedOptionRel();
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			getCommerceShippingFixedOptionRel();
 
-		if (cShippingFixedOptionRel != null) {
-			commerceRegionId = cShippingFixedOptionRel.getCommerceRegionId();
+		if (commerceShippingFixedOptionRel != null) {
+			commerceRegionId =
+				commerceShippingFixedOptionRel.getCommerceRegionId();
 		}
 
 		return commerceRegionId;
@@ -106,6 +110,36 @@ public class CShippingFixedOptionRelsDisplayContext
 	public List<CommerceRegion> getCommerceRegions() {
 		return _commerceRegionService.getCommerceRegions(
 			getCommerceCountryId(), true);
+	}
+
+	public CommerceShippingFixedOptionRel getCommerceShippingFixedOptionRel() {
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			(CommerceShippingFixedOptionRel)renderRequest.getAttribute(
+				CommerceShippingEngineFixedWebKeys.
+					COMMERCE_SHIPPING_FIXED_OPTION_REL);
+
+		if (commerceShippingFixedOptionRel != null) {
+			return commerceShippingFixedOptionRel;
+		}
+
+		long commerceShippingFixedOptionRelId = ParamUtil.getLong(
+			renderRequest, "commerceShippingFixedOptionRelId");
+
+		if (commerceShippingFixedOptionRelId > 0) {
+			commerceShippingFixedOptionRel =
+				_commerceShippingFixedOptionRelService.
+					fetchCommerceShippingFixedOptionRel(
+						commerceShippingFixedOptionRelId);
+		}
+
+		if (commerceShippingFixedOptionRel != null) {
+			renderRequest.setAttribute(
+				CommerceShippingEngineFixedWebKeys.
+					COMMERCE_SHIPPING_FIXED_OPTION_REL,
+				commerceShippingFixedOptionRel);
+		}
+
+		return commerceShippingFixedOptionRel;
 	}
 
 	public List<CommerceShippingFixedOption> getCommerceShippingFixedOptions()
@@ -129,42 +163,13 @@ public class CShippingFixedOptionRelsDisplayContext
 			QueryUtil.ALL_POS, orderByComparator);
 	}
 
-	public CShippingFixedOptionRel getCShippingFixedOptionRel() {
-		CShippingFixedOptionRel cShippingFixedOptionRel =
-			(CShippingFixedOptionRel)renderRequest.getAttribute(
-				CommerceShippingEngineFixedWebKeys.
-					COMMERCE_SHIPPING_FIXED_OPTION_REL);
-
-		if (cShippingFixedOptionRel != null) {
-			return cShippingFixedOptionRel;
-		}
-
-		long cShippingFixedOptionRelId = ParamUtil.getLong(
-			renderRequest, "cShippingFixedOptionRelId");
-
-		if (cShippingFixedOptionRelId > 0) {
-			cShippingFixedOptionRel =
-				_cShippingFixedOptionRelService.fetchCShippingFixedOptionRel(
-					cShippingFixedOptionRelId);
-		}
-
-		if (cShippingFixedOptionRel != null) {
-			renderRequest.setAttribute(
-				CommerceShippingEngineFixedWebKeys.
-					COMMERCE_SHIPPING_FIXED_OPTION_REL,
-				cShippingFixedOptionRel);
-		}
-
-		return cShippingFixedOptionRel;
-	}
-
 	@Override
 	public String getScreenNavigationEntryKey() {
 		return "shipping-option-settings";
 	}
 
 	@Override
-	public SearchContainer<CShippingFixedOptionRel> getSearchContainer()
+	public SearchContainer<CommerceShippingFixedOptionRel> getSearchContainer()
 		throws PortalException {
 
 		if (searchContainer != null) {
@@ -177,9 +182,9 @@ public class CShippingFixedOptionRelsDisplayContext
 		searchContainer.setEmptyResultsMessage(
 			"there-are-no-shipping-option-settings");
 
-		OrderByComparator<CShippingFixedOptionRel> orderByComparator =
+		OrderByComparator<CommerceShippingFixedOptionRel> orderByComparator =
 			CommerceShippingEngineFixedUtil.
-				getCShippingFixedOptionRelOrderByComparator(
+				getCommerceShippingFixedOptionRelOrderByComparator(
 					getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());
@@ -188,14 +193,14 @@ public class CShippingFixedOptionRelsDisplayContext
 		searchContainer.setRowChecker(getRowChecker());
 
 		int total =
-			_cShippingFixedOptionRelService.
+			_commerceShippingFixedOptionRelService.
 				getCommerceShippingMethodFixedOptionRelsCount(
 					getCommerceShippingMethodId());
 
 		searchContainer.setTotal(total);
 
-		List<CShippingFixedOptionRel> results =
-			_cShippingFixedOptionRelService.
+		List<CommerceShippingFixedOptionRel> results =
+			_commerceShippingFixedOptionRelService.
 				getCommerceShippingMethodFixedOptionRels(
 					getCommerceShippingMethodId(), searchContainer.getStart(),
 					searchContainer.getEnd(), orderByComparator);
@@ -218,10 +223,10 @@ public class CShippingFixedOptionRelsDisplayContext
 
 	private final CommerceCountryService _commerceCountryService;
 	private final CommerceRegionService _commerceRegionService;
+	private final CommerceShippingFixedOptionRelService
+		_commerceShippingFixedOptionRelService;
 	private final CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 	private final CommerceWarehouseService _commerceWarehouseService;
-	private final CShippingFixedOptionRelService
-		_cShippingFixedOptionRelService;
 
 }

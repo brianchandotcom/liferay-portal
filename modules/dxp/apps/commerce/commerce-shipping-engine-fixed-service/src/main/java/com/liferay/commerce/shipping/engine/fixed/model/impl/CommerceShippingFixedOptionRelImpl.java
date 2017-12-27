@@ -32,10 +32,10 @@ import com.liferay.portal.kernel.exception.PortalException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class CShippingFixedOptionRelImpl
-	extends CShippingFixedOptionRelBaseImpl {
+public class CommerceShippingFixedOptionRelImpl
+	extends CommerceShippingFixedOptionRelBaseImpl {
 
-	public CShippingFixedOptionRelImpl() {
+	public CommerceShippingFixedOptionRelImpl() {
 	}
 
 	@Override

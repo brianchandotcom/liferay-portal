@@ -23,9 +23,9 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceAddressRestrictionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
-import com.liferay.commerce.shipping.engine.fixed.service.CShippingFixedOptionRelService;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionRelService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -131,20 +131,22 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		double cartWeight = _commerceShippingHelper.getWeight(
 			commerceCartItems);
 
-		CShippingFixedOptionRel cShippingFixedOptionRel =
-			_cShippingFixedOptionRelService.fetchCShippingFixedOptionRel(
-				commerceShippingFixedOption.getCommerceShippingFixedOptionId(),
-				commerceAddress.getCommerceCountryId(),
-				commerceAddress.getCommerceRegionId(), commerceAddress.getZip(),
-				cartWeight);
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel =
+			_commerceShippingFixedOptionRelService.
+				fetchCommerceShippingFixedOptionRel(
+					commerceShippingFixedOption.
+						getCommerceShippingFixedOptionId(),
+					commerceAddress.getCommerceCountryId(),
+					commerceAddress.getCommerceRegionId(),
+					commerceAddress.getZip(), cartWeight);
 
-		if (cShippingFixedOptionRel == null) {
+		if (commerceShippingFixedOptionRel == null) {
 			return null;
 		}
 
 		int rate = 1;
 		double rateUnitWeightPrice =
-			cShippingFixedOptionRel.getRateUnitWeightPrice();
+			commerceShippingFixedOptionRel.getRateUnitWeightPrice();
 
 		if (rateUnitWeightPrice > 0) {
 			rate = (int)Math.ceil(cartWeight / rateUnitWeightPrice);
@@ -154,10 +156,11 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			amount = amount * rate;
 		}
 
-		amount += cShippingFixedOptionRel.getFixedPrice();
+		amount += commerceShippingFixedOptionRel.getFixedPrice();
 
 		amount +=
-			(cartPrice / 100) * cShippingFixedOptionRel.getRatePercentage();
+			(cartPrice / 100) *
+				commerceShippingFixedOptionRel.getRatePercentage();
 
 		return new CommerceShippingOption(name, name, amount);
 	}
@@ -214,6 +217,10 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		_commerceAddressRestrictionService;
 
 	@Reference
+	private CommerceShippingFixedOptionRelService
+		_commerceShippingFixedOptionRelService;
+
+	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 
@@ -222,8 +229,5 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;
-
-	@Reference
-	private CShippingFixedOptionRelService _cShippingFixedOptionRelService;
 
 }

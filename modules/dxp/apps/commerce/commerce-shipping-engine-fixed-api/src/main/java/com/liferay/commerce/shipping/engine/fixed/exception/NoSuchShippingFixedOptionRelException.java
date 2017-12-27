@@ -22,21 +22,21 @@ import com.liferay.portal.kernel.exception.NoSuchModelException;
  * @author Alessio Antonio Rendina
  */
 @ProviderType
-public class NoSuchCShippingFixedOptionRelException
+public class NoSuchShippingFixedOptionRelException
 	extends NoSuchModelException {
 
-	public NoSuchCShippingFixedOptionRelException() {
+	public NoSuchShippingFixedOptionRelException() {
 	}
 
-	public NoSuchCShippingFixedOptionRelException(String msg) {
+	public NoSuchShippingFixedOptionRelException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchCShippingFixedOptionRelException(String msg, Throwable cause) {
+	public NoSuchShippingFixedOptionRelException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchCShippingFixedOptionRelException(Throwable cause) {
+	public NoSuchShippingFixedOptionRelException(Throwable cause) {
 		super(cause);
 	}
 

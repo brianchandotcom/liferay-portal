@@ -14,14 +14,14 @@
 
 package com.liferay.commerce.shipping.engine.fixed.util.comparator;
 
-import com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel;
+import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
-public class CShippingFixedOptionRelCommerceCountryIdComparator
-	extends OrderByComparator<CShippingFixedOptionRel> {
+public class CommerceShippingFixedOptionRelCommerceCountryIdComparator
+	extends OrderByComparator<CommerceShippingFixedOptionRel> {
 
 	public static final String ORDER_BY_ASC = "commerceCountryId ASC";
 
@@ -29,11 +29,11 @@ public class CShippingFixedOptionRelCommerceCountryIdComparator
 
 	public static final String[] ORDER_BY_FIELDS = {"commerceCountryId"};
 
-	public CShippingFixedOptionRelCommerceCountryIdComparator() {
+	public CommerceShippingFixedOptionRelCommerceCountryIdComparator() {
 		this(false);
 	}
 
-	public CShippingFixedOptionRelCommerceCountryIdComparator(
+	public CommerceShippingFixedOptionRelCommerceCountryIdComparator(
 		boolean ascending) {
 
 		_ascending = ascending;
@@ -41,12 +41,12 @@ public class CShippingFixedOptionRelCommerceCountryIdComparator
 
 	@Override
 	public int compare(
-		CShippingFixedOptionRel cShippingFixedOptionRel1,
-		CShippingFixedOptionRel cShippingFixedOptionRel2) {
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel1,
+		CommerceShippingFixedOptionRel commerceShippingFixedOptionRel2) {
 
 		int value = Long.compare(
-			cShippingFixedOptionRel1.getCommerceCountryId(),
-			cShippingFixedOptionRel2.getCommerceCountryId());
+			commerceShippingFixedOptionRel1.getCommerceCountryId(),
+			commerceShippingFixedOptionRel2.getCommerceCountryId());
 
 		if (_ascending) {
 			return value;

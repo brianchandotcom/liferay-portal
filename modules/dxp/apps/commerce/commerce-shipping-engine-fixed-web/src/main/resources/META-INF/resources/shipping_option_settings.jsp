@@ -17,71 +17,71 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CShippingFixedOptionRelsDisplayContext cShippingFixedOptionRelsDisplayContext = (CShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceShippingFixedOptionRelsDisplayContext commerceShippingFixedOptionRelsDisplayContext = (CommerceShippingFixedOptionRelsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-SearchContainer<CShippingFixedOptionRel> cShippingFixedOptionRelSearchContainer = cShippingFixedOptionRelsDisplayContext.getSearchContainer();
+SearchContainer<CommerceShippingFixedOptionRel> commerceShippingFixedOptionRelSearchContainer = commerceShippingFixedOptionRelsDisplayContext.getSearchContainer();
 
 boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPPING_METHODS);
 %>
 
 <c:choose>
-	<c:when test="<%= cShippingFixedOptionRelsDisplayContext.isVisible() %>">
+	<c:when test="<%= commerceShippingFixedOptionRelsDisplayContext.isVisible() %>">
 		<liferay-frontend:management-bar
 			includeCheckBox="<%= true %>"
-			searchContainerId="cShippingFixedOptionRels"
+			searchContainerId="commerceShippingFixedOptionRels"
 		>
 			<liferay-frontend:management-bar-filters>
 				<liferay-frontend:management-bar-navigation
 					navigationKeys='<%= new String[] {"all"} %>'
-					portletURL="<%= cShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
+					portletURL="<%= commerceShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
 				/>
 
 				<liferay-frontend:management-bar-sort
-					orderByCol="<%= cShippingFixedOptionRelsDisplayContext.getOrderByCol() %>"
-					orderByType="<%= cShippingFixedOptionRelsDisplayContext.getOrderByType() %>"
+					orderByCol="<%= commerceShippingFixedOptionRelsDisplayContext.getOrderByCol() %>"
+					orderByType="<%= commerceShippingFixedOptionRelsDisplayContext.getOrderByType() %>"
 					orderColumns='<%= new String[] {"country"} %>'
-					portletURL="<%= cShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
+					portletURL="<%= commerceShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
 				/>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-buttons>
 				<liferay-frontend:management-bar-display-buttons
 					displayViews='<%= new String[] {"list"} %>'
-					portletURL="<%= cShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
+					portletURL="<%= commerceShippingFixedOptionRelsDisplayContext.getPortletURL() %>"
 					selectedDisplayStyle="list"
 				/>
 			</liferay-frontend:management-bar-buttons>
 
 			<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
 				<liferay-frontend:management-bar-action-buttons>
-					<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCShippingFixedOptionRels();" %>' icon="times" label="delete" />
+					<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceShippingFixedOptionRels();" %>' icon="times" label="delete" />
 				</liferay-frontend:management-bar-action-buttons>
 			</c:if>
 		</liferay-frontend:management-bar>
 
-		<portlet:actionURL name="editCShippingFixedOptionRel" var="editCShippingFixedOptionRelActionURL" />
+		<portlet:actionURL name="editCommerceShippingFixedOptionRel" var="editCommerceShippingFixedOptionRelActionURL" />
 
-		<aui:form action="<%= editCShippingFixedOptionRelActionURL %>" method="post" name="fm">
+		<aui:form action="<%= editCommerceShippingFixedOptionRelActionURL %>" method="post" name="fm">
 			<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= Constants.DELETE %>" />
 			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="deleteCShippingFixedOptionRelIds" type="hidden" />
+			<aui:input name="deleteCommerceShippingFixedOptionRelIds" type="hidden" />
 
 			<liferay-ui:search-container
-				id="cShippingFixedOptionRels"
-				searchContainer="<%= cShippingFixedOptionRelSearchContainer %>"
+				id="commerceShippingFixedOptionRels"
+				searchContainer="<%= commerceShippingFixedOptionRelSearchContainer %>"
 			>
 				<liferay-ui:search-container-row
-					className="com.liferay.commerce.shipping.engine.fixed.model.CShippingFixedOptionRel"
-					keyProperty="CShippingFixedOptionRelId"
-					modelVar="cShippingFixedOptionRel"
+					className="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel"
+					keyProperty="CommerceShippingFixedOptionRelId"
+					modelVar="commerceShippingFixedOptionRel"
 				>
 
 					<%
-					CommerceCountry commerceCountry = cShippingFixedOptionRel.getCommerceCountry();
-					CommerceRegion commerceRegion = cShippingFixedOptionRel.getCommerceRegion();
-					CommerceShippingFixedOption commerceShippingFixedOption = cShippingFixedOptionRel.getCommerceShippingFixedOption();
-					CommerceShippingMethod commerceShippingMethod = cShippingFixedOptionRel.getCommerceShippingMethod();
-					CommerceWarehouse commerceWarehouse = cShippingFixedOptionRel.getCommerceWarehouse();
+					CommerceCountry commerceCountry = commerceShippingFixedOptionRel.getCommerceCountry();
+					CommerceRegion commerceRegion = commerceShippingFixedOptionRel.getCommerceRegion();
+					CommerceShippingFixedOption commerceShippingFixedOption = commerceShippingFixedOptionRel.getCommerceShippingFixedOption();
+					CommerceShippingMethod commerceShippingMethod = commerceShippingFixedOptionRel.getCommerceShippingMethod();
+					CommerceWarehouse commerceWarehouse = commerceShippingFixedOptionRel.getCommerceWarehouse();
 					%>
 
 					<liferay-ui:search-container-column-text
@@ -135,23 +135,23 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 		</aui:form>
 
 		<c:if test="<%= hasManageCommerceShippingMethodsPermission %>">
-			<portlet:renderURL var="addCShippingFixedOptionRelURL">
-				<portlet:param name="mvcRenderCommandName" value="editCShippingFixedOptionRel" />
+			<portlet:renderURL var="addCommerceShippingFixedOptionRelURL">
+				<portlet:param name="mvcRenderCommandName" value="editCommerceShippingFixedOptionRel" />
 				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(cShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId()) %>" />
+				<portlet:param name="commerceShippingMethodId" value="<%= String.valueOf(commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingMethodId()) %>" />
 			</portlet:renderURL>
 
 			<liferay-frontend:add-menu>
-				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-shipping-option-setting") %>' url="<%= addCShippingFixedOptionRelURL.toString() %>" />
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-shipping-option-setting") %>' url="<%= addCommerceShippingFixedOptionRelURL.toString() %>" />
 			</liferay-frontend:add-menu>
 		</c:if>
 
 		<aui:script>
-			function <portlet:namespace />deleteCShippingFixedOptionRels() {
+			function <portlet:namespace />deleteCommerceShippingFixedOptionRels() {
 				if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-shipping-option-settings") %>')) {
 					var form = AUI.$(document.<portlet:namespace />fm);
 
-					form.fm('deleteCShippingFixedOptionRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+					form.fm('deleteCommerceShippingFixedOptionRelIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
 
 					submitForm(form);
 				}

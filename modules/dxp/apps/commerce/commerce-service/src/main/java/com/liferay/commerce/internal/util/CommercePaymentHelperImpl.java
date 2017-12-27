@@ -28,6 +28,8 @@ import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.util.CommercePaymentEngineRegistry;
 import com.liferay.commerce.util.CommercePaymentHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -70,6 +72,11 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			content = commercePaymentEngineResult.getContent();
 		}
 		catch (CommercePaymentEngineException cpee) {
+			_log.error(
+				"Unable to cancel payment of order " +
+					commerceOrder.getCommerceOrderId(),
+				cpee);
+
 			content = _getContent(cpee);
 		}
 
@@ -106,6 +113,11 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 				CommerceOrderConstants.STATUS_PROCESSING);
 		}
 		catch (CommercePaymentEngineException cpee) {
+			_log.error(
+				"Unable to complete payment of order " +
+					commerceOrder.getCommerceOrderId(),
+				cpee);
+
 			content = _getContent(cpee);
 			status = CommerceOrderPaymentConstants.STATUS_FAILED;
 		}
@@ -172,6 +184,11 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 			output = startPayment.getOutput();
 		}
 		catch (CommercePaymentEngineException cpee) {
+			_log.error(
+				"Unable to start payment of order " +
+					commerceOrder.getCommerceOrderId(),
+				cpee);
+
 			content = _getContent(cpee);
 			status = CommerceOrderPaymentConstants.STATUS_FAILED;
 		}
@@ -206,6 +223,9 @@ public class CommercePaymentHelperImpl implements CommercePaymentHelper {
 	private String _getContent(CommercePaymentEngineException cpee) {
 		return StackTraceUtil.getStackTrace(cpee);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CommercePaymentHelperImpl.class);
 
 	@Reference
 	private CommerceOrderLocalService _commerceOrderLocalService;

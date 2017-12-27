@@ -93,7 +93,7 @@ public class EditCPDefinitionInventoryMVCActionCommand
 			actionRequest, "cpDefinitionId");
 
 		String cpDefinitionInventoryEngine = ParamUtil.getString(
-			actionRequest, "cpDefinitionInventoryEngine");
+			actionRequest, "CPDefinitionInventoryEngine");
 		String lowStockActivity = ParamUtil.getString(
 			actionRequest, "lowStockActivity");
 		long commerceAvailabilityRangeId = ParamUtil.getLong(

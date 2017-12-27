@@ -53,6 +53,14 @@ public class FixedCommerceShippingEngine implements CommerceShippingEngine {
 	public static final String KEY = "fixed";
 
 	@Override
+	public String getCommerceShippingOptionLabel(String name, Locale locale) {
+		ResourceBundle resourceBundle = _getResourceBundle(locale);
+
+		return ResourceBundleUtil.getString(
+			resourceBundle, "fixed-description");
+	}
+
+	@Override
 	public List<CommerceShippingOption> getCommerceShippingOptions(
 			CommerceCart commerceCart, Locale locale)
 		throws CommerceShippingEngineException {

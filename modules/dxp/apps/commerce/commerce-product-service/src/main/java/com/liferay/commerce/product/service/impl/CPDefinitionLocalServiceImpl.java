@@ -102,12 +102,12 @@ public class CPDefinitionLocalServiceImpl
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
 			double depth, double weight, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, boolean hasDefaultInstance,
-			ServiceContext serviceContext)
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			boolean hasDefaultInstance, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -156,6 +156,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
+		cpDefinition.setPublished(published);
 		cpDefinition.setDefaultLanguageId(LocaleUtil.toLanguageId(locale));
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);
@@ -184,10 +185,11 @@ public class CPDefinitionLocalServiceImpl
 		if (hasDefaultInstance) {
 			cpInstanceLocalService.addCPInstance(
 				cpDefinitionId, CPInstanceConstants.DEFAULT_SKU, null, null,
-				null, displayDateMonth, displayDateDay, displayDateYear,
-				displayDateHour, displayDateMinute, expirationDateMonth,
-				expirationDateDay, expirationDateYear, expirationDateHour,
-				expirationDateMinute, neverExpire, serviceContext);
+				true, null, true, displayDateMonth, displayDateDay,
+				displayDateYear, displayDateHour, displayDateMinute,
+				expirationDateMonth, expirationDateDay, expirationDateYear,
+				expirationDateHour, expirationDateMinute, neverExpire,
+				serviceContext);
 		}
 
 		// Commerce product friendly URL
@@ -231,11 +233,12 @@ public class CPDefinitionLocalServiceImpl
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
 			double depth, double weight, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCPDefinition(
@@ -243,10 +246,10 @@ public class CPDefinitionLocalServiceImpl
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, true, serviceContext);
+			published, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, true, serviceContext);
 	}
 
 	@Override
@@ -258,21 +261,23 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap, String productTypeName,
 			boolean ignoreSKUCombinations, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, false, false, false, 0, 0, 0, 0, 0,
-			ddmStructureKey, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, neverExpire, serviceContext);
+			ddmStructureKey, published, displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, neverExpire,
+			serviceContext);
 	}
 
 	@Override
@@ -829,11 +834,12 @@ public class CPDefinitionLocalServiceImpl
 			boolean freeShipping, boolean shipSeparately,
 			double shippingExtraPrice, double width, double height,
 			double depth, double weight, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Commerce product definition
@@ -871,6 +877,7 @@ public class CPDefinitionLocalServiceImpl
 		cpDefinition.setDepth(depth);
 		cpDefinition.setWeight(weight);
 		cpDefinition.setDDMStructureKey(ddmStructureKey);
+		cpDefinition.setPublished(published);
 		cpDefinition.setDisplayDate(displayDate);
 		cpDefinition.setExpirationDate(expirationDate);
 
@@ -928,11 +935,12 @@ public class CPDefinitionLocalServiceImpl
 			Map<Locale, String> metaKeywordsMap,
 			Map<Locale, String> metaDescriptionMap,
 			boolean ignoreSKUCombinations, String ddmStructureKey,
-			int displayDateMonth, int displayDateDay, int displayDateYear,
-			int displayDateHour, int displayDateMinute, int expirationDateMonth,
-			int expirationDateDay, int expirationDateYear,
-			int expirationDateHour, int expirationDateMinute,
-			boolean neverExpire, ServiceContext serviceContext)
+			boolean published, int displayDateMonth, int displayDateDay,
+			int displayDateYear, int displayDateHour, int displayDateMinute,
+			int expirationDateMonth, int expirationDateDay,
+			int expirationDateYear, int expirationDateHour,
+			int expirationDateMinute, boolean neverExpire,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
@@ -945,11 +953,11 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.isFreeShipping(), cpDefinition.isShipSeparately(),
 			cpDefinition.getShippingExtraPrice(), cpDefinition.getWidth(),
 			cpDefinition.getHeight(), cpDefinition.getDepth(),
-			cpDefinition.getWeight(), ddmStructureKey, displayDateMonth,
-			displayDateDay, displayDateYear, displayDateHour, displayDateMinute,
-			expirationDateMonth, expirationDateDay, expirationDateYear,
-			expirationDateHour, expirationDateMinute, neverExpire,
-			serviceContext);
+			cpDefinition.getWeight(), ddmStructureKey, published,
+			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
+			displayDateMinute, expirationDateMonth, expirationDateDay,
+			expirationDateYear, expirationDateHour, expirationDateMinute,
+			neverExpire, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)

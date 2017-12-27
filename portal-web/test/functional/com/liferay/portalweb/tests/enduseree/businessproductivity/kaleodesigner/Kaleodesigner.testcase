@@ -1259,6 +1259,46 @@
 		</execute>
 	</command>
 
+	<command name="PublishWorkflowDefinitionWithNoNameLineAndViewErrorMessage" priority="3">
+		<description message="This is a use case for LPS-76517." />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewTableDefinitionPublishedViaKDCP">
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editWorkflowDefinitionViaKDCP">
+			<var name="workflowDefinitionName" value="Test Definition" />
+			<var name="workflowDefinitionTitle" value="Test Definition" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editSourceXML">
+			<var name="kdSourceXML" value=" " />
+			<var name="line" value="5" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishInvalidWorkflowDefinitionViaWorkflowCP">
+			<var name="errorMessage" value="An error occurred in the workflow engine." />
+		</execute>
+	</command>
+
 	<command name="PublishWorkflowDefinitionWithNoStartNodeAndViewErrorMessage" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

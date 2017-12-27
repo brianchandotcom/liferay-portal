@@ -126,14 +126,14 @@ public class EditCommercePaymentMethodMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals(Constants.EDIT)) {
+			if (cmd.equals(Constants.DELETE)) {
+				deleteCommercePaymentMethod(actionRequest);
+			}
+			else if (cmd.equals(Constants.EDIT)) {
 				editCommercePaymentMethod(actionRequest, actionResponse);
 
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
-				deleteCommercePaymentMethod(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {

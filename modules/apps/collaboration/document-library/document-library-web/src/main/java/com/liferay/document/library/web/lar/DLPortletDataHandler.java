@@ -152,6 +152,8 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 		}
 
 		_dlAppLocalService.deleteAll(portletDataContext.getScopeGroupId());
+		_dlFileEntryTypeLocalService.deleteFileEntryTypes(
+			portletDataContext.getScopeGroupId());
 
 		if (portletPreferences == null) {
 			return portletPreferences;

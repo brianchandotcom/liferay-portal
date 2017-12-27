@@ -15,7 +15,6 @@
 package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.exception.NoSuchWarehouseException;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseService;
@@ -74,10 +73,6 @@ public class EditCommerceWarehouseMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceWarehousesDisplayContext);
 
-			renderRequest.setAttribute(
-				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
-				_commerceAdminServletContext);
-
 			requestDispatcher.include(httpServletRequest, httpServletResponse);
 		}
 		catch (Exception e) {
@@ -96,11 +91,6 @@ public class EditCommerceWarehouseMVCRenderCommand implements MVCRenderCommand {
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
-	)
-	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceCountryService _commerceCountryService;

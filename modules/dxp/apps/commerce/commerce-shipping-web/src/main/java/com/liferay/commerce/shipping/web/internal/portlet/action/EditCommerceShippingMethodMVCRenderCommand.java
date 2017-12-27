@@ -15,7 +15,6 @@
 package com.liferay.commerce.shipping.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.exception.NoSuchShippingMethodException;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.internal.display.context.CommerceShippingMethodsDisplayContext;
@@ -72,10 +71,6 @@ public class EditCommerceShippingMethodMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceCurrenciesDisplayContext);
 
-			renderRequest.setAttribute(
-				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
-				_commerceAdminServletContext);
-
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -99,11 +94,6 @@ public class EditCommerceShippingMethodMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
-	)
-	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;

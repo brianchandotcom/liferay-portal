@@ -16,7 +16,6 @@ package com.liferay.commerce.address.web.internal.portlet.action;
 
 import com.liferay.commerce.address.web.internal.display.context.CommerceRegionsDisplayContext;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.exception.NoSuchRegionException;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -67,10 +66,6 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT, commerceRegionsDisplayContext);
 
-			renderRequest.setAttribute(
-				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
-				_commerceAdminServletContext);
-
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -97,11 +92,6 @@ public class EditCommerceRegionMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private ActionHelper _actionHelper;
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
-	)
-	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceRegionService _commerceRegionService;

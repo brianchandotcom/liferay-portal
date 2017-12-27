@@ -15,7 +15,6 @@
 package com.liferay.commerce.currency.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
@@ -71,10 +70,6 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				commerceCurrenciesDisplayContext);
 
-			renderRequest.setAttribute(
-				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
-				_commerceAdminServletContext);
-
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -98,11 +93,6 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
-	)
-	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;

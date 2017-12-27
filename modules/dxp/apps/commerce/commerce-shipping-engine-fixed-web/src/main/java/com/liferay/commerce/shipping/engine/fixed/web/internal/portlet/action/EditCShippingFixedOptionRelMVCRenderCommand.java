@@ -15,7 +15,6 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -81,10 +80,6 @@ public class EditCShippingFixedOptionRelMVCRenderCommand
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
 				cShippingFixedOptionRelsDisplayContext);
 
-			renderRequest.setAttribute(
-				CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
-				_commerceAdminServletContext);
-
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
 			HttpServletResponse httpServletResponse =
@@ -108,11 +103,6 @@ public class EditCShippingFixedOptionRelMVCRenderCommand
 
 		return MVCRenderConstants.MVC_PATH_VALUE_SKIP_DISPATCH;
 	}
-
-	@Reference(
-		target = "(osgi.web.symbolicname=com.liferay.commerce.admin.web)"
-	)
-	private ServletContext _commerceAdminServletContext;
 
 	@Reference
 	private CommerceCountryService _commerceCountryService;

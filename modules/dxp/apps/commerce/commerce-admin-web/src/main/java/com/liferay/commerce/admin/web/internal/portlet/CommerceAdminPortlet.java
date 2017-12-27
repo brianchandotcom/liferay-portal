@@ -18,6 +18,7 @@ import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.admin.web.constants.CommerceAdminWebKeys;
 import com.liferay.commerce.admin.web.internal.util.CommerceAdminModuleRegistry;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 
@@ -25,6 +26,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -66,6 +69,13 @@ public class CommerceAdminPortlet extends MVCPortlet {
 		renderRequest.setAttribute(
 			CommerceAdminWebKeys.COMMERCE_ADMIN_MODULE_REGISTRY,
 			_commerceAdminModuleRegistry);
+
+		ServletContext servletContext =
+			(ServletContext)renderRequest.getAttribute(WebKeys.CTX);
+
+		renderRequest.setAttribute(
+			CommerceAdminWebKeys.COMMERCE_ADMIN_SERVLET_CONTEXT,
+			servletContext);
 
 		super.render(renderRequest, renderResponse);
 	}

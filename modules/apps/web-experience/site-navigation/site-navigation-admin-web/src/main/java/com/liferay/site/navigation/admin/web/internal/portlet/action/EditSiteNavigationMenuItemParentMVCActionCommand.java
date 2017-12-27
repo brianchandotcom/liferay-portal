@@ -17,8 +17,6 @@ package com.liferay.site.navigation.admin.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Http;
@@ -63,14 +61,11 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 
 		int order = ParamUtil.getInteger(actionRequest, "order");
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			actionRequest);
-
 		try {
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
 					siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-					order, serviceContext);
+					order);
 
 			String redirect = _getRedirect(
 				actionRequest, siteNavigationMenuItem);

@@ -376,6 +376,7 @@
 		<execute macro="AdaptiveMedia#disableImageResolution">
 			<var name="imageName" value="Small Image Variant" />
 			<var name="imageState" value="Disabled" />
+			<var name="percentAdapted" value="0" />
 		</execute>
 
 		<execute macro="AdaptiveMedia#editImageResolution">
@@ -723,6 +724,7 @@
 		<execute macro="AdaptiveMedia#disableImageResolution">
 			<var name="imageName" value="Low Resolution" />
 			<var name="imageState" value="Disabled" />
+			<var name="percentAdapted" value="100" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

@@ -42,14 +42,6 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 	<aui:input name="cpOptionId" type="hidden" value="<%= String.valueOf(cpOptionId) %>" />
 
-	<liferay-frontend:translation-manager
-		availableLocales="<%= availableLocales %>"
-		changeableDefaultLanguage="<%= true %>"
-		componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
-		defaultLanguageId="<%= defaultLanguageId %>"
-		id="translationManager"
-	/>
-
 	<div class="lfr-form-content">
 
 		<%
@@ -124,37 +116,3 @@ boolean hasCustomAttributesAvailable = CustomAttributesUtil.hasCustomAttributes(
 		</c:if>
 	</div>
 </aui:form>
-
-<aui:script use="aui-base">
-	function afterDeletingAvailableLocale(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
-		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
-
-		var locale = event.locale;
-
-		descriptionInputLocalized.removeInputLanguage(locale);
-		titleInputLocalized.removeInputLanguage(locale);
-	}
-
-	function afterEditingLocaleChange(event) {
-		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
-		var titleInputLocalized = Liferay.component('<portlet:namespace />title');
-
-		var editingLocale = event.newVal;
-		var items = descriptionInputLocalized.get('items');
-		var selectedIndex = items.indexOf(editingLocale);
-
-		descriptionInputLocalized.set('selected', selectedIndex);
-		descriptionInputLocalized.selectFlag(editingLocale);
-
-		titleInputLocalized.set('selected', selectedIndex);
-		titleInputLocalized.selectFlag(editingLocale);
-	}
-
-	var translationManager = Liferay.component('<portlet:namespace />translationManager');
-
-	if (translationManager) {
-		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
-		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
-	}
-</aui:script>

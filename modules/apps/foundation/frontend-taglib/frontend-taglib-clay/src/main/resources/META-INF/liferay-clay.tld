@@ -574,13 +574,13 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>totalItems</name>
+			<name>spritemap</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>spritemap</name>
+			<name>totalItems</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>

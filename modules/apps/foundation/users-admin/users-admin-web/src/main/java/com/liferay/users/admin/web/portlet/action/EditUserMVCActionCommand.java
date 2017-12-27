@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserFieldException;
 import com.liferay.portal.kernel.exception.UserIdException;
-import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,7 +45,6 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
-import com.liferay.portal.kernel.model.PasswordPolicy;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
@@ -82,12 +80,10 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdmin;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
@@ -130,21 +126,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		boolean autoPassword = ParamUtil.getBoolean(
-			actionRequest, "autoPassword", true);
-		String password1 = actionRequest.getParameter("password1");
-		String password2 = actionRequest.getParameter("password2");
-
-		String reminderQueryQuestion = ParamUtil.getString(
-			actionRequest, "reminderQueryQuestion");
-
-		if (reminderQueryQuestion.equals(UsersAdmin.CUSTOM_QUESTION)) {
-			reminderQueryQuestion = ParamUtil.getString(
-				actionRequest, "reminderQueryCustomQuestion");
-		}
-
-		String reminderQueryAnswer = ParamUtil.getString(
-			actionRequest, "reminderQueryAnswer");
 		boolean autoScreenName = ParamUtil.getBoolean(
 			actionRequest, "autoScreenName");
 		String screenName = ParamUtil.getString(actionRequest, "screenName");
@@ -175,8 +156,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			User.class.getName(), actionRequest);
 
 		User user = _userService.addUser(
-			themeDisplay.getCompanyId(), autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, null,
+			themeDisplay.getCompanyId(), true, null, null, autoScreenName,
+			screenName, emailAddress, facebookId, null,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, null, roleIds, userGroupIds,
@@ -191,15 +172,14 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 			user = _userService.updateUser(
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
-				StringPool.BLANK, false, reminderQueryQuestion,
-				reminderQueryAnswer, user.getScreenName(),
-				user.getEmailAddress(), facebookId, user.getOpenId(), true,
-				null, languageId, user.getTimeZoneId(), user.getGreeting(),
-				comments, firstName, middleName, lastName, prefixId, suffixId,
-				male, birthdayMonth, birthdayDay, birthdayYear, null, null,
-				null, null, null, jobTitle, groupIds, null, roleIds,
-				userGroupRoles, userGroupIds, null, null, null, null, null,
-				serviceContext);
+				StringPool.BLANK, user.getPasswordReset(), null, null,
+				user.getScreenName(), user.getEmailAddress(), facebookId,
+				user.getOpenId(), true, null, languageId, user.getTimeZoneId(),
+				user.getGreeting(), comments, firstName, middleName, lastName,
+				prefixId, suffixId, male, birthdayMonth, birthdayDay,
+				birthdayYear, null, null, null, null, null, jobTitle, groupIds,
+				null, roleIds, userGroupRoles, userGroupIds, null, null, null,
+				null, null, serviceContext);
 		}
 
 		long publicLayoutSetPrototypeId = ParamUtil.getLong(
@@ -380,7 +360,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof UserEmailAddressException ||
 					 e instanceof UserFieldException ||
 					 e instanceof UserIdException ||
-					 e instanceof UserPasswordException ||
 					 e instanceof UserReminderQueryException ||
 					 e instanceof UserScreenNameException) {
 
@@ -396,30 +375,11 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					SessionErrors.add(actionRequest, e.getClass(), e);
 				}
 
-				String password1 = actionRequest.getParameter("password1");
-				String password2 = actionRequest.getParameter("password2");
-
-				boolean submittedPassword = false;
-
-				if (!Validator.isBlank(password1) ||
-					!Validator.isBlank(password2)) {
-
-					submittedPassword = true;
-				}
-
 				if (e instanceof CompanyMaxUsersException ||
-					e instanceof RequiredUserException || submittedPassword) {
+					e instanceof RequiredUserException) {
 
 					String redirect = portal.escapeRedirect(
 						ParamUtil.getString(actionRequest, "redirect"));
-
-					if (submittedPassword) {
-						User user = portal.getSelectedUser(actionRequest);
-
-						redirect = http.setParameter(
-							redirect, actionResponse.getNamespace() + "p_u_i_d",
-							user.getUserId());
-					}
 
 					if (Validator.isNotNull(redirect)) {
 						sendRedirect(actionRequest, actionResponse, redirect);
@@ -522,35 +482,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String oldPassword = AdminUtil.getUpdateUserPassword(
 			actionRequest, user.getUserId());
 
-		String newPassword1 = actionRequest.getParameter("password1");
-		String newPassword2 = actionRequest.getParameter("password2");
-
-		boolean passwordReset = false;
-
-		PasswordPolicy passwordPolicy = user.getPasswordPolicy();
-
-		if ((user.getLastLoginDate() == null) &&
-			((passwordPolicy == null) ||
-			 (passwordPolicy.isChangeable() &&
-			  passwordPolicy.isChangeRequired()))) {
-
-			passwordReset = true;
-		}
-		else {
-			passwordReset = ParamUtil.getBoolean(
-				actionRequest, "passwordReset");
-		}
-
-		String reminderQueryQuestion = BeanParamUtil.getString(
-			user, actionRequest, "reminderQueryQuestion");
-
-		if (reminderQueryQuestion.equals(UsersAdmin.CUSTOM_QUESTION)) {
-			reminderQueryQuestion = BeanParamUtil.getStringSilent(
-				user, actionRequest, "reminderQueryCustomQuestion");
-		}
-
-		String reminderQueryAnswer = BeanParamUtil.getString(
-			user, actionRequest, "reminderQueryAnswer");
 		String oldScreenName = user.getScreenName();
 		String screenName = BeanParamUtil.getString(
 			user, actionRequest, "screenName");
@@ -620,14 +551,14 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			User.class.getName(), actionRequest);
 
 		user = _userService.updateUser(
-			user.getUserId(), oldPassword, newPassword1, newPassword2,
-			passwordReset, reminderQueryQuestion, reminderQueryAnswer,
-			screenName, emailAddress, facebookId, user.getOpenId(), !deleteLogo,
-			portraitBytes, languageId, user.getTimeZoneId(), user.getGreeting(),
-			comments, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, null, null, null, null,
-			null, jobTitle, groupIds, null, roleIds, userGroupRoles,
-			userGroupIds, null, null, null, null, null, serviceContext);
+			user.getUserId(), oldPassword, null, null, user.getPasswordReset(),
+			null, null, screenName, emailAddress, facebookId, user.getOpenId(),
+			!deleteLogo, portraitBytes, languageId, user.getTimeZoneId(),
+			user.getGreeting(), comments, firstName, middleName, lastName,
+			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
+			null, null, null, null, null, jobTitle, groupIds, null, roleIds,
+			userGroupRoles, userGroupIds, null, null, null, null, null,
+			serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;
@@ -656,16 +587,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			PortletSession portletSession = actionRequest.getPortletSession();
 
 			InvokerPortletImpl.clearResponses(portletSession);
-
-			// Password
-
-			if (PropsValues.SESSION_STORE_PASSWORD &&
-				Validator.isNotNull(newPassword1)) {
-
-				portletSession.setAttribute(
-					WebKeys.USER_PASSWORD, newPassword1,
-					PortletSession.APPLICATION_SCOPE);
-			}
 
 			updateLanguageId = true;
 		}

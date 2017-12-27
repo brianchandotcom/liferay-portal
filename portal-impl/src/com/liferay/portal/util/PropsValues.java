@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TextFormatter;
 import com.liferay.portal.kernel.util.Time;
@@ -26,6 +27,8 @@ import com.liferay.portal.kernel.util.Time;
  * @author Brian Wing Shun Chan
  */
 public class PropsValues {
+
+	public static String ZIP_FILE_NAME_ENCODING = GetterUtil.getString(PropsUtil.get(PropsKeys.ZIP_FILE_NAME_ENCODING), StringPool.UTF8);
 
 	public static String[] ADMIN_ANALYTICS_TYPES = StringUtil.splitLines(PropsUtil.get(PropsKeys.ADMIN_ANALYTICS_TYPES));
 

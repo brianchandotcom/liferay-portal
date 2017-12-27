@@ -115,6 +115,12 @@ public class CommerceCountryLocalServiceImpl
 		commerceAddressLocalService.deleteCountryCommerceAddresses(
 			commerceCountry.getCommerceCountryId());
 
+		// Commerce address restrictions
+
+		commerceAddressRestrictionLocalService.
+			deleteCommerceAddressRestrictions(
+				commerceCountry.getCommerceCountryId());
+
 		return commerceCountry;
 	}
 

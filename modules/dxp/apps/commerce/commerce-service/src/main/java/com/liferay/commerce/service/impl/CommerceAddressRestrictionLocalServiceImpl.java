@@ -61,6 +61,12 @@ public class CommerceAddressRestrictionLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceAddressRestrictions(long commerceCountryId) {
+		commerceAddressRestrictionPersistence.removeByCommerceCountryId(
+			commerceCountryId);
+	}
+
+	@Override
 	public void deleteCommerceAddressRestrictions(
 		String className, long classPK) {
 

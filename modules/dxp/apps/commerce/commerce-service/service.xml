@@ -104,6 +104,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="CommerceCountryId" return-type="Collection">
+			<finder-column name="commerceCountryId" />
+		</finder>
 		<finder name="C_C" return-type="Collection">
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />

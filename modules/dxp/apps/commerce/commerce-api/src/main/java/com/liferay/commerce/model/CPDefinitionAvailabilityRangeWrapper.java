@@ -161,6 +161,12 @@ public class CPDefinitionAvailabilityRangeWrapper
 		return _cpDefinitionAvailabilityRange.compareTo(cpDefinitionAvailabilityRange);
 	}
 
+	@Override
+	public CommerceAvailabilityRange getCommerceAvailabilityRange()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionAvailabilityRange.getCommerceAvailabilityRange();
+	}
+
 	/**
 	* Returns the commerce availability range ID of this cp definition availability range.
 	*

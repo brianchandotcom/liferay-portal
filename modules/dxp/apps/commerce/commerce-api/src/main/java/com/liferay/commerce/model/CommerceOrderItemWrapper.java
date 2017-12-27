@@ -185,6 +185,12 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 		return _commerceOrderItem.getAvailableLanguageIds();
 	}
 
+	@Override
+	public CommerceOrder getCommerceOrder()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItem.getCommerceOrder();
+	}
+
 	/**
 	* Returns the commerce order ID of this commerce order item.
 	*

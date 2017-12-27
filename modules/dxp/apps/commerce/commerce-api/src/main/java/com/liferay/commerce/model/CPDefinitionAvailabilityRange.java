@@ -56,4 +56,7 @@ public interface CPDefinitionAvailabilityRange
 				return CPDefinitionAvailabilityRange.class;
 			}
 		};
+
+	public CommerceAvailabilityRange getCommerceAvailabilityRange()
+		throws com.liferay.portal.kernel.exception.PortalException;
 }

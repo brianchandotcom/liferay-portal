@@ -253,6 +253,11 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		return _commerceWarehouse.getCommerceWarehouseId();
 	}
 
+	@Override
+	public java.util.List<CommerceWarehouseItem> getCommerceWarehouseItems() {
+		return _commerceWarehouse.getCommerceWarehouseItems();
+	}
+
 	/**
 	* Returns the company ID of this commerce warehouse.
 	*

@@ -55,6 +55,9 @@ public interface CommerceOrderItem extends CommerceOrderItemModel, PersistedMode
 			}
 		};
 
+	public CommerceOrder getCommerceOrder()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

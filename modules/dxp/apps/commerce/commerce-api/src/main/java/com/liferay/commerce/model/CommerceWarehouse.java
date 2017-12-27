@@ -55,6 +55,8 @@ public interface CommerceWarehouse extends CommerceWarehouseModel, PersistedMode
 			}
 		};
 
+	public java.util.List<CommerceWarehouseItem> getCommerceWarehouseItems();
+
 	public CommerceCountry getCommerceCountry()
 		throws com.liferay.portal.kernel.exception.PortalException;
 

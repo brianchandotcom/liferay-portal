@@ -263,6 +263,12 @@ public class CommerceWarehouseItemLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItemsByCommerceWarehouseId(
+		long commerceWarehouseId) {
+		return _commerceWarehouseItemLocalService.getCommerceWarehouseItemsByCommerceWarehouseId(commerceWarehouseId);
+	}
+
 	/**
 	* Returns the number of commerce warehouse items.
 	*

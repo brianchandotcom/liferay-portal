@@ -250,6 +250,12 @@ public class CommerceWarehouseItemLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouseItem> getCommerceWarehouseItemsByCommerceWarehouseId(
+		long commerceWarehouseId) {
+		return getService()
+				   .getCommerceWarehouseItemsByCommerceWarehouseId(commerceWarehouseId);
+	}
+
 	/**
 	* Returns the number of commerce warehouse items.
 	*

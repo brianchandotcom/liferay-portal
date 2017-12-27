@@ -210,6 +210,12 @@ public class CommerceCartItemWrapper implements CommerceCartItem,
 		return _commerceCartItem.getCPDefinitionId();
 	}
 
+	@Override
+	public com.liferay.commerce.product.model.CPInstance getCPInstance()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartItem.getCPInstance();
+	}
+
 	/**
 	* Returns the cp instance ID of this commerce cart item.
 	*

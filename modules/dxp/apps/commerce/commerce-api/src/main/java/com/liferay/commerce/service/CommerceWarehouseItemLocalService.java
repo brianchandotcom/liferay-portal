@@ -222,6 +222,10 @@ public interface CommerceWarehouseItemLocalService extends BaseLocalService,
 		long cpInstanceId, int start, int end,
 		OrderByComparator<CommerceWarehouseItem> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWarehouseItem> getCommerceWarehouseItemsByCommerceWarehouseId(
+		long commerceWarehouseId);
+
 	/**
 	* Returns the number of commerce warehouse items.
 	*

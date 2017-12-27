@@ -50,6 +50,9 @@ public class AssetCategoryFinderImpl
 	public static final String COUNT_BY_G_N_P =
 		AssetCategoryFinder.class.getName() + ".countByG_N_P";
 
+	public static final String FIND_BY_C_C =
+		AssetCategoryFinder.class.getName() + ".findByC_C";
+
 	public static final String FIND_BY_G_N =
 		AssetCategoryFinder.class.getName() + ".findByG_N";
 
@@ -130,6 +133,34 @@ public class AssetCategoryFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<AssetCategory> findByC_C(long classNameId, long classPK) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_C);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("AssetCategory", AssetCategoryImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+			qPos.add(classPK);
+
+			return q.list();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

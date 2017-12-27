@@ -28,6 +28,9 @@ public interface AssetCategoryFinder {
 	public int countByG_N_P(long groupId, java.lang.String name,
 		java.lang.String[] categoryProperties);
 
+	public java.util.List<com.liferay.asset.kernel.model.AssetCategory> findByC_C(
+		long classNameId, long classPK);
+
 	public com.liferay.asset.kernel.model.AssetCategory findByG_N(
 		long groupId, java.lang.String name)
 		throws com.liferay.asset.kernel.exception.NoSuchCategoryException;

@@ -531,7 +531,7 @@ public abstract class BaseStagedModelDataHandler<T extends StagedModel>
 
 		List<AssetCategory> assetCategories =
 			AssetCategoryLocalServiceUtil.getCategories(
-				ExportImportClassedModelUtil.getClassName(stagedModel),
+				ExportImportClassedModelUtil.getClassNameId(stagedModel),
 				ExportImportClassedModelUtil.getClassPK(stagedModel));
 
 		for (AssetCategory assetCategory : assetCategories) {

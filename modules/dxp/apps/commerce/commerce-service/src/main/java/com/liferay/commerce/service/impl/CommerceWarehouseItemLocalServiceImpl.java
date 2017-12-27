@@ -97,6 +97,15 @@ public class CommerceWarehouseItemLocalServiceImpl
 	}
 
 	@Override
+	public List<CommerceWarehouseItem>
+		getCommerceWarehouseItemsByCommerceWarehouseId(
+			long commerceWarehouseId) {
+
+		return commerceWarehouseItemPersistence.findByCommerceWarehouseId(
+			commerceWarehouseId);
+	}
+
+	@Override
 	public int getCommerceWarehouseItemsCount(long cpInstanceId) {
 		return commerceWarehouseItemPersistence.countByCPInstanceId(
 			cpInstanceId);

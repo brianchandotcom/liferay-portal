@@ -158,6 +158,7 @@ public class CShippingFixedOptionRelsDisplayContext
 		return cShippingFixedOptionRel;
 	}
 
+	@Override
 	public String getScreenNavigationEntryKey() {
 		return "shipping-option-settings";
 	}

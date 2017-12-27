@@ -65,6 +65,7 @@ public class CommerceShippingFixedOptionsDisplayContext
 		return sb.toString();
 	}
 
+	@Override
 	public String getScreenNavigationEntryKey() {
 		return "shipping-options";
 	}

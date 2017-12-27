@@ -28,8 +28,8 @@ for (int i = 0; i < 8; i++) {
 		item.put("active", true);
 	}
 
+	item.put("href", "#" + i);
 	item.put("label", "Page " + i);
-	item.put("url", "#" + i);
 
 	items.add(item);
 }

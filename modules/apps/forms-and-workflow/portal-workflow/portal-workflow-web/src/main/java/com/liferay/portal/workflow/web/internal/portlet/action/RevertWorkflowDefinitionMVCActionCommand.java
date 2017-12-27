@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -27,8 +27,9 @@ import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
-import java.text.Format;
+import java.text.DateFormat;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -56,31 +57,32 @@ public class RevertWorkflowDefinitionMVCActionCommand
 	 * Adds a success message to the workflow definition reversion action
 	 *
 	 * @param  actionRequest The actionRequest object of the action
-	 * @param  workflowDefinition The workflow definition that will be reverted
-	 *         back to published.
 	 * @review
 	 */
+	@Override
 	protected void addSuccessMessage(
-		ActionRequest actionRequest, WorkflowDefinition workflowDefinition) {
+		ActionRequest actionRequest, ActionResponse actionResponse) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		Locale locale = themeDisplay.getLocale();
 
-		Format dateTimeFormat = null;
+		DateFormat dateTimeFormat = null;
 
 		if (DateUtil.isFormatAmPm(locale)) {
-			dateTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"MMM d, yyyy, hh:mm a", locale);
 		}
 		else {
-			dateTimeFormat = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
 				"MMM d, yyyy, HH:mm", locale);
 		}
 
-		String dateTime = dateTimeFormat.format(
-			workflowDefinition.getModifiedDate());
+		Date previousDefinitionModifiedDate = ParamUtil.getDate(
+			actionRequest, "previousDefinitionModifiedDate", dateTimeFormat);
+
+		String dateTime = dateTimeFormat.format(previousDefinitionModifiedDate);
 
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
@@ -110,17 +112,24 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		int version = ParamUtil.getInteger(actionRequest, "version");
 
-		WorkflowDefinition workflowDefinition =
+		WorkflowDefinition previousDefinitionRevision =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 				themeDisplay.getCompanyId(), name, version);
 
-		String content = workflowDefinition.getContent();
+		actionRequest.setAttribute(
+			"previousDefinitionModifiedDate",
+			previousDefinitionRevision.getModifiedDate());
 
-		workflowDefinitionManager.deployWorkflowDefinition(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			workflowDefinition.getTitle(), content.getBytes());
+		String content = previousDefinitionRevision.getContent();
 
-		addSuccessMessage(actionRequest, workflowDefinition);
+		WorkflowDefinition workflowDefinition =
+			workflowDefinitionManager.deployWorkflowDefinition(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				previousDefinitionRevision.getTitle(), content.getBytes());
+
+		setRedirectAttribute(actionRequest, workflowDefinition);
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference(

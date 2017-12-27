@@ -43,7 +43,9 @@ import java.util.function.Function;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
  * @see    Builder
+ * @review
  */
 public class CollectionRoutes<T> {
 

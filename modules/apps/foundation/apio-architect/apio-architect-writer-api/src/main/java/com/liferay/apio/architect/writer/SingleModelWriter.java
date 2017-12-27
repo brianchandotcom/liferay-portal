@@ -35,6 +35,8 @@ import java.util.function.Function;
  * Writes a single model.
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @review
  */
 public class SingleModelWriter<T> {
 
@@ -149,6 +151,9 @@ public class SingleModelWriter<T> {
 
 	/**
 	 * Creates {@code SingleModelWriter} instances.
+	 *
+	 * @param  <T> the model's type
+	 * @review
 	 */
 	public static class Builder<T> {
 
@@ -288,11 +293,11 @@ public class SingleModelWriter<T> {
 
 	}
 
-	private <V> void _writeEmbeddedModelFields(
-		SingleModel<V> singleModel,
+	private <S> void _writeEmbeddedModelFields(
+		SingleModel<S> singleModel,
 		FunctionalList<String> embeddedPathElements) {
 
-		Optional<FieldsWriter<V, ?>> optional = getFieldsWriter(
+		Optional<FieldsWriter<S, ?>> optional = getFieldsWriter(
 			singleModel, embeddedPathElements, _requestInfo, _pathFunction,
 			_representorFunction);
 
@@ -300,7 +305,7 @@ public class SingleModelWriter<T> {
 			return;
 		}
 
-		FieldsWriter<V, ?> fieldsWriter = optional.get();
+		FieldsWriter<S, ?> fieldsWriter = optional.get();
 
 		fieldsWriter.writeBooleanFields(
 			(field, value) ->

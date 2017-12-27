@@ -45,6 +45,8 @@ import javax.ws.rs.core.HttpHeaders;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @param  <T> the model's type
+ * @review
  */
 @ConsumerType
 @SuppressWarnings("unused")

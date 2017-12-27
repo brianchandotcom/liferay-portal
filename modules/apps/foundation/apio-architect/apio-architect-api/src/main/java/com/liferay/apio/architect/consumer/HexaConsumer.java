@@ -25,6 +25,12 @@ import java.util.Objects;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <A> the type of the first argument of the consumer
+ * @param  <B> the type of the second argument of the consumer
+ * @param  <C> the type of the third argument of the consumer
+ * @param  <D> the type of the fourth argument of the consumer
+ * @param  <E> the type of the fifth argument of the consumer
+ * @param  <F> the type of the sixth argument of the consumer
  */
 @FunctionalInterface
 public interface HexaConsumer<A, B, C, D, E, F> {

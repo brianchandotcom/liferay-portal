@@ -28,6 +28,10 @@ import java.util.function.Function;
  *
  * @author Alejandro Hernández
  * @author Jorge Ferrer
+ * @param  <A> the type of the first argument of the function
+ * @param  <B> the type of the second argument of the function
+ * @param  <C> the type of the third argument of the function
+ * @param  <R> the type of the result of the function
  */
 @FunctionalInterface
 public interface TriFunction<A, B, C, R> {

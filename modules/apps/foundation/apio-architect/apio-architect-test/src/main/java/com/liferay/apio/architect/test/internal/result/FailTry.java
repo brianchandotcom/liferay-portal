@@ -24,6 +24,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  * Try.Failure}.
  *
  * @author Alejandro Hernández
+ * @param  <T> the {@code Try}'s possible value type
+ * @review
  */
 public class FailTry<T> extends TypeSafeDiagnosingMatcher<Try<T>> {
 

@@ -19,6 +19,8 @@ package com.liferay.apio.architect.single.model;
  * generics system.
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @review
  */
 public class SingleModel<T> {
 

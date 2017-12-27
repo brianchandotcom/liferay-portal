@@ -47,12 +47,15 @@ import java.util.stream.Stream;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
  * @see    Representor.Builder
+ * @review
  */
-public class Representor<T, U> {
+public class Representor<T, S> {
 
 	public Representor(
-		Class<U> identifierClass,
+		Class<S> identifierClass,
 		Supplier<List<RelatedCollection<T, ?>>> relatedCollectionsSupplier) {
 
 		_identifierClass = identifierClass;
@@ -84,7 +87,7 @@ public class Representor<T, U> {
 	 * @param  model the model instance
 	 * @return the model's identifier
 	 */
-	public U getIdentifier(T model) {
+	public S getIdentifier(T model) {
 		return _identifierFunction.apply(model);
 	}
 
@@ -93,7 +96,7 @@ public class Representor<T, U> {
 	 *
 	 * @return the identifier class
 	 */
-	public Class<U> getIdentifierClass() {
+	public Class<S> getIdentifierClass() {
 		return _identifierClass;
 	}
 
@@ -442,8 +445,8 @@ public class Representor<T, U> {
 	private Map<String, BinaryFunction<T>> _binaryFunctions = new HashMap<>();
 	private Map<String, Function<T, Boolean>> _booleanFunctions =
 		new HashMap<>();
-	private final Class<U> _identifierClass;
-	private Function<T, U> _identifierFunction;
+	private final Class<S> _identifierClass;
+	private Function<T, S> _identifierFunction;
 	private Map<String, String> _links = new HashMap<>();
 	private Map<String, BiFunction<T, Language, String>>
 		_localizedStringFunctions = new HashMap<>();

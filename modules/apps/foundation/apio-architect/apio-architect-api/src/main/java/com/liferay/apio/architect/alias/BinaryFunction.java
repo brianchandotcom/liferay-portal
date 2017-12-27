@@ -23,6 +23,8 @@ import java.util.function.Function;
  * and returns a binary representation of that model in an {@code InputStream}.
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @review
  */
 @FunctionalInterface
 public interface BinaryFunction<T> extends Function<T, InputStream> {

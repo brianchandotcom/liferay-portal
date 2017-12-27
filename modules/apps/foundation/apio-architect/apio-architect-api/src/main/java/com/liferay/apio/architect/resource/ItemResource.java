@@ -41,11 +41,13 @@ import com.liferay.apio.architect.router.ItemRouter;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
  * @see    com.liferay.apio.architect.representor.Representor.Builder
  * @see    com.liferay.apio.architect.routes.ItemRoutes.Builder
  * @review
  */
 @ConsumerType
-public interface ItemResource<T, U>
-	extends Representable<T, U>, ItemRouter<T, U> {
+public interface ItemResource<T, S>
+	extends Representable<T, S>, ItemRouter<T, S> {
 }

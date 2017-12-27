@@ -22,6 +22,8 @@ import java.util.Collection;
  * Page}.
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @review
  */
 public class PageItems<T> {
 

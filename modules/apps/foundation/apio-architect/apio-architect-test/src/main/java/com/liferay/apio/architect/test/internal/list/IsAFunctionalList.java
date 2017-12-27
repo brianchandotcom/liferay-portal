@@ -29,11 +29,12 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  * containing some values.
  *
  * @author Alejandro Hernández
+ * @param  <E> the type of elements in the list
  */
-public class IsAFunctionalList<T>
-	extends TypeSafeDiagnosingMatcher<FunctionalList<T>> {
+public class IsAFunctionalList<E>
+	extends TypeSafeDiagnosingMatcher<FunctionalList<E>> {
 
-	public IsAFunctionalList(Matcher<Iterable<? extends T>> matcher) {
+	public IsAFunctionalList(Matcher<Iterable<? extends E>> matcher) {
 		_matcher = matcher;
 	}
 
@@ -48,14 +49,14 @@ public class IsAFunctionalList<T>
 
 	@Override
 	protected boolean matchesSafely(
-		final FunctionalList<T> functionalList, final Description description) {
+		final FunctionalList<E> functionalList, final Description description) {
 
-		T head = functionalList.head();
+		E head = functionalList.head();
 
-		Stream<T> stream = Stream.concat(
+		Stream<E> stream = Stream.concat(
 			Stream.of(head), functionalList.tailStream());
 
-		List<T> list = stream.collect(Collectors.toList());
+		List<E> list = stream.collect(Collectors.toList());
 
 		if (_matcher.matches(list)) {
 			return true;
@@ -68,6 +69,6 @@ public class IsAFunctionalList<T>
 		return false;
 	}
 
-	private final Matcher<Iterable<? extends T>> _matcher;
+	private final Matcher<Iterable<? extends E>> _matcher;
 
 }

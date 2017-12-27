@@ -42,19 +42,6 @@ public class GenericUtil {
 	}
 
 	/**
-	 * Returns the class of the parameterized class's first type argument.
-	 *
-	 * @param  clazz the parameterized class
-	 * @param  interfaceClass the interface class
-	 * @return the class of the parameterized class's first type argument
-	 */
-	public static <S> Try<Class<S>> getFirstGenericTypeArgumentTry(
-		Class<?> clazz, Class<?> interfaceClass) {
-
-		return getGenericTypeArgumentTry(clazz, interfaceClass, 0);
-	}
-
-	/**
 	 * Returns the class of the n-th type argument in the {@code Type}.
 	 *
 	 * @param  type the type

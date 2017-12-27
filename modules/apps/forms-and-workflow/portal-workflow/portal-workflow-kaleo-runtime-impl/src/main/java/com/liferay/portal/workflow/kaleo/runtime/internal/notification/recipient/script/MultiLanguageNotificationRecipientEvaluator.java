@@ -14,11 +14,11 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.internal.notification.recipient.script;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoNotificationRecipient;
 import com.liferay.portal.workflow.kaleo.runtime.ExecutionContext;

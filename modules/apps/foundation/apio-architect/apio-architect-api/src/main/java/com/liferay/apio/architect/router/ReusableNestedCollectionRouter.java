@@ -41,11 +41,14 @@ import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @param  <S> the collection identifier's type ({@link Long}, {@link String},
+ *         etc.)
  * @see    NestedCollectionRoutes.Builder
  * @review
  */
 @ConsumerType
-public interface ReusableNestedCollectionRouter<T, U> {
+public interface ReusableNestedCollectionRouter<T, S> {
 
 	/**
 	 * Creates the {@link NestedCollectionRoutes} supported by the nested
@@ -56,6 +59,6 @@ public interface ReusableNestedCollectionRouter<T, U> {
 	 *        NestedCollectionRoutes} instance
 	 * @see   NestedCollectionRoutes.Builder
 	 */
-	public NestedCollectionRoutes<T> collectionRoutes(Builder<T, U> builder);
+	public NestedCollectionRoutes<T> collectionRoutes(Builder<T, S> builder);
 
 }

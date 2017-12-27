@@ -29,6 +29,8 @@ import com.liferay.apio.architect.uri.Path;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the type of the identifier to map
+ * @review
  */
 @ConsumerType
 public interface PathIdentifierMapper<T> {

@@ -30,10 +30,11 @@ import java.util.stream.Stream;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés§
  * @author Jorge Ferrer
+ * @param  <E> the type of elements in this list
  */
-public class FunctionalList<T> {
+public class FunctionalList<E> {
 
-	public FunctionalList(FunctionalList<T> functionalList, T last) {
+	public FunctionalList(FunctionalList<E> functionalList, E last) {
 		if (functionalList == null) {
 			_first = last;
 			_tail = Collections.emptyList();
@@ -41,9 +42,9 @@ public class FunctionalList<T> {
 		else {
 			_first = functionalList.head();
 
-			Stream<T> stream = functionalList.tailStream();
+			Stream<E> stream = functionalList.tailStream();
 
-			List<T> tail = stream.collect(Collectors.toList());
+			List<E> tail = stream.collect(Collectors.toList());
 
 			tail.add(last);
 
@@ -56,7 +57,7 @@ public class FunctionalList<T> {
 	 *
 	 * @return the first element of the list
 	 */
-	public T head() {
+	public E head() {
 		return _first;
 	}
 
@@ -66,13 +67,13 @@ public class FunctionalList<T> {
 	 * @return a {@code Stream} that contains all but the last element of the
 	 *         list
 	 */
-	public Stream<T> initStream() {
+	public Stream<E> initStream() {
 		if (_init == null) {
-			List<T> init = new ArrayList<>();
+			List<E> init = new ArrayList<>();
 
 			init.add(_first);
 
-			Stream<T> stream = middleStream();
+			Stream<E> stream = middleStream();
 
 			init.addAll(stream.collect(Collectors.toList()));
 
@@ -87,7 +88,7 @@ public class FunctionalList<T> {
 	 *
 	 * @return the last element of the list; {@code Optional.empty()} otherwise
 	 */
-	public Optional<T> lastOptional() {
+	public Optional<E> lastOptional() {
 		if (_last == null) {
 			if (_tail.size() == 0) {
 				return Optional.empty();
@@ -105,7 +106,7 @@ public class FunctionalList<T> {
 	 * @return a {@code Stream} that contains all list elements except the first
 	 *         and last
 	 */
-	public Stream<T> middleStream() {
+	public Stream<E> middleStream() {
 		if (_middle == null) {
 			if (_tail.size() == 0) {
 				_middle = Collections.emptyList();
@@ -123,14 +124,14 @@ public class FunctionalList<T> {
 	 *
 	 * @return a {@code Stream} that contains all list elements except the first
 	 */
-	public Stream<T> tailStream() {
+	public Stream<E> tailStream() {
 		return _tail.stream();
 	}
 
-	private final T _first;
-	private List<T> _init;
-	private T _last;
-	private List<T> _middle;
-	private final List<T> _tail;
+	private final E _first;
+	private List<E> _init;
+	private E _last;
+	private List<E> _middle;
+	private final List<E> _tail;
 
 }

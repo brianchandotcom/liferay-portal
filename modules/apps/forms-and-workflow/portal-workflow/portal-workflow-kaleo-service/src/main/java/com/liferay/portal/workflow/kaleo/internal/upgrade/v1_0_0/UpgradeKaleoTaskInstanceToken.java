@@ -14,10 +14,10 @@
 
 package com.liferay.portal.workflow.kaleo.internal.upgrade.v1_0_0;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.workflow.kaleo.definition.NodeType;
 
 import java.sql.PreparedStatement;

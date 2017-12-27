@@ -54,7 +54,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 		</c:choose>
 
 		<div class="task-content">
-			<aui:input cols="55" disabled="<%= !hasOtherAssignees && assigneeUserId <= 0 %>" name="comment" placeholder="comment" rows="1" type="textarea" />
+			<aui:input cols="55" cssClass="task-content-comment" disabled="<%= !hasOtherAssignees && assigneeUserId <= 0 %>" name="comment" placeholder="comment" rows="1" type="textarea" />
 		</div>
 
 		<aui:button-row cssClass="modal-footer task-button">

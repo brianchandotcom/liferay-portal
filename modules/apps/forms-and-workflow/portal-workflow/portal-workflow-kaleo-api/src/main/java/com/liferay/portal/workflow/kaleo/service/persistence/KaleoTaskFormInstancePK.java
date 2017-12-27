@@ -18,7 +18,7 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.Serializable;
 

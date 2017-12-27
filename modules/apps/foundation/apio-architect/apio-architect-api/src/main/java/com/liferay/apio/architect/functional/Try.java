@@ -39,6 +39,8 @@ import java.util.function.Supplier;
  * {@link #success(Object)}.
  *
  * @author Alejandro Hernández
+ * @param  <T> the {@code Try}'s possible value type
+ * @review
  */
 @SuppressWarnings("unused")
 public abstract class Try<T> {
@@ -50,7 +52,7 @@ public abstract class Try<T> {
 	 * @param  exception the exception to create the {@code Failure} from
 	 * @return the {@code Try} instance created from the exception
 	 */
-	public static <U> Try<U> fail(Exception exception) {
+	public static <T> Try<T> fail(Exception exception) {
 		return new Failure<>(exception);
 	}
 
@@ -58,15 +60,15 @@ public abstract class Try<T> {
 	 * Creates a new {@code Try} instance by executing a fallible lambda in a
 	 * {@link ThrowableSupplier}. If this throws an exception, a {@code Failure}
 	 * instance is created. Otherwise, a {@code Success} instance with the
-	 * lambda's result is created.
+	 * lambda'S result is created.
 	 *
 	 * @param  throwableSupplier the throwable supplier that contains the
 	 *         fallible lambda
 	 * @return {@code Failure} if the throwable supplier throws an exception;
 	 *         {@code Success} otherwise
 	 */
-	public static <U> Try<U> fromFallible(
-		ThrowableSupplier<U> throwableSupplier) {
+	public static <T> Try<T> fromFallible(
+		ThrowableSupplier<T> throwableSupplier) {
 
 		Objects.requireNonNull(throwableSupplier);
 
@@ -91,15 +93,15 @@ public abstract class Try<T> {
 	 * @return a {@code Success} instance if the functions succeed; a {@code
 	 *         Failure} instance otherwise
 	 */
-	public static <U, V extends Closeable> Try<U> fromFallibleWithResources(
-		ThrowableSupplier<V> throwableSupplier,
-		ThrowableFunction<V, U> throwableFunction) {
+	public static <T, S extends Closeable> Try<T> fromFallibleWithResources(
+		ThrowableSupplier<S> throwableSupplier,
+		ThrowableFunction<S, T> throwableFunction) {
 
 		Objects.requireNonNull(throwableFunction);
 		Objects.requireNonNull(throwableSupplier);
 
-		try (V v = throwableSupplier.get()) {
-			return success(throwableFunction.apply(v));
+		try (S s = throwableSupplier.get()) {
+			return success(throwableFunction.apply(s));
 		}
 		catch (Exception exception) {
 			return fail(exception);
@@ -110,11 +112,11 @@ public abstract class Try<T> {
 	 * Creates a new {@code Try} instance from an object. This method creates
 	 * the instance as a {@code Success} object.
 	 *
-	 * @param  u the object to create the {@code Success} object from
+	 * @param  t the object to create the {@code Success} object from
 	 * @return the {@code Success} object
 	 */
-	public static <U> Try<U> success(U u) {
-		return new Success<>(u);
+	public static <T> Try<T> success(T t) {
+		return new Success<>(t);
 	}
 
 	/**
@@ -131,21 +133,21 @@ public abstract class Try<T> {
 
 	/**
 	 * Returns the result of applying the mapping function to the {@code
-	 * Success} instance's value, if the current {@code Try} instance is a
+	 * Success} instance'S value, if the current {@code Try} instance is a
 	 * {@code Success}; otherwise returns the {@code Failure} instance.
 	 *
 	 * <p>
 	 * This method is similar to {@link #map(ThrowableFunction)}, but the
-	 * mapping function's result is already a {@code Try}, and if invoked,
+	 * mapping function'S result is already a {@code Try}, and if invoked,
 	 * {@code flatMap} doesn't wrap it in an additional {@code Try}.
 	 * </p>
 	 *
 	 * @param  function the mapping function
 	 * @return the result of the mapping function if applied to the {@code
-	 *         Success} instance's value; the {@code Failure} instance otherwise
+	 *         Success} instance'S value; the {@code Failure} instance otherwise
 	 */
-	public abstract <U> Try<U> flatMap(
-		ThrowableFunction<? super T, Try<U>> function);
+	public abstract <S> Try<S> flatMap(
+		ThrowableFunction<? super T, Try<S>> function);
 
 	/**
 	 * Returns the value that results from applying {@code failureFunction} if
@@ -164,30 +166,30 @@ public abstract class Try<T> {
 	 *         {@code Success}
 	 * @return the value that results from applying the corresponding function
 	 */
-	public abstract <U> U fold(
-		Function<Exception, U> failureFunction,
-		ThrowableFunction<T, U> successFunction);
+	public abstract <S> S fold(
+		Function<Exception, S> failureFunction,
+		ThrowableFunction<T, S> successFunction);
 
 	/**
-	 * Returns a {@code Success} instance's value, or a {@code Failure}
-	 * instance's exception. What this method returns therefore depends on
+	 * Returns a {@code Success} instance'S value, or a {@code Failure}
+	 * instance'S exception. What this method returns therefore depends on
 	 * whether the current {@code Try} instance is a {@code Success} or {@code
 	 * Failure}.
 	 *
-	 * @return a {@code Success} instance's value; otherwise the {@code Failure}
-	 *         instance's exception
+	 * @return a {@code Success} instance'S value; otherwise the {@code Failure}
+	 *         instance'S exception
 	 * @throws Exception if the operation failed
 	 */
 	public abstract T get() throws Exception;
 
 	/**
-	 * Returns a {@code Success} instance's value, or a {@code Failure}
-	 * instance's exception wrapped in a {@code RuntimeException}. What this
+	 * Returns a {@code Success} instance'S value, or a {@code Failure}
+	 * instance'S exception wrapped in a {@code RuntimeException}. What this
 	 * method returns therefore depends on whether the current {@code Try}
 	 * instance is a {@code Success} or {@code Failure}.
 	 *
-	 * @return a {@code Success} instance's value; otherwise the {@code Failure}
-	 *         instance's exception wrapped in a {@code RuntimeException}
+	 * @return a {@code Success} instance'S value; otherwise the {@code Failure}
+	 *         instance'S exception wrapped in a {@code RuntimeException}
 	 */
 	public abstract T getUnchecked();
 
@@ -211,35 +213,35 @@ public abstract class Try<T> {
 
 	/**
 	 * Returns the result of applying the mapping function to the {@code
-	 * Success} instance's value, if the current {@code Try} instance is a
+	 * Success} instance'S value, if the current {@code Try} instance is a
 	 * {@code Success}; otherwise returns the {@code Failure} instance.
 	 *
 	 * <p>
 	 * This function is similar to {@link #flatMap(ThrowableFunction)}, but the
-	 * mapping function's result isn't a {@code Try}, and if invoked, {@code
+	 * mapping function'S result isn't a {@code Try}, and if invoked, {@code
 	 * map} wraps it in {@code Try}.
 	 * </p>
 	 *
 	 * @param  throwableFunction the mapping function
 	 * @return the result of the mapping function if applied to the {@code
-	 *         Success} instance's value; the {@code Failure} instance otherwise
+	 *         Success} instance'S value; the {@code Failure} instance otherwise
 	 */
-	public abstract <U> Try<U> map(
-		ThrowableFunction<? super T, ? extends U> throwableFunction);
+	public abstract <S> Try<S> map(
+		ThrowableFunction<? super T, ? extends S> throwableFunction);
 
 	/**
 	 * Returns a {@code Try} instance that contains the result of applying the
-	 * mapping function to the current {@code Try} instance's exception, if that
+	 * mapping function to the current {@code Try} instance'S exception, if that
 	 * instance is a {@code Failure} object. If the current {@code Try} instance
 	 * is a {@code Success} object, this method returns it unmodified.
 	 *
 	 * @param  function the mapping function to apply to the {@code Failure}
-	 *         instance's exception
-	 * @return the {@code Try} with the mapping function's result; the {@code
+	 *         instance'S exception
+	 * @return the {@code Try} with the mapping function'S result; the {@code
 	 *         Success} object otherwise
 	 */
-	public abstract <X extends Exception> Try<T> mapFail(
-		Function<Exception, X> function);
+	public abstract <S extends Exception> Try<T> mapFail(
+		Function<Exception, S> function);
 
 	/**
 	 * Returns a {@code Try} instance that contains the exception provided by
@@ -252,57 +254,57 @@ public abstract class Try<T> {
 	 * @return the {@code Try} with the exception from the supplier; the {@code
 	 *         Success} object otherwise
 	 */
-	public abstract <X extends Exception, Y extends Exception> Try<T>
-		mapFailMatching(Class<Y> exceptionClass, Supplier<X> supplier);
+	public abstract <S extends Exception, U extends Exception> Try<T>
+		mapFailMatching(Class<U> exceptionClass, Supplier<S> supplier);
 
 	/**
-	 * Returns the {@code Success} instance's value, if the current {@code Try}
+	 * Returns the {@code Success} instance'S value, if the current {@code Try}
 	 * instance is a {@code Success} object. If the current {@code Try} instance
 	 * is a {@code Failure} object, this method returns the {@code other}
 	 * parameter.
 	 *
 	 * @param  other the value to return if current {@code Try} instance is a
 	 *         {@code Failure} object
-	 * @return the {@code Success} instance's value, or {@code other}
+	 * @return the {@code Success} instance'S value, or {@code other}
 	 */
 	public abstract T orElse(T other);
 
 	/**
-	 * Returns the {@code Success} instance's value, if the current {@code Try}
+	 * Returns the {@code Success} instance'S value, if the current {@code Try}
 	 * instance is a {@code Success} object. If the current {@code Try} instance
 	 * is a {@code Failure} object, this method returns the result of invoking
 	 * {@code Supplier#get()}.
 	 *
 	 * @param  supplier the supplier
-	 * @return the {@code Success} instance's value, or the result of the
-	 *         supplier's {@code get} method
+	 * @return the {@code Success} instance'S value, or the result of the
+	 *         supplier'S {@code get} method
 	 */
 	public abstract T orElseGet(Supplier<? extends T> supplier);
 
 	/**
-	 * Returns the {@code Success} instance's value, if the current {@code Try}
+	 * Returns the {@code Success} instance'S value, if the current {@code Try}
 	 * instance is a {@code Success} object. If the current {@code Try} instance
 	 * is a {@code Failure} object, this method throws the exception that
 	 * results from invoking {@code Supplier#get()}.
 	 *
 	 * @param  supplier the supplier
-	 * @return the {@code Success} instance's value
-	 * @throws X if the current {@code Try} instance was a {@code Failure}
+	 * @return the {@code Success} instance'S value
+	 * @throws S if the current {@code Try} instance was a {@code Failure}
 	 *         object
 	 */
-	public abstract <X extends Throwable> T orElseThrow(
-			Supplier<? extends X> supplier)
-		throws X;
+	public abstract <S extends Throwable> T orElseThrow(
+			Supplier<? extends S> supplier)
+		throws S;
 
 	/**
 	 * Returns the result of applying the function to the {@code Failure}
-	 * object's exception, if the current {@code Try} instance is a {@code
+	 * object'S exception, if the current {@code Try} instance is a {@code
 	 * Failure} object. If the current {@code Try} instance is a {@code Success}
-	 * object, this method returns that object's value.
+	 * object, this method returns that object'S value.
 	 *
 	 * @param  function the function
-	 * @return the function's result when applied to the {@code Failure}; the
-	 *         {@code Success} object's value otherwise
+	 * @return the function'S result when applied to the {@code Failure}; the
+	 *         {@code Success} object'S value otherwise
 	 */
 	public abstract T recover(Function<? super Exception, T> function);
 
@@ -321,7 +323,7 @@ public abstract class Try<T> {
 		ThrowableFunction<? super Exception, Try<T>> throwableFunction);
 
 	/**
-	 * The implementation of {@code Try}'s failure case. Don't try to
+	 * The implementation of {@code Try}'S failure case. Don't try to
 	 * instantiate this class directly. To instantiate this class when you don't
 	 * know if the operation will fail, use {@link
 	 * #fromFallible(ThrowableSupplier)}. To instantiate this class from an
@@ -335,8 +337,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <U> Try<U> flatMap(
-			ThrowableFunction<? super T, Try<U>> throwableFunction) {
+		public <S> Try<S> flatMap(
+			ThrowableFunction<? super T, Try<S>> throwableFunction) {
 
 			Objects.requireNonNull(throwableFunction);
 
@@ -344,9 +346,9 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <U> U fold(
-			Function<Exception, U> failureFunction,
-			ThrowableFunction<T, U> successFunction) {
+		public <S> S fold(
+			Function<Exception, S> failureFunction,
+			ThrowableFunction<T, S> successFunction) {
 
 			Objects.requireNonNull(failureFunction);
 
@@ -359,7 +361,7 @@ public abstract class Try<T> {
 		}
 
 		/**
-		 * Returns the current {@code Failure} instance's exception.
+		 * Returns the current {@code Failure} instance'S exception.
 		 *
 		 * @return the exception
 		 */
@@ -387,8 +389,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <U> Try<U> map(
-			ThrowableFunction<? super T, ? extends U> throwableFunction) {
+		public <S> Try<S> map(
+			ThrowableFunction<? super T, ? extends S> throwableFunction) {
 
 			Objects.requireNonNull(throwableFunction);
 
@@ -396,8 +398,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <X extends Exception> Try<T> mapFail(
-			Function<Exception, X> function) {
+		public <S extends Exception> Try<T> mapFail(
+			Function<Exception, S> function) {
 
 			Objects.requireNonNull(function);
 
@@ -405,8 +407,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <X extends Exception, Y extends Exception> Try<T>
-			mapFailMatching(Class<Y> exceptionClass, Supplier<X> supplier) {
+		public <S extends Exception, U extends Exception> Try<T>
+			mapFailMatching(Class<U> exceptionClass, Supplier<S> supplier) {
 
 			Objects.requireNonNull(supplier);
 
@@ -430,9 +432,9 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <X extends Throwable> T orElseThrow(
-				Supplier<? extends X> supplier)
-			throws X {
+		public <S extends Throwable> T orElseThrow(
+				Supplier<? extends S> supplier)
+			throws S {
 
 			throw supplier.get();
 		}
@@ -466,7 +468,7 @@ public abstract class Try<T> {
 	}
 
 	/**
-	 * The implementation of {@code Try}'s success case. Don't try to
+	 * The implementation of {@code Try}'S success case. Don't try to
 	 * instantiate this class directly. To instantiate this class when you don't
 	 * know if the operation will fail, use {@link
 	 * #fromFallible(ThrowableSupplier)}. To instantiate this class from a value
@@ -487,8 +489,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <U> Try<U> flatMap(
-			ThrowableFunction<? super T, Try<U>> function) {
+		public <S> Try<S> flatMap(
+			ThrowableFunction<? super T, Try<S>> function) {
 
 			Objects.requireNonNull(function);
 
@@ -501,9 +503,9 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <U> U fold(
-			Function<Exception, U> failureFunction,
-			ThrowableFunction<T, U> successFunction) {
+		public <S> S fold(
+			Function<Exception, S> failureFunction,
+			ThrowableFunction<T, S> successFunction) {
 
 			Objects.requireNonNull(successFunction);
 
@@ -526,9 +528,9 @@ public abstract class Try<T> {
 		}
 
 		/**
-		 * Returns the current {@code Success} instance's value.
+		 * Returns the current {@code Success} instance'S value.
 		 *
-		 * @return the current {@code Success} instance's value
+		 * @return the current {@code Success} instance'S value
 		 */
 		public T getValue() {
 			return _value;
@@ -545,8 +547,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <U> Try<U> map(
-			ThrowableFunction<? super T, ? extends U> throwableFunction) {
+		public <S> Try<S> map(
+			ThrowableFunction<? super T, ? extends S> throwableFunction) {
 
 			Objects.requireNonNull(throwableFunction);
 
@@ -559,8 +561,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <X extends Exception> Try<T> mapFail(
-			Function<Exception, X> function) {
+		public <S extends Exception> Try<T> mapFail(
+			Function<Exception, S> function) {
 
 			Objects.requireNonNull(function);
 
@@ -568,8 +570,8 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <X extends Exception, Y extends Exception> Try<T>
-			mapFailMatching(Class<Y> exceptionClass, Supplier<X> supplier) {
+		public <S extends Exception, U extends Exception> Try<T>
+			mapFailMatching(Class<U> exceptionClass, Supplier<S> supplier) {
 
 			Objects.requireNonNull(supplier);
 
@@ -587,9 +589,9 @@ public abstract class Try<T> {
 		}
 
 		@Override
-		public <X extends Throwable> T orElseThrow(
-				Supplier<? extends X> supplier)
-			throws X {
+		public <S extends Throwable> T orElseThrow(
+				Supplier<? extends S> supplier)
+			throws S {
 
 			return _value;
 		}

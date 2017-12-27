@@ -24,8 +24,8 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
-<%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
+<%@ page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.workflow.web.internal.display.context.WorkflowDefinitionLinkDisplayContext" %><%@

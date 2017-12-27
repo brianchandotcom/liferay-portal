@@ -20,6 +20,9 @@ import java.util.function.Function;
  * Represents the relation between a thing and a collection.
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @param  <S> the related collection model's type
+ * @review
  */
 public class RelatedCollection<T, S> {
 

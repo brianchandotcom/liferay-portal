@@ -27,18 +27,21 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  * Creates a {@code Matcher} for a type of {@code JsonElement}.
  *
  * @author Alejandro Hernández
+ * @param  <T> the type of {@code JsonElement} this matcher validates
+ * @param  <S> the type of the actual value of the element
+ * @review
  */
-public abstract class AbstractJsonElementMatcher<A extends JsonElement, B>
+public abstract class AbstractJsonElementMatcher<T extends JsonElement, S>
 	extends TypeSafeDiagnosingMatcher<JsonElement> {
 
 	public AbstractJsonElementMatcher(
-		JsonElementType jsonElementType, Matcher<B> bMatcher,
-		Function<A, B> transformFunction) {
+		JsonElementType jsonElementType, Matcher<S> sMatcher,
+		Function<T, S> transformFunction) {
 
 		super(JsonElement.class);
 
 		_jsonElementType = Objects.requireNonNull(jsonElementType);
-		_bMatcher = bMatcher;
+		_sMatcher = sMatcher;
 		_transformFunction = transformFunction;
 	}
 
@@ -49,7 +52,7 @@ public abstract class AbstractJsonElementMatcher<A extends JsonElement, B>
 		).appendText(
 			" element with a value that "
 		).appendDescriptionOf(
-			_bMatcher
+			_sMatcher
 		);
 	}
 
@@ -68,8 +71,8 @@ public abstract class AbstractJsonElementMatcher<A extends JsonElement, B>
 	 *
 	 * @return this matcher's inner matcher
 	 */
-	protected Matcher<B> getInnerMatcher() {
-		return _bMatcher;
+	protected Matcher<S> getInnerMatcher() {
+		return _sMatcher;
 	}
 
 	@Override
@@ -80,17 +83,17 @@ public abstract class AbstractJsonElementMatcher<A extends JsonElement, B>
 			jsonElement);
 
 		if (jsonElementType.equals(_jsonElementType)) {
-			@SuppressWarnings("unchecked") A a = (A)jsonElement;
+			@SuppressWarnings("unchecked") T t = (T)jsonElement;
 
-			B value = _transformFunction.apply(a);
+			S value = _transformFunction.apply(t);
 
-			if (_bMatcher.matches(value)) {
+			if (_sMatcher.matches(value)) {
 				return true;
 			}
 
 			description.appendText(getFailText());
 
-			_bMatcher.describeMismatch(value, description);
+			_sMatcher.describeMismatch(value, description);
 
 			return false;
 		}
@@ -110,8 +113,8 @@ public abstract class AbstractJsonElementMatcher<A extends JsonElement, B>
 		return false;
 	}
 
-	private final Matcher<B> _bMatcher;
 	private final JsonElementType _jsonElementType;
-	private final Function<A, B> _transformFunction;
+	private final Matcher<S> _sMatcher;
+	private final Function<T, S> _transformFunction;
 
 }

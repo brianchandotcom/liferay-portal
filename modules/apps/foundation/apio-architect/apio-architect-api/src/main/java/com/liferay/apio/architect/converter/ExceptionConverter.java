@@ -24,6 +24,8 @@ import com.liferay.apio.architect.error.APIError;
  * to provide meaningful information about the error.
  *
  * @author Alejandro Hernández
+ * @param  <T> the type of the exception to be converted
+ * @review
  */
 @ConsumerType
 public interface ExceptionConverter<T extends Exception> {

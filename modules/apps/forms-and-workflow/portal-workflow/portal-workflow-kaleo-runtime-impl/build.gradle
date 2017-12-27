@@ -3,6 +3,7 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.rules.engine.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"

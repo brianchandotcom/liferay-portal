@@ -28,6 +28,15 @@ import java.util.function.Function;
  *
  * @author Alejandro Hernández
  * @author Jorge Ferrer
+ * @param  <A> the type of the first argument of the function
+ * @param  <B> the type of the second argument of the function
+ * @param  <C> the type of the third argument of the function
+ * @param  <D> the type of the fourth argument of the function
+ * @param  <E> the type of the fifth argument of the function
+ * @param  <F> the type of the sixth argument of the function
+ * @param  <G> the type of the seventh argument of the function
+ * @param  <H> the type of the eighth argument of the function
+ * @param  <R> the type of the result of the function
  */
 @FunctionalInterface
 public interface OctaFunction<A, B, C, D, E, F, G, H, R> {

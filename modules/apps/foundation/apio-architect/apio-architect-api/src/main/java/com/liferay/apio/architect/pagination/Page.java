@@ -28,6 +28,8 @@ import java.util.Optional;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @param  <T> the model's type
+ * @review
  */
 @ProviderType
 public class Page<T> {

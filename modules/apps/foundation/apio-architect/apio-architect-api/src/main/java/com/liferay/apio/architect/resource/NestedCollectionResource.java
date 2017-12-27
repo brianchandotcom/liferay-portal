@@ -47,12 +47,17 @@ import com.liferay.apio.architect.router.NestedCollectionRouter;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @param  <S> the model identifier's type ({@link Long}, {@link String}, etc.)
+ * @param  <U> the parent model's type
+ * @param  <V> the parent model identifier's type ({@link Long}, {@link String},
+ *         etc.)
  * @see    com.liferay.apio.architect.representor.Representor.Builder
  * @see    com.liferay.apio.architect.routes.ItemRoutes.Builder
  * @see    com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder
  * @review
  */
 @ConsumerType
-public interface NestedCollectionResource <T, U, V, W>
-	extends ItemResource<T, U>, NestedCollectionRouter<T, V, W> {
+public interface NestedCollectionResource<T, S, U, V>
+	extends ItemResource<T, S>, NestedCollectionRouter<T, U, V> {
 }

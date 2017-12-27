@@ -14,8 +14,8 @@
 
 package com.liferay.portal.workflow.web.internal.util.filter;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.PredicateFilter;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;

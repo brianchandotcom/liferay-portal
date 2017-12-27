@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
  * HttpServletRequest} and returns another item.
  *
  * @author Alejandro Hernández
+ * @param  <T> the function result's type
+ * @review
  */
 @FunctionalInterface
 public interface RequestFunction<T> extends Function<HttpServletRequest, T> {

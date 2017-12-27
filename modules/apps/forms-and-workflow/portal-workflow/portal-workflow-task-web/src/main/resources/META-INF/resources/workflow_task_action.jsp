@@ -116,8 +116,8 @@ redirectURL.setParameter("mvcPath", "/view.jsp");
 	<aui:input bean="<%= workflowTask %>" model="<%= WorkflowTask.class %>" name="dueDate" required="<%= true %>" />
 </div>
 
-<div class="hide task-content" id="<%= randomId %>updateComments">
-	<aui:input cols="55" name="comment" placeholder="comment" rows="1" type="textarea" />
+<div class="hide" id="<%= randomId %>updateComments">
+	<aui:input cols="55" cssClass="task-content-comment" name="comment" placeholder="comment" rows="1" type="textarea" />
 </div>
 
 <aui:script use="liferay-workflow-tasks">

@@ -24,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
  * any of the routes builders.
  *
  * @author Alejandro Hernández
+ * @param  <T> the type of thing to provide
+ * @review
  */
 @ConsumerType
 public interface Provider<T> {

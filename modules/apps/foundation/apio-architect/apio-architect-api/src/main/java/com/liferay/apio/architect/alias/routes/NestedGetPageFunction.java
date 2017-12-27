@@ -25,6 +25,8 @@ import java.util.function.Function;
  * collection page.
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
+ * @review
  */
 @FunctionalInterface
 public interface NestedGetPageFunction<T>

@@ -23,6 +23,9 @@ import java.util.function.Function;
  * @author Alejandro Hernández
  * @author Carlos Sierra Andrés
  * @author Jorge Ferrer
+ * @param  <T> the model's type
+ * @param  <S> the related model's type
+ * @review
  */
 public class RelatedModel<T, S> {
 

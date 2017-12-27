@@ -25,6 +25,16 @@ import java.util.Objects;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <A> the type of the first argument of the consumer
+ * @param  <B> the type of the second argument of the consumer
+ * @param  <C> the type of the third argument of the consumer
+ * @param  <D> the type of the fourth argument of the consumer
+ * @param  <E> the type of the fifth argument of the consumer
+ * @param  <F> the type of the sixth argument of the consumer
+ * @param  <G> the type of the seventh argument of the consumer
+ * @param  <H> the type of the eighth argument of the consumer
+ * @param  <I> the type of the ninth argument of the consumer
+ * @param  <J> the type of the tenth argument of the consumer
  */
 @FunctionalInterface
 public interface DecaConsumer<A, B, C, D, E, F, G, H, I, J> {

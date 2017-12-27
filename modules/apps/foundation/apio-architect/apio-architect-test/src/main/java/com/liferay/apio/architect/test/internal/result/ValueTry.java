@@ -27,6 +27,8 @@ import org.hamcrest.TypeSafeDiagnosingMatcher;
  * specific value.
  *
  * @author Alejandro Hernández
+ * @param  <T> the {@code Try}'s possible value type
+ * @review
  */
 public class ValueTry<T> extends TypeSafeDiagnosingMatcher<Try<T>> {
 

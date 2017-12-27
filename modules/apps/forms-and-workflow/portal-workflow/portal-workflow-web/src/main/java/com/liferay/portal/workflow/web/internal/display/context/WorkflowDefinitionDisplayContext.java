@@ -71,6 +71,17 @@ public class WorkflowDefinitionDisplayContext {
 		return LanguageUtil.get(request, "no");
 	}
 
+	public Date getCreatedDate(WorkflowDefinition workflowDefinition)
+		throws PortalException {
+
+		List<WorkflowDefinition> workflowDefinitions = getWorkflowDefinitions(
+			workflowDefinition.getName());
+
+		WorkflowDefinition firstWorkflowDefinition = workflowDefinitions.get(0);
+
+		return firstWorkflowDefinition.getModifiedDate();
+	}
+
 	public String getDescription(WorkflowDefinition workflowDefinition) {
 		return HtmlUtil.escape(workflowDefinition.getDescription());
 	}
@@ -148,6 +159,14 @@ public class WorkflowDefinitionDisplayContext {
 		}
 
 		return userName;
+	}
+
+	public int getWorkflowDefinitionCount(WorkflowDefinition workflowDefinition)
+		throws PortalException {
+
+		return WorkflowDefinitionManagerUtil.getWorkflowDefinitionCount(
+			_workflowDefinitionRequestHelper.getCompanyId(),
+			workflowDefinition.getName());
 	}
 
 	public List<WorkflowDefinition> getWorkflowDefinitions(String name)

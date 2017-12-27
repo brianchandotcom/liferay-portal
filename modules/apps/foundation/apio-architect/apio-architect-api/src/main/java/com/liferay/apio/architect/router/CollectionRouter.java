@@ -35,6 +35,7 @@ import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
  * @see    CollectionRoutes.Builder
  * @review
  */

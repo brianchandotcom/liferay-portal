@@ -51,7 +51,9 @@ import java.util.function.Supplier;
  * </p>
  *
  * @author Alejandro Hernández
+ * @param  <T> the model's type
  * @see    Builder
+ * @review
  */
 public class ItemRoutes<T> {
 
@@ -100,12 +102,17 @@ public class ItemRoutes<T> {
 	/**
 	 * Creates the {@link ItemRoutes} of a {@link
 	 * com.liferay.apio.architect.router.ItemRouter}.
+	 *
+	 * @param  <T> the model's type
+	 * @param  <S> the model identifier's type ({@link Long}, {@link String},
+	 *         etc.)
+	 * @review
 	 */
 	@SuppressWarnings("unused")
-	public static class Builder<T, U> {
+	public static class Builder<T, S> {
 
 		public Builder(
-			Class<T> modelClass, Class<U> identifierClass,
+			Class<T> modelClass, Class<S> identifierClass,
 			ProvideFunction provideFunction,
 			Supplier<BiFunction<Class<?>, Path,
 				Optional<?>>> identifierFunctionSupplier) {
@@ -123,8 +130,8 @@ public class ItemRoutes<T> {
 		 * @param  aClass the class of the item function's second parameter
 		 * @return the updated builder
 		 */
-		public <A> ItemRoutes.Builder<T, U> addGetter(
-			BiFunction<U, A, T> biFunction, Class<A> aClass) {
+		public <A> ItemRoutes.Builder<T, S> addGetter(
+			BiFunction<S, A, T> biFunction, Class<A> aClass) {
 
 			_singleModelFunction = httpServletRequest -> path -> provide(
 				_provideFunction, httpServletRequest, aClass,
@@ -143,7 +150,7 @@ public class ItemRoutes<T> {
 		 * @param  function the function that calculates the item
 		 * @return the updated builder
 		 */
-		public ItemRoutes.Builder<T, U> addGetter(Function<U, T> function) {
+		public ItemRoutes.Builder<T, S> addGetter(Function<S, T> function) {
 			_singleModelFunction =
 				httpServletRequest -> path -> function.andThen(
 					t -> new SingleModel<>(t, _modelClass)
@@ -164,8 +171,8 @@ public class ItemRoutes<T> {
 		 * @param  dClass the class of the item function's fifth parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C, D> ItemRoutes.Builder<T, U> addGetter(
-			PentaFunction<U, A, B, C, D, T> pentaFunction, Class<A> aClass,
+		public <A, B, C, D> ItemRoutes.Builder<T, S> addGetter(
+			PentaFunction<S, A, B, C, D, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass) {
 
 			_singleModelFunction = httpServletRequest -> path -> provide(
@@ -189,8 +196,8 @@ public class ItemRoutes<T> {
 		 * @param  cClass the class of the item function's fourth parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C> ItemRoutes.Builder<T, U> addGetter(
-			TetraFunction<U, A, B, C, T> tetraFunction, Class<A> aClass,
+		public <A, B, C> ItemRoutes.Builder<T, S> addGetter(
+			TetraFunction<S, A, B, C, T> tetraFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass) {
 
 			_singleModelFunction = httpServletRequest -> path -> provide(
@@ -212,8 +219,8 @@ public class ItemRoutes<T> {
 		 * @param  bClass the class of the item function's third parameter
 		 * @return the updated builder
 		 */
-		public <A, B> ItemRoutes.Builder<T, U> addGetter(
-			TriFunction<U, A, B, T> triFunction, Class<A> aClass,
+		public <A, B> ItemRoutes.Builder<T, S> addGetter(
+			TriFunction<S, A, B, T> triFunction, Class<A> aClass,
 			Class<B> bClass) {
 
 			_singleModelFunction = httpServletRequest -> path -> provide(
@@ -235,8 +242,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A> ItemRoutes.Builder<T, U> addRemover(
-			BiConsumer<U, A> biConsumer, Class<A> aClass) {
+		public <A> ItemRoutes.Builder<T, S> addRemover(
+			BiConsumer<S, A> biConsumer, Class<A> aClass) {
 
 			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
 				_provideFunction, httpServletRequest, aClass,
@@ -252,7 +259,7 @@ public class ItemRoutes<T> {
 		 * @param  consumer the remover function that removes the item
 		 * @return the updated builder
 		 */
-		public ItemRoutes.Builder<T, U> addRemover(Consumer<U> consumer) {
+		public ItemRoutes.Builder<T, S> addRemover(Consumer<S> consumer) {
 			_deleteItemConsumer = httpServletRequest -> path -> consumer.accept(
 				_convertIdentifier(path, _identifierClass));
 
@@ -273,8 +280,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C, D> ItemRoutes.Builder<T, U> addRemover(
-			PentaConsumer<U, A, B, C, D> pentaConsumer, Class<A> aClass,
+		public <A, B, C, D> ItemRoutes.Builder<T, S> addRemover(
+			PentaConsumer<S, A, B, C, D> pentaConsumer, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass) {
 
 			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
@@ -298,8 +305,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C> ItemRoutes.Builder<T, U> addRemover(
-			TetraConsumer<U, A, B, C> tetraConsumer, Class<A> aClass,
+		public <A, B, C> ItemRoutes.Builder<T, S> addRemover(
+			TetraConsumer<S, A, B, C> tetraConsumer, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass) {
 
 			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
@@ -320,8 +327,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B> ItemRoutes.Builder<T, U> addRemover(
-			TriConsumer<U, A, B> triConsumer, Class<A> aClass,
+		public <A, B> ItemRoutes.Builder<T, S> addRemover(
+			TriConsumer<S, A, B> triConsumer, Class<A> aClass,
 			Class<B> bClass) {
 
 			_deleteItemConsumer = httpServletRequest -> path -> provideConsumer(
@@ -338,8 +345,8 @@ public class ItemRoutes<T> {
 		 * @param  biFunction the updater function that removes the item
 		 * @return the updated builder
 		 */
-		public ItemRoutes.Builder<T, U> addUpdater(
-			BiFunction<U, Map<String, Object>, T> biFunction) {
+		public ItemRoutes.Builder<T, S> addUpdater(
+			BiFunction<S, Map<String, Object>, T> biFunction) {
 
 			_updateItemFunction =
 				httpServletRequest -> path -> body -> biFunction.andThen(
@@ -365,8 +372,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C, D> ItemRoutes.Builder<T, U> addUpdater(
-			HexaFunction<U, Map<String, Object>, A, B, C, D, T> hexaFunction,
+		public <A, B, C, D> ItemRoutes.Builder<T, S> addUpdater(
+			HexaFunction<S, Map<String, Object>, A, B, C, D, T> hexaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass,
 			Class<D> dClass) {
 
@@ -394,8 +401,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B, C> Builder<T, U> addUpdater(
-			PentaFunction<U, Map<String, Object>, A, B, C, T> pentaFunction,
+		public <A, B, C> Builder<T, S> addUpdater(
+			PentaFunction<S, Map<String, Object>, A, B, C, T> pentaFunction,
 			Class<A> aClass, Class<B> bClass, Class<C> cClass) {
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
@@ -419,8 +426,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A, B> ItemRoutes.Builder<T, U> addUpdater(
-			TetraFunction<U, Map<String, Object>, A, B, T> tetraFunction,
+		public <A, B> ItemRoutes.Builder<T, S> addUpdater(
+			TetraFunction<S, Map<String, Object>, A, B, T> tetraFunction,
 			Class<A> aClass, Class<B> bClass) {
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
@@ -442,8 +449,8 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
-		public <A> ItemRoutes.Builder<T, U> addUpdater(
-			TriFunction<U, Map<String, Object>, A, T> triFunction,
+		public <A> ItemRoutes.Builder<T, S> addUpdater(
+			TriFunction<S, Map<String, Object>, A, T> triFunction,
 			Class<A> aClass) {
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
@@ -482,7 +489,7 @@ public class ItemRoutes<T> {
 		}
 
 		private DeleteItemConsumer _deleteItemConsumer;
-		private final Class<U> _identifierClass;
+		private final Class<S> _identifierClass;
 		private final Supplier<BiFunction<Class<?>, Path,
 			Optional<?>>> _identifierFunctionSupplier;
 		private final Class<T> _modelClass;

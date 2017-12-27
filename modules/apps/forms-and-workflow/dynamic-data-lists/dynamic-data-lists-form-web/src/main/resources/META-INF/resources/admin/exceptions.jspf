@@ -72,7 +72,7 @@
 
 	Map<String, Set<String>> fieldNamePropertiesMap = msvvfp.getFieldNamePropertiesMap();
 
-	StringBundler sb = new StringBundler(fieldNamePropertiesMap.size());
+	StringBundler sb = new StringBundler(fieldNamePropertiesMap.size() * 2);
 
 	for (Entry<String, Set<String>> fieldNameProperties : fieldNamePropertiesMap.entrySet()) {
 		Set<String> value = fieldNameProperties.getValue();

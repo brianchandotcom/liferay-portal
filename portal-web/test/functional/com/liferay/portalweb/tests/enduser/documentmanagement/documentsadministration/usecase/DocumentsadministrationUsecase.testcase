@@ -284,7 +284,7 @@
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Upload documents no larger than 293KB." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Upload documents no larger than 28.6MB." />
 
 		<execute macro="DMDocument#editCmd">
 			<var name="dmDocumentFileEdit" value="Document_1.mp4" />

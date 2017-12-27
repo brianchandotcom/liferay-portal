@@ -2708,7 +2708,7 @@
 			<var name="pageName" value="Web Content Display Page" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#PORTLET_CONTENT" value1="This portlet has been undeployed." />
+		<execute macro="Portlet#viewUndeployMessage" />
 
 		<execute macro="Portlet#deletePG">
 			<var name="portletName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />

@@ -555,4 +555,8 @@
 
 		<execute function="AssertTextEquals" locator1="Portlet#TITLE" value1="${portletName}" />
 	</command>
+
+	<command name="viewUndeployMessage">
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#PORTLET_CONTENT" value1="This portlet has been undeployed." />
+	</command>
 </definition>

@@ -80,22 +80,19 @@ public class SiteNavigationMenuItemServiceUtil {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		int order,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		int order) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenuItem(siteNavigationMenuId,
-			parentSiteNavigationMenuItemId, order, serviceContext);
+			parentSiteNavigationMenuItemId, order);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
-		long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-		java.lang.String typeSettings,
+		long siteNavigationMenuId, java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenuItem(siteNavigationMenuId,
-			parentSiteNavigationMenuItemId, typeSettings, serviceContext);
+			typeSettings, serviceContext);
 	}
 
 	public static SiteNavigationMenuItemService getService() {

@@ -87,10 +87,10 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 		sb.append(parentSiteNavigationMenuItemId);
 		sb.append(", type=");
 		sb.append(type);
-		sb.append(", typeSettings=");
-		sb.append(typeSettings);
 		sb.append(", order=");
 		sb.append(order);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,14 +136,14 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 			siteNavigationMenuItemImpl.setType(type);
 		}
 
+		siteNavigationMenuItemImpl.setOrder(order);
+
 		if (typeSettings == null) {
 			siteNavigationMenuItemImpl.setTypeSettings("");
 		}
 		else {
 			siteNavigationMenuItemImpl.setTypeSettings(typeSettings);
 		}
-
-		siteNavigationMenuItemImpl.setOrder(order);
 
 		siteNavigationMenuItemImpl.resetOriginalValues();
 
@@ -167,9 +167,9 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 
 		parentSiteNavigationMenuItemId = objectInput.readLong();
 		type = objectInput.readUTF();
-		typeSettings = objectInput.readUTF();
 
 		order = objectInput.readInt();
+		typeSettings = objectInput.readUTF();
 	}
 
 	@Override
@@ -204,14 +204,14 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 			objectOutput.writeUTF(type);
 		}
 
+		objectOutput.writeInt(order);
+
 		if (typeSettings == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(typeSettings);
 		}
-
-		objectOutput.writeInt(order);
 	}
 
 	public long siteNavigationMenuItemId;
@@ -224,6 +224,6 @@ public class SiteNavigationMenuItemCacheModel implements CacheModel<SiteNavigati
 	public long siteNavigationMenuId;
 	public long parentSiteNavigationMenuItemId;
 	public String type;
-	public String typeSettings;
 	public int order;
+	public String typeSettings;
 }

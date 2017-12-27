@@ -43,6 +43,18 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 	 */
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
 		long userId, long groupId, long siteNavigationMenuId,
+		long parentSiteNavigationMenuItemId, java.lang.String type, int order,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addSiteNavigationMenuItem(userId, groupId,
+			siteNavigationMenuId, parentSiteNavigationMenuItemId, type, order,
+			typeSettings, serviceContext);
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
+		long userId, long groupId, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId, java.lang.String type,
 		java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -279,34 +291,20 @@ public class SiteNavigationMenuItemLocalServiceUtil {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
-		int order,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		int order) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenuItem(siteNavigationMenuItemId,
-			parentSiteNavigationMenuItemId, order, serviceContext);
+			parentSiteNavigationMenuItemId, order);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long userId, long siteNavigationMenuItemId,
-		long parentSiteNavigationMenuItemId,
+		java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenuItem(userId,
-			siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-			serviceContext);
-	}
-
-	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
-		long userId, long siteNavigationMenuItemId,
-		long parentSiteNavigationMenuItemId, java.lang.String typeSettings,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .updateSiteNavigationMenuItem(userId,
-			siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-			typeSettings, serviceContext);
+			siteNavigationMenuItemId, typeSettings, serviceContext);
 	}
 
 	/**

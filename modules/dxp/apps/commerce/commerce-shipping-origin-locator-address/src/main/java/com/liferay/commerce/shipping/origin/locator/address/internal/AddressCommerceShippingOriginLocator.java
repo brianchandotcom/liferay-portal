@@ -18,11 +18,13 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
+import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration;
 import com.liferay.commerce.shipping.origin.locator.address.internal.constants.AddressCommerceShippingOriginLocatorConstants;
 import com.liferay.commerce.util.SuffixParameterMapSettingsLocator;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -64,6 +66,14 @@ public class AddressCommerceShippingOriginLocator
 	implements CommerceShippingOriginLocator {
 
 	public static final String KEY = "address";
+
+	@Override
+	public CommerceWarehouse getClosestCommerceWarehouse(
+			CommerceAddress commerceAddress, long cpInstanceId, int quantity)
+		throws PortalException {
+
+		return null;
+	}
 
 	@Override
 	public String getDescription(Locale locale) {

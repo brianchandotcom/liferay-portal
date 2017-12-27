@@ -56,6 +56,39 @@ public class WarehouseCommerceShippingOriginLocator
 	public static final String KEY = "warehouse";
 
 	@Override
+	public CommerceWarehouse getClosestCommerceWarehouse(
+			CommerceAddress commerceAddress, long cpInstanceId, int quantity)
+		throws PortalException {
+
+		List<CommerceWarehouse> commerceWarehouses =
+			_commerceWarehouseLocalService.getCommerceWarehouses(
+				cpInstanceId, quantity, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		CommerceWarehouse closestCommerceWarehouse = null;
+		double closestDistance = Double.MAX_VALUE;
+
+		for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
+			if (!commerceWarehouse.isGeolocated()) {
+				commerceWarehouse =
+					_commerceWarehouseLocalService.geolocateCommerceWarehouse(
+						commerceWarehouse.getCommerceWarehouseId());
+			}
+
+			double distance = _distanceCalculator.getDistance(
+				commerceAddress.getLatitude(), commerceAddress.getLongitude(),
+				commerceWarehouse.getLatitude(),
+				commerceWarehouse.getLongitude());
+
+			if (distance < closestDistance) {
+				closestCommerceWarehouse = commerceWarehouse;
+				closestDistance = distance;
+			}
+		}
+
+		return closestCommerceWarehouse;
+	}
+
+	@Override
 	public String getDescription(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
@@ -88,8 +121,9 @@ public class WarehouseCommerceShippingOriginLocator
 			commerceCart.getCommerceCartItems();
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
-			CommerceWarehouse commerceWarehouse = _getClosestCommerceWarehouse(
-				commerceAddress, commerceCartItem);
+			CommerceWarehouse commerceWarehouse = getClosestCommerceWarehouse(
+				commerceAddress, commerceCartItem.getCPInstanceId(),
+				commerceCartItem.getQuantity());
 
 			List<CommerceCartItem> commerceWarehouseCartItems =
 				commerceWarehouseCartItemsMap.get(commerceWarehouse);
@@ -130,40 +164,6 @@ public class WarehouseCommerceShippingOriginLocator
 	public void updateConfiguration(
 			Map<String, String> parameterMap, ServiceContext serviceContext)
 		throws Exception {
-	}
-
-	private CommerceWarehouse _getClosestCommerceWarehouse(
-			CommerceAddress commerceAddress, CommerceCartItem commerceCartItem)
-		throws PortalException {
-
-		List<CommerceWarehouse> commerceWarehouses =
-			_commerceWarehouseLocalService.getCommerceWarehouses(
-				commerceCartItem.getCPInstanceId(),
-				commerceCartItem.getQuantity(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS);
-
-		CommerceWarehouse closestCommerceWarehouse = null;
-		double closestDistance = Double.MAX_VALUE;
-
-		for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
-			if (!commerceWarehouse.isGeolocated()) {
-				commerceWarehouse =
-					_commerceWarehouseLocalService.geolocateCommerceWarehouse(
-						commerceWarehouse.getCommerceWarehouseId());
-			}
-
-			double distance = _distanceCalculator.getDistance(
-				commerceAddress.getLatitude(), commerceAddress.getLongitude(),
-				commerceWarehouse.getLatitude(),
-				commerceWarehouse.getLongitude());
-
-			if (distance < closestDistance) {
-				closestCommerceWarehouse = commerceWarehouse;
-				closestDistance = distance;
-			}
-		}
-
-		return closestCommerceWarehouse;
 	}
 
 	private CommerceAddress _getCommerceAddress(

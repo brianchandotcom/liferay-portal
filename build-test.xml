@@ -1464,25 +1464,20 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 				</elseif>
 			</if>
 
+			<propertyregex
+				input="${env.ANT_OPTS}"
+				override="true"
+				property="gradle.opts"
+				regexp="(-Xmx)(\d*\w*)"
+				replace="\12048m"
+			/>
+
 			<if>
 				<and>
 					<isset property="env.JENKINS_HOME" />
 					<available file="${java.jdk.home}" />
 				</and>
 				<then>
-					<if>
-						<isset property="env.ANT_OPTS" />
-						<then>
-							<propertyregex
-								input="${env.ANT_OPTS}"
-								override="true"
-								property="gradle.opts"
-								regexp="(-Xmx)(\d*\w*)"
-								replace="\12048m"
-							/>
-						</then>
-					</if>
-
 					<gradle-execute failonerror="false" gradleopts="${gradle.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
@@ -1492,7 +1487,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 					</gradle-execute>
 				</then>
 				<else>
-					<gradle-execute failonerror="false" task="@{task}">
+					<gradle-execute failonerror="false" gradleopts="${gradle.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />

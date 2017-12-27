@@ -67,12 +67,11 @@ public class SiteNavigationMenuItemServiceImpl
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-			int order, ServiceContext serviceContext)
+			int order)
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
-			siteNavigationMenuId, parentSiteNavigationMenuItemId, order,
-			serviceContext);
+			siteNavigationMenuId, parentSiteNavigationMenuItemId, order);
 	}
 
 	@Override

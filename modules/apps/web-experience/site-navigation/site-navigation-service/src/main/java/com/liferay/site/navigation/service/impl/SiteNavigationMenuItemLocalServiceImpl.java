@@ -132,7 +132,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
 			long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
-			int order, ServiceContext serviceContext)
+			int order)
 		throws PortalException {
 
 		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);

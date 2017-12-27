@@ -121,12 +121,12 @@ public class EditCommerceShippingMethodMVCActionCommand
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.UPDATE)) {
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCommerceShippingMethod(actionRequest);
 			}
-
-			if (cmd.equals("setActive")) {
+			else if (cmd.equals("setActive")) {
 				setActive(actionRequest);
 			}
 		}

@@ -91,8 +91,9 @@ public class EditCommerceAvailabilityRangeMVCActionCommand
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceAvailabilityRanges(actionRequest);
 			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.UPDATE)) {
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCommerceAvailabilityRange(actionRequest);
 			}
 		}

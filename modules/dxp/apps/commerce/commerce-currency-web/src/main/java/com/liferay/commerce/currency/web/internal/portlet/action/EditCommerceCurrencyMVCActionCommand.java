@@ -88,8 +88,9 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceCurrencies(actionRequest);
 			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.UPDATE)) {
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCommerceCurrency(actionRequest);
 			}
 		}

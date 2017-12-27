@@ -88,8 +88,7 @@ public class EditCommerceWarehouseMVCActionCommand
 			if (cmd.equals("geolocate")) {
 				geolocateCommerceWarehouse(actionRequest);
 			}
-
-			if (cmd.equals(Constants.DELETE)) {
+			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceWarehouses(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||

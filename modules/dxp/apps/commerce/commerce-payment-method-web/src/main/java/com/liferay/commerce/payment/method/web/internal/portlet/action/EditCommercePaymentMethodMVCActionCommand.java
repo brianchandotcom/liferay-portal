@@ -132,20 +132,18 @@ public class EditCommercePaymentMethodMVCActionCommand
 				hideDefaultErrorMessage(actionRequest);
 				hideDefaultSuccessMessage(actionRequest);
 			}
-
-			if (cmd.equals(Constants.DELETE)) {
+			else if (cmd.equals(Constants.DELETE)) {
 				deleteCommercePaymentMethod(actionRequest);
 			}
+			else if (cmd.equals(Constants.ADD) ||
+					 cmd.equals(Constants.UPDATE)) {
 
-			if (cmd.equals(Constants.ADD) || cmd.equals(Constants.UPDATE)) {
 				updateCommercePaymentMethod(actionRequest);
 			}
-
-			if (cmd.equals("setActive")) {
+			else if (cmd.equals("setActive")) {
 				setActive(actionRequest);
 			}
-
-			if (cmd.equals("viewRestrictions")) {
+			else if (cmd.equals("viewRestrictions")) {
 				viewRestrictions(actionRequest, actionResponse);
 
 				hideDefaultErrorMessage(actionRequest);

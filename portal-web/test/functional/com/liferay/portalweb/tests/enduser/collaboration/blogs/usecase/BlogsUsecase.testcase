@@ -197,7 +197,6 @@
 
 		<execute macro="BlogsConfiguration#uncheckComments" />
 		<execute macro="BlogsConfiguration#uncheckRelatedAssets" />
-		<execute macro="BlogsConfiguration#uncheckSocialBookmarks" />
 
 		<execute macro="BlogsConfiguration#saveConfigurationIFrame" />
 

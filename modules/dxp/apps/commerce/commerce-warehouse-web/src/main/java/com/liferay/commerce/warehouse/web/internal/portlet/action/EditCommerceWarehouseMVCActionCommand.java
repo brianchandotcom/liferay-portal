@@ -85,16 +85,16 @@ public class EditCommerceWarehouseMVCActionCommand
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
 		try {
-			if (cmd.equals("geolocate")) {
-				geolocateCommerceWarehouse(actionRequest);
-			}
-			else if (cmd.equals(Constants.DELETE)) {
+			if (cmd.equals(Constants.DELETE)) {
 				deleteCommerceWarehouses(actionRequest);
 			}
 			else if (cmd.equals(Constants.ADD) ||
 					 cmd.equals(Constants.UPDATE)) {
 
 				updateCommerceWarehouse(actionRequest);
+			}
+			else if (cmd.equals("geolocate")) {
+				geolocateCommerceWarehouse(actionRequest);
 			}
 		}
 		catch (Exception e) {

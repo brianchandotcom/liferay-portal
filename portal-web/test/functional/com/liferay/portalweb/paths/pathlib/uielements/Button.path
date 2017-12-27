@@ -765,7 +765,7 @@
 </tr>
 <tr>
 	<td>TRANSFORM</td>
-	<td>//a[contains(@class, 'btn')][span/*[name()='svg'][@data-icon='transform']]</td>
+	<td>//a[contains(@class, 'btn')]//*[name()='svg'][@data-icon='transform']</td>
 	<td></td>
 </tr>
 <tr>

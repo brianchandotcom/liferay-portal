@@ -61,7 +61,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "add-new-page"));
 	<portlet:param name="mvcPath" value="/add_layout.jsp" />
 </portlet:actionURL>
 
-<aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" data-senna-off="true" enctype="multipart/form-data" method="post" name="addPageFm">
+<aui:form action="<%= addLayoutURL %>" cssClass="container-fluid-1280" enctype="multipart/form-data" method="post" name="addPageFm">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="groupId" type="hidden" value="<%= String.valueOf(groupId) %>" />
 	<aui:input name="privateLayout" type="hidden" value="<%= privateLayout %>" />

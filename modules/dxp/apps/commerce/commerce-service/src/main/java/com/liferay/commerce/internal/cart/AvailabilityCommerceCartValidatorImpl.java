@@ -16,13 +16,13 @@ package com.liferay.commerce.internal.cart;
 
 import com.liferay.commerce.cart.CommerceCartValidator;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
+import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceCartItemLocalService;
-import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import org.osgi.service.component.annotations.Component;
@@ -54,82 +54,84 @@ public class AvailabilityCommerceCartValidatorImpl
 			CommerceCartItem commerceCartItem)
 		throws PortalException {
 
-		if (commerceCartItem != null) {
-			CPDefinitionInventory cpDefinitionInventory =
-				_cpDefinitionInventoryLocalService.
-					fetchCPDefinitionInventoryByCPDefinitionId(
-						commerceCartItem.getCPDefinitionId());
+		if (commerceCartItem == null) {
+			return new CommerceCartValidatorResult(false);
+		}
 
-			if ((cpDefinitionInventory != null) &&
-				cpDefinitionInventory.getBackOrders()) {
+		CPInstance cpInstance = commerceCartItem.getCPInstance();
 
-				return new CommerceCartValidatorResult(true);
-			}
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
 
-			int availableQuantity =
-				_commerceWarehouseItemLocalService.getCPInstanceQuantity(
-					commerceCartItem.getCPInstanceId());
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
+			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
+				cpDefinitionInventory);
 
-			int cartQuantity =
-				_commerceCartItemLocalService.getCPInstanceQuantity(
-					commerceCartItem.getCPInstanceId());
-
-			if (cartQuantity > availableQuantity) {
-				return new CommerceCartValidatorResult(
-					commerceCartItem.getCommerceCartItemId(), false,
-					"quantity-unavailable");
-			}
-
+		if (cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
 			return new CommerceCartValidatorResult(true);
 		}
 
-		return new CommerceCartValidatorResult(false);
+		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
+			cpInstance);
+
+		int cartQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
+			commerceCartItem.getCPInstanceId());
+
+		if (cartQuantity > availableQuantity) {
+			return new CommerceCartValidatorResult(
+				commerceCartItem.getCommerceCartItemId(), false,
+				"quantity-unavailable");
+		}
+
+		return new CommerceCartValidatorResult(true);
 	}
 
 	@Override
 	public CommerceCartValidatorResult validate(
-			CPInstance cpInstance, CommerceCart commerceCart, int quantity)
+			CPInstance cpInstance, int quantity)
 		throws PortalException {
 
-		if (cpInstance != null) {
-			CPDefinitionInventory cpDefinitionInventory =
-				_cpDefinitionInventoryLocalService.
-					fetchCPDefinitionInventoryByCPDefinitionId(
-						cpInstance.getCPDefinitionId());
+		if (cpInstance == null) {
+			return new CommerceCartValidatorResult(false);
+		}
 
-			if ((cpDefinitionInventory != null) &&
-				cpDefinitionInventory.getBackOrders()) {
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
 
-				return new CommerceCartValidatorResult(true);
-			}
+		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
+			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
+				cpDefinitionInventory);
 
-			int availableQuantity =
-				_commerceWarehouseItemLocalService.getCPInstanceQuantity(
-					cpInstance.getCPInstanceId());
-
-			int cartQuantity =
-				_commerceCartItemLocalService.getCPInstanceQuantity(
-					cpInstance.getCPInstanceId());
-
-			cartQuantity += quantity;
-
-			if (cartQuantity > availableQuantity) {
-				return new CommerceCartValidatorResult(
-					false, "quantity-unavailable");
-			}
-
+		if (cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
 			return new CommerceCartValidatorResult(true);
 		}
 
-		return new CommerceCartValidatorResult(false);
+		int availableQuantity = cpDefinitionInventoryEngine.getStockQuantity(
+			cpInstance);
+
+		int cartQuantity = _commerceCartItemLocalService.getCPInstanceQuantity(
+			cpInstance.getCPInstanceId());
+
+		cartQuantity += quantity;
+
+		if (cartQuantity > availableQuantity) {
+			return new CommerceCartValidatorResult(
+				false, "quantity-unavailable");
+		}
+
+		return new CommerceCartValidatorResult(true);
 	}
 
 	@Reference
 	private CommerceCartItemLocalService _commerceCartItemLocalService;
 
 	@Reference
-	private CommerceWarehouseItemLocalService
-		_commerceWarehouseItemLocalService;
+	private CPDefinitionInventoryEngineRegistry
+		_cpDefinitionInventoryEngineRegistry;
 
 	@Reference
 	private CPDefinitionInventoryLocalService

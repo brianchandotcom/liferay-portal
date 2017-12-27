@@ -1162,6 +1162,7 @@
 
 	<command name="editCP">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="${dmDocumentTitle}" />
 		</execute>
 
@@ -1733,6 +1734,7 @@
 
 	<command name="saveAndCheckinEditedDocumentPG">
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
 			<var name="rowEntry" value="${dmDocumentTitle}" />
 		</execute>
 

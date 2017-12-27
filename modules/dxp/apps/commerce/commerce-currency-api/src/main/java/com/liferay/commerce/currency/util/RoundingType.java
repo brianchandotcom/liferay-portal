@@ -20,12 +20,15 @@ import java.util.Locale;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface RoundingType {
 
 	public String getLabel(Locale locale);
 
-	public double round(double value);
+	public String getName();
+
+	public String round(double value);
 
 }

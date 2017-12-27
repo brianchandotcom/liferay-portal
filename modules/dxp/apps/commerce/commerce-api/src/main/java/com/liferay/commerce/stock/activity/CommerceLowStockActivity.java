@@ -14,11 +14,21 @@
 
 package com.liferay.commerce.stock.activity;
 
+import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.Locale;
+
 /**
  * @author Alessio Antonio Rendina
  */
 public interface CommerceLowStockActivity {
 
-	public String getName();
+	public void check(CommerceOrderItem commerceOrderItem)
+		throws PortalException;
+
+	public String getKey();
+
+	public String getLabel(Locale locale);
 
 }

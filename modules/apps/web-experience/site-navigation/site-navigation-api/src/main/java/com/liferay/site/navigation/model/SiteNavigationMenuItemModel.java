@@ -237,6 +237,20 @@ public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMen
 	public void setType(String type);
 
 	/**
+	 * Returns the order of this site navigation menu item.
+	 *
+	 * @return the order of this site navigation menu item
+	 */
+	public int getOrder();
+
+	/**
+	 * Sets the order of this site navigation menu item.
+	 *
+	 * @param order the order of this site navigation menu item
+	 */
+	public void setOrder(int order);
+
+	/**
 	 * Returns the type settings of this site navigation menu item.
 	 *
 	 * @return the type settings of this site navigation menu item
@@ -250,20 +264,6 @@ public interface SiteNavigationMenuItemModel extends BaseModel<SiteNavigationMen
 	 * @param typeSettings the type settings of this site navigation menu item
 	 */
 	public void setTypeSettings(String typeSettings);
-
-	/**
-	 * Returns the order of this site navigation menu item.
-	 *
-	 * @return the order of this site navigation menu item
-	 */
-	public int getOrder();
-
-	/**
-	 * Sets the order of this site navigation menu item.
-	 *
-	 * @param order the order of this site navigation menu item
-	 */
-	public void setOrder(int order);
 
 	@Override
 	public boolean isNew();

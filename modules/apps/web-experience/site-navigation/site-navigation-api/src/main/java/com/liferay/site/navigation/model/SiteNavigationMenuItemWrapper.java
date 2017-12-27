@@ -70,8 +70,8 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		attributes.put("parentSiteNavigationMenuItemId",
 			getParentSiteNavigationMenuItemId());
 		attributes.put("type", getType());
-		attributes.put("typeSettings", getTypeSettings());
 		attributes.put("order", getOrder());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -140,16 +140,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 			setType(type);
 		}
 
-		String typeSettings = (String)attributes.get("typeSettings");
-
-		if (typeSettings != null) {
-			setTypeSettings(typeSettings);
-		}
-
 		Integer order = (Integer)attributes.get("order");
 
 		if (order != null) {
 			setOrder(order);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 

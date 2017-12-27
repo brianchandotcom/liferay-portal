@@ -2116,8 +2116,8 @@ public class SiteNavigationMenuItemPersistenceImpl extends BasePersistenceImpl<S
 		siteNavigationMenuItemImpl.setSiteNavigationMenuId(siteNavigationMenuItem.getSiteNavigationMenuId());
 		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 		siteNavigationMenuItemImpl.setType(siteNavigationMenuItem.getType());
-		siteNavigationMenuItemImpl.setTypeSettings(siteNavigationMenuItem.getTypeSettings());
 		siteNavigationMenuItemImpl.setOrder(siteNavigationMenuItem.getOrder());
+		siteNavigationMenuItemImpl.setTypeSettings(siteNavigationMenuItem.getTypeSettings());
 
 		return siteNavigationMenuItemImpl;
 	}

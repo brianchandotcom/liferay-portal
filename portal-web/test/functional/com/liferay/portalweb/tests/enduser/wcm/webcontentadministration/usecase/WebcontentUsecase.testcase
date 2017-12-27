@@ -2690,12 +2690,17 @@
 			<var name="portlet" value="Gogo Shell" />
 		</execute>
 
-		<execute macro="GogoShell#inputGogoShellStopModuleCommand">
-			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+		<execute macro="GogoShell#getModuleID">
+			<return from="moduleID" name="moduleID" />
+			<var name="moduleName" value="com.liferay.journal.content.web" />
+		</execute>
+
+		<execute macro="GogoShell#stopModule">
+			<var name="moduleID" value="${moduleID}" />
 		</execute>
 
 		<execute macro="GogoShell#viewModuleStatus">
-			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+			<var name="moduleName" value="com.liferay.journal.content.web" />
 			<var name="moduleStatus" value="Resolved" />
 		</execute>
 
@@ -2715,12 +2720,12 @@
 			<var name="portlet" value="Gogo Shell" />
 		</execute>
 
-		<execute macro="GogoShell#inputGogoShellStartModuleCommand">
-			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+		<execute macro="GogoShell#startModule">
+			<var name="moduleID" value="${moduleID}" />
 		</execute>
 
 		<execute macro="GogoShell#viewModuleStatus">
-			<var name="moduleJarName" value="com.liferay.journal.content.web" />
+			<var name="moduleName" value="com.liferay.journal.content.web" />
 			<var name="moduleStatus" value="Active" />
 		</execute>
 

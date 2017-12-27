@@ -180,7 +180,7 @@ System.out.println(items);
 %>
 
 <clay:table
-    items="<%= items %>"
-    schema="<%= schema %>"
-    showActionsMenu="<%= true %>"
+	items="<%= items %>"
+	schema="<%= schema %>"
+	showActionsMenu="<%= true %>"
 />

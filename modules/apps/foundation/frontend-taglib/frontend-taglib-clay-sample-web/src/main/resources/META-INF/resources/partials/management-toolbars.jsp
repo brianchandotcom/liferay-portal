@@ -35,13 +35,13 @@ navigationFilterItem.put("items", navigationFilterItemItems);
 String[] navigationFilterItemItemsTypes = {"All", "Recent", "Mine", "Structures"};
 
 for (int i = 0; i < navigationFilterItemItemsTypes.length; i++) {
-    Map<String, Object> navigationFilterItemItem = new HashMap<>();
+	Map<String, Object> navigationFilterItemItem = new HashMap<>();
 
-    navigationFilterItemItem.put("href", "#" + i);
-    navigationFilterItemItem.put("label", navigationFilterItemItemsTypes[i]);
-    navigationFilterItemItem.put("type", "item");
+	navigationFilterItemItem.put("href", "#" + i);
+	navigationFilterItemItem.put("label", navigationFilterItemItemsTypes[i]);
+	navigationFilterItemItem.put("type", "item");
 
-    navigationFilterItemItems.add(navigationFilterItemItem);
+	navigationFilterItemItems.add(navigationFilterItemItem);
 }
 
 Map<String, Object> statusFilterItem = new HashMap<>();
@@ -58,13 +58,13 @@ statusFilterItem.put("items", statusFilterItemItems);
 String[] statusFilterItemItemsTypes = {"Any", "Draft", "Scheduled", "Approved", "Expired"};
 
 for (int i = 0; i < statusFilterItemItemsTypes.length; i++) {
-    Map<String, Object> statusFilterItemItem = new HashMap<>();
+	Map<String, Object> statusFilterItemItem = new HashMap<>();
 
-    statusFilterItemItem.put("href", "#" + i);
-    statusFilterItemItem.put("label", statusFilterItemItemsTypes[i]);
-    statusFilterItemItem.put("type", "item");
+	statusFilterItemItem.put("href", "#" + i);
+	statusFilterItemItem.put("label", statusFilterItemItemsTypes[i]);
+	statusFilterItemItem.put("type", "item");
 
-    statusFilterItemItems.add(statusFilterItemItem);
+	statusFilterItemItems.add(statusFilterItemItem);
 }
 
 List<Map<String, Object>> viewTypes = new ArrayList<>();
@@ -109,8 +109,9 @@ previewActionItem.put("label", "Preview");
 %>
 
 <clay:management-toolbar
-    actionItems="<%= actionItems %>"
-    filterItems="<%= filterItems %>"
-    selectable="<%= true %>"
-    sortingOrder="desc"
-    viewTypes="<%= viewTypes %>" />
+	actionItems="<%= actionItems %>"
+	filterItems="<%= filterItems %>"
+	selectable="<%= true %>"
+	sortingOrder="desc"
+	viewTypes="<%= viewTypes %>"
+/>

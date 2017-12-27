@@ -14,15 +14,19 @@
 
 package com.liferay.commerce.stock.activity;
 
-import java.util.Map;
+import com.liferay.commerce.model.CPDefinitionInventory;
+
+import java.util.List;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public interface CommerceLowStockActivityRegistry {
 
-	public Map<String, CommerceLowStockActivity>
-		getCommerceLowStockActivities();
+	public List<CommerceLowStockActivity> getCommerceLowStockActivities();
+
+	public CommerceLowStockActivity getCommerceLowStockActivity(
+		CPDefinitionInventory cpDefinitionInventory);
 
 	public CommerceLowStockActivity getCommerceLowStockActivity(String key);
 

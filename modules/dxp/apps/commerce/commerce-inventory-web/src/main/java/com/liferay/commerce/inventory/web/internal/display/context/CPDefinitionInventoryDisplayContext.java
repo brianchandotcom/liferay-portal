@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -72,9 +71,7 @@ public class CPDefinitionInventoryDisplayContext
 			new CommerceAvailabilityRangePriorityComparator(true));
 	}
 
-	public Map<String, CommerceLowStockActivity>
-		getCommerceLowStockActivities() {
-
+	public List<CommerceLowStockActivity> getCommerceLowStockActivities() {
 		return
 			_commerceLowStockActivityRegistry.getCommerceLowStockActivities();
 	}
@@ -112,9 +109,7 @@ public class CPDefinitionInventoryDisplayContext
 		return _cpDefinitionInventory;
 	}
 
-	public Map<String, CPDefinitionInventoryEngine>
-		getCPDefinitionInventoryEngines() {
-
+	public List<CPDefinitionInventoryEngine> getCPDefinitionInventoryEngines() {
 		return _cpDefinitionInventoryEngineRegistry.
 			getCPDefinitionInventoryEngines();
 	}

@@ -45,17 +45,16 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 				<aui:select label="inventory-engine" name="CPDefinitionInventoryEngine" showEmptyOption="<%= true %>">
 
 					<%
-					Map<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngines = cpDefinitionInventoryDisplayContext.getCPDefinitionInventoryEngines();
+					List<CPDefinitionInventoryEngine> cpDefinitionInventoryEngines = cpDefinitionInventoryDisplayContext.getCPDefinitionInventoryEngines();
 
-					for (Map.Entry<String, CPDefinitionInventoryEngine> cpDefinitionInventoryEngineEntry : cpDefinitionInventoryEngines.entrySet()) {
-						CPDefinitionInventoryEngine cpDefinitionInventoryEngine = cpDefinitionInventoryEngineEntry.getValue();
-
-						String cpDefinitionInventoryEngineName = cpDefinitionInventoryEngine.getName();
+					for (CPDefinitionInventoryEngine cpDefinitionInventoryEngine : cpDefinitionInventoryEngines) {
+						String cpDefinitionInventoryEngineName = cpDefinitionInventoryEngine.getKey();
 					%>
 
 						<aui:option
-							label="<%= cpDefinitionInventoryEngineName %>"
+							label="<%= cpDefinitionInventoryEngine.getLabel(locale) %>"
 							selected="<%= (cpDefinitionInventory != null) && cpDefinitionInventoryEngineName.equals(cpDefinitionInventory.getCPDefinitionInventoryEngine()) %>"
+							value="<%= cpDefinitionInventoryEngineName %>"
 						/>
 
 					<%
@@ -67,17 +66,16 @@ long cpDefinitionId = cpDefinitionInventoryDisplayContext.getCPDefinitionId();
 				<aui:select name="lowStockActivity" showEmptyOption="<%= true %>">
 
 					<%
-					Map<String, CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();
+					List<CommerceLowStockActivity> commerceLowStockActivities = cpDefinitionInventoryDisplayContext.getCommerceLowStockActivities();
 
-					for (Map.Entry<String, CommerceLowStockActivity> commerceLowStockActivityEntry : commerceLowStockActivities.entrySet()) {
-						CommerceLowStockActivity commerceLowStockActivity = commerceLowStockActivityEntry.getValue();
-
-						String commerceLowStockActivityName = commerceLowStockActivity.getName();
+					for (CommerceLowStockActivity commerceLowStockActivity : commerceLowStockActivities) {
+						String commerceLowStockActivityName = commerceLowStockActivity.getKey();
 					%>
 
 						<aui:option
-							label="<%= commerceLowStockActivityName %>"
+							label="<%= commerceLowStockActivity.getLabel(locale) %>"
 							selected="<%= (cpDefinitionInventory != null) && commerceLowStockActivityName.equals(cpDefinitionInventory.getLowStockActivity()) %>"
+							value="<%= commerceLowStockActivityName %>"
 						/>
 
 					<%

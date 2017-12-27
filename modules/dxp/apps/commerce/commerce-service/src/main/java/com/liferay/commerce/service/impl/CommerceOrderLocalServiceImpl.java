@@ -19,14 +19,18 @@ import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
 import com.liferay.commerce.exception.CommerceCartShippingAddressException;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -161,11 +165,25 @@ public class CommerceOrderLocalServiceImpl
 				commerceCartItem.fetchCPInstance(),
 				commerceCartItem.getQuantity());
 
-			commerceOrderItemLocalService.addCommerceOrderItem(
-				commerceOrder.getCommerceOrderId(),
-				commerceCartItem.getCPInstanceId(),
-				commerceCartItem.getQuantity(), 0, commerceCartItem.getJson(),
-				price, serviceContext);
+			CommerceOrderItem commerceOrderItem =
+				commerceOrderItemLocalService.addCommerceOrderItem(
+					commerceOrder.getCommerceOrderId(),
+					commerceCartItem.getCPInstanceId(),
+					commerceCartItem.getQuantity(), 0,
+					commerceCartItem.getJson(), price, serviceContext);
+
+			// Commerce low stock activity
+
+			CPDefinitionInventory cpDefinitionInventory =
+				cpDefinitionInventoryLocalService.
+					fetchCPDefinitionInventoryByCPDefinitionId(
+						commerceCartItem.getCPDefinitionId());
+
+			CommerceLowStockActivity commerceLowStockActivity =
+				_commerceLowStockActivityRegistry.getCommerceLowStockActivity(
+					cpDefinitionInventory);
+
+			commerceLowStockActivity.check(commerceOrderItem);
 		}
 
 		// Commerce cart
@@ -440,6 +458,9 @@ public class CommerceOrderLocalServiceImpl
 			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
+
+	@ServiceReference(type = CommerceLowStockActivityRegistry.class)
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 	@ServiceReference(type = CommercePriceCalculator.class)
 	private CommercePriceCalculator _commercePriceCalculator;

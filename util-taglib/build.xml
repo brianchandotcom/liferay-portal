@@ -39,6 +39,13 @@
 			<replacetoken><![CDATA[<uri>http://java.sun.com/portlet</uri>]]></replacetoken>
 			<replacevalue><![CDATA[<uri>http://java.sun.com/portlet_2_0</uri>]]></replacevalue>
 		</replace>
+
+		<copy file="classes/META-INF/liferay-portlet_1_0.tld" preservelastmodified="true" tofile="classes/META-INF/liferay-portlet_1_0.tld" />
+
+		<replace file="classes/META-INF/liferay-portlet_1_0.tld">
+			<replacetoken><![CDATA[<short-name>portlet_1_0</short-name>]]></replacetoken>
+			<replacevalue><![CDATA[<short-name>portlet</short-name>]]></replacevalue>
+		</replace>
 	</target>
 
 	<target depends="build-common-java.deploy" name="deploy">

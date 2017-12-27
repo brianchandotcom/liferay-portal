@@ -66,4 +66,17 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<c:if test="<%= (kaleoDefinitionVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+		<portlet:actionURL name="unpublishKaleoDefinitionVersion" var="unpublishURL">
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message="unpublish"
+			url="<%= unpublishURL %>"
+		/>
+	</c:if>
 </liferay-ui:icon-menu>

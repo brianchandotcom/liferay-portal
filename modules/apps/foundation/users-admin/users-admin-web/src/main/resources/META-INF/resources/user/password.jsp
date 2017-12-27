@@ -17,9 +17,16 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = (User)request.getAttribute("user.selUser");
+User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 
-PasswordPolicy passwordPolicy = (PasswordPolicy)request.getAttribute("user.passwordPolicy");
+PasswordPolicy passwordPolicy = null;
+
+if (selUser == null) {
+	passwordPolicy = PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(company.getCompanyId());
+}
+else {
+	passwordPolicy = selUser.getPasswordPolicy();
+}
 
 boolean passwordReset = false;
 boolean passwordResetDisabled = false;

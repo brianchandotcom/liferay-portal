@@ -1,0 +1,10 @@
+Bundle-Name: Liferay Asset Entry Rel API
+Bundle-SymbolicName: com.liferay.asset.entry.rel.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.asset.entry.rel.exception,\
+	com.liferay.asset.entry.rel.model,\
+	com.liferay.asset.entry.rel.service,\
+	com.liferay.asset.entry.rel.service.persistence
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset

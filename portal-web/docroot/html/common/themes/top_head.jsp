@@ -213,11 +213,7 @@ StringBundler pageTopSB = OutputTag.getData(request, WebKeys.PAGE_TOP);
 
 <%!
 private String _escapeCssBlock(String css) {
-	return StringUtil.replace(
-		css,
-		new String[] {"<", "expression("},
-		new String[] {"\\3c", ""}
-	);
+	return StringUtil.replace(css, new String[] {"<", "expression("}, new String[] {"\\3c", ""});
 }
 
 private static Log _log = LogFactoryUtil.getLog("portal_web.docroot.html.common.themes.top_head_jsp");

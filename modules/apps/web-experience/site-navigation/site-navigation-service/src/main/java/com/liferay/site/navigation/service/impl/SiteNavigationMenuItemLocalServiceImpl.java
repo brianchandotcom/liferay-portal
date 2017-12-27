@@ -138,20 +138,20 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
-			getSiteNavigationMenuItem(siteNavigationMenuItemId);
+			siteNavigationMenuItemPersistence.fetchByPrimaryKey(
+				siteNavigationMenuItemId);
 
 		long oldParentSiteNavigationMenuItemId =
 			siteNavigationMenuItem.getParentSiteNavigationMenuItemId();
-
-		List<SiteNavigationMenuItem> children = getSiteNavigationMenuItems(
-			siteNavigationMenuItem.getSiteNavigationMenuId(),
-			parentSiteNavigationMenuItemId);
 
 		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(
 			parentSiteNavigationMenuItemId);
 		siteNavigationMenuItem.setOrder(order);
 
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
+
+		List<SiteNavigationMenuItem> children = getSiteNavigationMenuItems(
+			siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		Stream<SiteNavigationMenuItem> stream = children.stream();
 

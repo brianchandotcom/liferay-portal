@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
+import javax.portlet.ActionRequest;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -157,7 +158,8 @@ public class CommerceAddressDisplayContext {
 		PortletURL portletURL = _liferayPortletResponse.createActionURL();
 
 		portletURL.setParameter(Constants.CMD, Constants.DELETE);
-		portletURL.setParameter("javax.portlet.action", "editCommerceAddress");
+		portletURL.setParameter(
+			ActionRequest.ACTION_NAME, "editCommerceAddress");
 		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
 		portletURL.setParameter(
 			"commerceAddressId", String.valueOf(commerceAddressId));

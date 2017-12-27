@@ -51,7 +51,8 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.Map" %>
 
-<%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="javax.portlet.ActionRequest" %><%@
+page import="javax.portlet.PortletURL" %>
 
 <liferay-frontend:defineObjects />
 

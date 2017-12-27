@@ -91,10 +91,22 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 			}
 		}
 
+		matcher = _redundantLineBreakPattern2.matcher(content);
+
+		while (matcher.find()) {
+			if (JSPSourceUtil.isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, matcher.group(1), StringPool.SPACE,
+					matcher.start());
+			}
+		}
+
 		return content;
 	}
 
 	private final Pattern _redundantLineBreakPattern1 = Pattern.compile(
 		"\\(\n");
+	private final Pattern _redundantLineBreakPattern2 = Pattern.compile(
+		"[|&](\n\\s*)");
 
 }

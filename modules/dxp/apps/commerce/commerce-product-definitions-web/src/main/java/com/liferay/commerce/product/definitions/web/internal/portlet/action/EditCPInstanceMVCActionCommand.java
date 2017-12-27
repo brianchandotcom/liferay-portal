@@ -194,6 +194,9 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 		String gtin = ParamUtil.getString(actionRequest, "gtin");
 		String manufacturerPartNumber = ParamUtil.getString(
 			actionRequest, "manufacturerPartNumber");
+		boolean purchasable = ParamUtil.getBoolean(
+			actionRequest, "purchasable");
+		boolean published = ParamUtil.getBoolean(actionRequest, "published");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -239,8 +242,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		if (cpInstanceId > 0) {
 			cpInstance = _cpInstanceService.updateCPInstance(
-				cpInstanceId, sku, gtin, manufacturerPartNumber,
-				displayDateMonth, displayDateDay, displayDateYear,
+				cpInstanceId, sku, gtin, manufacturerPartNumber, purchasable,
+				published, displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,
 				expirationDateMinute, neverExpire, serviceContext);
@@ -250,8 +253,8 @@ public class EditCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				actionRequest, "ddmFormValues");
 
 			cpInstance = _cpInstanceService.addCPInstance(
-				cpDefinitionId, sku, gtin, manufacturerPartNumber,
-				ddmFormValues, displayDateMonth, displayDateDay,
+				cpDefinitionId, sku, gtin, manufacturerPartNumber, purchasable,
+				ddmFormValues, published, displayDateMonth, displayDateDay,
 				displayDateYear, displayDateHour, displayDateMinute,
 				expirationDateMonth, expirationDateDay, expirationDateYear,
 				expirationDateHour, expirationDateMinute, neverExpire,

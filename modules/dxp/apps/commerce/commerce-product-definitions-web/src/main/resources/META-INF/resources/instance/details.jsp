@@ -65,6 +65,8 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 				<aui:input helpMessage="gtin-help" label="global-trade-item-number" name="gtin" />
 
 				<aui:input name="manufacturerPartNumber" />
+
+				<aui:input name="purchasable" />
 			</aui:fieldset>
 
 			<c:if test="<%= !cpDefinition.getIgnoreSKUCombinations() %>">
@@ -106,7 +108,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 			</c:if>
 
 			<aui:fieldset collapsible="<%= true %>" label="schedule">
-				<aui:input name="published" type="checkbox" />
+				<aui:input name="published" />
 
 				<aui:input formName="fm" name="displayDate" />
 

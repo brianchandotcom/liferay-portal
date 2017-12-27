@@ -118,7 +118,8 @@ public class CPInstanceStagedModelRepository
 		return _cpInstanceLocalService.addCPInstance(
 			cpInstance.getCPDefinitionId(), cpInstance.getSku(),
 			cpInstance.getGtin(), cpInstance.getManufacturerPartNumber(),
-			cpInstance.getDDMContent(), displayDateMonth, displayDateDay,
+			cpInstance.getPurchasable(), cpInstance.getDDMContent(),
+			cpInstance.getPublished(), displayDateMonth, displayDateDay,
 			displayDateYear, displayDateHour, displayDateMinute,
 			expirationDateMonth, expirationDateDay, expirationDateYear,
 			expirationDateHour, expirationDateMinute, neverExpire,
@@ -249,6 +250,7 @@ public class CPInstanceStagedModelRepository
 		return _cpInstanceLocalService.updateCPInstance(
 			cpInstance.getCPInstanceId(), cpInstance.getSku(),
 			cpInstance.getGtin(), cpInstance.getManufacturerPartNumber(),
+			cpInstance.getPurchasable(), cpInstance.getPublished(),
 			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
 			displayDateMinute, expirationDateMonth, expirationDateDay,
 			expirationDateYear, expirationDateHour, expirationDateMinute,

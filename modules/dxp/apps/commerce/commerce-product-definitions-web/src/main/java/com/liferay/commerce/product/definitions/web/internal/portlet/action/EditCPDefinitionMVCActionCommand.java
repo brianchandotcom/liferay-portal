@@ -244,6 +244,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 		Map<Locale, String> metaDescriptionMap =
 			LocalizationUtil.getLocalizationMap(
 				actionRequest, "metaDescriptionMapAsXML");
+		boolean published = ParamUtil.getBoolean(actionRequest, "published");
 
 		int displayDateMonth = ParamUtil.getInteger(
 			actionRequest, "displayDateMonth");
@@ -294,11 +295,11 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			cpDefinition = _cpDefinitionService.addCPDefinition(
 				titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 				metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-				productTypeName, false, null, displayDateMonth, displayDateDay,
-				displayDateYear, displayDateHour, displayDateMinute,
-				expirationDateMonth, expirationDateDay, expirationDateYear,
-				expirationDateHour, expirationDateMinute, neverExpire,
-				serviceContext);
+				productTypeName, false, null, published, displayDateMonth,
+				displayDateDay, displayDateYear, displayDateHour,
+				displayDateMinute, expirationDateMonth, expirationDateDay,
+				expirationDateYear, expirationDateHour, expirationDateMinute,
+				neverExpire, serviceContext);
 		}
 		else {
 
@@ -310,7 +311,7 @@ public class EditCPDefinitionMVCActionCommand extends BaseMVCActionCommand {
 			cpDefinition = _cpDefinitionService.updateCPDefinition(
 				cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 				urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
-				oldCPDefinition.isIgnoreSKUCombinations(), null,
+				oldCPDefinition.isIgnoreSKUCombinations(), null, published,
 				displayDateMonth, displayDateDay, displayDateYear,
 				displayDateHour, displayDateMinute, expirationDateMonth,
 				expirationDateDay, expirationDateYear, expirationDateHour,

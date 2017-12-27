@@ -128,7 +128,7 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 		</aui:fieldset>
 
 		<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="schedule">
-			<aui:input name="published" type="checkbox" />
+			<aui:input name="published" />
 
 			<aui:input formName="fm" name="displayDate" />
 

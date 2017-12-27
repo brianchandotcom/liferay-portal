@@ -295,10 +295,11 @@ public class CPTestUtil {
 		return CPInstanceLocalServiceUtil.addCPInstance(
 			cpDefinitionId, RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			ddmContent, displayDateMonth, displayDateDay, displayDateYear,
-			displayDateHour, displayDateMinute, expirationDateMonth,
-			expirationDateDay, expirationDateYear, expirationDateHour,
-			expirationDateMinute, false, serviceContext);
+			RandomTestUtil.randomBoolean(), ddmContent,
+			RandomTestUtil.randomBoolean(), displayDateMonth, displayDateDay,
+			displayDateYear, displayDateHour, displayDateMinute,
+			expirationDateMonth, expirationDateDay, expirationDateYear,
+			expirationDateHour, expirationDateMinute, false, serviceContext);
 	}
 
 	public static CPOption addCPOption(long groupId) throws Exception {
@@ -421,6 +422,7 @@ public class CPTestUtil {
 		double depth = RandomTestUtil.randomDouble();
 		double weight = RandomTestUtil.randomDouble();
 		String ddmStructureKey = null;
+		boolean published = RandomTestUtil.randomBoolean();
 
 		Date displayDate = new Date(now - Time.HOUR);
 		Date expirationDate = new Date(now + Time.DAY);
@@ -462,10 +464,11 @@ public class CPTestUtil {
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
 			shippingExtraPrice, width, height, depth, weight, ddmStructureKey,
-			displayDateMonth, displayDateDay, displayDateYear, displayDateHour,
-			displayDateMinute, expirationDateMonth, expirationDateDay,
-			expirationDateYear, expirationDateHour, expirationDateMinute,
-			neverExpire, hasDefaultInstance, serviceContext);
+			published, displayDateMonth, displayDateDay, displayDateYear,
+			displayDateHour, displayDateMinute, expirationDateMonth,
+			expirationDateDay, expirationDateYear, expirationDateHour,
+			expirationDateMinute, neverExpire, hasDefaultInstance,
+			serviceContext);
 	}
 
 	protected static String getJSON(

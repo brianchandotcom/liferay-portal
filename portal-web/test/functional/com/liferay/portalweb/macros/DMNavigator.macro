@@ -79,12 +79,6 @@
 		</execute>
 	</command>
 
-	<command name="gotoEditDocument">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="rowEntry" value="${dmDocumentTitle}" />
-		</execute>
-	</command>
-
 	<command name="gotoFolder">
 		<var name="key_dmFolderName" value="${dmFolderName}" />
 

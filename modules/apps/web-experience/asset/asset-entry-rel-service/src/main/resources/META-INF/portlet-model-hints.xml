@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel">
+		<field name="assetEntryAssetCategoryRelId" type="long" />
+		<field name="entryId" type="long" />
+		<field name="categoryId" type="long" />
+	</model>
+</model-hints>

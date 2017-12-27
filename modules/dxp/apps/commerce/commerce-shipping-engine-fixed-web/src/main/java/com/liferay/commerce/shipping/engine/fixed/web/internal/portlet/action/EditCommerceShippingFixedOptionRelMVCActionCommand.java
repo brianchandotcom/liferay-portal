@@ -114,19 +114,14 @@ public class EditCommerceShippingFixedOptionRelMVCActionCommand
 
 		long commerceShippingMethodId = ParamUtil.getLong(
 			actionRequest, "commerceShippingMethodId");
-
 		long commerceShippingFixedOptionId = ParamUtil.getLong(
 			actionRequest, "commerceShippingFixedOptionId");
-
 		long commerceWarehouseId = ParamUtil.getLong(
 			actionRequest, "commerceWarehouseId");
-
 		long commerceCountryId = ParamUtil.getLong(
 			actionRequest, "commerceCountryId");
-
 		long commerceRegionId = ParamUtil.getLong(
 			actionRequest, "commerceRegionId");
-
 		String zip = ParamUtil.getString(actionRequest, "zip");
 		double weightFrom = ParamUtil.getDouble(actionRequest, "weightFrom");
 		double weightTo = ParamUtil.getDouble(actionRequest, "weightTo");

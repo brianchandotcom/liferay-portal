@@ -31,7 +31,6 @@ public interface CommercePriceFormatter {
 	public String format(HttpServletRequest httpServletRequest, double price)
 		throws PortalException;
 
-	public String format(Locale locale, long groupId, double price)
-		throws PortalException;
+	public String format(Locale locale, long groupId, double price);
 
 }

@@ -16,12 +16,12 @@ package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.RoundingType;
+import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
-
-import java.text.NumberFormat;
 
 import java.util.Locale;
 
@@ -47,9 +47,7 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	}
 
 	@Override
-	public String format(Locale locale, long groupId, double price)
-		throws PortalException {
-
+	public String format(Locale locale, long groupId, double price) {
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
@@ -59,9 +57,11 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			code = commerceCurrency.getCode();
 		}
 
-		NumberFormat numberFormat = NumberFormat.getNumberInstance(locale);
+		RoundingType roundingType =
+			_roundingTypeServicesTracker.getRoundingType(
+				commerceCurrency.getRoundingType());
 
-		return code + StringPool.SPACE + numberFormat.format(price);
+		return code + StringPool.SPACE + roundingType.round(price);
 	}
 
 	@Reference
@@ -69,5 +69,8 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 	@Reference
 	private Portal _portal;
+
+	@Reference
+	private RoundingTypeServicesTracker _roundingTypeServicesTracker;
 
 }

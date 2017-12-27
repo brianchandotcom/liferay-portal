@@ -146,28 +146,26 @@ public class DispatchIoHandler implements IoHandler {
 	protected LdapHandler getLdapHandler(Request request) {
 		MessageTypeEnum messageTypeEnum = request.getType();
 
-		switch (messageTypeEnum) {
-			case ABANDON_REQUEST:
-				return _abandonLdapHandler;
-
-			case BIND_REQUEST:
-				return _bindLdapHandler;
-
-			case COMPARE_REQUEST:
-				return _compareLdapHandler;
-
-			case EXTENDED_REQUEST:
-				return _extendedLdapHandler;
-
-			case SEARCH_REQUEST:
-				return _searchLdapHandler;
-
-			case UNBIND_REQUEST:
-				return _unbindLdapHandler;
-
-			default:
-				return null;
+		if (DispatchIoHandler == MessageTypeEnum.ABANDON_REQUEST) {
+			return _abandonLdapHandler;
 		}
+		else if (DispatchIoHandler == MessageTypeEnum.BIND_REQUEST) {
+			return _bindLdapHandler;
+		}
+		else if (DispatchIoHandler == MessageTypeEnum.COMPARE_REQUEST) {
+			return _compareLdapHandler;
+		}
+		else if (DispatchIoHandler == MessageTypeEnum.EXTENDED_REQUEST) {
+			return _extendedLdapHandler;
+		}
+		else if (DispatchIoHandler == MessageTypeEnum.SEARCH_REQUEST) {
+			return _searchLdapHandler;
+		}
+		else if (DispatchIoHandler == MessageTypeEnum.UNBIND_REQUEST) {
+			return _unbindLdapHandler;
+		}
+
+		return null;
 	}
 
 	protected LdapHandlerContext getLdapHandlerContext(IoSession ioSession) {

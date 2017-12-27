@@ -35,7 +35,6 @@ import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -179,7 +178,7 @@ public class EditCommercePaymentMethodMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String redirect = StringPool.BLANK;
+		String redirect = null;
 
 		long commercePaymentMethodId = ParamUtil.getLong(
 			actionRequest, "commercePaymentMethodId");
@@ -290,7 +289,7 @@ public class EditCommercePaymentMethodMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String redirect = StringPool.BLANK;
+		String redirect = null;
 
 		long commercePaymentMethodId = ParamUtil.getLong(
 			actionRequest, "commercePaymentMethodId");

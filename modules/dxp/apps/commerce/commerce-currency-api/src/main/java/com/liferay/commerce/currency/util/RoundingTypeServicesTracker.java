@@ -16,14 +16,17 @@ package com.liferay.commerce.currency.util;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.NavigableMap;
+import java.util.List;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 @ProviderType
 public interface RoundingTypeServicesTracker {
 
-	public NavigableMap<String, RoundingType> getRoundingTypes();
+	public RoundingType getRoundingType(String name);
+
+	public List<RoundingType> getRoundingTypes();
 
 }

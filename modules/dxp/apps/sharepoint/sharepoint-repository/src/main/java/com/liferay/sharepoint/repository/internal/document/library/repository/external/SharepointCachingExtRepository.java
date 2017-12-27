@@ -477,8 +477,8 @@ public class SharepointCachingExtRepository implements ExtRepository {
 		return extRepositoryFileEntry;
 	}
 
-	private static final ThreadLocal<
-		Map<String, List<ExtRepositoryFileVersion>>>
+	private static final ThreadLocal
+		<Map<String, List<ExtRepositoryFileVersion>>>
 			_extRepositoryFileVersionCache = new AutoResetThreadLocal<>(
 				"extRepositoryFileVersionCache", HashMap::new);
 	private static final ThreadLocal<Map<String, ExtRepositoryObject>>

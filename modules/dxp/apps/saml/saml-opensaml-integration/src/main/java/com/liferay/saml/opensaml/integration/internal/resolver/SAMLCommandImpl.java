@@ -32,9 +32,9 @@ public class SAMLCommandImpl
 			implements SAMLCommand<T, R> {
 
 	public SAMLCommandImpl(
-		Function<
-			SAMLMessageContext<
-				InboundMessageType, OutboundMessageType, NameID>, T>
+		Function
+			<SAMLMessageContext
+				<InboundMessageType, OutboundMessageType, NameID>, T>
 					samlMessageContextFunction) {
 
 		_samlMessageContextFunction = samlMessageContextFunction;

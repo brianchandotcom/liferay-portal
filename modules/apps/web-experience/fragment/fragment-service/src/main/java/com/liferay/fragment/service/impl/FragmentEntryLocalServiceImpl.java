@@ -141,8 +141,10 @@ public class FragmentEntryLocalServiceImpl
 
 		// HTML preview
 
-		_htmlPreviewEntryLocalService.deleteHtmlPreviewEntry(
-			fragmentEntry.getHtmlPreviewEntryId());
+		if (fragmentEntry.getHtmlPreviewEntryId() > 0) {
+			_htmlPreviewEntryLocalService.deleteHtmlPreviewEntry(
+				fragmentEntry.getHtmlPreviewEntryId());
+		}
 
 		return fragmentEntry;
 	}

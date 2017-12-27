@@ -25,6 +25,7 @@ if (displayActivityCounterNameCount == 0) {
 	displayActivityCounterNameCount = 1;
 }
 
+String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNameCount];
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -57,13 +58,14 @@ if (displayActivityCounterNameCount == 0) {
 
 						<%
 						for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
+							displayActivityCounterNameIndexes[displayActivityCounterNameIndex] = String.valueOf(displayActivityCounterNameIndex);
 						%>
 
 							<div class="lfr-form-row">
 								<div class="row-fields">
 									<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
 										<liferay-util:param name="portletResource" value="<%= portletName %>" />
-										<liferay-util:param name="index" value="<%= String.valueOf(displayActivityCounterNameIndex) %>" />
+										<liferay-util:param name="index" value="<%= displayActivityCounterNameIndexes[displayActivityCounterNameIndex] %>" />
 									</liferay-util:include>
 								</div>
 							</div>
@@ -75,11 +77,13 @@ if (displayActivityCounterNameCount == 0) {
 					</aui:fieldset>
 				</div>
 
+				<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
 
 				<aui:script use="liferay-auto-fields">
 					var autoFields = new Liferay.AutoFields(
 						{
 							contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
+							fieldIndexes: '<portlet:namespace/>displayActivityCounterNameIndexes',
 							namespace: '<portlet:namespace />',
 							url: '<liferay-portlet:renderURL portletName="<%= SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS %>" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><liferay-portlet:param name="mvcPath" value="/add_activity_counter.jsp" /><liferay-portlet:param name="portletResource" value="<%= portletName %>" /></liferay-portlet:renderURL>'
 							urlNamespace: '<%= "_" + SocialUserStatisticsPortletKeys.SOCIAL_USER_STATISTICS + "_" %>'

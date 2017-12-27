@@ -14,6 +14,24 @@ Import-Package:\
 	\
 	!org.mozilla.javascript.*,\
 	\
+	com.ibm.db2.jcc;resolution:=optional,\
+	\
+	com.microsoft.sqlserver.jdbc;resolution:=optional,\
+	\
+	com.mysql.jdbc;resolution:=optional,\
+	\
+	com.p6spy.engine.spy;resolution:=optional,\
+	\
+	com.sybase.jdbc4.jdbc;resolution:=optional,\
+	\
+	oracle.jdbc;resolution:=optional,\
+	\
+	org.hsqldb.jdbc;resolution:=optional,\
+	\
+	org.mariadb.jdbc;resolution:=optional,\
+	\
+	org.postgresql;resolution:=optional,\
+	\
 	*
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Clustering

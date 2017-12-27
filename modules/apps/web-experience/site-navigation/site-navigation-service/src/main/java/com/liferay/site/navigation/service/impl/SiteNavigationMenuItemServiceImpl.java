@@ -77,13 +77,12 @@ public class SiteNavigationMenuItemServiceImpl
 
 	@Override
 	public SiteNavigationMenuItem updateSiteNavigationMenuItem(
-			long siteNavigationMenuId, long parentSiteNavigationMenuItemId,
-			String typeSettings, ServiceContext serviceContext)
+			long siteNavigationMenuId, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(
-			getUserId(), siteNavigationMenuId, parentSiteNavigationMenuItemId,
-			typeSettings, serviceContext);
+			getUserId(), siteNavigationMenuId, typeSettings, serviceContext);
 	}
 
 }

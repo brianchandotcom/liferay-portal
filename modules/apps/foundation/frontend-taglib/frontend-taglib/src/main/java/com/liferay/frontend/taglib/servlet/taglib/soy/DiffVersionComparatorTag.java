@@ -46,11 +46,11 @@ import javax.portlet.RenderResponse;
  */
 public class DiffVersionComparatorTag extends TemplateRendererTag {
 
-	public JSONObject createDiffVersionJSONObject(DiffVersion diffVersion,
-		PortletURL sourceURL, PortletURL targetURL) throws PortalException {
+	public JSONObject createDiffVersionJSONObject(
+			DiffVersion diffVersion, PortletURL sourceURL, PortletURL targetURL)
+		throws PortalException {
 
 		JSONObject diffVersionJSONObject = JSONFactoryUtil.createJSONObject();
-		JSONObject userJSONObject = JSONFactoryUtil.createJSONObject();
 		double diffVersionNumber = diffVersion.getVersion();
 
 		String diffVersionString = String.valueOf(diffVersionNumber);
@@ -63,6 +63,7 @@ public class DiffVersionComparatorTag extends TemplateRendererTag {
 		diffVersionJSONObject.put(
 			"displayDate",
 			LanguageUtil.format(request, "x-ago", timeDescription, false));
+
 		diffVersionJSONObject.put(
 			"inRange",
 			diffVersionNumber > _sourceVersion && diffVersionNumber <=
@@ -92,7 +93,7 @@ public class DiffVersionComparatorTag extends TemplateRendererTag {
 	public JSONObject createLanguageKeysJSONObject() {
 		JSONObject languageKeysJSONObject = JSONFactoryUtil.createJSONObject();
 
-		for (String languageKey : languageKeys) {
+		for (String languageKey : _LANGUAGE_KEYS) {
 			languageKeysJSONObject.put(
 				languageKey, LanguageUtil.get(request, languageKey));
 		}
@@ -174,7 +175,8 @@ public class DiffVersionComparatorTag extends TemplateRendererTag {
 
 	@Override
 	public String getModule() {
-		return "frontend-taglib/diff_version_comparator/DiffVersionComparator.es";
+		return
+			"frontend-taglib/diff_version_comparator/DiffVersionComparator.es";
 	}
 
 	public void setAvailableLocales(Set<Locale> availableLocales) {
@@ -241,13 +243,13 @@ public class DiffVersionComparatorTag extends TemplateRendererTag {
 			LanguageUtil.format(request, "version-x", targetVersion));
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DiffVersionComparatorTag.class);
-
-	private static final String[] languageKeys = {
+	private static final String[] _LANGUAGE_KEYS = {
 		"added", "deleted", "first-version", "format-changes", "last-version",
 		"there-are-no-results", "you-are-comparing-these-versions"
 	};
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DiffVersionComparatorTag.class);
 
 	private Set<Locale> _availableLocales;
 	private DiffVersionsInfo _diffVersionsInfo;

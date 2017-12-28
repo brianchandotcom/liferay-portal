@@ -1,5 +1,5 @@
 <definition>
-	<command name="addCatalogEntry">
+	<command name="addProductsEntry">
 		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${productTitle}" />
 
 		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
@@ -19,16 +19,12 @@
 		<execute function="Type" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
 
 		<execute function="Select" locator1="CommerceEntry#FIELD_TYPE_SELECT" value1="${optionFieldType}" />
-
-		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${optionTitle}" />
 	</command>
 
 	<command name="addOptionValue">
-		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${valueTitle}" />
+		<execute function="Type" locator1="CommerceEntry#MODAL_TITLE_FIELD" value1="${valueTitle}" />
 
 		<execute function="Type" locator1="CommerceEntry#PRIORITY_FIELD" value1="${valuePriority}" />
-
-		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${valueTitle}" />
 	</command>
 
 	<command name="addSKUsEntry">
@@ -55,15 +51,9 @@
 		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${newEntryTitle}" />
 	</command>
 
-	<command name="gotoEntryMenu">
-		<execute function="AssertClick" locator1="CommerceEntry#ENTRY_MENU_TAB" value1="${menuTab}">
+	<command name="gotoMenuTab">
+		<execute function="AssertClick" locator1="CommerceEntry#MENU_TAB" value1="${menuTab}">
 			<var name="key_menuTab" value="${menuTab}" />
-		</execute>
-	</command>
-
-	<command name="gotoEntryTab">
-		<execute macro="CommerceEntry#gotoEntryMenu">
-			<var name="menuTab" value="${menuTab}" />
 		</execute>
 	</command>
 
@@ -153,7 +143,7 @@
 	</command>
 
 	<command name="uploadCatalogEntrySingleImage">
-		<execute macro="CommerceEntry#gotoEntryMenu">
+		<execute macro="CommerceEntry#gotoMenuTab">
 			<var name="menuTab" value="Images" />
 		</execute>
 
@@ -172,13 +162,15 @@
 		<execute function="AssertTextEquals" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#FULL_DESCRIPTION_FIELD" value1="${productFullDescription}" />
+
+		<execute function="AssertTextEquals" locator1="CommerceEntry#SEO_FRIENDLYURL" value1="${productTitle}">
+			<var name="key_productTitle" value="${productTitle}" />
+		</execute>
 	</command>
 
 	<command name="viewOptionsEntry">
 		<execute function="AssertTextEquals" locator1="CommerceEntry#TITLE_FIELD" value1="${optionTitle}" />
 
 		<execute function="AssertTextEquals" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
-
-		<execute function="AssertTextEquals" locator1="CommerceEntry#KEY_FIELD" value1="${optionKey}" />
 	</command>
 </definition>

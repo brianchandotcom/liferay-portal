@@ -88,10 +88,6 @@ StringBuilder friendlyURLBase = new StringBuilder();
 	<c:when test="<%= !group.isLayoutPrototype() %>">
 		<aui:input name="name" />
 
-		<div class="form-group">
-			<aui:input helpMessage="if-enabled-this-page-does-not-show-up-in-the-navigation-menu" label="hide-from-navigation-menu" name="hidden" type="toggle-switch" value="<%= selLayout.isHidden() %>" />
-		</div>
-
 		<c:choose>
 			<c:when test="<%= selLayoutType.isURLFriendliable() %>">
 				<div class="form-group">

@@ -17,13 +17,13 @@
 	],
 	"liferayTheme": {
 		"baseTheme": "styled",
-		"distName": "commerce-theme-b2b",
+		"distName": "commerce-theme-customer-portal",
 		"hookModules": [
 			"liferay-theme-es2015-hook"
 		],
 		"rubySass": false,
 		"version": "7.0"
 	},
-	"name": "commerce-theme-b2b",
+	"name": "commerce-theme-customer-portal",
 	"version": "1.0.0"
 }

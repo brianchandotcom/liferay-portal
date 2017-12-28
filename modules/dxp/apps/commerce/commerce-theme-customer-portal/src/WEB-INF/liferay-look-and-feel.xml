@@ -5,7 +5,7 @@
 	<compatibility>
 		<version>7.1.0+</version>
 	</compatibility>
-	<theme id="commerce-theme-b2b" name="Commerce Theme b2b">
+	<theme id="commerce-theme-customer-portal" name="Commerce Theme Customer Portal">
 		<template-extension>ftl</template-extension>
 		<settings>
 			<setting configurable="true" key="demo-mode" type="checkbox" value="false" />

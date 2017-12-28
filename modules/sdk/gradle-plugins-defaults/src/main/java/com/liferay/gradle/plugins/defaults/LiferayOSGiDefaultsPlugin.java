@@ -1685,12 +1685,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			SourceSet sourceSet = GradleUtil.getSourceSet(
 				project, SourceSet.MAIN_SOURCE_SET_NAME);
 
-			FileCollection resourcesFileCollection = sourceSet.getResources();
-
-			FileCollection jspFileCollection = resourcesFileCollection.filter(
-				_jspSpec);
-
-			if (!jspFileCollection.isEmpty()) {
+			if (FileUtil.hasFiles(sourceSet.getResources(), _jspSpec)) {
 				artifactHandler.add(
 					Dependency.ARCHIVES_CONFIGURATION, jarJSPTask);
 			}

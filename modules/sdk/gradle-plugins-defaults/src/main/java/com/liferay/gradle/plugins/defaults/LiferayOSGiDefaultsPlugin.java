@@ -35,6 +35,7 @@ import com.liferay.gradle.plugins.defaults.internal.util.GitUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.IncrementVersionClosure;
+import com.liferay.gradle.plugins.defaults.internal.util.NameSuffixFileSpec;
 import com.liferay.gradle.plugins.defaults.internal.util.XMLUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.RenameDependencyAction;
 import com.liferay.gradle.plugins.defaults.internal.util.copy.ReplaceContentFilterReader;
@@ -1661,22 +1662,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 			FileCollection resourcesFileCollection = sourceSet.getResources();
 
 			FileCollection jspFileCollection = resourcesFileCollection.filter(
-				new Spec<File>() {
-
-					@Override
-					public boolean isSatisfiedBy(File file) {
-						String fileName = file.getName();
-
-						if (fileName.endsWith(".jsp") ||
-							fileName.endsWith(".jspf")) {
-
-							return true;
-						}
-
-						return false;
-					}
-
-				});
+				_jspSpec);
 
 			if (!jspFileCollection.isEmpty()) {
 				artifactHandler.add(
@@ -1712,22 +1698,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Task javadocTask = GradleUtil.getTask(
 			project, JavaPlugin.JAVADOC_TASK_NAME);
 
-		spec = new Spec<File>() {
-
-			@Override
-			public boolean isSatisfiedBy(File file) {
-				String fileName = file.getName();
-
-				if (fileName.endsWith(".java")) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
-		if (FileUtil.hasSourceFiles(javadocTask, spec)) {
+		if (FileUtil.hasSourceFiles(javadocTask, _javaSpec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarJavadocTask);
 		}
@@ -1735,22 +1706,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		Task tlddocTask = GradleUtil.getTask(
 			project, TLDDocBuilderPlugin.TLDDOC_TASK_NAME);
 
-		spec = new Spec<File>() {
-
-			@Override
-			public boolean isSatisfiedBy(File file) {
-				String fileName = file.getName();
-
-				if (fileName.endsWith(".tld")) {
-					return true;
-				}
-
-				return false;
-			}
-
-		};
-
-		if (FileUtil.hasSourceFiles(tlddocTask, spec)) {
+		if (FileUtil.hasSourceFiles(tlddocTask, _tldSpec)) {
 			artifactHandler.add(
 				Dependency.ARCHIVES_CONFIGURATION, jarTLDDocTask);
 		}
@@ -4239,6 +4195,10 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 	private static final BackupFilesBuildAdapter _backupFilesBuildAdapter =
 		new BackupFilesBuildAdapter();
 	private static final Set<String> _copyrightedExtensions;
+	private static final Spec<File> _javaSpec = new NameSuffixFileSpec(".java");
+	private static final Spec<File> _jspSpec = new NameSuffixFileSpec(
+		".jsp", ".jspf");
+	private static final Spec<File> _tldSpec = new NameSuffixFileSpec(".tld");
 
 	static {
 		_copyrightedExtensions = new HashSet<>();

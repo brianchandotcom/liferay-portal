@@ -35,7 +35,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 			String selectLayoutPageTemplateEntryURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
 		%>
 
-			<aui:nav-item href="<%= selectLayoutPageTemplateEntryURL %>" label="<%= layoutPageTemplateCollection.getName() %>" selected="<%= Objects.equals(layoutPageTemplateCollectionId, layoutPageTemplateCollection.getLayoutPageTemplateCollectionId()) %>" />
+			<aui:nav-item href="<%= selectLayoutPageTemplateEntryURL %>" label="<%= layoutPageTemplateCollection.getName() %>" selected="<%= layoutPageTemplateCollectionId == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() %>" />
 
 		<%
 		}

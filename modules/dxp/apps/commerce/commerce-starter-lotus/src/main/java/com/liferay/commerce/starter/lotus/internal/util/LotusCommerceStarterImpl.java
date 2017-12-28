@@ -77,20 +77,7 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class LotusCommerceStarterImpl implements CommerceStarter {
 
-	public static final String CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =
-		"com_liferay_commerce_product_asset_categories_navigation_web_" +
-			"internal_portlet_CPAssetCategoriesNavigationPortlet";
-
-	public static final String DEPENDENCY_PATH =
-		"com/liferay/commerce/starter/lotus/internal/dependencies/";
-
 	public static final String KEY = "lotus";
-
-	public static final String LOTUS_THEME_ID = "lotus_WAR_commercethemelotus";
-
-	public static final String SITE_NAVIGATION_MENU_PORTLET_NAME =
-		"com_liferay_site_navigation_menu_web_portlet_" +
-			"SiteNavigationMenuPortlet";
 
 	@Override
 	public void create(HttpServletRequest httpServletRequest) throws Exception {
@@ -104,7 +91,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		createJournalArticles(serviceContext, themeDisplay);
 
-		_cpFileImporter.updateLookAndFeel(LOTUS_THEME_ID, serviceContext);
+		_cpFileImporter.updateLookAndFeel(_LOTUS_THEME_ID, serviceContext);
 
 		createLayouts(serviceContext);
 
@@ -173,11 +160,11 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	public boolean isActive(HttpServletRequest httpServletRequest) {
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
-		Theme theme = _themeLocalService.fetchTheme(companyId, LOTUS_THEME_ID);
+		Theme theme = _themeLocalService.fetchTheme(companyId, _LOTUS_THEME_ID);
 
 		if (theme == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info(LOTUS_THEME_ID + " is not registered");
+				_log.info(_LOTUS_THEME_ID + " is not registered");
 			}
 
 			return false;
@@ -206,7 +193,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String journalArticlePath = DEPENDENCY_PATH + "journal-articles.json";
+		String journalArticlePath = _DEPENDENCY_PATH + "journal-articles.json";
 
 		String journalArticleJSON = StringUtil.read(
 			clazz.getClassLoader(), journalArticlePath, false);
@@ -215,7 +202,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			journalArticleJSON);
 
 		_cpFileImporter.createJournalArticles(
-			jsonArray, clazz.getClassLoader(), DEPENDENCY_PATH, serviceContext,
+			jsonArray, clazz.getClassLoader(), _DEPENDENCY_PATH, serviceContext,
 			themeDisplay);
 	}
 
@@ -224,7 +211,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = DEPENDENCY_PATH + "layouts.json";
+		String layoutsPath = _DEPENDENCY_PATH + "layouts.json";
 
 		String layoutsJSON = StringUtil.read(
 			clazz.getClassLoader(), layoutsPath, false);
@@ -238,7 +225,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		Class<?> clazz = getClass();
 
 		String themePortletSettingsPath =
-			DEPENDENCY_PATH + "theme-portlet-settings.json";
+			_DEPENDENCY_PATH + "theme-portlet-settings.json";
 
 		String themePortletSettingsJSON = StringUtil.read(
 			clazz.getClassLoader(), themePortletSettingsPath, false);
@@ -251,7 +238,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (portletName.equals(CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME)) {
+		if (portletName.equals(_CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME)) {
 			String instanceId = jsonObject.getString("instanceId");
 			String vocabularyName = jsonObject.getString("vocabularyName");
 
@@ -305,7 +292,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		if (portletName.equals(SITE_NAVIGATION_MENU_PORTLET_NAME)) {
+		if (portletName.equals(_SITE_NAVIGATION_MENU_PORTLET_NAME)) {
 			String instanceId = jsonObject.getString("instanceId");
 			String rootLayoutFriendlyURL = jsonObject.getString(
 				"rootLayoutFriendlyURL");
@@ -373,6 +360,20 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 				jsonObject, portletName, serviceContext);
 		}
 	}
+
+	private static final String _CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =
+		"com_liferay_commerce_product_asset_categories_navigation_web_" +
+			"internal_portlet_CPAssetCategoriesNavigationPortlet";
+
+	private static final String _DEPENDENCY_PATH =
+		"com/liferay/commerce/starter/lotus/internal/dependencies/";
+
+	private static final String _LOTUS_THEME_ID =
+		"lotus_WAR_commercethemelotus";
+
+	private static final String _SITE_NAVIGATION_MENU_PORTLET_NAME =
+		"com_liferay_site_navigation_menu_web_portlet_" +
+			"SiteNavigationMenuPortlet";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		LotusCommerceStarterImpl.class);

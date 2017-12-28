@@ -59,12 +59,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 
-	public static final String CUSTOMER_PORTAL_THEME_ID =
-		"customerportal_WAR_commercethemecustomerportal";
-
-	public static final String DEPENDENCY_PATH =
-		"com/liferay/commerce/starter/customer/portal/internal/dependencies/";
-
 	public static final String KEY = "customer-portal";
 
 	@Override
@@ -74,7 +68,7 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 		_cpFileImporter.cleanLayouts(serviceContext);
 
 		_cpFileImporter.updateLookAndFeel(
-			CUSTOMER_PORTAL_THEME_ID, serviceContext);
+			_CUSTOMER_PORTAL_THEME_ID, serviceContext);
 
 		createLayouts(serviceContext);
 
@@ -133,11 +127,11 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 		long companyId = _portal.getCompanyId(httpServletRequest);
 
 		Theme theme = _themeLocalService.fetchTheme(
-			companyId, CUSTOMER_PORTAL_THEME_ID);
+			companyId, _CUSTOMER_PORTAL_THEME_ID);
 
 		if (theme == null) {
 			if (_log.isInfoEnabled()) {
-				_log.info(CUSTOMER_PORTAL_THEME_ID + " is not registered");
+				_log.info(_CUSTOMER_PORTAL_THEME_ID + " is not registered");
 			}
 
 			return false;
@@ -165,7 +159,7 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 
 		Class<?> clazz = getClass();
 
-		String layoutsPath = DEPENDENCY_PATH + "layouts.json";
+		String layoutsPath = _DEPENDENCY_PATH + "layouts.json";
 
 		String layoutsJSON = StringUtil.read(
 			clazz.getClassLoader(), layoutsPath, false);
@@ -174,6 +168,12 @@ public class CustomerPortalCommerceStarterImpl implements CommerceStarter {
 
 		_cpFileImporter.createLayouts(jsonArray, serviceContext);
 	}
+
+	private static final String _CUSTOMER_PORTAL_THEME_ID =
+		"customerportal_WAR_commercethemecustomerportal";
+
+	private static final String _DEPENDENCY_PATH =
+		"com/liferay/commerce/starter/customer/portal/internal/dependencies/";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CustomerPortalCommerceStarterImpl.class);

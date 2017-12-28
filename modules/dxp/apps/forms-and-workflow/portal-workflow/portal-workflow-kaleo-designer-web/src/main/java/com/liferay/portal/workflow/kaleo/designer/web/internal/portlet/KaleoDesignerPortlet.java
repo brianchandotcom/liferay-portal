@@ -326,25 +326,16 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (_kaleoDesignerDisplayContext == null) {
-			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-				renderRequest, renderResponse, _userLocalService);
-		}
+		KaleoDesignerDisplayContext kaleoDesignerDisplayContext =
+			new KaleoDesignerDisplayContext(
+				renderRequest, _kaleoDefinitionVersionLocalService,
+				_userLocalService);
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
-			_kaleoDesignerDisplayContext);
+			kaleoDesignerDisplayContext);
 
 		String name = ParamUtil.getString(renderRequest, "name");
-
-		if (_kaleoDesignerDisplayContext == null) {
-			_kaleoDesignerDisplayContext = new KaleoDesignerDisplayContext(
-				renderRequest, renderResponse, _userLocalService);
-		}
-
-		renderRequest.setAttribute(
-			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
-			_kaleoDesignerDisplayContext);
 
 		if (Validator.isNull(name)) {
 			return;
@@ -372,26 +363,17 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			kaleoDefinitionVersion);
 	}
 
-	@Reference(unbind = "-")
-	protected void setRoleLocalService(RoleLocalService roleLocalService) {
-		_roleLocalService = roleLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerPortlet.class);
 
+	@Reference
 	private KaleoDefinitionVersionLocalService
 		_kaleoDefinitionVersionLocalService;
-	private KaleoDesignerDisplayContext _kaleoDesignerDisplayContext;
 
 	@Reference
 	private Portal _portal;
 
+	@Reference
 	private RoleLocalService _roleLocalService;
 
 	@Reference

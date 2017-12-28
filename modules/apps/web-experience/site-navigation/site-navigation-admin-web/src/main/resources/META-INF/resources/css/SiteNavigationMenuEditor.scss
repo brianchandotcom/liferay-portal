@@ -10,8 +10,7 @@
 		}
 	}
 
-	.targetOver .card, &.targetOver {
-		box-shadow: none;
-		outline: 2px dashed #65B6F0;
+	.item-dragging {
+		opacity: 0.4;
 	}
 }

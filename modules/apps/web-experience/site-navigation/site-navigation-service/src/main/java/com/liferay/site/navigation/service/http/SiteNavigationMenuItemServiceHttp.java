@@ -184,8 +184,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-		long parentSiteNavigationMenuItemId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long parentSiteNavigationMenuItemId, int order)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(SiteNavigationMenuItemServiceUtil.class,
@@ -193,8 +192,7 @@ public class SiteNavigationMenuItemServiceHttp {
 					_updateSiteNavigationMenuItemParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					siteNavigationMenuId, parentSiteNavigationMenuItemId,
-					serviceContext);
+					siteNavigationMenuId, parentSiteNavigationMenuItemId, order);
 
 			Object returnObj = null;
 
@@ -220,7 +218,7 @@ public class SiteNavigationMenuItemServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		HttpPrincipal httpPrincipal, long siteNavigationMenuId,
-		long parentSiteNavigationMenuItemId, java.lang.String typeSettings,
+		java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -229,8 +227,7 @@ public class SiteNavigationMenuItemServiceHttp {
 					_updateSiteNavigationMenuItemParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					siteNavigationMenuId, parentSiteNavigationMenuItemId,
-					typeSettings, serviceContext);
+					siteNavigationMenuId, typeSettings, serviceContext);
 
 			Object returnObj = null;
 
@@ -268,13 +265,10 @@ public class SiteNavigationMenuItemServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuItemParameterTypes4 =
-		new Class[] {
-			long.class, long.class,
-			com.liferay.portal.kernel.service.ServiceContext.class
-		};
+		new Class[] { long.class, long.class, int.class };
 	private static final Class<?>[] _updateSiteNavigationMenuItemParameterTypes5 =
 		new Class[] {
-			long.class, long.class, java.lang.String.class,
+			long.class, java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 }

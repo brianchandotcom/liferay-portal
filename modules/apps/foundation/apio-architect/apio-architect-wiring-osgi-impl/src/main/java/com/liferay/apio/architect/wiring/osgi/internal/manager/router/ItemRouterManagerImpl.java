@@ -19,6 +19,7 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.Manag
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
 import com.liferay.apio.architect.alias.ProvideFunction;
+import com.liferay.apio.architect.error.ApioDeveloperError.MustHavePathIdentifierMapper;
 import com.liferay.apio.architect.router.ItemRouter;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
@@ -75,8 +76,14 @@ public class ItemRouterManagerImpl
 			() -> getTypeParamOrFail(itemRouter, ItemRouter.class, 1));
 
 		Builder builder = new Builder<>(
-			modelClass, identifierClass, provideFunction,
-			() -> _pathIdentifierMapperManager::map);
+			modelClass, provideFunction,
+			path -> {
+				Optional<?> optional = _pathIdentifierMapperManager.map(
+					identifierClass, path);
+
+				return optional.orElseThrow(
+					() -> new MustHavePathIdentifierMapper(identifierClass));
+			});
 
 		return itemRouter.itemRoutes(builder);
 	}

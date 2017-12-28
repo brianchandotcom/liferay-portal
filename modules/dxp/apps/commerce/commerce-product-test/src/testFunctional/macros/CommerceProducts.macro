@@ -1,0 +1,35 @@
+<definition>
+	<command name="addEntry">
+		<execute function="Click" locator1="Button#PLUS" />
+
+		<execute function="Click" locator1="MenuItem#ANY_MENU_ITEM" value1="${key_menuItem}">
+			<var name="key_menuItem" value="${productType}" />
+		</execute>
+
+		<execute macro="CommerceEntry#addProductsEntry">
+			<var name="productFullDescription" value="${productFullDescription}" />
+			<var name="productShortDescription" value="${productShortDescription}" />
+			<var name="productTitle" value="${productTitle}" />
+		</execute>
+	</command>
+
+	<command name="moveCatalogEntriesToRecycleBin">
+		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
+
+		<execute function="Click" locator1="Button#RECYCLE_BIN" />
+	</command>
+
+	<command name="moveCatalogEntryToRecycleBinViaCheckbox">
+		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
+			<var name="key_entryTitle" value="${productTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="Button#RECYCLE_BIN" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+	</command>
+</definition>

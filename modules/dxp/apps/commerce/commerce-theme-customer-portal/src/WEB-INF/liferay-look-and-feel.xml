@@ -19,14 +19,14 @@
 		<portlet-decorator id="borderless" name="Borderless">
 			<portlet-decorator-css-class>portlet-borderless</portlet-decorator-css-class>
 		</portlet-decorator>
-		<portlet-decorator id="decorate" name="Decorate">
-			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
-		</portlet-decorator>
 		<portlet-decorator id="card" name="Card">
 			<portlet-decorator-css-class>portlet-card</portlet-decorator-css-class>
 		</portlet-decorator>
 		<portlet-decorator id="card-inverse" name="Card inverse">
 			<portlet-decorator-css-class>portlet-card-inverse</portlet-decorator-css-class>
+		</portlet-decorator>
+		<portlet-decorator id="decorate" name="Decorate">
+			<portlet-decorator-css-class>portlet-decorate</portlet-decorator-css-class>
 		</portlet-decorator>
 	</theme>
 </look-and-feel>

@@ -34,8 +34,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ENTRY_MENU_TAB</td>
-	<td>//a[@role="menuitem" and @title="${key_menuTab}"]</td>
+	<td>MENU_TAB</td>
+	<td>//div[@class='navbar navbar-default ']//div/div/ul/li/a[@title='${key_menuTab}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ADD_BUTTON</td>
+	<td>//*[@data-qa-id='addButton'] | //a[contains(@class,'btn') and span[contains(@class,'icon-plus')]] | //button/span[contains(@class,'icon-plus')] | //button[@type='button']/*[contains(@class,'icon-plus')] | //h4[contains(@class,'section-header') and contains (.,'Options')]/button</td>
+	<td></td>
+</tr>
+<tr>
 	<td>PLUS_MENU</td>
 	<td>//div[contains (@class, 'dropdown')]//li/a[contains (.,'${key_plusMenu}')]</td>
 	<td></td>
@@ -144,6 +149,16 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SKU_GLOBAL_TRADE_ITEM_NUMBER_FIELD</td>
+	<td>//div/input[contains(@id,'gtin')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SKU_MANUFACTURER_PART_NUMBER_FIELD</td>
+	<td>//div/input[contains(@id,'manufacturerPartNumber')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SKU_CONTRIBUTOR_CHECKBOX</td>
 	<td>//input[contains(@id,'skuContributor') and (@type='checkbox')]</td>
 	<td></td>
@@ -159,8 +174,53 @@
 	<td></td>
 </tr>
 <tr>
+	<td>MODAL_TITLE_FIELD</td>
+	<td>//div/span/input[contains(@id,'Title')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>WORKFLOW_STATUS</td>
 	<td>//span[@class='workflow-status']//span[contains(.,'${key_status}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FIX_ISSUE_BUTTON</td>
+	<td>//tr[contains (@data-qa-id,'row')]//td/button[contains (@id,'fixIssueButton${key_buttonRowNumber}')and contains(@class,'${key_buttonStatus}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SEO_FRIENDLYURL</td>
+	<td>//div/span/input[@value='${key_productTitle}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRONT_STORE_PRODUCT_LINK</td>
+	<td>//span//span[contains (.,'Go to page')]//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_SAVE</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'primary') and contains (.,'Save')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_CANCEL</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'link') and contains (.,'Cancel')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_CLOSE</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_PLUS</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'nav-btn')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>MODAL_DELETE</td>
+	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'secondary') and contains (.,'Delete')]</td>
 	<td></td>
 </tr>
 </tbody>

@@ -737,6 +737,15 @@ AUI.add(
 						return instance.get('formInstanceId') > 0 || translating;
 					},
 
+					isValidNewLayoutColumn: function(layoutColumn) {
+						var instance = this;
+
+						if (layoutColumn && layoutColumn.get('size') == 1) {
+							return false;
+						}
+
+						return true;
+					},
 
 					onHoverColumn: function(event) {
 						var instance = this;
@@ -793,6 +802,16 @@ AUI.add(
 
 						instance.showFieldTypesPanel();
 						instance.bindSidebarFieldDragAction();
+					},
+
+					removeRemovebleLayoutBuilderColumn: function(layoutColumn) {
+						var instance = this;
+
+						var dropNode = instance._layoutBuilder._lastDropEnter;
+
+						instance.lastRemovedDropPosition = dropNode.getData('layout-position');
+						instance.lastColumnRemoved = layoutColumn.get('node');
+						instance.lastColumnRemoved.setStyle('display', 'none');
 					},
 
 					resizeColumns: function(dragNode) {
@@ -866,6 +885,7 @@ AUI.add(
 
 						dragNode.setData('last-layout-position', colLayoutPosition);
 					},
+
 					showFieldSettingsPanel: function(field) {
 						var instance = this;
 
@@ -888,6 +908,30 @@ AUI.add(
 						fieldTypesPanel.open();
 					},
 
+					showLastRemovedColumn: function() {
+						var instance = this;
+
+						instance.lastColumnRemoved.setStyle('display', 'block');
+						instance.lastColumnRemoved = false;
+					},
+
+					showResizeableColumnsDrop: function(columnSide, dropNode, increment) {
+						var instance = this;
+
+						var rowNode = dropNode.ancestor(SELECTOR_ROW);
+
+						var columnsBreakPoints = rowNode.all('.' + CSS_RESIZE_COL_BREAKPOINT);
+
+						for (var i = 0; i < columnSide.get('size'); i++) {
+							if (increment && columnsBreakPoints.item(dropNode.getData('layout-position') + i)) {
+								columnsBreakPoints.item(dropNode.getData('layout-position') + i).setStyle('display', 'block');
+							}
+							else if (!increment && columnsBreakPoints.item(dropNode.getData('layout-position') - i)) {
+								columnsBreakPoints.item(dropNode.getData('layout-position') - i).setStyle('display', 'block');
+							}
+						}
+					},
+
 					unformatFieldsetRows: function() {
 						A.all('[data-removed-col-empty="true"]').each(
 							function(col) {
@@ -903,13 +947,18 @@ AUI.add(
 						var fieldSetId = fieldNode.getData('field-set-id');
 						var fieldType = fieldNode.getData('field-type');
 
+						if (!fieldNode.ancestor('.col')) {
+							return;
+						}
+
 						instance._newFieldContainer = fieldNode.ancestor('.col').getData('layout-col');
 
 						if (fieldSetId) {
-							return instance._addFieldSetInDragAndDropLayout(fieldSetId);
+							instance._addFieldSetInDragAndDropLayout(fieldSetId);
 						}
-
-						instance.createNewField(fieldType);
+						else {
+							instance.createNewField(fieldType);
+						}
 					},
 
 					_addColumnInRow: function(row, hasContext) {
@@ -943,6 +992,7 @@ AUI.add(
 								},
 								dragNodes: '.layout-col-content',
 								dropNodes: '.layout-row .col-empty',
+								proxy: null,
 								proxyNode: '<div></div>'
 							}
 						);
@@ -1042,6 +1092,28 @@ AUI.add(
 
 						instance._syncColsSize(dragNode);
 					},
+
+					_afterDragStart: function(event) {
+						var instance = this;
+
+						var dragNode = event.target.get('node');
+						var layoutBuilder = instance._layoutBuilder;
+
+						layoutBuilder.dragging = true;
+
+						dragNode.hide();
+
+						instance.initialDragPosition = dragNode.getData('layout-position');
+
+						if (A.one('.last-drag-row')) {
+							A.one('.last-drag-row').removeClass('last-drag-row');
+						}
+
+						dragNode.ancestor(SELECTOR_ROW).addClass('last-drag-row');
+
+						layoutBuilder._hideColDraggableBoundaries();
+					},
+
 					_afterEditingLanguageIdChange: function(event) {
 						var instance = this;
 
@@ -1063,9 +1135,10 @@ AUI.add(
 
 						var field = event.currentTarget.getData('field-instance');
 
-						if (event.target.ancestor('.lfr-ddm-field-actions-container')) {
+						if (event.target.ancestor('.' + FIELD_ACTIONS)) {
 							return;
 						}
+
 						instance.editField(field);
 					},
 
@@ -1077,6 +1150,11 @@ AUI.add(
 
 					_afterFormBuilderRender: function() {
 						var instance = this;
+						var layoutBuilder = instance._layoutBuilder;
+
+						instance._eventHandlers.push(
+							A.one('.' + CSS_LAYOUT_BUILDER_CONTAINER).delegate('hover', A.bind('onHoverColumn', instance), '.col', instance)
+						);
 
 						instance._fieldToolbar.destroy();
 
@@ -1143,13 +1221,23 @@ AUI.add(
 						var dragNode = layoutBuilder._delegateDrag.get('lastNode');
 						var row = dragNode.ancestor(SELECTOR_ROW);
 
+						instance.hasColumnRightCreated = false;
+						instance.hasColumnLeftCreated = false;
+						instance.initialRightSize = false;
+						instance.initialLeftSize = false;
+						instance.initialDragPosition = false;
+						instance.lastRemovedDropPosition = false;
+
+						if (instance.lastColumnAdd) {
+							instance.lastColumnAdd.removeClass('col-empty');
+							instance.lastColumnAdd = false;
+						}
+
 						if (row) {
-							if (dragNode.getData('layout-action') && dragNode.getData('layout-action') === 'addColumn') {
-								layoutBuilder._insertColumnAfterDropHandles(dragNode);
-							}
-							else {
-								layoutBuilder._resize(dragNode);
-								layoutBuilder.get('layout').normalizeColsHeight(new A.NodeList(row));
+							if (instance.lastColumnRemoved) {
+								row.getData('layout-row').removeCol(instance.lastColumnRemoved.getData('layout-col'));
+								instance.lastColumnRemoved.remove();
+								instance.lastColumnRemoved = false;
 							}
 
 							row.removeClass(CSS_RESIZE_COL_DRAGGING);
@@ -1164,8 +1252,12 @@ AUI.add(
 						dragNode.removeClass(CSS_RESIZE_COL_DRAGGABLE_DRAGGING);
 
 						dragNode.show();
+
 						instance._traverseFormPages();
+						instance._destroySortable(instance.sortable1);
 						instance._applyDragAndDrop();
+
+						instance.addedColumWhileDragging = false;
 					},
 
 					_afterSelectFieldType: function(event) {
@@ -1395,16 +1487,6 @@ AUI.add(
 						visitor.set('pages', instance.get('layouts'));
 
 						return visitor;
-					},
-
-					_insertCutRowIcon: function(row) {
-						var instance = this;
-
-						var cutButton = row.ancestor('.' + CSS_ROW_CONTAINER_ROW).one('.layout-builder-move-cut-button');
-
-						if (cutButton) {
-							cutButton.insert(Liferay.Util.getLexiconIconTpl('cut'));
-						}
 					},
 
 					_insertField: function(field) {

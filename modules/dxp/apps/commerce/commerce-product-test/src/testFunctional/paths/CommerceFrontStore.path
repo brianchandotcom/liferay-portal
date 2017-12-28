@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>CommerceFrontStore</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">CommerceFrontStore</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>FS_PRODUCT_PRICE</td>
+	<td>//div/h2[contains (.,'Product Detail')]//..//div/div[contains (@class,'price') and contains (.,'${key_FSProductPrice')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_SKU</td>
+	<td>//div/h2[contains (.,'Product Detail')]//..//div/h4[contains (@class,'sku') and contains (.,'${key_FSProductSKU}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_TITLE</td>
+	<td>//div/h2[contains (.,'Product Detail')]//..//div/h1[contains (.,'${key_FSProductTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_OPTIONS</td>
+	<td>//div[@class='options']//*//div[contains (@class,'placeholder') and contains (.,'Choose an Option')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_OPTIONS_SELECT</td>
+	<td>//div[@class='drop-chosen']//ul/li/span[contains (@title,'${key_optionValue}') and contains (.,'${key_optionValue}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_IMAGE</td>
+	<td>//div/h2[contains (.,'Product Detail')]//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

@@ -29,7 +29,7 @@
 
 	<command name="ViewFrontStoreSimpleProduct">
 		<property name="portal.acceptance" value="false" />
-		
+
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />
 		</execute>

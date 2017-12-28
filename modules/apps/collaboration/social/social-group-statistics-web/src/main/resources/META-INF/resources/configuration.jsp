@@ -68,7 +68,7 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 				<aui:input name="displayActivityCounterNameIndexes" type="hidden" value="<%= StringUtil.merge(displayActivityCounterNameIndexes) %>" />
 
 				<aui:script use="liferay-auto-fields">
-					var autoFields = new Liferay.AutoFields(
+					new Liferay.AutoFields(
 						{
 							contentBox: '#<portlet:namespace />displayActivityCounterNames > fieldset',
 							fieldIndexes: '<portlet:namespace/>displayActivityCounterNameIndexes',

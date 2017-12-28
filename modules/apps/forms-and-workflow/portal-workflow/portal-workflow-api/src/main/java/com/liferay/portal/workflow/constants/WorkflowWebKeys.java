@@ -28,6 +28,9 @@ public class WorkflowWebKeys {
 	public static final String WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT =
 		"WORKFLOW_DEFINITION_LINK_DISPLAY_CONTEXT";
 
+	public static final String WORKFLOW_DEFINITION_MODIFIED_DATE =
+		"WORKFLOW_DEFINITION_MODIFIED_DATE";
+
 	public static final String WORKFLOW_JSP_STATE = "jsp_state";
 
 	public static final String WORKFLOW_PORTLET_TABS = "WORKFLOW_PORTLET_TABS";

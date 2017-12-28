@@ -78,3 +78,15 @@ else {
 %>
 
 <%@ include file="/definition/init-ext.jsp" %>
+
+<aui:script use="liferay-workflow-web">
+	window.<portlet:namespace/>confirmDeleteDefinition = function(deleteURL) {
+
+		var title = "<%= LanguageUtil.get(request, "delete-workflow-question") %>";
+		var message = "<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>";
+
+		Liferay.WorkflowWeb.openConfirmDeleteDialog(title, message, deleteURL);
+
+		return false;
+	}
+</aui:script>

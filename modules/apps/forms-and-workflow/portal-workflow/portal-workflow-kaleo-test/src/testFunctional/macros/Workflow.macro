@@ -355,11 +355,11 @@
 	</command>
 
 	<command name="deactivateWorkflowDefinitionCmd">
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Deactivate">
-			<var name="key_menuItem" value="Deactivate" />
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Unpublish">
+			<var name="key_menuItem" value="Unpublish" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to deactivate this?" />
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow unpublished successfully." />
 
 		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
@@ -383,7 +383,13 @@
 			<var name="key_menuItem" value="Delete" />
 		</execute>
 
-		<execute function="Confirm" value1="Are you sure you want to delete this? It will be deleted immediately." />
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DIALOG_BOX_TITLE" value1="Delete Workflow?" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DIALOG_BOX_BODY" value1="A deleted workflow cannot be recovered." />
+
+		<execute macro="Button#clickDelete" />
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow deleted successfully." />
 
 		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
@@ -461,8 +467,8 @@
 
 		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Activate">
-			<var name="key_menuItem" value="Activate" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Publish">
+			<var name="key_menuItem" value="Publish" />
 		</execute>
 
 		<execute macro="Workflow#waitForSuccessMessageHide" />

@@ -3,7 +3,7 @@
 	<property name="testray.main.component.name" value="Setup Wizard" />
 
 	<command name="HypersonicToHypersonic" priority="5">
-		<property name="portal.acceptance.tomcat.hypersonic" value="true" />
+		<property name="portal.acceptance.tomcat.hypersonic" value="quarantine" />
 
 		<execute macro="SetupWizard#configurePG">
 			<var name="administratorEmail" value="test@liferay.com" />

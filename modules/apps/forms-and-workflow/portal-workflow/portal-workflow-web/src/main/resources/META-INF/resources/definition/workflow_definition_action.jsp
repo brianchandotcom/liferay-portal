@@ -55,26 +55,35 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		</liferay-portlet:actionURL>
 
 		<liferay-ui:icon
-			message="activate"
+			message="publish"
 			url="<%= restoreWorkflowDefinitionURL %>"
 		/>
 	</c:if>
 
-	<liferay-portlet:actionURL name='<%= workflowDefinition.isActive() ? "deactivateWorkflowDefinition" : "deleteWorkflowDefinition" %>' var="deleteURL">
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-		<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-	</liferay-portlet:actionURL>
-
 	<c:choose>
 		<c:when test="<%= workflowDefinition.isActive() %>">
-			<liferay-ui:icon-deactivate
-				url="<%= deleteURL %>"
+			<liferay-portlet:actionURL name="deactivateWorkflowDefinition" var="deactivateWorkflowDefinitionURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+			</liferay-portlet:actionURL>
+
+			<liferay-ui:icon
+				message="unpublish"
+				url="<%= deactivateWorkflowDefinitionURL %>"
 			/>
 		</c:when>
 		<c:otherwise>
-			<liferay-ui:icon-delete
-				url="<%= deleteURL %>"
+			<liferay-portlet:actionURL name="deleteWorkflowDefinition" var="deleteWorkflowDefinitionURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+			</liferay-portlet:actionURL>
+
+			<liferay-ui:icon
+				message="delete"
+				onClick='<%= renderResponse.getNamespace() + "confirmDeleteDefinition('" + deleteWorkflowDefinitionURL + "'); return false;" %>'
+				url="<%= deleteWorkflowDefinitionURL %>"
 			/>
 		</c:otherwise>
 	</c:choose>

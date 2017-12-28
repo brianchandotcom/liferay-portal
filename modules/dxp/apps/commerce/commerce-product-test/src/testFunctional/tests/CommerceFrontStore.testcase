@@ -1,0 +1,75 @@
+<definition component-name="portal-commerce">
+	<property name="portal.upstream" value="false" />
+	<property name="test.run.environment" value="EE" />
+	<property name="testray.main.component.name" value="Commerce" />
+
+	<set-up>
+		<execute macro="TestCase#setUpPortalInstance" />
+
+		<execute macro="User#firstLoginPG" />
+
+		<execute macro="CommerceConfiguration#commerceSetUp" />
+
+		<execute macro="CommerceConfiguration#addPortletsToSitePagesViaHealthStatus" />
+	</set-up>
+
+	<tear-down>
+		<var method="TestPropsUtil#get('test.portal.instance')" name="testPortalInstance" />
+
+		<if>
+			<equals arg1="${testPortalInstance}" arg2="true" />
+			<then>
+				<execute macro="PortalInstances#tearDownCP" />
+			</then>
+			<else>
+				<execute macro="CommerceConfiguration#commerceTearDown" />
+			</else>
+		</if>
+	</tear-down>
+
+	<command name="ViewFrontStoreSimpleProduct">
+		<property name="portal.acceptance" value="false" />
+		
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
+			<var name="menuTabItem" value="Options" />
+		</execute>
+
+		<execute function="Pause" locator1="2000" />
+
+		<execute macro="CPCommerceCatalog#newOptionsEntry">
+			<var name="optionDescription" value="Option Description" />
+			<var name="optionFieldType" value="Select" />
+			<var name="optionTitle" value="Color" />
+			<var name="optionValuesList" value="Black,Blue,White" />
+			<var name="valuePriority" value="1" />
+		</execute>
+
+		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
+			<var name="menuTabItem" value="Products" />
+		</execute>
+
+		<execute macro="CPCommerceCatalog#newProductsEntry">
+			<var name="productTitle" value="Simple Product" />
+			<var name="productType" value="Simple" />
+		</execute>
+
+		<execute macro="CommerceOptionsRel#assignOptionToProductsEntry">
+			<var name="optionTitle" value="Color" />
+		</execute>
+
+		<execute macro="CommerceNavigator#gotoFrontStoreProductPage">
+			<var name="productTitle" value="Simple Product" />
+		</execute>
+
+		<execute macro="FrontStore#viewProductDetail">
+			<var name="FSOptionValuesList" value="Black,Blue,White" />
+			<var name="FSProductPrice" value=" " />
+			<var name="FSProductSKU" value=" " />
+			<var name="FSProductTitle" value="Simple Product" />
+		</execute>
+	</command>
+</definition>

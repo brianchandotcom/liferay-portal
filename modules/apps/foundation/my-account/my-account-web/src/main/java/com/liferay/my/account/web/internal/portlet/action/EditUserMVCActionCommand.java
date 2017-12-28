@@ -15,16 +15,7 @@
 package com.liferay.my.account.web.internal.portlet.action;
 
 import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
-import com.liferay.portal.kernel.exception.UserPasswordException;
-import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.model.CompanyConstants;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.Authenticator;
-import com.liferay.portal.kernel.util.Validator;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -61,51 +52,6 @@ public class EditUserMVCActionCommand
 	protected Object[] updateUser(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
-
-		String currentPassword = actionRequest.getParameter("password0");
-		String newPassword = actionRequest.getParameter("password1");
-
-		User user = portal.getSelectedUser(actionRequest);
-
-		if (Validator.isNotNull(currentPassword)) {
-			if (Validator.isNull(newPassword)) {
-				throw new UserPasswordException.MustNotBeNull(user.getUserId());
-			}
-
-			Company company = portal.getCompany(actionRequest);
-
-			String authType = company.getAuthType();
-
-			Map<String, String[]> headerMap = new HashMap<>();
-			Map<String, String[]> parameterMap = new HashMap<>();
-			Map<String, Object> resultsMap = new HashMap<>();
-
-			int authResult = Authenticator.FAILURE;
-
-			if (authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
-				authResult = userLocalService.authenticateByEmailAddress(
-					company.getCompanyId(), user.getEmailAddress(),
-					currentPassword, headerMap, parameterMap, resultsMap);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_ID)) {
-				authResult = userLocalService.authenticateByUserId(
-					company.getCompanyId(), user.getUserId(), currentPassword,
-					headerMap, parameterMap, resultsMap);
-			}
-			else if (authType.equals(CompanyConstants.AUTH_TYPE_SN)) {
-				authResult = userLocalService.authenticateByScreenName(
-					company.getCompanyId(), user.getScreenName(),
-					currentPassword, headerMap, parameterMap, resultsMap);
-			}
-
-			if (authResult == Authenticator.FAILURE) {
-				throw new UserPasswordException.MustMatchCurrentPassword(
-					user.getUserId());
-			}
-		}
-		else if (Validator.isNotNull(newPassword)) {
-			throw new UserPasswordException.MustNotBeNull(user.getUserId());
-		}
 
 		return super.updateUser(actionRequest, actionResponse);
 	}

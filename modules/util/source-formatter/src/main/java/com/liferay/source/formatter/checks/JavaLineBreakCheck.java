@@ -146,17 +146,12 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 
 		_checkLambdaLineBreaks(trimmedLine, fileName, lineCount);
 
-		if (trimmedLine.startsWith("}") && !trimmedLine.equals("}")) {
-			if (trimmedLine.startsWith("},") && !trimmedLine.equals("},")) {
-				addMessage(
-					fileName, "There should be a line break after '},'",
-					lineCount);
-			}
-			else if (!trimmedLine.matches("\\}\\)*( \\{|[;,]|\\..*)")) {
-				addMessage(
-					fileName, "There should be a line break after '}'",
-					lineCount);
-			}
+		if (trimmedLine.startsWith("}") && !trimmedLine.equals("}") &&
+			(!trimmedLine.startsWith("},") || trimmedLine.equals("},")) &&
+			!trimmedLine.matches("\\}\\)*( \\{|[;,]|\\..*)")) {
+
+			addMessage(
+				fileName, "There should be a line break after '}'", lineCount);
 		}
 
 		if (trimmedLine.endsWith("( {")) {
@@ -271,56 +266,6 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 				fileName, "There should be a line break after '{'", lineCount);
 		}
 
-		if (previousLine.endsWith(StringPool.OPEN_PARENTHESIS) ||
-			previousLine.endsWith(StringPool.PLUS)) {
-
-			int x = -1;
-
-			while (true) {
-				x = trimmedLine.indexOf(StringPool.COMMA_AND_SPACE, x + 1);
-
-				if (x == -1) {
-					break;
-				}
-
-				if (ToolsUtil.isInsideQuotes(trimmedLine, x)) {
-					continue;
-				}
-
-				String linePart = trimmedLine.substring(0, x + 1);
-
-				int level = getLevel(linePart);
-
-				if ((previousLine.endsWith(StringPool.OPEN_PARENTHESIS) &&
-					 (level < 0)) ||
-					(previousLine.endsWith(StringPool.PLUS) && (level <= 0))) {
-
-					addMessage(
-						fileName,
-						"There should be a line break after '" + linePart + "'",
-						lineCount);
-				}
-			}
-		}
-
-		int x = trimmedLine.indexOf(StringPool.COMMA_AND_SPACE);
-
-		if (x != -1) {
-			if (!ToolsUtil.isInsideQuotes(trimmedLine, x)) {
-				String linePart = trimmedLine.substring(0, x + 1);
-
-				if ((getLevel(linePart) < 0) ||
-					(previousLine.endsWith(">") &&
-					 Validator.isVariableName(trimmedLine.substring(0, x)))) {
-
-					addMessage(
-						fileName,
-						"There should be a line break after '" + linePart + "'",
-						lineCount);
-				}
-			}
-		}
-
 		if (line.endsWith(" throws") ||
 			((previousLine.endsWith(StringPool.COMMA) ||
 			  previousLine.endsWith(StringPool.OPEN_PARENTHESIS)) &&
@@ -348,7 +293,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		Matcher matcher = _incorrectLineBreakPattern6.matcher(trimmedLine);
 
 		if (matcher.find() && (getLevel(matcher.group(4)) > 1)) {
-			x = trimmedLine.indexOf("(", matcher.start(4));
+			int x = trimmedLine.indexOf("(", matcher.start(4));
 
 			String linePart = trimmedLine.substring(0, x + 1);
 
@@ -359,7 +304,7 @@ public class JavaLineBreakCheck extends LineBreakCheck {
 		}
 
 		if (trimmedLine.matches("for \\(.*[^;{]")) {
-			x = trimmedLine.length();
+			int x = trimmedLine.length();
 
 			while (true) {
 				x = trimmedLine.lastIndexOf(StringPool.SEMICOLON, x - 1);

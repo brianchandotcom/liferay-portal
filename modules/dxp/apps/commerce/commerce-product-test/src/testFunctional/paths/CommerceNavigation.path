@@ -19,8 +19,23 @@
 	<td></td>
 </tr>
 <tr>
+	<td>OPTION_VALUES_LINK</td>
+	<td>//td[contains(.,'${key_optionEntryTitle}')]/../td/button[@type='button' and contains(.,'Values')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>ENTRY_TITLE</td>
 	<td>//div[@class='products-container']//a[contains(.,'${key_entryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>OPTIONS_ENTRY_TITLE</td>
+	<td>//div[@class='form-container']//td[contains(.,'${key_OptionEntryTitle}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>INVERSE_MENU_TAB</td>
+	<td>//div[contains (@class,'navbar-inverse')]//..//a[@title='${key_menuTabItem}']</td>
 	<td></td>
 </tr>
 <tr>
@@ -38,7 +53,21 @@
 	<td>//*[@data-qa-id='row' and contains(.,'${key_entryTitle}')]//input[@type='checkbox']</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>WIZARD_METHOD</td>
+	<td>//div[contains (@class,'commerce-wizard-method')]//h4[contains (.,'${key_wizardMethod}')]//..//a</td>
+	<td></td>
+</tr>
+<tr>
+	<td>WIZARD_STARTER</td>
+	<td>//div[contains (@class,'commerce-starter')]//h3[contains (.,'${key_wizardStarter}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ANY_BUTTON</td>
+	<td>//a[normalize-space()='${key_text}'] | //button[normalize-space()='${key_text}']</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

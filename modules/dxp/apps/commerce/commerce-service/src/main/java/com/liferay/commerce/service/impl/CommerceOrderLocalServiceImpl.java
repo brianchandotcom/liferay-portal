@@ -26,6 +26,7 @@ import com.liferay.commerce.model.CommercePaymentMethod;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.base.CommerceOrderLocalServiceBaseImpl;
 import com.liferay.commerce.util.CommercePriceCalculator;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -259,7 +260,8 @@ public class CommerceOrderLocalServiceImpl
 
 		if ((commerceShippingMethod == null) &&
 			(commerceShippingMethodLocalService.getCommerceShippingMethodsCount(
-				commerceCart.getGroupId(), true) > 0)) {
+				commerceCart.getGroupId(), true) > 0) &&
+			_commerceShippingHelper.isShippable(commerceCart)) {
 
 			throw new CommerceCartShippingMethodException();
 		}
@@ -267,5 +269,8 @@ public class CommerceOrderLocalServiceImpl
 
 	@ServiceReference(type = CommercePriceCalculator.class)
 	private CommercePriceCalculator _commercePriceCalculator;
+
+	@ServiceReference(type = CommerceShippingHelper.class)
+	private CommerceShippingHelper _commerceShippingHelper;
 
 }

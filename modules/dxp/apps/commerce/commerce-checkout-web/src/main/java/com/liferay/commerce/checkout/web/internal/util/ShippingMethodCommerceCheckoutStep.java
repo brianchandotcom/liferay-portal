@@ -27,6 +27,7 @@ import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
+import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -89,12 +90,12 @@ public class ShippingMethodCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
+		CommerceCart commerceCart = _commerceCartHelper.getCurrentCommerceCart(
+			httpServletRequest, httpServletResponse);
 
-		if (_commerceShippingMethodService.getCommerceShippingMethodsCount(
-				themeDisplay.getScopeGroupId(), true) > 0) {
+		if ((_commerceShippingMethodService.getCommerceShippingMethodsCount(
+				commerceCart.getGroupId(), true) > 0) &&
+			_commerceShippingHelper.isShippable(commerceCart)) {
 
 			return true;
 		}
@@ -253,6 +254,9 @@ public class ShippingMethodCommerceCheckoutStep
 
 	@Reference
 	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private CommerceShippingHelper _commerceShippingHelper;
 
 	@Reference
 	private CommerceShippingMethodService _commerceShippingMethodService;

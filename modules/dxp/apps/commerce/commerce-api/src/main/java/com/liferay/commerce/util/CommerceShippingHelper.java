@@ -16,9 +16,11 @@ package com.liferay.commerce.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.model.CPInstance;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.List;
 
@@ -39,5 +41,8 @@ public interface CommerceShippingHelper {
 	public double getWeight(CPInstance cpInstance);
 
 	public double getWeight(List<CommerceCartItem> commerceCartItems);
+
+	public boolean isShippable(CommerceCart commerceCart)
+		throws PortalException;
 
 }

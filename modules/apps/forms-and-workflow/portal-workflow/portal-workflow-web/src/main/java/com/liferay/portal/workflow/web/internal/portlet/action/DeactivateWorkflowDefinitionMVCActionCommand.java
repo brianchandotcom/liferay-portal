@@ -14,8 +14,11 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,6 +35,12 @@ import org.osgi.service.component.annotations.Component;
 )
 public class DeactivateWorkflowDefinitionMVCActionCommand
 	extends RestoreWorkflowDefinitionMVCActionCommand {
+
+	@Override
+	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+		return LanguageUtil.get(
+			resourceBundle, "workflow-unpublished-successfully");
+	}
 
 	@Override
 	protected boolean isActive() {

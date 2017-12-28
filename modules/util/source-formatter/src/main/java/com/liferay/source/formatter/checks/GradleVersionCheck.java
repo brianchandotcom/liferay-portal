@@ -57,6 +57,8 @@ public class GradleVersionCheck extends BaseFileCheck {
 		if (version.equals("default") &&
 			!name.equals("com.liferay.portal.impl") &&
 			!name.equals("com.liferay.portal.kernel") &&
+			!name.equals("com.liferay.portal.test") &&
+			!name.equals("com.liferay.portal.test.integration") &&
 			!name.equals("com.liferay.util.bridges") &&
 			!name.equals("com.liferay.util.taglib")) {
 

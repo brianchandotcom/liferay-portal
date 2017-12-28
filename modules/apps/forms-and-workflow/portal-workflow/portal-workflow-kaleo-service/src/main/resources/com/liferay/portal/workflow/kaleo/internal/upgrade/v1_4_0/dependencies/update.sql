@@ -5,20 +5,21 @@ create table KaleoTaskForm (
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
-	userName STRING,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	kaleoDefinitionVersionId LONG,
 	kaleoNodeId LONG,
 	kaleoTaskId LONG,
-	kaleoTaskName VARCHAR(200),
+	kaleoTaskName VARCHAR(200) null,
 	name VARCHAR(200) null,
-	description TEXT null,
+	description STRING null,
 	formCompanyId LONG,
-	formDefinition TEXT null, 
-	formGroupId LONG, 
+	formDefinition STRING null,
+	formGroupId LONG,
 	formId LONG,
-	formUuid STRING,
-	metadata TEXT null,
+	formUuid VARCHAR(75) null,
+	metadata STRING null,
 	priority INTEGER
 );
 
@@ -29,18 +30,19 @@ create table KaleoTaskFormInstance (
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
-	userName STRING,
+	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
+	kaleoDefinitionVersionId LONG,
 	kaleoInstanceId LONG,
 	kaleoTaskId LONG,
 	kaleoTaskInstanceTokenId LONG,
 	kaleoTaskFormId LONG,
-	formValues TEXT null,
+	formValues STRING null,
 	formValueEntryGroupId LONG,
 	formValueEntryId LONG,
-	formValueEntryUuid STRING,
-	metadata TEXT null
+	formValueEntryUuid VARCHAR(75) null,
+	metadata STRING null
 );
 
 drop table KaleoDefinitionVersion;

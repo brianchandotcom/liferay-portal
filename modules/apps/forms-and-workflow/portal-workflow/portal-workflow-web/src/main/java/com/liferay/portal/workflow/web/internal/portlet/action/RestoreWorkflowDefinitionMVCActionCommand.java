@@ -14,11 +14,14 @@
 
 package com.liferay.portal.workflow.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,6 +56,14 @@ public class RestoreWorkflowDefinitionMVCActionCommand
 		workflowDefinitionManager.updateActive(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
 			version, isActive());
+
+		addSuccessMessage(actionRequest, actionResponse);
+	}
+
+	@Override
+	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+		return LanguageUtil.get(
+			resourceBundle, "workflow-published-successfully");
 	}
 
 	protected boolean isActive() {

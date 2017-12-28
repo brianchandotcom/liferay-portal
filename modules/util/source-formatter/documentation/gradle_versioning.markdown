@@ -12,6 +12,8 @@ Exceptions:
 ```
 provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "default"
 provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "default"
+provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
+provided group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "default"
 provided group: "com.liferay.portal", name: "com.liferay.util.bridges", version: "default"
 provided group: "com.liferay.portal", name: "com.liferay.util.taglib", version: "default"
 ```

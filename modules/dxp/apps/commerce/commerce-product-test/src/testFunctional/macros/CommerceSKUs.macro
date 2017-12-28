@@ -2,8 +2,8 @@
 	<command name="addEntry">
 		<execute function="Click" locator1="Button#PLUS" />
 
-		<execute function="AssertClick" locator1="CommerceEntry#PLUS_MENU" value1="${plusMenu}">
-			<var name="key_plusMenu" value="${plusMenu}" />
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${key_menuItem}">
+			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
 
 		<execute macro="CommerceEntry#addSKUsEntry">

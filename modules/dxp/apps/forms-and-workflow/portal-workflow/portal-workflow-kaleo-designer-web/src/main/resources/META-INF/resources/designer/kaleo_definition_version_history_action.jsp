@@ -35,7 +35,7 @@ boolean showActions = workflowDefinition.getVersion() != (int)Double.parseDouble
 	<portlet:param name="draftVersion" value="<%= Double.valueOf(workflowDefinition.getVersion()).toString() %>" />
 </portlet:renderURL>
 
-<liferay-portlet:actionURL name="restoreKaleoDefinitionVersion" var="revertURL">
+<liferay-portlet:actionURL name="revertKaleoDefinitionVersion" var="revertURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
 	<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
 	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />

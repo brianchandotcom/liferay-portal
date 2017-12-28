@@ -14,14 +14,25 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
+import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+
+import java.text.DateFormat;
+
+import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -36,12 +47,53 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + KaleoDesignerPortletKeys.KALEO_DESIGNER,
-		"mvc.command.name=restoreKaleoDefinitionVersion"
+		"mvc.command.name=revertKaleoDefinitionVersion"
 	},
 	service = MVCActionCommand.class
 )
-public class RestoreKaleoDefinitionVersionMVCActionCommand
+public class RevertWorkflowDefinitionMVCActionCommand
 	extends AddKaleoDefinitionVersionMVCActionCommand {
+
+	/**
+	 * Adds a success message to the workflow definition reversion action
+	 *
+	 * @param  actionRequest The actionRequest object of the action
+	 * @review
+	 */
+	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		DateFormat dateTimeFormat = null;
+
+		if (DateUtil.isFormatAmPm(locale)) {
+			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MMM d, yyyy, hh:mm a", locale);
+		}
+		else {
+			dateTimeFormat = DateFormatFactoryUtil.getSimpleDateFormat(
+				"MMM d, yyyy, HH:mm", locale);
+		}
+
+		Date workflowDefinitionModifiedDate = ParamUtil.getDate(
+			actionRequest, WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
+			dateTimeFormat);
+
+		String dateTime = dateTimeFormat.format(workflowDefinitionModifiedDate);
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			locale);
+
+		SessionMessages.add(
+			actionRequest, "requestProcessed",
+			LanguageUtil.format(
+				resourceBundle, "restored-to-revision-from-x", dateTime));
+	}
 
 	@Override
 	protected void doProcessAction(
@@ -54,15 +106,21 @@ public class RestoreKaleoDefinitionVersionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		int version = ParamUtil.getInteger(actionRequest, "version");
 
-		WorkflowDefinition workflowDefinition =
+		WorkflowDefinition previousWorkflowDefinition =
 			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
 				themeDisplay.getCompanyId(), name, version);
 
-		String content = workflowDefinition.getContent();
+		actionRequest.setAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
+			previousWorkflowDefinition.getModifiedDate());
+
+		String content = previousWorkflowDefinition.getContent();
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			workflowDefinition.getTitle(), content.getBytes());
+			previousWorkflowDefinition.getTitle(), content.getBytes());
+
+		sendRedirect(actionRequest, actionResponse);
 	}
 
 	@Reference

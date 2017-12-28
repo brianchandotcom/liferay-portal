@@ -93,34 +93,6 @@ public class LayoutsAdminDisplayContext {
 			WebKeys.LAYOUT_DESCRIPTIONS, getLayoutDescriptions());
 	}
 
-	public String getAddLayoutURL() {
-		return getAddLayoutURL(LayoutConstants.DEFAULT_PLID, isPrivatePages());
-	}
-
-	public String getAddLayoutURL(long selPlid, Boolean privateLayout) {
-		PortletURL addLayoutURL = _liferayPortletResponse.createRenderURL();
-
-		addLayoutURL.setParameter("mvcPath", "/add_layout.jsp");
-		addLayoutURL.setParameter("redirect", _themeDisplay.getURLCurrent());
-		addLayoutURL.setParameter("backURL", _themeDisplay.getURLCurrent());
-		addLayoutURL.setParameter("groupId", String.valueOf(getSelGroupId()));
-
-		PortletDisplay portletDisplay = _themeDisplay.getPortletDisplay();
-
-		addLayoutURL.setParameter("portletResource", portletDisplay.getId());
-
-		if (selPlid >= LayoutConstants.DEFAULT_PLID) {
-			addLayoutURL.setParameter("selPlid", String.valueOf(selPlid));
-		}
-
-		if (privateLayout != null) {
-			addLayoutURL.setParameter(
-				"privateLayout", String.valueOf(privateLayout));
-		}
-
-		return addLayoutURL.toString();
-	}
-
 	public JSONArray getBreadcrumbEntriesJSONArray() throws PortalException {
 		JSONArray breadcrumbEntriesJSONArray =
 			JSONFactoryUtil.createJSONArray();
@@ -907,7 +879,7 @@ public class LayoutsAdminDisplayContext {
 		if (showAddChildPageAction(layout)) {
 			jsonObject.put(
 				"addURL",
-				getAddLayoutURL(layout.getPlid(), layout.isPrivateLayout()));
+				getSelectLayoutPageTemplateEntryURL(layout.getPlid()));
 		}
 
 		if (showConfigureAction(layout)) {

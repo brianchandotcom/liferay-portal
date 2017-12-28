@@ -14,25 +14,19 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
-import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
-import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jeyvison Nascimento
@@ -46,32 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = MVCActionCommand.class
 )
 public class UnpublishKaleoDefinitionVersionMVCActionCommand
-	extends BaseMVCActionCommand {
-
-	@Override
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		try {
-			doProcessAction(actionRequest, actionResponse);
-
-			return SessionErrors.isEmpty(actionRequest);
-		}
-		catch (WorkflowException we) {
-			hideDefaultErrorMessage(actionRequest);
-
-			SessionErrors.add(actionRequest, we.getClass());
-
-			return false;
-		}
-		catch (PortletException pe) {
-			throw pe;
-		}
-		catch (Exception e) {
-			throw new PortletException(e);
-		}
-	}
+	extends AddKaleoDefinitionVersionMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -82,27 +51,17 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		double version = ParamUtil.getDouble(actionRequest, "draftVersion");
+		int version = ParamUtil.getInteger(actionRequest, "version");
 
-		_workflowDefinitionManager.updateActive(
+		workflowDefinitionManager.updateActive(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-			(int)version, false);
-
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			_kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
-				themeDisplay.getCompanyId(), name);
-
-		kaleoDefinitionVersion.setStatus(WorkflowConstants.STATUS_DRAFT);
-
-		_kaleoDefinitionVersionLocalService.updateKaleoDefinitionVersion(
-			kaleoDefinitionVersion);
+			version, false);
 	}
 
-	@Reference
-	private KaleoDefinitionVersionLocalService
-		_kaleoDefinitionVersionLocalService;
-
-	@Reference
-	private WorkflowDefinitionManager _workflowDefinitionManager;
+	@Override
+	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+		return LanguageUtil.get(
+			resourceBundle, "workflow-unpublished-successfully");
+	}
 
 }

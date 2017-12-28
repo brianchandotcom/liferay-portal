@@ -307,9 +307,9 @@
 	<xs:element name="workflow-definition">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="name" type="xs:string" />
+				<xs:element minOccurs="0" name="name" type="xs:string" />
 				<xs:element minOccurs="0" name="description" type="xs:string" />
-				<xs:element name="version" type="xs:int" />
+				<xs:element minOccurs="0" name="version" type="xs:int" />
 				<xs:group maxOccurs="unbounded" ref="nodes-group" />
 			</xs:sequence>
 		</xs:complexType>

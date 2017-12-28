@@ -24,8 +24,6 @@
 
 		<execute macro="CPCommerceStarterKit#clickApply" />
 
-		<execute function="Confirm" value1="Are you sure you want to continue? All contents will be deleted." />
-
 		<execute function="Pause" locator1="3000" />
 	</command>
 </definition>

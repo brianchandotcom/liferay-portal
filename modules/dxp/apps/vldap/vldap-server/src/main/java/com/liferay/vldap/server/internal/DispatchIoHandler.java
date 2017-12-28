@@ -146,22 +146,22 @@ public class DispatchIoHandler implements IoHandler {
 	protected LdapHandler getLdapHandler(Request request) {
 		MessageTypeEnum messageTypeEnum = request.getType();
 
-		if (DispatchIoHandler == MessageTypeEnum.ABANDON_REQUEST) {
+		if (messageTypeEnum == MessageTypeEnum.ABANDON_REQUEST) {
 			return _abandonLdapHandler;
 		}
-		else if (DispatchIoHandler == MessageTypeEnum.BIND_REQUEST) {
+		else if (messageTypeEnum == MessageTypeEnum.BIND_REQUEST) {
 			return _bindLdapHandler;
 		}
-		else if (DispatchIoHandler == MessageTypeEnum.COMPARE_REQUEST) {
+		else if (messageTypeEnum == MessageTypeEnum.COMPARE_REQUEST) {
 			return _compareLdapHandler;
 		}
-		else if (DispatchIoHandler == MessageTypeEnum.EXTENDED_REQUEST) {
+		else if (messageTypeEnum == MessageTypeEnum.EXTENDED_REQUEST) {
 			return _extendedLdapHandler;
 		}
-		else if (DispatchIoHandler == MessageTypeEnum.SEARCH_REQUEST) {
+		else if (messageTypeEnum == MessageTypeEnum.SEARCH_REQUEST) {
 			return _searchLdapHandler;
 		}
-		else if (DispatchIoHandler == MessageTypeEnum.UNBIND_REQUEST) {
+		else if (messageTypeEnum == MessageTypeEnum.UNBIND_REQUEST) {
 			return _unbindLdapHandler;
 		}
 

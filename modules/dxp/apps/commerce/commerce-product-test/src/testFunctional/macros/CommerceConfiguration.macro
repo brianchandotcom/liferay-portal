@@ -1,0 +1,74 @@
+<definition>
+	<command name="addPortletsToSitePagesViaHealthStatus">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Settings" />
+		</execute>
+
+		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
+			<var name="menuTabItem" value="Health Status" />
+		</execute>
+
+		<for list="1,2,3,4" param="buttonRowNumber">
+			<if>
+				<not>
+					<condition function="IsElementPresent" locator1="CommerceEntry#FIX_ISSUE_BUTTON">
+						<var name="key_buttonStatus" value="disabled" />
+					</condition>
+				</not>
+				<then>
+					<execute function="Click" locator1="CommerceEntry#FIX_ISSUE_BUTTON">
+						<var name="key_buttonRowNumber" value="${buttonRowNumber}" />
+						<var name="key_buttonStatus" value="" />
+					</execute>
+				</then>
+			</if>
+		</for>
+	</command>
+
+	<command name="commerceSetUp">
+		<execute macro="ProductMenuHelper#expandPanel">
+			<var name="panel" value="Site Administration" />
+		</execute>
+
+		<execute macro="ProductMenuHelper#expandCategory">
+			<var name="category" value="Commerce" />
+		</execute>
+
+		<if>
+			<condition function="IsElementPresent" locator1="ProductMenu#PORTLET">
+				<var name="key_portlet" value="Enable Features" />
+			</condition>
+
+			<then>
+				<execute macro="CPCommerceStarterKit#setEmptyStore" />
+			</then>
+		</if>
+	</command>
+
+	<command name="commerceTearDown">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Catalog" />
+		</execute>
+
+		<if>
+			<condition function="IsElementNotPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			<then>
+				<execute macro="CommerceProducts#moveCatalogEntriesToRecycleBin" />
+
+				<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+			</then>
+		</if>
+
+		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
+			<var name="menuTabItem" value="Options" />
+		</execute>
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="CommerceOptions#deleteOptionsEntries" />
+
+		<execute macro="User#logoutPG" />
+	</command>
+</definition>

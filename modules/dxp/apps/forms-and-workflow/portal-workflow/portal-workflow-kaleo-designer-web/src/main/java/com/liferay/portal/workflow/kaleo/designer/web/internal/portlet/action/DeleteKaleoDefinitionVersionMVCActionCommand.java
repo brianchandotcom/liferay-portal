@@ -14,12 +14,17 @@
 
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -48,16 +53,40 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long companyId = themeDisplay.getCompanyId();
+
 		String name = ParamUtil.getString(actionRequest, "name");
-		String draftVersion = ParamUtil.getString(
-			actionRequest, "draftVersion");
 
-		KaleoDefinitionVersion kaleoDefinitionVersion =
-			kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-				themeDisplay.getCompanyId(), name, draftVersion);
+		ServiceContext serviceContext = new ServiceContext();
 
-		kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersion(
-			kaleoDefinitionVersion);
+		serviceContext.setCompanyId(companyId);
+
+		KaleoDefinition kaleoDefinition =
+			kaleoDefinitionLocalService.fetchKaleoDefinition(
+				name, serviceContext);
+
+		if (kaleoDefinition != null) {
+			workflowDefinitionManager.undeployWorkflowDefinition(
+				companyId, themeDisplay.getUserId(), name,
+				kaleoDefinition.getVersion());
+		}
+		else {
+			String draftVersion = ParamUtil.getString(
+				actionRequest, "draftVersion");
+
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+					themeDisplay.getCompanyId(), name, draftVersion);
+
+			kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersion(
+				kaleoDefinitionVersion);
+		}
+	}
+
+	@Override
+	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+		return LanguageUtil.get(
+			resourceBundle, "workflow-deleted-successfully");
 	}
 
 }

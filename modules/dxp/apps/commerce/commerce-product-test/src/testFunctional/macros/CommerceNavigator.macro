@@ -1,4 +1,10 @@
 <definition>
+	<command name="gotoCommercePortletMenuItem">
+		<execute function="AssertClick" locator1="CommerceNavigation#INVERSE_MENU_TAB" value1="${menuTabItem}">
+			<var name="key_menuTabItem" value="${menuTabItem}" />
+		</execute>
+	</command>
+
 	<command name="gotoEntry">
 		<if>
 			<condition function="IsElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" />
@@ -17,18 +23,20 @@
 		</if>
 	</command>
 
-	<command name="gotoSitesCommerce" summary="Navigate to Product Menu > Sites > Commerce > ${portlet}">
-		<execute macro="Navigator#openURL" />
+	<command name="gotoFrontStoreProductPage">
+		<execute function="Click" locator1="CommerceEntry#FRONT_STORE_PRODUCT_LINK" />
 
-		<execute macro="ProductMenuHelper#expandPanelSites" />
+		<execute function="SelectWindow" locator1="title=${productTitle} - Product - Liferay" />
+	</command>
 
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Commerce" />
+	<command name="gotoOptionValues">
+		<execute function="Click" locator1="CommerceNavigation#OPTION_VALUES_LINK" value1="${optionEntryTitle}">
+			<var name="key_optionEntryTitle" value="${optionEntryTitle}" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#gotoPortlet">
-			<var name="portlet" value="${portlet}" />
-		</execute>
+		<execute function="WaitForSPARefresh" />
+
+		<execute function="AssertElementPresent" locator1="CommerceEntry#TITLE_FIELD" />
 	</command>
 
 	<command name="searchEntry">

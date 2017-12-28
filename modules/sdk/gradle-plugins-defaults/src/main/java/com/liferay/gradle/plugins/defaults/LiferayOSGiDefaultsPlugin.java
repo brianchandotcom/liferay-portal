@@ -25,6 +25,7 @@ import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
 import com.liferay.gradle.plugins.defaults.internal.FindSecurityBugsPlugin;
+import com.liferay.gradle.plugins.defaults.internal.JSDocDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.JaCoCoPlugin;
 import com.liferay.gradle.plugins.defaults.internal.LiferayRelengPlugin;
 import com.liferay.gradle.plugins.defaults.internal.WhipDefaultsPlugin;
@@ -1428,6 +1429,7 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		}
 
 		FindSecurityBugsPlugin.INSTANCE.apply(project);
+		JSDocDefaultsPlugin.INSTANCE.apply(project);
 	}
 
 	private void _applyVersionOverrideJson(Project project, String fileName)

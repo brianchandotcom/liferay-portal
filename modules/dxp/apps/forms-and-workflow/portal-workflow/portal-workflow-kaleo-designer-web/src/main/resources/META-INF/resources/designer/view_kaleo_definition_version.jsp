@@ -19,23 +19,25 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-KaleoDefinitionVersion workflowDefinition = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
-String content = workflowDefinition.getContent();
+KaleoDefinition kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
+
+String content = kaleoDefinitionVersion.getContent();
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(workflowDefinition.getName());
+renderResponse.setTitle(kaleoDefinitionVersion.getName());
 %>
 
-<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
+<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 
 <liferay-frontend:info-bar>
 	<div class="container-fluid-1280">
 		<div class="info-bar-item">
 			<c:choose>
-				<c:when test="<%= !workflowDefinition.isDraft() && !workflowDefinition.isInactive() %>">
+				<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
 					<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
 				</c:when>
 				<c:otherwise>
@@ -45,16 +47,16 @@ renderResponse.setTitle(workflowDefinition.getName());
 		</div>
 
 		<%
-		String userName = kaleoDesignerDisplayContext.getUserName(workflowDefinition);
+		String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
 		%>
 
 		<span>
 			<c:choose>
 				<c:when test="<%= userName == null %>">
-					<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+					<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
 				</c:when>
 				<c:otherwise>
-					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
+					<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="revision-from-x-by-x" translateArguments="<%= false %>" />
 				</c:otherwise>
 			</c:choose>
 		</span>
@@ -68,7 +70,7 @@ renderResponse.setTitle(workflowDefinition.getName());
 		<aui:fieldset cssClass="workflow-definition-content">
 			<aui:col>
 				<aui:field-wrapper label="title">
-					<liferay-ui:input-localized disabled="<%= true %>" name="title" xml='<%= BeanPropertiesUtil.getString(workflowDefinition, "title") %>' />
+					<liferay-ui:input-localized disabled="<%= true %>" name="title" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
 				</aui:field-wrapper>
 			</aui:col>
 

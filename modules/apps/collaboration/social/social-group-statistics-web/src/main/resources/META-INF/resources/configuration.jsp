@@ -45,15 +45,17 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 					<aui:fieldset label="">
 
 						<%
-						for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameIndexCount; displayActivityCounterNameIndex++) {
-							displayActivityCounterNameIndexes[displayActivityCounterNameIndex] = String.valueOf(displayActivityCounterNameIndex);
+						for (int i = 0; i < displayActivityCounterNameIndexCount; i++) {
+							String index = String.valueOf(i);
+
+							displayActivityCounterNameIndexes[i] = index;
 						%>
 
 							<div class="lfr-form-row">
 								<div class="row-fields">
 									<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
 										<liferay-util:param name="portletResource" value="<%= portletName %>" />
-										<liferay-util:param name="index" value="<%= displayActivityCounterNameIndexes[displayActivityCounterNameIndex] %>" />
+										<liferay-util:param name="index" value="<%= index %>" />
 									</liferay-util:include>
 								</div>
 							</div>

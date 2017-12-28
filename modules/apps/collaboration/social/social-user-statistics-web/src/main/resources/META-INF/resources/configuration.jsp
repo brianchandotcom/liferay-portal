@@ -19,13 +19,15 @@
 <%
 socialUserStatisticsPortletInstanceConfiguration = ConfigurationProviderUtil.getConfiguration(SocialUserStatisticsPortletInstanceConfiguration.class, new PortletInstanceSettingsLocator(themeDisplay.getLayout(), portletDisplay.getPortletResource()));
 
-int displayActivityCounterNameCount = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName().length;
+String[] displayActivityCounterNames = socialUserStatisticsPortletInstanceConfiguration.displayActivityCounterName();
 
-if (displayActivityCounterNameCount == 0) {
-	displayActivityCounterNameCount = 1;
+int displayActivityCounterNameIndexCount = displayActivityCounterNames.length;
+
+if (displayActivityCounterNameIndexCount == 0) {
+	displayActivityCounterNameIndexCount = 1;
 }
 
-String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNameCount];
+String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNameIndexCount];
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL" />
@@ -57,15 +59,17 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 					<aui:fieldset label="">
 
 						<%
-						for (int displayActivityCounterNameIndex = 0; displayActivityCounterNameIndex < displayActivityCounterNameCount; displayActivityCounterNameIndex++) {
-							displayActivityCounterNameIndexes[displayActivityCounterNameIndex] = String.valueOf(displayActivityCounterNameIndex);
+						for (int i = 0; i < displayActivityCounterNameIndexCount; i++) {
+							String index = String.valueOf(i);
+
+							displayActivityCounterNameIndexes[i] = index;
 						%>
 
 							<div class="lfr-form-row">
 								<div class="row-fields">
 									<liferay-util:include page="/add_activity_counter.jsp" servletContext="<%= application %>">
 										<liferay-util:param name="portletResource" value="<%= portletName %>" />
-										<liferay-util:param name="index" value="<%= displayActivityCounterNameIndexes[displayActivityCounterNameIndex] %>" />
+										<liferay-util:param name="index" value="<%= index %>" />
 									</liferay-util:include>
 								</div>
 							</div>

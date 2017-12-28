@@ -38,14 +38,17 @@ public class GradleBlockOrderCheck extends BaseGradleFileCheck {
 			return content;
 		}
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append(gradleFile.getImportsBlock());
 
-		String buildScriptBlock = gradleFile.getBuildScriptBlock();
+		if (Validator.isNotNull(gradleFile.getBuildScriptBlock())) {
+			sb.append(gradleFile.getBuildScriptBlock());
+			sb.append("\n\n");
+		}
 
-		if (Validator.isNotNull(buildScriptBlock)) {
-			sb.append(buildScriptBlock);
+		if (Validator.isNotNull(gradleFile.getPluginsScriptBlock())) {
+			sb.append(gradleFile.getPluginsScriptBlock());
 			sb.append("\n\n");
 		}
 

@@ -22,7 +22,7 @@ long layoutPageTemplateCollectionId = ParamUtil.getLong(request, "layoutPageTemp
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
 
-renderResponse.setTitle("select-template");
+renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">

@@ -38,7 +38,7 @@ public class UnwrappedVariableInfoCheck extends BaseCheck {
 			return;
 		}
 
-		String line = fileContents.getLine(detailAST.getLineNo() - 1);
+		String line = getLine(detailAST.getLineNo() - 1);
 
 		if (!line.contains("private static final VariableInfo[]")) {
 			return;

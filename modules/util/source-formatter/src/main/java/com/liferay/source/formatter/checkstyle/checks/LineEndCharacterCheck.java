@@ -15,7 +15,6 @@
 package com.liferay.source.formatter.checkstyle.checks;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 /**
@@ -57,9 +56,7 @@ public class LineEndCharacterCheck extends BaseCheck {
 	}
 
 	private boolean _isAtLineEnd(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
-
-		String line = fileContents.getLine(detailAST.getLineNo() - 1);
+		String line = getLine(detailAST.getLineNo() - 1);
 
 		String text = detailAST.getText();
 

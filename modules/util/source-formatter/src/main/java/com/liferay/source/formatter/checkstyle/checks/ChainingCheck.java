@@ -124,12 +124,10 @@ public class ChainingCheck extends BaseCheck {
 	}
 
 	private void _checkStyling(DetailAST methodCallAST) {
-		FileContents fileContents = getFileContents();
-
 		for (int i = DetailASTUtil.getStartLine(methodCallAST) + 1;
 			 i <= DetailASTUtil.getEndLine(methodCallAST); i++) {
 
-			String line = StringUtil.trim(fileContents.getLine(i - 1));
+			String line = StringUtil.trim(getLine(i - 1));
 
 			if (line.startsWith(").")) {
 				return;

@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
-import com.puppycrawl.tools.checkstyle.api.FileContents;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.HashSet;
@@ -414,10 +413,8 @@ public class IndentationCheck extends BaseCheck {
 			}
 
 			if (checkChaining) {
-				FileContents fileContents = getFileContents();
-
 				String line = StringUtil.trim(
-					fileContents.getLine(parentAST.getLineNo() - 1));
+					getLine(parentAST.getLineNo() - 1));
 
 				if (line.endsWith("(") &&
 					(parentAST.getLineNo() < methodCallLineCount)) {
@@ -463,10 +460,8 @@ public class IndentationCheck extends BaseCheck {
 			}
 
 			if (parentAST.getType() == TokenTypes.METHOD_CALL) {
-				FileContents fileContents = getFileContents();
-
 				String line = StringUtil.trim(
-					fileContents.getLine(parentAST.getLineNo() - 1));
+					getLine(parentAST.getLineNo() - 1));
 
 				if (line.startsWith(").") &&
 					(parentAST.getLineNo() < detailAST.getLineNo())) {
@@ -503,9 +498,7 @@ public class IndentationCheck extends BaseCheck {
 
 				String text = parentAST.getText();
 
-				FileContents fileContents = getFileContents();
-
-				String line = fileContents.getLine(parentAST.getLineNo() - 1);
+				String line = getLine(parentAST.getLineNo() - 1);
 
 				String trimmedLine = StringUtil.trim(line);
 
@@ -617,10 +610,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private int _getLeadingTabCount(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
-
-		String line = fileContents.getLine(
-			DetailASTUtil.getStartLine(detailAST) - 1);
+		String line = getLine(DetailASTUtil.getStartLine(detailAST) - 1);
 
 		int leadingTabCount = 0;
 
@@ -859,10 +849,7 @@ public class IndentationCheck extends BaseCheck {
 	}
 
 	private boolean _isAtLineStart(DetailAST detailAST) {
-		FileContents fileContents = getFileContents();
-
-		String line = fileContents.getLine(
-			DetailASTUtil.getStartLine(detailAST) - 1);
+		String line = getLine(DetailASTUtil.getStartLine(detailAST) - 1);
 
 		for (int i = 0; i < detailAST.getColumnNo(); i++) {
 			char c = line.charAt(i);

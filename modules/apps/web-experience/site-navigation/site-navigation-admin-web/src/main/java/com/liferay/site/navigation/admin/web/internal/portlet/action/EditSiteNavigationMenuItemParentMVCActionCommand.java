@@ -70,7 +70,7 @@ public class EditSiteNavigationMenuItemParentMVCActionCommand
 			SiteNavigationMenuItem siteNavigationMenuItem =
 				_siteNavigationMenuItemService.updateSiteNavigationMenuItem(
 					siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-					order, serviceContext);
+					order);
 
 			String redirect = _getRedirect(
 				actionRequest, siteNavigationMenuItem);

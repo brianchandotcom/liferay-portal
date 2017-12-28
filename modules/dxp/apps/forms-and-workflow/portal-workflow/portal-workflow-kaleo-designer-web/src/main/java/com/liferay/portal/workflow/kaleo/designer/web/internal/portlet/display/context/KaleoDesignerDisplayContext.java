@@ -90,6 +90,15 @@ public class KaleoDesignerDisplayContext {
 		return null;
 	}
 
+	public int getKaleoDefinitionVersionCount(
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		return WorkflowDefinitionManagerUtil.getWorkflowDefinitionCount(
+			kaleoDefinitionVersion.getCompanyId(),
+			kaleoDefinitionVersion.getName());
+	}
+
 	public OrderByComparator<KaleoDefinitionVersion>
 		getKaleoDefinitionVersionOrderByComparator() {
 

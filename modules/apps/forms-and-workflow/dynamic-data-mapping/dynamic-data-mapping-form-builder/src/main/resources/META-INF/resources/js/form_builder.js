@@ -795,6 +795,77 @@ AUI.add(
 						instance.bindSidebarFieldDragAction();
 					},
 
+					resizeColumns: function(dragNode) {
+						var instance = this;
+
+						var dropNode = instance._layoutBuilder._lastDropEnter;
+						var lastLayoutPosition = dragNode.getData('last-layout-position');
+
+						var colLayoutPosition = dropNode.getData('layout-position');
+
+						if (!lastLayoutPosition || lastLayoutPosition != colLayoutPosition) {
+							var leftSideColumn = dragNode.getData('layout-col1');
+							var rightSideColumn = dragNode.getData('layout-col2');
+
+							if (!instance.initialLeftSize && !instance.initialRightSize) {
+								if (instance.startedPosition) {
+									instance.initialLeftSize = leftSideColumn.get('size') - 1;
+									instance.initialRightSize = rightSideColumn.get('size');
+								}
+								else if (instance.endedPosition) {
+									instance.initialLeftSize = leftSideColumn.get('size');
+									instance.initialRightSize = rightSideColumn.get('size') - 1;
+								}
+								else {
+									instance.initialLeftSize = leftSideColumn.get('size');
+									instance.initialRightSize = rightSideColumn.get('size');
+								}
+
+								instance.startedPosition = false;
+								instance.endedPosition = false;
+							}
+
+							var difference = colLayoutPosition - instance.initialDragPosition;
+							var leftSideColumNewSize = instance.initialLeftSize;
+							var rightSideColumnNewSize = instance.initialRightSize;
+
+							leftSideColumNewSize += difference;
+							rightSideColumnNewSize -= difference;
+
+							if (colLayoutPosition > 0 && colLayoutPosition < 12 && instance.lastColumnRemoved && ((leftSideColumNewSize >= 1 && leftSideColumn.get('node').hasClass('col-empty')) || (rightSideColumnNewSize >= 1 && rightSideColumn.get('node').hasClass('col-empty')))) {
+								return instance.showLastRemovedColumn();
+							}
+
+							if ((leftSideColumn.get('removable') || leftSideColumn.get('node').hasClass('col-empty')) && leftSideColumNewSize === 0) {
+								leftSideColumNewSize += 1;
+								instance.removeRemoveLayoutBuilderColumn(leftSideColumn);
+							}
+
+							if ((rightSideColumn.get('removable') || rightSideColumn.get('node').hasClass('col-empty')) && rightSideColumnNewSize === 0) {
+								rightSideColumnNewSize += 1;
+								instance.removeRemoveLayoutBuilderColumn(rightSideColumn);
+							}
+
+							if (rightSideColumnNewSize <= 0 || leftSideColumNewSize <= 0) {
+								return false;
+							}
+
+							if (colLayoutPosition == 1) {
+								leftSideColumn.set('size', 1);
+								rightSideColumn.set('size', rightSideColumnNewSize);
+							}
+							else if (colLayoutPosition == 11) {
+								leftSideColumn.set('size', leftSideColumNewSize);
+								rightSideColumn.set('size', 1);
+							}
+							else {
+								leftSideColumn.set('size', leftSideColumNewSize);
+								rightSideColumn.set('size', rightSideColumnNewSize);
+							}
+						}
+
+						dragNode.setData('last-layout-position', colLayoutPosition);
+					},
 					showFieldSettingsPanel: function(field) {
 						var instance = this;
 
@@ -960,6 +1031,17 @@ AUI.add(
 						}
 					},
 
+					_afterDragAlign: function(event) {
+						var instance = this;
+
+						var dragNode = event.target.get('node');
+
+						if (instance.lastFieldHovered) {
+							instance.lastFieldHovered.addClass('hovered-field');
+						}
+
+						instance._syncColsSize(dragNode);
+					},
 					_afterEditingLanguageIdChange: function(event) {
 						var instance = this;
 
@@ -1626,6 +1708,61 @@ AUI.add(
 								return !item.get('system');
 							}
 						);
+					},
+
+					_syncColsSize: function(dragNode) {
+						var instance = this;
+
+						var dropNode = instance._layoutBuilder._lastDropEnter;
+						var rowNode = dragNode.ancestor(SELECTOR_ROW);
+
+						if (!rowNode && !dropNode) {
+							return;
+						}
+
+						var colLayoutPosition = dropNode.getData('layout-position');
+
+						if (dragNode.getData('layout-action') === 'addColumn' && !instance.addedColumWhileDragging && colLayoutPosition > 0 && colLayoutPosition < 12) {
+							instance.addColumnOnDragAction(dragNode, dropNode);
+						}
+
+						if (dropNode && rowNode && (dragNode.getData('layout-col1') && dragNode.getData('layout-col2'))) {
+							instance.resizeColumns(dragNode);
+						}
+					},
+
+					_syncDragHandles: function(rowNode) {
+						var instance = this;
+
+						var dragHandles = rowNode.all('.' + CSS_RESIZE_COL_DRAGGABLE);
+						var row = rowNode.getData('layout-row');
+
+						var cols = row.get('cols');
+						var currentPos = 0;
+						var index;
+						var numberOfCols = cols.length - 1;
+
+						if (!numberOfCols) {
+							numberOfCols = 1;
+						}
+
+						for (index = 0; index <= numberOfCols; index++) {
+							var dragNode = dragHandles.item(index);
+
+							currentPos += cols[index].get('size');
+							dragNode.setStyle('left', ((currentPos * 100) / 12) + '%');
+
+							if (index == 1) {
+								dragNode.setData('layout-col1', cols[cols.length - 2]);
+								dragNode.setData('layout-col2', cols[cols.length - 1]);
+							}
+							else {
+								dragNode.setData('layout-col1', cols[index]);
+								dragNode.setData('layout-col2', cols[index + 1]);
+							}
+
+							dragNode.setData('layout-position', currentPos);
+						}
 					},
 
 					_syncRequiredFieldsWarning: function() {

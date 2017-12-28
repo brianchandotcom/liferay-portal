@@ -17,6 +17,10 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.dao.search;
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitter;
 import com.liferay.portal.kernel.dao.search.ResultRowSplitterEntry;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.ArrayList;
@@ -41,13 +45,23 @@ public class KaleoDefinitionVersionResultRowSplitter
 			KaleoDefinitionVersion kaleoDefinitionVersion =
 				(KaleoDefinitionVersion)resultRow.getObject();
 
-			if (kaleoDefinitionVersion.isInactive() ||
-				kaleoDefinitionVersion.isDraft()) {
+			try {
+				KaleoDefinition kaleoDefinition =
+					kaleoDefinitionVersion.getKaleoDefinition();
+
+				if (kaleoDefinition.isActive()) {
+					kaleoDefinitionPublishedResultRows.add(resultRow);
+				}
+				else {
+					kaleoDefinitionNotPublishedResultRows.add(resultRow);
+				}
+			}
+			catch (PortalException pe) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(pe, pe);
+				}
 
 				kaleoDefinitionNotPublishedResultRows.add(resultRow);
-			}
-			else {
-				kaleoDefinitionPublishedResultRows.add(resultRow);
 			}
 		}
 
@@ -65,5 +79,8 @@ public class KaleoDefinitionVersionResultRowSplitter
 
 		return resultRowSplitterEntries;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoDefinitionVersionResultRowSplitter.class);
 
 }

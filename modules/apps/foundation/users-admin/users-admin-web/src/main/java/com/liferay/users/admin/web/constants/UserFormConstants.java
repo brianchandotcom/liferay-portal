@@ -25,6 +25,8 @@ public class UserFormConstants {
 
 	public static final String CATEGORY_KEY_PREFERENCES = "preferences";
 
+	public static final String ENTRY_KEY_ADDRESSES = "addresses";
+
 	public static final String ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY =
 		"alerts-and-announcements-delivery";
 

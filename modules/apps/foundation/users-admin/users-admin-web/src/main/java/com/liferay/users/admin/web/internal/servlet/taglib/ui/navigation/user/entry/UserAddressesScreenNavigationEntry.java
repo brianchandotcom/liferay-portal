@@ -12,28 +12,42 @@
  * details.
  */
 
-package com.liferay.users.admin.web.servlet.taglib.ui;
+package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
 
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.users.admin.web.constants.UserFormConstants;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
- * @deprecated As of 2.5.0, replaced by {@link
- * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserAddressesScreenNavigationEntry}
  */
-@Deprecated
-public class UserAddressesFormNavigatorEntry
-	extends BaseUserFormNavigatorEntry {
+@Component(
+	property = {"screen.navigation.entry.order:Integer=10"},
+	service = ScreenNavigationEntry.class
+)
+public class UserAddressesScreenNavigationEntry
+	extends BaseUserScreenNavigationEntry {
 
 	@Override
-	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_USER_IDENTIFICATION;
+	public String getActionCommandName() {
+		return "/users_admin/update_addresses";
 	}
 
 	@Override
-	public String getKey() {
-		return "addresses";
+	public String getCategoryKey() {
+		return UserFormConstants.CATEGORY_KEY_CONTACT;
+	}
+
+	@Override
+	public String getEntryKey() {
+		return UserFormConstants.ENTRY_KEY_ADDRESSES;
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/user/addresses.jsp";
 	}
 
 	@Override
@@ -43,11 +57,6 @@ public class UserAddressesFormNavigatorEntry
 		}
 
 		return true;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/user/addresses.jsp";
 	}
 
 }

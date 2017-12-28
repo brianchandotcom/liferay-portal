@@ -67,7 +67,6 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 
 /**
@@ -545,9 +544,7 @@ public class LayoutsAdminDisplayContext {
 		long layoutPageTemplateCollectionId) {
 
 		PortletURL selectLayoutPageTemplateEntryURL =
-			PortalUtil.getControlPanelPortletURL(
-				_liferayPortletRequest, LayoutAdminPortletKeys.GROUP_PAGES,
-				PortletRequest.RENDER_PHASE);
+			_liferayPortletResponse.createRenderURL();
 
 		selectLayoutPageTemplateEntryURL.setParameter(
 			"mvcPath", "/select_layout_page_template_entry.jsp");

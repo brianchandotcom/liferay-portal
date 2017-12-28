@@ -26,22 +26,27 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionLocalService;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.util.Locale;
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -94,6 +99,18 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 	}
 
 	@Override
+	protected void addSuccessMessage(
+		ActionRequest actionRequest, ActionResponse actionResponse) {
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			portal.getLocale(actionRequest));
+
+		String successMessage = getSuccessMessage(resourceBundle);
+
+		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
+	}
+
+	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -101,9 +118,16 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String content = ParamUtil.getString(actionRequest, "content");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			throw new WorkflowDefinitionTitleException();
+		}
+
+		String content = ParamUtil.getString(actionRequest, "content");
 
 		if (Validator.isNull(content)) {
 			throw new WorkflowDefinitionFileException();
@@ -150,6 +174,11 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		return versionParts[0] + StringPool.PERIOD + ++versionParts[1];
 	}
 
+	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+		return LanguageUtil.get(
+			resourceBundle, "workflow-updated-successfully");
+	}
+
 	protected String getTitle(Map<Locale, String> titleMap)
 		throws WorkflowException {
 
@@ -191,12 +220,30 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			closeRedirect);
 	}
 
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		this.resourceBundleLoader = resourceBundleLoader;
+	}
+
+	@Reference
+	protected KaleoDefinitionLocalService kaleoDefinitionLocalService;
+
 	@Reference
 	protected KaleoDefinitionVersionLocalService
 		kaleoDefinitionVersionLocalService;
 
 	@Reference
 	protected Portal portal;
+
+	protected ResourceBundleLoader resourceBundleLoader;
+
+	@Reference
+	protected WorkflowDefinitionManager workflowDefinitionManager;
 
 	@Reference
 	protected WorkflowModelParser workflowModelParser;

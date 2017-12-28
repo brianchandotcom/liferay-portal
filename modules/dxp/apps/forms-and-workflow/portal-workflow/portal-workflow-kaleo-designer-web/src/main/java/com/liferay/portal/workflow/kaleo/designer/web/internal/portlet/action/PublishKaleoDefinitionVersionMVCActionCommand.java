@@ -16,13 +16,13 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
@@ -36,7 +36,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Inácio Nery
@@ -60,16 +59,25 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String content = ParamUtil.getString(actionRequest, "content");
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
+
+		String title = titleMap.get(LocaleUtil.getDefault());
+
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			throw new WorkflowDefinitionTitleException();
+		}
+
+		String content = ParamUtil.getString(actionRequest, "content");
 
 		if (Validator.isNull(content)) {
 			throw new WorkflowDefinitionFileException();
 		}
 
+		validateWorkflowDefinition(content.getBytes());
+
 		WorkflowDefinition workflowDefinition =
-			_workflowDefinitionManager.deployWorkflowDefinition(
+			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(titleMap), content.getBytes());
 
@@ -95,7 +103,15 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		return title;
 	}
 
-	@Reference(target = "(proxy.bean=false)")
-	private WorkflowDefinitionManager _workflowDefinitionManager;
+	protected void validateWorkflowDefinition(byte[] bytes)
+		throws WorkflowDefinitionFileException {
+
+		try {
+			workflowDefinitionManager.validateWorkflowDefinition(bytes);
+		}
+		catch (WorkflowException we) {
+			throw new WorkflowDefinitionFileException(we);
+		}
+	}
 
 }

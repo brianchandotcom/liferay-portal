@@ -122,7 +122,8 @@ public class AssetRendererFactoryRegistryUtil {
 		ServiceRegistration<AssetRendererFactory<?>> serviceRegistration =
 			registry.registerService(
 				(Class<AssetRendererFactory<?>>)(Class<?>)
-					AssetRendererFactory.class, assetRendererFactory);
+					AssetRendererFactory.class,
+				assetRendererFactory);
 
 		_serviceRegistrations.put(assetRendererFactory, serviceRegistration);
 	}

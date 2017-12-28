@@ -286,8 +286,9 @@ public class DDLFormAdminPortlet extends MVCPortlet {
 				new DDLFormAdminFieldSetDisplayContext(
 					renderRequest, renderResponse,
 					_ddlFormWebConfigurationActivator.
-						getDDLFormWebConfiguration(), _ddlRecordLocalService,
-					_ddlRecordSetService, _ddmFormFieldTypeServicesTracker,
+						getDDLFormWebConfiguration(),
+					_ddlRecordLocalService, _ddlRecordSetService,
+					_ddmFormFieldTypeServicesTracker,
 					_ddmFormFieldTypesJSONSerializer, _ddmFormRenderer,
 					_ddmFormValuesFactory, _ddmFormValuesMerger,
 					_ddmStructureLocalService, _ddmStructureService,

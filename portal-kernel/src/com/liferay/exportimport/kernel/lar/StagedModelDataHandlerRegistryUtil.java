@@ -132,7 +132,8 @@ public class StagedModelDataHandlerRegistryUtil {
 		ServiceRegistration<StagedModelDataHandler<?>> serviceRegistration =
 			registry.registerService(
 				(Class<StagedModelDataHandler<?>>)(Class<?>)
-					StagedModelDataHandler.class, stagedModelDataHandler);
+					StagedModelDataHandler.class,
+				stagedModelDataHandler);
 
 		_serviceRegistrations.put(stagedModelDataHandler, serviceRegistration);
 	}

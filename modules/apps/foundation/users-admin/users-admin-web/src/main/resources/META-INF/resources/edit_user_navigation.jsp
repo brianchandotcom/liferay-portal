@@ -33,6 +33,8 @@ request.setAttribute(UsersAdminWebKeys.SELECTED_USER, selUser);
 if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(viewUsersRenderURL.toString());
+
+	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
 }
 %>
 

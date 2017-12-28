@@ -24,8 +24,8 @@ import javax.portlet.RenderRequest;
  */
 public class KaleoDesignerRequestHelper extends BaseRequestHelper {
 
-	public KaleoDesignerRequestHelper(RenderRequest request) {
-		super(PortalUtil.getHttpServletRequest(request));
+	public KaleoDesignerRequestHelper(RenderRequest renderRequest) {
+		super(PortalUtil.getHttpServletRequest(renderRequest));
 	}
 
 }

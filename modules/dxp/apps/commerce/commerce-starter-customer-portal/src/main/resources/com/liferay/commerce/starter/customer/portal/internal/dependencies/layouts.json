@@ -1,0 +1,70 @@
+[
+	{
+		"hidden": false,
+		"layoutTemplateId": "1_column",
+		"name": "Home"
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "commerce_1_2_columns_width_limited",
+		"name": "Categories",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPCategoryContentPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPOptionFacetsPortlet"
+			},
+			{
+				"layoutColumnId": "column-3",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "1_column",
+		"name": "Product Detail",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "commerce_2_columns_width_limited_70_30",
+		"name": "Cart",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentPortlet"
+			},
+			{
+				"layoutColumnId": "column-2",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_cart_content_web_internal_portlet_CommerceCartContentTotalPortlet"
+			}
+		]
+	},
+	{
+		"hidden": true,
+		"layoutTemplateId": "commerce_1_column_width_limited",
+		"name": "Checkout",
+		"portlets": [
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "0",
+				"portletName": "com_liferay_commerce_checkout_web_internal_portlet_CommerceCheckoutPortlet"
+			}
+		]
+	}
+]

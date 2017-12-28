@@ -1008,8 +1008,9 @@ AUI.add(
 						instance._traverseFormPages();
 						instance._applyDragAndDrop();
 
-						instance._layoutBuilder._delegateDrag.detach('drag:end');
-						instance._layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
+						layoutBuilder.detach('layout-row:colsChange');
+
+						layoutBuilder._delegateDrag.detach('drag:end');
 
 						layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
 						layoutBuilder._delegateDrag.after('drag:align', A.bind(instance._afterDragAlign, instance));

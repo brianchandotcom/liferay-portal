@@ -2649,6 +2649,12 @@ sub-repositories.
 
 ## 5.2.31 - 2017-12-29
 
+### Added
+- [LRDOCS-4111]: Apply and preconfigure [Liferay Gradle Plugins JSDoc] for OSGi
+projects.
+- [LRDOCS-4111]: Publish the Javascript API documentation JAR of an OSGi project
+with the `install` and `uploadArchives` tasks.
+
 ### Changed
 - [LPS-76747]: Update the [Liferay Gradle Plugins] dependency to version 3.5.77.
 
@@ -2659,6 +2665,7 @@ sub-repositories.
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
+[Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
@@ -2956,3 +2963,4 @@ sub-repositories.
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
 [LRDOCS-3038]: https://issues.liferay.com/browse/LRDOCS-3038
 [LRDOCS-3643]: https://issues.liferay.com/browse/LRDOCS-3643
+[LRDOCS-4111]: https://issues.liferay.com/browse/LRDOCS-4111

@@ -27,6 +27,8 @@
 
 		KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
+		KaleoDefinition kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
+
 		String name = BeanParamUtil.getString(kaleoDefinitionVersion, request, "name");
 		String draftVersion = BeanParamUtil.getString(kaleoDefinitionVersion, request, "version");
 		String content = BeanParamUtil.getString(kaleoDefinitionVersion, request, "content");
@@ -35,8 +37,6 @@
 		int version = 0;
 
 		KaleoDefinitionVersion latestKaleoDefinitionVersion = null;
-
-		WorkflowDefinition workflowDefinition = null;
 
 		if (kaleoDefinitionVersion != null) {
 			if (Validator.isNull(name)) {
@@ -49,10 +49,8 @@
 
 			latestDraftVersion = latestKaleoDefinitionVersion.getVersion();
 
-			if (kaleoDefinitionVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) {
-				workflowDefinition = WorkflowDefinitionManagerUtil.getLatestKaleoDefinition(themeDisplay.getCompanyId(), name);
-
-				version = workflowDefinition.getVersion();
+			if (kaleoDefinition != null) {
+				version = kaleoDefinition.getVersion();
 			}
 		}
 
@@ -69,11 +67,15 @@
 				<div class="container-fluid-1280">
 					<div class="info-bar-item">
 						<c:choose>
-							<c:when test="<%= !kaleoDefinitionVersion.isDraft() && !kaleoDefinitionVersion.isInactive() %>">
-								<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+							<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
+								<span class="label label-info label-lg ">
+									<liferay-ui:message key="published" />
+								</span>
 							</c:when>
 							<c:otherwise>
-								<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+								<span class="label label-lg label-secondary">
+									<liferay-ui:message key="not-published" />
+								</span>
 							</c:otherwise>
 						</c:choose>
 					</div>
@@ -112,16 +114,16 @@
 						</div>
 
 						<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,revision-history" refresh="<%= false %>" type="tabs">
-							<c:if test="<%= workflowDefinition != null %>">
+							<c:if test="<%= kaleoDefinition != null %>">
 								<liferay-ui:section>
 									<div class="sidebar-body">
 										<h3 class="version">
-											<liferay-ui:message key="version" /> <%= workflowDefinition.getVersion() %>
+											<liferay-ui:message key="version" /> <%= kaleoDefinition.getVersion() %>
 										</h3>
 
-										<aui:model-context bean="<%= workflowDefinition %>" model="<%= WorkflowDefinition.class %>" />
+										<aui:model-context bean="<%= kaleoDefinition %>" model="<%= KaleoDefinition.class %>" />
 
-										<aui:workflow-status model="<%= WorkflowDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
+										<aui:workflow-status model="<%= KaleoDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
 									</div>
 								</liferay-ui:section>
 							</c:if>
@@ -162,13 +164,13 @@
 							<liferay-ui:panel-container extended="<%= false %>" id="kaleoDesignerDetailsPanelContainer" persistState="<%= true %>">
 								<liferay-ui:panel collapsible="<%= true %>" cssClass="lfr-portlet-workflowdesigner-panel" extended="<%= false %>" id="kaleoDesignerSectionPanel" markupView="lexicon" persistState="<%= true %>" title='<%= LanguageUtil.get(request, "details") %>'>
 									<div class="lfr-portlet-workflowdesigner-details-view">
-										<c:if test="<%= workflowDefinition != null %>">
+										<c:if test="<%= kaleoDefinition != null %>">
 											<aui:field-wrapper cssClass="lfr-portlet-workflowdesigner-field-wrapper-first" helpMessage="the-definition-name-is-defined-in-the-workflow-definition-file" label="workflow-definition-name">
-												<%= HtmlUtil.escape(workflowDefinition.getName()) %>
+												<%= HtmlUtil.escape(kaleoDefinition.getName()) %>
 											</aui:field-wrapper>
 
 											<aui:field-wrapper label="workflow-definition-status">
-												<%= workflowDefinition.isActive() ? LanguageUtil.get(request, "active") : LanguageUtil.get(request, "not-active") %>
+												<%= kaleoDefinition.isActive() ? LanguageUtil.get(request, "active") : LanguageUtil.get(request, "not-active") %>
 											</aui:field-wrapper>
 										</c:if>
 
@@ -798,7 +800,7 @@
 										function(event) {
 											if (!event.newVal) {
 												<c:choose>
-													<c:when test="<%= (workflowDefinition != null) && !workflowDefinition.isActive() %>">
+													<c:when test="<%= (kaleoDefinition != null) && !kaleoDefinition.isActive() %>">
 														if (confirm('<liferay-ui:message key="do-you-want-to-publish-this-draft" />')) {
 															event.halt();
 
@@ -840,6 +842,7 @@
 					<aui:button-row>
 						<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
 							<aui:button
+								cssClass="btn-lg"
 								onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>'
 								primary="<%= true %>"
 								value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>"
@@ -848,6 +851,7 @@
 
 						<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 							<aui:button
+								cssClass="btn-lg"
 								onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>'
 								value="save"
 							/>

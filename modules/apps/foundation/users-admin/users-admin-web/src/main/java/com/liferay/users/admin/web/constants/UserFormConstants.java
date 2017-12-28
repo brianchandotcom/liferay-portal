@@ -19,6 +19,8 @@ package com.liferay.users.admin.web.constants;
  */
 public class UserFormConstants {
 
+	public static final String CATEGORY_KEY_CONTACT = "contact";
+
 	public static final String CATEGORY_KEY_GENERAL = "general";
 
 	public static final String CATEGORY_KEY_PREFERENCES = "preferences";

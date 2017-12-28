@@ -18,7 +18,6 @@ import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
-import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -155,8 +154,8 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 
 		CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext =
 			new CommerceCurrenciesDisplayContext(
-				_commerceCurrencyService, _exchangeRateProviderRegistry,
-				_roundingTypeServicesTracker, renderRequest, renderResponse);
+				_commerceCurrencyService, _roundingTypeServicesTracker,
+				renderRequest, renderResponse);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
@@ -179,9 +178,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 	)
 	private StagedModelRepository<CommerceCurrency>
 		_commerceCurrencyStagedModelRepository;
-
-	@Reference
-	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

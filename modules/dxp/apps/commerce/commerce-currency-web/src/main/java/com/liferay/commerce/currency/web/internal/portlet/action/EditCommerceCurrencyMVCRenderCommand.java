@@ -17,7 +17,6 @@ package com.liferay.commerce.currency.web.internal.portlet.action;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -62,9 +61,8 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext =
 				new CommerceCurrenciesDisplayContext(
-					_commerceCurrencyService, _exchangeRateProviderRegistry,
-					_roundingTypeServicesTracker, renderRequest,
-					renderResponse);
+					_commerceCurrencyService, _roundingTypeServicesTracker,
+					renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -96,9 +94,6 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
-
-	@Reference
-	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 	@Reference
 	private Portal _portal;

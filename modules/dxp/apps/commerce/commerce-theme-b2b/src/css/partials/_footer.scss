@@ -1,14 +1,14 @@
 .footer {
 	background-color: $brand-color-secondary;
 	color: $brand-color-secondary-light;
-	padding: 40px;
 	margin-left: -15px;
 	margin-right: -15px;
+	padding: 40px;
 
 	.portlet-title-text, h2 {
 		color: #FFF;
-		text-transform: uppercase;
 		font-size: 20px;
+		text-transform: uppercase;
 	}
 
 	.nav-pills > li.active > a {

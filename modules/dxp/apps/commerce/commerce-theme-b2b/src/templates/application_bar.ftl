@@ -16,6 +16,7 @@
 			<span>
 				Submit a ticket
 			</span>
+
 			<svg class="commerce-icon lexicon-icon lexicon-icon-comments text-light ml-1">
 				<use xlink:href="${images_folder}/lexicon/icons.svg#comments" />
 			</svg>
@@ -28,6 +29,7 @@
 		<svg class="commerce-icon lexicon-icon lexicon-icon-archive text-light mr-2">
 			<use xlink:href="${images_folder}/lexicon/icons.svg#archive" />
 		</svg>
+
 		<span class="sticker sticker-light">${cartItemsCount}</span>
 	</div>
 </div>

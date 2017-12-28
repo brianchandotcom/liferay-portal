@@ -29,7 +29,9 @@ String title = siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, local
 
 Map<String, Object> data = new HashMap<String, Object>();
 
-data.put("siteNavigationMenuItemId", siteNavigationMenuItemId);
+data.put("order", siteNavigationMenuItem.getOrder());
+data.put("parent-site-navigation-menu-item-id", siteNavigationMenuItem.getParentSiteNavigationMenuItemId());
+data.put("site-navigation-menu-item-id", siteNavigationMenuItemId);
 data.put("title", title);
 
 request.setAttribute("edit_site_navigation_menu.jsp-siteNavigationMenuItemId", siteNavigationMenuItem.getSiteNavigationMenuItemId());

@@ -79,6 +79,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			{ "siteNavigationMenuId", Types.BIGINT },
 			{ "parentSiteNavigationMenuItemId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
+			{ "order_", Types.INTEGER },
 			{ "typeSettings", Types.CLOB }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
@@ -94,10 +95,11 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		TABLE_COLUMNS_MAP.put("siteNavigationMenuId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("parentSiteNavigationMenuItemId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("type_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("order_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("typeSettings", Types.CLOB);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,type_ VARCHAR(75) null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenuItem (siteNavigationMenuItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,siteNavigationMenuId LONG,parentSiteNavigationMenuItemId LONG,type_ VARCHAR(75) null,order_ INTEGER,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenuItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteNavigationMenuItem.siteNavigationMenuItemId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteNavigationMenuItem.siteNavigationMenuItemId ASC";
@@ -141,6 +143,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		model.setSiteNavigationMenuId(soapModel.getSiteNavigationMenuId());
 		model.setParentSiteNavigationMenuItemId(soapModel.getParentSiteNavigationMenuItemId());
 		model.setType(soapModel.getType());
+		model.setOrder(soapModel.getOrder());
 		model.setTypeSettings(soapModel.getTypeSettings());
 
 		return model;
@@ -218,6 +221,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		attributes.put("parentSiteNavigationMenuItemId",
 			getParentSiteNavigationMenuItemId());
 		attributes.put("type", getType());
+		attributes.put("order", getOrder());
 		attributes.put("typeSettings", getTypeSettings());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
@@ -288,6 +292,12 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 		if (type != null) {
 			setType(type);
+		}
+
+		Integer order = (Integer)attributes.get("order");
+
+		if (order != null) {
+			setOrder(order);
 		}
 
 		String typeSettings = (String)attributes.get("typeSettings");
@@ -466,6 +476,17 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@JSON
 	@Override
+	public int getOrder() {
+		return _order;
+	}
+
+	@Override
+	public void setOrder(int order) {
+		_order = order;
+	}
+
+	@JSON
+	@Override
 	public String getTypeSettings() {
 		if (_typeSettings == null) {
 			return "";
@@ -521,6 +542,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		siteNavigationMenuItemImpl.setSiteNavigationMenuId(getSiteNavigationMenuId());
 		siteNavigationMenuItemImpl.setParentSiteNavigationMenuItemId(getParentSiteNavigationMenuItemId());
 		siteNavigationMenuItemImpl.setType(getType());
+		siteNavigationMenuItemImpl.setOrder(getOrder());
 		siteNavigationMenuItemImpl.setTypeSettings(getTypeSettings());
 
 		siteNavigationMenuItemImpl.resetOriginalValues();
@@ -647,6 +669,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 			siteNavigationMenuItemCacheModel.type = null;
 		}
 
+		siteNavigationMenuItemCacheModel.order = getOrder();
+
 		siteNavigationMenuItemCacheModel.typeSettings = getTypeSettings();
 
 		String typeSettings = siteNavigationMenuItemCacheModel.typeSettings;
@@ -660,7 +684,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{siteNavigationMenuItemId=");
 		sb.append(getSiteNavigationMenuItemId());
@@ -682,6 +706,8 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getParentSiteNavigationMenuItemId());
 		sb.append(", type=");
 		sb.append(getType());
+		sb.append(", order=");
+		sb.append(getOrder());
 		sb.append(", typeSettings=");
 		sb.append(getTypeSettings());
 		sb.append("}");
@@ -691,7 +717,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.site.navigation.model.SiteNavigationMenuItem");
@@ -738,6 +764,10 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>order</column-name><column-value><![CDATA[");
+		sb.append(getOrder());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
 		sb.append(getTypeSettings());
 		sb.append("]]></column-value></column>");
@@ -766,6 +796,7 @@ public class SiteNavigationMenuItemModelImpl extends BaseModelImpl<SiteNavigatio
 	private long _originalParentSiteNavigationMenuItemId;
 	private boolean _setOriginalParentSiteNavigationMenuItemId;
 	private String _type;
+	private int _order;
 	private String _typeSettings;
 	private long _columnBitmask;
 	private SiteNavigationMenuItem _escapedModel;

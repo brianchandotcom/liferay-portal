@@ -341,6 +341,7 @@ AUI.add(
 
 								instance.currentFieldTypeDrag = event.target;
 
+								instance.sidebarSortable.addDropNode(fieldNodeStart.ancestor());
 								A.DD.DDM._activateTargets();
 
 								instance._addToStack(fieldNodeStart);

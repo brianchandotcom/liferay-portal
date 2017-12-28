@@ -25,8 +25,6 @@ import com.liferay.site.navigation.util.comparator.SiteNavigationMenuItemOrderCo
 
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * @author Pavel Savinov
@@ -135,6 +133,8 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			int order)
 		throws PortalException {
 
+		// Site navigation menu item
+
 		validate(siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
@@ -150,41 +150,43 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		siteNavigationMenuItemPersistence.update(siteNavigationMenuItem);
 
-		List<SiteNavigationMenuItem> children = getSiteNavigationMenuItems(
-			siteNavigationMenuItemId, parentSiteNavigationMenuItemId);
+		// Child site navigation menu item
 
-		Stream<SiteNavigationMenuItem> stream = children.stream();
+		List<SiteNavigationMenuItem> childs = getSiteNavigationMenuItems(
+			siteNavigationMenuItem.getSiteNavigationMenuId(),
+			parentSiteNavigationMenuItemId);
 
-		children = stream.filter(
-			item -> item.getSiteNavigationMenuItemId() !=
-				siteNavigationMenuItemId).collect(Collectors.toList());
+		for (SiteNavigationMenuItem child : childs) {
+			if (child.getOrder() < order) {
+				continue;
+			}
 
-		int index = 0;
+			if (child.getSiteNavigationMenuItemId() ==
+					siteNavigationMenuItemId) {
 
-		for (SiteNavigationMenuItem childSiteNavigationMenuItem : children) {
-			childSiteNavigationMenuItem.setOrder(
-				index == order ? ++index : index);
+				continue;
+			}
 
-			siteNavigationMenuItemPersistence.update(
-				childSiteNavigationMenuItem);
+			child.setOrder(child.getOrder() + 1);
 
-			index++;
+			siteNavigationMenuItemPersistence.update(child);
 		}
 
 		if (parentSiteNavigationMenuItemId !=
 				oldParentSiteNavigationMenuItemId) {
 
-			List<SiteNavigationMenuItem> oldChildren =
-				getSiteNavigationMenuItems(
-					siteNavigationMenuItem.getSiteNavigationMenuId(),
-					oldParentSiteNavigationMenuItemId);
+			List<SiteNavigationMenuItem> oldChilds = getSiteNavigationMenuItems(
+				siteNavigationMenuItem.getSiteNavigationMenuId(),
+				oldParentSiteNavigationMenuItemId);
 
-			index = 0;
+			for (SiteNavigationMenuItem oldChild : oldChilds) {
+				if (oldChild.getOrder() <= order) {
+					continue;
+				}
 
-			for (SiteNavigationMenuItem child : oldChildren) {
-				child.setOrder(index++);
+				oldChild.setOrder(oldChild.getOrder() - 1);
 
-				siteNavigationMenuItemPersistence.update(child);
+				siteNavigationMenuItemPersistence.update(oldChild);
 			}
 		}
 

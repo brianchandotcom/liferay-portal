@@ -1,0 +1,102 @@
+<definition>
+	<command name="addOptionValues">
+		<var name="optionValuesList" value="${optionValuesList}" />
+
+		<execute macro="CommerceNavigator#gotoOptionValues">
+			<var name="optionEntryTitle" value="${optionEntryTitle}" />
+		</execute>
+
+		<for list="${optionValuesList}" param="optionValues">
+
+			<if>
+				<condition function="IsElementPresent" locator1="CommerceEntry#MODAL_DELETE" />
+				<then>
+					<execute function="Click" locator1="CommerceEntry#MODAL_PLUS" />
+				</then>
+			</if>
+
+			<execute macro="CommerceEntry#addOptionValue">
+				<var name="valuePriority" value="${valuePriority}" />
+				<var name="valueTitle" value="${optionValues}" />
+			</execute>
+
+			<execute function="Click" locator1="CommerceEntry#MODAL_SAVE" />
+		</for>
+
+		<execute function="Click" locator1="CommerceEntry#MODAL_CLOSE" />
+	</command>
+
+	<command name="moveProductsEntriesToRecycleBin">
+		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
+
+		<execute function="Click" locator1="Button#RECYCLE_BIN" />
+	</command>
+
+	<command name="moveProductsToRecycleBinViaCheckbox">
+		<execute function="Click" locator1="CommerceNavigation#SINGLE_ENTRY_CHECKBOX">
+			<var name="key_entryTitle" value="${productTitle}" />
+		</execute>
+
+		<execute function="Click" locator1="Button#RECYCLE_BIN" />
+
+		<execute function="AssertElementPresent" locator1="Message#SUCCESS" />
+
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
+
+		<execute function="AssertElementPresent" locator1="CommerceNavigation#EMPTY_SEARCH_CONTAINER" />
+	</command>
+
+	<command name="newOptionsEntry">
+		<if>
+			<condition function="IsElementPresent" locator1="Button#DELETE" />
+			<then>
+				<execute function="Click" locator1="CommerceEntry#ADD_BUTTON" />
+			</then>
+		</if>
+
+		<execute macro="CommerceOptions#addEntry">
+			<var name="optionDescription" value="${optionDescription}" />
+			<var name="optionFieldType" value="${optionFieldType}" />
+			<var name="optionTitle" value="${optionTitle}" />
+		</execute>
+
+		<execute macro="Button#clickSave" />
+
+		<execute macro="CommerceEntry#viewOptionsEntry">
+			<var name="optionDescription" value="${optionDescription}" />
+			<var name="optionFieldType" value="${optionFieldType}" />
+			<var name="optionTitle" value="${optionTitle}" />
+		</execute>
+
+		<if>
+			<or>
+				<equals arg1="${optionFieldType}" arg2="checkbox-multiple" />
+				<equals arg1="${optionFieldType}" arg2="Select" />
+				<equals arg1="${optionFieldType}" arg2="Radio" />
+			</or>
+			<then>
+				<execute macro="CPCommerceCatalog#addOptionValues">
+					<var name="optionEntryTitle" value="${optionTitle}" />
+					<var name="optionValues" value="${optionValues}" />
+					<var name="optionValuesList" value="${optionValuesList}" />
+					<var name="valuePriority" value="${valuePriority}" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
+	<command name="newProductsEntry">
+		<execute macro="CommerceProducts#addEntry">
+			<var name="productFullDescription" value="${productTitle} Full Description" />
+			<var name="productShortDescription" value="${productTitle} Short Description" />
+			<var name="productTitle" value="${productTitle}" />
+			<var name="productType" value="${productType}" />
+		</execute>
+
+		<execute function="Pause" locator1="3000" />
+
+		<execute macro="CommerceEntry#publishEntry">
+			<var name="status" value="Approved" />
+		</execute>
+	</command>
+</definition>

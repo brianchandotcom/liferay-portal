@@ -1,0 +1,27 @@
+<definition>
+	<command name="clickApply">
+		<execute function="Click" locator1="CommerceNavigation#ANY_BUTTON" value1="key_text">
+			<var name="key_text" value="Apply" />
+		</execute>
+	</command>
+
+	<command name="setEmptyStore">
+		<execute macro="ProductMenu#gotoSitesCommerce">
+			<var name="portlet" value="Enable Features" />
+		</execute>
+
+		<execute function="Click" locator1="CommerceNavigation#WIZARD_METHOD">
+			<var name="key_wizardMethod" value="Predefined" />
+		</execute>
+
+		<execute function="Click" locator1="CommerceNavigation#WIZARD_STARTER">
+			<var name="key_wizardStarter" value="Empty Catalog" />
+		</execute>
+
+		<execute macro="CPCommerceStarterKit#clickApply" />
+
+		<execute function="Confirm" value1="Are you sure you want to continue? All contents will be deleted." />
+
+		<execute function="Pause" locator1="3000" />
+	</command>
+</definition>

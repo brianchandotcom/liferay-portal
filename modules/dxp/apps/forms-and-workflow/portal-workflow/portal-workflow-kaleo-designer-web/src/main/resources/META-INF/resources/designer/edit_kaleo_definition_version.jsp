@@ -111,19 +111,56 @@
 					<div class="sidebar sidebar-default sidenav-menu">
 						<div class="sidebar-header">
 							<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
+
+							<h4>
+								<%= kaleoDefinitionVersion.getName() %>
+							</h4>
 						</div>
 
-						<liferay-ui:tabs cssClass="navbar-no-collapse" names="details,revision-history" refresh="<%= false %>" type="tabs">
-							<c:if test="<%= kaleoDefinition != null %>">
+						<liferay-ui:tabs cssClass="navbar-no-collapse panel panel-default" names="details,revision-history" refresh="<%= false %>" type="tabs nav-tabs-default">
+							<c:if test="<%= kaleoDefinitionVersion != null %>">
 								<liferay-ui:section>
-									<div class="sidebar-body">
-										<h3 class="version">
-											<liferay-ui:message key="version" /> <%= kaleoDefinition.getVersion() %>
-										</h3>
+									<div class="sidebar-list">
 
-										<aui:model-context bean="<%= kaleoDefinition %>" model="<%= KaleoDefinition.class %>" />
+										<%
+										String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
+										%>
 
-										<aui:workflow-status model="<%= KaleoDefinition.class %>" status="<%= WorkflowConstants.STATUS_APPROVED %>" />
+										<div class="card-row-padded created-date">
+											<div>
+												<span class="info-title">
+													<liferay-ui:message key="created" />
+												</span>
+											</div>
+
+											<span class="info-content lfr-card-modified-by-text">
+												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getCreateDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+											</span>
+										</div>
+
+										<div class="card-row-padded last-modified">
+											<div>
+												<span class="info-title">
+													<liferay-ui:message key="last-modified" />
+												</span>
+											</div>
+
+											<span class="info-content lfr-card-modified-by-text">
+												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+											</span>
+										</div>
+
+										<div class="card-row-padded">
+											<div>
+												<span class="info-title">
+													<liferay-ui:message key="total-modifications" />
+												</span>
+											</div>
+
+											<span class="info-content lfr-card-modified-by-text">
+												<liferay-ui:message arguments='<%= new String[] {kaleoDesignerDisplayContext.getKaleoDefinitionVersionCount(kaleoDefinitionVersion) + ""} %>' key="x-revisions" translateArguments="<%= false %>" />
+											</span>
+										</div>
 									</div>
 								</liferay-ui:section>
 							</c:if>

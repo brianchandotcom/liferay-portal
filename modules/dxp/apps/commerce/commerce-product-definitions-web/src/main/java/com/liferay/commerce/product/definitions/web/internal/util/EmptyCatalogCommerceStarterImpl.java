@@ -19,8 +19,6 @@ import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
@@ -126,9 +124,6 @@ public class EmptyCatalogCommerceStarterImpl implements CommerceStarter {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/starter/render.jsp");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		EmptyCatalogCommerceStarterImpl.class);
 
 	@Reference
 	private CPGroupLocalService _cpGroupLocalService;

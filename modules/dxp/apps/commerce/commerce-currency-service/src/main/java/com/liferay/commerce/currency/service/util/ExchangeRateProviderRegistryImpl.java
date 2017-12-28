@@ -18,8 +18,6 @@ import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -66,9 +64,6 @@ public class ExchangeRateProviderRegistryImpl
 	protected void deactivate() {
 		_serviceTrackerMap.close();
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		ExchangeRateProviderRegistryImpl.class);
 
 	private ServiceTrackerMap<String, ExchangeRateProvider> _serviceTrackerMap;
 

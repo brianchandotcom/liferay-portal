@@ -1,0 +1,15 @@
+<definition>
+	<command name="assignOptionToProductsEntry" >
+		<execute macro="CommerceEntry#gotoMenuTab">
+			<var name="menuTab" value="Options" />
+		</execute>
+
+		<execute function="Click" locator1="CommerceEntry#ADD_BUTTON" />
+
+		<execute function="WaitForSPARefresh" />
+
+		<execute macro="CommerceItemSelector#selectEntry">
+			<var name="entryTitle" value="${optionTitle}" />
+		</execute>
+	</command>
+</definition>

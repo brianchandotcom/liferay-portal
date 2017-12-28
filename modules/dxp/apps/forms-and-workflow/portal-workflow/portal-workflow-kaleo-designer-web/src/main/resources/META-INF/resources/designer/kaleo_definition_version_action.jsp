@@ -20,6 +20,8 @@
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getObject();
+
+KaleoDefinition kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
@@ -55,28 +57,33 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getO
 		/>
 	</c:if>
 
-	<c:if test="<%= (kaleoDefinitionVersion.getStatus() != WorkflowConstants.STATUS_APPROVED) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteKaleoDefinitionVersion" var="deleteURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-		</portlet:actionURL>
+	<c:choose>
+		<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
+			<portlet:actionURL name="unpublishKaleoDefinitionVersion" var="unpublishURL">
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+				<portlet:param name="version" value="<%= String.valueOf(kaleoDefinition.getVersion()) %>" />
+			</portlet:actionURL>
 
-		<liferay-ui:icon-delete
-			url="<%= deleteURL %>"
-		/>
-	</c:if>
+			<liferay-ui:icon
+				message="unpublish"
+				url="<%= unpublishURL %>"
+			/>
+		</c:when>
+		<c:otherwise>
+			<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.DELETE) %>">
+				<portlet:actionURL name="deleteKaleoDefinitionVersion" var="deleteURL">
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+					<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+				</portlet:actionURL>
 
-	<c:if test="<%= (kaleoDefinitionVersion.getStatus() == WorkflowConstants.STATUS_APPROVED) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
-		<portlet:actionURL name="unpublishKaleoDefinitionVersion" var="unpublishURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
-			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
-		</portlet:actionURL>
-
-		<liferay-ui:icon
-			message="unpublish"
-			url="<%= unpublishURL %>"
-		/>
-	</c:if>
+				<liferay-ui:icon
+					message="delete"
+					onClick='<%= renderResponse.getNamespace() + "confirmDeleteDefinition('" + deleteURL + "'); return false;" %>'
+					url="<%= deleteURL %>"
+				/>
+			</c:if>
+		</c:otherwise>
+	</c:choose>
 </liferay-ui:icon-menu>

@@ -80,3 +80,15 @@ else {
 	dateFormatTime = FastDateFormatFactoryUtil.getSimpleDateFormat("MMM d, yyyy, HH:mm", locale, timeZone);
 }
 %>
+
+<aui:script use="liferay-portlet-kaleo-designer">
+	window.<portlet:namespace/>confirmDeleteDefinition = function(deleteURL) {
+
+		var title = "<%= LanguageUtil.get(request, "delete-workflow-question") %>";
+		var message = "<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>";
+
+		Liferay.KaleoDesigner.openConfirmDeleteDialog(title, message, deleteURL);
+
+		return false;
+	}
+</aui:script>

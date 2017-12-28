@@ -154,6 +154,11 @@
 	}
 }
 
+.dialog-iframe-popup,
+.info-bar-container {
+	background: #FFF;
+}
+
 .diagram-node-suggest-connector .popover-content {
 	.diagram-node-label {
 		font-size: 14px;
@@ -170,6 +175,20 @@
 			font-size: 32px;
 		}
 	}
+}
+
+.info-bar-item {
+	position: absolute;
+}
+
+.info-content {
+	font-size: 0.875rem;
+	font-weight: 100;
+}
+
+.info-title {
+	font-size: 0.875rem;
+	font-weight: 600;
 }
 
 .lfr-portlet-workflowdesigner-draft-version {
@@ -230,10 +249,6 @@
 	.lfr-active-column, .lfr-description-column, .lfr-last-modified-column, .lfr-version-column {
 		width: auto;
 	}
-}
-
-.info-bar-item {
-	position: absolute;
 }
 
 .workflow-definition-container, .workflow-definition-sidebar {

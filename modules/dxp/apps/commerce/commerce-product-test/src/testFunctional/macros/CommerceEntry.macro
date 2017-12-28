@@ -1,14 +1,4 @@
 <definition>
-	<command name="addProductsEntry">
-		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${productTitle}" />
-
-		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
-
-		<execute macro="CommerceEntry#addFullDescriptionViaAlloyEditor">
-			<var name="entryFullDescription" value="${productFullDescription}" />
-		</execute>
-	</command>
-
 	<command name="addFullDescriptionViaAlloyEditor">
 		<execute function="Type#typeEditor" locator1="CommerceEntry#FULL_DESCRIPTION_FIELD" value1="${entryFullDescription}" />
 	</command>
@@ -25,6 +15,16 @@
 		<execute function="Type" locator1="CommerceEntry#MODAL_TITLE_FIELD" value1="${valueTitle}" />
 
 		<execute function="Type" locator1="CommerceEntry#PRIORITY_FIELD" value1="${valuePriority}" />
+	</command>
+
+	<command name="addProductsEntry">
+		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${productTitle}" />
+
+		<execute function="Type" locator1="CommerceEntry#SHORT_DESCRIPTION_FIELD" value1="${productShortDescription}" />
+
+		<execute macro="CommerceEntry#addFullDescriptionViaAlloyEditor">
+			<var name="entryFullDescription" value="${productFullDescription}" />
+		</execute>
 	</command>
 
 	<command name="addSKUsEntry">

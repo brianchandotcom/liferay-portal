@@ -1,6 +1,11 @@
 <definition>
 	<command name="addEntry">
-		<execute function="Click" locator1="Button#PLUS" />
+		<if>
+			<condition function="IsElementPresent" locator1="Button#DELETE" />
+			<then>
+				<execute function="Click" locator1="CommerceEntry#ADD_BUTTON" />
+			</then>
+		</if>
 
 		<execute macro="CommerceEntry#addOptionsEntry">
 			<var name="optionDescription" value="${optionDescription}" />
@@ -10,14 +15,14 @@
 	</command>
 
 	<command name="addOptionValueEntry">
-		<execute macro="CommerceEntry#gotoEntryMenu">
-			<var name="menuTab" value="Values" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PLUS" />
+		<if>
+			<condition function="IsElementPresent" locator1="Button#DELETE" />
+			<then>
+				<execute function="Click" locator1="CommerceEntry#ADD_BUTTON" />
+			</then>
+		</if>
 
 		<execute macro="CommerceEntry#addOptionValue">
-			<var name="valueName" value="${optionValueName}" />
 			<var name="valuePriority" value="${optionValuePriority}" />
 			<var name="valueTitle" value="${optionValueTitle}" />
 		</execute>
@@ -25,64 +30,18 @@
 		<execute macro="CommerceEntry#saveEntry" />
 	</command>
 
-	<command name="assertAllCpOptionsSet">
-		<for list="${setCpOption1},${setCpOption2},${setCpOption3}" param="cpOption" >
-			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-				<var name="key_cpOption" value="${cpOption}" />
-				<var name="key_cpOptionStatus" value="true" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="assertCpOptionSet">
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="${setCpOption}" />
-			<var name="key_cpOptionStatus" value="true" />
-		</execute>
-
-		<for list="${notSetCpOption1},${notSetCpOption2}" param="cpOption" >
-			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-				<var name="key_cpOption" value="${cpOption}" />
-				<var name="key_cpOptionStatus" value="false" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="assertTwoCpOptionsSet">
-		<for list="${setCpOption1},${setCpOption2}" param="cpOption" >
-			<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-				<var name="key_cpOption" value="${cpOption}" />
-				<var name="key_cpOptionStatus" value="true" />
-			</execute>
-		</for>
-
-		<execute function="AssertElementPresent" locator1="CommerceNavigation#CPOPTIONS_STATUS" >
-			<var name="key_cpOption" value="${notSetCpOption}" />
-			<var name="key_cpOptionStatus" value="false" />
-		</execute>
-	</command>
-
 	<command name="deleteOptionsEntries">
-		<execute function="Click" locator1="CommerceNavigation#SELECT_ALL_CHECKBOX" />
-
-		<execute function="AssertClickNoError" locator1="Button#DELETE" value1="Delete" />
-
-		<execute function="Confirm" value1="Are you sure you want to delete the selected options?" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<while>
+			<condition function="IsElementPresent" locator1="Button#DELETE" />
+			<then>
+				<execute macro="CommerceOptions#deleteOptionsEntry" />
+			</then>
+		</while>
 	</command>
 
-	<command name="setThreeCpOptions">
-		<execute function="Check" locator1="CommerceEntry#${checkboxLocator1}_CHECKBOX" value1="${cpOption1}" />
+	<command name="deleteOptionsEntry">
+		<execute macro="Button#clickDelete" />
 
-		<execute function="Check" locator1="CommerceEntry#${checkboxLocator2}_CHECKBOX" value1="${cpOption2}" />
-
-		<execute function="Check" locator1="CommerceEntry#${checkboxLocator3}_CHECKBOX" value1="${cpOption3}" />
-	</command>
-
-	<command name="setTwoCpOptions">
-		<execute function="Check" locator1="CommerceEntry#${checkboxLocator1}_CHECKBOX" value1="${cpOption1}" />
-
-		<execute function="Check" locator1="CommerceEntry#${checkboxLocator2}_CHECKBOX" value1="${cpOption2}" />
+		<execute function="Confirm" value1="Are you sure to delte?" />
 	</command>
 </definition>

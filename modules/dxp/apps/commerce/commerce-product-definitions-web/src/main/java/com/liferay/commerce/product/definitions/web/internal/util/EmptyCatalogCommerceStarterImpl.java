@@ -99,11 +99,7 @@ public class EmptyCatalogCommerceStarterImpl implements CommerceStarter {
 
 	@Override
 	public String getThumbnailSrc() {
-		String contextPath = _servletContext.getContextPath();
-
-		String thumbnailSrc = contextPath + "/images/thumbnail.png";
-
-		return thumbnailSrc;
+		return _servletContext.getContextPath() + "/images/thumbnail.png";
 	}
 
 	@Override

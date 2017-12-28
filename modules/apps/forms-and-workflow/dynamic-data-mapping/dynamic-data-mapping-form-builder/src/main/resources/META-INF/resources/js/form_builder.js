@@ -393,11 +393,12 @@ AUI.add(
 						instance.sidebarSortable = new A.SortableLayout(
 							{
 								delegateConfig: {
-									target: false,
-									useShim: false
+									target: true,
+									useShim: true
 								},
 								dragNodes: '.lfr-ddm-form-builder-draggable-item',
-								dropNodes: '.layout-row .col-empty'
+								dropNodes: '.layout-row .col-empty',
+								proxy: null
 							}
 						);
 
@@ -1004,12 +1005,18 @@ AUI.add(
 						instance._renderRequiredFieldsWarning();
 						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
-						instance._syncRowIcons();
 						instance._traverseFormPages();
 						instance._applyDragAndDrop();
 
 						instance._layoutBuilder._delegateDrag.detach('drag:end');
 						instance._layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
+
+						layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
+						layoutBuilder._delegateDrag.after('drag:align', A.bind(instance._afterDragAlign, instance));
+						layoutBuilder._delegateDrag.after('drag:start', A.bind(instance._afterDragStart, instance));
+
+						layoutBuilder.set('enableRemoveRows', false);
+						layoutBuilder.set('enableMoveRows', false);
 					},
 
 					_afterLayoutColsChange: function(event) {

@@ -22,7 +22,6 @@ import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPGroupLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CommerceStarter;
-import com.liferay.commerce.product.util.CommerceStarterRegistry;
 import com.liferay.commerce.service.CommerceCountryLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -39,7 +38,6 @@ import com.liferay.portal.kernel.model.Theme;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ThemeLocalService;
@@ -396,9 +394,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	private CommerceRegionLocalService _commerceRegionLocalService;
 
 	@Reference
-	private CommerceStarterRegistry _commerceStarterRegistry;
-
-	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;
 
 	@Reference
@@ -418,9 +413,6 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.starter.lotus)"

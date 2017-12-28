@@ -6,7 +6,7 @@
 			<var name="key_plusMenu" value="${plusMenu}" />
 		</execute>
 
-		<execute macro="CommerceEntry#addCatalogEntry">
+		<execute macro="CommerceEntry#addProductsEntry">
 			<var name="productFullDescription" value="${productFullDescription}" />
 			<var name="productShortDescription" value="${productShortDescription}" />
 			<var name="productTitle" value="${productTitle}" />

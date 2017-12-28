@@ -15,35 +15,40 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.search.KaleoDefinitionVersionSearchTerms;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.util.filter.KaleoDefinitionVersionActivePredicateFilter;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
-import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionNameComparator;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
-import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 /**
  * @author Rafael Praxedes
@@ -51,30 +56,21 @@ import javax.portlet.RenderResponse;
 public class KaleoDesignerDisplayContext {
 
 	public KaleoDesignerDisplayContext(
-			RenderRequest renderRequest, RenderResponse renderResponse,
+			RenderRequest renderRequest,
+			KaleoDefinitionVersionLocalService
+				kaleoDefinitionVersionLocalService,
 			UserLocalService userLocalService)
 		throws PortalException {
 
-		_renderRequest = renderRequest;
-		_renderResponse = renderResponse;
 		_themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_kaleoDefinitionVersionLocalService =
+			kaleoDefinitionVersionLocalService;
 		_userLocalService = userLocalService;
 
 		_kaleoDesignerRequestHelper = new KaleoDesignerRequestHelper(
 			renderRequest);
-	}
-
-	public PortletURL getBasePortletURL() throws PortalException {
-		PortletURL portletURL = _renderResponse.createRenderURL();
-
-		String keywords = ParamUtil.getString(_renderRequest, "keywords");
-
-		if (Validator.isNotNull(keywords)) {
-			portletURL.setParameter("keywords", keywords);
-		}
-
-		return portletURL;
 	}
 
 	public OrderByComparator<KaleoDefinitionVersion>
@@ -90,59 +86,99 @@ public class KaleoDesignerDisplayContext {
 
 		OrderByComparator<KaleoDefinitionVersion> orderByComparator = null;
 
-		if (orderByCol.equals("name")) {
-			orderByComparator = new KaleoDefinitionVersionNameComparator(
-				orderByAsc);
-		}
-		else if (orderByCol.equals("title")) {
+		if (orderByCol.equals("title")) {
 			orderByComparator = new KaleoDefinitionVersionTitleComparator(
 				orderByAsc);
+		}
+		else if (orderByCol.equals("last-modified")) {
+			orderByComparator =
+				new KaleoDefinitionVersionModifiedDateComparator(orderByAsc);
 		}
 
 		return orderByComparator;
 	}
 
-	public String getKaleoDraftDefinitionDisplayStyle() {
-		return _DISPLAY_VIEWS[0];
-	}
+	public Date getModifiedDate(KaleoDefinitionVersion kaleoDefinitionVersion) {
+		try {
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.getKaleoDefinition();
 
-	public String[] getKaleoDraftDefinitionDisplayViews() {
-		return _DISPLAY_VIEWS;
+			return kaleoDefinition.getModifiedDate();
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return kaleoDefinitionVersion.getModifiedDate();
 	}
 
 	public String getOrderByCol() {
-		return ParamUtil.getString(_renderRequest, "orderByCol", "name");
+		return ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "orderByCol", "title");
 	}
 
 	public String getOrderByType() {
-		return ParamUtil.getString(_renderRequest, "orderByType", "desc");
-	}
-
-	public String[] getOrderColumns() {
-		return _ORDER_COLUMNS;
+		return ParamUtil.getString(
+			_kaleoDesignerRequestHelper.getRequest(), "orderByType", "asc");
 	}
 
 	public String getPublishKaleoDefinitionVersionButtonLabel(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		if ((kaleoDefinitionVersion == null) ||
-			!kaleoDefinitionVersion.isApproved()) {
+		try {
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.getKaleoDefinition();
 
-			return "publish";
+			if (kaleoDefinition.isActive()) {
+				return "update";
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
 		}
 
-		return "update";
+		return "publish";
 	}
 
-	public ResourceBundle getResourceBundle(Locale locale) {
-		Class<?> clazz = getClass();
+	public List<KaleoDefinitionVersion> getSearchContainerResults(
+			SearchContainer<KaleoDefinitionVersion> searchContainer, int status)
+		throws PortalException {
 
-		return ResourceBundleUtil.getBundle(
-			"content.Language", locale, clazz.getClassLoader());
+		KaleoDefinitionVersionSearchTerms searchTerms =
+			(KaleoDefinitionVersionSearchTerms)searchContainer.getSearchTerms();
+
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+			_kaleoDefinitionVersionLocalService.
+				getLatestKaleoDefinitionVersions(
+					_kaleoDesignerRequestHelper.getCompanyId(),
+					searchTerms.getKeywords(), WorkflowConstants.STATUS_ANY,
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					getKaleoDefinitionVersionOrderByComparator());
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionActivePredicateFilter(status));
+
+		searchContainer.setTotal(kaleoDefinitionVersions.size());
+
+		if (kaleoDefinitionVersions.size() >
+				(searchContainer.getEnd() - searchContainer.getStart())) {
+
+			kaleoDefinitionVersions = ListUtil.subList(
+				kaleoDefinitionVersions, searchContainer.getStart(),
+				searchContainer.getEnd());
+		}
+
+		return kaleoDefinitionVersions;
 	}
 
-	public String getUserName(KaleoDefinitionVersion workflowDefinition) {
-		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
+	public String getUserName(KaleoDefinitionVersion kaleoDefinitionVersion) {
+		User user = _userLocalService.fetchUser(
+			kaleoDefinitionVersion.getUserId());
 
 		if ((user == null) || user.isDefaultUser() ||
 			Validator.isNull(user.getFullName())) {
@@ -217,13 +253,12 @@ public class KaleoDesignerDisplayContext {
 		return kaleoDefinitionVersion.isDraft();
 	}
 
-	private static final String[] _DISPLAY_VIEWS = {"list"};
+	private static final Log _log = LogFactoryUtil.getLog(
+		KaleoDesignerDisplayContext.class);
 
-	private static final String[] _ORDER_COLUMNS = {"name", "title"};
-
+	private final KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 	private final KaleoDesignerRequestHelper _kaleoDesignerRequestHelper;
-	private final RenderRequest _renderRequest;
-	private final RenderResponse _renderResponse;
 	private final ThemeDisplay _themeDisplay;
 	private final UserLocalService _userLocalService;
 

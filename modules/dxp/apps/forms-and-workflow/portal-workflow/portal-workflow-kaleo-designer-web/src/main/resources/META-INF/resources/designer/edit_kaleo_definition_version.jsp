@@ -134,7 +134,7 @@
 											</div>
 
 											<span class="info-content lfr-card-modified-by-text">
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getCreateDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDesignerDisplayContext.getCreatedDate(kaleoDefinitionVersion)), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
 											</span>
 										</div>
 

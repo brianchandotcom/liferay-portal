@@ -42,6 +42,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
+import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionVersionComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,6 +89,21 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		return null;
+	}
+
+	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
+				kaleoDefinitionVersion.getCompanyId(), QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS,
+				new KaleoDefinitionVersionVersionComparator(true));
+
+		KaleoDefinitionVersion firstKaleoDefinitionVersion =
+			kaleoDefinitionVersions.get(0);
+
+		return firstKaleoDefinitionVersion.getCreateDate();
 	}
 
 	public int getKaleoDefinitionVersionCount(

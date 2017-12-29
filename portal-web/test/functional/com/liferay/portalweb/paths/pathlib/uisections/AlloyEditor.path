@@ -168,11 +168,6 @@
 </tr>
 <!--CONTENT_EDITOR-->
 <tr>
-	<td>CONTENT_EDITOR_SWITCH_ACE_EDITOR</td>
-	<td>//button[contains(@id,'EditorSwitch')]/span/*[name()='svg'][contains(@class,'icon-code')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>CONTENT_EDITOR_SWITCH_ABC</td>
 	<td>//button[contains(@id,'contentEditorSwitch') and contains(.,'abc')]</td>
 	<td></td>

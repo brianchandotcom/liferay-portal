@@ -60,7 +60,36 @@ public class LayoutItemSelectorViewDisplayContext {
 		return _itemSelectedEventName;
 	}
 
-	public String getLayoutBreadcrumb(Layout layout) throws Exception {
+	public JSONArray getLayoutsJSONArray() throws Exception {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String layoutUuid = ParamUtil.getString(_request, "layoutUuid");
+
+		JSONArray jsonArray = _getLayoutsJSONArray(
+			themeDisplay.getScopeGroupId(), _privateLayout, 0, layoutUuid);
+
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("children", jsonArray);
+		jsonObject.put("disabled", true);
+		jsonObject.put("expanded", true);
+		jsonObject.put("icon", "home");
+		jsonObject.put("id", "0");
+		jsonObject.put("name", themeDisplay.getScopeGroupName());
+
+		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		layoutsJSONArray.put(jsonObject);
+
+		return layoutsJSONArray;
+	}
+
+	public boolean isFollowURLOnTitleClick() {
+		return _layoutItemSelectorCriterion.isFollowURLOnTitleClick();
+	}
+
+	private String _getLayoutBreadcrumb(Layout layout) throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -95,42 +124,6 @@ public class LayoutItemSelectorViewDisplayContext {
 		return sb.toString();
 	}
 
-	public JSONArray getLayoutsJSONArray() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String layoutUuid = ParamUtil.getString(_request, "layoutUuid");
-
-		JSONArray jsonArray = _getLayoutsJSONArray(
-			themeDisplay.getScopeGroupId(), _privateLayout, 0, layoutUuid);
-
-		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
-
-		jsonObject.put("children", jsonArray);
-		jsonObject.put("disabled", true);
-		jsonObject.put("expanded", true);
-		jsonObject.put("icon", "home");
-		jsonObject.put("id", "0");
-		jsonObject.put("name", themeDisplay.getScopeGroupName());
-
-		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
-
-		layoutsJSONArray.put(jsonObject);
-
-		return layoutsJSONArray;
-	}
-
-	public long getSelPlid() {
-		long selPlid = ParamUtil.getLong(
-			_request, "selPlid", LayoutConstants.DEFAULT_PLID);
-
-		return selPlid;
-	}
-
-	public boolean isFollowURLOnTitleClick() {
-		return _layoutItemSelectorCriterion.isFollowURLOnTitleClick();
-	}
-
 	private JSONArray _getLayoutsJSONArray(
 			long groupId, boolean privateLayout, long parentLayoutId,
 			String selectedLayoutUuid)
@@ -162,7 +155,7 @@ public class LayoutItemSelectorViewDisplayContext {
 			if ((_layoutItemSelectorCriterion.isCheckDisplayPage() &&
 				 !layout.isContentDisplayPage()) ||
 				(!_layoutItemSelectorCriterion.isEnableCurrentPage() &&
-				 (layout.getPlid() == getSelPlid()))) {
+				 (layout.getPlid() == _getSelPlid()))) {
 
 				jsonObject.put("disabled", true);
 			}
@@ -180,12 +173,19 @@ public class LayoutItemSelectorViewDisplayContext {
 				jsonObject.put("selected", true);
 			}
 
-			jsonObject.put("value", getLayoutBreadcrumb(layout));
+			jsonObject.put("value", _getLayoutBreadcrumb(layout));
 
 			jsonArray.put(jsonObject);
 		}
 
 		return jsonArray;
+	}
+
+	private long _getSelPlid() {
+		long selPlid = ParamUtil.getLong(
+			_request, "selPlid", LayoutConstants.DEFAULT_PLID);
+
+		return selPlid;
 	}
 
 	private final String _itemSelectedEventName;

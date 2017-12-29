@@ -117,6 +117,7 @@ page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortletKeys" %><%@
+page import="com.liferay.portal.kernel.util.PredicateFilter" %><%@
 page import="com.liferay.portal.kernel.util.PropertiesParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.ResourceBundleUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@

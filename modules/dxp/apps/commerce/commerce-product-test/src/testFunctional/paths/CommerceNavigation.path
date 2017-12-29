@@ -64,8 +64,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>ANY_BUTTON</td>
-	<td>//a[normalize-space()='${key_text}'] | //button[normalize-space()='${key_text}']</td>
+	<td>APPLY_BUTTON</td>
+	<td>//span[normalize-space()='${key_text}']</td>
 	<td></td>
 </tr>
 </tbody>

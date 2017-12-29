@@ -17,6 +17,7 @@ package com.liferay.exportimport.internal.content.processor.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.document.library.kernel.service.DLAppHelperLocalServiceUtil;
 import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.content.processor.ExportImportContentProcessorRegistryUtil;
@@ -519,29 +520,35 @@ public class DefaultExportImportContentProcessorTest {
 
 	@Test
 	public void testImportDLReferences() throws Exception {
-		Element referrerStagedModelElement =
-			_portletDataContextExport.getExportDataElement(
-				_referrerStagedModel);
+		doTestImportDLReferences(false);
+	}
 
-		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
-			_referrerStagedModel);
+	@Test
+	public void testImportDLReferences2() throws Exception {
+		doTestImportDLReferences(true);
+	}
 
-		referrerStagedModelElement.addAttribute(
-			"path", referrerStagedModelPath);
+	@Test
+	public void testImportDLReferencesFileEntryDeleted() throws Exception {
+		DLAppHelperLocalServiceUtil.deleteFileEntry(_fileEntry);
 
-		String content = replaceParameters(
-			getContent("dl_references.txt"), _fileEntry);
+		doTestImportDLReferences(false);
+	}
 
-		content = _exportImportContentProcessor.replaceExportContentReferences(
-			_portletDataContextExport, _referrerStagedModel, content, true,
-			true);
+	@Test
+	public void testImportDLReferencesFileEntryInTrash() throws Exception {
+		DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
+			TestPropsValues.getUserId(), _fileEntry);
 
-		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
+		doTestImportDLReferences(false);
+	}
 
-		content = _exportImportContentProcessor.replaceImportContentReferences(
-			_portletDataContextImport, _referrerStagedModel, content);
+	@Test
+	public void testImportDLReferencesFileEntryInTrash2() throws Exception {
+		DLAppHelperLocalServiceUtil.moveFileEntryToTrash(
+			TestPropsValues.getUserId(), _fileEntry);
 
-		Assert.assertFalse(content, content.contains("[$dl-reference="));
+		doTestImportDLReferences(true);
 	}
 
 	@Test
@@ -721,6 +728,38 @@ public class DefaultExportImportContentProcessorTest {
 		sb.append(StringPool.CLOSE_BRACKET);
 
 		Assert.assertTrue(content, content.contains(sb.toString()));
+	}
+
+	protected void doTestImportDLReferences(boolean deleteFileEntryBeforeImport)
+		throws Exception {
+
+		Element referrerStagedModelElement =
+			_portletDataContextExport.getExportDataElement(
+				_referrerStagedModel);
+
+		String referrerStagedModelPath = ExportImportPathUtil.getModelPath(
+			_referrerStagedModel);
+
+		referrerStagedModelElement.addAttribute(
+			"path", referrerStagedModelPath);
+
+		String content = replaceParameters(
+			getContent("dl_references.txt"), _fileEntry);
+
+		content = _exportImportContentProcessor.replaceExportContentReferences(
+			_portletDataContextExport, _referrerStagedModel, content, true,
+			true);
+
+		_portletDataContextImport.setScopeGroupId(_fileEntry.getGroupId());
+
+		if (deleteFileEntryBeforeImport) {
+			DLAppLocalServiceUtil.deleteFileEntry(_fileEntry.getFileEntryId());
+		}
+
+		content = _exportImportContentProcessor.replaceImportContentReferences(
+			_portletDataContextImport, _referrerStagedModel, content);
+
+		Assert.assertFalse(content, content.contains("[$dl-reference="));
 	}
 
 	protected void exportImportLayouts(boolean privateLayout) throws Exception {

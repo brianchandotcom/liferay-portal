@@ -73,6 +73,11 @@ public class LinkToPageLayoutTypeController
 	}
 
 	@Override
+	public boolean isInstanceable() {
+		return false;
+	}
+
+	@Override
 	public boolean isParentable() {
 		return true;
 	}

@@ -1,0 +1,10 @@
+{
+	"source": {
+		"excludePattern": "(^|\\/|\\\\)_",
+		"includePattern": ".+\\.(es\\.js|jsdoc|jsx)$"
+	},
+	"templates": {
+		"cleverLinks": false,
+		"monospaceLinks": false
+	}
+}

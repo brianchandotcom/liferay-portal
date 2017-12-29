@@ -38,7 +38,7 @@ public class GradleBlockOrderCheck extends BaseGradleFileCheck {
 			return content;
 		}
 
-		StringBundler sb = new StringBundler(14);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append(gradleFile.getImportsBlock());
 
@@ -46,6 +46,13 @@ public class GradleBlockOrderCheck extends BaseGradleFileCheck {
 
 		if (Validator.isNotNull(buildScriptBlock)) {
 			sb.append(buildScriptBlock);
+			sb.append("\n\n");
+		}
+
+		String pluginsScriptBlock = gradleFile.getPluginsScriptBlock();
+
+		if (Validator.isNotNull(pluginsScriptBlock)) {
+			sb.append(pluginsScriptBlock);
 			sb.append("\n\n");
 		}
 

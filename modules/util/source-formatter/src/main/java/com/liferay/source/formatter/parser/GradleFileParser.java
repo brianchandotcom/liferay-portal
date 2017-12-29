@@ -37,6 +37,7 @@ public class GradleFileParser {
 		String extScriptBlock = StringPool.BLANK;
 		String importsBlock = StringPool.BLANK;
 		String initializeBlock = StringPool.BLANK;
+		String pluginsScriptBlock = StringPool.BLANK;
 		Set<String> properties = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 		Set<String> tasks = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
@@ -84,6 +85,22 @@ public class GradleFileParser {
 				continue;
 			}
 
+			if (Validator.isNull(pluginsScriptBlock) &&
+				line.matches("^plugins\\s+.*\\{")) {
+
+				pluginsScriptBlock = line;
+
+				continue;
+			}
+
+			if (Validator.isNotNull(pluginsScriptBlock) &&
+				!pluginsScriptBlock.endsWith("\n}")) {
+
+				pluginsScriptBlock = pluginsScriptBlock + "\n" + line;
+
+				continue;
+			}
+
 			if (line.matches("^apply plugin.*")) {
 				applyPlugins.add(line);
 			}
@@ -110,7 +127,8 @@ public class GradleFileParser {
 			applyPlugins, StringUtil.trim(bodyBlock),
 			StringUtil.trim(buildScriptBlock), content,
 			StringUtil.trim(extScriptBlock), fileName, importsBlock,
-			StringUtil.trim(initializeBlock), properties, tasks);
+			StringUtil.trim(initializeBlock),
+			StringUtil.trim(pluginsScriptBlock), properties, tasks);
 	}
 
 	private static final Pattern _importsPattern = Pattern.compile(

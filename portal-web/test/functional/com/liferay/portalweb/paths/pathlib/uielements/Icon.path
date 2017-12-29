@@ -40,7 +40,7 @@
 </tr>
 <tr>
 	<td>BACK</td>
-	<td>//a[span/*[name()='svg'][contains(@class,'icon-angle-left')]] | //a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
+	<td>//a[span//*[name()='svg'][contains(@class,'icon-angle-left')]] | //a[contains(@class,'icon-circle-arrow-left') and contains(@class,'previous-level')] | //span[contains(@class,'icon-angle-left')]</td>
 	<td></td>
 </tr>
 <tr>

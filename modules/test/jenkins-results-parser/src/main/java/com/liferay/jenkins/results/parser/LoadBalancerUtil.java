@@ -240,7 +240,7 @@ public class LoadBalancerUtil {
 			return 0;
 		}
 
-		else return _nextUpdateTimestampMap.get(masterPrefix);
+		return _nextUpdateTimestampMap.get(masterPrefix);
 	}
 
 	private static void _setNextUpdateTimestamp(

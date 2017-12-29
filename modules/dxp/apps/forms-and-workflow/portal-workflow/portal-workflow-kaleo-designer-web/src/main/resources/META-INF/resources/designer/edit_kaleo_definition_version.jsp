@@ -27,7 +27,7 @@
 
 		KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
-		KaleoDefinition kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
+		KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition(kaleoDefinitionVersion);
 
 		String name = BeanParamUtil.getString(kaleoDefinitionVersion, request, "name");
 		String draftVersion = BeanParamUtil.getString(kaleoDefinitionVersion, request, "version");

@@ -73,6 +73,25 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
+	public KaleoDefinition getKaleoDefinition(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
+
+		KaleoDefinition kaleoDefinition = null;
+
+		try {
+			if (kaleoDefinitionVersion != null) {
+				kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+
+		return kaleoDefinition;
+	}
+
 	public OrderByComparator<KaleoDefinitionVersion>
 		getKaleoDefinitionVersionOrderByComparator() {
 
@@ -127,18 +146,11 @@ public class KaleoDesignerDisplayContext {
 	public String getPublishKaleoDefinitionVersionButtonLabel(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		try {
-			KaleoDefinition kaleoDefinition =
-				kaleoDefinitionVersion.getKaleoDefinition();
+		KaleoDefinition kaleoDefinition = getKaleoDefinition(
+			kaleoDefinitionVersion);
 
-			if (kaleoDefinition.isActive()) {
-				return "update";
-			}
-		}
-		catch (PortalException pe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(pe, pe);
-			}
+		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
+			return "update";
 		}
 
 		return "publish";

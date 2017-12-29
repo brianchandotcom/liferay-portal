@@ -69,26 +69,40 @@ public class UnpublishDefinitionPortletConfigurationIcon
 
 		portletURL.setParameter(
 			ActionRequest.ACTION_NAME, "unpublishKaleoDefinitionVersion");
-		portletURL.setParameter("name", portletRequest.getParameter("name"));
+
+		KaleoDefinition kaleoDefinition = getKaleoDefinition(portletRequest);
+
+		portletURL.setParameter("name", kaleoDefinition.getName());
 		portletURL.setParameter(
-			"version", portletRequest.getParameter("version"));
+			"version", String.valueOf(kaleoDefinition.getVersion()));
 
 		return portletURL.toString();
 	}
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
+		KaleoDefinition kaleoDefinition = getKaleoDefinition(portletRequest);
+
+		if ((kaleoDefinition != null) && kaleoDefinition.isActive()) {
+			return true;
+		}
+
+		return false;
+	}
+
+	protected KaleoDefinition getKaleoDefinition(
+		PortletRequest portletRequest) {
+
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			(KaleoDefinitionVersion)portletRequest.getAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
-		try {
-			KaleoDefinition kaleoDefinition =
-				kaleoDefinitionVersion.getKaleoDefinition();
+		if (kaleoDefinitionVersion == null) {
+			return null;
+		}
 
-			if (kaleoDefinition.isActive()) {
-				return true;
-			}
+		try {
+			return kaleoDefinitionVersion.getKaleoDefinition();
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -96,7 +110,7 @@ public class UnpublishDefinitionPortletConfigurationIcon
 			}
 		}
 
-		return false;
+		return null;
 	}
 
 	@Reference(

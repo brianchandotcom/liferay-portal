@@ -330,8 +330,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(uploadPortletRequest.getContentType("name"));
 		}
@@ -401,8 +401,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(uploadPortletRequest.getFile("irrelevantName"));
 			Assert.assertNull(
@@ -501,8 +501,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(
 				uploadPortletRequest.getFileAsStream("irrelevantName"));
@@ -600,8 +600,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(
 				uploadPortletRequest.getFileName("irrelevantName"));
@@ -705,8 +705,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(
 				uploadPortletRequest.getFileNames("irrelevantName"));
@@ -763,8 +763,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(uploadPortletRequest.getFiles("irrelevantName"));
 		}
@@ -869,8 +869,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(
 				uploadPortletRequest.getFilesAsStream("irrelevantName"));
@@ -1014,8 +1014,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertNull(
 				uploadPortletRequest.getFullFileName("irrelevantName"));
@@ -1145,8 +1145,8 @@ public class UploadPortletRequestTest {
 				new UploadPortletRequestImpl(
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
-						fileParameters, regularParameters), null,
-					_portletNamespace);
+						fileParameters, regularParameters),
+					null, _portletNamespace);
 
 			Enumeration<String> parameterNames =
 				uploadPortletRequest.getParameterNames();
@@ -1222,8 +1222,8 @@ public class UploadPortletRequestTest {
 				new UploadPortletRequestImpl(
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
-						fileParameters, regularParameters), null,
-					_portletNamespace);
+						fileParameters, regularParameters),
+					null, _portletNamespace);
 
 			for (Map.Entry<String, List<String>> entry :
 					regularParameters.entrySet()) {
@@ -1326,8 +1326,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Long size = uploadPortletRequest.getSize("irrelevantName");
 
@@ -1421,8 +1421,8 @@ public class UploadPortletRequestTest {
 					new UploadServletRequestImpl(
 						(HttpServletRequest)liferayServletRequest.getRequest(),
 						new HashMap<String, FileItem[]>(),
-						new HashMap<String, List<String>>()), null,
-					_portletNamespace);
+						new HashMap<String, List<String>>()),
+					null, _portletNamespace);
 
 			Assert.assertTrue(
 				uploadPortletRequest.isFormField("irrelevantName"));

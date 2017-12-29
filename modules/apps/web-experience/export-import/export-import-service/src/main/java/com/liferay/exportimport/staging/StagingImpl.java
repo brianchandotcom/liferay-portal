@@ -1639,8 +1639,8 @@ public class StagingImpl implements Staging {
 				userId, exportImportConfiguration.getGroupId(),
 				backgroundTaskName,
 				BackgroundTaskExecutorNames.
-					LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR, taskContextMap,
-				new ServiceContext());
+					LAYOUT_STAGING_BACKGROUND_TASK_EXECUTOR,
+				taskContextMap, new ServiceContext());
 
 		return backgroundTask.getBackgroundTaskId();
 	}

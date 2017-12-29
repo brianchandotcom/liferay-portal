@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.SystemProperties;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.util.PropsValues;
 
 import de.schlichtherle.io.ArchiveDetector;
 import de.schlichtherle.io.ArchiveException;
@@ -142,7 +143,7 @@ public class ZipWriterImpl implements ZipWriter {
 		File.setDefaultArchiveDetector(
 			new DefaultArchiveDetector(
 				ArchiveDetector.ALL, "lar|" + ArchiveDetector.ALL.getSuffixes(),
-				new ZipDriver()));
+				new ZipDriver(PropsValues.ZIP_FILE_NAME_ENCODING)));
 
 		TrueZIPHelperUtil.initialize();
 	}

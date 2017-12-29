@@ -2695,4 +2695,6 @@ public interface PropsKeys {
 
 	public static final String YUI_COMPRESSOR_JS_VERBOSE = "yui.compressor.js.verbose";
 
+	public static final String ZIP_FILE_NAME_ENCODING = "zip.file.name.encoding";
+
 }

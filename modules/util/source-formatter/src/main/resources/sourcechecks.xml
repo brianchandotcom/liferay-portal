@@ -221,6 +221,7 @@
 		<check name="JavaDeserializationSecurityCheck" />
 		<check name="JavaEmptyLinesCheck" />
 		<check name="JavaExceptionCheck" />
+		<check name="JavaForLoopCheck" />
 		<check name="JavaHibernateSQLCheck" />
 		<check name="JavaIfStatementCheck" />
 		<check name="JavaIllegalImportsCheck" />

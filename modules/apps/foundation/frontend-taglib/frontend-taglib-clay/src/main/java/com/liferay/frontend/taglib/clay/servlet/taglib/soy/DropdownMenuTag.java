@@ -73,12 +73,12 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("expanded", expanded);
 	}
 
-	public void setIndicatorsPosition(String indicatorsPosition) {
-		putValue("indicatorsPosition", indicatorsPosition);
-	}
-
 	public void setItems(Object items) {
 		putValue("items", items);
+	}
+
+	public void setItemsIconAlignment(String itemsIconAlignment) {
+		putValue("itemsIconAlignment", itemsIconAlignment);
 	}
 
 	public void setLabel(String label) {

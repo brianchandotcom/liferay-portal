@@ -328,14 +328,14 @@
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>indicatorsPosition</name>
-			<required>false</required>
+			<name>items</name>
+			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
 			<description></description>
-			<name>items</name>
-			<required>true</required>
+			<name>itemsIconAlignment</name>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>

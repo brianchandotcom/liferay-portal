@@ -13,7 +13,7 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="ViewLayoutArchive621015" priority="5">
+	<command name="ViewLayoutArchive625" priority="5">
 		<description message="This is a use case for LPS-75561." />
 
 		<property name="data.archive.type" value="data-archive-layout" />

@@ -75,7 +75,7 @@ List<String> types = ListUtil.filter(
 	<liferay-ui:search-iterator displayStyle="icon" markupView="lexicon" />
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/layout/add_layout" var="addLayoutURL">
+<portlet:actionURL name="/layout/add_simple_layout" var="addLayoutURL">
 	<portlet:param name="mvcPath" value="/select_layout_page_template_entry.jsp" />
 	<portlet:param name="groupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getGroupId()) %>" />
 	<portlet:param name="liveGroupId" value="<%= String.valueOf(layoutsAdminDisplayContext.getLiveGroupId()) %>" />

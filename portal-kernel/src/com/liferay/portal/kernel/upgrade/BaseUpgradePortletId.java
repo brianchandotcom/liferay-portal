@@ -85,7 +85,7 @@ public abstract class BaseUpgradePortletId extends UpgradeProcess {
 
 			String typeSettingId = entry.getKey();
 
-			if (!LayoutTypePortletConstants.isLayoutTemplateColumnName(
+			if (!LayoutTypePortletConstants.isTypeSettingWithPortletIds(
 					typeSettingId)) {
 
 				continue;

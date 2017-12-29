@@ -103,6 +103,17 @@ public class LayoutTypePortletConstants
 		return true;
 	}
 
+	public static boolean isTypeSettingWithPortletIds(String typeSettingId) {
+		if (isLayoutTemplateColumnName(typeSettingId) ||
+			DEFAULT_ASSET_PUBLISHER_PORTLET_ID.equals(typeSettingId) ||
+			PANEL_SELECTED_PORTLETS.equals(typeSettingId)) {
+
+			return true;
+		}
+
+		return false;
+	}
+
 	private static final Set<String> _typeSettingsIds = SetUtil.fromArray(
 		new String[] {
 			ARTICLE_ID, CUSTOMIZABLE_LAYOUT, DEFAULT_ASSET_PUBLISHER_PORTLET_ID,

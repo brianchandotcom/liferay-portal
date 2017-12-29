@@ -1,6 +1,6 @@
 <definition>
-	<command name="clickApply">
-		<execute function="Click" locator1="CommerceNavigation#ANY_BUTTON" value1="key_text">
+	<command name="ApplyMethod">
+		<execute function="Click" locator1="CommerceNavigation#APPLY_BUTTON" value1="Apply">
 			<var name="key_text" value="Apply" />
 		</execute>
 
@@ -22,7 +22,7 @@
 			<var name="key_wizardStarter" value="Empty Catalog" />
 		</execute>
 
-		<execute macro="CPCommerceStarterKit#clickApply" />
+		<execute macro="CPCommerceStarterKit#ApplyMethod" />
 
 		<execute function="Pause" locator1="3000" />
 	</command>

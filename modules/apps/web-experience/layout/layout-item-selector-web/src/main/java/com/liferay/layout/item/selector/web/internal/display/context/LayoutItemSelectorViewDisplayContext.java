@@ -15,14 +15,11 @@
 package com.liferay.layout.item.selector.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.StagingUtil;
-import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -32,14 +29,12 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermissionUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ClassUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
@@ -72,48 +67,8 @@ public class LayoutItemSelectorViewDisplayContext {
 		_privateLayout = privateLayout;
 	}
 
-	public String getCkEditorFuncNum() {
-		String ckEditorFuncNum = ParamUtil.getString(
-			_request, "CKEditorFuncNum");
-
-		return ckEditorFuncNum;
-	}
-
-	public PortletURL getEditLayoutURL() throws PortalException {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletURL editLayoutURL = PortletProviderUtil.getPortletURL(
-			_request, Layout.class.getName(), PortletProvider.Action.EDIT);
-
-		editLayoutURL.setParameter("redirect", themeDisplay.getURLCurrent());
-		editLayoutURL.setParameter(
-			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
-
-		return editLayoutURL;
-	}
-
 	public String getItemSelectedEventName() {
 		return _itemSelectedEventName;
-	}
-
-	public String getItemSelectorReturnTypeName() {
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			_layoutItemSelectorCriterion.getDesiredItemSelectorReturnTypes();
-
-		ItemSelectorReturnType desiredItemSelectorReturnType =
-			desiredItemSelectorReturnTypes.get(0);
-
-		String itemSelectorReturnTypeName = ClassUtil.getClassName(
-			desiredItemSelectorReturnType);
-
-		if (Validator.isNull(itemSelectorReturnTypeName)) {
-			throw new IllegalArgumentException(
-				"Invalid item selector return type " +
-					itemSelectorReturnTypeName);
-		}
-
-		return itemSelectorReturnTypeName;
 	}
 
 	public String getLayoutBreadcrumb(Layout layout) throws Exception {
@@ -151,10 +106,6 @@ public class LayoutItemSelectorViewDisplayContext {
 		return sb.toString();
 	}
 
-	public LayoutItemSelectorCriterion getLayoutItemSelectorCriterion() {
-		return _layoutItemSelectorCriterion;
-	}
-
 	public JSONArray getLayoutsJSONArray() throws Exception {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -162,7 +113,7 @@ public class LayoutItemSelectorViewDisplayContext {
 		String layoutUuid = ParamUtil.getString(_request, "layoutUuid");
 
 		JSONArray jsonArray = _getLayoutsJSONArray(
-			themeDisplay.getScopeGroupId(), isPrivateLayout(), 0, layoutUuid);
+			themeDisplay.getScopeGroupId(), _privateLayout, 0, layoutUuid);
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
@@ -180,23 +131,6 @@ public class LayoutItemSelectorViewDisplayContext {
 		return layoutsJSONArray;
 	}
 
-	public String getRootNodeName() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Group group = themeDisplay.getScopeGroup();
-
-		return group.getLayoutRootNodeName(
-			isPrivateLayout(), themeDisplay.getLocale());
-	}
-
-	public String getSelectedLayoutIds() {
-		String selectedLayoutIds = ParamUtil.getString(
-			_request, "selectedLayoutIds");
-
-		return selectedLayoutIds;
-	}
-
 	public long getSelPlid() {
 		long selPlid = ParamUtil.getLong(
 			_request, "selPlid", LayoutConstants.DEFAULT_PLID);
@@ -206,10 +140,6 @@ public class LayoutItemSelectorViewDisplayContext {
 
 	public boolean isFollowURLOnTitleClick() {
 		return _layoutItemSelectorCriterion.isFollowURLOnTitleClick();
-	}
-
-	public boolean isPrivateLayout() {
-		return _privateLayout;
 	}
 
 	private JSONArray _getActionsJSONArray(Layout layout) throws Exception {

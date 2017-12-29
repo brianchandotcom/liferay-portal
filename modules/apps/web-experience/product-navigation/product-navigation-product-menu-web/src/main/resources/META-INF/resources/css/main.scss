@@ -4,14 +4,14 @@
 .product-menu {
 	.sidebar-header {
 		line-height: 32px;
-		padding-bottom: 10px;
+		padding-bottom: 8px;
 		padding-right: 9px;
-		padding-top: 12px;
+		padding-top: 8px;
 
 		@include sm() {
-			padding-bottom: 16px;
+			padding-bottom: 12px;
 			padding-left: 24px;
-			padding-top: 16px;
+			padding-top: 12px;
 		}
 
 		.sidenav-close {
@@ -39,6 +39,10 @@
 		@include media-query(null, 320px) {
 			overflow: visible;
 			position: static;
+		}
+
+		.panel-group {
+			border-radius: 0;
 		}
 	}
 

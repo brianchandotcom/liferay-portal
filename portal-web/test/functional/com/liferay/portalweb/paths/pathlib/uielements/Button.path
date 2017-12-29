@@ -269,6 +269,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>CLOSE_SUCCESS_MESSAGE</td>
+	<td>//button[contains(@class,'close')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>COLOR_EFFECT</td>
 	<td>//a[contains(@class, 'btn')][span/*[name()='svg'][@data-icon='effects']]</td>
 	<td></td>

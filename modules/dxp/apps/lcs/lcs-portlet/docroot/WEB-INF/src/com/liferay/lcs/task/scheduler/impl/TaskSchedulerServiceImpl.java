@@ -74,6 +74,14 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 			ScheduledTask scheduledTask = (ScheduledTask)beanLocator.locate(
 				taskName);
 
+			if (scheduledTask == null) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(taskName + " task is not supported");
+				}
+
+				return;
+			}
+
 			if (scheduledTask.getType() == Type.LOCAL) {
 				scheduleLocalScheduledTask(schedulerContext);
 			}

@@ -48,9 +48,7 @@ public class BeanToXMLUtil {
 
 		Method[] methods = clazz.getMethods();
 
-		for (int i = 0; i < methods.length; i++) {
-			Method method = methods[i];
-
+		for (Method method : methods) {
 			if (method.getName().startsWith("get") &&
 				!method.getName().equals("getClass")) {
 

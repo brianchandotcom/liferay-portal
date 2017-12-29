@@ -305,9 +305,7 @@ public class PortalInstances {
 
 				portletCategory.merge(newPortletCategory);
 
-				for (int i = 0; i < _companyIds.length; i++) {
-					long currentCompanyId = _companyIds[i];
-
+				for (long currentCompanyId : _companyIds) {
 					PortletCategory currentPortletCategory =
 						(PortletCategory)WebAppPool.get(
 							currentCompanyId, WebKeys.PORTLET_CATEGORY);

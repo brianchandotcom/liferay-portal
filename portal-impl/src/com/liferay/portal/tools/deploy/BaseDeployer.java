@@ -347,9 +347,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 	public void copyJars(File srcFile, PluginPackage pluginPackage)
 		throws Exception {
 
-		for (int i = 0; i < jars.size(); i++) {
-			String jarFullName = jars.get(i);
-
+		for (String jarFullName : jars) {
 			String jarName = jarFullName.substring(
 				jarFullName.lastIndexOf("/") + 1);
 

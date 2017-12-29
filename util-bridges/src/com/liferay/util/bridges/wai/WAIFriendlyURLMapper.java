@@ -143,9 +143,7 @@ public class WAIFriendlyURLMapper implements FriendlyURLMapper {
 	}
 
 	protected boolean hasBinaryExtension(String friendlyURLPath) {
-		for (int i = 0; i < _BINARY_EXTENSIONS.length; i++) {
-			String binaryExtension = _BINARY_EXTENSIONS[i];
-
+		for (String binaryExtension : _BINARY_EXTENSIONS) {
 			if (friendlyURLPath.endsWith(binaryExtension)) {
 				return true;
 			}

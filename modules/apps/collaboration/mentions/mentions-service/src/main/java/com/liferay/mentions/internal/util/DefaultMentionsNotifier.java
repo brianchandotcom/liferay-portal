@@ -106,9 +106,7 @@ public class DefaultMentionsNotifier implements MentionsNotifier {
 		subscriptionSender.setLocalizedSubjectMap(
 			LocalizationUtil.getMap(subjectLocalizedValuesMap));
 
-		for (int i = 0; i < mentionedUsersScreenNames.length; i++) {
-			String mentionedUserScreenName = mentionedUsersScreenNames[i];
-
+		for (String mentionedUserScreenName : mentionedUsersScreenNames) {
 			User mentionedUser = _userLocalService.fetchUserByScreenName(
 				user.getCompanyId(), mentionedUserScreenName);
 

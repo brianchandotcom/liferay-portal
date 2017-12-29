@@ -36,9 +36,7 @@ public class XMLTypeDetector {
 	};
 
 	public static XMLDescriptor determineType(String doctype, Document root) {
-		for (int i = 0; i < REGISTERED_DESCRIPTORS.length; i++) {
-			XMLDescriptor descriptor = REGISTERED_DESCRIPTORS[i];
-
+		for (XMLDescriptor descriptor : REGISTERED_DESCRIPTORS) {
 			if (descriptor.canHandleType(doctype, root)) {
 				return descriptor;
 			}

@@ -132,11 +132,8 @@ public class InstanceWrapperBuilder {
 			if (typeParameters.length > 0) {
 				sb.append(" <");
 
-				for (int i = 0; i < typeParameters.length; i++) {
-					TypeVariable typeParameter = typeParameters[i];
-
+				for (TypeVariable typeParameter : typeParameters) {
 					sb.append(typeParameter.getName());
-
 					sb.append(", ");
 				}
 
@@ -152,9 +149,7 @@ public class InstanceWrapperBuilder {
 
 			JavaParameter[] javaParameters = javaMethod.getParameters();
 
-			for (int i = 0; i < javaParameters.length; i++) {
-				JavaParameter javaParameter = javaParameters[i];
-
+			for (JavaParameter javaParameter : javaParameters) {
 				sb.append(_getTypeGenericsName(javaParameter.getType()));
 
 				if (javaParameter.isVarArgs()) {
@@ -176,9 +171,7 @@ public class InstanceWrapperBuilder {
 
 			Set<String> newExceptions = new LinkedHashSet<>();
 
-			for (int j = 0; j < thrownExceptions.length; j++) {
-				Type thrownException = thrownExceptions[j];
-
+			for (Type thrownException : thrownExceptions) {
 				newExceptions.add(thrownException.getValue());
 			}
 
@@ -208,11 +201,8 @@ public class InstanceWrapperBuilder {
 			sb.append(javaMethod.getName());
 			sb.append("(");
 
-			for (int j = 0; j < javaParameters.length; j++) {
-				JavaParameter javaParameter = javaParameters[j];
-
+			for (JavaParameter javaParameter : javaParameters) {
 				sb.append(javaParameter.getName());
-
 				sb.append(", ");
 			}
 

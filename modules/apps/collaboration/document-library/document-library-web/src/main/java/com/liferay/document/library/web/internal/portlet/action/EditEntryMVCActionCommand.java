@@ -129,9 +129,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		List<TrashedModel> trashedModels = new ArrayList<>();
 
-		for (int i = 0; i < deleteFolderIds.length; i++) {
-			long deleteFolderId = deleteFolderIds[i];
-
+		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
 				Folder folder = _dlTrashService.moveFolderToTrash(
 					deleteFolderId);
@@ -150,9 +148,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] deleteFileShortcutIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsDLFileShortcut");
 
-		for (int i = 0; i < deleteFileShortcutIds.length; i++) {
-			long deleteFileShortcutId = deleteFileShortcutIds[i];
-
+		for (long deleteFileShortcutId : deleteFileShortcutIds) {
 			if (moveToTrash) {
 				FileShortcut fileShortcut =
 					_dlTrashService.moveFileShortcutToTrash(

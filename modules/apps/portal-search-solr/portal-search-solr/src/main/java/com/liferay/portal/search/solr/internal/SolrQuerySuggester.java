@@ -317,9 +317,7 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 
 			SolrDocumentList solrDocumentList = queryResponse.getResults();
 
-			for (int i = 0; i < solrDocumentList.size(); i++) {
-				SolrDocument solrDocument = solrDocumentList.get(i);
-
+			for (SolrDocument solrDocument : solrDocumentList) {
 				List<String> suggestions = (List<String>)solrDocument.get(
 					Field.SPELL_CHECK_WORD);
 

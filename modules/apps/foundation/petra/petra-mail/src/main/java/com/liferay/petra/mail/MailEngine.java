@@ -314,9 +314,7 @@ public class MailEngine {
 					messageMultipart.addBodyPart(bodyPart);
 				}
 
-				for (int i = 0; i < fileAttachments.size(); i++) {
-					FileAttachment fileAttachment = fileAttachments.get(i);
-
+				for (FileAttachment fileAttachment : fileAttachments) {
 					File file = fileAttachment.getFile();
 
 					if (file == null) {

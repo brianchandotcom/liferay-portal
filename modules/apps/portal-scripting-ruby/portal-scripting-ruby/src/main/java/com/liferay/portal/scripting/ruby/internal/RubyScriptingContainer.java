@@ -61,7 +61,6 @@ public class RubyScriptingContainer
 
 			for (Object object : rubyArray) {
 				sb.append(String.valueOf(object));
-
 				sb.append(StringPool.NEW_LINE);
 			}
 

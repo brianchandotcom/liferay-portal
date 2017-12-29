@@ -58,7 +58,6 @@ public class SendmailHook implements Hook {
 
 					for (String emailAddress : emailAddresses) {
 						sb.append(emailAddress);
-
 						sb.append("\n");
 					}
 

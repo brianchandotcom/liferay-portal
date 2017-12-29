@@ -48,9 +48,8 @@ if (url != null) {
 		url = url.substring(0, y) + url.substring(z);
 	}
 
-	// Strip trailing &
+	// Strip trailing & if (url.endsWith("&")) {
 
-	if (url.endsWith("&")) {
 		url = url.substring(0, url.length() - 1);
 	}
 

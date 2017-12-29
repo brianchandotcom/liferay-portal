@@ -135,9 +135,7 @@ public class PluginPackageIndexer extends BaseIndexer<PluginPackage> {
 
 		boolean osiLicense = false;
 
-		for (int i = 0; i < licenses.size(); i++) {
-			License license = licenses.get(i);
-
+		for (License license : licenses) {
 			if (license.isOsiApproved()) {
 				osiLicense = true;
 

@@ -70,9 +70,7 @@ public abstract class URLResourceParser implements TemplateResourceParser {
 
 		char[] chars = templateId.toCharArray();
 
-		for (int i = 0; i < chars.length; i++) {
-			char c = chars[i];
-
+		for (char c : chars) {
 			if ((c == CharPool.PERCENT) || (c == CharPool.POUND) ||
 				(c == CharPool.QUESTION) || (c == CharPool.SEMICOLON)) {
 

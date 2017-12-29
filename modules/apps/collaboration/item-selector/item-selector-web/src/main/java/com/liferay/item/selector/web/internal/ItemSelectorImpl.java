@@ -148,9 +148,8 @@ public class ItemSelectorImpl implements ItemSelector {
 			itemSelectorCriteria.toArray(
 				new ItemSelectorCriterion[itemSelectorCriteria.size()]);
 
-		for (int i = 0; i < itemSelectorCriteria.size(); i++) {
-			ItemSelectorCriterion itemSelectorCriterion =
-				itemSelectorCriteria.get(i);
+		for (ItemSelectorCriterion itemSelectorCriterion :
+				itemSelectorCriteria) {
 
 			Class<? extends ItemSelectorCriterion> itemSelectorCriterionClass =
 				itemSelectorCriterion.getClass();

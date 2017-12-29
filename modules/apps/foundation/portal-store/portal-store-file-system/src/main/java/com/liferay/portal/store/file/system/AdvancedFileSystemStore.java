@@ -309,9 +309,7 @@ public class AdvancedFileSystemStore extends FileSystemStore {
 
 		String headVersionLabel = VERSION_DEFAULT;
 
-		for (int i = 0; i < versionLabels.length; i++) {
-			String versionLabelFragment = versionLabels[i];
-
+		for (String versionLabelFragment : versionLabels) {
 			int x = versionLabelFragment.lastIndexOf(CharPool.UNDERLINE);
 			int y = versionLabelFragment.lastIndexOf(CharPool.PERIOD);
 

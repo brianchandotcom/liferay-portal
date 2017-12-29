@@ -259,9 +259,7 @@ public class PasswordPolicyLocalServiceImpl
 
 		PasswordPolicyRel passwordPolicyRel = null;
 
-		for (int i = 0; i < organizationIds.length; i++) {
-			long organizationId = organizationIds[i];
-
+		for (long organizationId : organizationIds) {
 			passwordPolicyRel = passwordPolicyRelPersistence.fetchByC_C(
 				classNameId, organizationId);
 

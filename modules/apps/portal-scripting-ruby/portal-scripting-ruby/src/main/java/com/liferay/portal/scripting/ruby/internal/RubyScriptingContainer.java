@@ -59,9 +59,7 @@ public class RubyScriptingContainer
 				String.valueOf(rubyException.message.toJava(String.class)));
 			sb.append(StringPool.NEW_LINE);
 
-			for (int i = 0; i < rubyArray.size(); i++) {
-				Object object = rubyArray.get(i);
-
+			for (Object object : rubyArray) {
 				sb.append(String.valueOf(object));
 
 				sb.append(StringPool.NEW_LINE);

@@ -56,9 +56,7 @@ public class SendmailHook implements Hook {
 					StringBundler sb = new StringBundler(
 						emailAddresses.size() * 2);
 
-					for (int i = 0; i < emailAddresses.size(); i++) {
-						String emailAddress = emailAddresses.get(i);
-
+					for (String emailAddress : emailAddresses) {
 						sb.append(emailAddress);
 
 						sb.append("\n");
@@ -181,9 +179,7 @@ public class SendmailHook implements Hook {
 		sb.append("MAILDIR $HOME/\n");
 		sb.append("SENDMAIL /usr/smin/sendmail\n");
 
-		for (int i = 0; i < blocked.size(); i++) {
-			String emailAddress = blocked.get(i);
-
+		for (String emailAddress : blocked) {
 			sb.append("\n");
 			sb.append(":0\n");
 			sb.append("* ^From.*");

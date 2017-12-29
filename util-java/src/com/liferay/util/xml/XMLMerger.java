@@ -118,9 +118,7 @@ public class XMLMerger {
 		List<Element> originalElements = new ArrayList<>();
 		List<Element> duplicateElements = new ArrayList<>();
 
-		for (int i = 0; i < childElements.size(); i++) {
-			Element childElement = childElements.get(i);
-
+		for (Element childElement : childElements) {
 			if (_containsObjectEqualTo(
 					childElement, originalElements, elementComparator)) {
 

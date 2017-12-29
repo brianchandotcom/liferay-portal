@@ -495,9 +495,7 @@ public class ShoppingItemFinderImpl
 
 			qPos.add(groupId);
 
-			for (int i = 0; i < categoryIds.size(); i++) {
-				Long categoryId = categoryIds.get(i);
-
+			for (Long categoryId : categoryIds) {
 				qPos.add(categoryId);
 			}
 

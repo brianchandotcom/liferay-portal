@@ -79,9 +79,7 @@ public class BlogsStatsUserFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			for (int i = 0; i < organizationIds.size(); i++) {
-				Long organizationId = organizationIds.get(i);
-
+			for (Long organizationId : organizationIds) {
 				qPos.add(organizationId);
 			}
 
@@ -195,9 +193,7 @@ public class BlogsStatsUserFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			for (int i = 0; i < organizationIds.size(); i++) {
-				Long organizationId = organizationIds.get(i);
-
+			for (Long organizationId : organizationIds) {
 				qPos.add(organizationId);
 			}
 

@@ -44,9 +44,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 		}
 
 		if (publicId != null) {
-			for (int i = 0; i < _PUBLIC_IDS.length; i++) {
-				KeyValuePair kvp = _PUBLIC_IDS[i];
-
+			for (KeyValuePair kvp : _PUBLIC_IDS) {
 				if (publicId.equals(kvp.getKey())) {
 					InputStream is = classLoader.getResourceAsStream(
 						_DEFINITIONS_PATH + kvp.getValue());
@@ -64,9 +62,7 @@ public class EntityResolver implements org.xml.sax.EntityResolver {
 			}
 		}
 		else if (systemId != null) {
-			for (int i = 0; i < _SYSTEM_IDS.length; i++) {
-				KeyValuePair kvp = _SYSTEM_IDS[i];
-
+			for (KeyValuePair kvp : _SYSTEM_IDS) {
 				if (systemId.equals(kvp.getKey())) {
 					InputStream is = classLoader.getResourceAsStream(
 						_DEFINITIONS_PATH + kvp.getValue());

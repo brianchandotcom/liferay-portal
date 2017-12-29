@@ -81,9 +81,7 @@ public class InputPermissionsParamsTagUtil {
 
 			StringBundler sb = new StringBundler();
 
-			for (int i = 0; i < supportedActions.size(); i++) {
-				String action = supportedActions.get(i);
-
+			for (String action : supportedActions) {
 				boolean groupChecked = groupDefaultActions.contains(action);
 
 				boolean guestChecked = false;

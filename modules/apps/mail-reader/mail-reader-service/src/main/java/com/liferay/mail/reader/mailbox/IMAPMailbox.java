@@ -231,9 +231,7 @@ public class IMAPMailbox extends BaseMailbox {
 		try {
 			internetAddresses = InternetAddress.parse(addresses, true);
 
-			for (int i = 0; i < internetAddresses.length; i++) {
-				InternetAddress internetAddress = internetAddresses[i];
-
+			for (InternetAddress internetAddress : internetAddresses) {
 				if (!Validator.isEmailAddress(internetAddress.getAddress())) {
 					StringBundler sb = new StringBundler(4);
 
@@ -442,9 +440,7 @@ public class IMAPMailbox extends BaseMailbox {
 
 		List<Long> missingRemoteMessageIdsList = new ArrayList<>();
 
-		for (int i = 0; i < remoteMessageIds.length; i++) {
-			long remoteMessageId = remoteMessageIds[i];
-
+		for (long remoteMessageId : remoteMessageIds) {
 			try {
 				MessageLocalServiceUtil.getMessage(folderId, remoteMessageId);
 			}

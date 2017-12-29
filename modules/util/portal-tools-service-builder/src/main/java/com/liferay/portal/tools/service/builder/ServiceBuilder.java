@@ -726,9 +726,7 @@ public class ServiceBuilder {
 			if (build) {
 				Collections.sort(_ejbList);
 
-				for (int x = 0; x < _ejbList.size(); x++) {
-					Entity entity = _ejbList.get(x);
-
+				for (Entity entity : _ejbList) {
 					if (_isTargetEntity(entity)) {
 						System.out.println("Building " + entity.getName());
 
@@ -3433,9 +3431,7 @@ public class ServiceBuilder {
 
 		// indexes.sql appending
 
-		for (int i = 0; i < _ejbList.size(); i++) {
-			Entity entity = _ejbList.get(i);
-
+		for (Entity entity : _ejbList) {
 			if (!_isTargetEntity(entity)) {
 				continue;
 			}
@@ -3450,17 +3446,13 @@ public class ServiceBuilder {
 
 			List<EntityFinder> finderList = entity.getFinderList();
 
-			for (int j = 0; j < finderList.size(); j++) {
-				EntityFinder finder = finderList.get(j);
-
+			for (EntityFinder finder : finderList) {
 				if (finder.isDBIndex()) {
 					List<String> finderColsNames = new ArrayList<>();
 
 					List<EntityColumn> finderColsList = finder.getColumns();
 
-					for (int k = 0; k < finderColsList.size(); k++) {
-						EntityColumn col = finderColsList.get(k);
-
+					for (EntityColumn col : finderColsList) {
 						finderColsNames.add(col.getDBName());
 					}
 
@@ -3618,9 +3610,7 @@ public class ServiceBuilder {
 			}
 		}
 
-		for (int i = 0; i < _ejbList.size(); i++) {
-			Entity entity = _ejbList.get(i);
-
+		for (Entity entity : _ejbList) {
 			if (!_isTargetEntity(entity)) {
 				continue;
 			}
@@ -3631,9 +3621,7 @@ public class ServiceBuilder {
 
 			List<EntityColumn> columnList = entity.getColumnList();
 
-			for (int j = 0; j < columnList.size(); j++) {
-				EntityColumn column = columnList.get(j);
-
+			for (EntityColumn column : columnList) {
 				if ("sequence".equals(column.getIdType())) {
 					StringBundler sb = new StringBundler(3);
 
@@ -3683,9 +3671,7 @@ public class ServiceBuilder {
 			_touch(sqlFile);
 		}
 
-		for (int i = 0; i < _ejbList.size(); i++) {
-			Entity entity = _ejbList.get(i);
-
+		for (Entity entity : _ejbList) {
 			if (!_isTargetEntity(entity)) {
 				continue;
 			}
@@ -4083,9 +4069,7 @@ public class ServiceBuilder {
 		for (Entity entity : entities) {
 			List<EntityColumn> pkList = entity.getPKList();
 
-			for (int j = 0; j < pkList.size(); j++) {
-				EntityColumn col = pkList.get(j);
-
+			for (EntityColumn col : pkList) {
 				IndexMetadata indexMetadata =
 					IndexMetadataFactoryUtil.createIndexMetadata(
 						false, tableName, col.getDBName());
@@ -4157,9 +4141,7 @@ public class ServiceBuilder {
 		for (Entity entity : entities) {
 			List<EntityColumn> pkList = entity.getPKList();
 
-			for (int i = 0; i < pkList.size(); i++) {
-				EntityColumn col = pkList.get(i);
-
+			for (EntityColumn col : pkList) {
 				String colDBName = col.getDBName();
 
 				if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {

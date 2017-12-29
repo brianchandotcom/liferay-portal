@@ -102,9 +102,7 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 		long[] deleteFolderIds = ParamUtil.getLongValues(
 			actionRequest, "rowIdsBookmarksFolder");
 
-		for (int i = 0; i < deleteFolderIds.length; i++) {
-			long deleteFolderId = deleteFolderIds[i];
-
+		for (long deleteFolderId : deleteFolderIds) {
 			if (moveToTrash) {
 				BookmarksFolder folder =
 					_bookmarksFolderService.moveFolderToTrash(deleteFolderId);

@@ -18,23 +18,6 @@
 
 <blockquote><p>A navigation bar, navbar, is an horizontal bar that provides several access points to different parts of a system.</p></blockquote>
 
-<%
-List<Map<String, Object>> items = new ArrayList<>();
+<clay:navigation-bar items="<%= navigationBarsDisplayContext.getNavigationItems() %>" />
 
-for (int i = 0; i < 8; i++) {
-	Map<String, Object> item = new HashMap<>();
-
-	if (i == 0) {
-		item.put("active", true);
-	}
-
-	item.put("label", "Page " + i);
-	item.put("url", "#" + i);
-
-	items.add(item);
-}
-%>
-
-<clay:navigation-bar items="<%= items %>" />
-
-<clay:navigation-bar inverted="<%= true %>" items="<%= items %>" />
+<clay:navigation-bar inverted="<%= true %>" items="<%= navigationBarsDisplayContext.getNavigationItems() %>" />

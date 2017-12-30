@@ -536,6 +536,38 @@ public class LayoutsAdminDisplayContext {
 			privateLayout, _themeDisplay.getLocale());
 	}
 
+	public String getSelectLayoutPageTemplateEntryURL() {
+		return getSelectLayoutPageTemplateEntryURL(0);
+	}
+
+	public String getSelectLayoutPageTemplateEntryURL(
+		long layoutPageTemplateCollectionId) {
+
+		PortletURL selectLayoutPageTemplateEntryURL =
+			_liferayPortletResponse.createRenderURL();
+
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"mvcPath", "/select_layout_page_template_entry.jsp");
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"redirect", _themeDisplay.getURLCurrent());
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"backURL", _themeDisplay.getURLCurrent());
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"groupId", String.valueOf(getSelGroupId()));
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"selPlid", String.valueOf(getSelPlid()));
+		selectLayoutPageTemplateEntryURL.setParameter(
+			"privateLayout", String.valueOf(isPrivatePages()));
+
+		if (layoutPageTemplateCollectionId > 0) {
+			selectLayoutPageTemplateEntryURL.setParameter(
+				"layoutPageTemplateCollectionId",
+				String.valueOf(layoutPageTemplateCollectionId));
+		}
+
+		return selectLayoutPageTemplateEntryURL.toString();
+	}
+
 	public Group getSelGroup() {
 		return _groupDisplayContextHelper.getSelGroup();
 	}

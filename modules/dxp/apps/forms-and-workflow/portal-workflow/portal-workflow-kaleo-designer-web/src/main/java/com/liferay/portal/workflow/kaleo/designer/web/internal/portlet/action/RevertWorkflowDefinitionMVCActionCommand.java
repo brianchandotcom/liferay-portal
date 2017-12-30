@@ -22,11 +22,11 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 
 import java.text.DateFormat;
 
@@ -104,24 +104,29 @@ public class RevertWorkflowDefinitionMVCActionCommand
 			WebKeys.THEME_DISPLAY);
 
 		String name = ParamUtil.getString(actionRequest, "name");
-		int version = ParamUtil.getInteger(actionRequest, "version");
+		String draftVersion = ParamUtil.getString(
+			actionRequest, "draftVersion");
 
-		WorkflowDefinition previousWorkflowDefinition =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinition(
-				themeDisplay.getCompanyId(), name, version);
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
+				themeDisplay.getCompanyId(), name, draftVersion);
 
 		actionRequest.setAttribute(
 			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
-			previousWorkflowDefinition.getModifiedDate());
+			kaleoDefinitionVersion.getModifiedDate());
 
-		String content = previousWorkflowDefinition.getContent();
+		String content = kaleoDefinitionVersion.getContent();
 
 		_workflowDefinitionManager.deployWorkflowDefinition(
 			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			previousWorkflowDefinition.getTitle(), content.getBytes());
+			kaleoDefinitionVersion.getTitle(), content.getBytes());
 
 		sendRedirect(actionRequest, actionResponse);
 	}
+
+	@Reference
+	private KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 
 	@Reference
 	private WorkflowDefinitionManager _workflowDefinitionManager;

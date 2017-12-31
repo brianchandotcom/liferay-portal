@@ -84,13 +84,12 @@ else {
 }
 %>
 
-<aui:script use="liferay-portlet-kaleo-designer">
+<aui:script use="liferay-kaleo-designer-dialogs">
 	window.<portlet:namespace/>confirmDeleteDefinition = function(deleteURL) {
-
 		var title = "<%= LanguageUtil.get(request, "delete-workflow-question") %>";
 		var message = "<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>";
 
-		Liferay.KaleoDesigner.openConfirmDeleteDialog(title, message, deleteURL);
+		Liferay.KaleoDesignerDialogs.openConfirmDeleteDialog(title, message, deleteURL);
 
 		return false;
 	}

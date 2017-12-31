@@ -21,6 +21,12 @@
 								'liferay-kaleo-designer-utils'
 							]
 						},
+						'liferay-kaleo-designer-dialogs': {
+							path: 'dialogs.js',
+							requires: [
+								'liferay-util-window'
+							]
+						},
 						'liferay-kaleo-designer-editors': {
 							path: 'editors.js',
 							requires: [

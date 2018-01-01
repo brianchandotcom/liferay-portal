@@ -145,7 +145,6 @@
 					<aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
 
 					<aui:input name="mvcPath" type="hidden" value="<%= mvcPath %>" />
-					<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 					<aui:input name="closeRedirect" type="hidden" value="<%= closeRedirect %>" />
 					<aui:input name="name" type="hidden" value="<%= name %>" />
 					<aui:input name="content" type="hidden" value="<%= content %>" />

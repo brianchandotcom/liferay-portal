@@ -160,6 +160,11 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		}
 	}
 
+	@Override
+	protected boolean isAlwaysSendRedirect() {
+		return true;
+	}
+
 	protected void serveKaleoDefinitionVersions(
 			ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 		throws Exception {

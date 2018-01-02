@@ -115,7 +115,7 @@
 	</tag>
 	<tag>
 		<name>diff-version-comparator</name>
-		<tag-class>com.liferay.frontend.taglib.servlet.taglib.DiffVersionComparatorTag</tag-class>
+		<tag-class>com.liferay.frontend.taglib.servlet.taglib.soy.DiffVersionComparatorTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<name>availableLocales</name>

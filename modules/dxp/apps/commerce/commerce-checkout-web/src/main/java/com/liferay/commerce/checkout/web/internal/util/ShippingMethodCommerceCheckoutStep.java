@@ -130,6 +130,11 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	@Override
+	public boolean isOrder() {
+		return false;
+	}
+
+	@Override
 	public boolean isSennaDisabled() {
 		return false;
 	}

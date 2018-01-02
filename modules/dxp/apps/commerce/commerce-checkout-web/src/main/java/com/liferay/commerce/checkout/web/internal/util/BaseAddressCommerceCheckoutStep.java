@@ -71,6 +71,11 @@ public abstract class BaseAddressCommerceCheckoutStep
 	}
 
 	@Override
+	public boolean isOrder() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(
 			HttpServletRequest httpServletRequest,
 			HttpServletResponse httpServletResponse)

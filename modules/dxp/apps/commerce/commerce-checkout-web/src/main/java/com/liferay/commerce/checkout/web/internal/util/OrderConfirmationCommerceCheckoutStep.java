@@ -80,6 +80,11 @@ public class OrderConfirmationCommerceCheckoutStep
 	}
 
 	@Override
+	public boolean isOrder() {
+		return true;
+	}
+
+	@Override
 	public boolean isSennaDisabled() {
 		return true;
 	}

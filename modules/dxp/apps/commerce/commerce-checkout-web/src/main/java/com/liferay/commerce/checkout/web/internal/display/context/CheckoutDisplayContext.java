@@ -104,7 +104,10 @@ public class CheckoutDisplayContext {
 					_commerceCheckoutStep.getName(), _httpServletRequest,
 					_httpServletResponse);
 
-		if (commerceCheckoutStep == null) {
+		if ((commerceCheckoutStep == null) ||
+			(_commerceCheckoutStep.isOrder() &&
+			 !commerceCheckoutStep.isOrder())) {
+
 			return null;
 		}
 

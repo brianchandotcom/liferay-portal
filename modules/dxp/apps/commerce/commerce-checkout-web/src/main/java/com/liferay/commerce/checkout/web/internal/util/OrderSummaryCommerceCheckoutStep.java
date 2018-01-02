@@ -93,6 +93,11 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 	}
 
 	@Override
+	public boolean isOrder() {
+		return false;
+	}
+
+	@Override
 	public boolean isSennaDisabled() {
 		return true;
 	}

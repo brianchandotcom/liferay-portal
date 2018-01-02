@@ -42,8 +42,6 @@ import javax.xml.parsers.DocumentBuilder;
 
 import nebula.plugin.extraconfigurations.ProvidedBasePlugin;
 
-import org.dm.gradle.plugins.bundle.BundleExtension;
-
 import org.gradle.api.Action;
 import org.gradle.api.GradleException;
 import org.gradle.api.Plugin;
@@ -148,7 +146,8 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 			final Set<String> dependencyNames = new HashSet<>();
 
-			Map<String, String> bundleInstructions = _getBundleInstructions();
+			Map<String, String> bundleInstructions =
+				GradlePluginsDefaultsUtil.getBundleInstructions(project);
 
 			_addBundleDependencyNames(
 				dependencyNames, bundleInstructions, Constants.INCLUDERESOURCE);
@@ -211,14 +210,6 @@ public class LicenseReportDefaultsPlugin implements Plugin<Project> {
 
 				dependencyNames.add(dependencyName);
 			}
-		}
-
-		@SuppressWarnings("unchecked")
-		private Map<String, String> _getBundleInstructions() {
-			BundleExtension bundleExtension = GradleUtil.getExtension(
-				project, BundleExtension.class);
-
-			return (Map<String, String>)bundleExtension.getInstructions();
 		}
 
 		private static final Pattern _bundleDependencyNamePattern =

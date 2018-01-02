@@ -1,3 +1,4 @@
+Bundle-Description: The TLDDoc Builder Gradle plugin lets you run the Tag Library Documentation Generator tool in order to generate documentation for the JSP Tag Library Descriptor (TLD) files in your project.
 Bundle-Name: Liferay Gradle Plugins TLDDoc Builder
 Bundle-SymbolicName: com.liferay.gradle.plugins.tlddoc.builder
 Bundle-Version: 1.3.1

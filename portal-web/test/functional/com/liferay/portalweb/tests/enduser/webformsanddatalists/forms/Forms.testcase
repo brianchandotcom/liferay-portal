@@ -2826,7 +2826,7 @@
 		</for>
 	</command>
 
-	<command name="SubmitFormDeleteSelectFromListOptionValueAndCheckEntries" priority="4">
+	<command name="DeleteSelectFromListOptionAndViewEntries" priority="4">
 		<description message="This is a use case for LPS-74997." />
 
 		<execute macro="Navigator#openURL" />

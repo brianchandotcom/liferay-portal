@@ -59,11 +59,11 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 		Matcher matcher = _redundantLineBreakPattern1.matcher(content);
 
 		while (matcher.find()) {
-			if (!JSPSourceUtil.isJavaSource(content, matcher.start())) {
+			if (!JSPSourceUtil.isJavaSource(content, matcher.start(1))) {
 				continue;
 			}
 
-			int x = matcher.start();
+			int x = matcher.start(1);
 
 			while (true) {
 				x = content.indexOf(StringPool.CLOSE_PARENTHESIS, x + 1);
@@ -72,7 +72,7 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 					break;
 				}
 
-				String codeBlock = content.substring(matcher.start(), x + 1);
+				String codeBlock = content.substring(matcher.start(1), x + 1);
 
 				if (codeBlock.contains("{\n")) {
 					break;
@@ -87,7 +87,7 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 					new String[] {StringPool.BLANK, ", ", StringPool.BLANK});
 
 				return StringUtil.replaceFirst(
-					content, codeBlock, codeSingleLine, matcher.start());
+					content, codeBlock, codeSingleLine, matcher.start(1));
 			}
 		}
 
@@ -105,8 +105,8 @@ public class JSPLineBreakCheck extends LineBreakCheck {
 	}
 
 	private final Pattern _redundantLineBreakPattern1 = Pattern.compile(
-		"\\(\n");
+		"[\n\t][^/].*(\\(\n)");
 	private final Pattern _redundantLineBreakPattern2 = Pattern.compile(
-		"[|&](\n\\s*)");
+		"[\n\t][^/].*[|&](\n[\t ]*)");
 
 }

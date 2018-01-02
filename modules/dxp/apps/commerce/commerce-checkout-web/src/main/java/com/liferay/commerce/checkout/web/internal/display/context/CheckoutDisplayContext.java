@@ -93,6 +93,10 @@ public class CheckoutDisplayContext {
 			_httpServletRequest, _httpServletResponse);
 	}
 
+	public long getCommerceOrderId() {
+		return ParamUtil.getLong(_httpServletRequest, "commerceOrderId");
+	}
+
 	public String getCurrentCheckoutStepName() {
 		return _commerceCheckoutStep.getName();
 	}
@@ -131,8 +135,20 @@ public class CheckoutDisplayContext {
 
 			portletURL.setParameter(
 				"checkoutStepName", commerceCheckoutStep.getName());
-			portletURL.setParameter(
-				"commerceCartId", String.valueOf(getCommerceCartId()));
+
+			long commerceCartId = getCommerceCartId();
+
+			if (commerceCartId > 0) {
+				portletURL.setParameter(
+					"commerceCartId", String.valueOf(commerceCartId));
+			}
+
+			long commerceOrderId = getCommerceOrderId();
+
+			if (commerceOrderId > 0) {
+				portletURL.setParameter(
+					"commerceOrderId", String.valueOf(commerceOrderId));
+			}
 		}
 
 		return portletURL.toString();

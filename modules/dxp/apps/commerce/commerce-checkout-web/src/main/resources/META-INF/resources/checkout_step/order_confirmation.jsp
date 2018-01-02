@@ -28,8 +28,6 @@ int paymentStatus = commerceOrderPayment.getStatus();
 Order <%= commerceOrder.getCommerceOrderId() %>
 
 <c:if test="<%= (paymentStatus == CommerceOrderPaymentConstants.STATUS_CANCELLED) || (paymentStatus == CommerceOrderPaymentConstants.STATUS_FAILED) %>">
-	<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrder.getCommerceOrderId() %>" />
-
 	<div class="alert alert-warning">
 
 		<%

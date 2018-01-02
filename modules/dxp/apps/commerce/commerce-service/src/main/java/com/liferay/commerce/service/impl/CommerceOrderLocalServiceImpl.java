@@ -34,7 +34,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -205,7 +204,6 @@ public class CommerceOrderLocalServiceImpl
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
-		commerceOrder.setModifiedDate(new Date());
 		commerceOrder.setPaymentStatus(paymentStatus);
 		commerceOrder.setStatus(status);
 

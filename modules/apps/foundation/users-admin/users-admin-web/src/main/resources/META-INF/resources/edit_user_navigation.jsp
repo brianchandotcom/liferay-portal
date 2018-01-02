@@ -21,12 +21,24 @@ String actionCommandName = (String)request.getAttribute(UsersAdminWebKeys.ACTION
 boolean editable = (boolean)request.getAttribute(UsersAdminWebKeys.EDITABLE);
 String jspPath = (String)request.getAttribute(UsersAdminWebKeys.JSP_PATH);
 
+String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey");
+String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigationEntryKey");
+
 User selUser = PortalUtil.getSelectedUser(request);
 
 request.setAttribute(UsersAdminWebKeys.SELECTED_USER, selUser);
+
+long selUserId = (selUser != null) ? selUser.getUserId() : 0;
 %>
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />
+
+<portlet:renderURL var="redirect">
+	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
+	<portlet:param name="p_u_i_d" value="<%= String.valueOf(selUserId) %>" />
+	<portlet:param name="screenNavigationCategoryKey" value="<%= screenNavigationCategoryKey %>" />
+	<portlet:param name="screenNavigationEntryKey" value="<%= screenNavigationEntryKey %>" />
+</portlet:renderURL>
 
 <portlet:renderURL var="viewUsersRenderURL" />
 
@@ -40,8 +52,10 @@ if (!portletName.equals(UsersAdminPortletKeys.MY_ACCOUNT)) {
 %>
 
 <aui:form action="<%= actionCommandURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
-	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-	<aui:input name="p_u_i_d" type="hidden" value="<%= (selUser != null) ? selUser.getUserId() : 0 %>" />
+	<aui:input name="redirect" type="hidden" value="<%= redirect.toString() %>" />
+	<aui:input name="screenNavigationCategoryKey" type="hidden" value="<%= screenNavigationCategoryKey %>" />
+	<aui:input name="screenNavigationEntryKey" type="hidden" value="<%= screenNavigationEntryKey %>" />
+	<aui:input name="p_u_i_d" type="hidden" value="<%= selUserId %>" />
 
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>

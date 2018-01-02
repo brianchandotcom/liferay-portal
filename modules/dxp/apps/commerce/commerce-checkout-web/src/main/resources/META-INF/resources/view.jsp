@@ -48,7 +48,7 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 		</li>
 
 	<%
-			step ++;
+			step++;
 	}
 	%>
 

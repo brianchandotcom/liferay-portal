@@ -208,20 +208,6 @@
 
 	<command name="gotoAddField">
 		<toggle name="LPS-75358">
-			<off>
- 				<var name="key_columnSize" value="${columnSize}" />
-
-				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
-
-				<execute function="Click" locator1="Form#ADD_FIELD" />
-
-				<var name="key_fieldType" value="${fieldType}" />
-
-				<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
-
-				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
-			</off>
-
 			<on>
 				<var name="key_columnSize" value="${columnSize}" />
 
@@ -233,6 +219,20 @@
 
 				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
 			</on>
+
+			<off>
+				<var name="key_columnSize" value="${columnSize}" />
+
+				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
+
+				<execute function="Click" locator1="Form#ADD_FIELD" />
+
+				<var name="key_fieldType" value="${fieldType}" />
+
+				<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+
+				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
+			</off>
 		</toggle>
 	</command>
 

@@ -425,6 +425,18 @@ public class AssetLinkLocalServiceImpl extends AssetLinkLocalServiceBaseImpl {
 	}
 
 	/**
+	 * Returns all the asset links of an AssetEntry.
+	 *
+	 * @param classNameId AssetEntry's classNameId
+	 * @param classPK AssetEntry's classPK
+	 * @return the asset links of the given entry params
+	 */
+	@Override
+	public List<AssetLink> getLinks(long classNameId, long classPK) {
+		return assetLinkFinder.findByC_C(classNameId, classPK);
+	}
+
+	/**
 	 * Returns all the asset links of the given link type whose second entry ID
 	 * is the given entry ID.
 	 *

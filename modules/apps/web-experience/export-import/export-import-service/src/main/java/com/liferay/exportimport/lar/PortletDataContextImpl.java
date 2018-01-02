@@ -236,12 +236,11 @@ public class PortletDataContextImpl implements PortletDataContext {
 				Serializable classPK =
 					ExportImportClassedModelUtil.getPrimaryKeyObj(classedModel);
 
-				addAssetLinks(clazz, classPK);
-
 				long classNameId = ExportImportClassedModelUtil.getClassNameId(
 					classedModel);
 
-				_addAssetEntryPriority(
+				_addAssetLinks(classNameId, GetterUtil.getLong(classPK));
+				_addAssetPriority(
 					element, classNameId, GetterUtil.getLong(classPK));
 
 				addExpando(element, path, classedModel, clazz);
@@ -2091,6 +2090,10 @@ public class PortletDataContextImpl implements PortletDataContext {
 		return _xStream.toXML(object);
 	}
 
+	/**
+	 * @deprecated As of 4.0.0
+	 */
+	@Deprecated
 	protected void addAssetLinks(Class<?> clazz, Serializable classPK) {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			clazz.getName(), GetterUtil.getLong(classPK));
@@ -2811,7 +2814,16 @@ public class PortletDataContextImpl implements PortletDataContext {
 		}
 	}
 
-	private void _addAssetEntryPriority(
+	private void _addAssetLinks(long classNameId, long classPK) {
+		List<AssetLink> assetLinks = AssetLinkLocalServiceUtil.getLinks(
+			classNameId, classPK);
+
+		for (AssetLink assetLink : assetLinks) {
+			_assetLinkIds.add(assetLink.getLinkId());
+		}
+	}
+
+	private void _addAssetPriority(
 		Element element, long classNameId, long classPK) {
 
 		double assetEntryPriority = AssetEntryLocalServiceUtil.getEntryPriority(

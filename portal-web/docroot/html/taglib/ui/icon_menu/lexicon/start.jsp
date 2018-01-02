@@ -42,7 +42,7 @@ if (Validator.isNull(icon)) {
 %>
 
 <div class="dropdown lfr-icon-menu <%= cssClass %>" <%= AUIUtil.buildData(data) %>>
-	<a class="dropdown-toggle icon-monospaced <%= triggerCssClass %>" href="javascript:;" id="<%= id %>" title="<%= message %>">
+	<a class="dropdown-toggle direction-<%= direction %> icon-monospaced <%= triggerCssClass %>" href="javascript:;" id="<%= id %>" title="<%= message %>">
 		<aui:icon image="<%= icon %>" markupView="lexicon" />
 	</a>
 

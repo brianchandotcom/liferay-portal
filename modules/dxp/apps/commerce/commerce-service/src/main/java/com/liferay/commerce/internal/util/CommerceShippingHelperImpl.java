@@ -16,6 +16,8 @@ package com.liferay.commerce.internal.util;
 
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.Dimensions;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -126,6 +128,23 @@ public class CommerceShippingHelperImpl implements CommerceShippingHelper {
 				commerceCart.getCommerceCartItems()) {
 
 			CPDefinition cpDefinition = commerceCartItem.getCPDefinition();
+
+			if (cpDefinition.isShippable()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	@Override
+	public boolean isShippable(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		for (CommerceOrderItem commerceOrderItem :
+				commerceOrder.getCommerceOrderItems()) {
+
+			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
 
 			if (cpDefinition.isShippable()) {
 				return true;

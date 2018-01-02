@@ -19,10 +19,12 @@ import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethod
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceShippingEngine;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.model.CommerceShippingOption;
 import com.liferay.commerce.service.CommerceCartService;
+import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.commerce.util.CommercePriceFormatter;
@@ -31,6 +33,7 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
@@ -90,12 +93,35 @@ public class ShippingMethodCommerceCheckoutStep
 			HttpServletResponse httpServletResponse)
 		throws Exception {
 
-		CommerceCart commerceCart = _commerceCartHelper.getCurrentCommerceCart(
-			httpServletRequest, httpServletResponse);
+		GroupedModel groupedModel = null;
 
-		if ((_commerceShippingMethodService.getCommerceShippingMethodsCount(
-				commerceCart.getGroupId(), true) > 0) &&
-			_commerceShippingHelper.isShippable(commerceCart)) {
+		long commerceOrderId = ParamUtil.getLong(
+			httpServletRequest, "commerceOrderId");
+
+		if (commerceOrderId > 0) {
+			CommerceOrder commerceOrder =
+				_commerceOrderService.getCommerceOrder(commerceOrderId);
+
+			if (!_commerceShippingHelper.isShippable(commerceOrder)) {
+				return false;
+			}
+
+			groupedModel = commerceOrder;
+		}
+		else {
+			CommerceCart commerceCart =
+				_commerceCartHelper.getCurrentCommerceCart(
+					httpServletRequest, httpServletResponse);
+
+			if (!_commerceShippingHelper.isShippable(commerceCart)) {
+				return false;
+			}
+
+			groupedModel = commerceCart;
+		}
+
+		if (_commerceShippingMethodService.getCommerceShippingMethodsCount(
+				groupedModel.getGroupId(), true) > 0) {
 
 			return true;
 		}
@@ -248,6 +274,9 @@ public class ShippingMethodCommerceCheckoutStep
 
 	@Reference
 	private CommerceCartService _commerceCartService;
+
+	@Reference
+	private CommerceOrderService _commerceOrderService;
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;

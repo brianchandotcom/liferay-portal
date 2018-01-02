@@ -69,9 +69,8 @@ DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletI
 						playerHeight = 43;
 					}
 					else if (hasImages) {
+						imagePreviewURL = DLUtil.getThumbnailSrc(fileEntry, fileVersion, themeDisplay);
 						imageURL = DLUtil.getPreviewURL(fileEntry, fileVersion, themeDisplay, "&imagePreview=1");
-
-						imagePreviewURL = imageURL;
 					}
 					else if (hasPDFImages) {
 						imagePreviewURL = DLUtil.getImagePreviewURL(fileEntry, fileVersion, themeDisplay);

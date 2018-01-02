@@ -190,9 +190,7 @@ if ((portletParallelRender != null) && (portletParallelRender.booleanValue() == 
 
 Layout curLayout = PortletConfigurationLayoutUtil.getLayout(themeDisplay);
 
-if ((!group.hasStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) &&
-	(PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION))) {
-
+if ((!group.hasStagingGroup() || !PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) && PortletPermissionUtil.contains(permissionChecker, themeDisplay.getScopeGroupId(), curLayout, portlet, ActionKeys.CONFIGURATION)) {
 	showConfigurationIcon = true;
 
 	boolean supportsConfigurationLAR = portlet.getConfigurationActionInstance() != null;
@@ -257,10 +255,7 @@ if (responseContentType.equals(ContentTypes.XHTML_MP) && portlet.hasMultipleMime
 // Only authenticated with the correct permissions can update a layout. If
 // staging is activated, only staging layouts can be updated.
 
-if ((!themeDisplay.isSignedIn()) ||
-	(group.hasStagingGroup() && PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) ||
-	(!LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE))) {
-
+if (!themeDisplay.isSignedIn() || (group.hasStagingGroup() && PropsValues.STAGING_LIVE_GROUP_LOCKING_ENABLED) || !LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE)) {
 	if (!(!columnDisabled && customizable && LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.CUSTOMIZE))) {
 		showCloseIcon = false;
 		showMoveIcon = false;

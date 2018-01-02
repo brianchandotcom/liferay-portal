@@ -282,12 +282,10 @@ private OrderByComparator<DDLRecordSet> getDDLRecordSetOrderByComparator(String 
 	OrderByComparator<DDLRecordSet> orderByComparator = null;
 
 	if (orderByCol.equals("create-date")) {
-		orderByComparator = new DDLRecordSetCreateDateComparator(
-			orderByAsc);
+		orderByComparator = new DDLRecordSetCreateDateComparator(orderByAsc);
 	}
 	else if (orderByCol.equals("modified-date")) {
-		orderByComparator = new DDLRecordSetModifiedDateComparator(
-			orderByAsc);
+		orderByComparator = new DDLRecordSetModifiedDateComparator(orderByAsc);
 	}
 	else if (orderByCol.equals("name")) {
 		orderByComparator = new DDLRecordSetNameComparator(orderByAsc);

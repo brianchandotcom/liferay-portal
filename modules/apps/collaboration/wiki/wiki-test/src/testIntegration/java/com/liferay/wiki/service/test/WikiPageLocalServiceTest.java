@@ -66,6 +66,7 @@ import com.liferay.wiki.util.test.WikiTestUtil;
 
 import java.io.Serializable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -623,6 +624,9 @@ public class WikiPageLocalServiceTest {
 		long[] finalAssetCategoryIds =
 			AssetCategoryLocalServiceUtil.getCategoryIds(
 				WikiPage.class.getName(), renamedPage.getResourcePrimKey());
+
+		Arrays.sort(assetCategoryIds);
+		Arrays.sort(finalAssetCategoryIds);
 
 		Assert.assertArrayEquals(assetCategoryIds, finalAssetCategoryIds);
 	}

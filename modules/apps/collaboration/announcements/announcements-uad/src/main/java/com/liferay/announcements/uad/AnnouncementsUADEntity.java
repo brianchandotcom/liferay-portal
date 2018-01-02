@@ -15,7 +15,7 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.user.associated.data.model.BaseUADEntity;
+import com.liferay.user.associated.data.entity.BaseUADEntity;
 
 /**
  * @author William Newbury

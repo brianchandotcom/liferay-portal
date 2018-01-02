@@ -197,10 +197,10 @@
 				{AssetTag.*}
 			FROM
 				AssetEntry
-				INNER JOIN
+			INNER JOIN
 				AssetEntries_AssetTags ON
 	  				AssetEntries_AssetTags.entryId = AssetEntry.entryId
-				INNER JOIN
+			INNER JOIN
 				AssetTag ON
 	  				AssetTag.tagId = AssetEntries_AssetTags.tagId
 			WHERE

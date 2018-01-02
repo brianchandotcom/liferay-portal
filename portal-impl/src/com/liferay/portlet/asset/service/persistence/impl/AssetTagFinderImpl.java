@@ -156,9 +156,7 @@ public class AssetTagFinderImpl
 			qPos.add(classNameId);
 			qPos.add(classPK);
 
-			List<AssetTag> tags = q.list();
-
-			return tags;
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

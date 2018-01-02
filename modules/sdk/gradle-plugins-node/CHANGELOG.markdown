@@ -182,6 +182,13 @@ the `node.global` property to `true` in the root project.
 - [LPS-75965]: The `downloadNode.nodeExeUrl` and `node.nodeExeUrl` properties
 are no longer available.
 
+## 4.0.1 - 2018-01-02
+
+### Fixed
+- [LPS-74904]: Fail the build if all retries configured in the
+`npmInstallRetries` property of an `ExecuteNodeTask` instance have been
+exhausted.
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573
@@ -200,6 +207,7 @@ are no longer available.
 [LPS-73070]: https://issues.liferay.com/browse/LPS-73070
 [LPS-73472]: https://issues.liferay.com/browse/LPS-73472
 [LPS-74770]: https://issues.liferay.com/browse/LPS-74770
+[LPS-74904]: https://issues.liferay.com/browse/LPS-74904
 [LPS-74933]: https://issues.liferay.com/browse/LPS-74933
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965

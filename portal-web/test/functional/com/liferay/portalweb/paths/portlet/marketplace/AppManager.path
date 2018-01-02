@@ -16,7 +16,7 @@
 </tr>
 <tr>
 	<td>APP_ACTIONS</td>
-	<td>//ul/li[contains(.,'${key_appName}')]//div[contains(@class,'lfr-icon-menu')]/a/span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]</td>
+	<td>//ul/li[contains(.,'${key_appName}')]//div[contains(@class,'lfr-icon-menu')]/a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>

@@ -526,7 +526,7 @@ public class TopLevelBuild extends BaseBuild {
 
 		if (branchName.endsWith("-private")) {
 			companionRepositoryName = baseRepositoryName.substring(
-				0, baseRepositoryName.indexOf("-ee") - 1);
+				0, baseRepositoryName.indexOf("-ee"));
 		}
 
 		String companionUsername = getCompanionUsername();

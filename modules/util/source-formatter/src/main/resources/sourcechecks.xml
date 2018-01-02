@@ -109,7 +109,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-template/portal-template-soy" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/text-localizer/text-localizer-address" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/users-admin/users-admin-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/ip-geocoder/ip-geocoder" />
 			<property name="allowedExportPackageDirName" value="modules/apps/knowledge-base/knowledge-base-markdown-converter" />
 			<property name="allowedExportPackageDirName" value="modules/apps/knowledge-base/knowledge-base-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/mail-reader/mail-reader-service" />

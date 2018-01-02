@@ -1,7 +1,7 @@
 # JSDoc Gradle Plugin
 
 The JSDoc Gradle plugin lets you run the [JSDoc](http://usejsdoc.org/) tool in
-order to generate documentation for the Javascript files in your project.
+order to generate documentation for your project's JavaScript files.
 
 The plugin has been successfully tested with Gradle 2.5 up to 3.3.
 
@@ -35,12 +35,12 @@ The plugin adds two tasks to your project:
 Name | Depends On | Type | Description
 ---- | ---------- | ---- | -----------
 `downloadJSDoc` | `downloadNode` | `DownloadNodeModuleTask` | Downloads JSDoc in the project's `node_modules` directory.
-`jsdoc` | `downloadJSDoc` | [`JSDocTask`](#jsdoctask) | Generates the API documentation for the JavaScript code in the project.
+`jsdoc` | `downloadJSDoc` | [`JSDocTask`](#jsdoctask) | Generates API documentation for the project's JavaScript code.
 
 By default, the `downloadJSDoc` task downloads version `3.5.5` of the `jsdoc`
-package. However, if the project's `package.json` file, however, already lists
-the `jsdoc` package in its `dependencies` or `devDependencies`, the
-`downloadJSDoc` task is disabled.
+package. If the project's `package.json` file, however, already lists the
+`jsdoc` package in its `dependencies` or `devDependencies`, the `downloadJSDoc`
+task is disabled.
 
 The `jsdoc` task is automatically configured with sensible defaults,
 depending on whether the [`java`](https://docs.gradle.org/current/userguide/java_plugin.html)
@@ -68,7 +68,7 @@ Property Name | Default Value
 Property Name | Type | Default Value | Description
 ------------- | ---- | ------------- | -----------
 `configuration` | [`TextResource`](https://docs.gradle.org/current/dsl/org.gradle.api.resources.TextResource.html) | `null` | The JSDoc configuration file. It sets the `--configure` argument.
-<a name="destinationdir"></a>`destinationDir` | `File` | `null` | The directory where the Javascript API documentation files are saved. It sets the `--destination` argument.
+<a name="destinationdir"></a>`destinationDir` | `File` | `null` | The directory where the JavaScript API documentation files are saved. It sets the `--destination` argument.
 `packageJsonFile` | `File` | `"${project.projectDir}/package.json"` | The path to the project's package file. It sets the `--package` argument.
 <a name="sourcesdir"></a>`sourcesDir` | `File` | `null` | The directory that contains the files to process.
 `readmeFile` | `File` | `null` | The path to the project's README file. It sets the `--readme` argument.

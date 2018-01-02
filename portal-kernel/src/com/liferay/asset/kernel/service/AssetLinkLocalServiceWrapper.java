@@ -384,6 +384,13 @@ public class AssetLinkLocalServiceWrapper implements AssetLinkLocalService,
 		return _assetLinkLocalService.getLinks(entryId, typeId);
 	}
 
+	/**
+	* Returns all the asset links of an AssetEntry.
+	*
+	* @param classNameId AssetEntry's classNameId
+	* @param classPK AssetEntry's classPK
+	* @return the asset links of the given entry params
+	*/
 	@Override
 	public java.util.List<com.liferay.asset.kernel.model.AssetLink> getLinks(
 		long classNameId, long classPK) {

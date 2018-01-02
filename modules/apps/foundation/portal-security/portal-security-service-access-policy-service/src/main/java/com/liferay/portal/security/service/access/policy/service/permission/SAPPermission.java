@@ -15,47 +15,60 @@
 package com.liferay.portal.security.service.access.policy.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Tomas Polesovsky
+ * @deprecated As of 2.1.0, with no direct replacement
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + SAPPermission.RESOURCE_NAME},
+	property = {"resource.name=" + SAPConstants.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
+@Deprecated
 public class SAPPermission implements ResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = SAPConstants.SERVICE_NAME;
+	public static final String RESOURCE_NAME = SAPConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, RESOURCE_NAME, actionId);
-		}
+		_portletResourcePermission.check(permissionChecker, null, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
-		return permissionChecker.hasPermission(
-			0, RESOURCE_NAME, RESOURCE_NAME, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, null, actionId);
 	}
 
 	@Override
 	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return contains(permissionChecker, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, null, actionId);
 	}
+
+	@Reference(
+		target = "(resource.name=" + SAPConstants.RESOURCE_NAME + ")",
+		unbind = "-"
+	)
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission) {
+
+		_portletResourcePermission = portletResourcePermission;
+	}
+
+	private static PortletResourcePermission _portletResourcePermission;
 
 }

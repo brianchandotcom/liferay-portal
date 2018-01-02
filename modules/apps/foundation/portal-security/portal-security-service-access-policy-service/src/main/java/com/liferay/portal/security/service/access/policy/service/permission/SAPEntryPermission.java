@@ -15,9 +15,9 @@
 package com.liferay.portal.security.service.access.policy.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.security.service.access.policy.model.SAPEntry;
 import com.liferay.portal.security.service.access.policy.service.SAPEntryLocalService;
 
@@ -26,12 +26,14 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mika Koivisto
+ * @deprecated As of 2.1.0, with no direct replacement
  */
 @Component(
 	property = {
 		"model.class.name=com.liferay.portal.security.service.access.policy.model.SAPEntry"
 	}
 )
+@Deprecated
 public class SAPEntryPermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -39,11 +41,8 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, sapEntryId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, SAPEntry.class.getName(), sapEntryId,
-				actionId);
-		}
+		_entryModelResourcePermission.check(
+			permissionChecker, sapEntryId, actionId);
 	}
 
 	public static void check(
@@ -51,28 +50,25 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, sapEntry, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, SAPEntry.class.getName(),
-				sapEntry.getSapEntryId(), actionId);
-		}
+		_entryModelResourcePermission.check(
+			permissionChecker, sapEntry, actionId);
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		SAPEntry sapEntry = _sapEntryLocalService.getSAPEntry(classPK);
-
-		return contains(permissionChecker, sapEntry, actionId);
+		return _entryModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, SAPEntry sapEntry,
-		String actionId) {
+			PermissionChecker permissionChecker, SAPEntry sapEntry,
+			String actionId)
+		throws PortalException {
 
-		return permissionChecker.hasPermission(
-			null, SAPEntry.class.getName(), sapEntry.getSapEntryId(), actionId);
+		return _entryModelResourcePermission.contains(
+			permissionChecker, sapEntry, actionId);
 	}
 
 	@Override
@@ -81,16 +77,25 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_entryModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference(unbind = "-")
+	@Reference(
+		target = "(model.class.name=com.liferay.portal.security.service.access.policy.model.SAPEntry)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<SAPEntry> modelResourcePermission) {
+
+		_entryModelResourcePermission = modelResourcePermission;
+	}
+
 	protected void setSAPEntryLocalService(
 		SAPEntryLocalService sapEntryLocalService) {
-
-		_sapEntryLocalService = sapEntryLocalService;
 	}
 
-	private static SAPEntryLocalService _sapEntryLocalService;
+	private static ModelResourcePermission<SAPEntry>
+		_entryModelResourcePermission;
 
 }

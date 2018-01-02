@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.service.test.ServiceTestUtil;
 
+import java.util.Map;
+
 import org.junit.After;
 import org.junit.Before;
 
@@ -99,6 +101,11 @@ public abstract class BasePermissionTestCase {
 		RoleTestUtil.removeResourcePermission(
 			getRoleName(), getResourceName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, getPrimKey(), ActionKeys.VIEW);
+
+		Map<Object, Object> permissionChecksMap =
+			permissionChecker.getPermissionChecksMap();
+
+		permissionChecksMap.clear();
 	}
 
 	@DeleteAfterTestRun

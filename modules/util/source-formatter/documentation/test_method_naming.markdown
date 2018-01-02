@@ -9,4 +9,4 @@ Annotation | Method Name
 `@AfterClass` | `tearDownClass`
 `@Before` | `setUp`
 `@BeforeClass` | `setUpClass`
-`@After` | `test*`
+`@Test` | `test*`

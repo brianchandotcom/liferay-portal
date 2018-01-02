@@ -251,6 +251,40 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
+		HttpPrincipal httpPrincipal, long commerceOrderId,
+		java.lang.String purchaseOrderNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
+					"updatePurchaseOrderNumber",
+					_updatePurchaseOrderNumberParameterTypes6);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceOrderId, purchaseOrderNumber);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceOrder)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderServiceHttp.class);
 	private static final Class<?>[] _addCommerceOrderFromCartParameterTypes0 = new Class[] {
 			long.class, com.liferay.portal.kernel.service.ServiceContext.class
@@ -269,5 +303,8 @@ public class CommerceOrderServiceHttp {
 		};
 	private static final Class<?>[] _getCommerceOrdersCountParameterTypes5 = new Class[] {
 			long.class
+		};
+	private static final Class<?>[] _updatePurchaseOrderNumberParameterTypes6 = new Class[] {
+			long.class, java.lang.String.class
 		};
 }

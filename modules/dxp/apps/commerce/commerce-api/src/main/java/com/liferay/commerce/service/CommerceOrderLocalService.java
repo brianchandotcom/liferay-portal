@@ -310,4 +310,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 
 	public CommerceOrder updatePaymentStatus(long commerceOrderId,
 		int paymentStatus, int status) throws PortalException;
+
+	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
+		java.lang.String purchaseOrderNumber) throws PortalException;
 }

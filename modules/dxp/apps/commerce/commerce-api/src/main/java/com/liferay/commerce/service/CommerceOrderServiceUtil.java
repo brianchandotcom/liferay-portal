@@ -89,6 +89,14 @@ public class CommerceOrderServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
+		long commerceOrderId, java.lang.String purchaseOrderNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updatePurchaseOrderNumber(commerceOrderId,
+			purchaseOrderNumber);
+	}
+
 	public static CommerceOrderService getService() {
 		return _serviceTracker.getService();
 	}

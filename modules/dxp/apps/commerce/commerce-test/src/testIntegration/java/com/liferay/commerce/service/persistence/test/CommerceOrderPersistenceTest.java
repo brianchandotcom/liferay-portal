@@ -151,6 +151,8 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setShippingOptionName(RandomTestUtil.randomString());
 
+		newCommerceOrder.setPurchaseOrderNumber(RandomTestUtil.randomString());
+
 		newCommerceOrder.setSubtotal(RandomTestUtil.nextDouble());
 
 		newCommerceOrder.setShippingPrice(RandomTestUtil.nextDouble());
@@ -197,6 +199,8 @@ public class CommerceOrderPersistenceTest {
 			newCommerceOrder.getCommerceShippingMethodId());
 		Assert.assertEquals(existingCommerceOrder.getShippingOptionName(),
 			newCommerceOrder.getShippingOptionName());
+		Assert.assertEquals(existingCommerceOrder.getPurchaseOrderNumber(),
+			newCommerceOrder.getPurchaseOrderNumber());
 		AssertUtils.assertEquals(existingCommerceOrder.getSubtotal(),
 			newCommerceOrder.getSubtotal());
 		AssertUtils.assertEquals(existingCommerceOrder.getShippingPrice(),
@@ -274,8 +278,9 @@ public class CommerceOrderPersistenceTest {
 			"modifiedDate", true, "orderUserId", true, "billingAddressId",
 			true, "shippingAddressId", true, "commercePaymentMethodId", true,
 			"commerceShippingMethodId", true, "shippingOptionName", true,
-			"subtotal", true, "shippingPrice", true, "total", true,
-			"paymentStatus", true, "shippingStatus", true, "status", true);
+			"purchaseOrderNumber", true, "subtotal", true, "shippingPrice",
+			true, "total", true, "paymentStatus", true, "shippingStatus", true,
+			"status", true);
 	}
 
 	@Test
@@ -518,6 +523,8 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setCommerceShippingMethodId(RandomTestUtil.nextLong());
 
 		commerceOrder.setShippingOptionName(RandomTestUtil.randomString());
+
+		commerceOrder.setPurchaseOrderNumber(RandomTestUtil.randomString());
 
 		commerceOrder.setSubtotal(RandomTestUtil.nextDouble());
 

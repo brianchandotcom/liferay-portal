@@ -171,6 +171,7 @@ create table CommerceOrder (
 	commercePaymentMethodId LONG,
 	commerceShippingMethodId LONG,
 	shippingOptionName VARCHAR(75) null,
+	purchaseOrderNumber VARCHAR(75) null,
 	subtotal DOUBLE,
 	shippingPrice DOUBLE,
 	total DOUBLE,

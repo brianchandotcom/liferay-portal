@@ -48,6 +48,7 @@ public class CommerceOrderSoap implements Serializable {
 		soapModel.setCommercePaymentMethodId(model.getCommercePaymentMethodId());
 		soapModel.setCommerceShippingMethodId(model.getCommerceShippingMethodId());
 		soapModel.setShippingOptionName(model.getShippingOptionName());
+		soapModel.setPurchaseOrderNumber(model.getPurchaseOrderNumber());
 		soapModel.setSubtotal(model.getSubtotal());
 		soapModel.setShippingPrice(model.getShippingPrice());
 		soapModel.setTotal(model.getTotal());
@@ -218,6 +219,14 @@ public class CommerceOrderSoap implements Serializable {
 		_shippingOptionName = shippingOptionName;
 	}
 
+	public String getPurchaseOrderNumber() {
+		return _purchaseOrderNumber;
+	}
+
+	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+		_purchaseOrderNumber = purchaseOrderNumber;
+	}
+
 	public double getSubtotal() {
 		return _subtotal;
 	}
@@ -280,6 +289,7 @@ public class CommerceOrderSoap implements Serializable {
 	private long _commercePaymentMethodId;
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
+	private String _purchaseOrderNumber;
 	private double _subtotal;
 	private double _shippingPrice;
 	private double _total;

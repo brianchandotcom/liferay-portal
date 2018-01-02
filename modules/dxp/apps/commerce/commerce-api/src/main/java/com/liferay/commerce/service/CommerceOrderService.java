@@ -85,4 +85,7 @@ public interface CommerceOrderService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
+		java.lang.String purchaseOrderNumber) throws PortalException;
 }

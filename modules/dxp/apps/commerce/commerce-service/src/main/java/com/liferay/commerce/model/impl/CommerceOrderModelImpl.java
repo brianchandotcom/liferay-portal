@@ -87,6 +87,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "commercePaymentMethodId", Types.BIGINT },
 			{ "commerceShippingMethodId", Types.BIGINT },
 			{ "shippingOptionName", Types.VARCHAR },
+			{ "purchaseOrderNumber", Types.VARCHAR },
 			{ "subtotal", Types.DOUBLE },
 			{ "shippingPrice", Types.DOUBLE },
 			{ "total", Types.DOUBLE },
@@ -111,6 +112,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("commercePaymentMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingOptionName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("purchaseOrderNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("subtotal", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("total", Types.DOUBLE);
@@ -119,7 +121,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,status INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -167,6 +169,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setCommercePaymentMethodId(soapModel.getCommercePaymentMethodId());
 		model.setCommerceShippingMethodId(soapModel.getCommerceShippingMethodId());
 		model.setShippingOptionName(soapModel.getShippingOptionName());
+		model.setPurchaseOrderNumber(soapModel.getPurchaseOrderNumber());
 		model.setSubtotal(soapModel.getSubtotal());
 		model.setShippingPrice(soapModel.getShippingPrice());
 		model.setTotal(soapModel.getTotal());
@@ -251,6 +254,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
 		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
 		attributes.put("subtotal", getSubtotal());
 		attributes.put("shippingPrice", getShippingPrice());
 		attributes.put("total", getTotal());
@@ -350,6 +354,13 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (shippingOptionName != null) {
 			setShippingOptionName(shippingOptionName);
+		}
+
+		String purchaseOrderNumber = (String)attributes.get(
+				"purchaseOrderNumber");
+
+		if (purchaseOrderNumber != null) {
+			setPurchaseOrderNumber(purchaseOrderNumber);
 		}
 
 		Double subtotal = (Double)attributes.get("subtotal");
@@ -632,6 +643,22 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
+	public String getPurchaseOrderNumber() {
+		if (_purchaseOrderNumber == null) {
+			return "";
+		}
+		else {
+			return _purchaseOrderNumber;
+		}
+	}
+
+	@Override
+	public void setPurchaseOrderNumber(String purchaseOrderNumber) {
+		_purchaseOrderNumber = purchaseOrderNumber;
+	}
+
+	@JSON
+	@Override
 	public double getSubtotal() {
 		return _subtotal;
 	}
@@ -747,6 +774,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setCommercePaymentMethodId(getCommercePaymentMethodId());
 		commerceOrderImpl.setCommerceShippingMethodId(getCommerceShippingMethodId());
 		commerceOrderImpl.setShippingOptionName(getShippingOptionName());
+		commerceOrderImpl.setPurchaseOrderNumber(getPurchaseOrderNumber());
 		commerceOrderImpl.setSubtotal(getSubtotal());
 		commerceOrderImpl.setShippingPrice(getShippingPrice());
 		commerceOrderImpl.setTotal(getTotal());
@@ -893,6 +921,15 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			commerceOrderCacheModel.shippingOptionName = null;
 		}
 
+		commerceOrderCacheModel.purchaseOrderNumber = getPurchaseOrderNumber();
+
+		String purchaseOrderNumber = commerceOrderCacheModel.purchaseOrderNumber;
+
+		if ((purchaseOrderNumber != null) &&
+				(purchaseOrderNumber.length() == 0)) {
+			commerceOrderCacheModel.purchaseOrderNumber = null;
+		}
+
 		commerceOrderCacheModel.subtotal = getSubtotal();
 
 		commerceOrderCacheModel.shippingPrice = getShippingPrice();
@@ -910,7 +947,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -940,6 +977,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getCommerceShippingMethodId());
 		sb.append(", shippingOptionName=");
 		sb.append(getShippingOptionName());
+		sb.append(", purchaseOrderNumber=");
+		sb.append(getPurchaseOrderNumber());
 		sb.append(", subtotal=");
 		sb.append(getSubtotal());
 		sb.append(", shippingPrice=");
@@ -959,7 +998,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(64);
+		StringBundler sb = new StringBundler(67);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -1022,6 +1061,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getShippingOptionName());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>purchaseOrderNumber</column-name><column-value><![CDATA[");
+		sb.append(getPurchaseOrderNumber());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>subtotal</column-name><column-value><![CDATA[");
 		sb.append(getSubtotal());
 		sb.append("]]></column-value></column>");
@@ -1075,6 +1118,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private long _commercePaymentMethodId;
 	private long _commerceShippingMethodId;
 	private String _shippingOptionName;
+	private String _purchaseOrderNumber;
 	private double _subtotal;
 	private double _shippingPrice;
 	private double _total;

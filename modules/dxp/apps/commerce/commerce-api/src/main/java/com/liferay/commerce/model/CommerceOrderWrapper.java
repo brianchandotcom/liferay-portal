@@ -74,6 +74,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("commercePaymentMethodId", getCommercePaymentMethodId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
 		attributes.put("shippingOptionName", getShippingOptionName());
+		attributes.put("purchaseOrderNumber", getPurchaseOrderNumber());
 		attributes.put("subtotal", getSubtotal());
 		attributes.put("shippingPrice", getShippingPrice());
 		attributes.put("total", getTotal());
@@ -170,6 +171,13 @@ public class CommerceOrderWrapper implements CommerceOrder,
 
 		if (shippingOptionName != null) {
 			setShippingOptionName(shippingOptionName);
+		}
+
+		String purchaseOrderNumber = (String)attributes.get(
+				"purchaseOrderNumber");
+
+		if (purchaseOrderNumber != null) {
+			setPurchaseOrderNumber(purchaseOrderNumber);
 		}
 
 		Double subtotal = (Double)attributes.get("subtotal");
@@ -370,6 +378,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _commerceOrder.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the purchase order number of this commerce order.
+	*
+	* @return the purchase order number of this commerce order
+	*/
+	@Override
+	public java.lang.String getPurchaseOrderNumber() {
+		return _commerceOrder.getPurchaseOrderNumber();
 	}
 
 	@Override
@@ -662,6 +680,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_commerceOrder.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the purchase order number of this commerce order.
+	*
+	* @param purchaseOrderNumber the purchase order number of this commerce order
+	*/
+	@Override
+	public void setPurchaseOrderNumber(java.lang.String purchaseOrderNumber) {
+		_commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
 	}
 
 	/**

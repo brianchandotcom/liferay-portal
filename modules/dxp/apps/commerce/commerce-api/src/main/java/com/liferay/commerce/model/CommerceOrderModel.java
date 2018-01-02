@@ -310,6 +310,21 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setShippingOptionName(String shippingOptionName);
 
 	/**
+	 * Returns the purchase order number of this commerce order.
+	 *
+	 * @return the purchase order number of this commerce order
+	 */
+	@AutoEscape
+	public String getPurchaseOrderNumber();
+
+	/**
+	 * Sets the purchase order number of this commerce order.
+	 *
+	 * @param purchaseOrderNumber the purchase order number of this commerce order
+	 */
+	public void setPurchaseOrderNumber(String purchaseOrderNumber);
+
+	/**
 	 * Returns the subtotal of this commerce order.
 	 *
 	 * @return the subtotal of this commerce order

@@ -137,6 +137,7 @@
 		<field name="commercePaymentMethodId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
 		<field name="shippingOptionName" type="String" />
+		<field name="purchaseOrderNumber" type="String" />
 		<field name="subtotal" type="double" />
 		<field name="shippingPrice" type="double" />
 		<field name="total" type="double" />

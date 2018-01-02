@@ -157,5 +157,21 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderSoap updatePurchaseOrderNumber(
+		long commerceOrderId, java.lang.String purchaseOrderNumber)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updatePurchaseOrderNumber(commerceOrderId,
+					purchaseOrderNumber);
+
+			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(CommerceOrderServiceSoap.class);
 }

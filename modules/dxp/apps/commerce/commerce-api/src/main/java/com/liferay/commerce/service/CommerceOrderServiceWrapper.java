@@ -90,6 +90,14 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
+		long commerceOrderId, java.lang.String purchaseOrderNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderService.updatePurchaseOrderNumber(commerceOrderId,
+			purchaseOrderNumber);
+	}
+
+	@Override
 	public CommerceOrderService getWrappedService() {
 		return _commerceOrderService;
 	}

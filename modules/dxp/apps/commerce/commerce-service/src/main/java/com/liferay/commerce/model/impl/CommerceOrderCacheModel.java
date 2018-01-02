@@ -65,7 +65,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(41);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -95,6 +95,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(commerceShippingMethodId);
 		sb.append(", shippingOptionName=");
 		sb.append(shippingOptionName);
+		sb.append(", purchaseOrderNumber=");
+		sb.append(purchaseOrderNumber);
 		sb.append(", subtotal=");
 		sb.append(subtotal);
 		sb.append(", shippingPrice=");
@@ -162,6 +164,13 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 			commerceOrderImpl.setShippingOptionName(shippingOptionName);
 		}
 
+		if (purchaseOrderNumber == null) {
+			commerceOrderImpl.setPurchaseOrderNumber("");
+		}
+		else {
+			commerceOrderImpl.setPurchaseOrderNumber(purchaseOrderNumber);
+		}
+
 		commerceOrderImpl.setSubtotal(subtotal);
 		commerceOrderImpl.setShippingPrice(shippingPrice);
 		commerceOrderImpl.setTotal(total);
@@ -199,6 +208,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		commerceShippingMethodId = objectInput.readLong();
 		shippingOptionName = objectInput.readUTF();
+		purchaseOrderNumber = objectInput.readUTF();
 
 		subtotal = objectInput.readDouble();
 
@@ -258,6 +268,13 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 			objectOutput.writeUTF(shippingOptionName);
 		}
 
+		if (purchaseOrderNumber == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(purchaseOrderNumber);
+		}
+
 		objectOutput.writeDouble(subtotal);
 
 		objectOutput.writeDouble(shippingPrice);
@@ -285,6 +302,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public long commercePaymentMethodId;
 	public long commerceShippingMethodId;
 	public String shippingOptionName;
+	public String purchaseOrderNumber;
 	public double subtotal;
 	public double shippingPrice;
 	public double total;

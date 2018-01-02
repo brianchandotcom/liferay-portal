@@ -388,6 +388,14 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
+		long commerceOrderId, java.lang.String purchaseOrderNumber)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updatePurchaseOrderNumber(commerceOrderId,
+			purchaseOrderNumber);
+	}
+
+	@Override
 	public CommerceOrderLocalService getWrappedService() {
 		return _commerceOrderLocalService;
 	}

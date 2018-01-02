@@ -208,7 +208,7 @@
 
 	<command name="gotoAddField">
 		<toggle name="LPS-75358">
-			<on>
+			<off>
  				<var name="key_columnSize" value="${columnSize}" />
 
 				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
@@ -220,10 +220,10 @@
 				<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
 
 				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
- 			</on>
+			</off>
 
- 			<off>
- 				<var name="key_columnSize" value="${columnSize}" />
+			<on>
+				<var name="key_columnSize" value="${columnSize}" />
 
 				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
 
@@ -232,8 +232,8 @@
 				<execute function="DragAndDrop" locator1="Form#ADD_FIELD_TYPE" locator2="Form#ADD_FIELD_POSITION" value1="${fieldType}" />
 
 				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
- 			</off>
- 		</toggle>		
+			</on>
+		</toggle>
 	</command>
 
 	<command name="gotoAdvancedTab">

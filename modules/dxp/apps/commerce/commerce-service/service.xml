@@ -351,6 +351,7 @@
 		<column name="commercePaymentMethodId" type="long" />
 		<column name="commerceShippingMethodId" type="long" />
 		<column name="shippingOptionName" type="String" />
+		<column name="purchaseOrderNumber" type="String" />
 		<column name="subtotal" type="double" />
 		<column name="shippingPrice" type="double" />
 		<column name="total" type="double" />
@@ -1071,6 +1072,7 @@
 		<exception>CommerceCountryThreeLettersISOCode</exception>
 		<exception>CommerceCountryTwoLettersISOCode</exception>
 		<exception>CommerceGeocoder</exception>
+		<exception>CommerceOrderPurchaseOrderNumber</exception>
 		<exception>CommercePaymentEngine</exception>
 		<exception>CommercePaymentMethodEngineKey</exception>
 		<exception>CommercePaymentMethodName</exception>

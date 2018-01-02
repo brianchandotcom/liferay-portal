@@ -18,6 +18,7 @@ import com.liferay.commerce.exception.CommerceCartBillingAddressException;
 import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
 import com.liferay.commerce.exception.CommerceCartShippingAddressException;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
+import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
@@ -32,6 +33,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
@@ -212,6 +214,23 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	@Override
+	public CommerceOrder updatePurchaseOrderNumber(
+			long commerceOrderId, String purchaseOrderNumber)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		validatePurchaseOrderNumber(purchaseOrderNumber);
+
+		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrder;
+	}
+
 	protected void validate(CommerceCart commerceCart) throws PortalException {
 		CommercePaymentMethod commercePaymentMethod = null;
 
@@ -262,6 +281,14 @@ public class CommerceOrderLocalServiceImpl
 			_commerceShippingHelper.isShippable(commerceCart)) {
 
 			throw new CommerceCartShippingMethodException();
+		}
+	}
+
+	protected void validatePurchaseOrderNumber(String purchaseOrderNumber)
+		throws PortalException {
+
+		if (Validator.isNull(purchaseOrderNumber)) {
+			throw new CommerceOrderPurchaseOrderNumberException();
 		}
 	}
 

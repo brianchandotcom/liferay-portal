@@ -110,6 +110,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 		return commerceOrderLocalService.getCommerceOrdersCount(groupId);
 	}
 
+	@Override
+	public CommerceOrder updatePurchaseOrderNumber(
+			long commerceOrderId, String purchaseOrderNumber)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		checkCommerceOrder(commerceOrder);
+
+		return commerceOrderLocalService.updatePurchaseOrderNumber(
+			commerceOrder.getCommerceOrderId(), purchaseOrderNumber);
+	}
+
 	protected void checkCommerceOrder(CommerceOrder commerceOrder)
 		throws PrincipalException {
 

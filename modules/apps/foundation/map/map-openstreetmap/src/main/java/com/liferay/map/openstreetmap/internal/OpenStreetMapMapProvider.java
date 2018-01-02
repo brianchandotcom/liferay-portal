@@ -14,6 +14,7 @@
 
 package com.liferay.map.openstreetmap.internal;
 
+import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.map.BaseJSPMapProvider;
 import com.liferay.map.MapProvider;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -23,6 +24,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -69,5 +71,18 @@ public class OpenStreetMapMapProvider extends BaseJSPMapProvider {
 	public void setServletContext(ServletContext servletContext) {
 		super.setServletContext(servletContext);
 	}
+
+	@Override
+	protected void prepareRequest(HttpServletRequest request) {
+		String resolvedModuleName = _npmResolver.resolveModuleName(
+			"map-openstreetmap/js/MapOpenStreetMap.es");
+
+		request.setAttribute(
+			"liferay-map:map:bootstrapRequire",
+			resolvedModuleName + " as MapOpenStreetMap");
+	}
+
+	@Reference
+	private NPMResolver _npmResolver;
 
 }

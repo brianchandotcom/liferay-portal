@@ -1,3 +1,4 @@
+apply plugin: "com.gradle.plugin-publish"
 apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
@@ -29,4 +30,8 @@ installGradleTestSmokeSample100 {
 	dir = "src/gradleTest/smoke/dependencies/sample-100"
 	startParameter.systemPropertiesArgs = ["maven.repo.local": userMavenRepoLocalDir.absolutePath]
 	tasks = ["install"]
+}
+
+pluginBundle {
+	tags = ["baseline", "bnd", "bundle", "java", "osgi", "semantic", "semver", "versioning"]
 }

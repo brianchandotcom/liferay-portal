@@ -1,3 +1,4 @@
+Bundle-Description: The App Docker Gradle plugin lets you build a single Docker image for an application that spans different subprojects, each one representing a different component of the same application. The Docker image can then be pushed to a registry.
 Bundle-Name: Liferay Gradle Plugins App Docker
 Bundle-SymbolicName: com.liferay.gradle.plugins.app.docker
 Bundle-Version: 1.0.5

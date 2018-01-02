@@ -16,10 +16,10 @@ package com.liferay.user.associated.data.registry;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.user.associated.data.model.UADEntity;
-import com.liferay.user.associated.data.model.UADEntityAggregator;
-import com.liferay.user.associated.data.model.UADEntityAnonymizer;
-import com.liferay.user.associated.data.model.UADEntityExporter;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.util.Collection;
 import java.util.Set;

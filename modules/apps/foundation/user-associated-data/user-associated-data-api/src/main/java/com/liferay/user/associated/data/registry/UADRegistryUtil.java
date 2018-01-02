@@ -14,9 +14,9 @@
 
 package com.liferay.user.associated.data.registry;
 
-import com.liferay.user.associated.data.model.UADEntityAggregator;
-import com.liferay.user.associated.data.model.UADEntityAnonymizer;
-import com.liferay.user.associated.data.model.UADEntityExporter;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.util.Collection;
 

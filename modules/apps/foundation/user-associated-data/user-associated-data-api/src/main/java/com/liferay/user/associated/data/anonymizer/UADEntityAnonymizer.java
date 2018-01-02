@@ -12,22 +12,24 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model;
+package com.liferay.user.associated.data.anonymizer;
 
 import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
+import com.liferay.user.associated.data.entity.UADEntity;
 
 /**
  * @author William Newbury
  */
 @ProviderType
-public interface UADEntityAggregator {
+public interface UADEntityAnonymizer {
 
-	public long count(long userId);
+	public void autoAnonymize(UADEntity uadEntity);
 
-	public List<UADEntity> getUADEntities(long userId);
+	public void autoAnonymizeAll(long userId);
 
-	public UADEntity getUADEntity(String uadEntityId);
+	public void delete(UADEntity uadEntity);
+
+	public void deleteAll(long userId);
 
 }

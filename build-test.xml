@@ -3050,7 +3050,7 @@ persisted.scheduler.org.quartz.threadPool.threadCount=1]]></echo>
 
 			<echo>${env.SYBASE}/${env.SYBASE_ASE}/bin/charset -P${database.password} -S${database.schema} -U${database.username} binary.srt utf8</echo>
 
-			<exec executable="${env.SYBASE}/${env.SYBASE_ASE}/bin/charset">
+			<exec executable="${env.SYBASE}/${env.SYBASE_ASE}/bin/charset" timeout="60000">
 				<arg value="-P${database.password}" />
 				<arg value="-S${database.schema}" />
 				<arg value="-U${database.username}" />

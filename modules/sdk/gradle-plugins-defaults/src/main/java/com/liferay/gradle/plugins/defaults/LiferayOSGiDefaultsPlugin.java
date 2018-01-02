@@ -3167,14 +3167,9 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		sb.append(' ');
 		sb.append(project.getVersion());
 		sb.append(" - ");
-
-		String moduleName = project.getDescription();
-
-		if (Validator.isNull(moduleName)) {
-			moduleName = project.getName();
-		}
-
-		sb.append(moduleName);
+		sb.append(
+			GradlePluginsDefaultsUtil.getBundleInstruction(
+				project, Constants.BUNDLE_NAME));
 
 		javadoc.setTitle(sb.toString());
 	}

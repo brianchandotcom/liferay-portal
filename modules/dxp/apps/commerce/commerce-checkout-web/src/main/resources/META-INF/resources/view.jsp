@@ -29,9 +29,15 @@ String currentCheckoutStepName = checkoutDisplayContext.getCurrentCheckoutStepNa
 	int step = 1;
 
 	for (CommerceCheckoutStep commerceCheckoutStep : checkoutDisplayContext.getCommerceCheckoutSteps()) {
+		String name = commerceCheckoutStep.getName();
+
+		if (!currentCheckoutStepName.equals(name) && !commerceCheckoutStep.isVisible(request, response)) {
+			continue;
+		}
+
 		String cssClass = "";
 
-		if (currentCheckoutStepName.equals(commerceCheckoutStep.getName())) {
+		if (currentCheckoutStepName.equals(name)) {
 			cssClass = "active";
 			complete = false;
 		}

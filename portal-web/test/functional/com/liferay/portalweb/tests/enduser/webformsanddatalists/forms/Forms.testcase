@@ -2857,11 +2857,6 @@
 				<var name="optionValue" value="Select ${number}" />
 				<var name="rowNumber" value="${number}" />
 			</execute>
-
-			<execute macro="FormFields#viewOptionsRowFieldName">
-				<var name="fieldName" value="Select${number}" />
-				<var name="rowNumber" value="${number}" />
-			</execute>
 		</for>
 
 		<execute macro="Form#closeSidebar" />

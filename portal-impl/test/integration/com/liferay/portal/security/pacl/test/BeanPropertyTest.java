@@ -63,7 +63,7 @@ public class BeanPropertyTest {
 	}
 
 	@Test
-	public void testSet() throws Exception {
+	public void testSet1() throws Exception {
 		try {
 			LanguageUtil languageUtil = new LanguageUtil();
 
@@ -76,7 +76,7 @@ public class BeanPropertyTest {
 	}
 
 	@Test
-	public void testSet3() throws Exception {
+	public void testSet2() throws Exception {
 		PortalCustomSQLUtil portalCustomSQLUtil = new PortalCustomSQLUtil();
 
 		PortalCustomSQL portalCustomSQL =

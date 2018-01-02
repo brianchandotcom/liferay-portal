@@ -421,7 +421,7 @@ public class AntlrCreoleParserTest {
 	}
 
 	@Test
-	public void testParseSimpleLinkTagWithoutDescription() throws Exception {
+	public void testParseSimpleLinkTagWithoutDescription1() throws Exception {
 		WikiPageNode wikiPageNode = getWikiPageNode("link-2.creole");
 
 		Assert.assertNotNull(wikiPageNode);

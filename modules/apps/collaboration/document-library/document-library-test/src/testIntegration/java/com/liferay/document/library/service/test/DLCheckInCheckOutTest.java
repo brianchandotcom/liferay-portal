@@ -434,7 +434,7 @@ public class DLCheckInCheckOutTest {
 	}
 
 	@Test
-	public void testUpdateFileEntry() throws Exception {
+	public void testUpdateFileEntry1() throws Exception {
 		Folder folder = DLAppServiceUtil.getFolder(_folder.getFolderId());
 
 		Date lastPostDate = folder.getLastPostDate();

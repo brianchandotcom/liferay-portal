@@ -71,14 +71,15 @@
 
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="Message Boards Subject" />
 
-		<execute macro="AlloyEditor#addContent">
+		<execute macro="AlloyEditor#typeEditor">
 			<var name="content" value="Message Boards Body" />
+			<var name="editor" value="body" />
 		</execute>
 
 		<execute function="Copy" locator1="TextInput#SUBJECT" />
 
 		<execute function="Paste" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
+			<var name="key_editor" value="body" />
 		</execute>
 
 		<execute macro="PortletEntry#publish" />

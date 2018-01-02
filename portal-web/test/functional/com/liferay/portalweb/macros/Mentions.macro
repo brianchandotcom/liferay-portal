@@ -59,7 +59,7 @@
 
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
 
-		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
+		<execute function="Type#typeWaitForCKEditorScript" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1="@${mentionsUserScreenName}">
 			<var name="key_editor" value="body" />
@@ -80,13 +80,13 @@
 		<execute function="Type" locator1="TextInput#SUBJECT" value1="${threadSubject}" />
 
 		<execute function="Click" locator1="AlloyEditor#EDITOR">
-			<var name="key_editor" value="content" />
+			<var name="key_editor" value="body" />
 		</execute>
 
 		<var name="key_mentionsUserScreenName" value="${mentionsUserScreenName}" />
 
 		<execute function="Type#sendKeys" locator1="AlloyEditor#EDITOR" value1=" @${mentionsUserScreenName}">
-			<var name="key_editor" value="content" />
+			<var name="key_editor" value="body" />
 		</execute>
 
 		<execute function="Click#clickNoMouseOver" locator1="Mentions#MENTIONS_USER_DISPLAY_OPTION" />

@@ -2647,10 +2647,16 @@ sub-repositories.
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.76.
 
-## 5.2.31 - 2017-12-26
+## 5.2.31 - 2017-12-29
+
+### Added
+- [LRDOCS-4111]: Apply and preconfigure [Liferay Gradle Plugins JSDoc] for OSGi
+projects.
+- [LRDOCS-4111]: Publish the Javascript API documentation JAR of an OSGi project
+with the `install` and `uploadArchives` tasks.
 
 ### Changed
-- [LPS-72868]: Update the [Liferay Gradle Plugins] dependency to version 3.5.77.
+- [LPS-76747]: Update the [Liferay Gradle Plugins] dependency to version 3.5.77.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2659,6 +2665,7 @@ sub-repositories.
 [Liferay Gradle Plugins App Javadoc Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-app-javadoc-builder
 [Liferay Gradle Plugins Baseline]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-baseline
 [Liferay Gradle Plugins Dependency Checker]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-dependency-checker
+[Liferay Gradle Plugins JSDoc]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-jsdoc
 [Liferay Gradle Plugins Lang Merger]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-lang-merger
 [Liferay Gradle Plugins Node]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-node
 [Liferay Gradle Plugins Source Formatter]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins-source-formatter
@@ -2949,9 +2956,11 @@ sub-repositories.
 [LPS-76326]: https://issues.liferay.com/browse/LPS-76326
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
+[LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023
 [LRDOCS-3038]: https://issues.liferay.com/browse/LRDOCS-3038
 [LRDOCS-3643]: https://issues.liferay.com/browse/LRDOCS-3643
+[LRDOCS-4111]: https://issues.liferay.com/browse/LRDOCS-4111

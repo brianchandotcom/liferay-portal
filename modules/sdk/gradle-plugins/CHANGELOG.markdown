@@ -3218,7 +3218,7 @@ to version 2.3.55.
 - [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
 1.0.526.
 
-## 3.5.77 - 2017-12-26
+## 3.5.77 - 2017-12-29
 
 ### Added
 - [LPS-72868]: Automatically exclude the [`EI_EXPOSE_REP`](http://findbugs.sourceforge.net/bugDescriptions.html#EI_EXPOSE_REP),
@@ -3238,6 +3238,12 @@ FindBugs warnings for `*Comparator`, `*Searcher`, and `*StagedModelDataHandler`
 classes.
 - [LPS-72868]: Automatically exclude the [`ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD`](http://findbugs.sourceforge.net/bugDescriptions.html#ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD)
 FindBugs warning for `*Permission` and `ServletContextUtil` classes.
+
+### Changed
+- [LPS-76747]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.56.
+- [LPS-76747]: Update the [Liferay Source Formatter] dependency to version
+1.0.527.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -3520,4 +3526,5 @@ FindBugs warning for `*Permission` and `ServletContextUtil` classes.
 [LPS-76475]: https://issues.liferay.com/browse/LPS-76475
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
+[LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

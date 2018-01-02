@@ -65,6 +65,10 @@ public class ConfigurationTemporarySwapperTest {
 
 		_callPersistenceManager(
 			persistenceManager -> {
+				Assert.assertFalse(
+					String.valueOf(persistenceManager.load(_pid)),
+					persistenceManager.exists(_pid));
+
 				try (ConfigurationTemporarySwapper
 						configurationTemporarySwapper =
 							new ConfigurationTemporarySwapper(

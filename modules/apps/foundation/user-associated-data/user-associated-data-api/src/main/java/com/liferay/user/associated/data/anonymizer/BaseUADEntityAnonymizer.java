@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model;
+package com.liferay.user.associated.data.anonymizer;
+
+import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
 

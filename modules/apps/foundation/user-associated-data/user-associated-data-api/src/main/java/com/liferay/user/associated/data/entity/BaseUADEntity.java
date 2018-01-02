@@ -12,26 +12,42 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model;
-
-import java.util.List;
+package com.liferay.user.associated.data.entity;
 
 /**
  * @author William Newbury
  */
-public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
+public abstract class BaseUADEntity implements UADEntity {
 
-	@Override
-	public long count(long userId) {
-		List<UADEntity> userIdUADEntities = getUADEntities(userId);
+	public BaseUADEntity(
+		long userId, String uadEntityId, String uadRegistryKey) {
 
-		return userIdUADEntities.size();
+		_userId = userId;
+
+		_uadEntityId = uadEntityId;
+		_uadRegistryKey = uadRegistryKey;
 	}
 
 	@Override
-	public abstract List<UADEntity> getUADEntities(long userId);
+	public abstract String getEditURL();
 
 	@Override
-	public abstract UADEntity getUADEntity(String uadEntityId);
+	public String getUADEntityId() {
+		return _uadEntityId;
+	}
+
+	@Override
+	public String getUADRegistryKey() {
+		return _uadRegistryKey;
+	}
+
+	@Override
+	public long getUserId() {
+		return _userId;
+	}
+
+	private final String _uadEntityId;
+	private final String _uadRegistryKey;
+	private final long _userId;
 
 }

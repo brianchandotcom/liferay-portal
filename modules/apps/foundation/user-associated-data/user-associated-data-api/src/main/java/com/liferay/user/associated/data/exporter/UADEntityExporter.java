@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model;
+package com.liferay.user.associated.data.exporter;
 
 import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.user.associated.data.entity.UADEntity;
 
 /**
  * @author William Newbury
  */
 @ProviderType
-public interface UADEntityAnonymizer {
+public interface UADEntityExporter {
 
-	public void autoAnonymize(UADEntity uadEntity);
+	public void export(UADEntity uadEntity);
 
-	public void autoAnonymizeAll(long userId);
-
-	public void delete(UADEntity uadEntity);
-
-	public void deleteAll(long userId);
+	public void exportAll(long userId);
 
 }

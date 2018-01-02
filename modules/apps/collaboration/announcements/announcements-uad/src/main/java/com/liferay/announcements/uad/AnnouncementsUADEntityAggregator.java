@@ -15,9 +15,9 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.user.associated.data.model.BaseUADEntityAggregator;
-import com.liferay.user.associated.data.model.UADEntity;
-import com.liferay.user.associated.data.model.UADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.ArrayList;
 import java.util.List;

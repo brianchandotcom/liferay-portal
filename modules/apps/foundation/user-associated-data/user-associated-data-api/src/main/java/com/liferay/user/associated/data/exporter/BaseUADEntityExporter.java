@@ -12,18 +12,27 @@
  * details.
  */
 
-package com.liferay.user.associated.data.model;
+package com.liferay.user.associated.data.exporter;
 
-import aQute.bnd.annotation.ProviderType;
+import com.liferay.user.associated.data.entity.UADEntity;
+
+import java.util.List;
 
 /**
  * @author William Newbury
  */
-@ProviderType
-public interface UADEntityExporter {
+public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
-	public void export(UADEntity uadEntity);
+	@Override
+	public abstract void export(UADEntity uadEntity);
 
-	public void exportAll(long userId);
+	@Override
+	public void exportAll(long userId) {
+		for (UADEntity uadEntity : getUADEntities(userId)) {
+			export(uadEntity);
+		}
+	}
+
+	protected abstract List<UADEntity> getUADEntities(long userId);
 
 }

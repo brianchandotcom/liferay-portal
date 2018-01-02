@@ -15,10 +15,10 @@
 package com.liferay.announcements.uad;
 
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.user.associated.data.model.BaseUADEntityExporter;
-import com.liferay.user.associated.data.model.UADEntity;
-import com.liferay.user.associated.data.model.UADEntityAggregator;
-import com.liferay.user.associated.data.model.UADEntityExporter;
+import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
+import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.exporter.BaseUADEntityExporter;
+import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.util.List;
 

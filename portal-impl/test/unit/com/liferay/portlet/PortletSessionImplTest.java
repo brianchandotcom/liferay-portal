@@ -277,6 +277,36 @@ public class PortletSessionImplTest {
 	}
 
 	@Test
+	public void testInvalidate() {
+		PortletSessionImpl portletSessionImpl = new PortletSessionImpl(
+			new MockHttpSession(), _portletContext, _PORTLET_NAME, _PLID);
+
+		Assert.assertFalse(portletSessionImpl.isInvalidated());
+
+		portletSessionImpl.invalidate();
+
+		try {
+			Assert.assertSame(_value1, portletSessionImpl.getAttribute(_KEY_1));
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+		}
+
+		try {
+			Assert.assertEquals(
+				_mockHttpSession.getCreationTime(),
+				portletSessionImpl.getCreationTime());
+
+			Assert.fail();
+		}
+		catch (IllegalStateException ise) {
+		}
+
+		Assert.assertTrue(portletSessionImpl.isInvalidated());
+	}
+
+	@Test
 	public void testLazySerializableObjectWrapper() throws Exception {
 		Constructor<?> constructor =
 			_lazySerializableObjectWrapperClass.getDeclaredConstructor(

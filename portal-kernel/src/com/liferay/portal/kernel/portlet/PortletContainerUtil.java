@@ -114,13 +114,17 @@ public class PortletContainerUtil {
 		ActionResult actionResult = portletContainer.processAction(
 			request, response, portlet);
 
-		List<Event> events = actionResult.getEvents();
-
-		if (!events.isEmpty()) {
-			_processEvents(request, response, events);
-		}
-
 		String location = actionResult.getLocation();
+
+		if (Validator.isNull(location) ||
+			(Validator.isNotNull(location) && portlet.isActionURLRedirect())) {
+
+			List<Event> events = actionResult.getEvents();
+
+			if (!events.isEmpty()) {
+				_processEvents(request, response, events);
+			}
+		}
 
 		if (Validator.isNotNull(location)) {
 			try {

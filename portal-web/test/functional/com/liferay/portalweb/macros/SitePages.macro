@@ -139,6 +139,8 @@
 		</execute>
 
 		<execute macro="SitePages#_addPage" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="addPrivateChildPage">

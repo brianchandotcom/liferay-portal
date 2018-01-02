@@ -49,11 +49,6 @@ public class BillingAddressCommerceCheckoutStep
 	}
 
 	@Override
-	public boolean isSennaDisabled() {
-		return false;
-	}
-
-	@Override
 	protected BaseAddressCheckoutStepDisplayContext
 			getBaseAddressCheckoutStepDisplayContext(
 				HttpServletRequest httpServletRequest,

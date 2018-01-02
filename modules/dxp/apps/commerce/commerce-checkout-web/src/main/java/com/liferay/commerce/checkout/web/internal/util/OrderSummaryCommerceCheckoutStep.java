@@ -18,6 +18,7 @@ import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderSummaryCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceCartBillingAddressException;
 import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
@@ -32,7 +33,6 @@ import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -40,10 +40,6 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -66,17 +62,9 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = CommerceCheckoutStep.class
 )
-public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
+public class OrderSummaryCommerceCheckoutStep extends BaseCommerceCheckoutStep {
 
 	public static final String NAME = "order-summary";
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, NAME);
-	}
 
 	@Override
 	public String getName() {
@@ -84,30 +72,7 @@ public class OrderSummaryCommerceCheckoutStep implements CommerceCheckoutStep {
 	}
 
 	@Override
-	public boolean isActive(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		return true;
-	}
-
-	@Override
-	public boolean isOrder() {
-		return false;
-	}
-
-	@Override
 	public boolean isSennaDisabled() {
-		return true;
-	}
-
-	@Override
-	public boolean isVisible(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
 		return true;
 	}
 

@@ -16,6 +16,7 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.PaymentMethodCheckoutStepDisplayContext;
+import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
 import com.liferay.commerce.model.CommerceCart;
@@ -23,15 +24,10 @@ import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.service.CommercePaymentMethodService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,17 +49,10 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = CommerceCheckoutStep.class
 )
-public class PaymentMethodCommerceCheckoutStep implements CommerceCheckoutStep {
+public class PaymentMethodCommerceCheckoutStep
+	extends BaseCommerceCheckoutStep {
 
 	public static final String NAME = "payment-method";
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, NAME);
-	}
 
 	@Override
 	public String getName() {
@@ -87,25 +76,6 @@ public class PaymentMethodCommerceCheckoutStep implements CommerceCheckoutStep {
 		}
 
 		return false;
-	}
-
-	@Override
-	public boolean isOrder() {
-		return false;
-	}
-
-	@Override
-	public boolean isSennaDisabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isVisible(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		return true;
 	}
 
 	@Override
@@ -146,14 +116,6 @@ public class PaymentMethodCommerceCheckoutStep implements CommerceCheckoutStep {
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/checkout_step/payment_method.jsp");
-	}
-
-	@Override
-	public boolean showControls(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		return true;
 	}
 
 	protected void updateCommerceCartPaymentMethod(ActionRequest actionRequest)

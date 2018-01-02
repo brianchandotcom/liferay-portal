@@ -16,6 +16,7 @@ package com.liferay.commerce.checkout.web.internal.util;
 
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.ShippingMethodCheckoutStepDisplayContext;
+import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceCart;
@@ -32,19 +33,16 @@ import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -67,20 +65,12 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommerceCheckoutStep.class
 )
 public class ShippingMethodCommerceCheckoutStep
-	implements CommerceCheckoutStep {
+	extends BaseCommerceCheckoutStep {
 
 	public static final char COMMERCE_SHIPPING_OPTION_KEY_SEPARATOR =
 		CharPool.POUND;
 
 	public static final String NAME = "shipping-method";
-
-	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, NAME);
-	}
 
 	@Override
 	public String getName() {
@@ -130,25 +120,6 @@ public class ShippingMethodCommerceCheckoutStep
 	}
 
 	@Override
-	public boolean isOrder() {
-		return false;
-	}
-
-	@Override
-	public boolean isSennaDisabled() {
-		return false;
-	}
-
-	@Override
-	public boolean isVisible(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		return isActive(httpServletRequest, httpServletResponse);
-	}
-
-	@Override
 	public void processAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
@@ -188,14 +159,6 @@ public class ShippingMethodCommerceCheckoutStep
 		_jspRenderer.renderJSP(
 			httpServletRequest, httpServletResponse,
 			"/checkout_step/shipping_method.jsp");
-	}
-
-	@Override
-	public boolean showControls(
-		HttpServletRequest httpServletRequest,
-		HttpServletResponse httpServletResponse) {
-
-		return true;
 	}
 
 	protected double getShippingPrice(

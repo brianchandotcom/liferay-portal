@@ -17,19 +17,15 @@ package com.liferay.commerce.checkout.web.internal.util;
 import com.liferay.commerce.checkout.web.constants.CommerceCheckoutWebKeys;
 import com.liferay.commerce.checkout.web.internal.display.context.OrderConfirmationCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.internal.portlet.action.ActionHelper;
+import com.liferay.commerce.checkout.web.util.BaseCommerceCheckoutStep;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.service.CommerceOrderPaymentLocalService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
-
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -53,30 +49,13 @@ import org.osgi.service.component.annotations.Reference;
 	service = CommerceCheckoutStep.class
 )
 public class OrderConfirmationCommerceCheckoutStep
-	implements CommerceCheckoutStep {
+	extends BaseCommerceCheckoutStep {
 
 	public static final String NAME = "order-confirmation";
 
 	@Override
-	public String getLabel(Locale locale) {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", locale, getClass());
-
-		return LanguageUtil.get(resourceBundle, NAME);
-	}
-
-	@Override
 	public String getName() {
 		return NAME;
-	}
-
-	@Override
-	public boolean isActive(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
-		return true;
 	}
 
 	@Override
@@ -86,15 +65,6 @@ public class OrderConfirmationCommerceCheckoutStep
 
 	@Override
 	public boolean isSennaDisabled() {
-		return true;
-	}
-
-	@Override
-	public boolean isVisible(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse)
-		throws Exception {
-
 		return true;
 	}
 

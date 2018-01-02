@@ -16,6 +16,7 @@ package com.liferay.knowledge.base.internal.importer.util;
 
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.model.KBArticle;
@@ -25,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -47,8 +49,10 @@ public class KBArticleImporterUtil {
 		throws PortalException {
 
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
-			ConfigurationProviderUtil.getGroupConfiguration(
-				KBGroupServiceConfiguration.class, kbArticle.getGroupId());
+			ConfigurationProviderUtil.getConfiguration(
+				KBGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					kbArticle.getGroupId(), KBConstants.SERVICE_NAME));
 
 		try {
 			validateImageFileExtension(

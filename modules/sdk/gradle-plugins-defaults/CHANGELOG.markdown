@@ -2647,10 +2647,10 @@ sub-repositories.
 ### Changed
 - [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.76.
 
-## 5.2.31 - 2017-12-26
+## 5.2.31 - 2017-12-29
 
 ### Changed
-- [LPS-72868]: Update the [Liferay Gradle Plugins] dependency to version 3.5.77.
+- [LPS-76747]: Update the [Liferay Gradle Plugins] dependency to version 3.5.77.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -2949,6 +2949,7 @@ sub-repositories.
 [LPS-76326]: https://issues.liferay.com/browse/LPS-76326
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
+[LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LRDOCS-2594]: https://issues.liferay.com/browse/LRDOCS-2594
 [LRDOCS-2841]: https://issues.liferay.com/browse/LRDOCS-2841
 [LRDOCS-2981]: https://issues.liferay.com/browse/LRDOCS-2981

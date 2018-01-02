@@ -3,4 +3,6 @@
 
 <suppressions>
 	<suppress checks="Subname" files="modules/core/registry-api/src/main/java/com/liferay/registry/collections/internal/ServiceTrackerCollectionImpl\.java" />
+	<suppress checks="StringBundlerNaming" files="modules/core/petra/petra-io/src/main/java/com/liferay/petra/io/unsync/UnsyncStringWriter\.java" />
+	<suppress checks="StringBundlerNaming" files="modules/core/petra/petra-io/src/test/java/com/liferay/petra/io/unsync/UnsyncStringWriterTest\.java" />
 </suppressions>

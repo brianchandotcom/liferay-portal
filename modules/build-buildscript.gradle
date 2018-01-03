@@ -2,7 +2,7 @@ dependencies {
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.defaults", version: "5.2.33"
 	classpath group: "com.liferay", name: "com.liferay.gradle.plugins.maven.plugin.builder", version: "1.1.2"
 	classpath group: "de.undercouch", name: "gradle-download-task", version: "3.2.0"
-	classpath group: "org.ysb33r.gradletest", name: "org.ysb33r.gradletest.gradle.plugin", version: "1.1"
+	classpath group: "gradle.plugin.org.ysb33r.gradle", name: "gradletest", version: "1.1"
 	classpath group: "xalan", name: "xalan", version: "2.7.2"
 }
 

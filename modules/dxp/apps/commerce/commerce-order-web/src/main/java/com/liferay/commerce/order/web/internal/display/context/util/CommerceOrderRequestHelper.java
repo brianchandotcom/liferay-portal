@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,21 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.commerce.order.web.internal.display.context.util;
 
-<liferay-ui:error-header />
+import com.liferay.portal.kernel.display.context.util.BaseRequestHelper;
+import com.liferay.portal.kernel.util.PortalUtil;
 
-<liferay-ui:error exception="<%= NoSuchOrderException.class %>" message="the-order-could-not-be-found" />
-<liferay-ui:error exception="<%= NoSuchOrderNoteException.class %>" message="the-note-could-not-be-found" />
+import javax.portlet.RenderRequest;
 
-<liferay-ui:error-principal />
+/**
+ * @author Andrea Di Giorgi
+ */
+public class CommerceOrderRequestHelper extends BaseRequestHelper {
+
+	public CommerceOrderRequestHelper(RenderRequest renderRequest) {
+		super(PortalUtil.getHttpServletRequest(renderRequest));
+	}
+
+}

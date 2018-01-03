@@ -19,19 +19,13 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-CommerceOrder commerceOrder = null;
-
-if (row != null) {
-	commerceOrder = (CommerceOrder)row.getObject();
-}
-else {
-	commerceOrder = (CommerceOrder)request.getAttribute("info_panel.jsp-entry");
-}
+CommerceOrder commerceOrder = (CommerceOrder)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="editURL">
-		<portlet:param name="mvcRenderCommandName" value="viewCommerceOrderItems" />
+		<portlet:param name="mvcRenderCommandName" value="editCommerceOrder" />
+		<portlet:param name="redirect" value="<%= currentURL %>" />
 		<portlet:param name="commerceOrderId" value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>" />
 	</portlet:renderURL>
 

@@ -15,28 +15,22 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.exception.NoSuchOrderItemException;
-import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.util.CommercePriceCalculator;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.service.CommerceOrderItemService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
 	immediate = true,
@@ -48,14 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class EditCommerceOrderItemMVCActionCommand
 	extends BaseMVCActionCommand {
-
-	@Override
-	public boolean processAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws PortletException {
-
-		return super.processAction(actionRequest, actionResponse);
-	}
 
 	protected void deleteCommerceOrderItems(ActionRequest actionRequest)
 		throws Exception {
@@ -76,7 +62,7 @@ public class EditCommerceOrderItemMVCActionCommand
 		}
 
 		for (long deleteCommerceOrderItemId : deleteCommerceOrderItemIds) {
-			_commerceOrderItemLocalService.deleteCommerceOrderItem(
+			_commerceOrderItemService.deleteCommerceOrderItem(
 				deleteCommerceOrderItemId);
 		}
 	}
@@ -88,49 +74,12 @@ public class EditCommerceOrderItemMVCActionCommand
 
 		String cmd = ParamUtil.getString(actionRequest, Constants.CMD);
 
-		try {
-			if (cmd.equals(Constants.DELETE)) {
-				deleteCommerceOrderItems(actionRequest);
-			}
-			else if (cmd.equals(Constants.UPDATE)) {
-				updateCommerceOrderItem(actionRequest);
-			}
-		}
-		catch (Exception e) {
-			if (e instanceof NoSuchOrderItemException ||
-				e instanceof PrincipalException) {
-
-				SessionErrors.add(actionRequest, e.getClass());
-			}
-			else {
-				throw e;
-			}
+		if (cmd.equals(Constants.DELETE)) {
+			deleteCommerceOrderItems(actionRequest);
 		}
 	}
 
-	protected void updateCommerceOrderItem(ActionRequest actionRequest)
-		throws PortalException {
-
-		long commerceOrderItemId = ParamUtil.getLong(
-			actionRequest, "commerceOrderItemId");
-
-		int quantity = ParamUtil.getInteger(actionRequest, "quantity");
-
-		CommerceOrderItem commerceOrderItem =
-			_commerceOrderItemLocalService.fetchCommerceOrderItem(
-				commerceOrderItemId);
-
-		double price = _commercePriceCalculator.getPrice(
-			commerceOrderItem.getCPInstance(), quantity);
-
-		_commerceOrderItemLocalService.updateCommerceOrderItem(
-			commerceOrderItemId, quantity, commerceOrderItem.getJson(), price);
-	}
-
 	@Reference
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
-
-	@Reference
-	private CommercePriceCalculator _commercePriceCalculator;
+	private CommerceOrderItemService _commerceOrderItemService;
 
 }

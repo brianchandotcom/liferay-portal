@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,13 +11,24 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/init.jsp" %>
+package com.liferay.commerce.order.web.internal.search;
 
-<liferay-ui:error-header />
+import com.liferay.portal.kernel.dao.search.DAOParamUtil;
 
-<liferay-ui:error exception="<%= NoSuchOrderException.class %>" message="the-order-could-not-be-found" />
-<liferay-ui:error exception="<%= NoSuchOrderNoteException.class %>" message="the-note-could-not-be-found" />
+import javax.portlet.PortletRequest;
 
-<liferay-ui:error-principal />
+/**
+ * @author Andrea Di Giorgi
+ */
+public class CommerceOrderItemSearchTerms
+	extends CommerceOrderItemDisplayTerms {
+
+	public CommerceOrderItemSearchTerms(PortletRequest portletRequest) {
+		super(portletRequest);
+
+		sku = DAOParamUtil.getString(portletRequest, SKU);
+		title = DAOParamUtil.getString(portletRequest, TITLE);
+	}
+
+}

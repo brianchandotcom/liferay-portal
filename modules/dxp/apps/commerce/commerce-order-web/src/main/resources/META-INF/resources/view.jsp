@@ -17,110 +17,162 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-orders");
+CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
-CommerceOrderDisplayContext commerceOrderDisplayContext = (CommerceOrderDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
-
-SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderDisplayContext.getSearchContainer();
-
-String displayStyle = commerceOrderDisplayContext.getDisplayStyle();
-
-PortletURL portletURL = commerceOrderDisplayContext.getPortletURL();
-
-portletURL.setParameter("toolbarItem", toolbarItem);
-portletURL.setParameter("searchContainerId", "commerceOrders");
-
-request.setAttribute("view.jsp-portletURL", portletURL);
+SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListDisplayContext.getSearchContainer();
 %>
 
-<liferay-portlet:renderURL varImpl="viewCommerceOrdersURL">
-	<portlet:param name="toolbarItem" value="view-all-orders" />
-	<portlet:param name="jspPage" value="/view.jsp" />
-</liferay-portlet:renderURL>
+<aui:nav-bar cssClass="collapse-basic-search container-fluid" markupView="lexicon">
+	<aui:nav cssClass="navbar-nav">
 
-<liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchContainerId" value="commerceOrders" />
-</liferay-util:include>
+		<%
+		int status = commerceOrderListDisplayContext.getStatus();
+		Map<Integer, Long> statusCounts = commerceOrderListDisplayContext.getStatusCounts();
 
-<div id="<portlet:namespace />ordersContainer">
-	<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
-		<c:if test="<%= commerceOrderDisplayContext.isShowInfoPanel() %>">
-			<liferay-portlet:resourceURL
-				copyCurrentRenderParameters="<%= false %>"
-				id="commerceOrderInfoPanel"
-				var="sidebarPanelURL"
+		for (Map.Entry<Integer, Long> entry : statusCounts.entrySet()) {
+			int curStatus = entry.getKey();
+			long curCount = entry.getValue();
+
+			PortletURL statusURL = renderResponse.createRenderURL();
+
+			statusURL.setParameter("status", String.valueOf(curStatus));
+		%>
+
+			<aui:nav-item
+				href="<%= statusURL.toString() %>"
+				label="<%= commerceOrderListDisplayContext.getStatusLabel(curStatus, curCount) %>"
+				localizeLabel="<%= false %>"
+				selected="<%= curStatus == status %>"
+				title="<%= CommerceOrderConstants.getStatusLabel(curStatus) %>"
 			/>
 
-			<liferay-frontend:sidebar-panel
-				resourceURL="<%= sidebarPanelURL %>"
-				searchContainerId="commerceOrders"
+		<%
+		}
+		%>
+
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<liferay-portlet:renderURL varImpl="searchURL" />
+
+		<aui:form action="<%= searchURL %>" method="get" name="fm">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:search-form
+				page="/order_search.jsp"
+				servletContext="<%= application %>"
+			/>
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
+
+<liferay-frontend:management-bar
+	includeCheckBox="<%= true %>"
+	searchContainerId="commerceOrders"
+>
+	<liferay-frontend:management-bar-filters>
+		<liferay-frontend:management-bar-sort
+			orderByCol="<%= commerceOrderSearchContainer.getOrderByCol() %>"
+			orderByType="<%= commerceOrderSearchContainer.getOrderByType() %>"
+			orderColumns="<%= commerceOrderSearchContainer.getOrderableHeaders() %>"
+			portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
+		/>
+	</liferay-frontend:management-bar-filters>
+
+	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteCommerceOrders();" %>' icon="times" label="delete" />
+	</liferay-frontend:management-bar-action-buttons>
+</liferay-frontend:management-bar>
+
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		id="commerceOrders"
+		searchContainer="<%= commerceOrderSearchContainer %>"
+	>
+		<liferay-ui:search-container-row
+			className="com.liferay.commerce.model.CommerceOrder"
+			escapedModel="<%= true %>"
+			keyProperty="commerceOrderId"
+			modelVar="commerceOrder"
+		>
+
+			<%
+			User orderUser = commerceOrder.getOrderUser();
+
+			PortletURL rowURL = renderResponse.createRenderURL();
+
+			rowURL.setParameter("mvcRenderCommandName", "editCommerceOrder");
+			rowURL.setParameter("redirect", currentURL);
+			rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				href="<%= rowURL %>"
+				name="order-date"
 			>
-				<liferay-util:include page="/order_info_panel.jsp" servletContext="<%= application %>" />
-			</liferay-frontend:sidebar-panel>
-		</c:if>
-
-		<div class="sidenav-content">
-			<aui:form action="<%= portletURL.toString() %>" cssClass="container-fluid-1280" method="post" name="fm">
-				<aui:input name="<%= Constants.CMD %>" type="hidden" />
-				<aui:input name="redirect" type="hidden" value="<%= portletURL.toString() %>" />
-				<aui:input name="deleteCommerceOrderIds" type="hidden" />
-
-				<div class="orders-container" id="<portlet:namespace />entriesContainer">
-					<liferay-ui:search-container
-						id="commerceOrders"
-						iteratorURL="<%= portletURL %>"
-						searchContainer="<%= commerceOrderSearchContainer %>"
-					>
-						<liferay-ui:search-container-row
-							className="com.liferay.commerce.model.CommerceOrder"
-							cssClass="entry-display-style"
-							keyProperty="commerceOrderId"
-							modelVar="commerceOrder"
-						>
-
-							<%
-							PortletURL rowURL = renderResponse.createRenderURL();
-
-							rowURL.setParameter("mvcRenderCommandName", "viewCommerceOrderItems");
-							rowURL.setParameter("redirect", currentURL);
-							rowURL.setParameter("commerceOrderId", String.valueOf(commerceOrder.getCommerceOrderId()));
-							%>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								href="<%= rowURL %>"
-								name="order-number"
-								property="commerceOrderId"
-							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								name="user"
-								property="userName"
-							/>
-
-							<liferay-ui:search-container-column-text
-								cssClass="table-cell-content"
-								name="total"
-								value="<%= commerceOrderDisplayContext.getCommerceOrderTotal(commerceOrder.getCommerceOrderId()) %>"
-							/>
-
-							<liferay-ui:search-container-column-status
-								cssClass="table-cell-content"
-								name="status"
-								status="<%= commerceOrder.getStatus() %>"
-							/>
-
-							<liferay-ui:search-container-column-jsp
-								cssClass="entry-action-column"
-								path="/order_action.jsp"
-							/>
-						</liferay-ui:search-container-row>
-
-						<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" searchContainer="<%= commerceOrderSearchContainer %>" />
-					</liferay-ui:search-container>
+				<div class="order-date">
+					<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderDate(commerceOrder)) %>
 				</div>
-			</aui:form>
-		</div>
-	</div>
+
+				<div class="order-time">
+					<%= HtmlUtil.escape(commerceOrderListDisplayContext.getCommerceOrderTime(commerceOrder)) %>
+				</div>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="status"
+				value="<%= LanguageUtil.get(request, CommerceOrderConstants.getStatusLabel(commerceOrder.getStatus())) %>"
+			>
+
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="customer-name"
+			>
+				<div class="customer-name">
+					<%= HtmlUtil.escape(orderUser.getFullName()) %>
+				</div>
+
+				<div class="customer-id">
+					<%= commerceOrder.getOrderUserId() %>
+				</div>
+			</liferay-ui:search-container-column-text>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="order-id"
+				property="commerceOrderId"
+			/>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="order-value"
+				value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/order_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator markupView="lexicon" />
+	</liferay-ui:search-container>
 </div>
+
+<aui:script>
+	function <portlet:namespace />deleteCommerceOrders() {
+		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-orders") %>')) {
+			var form = AUI.$(document.<portlet:namespace />fm);
+
+			form.attr('method', 'post');
+			form.fm('<%= Constants.CMD %>').val('<%= Constants.DELETE %>');
+			form.fm('deleteCommerceOrderIds').val(Liferay.Util.listCheckedExcept(form, '<portlet:namespace />allRowIds'));
+
+			submitForm(form, '<portlet:actionURL name="editCommerceOrder" />');
+		}
+	}
+</aui:script>

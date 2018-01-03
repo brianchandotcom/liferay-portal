@@ -15,38 +15,32 @@
 package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
-import com.liferay.commerce.order.web.internal.display.context.CommerceOrderItemDisplayContext;
-import com.liferay.commerce.product.util.CPDefinitionHelper;
-import com.liferay.commerce.service.CommerceOrderItemLocalService;
-import com.liferay.commerce.util.CommercePriceFormatter;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.commerce.exception.NoSuchOrderNoteException;
+import com.liferay.commerce.order.web.internal.display.context.CommerceOrderNoteEditDisplayContext;
+import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(
-	immediate = true,
 	property = {
 		"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER,
-		"mvc.command.name=viewCommerceOrderItems"
+		"mvc.command.name=editCommerceOrderNote"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewCommerceOrderItemsMVCRenderCommand
-	implements MVCRenderCommand {
+public class EditCommerceOrderNoteMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
@@ -54,39 +48,32 @@ public class ViewCommerceOrderItemsMVCRenderCommand
 		throws PortletException {
 
 		try {
-			HttpServletRequest httpServletRequest =
-				_portal.getHttpServletRequest(renderRequest);
-
-			CommerceOrderItemDisplayContext commerceOrderItemDisplayContext =
-				new CommerceOrderItemDisplayContext(
-					_actionHelper, httpServletRequest,
-					_commerceOrderItemLocalService, _commercePriceFormatter,
-					_cpDefinitionHelper);
+			CommerceOrderNoteEditDisplayContext
+				commerceOrderNoteEditDisplayContext =
+					new CommerceOrderNoteEditDisplayContext(
+						_commerceOrderNoteService, renderRequest);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
-				commerceOrderItemDisplayContext);
+				commerceOrderNoteEditDisplayContext);
 		}
-		catch (PortalException pe) {
-			SessionErrors.add(renderRequest, pe.getClass());
+		catch (Exception e) {
+			if (e instanceof NoSuchOrderNoteException ||
+				e instanceof PrincipalException) {
+
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
 		}
 
-		return "/view_order_items.jsp";
+		return "/edit_order_note.jsp";
 	}
 
 	@Reference
-	private ActionHelper _actionHelper;
-
-	@Reference
-	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
-
-	@Reference
-	private CommercePriceFormatter _commercePriceFormatter;
-
-	@Reference
-	private CPDefinitionHelper _cpDefinitionHelper;
-
-	@Reference
-	private Portal _portal;
+	private CommerceOrderNoteService _commerceOrderNoteService;
 
 }

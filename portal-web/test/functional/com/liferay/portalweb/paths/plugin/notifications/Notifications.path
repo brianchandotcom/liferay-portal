@@ -174,7 +174,7 @@
 <!--REQUESTS-->
 <tr>
 	<td>REQUESTS_LIST_TAB</td>
-	<td>//a[@title='Requests List']</td>
+	<td>//a[contains(@title,'Requests List')]</td>
 	<td></td>
 </tr>
 </tbody>

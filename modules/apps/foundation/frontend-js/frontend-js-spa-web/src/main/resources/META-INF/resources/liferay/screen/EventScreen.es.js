@@ -1,9 +1,12 @@
 'use strict';
 
-import HtmlScreen from 'senna/src/screen/HtmlScreen';
 import globals from 'senna/src/globals/globals';
-import {CancellablePromise} from 'metal-promise/src/promise/Promise';
+import HtmlScreen from 'senna/src/screen/HtmlScreen';
 import Utils from '../util/Utils.es';
+import {enterDocument, exitDocument} from 'metal-dom';
+import {CancellablePromise} from 'metal-promise/src/promise/Promise';
+
+let lastLanguageId = themeDisplay.getLanguageId();
 
 class EventScreen extends HtmlScreen {
 	constructor() {
@@ -73,11 +76,32 @@ class EventScreen extends HtmlScreen {
 		);
 	}
 
+	clearPermanentStyles(surfaces) {
+		const permanentStylesInDoc = this.querySelectorAll_(HtmlScreen.selectors.stylesPermanent);
+		permanentStylesInDoc.forEach((resource) => exitDocument(resource));
+		HtmlScreen.permanentResourcesInDoc = {};
+	}
+
 	copyBodyAttributes() {
-		var virtualBody = this.virtualDocument.querySelector('body');
+		const virtualBody = this.virtualDocument.querySelector('body');
 
 		document.body.className = virtualBody.className;
 		document.body.onload = virtualBody.onload;
+	}
+
+	evaluateScripts(surfaces) {
+		return super.evaluateScripts(surfaces).then(() => {
+			const languageId = themeDisplay.getLanguageId();
+
+			if (languageId !== lastLanguageId) {
+				lastLanguageId = languageId;
+				this.clearPermanentStyles(surfaces);
+
+				const request = this.getRequest();
+				this.allocateVirtualDocumentForContent(request.responseText);
+				return this.evaluateStyles(surfaces);
+			}
+		});
 	}
 
 	flip(surfaces) {

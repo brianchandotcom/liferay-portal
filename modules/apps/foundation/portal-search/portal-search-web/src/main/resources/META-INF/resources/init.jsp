@@ -40,7 +40,6 @@ page import="com.liferay.portal.kernel.search.facet.collector.FacetCollector" %>
 page import="com.liferay.portal.kernel.search.facet.collector.TermCollector" %><%@
 page import="com.liferay.portal.kernel.search.facet.config.FacetConfiguration" %><%@
 page import="com.liferay.portal.kernel.search.highlight.HighlightUtil" %><%@
-page import="com.liferay.portal.kernel.search.suggest.KeywordsSuggestionHolder" %><%@
 page import="com.liferay.portal.kernel.security.permission.ResourceActionsUtil" %><%@
 page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.util.ArrayUtil" %><%@
@@ -67,6 +66,7 @@ page import="com.liferay.portal.search.web.internal.display.context.SearchDispla
 page import="com.liferay.portal.search.web.internal.display.context.SearchDisplayContextFactoryUtil" %><%@
 page import="com.liferay.portal.search.web.internal.facet.AssetEntriesSearchFacet" %><%@
 page import="com.liferay.portal.search.web.internal.result.display.context.SearchResultFieldDisplayContext" %><%@
+page import="com.liferay.portal.search.web.internal.search.suggest.KeywordsSuggestionHolder" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 

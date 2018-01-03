@@ -46,15 +46,16 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
 /**
  * @author Carlos Sierra Andrés
  */
-@Component(
-	immediate = true, service = OutputStreamContainerFactoryTracker.class
-)
-public class OutputStreamContainerFactoryTracker {
+@Component(immediate = true)
+public class OutputStreamContainerFactoryTrackerImpl
+	implements OutputStreamContainerFactoryTracker {
 
+	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory() {
 		return _outputStreamContainerFactory;
 	}
 
+	@Override
 	public OutputStreamContainerFactory getOutputStreamContainerFactory(
 		String outputStreamContainerFactoryName) {
 
@@ -71,10 +72,12 @@ public class OutputStreamContainerFactoryTracker {
 		return outputStreamContainerFactory;
 	}
 
+	@Override
 	public Set<String> getOutputStreamContainerFactoryNames() {
 		return _outputStreamContainerFactories.keySet();
 	}
 
+	@Override
 	public void runWithSwappedLog(Runnable runnable, String outputStreamHint) {
 		OutputStreamContainer outputStreamContainer =
 			_outputStreamContainerFactory.create(outputStreamHint);
@@ -84,6 +87,7 @@ public class OutputStreamContainerFactoryTracker {
 			outputStreamContainer.getOutputStream());
 	}
 
+	@Override
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamName, OutputStream outputStream) {
 
@@ -113,6 +117,7 @@ public class OutputStreamContainerFactoryTracker {
 		}
 	}
 
+	@Override
 	public void runWithSwappedLog(
 		Runnable runnable, String outputStreamHint,
 		String outputStreamContainerName) {

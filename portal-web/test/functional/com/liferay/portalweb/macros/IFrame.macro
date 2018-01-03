@@ -37,6 +37,10 @@
 		</if>
 	</command>
 
+	<command name="selectDialogFrame">
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+	</command>
+
 	<command name="selectEditAssetFrame">
 		<execute function="SelectFrame" locator1="IFrame#EDIT_ASSET" />
 	</command>

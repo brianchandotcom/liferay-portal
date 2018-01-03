@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.analysis.SimpleTokenizer;
 import com.liferay.portal.kernel.search.analysis.Tokenizer;
-import com.liferay.portal.kernel.search.suggest.BaseQuerySuggester;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
 import com.liferay.portal.kernel.search.suggest.WeightedWord;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
 import com.liferay.portal.search.solr.suggest.NGramQueryBuilder;
+import com.liferay.portal.search.suggest.BaseQuerySuggester;
 
 import java.util.ArrayList;
 import java.util.HashMap;

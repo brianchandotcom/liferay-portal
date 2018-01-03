@@ -16,7 +16,10 @@ package com.liferay.portal.kernel.search.suggest;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.portal.search.suggest.NullNGramHolderBuilder}
  */
+@Deprecated
 public class NullNGramHolderBuilder implements NGramHolderBuilder {
 
 	@Override

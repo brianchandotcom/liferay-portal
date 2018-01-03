@@ -23,7 +23,9 @@ import java.util.List;
 
 /**
  * @author David Mendez Gonzalez
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class TokenizerUtil {
 
 	public static Tokenizer getTokenizer() {

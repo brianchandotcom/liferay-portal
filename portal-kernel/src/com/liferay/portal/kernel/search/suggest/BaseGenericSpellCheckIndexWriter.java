@@ -34,7 +34,10 @@ import java.util.Set;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, moved to {@link
+ *             com.liferay.portal.search.suggest.BaseGenericSpellCheckIndexWriter}
  */
+@Deprecated
 public abstract class BaseGenericSpellCheckIndexWriter
 	extends BaseSpellCheckIndexWriter {
 

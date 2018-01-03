@@ -3,8 +3,6 @@ copyLibs {
 }
 
 dependencies {
-	provided group: "com.liferay", name: "com.liferay.exportimport.resources.importer", version: "1.1.0"
-
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.8"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api", version: "3.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.0.0"

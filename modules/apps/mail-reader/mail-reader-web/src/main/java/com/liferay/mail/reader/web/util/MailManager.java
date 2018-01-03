@@ -102,8 +102,7 @@ public class MailManager {
 		throws PortalException {
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), protocol);
+			Mailbox mailbox = MailboxFactoryUtil.getMailbox(_user, protocol);
 
 			Account account = mailbox.addAccount(
 				address, personalName, protocol, incomingHostName, incomingPort,
@@ -117,7 +116,7 @@ public class MailManager {
 			}
 
 			mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), account.getAccountId(),
+				_user, account,
 				_passwordRetriever.getPassword(account.getAccountId()));
 
 			mailbox.updateFolders();
@@ -156,7 +155,7 @@ public class MailManager {
 
 		try {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId,
+				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
 			mailbox.addFolder(displayName);
@@ -180,7 +179,7 @@ public class MailManager {
 
 		try {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId,
+				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
 			if (mailbox.hasNewMessages(folderId)) {
@@ -199,7 +198,7 @@ public class MailManager {
 	public JSONObject deleteAccount(long accountId) throws PortalException {
 		try {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId,
+				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
 			_passwordRetriever.removePassword(accountId);
@@ -223,7 +222,8 @@ public class MailManager {
 				attachmentId);
 
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), attachment.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(attachment.getAccountId()),
 				_passwordRetriever.getPassword(attachment.getAccountId()));
 
 			mailbox.deleteAttachment(attachmentId);
@@ -242,7 +242,8 @@ public class MailManager {
 			Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), folder.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(folder.getAccountId()),
 				_passwordRetriever.getPassword(folder.getAccountId()));
 
 			mailbox.deleteFolder(folderId);
@@ -288,7 +289,8 @@ public class MailManager {
 			}
 			else {
 				Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-					_user.getUserId(), message.getAccountId(),
+					_user,
+					AccountLocalServiceUtil.getAccount(message.getAccountId()),
 					_passwordRetriever.getPassword(message.getAccountId()));
 
 				mailbox.deleteMessages(message.getFolderId(), messageIds);
@@ -315,7 +317,8 @@ public class MailManager {
 			Message message = MessageLocalServiceUtil.getMessage(messageIds[0]);
 
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), message.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(message.getAccountId()),
 				_passwordRetriever.getPassword(message.getAccountId()));
 
 			mailbox.updateFlags(message.getFolderId(), messageIds, flag, value);
@@ -349,7 +352,8 @@ public class MailManager {
 			attachmentId);
 
 		Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-			_user.getUserId(), attachment.getAccountId(),
+			_user,
+			AccountLocalServiceUtil.getAccount(attachment.getAccountId()),
 			_passwordRetriever.getPassword(attachment.getAccountId()));
 
 		return mailbox.getAttachment(attachmentId);
@@ -468,7 +472,8 @@ public class MailManager {
 
 		if (Validator.isNull(message.getBody())) {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), message.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(message.getAccountId()),
 				_passwordRetriever.getPassword(message.getAccountId()));
 
 			mailbox.synchronizeMessage(message.getMessageId());
@@ -514,7 +519,8 @@ public class MailManager {
 
 		if (folderId != 0) {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), folder.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(folder.getAccountId()),
 				_passwordRetriever.getPassword(folder.getAccountId()));
 
 			return mailbox.getMessagesDisplay(
@@ -572,7 +578,8 @@ public class MailManager {
 			Message message = MessageLocalServiceUtil.getMessage(messageIds[0]);
 
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), message.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(message.getAccountId()),
 				_passwordRetriever.getPassword(message.getAccountId()));
 
 			mailbox.moveMessages(folderId, messageIds);
@@ -598,7 +605,8 @@ public class MailManager {
 
 		try {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), folder.getAccountId(),
+				_user,
+				AccountLocalServiceUtil.getAccount(folder.getAccountId()),
 				_passwordRetriever.getPassword(folder.getAccountId()));
 
 			mailbox.renameFolder(folderId, displayName);
@@ -628,7 +636,7 @@ public class MailManager {
 
 		try {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId,
+				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
 			Message message = mailbox.saveDraft(
@@ -664,7 +672,7 @@ public class MailManager {
 
 		try {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId,
+				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
 			Message message = mailbox.saveDraft(
@@ -710,7 +718,7 @@ public class MailManager {
 
 		if (!account.isSavePassword()) {
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId,
+				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
 			try {
@@ -795,7 +803,7 @@ public class MailManager {
 			}
 
 			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-				_user.getUserId(), accountId, password);
+				_user, AccountLocalServiceUtil.getAccount(accountId), password);
 
 			mailbox.updateAccount(
 				accountId, personalName, password, savePassword, signature,

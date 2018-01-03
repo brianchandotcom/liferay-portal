@@ -49,7 +49,7 @@ public class UserModelListener extends BaseModelListener<User> {
 
 			for (Account account : accounts) {
 				Mailbox mailbox = MailboxFactoryUtil.getMailbox(
-					user.getUserId(), account.getAccountId(), StringPool.BLANK);
+					user, account, StringPool.BLANK);
 
 				mailbox.deleteAccount();
 			}

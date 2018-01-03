@@ -16,7 +16,6 @@ package com.liferay.mail.reader.mailbox;
 
 import com.liferay.mail.reader.constants.MailPortletKeys;
 import com.liferay.mail.reader.model.Account;
-import com.liferay.mail.reader.service.AccountLocalService;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
@@ -24,7 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,6 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Scott Lee
@@ -47,11 +44,8 @@ import org.osgi.service.component.annotations.Reference;
 public class MailboxFactoryUtil {
 
 	public static Mailbox getMailbox(
-			long userId, long accountId, String password)
+			User user, Account account, String password)
 		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
-		Account account = _accountLocalService.getAccount(accountId);
 
 		MailboxFactory mailboxFactory = _mailboxFactories.getService(
 			account.getProtocol());
@@ -64,10 +58,8 @@ public class MailboxFactoryUtil {
 		return mailboxFactory.getMailbox(user, account, password);
 	}
 
-	public static Mailbox getMailbox(long userId, String protocol)
+	public static Mailbox getMailbox(User user, String protocol)
 		throws PortalException {
-
-		User user = _userLocalService.getUser(userId);
 
 		MailboxFactory mailboxFactory = _mailboxFactories.getService(protocol);
 
@@ -90,25 +82,11 @@ public class MailboxFactoryUtil {
 		return mailboxFactories;
 	}
 
-	@Reference(unbind = "-")
-	protected void setAccountLocalService(
-		AccountLocalService accountLocalService) {
-
-		_accountLocalService = accountLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setUserLocalService(UserLocalService userLocalService) {
-		_userLocalService = userLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		MailboxFactoryUtil.class);
 
-	private static AccountLocalService _accountLocalService;
 	private static final ServiceTrackerMap<String, MailboxFactory>
 		_mailboxFactories;
-	private static UserLocalService _userLocalService;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(MailboxFactoryUtil.class);

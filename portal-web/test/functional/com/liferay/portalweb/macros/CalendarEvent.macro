@@ -973,6 +973,7 @@
 		<var method="DateUtil#getCurrentHour()" name="currentHour" />
 
 		<echo> The current day is: ${currentDay} </echo>
+
 		<echo> The current hour is: ${currentHour} </echo>
 
 		<if>

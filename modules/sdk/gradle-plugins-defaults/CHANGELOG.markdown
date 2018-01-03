@@ -2674,6 +2674,11 @@ when applied.
 - [LPS-74904]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
 1.0.1.
 
+## 5.2.34 - 2018-01-03
+
+### Fixed
+- [LPS-76623]: Fix Maven coordinates of the [Gradle License Report] dependency.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -2972,6 +2977,7 @@ when applied.
 [LPS-76256]: https://issues.liferay.com/browse/LPS-76256
 [LPS-76326]: https://issues.liferay.com/browse/LPS-76326
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
+[LPS-76623]: https://issues.liferay.com/browse/LPS-76623
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
 [LPS-76644]: https://issues.liferay.com/browse/LPS-76644
 [LPS-76747]: https://issues.liferay.com/browse/LPS-76747

@@ -34,6 +34,16 @@ public class BlogsEntryLocalServiceWrapper implements BlogsEntryLocalService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.repository.model.FileEntry addAttachmentFileEntry(
+		com.liferay.blogs.model.BlogsEntry blogsEntry, long userId,
+		java.lang.String fileName, java.lang.String mimeType,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _blogsEntryLocalService.addAttachmentFileEntry(blogsEntry,
+			userId, fileName, mimeType, is);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

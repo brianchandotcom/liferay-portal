@@ -19,8 +19,6 @@ package com.liferay.user.associated.data.entity;
  */
 public interface UADEntity {
 
-	public String getEditURL();
-
 	public String getUADEntityId();
 
 	public String getUADRegistryKey();

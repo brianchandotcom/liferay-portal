@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.exporter;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 /**
@@ -24,8 +25,8 @@ import com.liferay.user.associated.data.entity.UADEntity;
 @ProviderType
 public interface UADEntityExporter {
 
-	public void export(UADEntity uadEntity);
+	public void export(UADEntity uadEntity) throws PortalException;
 
-	public void exportAll(long userId);
+	public void exportAll(long userId) throws PortalException;
 
 }

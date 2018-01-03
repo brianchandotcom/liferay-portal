@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.exporter;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
@@ -24,10 +25,10 @@ import java.util.List;
 public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
-	public abstract void export(UADEntity uadEntity);
+	public abstract void export(UADEntity uadEntity) throws PortalException;
 
 	@Override
-	public void exportAll(long userId) {
+	public void exportAll(long userId) throws PortalException {
 		for (UADEntity uadEntity : getUADEntities(userId)) {
 			export(uadEntity);
 		}

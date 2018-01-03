@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.ntlm.constants;
+package com.liferay.portal.security.sso.ntlm.internal.constants;
 
 /**
  * @author Michael C. Han

@@ -142,7 +142,7 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _blogsEntryFolderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -153,10 +153,11 @@ public class BlogsEntryTrashHandler extends BaseTrashHandler {
 		_blogsEntryLocalService = blogsEntryLocalService;
 	}
 
-	private BlogsEntryLocalService _blogsEntryLocalService;
-
 	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private ModelResourcePermission<BlogsEntry> _entryModelResourcePermission;
+	private ModelResourcePermission<BlogsEntry>
+		_blogsEntryFolderModelResourcePermission;
+
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
 	@Reference
 	private Portal _portal;

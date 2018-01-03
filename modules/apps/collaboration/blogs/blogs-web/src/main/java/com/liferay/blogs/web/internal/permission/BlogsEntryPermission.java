@@ -33,7 +33,7 @@ public class BlogsEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _blogsEntryFolderModelResourcePermission.contains(
 			permissionChecker, entry, actionId);
 	}
 
@@ -41,7 +41,7 @@ public class BlogsEntryPermission {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _blogsEntryFolderModelResourcePermission.contains(
 			permissionChecker, entryId, actionId);
 	}
 
@@ -52,10 +52,10 @@ public class BlogsEntryPermission {
 	protected void setEntryModelPermission(
 		ModelResourcePermission<BlogsEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_blogsEntryFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<BlogsEntry>
-		_entryModelResourcePermission;
+		_blogsEntryFolderModelResourcePermission;
 
 }

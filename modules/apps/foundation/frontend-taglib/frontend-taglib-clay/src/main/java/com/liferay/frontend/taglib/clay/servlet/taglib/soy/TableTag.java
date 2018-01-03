@@ -24,10 +24,10 @@ import java.util.Map;
 /**
  * @author Chema Balsas
  */
-public class ButtonTag extends BaseClayTag {
+public class TableTag extends BaseClayTag {
 
-	public ButtonTag() {
-		super("button", "ClayButton");
+	public TableTag() {
+		super("table", "ClayTable", true);
 	}
 
 	@Override
@@ -46,40 +46,28 @@ public class ButtonTag extends BaseClayTag {
 		return super.doStartTag();
 	}
 
-	public void setAriaLabel(String ariaLabel) {
-		putValue("ariaLabel", ariaLabel);
-	}
-
-	public void setBlock(Boolean block) {
-		putValue("block", block);
-	}
-
-	public void setDisabled(Boolean disabled) {
-		putValue("disabled", disabled);
-	}
-
-	public void setIcon(String icon) {
-		putValue("icon", icon);
-	}
-
-	public void setIconAlignment(String iconAlignment) {
-		putValue("iconAlignment", iconAlignment);
+	public void setElementClasses(String elementClasses) {
+		putValue("elementClasses", elementClasses);
 	}
 
 	public void setId(String id) {
 		putValue("id", id);
 	}
 
-	public void setLabel(String label) {
-		putValue("label", label);
+	public void setItems(Object items) {
+		putValue("items", items);
 	}
 
-	public void setMonospaced(Boolean monospaced) {
-		putValue("monospaced", monospaced);
+	public void setSchema(Object schema) {
+		putValue("schema", schema);
 	}
 
-	public void setName(String name) {
-		putValue("name", name);
+	public void setSelectable(Boolean selectable) {
+		putValue("selectable", selectable);
+	}
+
+	public void setShowActionsMenu(Boolean showActionsMenu) {
+		putValue("showActionsMenu", showActionsMenu);
 	}
 
 	public void setSize(String size) {
@@ -88,18 +76,6 @@ public class ButtonTag extends BaseClayTag {
 
 	public void setSpritemap(String spritemap) {
 		putValue("spritemap", spritemap);
-	}
-
-	public void setStyle(String style) {
-		putValue("style", style);
-	}
-
-	public void setType(String type) {
-		putValue("type", type);
-	}
-
-	public void setValue(String value) {
-		putValue("value", value);
 	}
 
 }

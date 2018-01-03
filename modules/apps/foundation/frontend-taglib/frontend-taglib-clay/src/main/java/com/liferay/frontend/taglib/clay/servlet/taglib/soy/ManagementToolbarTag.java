@@ -24,10 +24,10 @@ import java.util.Map;
 /**
  * @author Chema Balsas
  */
-public class ButtonTag extends BaseClayTag {
+public class ManagementToolbarTag extends BaseClayTag {
 
-	public ButtonTag() {
-		super("button", "ClayButton");
+	public ManagementToolbarTag() {
+		super("management-toolbar", "ClayManagementToolbar", true);
 	}
 
 	@Override
@@ -46,60 +46,44 @@ public class ButtonTag extends BaseClayTag {
 		return super.doStartTag();
 	}
 
-	public void setAriaLabel(String ariaLabel) {
-		putValue("ariaLabel", ariaLabel);
+	public void setActionItems(Object actionItems) {
+		putValue("actionItems", actionItems);
 	}
 
-	public void setBlock(Boolean block) {
-		putValue("block", block);
+	public void setElementClasses(String elementClasses) {
+		putValue("elementClasses", elementClasses);
 	}
 
-	public void setDisabled(Boolean disabled) {
-		putValue("disabled", disabled);
-	}
-
-	public void setIcon(String icon) {
-		putValue("icon", icon);
-	}
-
-	public void setIconAlignment(String iconAlignment) {
-		putValue("iconAlignment", iconAlignment);
+	public void setFilterItems(Object filterItems) {
+		putValue("filterItems", filterItems);
 	}
 
 	public void setId(String id) {
 		putValue("id", id);
 	}
 
-	public void setLabel(String label) {
-		putValue("label", label);
+	public void setSelectable(Boolean selectable) {
+		putValue("selectable", selectable);
 	}
 
-	public void setMonospaced(Boolean monospaced) {
-		putValue("monospaced", monospaced);
+	public void setSelectedItems(int selectedItems) {
+		putValue("selectedItems", selectedItems);
 	}
 
-	public void setName(String name) {
-		putValue("name", name);
-	}
-
-	public void setSize(String size) {
-		putValue("size", size);
+	public void setSortingOrder(String sortingOrder) {
+		putValue("sortingOrder", sortingOrder);
 	}
 
 	public void setSpritemap(String spritemap) {
 		putValue("spritemap", spritemap);
 	}
 
-	public void setStyle(String style) {
-		putValue("style", style);
+	public void setTotalItems(int totalItems) {
+		putValue("totalItems", totalItems);
 	}
 
-	public void setType(String type) {
-		putValue("type", type);
-	}
-
-	public void setValue(String value) {
-		putValue("value", value);
+	public void setViewTypes(Object viewTypes) {
+		putValue("viewTypes", viewTypes);
 	}
 
 }

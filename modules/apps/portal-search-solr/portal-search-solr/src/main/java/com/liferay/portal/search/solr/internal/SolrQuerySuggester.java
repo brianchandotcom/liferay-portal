@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.analysis.SimpleTokenizer;
 import com.liferay.portal.kernel.search.analysis.Tokenizer;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
@@ -232,14 +231,6 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		return ArrayUtil.append(groupIds, _GLOBAL_GROUP_ID);
 	}
 
-	protected Tokenizer getTokenizer() {
-		if (tokenizer != null) {
-			return tokenizer;
-		}
-
-		return _defaultTokenizer;
-	}
-
 	@Reference(unbind = "-")
 	protected void setNGramQueryBuilder(NGramQueryBuilder nGramQueryBuilder) {
 		_nGramQueryBuilder = nGramQueryBuilder;
@@ -373,13 +364,6 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 		_stringDistance = new LevensteinDistance();
 	}
 
-	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
-		policy = ReferencePolicy.DYNAMIC,
-		policyOption = ReferencePolicyOption.GREEDY
-	)
-	protected volatile Tokenizer tokenizer;
-
 	private static final long _GLOBAL_GROUP_ID = 0;
 
 	private static final float _INFINITE_WEIGHT = 100F;
@@ -388,8 +372,6 @@ public class SolrQuerySuggester extends BaseQuerySuggester {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		SolrQuerySuggester.class);
-
-	private static final Tokenizer _defaultTokenizer = new SimpleTokenizer();
 
 	private double _distanceThreshold;
 	private NGramQueryBuilder _nGramQueryBuilder;

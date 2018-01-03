@@ -94,14 +94,23 @@ public class DefaultTextExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		content = replaceExportDLReferences(
-			portletDataContext, stagedModel, content, exportReferencedContent);
+		content =
+			_dlReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, stagedModel, content,
+					exportReferencedContent, escapeContent);
 
-		content = replaceExportLayoutReferences(
-			portletDataContext, stagedModel, content);
+		content =
+			_layoutReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, stagedModel, content,
+					exportReferencedContent, escapeContent);
 
-		content = replaceExportLinksToLayouts(
-			portletDataContext, stagedModel, content);
+		content =
+			_linksToLayoutsExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, stagedModel, content,
+					exportReferencedContent, escapeContent);
 
 		if (escapeContent) {
 			content = StringUtil.replace(
@@ -117,11 +126,19 @@ public class DefaultTextExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		content = replaceImportDLReferences(
-			portletDataContext, stagedModel, content);
+		content =
+			_dlReferencesExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, stagedModel, content);
 
-		content = replaceImportLayoutReferences(portletDataContext, content);
-		content = replaceImportLinksToLayouts(portletDataContext, content);
+		content =
+			_layoutReferencesExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, stagedModel, content);
+		content =
+			_linksToLayoutsExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, stagedModel, content);
 
 		return content;
 	}
@@ -130,9 +147,12 @@ public class DefaultTextExportImportContentProcessor
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
 
-		validateDLReferences(groupId, content);
-		validateLayoutReferences(groupId, content);
-		validateLinksToLayoutsReferences(content);
+		_dlReferencesExportImportContentProcessor.validateContentReferences(
+			groupId, content);
+		_layoutReferencesExportImportContentProcessor.validateContentReferences(
+			groupId, content);
+		_linksToLayoutsExportImportContentProcessor.validateContentReferences(
+			groupId, content);
 	}
 
 	@Activate
@@ -1666,6 +1686,10 @@ public class DefaultTextExportImportContentProcessor
 	@Reference
 	private DLFileEntryLocalService _dlFileEntryLocalService;
 
+	@Reference(target = "(content.processor.type=DLReferences)")
+	private ExportImportContentProcessor<String>
+		_dlReferencesExportImportContentProcessor;
+
 	private ExportImportServiceConfiguration _exportImportServiceConfiguration;
 
 	@Reference
@@ -1679,6 +1703,14 @@ public class DefaultTextExportImportContentProcessor
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference(target = "(content.processor.type=LayoutReferences)")
+	private ExportImportContentProcessor<String>
+		_layoutReferencesExportImportContentProcessor;
+
+	@Reference(target = "(content.processor.type=LinksToLayouts)")
+	private ExportImportContentProcessor<String>
+		_linksToLayoutsExportImportContentProcessor;
 
 	@Reference
 	private Portal _portal;

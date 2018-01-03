@@ -53,12 +53,12 @@ public class BlogsEntryPermissionRegistrar {
 			ModelResourcePermissionFactory.create(
 				BlogsEntry.class, BlogsEntry::getEntryId,
 				_blogsEntryLocalService::getEntry, _portletResourcePermission,
-				(modelResourcePermission, logicConsumer) -> {
-					logicConsumer.accept(
+				(modelResourcePermission, consumer) -> {
+					consumer.accept(
 						new StagedModelPermissionLogic<>(
 							_stagingPermission, BlogsPortletKeys.BLOGS,
 							BlogsEntry::getEntryId));
-					logicConsumer.accept(
+					consumer.accept(
 						new WorkflowedModelPermissionLogic<>(
 							_workflowPermission, modelResourcePermission,
 							BlogsEntry::getEntryId));

@@ -83,7 +83,8 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 
 				_escapedModel = createProxy(
 					(com.liferay.portal.security.audit.storage.model.AuditEvent)
-						escapedAuditEvent, true);
+						escapedAuditEvent,
+					true);
 			}
 
 			return _escapedModel;
@@ -99,7 +100,8 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 
 				_escapedModel = createProxy(
 					(com.liferay.portal.security.audit.storage.model.AuditEvent)
-						unescapedAuditEvent, false);
+						unescapedAuditEvent,
+					false);
 			}
 
 			return _escapedModel;

@@ -401,16 +401,16 @@ public class SPIDefinitionLocalServiceImpl
 
 		taskContextMap.put("spiDefinitionId", spiDefinitionId);
 
-		StringBundler taskName = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		taskName.append("stop_");
-		taskName.append(spiDefinition.getName());
-		taskName.append("_");
-		taskName.append(System.currentTimeMillis());
+		sb.append("stop_");
+		sb.append(spiDefinition.getName());
+		sb.append("_");
+		sb.append(System.currentTimeMillis());
 
 		BackgroundTask backgroundTask =
 			BackgroundTaskManagerUtil.addBackgroundTask(
-				userId, 0, taskName.toString(),
+				userId, 0, sb.toString(),
 				new String[] {ServletContextUtil.getServletContextName()},
 				StopSPIBackgroundTaskExecutor.class, taskContextMap,
 				new ServiceContext());

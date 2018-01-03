@@ -140,6 +140,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 
 		newSiteNavigationMenuItem.setType(RandomTestUtil.randomString());
 
+		newSiteNavigationMenuItem.setOrder(RandomTestUtil.nextInt());
+
 		newSiteNavigationMenuItem.setTypeSettings(RandomTestUtil.randomString());
 
 		_siteNavigationMenuItems.add(_persistence.update(
@@ -169,6 +171,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 			newSiteNavigationMenuItem.getParentSiteNavigationMenuItemId());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getType(),
 			newSiteNavigationMenuItem.getType());
+		Assert.assertEquals(existingSiteNavigationMenuItem.getOrder(),
+			newSiteNavigationMenuItem.getOrder());
 		Assert.assertEquals(existingSiteNavigationMenuItem.getTypeSettings(),
 			newSiteNavigationMenuItem.getTypeSettings());
 	}
@@ -224,7 +228,7 @@ public class SiteNavigationMenuItemPersistenceTest {
 			"siteNavigationMenuItemId", true, "groupId", true, "companyId",
 			true, "userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "siteNavigationMenuId", true,
-			"parentSiteNavigationMenuItemId", true, "type", true);
+			"parentSiteNavigationMenuItemId", true, "type", true, "order", true);
 	}
 
 	@Test
@@ -455,6 +459,8 @@ public class SiteNavigationMenuItemPersistenceTest {
 		siteNavigationMenuItem.setParentSiteNavigationMenuItemId(RandomTestUtil.nextLong());
 
 		siteNavigationMenuItem.setType(RandomTestUtil.randomString());
+
+		siteNavigationMenuItem.setOrder(RandomTestUtil.nextInt());
 
 		siteNavigationMenuItem.setTypeSettings(RandomTestUtil.randomString());
 

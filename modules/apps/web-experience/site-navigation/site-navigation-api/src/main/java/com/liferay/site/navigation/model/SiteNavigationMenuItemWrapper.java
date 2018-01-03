@@ -70,6 +70,7 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 		attributes.put("parentSiteNavigationMenuItemId",
 			getParentSiteNavigationMenuItemId());
 		attributes.put("type", getType());
+		attributes.put("order", getOrder());
 		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
@@ -139,6 +140,12 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 			setType(type);
 		}
 
+		Integer order = (Integer)attributes.get("order");
+
+		if (order != null) {
+			setOrder(order);
+		}
+
 		String typeSettings = (String)attributes.get("typeSettings");
 
 		if (typeSettings != null) {
@@ -199,6 +206,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public Date getModifiedDate() {
 		return _siteNavigationMenuItem.getModifiedDate();
+	}
+
+	/**
+	* Returns the order of this site navigation menu item.
+	*
+	* @return the order of this site navigation menu item
+	*/
+	@Override
+	public int getOrder() {
+		return _siteNavigationMenuItem.getOrder();
 	}
 
 	/**
@@ -385,6 +402,16 @@ public class SiteNavigationMenuItemWrapper implements SiteNavigationMenuItem,
 	@Override
 	public void setNew(boolean n) {
 		_siteNavigationMenuItem.setNew(n);
+	}
+
+	/**
+	* Sets the order of this site navigation menu item.
+	*
+	* @param order the order of this site navigation menu item
+	*/
+	@Override
+	public void setOrder(int order) {
+		_siteNavigationMenuItem.setOrder(order);
 	}
 
 	/**

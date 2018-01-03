@@ -37,6 +37,18 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
 		long userId, long groupId, long siteNavigationMenuId,
+		long parentSiteNavigationMenuItemId, java.lang.String type, int order,
+		java.lang.String typeSettings,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(userId,
+			groupId, siteNavigationMenuId, parentSiteNavigationMenuItemId,
+			type, order, typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenuItem addSiteNavigationMenuItem(
+		long userId, long groupId, long siteNavigationMenuId,
 		long parentSiteNavigationMenuItemId, java.lang.String type,
 		java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
@@ -294,24 +306,20 @@ public class SiteNavigationMenuItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
-		long userId, long siteNavigationMenuItemId,
-		long parentSiteNavigationMenuItemId,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(userId,
-			siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-			serviceContext);
+		long siteNavigationMenuItemId, long parentSiteNavigationMenuItemId,
+		int order) throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(siteNavigationMenuItemId,
+			parentSiteNavigationMenuItemId, order);
 	}
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenuItem updateSiteNavigationMenuItem(
 		long userId, long siteNavigationMenuItemId,
-		long parentSiteNavigationMenuItemId, java.lang.String typeSettings,
+		java.lang.String typeSettings,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuItemLocalService.updateSiteNavigationMenuItem(userId,
-			siteNavigationMenuItemId, parentSiteNavigationMenuItemId,
-			typeSettings, serviceContext);
+			siteNavigationMenuItemId, typeSettings, serviceContext);
 	}
 
 	/**

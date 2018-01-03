@@ -76,6 +76,8 @@ public interface Build {
 
 	public String getInvocationURL();
 
+	public Long getInvokedTime();
+
 	public String getJDK();
 
 	public JenkinsMaster getJenkinsMaster();

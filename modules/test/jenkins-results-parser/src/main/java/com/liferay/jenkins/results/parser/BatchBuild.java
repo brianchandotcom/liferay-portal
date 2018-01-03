@@ -16,9 +16,13 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -132,6 +136,70 @@ public class BatchBuild extends BaseBuild {
 		}
 
 		return messageElement;
+	}
+
+	@Override
+	public Long getInvokedTime() {
+		if (invokedTime != null) {
+			return invokedTime;
+		}
+
+		String escapedJobName = getJobName();
+
+		escapedJobName = escapedJobName.replace("(", "\\(");
+
+		escapedJobName = escapedJobName.replace(")", "\\)");
+
+		String invokedTimePatternString = JenkinsResultsParserUtil.combine(
+			"\\s*\\[echo\\]\\s*", escapedJobName, "/", getJobVariant(),
+			"\\s*invoked time: (?<invokedTime>[^\\n]*)");
+
+		Pattern buildInvokedTimestampPattern = Pattern.compile(
+			invokedTimePatternString);
+
+		Build parentBuild = getParentBuild();
+
+		String parentConsoleText = parentBuild.getConsoleText();
+
+		for (String line : parentConsoleText.split("\n")) {
+			Matcher matcher = buildInvokedTimestampPattern.matcher(line);
+
+			if (!matcher.find()) {
+				continue;
+			}
+
+			Properties buildProperties = null;
+
+			try {
+				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+			}
+			catch (IOException ioe) {
+				throw new RuntimeException("Unable to get build properties");
+			}
+
+			SimpleDateFormat sdf = new SimpleDateFormat(
+				buildProperties.getProperty("jenkins.report.date.format"));
+
+			Date date = null;
+
+			try {
+				date = sdf.parse(matcher.group("invokedTime"));
+			}
+			catch (ParseException pe) {
+				throw new RuntimeException("Unable to get invoked time", pe);
+			}
+
+			invokedTime = date.getTime();
+
+			break;
+		}
+
+		if (invokedTime != null) {
+			return invokedTime;
+		}
+		else {
+			return getStartTime();
+		}
 	}
 
 	@Override

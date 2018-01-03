@@ -557,6 +557,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Long getInvokedTime() {
+		if (invokedTime != null) {
+			return invokedTime;
+		}
+
+		invokedTime = getStartTime();
+
+		return invokedTime;
+	}
+
+	@Override
 	public String getJDK() {
 		return null;
 	}

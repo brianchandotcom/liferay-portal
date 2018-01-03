@@ -18,6 +18,8 @@ import com.liferay.exportimport.content.processor.ExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -45,10 +47,24 @@ public class CalendarNotificationTemplateExportImportContentProcessor
 			boolean escapeContent)
 		throws Exception {
 
-		return _defaultTextExportImportContentProcessor.
-			replaceExportContentReferences(
-				portletDataContext, stagedModel, content,
-				exportReferencedContent, escapeContent);
+		content =
+			_dlReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, stagedModel, content,
+					exportReferencedContent, escapeContent);
+
+		content =
+			_layoutReferencesExportImportContentProcessor.
+				replaceExportContentReferences(
+					portletDataContext, stagedModel, content,
+					exportReferencedContent, escapeContent);
+
+		if (escapeContent) {
+			content = StringUtil.replace(
+				content, StringPool.AMPERSAND_ENCODED, StringPool.AMPERSAND);
+		}
+
+		return content;
 	}
 
 	@Override
@@ -57,21 +73,35 @@ public class CalendarNotificationTemplateExportImportContentProcessor
 			String content)
 		throws Exception {
 
-		return _defaultTextExportImportContentProcessor.
-			replaceImportContentReferences(
-				portletDataContext, stagedModel, content);
+		content =
+			_dlReferencesExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, stagedModel, content);
+
+		content =
+			_layoutReferencesExportImportContentProcessor.
+				replaceImportContentReferences(
+					portletDataContext, stagedModel, content);
+
+		return content;
 	}
 
 	@Override
 	public void validateContentReferences(long groupId, String content)
 		throws PortalException {
 
-		_defaultTextExportImportContentProcessor.validateContentReferences(
+		_dlReferencesExportImportContentProcessor.validateContentReferences(
+			groupId, content);
+		_layoutReferencesExportImportContentProcessor.validateContentReferences(
 			groupId, content);
 	}
 
-	@Reference(target = "(model.class.name=java.lang.String)")
+	@Reference(target = "(content.processor.type=DLReferences)")
 	private ExportImportContentProcessor<String>
-		_defaultTextExportImportContentProcessor;
+		_dlReferencesExportImportContentProcessor;
+
+	@Reference(target = "(content.processor.type=LayoutReferences)")
+	private ExportImportContentProcessor<String>
+		_layoutReferencesExportImportContentProcessor;
 
 }

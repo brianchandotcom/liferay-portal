@@ -79,7 +79,7 @@ public class CommerceOrderContentDisplayContext
 		List<CommerceOrder> results =
 			commerceOrderLocalService.getCommerceOrders(
 				themeDisplay.getScopeGroupId(), _searchContainer.getStart(),
-				_searchContainer.getEnd());
+				_searchContainer.getEnd(), null);
 
 		_searchContainer.setResults(results);
 

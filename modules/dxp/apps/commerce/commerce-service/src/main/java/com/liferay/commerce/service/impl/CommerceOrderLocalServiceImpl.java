@@ -212,14 +212,6 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end) {
-
-		return commerceOrderLocalService.getCommerceOrders(
-			groupId, start, end, null);
-	}
-
-	@Override
-	public List<CommerceOrder> getCommerceOrders(
 		long groupId, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
 

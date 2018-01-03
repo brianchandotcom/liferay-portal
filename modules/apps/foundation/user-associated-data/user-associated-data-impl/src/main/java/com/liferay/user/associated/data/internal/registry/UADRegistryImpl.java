@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.user.associated.data.internal;
+package com.liferay.user.associated.data.internal.registry;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;

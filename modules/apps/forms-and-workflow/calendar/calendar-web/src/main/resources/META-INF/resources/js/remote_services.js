@@ -367,6 +367,7 @@ AUI.add(
 
 					var url = Liferay.PortletURL.createResourceURL();
 
+					url.setDoAsUserId(Liferay.ThemeDisplay.getDoAsUserIdEncoded());
 					url.setParameters(params.queryParameters);
 					url.setPortletId(instance.ID);
 					url.setResourceId(params.resourceId);

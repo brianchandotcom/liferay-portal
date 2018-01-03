@@ -437,8 +437,6 @@ public class CSSBuilder implements AutoCloseable {
 			}
 		}
 
-		System.out.println(portalCommonCssDirPath);
-
 		return portalCommonCssDirPath.toFile();
 	}
 

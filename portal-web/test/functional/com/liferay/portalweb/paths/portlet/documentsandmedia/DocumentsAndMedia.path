@@ -81,7 +81,7 @@
 </tr>
 <tr>
 	<td>ICON_DOCUMENT_ICON_LOCKED</td>
-	<td>//div[contains(@id,'entriesContainer')]//li[contains(@data-title,'${key_dmDocumentTitle}')]//a[span/*[name()='svg'][@message='locked']]</td>
+	<td>//div[contains(@id,'entriesContainer')]//li[contains(@data-title,'${key_dmDocumentTitle}')]//span/*[name()='svg'][@message='locked']</td>
 	<td></td>
 </tr>
 <tr>

@@ -76,11 +76,9 @@ public class KaleoDesignerDisplayContext {
 	public KaleoDefinition getKaleoDefinition(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		KaleoDefinition kaleoDefinition = null;
-
 		try {
 			if (kaleoDefinitionVersion != null) {
-				kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
+				return kaleoDefinitionVersion.getKaleoDefinition();
 			}
 		}
 		catch (PortalException pe) {
@@ -89,7 +87,7 @@ public class KaleoDesignerDisplayContext {
 			}
 		}
 
-		return kaleoDefinition;
+		return null;
 	}
 
 	public OrderByComparator<KaleoDefinitionVersion>

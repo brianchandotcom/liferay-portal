@@ -968,6 +968,11 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Long getWaitTime() {
+		return getStartTime() - getInvokedTime();
+	}
+
+	@Override
 	public boolean hasBuildURL(String buildURL) {
 		try {
 			buildURL = JenkinsResultsParserUtil.decode(buildURL);

@@ -136,6 +136,8 @@ public interface Build {
 
 	public int getTotalSlavesUsedCount();
 
+	public Long getWaitTime();
+
 	public boolean hasBuildURL(String buildURL);
 
 	public void reinvoke();

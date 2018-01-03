@@ -45,6 +45,9 @@ public class AssetTagFinderImpl
 	public static final String COUNT_BY_G_C_N =
 		AssetTagFinder.class.getName() + ".countByG_C_N";
 
+	public static final String FIND_BY_C_C =
+		AssetTagFinder.class.getName() + ".findByC_C";
+
 	public static final String FIND_BY_G_C_N =
 		AssetTagFinder.class.getName() + ".findByG_C_N";
 
@@ -126,6 +129,34 @@ public class AssetTagFinderImpl
 			}
 
 			return 0;
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<AssetTag> findByC_C(long classNameId, long classPK) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_C_C);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addEntity("AssetTag", AssetTagImpl.class);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(classNameId);
+			qPos.add(classPK);
+
+			return q.list(true);
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

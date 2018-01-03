@@ -40,7 +40,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws PortalException {
 
 		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, getPermissionChecker(),
+			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
 			serviceContext.getScopeGroupId(), parentFolderId,
 			ActionKeys.ADD_FOLDER);
 
@@ -53,7 +53,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		bookmarksFolderLocalService.deleteFolder(folderId);
@@ -66,7 +66,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		bookmarksFolderLocalService.deleteFolder(
@@ -78,7 +78,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.VIEW);
 
 		return folder;
@@ -89,8 +89,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws PortalException {
 
 		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, getPermissionChecker(), groupId,
-			folderId, ActionKeys.VIEW);
+			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.VIEW);
 
 		List<Long> folderIds = getSubfolderIds(groupId, folderId, true);
 
@@ -243,7 +243,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		bookmarksFolderLocalService.mergeFolders(folderId, parentFolderId);
@@ -256,7 +256,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.moveFolder(folderId, parentFolderId);
@@ -270,7 +270,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.moveFolderFromTrash(
@@ -284,7 +284,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.DELETE);
 
 		return bookmarksFolderLocalService.moveFolderToTrash(
@@ -296,7 +296,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		bookmarksFolderLocalService.restoreFolderFromTrash(
@@ -308,8 +308,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws PortalException {
 
 		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, getPermissionChecker(), groupId,
-			folderId, ActionKeys.SUBSCRIBE);
+			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		bookmarksFolderLocalService.subscribeFolder(
 			getUserId(), groupId, folderId);
@@ -320,8 +320,8 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		throws PortalException {
 
 		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, getPermissionChecker(), groupId,
-			folderId, ActionKeys.SUBSCRIBE);
+			_bookmarksFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.SUBSCRIBE);
 
 		bookmarksFolderLocalService.unsubscribeFolder(
 			getUserId(), groupId, folderId);
@@ -342,7 +342,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.updateFolder(
@@ -359,7 +359,7 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 		BookmarksFolder folder = bookmarksFolderLocalService.getFolder(
 			folderId);
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			getPermissionChecker(), folder, ActionKeys.UPDATE);
 
 		return bookmarksFolderLocalService.updateFolder(
@@ -368,9 +368,10 @@ public class BookmarksFolderServiceImpl extends BookmarksFolderServiceBaseImpl {
 	}
 
 	private static volatile ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission =
+		_bookmarksFolderModelResourcePermission =
 			ModelResourcePermissionFactory.getInstance(
 				BookmarksFolderServiceImpl.class,
-				"_folderModelResourcePermission", BookmarksFolder.class);
+				"_bookmarksFolderModelResourcePermission",
+				BookmarksFolder.class);
 
 }

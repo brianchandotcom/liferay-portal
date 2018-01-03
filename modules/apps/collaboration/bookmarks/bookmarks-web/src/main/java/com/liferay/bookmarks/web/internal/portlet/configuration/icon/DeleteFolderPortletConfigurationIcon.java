@@ -142,7 +142,7 @@ public class DeleteFolderPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (_folderModelResourcePermission.contains(
+			if (_bookmarksFolderModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), folder,
 					ActionKeys.DELETE)) {
 
@@ -171,7 +171,7 @@ public class DeleteFolderPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

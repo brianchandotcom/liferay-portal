@@ -156,8 +156,8 @@ public class BookmarksPortletToolbarContributor
 
 		try {
 			return ModelResourcePermissionHelper.contains(
-				_folderModelResourcePermission, permissionChecker, groupId,
-				folderId, actionId);
+				_bookmarksFolderModelResourcePermission, permissionChecker,
+				groupId, folderId, actionId);
 		}
 		catch (PortalException pe) {
 
@@ -270,13 +270,13 @@ public class BookmarksPortletToolbarContributor
 	private static final Log _log = LogFactoryUtil.getLog(
 		BookmarksPortletToolbarContributor.class);
 
-	private BookmarksFolderService _bookmarksFolderService;
-
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
+
+	private BookmarksFolderService _bookmarksFolderService;
 
 	@Reference
 	private Portal _portal;

@@ -78,7 +78,7 @@ public class BookmarksFolderIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		return _folderModelResourcePermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
@@ -209,7 +209,7 @@ public class BookmarksFolderIndexer
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	@Reference
 	private IndexWriterHelper _indexWriterHelper;

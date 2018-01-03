@@ -97,7 +97,7 @@ public class BookmarksFolderActivityInterpreter
 		throws Exception {
 
 		return ModelResourcePermissionHelper.contains(
-			_folderModelResourcePermission, permissionChecker,
+			_bookmarksFolderModelResourcePermission, permissionChecker,
 			activity.getGroupId(), activity.getClassPK(), actionId);
 	}
 
@@ -120,7 +120,7 @@ public class BookmarksFolderActivityInterpreter
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	private ResourceBundleLoader _resourceBundleLoader;
 

@@ -112,7 +112,7 @@ public class BookmarksEntryActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
@@ -135,7 +135,7 @@ public class BookmarksEntryActivityInterpreter
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
 	private ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
 
 	private ResourceBundleLoader _resourceBundleLoader;
 

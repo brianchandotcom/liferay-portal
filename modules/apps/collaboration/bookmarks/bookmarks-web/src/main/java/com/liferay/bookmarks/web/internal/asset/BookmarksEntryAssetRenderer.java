@@ -53,7 +53,7 @@ public class BookmarksEntryAssetRenderer
 		ModelResourcePermission<BookmarksEntry> entryModelResourcePermission) {
 
 		_entry = entry;
-		_entryModelResourcePermission = entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission = entryModelResourcePermission;
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public boolean hasEditPermission(PermissionChecker permissionChecker) {
 		try {
-			return _entryModelResourcePermission.contains(
+			return _bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _entry, ActionKeys.UPDATE);
 		}
 		catch (Exception e) {
@@ -198,7 +198,7 @@ public class BookmarksEntryAssetRenderer
 	@Override
 	public boolean hasViewPermission(PermissionChecker permissionChecker) {
 		try {
-			return _entryModelResourcePermission.contains(
+			return _bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _entry, ActionKeys.VIEW);
 		}
 		catch (Exception e) {
@@ -223,8 +223,8 @@ public class BookmarksEntryAssetRenderer
 		return true;
 	}
 
-	private final BookmarksEntry _entry;
 	private final ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
+	private final BookmarksEntry _entry;
 
 }

@@ -119,7 +119,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
 		return new BookmarksFolderAssetRenderer(
-			folder, _trashHelper, _folderModelResourcePermission);
+			folder, _trashHelper, _bookmarksFolderModelResourcePermission);
 	}
 
 	@Override
@@ -130,8 +130,8 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
 			return ModelResourcePermissionHelper.contains(
-				_folderModelResourcePermission, permissionChecker, groupId,
-				classPK, ActionKeys.ADD_FOLDER);
+				_bookmarksFolderModelResourcePermission, permissionChecker,
+				groupId, classPK, ActionKeys.ADD_FOLDER);
 		}
 
 		return super.hasTrashPermission(
@@ -203,7 +203,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksFolder folder = getBookmarksFolder(classPK);
 
-		return _folderModelResourcePermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, folder, actionId);
 	}
 
@@ -220,7 +220,7 @@ public class BookmarksFolderTrashHandler extends BookmarksBaseTrashHandler {
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

@@ -105,7 +105,7 @@ public class BookmarksFolderLocalServiceTest {
 			PermissionCheckerFactoryUtil.create(user);
 
 		Assert.assertTrue(
-			_folderModelResourcePermission.contains(
+			_bookmarksFolderModelResourcePermission.contains(
 				permissionChecker, folder, ActionKeys.ADD_FOLDER));
 	}
 
@@ -249,7 +249,7 @@ public class BookmarksFolderLocalServiceTest {
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
 	)
 	private static ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	@DeleteAfterTestRun
 	private Group _group;

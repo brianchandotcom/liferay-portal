@@ -65,19 +65,19 @@ public class BookmarksEntryPermissionCheckerTest
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			_entryModelResourcePermission.contains(
+			_bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _entry.getEntryId(), ActionKeys.VIEW));
 		Assert.assertTrue(
-			_entryModelResourcePermission.contains(
+			_bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			_entryModelResourcePermission.contains(
+			_bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _entry.getEntryId(), ActionKeys.VIEW));
 		Assert.assertFalse(
-			_entryModelResourcePermission.contains(
+			_bookmarksEntryModelResourcePermission.contains(
 				permissionChecker, _subentry.getEntryId(), ActionKeys.VIEW));
 	}
 
@@ -101,7 +101,7 @@ public class BookmarksEntryPermissionCheckerTest
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksEntry"
 	)
 	private static ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
 
 	private BookmarksEntry _entry;
 	private BookmarksEntry _subentry;

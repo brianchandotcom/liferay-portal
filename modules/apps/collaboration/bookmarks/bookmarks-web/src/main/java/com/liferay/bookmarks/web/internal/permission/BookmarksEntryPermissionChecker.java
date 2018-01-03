@@ -33,7 +33,7 @@ public class BookmarksEntryPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, entry, actionId);
 	}
 
@@ -41,7 +41,7 @@ public class BookmarksEntryPermissionChecker {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, entryId, actionId);
 	}
 
@@ -52,10 +52,10 @@ public class BookmarksEntryPermissionChecker {
 	protected void setModelResourcePermission(
 		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_bookmarksEntryModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
 
 }

@@ -83,7 +83,7 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
@@ -277,14 +277,14 @@ public class BookmarksEntryIndexer extends BaseIndexer<BookmarksEntry> {
 		BookmarksEntryIndexer.class);
 
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
 	private ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
 
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 	private GroupLocalService _groupLocalService;
 
 	@Reference

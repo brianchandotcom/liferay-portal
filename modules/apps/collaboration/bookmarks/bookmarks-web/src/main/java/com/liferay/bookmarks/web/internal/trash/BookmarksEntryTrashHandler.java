@@ -115,8 +115,8 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
 			return ModelResourcePermissionHelper.contains(
-				_folderModelResourcePermission, permissionChecker, groupId,
-				classPK, ActionKeys.ADD_ENTRY);
+				_bookmarksFolderModelResourcePermission, permissionChecker,
+				groupId, classPK, ActionKeys.ADD_ENTRY);
 		}
 
 		return super.hasTrashPermission(
@@ -177,7 +177,7 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 
 		BookmarksEntry entry = _bookmarksEntryLocalService.getEntry(classPK);
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, entry, actionId);
 	}
 
@@ -196,18 +196,19 @@ public class BookmarksEntryTrashHandler extends BookmarksBaseTrashHandler {
 	}
 
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
 	private ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
+
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 }

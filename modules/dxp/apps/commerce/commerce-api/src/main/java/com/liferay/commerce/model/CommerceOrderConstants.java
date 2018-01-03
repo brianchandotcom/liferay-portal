@@ -30,8 +30,14 @@ public class CommerceOrderConstants {
 	public static final int PAYMENT_STATUS_PENDING =
 		WorkflowConstants.STATUS_PENDING;
 
+	public static final int[] PAYMENT_STATUSES = {
+		PAYMENT_STATUS_AUTHORIZED, PAYMENT_STATUS_PAID, PAYMENT_STATUS_PENDING
+	};
+
 	public static final int SHIPPING_STATUS_NOT_SHIPPED =
 		WorkflowConstants.STATUS_ANY;
+
+	public static final int STATUS_ANY = WorkflowConstants.STATUS_ANY;
 
 	public static final int STATUS_CANCELLED =
 		WorkflowConstants.STATUS_IN_TRASH;
@@ -42,5 +48,41 @@ public class CommerceOrderConstants {
 	public static final int STATUS_PENDING = WorkflowConstants.STATUS_PENDING;
 
 	public static final int STATUS_PROCESSING = 2;
+
+	public static final int[] STATUSES =
+		{STATUS_CANCELLED, STATUS_COMPLETED, STATUS_PENDING, STATUS_PROCESSING};
+
+	public static String getPaymentStatusLabel(int paymentStatus) {
+		if (paymentStatus == PAYMENT_STATUS_AUTHORIZED) {
+			return "authorized";
+		}
+		else if (paymentStatus == PAYMENT_STATUS_PAID) {
+			return "paid";
+		}
+		else if (paymentStatus == PAYMENT_STATUS_PENDING) {
+			return WorkflowConstants.LABEL_PENDING;
+		}
+		else {
+			return null;
+		}
+	}
+
+	public static String getStatusLabel(int status) {
+		if (status == STATUS_CANCELLED) {
+			return "cancelled";
+		}
+		else if (status == STATUS_COMPLETED) {
+			return "completed";
+		}
+		else if (status == STATUS_PENDING) {
+			return WorkflowConstants.LABEL_PENDING;
+		}
+		else if (status == STATUS_PROCESSING) {
+			return "processing";
+		}
+		else {
+			return WorkflowConstants.LABEL_ANY;
+		}
+	}
 
 }

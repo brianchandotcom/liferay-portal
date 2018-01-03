@@ -30,6 +30,9 @@ public class UserFormConstants {
 	public static final String ENTRY_KEY_ALERTS_AND_ANNOUNCEMENTS_DELIVERY =
 		"alerts-and-announcements-delivery";
 
+	public static final String ENTRY_KEY_CONTACT_INFORMATION =
+		"contact-information";
+
 	public static final String ENTRY_KEY_DISPLAY_SETTINGS = "display-settings";
 
 	public static final String ENTRY_KEY_INFORMATION = "information";

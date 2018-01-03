@@ -41,7 +41,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			permissionChecker, sapEntryId, actionId);
 	}
 
@@ -50,7 +50,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			permissionChecker, sapEntry, actionId);
 	}
 
@@ -58,7 +58,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _sapEntryFolderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -67,7 +67,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _sapEntryFolderModelResourcePermission.contains(
 			permissionChecker, sapEntry, actionId);
 	}
 
@@ -77,7 +77,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			permissionChecker, primaryKey, actionId);
 	}
 
@@ -88,7 +88,7 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 	protected void setModelResourcePermission(
 		ModelResourcePermission<SAPEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_sapEntryFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	protected void setSAPEntryLocalService(
@@ -96,6 +96,6 @@ public class SAPEntryPermission implements BaseModelPermissionChecker {
 	}
 
 	private static ModelResourcePermission<SAPEntry>
-		_entryModelResourcePermission;
+		_sapEntryFolderModelResourcePermission;
 
 }

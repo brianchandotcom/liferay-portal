@@ -16,4 +16,4 @@ command `ant upgrade`. Please refer to Ant's documentation on how to setup Ant
 for your environment.
 
 For more information on upgrades, see Liferay's
-[Upgrading documentation](https://dev.liferay.com/discover/deployment/-/knowledge_base/7-0/upgrading-to-liferay-7).
+[Upgrade documentation](https://dev.liferay.com/discover/deployment/-/knowledge_base/7-0/upgrading-to-liferay-7).

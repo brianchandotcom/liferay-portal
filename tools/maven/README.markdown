@@ -1,13 +1,18 @@
-Create build.<username>.properties to override repository path and id.
+# Maven
 
-Run "ant install" to install artifacts to a local Maven repository.
+Some quick tips are listed below for using Maven with Liferay products:
 
-Run "ant deploy" to install artifacts to a remote Maven repository. If  you need
-to provide credentials to your repository, add them into
-${USER_HOME}/.m2/settings.xml.
+Create a `build.<username>.properties` to override the repository path and ID.
 
-Below is a sample settings.xml
+Run `ant install` to install artifacts to a local Maven repository.
 
+Run `ant deploy` to install artifacts to a remote Maven repository. If you need
+to provide credentials to your repository, add them in the
+`${USER_HOME}/.m2/settings.xml` file.
+
+Below is a sample `settings.xml` file:
+
+```xml
 <?xml version="1.0"?>
 
 <settings>
@@ -19,3 +24,7 @@ Below is a sample settings.xml
         </server>
     </servers>
 </settings>
+```
+
+For more information on using Maven with Liferay, see Liferay's
+[Maven documentation](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/maven).

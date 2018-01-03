@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.permission;
+package com.liferay.blogs.web.internal.security.permission;
 
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the remote service interface for CommerceOrder. Methods of this
@@ -59,6 +60,9 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void deleteCommerceOrder(long commerceOrderId)
+		throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
 		throws PortalException;
@@ -72,12 +76,17 @@ public interface CommerceOrderService extends BaseService {
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
-		int end, OrderByComparator<CommerceOrder> orderByComparator)
+	public List<CommerceOrder> getCommerceOrders(long groupId, int status,
+		int start, int end, OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId) throws PortalException;
+	public Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
+		long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrdersCount(long groupId, int status)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -86,6 +95,27 @@ public interface CommerceOrderService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public CommerceOrder updateBillingAddress(long commerceOrderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceOrder updateCommerceOrder(long commerceOrderId,
+		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
+		double subtotal, double shippingPrice, double total, int paymentStatus,
+		int status) throws PortalException;
+
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
 		java.lang.String purchaseOrderNumber) throws PortalException;
+
+	public CommerceOrder updateShippingAddress(long commerceOrderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
 }

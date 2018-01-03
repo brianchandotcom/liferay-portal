@@ -41,6 +41,10 @@ public class CommerceOrderItemServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static void deleteCommerceOrderItem(long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceOrderItem(commerceOrderItemId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +53,23 @@ public class CommerceOrderItemServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
+		long commerceOrderId, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().search(commerceOrderId, keywords, start, end, sort);
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
+		long commerceOrderId, java.lang.String sku, java.lang.String title,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .search(commerceOrderId, sku, title, andOperator, start,
+			end, sort);
 	}
 
 	public static CommerceOrderItemService getService() {

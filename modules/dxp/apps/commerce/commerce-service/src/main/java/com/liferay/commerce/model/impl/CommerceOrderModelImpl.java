@@ -139,8 +139,9 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -720,7 +721,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@Override
@@ -853,6 +866,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderModelImpl._setOriginalCompanyId = false;
 
 		commerceOrderModelImpl._setModifiedDate = false;
+
+		commerceOrderModelImpl._originalStatus = commerceOrderModelImpl._status;
+
+		commerceOrderModelImpl._setOriginalStatus = false;
 
 		commerceOrderModelImpl._columnBitmask = 0;
 	}
@@ -1125,6 +1142,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private int _paymentStatus;
 	private int _shippingStatus;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _columnBitmask;
 	private CommerceOrder _escapedModel;
 }

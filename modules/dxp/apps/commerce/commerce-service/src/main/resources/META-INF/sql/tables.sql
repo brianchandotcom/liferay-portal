@@ -199,6 +199,19 @@ create table CommerceOrderItem (
 	price DOUBLE
 );
 
+create table CommerceOrderNote (
+	commerceOrderNoteId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	commerceOrderId LONG,
+	content VARCHAR(75) null,
+	restricted BOOLEAN
+);
+
 create table CommerceOrderPayment (
 	commerceOrderPaymentId LONG not null primary key,
 	groupId LONG,

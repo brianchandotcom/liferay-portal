@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -72,6 +74,7 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	public CommerceOrderItem addCommerceOrderItem(
 		CommerceOrderItem commerceOrderItem);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
 		long cpInstanceId, int quantity, int shippedQuantity,
 		java.lang.String json, double price, ServiceContext serviceContext)
@@ -253,6 +256,17 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 		long commerceOrderItemId, int shippedQuantity)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceOrderItem> search(
+		long commerceOrderId, java.lang.String keywords, int start, int end,
+		Sort sort) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceOrderItem> search(
+		long commerceOrderId, java.lang.String sku, java.lang.String title,
+		boolean andOperator, int start, int end, Sort sort)
+		throws PortalException;
+
 	/**
 	* Updates the commerce order item in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -263,6 +277,7 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 	public CommerceOrderItem updateCommerceOrderItem(
 		CommerceOrderItem commerceOrderItem);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
 		int quantity, java.lang.String json, double price)
 		throws PortalException;

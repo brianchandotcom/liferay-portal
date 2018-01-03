@@ -24,10 +24,14 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderServiceImpl" id="com.liferay.commerce.service.CommerceOrderService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPersistence" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderFinderImpl" id="com.liferay.commerce.service.persistence.CommerceOrderFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderItemLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl" id="com.liferay.commerce.service.CommerceOrderItemService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderItemPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderItemFinderImpl" id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder" parent="basePersistence" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderNoteLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderNoteLocalService" />
+	<bean class="com.liferay.commerce.service.impl.CommerceOrderNoteServiceImpl" id="com.liferay.commerce.service.CommerceOrderNoteService" />
+	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderNotePersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderNotePersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderPaymentLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderPaymentLocalService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPaymentPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommercePaymentMethodLocalServiceImpl" id="com.liferay.commerce.service.CommercePaymentMethodLocalService" />

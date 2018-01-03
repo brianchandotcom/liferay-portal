@@ -335,6 +335,12 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getModifiedDate();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.User getOrderUser()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrder.getOrderUser();
+	}
+
 	/**
 	* Returns the order user ID of this commerce order.
 	*

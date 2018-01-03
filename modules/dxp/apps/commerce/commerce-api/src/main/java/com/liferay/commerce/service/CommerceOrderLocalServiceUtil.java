@@ -264,15 +264,11 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end) {
-		return getService().getCommerceOrders(groupId, start, end);
-	}
-
-	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end,
+		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
 		return getService()
-				   .getCommerceOrders(groupId, start, end, orderByComparator);
+				   .getCommerceOrders(groupId, status, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -314,8 +310,13 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().getCommerceOrdersCount();
 	}
 
-	public static int getCommerceOrdersCount(long groupId) {
+	public static java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
+		long groupId) {
 		return getService().getCommerceOrdersCount(groupId);
+	}
+
+	public static int getCommerceOrdersCount(long groupId, int status) {
+		return getService().getCommerceOrdersCount(groupId, status);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -342,6 +343,20 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
+		long commerceOrderId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateBillingAddress(commerceOrderId, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, serviceContext);
+	}
+
 	/**
 	* Updates the commerce order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -351,6 +366,17 @@ public class CommerceOrderLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		com.liferay.commerce.model.CommerceOrder commerceOrder) {
 		return getService().updateCommerceOrder(commerceOrder);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
+		long commerceOrderId, long commercePaymentMethodId,
+		java.lang.String purchaseOrderNumber, double subtotal,
+		double shippingPrice, double total, int paymentStatus, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrder(commerceOrderId,
+			commercePaymentMethodId, purchaseOrderNumber, subtotal,
+			shippingPrice, total, paymentStatus, status);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
@@ -366,6 +392,20 @@ public class CommerceOrderLocalServiceUtil {
 		return getService()
 				   .updatePurchaseOrderNumber(commerceOrderId,
 			purchaseOrderNumber);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updateShippingAddress(
+		long commerceOrderId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateShippingAddress(commerceOrderId, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, serviceContext);
 	}
 
 	public static CommerceOrderLocalService getService() {

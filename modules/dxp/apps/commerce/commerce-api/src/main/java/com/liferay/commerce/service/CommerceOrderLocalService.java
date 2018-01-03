@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Provides the local service interface for CommerceOrder. Methods of this
@@ -235,12 +236,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public List<CommerceOrder> getCommerceOrders(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int start,
-		int end, OrderByComparator<CommerceOrder> orderByComparator);
+	public List<CommerceOrder> getCommerceOrders(long groupId, int status,
+		int start, int end, OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
 	* Returns all the commerce orders matching the UUID and company.
@@ -277,7 +274,11 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public int getCommerceOrdersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId);
+	public Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
+		long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrdersCount(long groupId, int status);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -298,6 +299,14 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public CommerceOrder updateBillingAddress(long commerceOrderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Updates the commerce order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -307,9 +316,22 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(CommerceOrder commerceOrder);
 
+	public CommerceOrder updateCommerceOrder(long commerceOrderId,
+		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
+		double subtotal, double shippingPrice, double total, int paymentStatus,
+		int status) throws PortalException;
+
 	public CommerceOrder updatePaymentStatus(long commerceOrderId,
 		int paymentStatus, int status) throws PortalException;
 
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
 		java.lang.String purchaseOrderNumber) throws PortalException;
+
+	public CommerceOrder updateShippingAddress(long commerceOrderId,
+		java.lang.String name, java.lang.String description,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId,
+		java.lang.String phoneNumber, ServiceContext serviceContext)
+		throws PortalException;
 }

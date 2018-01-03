@@ -33,6 +33,12 @@ public class CommerceOrderItemServiceWrapper implements CommerceOrderItemService
 		_commerceOrderItemService = commerceOrderItemService;
 	}
 
+	@Override
+	public void deleteCommerceOrderItem(long commerceOrderItemId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceOrderItemService.deleteCommerceOrderItem(commerceOrderItemId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +47,25 @@ public class CommerceOrderItemServiceWrapper implements CommerceOrderItemService
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceOrderItemService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
+		long commerceOrderId, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItemService.search(commerceOrderId, keywords,
+			start, end, sort);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrderItem> search(
+		long commerceOrderId, java.lang.String sku, java.lang.String title,
+		boolean andOperator, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItemService.search(commerceOrderId, sku, title,
+			andOperator, start, end, sort);
 	}
 
 	@Override

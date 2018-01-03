@@ -26,8 +26,10 @@ import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
+import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPaymentPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderPersistence;
 import com.liferay.commerce.service.persistence.CommercePaymentMethodPersistence;
@@ -520,6 +522,24 @@ public abstract class CommercePaymentMethodServiceBaseImpl
 	}
 
 	/**
+	 * Returns the commerce order finder.
+	 *
+	 * @return the commerce order finder
+	 */
+	public CommerceOrderFinder getCommerceOrderFinder() {
+		return commerceOrderFinder;
+	}
+
+	/**
+	 * Sets the commerce order finder.
+	 *
+	 * @param commerceOrderFinder the commerce order finder
+	 */
+	public void setCommerceOrderFinder(CommerceOrderFinder commerceOrderFinder) {
+		this.commerceOrderFinder = commerceOrderFinder;
+	}
+
+	/**
 	 * Returns the commerce order item local service.
 	 *
 	 * @return the commerce order item local service
@@ -593,6 +613,63 @@ public abstract class CommercePaymentMethodServiceBaseImpl
 	public void setCommerceOrderItemFinder(
 		CommerceOrderItemFinder commerceOrderItemFinder) {
 		this.commerceOrderItemFinder = commerceOrderItemFinder;
+	}
+
+	/**
+	 * Returns the commerce order note local service.
+	 *
+	 * @return the commerce order note local service
+	 */
+	public com.liferay.commerce.service.CommerceOrderNoteLocalService getCommerceOrderNoteLocalService() {
+		return commerceOrderNoteLocalService;
+	}
+
+	/**
+	 * Sets the commerce order note local service.
+	 *
+	 * @param commerceOrderNoteLocalService the commerce order note local service
+	 */
+	public void setCommerceOrderNoteLocalService(
+		com.liferay.commerce.service.CommerceOrderNoteLocalService commerceOrderNoteLocalService) {
+		this.commerceOrderNoteLocalService = commerceOrderNoteLocalService;
+	}
+
+	/**
+	 * Returns the commerce order note remote service.
+	 *
+	 * @return the commerce order note remote service
+	 */
+	public com.liferay.commerce.service.CommerceOrderNoteService getCommerceOrderNoteService() {
+		return commerceOrderNoteService;
+	}
+
+	/**
+	 * Sets the commerce order note remote service.
+	 *
+	 * @param commerceOrderNoteService the commerce order note remote service
+	 */
+	public void setCommerceOrderNoteService(
+		com.liferay.commerce.service.CommerceOrderNoteService commerceOrderNoteService) {
+		this.commerceOrderNoteService = commerceOrderNoteService;
+	}
+
+	/**
+	 * Returns the commerce order note persistence.
+	 *
+	 * @return the commerce order note persistence
+	 */
+	public CommerceOrderNotePersistence getCommerceOrderNotePersistence() {
+		return commerceOrderNotePersistence;
+	}
+
+	/**
+	 * Sets the commerce order note persistence.
+	 *
+	 * @param commerceOrderNotePersistence the commerce order note persistence
+	 */
+	public void setCommerceOrderNotePersistence(
+		CommerceOrderNotePersistence commerceOrderNotePersistence) {
+		this.commerceOrderNotePersistence = commerceOrderNotePersistence;
 	}
 
 	/**
@@ -1732,6 +1809,8 @@ public abstract class CommercePaymentMethodServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceOrderService commerceOrderService;
 	@BeanReference(type = CommerceOrderPersistence.class)
 	protected CommerceOrderPersistence commerceOrderPersistence;
+	@BeanReference(type = CommerceOrderFinder.class)
+	protected CommerceOrderFinder commerceOrderFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemService.class)
@@ -1740,6 +1819,12 @@ public abstract class CommercePaymentMethodServiceBaseImpl
 	protected CommerceOrderItemPersistence commerceOrderItemPersistence;
 	@BeanReference(type = CommerceOrderItemFinder.class)
 	protected CommerceOrderItemFinder commerceOrderItemFinder;
+	@BeanReference(type = com.liferay.commerce.service.CommerceOrderNoteLocalService.class)
+	protected com.liferay.commerce.service.CommerceOrderNoteLocalService commerceOrderNoteLocalService;
+	@BeanReference(type = com.liferay.commerce.service.CommerceOrderNoteService.class)
+	protected com.liferay.commerce.service.CommerceOrderNoteService commerceOrderNoteService;
+	@BeanReference(type = CommerceOrderNotePersistence.class)
+	protected CommerceOrderNotePersistence commerceOrderNotePersistence;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderPaymentLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderPaymentLocalService commerceOrderPaymentLocalService;
 	@BeanReference(type = CommerceOrderPaymentPersistence.class)

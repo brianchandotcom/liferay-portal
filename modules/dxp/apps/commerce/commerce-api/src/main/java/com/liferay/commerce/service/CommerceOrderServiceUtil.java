@@ -49,6 +49,11 @@ public class CommerceOrderServiceUtil {
 				   .addCommerceOrderFromCart(commerceCartId, serviceContext);
 	}
 
+	public static void deleteCommerceOrder(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceOrder(commerceOrderId);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder fetchCommerceOrder(
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -68,16 +73,23 @@ public class CommerceOrderServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end,
+		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCommerceOrders(groupId, start, end, orderByComparator);
+				   .getCommerceOrders(groupId, status, start, end,
+			orderByComparator);
 	}
 
-	public static int getCommerceOrdersCount(long groupId)
+	public static java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
+		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCommerceOrdersCount(groupId);
+	}
+
+	public static int getCommerceOrdersCount(long groupId, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrdersCount(groupId, status);
 	}
 
 	/**
@@ -89,12 +101,51 @@ public class CommerceOrderServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder updateBillingAddress(
+		long commerceOrderId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateBillingAddress(commerceOrderId, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
+		long commerceOrderId, long commercePaymentMethodId,
+		java.lang.String purchaseOrderNumber, double subtotal,
+		double shippingPrice, double total, int paymentStatus, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrder(commerceOrderId,
+			commercePaymentMethodId, purchaseOrderNumber, subtotal,
+			shippingPrice, total, paymentStatus, status);
+	}
+
 	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(
 		long commerceOrderId, java.lang.String purchaseOrderNumber)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatePurchaseOrderNumber(commerceOrderId,
 			purchaseOrderNumber);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrder updateShippingAddress(
+		long commerceOrderId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateShippingAddress(commerceOrderId, name, description,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, serviceContext);
 	}
 
 	public static CommerceOrderService getService() {

@@ -278,16 +278,10 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end) {
-		return _commerceOrderLocalService.getCommerceOrders(groupId, start, end);
-	}
-
-	@Override
-	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end,
+		long groupId, int status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
-		return _commerceOrderLocalService.getCommerceOrders(groupId, start,
-			end, orderByComparator);
+		return _commerceOrderLocalService.getCommerceOrders(groupId, status,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -333,8 +327,14 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId) {
+	public java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
+		long groupId) {
 		return _commerceOrderLocalService.getCommerceOrdersCount(groupId);
+	}
+
+	@Override
+	public int getCommerceOrdersCount(long groupId, int status) {
+		return _commerceOrderLocalService.getCommerceOrdersCount(groupId, status);
 	}
 
 	@Override
@@ -365,6 +365,20 @@ public class CommerceOrderLocalServiceWrapper
 		return _commerceOrderLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updateBillingAddress(
+		long commerceOrderId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updateBillingAddress(commerceOrderId,
+			name, description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, phoneNumber, serviceContext);
+	}
+
 	/**
 	* Updates the commerce order in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -375,6 +389,17 @@ public class CommerceOrderLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		com.liferay.commerce.model.CommerceOrder commerceOrder) {
 		return _commerceOrderLocalService.updateCommerceOrder(commerceOrder);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
+		long commerceOrderId, long commercePaymentMethodId,
+		java.lang.String purchaseOrderNumber, double subtotal,
+		double shippingPrice, double total, int paymentStatus, int status)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updateCommerceOrder(commerceOrderId,
+			commercePaymentMethodId, purchaseOrderNumber, subtotal,
+			shippingPrice, total, paymentStatus, status);
 	}
 
 	@Override
@@ -391,6 +416,20 @@ public class CommerceOrderLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updatePurchaseOrderNumber(commerceOrderId,
 			purchaseOrderNumber);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrder updateShippingAddress(
+		long commerceOrderId, java.lang.String name,
+		java.lang.String description, java.lang.String street1,
+		java.lang.String street2, java.lang.String street3,
+		java.lang.String city, java.lang.String zip, long commerceRegionId,
+		long commerceCountryId, java.lang.String phoneNumber,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updateShippingAddress(commerceOrderId,
+			name, description, street1, street2, street3, city, zip,
+			commerceRegionId, commerceCountryId, phoneNumber, serviceContext);
 	}
 
 	@Override

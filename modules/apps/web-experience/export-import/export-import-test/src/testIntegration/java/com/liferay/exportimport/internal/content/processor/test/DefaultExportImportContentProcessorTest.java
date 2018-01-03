@@ -74,6 +74,10 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.PortalImpl;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.registry.Filter;
+import com.liferay.registry.Registry;
+import com.liferay.registry.RegistryUtil;
+import com.liferay.registry.ServiceTracker;
 
 import java.io.File;
 import java.io.InputStream;
@@ -95,6 +99,7 @@ import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -102,6 +107,7 @@ import org.junit.runner.RunWith;
 
 /**
  * @author Michael Bowerman
+ * @author Gergely Mathe
  */
 @RunWith(Arquillian.class)
 @Sync
@@ -113,6 +119,23 @@ public class DefaultExportImportContentProcessorTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			SynchronousDestinationTestRule.INSTANCE);
+
+	@BeforeClass
+	public static void setUpClass() {
+		Registry registry = RegistryUtil.getRegistry();
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("(&(content.processor.type=LayoutReferences)(objectClass=");
+		sb.append(ExportImportContentProcessor.class.getName());
+		sb.append("))");
+
+		Filter filter = registry.getFilter(sb.toString());
+
+		_serviceTracker = registry.trackServices(filter);
+
+		_serviceTracker.open();
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -203,6 +226,9 @@ public class DefaultExportImportContentProcessorTest {
 		_exportImportContentProcessor =
 			ExportImportContentProcessorRegistryUtil.
 				getExportImportContentProcessor(String.class.getName());
+
+		_layoutReferencesExportImportContentProcessor =
+			_serviceTracker.getService();
 	}
 
 	@Test
@@ -329,7 +355,8 @@ public class DefaultExportImportContentProcessorTest {
 		portalUtil.setPortal(portalImpl);
 
 		Portal originalPortal = ReflectionTestUtil.getAndSetFieldValue(
-			_exportImportContentProcessor, "_portal", portalImpl);
+			_layoutReferencesExportImportContentProcessor, "_portal",
+			portalImpl);
 
 		_oldLayoutFriendlyURLPrivateUserServletMapping =
 			PropsValues.LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING;
@@ -339,7 +366,8 @@ public class DefaultExportImportContentProcessorTest {
 				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
 			"/en");
 
-		Class<?> clazz = _exportImportContentProcessor.getClass();
+		Class<?> clazz =
+			_layoutReferencesExportImportContentProcessor.getClass();
 
 		setFinalStaticField(
 			clazz.getDeclaredField("_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
@@ -394,7 +422,8 @@ public class DefaultExportImportContentProcessorTest {
 		portalUtil.setPortal(new PortalImpl());
 
 		ReflectionTestUtil.setFieldValue(
-			_exportImportContentProcessor, "_portal", originalPortal);
+			_layoutReferencesExportImportContentProcessor, "_portal",
+			originalPortal);
 	}
 
 	@Test
@@ -407,7 +436,8 @@ public class DefaultExportImportContentProcessorTest {
 				"LAYOUT_FRIENDLY_URL_PRIVATE_USER_SERVLET_MAPPING"),
 			"/en");
 
-		Class<?> clazz = _exportImportContentProcessor.getClass();
+		Class<?> clazz =
+			_layoutReferencesExportImportContentProcessor.getClass();
 
 		setFinalStaticField(
 			clazz.getDeclaredField("_PRIVATE_USER_SERVLET_MAPPING"), "/en/");
@@ -965,9 +995,14 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
+	private static ServiceTracker
+		<ExportImportContentProcessor,
+			ExportImportContentProcessor> _serviceTracker;
 
 	private ExportImportContentProcessor<String> _exportImportContentProcessor;
 	private FileEntry _fileEntry;
+	private ExportImportContentProcessor<String>
+		_layoutReferencesExportImportContentProcessor;
 
 	@DeleteAfterTestRun
 	private Group _liveGroup;

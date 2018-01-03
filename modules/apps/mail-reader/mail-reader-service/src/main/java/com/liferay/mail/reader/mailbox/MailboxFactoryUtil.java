@@ -97,7 +97,9 @@ public class MailboxFactoryUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMailboxFactory(MailboxFactory mailboxFactory) {
+	protected void setMailboxFactory(MailboxFactory mailboxFactory)
+		throws PortalException {
+
 		_addMailboxFactory(
 			mailboxFactory.getMailboxFactoryName(), mailboxFactory);
 	}
@@ -108,11 +110,14 @@ public class MailboxFactoryUtil {
 	}
 
 	private void _addMailboxFactory(
-		String mailboxFactoryName, MailboxFactory mailboxFactory) {
+			String mailboxFactoryName, MailboxFactory mailboxFactory)
+		throws PortalException {
 
 		if (_mailboxFactories == null) {
 			_mailboxFactories = new ConcurrentHashMap<>();
 		}
+
+		mailboxFactory.initialize();
 
 		_mailboxFactories.put(mailboxFactoryName, mailboxFactory);
 	}

@@ -15,22 +15,22 @@
 </tr>
 <tr>
 	<td>SAVE_FORM_BUTTON</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save Form') and not (contains(@class,'disabled'))]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save Form') and not (contains(@class,'disabled'))] | //div[@class='button-holder ddm-form-builder-buttons']//button[contains(.,'Save Form') and not (contains(@class,'disabled'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_FORM_BUTTON_LOCALIZED</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))] | //div[@class='button-holder ddm-form-builder-buttons']//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON_DISABLED</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save') and contains(@class,'disabled')]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(.,'Save') and contains(@class,'disabled')] | //div[@class='button-holder ddm-form-builder-buttons']//button[contains(.,'Save') and contains(@class,'disabled')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SAVE_BUTTON_DROPDOWN</td>
-	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(@id,'submitToggle')]</td>
+	<td>//div[@class='button-holder ddl-form-builder-buttons']//button[contains(@id,'submitToggle')] | //div[@class='button-holder ddm-form-builder-buttons']//button[contains(@id,'submitToggle')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -134,12 +134,17 @@
 <!--ADD_FIELD-->
 <tr>
 	<td>ADD_FIELD</td>
-	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//button[contains(@class,'add-button-large')]/span</td>
+	<td>//div[contains(@class,'col col-md-${key_columnSize}')]//button[contains(@class,'add-button-large')]/span | //div[contains(@class,'portlet-forms')]//button[contains(@class,'lfr-ddm-add-field')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ADD_FIELD_TYPE</td>
-	<td>//a[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //li[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')]</td>
+	<td>//a[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //li[contains(@class,'field-type')]/div/h4[contains(.,'${key_fieldType}')] | //div[contains(@class,'list-group-body')]//div/h4[contains(.,'${key_fieldType}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ADD_FIELD_POSITION</td>
+	<td>//div[contains(@class,'yui3-dd-drop') and contains(@class,'col-empty')]</td>
 	<td></td>
 </tr>
 <tr>

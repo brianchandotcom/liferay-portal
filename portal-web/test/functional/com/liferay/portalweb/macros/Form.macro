@@ -36,7 +36,7 @@
 	<command name="closeSidebar">
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Click" locator1="Form#SIDEBAR_CLOSE" />
+		<execute function="Click" locator1="Portlet#HEADER" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -207,17 +207,33 @@
 	</command>
 
 	<command name="gotoAddField">
-		<var name="key_columnSize" value="${columnSize}" />
+		<toggle name="LPS-75358">
+			<on>
+				<var name="key_columnSize" value="${columnSize}" />
 
-		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
+				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
 
-		<execute function="Click" locator1="Form#ADD_FIELD" />
+				<var name="key_fieldType" value="${fieldType}" />
 
-		<var name="key_fieldType" value="${fieldType}" />
+				<execute function="DragAndDrop" locator1="Form#ADD_FIELD_TYPE" locator2="Form#ADD_FIELD_POSITION" value1="${fieldType}" />
 
-		<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
+			</on>
 
-		<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
+			<off>
+				<var name="key_columnSize" value="${columnSize}" />
+
+				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
+
+				<execute function="Click" locator1="Form#ADD_FIELD" />
+
+				<var name="key_fieldType" value="${fieldType}" />
+
+				<execute function="AssertClick" locator1="Form#ADD_FIELD_TYPE" value1="${fieldType}" />
+
+				<execute function="AssertElementPresent" locator1="Form#SIDEBAR_BASIC_TAB" />
+			</off>
+		</toggle>
 	</command>
 
 	<command name="gotoAdvancedTab">

@@ -17,16 +17,23 @@ package com.liferay.mail.reader.mailbox;
 import com.liferay.mail.reader.constants.MailPortletKeys;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalService;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,7 +53,7 @@ public class MailboxFactoryUtil {
 		User user = _userLocalService.getUser(userId);
 		Account account = _accountLocalService.getAccount(accountId);
 
-		MailboxFactory mailboxFactory = _mailboxFactories.get(
+		MailboxFactory mailboxFactory = _mailboxFactories.getService(
 			account.getProtocol());
 
 		if (mailboxFactory == null) {
@@ -62,7 +69,7 @@ public class MailboxFactoryUtil {
 
 		User user = _userLocalService.getUser(userId);
 
-		MailboxFactory mailboxFactory = _mailboxFactories.get(protocol);
+		MailboxFactory mailboxFactory = _mailboxFactories.getService(protocol);
 
 		if (mailboxFactory == null) {
 			throw new IllegalArgumentException("Invalid protocol " + protocol);
@@ -77,16 +84,10 @@ public class MailboxFactoryUtil {
 		List<MailboxFactory> mailboxFactories = new ArrayList<>();
 
 		for (String protocol : protocols) {
-			mailboxFactories.add(_mailboxFactories.get(protocol));
+			mailboxFactories.add(_mailboxFactories.getService(protocol));
 		}
 
 		return mailboxFactories;
-	}
-
-	public void setMailboxFactories(
-		Map<String, MailboxFactory> mailboxFactories) {
-
-		_mailboxFactories = mailboxFactories;
 	}
 
 	@Reference(unbind = "-")
@@ -97,33 +98,49 @@ public class MailboxFactoryUtil {
 	}
 
 	@Reference(unbind = "-")
-	protected void setMailboxFactory(MailboxFactory mailboxFactory)
-		throws PortalException {
-
-		_addMailboxFactory(
-			mailboxFactory.getMailboxFactoryName(), mailboxFactory);
-	}
-
-	@Reference(unbind = "-")
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
 
-	private void _addMailboxFactory(
-			String mailboxFactoryName, MailboxFactory mailboxFactory)
-		throws PortalException {
-
-		if (_mailboxFactories == null) {
-			_mailboxFactories = new ConcurrentHashMap<>();
-		}
-
-		mailboxFactory.initialize();
-
-		_mailboxFactories.put(mailboxFactoryName, mailboxFactory);
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		MailboxFactoryUtil.class);
 
 	private static AccountLocalService _accountLocalService;
-	private static Map<String, MailboxFactory> _mailboxFactories;
+	private static final ServiceTrackerMap<String, MailboxFactory>
+		_mailboxFactories;
 	private static UserLocalService _userLocalService;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MailboxFactoryUtil.class);
+
+		final BundleContext bundleContext = bundle.getBundleContext();
+
+		_mailboxFactories = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MailboxFactory.class, null,
+			new ServiceReferenceMapper<String, MailboxFactory>() {
+
+				@Override
+				public void map(
+					ServiceReference<MailboxFactory> serviceReference,
+					ServiceReferenceMapper.Emitter<String> emitter) {
+
+					MailboxFactory mailboxFactory = bundleContext.getService(
+						serviceReference);
+
+					try {
+						mailboxFactory.initialize();
+
+						emitter.emit(mailboxFactory.getMailboxFactoryName());
+					}
+					catch (PortalException pe) {
+						_log.error("Unable to initialize mail box factory", pe);
+					}
+					finally {
+						bundleContext.ungetService(serviceReference);
+					}
+				}
+
+			});
+	}
 
 }

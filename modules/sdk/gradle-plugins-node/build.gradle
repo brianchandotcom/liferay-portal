@@ -1,3 +1,4 @@
+apply plugin: "com.gradle.plugin-publish"
 apply plugin: "org.ysb33r.gradletest"
 
 task copyGradleTestDependencies(type: Copy)
@@ -18,4 +19,8 @@ gradleTest {
 	dependsOn jar
 
 	versions "2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11", "2.12", "2.13", "2.14.1", "3.0", "3.1", "3.2.1", "3.3"
+}
+
+pluginBundle {
+	tags = ["javascript", "js", "node", "nodejs", "npm"]
 }

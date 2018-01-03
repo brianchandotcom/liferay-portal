@@ -972,6 +972,9 @@
 		<var method="DateUtil#getCurrentDayOfWeek()" name="currentDay" />
 		<var method="DateUtil#getCurrentHour()" name="currentHour" />
 
+		<echo> The current day is: ${currentDay} </echo>
+		<echo> The current hour is: ${currentHour} </echo>
+
 		<if>
 			<and>
 				<equals arg1="${currentDay}" arg2="Saturday" />
@@ -2036,6 +2039,8 @@
 				<equals arg1="${frequency}" arg2="Weekly" />
 				<then>
 					<var method="DateUtil#getCurrentHour()" name="currentHour" />
+
+					<echo> The current hour is: ${currentHour} </echo>
 
 					<if>
 						<equals arg1="${currentHour}" arg2="11" />

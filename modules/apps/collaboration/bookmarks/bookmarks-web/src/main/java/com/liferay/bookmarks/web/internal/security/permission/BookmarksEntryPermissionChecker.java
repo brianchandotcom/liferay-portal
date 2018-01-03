@@ -12,13 +12,12 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.permission;
+package com.liferay.bookmarks.web.internal.security.permission;
 
-import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
-import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -27,38 +26,36 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true)
-public class BookmarksFolderPermissionChecker {
+public class BookmarksEntryPermissionChecker {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, BookmarksFolder folder,
+			PermissionChecker permissionChecker, BookmarksEntry entry,
 			String actionId)
 		throws PortalException {
 
-		return _bookmarksFolderModelResourcePermission.contains(
-			permissionChecker, folder, actionId);
+		return _bookmarksEntryModelResourcePermission.contains(
+			permissionChecker, entry, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long groupId, long folderId,
-			String actionId)
+			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return ModelResourcePermissionHelper.contains(
-			_bookmarksFolderModelResourcePermission, permissionChecker, groupId,
-			folderId, actionId);
+		return _bookmarksEntryModelResourcePermission.contains(
+			permissionChecker, entryId, actionId);
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)",
+		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(
-		ModelResourcePermission<BookmarksFolder> modelResourcePermission) {
+		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
 
-		_bookmarksFolderModelResourcePermission = modelResourcePermission;
+		_bookmarksEntryModelResourcePermission = modelResourcePermission;
 	}
 
-	private static ModelResourcePermission<BookmarksFolder>
-		_bookmarksFolderModelResourcePermission;
+	private static ModelResourcePermission<BookmarksEntry>
+		_bookmarksEntryModelResourcePermission;
 
 }

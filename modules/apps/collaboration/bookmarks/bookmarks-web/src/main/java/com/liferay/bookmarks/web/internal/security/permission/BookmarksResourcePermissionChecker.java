@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.permission;
+package com.liferay.bookmarks.web.internal.security.permission;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.web.internal.permission;
+package com.liferay.portal.security.service.access.policy.web.internal.security.permission;
 
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;

@@ -46,8 +46,8 @@ page import="com.liferay.portal.security.service.access.policy.model.SAPEntryCon
 page import="com.liferay.portal.security.service.access.policy.service.SAPEntryServiceUtil" %><%@
 page import="com.liferay.portal.security.service.access.policy.util.comparator.SAPEntryNameComparator" %><%@
 page import="com.liferay.portal.security.service.access.policy.web.internal.constants.SAPWebKeys" %><%@
-page import="com.liferay.portal.security.service.access.policy.web.internal.permission.SAPEntryPermission" %><%@
-page import="com.liferay.portal.security.service.access.policy.web.internal.permission.SAPPermission" %><%@
+page import="com.liferay.portal.security.service.access.policy.web.internal.security.permission.SAPEntryPermission" %><%@
+page import="com.liferay.portal.security.service.access.policy.web.internal.security.permission.SAPPermission" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%@ page import="javax.portlet.ActionRequest" %><%@

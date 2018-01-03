@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
@@ -222,6 +223,11 @@ public class CommerceOrderLocalServiceImpl
 	@Override
 	public int getCommerceOrdersCount(long groupId) {
 		return commerceOrderPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public Map<Integer, Long> getCommerceOrdersCountByStatus(long groupId) {
+		return commerceOrderFinder.countByG_S(groupId);
 	}
 
 	@Override

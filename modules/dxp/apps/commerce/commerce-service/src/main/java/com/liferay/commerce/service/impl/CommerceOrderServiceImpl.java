@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
@@ -120,6 +121,18 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		return commerceOrderLocalService.getCommerceOrdersCount(groupId);
+	}
+
+	@Override
+	public Map<Integer, Long> getCommerceOrdersCountByStatus(long groupId)
+		throws PortalException {
+
+		CommercePermission.check(
+			getPermissionChecker(), groupId,
+			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+
+		return commerceOrderLocalService.getCommerceOrdersCountByStatus(
+			groupId);
 	}
 
 	@Override

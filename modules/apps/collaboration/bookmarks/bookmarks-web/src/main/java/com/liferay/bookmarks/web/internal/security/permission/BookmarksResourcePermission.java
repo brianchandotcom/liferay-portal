@@ -26,7 +26,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true)
-public class BookmarksResourcePermissionChecker {
+public class BookmarksResourcePermission {
 
 	public static void check(
 			PermissionChecker permissionChecker, long scopeGroupId,

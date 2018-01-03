@@ -39,7 +39,7 @@ if (folder != null) {
 	modelResourceDescription = folder.getName();
 	resourcePrimKey = String.valueOf(folder.getFolderId());
 
-	showPermissionsURL = BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
+	showPermissionsURL = BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.PERMISSIONS);
 }
 else {
 	modelResource = "com.liferay.bookmarks";
@@ -57,7 +57,7 @@ if (row == null) {
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= (folder != null) && BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
+	<c:if test="<%= (folder != null) && BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -99,7 +99,7 @@ if (row == null) {
 		/>
 	</c:if>
 
-	<c:if test="<%= (folder != null) && BookmarksFolderPermissionChecker.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
+	<c:if test="<%= (folder != null) && BookmarksFolderPermission.contains(permissionChecker, folder, ActionKeys.DELETE) %>">
 		<portlet:renderURL var="redirectURL">
 			<c:choose>
 				<c:when test="<%= folder.getParentFolderId() == BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID %>">

@@ -28,7 +28,7 @@
 					<svg class="commerce-icon lexicon-icon lexicon-icon-geolocation text-light mr-3">
 						<use xlink:href="${images_folder}/lexicon/icons.svg#geolocation" />
 					</svg>
-					Puchase Orders
+					Purchase Orders
 				</a>
 			</li>
 			<li class="nav-item">
@@ -106,7 +106,7 @@
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="#">
-					Puchase Orders
+					Purchase Orders
 				</a>
 			</li>
 		</ul>

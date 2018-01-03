@@ -64,6 +64,7 @@
 		<column name="siteNavigationMenuId" type="long" />
 		<column name="parentSiteNavigationMenuItemId" type="long" />
 		<column name="type" type="String" />
+		<column name="order" type="int" />
 		<column name="typeSettings" type="String" />
 
 		<!-- Finder methods -->

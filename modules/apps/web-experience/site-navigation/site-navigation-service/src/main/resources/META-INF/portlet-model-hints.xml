@@ -24,6 +24,7 @@
 		<field name="siteNavigationMenuId" type="long" />
 		<field name="parentSiteNavigationMenuItemId" type="long" />
 		<field name="type" type="String" />
+		<field name="order" type="int" />
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>

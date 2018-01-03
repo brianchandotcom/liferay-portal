@@ -67,6 +67,23 @@ import java.rmi.RemoteException;
 public class FragmentEntryServiceSoap {
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
 		long groupId, long fragmentCollectionId, java.lang.String name,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.addFragmentEntry(groupId,
+					fragmentCollectionId, name, serviceContext);
+
+			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
+		long groupId, long fragmentCollectionId, java.lang.String name,
 		java.lang.String css, java.lang.String html, java.lang.String js,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

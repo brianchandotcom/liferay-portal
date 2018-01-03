@@ -17,14 +17,20 @@ package com.liferay.portal.search.suggest;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.search.analysis.TokenizerUtil;
+import com.liferay.portal.kernel.search.analysis.Tokenizer;
 import com.liferay.portal.kernel.search.suggest.CollatorUtil;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
+import com.liferay.portal.search.analysis.SimpleTokenizer;
 
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -41,7 +47,9 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 		String localizedFieldName = Field.getLocalizedName(
 			searchContext.getLanguageId(), Field.SPELL_CHECK_WORD);
 
-		List<String> keywords = TokenizerUtil.tokenize(
+		Tokenizer tokenizer = getTokenizer();
+
+		List<String> keywords = tokenizer.tokenize(
 			localizedFieldName, searchContext.getKeywords(),
 			searchContext.getLanguageId());
 
@@ -54,5 +62,22 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 
 		return new SuggesterResults();
 	}
+
+	protected Tokenizer getTokenizer() {
+		if (tokenizer != null) {
+			return tokenizer;
+		}
+
+		return _defaultTokenizer;
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile Tokenizer tokenizer;
+
+	private static final Tokenizer _defaultTokenizer = new SimpleTokenizer();
 
 }

@@ -12,30 +12,30 @@
  * details.
  */
 
-package com.liferay.layout.page.template.exception;
+package com.liferay.fragment.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchPageTemplateFragmentException extends NoSuchModelException {
+public class RequiredFragmentEntryException extends PortalException {
 
-	public NoSuchPageTemplateFragmentException() {
+	public RequiredFragmentEntryException() {
 	}
 
-	public NoSuchPageTemplateFragmentException(String msg) {
+	public RequiredFragmentEntryException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchPageTemplateFragmentException(String msg, Throwable cause) {
+	public RequiredFragmentEntryException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchPageTemplateFragmentException(Throwable cause) {
+	public RequiredFragmentEntryException(Throwable cause) {
 		super(cause);
 	}
 

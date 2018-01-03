@@ -25,3 +25,11 @@ create table FragmentEntry (
 	js STRING null,
 	htmlPreviewEntryId LONG
 );
+
+create table FragmentEntryInstanceLink (
+	fragmentEntryInstanceLinkId LONG not null primary key,
+	groupId LONG,
+	fragmentEntryId LONG,
+	layoutPageTemplateEntryId LONG,
+	position INTEGER
+);

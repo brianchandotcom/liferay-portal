@@ -14,8 +14,8 @@
 
 package com.liferay.layout.type.controller.content.internal.controller;
 
-import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService;
+import com.liferay.fragment.model.FragmentEntryInstanceLink;
+import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerConstants;
 import com.liferay.layout.type.controller.content.internal.constants.ContentLayoutTypeControllerWebKeys;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -69,14 +69,14 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 		long layoutPageTemplateEntryId = GetterUtil.getLong(
 			typeSettingsProperties.get("layoutPageTemplateEntryId"));
 
-		List<LayoutPageTemplateFragment> layoutPageTemplateFragments =
-			_layoutPageTemplateFragmentLocalService.
-				getLayoutPageTemplateFragmentsByPageTemplate(
+		List<FragmentEntryInstanceLink> fragmentEntryInstanceLinks =
+			_fragmentEntryInstanceLinkLocalService.
+				getFragmentEntryInstanceLinks(
 					layout.getGroupId(), layoutPageTemplateEntryId);
 
 		request.setAttribute(
 			ContentLayoutTypeControllerWebKeys.LAYOUT_FRAGMENTS,
-			layoutPageTemplateFragments);
+			fragmentEntryInstanceLinks);
 
 		return super.includeLayoutContent(request, response, layout);
 	}
@@ -145,7 +145,7 @@ public class ContentLayoutTypeController extends BaseLayoutTypeControllerImpl {
 	private static final String _VIEW_PAGE = "/layout/view/content.jsp";
 
 	@Reference
-	private LayoutPageTemplateFragmentLocalService
-		_layoutPageTemplateFragmentLocalService;
+	private FragmentEntryInstanceLinkLocalService
+		_fragmentEntryInstanceLinkLocalService;
 
 }

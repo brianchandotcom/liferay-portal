@@ -7,4 +7,6 @@
 	<bean class="com.liferay.fragment.service.impl.FragmentEntryLocalServiceImpl" id="com.liferay.fragment.service.FragmentEntryLocalService" />
 	<bean class="com.liferay.fragment.service.impl.FragmentEntryServiceImpl" id="com.liferay.fragment.service.FragmentEntryService" />
 	<bean class="com.liferay.fragment.service.persistence.impl.FragmentEntryPersistenceImpl" id="com.liferay.fragment.service.persistence.FragmentEntryPersistence" parent="basePersistence" />
+	<bean class="com.liferay.fragment.service.impl.FragmentEntryInstanceLinkLocalServiceImpl" id="com.liferay.fragment.service.FragmentEntryInstanceLinkLocalService" />
+	<bean class="com.liferay.fragment.service.persistence.impl.FragmentEntryInstanceLinkPersistenceImpl" id="com.liferay.fragment.service.persistence.FragmentEntryInstanceLinkPersistence" parent="basePersistence" />
 </beans>

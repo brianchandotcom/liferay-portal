@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.layout.page.template.model.impl;
+package com.liferay.fragment.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -21,11 +21,11 @@ import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
 @ProviderType
-public class LayoutPageTemplateFragmentImpl
-	extends LayoutPageTemplateFragmentBaseImpl {
+public class FragmentEntryInstanceLinkImpl
+	extends FragmentEntryInstanceLinkBaseImpl {
 
 	@Override
 	public String getCss() throws PortalException {

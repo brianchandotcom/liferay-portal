@@ -61,7 +61,7 @@ public interface FragmentEntryService extends BaseService {
 		java.lang.String html, java.lang.String js,
 		ServiceContext serviceContext) throws PortalException;
 
-	public List<FragmentEntry> deleteFragmentEntries(long[] fragmentEntriesIds)
+	public void deleteFragmentEntries(long[] fragmentEntriesIds)
 		throws PortalException;
 
 	public FragmentEntry deleteFragmentEntry(long fragmentEntryId)

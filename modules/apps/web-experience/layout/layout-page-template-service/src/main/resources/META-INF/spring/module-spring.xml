@@ -7,6 +7,4 @@
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateEntryLocalService" />
 	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateEntryServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateEntryService" />
 	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateEntryPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateEntryPersistence" parent="basePersistence" />
-	<bean class="com.liferay.layout.page.template.service.impl.LayoutPageTemplateFragmentLocalServiceImpl" id="com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalService" />
-	<bean class="com.liferay.layout.page.template.service.persistence.impl.LayoutPageTemplateFragmentPersistenceImpl" id="com.liferay.layout.page.template.service.persistence.LayoutPageTemplateFragmentPersistence" parent="basePersistence" />
 </beans>

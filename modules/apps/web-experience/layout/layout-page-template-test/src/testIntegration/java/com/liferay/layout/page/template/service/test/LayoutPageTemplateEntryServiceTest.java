@@ -17,16 +17,16 @@ package com.liferay.layout.page.template.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.model.FragmentEntryInstanceLink;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
+import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateEntryException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateEntryNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
-import com.liferay.layout.page.template.model.LayoutPageTemplateFragment;
 import com.liferay.layout.page.template.service.LayoutPageTemplateCollectionServiceUtil;
 import com.liferay.layout.page.template.service.LayoutPageTemplateEntryServiceUtil;
-import com.liferay.layout.page.template.service.LayoutPageTemplateFragmentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
@@ -185,23 +185,21 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry 2", null, null, null, serviceContext);
 
-		List<FragmentEntry> layoutPageTemplateFragmentEntries =
-			new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		layoutPageTemplateFragmentEntries.add(fragmentEntry1);
-		layoutPageTemplateFragmentEntries.add(fragmentEntry2);
+		fragmentEntries.add(fragmentEntry1);
+		fragmentEntries.add(fragmentEntry2);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", layoutPageTemplateFragmentEntries,
-				serviceContext);
+				"Layout Page Template Entry", fragmentEntries, serviceContext);
 
-		List<LayoutPageTemplateFragment> actualLayoutPageTemplateEntriesCount =
-			LayoutPageTemplateFragmentLocalServiceUtil.
-				getLayoutPageTemplateFragmentsByPageTemplate(
+		List<FragmentEntryInstanceLink> actualLayoutPageTemplateEntriesCount =
+			FragmentEntryInstanceLinkLocalServiceUtil.
+				getFragmentEntryInstanceLinks(
 					_group.getGroupId(),
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 
@@ -312,27 +310,25 @@ public class LayoutPageTemplateEntryServiceTest {
 				fragmentCollection.getFragmentCollectionId(),
 				"Fragment Entry 2", null, null, null, serviceContext);
 
-		List<FragmentEntry> layoutPageTemplateFragmentEntries =
-			new ArrayList<>();
+		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
-		layoutPageTemplateFragmentEntries.add(fragmentEntry1);
-		layoutPageTemplateFragmentEntries.add(fragmentEntry2);
+		fragmentEntries.add(fragmentEntry1);
+		fragmentEntries.add(fragmentEntry2);
 
 		LayoutPageTemplateEntry layoutPageTemplateEntry =
 			LayoutPageTemplateEntryServiceUtil.addLayoutPageTemplateEntry(
 				_group.getGroupId(),
 				layoutPageTemplateCollection.
 					getLayoutPageTemplateCollectionId(),
-				"Layout Page Template Entry", layoutPageTemplateFragmentEntries,
-				serviceContext);
+				"Layout Page Template Entry", fragmentEntries, serviceContext);
 
 		LayoutPageTemplateEntryServiceUtil.updateLayoutPageTemplateEntry(
 			layoutPageTemplateEntry.getLayoutPageTemplateEntryId(), "New name",
 			new ArrayList<FragmentEntry>(), serviceContext);
 
-		List<LayoutPageTemplateFragment> actualLayoutPageTemplateEntriesCount =
-			LayoutPageTemplateFragmentLocalServiceUtil.
-				getLayoutPageTemplateFragmentsByPageTemplate(
+		List<FragmentEntryInstanceLink> actualLayoutPageTemplateEntriesCount =
+			FragmentEntryInstanceLinkLocalServiceUtil.
+				getFragmentEntryInstanceLinks(
 					_group.getGroupId(),
 					layoutPageTemplateEntry.getLayoutPageTemplateEntryId());
 

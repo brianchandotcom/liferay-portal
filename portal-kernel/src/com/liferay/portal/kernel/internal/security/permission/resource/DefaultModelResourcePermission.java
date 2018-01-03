@@ -36,15 +36,17 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 	implements ModelResourcePermission<T> {
 
 	public DefaultModelResourcePermission(
-		String modelName, ToLongFunction<T> primKeyFunction,
-		UnsafeFunction<Long, T, ? extends PortalException> getModelFunction,
+		String modelName, ToLongFunction<T> primKeyToLongFunction,
+		UnsafeFunction<Long, T, ? extends PortalException>
+			getModelUnsafeFunction,
 		PortletResourcePermission portletResourcePermission,
 		List<ModelResourcePermissionLogic<T>> modelResourcePermissionLogics,
 		UnaryOperator<String> actionIdMapper) {
 
 		_modelName = Objects.requireNonNull(modelName);
-		_primKeyFunction = Objects.requireNonNull(primKeyFunction);
-		_getModelFunction = Objects.requireNonNull(getModelFunction);
+		_primKeyToLongFunction = Objects.requireNonNull(primKeyToLongFunction);
+		_getModelUnsafeFunction = Objects.requireNonNull(
+			getModelUnsafeFunction);
 		_portletResourcePermission = portletResourcePermission;
 		_modelResourcePermissionLogics = Objects.requireNonNull(
 			modelResourcePermissionLogics);
@@ -71,7 +73,7 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 		if (!contains(permissionChecker, model, actionId)) {
 			throw new PrincipalException.MustHavePermission(
 				permissionChecker, _modelName,
-				_primKeyFunction.applyAsLong(model), actionId);
+				_primKeyToLongFunction.applyAsLong(model), actionId);
 		}
 	}
 
@@ -91,7 +93,7 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 
 		if (contains == null) {
 			contains = _contains(
-				permissionChecker, _getModelFunction.apply(primaryKey),
+				permissionChecker, _getModelUnsafeFunction.apply(primaryKey),
 				actionId);
 
 			permissionChecksMap.put(permissionCacheKey, contains);
@@ -109,7 +111,7 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 			permissionChecker.getPermissionChecksMap();
 
 		PermissionCacheKey permissionCacheKey = new PermissionCacheKey(
-			_modelName, _primKeyFunction.applyAsLong(model), actionId);
+			_modelName, _primKeyToLongFunction.applyAsLong(model), actionId);
 
 		Boolean contains = (Boolean)permissionChecksMap.get(permissionCacheKey);
 
@@ -149,7 +151,8 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 			}
 		}
 
-		String primKey = String.valueOf(_primKeyFunction.applyAsLong(model));
+		String primKey = String.valueOf(
+			_primKeyToLongFunction.applyAsLong(model));
 
 		if (permissionChecker.hasOwnerPermission(
 				model.getCompanyId(), _modelName, primKey, model.getUserId(),
@@ -164,11 +167,11 @@ public class DefaultModelResourcePermission<T extends GroupedModel>
 
 	private final UnaryOperator<String> _actionIdMapper;
 	private final UnsafeFunction<Long, T, ? extends PortalException>
-		_getModelFunction;
+		_getModelUnsafeFunction;
 	private final String _modelName;
 	private final List<ModelResourcePermissionLogic<T>>
 		_modelResourcePermissionLogics;
 	private final PortletResourcePermission _portletResourcePermission;
-	private final ToLongFunction<T> _primKeyFunction;
+	private final ToLongFunction<T> _primKeyToLongFunction;
 
 }

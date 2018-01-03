@@ -34,21 +34,23 @@ import java.util.function.UnaryOperator;
 public class ModelResourcePermissionFactory {
 
 	public static <T extends GroupedModel> ModelResourcePermission<T> create(
-		Class<T> modelClass, ToLongFunction<T> primKeyFunction,
-		UnsafeFunction<Long, T, ? extends PortalException> getModelFunction,
+		Class<T> modelClass, ToLongFunction<T> primKeyToLongFunction,
+		UnsafeFunction<Long, T, ? extends PortalException>
+			getModelUnsafeFunction,
 		PortletResourcePermission portletResourcePermission,
 		ModelResourcePermissionConfigurator<T>
 			modelResourcePermissionConfigurator) {
 
 		return create(
-			modelClass, primKeyFunction, getModelFunction,
+			modelClass, primKeyToLongFunction, getModelUnsafeFunction,
 			portletResourcePermission, modelResourcePermissionConfigurator,
 			UnaryOperator.identity());
 	}
 
 	public static <T extends GroupedModel> ModelResourcePermission<T> create(
-		Class<T> modelClass, ToLongFunction<T> primKeyFunction,
-		UnsafeFunction<Long, T, ? extends PortalException> getModelFunction,
+		Class<T> modelClass, ToLongFunction<T> primKeyToLongFunction,
+		UnsafeFunction<Long, T, ? extends PortalException>
+			getModelUnsafeFunction,
 		PortletResourcePermission portletResourcePermission,
 		ModelResourcePermissionConfigurator<T>
 			modelResourcePermissionConfigurator,
@@ -59,12 +61,13 @@ public class ModelResourcePermissionFactory {
 
 		ModelResourcePermission<T> modelResourcePermission =
 			new DefaultModelResourcePermission<>(
-				modelClass.getName(), primKeyFunction, getModelFunction,
-				portletResourcePermission, modelResourcePermissionLogics,
-				actionIdMapper);
+				modelClass.getName(), primKeyToLongFunction,
+				getModelUnsafeFunction, portletResourcePermission,
+				modelResourcePermissionLogics, actionIdMapper);
 
-		modelResourcePermissionConfigurator.configPermissionLogics(
-			modelResourcePermission, modelResourcePermissionLogics::add);
+		modelResourcePermissionConfigurator.
+			configureModelResourcePermissionLogics(
+				modelResourcePermission, modelResourcePermissionLogics::add);
 
 		return modelResourcePermission;
 	}
@@ -84,9 +87,9 @@ public class ModelResourcePermissionFactory {
 	public interface ModelResourcePermissionConfigurator
 		<T extends GroupedModel> {
 
-		public void configPermissionLogics(
+		public void configureModelResourcePermissionLogics(
 			ModelResourcePermission<T> modelResourcePermission,
-			Consumer<ModelResourcePermissionLogic<T>> logicConsumer);
+			Consumer<ModelResourcePermissionLogic<T>> consumer);
 
 	}
 

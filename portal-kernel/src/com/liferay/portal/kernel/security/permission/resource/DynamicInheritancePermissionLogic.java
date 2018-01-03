@@ -31,14 +31,16 @@ public class DynamicInheritancePermissionLogic
 
 	public DynamicInheritancePermissionLogic(
 		ModelResourcePermission<P> parentModelResourcePermission,
-		UnsafeFunction<C, P, ? extends PortalException> fetchParentFunction,
+		UnsafeFunction<C, P, ? extends PortalException>
+			fetchParentUnsafeFunction,
 		boolean checkParentAccess) {
 
 		_parentModelResourcePermission = Objects.requireNonNull(
 			parentModelResourcePermission);
 		_portletResourcePermission = Objects.requireNonNull(
 			parentModelResourcePermission.getPortletResourcePermission());
-		_fetchParentFunction = Objects.requireNonNull(fetchParentFunction);
+		_fetchParentUnsafeFunction = Objects.requireNonNull(
+			fetchParentUnsafeFunction);
 		_checkParentAccess = checkParentAccess;
 	}
 
@@ -52,7 +54,7 @@ public class DynamicInheritancePermissionLogic
 			return null;
 		}
 
-		P parent = _fetchParentFunction.apply(child);
+		P parent = _fetchParentUnsafeFunction.apply(child);
 
 		if (parent == null) {
 			if (_portletResourcePermission.contains(
@@ -82,7 +84,7 @@ public class DynamicInheritancePermissionLogic
 
 	private final boolean _checkParentAccess;
 	private final UnsafeFunction<C, P, ? extends PortalException>
-		_fetchParentFunction;
+		_fetchParentUnsafeFunction;
 	private final ModelResourcePermission<P> _parentModelResourcePermission;
 	private final PortletResourcePermission _portletResourcePermission;
 

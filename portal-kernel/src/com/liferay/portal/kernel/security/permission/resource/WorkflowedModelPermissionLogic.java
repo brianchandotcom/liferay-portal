@@ -33,12 +33,12 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 	public WorkflowedModelPermissionLogic(
 		WorkflowPermission workflowPermission,
 		ModelResourcePermission<T> modelResourcePermission,
-		ToLongFunction<T> primKeyFunction) {
+		ToLongFunction<T> primKeyToLongFunction) {
 
 		_workflowPermission = Objects.requireNonNull(workflowPermission);
 		_modelResourcePermission = Objects.requireNonNull(
 			modelResourcePermission);
-		_primKeyFunction = Objects.requireNonNull(primKeyFunction);
+		_primKeyToLongFunction = Objects.requireNonNull(primKeyToLongFunction);
 	}
 
 	@Override
@@ -60,14 +60,14 @@ public class WorkflowedModelPermissionLogic<T extends GroupedModel>
 		else if (workflowedModel.isPending()) {
 			return _workflowPermission.hasPermission(
 				permissionChecker, model.getGroupId(), name,
-				_primKeyFunction.applyAsLong(model), actionId);
+				_primKeyToLongFunction.applyAsLong(model), actionId);
 		}
 
 		return null;
 	}
 
 	private final ModelResourcePermission<T> _modelResourcePermission;
-	private final ToLongFunction<T> _primKeyFunction;
+	private final ToLongFunction<T> _primKeyToLongFunction;
 	private final WorkflowPermission _workflowPermission;
 
 }

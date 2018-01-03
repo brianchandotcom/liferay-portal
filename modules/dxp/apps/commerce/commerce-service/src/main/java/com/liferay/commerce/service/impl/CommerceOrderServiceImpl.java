@@ -102,7 +102,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-			long groupId, int start, int end,
+			long groupId, int status, int start, int end,
 			OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException {
 
@@ -111,11 +111,13 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		return commerceOrderLocalService.getCommerceOrders(
-			groupId, start, end, orderByComparator);
+			groupId, status, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId) throws PortalException {
+	public Map<Integer, Long> getCommerceOrdersCount(long groupId)
+		throws PortalException {
+
 		CommercePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
@@ -124,15 +126,15 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
-	public Map<Integer, Long> getCommerceOrdersCountByStatus(long groupId)
+	public int getCommerceOrdersCount(long groupId, int status)
 		throws PortalException {
 
 		CommercePermission.check(
 			getPermissionChecker(), groupId,
 			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
-		return commerceOrderLocalService.getCommerceOrdersCountByStatus(
-			groupId);
+		return commerceOrderLocalService.getCommerceOrdersCount(
+			groupId, status);
 	}
 
 	@Override

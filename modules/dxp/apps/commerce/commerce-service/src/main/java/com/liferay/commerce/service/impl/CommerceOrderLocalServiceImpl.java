@@ -213,21 +213,32 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-		long groupId, int start, int end,
+		long groupId, int status, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
 
-		return commerceOrderPersistence.findByGroupId(
-			groupId, start, end, orderByComparator);
+		if (status == CommerceOrderConstants.STATUS_ANY) {
+			return commerceOrderPersistence.findByGroupId(
+				groupId, start, end, orderByComparator);
+		}
+		else {
+			return commerceOrderPersistence.findByG_S(
+				groupId, status, start, end, orderByComparator);
+		}
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId) {
-		return commerceOrderPersistence.countByGroupId(groupId);
-	}
-
-	@Override
-	public Map<Integer, Long> getCommerceOrdersCountByStatus(long groupId) {
+	public Map<Integer, Long> getCommerceOrdersCount(long groupId) {
 		return commerceOrderFinder.countByG_S(groupId);
+	}
+
+	@Override
+	public int getCommerceOrdersCount(long groupId, int status) {
+		if (status == CommerceOrderConstants.STATUS_ANY) {
+			return commerceOrderPersistence.countByGroupId(groupId);
+		}
+		else {
+			return commerceOrderPersistence.countByG_S(groupId, status);
+		}
 	}
 
 	@Override

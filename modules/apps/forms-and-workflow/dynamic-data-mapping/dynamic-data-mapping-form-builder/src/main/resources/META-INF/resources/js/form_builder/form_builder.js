@@ -19,8 +19,6 @@ AUI.add(
 
 		var CSS_PAGES = A.getClassName('form', 'builder', 'pages', 'lexicon');
 
-		var CSS_RESIZE_COL_BREAKPOINT = A.getClassName('layout', 'builder', 'resize', 'col', 'breakpoint');
-
 		var CSS_RESIZE_COL_DRAGGABLE = A.getClassName('layout', 'builder', 'resize', 'col', 'draggable');
 
 		var CSS_RESIZE_COL_DRAGGABLE_HANDLE = A.getClassName('layout', 'builder', 'resize', 'col', 'draggable', 'handle');
@@ -46,10 +44,6 @@ AUI.add(
 		var TPL_REQURIED_FIELDS = '<label class="hide required-warning">{message}</label>';
 
 		var Util = Liferay.DDM.Renderer.Util;
-
-		var CSS_RESIZE_COL_DRAGGING = A.getClassName('layout', 'builder', 'resize', 'col', 'dragging');
-
-		var CSS_RESIZE_COL_DRAGGABLE_DRAGGING = A.getClassName('layout', 'builder', 'resize', 'col', 'draggable', 'dragging');
 
 		var SELECTOR_ROW = '.layout-row';
 
@@ -139,7 +133,11 @@ AUI.add(
 					}
 				},
 
-				AUGMENTS: [Liferay.DDM.FormBuilderLayoutBuilderSupport, Liferay.DDM.Renderer.NestedFieldsSupport],
+				AUGMENTS: [
+					Liferay.DDM.FormBuilderDDSupport,
+					Liferay.DDM.FormBuilderLayoutBuilderSupport,
+					Liferay.DDM.Renderer.NestedFieldsSupport
+				],
 
 				CSS_PREFIX: 'form-builder',
 
@@ -156,17 +154,17 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 
 						instance._eventHandlers = [
+							A.one('body').delegate('hover', instance.openSidebarByButton, '.lfr-ddm-add-field', instance),
 							boundingBox.delegate('click', A.bind('_afterFieldClick', instance), '.' + CSS_FIELD, instance),
+							boundingBox.delegate('click', instance._onClickDuplicateFieldButton, '.' + CSS_DUPLICATE_FIELD_BUTTON, instance),
 							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),
 							boundingBox.delegate('click', instance._onClickRemoveFieldButton, '.' + CSS_DELETE_FIELD_BUTTON, instance),
-							boundingBox.delegate('click', instance._onClickDuplicateFieldButton, '.' + CSS_DUPLICATE_FIELD_BUTTON, instance),
-							A.one('body').delegate('hover', instance.openSidebarByButton, '.lfr-ddm-add-field', instance),
 							boundingBox.delegate('mouseleave', instance.onLeaveLayoutBuilder, '.' + CSS_LAYOUT_BUILDER_CONTAINER, instance),
 							instance.after('editingLanguageIdChange', instance._afterEditingLanguageIdChange),
 							instance.after('liferay-ddm-form-builder-field-list:fieldsChange', instance._afterFieldListChange, instance),
-							instance.before('render', instance._beforeFormBuilderRender, instance),
 							instance.after('render', instance._afterFormBuilderRender, instance),
-							instance.after(instance._afterRemoveField, instance, 'removeField')
+							instance.after(instance._afterRemoveField, instance, 'removeField'),
+							instance.before('render', instance._beforeFormBuilderRender, instance)
 						];
 					},
 
@@ -184,228 +182,6 @@ AUI.add(
 						visitor.visit();
 
 						(new A.EventHandle(instance._eventHandlers)).detach();
-					},
-
-					addColumnOnDragAction: function(dragNode, dropNode) {
-						var instance = this;
-
-						instance.addedColumWhileDragging = true;
-
-						if (!instance.isValidNewLayoutColumn(dragNode.getData('layout-col1')) || !instance.isValidNewLayoutColumn(dragNode.getData('layout-col2'))) {
-							return;
-						}
-
-						var newCol = new A.LayoutCol(
-							{
-								size: 1
-							}
-						);
-						var rowNode = dragNode.ancestor(SELECTOR_ROW);
-
-						var draggable = A.Node.create(instance._layoutBuilder.TPL_RESIZE_COL_DRAGGABLE);
-
-						rowNode.append(draggable);
-
-						instance.addNewColumnInLayout(newCol, dropNode, rowNode);
-						instance._syncDragHandles(rowNode);
-					},
-
-					addNewColumnInLayout: function(newCol, dropNode, rowNode) {
-						var instance = this;
-
-						var colNode = newCol.get('node');
-						var cols = rowNode.getData('layout-row').get('cols');
-
-						instance.lastColumnAdd = colNode;
-
-						colNode.addClass('col-empty');
-
-						if (dropNode.getData('layout-position') == 1) {
-							cols.unshift(newCol);
-							rowNode.prepend(colNode);
-							instance.hasColumnLeftCreated = true;
-							instance.startedPosition = true;
-						}
-						else {
-							cols.push(newCol);
-							rowNode.append(colNode);
-							instance.hasColumnRightCreated = true;
-							instance.endedPosition = true;
-						}
-					},
-
-					afterDragEnd: function(sortable) {
-						var instance = this;
-
-						sortable.on(
-							'drag:end',
-							function(event) {
-								var fieldColumnStart = A.one('.current-dragging');
-								var fieldNodeEnd = event.target.get('node');
-								var layoutRows = instance.get('layouts')[instance._getActiveLayoutIndex()].get('rows');
-								var positions = {};
-
-								var fieldColumnEnd = fieldNodeEnd.ancestor('.col');
-
-								if (fieldNodeEnd.getData('field-type') || fieldNodeEnd.getData('field-set-id')) {
-									return instance.updateDragAndDropBySidebar(fieldNodeEnd);
-								}
-
-								if (!fieldColumnStart) {
-									return false;
-								}
-
-								instance.gridDOM.forEach(
-									function(cols, indexRow) {
-										cols.forEach(
-											function(col, indexCol) {
-												if (fieldColumnStart._node.id == col._node.id) {
-													positions.positionRowStart = indexRow;
-													positions.positionColumnStart = indexCol;
-												}
-											}
-										);
-
-										cols.forEach(
-											function(col, indexCol) {
-												if (fieldColumnEnd._node.id == col._node.id) {
-													positions.positionRowEnd = indexRow;
-													positions.positionColumnEnd = indexCol;
-												}
-											}
-										);
-									}
-								);
-
-								if ((positions.positionRowEnd == positions.positionRowStart - 1) && (layoutRows[positions.positionRowStart].get('cols').length == 1)) {
-									return instance._updateDragAndDropUI(fieldNodeEnd, sortable, positions);
-								}
-
-								return instance._updateDragAndDropContext(fieldNodeEnd, sortable, positions);
-							}
-						);
-					},
-
-					afterDragStart: function(sortable1) {
-						var instance = this;
-
-						sortable1.after(
-							'drag:start',
-							function(event) {
-								var fieldNodeStart = event.target.get('node');
-								var proxyActive;
-
-								var fieldColumnStart = fieldNodeStart.ancestor('.col');
-
-								fieldNodeStart.addClass('hidden');
-								fieldColumnStart.addClass('current-dragging');
-								fieldColumnStart.addClass('col-empty');
-
-								sortable1.addDropNode(fieldColumnStart);
-								A.DD.DDM._activateTargets();
-
-								instance._addToStack(fieldColumnStart);
-
-								proxyActive = A.one('.yui3-dd-proxy');
-
-								if (proxyActive) {
-									proxyActive.empty();
-									proxyActive.append(fieldNodeStart._node.innerHTML);
-								}
-							}
-						);
-					},
-
-					afterPlaceholderAlign: function(sortable) {
-						var instance = this;
-
-						sortable.after(
-							'placeholderAlign',
-							function(event) {
-								var activeDropNode = event.drop.get('node');
-
-								instance._addToStack(activeDropNode);
-							}
-						);
-					},
-
-					beforeSidebarDragStart: function() {
-						var instance = this;
-
-						instance.sidebarSortable.before(
-							'drag:start',
-							function(event) {
-								var clonedNode = A.DD.DDM.activeDrag.get('node').clone();
-								var fieldNodeStart = event.target.get('node');
-								var proxyActive = A.one('.yui3-dd-proxy');
-
-								instance.currentFieldTypeDrag = event.target;
-
-								instance.sidebarSortable.addDropNode(fieldNodeStart.ancestor());
-								A.DD.DDM._activateTargets();
-
-								instance._addToStack(fieldNodeStart);
-
-								if (proxyActive) {
-									proxyActive.empty();
-									proxyActive.append(clonedNode);
-								}
-
-								if (fieldNodeStart.getData('field-set-id')) {
-									instance.formatDragRowsToReceiveFieldset();
-								}
-							}
-						);
-					},
-
-					beforeSidebarItemPlaceholderAlign: function() {
-						var instance = this;
-
-						instance.sidebarSortable.before(
-							'placeholderAlign',
-							function(event) {
-								var fieldStart = instance.currentFieldTypeDrag;
-								var newTarget = A.one(document.createElement('div'));
-
-								if (fieldStart.get('node').attr('data-field-set-id')) {
-									newTarget.setData('field-set-id', fieldStart.get('node').getData('field-set-id'));
-									fieldStart.set('node', newTarget);
-								}
-
-								if (!fieldStart.get('node').getData('field-type') && fieldStart.get('node').attr('data-field-type-name')) {
-									newTarget.setData('field-type', FieldTypes.get(fieldStart.get('node').attr('data-field-type-name')));
-									fieldStart.set('node', newTarget);
-								}
-							}
-						);
-					},
-
-					bindSidebarFieldDragAction: function() {
-						var instance = this;
-						var rows = instance.getActiveLayout().get('rows');
-
-						instance._newFieldContainer = rows[rows.length - 1].get('cols')[0];
-
-						if (instance.sidebarSortable) {
-							return;
-						}
-
-						instance.sidebarSortable = new A.SortableLayout(
-							{
-								delegateConfig: {
-									target: true,
-									useShim: true
-								},
-								dragNodes: '.lfr-ddm-form-builder-draggable-item',
-								dropNodes: '.layout-row .col-empty',
-								proxy: null
-							}
-						);
-
-						instance.beforeSidebarDragStart();
-						instance.beforeSidebarItemPlaceholderAlign();
-						instance.afterPlaceholderAlign(instance.sidebarSortable);
-						instance.afterDragEnd(instance.sidebarSortable);
 					},
 
 					cancelFieldEdition: function(field) {
@@ -690,19 +466,6 @@ AUI.add(
 						return FieldTypes.get(field.get('type'));
 					},
 
-					formatDragRowsToReceiveFieldset: function() {
-						var instance = this;
-
-						A.all('.col-empty').each(
-							function(col) {
-								if (!col.hasClass('col-md-12')) {
-									col.removeClass('col-empty');
-									col.setAttribute('data-removed-col-empty', true);
-								}
-							}
-						);
-					},
-
 					getFieldSettingsPanel: function() {
 						var instance = this;
 
@@ -822,7 +585,7 @@ AUI.add(
 
 						var colLayoutPosition = dropNode.getData('layout-position');
 
-						if (!lastLayoutPosition || lastLayoutPosition != colLayoutPosition) {
+						if ((!lastLayoutPosition) || (lastLayoutPosition != colLayoutPosition)) {
 							var leftSideColumn = dragNode.getData('layout-col1');
 							var rightSideColumn = dragNode.getData('layout-col2');
 
@@ -857,12 +620,12 @@ AUI.add(
 
 							if ((leftSideColumn.get('removable') || leftSideColumn.get('node').hasClass('col-empty')) && leftSideColumNewSize === 0) {
 								leftSideColumNewSize += 1;
-								instance.removeRemoveLayoutBuilderColumn(leftSideColumn);
+								instance.removeRemovebleLayoutBuilderColumn(leftSideColumn);
 							}
 
 							if ((rightSideColumn.get('removable') || rightSideColumn.get('node').hasClass('col-empty')) && rightSideColumnNewSize === 0) {
 								rightSideColumnNewSize += 1;
-								instance.removeRemoveLayoutBuilderColumn(rightSideColumn);
+								instance.removeRemovebleLayoutBuilderColumn(rightSideColumn);
 							}
 
 							if (rightSideColumnNewSize <= 0 || leftSideColumNewSize <= 0) {
@@ -915,23 +678,6 @@ AUI.add(
 						instance.lastColumnRemoved = false;
 					},
 
-					showResizeableColumnsDrop: function(columnSide, dropNode, increment) {
-						var instance = this;
-
-						var rowNode = dropNode.ancestor(SELECTOR_ROW);
-
-						var columnsBreakPoints = rowNode.all('.' + CSS_RESIZE_COL_BREAKPOINT);
-
-						for (var i = 0; i < columnSide.get('size'); i++) {
-							if (increment && columnsBreakPoints.item(dropNode.getData('layout-position') + i)) {
-								columnsBreakPoints.item(dropNode.getData('layout-position') + i).setStyle('display', 'block');
-							}
-							else if (!increment && columnsBreakPoints.item(dropNode.getData('layout-position') - i)) {
-								columnsBreakPoints.item(dropNode.getData('layout-position') - i).setStyle('display', 'block');
-							}
-						}
-					},
-
 					unformatFieldsetRows: function() {
 						A.all('[data-removed-col-empty="true"]').each(
 							function(col) {
@@ -939,26 +685,6 @@ AUI.add(
 								col.removeAttribute('data-removed-col-empty', true);
 							}
 						);
-					},
-
-					updateDragAndDropBySidebar: function(fieldNode) {
-						var instance = this;
-
-						var fieldSetId = fieldNode.getData('field-set-id');
-						var fieldType = fieldNode.getData('field-type');
-
-						if (!fieldNode.ancestor('.col')) {
-							return;
-						}
-
-						instance._newFieldContainer = fieldNode.ancestor('.col').getData('layout-col');
-
-						if (fieldSetId) {
-							instance._addFieldSetInDragAndDropLayout(fieldSetId);
-						}
-						else {
-							instance.createNewField(fieldType);
-						}
 					},
 
 					_addColumnInRow: function(row, hasContext) {
@@ -981,42 +707,6 @@ AUI.add(
 						return row;
 					},
 
-					_addDragAndDropActions: function() {
-						var instance = this;
-
-						instance.sortable1 = new A.SortableLayout(
-							{
-								delegateConfig: {
-									target: false,
-									useShim: false
-								},
-								dragNodes: '.layout-col-content',
-								dropNodes: '.layout-row .col-empty',
-								proxy: null,
-								proxyNode: '<div></div>'
-							}
-						);
-
-						instance.afterDragStart(instance.sortable1);
-
-						instance.afterPlaceholderAlign(instance.sortable1);
-
-						instance.afterDragEnd(instance.sortable1);
-
-						instance._getPageManagerInstance()._getWizard().after(
-							'selectedChange',
-							function() {
-								setTimeout(
-									function() {
-										instance._destroySortable(instance.sortable1);
-										instance._applyDragAndDrop();
-									},
-									0
-								);
-							}
-						);
-					},
-
 					_addFieldsChangeListener: function(layouts) {
 						var instance = this;
 
@@ -1030,29 +720,6 @@ AUI.add(
 								);
 							}
 						);
-					},
-
-					_addFieldSetInDragAndDropLayout: function(fieldSetId) {
-						var instance = this;
-
-						instance._getFieldSetDefinitionRetriever(
-							fieldSetId,
-							function(fieldSetDefinition) {
-								instance.createFieldSet(fieldSetDefinition);
-								instance.unformatFieldsetRows();
-								instance._traverseFormPages();
-								instance._applyDragAndDrop();
-							}
-						);
-					},
-
-					_addToStack: function(node) {
-						var instance = this;
-
-						instance._clearStack();
-
-						node.addClass('col-empty-over');
-						instance.activeDropColStack.push(node);
 					},
 
 					_afterActivePageNumberChange: function(event) {
@@ -1079,39 +746,6 @@ AUI.add(
 							instance._syncRequiredFieldsWarning();
 							instance._syncRowsLastColumnUI();
 						}
-					},
-
-					_afterDragAlign: function(event) {
-						var instance = this;
-
-						var dragNode = event.target.get('node');
-
-						if (instance.lastFieldHovered) {
-							instance.lastFieldHovered.addClass('hovered-field');
-						}
-
-						instance._syncColsSize(dragNode);
-					},
-
-					_afterDragStart: function(event) {
-						var instance = this;
-
-						var dragNode = event.target.get('node');
-						var layoutBuilder = instance._layoutBuilder;
-
-						layoutBuilder.dragging = true;
-
-						dragNode.hide();
-
-						instance.initialDragPosition = dragNode.getData('layout-position');
-
-						if (A.one('.last-drag-row')) {
-							A.one('.last-drag-row').removeClass('last-drag-row');
-						}
-
-						dragNode.ancestor(SELECTOR_ROW).addClass('last-drag-row');
-
-						layoutBuilder._hideColDraggableBoundaries();
 					},
 
 					_afterEditingLanguageIdChange: function(event) {
@@ -1150,7 +784,6 @@ AUI.add(
 
 					_afterFormBuilderRender: function() {
 						var instance = this;
-						var layoutBuilder = instance._layoutBuilder;
 
 						instance._eventHandlers.push(
 							A.one('.' + CSS_LAYOUT_BUILDER_CONTAINER).delegate('hover', A.bind('onHoverColumn', instance), '.col', instance)
@@ -1166,18 +799,6 @@ AUI.add(
 						instance._syncRequiredFieldsWarning();
 						instance._syncRowsLastColumnUI();
 						instance._traverseFormPages();
-						instance._applyDragAndDrop();
-
-						layoutBuilder.detach('layout-row:colsChange');
-
-						layoutBuilder._delegateDrag.detach('drag:end');
-
-						layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
-						layoutBuilder._delegateDrag.after('drag:align', A.bind(instance._afterDragAlign, instance));
-						layoutBuilder._delegateDrag.after('drag:start', A.bind(instance._afterDragStart, instance));
-
-						layoutBuilder.set('enableRemoveRows', false);
-						layoutBuilder.set('enableMoveRows', false);
 					},
 
 					_afterLayoutColsChange: function(event) {
@@ -1213,79 +834,16 @@ AUI.add(
 						instance.getFieldSettingsPanel().close();
 					},
 
-					_afterResizeColEnd: function() {
-						var instance = this;
-
-						var layoutBuilder = instance._layoutBuilder;
-
-						var dragNode = layoutBuilder._delegateDrag.get('lastNode');
-						var row = dragNode.ancestor(SELECTOR_ROW);
-
-						instance.hasColumnRightCreated = false;
-						instance.hasColumnLeftCreated = false;
-						instance.initialRightSize = false;
-						instance.initialLeftSize = false;
-						instance.initialDragPosition = false;
-						instance.lastRemovedDropPosition = false;
-
-						if (instance.lastColumnAdd) {
-							instance.lastColumnAdd.removeClass('col-empty');
-							instance.lastColumnAdd = false;
-						}
-
-						if (row) {
-							if (instance.lastColumnRemoved) {
-								row.getData('layout-row').removeCol(instance.lastColumnRemoved.getData('layout-col'));
-								instance.lastColumnRemoved.remove();
-								instance.lastColumnRemoved = false;
-							}
-
-							row.removeClass(CSS_RESIZE_COL_DRAGGING);
-
-							layoutBuilder._hideBreakpoints(row);
-						}
-
-						layoutBuilder._syncDragHandles();
-
-						layoutBuilder.dragging = false;
-
-						dragNode.removeClass(CSS_RESIZE_COL_DRAGGABLE_DRAGGING);
-
-						dragNode.show();
-
-						instance._traverseFormPages();
-						instance._destroySortable(instance.sortable1);
-						instance._applyDragAndDrop();
-
-						instance.addedColumWhileDragging = false;
-					},
-
 					_afterSelectFieldType: function(event) {
 						var instance = this;
 
 						instance.createNewField(event.fieldType);
 					},
 
-					_applyDragAndDrop: function(event) {
-						var instance = this;
-
-						instance._removeAddWrapper();
-						instance._formatGridLayout();
-						instance._addDragAndDropActions();
-					},
-
 					_beforeFormBuilderRender: function() {
 						var instance = this;
 
 						instance.activeDropColStack = [];
-					},
-
-					_clearStack: function() {
-						var instance = this;
-
-						while (instance.activeDropColStack.length > 0) {
-							instance.activeDropColStack.pop().removeClass('col-empty-over');
-						}
 					},
 
 					_createFieldActions: function() {
@@ -1318,25 +876,6 @@ AUI.add(
 						return 0;
 					},
 
-					_destroySortable: function(sortable) {
-						var instance = this;
-
-						var dropNodes = sortable.get('dropNodes');
-
-						dropNodes.each(
-							function(node) {
-								var drop = A.DD.DDM.getDrop(node);
-
-								if (drop) {
-									drop.destroy();
-								}
-							}
-						);
-
-						sortable.delegate.destroy();
-						sortable.destroy();
-					},
-
 					_duplicateFieldToColumn: function(field, column) {
 						var instance = this;
 
@@ -1346,43 +885,6 @@ AUI.add(
 						fieldCopy.render();
 
 						column.get('value').addField(fieldCopy, column.get('value').get('fields').length);
-					},
-
-					_formatDragRow: function(rows, activePageIndex) {
-						var instance = this;
-
-						var newRows = {
-							contextRows: [],
-							layoutRows: []
-						};
-						var rowsIndex = [];
-
-						instance.get('layouts')[activePageIndex].get('rows').forEach(
-							function(row, index) {
-								row.get('cols').forEach(
-									function(col) {
-										if (col.get('value') && col.get('value').get('fields').length) {
-											rowsIndex.push(index);
-										}
-									}
-								);
-							}
-						);
-
-						rows.forEach(
-							function(row, index) {
-								if (rowsIndex.indexOf(index) != -1) {
-									newRows.layoutRows = instance._addColumnInRow(newRows.layoutRows);
-									newRows.layoutRows.push(row);
-								}
-
-								if (rows.length - 1 == index) {
-									newRows.layoutRows = instance._addColumnInRow(newRows.layoutRows);
-								}
-							}
-						);
-
-						return newRows;
 					},
 
 					_formatGridLayout: function() {
@@ -1396,17 +898,6 @@ AUI.add(
 								instance.gridDOM.push(row.get('node').all('.col').get('nodes'));
 							}
 						);
-					},
-
-					_formatNewDropRows: function(activePageIndex) {
-						var instance = this;
-
-						var activeLayout = instance.get('layouts')[activePageIndex];
-						var rows = activeLayout.get('rows');
-
-						var rowsData = instance._formatDragRow(rows, activePageIndex);
-
-						instance.get('layouts')[activePageIndex].set('rows', rowsData.layoutRows);
 					},
 
 					_getFieldActionsLayout: function() {
@@ -1606,15 +1097,6 @@ AUI.add(
 						}
 					},
 
-					_removeDropTarget: function(dropInstance, sortable) {
-						var colDrop = A.DD.DDM.getDrop(dropInstance);
-
-						if (colDrop) {
-							colDrop.destroy();
-							sortable.removeDropTarget(colDrop);
-						}
-					},
-
 					_removeFieldCol: function(field) {
 						var instance = this;
 
@@ -1762,25 +1244,6 @@ AUI.add(
 						);
 					},
 
-					_setDragAndDropDelegateConfig: function(sortableInstance, dragNodes) {
-						var config = {
-							bubbleTargets: sortableInstance,
-							dragConfig: {},
-							nodes: dragNodes,
-							target: false
-						};
-
-						A.mix(
-							config.dragConfig,
-							{
-								groups: sortableInstance.get('groups'),
-								startCentered: true
-							}
-						);
-
-						return config;
-					},
-
 					_setFieldTypes: function(fieldTypes) {
 						var instance = this;
 
@@ -1810,40 +1273,6 @@ AUI.add(
 
 						if (dropNode && rowNode && (dragNode.getData('layout-col1') && dragNode.getData('layout-col2'))) {
 							instance.resizeColumns(dragNode);
-						}
-					},
-
-					_syncDragHandles: function(rowNode) {
-						var instance = this;
-
-						var dragHandles = rowNode.all('.' + CSS_RESIZE_COL_DRAGGABLE);
-						var row = rowNode.getData('layout-row');
-
-						var cols = row.get('cols');
-						var currentPos = 0;
-						var index;
-						var numberOfCols = cols.length - 1;
-
-						if (!numberOfCols) {
-							numberOfCols = 1;
-						}
-
-						for (index = 0; index <= numberOfCols; index++) {
-							var dragNode = dragHandles.item(index);
-
-							currentPos += cols[index].get('size');
-							dragNode.setStyle('left', ((currentPos * 100) / 12) + '%');
-
-							if (index == 1) {
-								dragNode.setData('layout-col1', cols[cols.length - 2]);
-								dragNode.setData('layout-col2', cols[cols.length - 1]);
-							}
-							else {
-								dragNode.setData('layout-col1', cols[index]);
-								dragNode.setData('layout-col2', cols[index + 1]);
-							}
-
-							dragNode.setData('layout-position', currentPos);
 						}
 					},
 
@@ -1910,86 +1339,6 @@ AUI.add(
 								instance._formatNewDropRows(index);
 							}
 						);
-					},
-
-					_updateDragAndDropContext: function(fieldNodeEnd, sortable, positions) {
-						var instance = this;
-
-						var activePageIndex = instance._getActiveLayoutIndex();
-						var fieldColumnEnd = fieldNodeEnd.ancestor('.col');
-						var fieldColumnStart = A.one('.current-dragging');
-
-						var activeLayout = instance.get('layouts')[activePageIndex];
-						var layoutRows = activeLayout.get('rows');
-						var positionColumnEnd = positions.positionColumnEnd;
-						var positionColumnStart = positions.positionColumnStart;
-						var positionRowEnd = positions.positionRowEnd;
-						var positionRowStart = positions.positionRowStart;
-
-						var columnEnd = layoutRows[positionRowEnd].get('cols')[positionColumnEnd];
-
-						fieldColumnStart.addClass('col-empty');
-						fieldColumnStart.removeClass('col-empty-over');
-						fieldColumnEnd.removeClass('col-empty');
-						fieldNodeEnd.removeClass('hidden');
-						fieldColumnStart.removeClass('current-dragging');
-
-						instance._removeDropTarget(fieldColumnEnd, sortable);
-
-						var field = fieldColumnEnd.one('.' + CSS_FIELD).getData('field-instance');
-
-						if (positionRowEnd != positionRowStart || (positionRowEnd == positionRowStart && positionColumnEnd != positionColumnStart)) {
-							layoutRows[positionRowStart].get('cols')[positionColumnStart].get('value').removeField(field);
-							layoutRows[positionRowEnd].get('cols')[positionColumnEnd].get('value').addField(field);
-
-							columnEnd.get('node').one('.layout-col-content').empty();
-							columnEnd.get('node').one('.layout-col-content').append(columnEnd.get('value').get('content'));
-							field.render();
-						}
-
-						instance._clearStack();
-
-						setTimeout(
-							function() {
-								if (positionRowEnd != positionRowStart || (positionRowEnd == positionRowStart && positionColumnEnd != positionColumnStart)) {
-									instance._formatNewDropRows(instance._getActiveLayoutIndex());
-								}
-
-								instance._destroySortable(sortable);
-								instance._applyDragAndDrop();
-							},
-							0
-						);
-					},
-
-					_updateDragAndDropUI: function(fieldNodeEnd, sortable, positions) {
-						var instance = this;
-
-						var layoutRows = instance.get('layouts')[instance._getActiveLayoutIndex()].get('rows');
-						var positionColumnEnd = positions.positionColumnEnd;
-						var positionColumnStart = positions.positionColumnStart;
-						var positionRowEnd = positions.positionRowEnd;
-						var positionRowStart = positions.positionRowStart;
-
-						var columnEnd = layoutRows[positionRowEnd].get('cols')[positionColumnEnd];
-						var columnStart = layoutRows[positionRowStart].get('cols')[positionColumnStart];
-						var fieldColumnEnd = fieldNodeEnd.ancestor('.col');
-						var fieldColumnStart = A.one('.current-dragging');
-
-						columnStart.get('node').append(columnEnd.get('node').one('> div'));
-						columnEnd.get('node').empty();
-
-						fieldColumnEnd.removeClass('col-empty-over');
-
-						fieldColumnStart.removeClass('current-dragging');
-						fieldColumnStart.removeClass('col-empty');
-						fieldNodeEnd.removeClass('hidden');
-
-						return instance._removeDropTarget(fieldColumnStart, sortable);
-					},
-
-					_updateFieldsetDraggingStatus: function(fieldset, status) {
-						return fieldset.set('isDragging', status);
 					},
 
 					_valueDeserializer: function() {
@@ -2073,6 +1422,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-form-builder-pages', 'aui-popover', 'aui-sortable-layout', 'liferay-ddm-form-builder-confirmation-dialog', 'liferay-ddm-form-builder-field-list', 'liferay-ddm-form-builder-field-options-toolbar', 'liferay-ddm-form-builder-field-settings-sidebar', 'liferay-ddm-form-builder-field-support', 'liferay-ddm-form-builder-field-type', 'liferay-ddm-form-builder-field-types-sidebar', 'liferay-ddm-form-builder-fieldset', 'liferay-ddm-form-builder-layout-deserializer', 'liferay-ddm-form-builder-layout-visitor', 'liferay-ddm-form-builder-pages-manager', 'liferay-ddm-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-util']
+		requires: ['aui-form-builder', 'aui-form-builder-pages', 'aui-popover', 'aui-sortable-layout', 'liferay-ddm-form-builder-confirmation-dialog', 'liferay-ddm-form-builder-dd-support', 'liferay-ddm-form-builder-field-list', 'liferay-ddm-form-builder-field-options-toolbar', 'liferay-ddm-form-builder-field-settings-sidebar', 'liferay-ddm-form-builder-field-support', 'liferay-ddm-form-builder-field-type', 'liferay-ddm-form-builder-field-types-sidebar', 'liferay-ddm-form-builder-fieldset', 'liferay-ddm-form-builder-layout-deserializer', 'liferay-ddm-form-builder-layout-visitor', 'liferay-ddm-form-builder-pages-manager', 'liferay-ddm-form-builder-util', 'liferay-ddm-form-field-types', 'liferay-ddm-form-renderer', 'liferay-ddm-form-renderer-util']
 	}
 );

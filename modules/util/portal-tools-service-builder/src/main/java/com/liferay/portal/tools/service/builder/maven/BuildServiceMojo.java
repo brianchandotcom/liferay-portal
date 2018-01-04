@@ -103,6 +103,16 @@ public class BuildServiceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
+	public void setDatabaseNameMaxLengthCheckEnabled(
+		boolean databaseNameMaxLengthCheckEnabled) {
+
+		_serviceBuilderArgs.setDatabaseNameMaxLengthCheckEnabled(
+			databaseNameMaxLengthCheckEnabled);
+	}
+
+	/**
+	 * @parameter
+	 */
 	public void setHbmFileName(String hbmFileName) {
 		_serviceBuilderArgs.setHbmFileName(hbmFileName);
 	}

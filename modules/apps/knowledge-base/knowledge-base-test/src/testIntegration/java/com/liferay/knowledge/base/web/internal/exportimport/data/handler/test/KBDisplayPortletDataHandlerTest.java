@@ -63,6 +63,11 @@ public class KBDisplayPortletDataHandlerTest
 	}
 
 	@Override
+	protected String getSchemaVersion() {
+		return "2.0.0";
+	}
+
+	@Override
 	protected boolean isDataPortalLevel() {
 		return false;
 	}

@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -220,9 +221,13 @@ public class FriendlyURLServlet extends HttpServlet {
 				}
 
 				if (localeUnavailable ||
-					!StringUtil.equalsIgnoreCase(
+					(!StringUtil.equalsIgnoreCase(
 						layoutFriendlyURLSeparatorCompositeFriendlyURL,
-						layout.getFriendlyURL(locale)) ||
+						layout.getFriendlyURL(locale)) &&
+					 !StringUtil.equalsIgnoreCase(
+						 FriendlyURLNormalizerUtil.normalizeWithEncoding(
+							 layoutFriendlyURLSeparatorCompositeFriendlyURL),
+						 layout.getFriendlyURL(locale))) ||
 					(alternativeSiteFriendlyURL != null)) {
 
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(

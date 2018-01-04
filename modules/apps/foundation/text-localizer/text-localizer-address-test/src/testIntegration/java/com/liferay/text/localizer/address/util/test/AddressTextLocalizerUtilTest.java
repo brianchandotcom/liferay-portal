@@ -59,7 +59,12 @@ public class AddressTextLocalizerUtilTest {
 
 	@BeforeClass
 	public static void setUpClass() throws Exception {
-		Bundle bundle = FrameworkUtil.getBundle(AddressDisplayTag.class);
+		Bundle bundle = FrameworkUtil.getBundle(
+			AddressTextLocalizerUtilTest.class);
+
+		_bundleContext = bundle.getBundleContext();
+
+		bundle = FrameworkUtil.getBundle(AddressDisplayTag.class);
 
 		Class<?> clazz = bundle.loadClass(
 			"com.liferay.text.localizer.taglib.internal.util." +
@@ -165,22 +170,10 @@ public class AddressTextLocalizerUtilTest {
 			dictionary);
 	}
 
-	private static final BundleContext _bundleContext;
+	private static BundleContext _bundleContext;
 	private static Method _formatMethod;
 	private static Method _getAddressTextLocalizerMethod1;
 	private static Method _getAddressTextLocalizerMethod2;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			AddressTextLocalizerUtilTest.class);
-
-		if (bundle == null) {
-			_bundleContext = null;
-		}
-		else {
-			_bundleContext = bundle.getBundleContext();
-		}
-	}
 
 	@DeleteAfterTestRun
 	private Address _address;

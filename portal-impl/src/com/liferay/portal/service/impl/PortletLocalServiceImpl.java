@@ -19,6 +19,8 @@ import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.CharPool;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfig;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfigRegistry;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -392,7 +394,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 		PortletApp portletApp = portlet.getPortletApp();
 
 		if (portletApp != null) {
-			_portletApps.remove(portletApp.getServletContextName());
+			String servletContextName = portletApp.getServletContextName();
+
+			_portletApps.remove(servletContextName);
+
+			ExtraPortletAppConfigRegistry.unRegisterExtraPortletAppConfig(
+				servletContextName);
 		}
 
 		clearCache();
@@ -740,6 +747,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			Set<String> servletURLPatterns = readWebXML(xmls[4]);
 
+			_readWebXML(xmls[4], portletApp.getServletContextName());
+
 			Map<String, Portlet> portletsMap = readPortletXML(
 				StringPool.BLANK, servletContext, xmls[0], servletURLPatterns,
 				pluginPackage);
@@ -840,6 +849,8 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		try {
 			Set<String> servletURLPatterns = readWebXML(xmls[3]);
+
+			_readWebXML(xmls[3], servletContextName);
 
 			portletsMap = readPortletXML(
 				servletContextName, servletContext, xmls[0], servletURLPatterns,
@@ -2714,6 +2725,39 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 			throw new PrincipalException("Invalid portlet ID " + portletId);
 		}
+	}
+
+	private void _readWebXML(String xml, String servletContextName)
+		throws Exception {
+
+		Document document = UnsecureSAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		Map<String, String> localeEncodingMappingList = new HashMap<>();
+
+		for (Element localeEncodingMappingListElement :
+				rootElement.elements("locale-encoding-mapping-list")) {
+
+			for (Element localeEncodingMappingElement :
+					localeEncodingMappingListElement.elements(
+						"locale-encoding-mapping")) {
+
+				String locale = GetterUtil.getString(
+					localeEncodingMappingElement.elementText("locale"));
+
+				String encoding = GetterUtil.getString(
+					localeEncodingMappingElement.elementText("encoding"));
+
+				localeEncodingMappingList.put(locale, encoding);
+			}
+		}
+
+		ExtraPortletAppConfig extraPortletAppConfig = new ExtraPortletAppConfig(
+			localeEncodingMappingList);
+
+		ExtraPortletAppConfigRegistry.registerExtraPortletAppConfig(
+			servletContextName, extraPortletAppConfig);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

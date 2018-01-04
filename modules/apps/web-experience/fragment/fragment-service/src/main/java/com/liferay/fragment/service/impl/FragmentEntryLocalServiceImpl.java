@@ -212,6 +212,12 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getFragmentEntriesCount(long fragmentCollectionId) {
+		return fragmentEntryPersistence.countByFragmentCollectionId(
+			fragmentCollectionId);
+	}
+
+	@Override
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException {
 

@@ -21,4 +21,7 @@ public class SiteNavigationMenuWebKeys {
 
 	public static final String ITEM_SELECTOR = "ITEM_SELECTOR";
 
+	public static final String SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY =
+		"SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY";
+
 }

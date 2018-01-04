@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
 
@@ -63,6 +64,10 @@ public class SiteNavigationMenuConfigurationAction
 		request.setAttribute(
 			SiteNavigationMenuWebKeys.ITEM_SELECTOR, _itemSelector);
 
+		request.setAttribute(
+			SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY,
+			_siteNavigationMenuItemTypeRegistry);
+
 		super.include(portletConfig, request, response);
 	}
 
@@ -97,5 +102,9 @@ public class SiteNavigationMenuConfigurationAction
 	private ItemSelector _itemSelector;
 
 	private PortletDisplayTemplate _portletDisplayTemplate;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

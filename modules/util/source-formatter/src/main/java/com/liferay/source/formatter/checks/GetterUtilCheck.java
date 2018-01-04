@@ -69,9 +69,11 @@ public class GetterUtilCheck extends BaseFileCheck {
 
 			String defaultValue = String.valueOf(defaultValuefield.get(null));
 
+			defaultValue = defaultValue.replaceFirst("\\.0", StringPool.BLANK);
+
 			String value = parametersList.get(1);
 
-			value = value.replaceFirst("0[dDfFlL]", "0");
+			value = value.replaceFirst("0(\\.0)?[dDfFlL]?", "0");
 
 			if (value.equals("StringPool.BLANK")) {
 				value = StringPool.BLANK;

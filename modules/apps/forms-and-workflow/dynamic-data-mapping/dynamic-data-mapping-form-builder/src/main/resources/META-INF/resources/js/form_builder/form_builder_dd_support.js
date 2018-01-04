@@ -93,6 +93,7 @@ AUI.add(
 					function(fieldSetDefinition) {
 						instance.createFieldSet(fieldSetDefinition);
 						instance.unformatFieldsetRows();
+						instance._destroySortable(instance.sortable1);
 						instance._traverseFormPages();
 						instance._applyDragAndDrop();
 					}

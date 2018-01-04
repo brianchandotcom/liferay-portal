@@ -1,6 +1,6 @@
 <definition>
 	<command name="ApplyMethod">
-		<execute function="Click" locator1="CommerceNavigation#APPLY_BUTTON" value1="Apply">
+		<execute function="ClickNoError" locator1="CommerceNavigation#APPLY_BUTTON" value1="Apply">
 			<var name="key_text" value="Apply" />
 		</execute>
 

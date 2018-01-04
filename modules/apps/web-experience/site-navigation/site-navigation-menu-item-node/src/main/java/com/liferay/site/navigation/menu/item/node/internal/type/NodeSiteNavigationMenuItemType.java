@@ -15,8 +15,10 @@
 package com.liferay.site.navigation.menu.item.node.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.node.internal.constants.SiteNavigationMenuItemTypeNodeConstants;
@@ -74,6 +76,15 @@ public class NodeSiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeNodeConstants.NODE;
+	}
+
+	@Override
+	public String getURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
+
+		return StringPool.BLANK;
 	}
 
 	@Override

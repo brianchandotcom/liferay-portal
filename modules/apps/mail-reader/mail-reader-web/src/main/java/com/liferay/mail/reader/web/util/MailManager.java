@@ -19,7 +19,7 @@ import com.liferay.mail.reader.attachment.AttachmentHandler;
 import com.liferay.mail.reader.constants.MailConstants;
 import com.liferay.mail.reader.exception.MailException;
 import com.liferay.mail.reader.mailbox.Mailbox;
-import com.liferay.mail.reader.mailbox.MailboxFactoryUtil;
+import com.liferay.mail.reader.mailbox.MailboxFactory;
 import com.liferay.mail.reader.mailbox.PasswordRetriever;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.model.Attachment;
@@ -33,6 +33,9 @@ import com.liferay.mail.reader.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.reader.service.FolderLocalServiceUtil;
 import com.liferay.mail.reader.service.MessageLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -59,6 +62,11 @@ import java.util.ResourceBundle;
 import javax.portlet.PortletConfig;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.framework.ServiceReference;
 
 /**
  * @author Scott Lee
@@ -102,7 +110,7 @@ public class MailManager {
 		throws PortalException {
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(_user, protocol);
+			Mailbox mailbox = _getMailbox(_user, protocol);
 
 			Account account = mailbox.addAccount(
 				address, personalName, protocol, incomingHostName, incomingPort,
@@ -115,7 +123,7 @@ public class MailManager {
 					account.getAccountId(), password);
 			}
 
-			mailbox = MailboxFactoryUtil.getMailbox(
+			mailbox = _getMailbox(
 				_user, account,
 				_passwordRetriever.getPassword(account.getAccountId()));
 
@@ -154,7 +162,7 @@ public class MailManager {
 		throws PortalException {
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
@@ -178,7 +186,7 @@ public class MailManager {
 		throws PortalException {
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
@@ -197,7 +205,7 @@ public class MailManager {
 
 	public JSONObject deleteAccount(long accountId) throws PortalException {
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
@@ -221,7 +229,7 @@ public class MailManager {
 			Attachment attachment = AttachmentLocalServiceUtil.getAttachment(
 				attachmentId);
 
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(attachment.getAccountId()),
 				_passwordRetriever.getPassword(attachment.getAccountId()));
@@ -241,7 +249,7 @@ public class MailManager {
 		try {
 			Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(folder.getAccountId()),
 				_passwordRetriever.getPassword(folder.getAccountId()));
@@ -288,7 +296,7 @@ public class MailManager {
 					"success", "drafts-have-been-discarded");
 			}
 			else {
-				Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+				Mailbox mailbox = _getMailbox(
 					_user,
 					AccountLocalServiceUtil.getAccount(message.getAccountId()),
 					_passwordRetriever.getPassword(message.getAccountId()));
@@ -316,7 +324,7 @@ public class MailManager {
 
 			Message message = MessageLocalServiceUtil.getMessage(messageIds[0]);
 
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(message.getAccountId()),
 				_passwordRetriever.getPassword(message.getAccountId()));
@@ -351,7 +359,7 @@ public class MailManager {
 		Attachment attachment = AttachmentLocalServiceUtil.getAttachment(
 			attachmentId);
 
-		Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+		Mailbox mailbox = _getMailbox(
 			_user,
 			AccountLocalServiceUtil.getAccount(attachment.getAccountId()),
 			_passwordRetriever.getPassword(attachment.getAccountId()));
@@ -471,7 +479,7 @@ public class MailManager {
 		Message message = MessageLocalServiceUtil.getMessage(messageId);
 
 		if (Validator.isNull(message.getBody())) {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(message.getAccountId()),
 				_passwordRetriever.getPassword(message.getAccountId()));
@@ -518,7 +526,7 @@ public class MailManager {
 		Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
 		if (folderId != 0) {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(folder.getAccountId()),
 				_passwordRetriever.getPassword(folder.getAccountId()));
@@ -577,7 +585,7 @@ public class MailManager {
 
 			Message message = MessageLocalServiceUtil.getMessage(messageIds[0]);
 
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(message.getAccountId()),
 				_passwordRetriever.getPassword(message.getAccountId()));
@@ -604,7 +612,7 @@ public class MailManager {
 		Folder folder = FolderLocalServiceUtil.getFolder(folderId);
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user,
 				AccountLocalServiceUtil.getAccount(folder.getAccountId()),
 				_passwordRetriever.getPassword(folder.getAccountId()));
@@ -635,7 +643,7 @@ public class MailManager {
 		throws PortalException {
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
@@ -671,7 +679,7 @@ public class MailManager {
 		throws PortalException {
 
 		try {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
@@ -717,7 +725,7 @@ public class MailManager {
 		Account account = AccountLocalServiceUtil.getAccount(accountId);
 
 		if (!account.isSavePassword()) {
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId),
 				_passwordRetriever.getPassword(accountId));
 
@@ -802,7 +810,7 @@ public class MailManager {
 				}
 			}
 
-			Mailbox mailbox = MailboxFactoryUtil.getMailbox(
+			Mailbox mailbox = _getMailbox(
 				_user, AccountLocalServiceUtil.getAccount(accountId), password);
 
 			mailbox.updateAccount(
@@ -888,7 +896,65 @@ public class MailManager {
 		MessageBusUtil.sendMessage(DestinationNames.MAIL_SYNCHRONIZER, message);
 	}
 
+	private static Mailbox _getMailbox(
+			User user, Account account, String password)
+		throws PortalException {
+
+		MailboxFactory mailboxFactory = _mailboxFactories.getService(
+			account.getProtocol());
+
+		if (mailboxFactory == null) {
+			throw new IllegalArgumentException(
+				"Invalid protocol " + account.getProtocol());
+		}
+
+		return mailboxFactory.getMailbox(user, account, password);
+	}
+
+	private static Mailbox _getMailbox(User user, String protocol)
+		throws PortalException {
+
+		MailboxFactory mailboxFactory = _mailboxFactories.getService(protocol);
+
+		if (mailboxFactory == null) {
+			throw new IllegalArgumentException("Invalid protocol " + protocol);
+		}
+
+		return mailboxFactory.getMailbox(user, protocol);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(MailManager.class);
+
+	private static final ServiceTrackerMap<String, MailboxFactory>
+		_mailboxFactories;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(MailManager.class);
+
+		final BundleContext bundleContext = bundle.getBundleContext();
+
+		_mailboxFactories = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, MailboxFactory.class, null,
+			new ServiceReferenceMapper<String, MailboxFactory>() {
+
+				@Override
+				public void map(
+					ServiceReference<MailboxFactory> serviceReference,
+					ServiceReferenceMapper.Emitter<String> emitter) {
+
+					MailboxFactory mailboxFactory = bundleContext.getService(
+						serviceReference);
+
+					try {
+						emitter.emit(mailboxFactory.getMailboxFactoryName());
+					}
+					finally {
+						bundleContext.ungetService(serviceReference);
+					}
+				}
+
+			});
+	}
 
 	private final PasswordRetriever _passwordRetriever;
 	private final PortletConfig _portletConfig;

@@ -4126,7 +4126,9 @@ public class ServiceBuilder {
 
 		String tableName = entityMapping.getTable();
 
-		if (tableName.length() > _TABLE_NAME_MAX_LENGTH) {
+		if (_databaseNameMaxLengthCheckEnabled &&
+			(tableName.length() > _TABLE_NAME_MAX_LENGTH)) {
+
 			throw new ServiceBuilderException(
 				StringBundler.concat(
 					"Unable to create entity mapping \"", tableName,
@@ -4144,7 +4146,9 @@ public class ServiceBuilder {
 			for (EntityColumn col : pkList) {
 				String colDBName = col.getDBName();
 
-				if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {
+				if (_databaseNameMaxLengthCheckEnabled &&
+					(colDBName.length() > _COLUMN_NAME_MAX_LENGTH)) {
+
 					throw new ServiceBuilderException(
 						StringBundler.concat(
 							"Unable to create entity mapping \"", tableName,
@@ -4257,7 +4261,9 @@ public class ServiceBuilder {
 
 		String tableName = entity.getTable();
 
-		if (tableName.length() > _TABLE_NAME_MAX_LENGTH) {
+		if (_databaseNameMaxLengthCheckEnabled &&
+			(tableName.length() > _TABLE_NAME_MAX_LENGTH)) {
+
 			throw new ServiceBuilderException(
 				StringBundler.concat(
 					"Unable to create entity \"", tableName,
@@ -4274,7 +4280,9 @@ public class ServiceBuilder {
 
 			String colDBName = col.getDBName();
 
-			if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {
+			if (_databaseNameMaxLengthCheckEnabled &&
+				(colDBName.length() > _COLUMN_NAME_MAX_LENGTH)) {
+
 				throw new ServiceBuilderException(
 					StringBundler.concat(
 						"Unable to create entity \"", tableName,
@@ -6110,6 +6118,7 @@ public class ServiceBuilder {
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
 	private String _currentTplName;
+	private boolean _databaseNameMaxLengthCheckEnabled;
 	private List<Entity> _ejbList;
 	private Map<String, EntityMapping> _entityMappings;
 	private Map<String, Entity> _entityPool = new HashMap<>();

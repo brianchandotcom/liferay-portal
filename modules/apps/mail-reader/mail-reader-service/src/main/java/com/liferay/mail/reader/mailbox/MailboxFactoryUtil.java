@@ -24,9 +24,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
@@ -68,18 +65,6 @@ public class MailboxFactoryUtil {
 		}
 
 		return mailboxFactory.getMailbox(user, protocol);
-	}
-
-	public static List<MailboxFactory> getMailboxFactories() {
-		Set<String> protocols = _mailboxFactories.keySet();
-
-		List<MailboxFactory> mailboxFactories = new ArrayList<>();
-
-		for (String protocol : protocols) {
-			mailboxFactories.add(_mailboxFactories.getService(protocol));
-		}
-
-		return mailboxFactories;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

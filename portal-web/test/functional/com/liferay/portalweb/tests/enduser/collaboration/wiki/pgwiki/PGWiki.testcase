@@ -142,6 +142,7 @@
 
 		<execute macro="Page#view">
 			<var name="pageName" value="Child Site Page" />
+			<var name="privacy" value="Private" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

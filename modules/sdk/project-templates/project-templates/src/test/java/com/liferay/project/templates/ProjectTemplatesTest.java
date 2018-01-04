@@ -2398,8 +2398,10 @@ public class ProjectTemplatesTest {
 				zipFile1 = new ZipFile(warFile1);
 				zipFile2 = new ZipFile(warFile2);
 
-				for (String change : changed.keySet()) {
-					ZipArchiveEntry[] zipArchiveEntries = changed.get(change);
+				for (Map.Entry<String, ZipArchiveEntry[]> entry :
+						changed.entrySet()) {
+
+					ZipArchiveEntry[] zipArchiveEntries = entry.getValue();
 
 					ZipArchiveEntry zipArchiveEntry1 = zipArchiveEntries[0];
 					ZipArchiveEntry zipArchiveEntry2 = zipArchiveEntries[0];

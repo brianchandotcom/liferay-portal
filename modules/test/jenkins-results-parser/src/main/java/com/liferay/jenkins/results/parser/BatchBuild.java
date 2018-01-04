@@ -81,11 +81,10 @@ public class BatchBuild extends BaseBuild {
 		List<Element> failureElements = new ArrayList<>();
 		List<Element> upstreamJobFailureElements = new ArrayList<>();
 
-		for (Build failedDownstreamBuild :
-				downstreamBuildFailureMessages.keySet()) {
+		for (Map.Entry<Build, Element> entry :
+				downstreamBuildFailureMessages.entrySet()) {
 
-			Element failureElement = downstreamBuildFailureMessages.get(
-				failedDownstreamBuild);
+			Build failedDownstreamBuild = entry.getKey();
 
 			Element upstreamJobFailureElement =
 				failedDownstreamBuild.
@@ -94,6 +93,8 @@ public class BatchBuild extends BaseBuild {
 			if (upstreamJobFailureElement != null) {
 				upstreamJobFailureElements.add(upstreamJobFailureElement);
 			}
+
+			Element failureElement = entry.getValue();
 
 			if (failureElement == null) {
 				continue;

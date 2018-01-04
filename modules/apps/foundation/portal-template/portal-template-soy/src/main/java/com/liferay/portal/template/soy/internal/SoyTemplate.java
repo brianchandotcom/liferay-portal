@@ -105,8 +105,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 
 		_templateContextHelper.prepare(injectedDataObjects, request);
 
-		for (String key : injectedDataObjects.keySet()) {
-			putInjectedData(key, injectedDataObjects.get(key));
+		for (Map.Entry<String, Object> entry : injectedDataObjects.entrySet()) {
+			putInjectedData(entry.getKey(), entry.getValue());
 		}
 	}
 
@@ -200,8 +200,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			Map<String, Object> injectedData = (Map<String, Object>)get(
 				SoyTemplateConstants.INJECTED_DATA);
 
-			for (String key : injectedData.keySet()) {
-				putInjectedData(key, injectedData.get(key));
+			for (Map.Entry<String, Object> entry : injectedData.entrySet()) {
+				putInjectedData(entry.getKey(), entry.getValue());
 			}
 		}
 

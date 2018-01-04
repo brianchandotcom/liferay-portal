@@ -1121,11 +1121,12 @@ public class TopLevelBuild extends BaseBuild {
 
 			int maxFailureCount = 5;
 
-			for (Build failedDownstreamBuild :
-					downstreamBuildFailureMessages.keySet()) {
+			for (Map.Entry<Build, Element> entry :
+					downstreamBuildFailureMessages.entrySet()) {
 
-				Element failureElement = downstreamBuildFailureMessages.get(
-					failedDownstreamBuild);
+				Build failedDownstreamBuild = entry.getKey();
+
+				Element failureElement = entry.getValue();
 
 				if (failureElement != null) {
 					if (UpstreamFailureUtil.isBuildFailingInUpstreamJob(

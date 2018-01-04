@@ -294,8 +294,9 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 				LocalizationUtil.getLocalizationMap(
 					actionRequest, "fieldLabel" + formFieldsIndex);
 
-			for (Locale locale : fieldLabelMap.keySet()) {
-				String fieldLabelValue = fieldLabelMap.get(locale);
+			for (Map.Entry<Locale, String> entry : fieldLabelMap.entrySet()) {
+				String fieldLabelValue = entry.getValue();
+				Locale locale = entry.getKey();
 
 				if (locale.equals(defaultLocale) &&
 					Validator.isNull(fieldLabelValue)) {
@@ -363,14 +364,14 @@ public class WebFormConfigurationAction extends DefaultConfigurationAction {
 				continue;
 			}
 
-			for (Locale locale : fieldLabelMap.keySet()) {
-				String fieldLabelValue = fieldLabelMap.get(locale);
+			for (Map.Entry<Locale, String> entry : fieldLabelMap.entrySet()) {
+				String fieldLabelValue = entry.getValue();
 
 				if (Validator.isNull(fieldLabelValue)) {
 					continue;
 				}
 
-				String languageId = LocaleUtil.toLanguageId(locale);
+				String languageId = LocaleUtil.toLanguageId(entry.getKey());
 
 				if (!localizedUniqueFieldNames.add(
 						languageId + "_" + fieldLabelValue)) {

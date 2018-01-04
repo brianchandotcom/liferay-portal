@@ -170,6 +170,23 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public long getAverageWaitTime() {
+		if (getDownstreamBuildCount(null) == 0) {
+			return 0;
+		}
+
+		long totalWaitTime = 0;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			totalWaitTime += downstreamBuild.getWaitTime();
+		}
+
+		long averageWaitTime = totalWaitTime / getDownstreamBuildCount(null);
+
+		return averageWaitTime;
+	}
+
+	@Override
 	public List<String> getBadBuildURLs() {
 		List<String> badBuildURLs = new ArrayList<>();
 

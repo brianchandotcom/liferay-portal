@@ -34,6 +34,8 @@ public interface Build {
 
 	public String getArchivePath();
 
+	public long getAverageWaitTime();
+
 	public List<String> getBadBuildURLs();
 
 	public String getBaseRepositoryName();

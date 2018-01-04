@@ -20,6 +20,7 @@
 
 <%
 java.lang.Object bean = (java.lang.Object)request.getAttribute("aui:select:bean");
+java.lang.String bodyContent = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:bodyContent"));
 boolean changesContext = GetterUtil.getBoolean(String.valueOf(request.getAttribute("aui:select:changesContext")));
 java.lang.String cssClass = GetterUtil.getString((java.lang.String)request.getAttribute("aui:select:cssClass"));
 java.util.Map<java.lang.String, java.lang.Object> data = (java.util.Map<java.lang.String, java.lang.Object>)request.getAttribute("aui:select:data");

@@ -29,13 +29,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.tagext.BodyTag;
 
 /**
  * @author Julio Camarero
  * @author Jorge Ferrer
  * @author Brian Wing Shun Chan
  */
-public class SelectTag extends BaseSelectTag {
+public class SelectTag extends BaseSelectTag implements BodyTag {
 
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
@@ -74,7 +75,9 @@ public class SelectTag extends BaseSelectTag {
 			addRequiredValidatorTag();
 		}
 
-		return super.doStartTag();
+		super.doStartTag();
+
+		return EVAL_BODY_BUFFERED;
 	}
 
 	@Override
@@ -211,6 +214,11 @@ public class SelectTag extends BaseSelectTag {
 		setNamespacedAttribute(request, "model", model);
 		setNamespacedAttribute(request, "title", String.valueOf(title));
 		setNamespacedAttribute(request, "value", value);
+
+		if (Validator.isNotNull(bodyContent)) {
+			setNamespacedAttribute(
+				request, "bodyContent", bodyContent.getString());
+		}
 
 		Map<String, ValidatorTag> validatorTags = getValidatorTags();
 

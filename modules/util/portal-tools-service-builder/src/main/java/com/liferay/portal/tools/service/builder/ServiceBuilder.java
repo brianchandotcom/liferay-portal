@@ -173,6 +173,9 @@ public class ServiceBuilder {
 			arguments.get("service.build.number"), 1);
 		boolean buildNumberIncrement = GetterUtil.getBoolean(
 			arguments.get("service.build.number.increment"), true);
+		boolean databaseNameMaxLengthCheckEnabled = GetterUtil.getBoolean(
+			arguments.get("service.database.name.max.length.check.enabled"),
+			true);
 		String hbmFileName = arguments.get("service.hbm.file");
 		String implDirName = arguments.get("service.impl.dir");
 		String inputFileName = arguments.get("service.input.file");
@@ -221,9 +224,10 @@ public class ServiceBuilder {
 		try {
 			ServiceBuilder serviceBuilder = new ServiceBuilder(
 				apiDirName, autoImportDefaultReferences, autoNamespaceTables,
-				beanLocatorUtil, buildNumber, buildNumberIncrement, hbmFileName,
-				implDirName, inputFileName, modelHintsFileName, osgiModule,
-				pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
+				beanLocatorUtil, buildNumber, buildNumberIncrement,
+				databaseNameMaxLengthCheckEnabled, hbmFileName, implDirName,
+				inputFileName, modelHintsFileName, osgiModule, pluginName,
+				propsUtil, readOnlyPrefixes, resourceActionModels,
 				resourcesDirName, springFileName, springNamespaces, sqlDirName,
 				sqlFileName, sqlIndexesFileName, sqlSequencesFileName,
 				targetEntityName, testDirName, true);
@@ -517,9 +521,33 @@ public class ServiceBuilder {
 	}
 
 	public ServiceBuilder(
+			String apiDir, boolean autoImportDefaultReferences,
+			boolean autoNamespaceTables, String beanLocatorUtil,
+			boolean databaseNameMaxLengthCheckEnabled, String hbmFileName,
+			String implDir, String inputFileName, String modelHintsFileName,
+			boolean osgiModule, String pluginName, String propsUtil,
+			String[] readOnlyPrefixes, Set<String> resourceActionModels,
+			String resourcesDir, String springFileName,
+			String[] springNamespaces, String sqlDir, String sqlFileName,
+			String sqlIndexesFileName, String sqlSequencesFileName,
+			String targetEntityName, String testDir)
+		throws Exception {
+
+		this(
+			apiDir, autoImportDefaultReferences, autoNamespaceTables,
+			beanLocatorUtil, 1, true, databaseNameMaxLengthCheckEnabled,
+			hbmFileName, implDir, inputFileName, modelHintsFileName, osgiModule,
+			pluginName, propsUtil, readOnlyPrefixes, resourceActionModels,
+			resourcesDir, springFileName, springNamespaces, sqlDir, sqlFileName,
+			sqlIndexesFileName, sqlSequencesFileName, targetEntityName, testDir,
+			true);
+	}
+
+	public ServiceBuilder(
 			String apiDirName, boolean autoImportDefaultReferences,
 			boolean autoNamespaceTables, String beanLocatorUtil,
-			long buildNumber, boolean buildNumberIncrement, String hbmFileName,
+			long buildNumber, boolean buildNumberIncrement,
+			boolean databaseNameMaxLengthCheckEnabled, String hbmFileName,
 			String implDirName, String inputFileName, String modelHintsFileName,
 			boolean osgiModule, String pluginName, String propsUtil,
 			String[] readOnlyPrefixes, Set<String> resourceActionModels,
@@ -584,6 +612,8 @@ public class ServiceBuilder {
 			_beanLocatorUtil = beanLocatorUtil;
 			_buildNumber = buildNumber;
 			_buildNumberIncrement = buildNumberIncrement;
+			_databaseNameMaxLengthCheckEnabled =
+				databaseNameMaxLengthCheckEnabled;
 			_hbmFileName = _normalize(hbmFileName);
 			_implDirName = _normalize(implDirName);
 			_modelHintsFileName = _normalize(modelHintsFileName);
@@ -869,29 +899,6 @@ public class ServiceBuilder {
 		}
 	}
 
-	public ServiceBuilder(
-			String apiDir, boolean autoImportDefaultReferences,
-			boolean autoNamespaceTables, String beanLocatorUtil,
-			String hbmFileName, String implDir, String inputFileName,
-			String modelHintsFileName, boolean osgiModule, String pluginName,
-			String propsUtil, String[] readOnlyPrefixes,
-			Set<String> resourceActionModels, String resourcesDir,
-			String springFileName, String[] springNamespaces, String sqlDir,
-			String sqlFileName, String sqlIndexesFileName,
-			String sqlSequencesFileName, String targetEntityName,
-			String testDir)
-		throws Exception {
-
-		this(
-			apiDir, autoImportDefaultReferences, autoNamespaceTables,
-			beanLocatorUtil, 1, true, hbmFileName, implDir, inputFileName,
-			modelHintsFileName, osgiModule, pluginName, propsUtil,
-			readOnlyPrefixes, resourceActionModels, resourcesDir,
-			springFileName, springNamespaces, sqlDir, sqlFileName,
-			sqlIndexesFileName, sqlSequencesFileName, targetEntityName, testDir,
-			true);
-	}
-
 	public String getCacheFieldMethodName(JavaField javaField) {
 		List<JavaAnnotation> javaAnnotations = javaField.getAnnotations();
 
@@ -1109,12 +1116,13 @@ public class ServiceBuilder {
 
 		ServiceBuilder serviceBuilder = new ServiceBuilder(
 			_apiDirName, _autoImportDefaultReferences, _autoNamespaceTables,
-			_beanLocatorUtil, _buildNumber, _buildNumberIncrement, _hbmFileName,
-			_implDirName, refFile.getAbsolutePath(), _modelHintsFileName,
-			_osgiModule, _pluginName, _propsUtil, _readOnlyPrefixes,
-			_resourceActionModels, _resourcesDirName, _springFileName,
-			_springNamespaces, _sqlDirName, _sqlFileName, _sqlIndexesFileName,
-			_sqlSequencesFileName, _targetEntityName, _testDirName, false);
+			_beanLocatorUtil, _buildNumber, _buildNumberIncrement,
+			_databaseNameMaxLengthCheckEnabled, _hbmFileName, _implDirName,
+			refFile.getAbsolutePath(), _modelHintsFileName, _osgiModule,
+			_pluginName, _propsUtil, _readOnlyPrefixes, _resourceActionModels,
+			_resourcesDirName, _springFileName, _springNamespaces, _sqlDirName,
+			_sqlFileName, _sqlIndexesFileName, _sqlSequencesFileName,
+			_targetEntityName, _testDirName, false);
 
 		entity = serviceBuilder.getEntity(refEntity);
 
@@ -4126,7 +4134,9 @@ public class ServiceBuilder {
 
 		String tableName = entityMapping.getTable();
 
-		if (tableName.length() > _TABLE_NAME_MAX_LENGTH) {
+		if (_databaseNameMaxLengthCheckEnabled &&
+			(tableName.length() > _TABLE_NAME_MAX_LENGTH)) {
+
 			throw new ServiceBuilderException(
 				StringBundler.concat(
 					"Unable to create entity mapping \"", tableName,
@@ -4144,7 +4154,9 @@ public class ServiceBuilder {
 			for (EntityColumn col : pkList) {
 				String colDBName = col.getDBName();
 
-				if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {
+				if (_databaseNameMaxLengthCheckEnabled &&
+					(colDBName.length() > _COLUMN_NAME_MAX_LENGTH)) {
+
 					throw new ServiceBuilderException(
 						StringBundler.concat(
 							"Unable to create entity mapping \"", tableName,
@@ -4257,7 +4269,9 @@ public class ServiceBuilder {
 
 		String tableName = entity.getTable();
 
-		if (tableName.length() > _TABLE_NAME_MAX_LENGTH) {
+		if (_databaseNameMaxLengthCheckEnabled &&
+			(tableName.length() > _TABLE_NAME_MAX_LENGTH)) {
+
 			throw new ServiceBuilderException(
 				StringBundler.concat(
 					"Unable to create entity \"", tableName,
@@ -4274,7 +4288,9 @@ public class ServiceBuilder {
 
 			String colDBName = col.getDBName();
 
-			if (colDBName.length() > _COLUMN_NAME_MAX_LENGTH) {
+			if (_databaseNameMaxLengthCheckEnabled &&
+				(colDBName.length() > _COLUMN_NAME_MAX_LENGTH)) {
+
 				throw new ServiceBuilderException(
 					StringBundler.concat(
 						"Unable to create entity \"", tableName,
@@ -6110,6 +6126,7 @@ public class ServiceBuilder {
 	private long _buildNumber;
 	private boolean _buildNumberIncrement;
 	private String _currentTplName;
+	private boolean _databaseNameMaxLengthCheckEnabled;
 	private List<Entity> _ejbList;
 	private Map<String, EntityMapping> _entityMappings;
 	private Map<String, Entity> _entityPool = new HashMap<>();

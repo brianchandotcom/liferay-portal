@@ -183,6 +183,11 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Input
+	public boolean isDatabaseNameMaxLengthCheckEnabled() {
+		return _databaseNameMaxLengthCheckEnabled;
+	}
+
+	@Input
 	public boolean isOsgiModule() {
 		return _osgiModule;
 	}
@@ -249,6 +254,12 @@ public class BuildServiceTask extends JavaExec {
 
 	public void setBuildNumberIncrement(boolean buildNumberIncrement) {
 		_buildNumberIncrement = buildNumberIncrement;
+	}
+
+	public void setDatabaseNameMaxLengthCheckEnabled(
+		boolean databaseNameMaxLengthCheckEnabled) {
+
+		_databaseNameMaxLengthCheckEnabled = databaseNameMaxLengthCheckEnabled;
 	}
 
 	public void setHbmFile(Object hbmFile) {
@@ -376,6 +387,9 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.bean.locator.util=" + getBeanLocatorUtil());
 		args.add("service.build.number.increment=" + isBuildNumberIncrement());
 		args.add("service.build.number=" + getBuildNumber());
+		args.add(
+			"service.database.name.max.length.check.enabled=" +
+				isDatabaseNameMaxLengthCheckEnabled());
 		args.add("service.hbm.file=" + _relativize(getHbmFile()));
 		args.add("service.impl.dir=" + _relativize(getImplDir()));
 		args.add("service.input.file=" + _relativize(getInputFile()));
@@ -462,6 +476,7 @@ public class BuildServiceTask extends JavaExec {
 		"com.liferay.util.bean.PortletBeanLocatorUtil";
 	private long _buildNumber = 1;
 	private boolean _buildNumberIncrement = true;
+	private boolean _databaseNameMaxLengthCheckEnabled = true;
 	private Object _hbmFile;
 	private Object _implDir;
 	private Object _inputFile;

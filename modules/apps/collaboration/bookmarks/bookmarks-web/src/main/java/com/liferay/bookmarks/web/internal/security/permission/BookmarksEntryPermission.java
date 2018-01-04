@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.web.internal.permission;
+package com.liferay.bookmarks.web.internal.security.permission;
 
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -26,14 +26,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true)
-public class BookmarksEntryPermissionChecker {
+public class BookmarksEntryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, BookmarksEntry entry,
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, entry, actionId);
 	}
 
@@ -41,7 +41,7 @@ public class BookmarksEntryPermissionChecker {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, entryId, actionId);
 	}
 
@@ -52,10 +52,10 @@ public class BookmarksEntryPermissionChecker {
 	protected void setModelResourcePermission(
 		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_bookmarksEntryModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
 
 }

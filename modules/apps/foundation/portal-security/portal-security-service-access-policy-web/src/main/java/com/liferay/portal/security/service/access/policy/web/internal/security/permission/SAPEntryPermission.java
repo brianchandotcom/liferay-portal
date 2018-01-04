@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.web.internal.permission;
+package com.liferay.portal.security.service.access.policy.web.internal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -33,7 +33,7 @@ public class SAPEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _sapEntryFolderModelResourcePermission.contains(
 			permissionChecker, sapEntryId, actionId);
 	}
 
@@ -42,7 +42,7 @@ public class SAPEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _sapEntryFolderModelResourcePermission.contains(
 			permissionChecker, sapEntry, actionId);
 	}
 
@@ -53,10 +53,10 @@ public class SAPEntryPermission {
 	protected void setModelResourcePermission(
 		ModelResourcePermission<SAPEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_sapEntryFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<SAPEntry>
-		_entryModelResourcePermission;
+		_sapEntryFolderModelResourcePermission;
 
 }

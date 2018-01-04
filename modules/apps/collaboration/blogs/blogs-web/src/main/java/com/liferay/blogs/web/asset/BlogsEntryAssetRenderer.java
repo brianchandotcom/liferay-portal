@@ -19,7 +19,7 @@ import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
 import com.liferay.asset.util.AssetHelper;
 import com.liferay.blogs.constants.BlogsPortletKeys;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.web.internal.permission.BlogsEntryPermission;
+import com.liferay.blogs.web.internal.security.permission.BlogsEntryPermission;
 import com.liferay.blogs.web.internal.util.BlogsEntryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;

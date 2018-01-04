@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.internal.permission;
+package com.liferay.portal.security.service.access.policy.internal.security.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=com.liferay.portal.security.service.access.policy.model.SAPEntry",
 	service = ModelResourcePermission.class
 )
-public class SAPEntryPermissionChecker
+public class SAPEntryModelResourcePermission
 	implements ModelResourcePermission<SAPEntry> {
 
 	@Override

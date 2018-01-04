@@ -57,7 +57,7 @@ public class BookmarksFolderAssetRenderer
 
 		_folder = folder;
 		_trashHelper = trashHelper;
-		_folderModelResourcePermission = modelResourcePermission;
+		_bookmarksFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class BookmarksFolderAssetRenderer
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return _folderModelResourcePermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, _folder, ActionKeys.UPDATE);
 	}
 
@@ -212,7 +212,7 @@ public class BookmarksFolderAssetRenderer
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return _folderModelResourcePermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, _folder, ActionKeys.VIEW);
 	}
 
@@ -227,9 +227,9 @@ public class BookmarksFolderAssetRenderer
 		return super.include(request, response, template);
 	}
 
-	private final BookmarksFolder _folder;
 	private final ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
+	private final BookmarksFolder _folder;
 	private final TrashHelper _trashHelper;
 
 }

@@ -58,14 +58,14 @@ public class BookmarksFolderPermissionRegistrar {
 				BookmarksFolder.class, BookmarksFolder::getFolderId,
 				_bookmarksFolderLocalService::getFolder,
 				_portletResourcePermission,
-				(modelResourcePermission, logicConsumer) -> {
-					logicConsumer.accept(
+				(modelResourcePermission, consumer) -> {
+					consumer.accept(
 						new StagedModelPermissionLogic<>(
 							_stagingPermission, BookmarksPortletKeys.BOOKMARKS,
 							BookmarksFolder::getFolderId));
 
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						logicConsumer.accept(
+						consumer.accept(
 							new DynamicInheritancePermissionLogic<>(
 								modelResourcePermission,
 								_getFetchParentFunction(), true));

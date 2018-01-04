@@ -27,7 +27,7 @@ List<BookmarksFolder> invalidMoveFolders = new ArrayList<BookmarksFolder>();
 List<BookmarksFolder> validMoveFolders = new ArrayList<BookmarksFolder>();
 
 for (BookmarksFolder curFolder : folders) {
-	boolean movePermission = BookmarksFolderPermissionChecker.contains(permissionChecker, curFolder, ActionKeys.UPDATE);
+	boolean movePermission = BookmarksFolderPermission.contains(permissionChecker, curFolder, ActionKeys.UPDATE);
 
 	if (movePermission) {
 		validMoveFolders.add(curFolder);
@@ -54,7 +54,7 @@ List<BookmarksEntry> validMoveEntries = new ArrayList<BookmarksEntry>();
 List<BookmarksEntry> invalidMoveEntries = new ArrayList<BookmarksEntry>();
 
 for (BookmarksEntry curEntry : entries) {
-	boolean movePermission = BookmarksEntryPermissionChecker.contains(permissionChecker, curEntry, ActionKeys.UPDATE);
+	boolean movePermission = BookmarksEntryPermission.contains(permissionChecker, curEntry, ActionKeys.UPDATE);
 
 	if (movePermission) {
 		validMoveEntries.add(curEntry);

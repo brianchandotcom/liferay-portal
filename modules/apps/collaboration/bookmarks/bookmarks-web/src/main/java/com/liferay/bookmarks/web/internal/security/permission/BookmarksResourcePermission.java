@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.web.internal.permission;
+package com.liferay.bookmarks.web.internal.security.permission;
 
+import com.liferay.bookmarks.constants.BookmarksConstants;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
-import com.liferay.portal.security.service.access.policy.constants.SAPConstants;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -25,17 +26,26 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true)
-public class SAPPermission {
+public class BookmarksResourcePermission {
+
+	public static void check(
+			PermissionChecker permissionChecker, long scopeGroupId,
+			String actionId)
+		throws PrincipalException {
+
+		_portletResourcePermission.check(
+			permissionChecker, scopeGroupId, actionId);
+	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, String actionId) {
+		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return _portletResourcePermission.contains(
-			permissionChecker, null, actionId);
+			permissionChecker, groupId, actionId);
 	}
 
 	@Reference(
-		target = "(resource.name=" + SAPConstants.RESOURCE_NAME + ")",
+		target = "(resource.name=" + BookmarksConstants.RESOURCE_NAME + ")",
 		unbind = "-"
 	)
 	protected void setPortletResourcePermission(

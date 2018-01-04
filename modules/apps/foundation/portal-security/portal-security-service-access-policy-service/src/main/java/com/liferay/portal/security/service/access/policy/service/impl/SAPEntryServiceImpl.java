@@ -53,7 +53,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry deleteSAPEntry(long sapEntryId) throws PortalException {
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.DELETE);
 
 		return sapEntryLocalService.deleteSAPEntry(sapEntryId);
@@ -61,7 +61,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry deleteSAPEntry(SAPEntry sapEntry) throws PortalException {
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			getPermissionChecker(), sapEntry, ActionKeys.DELETE);
 
 		return sapEntryLocalService.deleteSAPEntry(sapEntry);
@@ -74,7 +74,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 		SAPEntry sapEntry = sapEntryPersistence.fetchByC_N(companyId, name);
 
 		if (sapEntry != null) {
-			_entryModelResourcePermission.check(
+			_sapEntryFolderModelResourcePermission.check(
 				getPermissionChecker(), sapEntry, ActionKeys.VIEW);
 		}
 
@@ -103,7 +103,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 	@Override
 	public SAPEntry getSAPEntry(long sapEntryId) throws PortalException {
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.VIEW);
 
 		return sapEntryPersistence.findByPrimaryKey(sapEntryId);
@@ -115,7 +115,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 
 		SAPEntry sapEntry = sapEntryPersistence.findByC_N(companyId, name);
 
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			getPermissionChecker(), sapEntry, ActionKeys.VIEW);
 
 		return sapEntry;
@@ -128,7 +128,7 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 			Map<Locale, String> titleMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_sapEntryFolderModelResourcePermission.check(
 			getPermissionChecker(), sapEntryId, ActionKeys.UPDATE);
 
 		return sapEntryLocalService.updateSAPEntry(
@@ -136,15 +136,15 @@ public class SAPEntryServiceImpl extends SAPEntryServiceBaseImpl {
 			name, titleMap, serviceContext);
 	}
 
-	private static volatile ModelResourcePermission<SAPEntry>
-		_entryModelResourcePermission =
-			ModelResourcePermissionFactory.getInstance(
-				SAPEntryServiceImpl.class, "_entryModelResourcePermission",
-				SAPEntry.class);
 	private static volatile PortletResourcePermission
 		_portletResourcePermission =
 			PortletResourcePermissionFactory.getInstance(
 				SAPEntryServiceImpl.class, "_portletResourcePermission",
 				SAPConstants.RESOURCE_NAME);
+	private static volatile ModelResourcePermission<SAPEntry>
+		_sapEntryFolderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				SAPEntryServiceImpl.class,
+				"_sapEntryFolderModelResourcePermission", SAPEntry.class);
 
 }

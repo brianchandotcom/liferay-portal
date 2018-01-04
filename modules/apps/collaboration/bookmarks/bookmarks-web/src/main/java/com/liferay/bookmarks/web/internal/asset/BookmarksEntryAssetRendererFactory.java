@@ -74,7 +74,7 @@ public class BookmarksEntryAssetRendererFactory
 
 		BookmarksEntryAssetRenderer bookmarksEntryAssetRenderer =
 			new BookmarksEntryAssetRenderer(
-				entry, _entryModelResourcePermission);
+				entry, _bookmarksEntryModelResourcePermission);
 
 		bookmarksEntryAssetRenderer.setAssetRendererType(type);
 		bookmarksEntryAssetRenderer.setServletContext(_servletContext);
@@ -148,7 +148,7 @@ public class BookmarksEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _entryModelResourcePermission.contains(
+		return _bookmarksEntryModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -173,7 +173,7 @@ public class BookmarksEntryAssetRendererFactory
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksEntry)"
 	)
 	private ModelResourcePermission<BookmarksEntry>
-		_entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

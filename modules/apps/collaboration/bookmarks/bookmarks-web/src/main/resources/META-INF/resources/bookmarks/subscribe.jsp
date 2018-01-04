@@ -31,7 +31,7 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entr
 <c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.emailEntryAddedEnabled() || bookmarksGroupServiceOverriddenConfiguration.emailEntryUpdatedEnabled() %>">
 	<c:choose>
 		<c:when test="<%= entry != null %>">
-			<c:if test="<%= BookmarksEntryPermissionChecker.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) %>">
+			<c:if test="<%= BookmarksEntryPermission.contains(permissionChecker, entry, ActionKeys.SUBSCRIBE) %>">
 				<c:choose>
 					<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksEntry.class.getName(), entry.getEntryId()) %>">
 						<portlet:actionURL name="/bookmarks/edit_entry" var="unsubscribeURL">
@@ -67,7 +67,7 @@ BookmarksEntry entry = (BookmarksEntry)request.getAttribute("info_panel.jsp-entr
 			</c:if>
 		</c:when>
 		<c:otherwise>
-			<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) %>">
+			<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.SUBSCRIBE) %>">
 				<c:choose>
 					<c:when test="<%= (folder == null) ? SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), scopeGroupId) : SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), BookmarksFolder.class.getName(), folder.getFolderId()) %>">
 						<portlet:actionURL name="/bookmarks/edit_folder" var="unsubscribeURL">

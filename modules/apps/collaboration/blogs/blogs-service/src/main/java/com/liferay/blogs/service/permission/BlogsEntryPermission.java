@@ -40,14 +40,15 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(permissionChecker, entry, actionId);
+		_blogsEntryFolderModelResourcePermission.check(
+			permissionChecker, entry, actionId);
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_blogsEntryFolderModelResourcePermission.check(
 			permissionChecker, entryId, actionId);
 	}
 
@@ -56,7 +57,7 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _blogsEntryFolderModelResourcePermission.contains(
 			permissionChecker, entry, actionId);
 	}
 
@@ -64,7 +65,7 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			PermissionChecker permissionChecker, long entryId, String actionId)
 		throws PortalException {
 
-		return _entryModelResourcePermission.contains(
+		return _blogsEntryFolderModelResourcePermission.contains(
 			permissionChecker, entryId, actionId);
 	}
 
@@ -74,7 +75,7 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		_entryModelResourcePermission.check(
+		_blogsEntryFolderModelResourcePermission.check(
 			permissionChecker, primaryKey, actionId);
 	}
 
@@ -89,10 +90,10 @@ public class BlogsEntryPermission implements BaseModelPermissionChecker {
 	protected void setModelResourcePermission(
 		ModelResourcePermission<BlogsEntry> modelResourcePermission) {
 
-		_entryModelResourcePermission = modelResourcePermission;
+		_blogsEntryFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<BlogsEntry>
-		_entryModelResourcePermission;
+		_blogsEntryFolderModelResourcePermission;
 
 }

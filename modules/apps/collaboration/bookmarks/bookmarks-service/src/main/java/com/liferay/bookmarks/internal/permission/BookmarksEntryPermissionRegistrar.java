@@ -59,16 +59,16 @@ public class BookmarksEntryPermissionRegistrar {
 				BookmarksEntry.class, BookmarksEntry::getEntryId,
 				_bookmarksEntryLocalService::getEntry,
 				_portletResourcePermission,
-				(modelResourcePermission, logicConsumer) -> {
-					logicConsumer.accept(
+				(modelResourcePermission, consumer) -> {
+					consumer.accept(
 						new StagedModelPermissionLogic<>(
 							_stagingPermission, BookmarksPortletKeys.BOOKMARKS,
 							BookmarksEntry::getEntryId));
 
 					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						logicConsumer.accept(
+						consumer.accept(
 							new DynamicInheritancePermissionLogic<>(
-								_folderModelResourcePermission,
+								_bookmarksFolderModelResourcePermission,
 								_getFetchParentFunction(), true));
 					}
 				}),
@@ -109,7 +109,7 @@ public class BookmarksEntryPermissionRegistrar {
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	@Reference(
 		target = "(resource.name=" + BookmarksConstants.RESOURCE_NAME + ")"

@@ -43,7 +43,7 @@ public class BookmarksFolderPermissionChecker
 			String actionId)
 		throws PortalException {
 
-		_folderModelResourcePermission.check(
+		_bookmarksFolderModelResourcePermission.check(
 			permissionChecker, folder, actionId);
 	}
 
@@ -53,7 +53,7 @@ public class BookmarksFolderPermissionChecker
 		throws PortalException {
 
 		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, permissionChecker, groupId,
+			_bookmarksFolderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}
 
@@ -62,7 +62,7 @@ public class BookmarksFolderPermissionChecker
 			String actionId)
 		throws PortalException {
 
-		return _folderModelResourcePermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, folder, actionId);
 	}
 
@@ -72,7 +72,7 @@ public class BookmarksFolderPermissionChecker
 		throws PortalException {
 
 		return ModelResourcePermissionHelper.contains(
-			_folderModelResourcePermission, permissionChecker, groupId,
+			_bookmarksFolderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
 	}
 
@@ -83,7 +83,7 @@ public class BookmarksFolderPermissionChecker
 		throws PortalException {
 
 		ModelResourcePermissionHelper.check(
-			_folderModelResourcePermission, permissionChecker, groupId,
+			_bookmarksFolderModelResourcePermission, permissionChecker, groupId,
 			primaryKey, actionId);
 	}
 
@@ -98,10 +98,10 @@ public class BookmarksFolderPermissionChecker
 	protected void setModelResourcePermission(
 		ModelResourcePermission<BookmarksFolder> modelResourcePermission) {
 
-		_folderModelResourcePermission = modelResourcePermission;
+		_bookmarksFolderModelResourcePermission = modelResourcePermission;
 	}
 
 	private static ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 }

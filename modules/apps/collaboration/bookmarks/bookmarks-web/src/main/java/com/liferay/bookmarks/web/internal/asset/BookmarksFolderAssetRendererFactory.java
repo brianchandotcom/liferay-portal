@@ -67,7 +67,7 @@ public class BookmarksFolderAssetRendererFactory
 
 		BookmarksFolderAssetRenderer bookmarksFolderAssetRenderer =
 			new BookmarksFolderAssetRenderer(
-				folder, _trashHelper, _folderModelResourcePermission);
+				folder, _trashHelper, _bookmarksFolderModelResourcePermission);
 
 		bookmarksFolderAssetRenderer.setAssetRendererType(type);
 		bookmarksFolderAssetRenderer.setServletContext(_servletContext);
@@ -113,7 +113,7 @@ public class BookmarksFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _folderModelResourcePermission.contains(
+		return _bookmarksFolderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -138,7 +138,7 @@ public class BookmarksFolderAssetRendererFactory
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	private ServletContext _servletContext;
 

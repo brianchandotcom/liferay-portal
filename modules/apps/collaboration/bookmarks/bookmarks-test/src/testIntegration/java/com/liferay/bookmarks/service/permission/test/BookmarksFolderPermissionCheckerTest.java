@@ -64,19 +64,19 @@ public class BookmarksFolderPermissionCheckerTest
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			_folderModelResourcePermission.contains(
+			_bookmarksFolderModelResourcePermission.contains(
 				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertTrue(
-			_folderModelResourcePermission.contains(
+			_bookmarksFolderModelResourcePermission.contains(
 				permissionChecker, _subfolder, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			_folderModelResourcePermission.contains(
+			_bookmarksFolderModelResourcePermission.contains(
 				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertFalse(
-			_folderModelResourcePermission.contains(
+			_bookmarksFolderModelResourcePermission.contains(
 				permissionChecker, _subfolder, ActionKeys.VIEW));
 	}
 
@@ -99,7 +99,7 @@ public class BookmarksFolderPermissionCheckerTest
 		filter = "model.class.name=com.liferay.bookmarks.model.BookmarksFolder"
 	)
 	private static ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	private BookmarksFolder _folder;
 	private BookmarksFolder _subfolder;

@@ -157,7 +157,7 @@ public class BlogsEntryAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return _entryModelResourcePermission.contains(
+		return _blogsEntryFolderModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -189,11 +189,12 @@ public class BlogsEntryAssetRendererFactory
 		_blogsEntryService = blogsEntryService;
 	}
 
+	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
+	private ModelResourcePermission<BlogsEntry>
+		_blogsEntryFolderModelResourcePermission;
+
 	private BlogsEntryLocalService _blogsEntryLocalService;
 	private BlogsEntryService _blogsEntryService;
-
-	@Reference(target = "(model.class.name=com.liferay.blogs.model.BlogsEntry)")
-	private ModelResourcePermission<BlogsEntry> _entryModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

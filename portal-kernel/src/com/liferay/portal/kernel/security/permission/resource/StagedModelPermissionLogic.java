@@ -29,11 +29,11 @@ public class StagedModelPermissionLogic<T extends StagedGroupedModel>
 
 	public StagedModelPermissionLogic(
 		StagingPermission stagingPermission, String portletId,
-		ToLongFunction<T> primKeyFunction) {
+		ToLongFunction<T> primKeyToLongFunction) {
 
 		_stagingPermission = Objects.requireNonNull(stagingPermission);
 		_portletId = Objects.requireNonNull(portletId);
-		_primKeyFunction = Objects.requireNonNull(primKeyFunction);
+		_primKeyToLongFunction = Objects.requireNonNull(primKeyToLongFunction);
 	}
 
 	@Override
@@ -43,11 +43,11 @@ public class StagedModelPermissionLogic<T extends StagedGroupedModel>
 
 		return _stagingPermission.hasPermission(
 			permissionChecker, model.getGroupId(), name,
-			_primKeyFunction.applyAsLong(model), _portletId, actionId);
+			_primKeyToLongFunction.applyAsLong(model), _portletId, actionId);
 	}
 
 	private final String _portletId;
-	private final ToLongFunction<T> _primKeyFunction;
+	private final ToLongFunction<T> _primKeyToLongFunction;
 	private final StagingPermission _stagingPermission;
 
 }

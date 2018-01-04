@@ -104,7 +104,7 @@ public class EditFolderPortletConfigurationIcon
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			if (_folderModelResourcePermission.contains(
+			if (_bookmarksFolderModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), folder,
 					ActionKeys.UPDATE)) {
 
@@ -121,7 +121,7 @@ public class EditFolderPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

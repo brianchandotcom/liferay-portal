@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.service.access.policy.internal.permission;
+package com.liferay.portal.security.service.access.policy.internal.security.permission;
 
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = "resource.name=" + SAPConstants.RESOURCE_NAME,
 	service = PortletResourcePermission.class
 )
-public class SAPPortletPermissionChecker implements PortletResourcePermission {
+public class SAPPortletResourcePermission implements PortletResourcePermission {
 
 	@Override
 	public void check(

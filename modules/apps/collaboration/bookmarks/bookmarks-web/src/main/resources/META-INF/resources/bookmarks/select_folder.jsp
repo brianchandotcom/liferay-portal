@@ -109,7 +109,7 @@ if (folder != null) {
 			</liferay-ui:search-container-row>
 
 			<aui:button-row>
-				<c:if test="<%= BookmarksFolderPermissionChecker.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
+				<c:if test="<%= BookmarksFolderPermission.contains(permissionChecker, scopeGroupId, folderId, ActionKeys.ADD_FOLDER) %>">
 					<portlet:renderURL var="editFolderURL">
 						<portlet:param name="mvcRenderCommandName" value="/bookmarks/edit_folder" />
 						<portlet:param name="redirect" value="<%= currentURL %>" />

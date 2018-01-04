@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.permission;
+package com.liferay.blogs.web.internal.security.permission;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;

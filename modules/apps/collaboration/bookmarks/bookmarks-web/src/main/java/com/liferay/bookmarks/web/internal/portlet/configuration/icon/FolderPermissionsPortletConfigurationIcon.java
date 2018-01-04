@@ -106,7 +106,7 @@ public class FolderPermissionsPortletConfigurationIcon
 		try {
 			BookmarksFolder folder = ActionUtil.getFolder(portletRequest);
 
-			if (!_folderModelResourcePermission.contains(
+			if (!_bookmarksFolderModelResourcePermission.contains(
 					permissionChecker, folder, ActionKeys.PERMISSIONS)) {
 
 				return false;
@@ -133,6 +133,6 @@ public class FolderPermissionsPortletConfigurationIcon
 		target = "(model.class.name=com.liferay.bookmarks.model.BookmarksFolder)"
 	)
 	private ModelResourcePermission<BookmarksFolder>
-		_folderModelResourcePermission;
+		_bookmarksFolderModelResourcePermission;
 
 }

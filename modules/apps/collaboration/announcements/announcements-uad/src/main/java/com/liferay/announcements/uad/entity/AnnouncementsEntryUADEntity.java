@@ -12,25 +12,31 @@
  * details.
  */
 
-package com.liferay.announcements.uad;
+package com.liferay.announcements.uad.entity;
 
+import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.user.associated.data.entity.BaseUADEntity;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
-public class AnnouncementsUADEntity extends BaseUADEntity {
+public class AnnouncementsEntryUADEntity extends BaseUADEntity {
 
-	public AnnouncementsUADEntity(long userId, String uadEntityId) {
+	public AnnouncementsEntryUADEntity(
+		long userId, String uadEntityId,
+		AnnouncementsEntry announcementsEntry) {
+
 		super(
-			userId, uadEntityId,
-			AnnouncementsUADConstants.ANNOUNCEMENTS_UAD_ENTITY);
+			userId, uadEntityId, AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY);
+
+		_announcementsEntry = announcementsEntry;
 	}
 
-	@Override
-	public String getEditURL() {
-		return null;
+	public AnnouncementsEntry getAnnouncementsEntry() {
+		return _announcementsEntry;
 	}
+
+	private final AnnouncementsEntry _announcementsEntry;
 
 }

@@ -19,7 +19,7 @@ package com.liferay.announcements.uad.constants;
  */
 public class AnnouncementsUADConstants {
 
-	public static final String ANNOUNCEMENTS_UAD_ENTITY =
-		"com.liferay.announcements.uad.AnnouncementsUADEntity";
+	public static final String ANNOUNCEMENTS_ENTRY =
+		"com.liferay.announcements.kernel.model.AnnouncementsEntry";
 
 }

@@ -6,7 +6,7 @@
 
 		<execute function="Pause" locator1="2000" />
 
-		<execute function="Confirm#WaitForConfirmation" value1="Are you sure you want to continue? All contents will be deleted." />
+		<execute function="Confirm#waitForConfirmation" value1="Are you sure you want to continue? All contents will be deleted." />
 	</command>
 
 	<command name="setEmptyStore">

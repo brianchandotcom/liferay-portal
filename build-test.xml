@@ -756,6 +756,18 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-poshi-jvm-opts">
+		<sequential>
+			<propertyregex
+				input="${env.ANT_OPTS}"
+				override="true"
+				property="poshi.jvm.opts"
+				regexp="(-Xmx)(\d*\w*)"
+				replace="\12048m"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-poshi-method-name">
 		<sequential>
 			<fail message="Please set the property ${test.class}." unless="test.class" />
@@ -1469,16 +1481,11 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 			</if>
 
 			<local name="java.jdk.home" />
+			<local name="poshi.jvm.opts" />
 
 			<get-java-jdk-home architecture="x32" />
 
-			<propertyregex
-				input="${env.ANT_OPTS}"
-				override="true"
-				property="gradle.opts"
-				regexp="(-Xmx)(\d*\w*)"
-				replace="\12048m"
-			/>
+			<get-poshi-jvm-opts />
 
 			<if>
 				<and>
@@ -1486,16 +1493,17 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 					<available file="${java.jdk.home}" />
 				</and>
 				<then>
-					<gradle-execute failonerror="false" gradleopts="${gradle.opts}" task="@{task}">
+					<gradle-execute failonerror="false" gradleopts="${poshi.jvm.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
+						<env key="ANT_OPTS" value="${poshi.jvm.opts}" />
 						<env key="JAVA_HOME" path="${java.jdk.home}" />
 					</gradle-execute>
 				</then>
 				<else>
-					<gradle-execute failonerror="false" gradleopts="${gradle.opts}" task="@{task}">
+					<gradle-execute failonerror="false" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />

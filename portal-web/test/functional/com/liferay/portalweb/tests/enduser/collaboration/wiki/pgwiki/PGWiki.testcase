@@ -130,7 +130,7 @@
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Wiki Test Page" />
+			<var name="pageName" value="Child Site Page" />
 			<var name="privacy" value="Private" />
 			<var name="sitePageType" value="Empty Page" />
 		</execute>

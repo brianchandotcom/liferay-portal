@@ -12,27 +12,42 @@
  * details.
  */
 
-package com.liferay.users.admin.web.servlet.taglib.ui;
+package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
 
+import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
+import com.liferay.users.admin.web.constants.UserFormConstants;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
- * @deprecated As of 2.5.0, replaced by {@link
- * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserRolesScreenNavigationEntry}
  */
-@Deprecated
-public class UserRolesFormNavigatorEntry extends BaseUserFormNavigatorEntry {
+@Component(
+	property = {"screen.navigation.entry.order:Integer=40"},
+	service = ScreenNavigationEntry.class
+)
+public class UserRolesScreenNavigationEntry
+	extends BaseUserScreenNavigationEntry {
 
 	@Override
-	public String getCategoryKey() {
-		return FormNavigatorConstants.CATEGORY_KEY_USER_USER_INFORMATION;
+	public String getActionCommandName() {
+		return "/users_admin/update_user_roles";
 	}
 
 	@Override
-	public String getKey() {
-		return "roles";
+	public String getCategoryKey() {
+		return UserFormConstants.CATEGORY_KEY_GENERAL;
+	}
+
+	@Override
+	public String getEntryKey() {
+		return UserFormConstants.ENTRY_KEY_ROLES;
+	}
+
+	@Override
+	public String getJspPath() {
+		return "/user/roles.jsp";
 	}
 
 	@Override
@@ -42,11 +57,6 @@ public class UserRolesFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 		}
 
 		return true;
-	}
-
-	@Override
-	protected String getJspPath() {
-		return "/user/roles.jsp";
 	}
 
 }

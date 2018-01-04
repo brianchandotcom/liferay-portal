@@ -47,7 +47,7 @@ AUI.add(
 
 				layoutBuilder.set('enableRemoveRows', false);
 				layoutBuilder.set('enableMoveRows', false);
-			},			
+			},
 
 			_addDragAndDropActions: function() {
 				var instance = this;
@@ -423,8 +423,8 @@ AUI.add(
 
 						var fieldColumnEnd = fieldNodeEnd.ancestor('.col');
 
-						if (fieldNodeEnd.getData('field-type') || fieldNodeEnd.getData('field-set-id')) {
-							return instance.updateDragAndDropBySidebar(fieldNodeEnd);
+						if (fieldNodeEnd.attr('data-field-type-name') || fieldNodeEnd.getData('field-set-id')) {
+							return instance.updateDragAndDropBySidebar(event, fieldNodeEnd);
 						}
 
 						if (!fieldColumnStart) {
@@ -508,14 +508,12 @@ AUI.add(
 			beforeSidebarDragStart: function() {
 				var instance = this;
 
-				instance.sidebarSortable.before(
+				instance.sidebarSortable.after(
 					'drag:start',
 					function(event) {
 						var clonedNode = A.DD.DDM.activeDrag.get('node').clone();
 						var fieldNodeStart = event.target.get('node');
 						var proxyActive = A.one('.yui3-dd-proxy');
-
-						instance.currentFieldTypeDrag = event.target;
 
 						instance.sidebarSortable.addDropNode(fieldNodeStart.ancestor());
 						A.DD.DDM._activateTargets();
@@ -529,28 +527,6 @@ AUI.add(
 
 						if (fieldNodeStart.getData('field-set-id')) {
 							instance.formatDragRowsToReceiveFieldset();
-						}
-					}
-				);
-			},
-
-			beforeSidebarItemPlaceholderAlign: function() {
-				var instance = this;
-
-				instance.sidebarSortable.before(
-					'placeholderAlign',
-					function(event) {
-						var fieldStart = instance.currentFieldTypeDrag;
-						var newTarget = A.one(document.createElement('div'));
-
-						if (fieldStart.get('node').attr('data-field-set-id')) {
-							newTarget.setData('field-set-id', fieldStart.get('node').getData('field-set-id'));
-							fieldStart.set('node', newTarget);
-						}
-
-						if (!fieldStart.get('node').getData('field-type') && fieldStart.get('node').attr('data-field-type-name')) {
-							newTarget.setData('field-type', FieldTypes.get(fieldStart.get('node').attr('data-field-type-name')));
-							fieldStart.set('node', newTarget);
 						}
 					}
 				);
@@ -578,8 +554,12 @@ AUI.add(
 					}
 				);
 
+				instance.sidebarSortable._getAppendNode = function() {
+					this.appendNode = A.one(document.createElement('div'));
+					return this.appendNode;
+				};
+
 				instance.beforeSidebarDragStart();
-				instance.beforeSidebarItemPlaceholderAlign();
 				instance.afterPlaceholderAlign(instance.sidebarSortable);
 				instance.afterDragEnd(instance.sidebarSortable);
 			},
@@ -666,23 +646,27 @@ AUI.add(
 				}
 			},
 
-			updateDragAndDropBySidebar: function(fieldNode) {
+			updateDragAndDropBySidebar: function(event, dragFieldNode) {
 				var instance = this;
 
-				var fieldSetId = fieldNode.getData('field-set-id');
-				var fieldType = fieldNode.getData('field-type');
+				var fieldSetId = dragFieldNode.getData('field-set-id');
+				var fieldType = FieldTypes.get(dragFieldNode.attr('data-field-type-name'));
+				var appendNode = event.currentTarget.appendNode;
 
-				if (!fieldNode.ancestor('.col')) {
+				if (!appendNode ||  !appendNode.ancestor('.col')) {
 					return;
 				}
 
-				instance._newFieldContainer = fieldNode.ancestor('.col').getData('layout-col');
+				instance._newFieldContainer = appendNode.ancestor('.col').getData('layout-col');
 
 				if (fieldSetId) {
 					instance._addFieldSetInDragAndDropLayout(fieldSetId);
 				}
 				else {
 					instance.createNewField(fieldType);
+					instance._formatNewDropRows(instance._getActiveLayoutIndex());
+					instance._destroySortable(instance.sortable1);
+					instance._applyDragAndDrop();
 				}
 			}
 		};

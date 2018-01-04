@@ -22,6 +22,8 @@ import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Repository;
@@ -125,6 +127,10 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FOLDER_NAME);
 		}
 		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(nsfe, nsfe);
+			}
+
 			folder = PortletFileRepositoryUtil.addPortletFolder(
 				_userLocalService.getDefaultUserId(companyId),
 				repository.getRepositoryId(),
@@ -142,6 +148,9 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 	}
 
 	private static final String _FOLDER_NAME = "UADExport";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		AnnouncementsEntryUADEntityExporter.class);
 
 	@Reference
 	private GroupLocalService _groupLocalService;

@@ -62,7 +62,7 @@ public class AnnouncementsEntryUADEntityAggregator
 	public UADEntity getUADEntity(String uadEntityId) throws PortalException {
 		AnnouncementsEntry announcementsEntry =
 			_announcementsEntryLocalService.getAnnouncementsEntry(
-				Long.valueOf(uadEntityId));
+				Long.parseLong(uadEntityId));
 
 		return _createAnnouncementsEntryUADEntity(announcementsEntry);
 	}

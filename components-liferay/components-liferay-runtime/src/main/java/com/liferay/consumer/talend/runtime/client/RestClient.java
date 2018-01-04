@@ -51,6 +51,11 @@ public class RestClient {
 		_password = connection.password.getValue();
 	}
 
+	public RestClient(LiferayConnectionProperties connection, String address) {
+		this(connection);
+		_endpoint = address;
+	}
+
 	public ApioResult executeGetRequest() throws ApioException {
 		Client client = getClient();
 
@@ -116,7 +121,7 @@ public class RestClient {
 	private static final Logger _log = LoggerFactory.getLogger(
 		RestClient.class);
 
-	private final String _endpoint;
+	private String _endpoint;
 	private final String _password;
 	private final String _userId;
 

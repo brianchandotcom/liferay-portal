@@ -42,6 +42,7 @@ import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.SimpleNamedThing;
+import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.i18n.TranslatableImpl;
@@ -71,10 +72,14 @@ public class LiferaySourceOrSink
 		else {
 			if (!client.getEndpoint().equals(conn.endpoint.getValue())) {
 				if (_log.isDebugEnabled()) {
-					_log.debug("Getting a new the REST client");
+					_log.debug(
+						"Endpoint has been changed, initialize a new " +
+							"RestClient");
 				}
 
-				return client = new RestClient(conn);
+				client = new RestClient(conn);
+
+				return client;
 			}
 		}
 
@@ -98,6 +103,22 @@ public class LiferaySourceOrSink
 		return null;
 	}
 
+	public RestClient getNewRestClient(RuntimeContainer container)
+		throws ApioException {
+
+		LiferayConnectionProperties conn = getEffectiveConnection(container);
+
+		if (client == null) {
+			client = new RestClient(conn);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug("Creating a brand new REST Client #1");
+			}
+		}
+
+		return client;
+	}
+
 	@Override
 	public List<NamedThing> getSchemaNames(RuntimeContainer container)
 		throws IOException {
@@ -118,6 +139,13 @@ public class LiferaySourceOrSink
 		}
 
 		return returnList;
+	}
+
+	@Override
+	public Schema guessSchema(String resourceURL) throws IOException {
+		_getResourceCollection(resourceURL);
+
+		return null;
 	}
 
 	@Override
@@ -220,7 +248,7 @@ public class LiferaySourceOrSink
 			if (fieldValue.has("href")) {
 				String href = fieldValue.get("href").asText();
 
-				resourcesMap.put(fieldName, href);
+				resourcesMap.put(href, fieldName);
 			}
 		}
 
@@ -235,6 +263,43 @@ public class LiferaySourceOrSink
 
 	protected RestClient client;
 	protected volatile LiferayProvideConnectionProperties properties;
+
+	private Map<String, String> _getResourceCollection(String resourceURL) {
+		final ObjectMapper mapper = new ObjectMapper();
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getNewRestClient(null);
+
+			apioResult = restClient.executeGetRequest();
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			return Collections.emptyMap();
+		}
+
+		JsonNode jsonNode = null;
+
+		try {
+			jsonNode = mapper.readTree(apioResult.getBody());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot read JSON object", ioe);
+			}
+
+			return Collections.emptyMap();
+		}
+
+		_log.debug("Returning null");
+
+		return null;
+	}
 
 	private Map<String, String> _getResourceCollections() {
 		final ObjectMapper mapper = new ObjectMapper();
@@ -270,6 +335,9 @@ public class LiferaySourceOrSink
 
 		return getApioLdJsonResourceCollections(jsonNode);
 	}
+
+	private static final transient Schema _DEFAULT_GUESS_SCHEMA_TYPE =
+		AvroUtils._string();
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferaySourceOrSink.class);

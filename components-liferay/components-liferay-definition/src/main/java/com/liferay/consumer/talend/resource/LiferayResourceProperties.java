@@ -66,7 +66,7 @@ public class LiferayResourceProperties
 			if (vr.getStatus() == ValidationResult.Result.OK) {
 				try {
 					Schema schema = ss.getEndpointSchema(
-						null, resourceName.getStringValue());
+						null, resourceURL.getStringValue());
 
 					main.schema.setValue(schema);
 				}
@@ -83,13 +83,21 @@ public class LiferayResourceProperties
 		}
 	}
 
-	public ValidationResult beforeResourceName() throws Exception {
+	public ValidationResult afterResourceURL() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Resource URL:" + resourceURL.getValue());
+		}
+
+		return ValidationResult.OK;
+	}
+
+	public ValidationResult beforeResourceURL() throws Exception {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
 						RUNTIME_SOURCEORSINK_CLASS)) {
 
-			resourceName.setPossibleValues(Collections.emptyList());
+			resourceURL.setPossibleValues(Collections.emptyList());
 
 			LiferaySourceOrSinkRuntime ss =
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
@@ -102,7 +110,7 @@ public class LiferayResourceProperties
 				try {
 					List<NamedThing> moduleNames = ss.getSchemaNames(null);
 
-					resourceName.setPossibleNamedThingValues(moduleNames);
+					resourceURL.setPossibleNamedThingValues(moduleNames);
 				}
 				catch (Exception ex) {
 					return ExceptionUtils.exceptionToValidationResult(ex);
@@ -131,7 +139,7 @@ public class LiferayResourceProperties
 
 		Form resourceSelectionForm = Form.create(this, Form.MAIN);
 
-		Widget resourcesWidget = Widget.widget(resourceName);
+		Widget resourcesWidget = Widget.widget(resourceURL);
 
 		resourcesWidget.setWidgetType(Widget.NAME_SELECTION_AREA_WIDGET_TYPE);
 
@@ -141,7 +149,7 @@ public class LiferayResourceProperties
 
 		Form moduleRefForm = Form.create(this, Form.REFERENCE);
 
-		Widget resourcesWidgetLong = Widget.widget(resourceName);
+		Widget resourcesWidgetLong = Widget.widget(resourceURL);
 
 		resourcesWidgetLong.setWidgetType(
 			Widget.NAME_SELECTION_REFERENCE_WIDGET_TYPE);
@@ -174,8 +182,8 @@ public class LiferayResourceProperties
 
 	};
 
-	public StringProperty resourceName =
-		PropertyFactory.newString("resourceName"); //$NON-NLS-1$
+	public StringProperty resourceURL =
+		PropertyFactory.newString("resourceURL"); //$NON-NLS-1$
 
 	public ISchemaListener schemaListener;
 

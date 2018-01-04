@@ -14,12 +14,12 @@
 
 package com.liferay.wiki.web.internal.portlet.action;
 
-import com.liferay.item.selector.ItemSelectorUploadResponseHandler;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.upload.UploadHandler;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.web.internal.upload.PageAttachmentWikiUploadFileEntryHandler;
+import com.liferay.wiki.web.internal.upload.PageAttachmentWikiUploadResponseHandler;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -47,16 +47,17 @@ public class UploadPageAttachmentMVCActionCommand extends BaseMVCActionCommand {
 
 		_uploadHandler.upload(
 			_pageAttachmentWikiUploadFileEntryHandler,
-			_itemSelectorUploadResponseHandler, actionRequest, actionResponse);
+			_pageAttachmentWikiUploadResponseHandler, actionRequest,
+			actionResponse);
 	}
-
-	@Reference
-	private ItemSelectorUploadResponseHandler
-		_itemSelectorUploadResponseHandler;
 
 	@Reference
 	private PageAttachmentWikiUploadFileEntryHandler
 		_pageAttachmentWikiUploadFileEntryHandler;
+
+	@Reference
+	private PageAttachmentWikiUploadResponseHandler
+		_pageAttachmentWikiUploadResponseHandler;
 
 	@Reference
 	private UploadHandler _uploadHandler;

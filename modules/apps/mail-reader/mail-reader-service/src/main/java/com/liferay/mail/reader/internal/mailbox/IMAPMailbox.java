@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.mail.reader.mailbox;
+package com.liferay.mail.reader.internal.mailbox;
 
 import com.liferay.mail.reader.attachment.AttachmentHandler;
-import com.liferay.mail.reader.attachment.DefaultAttachmentHandler;
 import com.liferay.mail.reader.constants.MailConstants;
 import com.liferay.mail.reader.exception.MailException;
 import com.liferay.mail.reader.exception.NoSuchFolderException;
 import com.liferay.mail.reader.exception.NoSuchMessageException;
+import com.liferay.mail.reader.internal.attachment.DefaultAttachmentHandler;
 import com.liferay.mail.reader.internal.imap.IMAPAccessor;
 import com.liferay.mail.reader.internal.imap.IMAPConnection;
 import com.liferay.mail.reader.internal.util.AccountLock;

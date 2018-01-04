@@ -438,7 +438,7 @@ public class ResourceImporter extends FileSystemImporter {
 		if (resourcesDir.endsWith(StringPool.SLASH) &&
 			dirName.startsWith(StringPool.SLASH)) {
 
-			return resourcesDir.concat(dirName.substring(1, dirName.length()));
+			return resourcesDir.concat(dirName.substring(1));
 		}
 
 		return resourcesDir.concat(dirName);

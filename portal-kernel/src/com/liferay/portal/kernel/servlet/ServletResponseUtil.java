@@ -100,8 +100,7 @@ public class ServletResponseUtil {
 			int index = rangeField.indexOf(StringPool.DASH);
 
 			long start = GetterUtil.getLong(rangeField.substring(0, index), -1);
-			long end = GetterUtil.getLong(
-				rangeField.substring(index + 1, rangeField.length()), -1);
+			long end = GetterUtil.getLong(rangeField.substring(index + 1), -1);
 
 			if (start == -1) {
 				start = length - end;

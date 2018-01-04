@@ -1005,7 +1005,7 @@ public class HttpImpl implements Http {
 		sb.append(url.substring(0, pos + 1));
 
 		String[] parameters = StringUtil.split(
-			url.substring(pos + 1, url.length()), CharPool.AMPERSAND);
+			url.substring(pos + 1), CharPool.AMPERSAND);
 
 		for (String parameter : parameters) {
 			if (parameter.length() > 0) {

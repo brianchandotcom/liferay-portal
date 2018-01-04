@@ -1188,8 +1188,7 @@ public class LanguageImpl implements Language, Serializable {
 			value = x.concat(StringPool.SPACE).concat(
 				get(
 					request,
-					StringUtil.toLowerCase(
-						description.substring(pos + 1, description.length()))));
+					StringUtil.toLowerCase(description.substring(pos + 1))));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
@@ -1330,8 +1329,7 @@ public class LanguageImpl implements Language, Serializable {
 			value = x.concat(StringPool.SPACE).concat(
 				get(
 					locale,
-					StringUtil.toLowerCase(
-						description.substring(pos + 1, description.length()))));
+					StringUtil.toLowerCase(description.substring(pos + 1))));
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {

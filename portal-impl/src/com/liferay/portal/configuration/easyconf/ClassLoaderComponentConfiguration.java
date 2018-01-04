@@ -159,7 +159,7 @@ public class ClassLoaderComponentConfiguration extends ComponentConfiguration {
 			position = index + 1;
 		}
 
-		sb.append(s.substring(position, s.length()));
+		sb.append(s.substring(position));
 
 		return sb.toString();
 	}

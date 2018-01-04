@@ -1227,7 +1227,7 @@ public class AssetPublisherExportImportPortletPreferencesProcessor
 			else if (name.startsWith("queryName") &&
 					 StringUtil.equalsIgnoreCase(value, "assetCategories")) {
 
-				String index = name.substring(9, name.length());
+				String index = name.substring(9);
 
 				updateImportPortletPreferencesClassPKs(
 					portletDataContext, portletPreferences,

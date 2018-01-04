@@ -819,7 +819,7 @@ public class ShoppingUtil {
 		for (String fields : fieldsArray) {
 			int pos = fields.indexOf("=");
 
-			String fieldValue = fields.substring(pos + 1, fields.length());
+			String fieldValue = fields.substring(pos + 1);
 
 			fieldsValues.add(fieldValue.trim());
 		}

@@ -16,6 +16,10 @@ package com.liferay.consumer.talend.runtime;
 
 import com.liferay.consumer.talend.connection.LiferayProvideConnectionProperties;
 
+import java.io.IOException;
+
+import org.apache.avro.Schema;
+
 import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.daikon.properties.ValidationResult;
 
@@ -23,6 +27,8 @@ import org.talend.daikon.properties.ValidationResult;
  * @author Zoltán Takács
  */
 public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
+
+	public Schema guessSchema(String resourceURL) throws IOException;
 
 	public ValidationResult validateConnection(
 		LiferayProvideConnectionProperties properties);

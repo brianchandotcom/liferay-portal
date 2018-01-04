@@ -1,12 +1,10 @@
 'use strict';
 
-import globals from 'senna/src/globals/globals';
 import HtmlScreen from 'senna/src/screen/HtmlScreen';
-import Utils from '../util/Utils.es';
-import {enterDocument, exitDocument} from 'metal-dom';
+import globals from 'senna/src/globals/globals';
 import {CancellablePromise} from 'metal-promise/src/promise/Promise';
 
-let lastLanguageId = themeDisplay.getLanguageId();
+import Utils from '../util/Utils.es';
 
 class EventScreen extends HtmlScreen {
 	constructor() {
@@ -76,12 +74,6 @@ class EventScreen extends HtmlScreen {
 		);
 	}
 
-	clearPermanentStyles(surfaces) {
-		const permanentStylesInDoc = this.querySelectorAll_(HtmlScreen.selectors.stylesPermanent);
-		permanentStylesInDoc.forEach((resource) => exitDocument(resource));
-		HtmlScreen.permanentResourcesInDoc = {};
-	}
-
 	copyBodyAttributes() {
 		const virtualBody = this.virtualDocument.querySelector('body');
 
@@ -89,19 +81,34 @@ class EventScreen extends HtmlScreen {
 		document.body.onload = virtualBody.onload;
 	}
 
-	evaluateScripts(surfaces) {
-		return super.evaluateScripts(surfaces).then(() => {
-			const languageId = themeDisplay.getLanguageId();
+	evaluateStyles(surfaces) {
+		const currentLanguageId = document.querySelector('html').lang.replace('-', '_');
+		const languageId = this.virtualDocument.lang.replace('-','_');
 
-			if (languageId !== lastLanguageId) {
-				lastLanguageId = languageId;
-				this.clearPermanentStyles(surfaces);
+		if (currentLanguageId !== languageId) {
+			this.stylesPermanentSelector_ = HtmlScreen.selectors.stylesPermanent;
+			this.stylesTemporarySelector_ = HtmlScreen.selectors.stylesTemporary;
 
-				const request = this.getRequest();
-				this.allocateVirtualDocumentForContent(request.responseText);
-				return this.evaluateStyles(surfaces);
-			}
-		});
+			HtmlScreen.selectors.stylesTemporary = HtmlScreen.selectors.stylesTemporary
+				.split(',')
+				.concat(
+					HtmlScreen.selectors.stylesPermanent
+					.split(',')
+					.map(
+						item => `${item}[href*="${currentLanguageId}"]`
+					)
+				)
+				.join();
+
+			HtmlScreen.selectors.stylesPermanent = HtmlScreen.selectors.stylesPermanent
+				.split(',')
+				.map(
+					item => `${item}[href*="${languageId}"]`
+				)
+				.join();
+		}
+
+		return super.evaluateStyles(surfaces).then(this.restoreSelectors_.bind(this));
 	}
 
 	flip(surfaces) {
@@ -164,6 +171,11 @@ class EventScreen extends HtmlScreen {
 					return content;
 				}
 			);
+	}
+
+	restoreSelectors_() {
+		HtmlScreen.selectors.stylesPermanent = this.stylesPermanentSelector_ || HtmlScreen.selectors.stylesPermanent;
+		HtmlScreen.selectors.stylesTemporary = this.stylesTemporarySelector_ || HtmlScreen.selectors.stylesTemporary;
 	}
 
 	runBodyOnLoad() {

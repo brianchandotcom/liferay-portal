@@ -115,7 +115,6 @@ page import="com.liferay.portal.kernel.security.membershippolicy.UserGroupMember
 page import="com.liferay.portal.kernel.security.permission.ActionKeys" %><%@
 page import="com.liferay.portal.kernel.service.AddressServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.EmailAddressServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.GroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.LayoutSetPrototypeLocalServiceUtil" %><%@
@@ -123,10 +122,8 @@ page import="com.liferay.portal.kernel.service.LayoutSetPrototypeServiceUtil" %>
 page import="com.liferay.portal.kernel.service.OrgLaborServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.OrganizationLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.OrganizationServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.PasswordPolicyLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.PhoneServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.RoleLocalServiceUtil" %><%@
-page import="com.liferay.portal.kernel.service.UserGroupGroupRoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserGroupRoleLocalServiceUtil" %><%@
 page import="com.liferay.portal.kernel.service.UserLocalServiceUtil" %><%@
@@ -185,6 +182,7 @@ page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
 page import="com.liferay.users.admin.web.constants.UserFormConstants" %><%@
 page import="com.liferay.users.admin.web.constants.UsersAdminWebKeys" %><%@
 page import="com.liferay.users.admin.web.internal.display.context.InitDisplayContext" %><%@
+page import="com.liferay.users.admin.web.internal.display.context.UserDisplayContext" %><%@
 page import="com.liferay.users.admin.web.search.AddUserOrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.search.OrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.search.OrganizationResultRowSplitter" %><%@
@@ -219,10 +217,7 @@ String myAccountPortletId = PortletProviderUtil.getPortletId(PortalMyAccountAppl
 
 InitDisplayContext initDisplayContext = new InitDisplayContext(request, portletName);
 
-boolean filterManageableGroups = initDisplayContext.isFilterManageableGroups();
 boolean filterManageableOrganizations = initDisplayContext.isFilterManageableOrganizations();
-boolean filterManageableRoles = initDisplayContext.isFilterManageableRoles();
-boolean filterManageableUserGroupRoles = initDisplayContext.isFilterManageableUserGroupRoles();
 boolean filterManageableUserGroups = initDisplayContext.isFilterManageableUserGroups();
 %>
 

@@ -21,130 +21,21 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-User selUser = PortalUtil.getSelectedUser(request);
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
 
-Contact selContact = null;
-
-if (selUser != null) {
-	selContact = selUser.getContact();
-}
-
-PasswordPolicy passwordPolicy = null;
-
-if (selUser == null) {
-	passwordPolicy = PasswordPolicyLocalServiceUtil.getDefaultPasswordPolicy(company.getCompanyId());
-}
-else {
-	passwordPolicy = selUser.getPasswordPolicy();
-}
-
-List<Group> groups = Collections.emptyList();
-
-if (selUser != null) {
-	groups = selUser.getGroups();
-
-	if (filterManageableGroups) {
-		groups = UsersAdminUtil.filterGroups(permissionChecker, groups);
-	}
-}
-
-List<Organization> organizations = Collections.emptyList();
-
-if (selUser != null) {
-	organizations = selUser.getOrganizations();
-
-	if (filterManageableOrganizations) {
-		organizations = UsersAdminUtil.filterOrganizations(permissionChecker, organizations);
-	}
-}
-else {
-	String organizationIds = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
-
-	if (Validator.isNotNull(organizationIds)) {
-		long[] organizationIdsArray = StringUtil.split(organizationIds, 0L);
-
-		organizations = OrganizationLocalServiceUtil.getOrganizations(organizationIdsArray);
-	}
-}
-
-List<Role> roles = Collections.emptyList();
-
-if (selUser != null) {
-	roles = selUser.getRoles();
-
-	if (filterManageableRoles) {
-		roles = UsersAdminUtil.filterRoles(permissionChecker, roles);
-	}
-}
-
-List<UserGroupRole> organizationRoles = new ArrayList<UserGroupRole>();
-List<UserGroupRole> siteRoles = new ArrayList<UserGroupRole>();
-
-List<UserGroupRole> userGroupRoles = Collections.emptyList();
-
-if (selUser != null) {
-	userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(selUser.getUserId());
-
-	if (filterManageableUserGroupRoles) {
-		userGroupRoles = UsersAdminUtil.filterUserGroupRoles(permissionChecker, userGroupRoles);
-	}
-}
-
-for (UserGroupRole userGroupRole : userGroupRoles) {
-	int roleType = userGroupRole.getRole().getType();
-
-	if (roleType == RoleConstants.TYPE_ORGANIZATION) {
-		organizationRoles.add(userGroupRole);
-	}
-	else if (roleType == RoleConstants.TYPE_SITE) {
-		siteRoles.add(userGroupRole);
-	}
-}
-
-List<UserGroup> userGroups = Collections.emptyList();
-
-if (selUser != null) {
-	userGroups = selUser.getUserGroups();
-
-	if (filterManageableUserGroups) {
-		userGroups = UsersAdminUtil.filterUserGroups(permissionChecker, userGroups);
-	}
-}
-
-List<UserGroupGroupRole> inheritedSiteRoles = Collections.emptyList();
-
-if (selUser != null) {
-	inheritedSiteRoles = UserGroupGroupRoleLocalServiceUtil.getUserGroupGroupRolesByUser(selUser.getUserId());
-}
-
-List<Group> inheritedSites = GroupLocalServiceUtil.getUserGroupsRelatedGroups(userGroups);
-List<Group> organizationsRelatedGroups = Collections.emptyList();
-
-if (!organizations.isEmpty()) {
-	organizationsRelatedGroups = GroupLocalServiceUtil.getOrganizationsRelatedGroups(organizations);
-
-	for (Group group : organizationsRelatedGroups) {
-		if (!inheritedSites.contains(group)) {
-			inheritedSites.add(group);
-		}
-	}
-}
-
-List<Group> allGroups = new ArrayList<Group>();
-
-allGroups.addAll(groups);
-allGroups.addAll(inheritedSites);
-allGroups.addAll(organizationsRelatedGroups);
-allGroups.addAll(GroupLocalServiceUtil.getOrganizationsGroups(organizations));
-allGroups.addAll(GroupLocalServiceUtil.getUserGroupsGroups(userGroups));
-
-List<Group> roleGroups = new ArrayList<Group>();
-
-for (Group group : allGroups) {
-	if (RoleLocalServiceUtil.hasGroupRoles(group.getGroupId())) {
-		roleGroups.add(group);
-	}
-}
+List<Group> allGroups = userDisplayContext.getAllGroups();
+List<Group> groups = userDisplayContext.getGroups();
+List<UserGroupGroupRole> inheritedSiteRoles = userDisplayContext.getInheritedSiteRoles();
+List<Group> inheritedSites = userDisplayContext.getInheritedSites();
+List<UserGroupRole> organizationRoles = userDisplayContext.getOrganizationRoles();
+List<Organization> organizations = userDisplayContext.getOrganizations();
+PasswordPolicy passwordPolicy = userDisplayContext.getPasswordPolicy();
+List<Group> roleGroups = userDisplayContext.getRoleGroups();
+List<Role> roles = userDisplayContext.getRoles();
+Contact selContact = userDisplayContext.getContact();
+User selUser = userDisplayContext.getSelectedUser();
+List<UserGroupRole> siteRoles = userDisplayContext.getSiteRoles();
+List<UserGroup> userGroups = userDisplayContext.getUserGroups();
 %>
 
 <liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />

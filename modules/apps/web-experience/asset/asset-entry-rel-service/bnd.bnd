@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Asset Entry Rel Service
+Bundle-SymbolicName: com.liferay.asset.entry.rel.service
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset
+Liferay-Require-SchemaVersion: 1.0.0
+Liferay-Service: true

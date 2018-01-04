@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean class="com.liferay.asset.entry.rel.service.impl.AssetEntryAssetCategoryRelLocalServiceImpl" id="com.liferay.asset.entry.rel.service.AssetEntryAssetCategoryRelLocalService" />
+	<bean class="com.liferay.asset.entry.rel.service.persistence.impl.AssetEntryAssetCategoryRelPersistenceImpl" id="com.liferay.asset.entry.rel.service.persistence.AssetEntryAssetCategoryRelPersistence" parent="basePersistence" />
+</beans>

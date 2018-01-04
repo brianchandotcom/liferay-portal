@@ -567,6 +567,9 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 						<property name="java.jdk.home" value="${java.jdk.8.@{architecture}.home}" />
 					</then>
 				</elseif>
+				<else>
+					<property name="java.jdk.home" value="${java.home}" />
+				</else>
 			</if>
 		</sequential>
 	</macrodef>

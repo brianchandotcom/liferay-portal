@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.text.localizer.address.util;
+package com.liferay.text.localizer.taglib.internal.address.util;
 
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;

@@ -18,7 +18,7 @@ import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
-import com.liferay.text.localizer.address.util.AddressTextLocalizerUtil;
+import com.liferay.text.localizer.taglib.internal.address.util.AddressTextLocalizerUtil;
 
 import java.io.IOException;
 

@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.text.localizer.address;
+package com.liferay.text.localizer.taglib.internal.address;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.text.localizer.address.util.AddressUtil;
+import com.liferay.text.localizer.address.AddressTextLocalizer;
+import com.liferay.text.localizer.taglib.internal.address.util.AddressUtil;
 
 import java.util.Optional;
 

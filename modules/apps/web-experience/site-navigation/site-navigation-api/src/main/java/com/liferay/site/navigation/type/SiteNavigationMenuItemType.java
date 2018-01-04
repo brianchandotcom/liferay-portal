@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.type;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
@@ -41,6 +42,11 @@ public interface SiteNavigationMenuItemType {
 	public default String getType() {
 		return StringPool.BLANK;
 	}
+
+	public String getURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException;
 
 	public default void renderAddPage(
 			HttpServletRequest request, HttpServletResponse response)

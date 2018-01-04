@@ -35,6 +35,20 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public FragmentEntry addFragmentEntry(
+			long groupId, long fragmentCollectionId, String name,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		FragmentPermission.check(
+			getPermissionChecker(), groupId,
+			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
+
+		return fragmentEntryLocalService.addFragmentEntry(
+			getUserId(), groupId, fragmentCollectionId, name, serviceContext);
+	}
+
+	@Override
+	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
 			String html, String js, ServiceContext serviceContext)
 		throws PortalException {

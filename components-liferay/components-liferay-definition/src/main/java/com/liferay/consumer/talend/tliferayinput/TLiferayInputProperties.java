@@ -14,7 +14,13 @@
 
 package com.liferay.consumer.talend.tliferayinput;
 
+import com.liferay.consumer.talend.LiferayBaseComponentDefinition;
+import com.liferay.consumer.talend.connection.LiferayConnectionProperties;
 import com.liferay.consumer.talend.connection.LiferayConnectionResourceBaseProperties;
+import com.liferay.consumer.talend.exception.ExceptionUtils;
+import com.liferay.consumer.talend.runtime.LiferaySourceOrSinkRuntime;
+
+import java.io.IOException;
 
 import java.util.Collections;
 import java.util.Set;
@@ -27,10 +33,13 @@ import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.daikon.properties.PresentationItem;
+import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
+import org.talend.daikon.sandbox.SandboxedInstance;
 
 /**
  * @author Zoltán Takács
@@ -65,6 +74,12 @@ public class TLiferayInputProperties
 	 * Refreshes form after "Guess Schema" button was processed
 	 */
 	public void afterGuessSchema() {
+		if (_log.isDebugEnabled()) {
+			_log.debug(
+				"Selected resource URL: " + resource.resourceURL.getValue());
+			_log.debug("Query string: " + queryString.getValue());
+		}
+
 		refreshLayout(getForm(Form.MAIN));
 	}
 
@@ -88,6 +103,48 @@ public class TLiferayInputProperties
 		super.setupProperties();
 	}
 
+	public ValidationResult validateGuessSchema() {
+		try (SandboxedInstance sandboxedInstance =
+				LiferayBaseComponentDefinition.getSandboxedInstance(
+					LiferayBaseComponentDefinition.
+						RUNTIME_SOURCEORSINK_CLASS)) {
+
+			LiferaySourceOrSinkRuntime ss =
+				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
+
+			ValidationResult result = ss.initialize(
+				null, _getEffectiveConnectionProperties());
+
+			if (result.getStatus() == Result.ERROR) {
+				return result;
+			}
+
+			result = ss.validate(null);
+
+			if (result.getStatus() == ValidationResult.Result.OK) {
+				try {
+					Schema runtimeSchema = ss.guessSchema(
+						resource.resourceURL.getValue());
+
+					resource.main.schema.setValue(runtimeSchema);
+				}
+				catch (IOException ioe) {
+					/* result = new ValidationResult(
+						Result.ERROR,
+						translations.getMessage(
+							"error.validation.connection.endpoint",
+							ioe.getMessage()));*/
+					ExceptionUtils.exceptionToValidationResult(ioe);
+				}
+			}
+			else {
+				return result;
+			}
+
+			return result;
+		}
+	}
+
 	public Property<String> queryString =
 		PropertyFactory.newProperty("queryString"); //$NON-NLS-1$
 
@@ -103,6 +160,31 @@ public class TLiferayInputProperties
 		}
 
 		return Collections.<PropertyPathConnector>emptySet();
+	}
+
+	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
+		LiferayConnectionProperties connProps = getConnectionProperties();
+
+		if (connProps != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("UserID: " + connProps.userId.getValue());
+				_log.debug("Endpoint: " + connProps.endpoint.getValue());
+			}
+		}
+		else {
+			if (_log.isDebugEnabled()) {
+				_log.debug("LiferayConnectionProperties is null");
+			}
+		}
+
+		LiferayConnectionProperties referenceProps =
+			connProps.getReferencedConnectionProperties();
+
+		if (referenceProps != null) {
+			return referenceProps;
+		}
+
+		return connProps;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

@@ -82,8 +82,21 @@ public class WorkflowDefinitionManagerProxyBean
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getLatestWorkflowDefinition(long, String)}
+	 * @review
+	 */
+	@Deprecated
 	@Override
 	public WorkflowDefinition getLatestKaleoDefinition(
+		long companyId, String name) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	public WorkflowDefinition getLatestWorkflowDefinition(
 		long companyId, String name) {
 
 		throw new UnsupportedOperationException();

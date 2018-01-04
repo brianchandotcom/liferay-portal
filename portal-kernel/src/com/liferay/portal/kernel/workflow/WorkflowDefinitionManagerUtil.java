@@ -86,11 +86,25 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, name, start, end, orderByComparator);
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getLatestWorkflowDefinition(long, String)}
+	 * @review
+	 */
+	@Deprecated
 	public static WorkflowDefinition getLatestKaleoDefinition(
 			long companyId, String name)
 		throws WorkflowException {
 
 		return getWorkflowDefinitionManager().getLatestKaleoDefinition(
+			companyId, name);
+	}
+
+	public static WorkflowDefinition getLatestWorkflowDefinition(
+			long companyId, String name)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().getLatestWorkflowDefinition(
 			companyId, name);
 	}
 

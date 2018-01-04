@@ -68,9 +68,22 @@ public interface WorkflowDefinitionManager {
 			OrderByComparator<WorkflowDefinition> orderByComparator)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link
+	 *             #getLatestWorkflowDefinition(long, String)}
+	 * @review
+	 */
+	@Deprecated
 	public WorkflowDefinition getLatestKaleoDefinition(
 			long companyId, String name)
 		throws WorkflowException;
+
+	public default WorkflowDefinition getLatestWorkflowDefinition(
+			long companyId, String name)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public default List<WorkflowDefinition> getLatestWorkflowDefinitions(
 			long companyId, int start, int end,

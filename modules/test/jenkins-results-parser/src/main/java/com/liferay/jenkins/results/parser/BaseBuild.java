@@ -695,6 +695,22 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Build getLongestDelayedDownstreamBuild() {
+		Build longestDelayedDownstreamBuild = null;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if ((longestDelayedDownstreamBuild == null) ||
+				(downstreamBuild.getWaitTime() >
+					longestDelayedDownstreamBuild.getWaitTime())) {
+
+				longestDelayedDownstreamBuild = downstreamBuild;
+			}
+		}
+
+		return longestDelayedDownstreamBuild;
+	}
+
+	@Override
 	public Build getLongestRunningDownstreamBuild() {
 		Build longestRunningDownstreamBuild = null;
 

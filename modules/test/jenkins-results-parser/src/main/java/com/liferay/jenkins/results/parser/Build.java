@@ -96,6 +96,8 @@ public interface Build {
 
 	public Long getLatestStartTimestamp();
 
+	public Build getLongestDelayedDownstreamBuild();
+
 	public Build getLongestRunningDownstreamBuild();
 
 	public TestResult getLongestRunningTest();

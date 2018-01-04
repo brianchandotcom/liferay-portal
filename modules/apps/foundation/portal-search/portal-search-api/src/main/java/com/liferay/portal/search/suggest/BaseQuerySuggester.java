@@ -18,10 +18,12 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.analysis.Tokenizer;
-import com.liferay.portal.kernel.search.suggest.CollatorUtil;
+import com.liferay.portal.kernel.search.suggest.Collator;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.analysis.SimpleTokenizer;
 
 import java.util.List;
@@ -44,7 +46,20 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 		Map<String, List<String>> suggestions = spellCheckKeywords(
 			searchContext, 1);
 
-		String localizedFieldName = Field.getLocalizedName(
+		// Must use LocalizationUtil instead of @Reference Localization,
+		// otherwise it becomes an unsatisfied reference and the component
+		// remains undeployed, with no stack trace.
+		// Similar to:
+		// https://issues.liferay.com/browse/LPS-72507
+		//     ("Stop using HttpUtil in modules, use service reference directly
+		//     instead")
+		// https://github.com/liferay/liferay-portal/commit/
+		//     cdadae7#diff-874fcf4d20d5892447db4ce340c2bc49
+		// https://github.com/liferay/liferay-portal/commit/d1da078
+
+		Localization localization = LocalizationUtil.getLocalization();
+
+		String localizedFieldName = localization.getLocalizedName(
 			searchContext.getLanguageId(), Field.SPELL_CHECK_WORD);
 
 		Tokenizer tokenizer = getTokenizer();
@@ -53,7 +68,7 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 			localizedFieldName, searchContext.getKeywords(),
 			searchContext.getLanguageId());
 
-		return CollatorUtil.collate(suggestions, keywords);
+		return collator.collate(suggestions, keywords);
 	}
 
 	@Override
@@ -70,6 +85,9 @@ public abstract class BaseQuerySuggester implements QuerySuggester {
 
 		return _defaultTokenizer;
 	}
+
+	@Reference
+	protected Collator collator;
 
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,

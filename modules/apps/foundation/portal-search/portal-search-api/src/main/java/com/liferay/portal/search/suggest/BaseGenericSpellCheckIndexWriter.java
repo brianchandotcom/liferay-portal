@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.NGramHolder;
-import com.liferay.portal.kernel.search.suggest.NGramHolderBuilderUtil;
+import com.liferay.portal.kernel.search.suggest.NGramHolderBuilder;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.InputStream;
@@ -33,6 +33,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Michael C. Han
@@ -86,7 +91,9 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		document.addKeyword(Field.TYPE, typeFieldValue);
 		document.addKeyword(Field.UID, getUID(companyId, languageId, keywords));
 
-		NGramHolder nGramHolder = NGramHolderBuilderUtil.buildNGramHolder(
+		NGramHolderBuilder nGramHolderBuilder = getNGramHolderBuilder();
+
+		NGramHolder nGramHolder = nGramHolderBuilder.buildNGramHolder(
 			keywords, maxNGramLength);
 
 		addNGramFields(document, nGramHolder.getNGramEnds());
@@ -104,6 +111,14 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		addNGramFields(document, nGramHolder.getNGramStarts());
 
 		return document;
+	}
+
+	protected NGramHolderBuilder getNGramHolderBuilder() {
+		if (nGramHolderBuilder != null) {
+			return nGramHolderBuilder;
+		}
+
+		return _defaultNGramHolderBuilder;
 	}
 
 	@Override
@@ -168,10 +183,20 @@ public abstract class BaseGenericSpellCheckIndexWriter
 		}
 	}
 
+	@Reference(
+		cardinality = ReferenceCardinality.OPTIONAL,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY
+	)
+	protected volatile NGramHolderBuilder nGramHolderBuilder;
+
 	private static final int _DEFAULT_BATCH_SIZE = 1000;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseGenericSpellCheckIndexWriter.class);
+
+	private static final NGramHolderBuilder _defaultNGramHolderBuilder =
+		new NullNGramHolderBuilder();
 
 	private int _batchSize = _DEFAULT_BATCH_SIZE;
 	private Document _documentPrototype = new DocumentImpl();

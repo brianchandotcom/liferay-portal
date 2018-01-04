@@ -15,8 +15,8 @@
 package com.liferay.mail.reader.internal.messaging;
 
 import com.liferay.mail.reader.exception.NoSuchAccountException;
+import com.liferay.mail.reader.internal.mailbox.MailboxFactoryUtil;
 import com.liferay.mail.reader.mailbox.Mailbox;
-import com.liferay.mail.reader.mailbox.MailboxFactoryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.mail.reader.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;

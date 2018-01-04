@@ -107,7 +107,7 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Displays the group name suffixed with <![CDATA[<code>(Staging)</code>]]> (e.g., Test (Staging)).</description>
+		<description>Displays the group name suffixed with <![CDATA[<code>(Staging)</code>]]> (e.g., Test (Staging)). This is useful for distinguishing a site as a staged group.</description>
 		<name>descriptive-name</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.DescriptiveNameTag</tag-class>
 		<body-content>JSP</body-content>

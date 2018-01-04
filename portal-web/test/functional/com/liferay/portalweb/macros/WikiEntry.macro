@@ -73,15 +73,9 @@
 				<execute macro="Panel#expandPanel">
 					<var name="panelHeading" value="Configuration" />
 				</execute>
-
-				<execute function="AssertSelectedLabel" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
 			</then>
-			<elseif>
-				<condition function="IsVisible" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" />
-				<then>
-					<execute function="AssertSelectedLabel" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />
-				</then>
-			</elseif>
 		</if>
+
+		<execute function="AssertSelectedLabel" locator1="Wiki#ADD_PAGE_FORMAT_DROPDOWN" value1="${pageFormat}" />	
 	</command>
 </definition>

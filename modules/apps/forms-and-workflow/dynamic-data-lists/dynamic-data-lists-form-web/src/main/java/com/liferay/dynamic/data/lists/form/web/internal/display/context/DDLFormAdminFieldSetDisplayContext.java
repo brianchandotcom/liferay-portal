@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
+import com.liferay.dynamic.data.lists.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.lists.form.web.internal.search.FieldSetSearch;
 import com.liferay.dynamic.data.lists.form.web.internal.search.FieldSetSearchTerms;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
@@ -66,6 +67,8 @@ public class DDLFormAdminFieldSetDisplayContext
 
 	public DDLFormAdminFieldSetDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
+		AddDefaultSharedFormLayoutPortalInstanceLifecycleListener
+			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
 		DDLFormWebConfiguration ddlFormWebConfiguration,
 		DDLRecordLocalService ddlRecordLocalService,
 		DDLRecordSetService ddlRecordSetService,
@@ -80,8 +83,9 @@ public class DDLFormAdminFieldSetDisplayContext
 		WorkflowEngineManager workflowEngineManager) {
 
 		super(
-			renderRequest, renderResponse, ddlFormWebConfiguration,
-			ddlRecordLocalService, ddlRecordSetService,
+			renderRequest, renderResponse,
+			addDefaultSharedFormLayoutPortalInstanceLifecycleListener,
+			ddlFormWebConfiguration, ddlRecordLocalService, ddlRecordSetService,
 			ddmFormFieldTypeServicesTracker, ddmFormFieldTypesJSONSerializer,
 			ddmFormRenderer, ddmFormValuesFactory, ddmFormValuesMerger,
 			ddmStructureLocalService, ddmStructureService, jsonFactory,

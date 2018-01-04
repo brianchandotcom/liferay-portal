@@ -12,21 +12,28 @@
  * details.
  */
 
-package com.liferay.portal.kernel.model.impl;
+package com.liferay.dynamic.data.lists.form.web.internal.layout.type.access.policy;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.dynamic.data.lists.form.web.internal.constants.DDLFormPortletKeys;
+import com.liferay.dynamic.data.lists.form.web.internal.layout.type.constants.DDLFormPortletLayoutTypeConstants;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypeAccessPolicy;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.impl.DefaultLayoutTypeAccessPolicyImpl;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.util.StringUtil;
 
-import javax.servlet.http.HttpServletRequest;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Leonardo Barros
- * @deprecated As of 7.0.0, with no direct replacement
  */
-@Deprecated
-public class ModificationDeniedLayoutTypeAccessPolicyImpl
+@Component(
+	immediate = true,
+	property = {"layout.type=" + DDLFormPortletLayoutTypeConstants.LAYOUT_TYPE},
+	service = LayoutTypeAccessPolicy.class
+)
+public class DDLFormPortletLayoutTypeAccessPolicy
 	extends DefaultLayoutTypeAccessPolicyImpl {
 
 	@Override
@@ -58,26 +65,17 @@ public class ModificationDeniedLayoutTypeAccessPolicyImpl
 	}
 
 	@Override
-	public boolean isViewLayoutAllowed(
-			PermissionChecker permissionChecker, Layout layout)
-		throws PortalException {
+	protected boolean isAccessGrantedByPortletOnPage(
+		Layout layout, Portlet portlet) {
 
-		return super.isViewLayoutAllowed(permissionChecker, layout);
-	}
+		if (StringUtil.equalsIgnoreCase(
+				portlet.getPortletId(),
+				DDLFormPortletKeys.DYNAMIC_DATA_LISTS_FORM)) {
 
-	@Override
-	protected boolean hasAccessPermission(
-			HttpServletRequest request, Layout layout, Portlet portlet)
-		throws PortalException {
+			return true;
+		}
 
-		return super.hasAccessPermission(request, layout, portlet);
-	}
-
-	@Override
-	protected boolean isAccessAllowedToLayoutPortlet(
-		HttpServletRequest request, Layout layout, Portlet portlet) {
-
-		return super.isAccessAllowedToLayoutPortlet(request, layout, portlet);
+		return false;
 	}
 
 }

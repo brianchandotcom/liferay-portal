@@ -433,6 +433,10 @@ public interface Layout extends LayoutModel, PersistedModel {
 
 	public boolean isTypePortlet();
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@java.lang.Deprecated()
 	public boolean isTypeSharedPortlet();
 
 	public boolean isTypeURL();

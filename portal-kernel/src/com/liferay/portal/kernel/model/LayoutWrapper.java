@@ -1552,6 +1552,10 @@ public class LayoutWrapper implements Layout, ModelWrapper<Layout> {
 		return _layout.isTypePortlet();
 	}
 
+	/**
+	* @deprecated As of 7.0.0, with no direct replacement
+	*/
+	@Deprecated
 	@Override
 	public boolean isTypeSharedPortlet() {
 		return _layout.isTypeSharedPortlet();

@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Layout Type Controller Shared Portlet
-Bundle-SymbolicName: com.liferay.layout.type.controller.shared.portlet
-Bundle-Version: 2.0.4
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Site Management
-Web-ContextPath: /layout-type-controller-shared-portlet

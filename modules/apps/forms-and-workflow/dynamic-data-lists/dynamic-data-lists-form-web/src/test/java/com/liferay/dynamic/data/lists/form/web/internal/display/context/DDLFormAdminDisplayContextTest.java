@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.lists.form.web.internal.display.context;
 
 import com.liferay.dynamic.data.lists.form.web.configuration.DDLFormWebConfiguration;
+import com.liferay.dynamic.data.lists.form.web.internal.instance.lifecycle.AddDefaultSharedFormLayoutPortalInstanceLifecycleListener;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordSetSettings;
 import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
@@ -274,6 +275,7 @@ public class DDLFormAdminDisplayContextTest extends PowerMockito {
 
 		_ddlFormAdminDisplayContext = new DDLFormAdminDisplayContext(
 			_renderRequest, mock(RenderResponse.class),
+			new AddDefaultSharedFormLayoutPortalInstanceLifecycleListener(),
 			mock(DDLFormWebConfiguration.class),
 			mock(DDLRecordLocalService.class), mockDDLRecordSetService(),
 			mock(DDMFormFieldTypeServicesTracker.class),

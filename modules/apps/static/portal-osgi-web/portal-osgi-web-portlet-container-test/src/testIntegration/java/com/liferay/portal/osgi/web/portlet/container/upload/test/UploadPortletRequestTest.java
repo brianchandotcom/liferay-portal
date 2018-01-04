@@ -1171,7 +1171,7 @@ public class UploadPortletRequestTest {
 				String fileParameter = entry.getKey();
 
 				fileParameter = fileParameter.substring(
-					_portletNamespace.length(), fileParameter.length());
+					_portletNamespace.length());
 
 				Assert.assertTrue(
 					parameterNamesList.toString(),

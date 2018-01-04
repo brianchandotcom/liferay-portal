@@ -206,9 +206,7 @@ public class UploadPortletRequestImpl
 			FileItem[] fileItems = entry.getValue();
 
 			if (name.startsWith(_namespace)) {
-				map.put(
-					name.substring(_namespace.length(), name.length()),
-					fileItems);
+				map.put(name.substring(_namespace.length()), fileItems);
 			}
 			else {
 				map.put(name, fileItems);
@@ -303,9 +301,7 @@ public class UploadPortletRequestImpl
 			List<String> parameters = entry.getValue();
 
 			if (name.startsWith(_namespace)) {
-				map.put(
-					name.substring(_namespace.length(), name.length()),
-					parameters);
+				map.put(name.substring(_namespace.length()), parameters);
 			}
 			else {
 				map.put(name, parameters);

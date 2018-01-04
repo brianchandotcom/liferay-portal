@@ -107,7 +107,7 @@ public class SimpleKeywordTokenizer implements KeywordTokenizer {
 			return;
 		}
 
-		keyword = keyword.substring(end + 1, keyword.length());
+		keyword = keyword.substring(end + 1);
 
 		keyword = keyword.trim();
 

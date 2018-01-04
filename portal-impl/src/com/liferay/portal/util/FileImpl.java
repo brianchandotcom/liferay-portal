@@ -605,8 +605,7 @@ public class FileImpl implements com.liferay.portal.kernel.util.File {
 		int pos = fileName.lastIndexOf(CharPool.PERIOD);
 
 		if (pos > 0) {
-			return StringUtil.toLowerCase(
-				fileName.substring(pos + 1, fileName.length()));
+			return StringUtil.toLowerCase(fileName.substring(pos + 1));
 		}
 		else {
 			return StringPool.BLANK;

@@ -373,7 +373,7 @@ public class TrashImpl implements Trash {
 			return StringPool.BLANK;
 		}
 
-		return title.substring(index + 1, title.length());
+		return title.substring(index + 1);
 	}
 
 	@Override

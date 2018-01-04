@@ -220,7 +220,7 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		}
 
 		if (index < quote.length()) {
-			sb.append(quote.substring(index, quote.length()));
+			sb.append(quote.substring(index));
 		}
 
 		return sb.toString();

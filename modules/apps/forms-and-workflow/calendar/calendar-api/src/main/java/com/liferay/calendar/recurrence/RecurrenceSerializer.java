@@ -54,8 +54,7 @@ public class RecurrenceSerializer {
 			int index = data.indexOf(StringPool.NEW_LINE);
 
 			if (index != -1) {
-				String exceptionDates = data.substring(
-					index + 1, data.length());
+				String exceptionDates = data.substring(index + 1);
 
 				RDateList rDateList = new RDateList(exceptionDates, timeZone);
 

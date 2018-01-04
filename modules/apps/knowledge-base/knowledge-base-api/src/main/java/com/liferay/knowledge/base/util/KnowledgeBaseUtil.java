@@ -247,7 +247,7 @@ public class KnowledgeBaseUtil {
 			x = x + 1;
 		}
 
-		return s.substring(x, s.length());
+		return s.substring(x);
 	}
 
 	private static final int _SQL_DATA_MAX_PARAMETERS = GetterUtil.getInteger(

@@ -242,8 +242,7 @@ public class LanguageKeysCheck extends BaseFileCheck {
 
 		int y = baseModuleName.lastIndexOf(StringPool.SLASH);
 
-		baseModuleName = baseModuleName.substring(
-			y + 1, baseModuleName.length());
+		baseModuleName = baseModuleName.substring(y + 1);
 
 		String moduleLangDirName =
 			moduleLocation.substring(0, x + 1) + baseModuleName +

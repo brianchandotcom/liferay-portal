@@ -571,6 +571,15 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					<property name="java.jdk.home" value="${java.home}" />
 				</else>
 			</if>
+
+			<if>
+				<not>
+					<available file="${java.jdk.home}" />
+				</not>
+				<then>
+					<var name="java.jdk.home" value="${java.home}" />
+				</then>
+			</if>
 		</sequential>
 	</macrodef>
 
@@ -1491,10 +1500,7 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 			<get-poshi-jvm-opts />
 
 			<if>
-				<and>
-					<isset property="env.JENKINS_HOME" />
-					<available file="${java.jdk.home}" />
-				</and>
+				<isset property="env.JENKINS_HOME" />
 				<then>
 					<gradle-execute failonerror="false" gradleopts="${poshi.jvm.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />

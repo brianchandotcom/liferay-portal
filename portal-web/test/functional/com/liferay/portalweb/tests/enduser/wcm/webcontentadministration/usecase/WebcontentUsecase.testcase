@@ -2667,6 +2667,83 @@
 		</execute>
 	</command>
 
+	<command name="UndeployWebContentDisplayModuleViaGogoShell" priority="5">
+		<description message="This is a use case for LPS-71941." />
+
+		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#UndeployWebContentDisplayModuleViaGogoShell" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Gogo Shell" />
+		</execute>
+
+		<execute macro="GogoShell#getModuleID">
+			<return from="moduleID" name="moduleID" />
+			<var name="moduleName" value="com.liferay.journal.content.web" />
+		</execute>
+
+		<execute macro="GogoShell#stopModule">
+			<var name="moduleID" value="${moduleID}" />
+		</execute>
+
+		<execute macro="GogoShell#viewModuleStatus">
+			<var name="moduleName" value="com.liferay.journal.content.web" />
+			<var name="moduleStatus" value="Resolved" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#viewUndeployMessage" />
+
+		<execute macro="Portlet#deletePG">
+			<var name="portletName" value="com_liferay_journal_content_web_portlet_JournalContentPortlet" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Gogo Shell" />
+		</execute>
+
+		<execute macro="GogoShell#startModule">
+			<var name="moduleID" value="${moduleID}" />
+		</execute>
+
+		<execute macro="GogoShell#viewModuleStatus">
+			<var name="moduleName" value="com.liferay.journal.content.web" />
+			<var name="moduleStatus" value="Active" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Web Content Display Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Web Content Display" />
+		</execute>
+	</command>
+
 	<command name="UseStructureAndTemplateFromParentSiteHierarchy" priority="4">
 		<property name="testray.component.names" value="Web Content Administration" />
 

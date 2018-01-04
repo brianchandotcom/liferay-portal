@@ -1,0 +1,41 @@
+<definition>
+	<command name="getModuleID" returns="moduleID">
+		<execute macro="GogoShell#listModuleStatus">
+			<var name="moduleName" value="${moduleName}" />
+		</execute>
+
+		<var method="selenium#getText(GogoShell#OUTPUT_FIELD)" name="moduleStatusOutput" />
+
+		<var method="StringUtil#stripBetween('${moduleStatusOutput}', 'START', 'Name   ')" name="partialModuleStatusOutput" />
+
+		<var method="StringUtil#extractFirst('${partialModuleStatusOutput}', '|')" name="moduleID" />
+
+		<return name="moduleID" value="${moduleID}" />
+	</command>
+
+	<command name="listModuleStatus">
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="lb ${moduleName}" />
+
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
+	<command name="startModule">
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="start ${moduleID}" />
+
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
+	<command name="stopModule">
+		<execute function="Type" locator1="GogoShell#COMMAND_FIELD" value1="stop ${moduleID}" />
+
+		<execute function="AssertClick" locator1="GogoShell#EXECUTE_BUTTON" value1="Execute" />
+	</command>
+
+	<command name="viewModuleStatus">
+		<execute macro="GogoShell#listModuleStatus" >
+			<var name="moduleName" value="${moduleName}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="GogoShell#OUTPUT_FIELD" value1="${moduleStatus}" />
+	</command>
+</definition>

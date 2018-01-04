@@ -26,6 +26,8 @@ import com.liferay.commerce.service.CommercePaymentMethodLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.List;
 
@@ -84,6 +86,11 @@ public class CommerceOrderImpl extends CommerceOrderBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public User getOrderUser() throws PortalException {
+		return UserLocalServiceUtil.getUser(getOrderUserId());
 	}
 
 	@Override

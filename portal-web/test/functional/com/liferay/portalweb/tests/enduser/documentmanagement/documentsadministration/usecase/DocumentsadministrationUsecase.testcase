@@ -264,7 +264,7 @@
 			<var name="configurationName" value="Documents &amp; Media Service" />
 		</execute>
 
-		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="30000000">
+		<execute function="Type" locator1="TextInput#GENERIC_TEXT_INPUT" value1="300000">
 			<var name="key_fieldLabel" value="Maximum File Size" />
 		</execute>
 
@@ -284,7 +284,7 @@
 			<var name="dmDocumentTypeName" value="${dmDocumentTypeName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Upload documents no larger than 28.6MB." />
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Upload documents no larger than 293KB." />
 
 		<execute macro="DMDocument#editCmd">
 			<var name="dmDocumentFileEdit" value="Document_1.mp4" />

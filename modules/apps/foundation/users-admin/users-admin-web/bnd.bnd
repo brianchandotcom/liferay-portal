@@ -19,3 +19,4 @@ Import-Package:\
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /users-admin-web
+-dsannotations-options: inherit

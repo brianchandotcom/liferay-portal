@@ -135,14 +135,14 @@
 			<var name="sitePageType" value="Empty Page" />
 		</execute>
 
-		<execute macro="Navigator#gotoSpecificURLPage">
-			<var name="pageName" value="Child Site Page" />
-			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
-		</execute>
-
 		<execute macro="Page#view">
 			<var name="pageName" value="Child Site Page" />
 			<var name="privacy" value="Private" />
+		</execute>
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Child Site Page" />
+			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

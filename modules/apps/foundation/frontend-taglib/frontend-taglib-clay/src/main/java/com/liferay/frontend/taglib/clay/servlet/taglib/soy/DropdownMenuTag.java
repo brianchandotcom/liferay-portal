@@ -73,12 +73,16 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("expanded", expanded);
 	}
 
-	public void setIndicatorsPosition(String indicatorsPosition) {
-		putValue("indicatorsPosition", indicatorsPosition);
-	}
-
 	public void setItems(Object items) {
 		putValue("items", items);
+	}
+
+	public void setItemsIconAlignment(String itemsIconAlignment) {
+		putValue("itemsIconAlignment", itemsIconAlignment);
+	}
+
+	public void setLabel(String label) {
+		putValue("label", label);
 	}
 
 	public void setSearchable(Boolean searchable) {
@@ -89,12 +93,8 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("spritemap", spritemap);
 	}
 
-	public void setTriggerLabel(String triggerLabel) {
-		putValue("triggerLabel", triggerLabel);
-	}
-
-	public void setTriggerStyle(String triggerStyle) {
-		putValue("triggerStyle", triggerStyle);
+	public void setStyle(String style) {
+		putValue("style", style);
 	}
 
 	public void setType(String type) {

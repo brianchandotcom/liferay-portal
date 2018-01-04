@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.form.values.factory.DDMFormValuesFactory
 import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -44,7 +45,7 @@ import org.springframework.mock.web.portlet.MockRenderResponse;
 /**
  * @author Adam Brandizzi
  */
-public class DDLFormDisplayContextTest extends PowerMockito {
+public class DDMFormDisplayContextTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws PortalException {
@@ -89,6 +90,7 @@ public class DDLFormDisplayContextTest extends PowerMockito {
 			mock(DDMFormInstanceService.class),
 			mock(DDMFormInstanceRecordVersionLocalService.class),
 			mock(DDMFormRenderer.class), mock(DDMFormValuesFactory.class),
+			mock(DDMFormValuesMerger.class),
 			mock(WorkflowDefinitionLinkLocalService.class));
 	}
 

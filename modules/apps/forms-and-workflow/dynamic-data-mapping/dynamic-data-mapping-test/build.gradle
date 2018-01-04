@@ -17,6 +17,7 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
+	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.portal.search.test.util", version: "1.1.0-20170427.050203-1"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"

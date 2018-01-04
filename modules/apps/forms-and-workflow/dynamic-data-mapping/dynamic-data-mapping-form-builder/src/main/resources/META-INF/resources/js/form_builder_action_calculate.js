@@ -14,6 +14,10 @@ AUI.add(
 						value: ''
 					},
 
+					builder: {
+						value: {}
+					},
+
 					functions: {
 						value: ''
 					},
@@ -63,12 +67,14 @@ AUI.add(
 
 						var boundingBox = instance.get('boundingBox');
 
+						var builder = instance.get('builder');
+
 						var calculateContainer = boundingBox.one('.additional-info-' + index);
 
 						calculateContainer.setHTML(instance._getRuleContainerTemplate());
 
 						var payload = {
-							bcp47LanguageId: themeDisplay.getBCP47LanguageId()
+							languageId: builder.get('defaultLanguageId')
 						};
 
 						A.io.request(

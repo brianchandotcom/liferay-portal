@@ -13,6 +13,10 @@ AUI.add(
 			open: function(config) {
 				var instance = this;
 
+				if (!config.width) {
+					config.width = false;
+				}
+
 				Liferay.Util.openWindow(
 					{
 						dialog: {
@@ -23,19 +27,6 @@ AUI.add(
 							resizable: false,
 							toolbars: {
 								footer: [
-									{
-										cssClass: [CSS_BTN_LG, CSS_BTN_PRIMARY].join(' '),
-										labelHTML: config.labelHTML,
-										on: {
-											click: function(event) {
-												if (Lang.isFunction(config.confirmFn)) {
-													config.confirmFn(arguments);
-												}
-
-												Liferay.Util.getWindow(config.id).hide();
-											}
-										}
-									},
 									{
 										cssClass: [CSS_BTN_LG, CSS_BTN_LINK].join(' '),
 										labelHTML: Liferay.Language.get('dismiss'),
@@ -48,10 +39,23 @@ AUI.add(
 												Liferay.Util.getWindow(config.id).hide();
 											}
 										}
+									},
+									{
+										cssClass: [CSS_BTN_LG, CSS_BTN_PRIMARY].join(' '),
+										labelHTML: config.labelHTML,
+										on: {
+											click: function(event) {
+												if (Lang.isFunction(config.confirmFn)) {
+													config.confirmFn(arguments);
+												}
+
+												Liferay.Util.getWindow(config.id).hide();
+											}
+										}
 									}
 								]
 							},
-							width: false
+							width: config.width
 						},
 						id: config.id,
 						title: config.title

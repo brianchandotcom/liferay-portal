@@ -31,6 +31,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.FieldConstants;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.language.Language;
@@ -48,7 +49,6 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Arrays;
 import java.util.List;
@@ -279,7 +279,8 @@ public class DDMFormEvaluatorHelperTest {
 		Set<Integer> disabledPagesIndexes =
 			ddmFormEvaluationResult.getDisabledPagesIndexes();
 
-		Assert.assertTrue(disabledPagesIndexes.contains(2));
+		Assert.assertTrue(
+			disabledPagesIndexes.toString(), disabledPagesIndexes.contains(2));
 	}
 
 	@Test
@@ -453,7 +454,8 @@ public class DDMFormEvaluatorHelperTest {
 		Set<Integer> disabledPagesIndexes =
 			ddmFormEvaluationResult.getDisabledPagesIndexes();
 
-		Assert.assertTrue(disabledPagesIndexes.isEmpty());
+		Assert.assertTrue(
+			disabledPagesIndexes.toString(), disabledPagesIndexes.isEmpty());
 	}
 
 	@Test

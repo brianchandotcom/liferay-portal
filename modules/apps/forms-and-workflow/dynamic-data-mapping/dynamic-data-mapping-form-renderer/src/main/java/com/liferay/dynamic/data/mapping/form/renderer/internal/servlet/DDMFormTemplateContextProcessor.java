@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
@@ -44,14 +45,16 @@ import java.util.Set;
  */
 public class DDMFormTemplateContextProcessor {
 
-	public DDMFormTemplateContextProcessor(JSONObject jsonObject) {
+	public DDMFormTemplateContextProcessor(
+		JSONObject jsonObject, String languageId) {
+
 		_jsonObject = jsonObject;
 
 		_ddmForm = new DDMForm();
 		_ddmFormLayout = new DDMFormLayout();
 		_ddmFormValues = new DDMFormValues(_ddmForm);
 
-		_locale = Locale.US;
+		_locale = LocaleUtil.fromLanguageId(languageId);
 
 		initModels();
 

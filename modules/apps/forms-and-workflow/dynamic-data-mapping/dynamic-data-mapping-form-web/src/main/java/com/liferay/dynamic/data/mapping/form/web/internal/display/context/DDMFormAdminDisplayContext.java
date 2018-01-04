@@ -85,9 +85,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -263,11 +260,8 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstance formInstance = getDDMFormInstance();
 
 		if (formInstance != null) {
-			ThemeDisplay themeDisplay =
-				formAdminRequestHelper.getThemeDisplay();
-
 			return LocalizationUtil.getLocalization(
-				formInstance.getDescription(), themeDisplay.getLanguageId());
+				formInstance.getDescription(), getFormDefaultLanguageId());
 		}
 
 		return getJSONObjectLocalizedPropertyFromRequest("description");
@@ -318,11 +312,8 @@ public class DDMFormAdminDisplayContext {
 		DDMFormInstance formInstance = getDDMFormInstance();
 
 		if (formInstance != null) {
-			ThemeDisplay themeDisplay =
-				formAdminRequestHelper.getThemeDisplay();
-
 			return LocalizationUtil.getLocalization(
-				formInstance.getName(), themeDisplay.getLanguageId());
+				formInstance.getName(), getFormDefaultLanguageId());
 		}
 
 		return getJSONObjectLocalizedPropertyFromRequest("name");
@@ -406,16 +397,6 @@ public class DDMFormAdminDisplayContext {
 		portletURL.setParameter("currentTab", "forms");
 
 		return portletURL;
-	}
-
-	public String getPreviewFormURL() throws PortalException {
-		String publishedFormURL = getPublishedFormURL();
-
-		if (Validator.isNull(publishedFormURL)) {
-			return StringPool.BLANK;
-		}
-
-		return publishedFormURL.concat("/preview");
 	}
 
 	public String getPublishedFormURL() throws PortalException {
@@ -855,14 +836,6 @@ public class DDMFormAdminDisplayContext {
 		return ParamUtil.getString(_renderRequest, "keywords");
 	}
 
-	protected String getServletContextPath(Servlet servlet) {
-		ServletConfig servletConfig = servlet.getServletConfig();
-
-		ServletContext servletContext = servletConfig.getServletContext();
-
-		return servletContext.getContextPath();
-	}
-
 	protected Locale getSiteDefaultLocale() {
 		ThemeDisplay themeDisplay = formAdminRequestHelper.getThemeDisplay();
 
@@ -889,22 +862,6 @@ public class DDMFormAdminDisplayContext {
 		}
 
 		return false;
-	}
-
-	protected String serialize(
-		List<DDMDataProviderInstance> dataProviderInstances, Locale locale) {
-
-		JSONArray jsonArray = _jsonFactory.createJSONArray();
-
-		for (DDMDataProviderInstance dataProviderInstance :
-				dataProviderInstances) {
-
-			JSONObject jsonObject = toJSONObject(dataProviderInstance, locale);
-
-			jsonArray.put(jsonObject);
-		}
-
-		return jsonArray.toString();
 	}
 
 	protected void setDDMFormInstanceSearchResults(

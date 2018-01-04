@@ -81,6 +81,23 @@ AUI.add(
 				instance.bindInputEvent(instance.getChangeEventName(), instance._onValueChange, true);
 			},
 
+			_fireStartedFillingEvent: function() {
+				var instance = this;
+
+				if (!instance.get('startedFilling')) {
+					instance.set('startedFilling', true);
+
+					var root = instance.getRoot();
+
+					if (root) {
+						Liferay.fire("ddmFieldStartedFilling", {
+							fieldName: instance.get("fieldName"),
+							formId: root.getFormId()
+						});
+					}
+				}
+			},
+
 			_getEventPayload: function(originalEvent) {
 				var instance = this;
 
@@ -94,12 +111,35 @@ AUI.add(
 				var instance = this;
 
 				instance.fire('blur', instance._getEventPayload(event));
+
+				var root = instance.getRoot();
+
+				if (root) {
+					var now = new Date();
+
+					Liferay.fire("ddmFieldBlur", {
+						fieldName: instance.get("fieldName"),
+						formId: root.getFormId(),
+						interactionTime: (now - (instance.get('fieldFocusDate') || now)) / 1000
+					});
+				}
 			},
 
 			_onInputFocus: function(event) {
 				var instance = this;
 
 				instance.fire('focus', instance._getEventPayload(event));
+
+				var root = instance.getRoot();
+
+				if (root) {
+					instance.set('fieldFocusDate', new Date());
+
+					Liferay.fire("ddmFieldFocus", {
+						fieldName: instance.get("fieldName"),
+						formId: root.getFormId()
+					});
+				}
 			},
 
 			_onValueChange: function(event) {
@@ -108,6 +148,8 @@ AUI.add(
 				var value = instance.getValue();
 
 				instance.set('value', value);
+
+				instance._fireStartedFillingEvent();
 			}
 		};
 

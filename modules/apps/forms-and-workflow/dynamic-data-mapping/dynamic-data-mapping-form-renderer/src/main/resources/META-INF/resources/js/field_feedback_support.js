@@ -75,6 +75,15 @@ AUI.add(
 					instance._errorMessageNode.show();
 
 					instance.showValidationStatus();
+
+					var root = instance.getRoot();
+
+					if (root) {
+						Liferay.fire("ddmFieldValidationError", {
+							formId: root.getFormId(),
+							fieldName:  instance.get("fieldName")
+						});
+					}
 				}
 			},
 

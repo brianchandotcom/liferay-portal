@@ -121,6 +121,8 @@ AUI.add(
 						instance._setFocusTarget(target);
 
 						instance.setValue(value);
+
+						instance._fireStartedFillingEvent();
 					},
 
 					_setColumns: function(columns) {

@@ -16,7 +16,7 @@ package com.liferay.dynamic.data.mapping.expression.model;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.List;
 import java.util.stream.Collectors;

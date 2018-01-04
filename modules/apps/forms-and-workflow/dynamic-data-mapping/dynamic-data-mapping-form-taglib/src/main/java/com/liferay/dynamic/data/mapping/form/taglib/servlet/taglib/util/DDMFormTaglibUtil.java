@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Locale;
 import java.util.Optional;
 
 import org.osgi.service.component.annotations.Component;
@@ -76,12 +77,21 @@ public class DDMFormTaglibUtil {
 		Optional<DDMStructure> ddmStructureOptional = Optional.ofNullable(
 			_ddmStructureLocalService.fetchDDMStructure(ddmStructureId));
 
+		Locale locale = themeDisplay.getSiteDefaultLocale();
+
+		if (ddmStructureOptional.isPresent()) {
+			DDMStructure ddmStructure = ddmStructureOptional.get();
+
+			DDMForm ddmForm = ddmStructure.getDDMForm();
+
+			locale = ddmForm.getDefaultLocale();
+		}
+
 		DDMFormBuilderContextResponse formBuilderContextResponse =
 			_ddmFormBuilderContextFactory.create(
 				DDMFormBuilderContextRequest.with(
 					ddmStructureOptional, themeDisplay.getRequest(),
-					themeDisplay.getResponse(), themeDisplay.getLocale(),
-					true));
+					themeDisplay.getResponse(), locale, true));
 
 		return jsonSerializer.serializeDeep(
 			formBuilderContextResponse.getContext());

@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Dynamic Data Mapping Data Provider Implementation
 Bundle-SymbolicName: com.liferay.dynamic.data.mapping.data.provider.impl
-Bundle-Version: 1.0.4
+Bundle-Version: 1.0.5
 Import-Package:\
 	!com.fasterxml.jackson.*,\
 	\

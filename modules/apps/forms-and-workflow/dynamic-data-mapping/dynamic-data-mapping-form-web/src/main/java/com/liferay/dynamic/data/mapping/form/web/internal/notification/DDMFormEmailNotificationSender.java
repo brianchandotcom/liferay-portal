@@ -49,6 +49,7 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.URLTemplateResource;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -504,7 +505,8 @@ public class DDMFormEmailNotificationSender {
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldValueRenderer(
 				ddmFormFieldValue.getType());
 
-		return ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale);
+		return HtmlUtil.unescape(
+			ddmFormFieldValueRenderer.render(ddmFormFieldValue, locale));
 	}
 
 	@Reference(unbind = "-")
@@ -524,11 +526,10 @@ public class DDMFormEmailNotificationSender {
 		_userLocalService = userLocalService;
 	}
 
-	private static final String _NAMESPACE = "form.form_instance_record";
+	private static final String _NAMESPACE = "form.form_entry";
 
 	private static final String _TEMPLATE_PATH =
-		"/META-INF/resources/notification" +
-			"/form_instance_record_entry_add_body.soy";
+		"/META-INF/resources/notification/form_entry_add_body.soy";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormEmailNotificationSender.class);

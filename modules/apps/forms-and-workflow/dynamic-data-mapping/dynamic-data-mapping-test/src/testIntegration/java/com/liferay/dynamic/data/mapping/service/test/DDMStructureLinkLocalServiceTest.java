@@ -114,15 +114,18 @@ public class DDMStructureLinkLocalServiceTest extends BaseDDMServiceTestCase {
 				_classNameId, _classPK, "Abc");
 
 		Assert.assertEquals(ddmStructures.toString(), 2, ddmStructures.size());
-		Assert.assertTrue(ddmStructures.contains(ddmStructure1));
-		Assert.assertTrue(ddmStructures.contains(ddmStructure2));
+		Assert.assertTrue(
+			ddmStructures.toString(), ddmStructures.contains(ddmStructure1));
+		Assert.assertTrue(
+			ddmStructures.toString(), ddmStructures.contains(ddmStructure2));
 
 		ddmStructures =
 			DDMStructureLinkLocalServiceUtil.getStructureLinkStructures(
 				_classNameId, _classPK, "Test1");
 
 		Assert.assertEquals(ddmStructures.toString(), 1, ddmStructures.size());
-		Assert.assertTrue(ddmStructures.contains(ddmStructure1));
+		Assert.assertTrue(
+			ddmStructures.toString(), ddmStructures.contains(ddmStructure1));
 	}
 
 	@Test

@@ -117,7 +117,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		super.cleanUp();
 
 		_className = null;
-		_defaultDisplayStyle = com.liferay.portal.kernel.util.StringPool.BLANK;
+		_defaultDisplayStyle = com.liferay.petra.string.StringPool.BLANK;
 		_displayStyle = null;
 		_displayStyleGroupId = 0;
 		_displayStyles = null;
@@ -151,7 +151,7 @@ public abstract class BaseTemplateSelectorTag extends com.liferay.taglib.util.In
 		"/template_selector/page.jsp";
 
 	private java.lang.String _className = null;
-	private java.lang.String _defaultDisplayStyle = com.liferay.portal.kernel.util.StringPool.BLANK;
+	private java.lang.String _defaultDisplayStyle = com.liferay.petra.string.StringPool.BLANK;
 	private java.lang.String _displayStyle = null;
 	private long _displayStyleGroupId = 0;
 	private java.util.List<java.lang.String> _displayStyles = null;

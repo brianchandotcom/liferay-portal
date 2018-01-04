@@ -216,11 +216,14 @@ AUI.add(
 					renderRule: function(rule) {
 						var instance = this;
 
+						var formBuilder = instance.get('formBuilder');
+
 						if (!instance._ruleClasses) {
 							instance._ruleClasses = new Liferay.DDM.FormBuilderRenderRule(
 								{
 									boundingBox: instance.get('boundingBox'),
 									bubbleTargets: [instance],
+									builder: formBuilder,
 									contentBox: instance.get('contentBox'),
 									fields: instance.getFields(),
 									getDataProviders: instance._dataProviders,
@@ -252,8 +255,10 @@ AUI.add(
 					_fillDataProviders: function() {
 						var instance = this;
 
+						var formBuilder = instance.get('formBuilder');
+
 						var payload = {
-							bcp47LanguageId: themeDisplay.getBCP47LanguageId(),
+							languageId: formBuilder.get('defaultLanguageId'),
 							scopeGroupId: themeDisplay.getScopeGroupId()
 						};
 
@@ -388,10 +393,12 @@ AUI.add(
 					_getUserRoles: function() {
 						var instance = this;
 
+						var formBuilder = instance.get('formBuilder');
+
 						var roles = instance.get('roles');
 
 						var payload = {
-							bcp47LanguageId: themeDisplay.getBCP47LanguageId(),
+							languageId: formBuilder.get('defaultLanguageId'),
 							scopeGroupId: themeDisplay.getScopeGroupId()
 						};
 

@@ -1,0 +1,119 @@
+(function(u, c, a, m, o,l){o="script",l=document,a=l.createElement(o)
+,m=l.getElementsByTagName(o)[0],a.async=1,a.src=u,a.onload=c,
+m.parentNode.insertBefore(a,m)})('https://s3-eu-west-1.amazonaws.com/com-liferay-analytics/analytics-all-min.js', function() {
+
+	var analyticsGatewayUrl = '#analyticsGatewayUrl#';
+
+	var config = {};
+
+	if (analyticsGatewayUrl) {
+		config.uri = analyticsGatewayUrl;
+	}
+
+	Analytics.create(config);
+
+	Liferay.fire('analyticsClientCreated');
+});
+
+Liferay.on(
+	'ddmFieldBlur', function(event) {
+		Analytics.send(
+			'FIELD_BLUR',
+			'Forms',
+			{
+				fieldName: event.fieldName,
+				formId: event.formId,
+				interactionTime: event.interactionTime
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFieldFocus', function(event) {
+		Analytics.send(
+			'FIELD_FOCUS',
+			'Forms',
+			{
+				fieldName: event.fieldName,
+				formId: event.formId
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFieldStartedFilling', function(event) {
+		Analytics.send(
+			'FIELD_STARTED_FILLING',
+			'Forms',
+			{
+				fieldName: event.fieldName,
+				formId: event.formId
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFieldValidationError', function(event) {
+		Analytics.send(
+			'FIELD_VALIDATION_ERROR',
+			'Forms',
+			{
+				fieldName: event.fieldName,
+				formId: event.formId
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFormPageShow', function(event) {
+		Analytics.send(
+			'FORM_PAGE_SHOW',
+			'Forms',
+			{
+				formId: event.formId,
+				page: event.page
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFormPageHide', function(event) {
+		Analytics.send(
+			'FORM_PAGE_HIDE',
+			'Forms',
+			{
+				formId: event.formId,
+				page: event.page
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFormValidationError', function(event) {
+		Analytics.send(
+			'FORM_VALIDATION_ERROR',
+			'Forms',
+			{
+				formId: event.formId
+			}
+		);
+	}
+);
+
+Liferay.on(
+	'ddmFormView', function(event) {
+		Analytics.send(
+			'FORM_VIEW',
+			'Forms',
+			{
+				formId: event.formId
+			}
+		);
+	}
+);

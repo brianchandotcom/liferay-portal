@@ -41,7 +41,6 @@ import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -116,11 +115,8 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMStructure structure = getDDMStructure();
 
 		if (structure != null) {
-			ThemeDisplay themeDisplay =
-				formAdminRequestHelper.getThemeDisplay();
-
 			return LocalizationUtil.getLocalization(
-				structure.getDescription(), themeDisplay.getLanguageId());
+				structure.getDescription(), getDefaultLanguageId());
 		}
 
 		return getJSONObjectLocalizedPropertyFromRequest("description");
@@ -177,11 +173,8 @@ public class DDMFormAdminFieldSetDisplayContext
 		DDMStructure structure = getDDMStructure();
 
 		if (structure != null) {
-			ThemeDisplay themeDisplay =
-				formAdminRequestHelper.getThemeDisplay();
-
 			return LocalizationUtil.getLocalization(
-				structure.getName(), themeDisplay.getLanguageId());
+				structure.getName(), getDefaultLanguageId());
 		}
 
 		return getJSONObjectLocalizedPropertyFromRequest("name");
@@ -200,6 +193,7 @@ public class DDMFormAdminFieldSetDisplayContext
 		return portletURL;
 	}
 
+	@Override
 	public SearchContainer<?> getSearch() {
 		PortletURL portletURL = getPortletURL();
 

@@ -46,6 +46,12 @@ AUI.add(
 						value: []
 					},
 
+					predefinedValue: {
+						state: true,
+						validator: Array.isArray,
+						value: []
+					},
+
 					strings: {
 						value: {
 							chooseAnOption: Liferay.Language.get('choose-an-option'),
@@ -65,6 +71,7 @@ AUI.add(
 					},
 
 					value: {
+						state: true,
 						value: []
 					}
 				},
@@ -146,10 +153,11 @@ AUI.add(
 								badgeCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced')),
 								open: instance._open,
 								options: instance.get('options'),
+								predefinedValue: instance.get('readOnly') ? instance.get('predefinedValue') : instance.getValue(),
 								selectCaretDoubleIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('caret-double-l', 'icon-monospaced')),
 								selectSearchIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('search', 'icon-monospaced')),
 								strings: instance.get('strings'),
-								value: instance.getValueSelected()
+								value: instance.getValue()
 							}
 						);
 					},
@@ -158,14 +166,6 @@ AUI.add(
 						var instance = this;
 
 						return instance.get('value') || [];
-					},
-
-					getValueSelected: function() {
-						var instance = this;
-
-						var value = instance.get('value') || [];
-
-						return instance._getOptionsSelected(value);
 					},
 
 					openList: function() {
@@ -265,28 +265,6 @@ AUI.add(
 						return options || [];
 					},
 
-					_getOptionsSelected: function(value) {
-						var instance = this;
-
-						var options = instance.get('options');
-
-						var optionsSelected = [];
-
-						value.forEach(
-							function(value, index) {
-								options.forEach(
-									function(option, index) {
-										if (value && option.value === value) {
-											optionsSelected.push(option);
-										}
-									}
-								);
-							}
-						);
-
-						return optionsSelected;
-					},
-
 					_getSelectTriggerAction: function() {
 						var instance = this;
 
@@ -353,6 +331,8 @@ AUI.add(
 						instance.setValue(value);
 
 						instance.focus();
+
+						instance._fireStartedFillingEvent();
 					},
 
 					_handleSelectTriggerClick: function(event) {

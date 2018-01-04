@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
@@ -65,9 +66,13 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		String portletNamespace) {
 
 		try {
+			String languageId = ParamUtil.getString(request, "languageId");
+
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
+
 			DDMFormRenderingContext ddmFormRenderingContext =
 				createDDMFormRenderingContext(
-					request, response, Locale.US, portletNamespace);
+					request, response, locale, portletNamespace);
 
 			DDMFormTemplateContextProcessor ddmFormTemplateContextProcessor =
 				createDDMFormTemplateContextProcessor(request);
@@ -80,7 +85,7 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 			ddmFormRenderingContext.setGroupId(
 				ddmFormTemplateContextProcessor.getGroupId());
 
-			_prepareThreadLocal(Locale.US);
+			_prepareThreadLocal(locale);
 
 			DDMForm ddmForm = ddmFormTemplateContextProcessor.getDDMForm();
 
@@ -135,7 +140,8 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		JSONObject jsonObject = _jsonFactory.createJSONObject(
 			serializedFormContext);
 
-		return new DDMFormTemplateContextProcessor(jsonObject);
+		return new DDMFormTemplateContextProcessor(
+			jsonObject, ParamUtil.getString(request, "languageId"));
 	}
 
 	@Override

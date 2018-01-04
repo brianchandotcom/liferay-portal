@@ -4,6 +4,10 @@ AUI.add(
 		var FormBuilderActionFactory = A.Component.create(
 			{
 				ATTRS: {
+					builder: {
+						value: {}
+					},
+
 					dataProviders: {
 						value: []
 					},
@@ -30,6 +34,8 @@ AUI.add(
 						var instance = this;
 
 						var action;
+
+						var builder = instance.get('builder');
 
 						if (instance._isPropertyAction(type)) {
 							action = new Liferay.DDM.FormBuilderActionProperty(
@@ -73,6 +79,7 @@ AUI.add(
 									action: act,
 									boundingBox: container,
 									bubbleTargets: [instance],
+									builder: builder,
 									index: index,
 									options: instance.get('fields')
 								}

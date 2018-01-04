@@ -28,6 +28,7 @@ import com.liferay.dynamic.data.mapping.render.DDMFormFieldRenderingContext;
 import com.liferay.dynamic.data.mapping.storage.Field;
 import com.liferay.dynamic.data.mapping.storage.Fields;
 import com.liferay.petra.string.CharPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.Editor;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -49,7 +50,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -339,9 +339,9 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				ddmFieldsCounter.incrementKey(name);
 			}
 
-			StringBundler childrenHTML = new StringBundler(2);
+			StringBundler childrenHTMLSB = new StringBundler(2);
 
-			childrenHTML.append(
+			childrenHTMLSB.append(
 				getHTML(
 					request, response, ddmFormField.getNestedDDMFormFields(),
 					fields, ddmFormField, portletNamespace, namespace, mode,
@@ -356,13 +356,13 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 				optionFreeMarkerContext.put(
 					"parentFieldStructure", fieldStructure);
 
-				childrenHTML.append(
+				childrenHTMLSB.append(
 					getDDMFormFieldOptionHTML(
 						request, response, ddmFormField, mode, readOnly, locale,
 						optionFreeMarkerContext));
 			}
 
-			fieldStructure.put("children", childrenHTML.toString());
+			fieldStructure.put("children", childrenHTMLSB.toString());
 
 			sb.append(
 				processFTL(
@@ -602,15 +602,15 @@ public class DDMFormFieldFreeMarkerRenderer implements DDMFormFieldRenderer {
 		String templateName = StringUtil.replaceFirst(
 			type, fieldNamespace.concat(StringPool.DASH), StringPool.BLANK);
 
-		StringBundler resourcePath = new StringBundler(5);
+		StringBundler sb = new StringBundler(5);
 
-		resourcePath.append(_TPL_PATH);
-		resourcePath.append(StringUtil.toLowerCase(fieldNamespace));
-		resourcePath.append(CharPool.SLASH);
-		resourcePath.append(templateName);
-		resourcePath.append(_TPL_EXT);
+		sb.append(_TPL_PATH);
+		sb.append(StringUtil.toLowerCase(fieldNamespace));
+		sb.append(CharPool.SLASH);
+		sb.append(templateName);
+		sb.append(_TPL_EXT);
 
-		String resource = resourcePath.toString();
+		String resource = sb.toString();
 
 		URL url = getResource(resource);
 

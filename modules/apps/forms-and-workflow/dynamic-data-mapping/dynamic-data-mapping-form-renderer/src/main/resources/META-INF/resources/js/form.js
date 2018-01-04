@@ -8,6 +8,10 @@ AUI.add(
 		var Form = A.Component.create(
 			{
 				ATTRS: {
+					builder: {
+						value: {}
+					},
+
 					container: {
 						setter: A.one,
 						valueFn: '_valueContainer'
@@ -81,11 +85,35 @@ AUI.add(
 					getEvaluationPayload: function() {
 						var instance = this;
 
+						var languageId;
+
+						var builder = instance.get('builder');
+
+						if (_.isEmpty(builder)) {
+							languageId = themeDisplay.getDefaultLanguageId();
+						}
+						else {
+							languageId = builder.get('defaultLanguageId');
+						}
+
 						return {
+							languageId: languageId,
 							p_auth: Liferay.authToken,
 							portletNamespace: instance.get('portletNamespace'),
 							serializedFormContext: JSON.stringify(instance.get('context'))
 						};
+					},
+
+					getFormId: function() {
+						var instance = this;
+
+						var formNode = instance.getFormNode();
+
+						if (!formNode) {
+							return 0;
+						}
+
+						return formNode.getData('DDMFormInstanceId');
 					},
 
 					getFormNode: function() {

@@ -77,6 +77,7 @@ AUI.add(
 
 				return new Liferay.DDM.FormBuilderSettingsForm(
 					{
+						builder: builder,
 						context: context,
 						editMode: builder.isEditMode() || instance.isPersisted(),
 						evaluatorURL: Liferay.DDM.Settings.evaluatorURL,
@@ -120,13 +121,15 @@ AUI.add(
 			getSettings: function() {
 				var instance = this;
 
-				var settings = {};
+				var builder = instance.get('builder');
 
 				var context = instance.get('context.settingsContext');
 
-				var defaultLocale = themeDisplay.getDefaultLanguageId();
+				var defaultLocale = builder.get('defaultLanguageId');
 
-				var locale = instance.get('locale');
+				var locale = builder.get('editingLanguageId');
+
+				var settings = {};
 
 				FormBuilderUtil.visitLayout(
 					context.pages,

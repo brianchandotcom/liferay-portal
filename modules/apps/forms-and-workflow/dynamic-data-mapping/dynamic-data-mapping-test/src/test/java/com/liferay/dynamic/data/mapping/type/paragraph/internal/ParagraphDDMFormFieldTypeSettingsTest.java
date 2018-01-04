@@ -89,15 +89,28 @@ public class ParagraphDDMFormFieldTypeSettingsTest
 
 		Assert.assertEquals(actions.toString(), 8, actions.size());
 
-		Assert.assertTrue(actions.contains("setRequired('text', true)"));
-		Assert.assertTrue(actions.contains("setVisible('dataType', false)"));
 		Assert.assertTrue(
+			actions.toString(), actions.contains("setRequired('text', true)"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('dataType', false)"));
+		Assert.assertTrue(
+			actions.toString(),
 			actions.contains("setVisible('predefinedValue', false)"));
-		Assert.assertTrue(actions.contains("setVisible('repeatable', false)"));
-		Assert.assertTrue(actions.contains("setVisible('required', false)"));
-		Assert.assertTrue(actions.contains("setVisible('showLabel', false)"));
-		Assert.assertTrue(actions.contains("setVisible('tip', false)"));
-		Assert.assertTrue(actions.contains("setVisible('validation', false)"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('repeatable', false)"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('required', false)"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('showLabel', false)"));
+		Assert.assertTrue(
+			actions.toString(), actions.contains("setVisible('tip', false)"));
+		Assert.assertTrue(
+			actions.toString(),
+			actions.contains("setVisible('validation', false)"));
 	}
 
 }

@@ -13,8 +13,9 @@
 {template .render}
 	{@param name: string}
 	{@param options: list<[label: string, value: string]>}
+	{@param predefinedValue: list<string>}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param value: list<?>}
+	{@param value: list<string>}
 	{@param visible: bool}
 	{@param? badgeCloseIcon: html}
 	{@param? dir: string}
@@ -28,6 +29,8 @@
 	{@param? showLabel: bool}
 	{@param? tip: string}
 
+	{let $displayValue: length($value) > 0 ? $value : length($predefinedValue) > 0 ? $predefinedValue : null /}
+
 	<div class="form-group{$visible ? '' : ' hide'}" data-fieldname="{$name}">
 		<div class="input-select-wrapper">
 
@@ -36,20 +39,27 @@
 			{/if}
 
 			<div class="form-builder-select-field input-group-container">
-				{if not $readOnly}
-					{call .hidden_select data="all"/}
+				{if not $readOnly and $displayValue}
+					{call .hidden_select}
+						{param dir: $dir /}
+						{param displayValue: $displayValue /}
+						{param multiple: $multiple /}
+						{param name: $name /}
+						{param options: $options /}
+						{param strings: $strings /}
+					{/call}
 				{/if}
 
 				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}">
 					{if $multiple}
-						{if $value and length($value) > 0}
+						{if $displayValue}
 							<ul class="multiple-badge-list">
 								{foreach $option in $options}
 									{call .badge_item}
 										{param badgeCloseIcon: $badgeCloseIcon /}
 										{param option: $option /}
 										{param readOnly: $readOnly /}
-										{param value: $value /}
+										{param value: $displayValue /}
 									{/call}
 								{/foreach}
 							</ul>
@@ -57,10 +67,10 @@
 							<div class="option-selected option-selected-placeholder">{$strings.chooseOptions}</div>
 						{/if}
 					{else}
-						{if $value and length($value) > 0}
-							{foreach $currentValue in $value}
-								{if $currentValue and $currentValue.label}
-									<div class="option-selected" title="{$currentValue.label}">{$currentValue.label}</div>
+						{if $displayValue}
+							{foreach $option in $options}
+								{if $option.value == $displayValue}
+									<div class="option-selected" title="{$option.label}">{$option.label}</div>
 								{/if}
 							{/foreach}
 						{else}
@@ -98,13 +108,13 @@
  */
 {template .badge_item}
 	{@param option: [label: string, value: string]}
-	{@param value: list<?>}
+	{@param value: list<string>}
 	{@param? badgeCloseIcon: html}
 	{@param? readOnly: bool}
 
 	{if $value}
 		{foreach $currentValue in $value}
-			{if $option.value == $currentValue.value}
+			{if $option.value == $currentValue}
 				<li>
 					<span class="badge badge-default badge-sm multiple-badge" data-original-title="{$option.label}" title="{$option.label}">
 						{$option.label}
@@ -144,26 +154,23 @@
  * Prints hidden select tag.
  */
 {template .hidden_select}
+	{@param displayValue: list<string>}
 	{@param name: string}
 	{@param options: list<[label: string, value: string]>}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param value: list<?>}
 	{@param? dir: string}
 	{@param? multiple: bool}
-	{@param? readOnly: bool}
 
 	<select class="form-control hide" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $multiple}multiple size="{length($options)}"{/if}>
-		{if not $readOnly}
-			<option {if $dir}dir="{$dir}"{/if} disabled {if length($value) == 0}selected{/if} value="">
-				{$strings.chooseAnOption}
-			</option>
-		{/if}
+		<option {if $dir}dir="{$dir}"{/if} disabled {if length($displayValue) == 0}selected{/if} value="">
+			{$strings.chooseAnOption}
+		</option>
 
 		{foreach $option in $options}
 			{call .select_hidden_options}
 				{param dir: $dir /}
 				{param option: $option /}
-				{param values: $value /}
+				{param values: $displayValue /}
 			{/call}
 		{/foreach}
 	</select>
@@ -174,17 +181,15 @@
  */
 {template .select_hidden_options}
 	{@param option: [label: string, value: string]}
-	{@param values: list<?>}
+	{@param values: list<string>}
 	{@param? dir: string}
 
 	{let $selected kind="attributes"}
-		{if $values}
-			{foreach $currentValue in $values}
-				{if $currentValue.value == $option.value}
-					selected
-				{/if}
-			{/foreach}
-		{/if}
+		{foreach $currentValue in $values}
+			{if $currentValue == $option.value}
+				selected
+			{/if}
+		{/foreach}
 	{/let}
 
 	<option {if $dir}dir="{$dir}"{/if} {$selected} value="{$option.value}">{$option.label}</option>
@@ -196,7 +201,7 @@
 {template .select_options}
 	{@param options: list<[label: string, value: string]>}
 	{@param strings: [chooseAnOption: string, chooseOptions: string, search: string, emptyList: string]}
-	{@param value: list<?>}
+	{@param value: list<string>}
 	{@param? multiple: bool}
 
 	<ul class="results-chosen">
@@ -205,7 +210,7 @@
 				{let $selected kind="text"}
 					{if $value}
 						{foreach $currentValue in $value}
-							{if $currentValue.value == $option.value}
+							{if $currentValue == $option.value}
 								selected
 							{/if}
 						{/foreach}

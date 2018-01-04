@@ -31,7 +31,7 @@ AUI.add(
 
 		var Lang = A.Lang;
 
-		var MOVE_COLUMN_CONTAINER = '<div class="' + CSS_RESIZE_COL_DRAGGABLE_BORDER + '"></div>' + '<div class="' + CSS_RESIZE_COL_DRAGGABLE_HANDLE + '">' + Liferay.Util.getLexiconIconTpl('horizontal-scroll') + '</div>';
+		var MOVE_COLUMN_CONTAINER = '<div class="' + CSS_RESIZE_COL_DRAGGABLE_BORDER + '"></div><div class="' + CSS_RESIZE_COL_DRAGGABLE_HANDLE + '">' + Liferay.Util.getLexiconIconTpl('horizontal-scroll') + '</div>';
 
 		var MOVE_COLUMN_TPL = '<div class="' + CSS_RESIZE_COL_DRAGGABLE + ' lfr-tpl">' + MOVE_COLUMN_CONTAINER + '</div>';
 
@@ -481,7 +481,8 @@ AUI.add(
 							confirmFn: confirmFn,
 							id: 'deleteFieldDialog',
 							labelHTML: Liferay.Language.get('yes-delete'),
-							title: Liferay.Language.get('delete-field-question')
+							title: Liferay.Language.get('delete-field-dialog-title'),
+							width: 300
 						};
 
 						FormBuilderConfirmDialog.open(config);

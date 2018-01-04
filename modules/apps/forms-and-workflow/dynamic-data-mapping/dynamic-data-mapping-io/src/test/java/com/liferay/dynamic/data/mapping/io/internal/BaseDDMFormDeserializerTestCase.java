@@ -117,8 +117,12 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 
 		Assert.assertEquals(
 			availableLocales.toString(), 2, availableLocales.size());
-		Assert.assertTrue(availableLocales.contains(LocaleUtil.US));
-		Assert.assertTrue(availableLocales.contains(LocaleUtil.BRAZIL));
+		Assert.assertTrue(
+			availableLocales.toString(),
+			availableLocales.contains(LocaleUtil.US));
+		Assert.assertTrue(
+			availableLocales.toString(),
+			availableLocales.contains(LocaleUtil.BRAZIL));
 	}
 
 	protected void testBooleanDDMFormField(DDMFormField ddmFormField) {
@@ -239,9 +243,12 @@ public abstract class BaseDDMFormDeserializerTestCase extends BaseDDMTestCase {
 		Set<String> optionsValues = ddmFormFieldOptions.getOptionsValues();
 
 		Assert.assertEquals(optionsValues.toString(), 3, optionsValues.size());
-		Assert.assertTrue(optionsValues.contains("Value 1"));
-		Assert.assertTrue(optionsValues.contains("Value 2"));
-		Assert.assertTrue(optionsValues.contains("Value 3"));
+		Assert.assertTrue(
+			optionsValues.toString(), optionsValues.contains("Value 1"));
+		Assert.assertTrue(
+			optionsValues.toString(), optionsValues.contains("Value 2"));
+		Assert.assertTrue(
+			optionsValues.toString(), optionsValues.contains("Value 3"));
 
 		LocalizedValue value1Labels = ddmFormFieldOptions.getOptionLabels(
 			"Value 1");

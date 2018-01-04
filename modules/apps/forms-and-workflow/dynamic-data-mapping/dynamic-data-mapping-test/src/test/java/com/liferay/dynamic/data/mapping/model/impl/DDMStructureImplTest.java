@@ -91,7 +91,9 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 			Locale actualAvailableLocale = LocaleUtil.fromLanguageId(
 				actualAvailableLanguageId);
 
-			Assert.assertTrue(availableLocales.contains(actualAvailableLocale));
+			Assert.assertTrue(
+				availableLocales.toString(),
+				availableLocales.contains(actualAvailableLocale));
 		}
 	}
 
@@ -116,8 +118,12 @@ public class DDMStructureImplTest extends BaseDDMTestCase {
 		Assert.assertEquals(
 			actualChildrenFieldNames.toString(), 2,
 			actualChildrenFieldNames.size());
-		Assert.assertTrue(actualChildrenFieldNames.contains("child1Field1"));
-		Assert.assertTrue(actualChildrenFieldNames.contains("child2Field1"));
+		Assert.assertTrue(
+			actualChildrenFieldNames.toString(),
+			actualChildrenFieldNames.contains("child1Field1"));
+		Assert.assertTrue(
+			actualChildrenFieldNames.toString(),
+			actualChildrenFieldNames.contains("child2Field1"));
 	}
 
 	@Test

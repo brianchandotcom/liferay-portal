@@ -44,7 +44,7 @@ AUI.add(
 					},
 
 					locale: {
-						value: themeDisplay.getDefaultLanguageId()
+						value: themeDisplay.getLanguageId()
 					},
 
 					name: {
@@ -76,6 +76,10 @@ AUI.add(
 					showLabel: {
 						state: true,
 						value: true
+					},
+
+					startedFilling: {
+						value: false
 					},
 
 					type: {

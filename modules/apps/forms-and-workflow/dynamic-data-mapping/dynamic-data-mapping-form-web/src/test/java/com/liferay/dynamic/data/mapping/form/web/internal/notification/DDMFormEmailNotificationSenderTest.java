@@ -22,9 +22,9 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
-import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
 import java.util.Map;
@@ -36,8 +36,6 @@ import org.junit.runner.RunWith;
 
 import org.mockito.Matchers;
 import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.api.support.membermodification.MemberMatcher;
@@ -47,11 +45,11 @@ import org.powermock.modules.junit4.PowerMockRunner;
  * @author Rafael Praxedes
  */
 @RunWith(PowerMockRunner.class)
-public class DDLFormEmailNotificationSenderTest {
+public class DDMFormEmailNotificationSenderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		setUpDDLFormEmailNotificationSender();
+		setUpDDMFormEmailNotificationSender();
 		setUpDDMFormFieldTypeServicesTracker();
 		setUpHtmlUtil();
 	}
@@ -62,7 +60,7 @@ public class DDLFormEmailNotificationSenderTest {
 			new UnlocalizedValue("test"));
 
 		Map<String, Object> fieldLabelValueMap =
-			_ddlFormEmailNotificationSender.getField(
+			_ddmFormEmailNotificationSender.getField(
 				ddmFormValues.getDDMFormFieldValues(), Locale.US);
 
 		Assert.assertEquals(
@@ -80,7 +78,7 @@ public class DDLFormEmailNotificationSenderTest {
 		DDMFormValues ddmFormValues = createDDMFormValues(null);
 
 		Map<String, Object> fieldLabelValueMap =
-			_ddlFormEmailNotificationSender.getField(
+			_ddmFormEmailNotificationSender.getField(
 				ddmFormValues.getDDMFormFieldValues(), Locale.US);
 
 		Assert.assertEquals(
@@ -114,14 +112,14 @@ public class DDLFormEmailNotificationSenderTest {
 		return ddmFormValues;
 	}
 
-	protected void setUpDDLFormEmailNotificationSender() throws Exception {
-		_ddlFormEmailNotificationSender = new DDMFormEmailNotificationSender();
+	protected void setUpDDMFormEmailNotificationSender() throws Exception {
+		_ddmFormEmailNotificationSender = new DDMFormEmailNotificationSender();
 
 		MemberMatcher.field(
 			DDMFormEmailNotificationSender.class,
 			"_ddmFormFieldTypeServicesTracker"
 		).set(
-			_ddlFormEmailNotificationSender, _ddmFormFieldTypeServicesTracker
+			_ddmFormEmailNotificationSender, _ddmFormFieldTypeServicesTracker
 		);
 	}
 
@@ -137,25 +135,10 @@ public class DDLFormEmailNotificationSenderTest {
 	protected void setUpHtmlUtil() {
 		HtmlUtil htmlUtil = new HtmlUtil();
 
-		htmlUtil.setHtml(_html);
-
-		PowerMockito.when(
-			_html.escape(Matchers.anyString())
-		).then(
-			new Answer<String>() {
-
-				@Override
-				public String answer(InvocationOnMock invocationOnMock)
-					throws Throwable {
-
-					return invocationOnMock.getArgumentAt(0, String.class);
-				}
-
-			}
-		);
+		htmlUtil.setHtml(new HtmlImpl());
 	}
 
-	private DDMFormEmailNotificationSender _ddlFormEmailNotificationSender;
+	private DDMFormEmailNotificationSender _ddmFormEmailNotificationSender;
 
 	@Mock
 	private DDMFormFieldTypeServicesTracker _ddmFormFieldTypeServicesTracker;
@@ -163,8 +146,5 @@ public class DDLFormEmailNotificationSenderTest {
 	private final DefaultDDMFormFieldValueRenderer
 		_defaultDDMFormFieldValueRenderer =
 			new DefaultDDMFormFieldValueRenderer();
-
-	@Mock
-	private Html _html;
 
 }

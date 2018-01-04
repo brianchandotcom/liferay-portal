@@ -27,7 +27,7 @@ import com.liferay.dynamic.data.mapping.expression.model.OrExpression;
 import com.liferay.dynamic.data.mapping.expression.model.StringLiteral;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRuleCondition;
 import com.liferay.dynamic.data.mapping.form.builder.internal.converter.model.DDMFormRuleCondition.Operand;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -31,6 +31,8 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceService;
 import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
+import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.dynamic.data.mapping.util.DDMFormValuesMerger;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -72,6 +74,7 @@ public class DDMFormDisplayContext {
 				ddmFormInstanceRecordVersionLocalService,
 			DDMFormRenderer ddmFormRenderer,
 			DDMFormValuesFactory ddmFormValuesFactory,
+			DDMFormValuesMerger ddmFormValuesMerger,
 			WorkflowDefinitionLinkLocalService
 				workflowDefinitionLinkLocalService)
 		throws PortalException {
@@ -81,8 +84,9 @@ public class DDMFormDisplayContext {
 		_ddmFormInstanceService = ddmFormInstanceService;
 		_ddmFormInstanceRecordVersionLocalService =
 			ddmFormInstanceRecordVersionLocalService;
-		_formRenderer = ddmFormRenderer;
-		_formValuesFactory = ddmFormValuesFactory;
+		_ddmFormRenderer = ddmFormRenderer;
+		_ddmFormValuesFactory = ddmFormValuesFactory;
+		_ddmFormValuesMerger = ddmFormValuesMerger;
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 		_containerId = StringUtil.randomString();
@@ -123,15 +127,18 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setGroupId(ddmFormInstance.getGroupId());
 
-		DDMFormInstanceRecordVersion ddlRecordVersion =
+		DDMFormInstanceRecordVersion ddmFormInstanceRecordVersion =
 			_ddmFormInstanceRecordVersionLocalService.
 				fetchLatestFormInstanceRecordVersion(
 					getUserId(), getFormInstanceId(), getFormInstanceVersion(),
 					WorkflowConstants.STATUS_DRAFT);
 
-		if (ddlRecordVersion != null) {
-			ddmFormRenderingContext.setDDMFormValues(
-				ddlRecordVersion.getDDMFormValues());
+		if (ddmFormInstanceRecordVersion != null) {
+			DDMFormValues mergedDDMFormValues = _ddmFormValuesMerger.merge(
+				ddmFormInstanceRecordVersion.getDDMFormValues(),
+				ddmFormRenderingContext.getDDMFormValues());
+
+			ddmFormRenderingContext.setDDMFormValues(mergedDDMFormValues);
 		}
 
 		boolean showSubmitButton = isShowSubmitButton();
@@ -142,7 +149,7 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setSubmitLabel(submitLabel);
 
-		return _formRenderer.render(
+		return _ddmFormRenderer.render(
 			ddmForm, ddmFormLayout, ddmFormRenderingContext);
 	}
 
@@ -287,7 +294,7 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setContainerId(_containerId);
 		ddmFormRenderingContext.setDDMFormValues(
-			_formValuesFactory.create(_renderRequest, ddmForm));
+			_ddmFormValuesFactory.create(_renderRequest, ddmForm));
 		ddmFormRenderingContext.setHttpServletRequest(
 			PortalUtil.getHttpServletRequest(_renderRequest));
 		ddmFormRenderingContext.setHttpServletResponse(
@@ -532,8 +539,9 @@ public class DDMFormDisplayContext {
 	private final DDMFormInstanceRecordVersionLocalService
 		_ddmFormInstanceRecordVersionLocalService;
 	private final DDMFormInstanceService _ddmFormInstanceService;
-	private final DDMFormRenderer _formRenderer;
-	private final DDMFormValuesFactory _formValuesFactory;
+	private final DDMFormRenderer _ddmFormRenderer;
+	private final DDMFormValuesFactory _ddmFormValuesFactory;
+	private final DDMFormValuesMerger _ddmFormValuesMerger;
 	private Boolean _hasViewPermission;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

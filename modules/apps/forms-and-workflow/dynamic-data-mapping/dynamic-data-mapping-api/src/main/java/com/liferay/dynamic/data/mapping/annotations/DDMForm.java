@@ -14,7 +14,7 @@
 
 package com.liferay.dynamic.data.mapping.annotations;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

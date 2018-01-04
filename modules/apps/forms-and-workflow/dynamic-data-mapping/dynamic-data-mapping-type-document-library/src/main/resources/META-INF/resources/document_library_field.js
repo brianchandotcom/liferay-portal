@@ -187,6 +187,8 @@ AUI.add(
 										if (selectedItem) {
 											instance.setValue(JSON.parse(selectedItem.value));
 										}
+
+										instance._fireStartedFillingEvent();
 									}
 								},
 								url: instance.getDocumentLibrarySelectorURL()

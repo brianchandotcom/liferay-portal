@@ -32,8 +32,8 @@ AUI.add(
 								}
 								else {
 									var payload = {
-										bcp47LanguageId: themeDisplay.getBCP47LanguageId(),
 										ddmStructureId: id,
+										languageId: themeDisplay.getLanguageId(),
 										portletNamespace: Liferay.DDM.Settings.portletNamespace,
 										scopeGroupId: themeDisplay.getScopeGroupId()
 									};

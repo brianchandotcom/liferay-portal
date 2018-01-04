@@ -22,11 +22,28 @@
 	{@param? required: bool}
 	{@param? tip: string}
 
-	{let $displayValue: $formattedValue ? $formattedValue : $predefinedValue /}
+	{let $formGroupClass kind="text"}
+		form-group
+		{if not $visible}
+			{sp}hide
+		{/if}
 
-	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-date" data-fieldname="{$name}">
+		{sp}liferay-ddm-form-field-date
+	{/let}
+
+	<div class="{$formGroupClass}" data-fieldname="{$name}">
 		{if $showLabel}
-			<label class="control-label{$readOnly ? ' disabled' : ''}" for="{$name}">
+			{let $labelAttributes kind="attributes"}
+				class="control-label
+					{if $readOnly}
+						{sp}disabled
+					{/if}
+				"
+
+				for="{$name}"
+			{/let}
+
+			<label {$labelAttributes}>
 				{$label}
 
 				{if $required}
@@ -34,17 +51,33 @@
 				{/if}
 			</label>
 
-			<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
+			<p class="liferay-ddm-form-field-tip">{$tip ?: ''}</p>
 		{/if}
 
+		{let $displayValue: $formattedValue ? $formattedValue : $predefinedValue /}
+
 		<div class="input-group input-group-container">
-			<input
-				aria-label="{$label}"
-				class="form-control trigger{if $readOnly}-readonly{/if}"
-				{if $readOnly}disabled{/if}
+			{let $inputAttributes kind="attributes"}
+				class="form-control"
+
+				{if $label}
+					aria-label="{$label}"
+				{/if}
+
+				{if $displayValue}
+					value="{$displayValue}"
+				{/if}
+
+				{if $readOnly}
+					readonly
+				{/if}
+
+				maxlength="10"
+
 				type="text"
-				value="{$displayValue}"
-			/>
+			{/let}
+
+			<input {$inputAttributes} />
 
 			<input
 				name="{$name}"

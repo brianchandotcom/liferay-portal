@@ -8,6 +8,11 @@ AUI.add(
 		var FormBuilderRenderRule = A.Component.create(
 			{
 				ATTRS: {
+
+					builder: {
+						value: {}
+					},
+
 					fields: {
 						value: []
 					},
@@ -67,9 +72,12 @@ AUI.add(
 
 						instance._conditions = {};
 
+						var builder = instance.get('builder');
+
 						instance._actionFactory = new Liferay.DDM.FormBuilderActionFactory(
 							{
 								bubbleTargets: [instance],
+								builder: builder,
 								fields: instance.get('fields'),
 								getDataProviders: instance.get('getDataProviders'),
 								pages: instance.get('pages')

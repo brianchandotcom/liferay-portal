@@ -109,3 +109,37 @@ div.layout-builder-resize-col-draggable-handle {
 		}
 	}
 }
+
+#deleteFieldDialog {
+	.btn {
+		border: 1px solid transparent;
+		border-radius: 0.25rem;
+		box-shadow: none;
+		font-size: 1rem;
+		font-weight: 600;
+		line-height: 1.5;
+		margin-right: 10px;
+		padding: 0.438rem 0.938rem;
+	}
+
+	.btn-primary {
+		background-color: #1865FB;
+		border-color: #1865FB;
+		color: $light;
+	}
+
+	.btn-link {
+		background-color: #FFF;
+		border-color: #CDCED9;
+		color: #6B6C7E;
+
+		&:hover {
+			text-decoration: none;
+		}
+	}
+
+	.modal-full-screen-content .modal-body {
+		overflow: visible;
+		padding: 1rem 1.5rem;
+	}
+}

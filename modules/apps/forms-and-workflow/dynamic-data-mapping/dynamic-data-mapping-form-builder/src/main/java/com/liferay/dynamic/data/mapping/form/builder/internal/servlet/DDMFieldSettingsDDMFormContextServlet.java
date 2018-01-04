@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -72,13 +73,12 @@ public class DDMFieldSettingsDDMFormContextServlet extends HttpServlet {
 		HttpServletRequest request, HttpServletResponse response) {
 
 		try {
-			String bcp47LanguageId = ParamUtil.getString(
-				request, "bcp47LanguageId");
+			String languageId = ParamUtil.getString(request, "languageId");
 			String portletNamespace = ParamUtil.getString(
 				request, "portletNamespace");
 			String type = ParamUtil.getString(request, "type");
 
-			Locale locale = Locale.forLanguageTag(bcp47LanguageId);
+			Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 			LocaleThreadLocal.setThemeDisplayLocale(locale);
 

@@ -16,7 +16,7 @@ AUI.add(
 				prototype: {
 					CONTENT_TEMPLATE: '<ul class="pagination"></ul>',
 					ITEM_TEMPLATE: '<li class="{cssClass}"><a href="#">{content}</a></li>',
-					SUCCESS_PAGE_ITEM_TEMPLATE: '<li class="{cssClass}"><a href="#">{content}</a></li>',
+					SUCCESS_PAGE_ITEM_TEMPLATE: '<li class="{cssClass}" data-success-page="true"><a href="#">{content}</a></li>',
 
 					initializer: function() {
 						var instance = this;
@@ -93,7 +93,7 @@ AUI.add(
 
 						if (instance.get('successPage')) {
 							buffer += A.Lang.sub(
-								instance.ITEM_TEMPLATE,
+								instance.SUCCESS_PAGE_ITEM_TEMPLATE,
 								{
 									content: Liferay.Language.get('success-page'),
 									cssClass: 'pagination-success-page'

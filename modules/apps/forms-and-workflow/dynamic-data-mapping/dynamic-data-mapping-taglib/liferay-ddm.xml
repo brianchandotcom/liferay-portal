@@ -162,7 +162,7 @@
 				<inputType>java.lang.String</inputType>
 				<outputType>java.lang.String</outputType>
 				<required>false</required>
-				<defaultValue><![CDATA[com.liferay.portal.kernel.util.StringPool.BLANK]]></defaultValue>
+				<defaultValue><![CDATA[com.liferay.petra.string.StringPool.BLANK]]></defaultValue>
 			</attribute>
 			<attribute>
 				<name>displayStyle</name>

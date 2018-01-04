@@ -81,6 +81,10 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("items", items);
 	}
 
+	public void setLabel(String label) {
+		putValue("label", label);
+	}
+
 	public void setSearchable(Boolean searchable) {
 		putValue("searchable", searchable);
 	}
@@ -89,12 +93,8 @@ public class DropdownMenuTag extends BaseClayTag {
 		putValue("spritemap", spritemap);
 	}
 
-	public void setTriggerLabel(String triggerLabel) {
-		putValue("triggerLabel", triggerLabel);
-	}
-
-	public void setTriggerStyle(String triggerStyle) {
-		putValue("triggerStyle", triggerStyle);
+	public void setStyle(String style) {
+		putValue("style", style);
 	}
 
 	public void setType(String type) {

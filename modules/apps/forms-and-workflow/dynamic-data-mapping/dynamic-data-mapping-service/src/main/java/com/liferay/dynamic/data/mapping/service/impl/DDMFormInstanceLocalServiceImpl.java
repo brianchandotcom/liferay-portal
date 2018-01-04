@@ -36,7 +36,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -62,9 +61,11 @@ public class DDMFormInstanceLocalServiceImpl
 			DDMFormValues settingsDDMFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userLocalService.getUser(userId);
+		Locale defaultLocale = getDDMFormDefaultLocale(ddmStructureId);
 
-		validate(ddmStructureId, nameMap, settingsDDMFormValues);
+		validate(ddmStructureId, nameMap, settingsDDMFormValues, defaultLocale);
+
+		User user = userLocalService.getUser(userId);
 
 		long ddmFormInstanceId = counterLocalService.increment();
 
@@ -78,8 +79,8 @@ public class DDMFormInstanceLocalServiceImpl
 		ddmFormInstance.setUserName(user.getFullName());
 		ddmFormInstance.setStructureId(ddmStructureId);
 		ddmFormInstance.setVersion(_VERSION_DEFAULT);
-		ddmFormInstance.setNameMap(nameMap);
-		ddmFormInstance.setDescriptionMap(descriptionMap);
+		ddmFormInstance.setNameMap(nameMap, defaultLocale);
+		ddmFormInstance.setDescriptionMap(descriptionMap, defaultLocale);
 		ddmFormInstance.setSettings(
 			ddmFormValuesJSONSerializer.serialize(settingsDDMFormValues));
 
@@ -382,7 +383,9 @@ public class DDMFormInstanceLocalServiceImpl
 			DDMFormInstance ddmFormInstance)
 		throws PortalException {
 
-		validate(ddmStructureId, nameMap, settingsDDMFormValues);
+		Locale defaultLocale = getDDMFormDefaultLocale(ddmStructureId);
+
+		validate(ddmStructureId, nameMap, settingsDDMFormValues, defaultLocale);
 
 		User user = userLocalService.getUser(userId);
 
@@ -420,8 +423,8 @@ public class DDMFormInstanceLocalServiceImpl
 			ddmFormInstance.setVersionUserName(user.getFullName());
 		}
 
-		ddmFormInstance.setNameMap(nameMap);
-		ddmFormInstance.setDescriptionMap(descriptionMap);
+		ddmFormInstance.setNameMap(nameMap, defaultLocale);
+		ddmFormInstance.setDescriptionMap(descriptionMap, defaultLocale);
 		ddmFormInstance.setSettings(
 			ddmFormValuesJSONSerializer.serialize(settingsDDMFormValues));
 
@@ -449,6 +452,27 @@ public class DDMFormInstanceLocalServiceImpl
 		}
 
 		return updatedDDMFormInstance;
+	}
+
+	protected Locale getDDMFormDefaultLocale(DDMFormInstance ddmFormInstance)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmFormInstance.getStructure();
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		return ddmForm.getDefaultLocale();
+	}
+
+	protected Locale getDDMFormDefaultLocale(long ddmStructureId)
+		throws PortalException {
+
+		DDMStructure ddmStructure = ddmStructureLocalService.getDDMStructure(
+			ddmStructureId);
+
+		DDMForm ddmForm = ddmStructure.getDDMForm();
+
+		return ddmForm.getDefaultLocale();
 	}
 
 	protected DDMFormValues getFormInstanceSettingsFormValues(
@@ -538,12 +562,12 @@ public class DDMFormInstanceLocalServiceImpl
 
 	protected void validate(
 			long ddmStructureId, Map<Locale, String> nameMap,
-			DDMFormValues settingsDDMFormValues)
+			DDMFormValues settingsDDMFormValues, Locale defaultLocale)
 		throws PortalException {
 
 		validateStructureId(ddmStructureId);
 
-		validateName(nameMap);
+		validateName(nameMap, defaultLocale);
 
 		validateFormInstanceSettings(settingsDDMFormValues);
 	}
@@ -555,16 +579,15 @@ public class DDMFormInstanceLocalServiceImpl
 		ddmFormValuesValidator.validate(settingsDDMFormValues);
 	}
 
-	protected void validateName(Map<Locale, String> nameMap)
+	protected void validateName(
+			Map<Locale, String> nameMap, Locale defaultLocale)
 		throws PortalException {
 
-		Locale locale = LocaleUtil.getSiteDefault();
-
-		String name = nameMap.get(locale);
+		String name = nameMap.get(defaultLocale);
 
 		if (Validator.isNull(name)) {
 			throw new FormInstanceNameException(
-				"Name is null for locale " + locale.getDisplayName());
+				"Name is null for locale " + defaultLocale.getDisplayName());
 		}
 	}
 

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
@@ -71,10 +72,9 @@ public class DDMFieldSetDefinitionServlet extends HttpServlet {
 			return;
 		}
 
-		String bcp47LanguageId = ParamUtil.getString(
-			request, "bcp47LanguageId");
+		String languageId = ParamUtil.getString(request, "languageId");
 
-		Locale locale = Locale.forLanguageTag(bcp47LanguageId);
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
 
 		LocaleThreadLocal.setThemeDisplayLocale(locale);
 

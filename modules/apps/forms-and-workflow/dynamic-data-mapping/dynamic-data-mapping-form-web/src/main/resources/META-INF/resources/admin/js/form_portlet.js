@@ -33,6 +33,7 @@ AUI.add(
 					},
 
 					formBuilder: {
+						value: {}
 					},
 
 					localizedDescription: {
@@ -79,9 +80,14 @@ AUI.add(
 					initializer: function() {
 						var instance = this;
 
+						var formBuilder = instance.get('formBuilder');
+
+						formBuilder.set('defaultLanguageId', instance.get('defaultLanguageId'));
+						formBuilder.set('editingLanguageId', instance.get('editingLanguageId'));
+
 						instance.layoutVisitor = new LayoutSerializer(
 							{
-								builder: instance.get('formBuilder'),
+								builder: formBuilder,
 								defaultLanguageId: instance.get('defaultLanguageId')
 							}
 						);
@@ -276,7 +282,7 @@ AUI.add(
 
 						var state = {
 							availableLanguageIds: translationManager.get('availableLocales'),
-							defaultLanguageId: translationManager.get('defaultLocale'),
+							defaultLanguageId: formBuilder.get('defaultLanguageId'),
 							description: instance.get('localizedDescription'),
 							name: instance._getLocalizedName(),
 							pages: instance.layoutVisitor.getPages(),

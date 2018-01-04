@@ -213,6 +213,20 @@ AUI.add(
 				if (firstField) {
 					firstField.focus();
 				}
+
+				var formId = instance.getFormId();
+
+				if (formId > 0) {
+					Liferay.fire("ddmFormPageHide", {
+						formId: formId,
+						page: event.prevVal
+					});
+
+					Liferay.fire("ddmFormPageShow", {
+						formId: formId,
+						page: event.newVal
+					});
+				}
 			},
 
 			_getPaginationControlsNode: function() {

@@ -184,6 +184,7 @@ page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %><%@
 page import="com.liferay.users.admin.web.constants.UserFormConstants" %><%@
 page import="com.liferay.users.admin.web.constants.UsersAdminWebKeys" %><%@
+page import="com.liferay.users.admin.web.internal.display.context.InitDisplayContext" %><%@
 page import="com.liferay.users.admin.web.search.AddUserOrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.search.OrganizationChecker" %><%@
 page import="com.liferay.users.admin.web.search.OrganizationResultRowSplitter" %><%@
@@ -214,32 +215,15 @@ page import="javax.portlet.WindowState" %>
 <%
 PortalPreferences portalPreferences = PortletPreferencesFactoryUtil.getPortalPreferences(liferayPortletRequest);
 
-boolean filterManageableGroups = true;
-
-boolean filterManageableOrganizations = true;
-
-if (permissionChecker.hasPermission(null, Organization.class.getName(), Organization.class.getName(), ActionKeys.VIEW)) {
-	filterManageableOrganizations = false;
-}
-
-boolean filterManageableRoles = true;
-boolean filterManageableUserGroupRoles = true;
-boolean filterManageableUserGroups = true;
-
 String myAccountPortletId = PortletProviderUtil.getPortletId(PortalMyAccountApplicationType.MyAccount.CLASS_NAME, PortletProvider.Action.VIEW);
 
-if (portletName.equals(myAccountPortletId)) {
-	filterManageableGroups = false;
-	filterManageableOrganizations = false;
-	filterManageableRoles = false;
-	filterManageableUserGroupRoles = false;
-	filterManageableUserGroups = false;
-}
-else if (permissionChecker.isCompanyAdmin()) {
-	filterManageableGroups = false;
-	filterManageableOrganizations = false;
-	filterManageableUserGroups = false;
-}
+InitDisplayContext initDisplayContext = new InitDisplayContext(request, portletName);
+
+boolean filterManageableGroups = initDisplayContext.isFilterManageableGroups();
+boolean filterManageableOrganizations = initDisplayContext.isFilterManageableOrganizations();
+boolean filterManageableRoles = initDisplayContext.isFilterManageableRoles();
+boolean filterManageableUserGroupRoles = initDisplayContext.isFilterManageableUserGroupRoles();
+boolean filterManageableUserGroups = initDisplayContext.isFilterManageableUserGroups();
 %>
 
 <%@ include file="/init-ext.jsp" %>

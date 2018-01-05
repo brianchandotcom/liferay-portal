@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.WikiPageLocalServiceUtil;
+import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class WikiUtil {
 		double previousVersion = 0;
 		double nextVersion = 0;
 
-		List<WikiPage> pages = WikiPageLocalServiceUtil.getPages(
+		List<WikiPage> pages = _wikiPageLocalService.getPages(
 			nodeId, title, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
 			new PageVersionComparator(true));
 
@@ -192,7 +192,15 @@ public class WikiUtil {
 		_wikiNodeModelResourcePermission = modelResourcePermission;
 	}
 
+	@Reference(unbind = "-")
+	protected void setWikiPageLocalService(
+		WikiPageLocalService wikiPageLocalService) {
+
+		_wikiPageLocalService = wikiPageLocalService;
+	}
+
 	private static ModelResourcePermission<WikiNode>
 		_wikiNodeModelResourcePermission;
+	private static WikiPageLocalService _wikiPageLocalService;
 
 }

@@ -174,7 +174,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			throw new PrimarySiteNavigationMenuException();
 		}
 
-		siteNavigationMenu.setPrimary(true);
+		siteNavigationMenu.setPrimary(primary);
 
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);
 	}

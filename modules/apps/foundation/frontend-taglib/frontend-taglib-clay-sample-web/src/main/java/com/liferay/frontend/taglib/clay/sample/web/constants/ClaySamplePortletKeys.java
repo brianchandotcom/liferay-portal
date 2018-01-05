@@ -22,4 +22,10 @@ public class ClaySamplePortletKeys {
 	public static final String CLAY_SAMPLE =
 		"com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
 
+	public static final String DROPDOWNS_DISPLAY_CONTEXT =
+		"DROPDOWNS_DISPLAY_CONTEXT";
+
+	public static final String NAVIGATION_BARS_DISPLAY_CONTEXT =
+		"NAVIGATION_BARS_DISPLAY_CONTEXT";
+
 }

@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,29 +34,13 @@ public class ButtonTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		if (Validator.isNotNull(context.get("icon"))) {
-			Map<String, String> icon = new HashMap();
+		if (Validator.isNull(context.get("spritemap"))) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-			String spritemap = (String)context.get("spritemap");
-
-			if (Validator.isNull(spritemap)) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				spritemap = themeDisplay.getPathThemeImages().concat(
-					"/clay/icons.svg");
-			}
-
-			String alignment = (String)context.get("iconAlignment");
-
-			if (Validator.isNotNull(alignment)) {
-				icon.put("alignment", alignment);
-			}
-
-			icon.put("spritemap", spritemap);
-			icon.put("symbol", (String)context.get("icon"));
-
-			putValue("icon", icon);
+			putValue(
+				"spritemap",
+				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
 		}
 
 		return super.doStartTag();

@@ -138,7 +138,7 @@ public class DefaultSingleDestinationMessageSenderFactory
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
+		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)

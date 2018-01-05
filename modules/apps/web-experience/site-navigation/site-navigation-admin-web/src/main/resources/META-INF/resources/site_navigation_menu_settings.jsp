@@ -22,7 +22,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
 %>
 
-<c:if test="<%= siteNavigationAdminDisplayContext.primaryMenuExists() %>">
+<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
 	<div class="alert alert-warning">
 		<liferay-ui:message key="the-primary-menu-for-this-site-is-already-defined" />
 	</div>
@@ -35,9 +35,9 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>" />
 
 	<aui:fieldset label="function">
-		<aui:input checked="<%= siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.primaryMenuExists() %>" label="primary" name="primary" type="radio" value="<%= true %>" />
+		<aui:input checked="<%= siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>" label="primary" name="primary" type="radio" value="<%= true %>" />
 
-		<aui:input checked="<%= !siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.primaryMenuExists() %>" label="secondary" name="primary" type="radio" value="<%= false %>" />
+		<aui:input checked="<%= !siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>" label="secondary" name="primary" type="radio" value="<%= false %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

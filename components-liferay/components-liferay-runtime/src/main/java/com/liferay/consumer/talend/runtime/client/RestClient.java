@@ -27,6 +27,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.StatusType;
 
+import org.apache.commons.lang3.StringUtils;
+
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
@@ -107,16 +109,24 @@ public class RestClient {
 	private Response _follow3Redirects(
 		Client client, Response currentResponse) {
 
+		StatusType statusType = currentResponse.getStatusInfo();
+
+		if (statusType.getFamily() != Response.Status.Family.REDIRECTION) {
+			return currentResponse;
+		}
+
 		AtomicInteger counter = new AtomicInteger();
 		Response response = currentResponse;
-
-		StatusType statusType = response.getStatusInfo();
 
 		while ((statusType.getFamily() ==
 					Response.Status.Family.REDIRECTION) &&
 			   (counter.incrementAndGet() <= 3)) {
 
 			String location = response.getHeaderString(HttpHeaders.LOCATION);
+
+			if (StringUtils.isEmpty(location)) {
+				return response;
+			}
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.internal.trash;
+package com.liferay.wiki.web.internal.trash;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.LayoutConstants;
@@ -30,13 +30,13 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
-import com.liferay.wiki.asset.WikiNodeTrashRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.web.internal.asset.WikiNodeTrashRenderer;
 
 import java.util.ArrayList;
 import java.util.List;

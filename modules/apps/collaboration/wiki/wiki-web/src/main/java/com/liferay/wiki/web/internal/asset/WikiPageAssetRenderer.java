@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.asset;
+package com.liferay.wiki.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
@@ -48,16 +48,13 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author Julio Camarero
  * @author Sergio González
- * @deprecated As of 1.7.0, with no direct replacement
  */
-@Deprecated
 public class WikiPageAssetRenderer
 	extends BaseJSPAssetRenderer<WikiPage> implements TrashRenderer {
 

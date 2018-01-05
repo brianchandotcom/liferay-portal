@@ -24,6 +24,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
+		<column name="primary" type="boolean" />
 
 		<!-- Finder methods -->
 
@@ -33,6 +34,10 @@
 		<finder name="G_N" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
+		</finder>
+		<finder name="G_P" return-type="SiteNavigationMenu">
+			<finder-column name="groupId" />
+			<finder-column name="primary" />
 		</finder>
 
 		<!-- References -->
@@ -87,6 +92,7 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
+		<exception>PrimarySiteNavigationMenu</exception>
 		<exception>SiteNavigationMenuName</exception>
 	</exceptions>
 </service-builder>

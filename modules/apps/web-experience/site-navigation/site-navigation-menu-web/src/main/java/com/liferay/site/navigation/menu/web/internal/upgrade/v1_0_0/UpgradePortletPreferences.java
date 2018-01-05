@@ -54,31 +54,6 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 			PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
 				"list-menu-ftl");
 
-		// Extract old "navigation.display.options" as portlet preferences
-
-		if (displayStyle.equals("from-level-0")) {
-			_upgradeDisplayStylePreferences(
-				portletPreferences, "absolute", "0", "auto");
-		}
-		else if (displayStyle.equals("from-level-1") ||
-				 displayStyle.equals("from-level-1-with-title")) {
-
-			_upgradeDisplayStylePreferences(
-				portletPreferences, "absolute", "1", "auto");
-		}
-		else if (displayStyle.equals("from-level-1-to-all-sublevels")) {
-			_upgradeDisplayStylePreferences(
-				portletPreferences, "absolute", "1", "all");
-		}
-		else if (displayStyle.equals("from-level-2-with-title")) {
-			_upgradeDisplayStylePreferences(
-				portletPreferences, "absolute", "2", "auto");
-		}
-		else if (displayStyle.equals("relative-with-breadcrumb")) {
-			_upgradeDisplayStylePreferences(
-				portletPreferences, "relative", "0", "auto");
-		}
-
 		// Remove unsupported preferences
 
 		portletPreferences.reset("bulletStyle");

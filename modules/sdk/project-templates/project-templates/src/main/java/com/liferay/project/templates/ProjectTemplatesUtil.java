@@ -27,8 +27,8 @@ import java.util.stream.Stream;
  */
 public class ProjectTemplatesUtil {
 
-	public static void deleteFileInPath(String fileName, Path projectPath) {
-		try (Stream<Path> projectFiles = Files.walk(projectPath)) {
+	public static void deleteFileInPath(String fileName, Path rootDirPath) {
+		try (Stream<Path> projectFiles = Files.walk(rootDirPath)) {
 			Stream<Path> filter = projectFiles.filter(
 				path -> {
 					return Paths.get(fileName).equals(path.getFileName());

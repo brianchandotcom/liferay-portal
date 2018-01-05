@@ -45,11 +45,11 @@ public class NpmIsomorphicPortletProjectTemplateCustomizer
 
 			Path destinationDirPath = destinationDir.toPath();
 
-			Path projectPath = destinationDirPath.resolve(
+			Path projectDirPath = destinationDirPath.resolve(
 				projectTemplatesArgs.getName());
 
 			ProjectTemplatesUtil.deleteFileInPath(
-				className + "WebKeys.java", projectPath);
+				className + "WebKeys.java", projectDirPath);
 		}
 	}
 

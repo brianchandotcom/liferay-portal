@@ -25,11 +25,13 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 public interface ProjectTemplateCustomizer {
 
 	public void onAfterGenerateProject(
-		ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
-		ArchetypeGenerationResult archetypeGenerationResult);
+			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
+			ArchetypeGenerationResult archetypeGenerationResult)
+		throws Exception;
 
 	public void onBeforeGenerateProject(
-		ProjectTemplatesArgs projectTemplatesArgs,
-		ArchetypeGenerationRequest archetypeGenerationRequest);
+			ProjectTemplatesArgs projectTemplatesArgs,
+			ArchetypeGenerationRequest archetypeGenerationRequest)
+		throws Exception;
 
 }

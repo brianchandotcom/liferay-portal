@@ -16,37 +16,41 @@ package com.liferay.project.templates;
 
 import java.io.IOException;
 
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import java.util.stream.Stream;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 
 /**
- * @author Gregory Amerson
+ * @author Andrea Di Giorgi
  */
 public class ProjectTemplatesUtil {
 
-	public static void deleteFileInPath(String fileName, Path rootDirPath) {
-		try (Stream<Path> projectFiles = Files.walk(rootDirPath)) {
-			Stream<Path> filter = projectFiles.filter(
-				path -> {
-					return Paths.get(fileName).equals(path.getFileName());
-				});
+	public static void deleteFileInPath(String fileName, Path rootDirPath)
+		throws IOException {
 
-			filter.findFirst(
-			).ifPresent(
-				path -> {
-					try {
-						Files.deleteIfExists(path);
+		Files.walkFileTree(
+			rootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path path = dirPath.resolve(fileName);
+
+					if (Files.exists(path)) {
+						Files.delete(path);
+
+						return FileVisitResult.TERMINATE;
 					}
-					catch (IOException ioe) {
-					}
+
+					return FileVisitResult.CONTINUE;
 				}
-			);
-		}
-		catch (IOException ioe) {
-		}
+
+			});
 	}
 
 }

@@ -34,8 +34,9 @@ public class SoyPortletProjectTemplateCustomizer
 
 	@Override
 	public void onAfterGenerateProject(
-		ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
-		ArchetypeGenerationResult archetypeGenerationResult) {
+			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
+			ArchetypeGenerationResult archetypeGenerationResult)
+		throws Exception {
 
 		if ((archetypeGenerationResult.getCause() == null) &&
 			projectTemplatesArgs.isGradle()) {
@@ -55,8 +56,9 @@ public class SoyPortletProjectTemplateCustomizer
 
 	@Override
 	public void onBeforeGenerateProject(
-		ProjectTemplatesArgs projectTemplatesArgs,
-		ArchetypeGenerationRequest archetypeGenerationRequest) {
+			ProjectTemplatesArgs projectTemplatesArgs,
+			ArchetypeGenerationRequest archetypeGenerationRequest)
+		throws Exception {
 	}
 
 }

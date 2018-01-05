@@ -2,18 +2,24 @@ package ${package}.portlet;
 
 import ${package}.constants.${className}PortletKeys;
 import ${package}.constants.${className}WebKeys;
+#if (${liferayVersion} == "7.1")
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSPackage;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
+#end
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+#if (${liferayVersion} == "7.1")
 
 import java.io.IOException;
+#end
 
 import javax.portlet.Portlet;
+#if (${liferayVersion} == "7.1")
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+#end
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = Portlet.class
 )
 public class ${className}Portlet extends MVCPortlet {
+#if (${liferayVersion} == "7.1")
 
 	@Override
 	public void doView(
@@ -54,4 +61,5 @@ public class ${className}Portlet extends MVCPortlet {
 	@Reference
 	private NPMResolver _npmResolver;
 
+#end
 }

@@ -23,7 +23,6 @@
 				<include>bnd.bnd</include>
 				<include>build.gradle</include>
 				<include>package.json</include>
-				<include>tsconfig.json</include>
 			</includes>
 		</fileSet>
 	</fileSets>
@@ -34,6 +33,9 @@
 			<defaultValue>maven</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="className">
+		</requiredProperty>
+		<requiredProperty key="liferayVersion">
+			<defaultValue>7.0</defaultValue>
 		</requiredProperty>
 		<requiredProperty key="packageJsonVersion">
 			<defaultValue>1.0.0</defaultValue>

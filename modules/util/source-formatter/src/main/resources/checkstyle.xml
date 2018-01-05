@@ -141,6 +141,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.LPS42924">
 			<message key="lps42924" value="Use ''classNameLocalService.getClassNameId'' instead of ''PortalUtil.getClassName''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.MapIteration">
+			<message key="entry.set.use" value="Use Map.entrySet() to retrieve values" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.MethodName">
 			<property name="applyToPackage" value="false" />
 			<property name="applyToPrivate" value="false" />

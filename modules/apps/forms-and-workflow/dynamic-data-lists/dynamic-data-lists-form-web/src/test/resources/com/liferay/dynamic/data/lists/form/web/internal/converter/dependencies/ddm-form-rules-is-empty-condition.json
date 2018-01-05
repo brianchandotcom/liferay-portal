@@ -1,8 +1,0 @@
-[
-	{
-		"actions": [
-			"setEnabled('Field1', true)"
-		],
-		"condition": "isEmpty(getValue('Field0'))"
-	}
-]

@@ -1,8 +1,0 @@
-[
-	{
-		"actions": [
-			"setVisible('Field1', true)"
-		],
-		"condition": "belongsTo('Role1', 'Role2')"
-	}
-]

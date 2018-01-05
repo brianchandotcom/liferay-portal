@@ -16,7 +16,6 @@ package com.liferay.project.templates.npm.jquery.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
-import com.liferay.project.templates.ProjectTemplatesUtil;
 
 import java.io.File;
 
@@ -49,7 +48,7 @@ public class NpmJqueryPortletProjectTemplateCustomizer
 			Path projectDirPath = destinationDirPath.resolve(
 				projectTemplatesArgs.getName());
 
-			ProjectTemplatesUtil.deleteFileInPath(
+			ProjectTemplateCustomizer.deleteFileInPath(
 				className + "WebKeys.java", projectDirPath);
 		}
 	}

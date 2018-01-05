@@ -17,9 +17,11 @@ package com.liferay.wiki.util;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.diff.DiffVersion;
 import com.liferay.portal.kernel.diff.DiffVersionsInfo;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -29,7 +31,6 @@ import com.liferay.portal.kernel.util.URLCodec;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.comparator.PageVersionComparator;
 
 import java.util.ArrayList;
@@ -39,10 +40,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
  */
+@Component(immediate = true)
 public class WikiUtil {
 
 	public static String getAttachmentURLPrefix(
@@ -117,8 +122,9 @@ public class WikiUtil {
 	}
 
 	public static List<WikiNode> getNodes(
-		List<WikiNode> nodes, String[] hiddenNodes,
-		PermissionChecker permissionChecker) {
+			List<WikiNode> nodes, String[] hiddenNodes,
+			PermissionChecker permissionChecker)
+		throws PortalException {
 
 		nodes = ListUtil.copy(nodes);
 
@@ -130,7 +136,7 @@ public class WikiUtil {
 			WikiNode node = itr.next();
 
 			if (!(Arrays.binarySearch(hiddenNodes, node.getName()) < 0) ||
-				!WikiNodePermissionChecker.contains(
+				!_wikiNodeModelResourcePermission.contains(
 					permissionChecker, node, ActionKeys.VIEW)) {
 
 				itr.remove();
@@ -175,5 +181,18 @@ public class WikiUtil {
 
 		return content;
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.wiki.model.WikiNode)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<WikiNode> modelResourcePermission) {
+
+		_wikiNodeModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<WikiNode>
+		_wikiNodeModelResourcePermission;
 
 }

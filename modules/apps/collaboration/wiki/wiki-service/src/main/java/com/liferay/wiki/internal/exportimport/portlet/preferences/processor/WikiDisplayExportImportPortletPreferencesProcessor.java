@@ -31,11 +31,11 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.wiki.constants.WikiConstants;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.service.permission.WikiResourcePermissionChecker;
 import com.liferay.wiki.service.persistence.WikiNodeUtil;
 
 import java.util.List;
@@ -113,7 +113,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 
 		try {
 			portletDataContext.addPortletPermissions(
-				WikiResourcePermissionChecker.RESOURCE_NAME);
+				WikiConstants.RESOURCE_NAME);
 		}
 		catch (PortalException pe) {
 			throw new PortletDataException(
@@ -146,7 +146,7 @@ public class WikiDisplayExportImportPortletPreferencesProcessor
 
 		try {
 			portletDataContext.importPortletPermissions(
-				WikiResourcePermissionChecker.RESOURCE_NAME);
+				WikiConstants.RESOURCE_NAME);
 		}
 		catch (PortalException pe) {
 			throw new PortletDataException(

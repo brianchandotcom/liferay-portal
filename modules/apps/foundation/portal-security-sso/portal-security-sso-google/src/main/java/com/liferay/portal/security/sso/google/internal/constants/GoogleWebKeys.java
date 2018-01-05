@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.google.constants;
+package com.liferay.portal.security.sso.google.internal.constants;
 
 /**
  * @author Sergio González

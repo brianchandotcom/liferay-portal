@@ -19,8 +19,6 @@ import com.liferay.expando.kernel.model.CustomAttributesDisplay;
 import com.liferay.petra.content.ContentUtil;
 import com.liferay.petra.lang.ClassLoaderPool;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portlet.extraconfig.ExtraPortletAppConfig;
-import com.liferay.portlet.extraconfig.ExtraPortletAppConfigRegistry;
 import com.liferay.portal.kernel.application.type.ApplicationType;
 import com.liferay.portal.kernel.cluster.Clusterable;
 import com.liferay.portal.kernel.configuration.Configuration;
@@ -97,6 +95,8 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebAppPool;
 import com.liferay.portlet.PortletBagFactory;
 import com.liferay.portlet.UndeployedPortlet;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfig;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfigRegistry;
 import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -2734,7 +2734,7 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 
 		Element rootElement = document.getRootElement();
 
-		Map<String, String> localeEncodingMappingList = new HashMap<>();
+		Map<String, String> localeEncodingMap = new HashMap<>();
 
 		for (Element localeEncodingMappingListElement :
 				rootElement.elements("locale-encoding-mapping-list")) {
@@ -2749,12 +2749,12 @@ public class PortletLocalServiceImpl extends PortletLocalServiceBaseImpl {
 				String encoding = GetterUtil.getString(
 					localeEncodingMappingElement.elementText("encoding"));
 
-				localeEncodingMappingList.put(locale, encoding);
+				localeEncodingMap.put(locale, encoding);
 			}
 		}
 
 		ExtraPortletAppConfig extraPortletAppConfig = new ExtraPortletAppConfig(
-			localeEncodingMappingList);
+			localeEncodingMap);
 
 		ExtraPortletAppConfigRegistry.registerExtraPortletAppConfig(
 			servletContextName, extraPortletAppConfig);

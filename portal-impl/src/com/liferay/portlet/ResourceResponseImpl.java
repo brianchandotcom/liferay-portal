@@ -14,12 +14,12 @@
 
 package com.liferay.portlet;
 
-import com.liferay.portlet.extraconfig.ExtraPortletAppConfig;
-import com.liferay.portlet.extraconfig.ExtraPortletAppConfigRegistry;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfig;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfigRegistry;
 
 import java.util.Locale;
 import java.util.Map;
@@ -158,11 +158,10 @@ public class ResourceResponseImpl
 				ExtraPortletAppConfigRegistry.getExtraPortletAppConfig(
 					portletApp.getServletContextName());
 
-			Map<String, String> localeEncodingMappings =
-				extraPortletAppConfig.getLocaleEncodingMappings();
+			Map<String, String> localeEncodingMap =
+				extraPortletAppConfig.getLocaleEncodingMap();
 
-			String characterEncoding = localeEncodingMappings.get(
-				locale.toString());
+			String characterEncoding = localeEncodingMap.get(locale.toString());
 
 			if (characterEncoding != null) {
 				setCharacterEncoding(characterEncoding);

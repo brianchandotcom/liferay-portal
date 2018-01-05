@@ -42,6 +42,6 @@
 	<command name="deleteOptionsEntry">
 		<execute macro="Button#clickDelete" />
 
-		<execute function="Confirm" value1="Are you sure to delte?" />
+		<execute function="Confirm#waitForConfirmation" value1="Are you sure to delte?" />
 	</command>
 </definition>

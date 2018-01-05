@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.util;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.repository.registry.RepositoryClassDefinition;
 
 import java.util.regex.Matcher;

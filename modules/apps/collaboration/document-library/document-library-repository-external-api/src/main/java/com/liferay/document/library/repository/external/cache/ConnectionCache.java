@@ -15,9 +15,9 @@
 package com.liferay.document.library.repository.external.cache;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.repository.RepositoryException;
 import com.liferay.portal.kernel.servlet.PortalSessionThreadLocal;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TransientValue;
 
 import javax.servlet.http.HttpSession;

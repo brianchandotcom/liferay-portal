@@ -16,14 +16,13 @@ package com.liferay.project.templates.npm.angular.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.ProjectTemplatesUtil;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
+
 import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.Properties;
-import java.util.stream.Stream;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -42,31 +41,15 @@ public class NpmAngularPortletProjectTemplateCustomizer
 		String liferayVersion = _projectTemplatesArgs.getLiferayVersion();
 
 		if (!liferayVersion.equals("7.1")) {
+			String className = _projectTemplatesArgs.getClassName();
+
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectPath = destinationDirPath.resolve(
-					_projectTemplatesArgs.getName());
+				_projectTemplatesArgs.getName());
 
-			String className = _projectTemplatesArgs.getClassName();
-
-			try (Stream<Path> projectFiles = Files.walk(projectPath)) {
-				projectFiles.filter(
-					path -> {
-						return Paths.get(className + "WebKeys.java").equals(path.getFileName());
-					}
-				).findFirst(
-				).ifPresent(
-					path -> {
-						try {
-							Files.deleteIfExists(path);
-						}
-						catch (IOException e) {
-						}
-					}
-				);
-			}
-			catch (IOException e) {
-			}
+			ProjectTemplatesUtil.deleteFileInPath(
+				className + "WebKeys.java", projectPath);
 		}
 	}
 
@@ -83,4 +66,5 @@ public class NpmAngularPortletProjectTemplateCustomizer
 	}
 
 	private ProjectTemplatesArgs _projectTemplatesArgs;
+
 }

@@ -380,6 +380,23 @@ public class SiteNavigationAdminDisplayContext {
 		return false;
 	}
 
+	public boolean primaryMenuExists() {
+		SiteNavigationMenu primarySiteNavigationMenu =
+			getPrimarySiteNavigationMenu();
+
+		if (primarySiteNavigationMenu == null) {
+			return false;
+		}
+
+		if (primarySiteNavigationMenu.getSiteNavigationMenuId() ==
+				getSiteNavigationMenuId()) {
+
+			return false;
+		}
+
+		return true;
+	}
+
 	private String _getFirstSiteNavigationMenuItem() {
 		String[] types = _siteNavigationMenuItemTypeRegistry.getTypes();
 

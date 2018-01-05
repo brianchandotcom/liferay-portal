@@ -42,6 +42,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setPrimary(model.getPrimary());
 
 		return soapModel;
 	}
@@ -161,6 +162,18 @@ public class SiteNavigationMenuSoap implements Serializable {
 		_name = name;
 	}
 
+	public boolean getPrimary() {
+		return _primary;
+	}
+
+	public boolean isPrimary() {
+		return _primary;
+	}
+
+	public void setPrimary(boolean primary) {
+		_primary = primary;
+	}
+
 	private long _siteNavigationMenuId;
 	private long _groupId;
 	private long _companyId;
@@ -169,4 +182,5 @@ public class SiteNavigationMenuSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private boolean _primary;
 }

@@ -29,12 +29,6 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(siteNavigationMenu.getName());
 %>
 
-<liferay-frontend:management-bar>
-	<liferay-frontend:management-bar-buttons>
-		<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
-	</liferay-frontend:management-bar-buttons>
-</liferay-frontend:management-bar>
-
 <c:choose>
 	<c:when test="<%= siteNavigationMenuItems.isEmpty() %>">
 		<div class="container-fluid-1280">
@@ -96,6 +90,12 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		</div>
 	</c:when>
 	<c:otherwise>
+		<liferay-frontend:management-bar>
+			<liferay-frontend:management-bar-buttons>
+				<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
+			</liferay-frontend:management-bar-buttons>
+		</liferay-frontend:management-bar>
+
 		<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
 
 		<div class="container-fluid-1280">

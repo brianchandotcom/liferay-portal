@@ -4,6 +4,7 @@ targetCompatibility = "1.8"
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.2.0"
 	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.38.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "1.0.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"

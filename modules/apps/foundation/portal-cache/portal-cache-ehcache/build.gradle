@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.cache", version: "2.4.0"
 	provided group: "com.liferay", name: "com.liferay.portal.cache.ehcache.provider", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.profile", version: "1.0.0"

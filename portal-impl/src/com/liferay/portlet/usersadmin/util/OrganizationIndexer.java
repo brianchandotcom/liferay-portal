@@ -177,17 +177,18 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 				organization.getParentOrganizationId());
 		}
 
-		StringBundler sb = new StringBundler((organizations.size() * 2) + 1);
+		int size = organizations.size();
 
-		for (int i = organizations.size() - 1; i >= 0; i--) {
+		StringBundler sb = new StringBundler(((size - 1) * 4) + 1);
+
+		sb.append(organization.getName());
+
+		for (int i = size - 2; i >= 0; i--) {
 			organization = organizations.get(i);
 
-			if (i < (organizations.size() - 1)) {
-				sb.append(StringPool.SPACE);
-				sb.append(StringPool.GREATER_THAN);
-				sb.append(StringPool.SPACE);
-			}
-
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
 			sb.append(organization.getName());
 		}
 

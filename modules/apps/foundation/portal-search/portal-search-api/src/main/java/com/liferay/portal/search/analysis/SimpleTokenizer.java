@@ -12,42 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.suggest;
+package com.liferay.portal.search.analysis;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.search.analysis.Tokenizer;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.search.suggest.DictionaryEntry}
  */
-@Deprecated
-public class DictionaryEntry {
+public class SimpleTokenizer implements Tokenizer {
 
-	public DictionaryEntry(String line) {
-		String[] values = StringUtil.split(line, StringPool.SPACE);
+	@Override
+	public List<String> tokenize(
+		String fieldName, String input, String languageId) {
 
-		_word = values[0];
-
-		if (values.length == 2) {
-			_weight = GetterUtil.getFloat(values[1]);
-		}
-		else {
-			_weight = 0;
-		}
+		return Arrays.asList(StringUtil.split(input, StringPool.PERIOD));
 	}
-
-	public float getWeight() {
-		return _weight;
-	}
-
-	public String getWord() {
-		return _word;
-	}
-
-	private final float _weight;
-	private final String _word;
 
 }

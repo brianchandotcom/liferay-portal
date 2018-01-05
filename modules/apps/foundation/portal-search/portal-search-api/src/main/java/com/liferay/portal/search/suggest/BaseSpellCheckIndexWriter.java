@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.suggest;
+package com.liferay.portal.search.suggest;
 
 import com.liferay.petra.nio.CharsetEncoderUtil;
 import com.liferay.portal.kernel.configuration.Filter;
@@ -22,14 +22,16 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
-import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
+import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
+import com.liferay.portal.kernel.search.suggest.SuggestionConstants;
+import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Base64;
 import com.liferay.portal.kernel.util.Digester;
 import com.liferay.portal.kernel.util.DigesterUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
+import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -43,12 +45,11 @@ import java.nio.charset.CharsetEncoder;
 
 import java.util.List;
 
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.search.suggest.BaseSpellCheckIndexWriter}
  */
-@Deprecated
 public abstract class BaseSpellCheckIndexWriter
 	implements SpellCheckIndexWriter {
 
@@ -98,7 +99,7 @@ public abstract class BaseSpellCheckIndexWriter
 		throws SearchException {
 
 		try {
-			for (String languageId : _SUPPORTED_LOCALES) {
+			for (String languageId : getSupportedLocales()) {
 				indexKeywords(
 					searchContext, languageId,
 					PropsKeys.INDEX_SEARCH_QUERY_SUGGESTION_DICTIONARY,
@@ -133,7 +134,7 @@ public abstract class BaseSpellCheckIndexWriter
 		throws SearchException {
 
 		try {
-			for (String languageId : _SUPPORTED_LOCALES) {
+			for (String languageId : getSupportedLocales()) {
 				indexKeywords(
 					searchContext, languageId,
 					PropsKeys.INDEX_SEARCH_SPELL_CHECKER_DICTIONARY,
@@ -184,6 +185,11 @@ public abstract class BaseSpellCheckIndexWriter
 		return url;
 	}
 
+	protected String[] getSupportedLocales() {
+		return StringUtil.split(
+			props.get(PropsKeys.INDEX_SEARCH_SPELL_CHECKER_SUPPORTED_LOCALES));
+	}
+
 	protected String getUID(
 		long companyId, String languageId, String word, String... parameters) {
 
@@ -222,7 +228,20 @@ public abstract class BaseSpellCheckIndexWriter
 
 			String key = keySB.toString();
 
-			byte[] bytes = DigesterUtil.digestRaw(
+			// Must use DigesterUtil instead of @Reference Digester, otherwise
+			// it becomes an unsatisfied reference and the component remains
+			// undeployed, with no stack trace.
+			// Similar to:
+			// https://issues.liferay.com/browse/LPS-72507
+			//     ("Stop using HttpUtil in modules, use service reference
+			//     directly instead")
+			// https://github.com/liferay/liferay-portal/commit/
+			//     cdadae7#diff-874fcf4d20d5892447db4ce340c2bc49
+			// https://github.com/liferay/liferay-portal/commit/d1da078
+
+			Digester digester = DigesterUtil.getDigester();
+
+			byte[] bytes = digester.digestRaw(
 				Digester.MD5, charsetEncoder.encode(CharBuffer.wrap(key)));
 
 			uidSB.append(Base64.encode(bytes));
@@ -286,17 +305,17 @@ public abstract class BaseSpellCheckIndexWriter
 			String keywordFieldName, String typeFieldValue, int maxNGramLength)
 		throws Exception {
 
-		String[] dictionaryFileNames = PropsUtil.getArray(
+		String[] dictionaryFileNames = props.getArray(
 			propsKey, new Filter(languageId));
 
 		indexKeywords(
 			searchContext, 0, languageId, dictionaryFileNames, keywordFieldName,
 			typeFieldValue, maxNGramLength);
 
-		List<Group> groups = GroupLocalServiceUtil.getLiveGroups();
+		List<Group> groups = groupLocalService.getLiveGroups();
 
 		for (Group group : groups) {
-			String[] groupDictionaryFileNames = PropsUtil.getArray(
+			String[] groupDictionaryFileNames = props.getArray(
 				propsKey,
 				new Filter(languageId, String.valueOf(group.getGroupId())));
 
@@ -311,8 +330,11 @@ public abstract class BaseSpellCheckIndexWriter
 		}
 	}
 
-	private static final String[] _SUPPORTED_LOCALES = StringUtil.split(
-		PropsUtil.get(PropsKeys.INDEX_SEARCH_SPELL_CHECKER_SUPPORTED_LOCALES));
+	@Reference
+	protected GroupLocalService groupLocalService;
+
+	@Reference
+	protected Props props;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		BaseSpellCheckIndexWriter.class);

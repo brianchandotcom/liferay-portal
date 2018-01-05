@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search.suggest;
+package com.liferay.portal.search.suggest;
 
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -20,10 +20,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Michael C. Han
- * @deprecated As of 7.0.0, moved to {@link
- *             com.liferay.portal.search.suggest.DictionaryEntry}
  */
-@Deprecated
 public class DictionaryEntry {
 
 	public DictionaryEntry(String line) {

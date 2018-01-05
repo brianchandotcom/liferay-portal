@@ -21,7 +21,9 @@ import com.liferay.registry.ServiceTracker;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 7.0.0, with no direct replacement
  */
+@Deprecated
 public class NGramHolderBuilderUtil {
 
 	public static NGramHolder buildNGramHolder(String input)

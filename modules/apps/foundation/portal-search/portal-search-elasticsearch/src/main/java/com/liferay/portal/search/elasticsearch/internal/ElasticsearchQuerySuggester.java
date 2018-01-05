@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
-import com.liferay.portal.kernel.search.suggest.BaseQuerySuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
 import com.liferay.portal.kernel.search.suggest.Suggester;
@@ -31,6 +30,7 @@ import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
+import com.liferay.portal.search.suggest.BaseQuerySuggester;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -14,7 +14,7 @@
 
 package com.liferay.portal.search.web.internal.search.bar.portlet;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.search.web.internal.display.context.SearchScopePreference;
 import com.liferay.portal.search.web.internal.util.PortletPreferencesHelper;
 

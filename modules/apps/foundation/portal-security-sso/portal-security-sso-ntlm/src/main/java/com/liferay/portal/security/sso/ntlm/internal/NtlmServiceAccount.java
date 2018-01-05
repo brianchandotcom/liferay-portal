@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.ntlm.internal;
 
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Marcellus Tavares

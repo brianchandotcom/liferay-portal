@@ -14,13 +14,13 @@
 
 package com.liferay.contacts.web.internal.social;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.social.kernel.model.BaseSocialRequestInterpreter;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 import com.liferay.social.kernel.model.SocialRequest;

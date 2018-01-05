@@ -14,8 +14,8 @@
 
 package com.liferay.configuration.admin.web.internal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Arrays;
 import java.util.Dictionary;

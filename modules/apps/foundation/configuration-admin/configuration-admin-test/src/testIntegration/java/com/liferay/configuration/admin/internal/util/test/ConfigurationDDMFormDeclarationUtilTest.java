@@ -17,7 +17,7 @@ package com.liferay.configuration.admin.internal.util.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.configuration.admin.definition.ConfigurationDDMFormDeclaration;
 import com.liferay.configuration.admin.web.internal.util.ConfigurationDDMFormDeclarationUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
 
 import java.util.Dictionary;

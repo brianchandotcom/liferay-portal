@@ -18,6 +18,7 @@ import com.liferay.alloy.mvc.AlloyController;
 import com.liferay.alloy.mvc.AlloyPortlet;
 import com.liferay.alloy.mvc.BaseAlloyControllerImpl;
 import com.liferay.alloy.mvc.internal.json.web.service.AlloyMockUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONSerializable;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.User;
@@ -30,7 +31,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.JavaConstants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.lang.reflect.Constructor;

@@ -17,10 +17,10 @@ package com.liferay.captcha.util;
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.Captcha;
 import com.liferay.portal.kernel.captcha.CaptchaException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 

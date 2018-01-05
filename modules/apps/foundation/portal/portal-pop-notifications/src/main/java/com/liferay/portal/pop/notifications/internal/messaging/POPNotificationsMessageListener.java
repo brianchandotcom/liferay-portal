@@ -16,6 +16,7 @@ package com.liferay.portal.pop.notifications.internal.messaging;
 
 import com.liferay.mail.kernel.model.Account;
 import com.liferay.petra.mail.MailEngine;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.pop.notifications.internal.MessageListenerWrapper;
 import com.liferay.portal.util.PropsValues;

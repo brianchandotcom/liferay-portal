@@ -16,7 +16,7 @@ package com.liferay.configuration.admin.web.internal.test;
 
 import com.liferay.arquillian.deploymentscenario.annotations.BndFile;
 import com.liferay.configuration.admin.web.internal.exporter.ConfigurationExporter;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.io.File;
 import java.io.FileInputStream;

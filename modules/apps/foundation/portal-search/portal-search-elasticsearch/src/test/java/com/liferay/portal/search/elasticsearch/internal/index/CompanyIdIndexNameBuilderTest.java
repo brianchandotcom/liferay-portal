@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch.internal.index;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.internal.connection.ElasticsearchFixture;
 

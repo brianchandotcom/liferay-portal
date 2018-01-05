@@ -21,8 +21,8 @@ import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHan
 import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
 import com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;

@@ -15,7 +15,7 @@
 package com.liferay.portal.security.ldap.internal;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Edward Han

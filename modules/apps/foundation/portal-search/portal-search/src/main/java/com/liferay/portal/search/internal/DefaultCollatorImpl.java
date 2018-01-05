@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.suggest.Collator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;

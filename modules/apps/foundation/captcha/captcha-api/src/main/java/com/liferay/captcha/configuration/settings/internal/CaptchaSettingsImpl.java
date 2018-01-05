@@ -15,9 +15,9 @@
 package com.liferay.captcha.configuration.settings.internal;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.captcha.CaptchaSettings;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

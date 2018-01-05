@@ -16,10 +16,10 @@ package com.liferay.captcha.internal.upgrade.v1_0_0;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.captcha.constants.LegacyCaptchaPropsKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Dictionary;

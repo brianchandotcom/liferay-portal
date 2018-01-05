@@ -20,10 +20,10 @@ import aQute.lib.converter.Converter;
 
 import com.liferay.frontend.js.loader.modules.extender.internal.npm.NPMRegistryImpl;
 import com.liferay.frontend.js.loader.modules.extender.npm.NPMRegistry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.PortalImpl;
 
 import java.net.URL;

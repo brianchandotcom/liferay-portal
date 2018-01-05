@@ -14,8 +14,8 @@
 
 package com.liferay.portal.security.ldap.internal.authenticator;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.naming.ldap.Control;
 

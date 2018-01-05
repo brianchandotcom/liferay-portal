@@ -14,10 +14,10 @@
 
 package com.liferay.portal.template.soy.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.soy.utils.SoyTemplateUtil;
 
 import java.util.Collection;

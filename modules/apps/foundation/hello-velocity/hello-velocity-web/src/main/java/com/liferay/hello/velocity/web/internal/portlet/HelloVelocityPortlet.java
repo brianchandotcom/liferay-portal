@@ -16,13 +16,13 @@ package com.liferay.hello.velocity.web.internal.portlet;
 
 import com.liferay.hello.velocity.web.internal.constants.HelloVelocityPortletKeys;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.template.StringTemplateResource;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.VelocityPortlet;
 
 import javax.portlet.Portlet;

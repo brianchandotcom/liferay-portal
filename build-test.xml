@@ -9996,6 +9996,32 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			</then>
 		</if>
 
+		<get-testcase-property property.name="socks.proxy.enabled" />
+
+		<if>
+			<equals arg1="${socks.proxy.enabled}" arg2="true" />
+			<then>
+				<echo file="tools/sdk/build.${user.name}.properties">auto.deploy.dir=${liferay.home}/deploy</echo>
+
+				<gradle-execute dir="${project.dir}/modules/test/simple-socks-proxy" task="deploy">
+					<arg value="clean" />
+				</gradle-execute>
+
+				<echo file="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg">allowedHostnames=${env.HOSTNAME}</echo>
+
+				<get-testcase-property property.name="socks.proxy.hosts" />
+
+				<if>
+					<isset property="socks.proxy.hosts" />
+					<then>
+						<echo append="true" file="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg">,${socks.proxy.hosts}</echo>
+					</then>
+				</if>
+
+				<print-file file.name="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg" />
+			</then>
+		</if>
+
 		<get-testcase-property property.name="solr.enabled" />
 
 		<if>
@@ -10033,6 +10059,17 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 				<request-cmis-repository-vm
 					cmis.repository.type="${cmis.repository.type}"
 				/>
+
+				<get-testcase-property property.name="socks.proxy.enabled" />
+
+				<if>
+					<equals arg1="${socks.proxy.enabled}" arg2="true" />
+					<then>
+						<echo append="true" file="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg">,${cmis.repository.vm.host.name}</echo>
+
+						<print-file file.name="${liferay.home}/osgi/modules/com.liferay.simple.socks.proxy.SocksProxyConfiguration.cfg" />
+					</then>
+				</if>
 			</then>
 		</if>
 

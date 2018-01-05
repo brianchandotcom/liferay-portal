@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Workflow Kaleo Forms Web
 Bundle-SymbolicName: com.liferay.portal.workflow.kaleo.forms.web
-Bundle-Version: 1.0.25
+Bundle-Version: 1.0.26
 Export-Package: com.liferay.portal.workflow.kaleo.forms.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Kaleo Forms

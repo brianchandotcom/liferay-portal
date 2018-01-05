@@ -14,20 +14,14 @@
 
 package com.liferay.upload;
 
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 
 /**
  * @author Alejandro Tardín
  * @author Jürgen Kappler
  */
-public interface AttachmentElementHandler {
+public interface AttachmentElementReplacer {
 
-	public String replaceAttachmentElements(
-			String content,
-			UnsafeFunction<FileEntry, FileEntry, PortalException>
-				saveTempFileUnsafeFunction)
-		throws PortalException;
+	public String replace(String originalElement, FileEntry fileEntry);
 
 }

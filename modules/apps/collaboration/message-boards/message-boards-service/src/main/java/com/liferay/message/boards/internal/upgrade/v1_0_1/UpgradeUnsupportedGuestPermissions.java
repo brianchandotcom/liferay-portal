@@ -16,7 +16,6 @@ package com.liferay.message.boards.internal.upgrade.v1_0_1;
 
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.portal.kernel.dao.db.DBProcessContext;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
@@ -60,14 +59,11 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 
 		_removeResourceActions(
 			MBMessage.class.getName(), ActionKeys.PERMISSIONS);
-		_removeResourceActions(MBMessage.class.getName(), ActionKeys.DELETE);
 
 		_removeResourceActions(
 			MBPermission.RESOURCE_NAME, ActionKeys.LOCK_THREAD);
 		_removeResourceActions(
 			MBPermission.RESOURCE_NAME, ActionKeys.MOVE_THREAD);
-
-		_removeResourceActions(MBThread.class.getName(), ActionKeys.DELETE);
 	}
 
 	private void _removeResourceAction(

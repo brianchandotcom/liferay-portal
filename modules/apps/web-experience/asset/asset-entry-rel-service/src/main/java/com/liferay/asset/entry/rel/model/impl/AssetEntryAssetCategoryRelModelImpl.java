@@ -61,18 +61,18 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	public static final String TABLE_NAME = "AssetEntryAssetCategoryRel";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "assetEntryAssetCategoryRelId", Types.BIGINT },
-			{ "entryId", Types.BIGINT },
-			{ "categoryId", Types.BIGINT }
+			{ "assetEntryId", Types.BIGINT },
+			{ "assetCategoryId", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
 		TABLE_COLUMNS_MAP.put("assetEntryAssetCategoryRelId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("entryId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("categoryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("assetEntryId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("assetCategoryId", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table AssetEntryAssetCategoryRel (assetEntryAssetCategoryRelId LONG not null primary key,entryId LONG,categoryId LONG)";
+	public static final String TABLE_SQL_CREATE = "create table AssetEntryAssetCategoryRel (assetEntryAssetCategoryRelId LONG not null primary key,assetEntryId LONG,assetCategoryId LONG)";
 	public static final String TABLE_SQL_DROP = "drop table AssetEntryAssetCategoryRel";
 	public static final String ORDER_BY_JPQL = " ORDER BY assetEntryAssetCategoryRel.assetEntryAssetCategoryRelId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY AssetEntryAssetCategoryRel.assetEntryAssetCategoryRelId ASC";
@@ -88,8 +88,8 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.asset.entry.rel.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel"),
 			true);
-	public static final long CATEGORYID_COLUMN_BITMASK = 1L;
-	public static final long ENTRYID_COLUMN_BITMASK = 2L;
+	public static final long ASSETCATEGORYID_COLUMN_BITMASK = 1L;
+	public static final long ASSETENTRYID_COLUMN_BITMASK = 2L;
 	public static final long ASSETENTRYASSETCATEGORYRELID_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.asset.entry.rel.service.util.ServiceProps.get(
 				"lock.expiration.time.com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel"));
@@ -133,8 +133,8 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 		attributes.put("assetEntryAssetCategoryRelId",
 			getAssetEntryAssetCategoryRelId());
-		attributes.put("entryId", getEntryId());
-		attributes.put("categoryId", getCategoryId());
+		attributes.put("assetEntryId", getAssetEntryId());
+		attributes.put("assetCategoryId", getAssetCategoryId());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -151,16 +151,16 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 			setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
 		}
 
-		Long entryId = (Long)attributes.get("entryId");
+		Long assetEntryId = (Long)attributes.get("assetEntryId");
 
-		if (entryId != null) {
-			setEntryId(entryId);
+		if (assetEntryId != null) {
+			setAssetEntryId(assetEntryId);
 		}
 
-		Long categoryId = (Long)attributes.get("categoryId");
+		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
 
-		if (categoryId != null) {
-			setCategoryId(categoryId);
+		if (assetCategoryId != null) {
+			setAssetCategoryId(assetCategoryId);
 		}
 	}
 
@@ -176,47 +176,47 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	}
 
 	@Override
-	public long getEntryId() {
-		return _entryId;
+	public long getAssetEntryId() {
+		return _assetEntryId;
 	}
 
 	@Override
-	public void setEntryId(long entryId) {
-		_columnBitmask |= ENTRYID_COLUMN_BITMASK;
+	public void setAssetEntryId(long assetEntryId) {
+		_columnBitmask |= ASSETENTRYID_COLUMN_BITMASK;
 
-		if (!_setOriginalEntryId) {
-			_setOriginalEntryId = true;
+		if (!_setOriginalAssetEntryId) {
+			_setOriginalAssetEntryId = true;
 
-			_originalEntryId = _entryId;
+			_originalAssetEntryId = _assetEntryId;
 		}
 
-		_entryId = entryId;
+		_assetEntryId = assetEntryId;
 	}
 
-	public long getOriginalEntryId() {
-		return _originalEntryId;
-	}
-
-	@Override
-	public long getCategoryId() {
-		return _categoryId;
+	public long getOriginalAssetEntryId() {
+		return _originalAssetEntryId;
 	}
 
 	@Override
-	public void setCategoryId(long categoryId) {
-		_columnBitmask |= CATEGORYID_COLUMN_BITMASK;
+	public long getAssetCategoryId() {
+		return _assetCategoryId;
+	}
 
-		if (!_setOriginalCategoryId) {
-			_setOriginalCategoryId = true;
+	@Override
+	public void setAssetCategoryId(long assetCategoryId) {
+		_columnBitmask |= ASSETCATEGORYID_COLUMN_BITMASK;
 
-			_originalCategoryId = _categoryId;
+		if (!_setOriginalAssetCategoryId) {
+			_setOriginalAssetCategoryId = true;
+
+			_originalAssetCategoryId = _assetCategoryId;
 		}
 
-		_categoryId = categoryId;
+		_assetCategoryId = assetCategoryId;
 	}
 
-	public long getOriginalCategoryId() {
-		return _originalCategoryId;
+	public long getOriginalAssetCategoryId() {
+		return _originalAssetCategoryId;
 	}
 
 	public long getColumnBitmask() {
@@ -251,8 +251,8 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl = new AssetEntryAssetCategoryRelImpl();
 
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(getAssetEntryAssetCategoryRelId());
-		assetEntryAssetCategoryRelImpl.setEntryId(getEntryId());
-		assetEntryAssetCategoryRelImpl.setCategoryId(getCategoryId());
+		assetEntryAssetCategoryRelImpl.setAssetEntryId(getAssetEntryId());
+		assetEntryAssetCategoryRelImpl.setAssetCategoryId(getAssetCategoryId());
 
 		assetEntryAssetCategoryRelImpl.resetOriginalValues();
 
@@ -315,13 +315,13 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 	public void resetOriginalValues() {
 		AssetEntryAssetCategoryRelModelImpl assetEntryAssetCategoryRelModelImpl = this;
 
-		assetEntryAssetCategoryRelModelImpl._originalEntryId = assetEntryAssetCategoryRelModelImpl._entryId;
+		assetEntryAssetCategoryRelModelImpl._originalAssetEntryId = assetEntryAssetCategoryRelModelImpl._assetEntryId;
 
-		assetEntryAssetCategoryRelModelImpl._setOriginalEntryId = false;
+		assetEntryAssetCategoryRelModelImpl._setOriginalAssetEntryId = false;
 
-		assetEntryAssetCategoryRelModelImpl._originalCategoryId = assetEntryAssetCategoryRelModelImpl._categoryId;
+		assetEntryAssetCategoryRelModelImpl._originalAssetCategoryId = assetEntryAssetCategoryRelModelImpl._assetCategoryId;
 
-		assetEntryAssetCategoryRelModelImpl._setOriginalCategoryId = false;
+		assetEntryAssetCategoryRelModelImpl._setOriginalAssetCategoryId = false;
 
 		assetEntryAssetCategoryRelModelImpl._columnBitmask = 0;
 	}
@@ -333,9 +333,9 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 		assetEntryAssetCategoryRelCacheModel.assetEntryAssetCategoryRelId = getAssetEntryAssetCategoryRelId();
 
-		assetEntryAssetCategoryRelCacheModel.entryId = getEntryId();
+		assetEntryAssetCategoryRelCacheModel.assetEntryId = getAssetEntryId();
 
-		assetEntryAssetCategoryRelCacheModel.categoryId = getCategoryId();
+		assetEntryAssetCategoryRelCacheModel.assetCategoryId = getAssetCategoryId();
 
 		return assetEntryAssetCategoryRelCacheModel;
 	}
@@ -346,10 +346,10 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 
 		sb.append("{assetEntryAssetCategoryRelId=");
 		sb.append(getAssetEntryAssetCategoryRelId());
-		sb.append(", entryId=");
-		sb.append(getEntryId());
-		sb.append(", categoryId=");
-		sb.append(getCategoryId());
+		sb.append(", assetEntryId=");
+		sb.append(getAssetEntryId());
+		sb.append(", assetCategoryId=");
+		sb.append(getAssetCategoryId());
 		sb.append("}");
 
 		return sb.toString();
@@ -369,12 +369,12 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 		sb.append(getAssetEntryAssetCategoryRelId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>entryId</column-name><column-value><![CDATA[");
-		sb.append(getEntryId());
+			"<column><column-name>assetEntryId</column-name><column-value><![CDATA[");
+		sb.append(getAssetEntryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>categoryId</column-name><column-value><![CDATA[");
-		sb.append(getCategoryId());
+			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
+		sb.append(getAssetCategoryId());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -387,12 +387,12 @@ public class AssetEntryAssetCategoryRelModelImpl extends BaseModelImpl<AssetEntr
 			AssetEntryAssetCategoryRel.class
 		};
 	private long _assetEntryAssetCategoryRelId;
-	private long _entryId;
-	private long _originalEntryId;
-	private boolean _setOriginalEntryId;
-	private long _categoryId;
-	private long _originalCategoryId;
-	private boolean _setOriginalCategoryId;
+	private long _assetEntryId;
+	private long _originalAssetEntryId;
+	private boolean _setOriginalAssetEntryId;
+	private long _assetCategoryId;
+	private long _originalAssetCategoryId;
+	private boolean _setOriginalAssetCategoryId;
 	private long _columnBitmask;
 	private AssetEntryAssetCategoryRel _escapedModel;
 }

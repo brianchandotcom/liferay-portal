@@ -61,8 +61,8 @@ public class AssetEntryAssetCategoryRelWrapper
 
 		attributes.put("assetEntryAssetCategoryRelId",
 			getAssetEntryAssetCategoryRelId());
-		attributes.put("entryId", getEntryId());
-		attributes.put("categoryId", getCategoryId());
+		attributes.put("assetEntryId", getAssetEntryId());
+		attributes.put("assetCategoryId", getAssetCategoryId());
 
 		return attributes;
 	}
@@ -76,16 +76,16 @@ public class AssetEntryAssetCategoryRelWrapper
 			setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
 		}
 
-		Long entryId = (Long)attributes.get("entryId");
+		Long assetEntryId = (Long)attributes.get("assetEntryId");
 
-		if (entryId != null) {
-			setEntryId(entryId);
+		if (assetEntryId != null) {
+			setAssetEntryId(assetEntryId);
 		}
 
-		Long categoryId = (Long)attributes.get("categoryId");
+		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
 
-		if (categoryId != null) {
-			setCategoryId(categoryId);
+		if (assetCategoryId != null) {
+			setAssetCategoryId(assetCategoryId);
 		}
 	}
 
@@ -100,6 +100,16 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 	/**
+	* Returns the asset category ID of this asset entry asset category rel.
+	*
+	* @return the asset category ID of this asset entry asset category rel
+	*/
+	@Override
+	public long getAssetCategoryId() {
+		return _assetEntryAssetCategoryRel.getAssetCategoryId();
+	}
+
+	/**
 	* Returns the asset entry asset category rel ID of this asset entry asset category rel.
 	*
 	* @return the asset entry asset category rel ID of this asset entry asset category rel
@@ -110,23 +120,13 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 	/**
-	* Returns the category ID of this asset entry asset category rel.
+	* Returns the asset entry ID of this asset entry asset category rel.
 	*
-	* @return the category ID of this asset entry asset category rel
+	* @return the asset entry ID of this asset entry asset category rel
 	*/
 	@Override
-	public long getCategoryId() {
-		return _assetEntryAssetCategoryRel.getCategoryId();
-	}
-
-	/**
-	* Returns the entry ID of this asset entry asset category rel.
-	*
-	* @return the entry ID of this asset entry asset category rel
-	*/
-	@Override
-	public long getEntryId() {
-		return _assetEntryAssetCategoryRel.getEntryId();
+	public long getAssetEntryId() {
+		return _assetEntryAssetCategoryRel.getAssetEntryId();
 	}
 
 	@Override
@@ -175,6 +175,16 @@ public class AssetEntryAssetCategoryRelWrapper
 	}
 
 	/**
+	* Sets the asset category ID of this asset entry asset category rel.
+	*
+	* @param assetCategoryId the asset category ID of this asset entry asset category rel
+	*/
+	@Override
+	public void setAssetCategoryId(long assetCategoryId) {
+		_assetEntryAssetCategoryRel.setAssetCategoryId(assetCategoryId);
+	}
+
+	/**
 	* Sets the asset entry asset category rel ID of this asset entry asset category rel.
 	*
 	* @param assetEntryAssetCategoryRelId the asset entry asset category rel ID of this asset entry asset category rel
@@ -185,29 +195,19 @@ public class AssetEntryAssetCategoryRelWrapper
 		_assetEntryAssetCategoryRel.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
 	}
 
+	/**
+	* Sets the asset entry ID of this asset entry asset category rel.
+	*
+	* @param assetEntryId the asset entry ID of this asset entry asset category rel
+	*/
+	@Override
+	public void setAssetEntryId(long assetEntryId) {
+		_assetEntryAssetCategoryRel.setAssetEntryId(assetEntryId);
+	}
+
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_assetEntryAssetCategoryRel.setCachedModel(cachedModel);
-	}
-
-	/**
-	* Sets the category ID of this asset entry asset category rel.
-	*
-	* @param categoryId the category ID of this asset entry asset category rel
-	*/
-	@Override
-	public void setCategoryId(long categoryId) {
-		_assetEntryAssetCategoryRel.setCategoryId(categoryId);
-	}
-
-	/**
-	* Sets the entry ID of this asset entry asset category rel.
-	*
-	* @param entryId the entry ID of this asset entry asset category rel
-	*/
-	@Override
-	public void setEntryId(long entryId) {
-		_assetEntryAssetCategoryRel.setEntryId(entryId);
 	}
 
 	@Override

@@ -51,7 +51,8 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 	public void upgrade(DBProcessContext dbProcessContext)
 		throws UpgradeException {
 
-		_removeResourceActions(MBCategory.class.getName(), ActionKeys.DELETE);
+		_removeResourceActions(
+			MBCategory.class.getName(), ActionKeys.DELETE);
 		_removeResourceActions(
 			MBCategory.class.getName(), ActionKeys.MOVE_THREAD);
 		_removeResourceActions(
@@ -89,7 +90,8 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 		}
 	}
 
-	private void _removeResourceActions(String resourceName, String actionId)
+	private void _removeResourceActions(
+			String resourceName, String actionId)
 		throws UpgradeException {
 
 		try {

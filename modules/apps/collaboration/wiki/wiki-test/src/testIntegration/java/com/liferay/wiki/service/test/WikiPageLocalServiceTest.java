@@ -625,10 +625,7 @@ public class WikiPageLocalServiceTest {
 			AssetCategoryLocalServiceUtil.getCategoryIds(
 				WikiPage.class.getName(), renamedPage.getResourcePrimKey());
 
-		Arrays.sort(assetCategoryIds);
-		Arrays.sort(finalAssetCategoryIds);
-
-		Assert.assertArrayEquals(assetCategoryIds, finalAssetCategoryIds);
+		_assertArrayEquals(assetCategoryIds, finalAssetCategoryIds);
 	}
 
 	@Test
@@ -666,7 +663,7 @@ public class WikiPageLocalServiceTest {
 		String[] finalAssetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			WikiPage.class.getName(), renamedPage.getResourcePrimKey());
 
-		Assert.assertArrayEquals(finalAssetTagNames, assetTagNames);
+		_assertArrayEquals(finalAssetTagNames, assetTagNames);
 	}
 
 	@Test
@@ -712,7 +709,7 @@ public class WikiPageLocalServiceTest {
 			AssetCategoryLocalServiceUtil.getCategoryIds(
 				WikiPage.class.getName(), renamedPage.getResourcePrimKey());
 
-		Assert.assertArrayEquals(assetCategoryIds, finalAssetCategoryIds);
+		_assertArrayEquals(assetCategoryIds, finalAssetCategoryIds);
 	}
 
 	@Test
@@ -752,7 +749,7 @@ public class WikiPageLocalServiceTest {
 		String[] finalAssetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			WikiPage.class.getName(), renamedPage.getResourcePrimKey());
 
-		Assert.assertArrayEquals(finalAssetTagNames, assetTagNames);
+		_assertArrayEquals(finalAssetTagNames, assetTagNames);
 	}
 
 	@Test
@@ -900,8 +897,7 @@ public class WikiPageLocalServiceTest {
 		long[] assetCategoryIds = AssetCategoryLocalServiceUtil.getCategoryIds(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
-		Assert.assertArrayEquals(
-			serviceContext.getAssetCategoryIds(), assetCategoryIds);
+		_assertArrayEquals(serviceContext.getAssetCategoryIds(), assetCategoryIds);
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
 			WikiPage.class.getName(), page.getResourcePrimKey());
@@ -912,14 +908,12 @@ public class WikiPageLocalServiceTest {
 		long[] assetLinkEntryIds = ListUtil.toLongArray(
 			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
 
-		Assert.assertArrayEquals(
-			serviceContext.getAssetLinkEntryIds(), assetLinkEntryIds);
+		_assertArrayEquals(serviceContext.getAssetLinkEntryIds(), assetLinkEntryIds);
 
 		String[] assetTagNames = AssetTagLocalServiceUtil.getTagNames(
 			WikiPage.class.getName(), page.getResourcePrimKey());
 
-		Assert.assertArrayEquals(
-			serviceContext.getAssetTagNames(), assetTagNames);
+		_assertArrayEquals(serviceContext.getAssetTagNames(), assetTagNames);
 
 		if (hasExpandoValues) {
 			ExpandoBridge expandoBridge = page.getExpandoBridge();
@@ -1047,6 +1041,20 @@ public class WikiPageLocalServiceTest {
 
 		checkPopulatedServiceContext(
 			serviceContext, revertedPage, hasExpandoValues);
+	}
+
+	private void _assertArrayEquals(long[] expecteds, long[] actuals) {
+		Arrays.sort(expecteds);
+		Arrays.sort(actuals);
+
+		Assert.assertArrayEquals(expecteds, actuals);
+	}
+
+	private void _assertArrayEquals(String[] expecteds, String[] actuals) {
+		Arrays.sort(expecteds);
+		Arrays.sort(actuals);
+
+		Assert.assertArrayEquals(expecteds, actuals);
 	}
 
 	@DeleteAfterTestRun

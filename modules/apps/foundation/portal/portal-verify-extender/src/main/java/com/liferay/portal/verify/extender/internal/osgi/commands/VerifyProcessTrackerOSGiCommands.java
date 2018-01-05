@@ -37,7 +37,6 @@ import com.liferay.portal.search.index.IndexStatusManager;
 import com.liferay.portal.verify.VerifyException;
 import com.liferay.portal.verify.VerifyProcess;
 import com.liferay.portal.verify.extender.internal.configuration.VerifyProcessTrackerConfiguration;
-import com.liferay.portal.verify.extender.marker.VerifyProcessCompletionMarker;
 import com.liferay.portlet.exportimport.staging.StagingAdvicesThreadLocal;
 
 import java.io.IOException;
@@ -230,12 +229,12 @@ public class VerifyProcessTrackerOSGiCommands {
 		_verifyProcesses.close();
 
 		for (Map.Entry
-				<String, ServiceRegistration<VerifyProcessCompletionMarker>>
+				<String, ServiceRegistration<Object>>
 					serviceRegistrationEntry :
 						_serviceRegistrations.entrySet()) {
 
-			ServiceRegistration<VerifyProcessCompletionMarker>
-				serviceRegistration = serviceRegistrationEntry.getValue();
+			ServiceRegistration<Object> serviceRegistration =
+				serviceRegistrationEntry.getValue();
 
 			serviceRegistration.unregister();
 		}
@@ -266,7 +265,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 			if ((release != null) && !force && release.isVerified()) {
 				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
-					_registerVerifyProcessCompletionMarker(verifyProcessName);
+					_registerMarkerObject(verifyProcessName);
 				}
 
 				return;
@@ -306,7 +305,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 				releaseLocalService.updateRelease(release);
 
-				_registerVerifyProcessCompletionMarker(verifyProcessName);
+				_registerMarkerObject(verifyProcessName);
 			}
 			else {
 				release.setState(ReleaseConstants.STATE_VERIFY_FAILURE);
@@ -401,17 +400,14 @@ public class VerifyProcessTrackerOSGiCommands {
 			"verify-" + verifyProcessName, force);
 	}
 
-	private void _registerVerifyProcessCompletionMarker(
-		String verifyProcessName) {
-
+	private void _registerMarkerObject(String verifyProcessName) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
 		dictionary.put("verify.process.name", verifyProcessName);
 
-		ServiceRegistration<VerifyProcessCompletionMarker> serviceRegistration =
+		ServiceRegistration<Object> serviceRegistration =
 			_bundleContext.registerService(
-				VerifyProcessCompletionMarker.class,
-				new VerifyProcessCompletionMarker() {}, dictionary);
+				Object.class, new Object(), dictionary);
 
 		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
 	}
@@ -435,8 +431,7 @@ public class VerifyProcessTrackerOSGiCommands {
 		VerifyProcessTrackerOSGiCommands.class);
 
 	private BundleContext _bundleContext;
-	private Map<String, ServiceRegistration<VerifyProcessCompletionMarker>>
-		_serviceRegistrations;
+	private Map<String, ServiceRegistration<Object>> _serviceRegistrations;
 	private ServiceTrackerMap<String, List<VerifyProcess>> _verifyProcesses;
 	private VerifyProcessTrackerConfiguration
 		_verifyProcessTrackerConfiguration;

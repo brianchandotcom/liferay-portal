@@ -191,6 +191,23 @@ public class SiteNavigationMenuServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap updateSiteNavigationMenu(
+		long siteNavigationMenuId, boolean primary,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.site.navigation.model.SiteNavigationMenu returnValue = SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(siteNavigationMenuId,
+					primary, serviceContext);
+
+			return com.liferay.site.navigation.model.SiteNavigationMenuSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap updateSiteNavigationMenu(
 		long siteNavigationMenuId, java.lang.String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {

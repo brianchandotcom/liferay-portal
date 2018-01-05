@@ -15,6 +15,7 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="primary_" name="primary" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.site.navigation.model.impl.SiteNavigationMenuItemImpl" table="SiteNavigationMenuItem">
 		<id name="siteNavigationMenuItemId" type="long">

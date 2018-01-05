@@ -51,23 +51,23 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 	public void upgrade(DBProcessContext dbProcessContext)
 		throws UpgradeException {
 
-		_removeResourceActions(
+		_removePermissionsForGuest(
 			MBCategory.class.getName(), ActionKeys.DELETE);
-		_removeResourceActions(
+		_removePermissionsForGuest(
 			MBCategory.class.getName(), ActionKeys.MOVE_THREAD);
-		_removeResourceActions(
+		_removePermissionsForGuest(
 			MBCategory.class.getName(), ActionKeys.PERMISSIONS);
 
-		_removeResourceActions(
+		_removePermissionsForGuest(
 			MBMessage.class.getName(), ActionKeys.PERMISSIONS);
 
-		_removeResourceActions(
+		_removePermissionsForGuest(
 			MBPermission.RESOURCE_NAME, ActionKeys.LOCK_THREAD);
-		_removeResourceActions(
+		_removePermissionsForGuest(
 			MBPermission.RESOURCE_NAME, ActionKeys.MOVE_THREAD);
 	}
 
-	private void _removeResourceAction(
+	private void _removeActionIfGuest(
 			ResourcePermission resourcePermission,
 			ResourceAction resourceAction)
 		throws PortalException {
@@ -90,7 +90,7 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 		}
 	}
 
-	private void _removeResourceActions(
+	private void _removePermissionsForGuest(
 			String resourceName, String actionId)
 		throws UpgradeException {
 
@@ -108,7 +108,7 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 
 			actionableDynamicQuery.setPerformActionMethod(
 				(ResourcePermission resourcePermission) -> {
-					_removeResourceAction(resourcePermission, resourceAction);
+					_removeActionIfGuest(resourcePermission, resourceAction);
 				});
 
 			actionableDynamicQuery.performActions();

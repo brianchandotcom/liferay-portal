@@ -174,6 +174,12 @@ public class SiteNavigationMenuLocalServiceImpl
 			throw new PrimarySiteNavigationMenuException();
 		}
 
+		User user = userLocalService.getUser(userId);
+
+		siteNavigationMenu.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		siteNavigationMenu.setUserId(userId);
+		siteNavigationMenu.setUserName(user.getFullName());
 		siteNavigationMenu.setPrimary(primary);
 
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);

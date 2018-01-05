@@ -273,7 +273,7 @@ public class IMAPMailbox extends BaseMailbox {
 
 		Account account = AccountLocalServiceUtil.getAccount(accountId);
 
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(4);
 
 		sb.append(user.getFullName());
 		sb.append(" <");

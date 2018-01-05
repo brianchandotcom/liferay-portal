@@ -84,7 +84,7 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 	}
 
 	public void populateCompanyIds() throws Exception {
-		StringBundler sb = new StringBundler();
+		StringBundler sb = new StringBundler(6);
 
 		sb.append("select MDRRuleGroup.companyId, ");
 		sb.append("MDRRuleGroupInstance.ruleGroupInstanceId from ");
@@ -116,7 +116,7 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 	}
 
 	public void populateResourcePermissions() throws Exception {
-		StringBundler sb1 = new StringBundler();
+		StringBundler sb1 = new StringBundler(11);
 
 		sb1.append("select MDRRuleGroupInstance.companyId, ");
 		sb1.append("MDRRuleGroupInstance.ruleGroupInstanceId, ");
@@ -131,7 +131,7 @@ public class UpgradeMobileDeviceRules extends UpgradeProcess {
 		sb1.append(_CLASS_NAME);
 		sb1.append("'))");
 
-		StringBundler sb2 = new StringBundler();
+		StringBundler sb2 = new StringBundler(4);
 
 		sb2.append("insert into ResourcePermission (resourcePermissionId, ");
 		sb2.append("companyId, name, scope, primKey, primKeyId, roleId, ");

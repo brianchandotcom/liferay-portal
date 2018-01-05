@@ -148,7 +148,8 @@ public class Archetyper {
 
 		if (projectTemplateCustomizer != null) {
 			projectTemplateCustomizer.onAfterGenerateProject(
-				destinationDir, archetypeGenerationResult);
+				projectTemplatesArgs, destinationDir,
+				archetypeGenerationResult);
 		}
 
 		return archetypeGenerationResult;

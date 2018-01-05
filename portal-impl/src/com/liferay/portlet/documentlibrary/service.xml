@@ -602,6 +602,7 @@
 		<exception>NoSuchFile</exception>
 		<exception>NoSuchMetadataSet</exception>
 		<exception>RepositoryName</exception>
+		<exception>RequiredFile</exception>
 		<exception>RequiredFileEntryType</exception>
 		<exception>SourceFileName</exception>
 	</exceptions>

@@ -66,6 +66,7 @@ page import="com.liferay.document.library.kernel.exception.NoSuchFolderException
 page import="com.liferay.document.library.kernel.exception.NoSuchMetadataSetException" %><%@
 page import="com.liferay.document.library.kernel.exception.RepositoryNameException" %><%@
 page import="com.liferay.document.library.kernel.exception.RequiredFileEntryTypeException" %><%@
+page import="com.liferay.document.library.kernel.exception.RequiredFileException" %><%@
 page import="com.liferay.document.library.kernel.exception.SourceFileNameException" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntry" %><%@
 page import="com.liferay.document.library.kernel.model.DLFileEntryConstants" %><%@

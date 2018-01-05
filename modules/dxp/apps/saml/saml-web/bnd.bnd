@@ -1,6 +1,6 @@
 Bundle-Name: Liferay SAML Web
 Bundle-SymbolicName: com.liferay.saml.web
-Bundle-Version: 1.0.6
+Bundle-Version: 1.0.7
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Provide-Capability:\

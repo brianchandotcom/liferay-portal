@@ -57,17 +57,75 @@ public class LiferaySourceOrSink
 	extends TranslatableImpl
 	implements SourceOrSink, LiferaySourceOrSinkRuntime {
 
-	public RestClient getClient(RuntimeContainer container)
+	public LiferayConnectionProperties getConnectionProperties() {
+		LiferayConnectionProperties connectionProperties =
+			properties.getConnectionProperties();
+
+		if (connectionProperties.getReferencedComponentId() != null) {
+			connectionProperties =
+				connectionProperties.getReferencedConnectionProperties();
+		}
+
+		return connectionProperties;
+	}
+
+	/**
+	 * If referenceComponentId is not null, it should return the reference
+	 * connection properties
+	 */
+	public LiferayConnectionProperties getEffectiveConnection(
+		RuntimeContainer container) {
+
+		LiferayConnectionProperties connProps =
+			properties.getConnectionProperties();
+
+		String refComponentId = connProps.getReferencedComponentId();
+
+		// Using another component's connection
+
+		if (refComponentId != null) {
+
+			// In a runtime container
+
+			if (container != null) {
+				LiferayConnectionProperties shared =
+					(LiferayConnectionProperties)container.getComponentData(
+						refComponentId, KEY_CONNECTION_PROPERTIES);
+
+				if (shared != null) {
+					return shared;
+				}
+			}
+
+			// Design time
+
+			connProps = connProps.getReferencedConnectionProperties();
+		}
+
+		if (container != null) {
+			container.setComponentData(
+				container.getCurrentComponentId(), KEY_CONNECTION_PROPERTIES,
+				connProps);
+		}
+
+		return connProps;
+	}
+
+	@Override
+	public Schema getEndpointSchema(
+			RuntimeContainer container, String schemaName)
+		throws IOException {
+
+		return null;
+	}
+
+	public RestClient getRestClient(RuntimeContainer container)
 		throws ApioException {
 
 		LiferayConnectionProperties conn = getEffectiveConnection(container);
 
 		if (client == null) {
 			client = new RestClient(conn);
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Creating a new REST Client #1");
-			}
 		}
 		else {
 			if (!client.getEndpoint().equals(conn.endpoint.getValue())) {
@@ -86,37 +144,19 @@ public class LiferaySourceOrSink
 		return client;
 	}
 
-	public LiferayConnectionProperties getEffectiveConnection(
-		RuntimeContainer container) {
-
-		LiferayConnectionProperties connProps =
-			properties.getConnectionProperties();
-
-		return connProps;
-	}
-
-	@Override
-	public Schema getEndpointSchema(
-			RuntimeContainer container, String schemaName)
-		throws IOException {
-
-		return null;
-	}
-
-	public RestClient getNewRestClient(RuntimeContainer container)
+	public RestClient getRestClient(
+			RuntimeContainer container, String resourceURL)
 		throws ApioException {
 
 		LiferayConnectionProperties conn = getEffectiveConnection(container);
 
-		if (client == null) {
-			client = new RestClient(conn);
+		conn.endpoint.setValue(resourceURL);
 
-			if (_log.isDebugEnabled()) {
-				_log.debug("Creating a brand new REST Client #1");
-			}
+		if (_log.isDebugEnabled()) {
+			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
 		}
 
-		return client;
+		return new RestClient(conn);
 	}
 
 	@Override
@@ -125,7 +165,7 @@ public class LiferaySourceOrSink
 
 		List<NamedThing> returnList = new ArrayList<>();
 
-		Map<String, String> map = _getResourceCollections();
+		Map<String, String> map = _getResourceCollections(container);
 
 		for (Map.Entry<String, String> entry : map.entrySet()) {
 			if (_log.isDebugEnabled()) {
@@ -143,7 +183,9 @@ public class LiferaySourceOrSink
 
 	@Override
 	public Schema guessSchema(String resourceURL) throws IOException {
-		_getResourceCollection(resourceURL);
+		_getResourceCollectionSchema(resourceURL);
+
+		//FIXME
 
 		return null;
 	}
@@ -152,9 +194,19 @@ public class LiferaySourceOrSink
 	public ValidationResult initialize(
 		RuntimeContainer container, ComponentProperties properties) {
 
-		this.properties = (LiferayProvideConnectionProperties)properties;
+		ValidationResultMutable vr = new ValidationResultMutable();
 
-		return ValidationResult.OK;
+		this.properties = (LiferayProvideConnectionProperties)properties;
+		vr.setStatus(ValidationResult.Result.OK);
+
+		try {
+			getRestClient(container);
+		}
+		catch (ApioException ae) {
+			vr.setStatus(ValidationResult.Result.ERROR);
+		}
+
+		return vr;
 	}
 
 	@Override
@@ -213,7 +265,7 @@ public class LiferaySourceOrSink
 			LiferaySourceOrSink sos = new LiferaySourceOrSink();
 
 			sos.initialize(null, (LiferayConnectionProperties)properties);
-			RestClient restClient = sos.getClient(null);
+			RestClient restClient = sos.getRestClient(null);
 
 			restClient.executeGetRequest();
 
@@ -255,7 +307,7 @@ public class LiferaySourceOrSink
 		return resourcesMap;
 	}
 
-	protected static final String KEY_CONNECTION = "Connection";
+	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
 
 	protected static final I18nMessages translations =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
@@ -264,51 +316,16 @@ public class LiferaySourceOrSink
 	protected RestClient client;
 	protected volatile LiferayProvideConnectionProperties properties;
 
-	private Map<String, String> _getResourceCollection(String resourceURL) {
+	private Map<String, String> _getResourceCollections(
+		RuntimeContainer container) {
+
 		final ObjectMapper mapper = new ObjectMapper();
 
 		RestClient restClient = null;
 		ApioResult apioResult = null;
 
 		try {
-			restClient = getNewRestClient(null);
-
-			apioResult = restClient.executeGetRequest();
-		}
-		catch (ApioException ae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ae.toString());
-			}
-
-			return Collections.emptyMap();
-		}
-
-		JsonNode jsonNode = null;
-
-		try {
-			jsonNode = mapper.readTree(apioResult.getBody());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Cannot read JSON object", ioe);
-			}
-
-			return Collections.emptyMap();
-		}
-
-		_log.debug("Returning null");
-
-		return null;
-	}
-
-	private Map<String, String> _getResourceCollections() {
-		final ObjectMapper mapper = new ObjectMapper();
-
-		RestClient restClient = null;
-		ApioResult apioResult = null;
-
-		try {
-			restClient = getClient(null);
+			restClient = getRestClient(container);
 
 			apioResult = restClient.executeGetRequest();
 		}
@@ -334,6 +351,49 @@ public class LiferaySourceOrSink
 		}
 
 		return getApioLdJsonResourceCollections(jsonNode);
+	}
+
+	private Map<String, String> _getResourceCollectionSchema(
+		String resourceURL) {
+
+		final ObjectMapper mapper = new ObjectMapper();
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getRestClient(null, resourceURL);
+
+			apioResult = restClient.executeGetRequest();
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			return Collections.emptyMap();
+		}
+
+		JsonNode jsonNode = null;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(apioResult.getBody());
+		}
+
+		try {
+			jsonNode = mapper.readTree(apioResult.getBody());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot read JSON object", ioe);
+			}
+
+			return Collections.emptyMap();
+		}
+
+		_log.debug("Returning null");
+
+		return null;
 	}
 
 	private static final transient Schema _DEFAULT_GUESS_SCHEMA_TYPE =

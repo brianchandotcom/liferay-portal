@@ -1112,6 +1112,18 @@
 
 		<execute macro="CalendarEvent#selectEventIframe" />
 
+		<execute macro="Button#clickSaveAsDraft" />
+
+		<execute macro="Alert#waitForSuccessMessageHide" />
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Calendar Page" />
+		</execute>
+
+		<execute macro="CalendarNavigator#gotoEditEvent">
+			<var name="eventTitle" value="Calendar Event Title" />
+		</execute>
+
 		<execute macro="CalendarEvent#publish" />
 
 		<execute macro="Navigator#gotoPage">

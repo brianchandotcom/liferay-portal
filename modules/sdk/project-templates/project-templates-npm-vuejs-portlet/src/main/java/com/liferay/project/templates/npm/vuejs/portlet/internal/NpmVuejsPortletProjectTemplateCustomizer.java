@@ -35,18 +35,18 @@ public class NpmVuejsPortletProjectTemplateCustomizer
 
 	@Override
 	public void onAfterGenerateProject(
-		File destinationDir,
+		ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
 		ArchetypeGenerationResult archetypeGenerationResult) {
 
-		String liferayVersion = _projectTemplatesArgs.getLiferayVersion();
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 
 		if (!liferayVersion.equals("7.1")) {
-			String className = _projectTemplatesArgs.getClassName();
+			String className = projectTemplatesArgs.getClassName();
 
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectPath = destinationDirPath.resolve(
-				_projectTemplatesArgs.getName());
+				projectTemplatesArgs.getName());
 
 			ProjectTemplatesUtil.deleteFileInPath(
 				className + "WebKeys.java", projectPath);
@@ -58,13 +58,9 @@ public class NpmVuejsPortletProjectTemplateCustomizer
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
-		_projectTemplatesArgs = projectTemplatesArgs;
-
 		Properties properties = archetypeGenerationRequest.getProperties();
 
 		properties.put("packageJsonVersion", "1.0.0");
 	}
-
-	private ProjectTemplatesArgs _projectTemplatesArgs;
 
 }

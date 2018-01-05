@@ -25,7 +25,7 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
 public interface ProjectTemplateCustomizer {
 
 	public void onAfterGenerateProject(
-		File destinationDir,
+		ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
 		ArchetypeGenerationResult archetypeGenerationResult);
 
 	public void onBeforeGenerateProject(

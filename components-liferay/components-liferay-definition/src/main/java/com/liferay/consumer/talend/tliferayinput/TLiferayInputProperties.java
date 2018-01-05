@@ -26,7 +26,6 @@ import java.util.Collections;
 import java.util.Set;
 
 import org.apache.avro.Schema;
-import org.apache.avro.Schema.Field;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,25 +45,6 @@ import org.talend.daikon.sandbox.SandboxedInstance;
  */
 public class TLiferayInputProperties
 	extends LiferayConnectionResourceBaseProperties {
-
-	/**
-	 * Out of band (a.k.a flow variables) data schema It has one field: int
-	 * currentLine
-	 */
-	public static final Schema outOfBandSchema;
-
-	/**
-	 * Sets Out of band schema. This schema is not supposed to be changed by
-	 * user
-	 */
-	static {
-		Field currentLineField = new Field(
-			"CURRENT_LINE", Schema.create(Schema.Type.INT), null, (Object)null);
-
-		outOfBandSchema = Schema.createRecord("OutOfBand", null, null, false);
-
-		outOfBandSchema.setFields(Collections.singletonList(currentLineField));
-	}
 
 	public TLiferayInputProperties(String name) {
 		super(name);

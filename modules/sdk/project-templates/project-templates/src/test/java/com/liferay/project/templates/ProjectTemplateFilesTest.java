@@ -158,7 +158,8 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
-			Properties bndProperties, boolean requireAuthorProperty,
+			Path archetypeResourcesDirPath, Properties bndProperties,
+			boolean requireAuthorProperty,
 			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
 
@@ -189,9 +190,27 @@ public class ProjectTemplateFilesTest {
 				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
 					archetypeDescriptorName + "\">"));
 
+		Matcher matcher = _archetypeMetadataXmlIncludePattern.matcher(
+			archetypeMetadataXml);
+
+		while (matcher.find()) {
+			String fileName = matcher.group(1);
+
+			if (fileName.equals(".gitignore")) {
+				fileName = "gitignore";
+			}
+
+			Path path = archetypeResourcesDirPath.resolve(fileName);
+
+			Assert.assertTrue(
+				"Included file " + path + " in " + archetypeMetadataXmlPath +
+					" not found",
+				Files.isRegularFile(path));
+		}
+
 		List<String> requiredPropertyNames = new ArrayList<>();
 
-		Matcher matcher = _archetypeMetadataXmlRequiredPropertyPattern.matcher(
+		matcher = _archetypeMetadataXmlRequiredPropertyPattern.matcher(
 			archetypeMetadataXml);
 
 		while (matcher.find()) {
@@ -824,7 +843,8 @@ public class ProjectTemplateFilesTest {
 			});
 
 		_testArchetypeMetadataXml(
-			projectTemplateDirPath, projectTemplateDirName, bndProperties,
+			projectTemplateDirPath, projectTemplateDirName,
+			archetypeResourcesDirPath, bndProperties,
 			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 
@@ -908,6 +928,8 @@ public class ProjectTemplateFilesTest {
 	private static final List<String>
 		_archetypeMetadataXmlDefaultPropertyNames = Arrays.asList(
 			"artifactId", "groupId", "package", "version");
+	private static final Pattern _archetypeMetadataXmlIncludePattern =
+		Pattern.compile("<include>([^\\*]+?)<\\/include>");
 	private static final Pattern _archetypeMetadataXmlRequiredPropertyPattern =
 		Pattern.compile("<requiredProperty key=\"(\\w+)\">");
 	private static final Pattern _archetypeResourcePropertyNamePattern =

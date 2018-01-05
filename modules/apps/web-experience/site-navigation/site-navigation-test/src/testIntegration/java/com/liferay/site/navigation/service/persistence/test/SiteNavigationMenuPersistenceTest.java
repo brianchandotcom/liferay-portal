@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -136,6 +137,8 @@ public class SiteNavigationMenuPersistenceTest {
 
 		newSiteNavigationMenu.setName(RandomTestUtil.randomString());
 
+		newSiteNavigationMenu.setPrimary(RandomTestUtil.randomBoolean());
+
 		_siteNavigationMenus.add(_persistence.update(newSiteNavigationMenu));
 
 		SiteNavigationMenu existingSiteNavigationMenu = _persistence.findByPrimaryKey(newSiteNavigationMenu.getPrimaryKey());
@@ -158,6 +161,8 @@ public class SiteNavigationMenuPersistenceTest {
 			Time.getShortTimestamp(newSiteNavigationMenu.getModifiedDate()));
 		Assert.assertEquals(existingSiteNavigationMenu.getName(),
 			newSiteNavigationMenu.getName());
+		Assert.assertEquals(existingSiteNavigationMenu.getPrimary(),
+			newSiteNavigationMenu.getPrimary());
 	}
 
 	@Test
@@ -174,6 +179,14 @@ public class SiteNavigationMenuPersistenceTest {
 		_persistence.countByG_N(0L, "null");
 
 		_persistence.countByG_N(0L, (String)null);
+	}
+
+	@Test
+	public void testCountByG_P() throws Exception {
+		_persistence.countByG_P(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -208,7 +221,7 @@ public class SiteNavigationMenuPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SiteNavigationMenu",
 			"siteNavigationMenuId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true);
+			"modifiedDate", true, "name", true, "primary", true);
 	}
 
 	@Test
@@ -406,6 +419,24 @@ public class SiteNavigationMenuPersistenceTest {
 		Assert.assertEquals(0, result.size());
 	}
 
+	@Test
+	public void testResetOriginalValues() throws Exception {
+		SiteNavigationMenu newSiteNavigationMenu = addSiteNavigationMenu();
+
+		_persistence.clearCache();
+
+		SiteNavigationMenu existingSiteNavigationMenu = _persistence.findByPrimaryKey(newSiteNavigationMenu.getPrimaryKey());
+
+		Assert.assertEquals(Long.valueOf(
+				existingSiteNavigationMenu.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Boolean.valueOf(
+				existingSiteNavigationMenu.getPrimary()),
+			ReflectionTestUtil.<Boolean>invoke(existingSiteNavigationMenu,
+				"getOriginalPrimary", new Class<?>[0]));
+	}
+
 	protected SiteNavigationMenu addSiteNavigationMenu()
 		throws Exception {
 		long pk = RandomTestUtil.nextLong();
@@ -425,6 +456,8 @@ public class SiteNavigationMenuPersistenceTest {
 		siteNavigationMenu.setModifiedDate(RandomTestUtil.nextDate());
 
 		siteNavigationMenu.setName(RandomTestUtil.randomString());
+
+		siteNavigationMenu.setPrimary(RandomTestUtil.randomBoolean());
 
 		_siteNavigationMenus.add(_persistence.update(siteNavigationMenu));
 

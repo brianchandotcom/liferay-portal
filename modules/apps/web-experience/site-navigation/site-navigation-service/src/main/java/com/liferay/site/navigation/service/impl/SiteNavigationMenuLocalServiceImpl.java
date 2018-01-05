@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.navigation.exception.PrimarySiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -58,6 +59,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenu.setCreateDate(
 			serviceContext.getCreateDate(new Date()));
 		siteNavigationMenu.setName(name);
+		siteNavigationMenu.setPrimary(false);
 
 		siteNavigationMenuPersistence.update(siteNavigationMenu);
 
@@ -117,6 +119,11 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenu fetchPrimarySiteNavigationMenu(long groupId) {
+		return siteNavigationMenuPersistence.fetchByG_P(groupId, true);
+	}
+
+	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByGroupId(groupId);
 	}
@@ -150,6 +157,28 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenu updateSiteNavigationMenu(
+			long userId, long siteNavigationMenuId, boolean primary,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
+			siteNavigationMenuId);
+
+		validatePrimarySiteNavigationMenu(siteNavigationMenu);
+
+		User user = userLocalService.getUser(userId);
+
+		siteNavigationMenu.setModifiedDate(
+			serviceContext.getModifiedDate(new Date()));
+		siteNavigationMenu.setUserId(userId);
+		siteNavigationMenu.setUserName(user.getFullName());
+		siteNavigationMenu.setPrimary(primary);
+
+		return siteNavigationMenuPersistence.update(siteNavigationMenu);
+	}
+
+	@Override
+	public SiteNavigationMenu updateSiteNavigationMenu(
 			long userId, long siteNavigationMenuId, String name,
 			ServiceContext serviceContext)
 		throws PortalException {
@@ -173,6 +202,24 @@ public class SiteNavigationMenuLocalServiceImpl
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SiteNavigationMenuNameException();
+		}
+	}
+
+	protected void validatePrimarySiteNavigationMenu(
+			SiteNavigationMenu siteNavigationMenu)
+		throws PrimarySiteNavigationMenuException {
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+
+		if (primarySiteNavigationMenu == null) {
+			return;
+		}
+
+		if (primarySiteNavigationMenu.getSiteNavigationMenuId() !=
+				siteNavigationMenu.getSiteNavigationMenuId()) {
+
+			throw new PrimarySiteNavigationMenuException();
 		}
 	}
 

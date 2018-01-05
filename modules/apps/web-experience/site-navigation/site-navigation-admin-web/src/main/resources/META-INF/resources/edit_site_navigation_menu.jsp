@@ -90,6 +90,12 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 		</div>
 	</c:when>
 	<c:otherwise>
+		<liferay-frontend:management-bar>
+			<liferay-frontend:management-bar-buttons>
+				<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
+			</liferay-frontend:management-bar-buttons>
+		</liferay-frontend:management-bar>
+
 		<liferay-ui:error key="<%= InvalidSiteNavigationMenuItemOrderException.class.getName() %>" message="the-order-of-site-navigation-menu-items-is-invalid" />
 
 		<div class="container-fluid-1280">
@@ -226,6 +232,39 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 				'click',
 				function(event) {
 					sidebar.addClass('hide');
+				}
+			);
+
+			A.one('#<portlet:namespace />showSiteNavigationMenuSettings').on(
+				'click',
+				function() {
+					var data = Liferay.Util.ns(
+						'<portlet:namespace />',
+						{
+							redirect: '<%= currentURL %>',
+							siteNavigationMenuId: <%= siteNavigationMenu.getSiteNavigationMenuId() %>
+						}
+					);
+
+					A.io.request(
+						'<portlet:renderURL windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>"><portlet:param name="mvcPath" value="/site_navigation_menu_settings.jsp" /></portlet:renderURL>',
+						{
+							data: data,
+							on: {
+								success: function(event, id, obj) {
+									var responseData = this.get('responseData');
+
+									sidebarBody.plug(A.Plugin.ParseContent);
+
+									sidebarBody.setContent(responseData);
+
+									sidebarTitle.text('<%= siteNavigationMenu.getName() %>');
+
+									sidebar.removeClass('hide');
+								}
+							}
+						}
+					);
 				}
 			);
 		</aui:script>

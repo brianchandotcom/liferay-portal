@@ -207,6 +207,27 @@ public interface SiteNavigationMenuModel extends BaseModel<SiteNavigationMenu>,
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the primary of this site navigation menu.
+	 *
+	 * @return the primary of this site navigation menu
+	 */
+	public boolean getPrimary();
+
+	/**
+	 * Returns <code>true</code> if this site navigation menu is primary.
+	 *
+	 * @return <code>true</code> if this site navigation menu is primary; <code>false</code> otherwise
+	 */
+	public boolean isPrimary();
+
+	/**
+	 * Sets whether this site navigation menu is primary.
+	 *
+	 * @param primary the primary of this site navigation menu
+	 */
+	public void setPrimary(boolean primary);
+
 	@Override
 	public boolean isNew();
 

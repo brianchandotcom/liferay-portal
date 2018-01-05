@@ -11,16 +11,16 @@
 
 		<!-- Other fields -->
 
-		<column name="entryId" type="long" />
-		<column name="categoryId" type="long" />
+		<column name="assetEntryId" type="long" />
+		<column name="assetCategoryId" type="long" />
 
 		<!-- Finder methods -->
 
-		<finder name="EntryId" return-type="Collection">
-			<finder-column name="entryId" />
+		<finder name="AssetEntryId" return-type="Collection">
+			<finder-column name="assetEntryId" />
 		</finder>
-		<finder name="CategoryId" return-type="Collection">
-			<finder-column name="categoryId" />
+		<finder name="AssetCategoryId" return-type="Collection">
+			<finder-column name="assetCategoryId" />
 		</finder>
 	</entity>
 </service-builder>

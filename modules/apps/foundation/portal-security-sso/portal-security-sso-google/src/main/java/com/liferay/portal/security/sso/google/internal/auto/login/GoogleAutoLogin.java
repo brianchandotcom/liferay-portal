@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
-import com.liferay.portal.security.sso.google.constants.GoogleWebKeys;
+import com.liferay.portal.security.sso.google.internal.constants.GoogleWebKeys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

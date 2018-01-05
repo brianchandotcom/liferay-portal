@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Search Elasticsearch Shield
 Bundle-SymbolicName: com.liferay.portal.search.elasticsearch.shield
-Bundle-Version: 1.0.7
+Bundle-Version: 1.0.8
 Export-Package:\
 	!org.elasticsearch,\
 	!org.elasticsearch.*

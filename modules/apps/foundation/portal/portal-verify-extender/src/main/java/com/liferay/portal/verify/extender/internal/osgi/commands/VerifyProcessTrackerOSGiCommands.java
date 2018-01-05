@@ -407,7 +407,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 		ServiceRegistration<Object> serviceRegistration =
 			_bundleContext.registerService(
-				Object.class, new Object() {}, dictionary);
+				Object.class, new Object(), dictionary);
 
 		_serviceRegistrations.put(verifyProcessName, serviceRegistration);
 	}

@@ -165,23 +165,26 @@ public class TLiferayInputProperties
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
 		LiferayConnectionProperties connProps = getConnectionProperties();
 
-		if (connProps != null) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("UserID: " + connProps.userId.getValue());
-				_log.debug("Endpoint: " + connProps.endpoint.getValue());
-			}
-		}
-		else {
-			if (_log.isDebugEnabled()) {
-				_log.debug("LiferayConnectionProperties is null");
-			}
+		if (connProps == null) {
+			_log.error("LiferayConnectionProperties is null");
 		}
 
 		LiferayConnectionProperties referenceProps =
 			connProps.getReferencedConnectionProperties();
 
 		if (referenceProps != null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Using a reference connection properties.");
+				_log.debug("UserID: " + referenceProps.userId.getValue());
+				_log.debug("Endpoint: " + referenceProps.endpoint.getValue());
+			}
+
 			return referenceProps;
+		}
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("UserID: " + connProps.userId.getValue());
+			_log.debug("Endpoint: " + connProps.endpoint.getValue());
 		}
 
 		return connProps;

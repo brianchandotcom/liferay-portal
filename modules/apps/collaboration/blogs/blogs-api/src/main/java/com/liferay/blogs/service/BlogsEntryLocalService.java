@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.model.SystemEventConstants;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -73,6 +74,10 @@ public interface BlogsEntryLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link BlogsEntryLocalServiceUtil} to access the blogs entry local service. Add custom service methods to {@link com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public FileEntry addAttachmentFileEntry(BlogsEntry blogsEntry, long userId,
+		java.lang.String fileName, java.lang.String mimeType, InputStream is)
+		throws PortalException;
+
 	public Folder addAttachmentsFolder(long userId, long groupId)
 		throws PortalException;
 

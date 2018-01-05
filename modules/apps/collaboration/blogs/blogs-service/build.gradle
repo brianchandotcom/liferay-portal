@@ -29,6 +29,7 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:collaboration:subscription:subscription-api")
+	provided project(":apps:collaboration:upload:upload-api")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:web-experience:export-import:export-import-api")
 	provided project(":apps:web-experience:export-import:export-import-service")

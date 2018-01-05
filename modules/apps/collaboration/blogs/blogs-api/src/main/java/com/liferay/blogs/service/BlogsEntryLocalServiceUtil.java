@@ -41,6 +41,16 @@ public class BlogsEntryLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.blogs.service.impl.BlogsEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.repository.model.FileEntry addAttachmentFileEntry(
+		com.liferay.blogs.model.BlogsEntry blogsEntry, long userId,
+		java.lang.String fileName, java.lang.String mimeType,
+		java.io.InputStream is)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addAttachmentFileEntry(blogsEntry, userId, fileName,
+			mimeType, is);
+	}
+
 	public static com.liferay.portal.kernel.repository.model.Folder addAttachmentsFolder(
 		long userId, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {

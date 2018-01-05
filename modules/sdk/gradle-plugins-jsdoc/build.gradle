@@ -1,5 +1,11 @@
+apply plugin: "com.gradle.plugin-publish"
+
 dependencies {
 	compile group: "com.liferay", name: "com.liferay.gradle.plugins.node", version: "4.0.1"
 
 	compileOnly fileTree(builtBy: [rootProject.tasks.extractGradleApi25], dir: new File(rootProject.buildDir, "gradle-2.5"))
+}
+
+pluginBundle {
+	tags = ["docs", "documentation", "javascript", "js", "jsdoc", "node", "nodejs"]
 }

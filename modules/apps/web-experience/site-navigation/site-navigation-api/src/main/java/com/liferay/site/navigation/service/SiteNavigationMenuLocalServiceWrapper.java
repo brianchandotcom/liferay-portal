@@ -192,6 +192,12 @@ public class SiteNavigationMenuLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu fetchPrimarySiteNavigationMenu(
+		long groupId) {
+		return _siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(groupId);
+	}
+
+	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu fetchSiteNavigationMenu(
 		long siteNavigationMenuId) {
 		return _siteNavigationMenuLocalService.fetchSiteNavigationMenu(siteNavigationMenuId);
@@ -297,6 +303,15 @@ public class SiteNavigationMenuLocalServiceWrapper
 		java.lang.String keywords) {
 		return _siteNavigationMenuLocalService.getSiteNavigationMenusCount(groupId,
 			keywords);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
+		long userId, long siteNavigationMenuId, boolean primary,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuLocalService.updateSiteNavigationMenu(userId,
+			siteNavigationMenuId, primary, serviceContext);
 	}
 
 	@Override

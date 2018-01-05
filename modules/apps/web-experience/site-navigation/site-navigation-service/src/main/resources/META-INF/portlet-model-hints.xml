@@ -12,6 +12,7 @@
 		<field name="name" type="String">
 			<validator name="required" />
 		</field>
+		<field name="primary" type="boolean" />
 	</model>
 	<model name="com.liferay.site.navigation.model.SiteNavigationMenuItem">
 		<field name="siteNavigationMenuItemId" type="long" />

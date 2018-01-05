@@ -25,7 +25,7 @@
 
 	<command name="gotoFrontStoreProductPage">
 		<var method="StringUtil#replace('${productTitle}', ' ', '-')" name="urlProductTitle" />
-	
+
 		<execute macro="Navigator#openSpecificURL">
 			<var name="url" value="http://localhost:8080/web/guest/${urlProductTitle}" />
 		</execute>

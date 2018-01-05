@@ -53,7 +53,7 @@
 		</execute>
 
 		<execute macro="CPCommerceCatalog#newProductsEntry">
-			<var name="productTitle" value="Simple Product" />
+			<var name="productTitle" value="simple product" />
 			<var name="productType" value="Simple" />
 		</execute>
 
@@ -62,14 +62,14 @@
 		</execute>
 
 		<execute macro="CommerceNavigator#gotoFrontStoreProductPage">
-			<var name="productTitle" value="Simple Product" />
+			<var name="productTitle" value="simple product" />
 		</execute>
 
 		<execute macro="FrontStore#viewProductDetail">
 			<var name="FSOptionValuesList" value="Black,Blue,White" />
 			<var name="FSProductPrice" value=" " />
 			<var name="FSProductSKU" value=" " />
-			<var name="FSProductTitle" value="Simple Product" />
+			<var name="FSProductTitle" value="simple product" />
 		</execute>
 	</command>
 </definition>

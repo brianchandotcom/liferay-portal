@@ -38,6 +38,7 @@ import com.liferay.site.navigation.admin.web.internal.constants.SiteNavigationAd
 import com.liferay.site.navigation.admin.web.internal.util.SiteNavigationMenuPortletUtil;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
+import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.service.permission.SiteNavigationPermission;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
@@ -222,6 +223,14 @@ public class SiteNavigationAdminDisplayContext {
 		}
 
 		return portletURL;
+	}
+
+	public SiteNavigationMenu getPrimarySiteNavigationMenu() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return SiteNavigationMenuLocalServiceUtil.
+			fetchPrimarySiteNavigationMenu(themeDisplay.getScopeGroupId());
 	}
 
 	public SearchContainer getSearchContainer() throws Exception {

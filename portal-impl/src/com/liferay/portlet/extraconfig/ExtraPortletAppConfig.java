@@ -14,7 +14,6 @@
 
 package com.liferay.portlet.extraconfig;
 
-import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -26,8 +25,8 @@ public class ExtraPortletAppConfig {
 		_localeEncodingMap = localeEncodingMap;
 	}
 
-	public Map<String, String> getLocaleEncodingMap() {
-		return Collections.unmodifiableMap(_localeEncodingMap);
+	public String getEncoding(String localeString) {
+		return _localeEncodingMap.get(localeString);
 	}
 
 	private final Map<String, String> _localeEncodingMap;

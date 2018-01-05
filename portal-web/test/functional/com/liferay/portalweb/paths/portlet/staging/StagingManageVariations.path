@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>UPDATE_BUTTON</td>
-	<td>xpath=(//button[contains(.,'Update')])[2]</td>
+	<td>//button[contains(@id,'StagingBarPortlet_wldt') and contains(.,'Update')]</td>
 	<td></td>
 </tr>
 <tr>

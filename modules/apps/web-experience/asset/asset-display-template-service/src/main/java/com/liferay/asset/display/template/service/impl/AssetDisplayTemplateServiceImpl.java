@@ -14,13 +14,16 @@
 
 package com.liferay.asset.display.template.service.impl;
 
+import com.liferay.asset.display.template.constants.AssetDisplayConstants;
 import com.liferay.asset.display.template.constants.AssetDisplayTemplateActionKeys;
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.base.AssetDisplayTemplateServiceBaseImpl;
-import com.liferay.asset.display.template.service.permission.AssetDisplayPermission;
-import com.liferay.asset.display.template.service.permission.AssetDisplayTemplatePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
@@ -36,7 +39,7 @@ public class AssetDisplayTemplateServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		AssetDisplayPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			AssetDisplayTemplateActionKeys.ADD_ASSET_DISPLAY_TEMPLATE);
 
@@ -50,7 +53,7 @@ public class AssetDisplayTemplateServiceImpl
 			long assetDisplayTemplateId)
 		throws PortalException {
 
-		AssetDisplayTemplatePermission.check(
+		_assetDisplayTemplateModelResourcePermission.check(
 			getPermissionChecker(), assetDisplayTemplateId, ActionKeys.DELETE);
 
 		return assetDisplayTemplateLocalService.deleteAssetDisplayTemplate(
@@ -64,12 +67,25 @@ public class AssetDisplayTemplateServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		AssetDisplayTemplatePermission.check(
+		_assetDisplayTemplateModelResourcePermission.check(
 			getPermissionChecker(), assetDisplayTemplateId, ActionKeys.UPDATE);
 
 		return assetDisplayTemplateLocalService.updateAssetDisplayTemplate(
 			assetDisplayTemplateId, name, classNameId, language, scriptContent,
 			main, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<AssetDisplayTemplate>
+		_assetDisplayTemplateModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				AssetDisplayTemplateServiceImpl.class,
+				"_assetDisplayTemplateModelResourcePermission",
+				AssetDisplayTemplate.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				AssetDisplayTemplateServiceImpl.class,
+				"_portletResourcePermission",
+				AssetDisplayConstants.RESOURCE_NAME);
 
 }

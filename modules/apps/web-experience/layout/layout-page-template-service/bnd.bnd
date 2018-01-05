@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Layout Page Template Service
 Bundle-SymbolicName: com.liferay.layout.page.template.service
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.layout.page.template.service.permission
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
 Liferay-Require-SchemaVersion: 1.0.0

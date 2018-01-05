@@ -16,13 +16,16 @@ package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.site.navigation.constants.SiteNavigationActionKeys;
+import com.liferay.site.navigation.constants.SiteNavigationConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuServiceBaseImpl;
-import com.liferay.site.navigation.service.permission.SiteNavigationMenuPermission;
-import com.liferay.site.navigation.service.permission.SiteNavigationPermission;
 
 import java.util.List;
 
@@ -37,7 +40,7 @@ public class SiteNavigationMenuServiceImpl
 			long groupId, String name, ServiceContext serviceContext)
 		throws PortalException {
 
-		SiteNavigationPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId,
 			SiteNavigationActionKeys.ADD_SITE_NAVIGATION_MENU);
 
@@ -50,7 +53,7 @@ public class SiteNavigationMenuServiceImpl
 			long siteNavigationMenuId)
 		throws PortalException {
 
-		SiteNavigationMenuPermission.check(
+		_siteNavigationMenuModelResourcePermission.check(
 			getPermissionChecker(), siteNavigationMenuId, ActionKeys.DELETE);
 
 		return siteNavigationMenuLocalService.deleteSiteNavigationMenu(
@@ -61,7 +64,7 @@ public class SiteNavigationMenuServiceImpl
 	public SiteNavigationMenu fetchSiteNavigationMenu(long siteNavigationMenuId)
 		throws PortalException {
 
-		SiteNavigationMenuPermission.check(
+		_siteNavigationMenuModelResourcePermission.check(
 			getPermissionChecker(), siteNavigationMenuId, ActionKeys.VIEW);
 
 		return siteNavigationMenuLocalService.fetchSiteNavigationMenu(
@@ -107,11 +110,24 @@ public class SiteNavigationMenuServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SiteNavigationMenuPermission.check(
+		_siteNavigationMenuModelResourcePermission.check(
 			getPermissionChecker(), siteNavigationMenuId, ActionKeys.UPDATE);
 
 		return siteNavigationMenuLocalService.updateSiteNavigationMenu(
 			getUserId(), siteNavigationMenuId, name, serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				SiteNavigationMenuServiceImpl.class,
+				"_portletResourcePermission",
+				SiteNavigationConstants.RESOURCE_NAME);
+	private static volatile ModelResourcePermission<SiteNavigationMenu>
+		_siteNavigationMenuModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				SiteNavigationMenuServiceImpl.class,
+				"_siteNavigationMenuModelResourcePermission",
+				SiteNavigationMenu.class);
 
 }

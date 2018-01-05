@@ -18,9 +18,9 @@ import com.liferay.asset.display.template.constants.AssetDisplayTemplateActionKe
 import com.liferay.asset.display.template.constants.AssetDisplayTemplatePortletKeys;
 import com.liferay.asset.display.template.model.AssetDisplayTemplate;
 import com.liferay.asset.display.template.service.AssetDisplayTemplateLocalServiceUtil;
-import com.liferay.asset.display.template.service.permission.AssetDisplayPermission;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateClassNameIdComparator;
 import com.liferay.asset.display.template.util.comparator.AssetDisplayTemplateCreateDateComparator;
+import com.liferay.asset.display.template.web.internal.security.permission.AssetDisplayPermission;
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
@@ -281,8 +281,6 @@ public class AssetDisplayTemplateDisplayContext {
 
 		if (AssetDisplayPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				AssetDisplayPermission.RESOURCE_NAME,
-				AssetDisplayTemplatePortletKeys.ASSET_DISPLAY_TEMPLATE,
 				themeDisplay.getSiteGroupId(),
 				AssetDisplayTemplateActionKeys.ADD_ASSET_DISPLAY_TEMPLATE)) {
 

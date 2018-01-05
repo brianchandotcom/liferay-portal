@@ -19,7 +19,7 @@ import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
-import com.liferay.fragment.service.permission.FragmentPermission;
+import com.liferay.fragment.web.internal.security.permission.FragmentPermission;
 import com.liferay.fragment.web.util.FragmentPortletUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -445,7 +445,6 @@ public class FragmentDisplayContext {
 
 		if (FragmentPermission.contains(
 				themeDisplay.getPermissionChecker(),
-				FragmentPermission.RESOURCE_NAME, FragmentPortletKeys.FRAGMENT,
 				themeDisplay.getSiteGroupId(), actionId)) {
 
 			return true;

@@ -101,6 +101,8 @@ public class TLiferayInputProperties
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
+
+		queryString.setValue("");
 	}
 
 	public ValidationResult validateGuessSchema() {
@@ -126,7 +128,7 @@ public class TLiferayInputProperties
 					Schema runtimeSchema = ss.guessSchema(
 						resource.resourceURL.getValue());
 
-					resource.main.schema.setValue(runtimeSchema);
+					//resource.main.schema.setValue(runtimeSchema);
 				}
 				catch (IOException ioe) {
 					/* result = new ValidationResult(

@@ -58,9 +58,9 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 		_removeResourceActions(
 			MBCategory.class.getName(), ActionKeys.PERMISSIONS);
 
-		_removeResourceActions(MBMessage.class.getName(), ActionKeys.DELETE);
 		_removeResourceActions(
 			MBMessage.class.getName(), ActionKeys.PERMISSIONS);
+		_removeResourceActions(MBMessage.class.getName(), ActionKeys.DELETE);
 
 		_removeResourceActions(
 			MBPermission.RESOURCE_NAME, ActionKeys.LOCK_THREAD);

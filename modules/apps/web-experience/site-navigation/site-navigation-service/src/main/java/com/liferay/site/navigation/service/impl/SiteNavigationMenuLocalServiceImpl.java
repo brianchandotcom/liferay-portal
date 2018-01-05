@@ -164,15 +164,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
-		SiteNavigationMenu primarySiteNavigationMenu =
-			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
-
-		if ((primarySiteNavigationMenu != null) &&
-			(primarySiteNavigationMenu.getSiteNavigationMenuId() !=
-				siteNavigationMenuId)) {
-
-			throw new PrimarySiteNavigationMenuException();
-		}
+		validatePrimarySiteNavigationMenu(siteNavigationMenu);
 
 		User user = userLocalService.getUser(userId);
 
@@ -210,6 +202,24 @@ public class SiteNavigationMenuLocalServiceImpl
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SiteNavigationMenuNameException();
+		}
+	}
+
+	protected void validatePrimarySiteNavigationMenu(
+			SiteNavigationMenu siteNavigationMenu)
+		throws PrimarySiteNavigationMenuException {
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+
+		if (primarySiteNavigationMenu == null) {
+			return;
+		}
+
+		if (primarySiteNavigationMenu.getSiteNavigationMenuId() !=
+				siteNavigationMenu.getSiteNavigationMenuId()) {
+
+			throw new PrimarySiteNavigationMenuException();
 		}
 	}
 

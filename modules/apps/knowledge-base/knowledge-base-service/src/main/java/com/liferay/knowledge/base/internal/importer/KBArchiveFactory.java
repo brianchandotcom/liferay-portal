@@ -15,9 +15,11 @@
 package com.liferay.knowledge.base.internal.importer;
 
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.StringPool;
@@ -56,8 +58,10 @@ public class KBArchiveFactory {
 		}
 
 		KBGroupServiceConfiguration kbGroupServiceConfiguration =
-			_configurationProvider.getGroupConfiguration(
-				KBGroupServiceConfiguration.class, groupId);
+			_configurationProvider.getConfiguration(
+				KBGroupServiceConfiguration.class,
+				new GroupServiceSettingsLocator(
+					groupId, KBConstants.SERVICE_NAME));
 
 		Collections.sort(entries);
 

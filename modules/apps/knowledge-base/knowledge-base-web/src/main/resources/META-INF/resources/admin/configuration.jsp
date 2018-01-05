@@ -27,7 +27,7 @@ kbGroupServiceConfiguration = ParameterMapUtil.setParameterMap(KBGroupServiceCon
 %>
 
 <liferay-portlet:actionURL portletConfiguration="<%= true %>" var="configurationActionURL">
-	<portlet:param name="serviceName" value="<%= KBGroupServiceConfiguration.class.getName() %>" />
+	<portlet:param name="serviceName" value="<%= KBConstants.SERVICE_NAME %>" />
 	<portlet:param name="settingsScope" value="group" />
 </liferay-portlet:actionURL>
 

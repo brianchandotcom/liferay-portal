@@ -17,6 +17,7 @@ package com.liferay.knowledge.base.service.impl;
 import com.liferay.knowledge.base.configuration.KBGroupServiceConfiguration;
 import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.exception.KBCommentContentException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
@@ -35,6 +36,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -393,8 +395,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 			long groupId)
 		throws ConfigurationException {
 
-		return configurationProvider.getGroupConfiguration(
-			KBGroupServiceConfiguration.class, groupId);
+		return configurationProvider.getConfiguration(
+			KBGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(groupId, KBConstants.SERVICE_NAME));
 	}
 
 	protected int getUserRating(long userId, long classNameId, long classPK)

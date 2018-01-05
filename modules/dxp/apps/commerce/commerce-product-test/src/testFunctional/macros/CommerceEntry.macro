@@ -31,7 +31,6 @@
 		<execute function="Type" locator1="CommerceEntry#SKU_FIELD" value1="${productSKU}" />
 
 		<execute macro="CommerceEntry#selectAssociatedOptionsValue">
-			<var name="optionText" value="${optionText}" />
 			<var name="optionValue" value="${optionValue}" />
 			<var name="selectValue" value="${selectValue}" />
 		</execute>

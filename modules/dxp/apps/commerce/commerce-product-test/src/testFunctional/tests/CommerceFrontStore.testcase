@@ -1,5 +1,5 @@
 <definition component-name="portal-commerce">
-	<property name="portal.upstream" value="false" />
+	<property name="portal.upstream" value="true" />
 	<property name="test.run.environment" value="EE" />
 	<property name="testray.main.component.name" value="Commerce" />
 
@@ -28,7 +28,7 @@
 	</tear-down>
 
 	<command name="ViewFrontStoreSimpleProduct">
-		<property name="portal.acceptance" value="false" />
+		<property name="portal.acceptance" value="true" />
 
 		<execute macro="ProductMenu#gotoSitesCommerce">
 			<var name="portlet" value="Catalog" />

@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Portal Security SSO NTLM
 Bundle-SymbolicName: com.liferay.portal.security.sso.ntlm
-Bundle-Version: 3.0.21
-Export-Package:\
-	com.liferay.portal.security.sso.ntlm.configuration,\
-	com.liferay.portal.security.sso.ntlm.constants
+Bundle-Version: 4.0.0
 Import-Package:\
 	!javax.microedition.*,\
 	\

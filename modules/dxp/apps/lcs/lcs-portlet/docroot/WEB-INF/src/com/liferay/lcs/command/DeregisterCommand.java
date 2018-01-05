@@ -38,8 +38,6 @@ public class DeregisterCommand implements Command {
 		boolean invalidateToken = Boolean.valueOf(
 			(String)commandMessage.get("invalidateToken"));
 
-		_lcsConnectionManager.stop(true, false);
-
 		if (deregister || invalidateToken) {
 			LCSPortletPreferencesUtil.removeCredentials();
 
@@ -49,6 +47,8 @@ public class DeregisterCommand implements Command {
 				_keyGenerator.clearCache();
 			}
 		}
+
+		_lcsConnectionManager.stop(true, false);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Signed off server from LCS");

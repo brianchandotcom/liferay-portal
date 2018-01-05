@@ -16,8 +16,11 @@ package com.liferay.project.templates.npm.jquery.portlet.internal;
 
 import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
+import com.liferay.project.templates.ProjectTemplatesUtil;
 
 import java.io.File;
+
+import java.nio.file.Path;
 
 import java.util.Properties;
 
@@ -34,6 +37,20 @@ public class NpmJqueryPortletProjectTemplateCustomizer
 	public void onAfterGenerateProject(
 		File destinationDir,
 		ArchetypeGenerationResult archetypeGenerationResult) {
+
+		String liferayVersion = _projectTemplatesArgs.getLiferayVersion();
+
+		if (!liferayVersion.equals("7.1")) {
+			String className = _projectTemplatesArgs.getClassName();
+
+			Path destinationDirPath = destinationDir.toPath();
+
+			Path projectPath = destinationDirPath.resolve(
+				_projectTemplatesArgs.getName());
+
+			ProjectTemplatesUtil.deleteFileInPath(
+				className + "WebKeys.java", projectPath);
+		}
 	}
 
 	@Override
@@ -41,9 +58,13 @@ public class NpmJqueryPortletProjectTemplateCustomizer
 		ProjectTemplatesArgs projectTemplatesArgs,
 		ArchetypeGenerationRequest archetypeGenerationRequest) {
 
+		_projectTemplatesArgs = projectTemplatesArgs;
+
 		Properties properties = archetypeGenerationRequest.getProperties();
 
 		properties.put("packageJsonVersion", "1.0.0");
 	}
+
+	private ProjectTemplatesArgs _projectTemplatesArgs;
 
 }

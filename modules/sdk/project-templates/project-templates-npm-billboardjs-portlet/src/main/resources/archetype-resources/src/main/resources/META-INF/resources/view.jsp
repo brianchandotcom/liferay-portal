@@ -1,12 +1,11 @@
-<%@ include file="/init.jsp" %>
-
 #parse ("definitions.vm")
+<%@ include file="/init.jsp" %>
 
 <link href="<%= stylesheetURL %>" rel="stylesheet">
 
 <div id="<portlet:namespace />"></div>
 
-#if ($version == "7.1")
+#if ($liferayVersion == "7.1")
 <aui:script require="<%= bootstrapRequire %>">
 	bootstrapRequire.default('<portlet:namespace />');
 #else

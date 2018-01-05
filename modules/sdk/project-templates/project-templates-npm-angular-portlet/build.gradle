@@ -3,5 +3,5 @@ dependencies {
 	compileOnly project(":sdk:project-templates:project-templates")
 }
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"

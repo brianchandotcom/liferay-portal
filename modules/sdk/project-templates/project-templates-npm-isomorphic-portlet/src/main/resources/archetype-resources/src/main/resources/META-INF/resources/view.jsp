@@ -1,11 +1,10 @@
-<%@ include file="/init.jsp" %>
-
 #parse ("definitions.vm")
+<%@ include file="/init.jsp" %>
 
 <pre id="<portlet:namespace />">
 </pre>
 
-#if ($version == "7.1")
+#if ($liferayVersion == "7.1")
 <aui:script require="<%= bootstrapRequire %>">
 #else
 <aui:script require="${artifactId}@${packageJsonVersion}">
@@ -16,7 +15,7 @@
 	out.innerHTML += "Invoking portlet's main module default export.\n";
 	out.innerHTML += '\n';
 
-#if ($version == "7.1")
+#if ($liferayVersion == "7.1")
 	bootstrapRequire.default({
 #else
 	${auiScriptRequireVarName}.default({

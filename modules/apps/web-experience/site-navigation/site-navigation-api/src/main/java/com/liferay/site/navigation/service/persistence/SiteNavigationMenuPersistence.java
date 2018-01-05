@@ -452,6 +452,56 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	public int filterCountByG_N(long groupId, java.lang.String name);
 
 	/**
+	* Returns the site navigation menu where groupId = &#63; and primary = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param primary the primary
+	* @return the matching site navigation menu
+	* @throws NoSuchMenuException if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu findByG_P(long groupId, boolean primary)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param primary the primary
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_P(long groupId, boolean primary);
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param primary the primary
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_P(long groupId, boolean primary,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the site navigation menu where groupId = &#63; and primary = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param primary the primary
+	* @return the site navigation menu that was removed
+	*/
+	public SiteNavigationMenu removeByG_P(long groupId, boolean primary)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the number of site navigation menus where groupId = &#63; and primary = &#63;.
+	*
+	* @param groupId the group ID
+	* @param primary the primary
+	* @return the number of matching site navigation menus
+	*/
+	public int countByG_P(long groupId, boolean primary);
+
+	/**
 	* Caches the site navigation menu in the entity cache if it is enabled.
 	*
 	* @param siteNavigationMenu the site navigation menu
@@ -571,4 +621,7 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	* @return the number of site navigation menus
 	*/
 	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

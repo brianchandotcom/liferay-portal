@@ -66,6 +66,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("primary", getPrimary());
 
 		return attributes;
 	}
@@ -118,6 +119,12 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean primary = (Boolean)attributes.get("primary");
+
+		if (primary != null) {
+			setPrimary(primary);
 		}
 	}
 
@@ -184,6 +191,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public java.lang.String getName() {
 		return _siteNavigationMenu.getName();
+	}
+
+	/**
+	* Returns the primary of this site navigation menu.
+	*
+	* @return the primary of this site navigation menu
+	*/
+	@Override
+	public boolean getPrimary() {
+		return _siteNavigationMenu.getPrimary();
 	}
 
 	/**
@@ -259,6 +276,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public boolean isNew() {
 		return _siteNavigationMenu.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this site navigation menu is primary.
+	*
+	* @return <code>true</code> if this site navigation menu is primary; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPrimary() {
+		return _siteNavigationMenu.isPrimary();
 	}
 
 	@Override
@@ -340,6 +367,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public void setNew(boolean n) {
 		_siteNavigationMenu.setNew(n);
+	}
+
+	/**
+	* Sets whether this site navigation menu is primary.
+	*
+	* @param primary the primary of this site navigation menu
+	*/
+	@Override
+	public void setPrimary(boolean primary) {
+		_siteNavigationMenu.setPrimary(primary);
 	}
 
 	/**

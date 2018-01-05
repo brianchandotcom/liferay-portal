@@ -184,6 +184,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchPrimarySiteNavigationMenu(
+		long groupId) {
+		return getService().fetchPrimarySiteNavigationMenu(groupId);
+	}
+
 	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchSiteNavigationMenu(
 		long siteNavigationMenuId) {
 		return getService().fetchSiteNavigationMenu(siteNavigationMenuId);
@@ -278,6 +283,15 @@ public class SiteNavigationMenuLocalServiceUtil {
 	public static int getSiteNavigationMenusCount(long groupId,
 		java.lang.String keywords) {
 		return getService().getSiteNavigationMenusCount(groupId, keywords);
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
+		long userId, long siteNavigationMenuId, boolean primary,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateSiteNavigationMenu(userId, siteNavigationMenuId,
+			primary, serviceContext);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(

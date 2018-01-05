@@ -14,7 +14,12 @@
 
 package com.liferay.project.templates;
 
+import com.liferay.project.templates.internal.util.FileUtil;
+
 import java.io.File;
+import java.io.IOException;
+
+import java.nio.file.Path;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
@@ -23,6 +28,12 @@ import org.apache.maven.archetype.ArchetypeGenerationResult;
  * @author Gregory Amerson
  */
 public interface ProjectTemplateCustomizer {
+
+	public static void deleteFileInPath(String fileName, Path rootDirPath)
+		throws IOException {
+
+		FileUtil.deleteFileInPath(fileName, rootDirPath);
+	}
 
 	public void onAfterGenerateProject(
 			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,

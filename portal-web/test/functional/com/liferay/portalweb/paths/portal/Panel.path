@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>PANEL_HEADING</td>
-	<td>//div[contains(@class,'panel') and contains(@role,'tablist')]//a[normalize-space(text())='${key_panelHeading}']"</td>
+	<td>//div[contains(@class,'panel-heading')]//a[normalize-space(text())='${key_panelHeading}']</td>
 	<td></td>
 </tr>
 <tr>

@@ -113,6 +113,14 @@ public class AssetCategoryLocalServiceWrapper
 	}
 
 	@Override
+	public long[] checkCategories(java.lang.String className, long classPK,
+		long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _assetCategoryLocalService.checkCategories(className, classPK,
+			categoryIds);
+	}
+
+	@Override
 	public void clearAssetEntryAssetCategories(long entryId) {
 		_assetCategoryLocalService.clearAssetEntryAssetCategories(entryId);
 	}

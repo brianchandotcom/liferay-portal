@@ -108,6 +108,12 @@ public class AssetCategoryLocalServiceUtil {
 		getService().addCategoryResources(category, modelPermissions);
 	}
 
+	public static long[] checkCategories(java.lang.String className,
+		long classPK, long[] categoryIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().checkCategories(className, classPK, categoryIds);
+	}
+
 	public static void clearAssetEntryAssetCategories(long entryId) {
 		getService().clearAssetEntryAssetCategories(entryId);
 	}

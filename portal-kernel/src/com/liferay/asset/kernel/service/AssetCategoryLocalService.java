@@ -111,6 +111,9 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public void addCategoryResources(AssetCategory category,
 		ModelPermissions modelPermissions) throws PortalException;
 
+	public long[] checkCategories(java.lang.String className, long classPK,
+		long[] categoryIds) throws PortalException;
+
 	public void clearAssetEntryAssetCategories(long entryId);
 
 	/**

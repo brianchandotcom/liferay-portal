@@ -159,7 +159,7 @@ public class PortalMetricsAggregator {
 				continue;
 			}
 
-			String name = methodName.substring(3, methodName.length());
+			String name = methodName.substring(3);
 
 			name = TextFormatter.format(name, TextFormatter.I);
 

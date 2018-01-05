@@ -223,8 +223,7 @@ public abstract class BaseSamlTestCase extends PowerMockito {
 		}
 
 		if (url.indexOf(StringPool.QUESTION) > 0) {
-			queryString = url.substring(
-				url.indexOf(StringPool.QUESTION) + 1, url.length());
+			queryString = url.substring(url.indexOf(StringPool.QUESTION) + 1);
 			requestURI = url.substring(
 				url.indexOf(StringPool.SLASH, protocol.length() + 3),
 				url.indexOf(StringPool.QUESTION));

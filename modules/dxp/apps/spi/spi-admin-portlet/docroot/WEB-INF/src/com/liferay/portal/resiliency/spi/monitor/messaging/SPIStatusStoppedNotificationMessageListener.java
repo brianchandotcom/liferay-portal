@@ -99,7 +99,7 @@ public class SPIStatusStoppedNotificationMessageListener
 		String body = NotificationUtil.getNotificationEmailBody(
 			portletPreferences);
 
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("<br /><table><tr><td>ID</td><td>");
 		sb.append(spiDefinition.getSpiDefinitionId());

@@ -35,7 +35,7 @@ public class ExtraPortletAppConfigRegistry {
 		_extraPortletAppConfigs.put(servletContextName, extraPortletAppConfig);
 	}
 
-	public static void unRegisterExtraPortletAppConfig(
+	public static void unregisterExtraPortletAppConfig(
 		String servletContextName) {
 
 		_extraPortletAppConfigs.remove(servletContextName);

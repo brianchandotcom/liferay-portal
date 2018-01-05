@@ -23,8 +23,11 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  *
  * @author Brian Wing Shun Chan
  * @see MBDiscussionLocalService
+ * @deprecated As of 7.0.0, replaced by {@link
+com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBDiscussionLocalServiceWrapper implements MBDiscussionLocalService,
 	ServiceWrapper<MBDiscussionLocalService> {

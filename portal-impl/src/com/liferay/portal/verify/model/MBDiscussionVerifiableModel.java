@@ -20,7 +20,10 @@ import com.liferay.portal.kernel.verify.model.VerifiableUUIDModel;
 
 /**
  * @author Miguel Pastor
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel}
  */
+@Deprecated
 public class MBDiscussionVerifiableModel
 	implements VerifiableAuditedModel, VerifiableGroupedModel,
 			   VerifiableUUIDModel {

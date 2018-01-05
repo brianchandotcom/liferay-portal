@@ -442,20 +442,6 @@
 		<field name="statusByUserName" type="String" />
 		<field name="statusDate" type="Date" />
 	</model>
-	<model name="com.liferay.message.boards.kernel.model.MBDiscussion">
-		<field name="uuid" type="String" />
-		<field name="discussionId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="classNameId" type="long" />
-		<field name="classPK" type="long" />
-		<field name="threadId" type="long" />
-		<field name="lastPublishDate" type="Date" />
-	</model>
 	<model name="com.liferay.message.boards.kernel.model.MBMessage">
 		<field name="uuid" type="String" />
 		<field name="messageId" type="long" />

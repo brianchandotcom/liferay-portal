@@ -16,13 +16,15 @@ package com.liferay.portlet.messageboards.service.impl;
 
 import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portlet.messageboards.service.base.MBDiscussionLocalServiceBaseImpl;
 
 /**
  * @author Brian Wing Shun Chan
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.impl.MBDiscussionLocalServiceImpl}
  */
+@Deprecated
 public class MBDiscussionLocalServiceImpl
 	extends MBDiscussionLocalServiceBaseImpl {
 
@@ -32,24 +34,10 @@ public class MBDiscussionLocalServiceImpl
 			long threadId, ServiceContext serviceContext)
 		throws PortalException {
 
-		User user = userPersistence.findByPrimaryKey(userId);
-
-		long discussionId = counterLocalService.increment();
-
-		MBDiscussion discussion = mbDiscussionPersistence.create(discussionId);
-
-		discussion.setUuid(serviceContext.getUuid());
-		discussion.setGroupId(groupId);
-		discussion.setCompanyId(serviceContext.getCompanyId());
-		discussion.setUserId(userId);
-		discussion.setUserName(user.getFullName());
-		discussion.setClassNameId(classNameId);
-		discussion.setClassPK(classPK);
-		discussion.setThreadId(threadId);
-
-		mbDiscussionPersistence.update(discussion);
-
-		return discussion;
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	/**
@@ -63,61 +51,85 @@ public class MBDiscussionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addDiscussion(
+		return mbDiscussionLocalService.addDiscussion(
 			userId, serviceContext.getScopeGroupId(), classNameId, classPK,
 			threadId, serviceContext);
 	}
 
 	@Override
 	public MBDiscussion fetchDiscussion(long discussionId) {
-		return mbDiscussionPersistence.fetchByPrimaryKey(discussionId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public MBDiscussion fetchDiscussion(String className, long classPK) {
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mbDiscussionPersistence.fetchByC_C(classNameId, classPK);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public MBDiscussion fetchThreadDiscussion(long threadId) {
-		return mbDiscussionPersistence.fetchByThreadId(threadId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public MBDiscussion getDiscussion(long discussionId)
 		throws PortalException {
 
-		return mbDiscussionPersistence.findByPrimaryKey(discussionId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public MBDiscussion getDiscussion(String className, long classPK)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return mbDiscussionPersistence.findByC_C(classNameId, classPK);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public MBDiscussion getThreadDiscussion(long threadId)
 		throws PortalException {
 
-		return mbDiscussionPersistence.findByThreadId(threadId);
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public void subscribeDiscussion(
 			long userId, long groupId, String className, long classPK)
 		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 	@Override
 	public void unsubscribeDiscussion(
 			long userId, String className, long classPK)
 		throws PortalException {
+
+		throw new UnsupportedOperationException(
+			"This class is deprecated and replaced by " +
+				"com.liferay.message.boards.service.impl." +
+					"MBDiscussionLocalServiceImpl");
 	}
 
 }

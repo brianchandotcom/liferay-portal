@@ -37,7 +37,10 @@ import java.util.List;
  * @author Charles May
  * @author Roberto Díaz
  * @author Sergio González
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.service.permission.MBDiscussionPermission}
  */
+@Deprecated
 @OSGiBeanProperties(
 	property = {
 		"model.class.name=com.liferay.message.boards.kernel.model.MBDiscussion"

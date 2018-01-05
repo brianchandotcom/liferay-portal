@@ -11,6 +11,21 @@ create table MBBan (
 	lastPublishDate DATE null
 );
 
+create table MBDiscussion (
+	uuid_ VARCHAR(75) null,
+	discussionId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	classNameId LONG,
+	classPK LONG,
+	threadId LONG,
+	lastPublishDate DATE null
+);
+
 create table MBMailingList (
 	uuid_ VARCHAR(75) null,
 	mailingListId LONG not null primary key,

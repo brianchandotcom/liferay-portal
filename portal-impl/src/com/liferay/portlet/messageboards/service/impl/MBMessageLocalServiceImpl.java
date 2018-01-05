@@ -35,7 +35,6 @@ import com.liferay.message.boards.kernel.util.comparator.MessageCreateDateCompar
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
@@ -79,7 +78,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
-import com.liferay.portal.kernel.workflow.WorkflowThreadLocal;
 import com.liferay.portal.linkback.LinkbackProducerUtil;
 import com.liferay.portal.util.LayoutURLUtil;
 import com.liferay.portal.util.PropsValues;
@@ -131,29 +129,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			long classPK, int workflowAction)
 		throws PortalException {
 
-		long threadId = 0;
-		long parentMessageId = MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID;
-
-		String subject = String.valueOf(classPK);
-
-		String body = subject;
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		serviceContext.setWorkflowAction(workflowAction);
-
-		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-		WorkflowThreadLocal.setEnabled(false);
-
-		try {
-			return addDiscussionMessage(
-				userId, userName, groupId, className, classPK, threadId,
-				parentMessageId, subject, body, serviceContext);
-		}
-		finally {
-			WorkflowThreadLocal.setEnabled(workflowEnabled);
-		}
+		return null;
 	}
 
 	@Override
@@ -163,55 +139,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			String body, ServiceContext serviceContext)
 		throws PortalException {
 
-		// Message
-
-		validateDiscussionMaxComments(className, classPK);
-
-		long categoryId = MBCategoryConstants.DISCUSSION_CATEGORY_ID;
-		subject = getDiscussionMessageSubject(subject, body);
-		List<ObjectValuePair<String, InputStream>> inputStreamOVPs =
-			Collections.emptyList();
-		boolean anonymous = false;
-		double priority = 0.0;
-		boolean allowPingbacks = false;
-
-		serviceContext.setAddGroupPermissions(true);
-		serviceContext.setAddGuestPermissions(true);
-		serviceContext.setAttribute("className", className);
-		serviceContext.setAttribute("classPK", String.valueOf(classPK));
-
-		Date now = new Date();
-
-		if (serviceContext.getCreateDate() == null) {
-			serviceContext.setCreateDate(now);
-		}
-
-		if (serviceContext.getModifiedDate() == null) {
-			serviceContext.setModifiedDate(now);
-		}
-
-		MBMessage message = addMessage(
-			userId, userName, groupId, categoryId, threadId, parentMessageId,
-			subject, body, PropsValues.DISCUSSION_COMMENTS_FORMAT,
-			inputStreamOVPs, anonymous, priority, allowPingbacks,
-			serviceContext);
-
-		// Discussion
-
-		if (parentMessageId == MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID) {
-			long classNameId = classNameLocalService.getClassNameId(className);
-
-			MBDiscussion discussion = mbDiscussionPersistence.fetchByC_C(
-				classNameId, classPK);
-
-			if (discussion == null) {
-				mbDiscussionLocalService.addDiscussion(
-					userId, groupId, classNameId, classPK,
-					message.getThreadId(), serviceContext);
-			}
-		}
-
-		return message;
+		return null;
 	}
 
 	@Override
@@ -576,37 +504,6 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	@Override
 	public void deleteDiscussionMessages(String className, long classPK)
 		throws PortalException {
-
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		MBDiscussion discussion = mbDiscussionPersistence.fetchByC_C(
-			classNameId, classPK);
-
-		if (discussion == null) {
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					StringBundler.concat(
-						"Unable to delete discussion message for class name ",
-						className, " and class PK ", String.valueOf(classPK),
-						" because it does not exist"));
-			}
-
-			return;
-		}
-
-		List<MBMessage> messages = mbMessagePersistence.findByT_P(
-			discussion.getThreadId(),
-			MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, 0, 1);
-
-		if (!messages.isEmpty()) {
-			MBMessage message = messages.get(0);
-
-			SocialActivityManagerUtil.deleteActivities(message);
-
-			mbThreadLocalService.deleteThread(message.getThreadId());
-		}
-
-		mbDiscussionPersistence.remove(discussion);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
@@ -860,6 +757,14 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	}
 
 	@Override
+	public MBMessage fetchFirstMessage(long threadId, long parentMessageId)
+		throws PortalException {
+
+		return mbMessagePersistence.fetchByT_P_First(
+			threadId, parentMessageId, null);
+	}
+
+	@Override
 	public List<MBMessage> getCategoryMessages(
 		long groupId, long categoryId, int status, int start, int end) {
 
@@ -945,9 +850,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status)
 		throws PortalException {
 
-		return getDiscussionMessageDisplay(
-			userId, groupId, className, classPK, status,
-			new MessageThreadComparator());
+		return null;
 	}
 
 	@Override
@@ -956,52 +859,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status, Comparator<MBMessage> comparator)
 		throws PortalException {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		MBMessage message = null;
-
-		MBDiscussion discussion = mbDiscussionPersistence.fetchByC_C(
-			classNameId, classPK);
-
-		if (discussion != null) {
-			message = mbMessagePersistence.findByT_P_First(
-				discussion.getThreadId(),
-				MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, null);
-		}
-		else {
-			boolean workflowEnabled = WorkflowThreadLocal.isEnabled();
-
-			WorkflowThreadLocal.setEnabled(false);
-
-			try {
-				String subject = String.valueOf(classPK);
-				//String body = subject;
-
-				message = addDiscussionMessage(
-					userId, null, groupId, className, classPK, 0,
-					MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, subject,
-					subject, new ServiceContext());
-			}
-			catch (SystemException se) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(
-						"Add failed, fetch {threadId=0, parentMessageId=" +
-							MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID + "}");
-				}
-
-				message = mbMessagePersistence.fetchByT_P_First(
-					0, MBMessageConstants.DEFAULT_PARENT_MESSAGE_ID, null);
-
-				if (message == null) {
-					throw se;
-				}
-			}
-			finally {
-				WorkflowThreadLocal.setEnabled(workflowEnabled);
-			}
-		}
-
-		return getMessageDisplay(userId, message, status, comparator);
+		return null;
 	}
 
 	/**
@@ -1015,7 +873,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			int status, String threadView)
 		throws PortalException {
 
-		return getDiscussionMessageDisplay(
+		return mbMessageLocalService.getDiscussionMessageDisplay(
 			userId, groupId, className, classPK, status);
 	}
 
@@ -1023,46 +881,27 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 	public int getDiscussionMessagesCount(
 		long classNameId, long classPK, int status) {
 
-		MBDiscussion discussion = mbDiscussionPersistence.fetchByC_C(
-			classNameId, classPK);
-
-		if (discussion == null) {
-			return 0;
-		}
-
-		int count = 0;
-
-		if (status == WorkflowConstants.STATUS_ANY) {
-			count = mbMessagePersistence.countByThreadId(
-				discussion.getThreadId());
-		}
-		else {
-			count = mbMessagePersistence.countByT_S(
-				discussion.getThreadId(), status);
-		}
-
-		if (count >= 1) {
-			return count - 1;
-		}
-		else {
-			return 0;
-		}
+		return 0;
 	}
 
 	@Override
 	public int getDiscussionMessagesCount(
 		String className, long classPK, int status) {
 
-		long classNameId = classNameLocalService.getClassNameId(className);
-
-		return getDiscussionMessagesCount(classNameId, classPK, status);
+		return 0;
 	}
 
 	@Override
 	public List<MBDiscussion> getDiscussions(String className) {
-		long classNameId = classNameLocalService.getClassNameId(className);
+		return Collections.emptyList();
+	}
 
-		return mbDiscussionPersistence.findByClassNameId(classNameId);
+	@Override
+	public MBMessage getFirstMessage(long threadId, long parentMessageId)
+		throws PortalException {
+
+		return mbMessagePersistence.findByT_P_First(
+			threadId, parentMessageId, null);
 	}
 
 	@Override
@@ -2254,6 +2093,10 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 		}
 	}
 
+	/**
+	 * @deprecated As of 7.0.0, with no direct replacement
+	 */
+	@Deprecated
 	protected void validateDiscussionMaxComments(String className, long classPK)
 		throws PortalException {
 
@@ -2261,7 +2104,7 @@ public class MBMessageLocalServiceImpl extends MBMessageLocalServiceBaseImpl {
 			return;
 		}
 
-		int count = getDiscussionMessagesCount(
+		int count = mbMessageLocalService.getDiscussionMessagesCount(
 			className, classPK, WorkflowConstants.STATUS_APPROVED);
 
 		if (count >= PropsValues.DISCUSSION_MAX_COMMENTS) {

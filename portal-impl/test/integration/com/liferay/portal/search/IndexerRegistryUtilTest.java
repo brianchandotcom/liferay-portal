@@ -14,15 +14,15 @@
 
 package com.liferay.portal.search;
 
-import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBThread;
+import com.liferay.portal.kernel.model.Contact;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.messageboards.util.MBMessageIndexer;
-import com.liferay.portlet.messageboards.util.MBThreadIndexer;
+import com.liferay.portlet.usersadmin.util.ContactIndexer;
+import com.liferay.portlet.usersadmin.util.OrganizationIndexer;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -41,15 +41,15 @@ public class IndexerRegistryUtilTest {
 
 	@Test
 	public void testGetIndexerByIndexerClassName() throws Exception {
-		Indexer<MBMessage> mbMessageIndexer = IndexerRegistryUtil.getIndexer(
-			MBMessageIndexer.class.getName());
+		Indexer<Organization> organizationIndexer =
+			IndexerRegistryUtil.getIndexer(OrganizationIndexer.class.getName());
 
-		Assert.assertNotNull(mbMessageIndexer);
+		Assert.assertNotNull(organizationIndexer);
 
-		Indexer<MBThread> mbThreadIndexer = IndexerRegistryUtil.getIndexer(
-			MBThreadIndexer.class.getName());
+		Indexer<Contact> contactIndexer = IndexerRegistryUtil.getIndexer(
+			ContactIndexer.class.getName());
 
-		Assert.assertNotNull(mbThreadIndexer);
+		Assert.assertNotNull(contactIndexer);
 	}
 
 	@Test

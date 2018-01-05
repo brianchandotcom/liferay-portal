@@ -14,19 +14,18 @@
 
 package com.liferay.message.boards.comment.internal;
 
+import com.liferay.comment.constants.CommentConstants;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageDisplay;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.model.MBTreeWalker;
-import com.liferay.message.boards.kernel.service.MBDiscussionLocalService;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.message.boards.kernel.util.comparator.MessageThreadComparator;
-import com.liferay.message.boards.service.MBBanLocalService;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.comment.Comment;
-import com.liferay.portal.kernel.comment.CommentConstants;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.comment.Discussion;
 import com.liferay.portal.kernel.comment.DiscussionComment;
@@ -233,8 +232,7 @@ public class MBCommentManagerImpl implements CommentManager {
 	public DiscussionPermission getDiscussionPermission(
 		PermissionChecker permissionChecker) {
 
-		return new MBDiscussionPermissionImpl(
-			permissionChecker, _mbBanLocalService, _mbMessageLocalService);
+		return new MBDiscussionPermissionImpl(permissionChecker);
 	}
 
 	@Override
@@ -391,9 +389,6 @@ public class MBCommentManagerImpl implements CommentManager {
 
 		_mbThreadLocalService = mbThreadLocalService;
 	}
-
-	@Reference
-	private MBBanLocalService _mbBanLocalService;
 
 	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;

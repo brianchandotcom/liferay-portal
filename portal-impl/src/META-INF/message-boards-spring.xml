@@ -8,11 +8,8 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
 >
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" id="com.liferay.portlet.messageboards.service.permission.MBCategoryPermission" />
-	<bean class="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" id="com.liferay.portlet.messageboards.service.permission.MBDiscussionPermission" />
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBPermission" id="com.liferay.portlet.messageboards.service.permission.MBPermission" />
-	<bean class="com.liferay.portlet.messageboards.util.MBMessageIndexer" id="com.liferay.portlet.messageboards.util.MBMessageIndexer" />
 	<bean class="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" id="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" />
-	<bean class="com.liferay.portlet.messageboards.util.MBThreadIndexer" id="com.liferay.portlet.messageboards.util.MBThreadIndexer" />
 </beans>

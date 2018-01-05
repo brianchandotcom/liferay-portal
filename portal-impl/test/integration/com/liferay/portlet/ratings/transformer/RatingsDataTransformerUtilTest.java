@@ -71,7 +71,7 @@ public class RatingsDataTransformerUtilTest {
 		oldPortletPreferences.setValue(
 			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "like");
 		oldPortletPreferences.setValue(
-			"com.liferay.message.boards.kernel.model.MBDiscussion_RatingsType",
+			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"like");
 		oldPortletPreferences.setValue(
 			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
@@ -93,7 +93,7 @@ public class RatingsDataTransformerUtilTest {
 		unicodeProperties.setProperty(
 			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "stars");
 		unicodeProperties.setProperty(
-			"com.liferay.message.boards.kernel.model.MBDiscussion_RatingsType",
+			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
 			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
@@ -125,7 +125,7 @@ public class RatingsDataTransformerUtilTest {
 		oldUnicodeProperties.setProperty(
 			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "like");
 		oldUnicodeProperties.setProperty(
-			"com.liferay.message.boards.kernel.model.MBDiscussion_RatingsType",
+			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"like");
 		oldUnicodeProperties.setProperty(
 			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",
@@ -147,7 +147,7 @@ public class RatingsDataTransformerUtilTest {
 		unicodeProperties.setProperty(
 			"com.liferay.knowledge.base.model.KBArticle_RatingsType", "stars");
 		unicodeProperties.setProperty(
-			"com.liferay.message.boards.kernel.model.MBDiscussion_RatingsType",
+			"com.liferay.message.boards.model.MBDiscussion_RatingsType",
 			"stars");
 		unicodeProperties.setProperty(
 			"com.liferay.message.boards.kernel.model.MBMessage_RatingsType",

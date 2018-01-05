@@ -50,7 +50,10 @@ import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.internal.search.MBThreadIndexer}
  */
+@Deprecated
 @OSGiBeanProperties
 public class MBThreadIndexer extends BaseIndexer<MBThread> {
 

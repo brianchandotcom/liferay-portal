@@ -34,8 +34,11 @@ import java.util.Date;
  *
  * @author Brian Wing Shun Chan
  * @see MBDiscussion
+ * @deprecated As of 7.0.0, replaced by {@link
+            com.liferay.message.boards.model.impl.MBDiscussionImpl}
  * @generated
  */
+@Deprecated
 @ProviderType
 public class MBDiscussionCacheModel implements CacheModel<MBDiscussion>,
 	Externalizable {

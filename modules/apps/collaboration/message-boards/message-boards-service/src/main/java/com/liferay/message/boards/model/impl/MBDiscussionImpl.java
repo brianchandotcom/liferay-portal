@@ -12,28 +12,13 @@
  * details.
  */
 
-package com.liferay.portal.verify;
+package com.liferay.message.boards.model.impl;
 
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portal.verify.test.BaseVerifyProcessTestCase;
-
-import org.junit.ClassRule;
-import org.junit.Rule;
+import aQute.bnd.annotation.ProviderType;
 
 /**
- * @author Manuel de la Peña
+ * @author Brian Wing Shun Chan
  */
-public class VerifyGroupedModelTest extends BaseVerifyProcessTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@Override
-	protected VerifyProcess getVerifyProcess() {
-		return new VerifyGroupedModel();
-	}
-
+@ProviderType
+public class MBDiscussionImpl extends MBDiscussionBaseImpl {
 }

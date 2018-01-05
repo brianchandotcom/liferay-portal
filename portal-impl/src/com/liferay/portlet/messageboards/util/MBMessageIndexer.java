@@ -72,7 +72,10 @@ import javax.portlet.PortletResponse;
  * @author Harry Mark
  * @author Bruno Farache
  * @author Raymond Augé
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.internal.search.MBMessageIndexer}
  */
+@Deprecated
 @OSGiBeanProperties(
 	property = {
 		"related.entry.indexer.class.name=com.liferay.message.boards.kernel.model.MBMessage"

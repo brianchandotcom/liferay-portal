@@ -17,9 +17,10 @@ package com.liferay.blogs.internal.verify;
 import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
-import com.liferay.message.boards.kernel.model.MBDiscussion;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
+import com.liferay.message.boards.model.MBDiscussion;
+import com.liferay.message.boards.service.MBDiscussionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -64,6 +65,13 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	}
 
 	@Reference(unbind = "-")
+	protected void setMBDiscussionLocalService(
+		MBDiscussionLocalService mbDiscussionLocalService) {
+
+		_mbDiscussionLocalService = mbDiscussionLocalService;
+	}
+
+	@Reference(unbind = "-")
 	protected void setMBMessageLocalService(
 		MBMessageLocalService mbMessageLocalService) {
 
@@ -78,7 +86,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	protected void verifyMBDiscussions() {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			List<MBDiscussion> mbDiscussions =
-				_mbMessageLocalService.getDiscussions(
+				_mbDiscussionLocalService.getDiscussions(
 					BlogsEntry.class.getName());
 
 			for (MBDiscussion mbDiscussion : mbDiscussions) {
@@ -141,6 +149,7 @@ public class VerifyBlogsTrackbacks extends VerifyProcess {
 	@Reference
 	private LinkbackConsumer _linkbackConsumer;
 
+	private MBDiscussionLocalService _mbDiscussionLocalService;
 	private MBMessageLocalService _mbMessageLocalService;
 	private UserLocalService _userLocalService;
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.site.navigation.exception.PrimarySiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -58,6 +59,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenu.setCreateDate(
 			serviceContext.getCreateDate(new Date()));
 		siteNavigationMenu.setName(name);
+		siteNavigationMenu.setPrimary(false);
 
 		siteNavigationMenuPersistence.update(siteNavigationMenu);
 
@@ -117,6 +119,11 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	@Override
+	public SiteNavigationMenu fetchPrimarySiteNavigationMenu(long groupId) {
+		return siteNavigationMenuPersistence.fetchByG_P(groupId, true);
+	}
+
+	@Override
 	public List<SiteNavigationMenu> getSiteNavigationMenus(long groupId) {
 		return siteNavigationMenuPersistence.findByGroupId(groupId);
 	}
@@ -146,6 +153,30 @@ public class SiteNavigationMenuLocalServiceImpl
 	@Override
 	public int getSiteNavigationMenusCount(long groupId, String keywords) {
 		return siteNavigationMenuPersistence.countByG_N(groupId, keywords);
+	}
+
+	@Override
+	public SiteNavigationMenu updateSiteNavigationMenu(
+			long userId, long siteNavigationMenuId, boolean primary,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
+			siteNavigationMenuId);
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+
+		if ((primarySiteNavigationMenu != null) &&
+			(primarySiteNavigationMenu.getSiteNavigationMenuId() !=
+				siteNavigationMenuId)) {
+
+			throw new PrimarySiteNavigationMenuException();
+		}
+
+		siteNavigationMenu.setPrimary(true);
+
+		return siteNavigationMenuPersistence.update(siteNavigationMenu);
 	}
 
 	@Override

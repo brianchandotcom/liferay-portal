@@ -50,6 +50,18 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCommerceOrder(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		checkCommerceOrder(commerceOrder);
+
+		commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
+	}
+
+	@Override
 	public CommerceOrder fetchCommerceOrder(long commerceOrderId)
 		throws PortalException {
 

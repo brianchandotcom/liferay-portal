@@ -17,15 +17,17 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = (User)request.getAttribute("user.selUser");
-List<Group> groups = (List<Group>)request.getAttribute("user.groups");
-List<Organization> organizations = (List<Organization>)request.getAttribute("user.organizations");
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
+
+User selUser = userDisplayContext.getSelectedUser();
+List<Group> groups = userDisplayContext.getGroups();
+List<Organization> organizations = userDisplayContext.getOrganizations();
 Long[] organizationIds = UsersAdminUtil.getOrganizationIds(organizations);
-List<Role> roles = (List<Role>)request.getAttribute("user.roles");
-List<UserGroupRole> organizationRoles = (List<UserGroupRole>)request.getAttribute("user.organizationRoles");
-List<UserGroupRole> siteRoles = (List<UserGroupRole>)request.getAttribute("user.siteRoles");
-List<UserGroupGroupRole> inheritedSiteRoles = (List<UserGroupGroupRole>)request.getAttribute("user.inheritedSiteRoles");
-List<Group> roleGroups = (List<Group>)request.getAttribute("user.roleGroups");
+List<Role> roles = userDisplayContext.getRoles();
+List<UserGroupRole> organizationRoles = userDisplayContext.getOrganizationRoles();
+List<UserGroupRole> siteRoles = userDisplayContext.getSiteRoles();
+List<UserGroupGroupRole> inheritedSiteRoles = userDisplayContext.getInheritedSiteRoles();
+List<Group> roleGroups = userDisplayContext.getRoleGroups();
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "roles");
 

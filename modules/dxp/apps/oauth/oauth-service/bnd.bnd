@@ -1,7 +1,7 @@
 Bundle-Activator: com.liferay.oauth.service.activator.OAuthServiceBundleActivator
 Bundle-Name: Liferay OAuth Service
 Bundle-SymbolicName: com.liferay.oauth.service
-Bundle-Version: 1.0.12
+Bundle-Version: 1.0.13
 Export-Package:\
 	com.liferay.oauth.model.impl,\
 	com.liferay.oauth.service.permission,\

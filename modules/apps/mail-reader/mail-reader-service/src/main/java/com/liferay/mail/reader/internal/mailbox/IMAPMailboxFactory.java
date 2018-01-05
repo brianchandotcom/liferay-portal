@@ -12,9 +12,11 @@
  * details.
  */
 
-package com.liferay.mail.reader.mailbox;
+package com.liferay.mail.reader.internal.mailbox;
 
 import com.liferay.mail.reader.constants.MailPortletKeys;
+import com.liferay.mail.reader.mailbox.Mailbox;
+import com.liferay.mail.reader.mailbox.MailboxFactory;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.util.StringPool;

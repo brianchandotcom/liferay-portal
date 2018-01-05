@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.mail.reader.mailbox;
+package com.liferay.mail.reader.internal.mailbox;
 
 import com.liferay.mail.reader.exception.MailException;
 import com.liferay.mail.reader.exception.NoSuchAccountException;
+import com.liferay.mail.reader.mailbox.Mailbox;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;

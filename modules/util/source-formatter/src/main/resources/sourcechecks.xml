@@ -111,7 +111,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/users-admin/users-admin-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/knowledge-base/knowledge-base-markdown-converter" />
 			<property name="allowedExportPackageDirName" value="modules/apps/knowledge-base/knowledge-base-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/mail-reader/mail-reader-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/marketplace/marketplace-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/marketplace/marketplace-store-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/portal-mobile-device-detection-fiftyonedegrees/portal-mobile-device-detection-fiftyonedegrees" />

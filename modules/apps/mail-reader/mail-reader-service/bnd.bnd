@@ -1,10 +1,5 @@
 Bundle-Name: Liferay Mail Reader Service
 Bundle-SymbolicName: com.liferay.mail.reader.service
-Bundle-Version: 2.0.22
-Export-Package:\
-	com.liferay.mail.reader.attachment,\
-	com.liferay.mail.reader.configuration,\
-	com.liferay.mail.reader.mailbox,\
-	com.liferay.mail.reader.model.impl
+Bundle-Version: 3.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

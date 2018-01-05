@@ -52,19 +52,17 @@ public class UpgradeUnsupportedGuestPermissions implements UpgradeStep {
 		throws UpgradeException {
 
 		_removePermissionsForGuest(
+			MBPermission.RESOURCE_NAME, ActionKeys.LOCK_THREAD);
+		_removePermissionsForGuest(
+			MBPermission.RESOURCE_NAME, ActionKeys.MOVE_THREAD);
+		_removePermissionsForGuest(
 			MBCategory.class.getName(), ActionKeys.DELETE);
 		_removePermissionsForGuest(
 			MBCategory.class.getName(), ActionKeys.MOVE_THREAD);
 		_removePermissionsForGuest(
 			MBCategory.class.getName(), ActionKeys.PERMISSIONS);
-
 		_removePermissionsForGuest(
 			MBMessage.class.getName(), ActionKeys.PERMISSIONS);
-
-		_removePermissionsForGuest(
-			MBPermission.RESOURCE_NAME, ActionKeys.LOCK_THREAD);
-		_removePermissionsForGuest(
-			MBPermission.RESOURCE_NAME, ActionKeys.MOVE_THREAD);
 	}
 
 	private void _removeActionIfGuest(

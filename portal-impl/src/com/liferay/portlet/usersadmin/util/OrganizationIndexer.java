@@ -182,7 +182,7 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 		StringBundler sb = new StringBundler(((size - 1) * 4) + 1);
 
 		organization = organizations.get(size - 1);
-		
+
 		sb.append(organization.getName());
 
 		for (int i = size - 2; i >= 0; i--) {

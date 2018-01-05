@@ -312,8 +312,16 @@
 			<var name="pageName" value="Research Projects" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
+		<execute macro="Page#view">
 			<var name="pageName" value="Research Projects" />
+			<var name="privacy" value="Private" />
+		</execute>
+
+		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
+
+		<execute macro="Navigator#gotoSpecificURLPage">
+			<var name="pageName" value="Research Projects" />
+			<var name="url" value="${portalURL}/group/guest/research-projects" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

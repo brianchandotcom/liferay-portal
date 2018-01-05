@@ -23,7 +23,6 @@
 				<include>bnd.bnd</include>
 				<include>build.gradle</include>
 				<include>package.json</include>
-				<include>tsconfig.json</include>
 			</includes>
 		</fileSet>
 	</fileSets>

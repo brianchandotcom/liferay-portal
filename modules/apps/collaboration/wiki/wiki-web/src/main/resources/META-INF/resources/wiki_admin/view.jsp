@@ -243,7 +243,7 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 </div>
 
 <%
-boolean showAddNodeButton = WikiResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
+boolean showAddNodeButton = WikiResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
 %>
 
 <c:if test="<%= showAddNodeButton %>">

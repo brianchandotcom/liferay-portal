@@ -29,7 +29,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>">
 	<c:choose>
 		<c:when test="<%= viewTrashAttachments %>">
-			<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+			<c:if test="<%= WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
 				<portlet:actionURL name="/wiki/edit_page_attachment" var="restoreEntryURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -44,7 +44,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 				/>
 			</c:if>
 
-			<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 				<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -59,7 +59,7 @@ WikiPage wikiPage = WikiPageAttachmentsUtil.getPage(attachmentsFileEntry.getFile
 			</c:if>
 		</c:when>
 		<c:otherwise>
-			<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+			<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 				<portlet:actionURL name="/wiki/edit_page_attachment" var="deleteURL">
 					<portlet:param name="<%= Constants.CMD %>" value="<%= trashHelper.isTrashEnabled(scopeGroupId) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 					<portlet:param name="redirect" value="<%= currentURL %>" />

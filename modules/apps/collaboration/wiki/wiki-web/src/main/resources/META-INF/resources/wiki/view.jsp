@@ -224,7 +224,7 @@ if (portletTitleBasedNavigation) {
 						<c:if test="<%= !print && !portletTitleBasedNavigation %>">
 							<div class="page-actions top-actions">
 								<c:if test="<%= followRedirect || (redirectPage == null) %>">
-									<c:if test="<%= Validator.isNotNull(formattedContent) && WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
+									<c:if test="<%= Validator.isNotNull(formattedContent) && WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_PAGE) %>">
 										<liferay-ui:icon
 											iconCssClass="icon-plus"
 											label="<%= true %>"
@@ -234,7 +234,7 @@ if (portletTitleBasedNavigation) {
 										/>
 									</c:if>
 
-									<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
+									<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) %>">
 										<liferay-ui:icon
 											iconCssClass="icon-edit"
 											label="<%= true %>"

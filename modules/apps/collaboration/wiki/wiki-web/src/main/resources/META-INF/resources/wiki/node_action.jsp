@@ -30,7 +30,7 @@ else {
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -43,7 +43,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= WikiNode.class.getName() %>"
 			modelResourceDescription="<%= node.getName() %>"
@@ -60,7 +60,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.IMPORT) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.IMPORT) %>">
 		<portlet:renderURL var="importURL">
 			<portlet:param name="mvcRenderCommandName" value="/wiki/import_pages" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -86,7 +86,7 @@ else {
 		<liferay-util:include page="/wiki/subscribe.jsp" servletContext="<%= application %>" />
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="viewDeletedAttachmentsURL">
 			<portlet:param name="mvcRenderCommandName" value="/wiki/view_node_deleted_attachments" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -100,7 +100,7 @@ else {
 		/>
 	</c:if>
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.DELETE) && (WikiNodeServiceUtil.getNodesCount(scopeGroupId) > 1) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.DELETE) && (WikiNodeServiceUtil.getNodesCount(scopeGroupId) > 1) %>">
 		<portlet:actionURL name="/wiki/edit_node" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= (trashHelper.isTrashEnabled(scopeGroupId)) ? Constants.MOVE_TO_TRASH : Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

@@ -44,9 +44,6 @@ page import="com.liferay.wiki.exception.WikiFormatException" %><%@
 page import="com.liferay.wiki.importer.impl.WikiImporterKeys" %><%@
 page import="com.liferay.wiki.importer.impl.WikiImporterTracker" %><%@
 page import="com.liferay.wiki.model.impl.WikiPageImpl" %><%@
-page import="com.liferay.wiki.service.permission.WikiNodePermissionChecker" %><%@
-page import="com.liferay.wiki.service.permission.WikiPagePermissionChecker" %><%@
-page import="com.liferay.wiki.service.permission.WikiResourcePermissionChecker" %><%@
 page import="com.liferay.wiki.social.WikiActivityKeys" %><%@
 page import="com.liferay.wiki.util.WikiPageAttachmentsUtil" %><%@
 page import="com.liferay.wiki.util.WikiUtil" %><%@
@@ -61,6 +58,9 @@ page import="com.liferay.wiki.web.internal.display.context.util.WikiRequestHelpe
 page import="com.liferay.wiki.web.internal.display.context.util.WikiSocialActivityHelper" %><%@
 page import="com.liferay.wiki.web.internal.display.context.util.WikiURLHelper" %><%@
 page import="com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor" %><%@
+page import="com.liferay.wiki.web.internal.security.permission.WikiNodePermission" %><%@
+page import="com.liferay.wiki.web.internal.security.permission.WikiPagePermission" %><%@
+page import="com.liferay.wiki.web.internal.security.permission.WikiResourcePermission" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiWebComponentProvider" %>
 
 <%

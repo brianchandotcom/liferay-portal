@@ -265,7 +265,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 			if ((release != null) && !force && release.isVerified()) {
 				if (!_serviceRegistrations.containsKey(verifyProcessName)) {
-					_registerObject(verifyProcessName);
+					_registerMarkerObject(verifyProcessName);
 				}
 
 				return;
@@ -305,7 +305,7 @@ public class VerifyProcessTrackerOSGiCommands {
 
 				releaseLocalService.updateRelease(release);
 
-				_registerObject(verifyProcessName);
+				_registerMarkerObject(verifyProcessName);
 			}
 			else {
 				release.setState(ReleaseConstants.STATE_VERIFY_FAILURE);
@@ -400,7 +400,7 @@ public class VerifyProcessTrackerOSGiCommands {
 			"verify-" + verifyProcessName, force);
 	}
 
-	private void _registerObject(String verifyProcessName) {
+	private void _registerMarkerObject(String verifyProcessName) {
 		Dictionary<String, String> dictionary = new HashMapDictionary<>();
 
 		dictionary.put("verify.process.name", verifyProcessName);

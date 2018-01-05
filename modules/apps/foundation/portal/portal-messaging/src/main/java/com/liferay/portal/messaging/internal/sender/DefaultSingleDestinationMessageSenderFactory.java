@@ -25,7 +25,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
@@ -113,17 +112,6 @@ public class DefaultSingleDestinationMessageSenderFactory
 		return _synchronousMessageSenders.get(mode);
 	}
 
-	@Activate
-	protected void activate(Map<String, Object> properties) {
-		_synchronousMessageSenders.put(
-			SynchronousMessageSender.Mode.DEFAULT,
-			new DefaultSynchronousMessageSender());
-
-		_synchronousMessageSenders.put(
-			SynchronousMessageSender.Mode.DIRECT,
-			new DirectSynchronousMessageSender());
-	}
-
 	protected SynchronousMessageSender.Mode getMode(
 		Map<String, Object> properties) {
 
@@ -138,7 +126,7 @@ public class DefaultSingleDestinationMessageSenderFactory
 	}
 
 	@Reference(
-		cardinality = ReferenceCardinality.OPTIONAL,
+		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
 		policyOption = ReferencePolicyOption.GREEDY
 	)

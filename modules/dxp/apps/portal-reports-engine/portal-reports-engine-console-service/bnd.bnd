@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Portal Reports Engine Console Service
 Bundle-SymbolicName: com.liferay.portal.reports.engine.console.service
-Bundle-Version: 1.0.7
+Bundle-Version: 1.0.8
 DynamicImport-Package: *
 Export-Package:\
 	com.liferay.portal.reports.engine.console.configuration,\

@@ -27,7 +27,7 @@ boolean primaryMenuExists = (primarySiteNavigationMenu != null) && (primarySiteN
 
 <c:if test="<%= primaryMenuExists %>">
 	<div class="alert alert-warning">
-		<liferay-ui:message key="primary-menu-for-this-site-already-defined" />
+		<liferay-ui:message key="the-primary-menu-for-this-site-is-already-defined" />
 	</div>
 </c:if>
 

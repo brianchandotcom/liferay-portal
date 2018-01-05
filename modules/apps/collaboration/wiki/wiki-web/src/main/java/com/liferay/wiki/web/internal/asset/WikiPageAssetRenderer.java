@@ -39,7 +39,7 @@ import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.internal.security.permission.WikiPagePermission;
 
 import java.util.Date;
 import java.util.Locale;
@@ -48,6 +48,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -318,7 +319,7 @@ public class WikiPageAssetRenderer
 	public boolean hasDeletePermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.DELETE);
 	}
 
@@ -326,7 +327,7 @@ public class WikiPageAssetRenderer
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.UPDATE);
 	}
 
@@ -334,7 +335,7 @@ public class WikiPageAssetRenderer
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.VIEW);
 	}
 

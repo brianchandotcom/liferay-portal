@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.internal.security.permission.WikiPagePermission;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,10 +90,17 @@ public class PagesChecker extends EmptyOnClickRowChecker {
 		String name = WikiPage.class.getSimpleName();
 		boolean showInput = false;
 
-		if (WikiPagePermissionChecker.contains(
-				_permissionChecker, page, ActionKeys.DELETE)) {
+		try {
+			if (WikiPagePermission.contains(
+					_permissionChecker, page, ActionKeys.DELETE)) {
 
-			showInput = true;
+				showInput = true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		if (!showInput) {

@@ -18,14 +18,15 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.constants.WikiPortletKeys;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.PortletRequest;
@@ -100,7 +101,7 @@ public class AddChildPagePortletConfigurationIcon
 				return false;
 			}
 
-			return WikiNodePermissionChecker.contains(
+			return _wikiNodeModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), page.getNodeId(),
 				ActionKeys.ADD_PAGE);
 		}
@@ -112,5 +113,8 @@ public class AddChildPagePortletConfigurationIcon
 
 	@Reference
 	private Portal _portal;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 }

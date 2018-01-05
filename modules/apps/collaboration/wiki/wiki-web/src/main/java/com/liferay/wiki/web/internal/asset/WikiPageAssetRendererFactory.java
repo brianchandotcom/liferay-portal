@@ -28,12 +28,13 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.internal.security.permission.WikiPagePermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
 import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
+
 import javax.servlet.ServletContext;
 
 import org.osgi.service.component.annotations.Component;
@@ -134,7 +135,7 @@ public class WikiPageAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 

@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -35,7 +36,6 @@ import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiNodeLocalService;
 import com.liferay.wiki.service.WikiPageLocalService;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.web.internal.asset.WikiNodeTrashRenderer;
 
 import java.util.ArrayList;
@@ -235,7 +235,7 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return WikiNodePermissionChecker.contains(
+		return _wikiNodeModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -260,6 +260,10 @@ public class WikiNodeTrashHandler extends BaseWikiTrashHandler {
 	private TrashHelper _trashHelper;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
+
 	private WikiPageLocalService _wikiPageLocalService;
 
 }

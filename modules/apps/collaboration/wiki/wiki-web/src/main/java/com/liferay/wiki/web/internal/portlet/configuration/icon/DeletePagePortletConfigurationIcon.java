@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
 import javax.portlet.ActionRequest;
@@ -129,7 +129,7 @@ public class DeletePagePortletConfigurationIcon
 		try {
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
-			return WikiPagePermissionChecker.contains(
+			return _wikiPageModelResourcePermission.contains(
 				themeDisplay.getPermissionChecker(), page, ActionKeys.DELETE);
 		}
 		catch (Exception e) {
@@ -155,5 +155,8 @@ public class DeletePagePortletConfigurationIcon
 
 	@Reference
 	private TrashHelper _trashHelper;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
 
 }

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
@@ -27,7 +28,6 @@ import com.liferay.subscription.service.SubscriptionLocalService;
 import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
@@ -130,7 +130,7 @@ public class NodeSubscriptionPortletConfigurationIcon
 		try {
 			WikiNode node = ActionUtil.getNode(portletRequest);
 
-			if (WikiNodePermissionChecker.contains(
+			if (_wikiNodeModelResourcePermission.contains(
 					themeDisplay.getPermissionChecker(), node,
 					ActionKeys.SUBSCRIBE) &&
 				(wikiGroupServiceOverriddenConfiguration.
@@ -169,5 +169,8 @@ public class NodeSubscriptionPortletConfigurationIcon
 	private Portal _portal;
 
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 }

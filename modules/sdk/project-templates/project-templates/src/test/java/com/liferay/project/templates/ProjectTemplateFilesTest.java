@@ -744,6 +744,7 @@ public class ProjectTemplateFilesTest {
 			projectTemplateDirPath.getFileName());
 
 		Properties bndProperties = _testBndBnd(projectTemplateDirPath);
+
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);

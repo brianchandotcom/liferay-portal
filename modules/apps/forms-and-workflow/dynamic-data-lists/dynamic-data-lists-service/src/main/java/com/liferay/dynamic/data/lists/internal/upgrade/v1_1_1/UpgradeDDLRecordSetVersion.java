@@ -47,13 +47,13 @@ public class UpgradeDDLRecordSetVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb1 = new StringBundler();
+		StringBundler sb1 = new StringBundler(3);
 
 		sb1.append("select recordSetId, groupId, companyId, userId, ");
 		sb1.append("userName, createDate, modifiedDate, DDMStructureId, ");
 		sb1.append("name, description, settings_ from DDLRecordSet");
 
-		StringBundler sb2 = new StringBundler();
+		StringBundler sb2 = new StringBundler(6);
 
 		sb2.append("insert into DDLRecordSetVersion (recordSetVersionId, ");
 		sb2.append("groupId, companyId, userId, userName, createDate, ");

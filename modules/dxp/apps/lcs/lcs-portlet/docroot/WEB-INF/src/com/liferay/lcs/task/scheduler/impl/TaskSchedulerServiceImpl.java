@@ -262,8 +262,7 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 		try {
 			Date endDate = null;
 
-			long endTime = GetterUtil.getLong(
-				schedulerContext.get("endTime"), 0);
+			long endTime = GetterUtil.getLong(schedulerContext.get("endTime"));
 
 			if (endTime > 0) {
 				endDate = new Date(endTime);
@@ -272,7 +271,7 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 			Date startDate = null;
 
 			long startTime = GetterUtil.getLong(
-				schedulerContext.get("startTime"), 0);
+				schedulerContext.get("startTime"));
 
 			if (startTime > 0) {
 				startDate = new Date(startTime);

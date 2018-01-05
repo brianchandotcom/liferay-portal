@@ -51,7 +51,7 @@ public class LicenseManagerTask implements Task {
 		long currentTimeMills = System.currentTimeMillis();
 
 		long licenseCheckTime = GetterUtil.getLong(
-			lcsConnectionMetadata.get("licenseCheckTime"), 0L);
+			lcsConnectionMetadata.get("licenseCheckTime"));
 
 		if ((currentTimeMills - licenseCheckTime) < _LICENSE_CHECK_PERIOD) {
 			LCSUtil.processLCSPortletState(

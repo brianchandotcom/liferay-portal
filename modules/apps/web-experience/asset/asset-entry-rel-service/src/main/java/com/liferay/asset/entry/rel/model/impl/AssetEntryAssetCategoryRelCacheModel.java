@@ -68,10 +68,10 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 
 		sb.append("{assetEntryAssetCategoryRelId=");
 		sb.append(assetEntryAssetCategoryRelId);
-		sb.append(", entryId=");
-		sb.append(entryId);
-		sb.append(", categoryId=");
-		sb.append(categoryId);
+		sb.append(", assetEntryId=");
+		sb.append(assetEntryId);
+		sb.append(", assetCategoryId=");
+		sb.append(assetCategoryId);
 		sb.append("}");
 
 		return sb.toString();
@@ -82,8 +82,8 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 		AssetEntryAssetCategoryRelImpl assetEntryAssetCategoryRelImpl = new AssetEntryAssetCategoryRelImpl();
 
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRelId);
-		assetEntryAssetCategoryRelImpl.setEntryId(entryId);
-		assetEntryAssetCategoryRelImpl.setCategoryId(categoryId);
+		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryId);
+		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetCategoryId);
 
 		assetEntryAssetCategoryRelImpl.resetOriginalValues();
 
@@ -94,9 +94,9 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		assetEntryAssetCategoryRelId = objectInput.readLong();
 
-		entryId = objectInput.readLong();
+		assetEntryId = objectInput.readLong();
 
-		categoryId = objectInput.readLong();
+		assetCategoryId = objectInput.readLong();
 	}
 
 	@Override
@@ -104,12 +104,12 @@ public class AssetEntryAssetCategoryRelCacheModel implements CacheModel<AssetEnt
 		throws IOException {
 		objectOutput.writeLong(assetEntryAssetCategoryRelId);
 
-		objectOutput.writeLong(entryId);
+		objectOutput.writeLong(assetEntryId);
 
-		objectOutput.writeLong(categoryId);
+		objectOutput.writeLong(assetCategoryId);
 	}
 
 	public long assetEntryAssetCategoryRelId;
-	public long entryId;
-	public long categoryId;
+	public long assetEntryId;
+	public long assetCategoryId;
 }

@@ -27,7 +27,7 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 
 	@Override
 	public AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
-		long entryId, long categoryId) {
+		long assetEntryId, long assetCategoryId) {
 
 		long assetEntryAssetCategoryRelId = counterLocalService.increment();
 
@@ -35,8 +35,8 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 			assetEntryAssetCategoryRelPersistence.create(
 				assetEntryAssetCategoryRelId);
 
-		assetEntryAssetCategoryRel.setEntryId(entryId);
-		assetEntryAssetCategoryRel.setCategoryId(categoryId);
+		assetEntryAssetCategoryRel.setAssetEntryId(assetEntryId);
+		assetEntryAssetCategoryRel.setAssetCategoryId(assetCategoryId);
 
 		assetEntryAssetCategoryRelPersistence.update(
 			assetEntryAssetCategoryRel);
@@ -45,23 +45,27 @@ public class AssetEntryAssetCategoryRelLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAssetEntryAssetCategoryRelByCategoryId(long categoryId) {
-		assetEntryAssetCategoryRelPersistence.removeByCategoryId(categoryId);
+	public void deleteAssetEntryAssetCategoryRelByAssetCategoryId(
+		long assetCategoryId) {
+
+		assetEntryAssetCategoryRelPersistence.removeByAssetCategoryId(
+			assetCategoryId);
 	}
 
 	@Override
 	public List<AssetEntryAssetCategoryRel>
-		getAssetEntryAssetCategoryRelsByCategoryId(long categoryId) {
+		getAssetEntryAssetCategoryRelsByAssetCategoryId(long assetCategoryId) {
 
-		return assetEntryAssetCategoryRelPersistence.findByCategoryId(
-			categoryId);
+		return assetEntryAssetCategoryRelPersistence.findByAssetCategoryId(
+			assetCategoryId);
 	}
 
 	@Override
 	public List<AssetEntryAssetCategoryRel>
-		getAssetEntryAssetCategoryRelsByEntryId(long entryId) {
+		getAssetEntryAssetCategoryRelsByAssetEntryId(long assetEntryId) {
 
-		return assetEntryAssetCategoryRelPersistence.findByEntryId(entryId);
+		return assetEntryAssetCategoryRelPersistence.findByAssetEntryId(
+			assetEntryId);
 	}
 
 }

@@ -42,270 +42,278 @@ public interface AssetEntryAssetCategoryRelPersistence extends BasePersistence<A
 	 */
 
 	/**
-	* Returns all the asset entry asset category rels where entryId = &#63;.
+	* Returns all the asset entry asset category rels where assetEntryId = &#63;.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @return the matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByEntryId(
-		long entryId);
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId);
 
 	/**
-	* Returns a range of all the asset entry asset category rels where entryId = &#63;.
+	* Returns a range of all the asset entry asset category rels where assetEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param start the lower bound of the range of asset entry asset category rels
 	* @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	* @return the range of matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByEntryId(
-		long entryId, int start, int end);
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId, int start, int end);
 
 	/**
-	* Returns an ordered range of all the asset entry asset category rels where entryId = &#63;.
+	* Returns an ordered range of all the asset entry asset category rels where assetEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param start the lower bound of the range of asset entry asset category rels
 	* @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByEntryId(
-		long entryId, int start, int end,
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the asset entry asset category rels where entryId = &#63;.
+	* Returns an ordered range of all the asset entry asset category rels where assetEntryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param start the lower bound of the range of asset entry asset category rels
 	* @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByEntryId(
-		long entryId, int start, int end,
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first asset entry asset category rel in the ordered set where entryId = &#63;.
+	* Returns the first asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry asset category rel
 	* @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel findByEntryId_First(long entryId,
+	public AssetEntryAssetCategoryRel findByAssetEntryId_First(
+		long assetEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
-	* Returns the first asset entry asset category rel in the ordered set where entryId = &#63;.
+	* Returns the first asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel fetchByEntryId_First(long entryId,
+	public AssetEntryAssetCategoryRel fetchByAssetEntryId_First(
+		long assetEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	* Returns the last asset entry asset category rel in the ordered set where entryId = &#63;.
+	* Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry asset category rel
 	* @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel findByEntryId_Last(long entryId,
+	public AssetEntryAssetCategoryRel findByAssetEntryId_Last(
+		long assetEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
-	* Returns the last asset entry asset category rel in the ordered set where entryId = &#63;.
+	* Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel fetchByEntryId_Last(long entryId,
+	public AssetEntryAssetCategoryRel fetchByAssetEntryId_Last(
+		long assetEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	* Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where entryId = &#63;.
+	* Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	*
 	* @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset entry asset category rel
 	* @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
 	*/
-	public AssetEntryAssetCategoryRel[] findByEntryId_PrevAndNext(
-		long assetEntryAssetCategoryRelId, long entryId,
+	public AssetEntryAssetCategoryRel[] findByAssetEntryId_PrevAndNext(
+		long assetEntryAssetCategoryRelId, long assetEntryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
-	* Removes all the asset entry asset category rels where entryId = &#63; from the database.
+	* Removes all the asset entry asset category rels where assetEntryId = &#63; from the database.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	*/
-	public void removeByEntryId(long entryId);
+	public void removeByAssetEntryId(long assetEntryId);
 
 	/**
-	* Returns the number of asset entry asset category rels where entryId = &#63;.
+	* Returns the number of asset entry asset category rels where assetEntryId = &#63;.
 	*
-	* @param entryId the entry ID
+	* @param assetEntryId the asset entry ID
 	* @return the number of matching asset entry asset category rels
 	*/
-	public int countByEntryId(long entryId);
+	public int countByAssetEntryId(long assetEntryId);
 
 	/**
-	* Returns all the asset entry asset category rels where categoryId = &#63;.
+	* Returns all the asset entry asset category rels where assetCategoryId = &#63;.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @return the matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByCategoryId(
-		long categoryId);
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId);
 
 	/**
-	* Returns a range of all the asset entry asset category rels where categoryId = &#63;.
+	* Returns a range of all the asset entry asset category rels where assetCategoryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param start the lower bound of the range of asset entry asset category rels
 	* @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	* @return the range of matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByCategoryId(
-		long categoryId, int start, int end);
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end);
 
 	/**
-	* Returns an ordered range of all the asset entry asset category rels where categoryId = &#63;.
+	* Returns an ordered range of all the asset entry asset category rels where assetCategoryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param start the lower bound of the range of asset entry asset category rels
 	* @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByCategoryId(
-		long categoryId, int start, int end,
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	* Returns an ordered range of all the asset entry asset category rels where categoryId = &#63;.
+	* Returns an ordered range of all the asset entry asset category rels where assetCategoryId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param start the lower bound of the range of asset entry asset category rels
 	* @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching asset entry asset category rels
 	*/
-	public java.util.List<AssetEntryAssetCategoryRel> findByCategoryId(
-		long categoryId, int start, int end,
+	public java.util.List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean retrieveFromCache);
 
 	/**
-	* Returns the first asset entry asset category rel in the ordered set where categoryId = &#63;.
+	* Returns the first asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry asset category rel
 	* @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel findByCategoryId_First(long categoryId,
+	public AssetEntryAssetCategoryRel findByAssetCategoryId_First(
+		long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
-	* Returns the first asset entry asset category rel in the ordered set where categoryId = &#63;.
+	* Returns the first asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel fetchByCategoryId_First(long categoryId,
+	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_First(
+		long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	* Returns the last asset entry asset category rel in the ordered set where categoryId = &#63;.
+	* Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry asset category rel
 	* @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel findByCategoryId_Last(long categoryId,
+	public AssetEntryAssetCategoryRel findByAssetCategoryId_Last(
+		long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
-	* Returns the last asset entry asset category rel in the ordered set where categoryId = &#63;.
+	* Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	*/
-	public AssetEntryAssetCategoryRel fetchByCategoryId_Last(long categoryId,
+	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_Last(
+		long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator);
 
 	/**
-	* Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where categoryId = &#63;.
+	* Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
 	*
 	* @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next asset entry asset category rel
 	* @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
 	*/
-	public AssetEntryAssetCategoryRel[] findByCategoryId_PrevAndNext(
-		long assetEntryAssetCategoryRelId, long categoryId,
+	public AssetEntryAssetCategoryRel[] findByAssetCategoryId_PrevAndNext(
+		long assetEntryAssetCategoryRelId, long assetCategoryId,
 		com.liferay.portal.kernel.util.OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException;
 
 	/**
-	* Removes all the asset entry asset category rels where categoryId = &#63; from the database.
+	* Removes all the asset entry asset category rels where assetCategoryId = &#63; from the database.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	*/
-	public void removeByCategoryId(long categoryId);
+	public void removeByAssetCategoryId(long assetCategoryId);
 
 	/**
-	* Returns the number of asset entry asset category rels where categoryId = &#63;.
+	* Returns the number of asset entry asset category rels where assetCategoryId = &#63;.
 	*
-	* @param categoryId the category ID
+	* @param assetCategoryId the asset category ID
 	* @return the number of matching asset entry asset category rels
 	*/
-	public int countByCategoryId(long categoryId);
+	public int countByAssetCategoryId(long assetCategoryId);
 
 	/**
 	* Caches the asset entry asset category rel in the entity cache if it is enabled.

@@ -34,8 +34,8 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 		AssetEntryAssetCategoryRelSoap soapModel = new AssetEntryAssetCategoryRelSoap();
 
 		soapModel.setAssetEntryAssetCategoryRelId(model.getAssetEntryAssetCategoryRelId());
-		soapModel.setEntryId(model.getEntryId());
-		soapModel.setCategoryId(model.getCategoryId());
+		soapModel.setAssetEntryId(model.getAssetEntryId());
+		soapModel.setAssetCategoryId(model.getAssetCategoryId());
 
 		return soapModel;
 	}
@@ -100,23 +100,23 @@ public class AssetEntryAssetCategoryRelSoap implements Serializable {
 		_assetEntryAssetCategoryRelId = assetEntryAssetCategoryRelId;
 	}
 
-	public long getEntryId() {
-		return _entryId;
+	public long getAssetEntryId() {
+		return _assetEntryId;
 	}
 
-	public void setEntryId(long entryId) {
-		_entryId = entryId;
+	public void setAssetEntryId(long assetEntryId) {
+		_assetEntryId = assetEntryId;
 	}
 
-	public long getCategoryId() {
-		return _categoryId;
+	public long getAssetCategoryId() {
+		return _assetCategoryId;
 	}
 
-	public void setCategoryId(long categoryId) {
-		_categoryId = categoryId;
+	public void setAssetCategoryId(long assetCategoryId) {
+		_assetCategoryId = assetCategoryId;
 	}
 
 	private long _assetEntryAssetCategoryRelId;
-	private long _entryId;
-	private long _categoryId;
+	private long _assetEntryId;
+	private long _assetCategoryId;
 }

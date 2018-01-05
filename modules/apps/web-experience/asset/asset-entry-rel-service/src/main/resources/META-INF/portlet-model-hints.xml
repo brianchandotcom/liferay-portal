@@ -3,7 +3,7 @@
 <model-hints>
 	<model name="com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel">
 		<field name="assetEntryAssetCategoryRelId" type="long" />
-		<field name="entryId" type="long" />
-		<field name="categoryId" type="long" />
+		<field name="assetEntryId" type="long" />
+		<field name="assetCategoryId" type="long" />
 	</model>
 </model-hints>

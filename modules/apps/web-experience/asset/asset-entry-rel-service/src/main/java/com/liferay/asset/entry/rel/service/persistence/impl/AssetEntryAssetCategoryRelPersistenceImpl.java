@@ -84,599 +84,89 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ENTRYID = new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETENTRYID =
+		new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
 			AssetEntryAssetCategoryRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByEntryId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetEntryId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID =
 		new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
 			AssetEntryAssetCategoryRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByEntryId",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetEntryId",
 			new String[] { Long.class.getName() },
-			AssetEntryAssetCategoryRelModelImpl.ENTRYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ENTRYID = new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryAssetCategoryRelModelImpl.ASSETENTRYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETENTRYID = new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
 			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByEntryId", new String[] { Long.class.getName() });
+			"countByAssetEntryId", new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the asset entry asset category rels where entryId = &#63;.
+	 * Returns all the asset entry asset category rels where assetEntryId = &#63;.
 	 *
-	 * @param entryId the entry ID
+	 * @param assetEntryId the asset entry ID
 	 * @return the matching asset entry asset category rels
 	 */
 	@Override
-	public List<AssetEntryAssetCategoryRel> findByEntryId(long entryId) {
-		return findByEntryId(entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the asset entry asset category rels where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param start the lower bound of the range of asset entry asset category rels
-	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
-	 * @return the range of matching asset entry asset category rels
-	 */
-	@Override
-	public List<AssetEntryAssetCategoryRel> findByEntryId(long entryId,
-		int start, int end) {
-		return findByEntryId(entryId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entry asset category rels where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param start the lower bound of the range of asset entry asset category rels
-	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching asset entry asset category rels
-	 */
-	@Override
-	public List<AssetEntryAssetCategoryRel> findByEntryId(long entryId,
-		int start, int end,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-		return findByEntryId(entryId, start, end, orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the asset entry asset category rels where entryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param entryId the entry ID
-	 * @param start the lower bound of the range of asset entry asset category rels
-	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching asset entry asset category rels
-	 */
-	@Override
-	public List<AssetEntryAssetCategoryRel> findByEntryId(long entryId,
-		int start, int end,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID;
-			finderArgs = new Object[] { entryId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ENTRYID;
-			finderArgs = new Object[] { entryId, start, end, orderByComparator };
-		}
-
-		List<AssetEntryAssetCategoryRel> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : list) {
-					if ((entryId != assetEntryAssetCategoryRel.getEntryId())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE);
-
-			query.append(_FINDER_COLUMN_ENTRYID_ENTRYID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(entryId);
-
-				if (!pagination) {
-					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first asset entry asset category rel in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel findByEntryId_First(long entryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByEntryId_First(entryId,
-				orderByComparator);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("entryId=");
-		msg.append(entryId);
-
-		msg.append("}");
-
-		throw new NoSuchEntryAssetCategoryRelException(msg.toString());
-	}
-
-	/**
-	 * Returns the first asset entry asset category rel in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel fetchByEntryId_First(long entryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-		List<AssetEntryAssetCategoryRel> list = findByEntryId(entryId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel findByEntryId_Last(long entryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByEntryId_Last(entryId,
-				orderByComparator);
-
-		if (assetEntryAssetCategoryRel != null) {
-			return assetEntryAssetCategoryRel;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("entryId=");
-		msg.append(entryId);
-
-		msg.append("}");
-
-		throw new NoSuchEntryAssetCategoryRelException(msg.toString());
-	}
-
-	/**
-	 * Returns the last asset entry asset category rel in the ordered set where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel fetchByEntryId_Last(long entryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-		int count = countByEntryId(entryId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<AssetEntryAssetCategoryRel> list = findByEntryId(entryId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where entryId = &#63;.
-	 *
-	 * @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
-	 * @param entryId the entry ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next asset entry asset category rel
-	 * @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
-	 */
-	@Override
-	public AssetEntryAssetCategoryRel[] findByEntryId_PrevAndNext(
-		long assetEntryAssetCategoryRelId, long entryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
-		throws NoSuchEntryAssetCategoryRelException {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = findByPrimaryKey(assetEntryAssetCategoryRelId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			AssetEntryAssetCategoryRel[] array = new AssetEntryAssetCategoryRelImpl[3];
-
-			array[0] = getByEntryId_PrevAndNext(session,
-					assetEntryAssetCategoryRel, entryId, orderByComparator, true);
-
-			array[1] = assetEntryAssetCategoryRel;
-
-			array[2] = getByEntryId_PrevAndNext(session,
-					assetEntryAssetCategoryRel, entryId, orderByComparator,
-					false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected AssetEntryAssetCategoryRel getByEntryId_PrevAndNext(
-		Session session, AssetEntryAssetCategoryRel assetEntryAssetCategoryRel,
-		long entryId,
-		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE);
-
-		query.append(_FINDER_COLUMN_ENTRYID_ENTRYID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(entryId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(assetEntryAssetCategoryRel);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<AssetEntryAssetCategoryRel> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the asset entry asset category rels where entryId = &#63; from the database.
-	 *
-	 * @param entryId the entry ID
-	 */
-	@Override
-	public void removeByEntryId(long entryId) {
-		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : findByEntryId(
-				entryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(assetEntryAssetCategoryRel);
-		}
-	}
-
-	/**
-	 * Returns the number of asset entry asset category rels where entryId = &#63;.
-	 *
-	 * @param entryId the entry ID
-	 * @return the number of matching asset entry asset category rels
-	 */
-	@Override
-	public int countByEntryId(long entryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ENTRYID;
-
-		Object[] finderArgs = new Object[] { entryId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE);
-
-			query.append(_FINDER_COLUMN_ENTRYID_ENTRYID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(entryId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_ENTRYID_ENTRYID_2 = "assetEntryAssetCategoryRel.entryId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CATEGORYID =
-		new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
-			AssetEntryAssetCategoryRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCategoryId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID =
-		new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
-			AssetEntryAssetCategoryRelImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCategoryId",
-			new String[] { Long.class.getName() },
-			AssetEntryAssetCategoryRelModelImpl.CATEGORYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CATEGORYID = new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
-			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
-			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCategoryId", new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the asset entry asset category rels where categoryId = &#63;.
-	 *
-	 * @param categoryId the category ID
-	 * @return the matching asset entry asset category rels
-	 */
-	@Override
-	public List<AssetEntryAssetCategoryRel> findByCategoryId(long categoryId) {
-		return findByCategoryId(categoryId, QueryUtil.ALL_POS,
+	public List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId) {
+		return findByAssetEntryId(assetEntryId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the asset entry asset category rels where categoryId = &#63;.
+	 * Returns a range of all the asset entry asset category rels where assetEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @return the range of matching asset entry asset category rels
 	 */
 	@Override
-	public List<AssetEntryAssetCategoryRel> findByCategoryId(long categoryId,
-		int start, int end) {
-		return findByCategoryId(categoryId, start, end, null);
+	public List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId, int start, int end) {
+		return findByAssetEntryId(assetEntryId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the asset entry asset category rels where categoryId = &#63;.
+	 * Returns an ordered range of all the asset entry asset category rels where assetEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching asset entry asset category rels
 	 */
 	@Override
-	public List<AssetEntryAssetCategoryRel> findByCategoryId(long categoryId,
-		int start, int end,
+	public List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-		return findByCategoryId(categoryId, start, end, orderByComparator, true);
+		return findByAssetEntryId(assetEntryId, start, end, orderByComparator,
+			true);
 	}
 
 	/**
-	 * Returns an ordered range of all the asset entry asset category rels where categoryId = &#63;.
+	 * Returns an ordered range of all the asset entry asset category rels where assetEntryId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param start the lower bound of the range of asset entry asset category rels
 	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -684,8 +174,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	 * @return the ordered range of matching asset entry asset category rels
 	 */
 	@Override
-	public List<AssetEntryAssetCategoryRel> findByCategoryId(long categoryId,
-		int start, int end,
+	public List<AssetEntryAssetCategoryRel> findByAssetEntryId(
+		long assetEntryId, int start, int end,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean retrieveFromCache) {
 		boolean pagination = true;
@@ -695,12 +185,16 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID;
-			finderArgs = new Object[] { categoryId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID;
+			finderArgs = new Object[] { assetEntryId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CATEGORYID;
-			finderArgs = new Object[] { categoryId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETENTRYID;
+			finderArgs = new Object[] {
+					assetEntryId,
+					
+					start, end, orderByComparator
+				};
 		}
 
 		List<AssetEntryAssetCategoryRel> list = null;
@@ -711,7 +205,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			if ((list != null) && !list.isEmpty()) {
 				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : list) {
-					if ((categoryId != assetEntryAssetCategoryRel.getCategoryId())) {
+					if ((assetEntryId != assetEntryAssetCategoryRel.getAssetEntryId())) {
 						list = null;
 
 						break;
@@ -733,7 +227,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			query.append(_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE);
 
-			query.append(_FINDER_COLUMN_CATEGORYID_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -755,7 +249,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(categoryId);
+				qPos.add(assetEntryId);
 
 				if (!pagination) {
 					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(q,
@@ -788,18 +282,19 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the first asset entry asset category rel in the ordered set where categoryId = &#63;.
+	 * Returns the first asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset entry asset category rel
 	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
 	 */
 	@Override
-	public AssetEntryAssetCategoryRel findByCategoryId_First(long categoryId,
+	public AssetEntryAssetCategoryRel findByAssetEntryId_First(
+		long assetEntryId,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByCategoryId_First(categoryId,
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByAssetEntryId_First(assetEntryId,
 				orderByComparator);
 
 		if (assetEntryAssetCategoryRel != null) {
@@ -810,8 +305,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("categoryId=");
-		msg.append(categoryId);
+		msg.append("assetEntryId=");
+		msg.append(assetEntryId);
 
 		msg.append("}");
 
@@ -819,17 +314,18 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the first asset entry asset category rel in the ordered set where categoryId = &#63;.
+	 * Returns the first asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	 */
 	@Override
-	public AssetEntryAssetCategoryRel fetchByCategoryId_First(long categoryId,
+	public AssetEntryAssetCategoryRel fetchByAssetEntryId_First(
+		long assetEntryId,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-		List<AssetEntryAssetCategoryRel> list = findByCategoryId(categoryId, 0,
-				1, orderByComparator);
+		List<AssetEntryAssetCategoryRel> list = findByAssetEntryId(assetEntryId,
+				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -839,18 +335,19 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry asset category rel in the ordered set where categoryId = &#63;.
+	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset entry asset category rel
 	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
 	 */
 	@Override
-	public AssetEntryAssetCategoryRel findByCategoryId_Last(long categoryId,
+	public AssetEntryAssetCategoryRel findByAssetEntryId_Last(
+		long assetEntryId,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException {
-		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByCategoryId_Last(categoryId,
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByAssetEntryId_Last(assetEntryId,
 				orderByComparator);
 
 		if (assetEntryAssetCategoryRel != null) {
@@ -861,8 +358,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("categoryId=");
-		msg.append(categoryId);
+		msg.append("assetEntryId=");
+		msg.append(assetEntryId);
 
 		msg.append("}");
 
@@ -870,22 +367,23 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the last asset entry asset category rel in the ordered set where categoryId = &#63;.
+	 * Returns the last asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
 	 */
 	@Override
-	public AssetEntryAssetCategoryRel fetchByCategoryId_Last(long categoryId,
+	public AssetEntryAssetCategoryRel fetchByAssetEntryId_Last(
+		long assetEntryId,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
-		int count = countByCategoryId(categoryId);
+		int count = countByAssetEntryId(assetEntryId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<AssetEntryAssetCategoryRel> list = findByCategoryId(categoryId,
+		List<AssetEntryAssetCategoryRel> list = findByAssetEntryId(assetEntryId,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -896,17 +394,17 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where categoryId = &#63;.
+	 * Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where assetEntryId = &#63;.
 	 *
 	 * @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next asset entry asset category rel
 	 * @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
 	 */
 	@Override
-	public AssetEntryAssetCategoryRel[] findByCategoryId_PrevAndNext(
-		long assetEntryAssetCategoryRelId, long categoryId,
+	public AssetEntryAssetCategoryRel[] findByAssetEntryId_PrevAndNext(
+		long assetEntryAssetCategoryRelId, long assetEntryId,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
 		throws NoSuchEntryAssetCategoryRelException {
 		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = findByPrimaryKey(assetEntryAssetCategoryRelId);
@@ -918,15 +416,15 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			AssetEntryAssetCategoryRel[] array = new AssetEntryAssetCategoryRelImpl[3];
 
-			array[0] = getByCategoryId_PrevAndNext(session,
-					assetEntryAssetCategoryRel, categoryId, orderByComparator,
-					true);
+			array[0] = getByAssetEntryId_PrevAndNext(session,
+					assetEntryAssetCategoryRel, assetEntryId,
+					orderByComparator, true);
 
 			array[1] = assetEntryAssetCategoryRel;
 
-			array[2] = getByCategoryId_PrevAndNext(session,
-					assetEntryAssetCategoryRel, categoryId, orderByComparator,
-					false);
+			array[2] = getByAssetEntryId_PrevAndNext(session,
+					assetEntryAssetCategoryRel, assetEntryId,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -938,9 +436,9 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		}
 	}
 
-	protected AssetEntryAssetCategoryRel getByCategoryId_PrevAndNext(
+	protected AssetEntryAssetCategoryRel getByAssetEntryId_PrevAndNext(
 		Session session, AssetEntryAssetCategoryRel assetEntryAssetCategoryRel,
-		long categoryId,
+		long assetEntryId,
 		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -956,7 +454,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		query.append(_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE);
 
-		query.append(_FINDER_COLUMN_CATEGORYID_CATEGORYID_2);
+		query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1026,7 +524,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(categoryId);
+		qPos.add(assetEntryId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(assetEntryAssetCategoryRel);
@@ -1047,29 +545,29 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 	}
 
 	/**
-	 * Removes all the asset entry asset category rels where categoryId = &#63; from the database.
+	 * Removes all the asset entry asset category rels where assetEntryId = &#63; from the database.
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 */
 	@Override
-	public void removeByCategoryId(long categoryId) {
-		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : findByCategoryId(
-				categoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+	public void removeByAssetEntryId(long assetEntryId) {
+		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : findByAssetEntryId(
+				assetEntryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(assetEntryAssetCategoryRel);
 		}
 	}
 
 	/**
-	 * Returns the number of asset entry asset category rels where categoryId = &#63;.
+	 * Returns the number of asset entry asset category rels where assetEntryId = &#63;.
 	 *
-	 * @param categoryId the category ID
+	 * @param assetEntryId the asset entry ID
 	 * @return the number of matching asset entry asset category rels
 	 */
 	@Override
-	public int countByCategoryId(long categoryId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CATEGORYID;
+	public int countByAssetEntryId(long assetEntryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETENTRYID;
 
-		Object[] finderArgs = new Object[] { categoryId };
+		Object[] finderArgs = new Object[] { assetEntryId };
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1078,7 +576,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 			query.append(_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE);
 
-			query.append(_FINDER_COLUMN_CATEGORYID_CATEGORYID_2);
+			query.append(_FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2);
 
 			String sql = query.toString();
 
@@ -1091,7 +589,7 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(categoryId);
+				qPos.add(assetEntryId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1110,7 +608,533 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CATEGORYID_CATEGORYID_2 = "assetEntryAssetCategoryRel.categoryId = ?";
+	private static final String _FINDER_COLUMN_ASSETENTRYID_ASSETENTRYID_2 = "assetEntryAssetCategoryRel.assetEntryId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETCATEGORYID =
+		new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
+			AssetEntryAssetCategoryRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByAssetCategoryId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETCATEGORYID =
+		new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
+			AssetEntryAssetCategoryRelImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByAssetCategoryId",
+			new String[] { Long.class.getName() },
+			AssetEntryAssetCategoryRelModelImpl.ASSETCATEGORYID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ASSETCATEGORYID = new FinderPath(AssetEntryAssetCategoryRelModelImpl.ENTITY_CACHE_ENABLED,
+			AssetEntryAssetCategoryRelModelImpl.FINDER_CACHE_ENABLED,
+			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByAssetCategoryId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the asset entry asset category rels where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @return the matching asset entry asset category rels
+	 */
+	@Override
+	public List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId) {
+		return findByAssetCategoryId(assetCategoryId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the asset entry asset category rels where assetCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param start the lower bound of the range of asset entry asset category rels
+	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
+	 * @return the range of matching asset entry asset category rels
+	 */
+	@Override
+	public List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end) {
+		return findByAssetCategoryId(assetCategoryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entry asset category rels where assetCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param start the lower bound of the range of asset entry asset category rels
+	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching asset entry asset category rels
+	 */
+	@Override
+	public List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
+		return findByAssetCategoryId(assetCategoryId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the asset entry asset category rels where assetCategoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AssetEntryAssetCategoryRelModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param start the lower bound of the range of asset entry asset category rels
+	 * @param end the upper bound of the range of asset entry asset category rels (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching asset entry asset category rels
+	 */
+	@Override
+	public List<AssetEntryAssetCategoryRel> findByAssetCategoryId(
+		long assetCategoryId, int start, int end,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETCATEGORYID;
+			finderArgs = new Object[] { assetCategoryId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ASSETCATEGORYID;
+			finderArgs = new Object[] {
+					assetCategoryId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AssetEntryAssetCategoryRel> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AssetEntryAssetCategoryRel>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : list) {
+					if ((assetCategoryId != assetEntryAssetCategoryRel.getAssetCategoryId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetCategoryId);
+
+				if (!pagination) {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<AssetEntryAssetCategoryRel>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry asset category rel
+	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
+	 */
+	@Override
+	public AssetEntryAssetCategoryRel findByAssetCategoryId_First(
+		long assetCategoryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
+		throws NoSuchEntryAssetCategoryRelException {
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByAssetCategoryId_First(assetCategoryId,
+				orderByComparator);
+
+		if (assetEntryAssetCategoryRel != null) {
+			return assetEntryAssetCategoryRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetCategoryId=");
+		msg.append(assetCategoryId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryAssetCategoryRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the first asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
+	 */
+	@Override
+	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_First(
+		long assetCategoryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
+		List<AssetEntryAssetCategoryRel> list = findByAssetCategoryId(assetCategoryId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry asset category rel
+	 * @throws NoSuchEntryAssetCategoryRelException if a matching asset entry asset category rel could not be found
+	 */
+	@Override
+	public AssetEntryAssetCategoryRel findByAssetCategoryId_Last(
+		long assetCategoryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
+		throws NoSuchEntryAssetCategoryRelException {
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = fetchByAssetCategoryId_Last(assetCategoryId,
+				orderByComparator);
+
+		if (assetEntryAssetCategoryRel != null) {
+			return assetEntryAssetCategoryRel;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("assetCategoryId=");
+		msg.append(assetCategoryId);
+
+		msg.append("}");
+
+		throw new NoSuchEntryAssetCategoryRelException(msg.toString());
+	}
+
+	/**
+	 * Returns the last asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching asset entry asset category rel, or <code>null</code> if a matching asset entry asset category rel could not be found
+	 */
+	@Override
+	public AssetEntryAssetCategoryRel fetchByAssetCategoryId_Last(
+		long assetCategoryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator) {
+		int count = countByAssetCategoryId(assetCategoryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AssetEntryAssetCategoryRel> list = findByAssetCategoryId(assetCategoryId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the asset entry asset category rels before and after the current asset entry asset category rel in the ordered set where assetCategoryId = &#63;.
+	 *
+	 * @param assetEntryAssetCategoryRelId the primary key of the current asset entry asset category rel
+	 * @param assetCategoryId the asset category ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next asset entry asset category rel
+	 * @throws NoSuchEntryAssetCategoryRelException if a asset entry asset category rel with the primary key could not be found
+	 */
+	@Override
+	public AssetEntryAssetCategoryRel[] findByAssetCategoryId_PrevAndNext(
+		long assetEntryAssetCategoryRelId, long assetCategoryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator)
+		throws NoSuchEntryAssetCategoryRelException {
+		AssetEntryAssetCategoryRel assetEntryAssetCategoryRel = findByPrimaryKey(assetEntryAssetCategoryRelId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AssetEntryAssetCategoryRel[] array = new AssetEntryAssetCategoryRelImpl[3];
+
+			array[0] = getByAssetCategoryId_PrevAndNext(session,
+					assetEntryAssetCategoryRel, assetCategoryId,
+					orderByComparator, true);
+
+			array[1] = assetEntryAssetCategoryRel;
+
+			array[2] = getByAssetCategoryId_PrevAndNext(session,
+					assetEntryAssetCategoryRel, assetCategoryId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AssetEntryAssetCategoryRel getByAssetCategoryId_PrevAndNext(
+		Session session, AssetEntryAssetCategoryRel assetEntryAssetCategoryRel,
+		long assetCategoryId,
+		OrderByComparator<AssetEntryAssetCategoryRel> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ASSETENTRYASSETCATEGORYREL_WHERE);
+
+		query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AssetEntryAssetCategoryRelModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(assetCategoryId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(assetEntryAssetCategoryRel);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AssetEntryAssetCategoryRel> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the asset entry asset category rels where assetCategoryId = &#63; from the database.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 */
+	@Override
+	public void removeByAssetCategoryId(long assetCategoryId) {
+		for (AssetEntryAssetCategoryRel assetEntryAssetCategoryRel : findByAssetCategoryId(
+				assetCategoryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(assetEntryAssetCategoryRel);
+		}
+	}
+
+	/**
+	 * Returns the number of asset entry asset category rels where assetCategoryId = &#63;.
+	 *
+	 * @param assetCategoryId the asset category ID
+	 * @return the number of matching asset entry asset category rels
+	 */
+	@Override
+	public int countByAssetCategoryId(long assetCategoryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ASSETCATEGORYID;
+
+		Object[] finderArgs = new Object[] { assetCategoryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_ASSETENTRYASSETCATEGORYREL_WHERE);
+
+			query.append(_FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(assetCategoryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ASSETCATEGORYID_ASSETCATEGORYID_2 =
+		"assetEntryAssetCategoryRel.assetCategoryId = ?";
 
 	public AssetEntryAssetCategoryRelPersistenceImpl() {
 		setModelClass(AssetEntryAssetCategoryRel.class);
@@ -1340,19 +1364,19 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		else
 		 if (isNew) {
 			Object[] args = new Object[] {
-					assetEntryAssetCategoryRelModelImpl.getEntryId()
+					assetEntryAssetCategoryRelModelImpl.getAssetEntryId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
 				args);
 
 			args = new Object[] {
-					assetEntryAssetCategoryRelModelImpl.getCategoryId()
+					assetEntryAssetCategoryRelModelImpl.getAssetCategoryId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID,
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETCATEGORYID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETCATEGORYID,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -1362,40 +1386,42 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 
 		else {
 			if ((assetEntryAssetCategoryRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetEntryAssetCategoryRelModelImpl.getOriginalEntryId()
+						assetEntryAssetCategoryRelModelImpl.getOriginalAssetEntryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
 					args);
 
 				args = new Object[] {
-						assetEntryAssetCategoryRelModelImpl.getEntryId()
+						assetEntryAssetCategoryRelModelImpl.getAssetEntryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ENTRYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ENTRYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETENTRYID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETENTRYID,
 					args);
 			}
 
 			if ((assetEntryAssetCategoryRelModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETCATEGORYID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						assetEntryAssetCategoryRelModelImpl.getOriginalCategoryId()
+						assetEntryAssetCategoryRelModelImpl.getOriginalAssetCategoryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETCATEGORYID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETCATEGORYID,
 					args);
 
 				args = new Object[] {
-						assetEntryAssetCategoryRelModelImpl.getCategoryId()
+						assetEntryAssetCategoryRelModelImpl.getAssetCategoryId()
 					};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CATEGORYID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CATEGORYID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ASSETCATEGORYID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ASSETCATEGORYID,
 					args);
 			}
 		}
@@ -1422,8 +1448,8 @@ public class AssetEntryAssetCategoryRelPersistenceImpl
 		assetEntryAssetCategoryRelImpl.setPrimaryKey(assetEntryAssetCategoryRel.getPrimaryKey());
 
 		assetEntryAssetCategoryRelImpl.setAssetEntryAssetCategoryRelId(assetEntryAssetCategoryRel.getAssetEntryAssetCategoryRelId());
-		assetEntryAssetCategoryRelImpl.setEntryId(assetEntryAssetCategoryRel.getEntryId());
-		assetEntryAssetCategoryRelImpl.setCategoryId(assetEntryAssetCategoryRel.getCategoryId());
+		assetEntryAssetCategoryRelImpl.setAssetEntryId(assetEntryAssetCategoryRel.getAssetEntryId());
+		assetEntryAssetCategoryRelImpl.setAssetCategoryId(assetEntryAssetCategoryRel.getAssetCategoryId());
 
 		return assetEntryAssetCategoryRelImpl;
 	}

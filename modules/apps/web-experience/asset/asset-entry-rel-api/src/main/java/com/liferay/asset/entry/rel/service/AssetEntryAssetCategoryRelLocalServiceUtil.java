@@ -55,8 +55,9 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 	}
 
 	public static com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
-		long entryId, long categoryId) {
-		return getService().addAssetEntryAssetCategoryRel(entryId, categoryId);
+		long assetEntryId, long assetCategoryId) {
+		return getService()
+				   .addAssetEntryAssetCategoryRel(assetEntryId, assetCategoryId);
 	}
 
 	/**
@@ -97,9 +98,10 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 				   .deleteAssetEntryAssetCategoryRel(assetEntryAssetCategoryRelId);
 	}
 
-	public static void deleteAssetEntryAssetCategoryRelByCategoryId(
-		long categoryId) {
-		getService().deleteAssetEntryAssetCategoryRelByCategoryId(categoryId);
+	public static void deleteAssetEntryAssetCategoryRelByAssetCategoryId(
+		long assetCategoryId) {
+		getService()
+			.deleteAssetEntryAssetCategoryRelByAssetCategoryId(assetCategoryId);
 	}
 
 	/**
@@ -229,15 +231,16 @@ public class AssetEntryAssetCategoryRelLocalServiceUtil {
 		return getService().getAssetEntryAssetCategoryRels(start, end);
 	}
 
-	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByCategoryId(
-		long categoryId) {
+	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByAssetCategoryId(
+		long assetCategoryId) {
 		return getService()
-				   .getAssetEntryAssetCategoryRelsByCategoryId(categoryId);
+				   .getAssetEntryAssetCategoryRelsByAssetCategoryId(assetCategoryId);
 	}
 
-	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByEntryId(
-		long entryId) {
-		return getService().getAssetEntryAssetCategoryRelsByEntryId(entryId);
+	public static java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByAssetEntryId(
+		long assetEntryId) {
+		return getService()
+				   .getAssetEntryAssetCategoryRelsByAssetEntryId(assetEntryId);
 	}
 
 	/**

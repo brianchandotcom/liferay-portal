@@ -48,9 +48,9 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 
 	@Override
 	public com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel addAssetEntryAssetCategoryRel(
-		long entryId, long categoryId) {
-		return _assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(entryId,
-			categoryId);
+		long assetEntryId, long assetCategoryId) {
+		return _assetEntryAssetCategoryRelLocalService.addAssetEntryAssetCategoryRel(assetEntryId,
+			assetCategoryId);
 	}
 
 	/**
@@ -92,8 +92,9 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteAssetEntryAssetCategoryRelByCategoryId(long categoryId) {
-		_assetEntryAssetCategoryRelLocalService.deleteAssetEntryAssetCategoryRelByCategoryId(categoryId);
+	public void deleteAssetEntryAssetCategoryRelByAssetCategoryId(
+		long assetCategoryId) {
+		_assetEntryAssetCategoryRelLocalService.deleteAssetEntryAssetCategoryRelByAssetCategoryId(assetCategoryId);
 	}
 
 	/**
@@ -236,15 +237,15 @@ public class AssetEntryAssetCategoryRelLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByCategoryId(
-		long categoryId) {
-		return _assetEntryAssetCategoryRelLocalService.getAssetEntryAssetCategoryRelsByCategoryId(categoryId);
+	public java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByAssetCategoryId(
+		long assetCategoryId) {
+		return _assetEntryAssetCategoryRelLocalService.getAssetEntryAssetCategoryRelsByAssetCategoryId(assetCategoryId);
 	}
 
 	@Override
-	public java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByEntryId(
-		long entryId) {
-		return _assetEntryAssetCategoryRelLocalService.getAssetEntryAssetCategoryRelsByEntryId(entryId);
+	public java.util.List<com.liferay.asset.entry.rel.model.AssetEntryAssetCategoryRel> getAssetEntryAssetCategoryRelsByAssetEntryId(
+		long assetEntryId) {
+		return _assetEntryAssetCategoryRelLocalService.getAssetEntryAssetCategoryRelsByAssetEntryId(assetEntryId);
 	}
 
 	/**

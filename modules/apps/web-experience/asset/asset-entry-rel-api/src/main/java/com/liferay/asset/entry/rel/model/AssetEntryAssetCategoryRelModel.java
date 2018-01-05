@@ -75,32 +75,32 @@ public interface AssetEntryAssetCategoryRelModel extends BaseModel<AssetEntryAss
 		long assetEntryAssetCategoryRelId);
 
 	/**
-	 * Returns the entry ID of this asset entry asset category rel.
+	 * Returns the asset entry ID of this asset entry asset category rel.
 	 *
-	 * @return the entry ID of this asset entry asset category rel
+	 * @return the asset entry ID of this asset entry asset category rel
 	 */
-	public long getEntryId();
+	public long getAssetEntryId();
 
 	/**
-	 * Sets the entry ID of this asset entry asset category rel.
+	 * Sets the asset entry ID of this asset entry asset category rel.
 	 *
-	 * @param entryId the entry ID of this asset entry asset category rel
+	 * @param assetEntryId the asset entry ID of this asset entry asset category rel
 	 */
-	public void setEntryId(long entryId);
+	public void setAssetEntryId(long assetEntryId);
 
 	/**
-	 * Returns the category ID of this asset entry asset category rel.
+	 * Returns the asset category ID of this asset entry asset category rel.
 	 *
-	 * @return the category ID of this asset entry asset category rel
+	 * @return the asset category ID of this asset entry asset category rel
 	 */
-	public long getCategoryId();
+	public long getAssetCategoryId();
 
 	/**
-	 * Sets the category ID of this asset entry asset category rel.
+	 * Sets the asset category ID of this asset entry asset category rel.
 	 *
-	 * @param categoryId the category ID of this asset entry asset category rel
+	 * @param assetCategoryId the asset category ID of this asset entry asset category rel
 	 */
-	public void setCategoryId(long categoryId);
+	public void setAssetCategoryId(long assetCategoryId);
 
 	@Override
 	public boolean isNew();

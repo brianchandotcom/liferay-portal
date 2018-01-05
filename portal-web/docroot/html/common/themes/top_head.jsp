@@ -116,6 +116,20 @@ if (layout != null) {
 		}
 	}
 
+	Iterator<Portlet> portletIterator = portlets.iterator();
+	LayoutTypeAccessPolicy layoutTypeAccessPolicy = LayoutTypeAccessPolicyTracker.getLayoutTypeAccessPolicy(layout);
+
+	while (portletIterator.hasNext()) {
+		Portlet portlet = portletIterator.next();
+
+		try {
+			layoutTypeAccessPolicy.checkAccessAllowedToPortlet(request, layout, portlet);
+		}
+		catch (PrincipalException pe) {
+			portletIterator.remove();
+		}
+	}
+
 	request.setAttribute(WebKeys.LAYOUT_PORTLETS, portlets);
 }
 %>

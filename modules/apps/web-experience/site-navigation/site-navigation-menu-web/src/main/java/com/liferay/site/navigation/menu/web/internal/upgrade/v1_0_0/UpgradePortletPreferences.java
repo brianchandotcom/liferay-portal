@@ -32,7 +32,7 @@ public class UpgradePortletPreferences extends BaseUpgradePortletPreferences {
 	@Override
 	protected String[] getPortletIds() {
 		return new String[] {
-			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU
+			SiteNavigationMenuPortletKeys.SITE_NAVIGATION_MENU + "%"
 		};
 	}
 

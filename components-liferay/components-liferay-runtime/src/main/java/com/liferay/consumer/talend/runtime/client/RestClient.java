@@ -16,12 +16,16 @@ package com.liferay.consumer.talend.runtime.client;
 
 import com.liferay.consumer.talend.connection.LiferayConnectionProperties;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.StatusType;
 
 import org.glassfish.jersey.client.ClientConfig;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
@@ -51,9 +55,11 @@ public class RestClient {
 		_password = connection.password.getValue();
 	}
 
-	public RestClient(LiferayConnectionProperties connection, String address) {
+	public RestClient(
+		LiferayConnectionProperties connection, String resourceURL) {
+
 		this(connection);
-		_endpoint = address;
+		_endpoint = resourceURL;
 	}
 
 	public ApioResult executeGetRequest() throws ApioException {
@@ -64,7 +70,7 @@ public class RestClient {
 		Invocation.Builder invocationBuilder = webTarget.request(
 			APPLICATION_JSON_LD);
 
-		Response response = invocationBuilder.get();
+		Response response = _follow3Redirects(client, invocationBuilder.get());
 
 		return _handleApioResponse(QueryMethod.GET, response);
 	}
@@ -98,13 +104,46 @@ public class RestClient {
 		GET, POST, DELETE
 	}
 
+	private Response _follow3Redirects(
+		Client client, Response currentResponse) {
+
+		AtomicInteger counter = new AtomicInteger();
+		Response response = currentResponse;
+
+		StatusType statusType = response.getStatusInfo();
+
+		while ((statusType.getFamily() ==
+					Response.Status.Family.REDIRECTION) &&
+			   (counter.incrementAndGet() <= 3)) {
+
+			String location = response.getHeaderString(HttpHeaders.LOCATION);
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Redirect location {}#: {}", counter.get(), location);
+			}
+
+			response.close();
+
+			WebTarget webTarget = client.target(location);
+
+			Invocation.Builder invocationBuilder = webTarget.request(
+				APPLICATION_JSON_LD);
+
+			response = invocationBuilder.get();
+		}
+
+		return response;
+	}
+
 	private ApioResult _handleApioResponse(
 			QueryMethod queryMethod, Response response)
 		throws ApioException {
 
+		StatusType statusType = response.getStatusInfo();
 		int statusCode = response.getStatus();
 
-		if (statusCode == 200) {
+		if (statusType.getFamily() == Response.Status.Family.SUCCESSFUL) {
 			String messageEntity = response.readEntity(String.class);
 
 			return new ApioResult(statusCode, messageEntity);
@@ -121,7 +160,7 @@ public class RestClient {
 	private static final Logger _log = LoggerFactory.getLogger(
 		RestClient.class);
 
-	private String _endpoint;
+	private volatile String _endpoint;
 	private final String _password;
 	private final String _userId;
 

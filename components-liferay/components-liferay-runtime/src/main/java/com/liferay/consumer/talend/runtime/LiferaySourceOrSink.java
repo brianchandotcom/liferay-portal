@@ -166,8 +166,8 @@ public class LiferaySourceOrSink
 		String password = conn.password.getValue();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug(conn.endpoint.getValue());
-			_log.debug(conn.userId.getValue());
+			_log.debug("Validate Endpoint: {}", conn.endpoint.getValue());
+			_log.debug("Validate UserID: {}", conn.userId.getValue());
 		}
 
 		ValidationResultMutable vr = new ValidationResultMutable();

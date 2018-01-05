@@ -1,8 +1,5 @@
 Bundle-Name: Liferay Portal Security SSO OpenSSO
 Bundle-SymbolicName: com.liferay.portal.security.sso.opensso
-Bundle-Version: 3.0.14
-Export-Package:\
-	com.liferay.portal.security.sso.opensso.configuration,\
-	com.liferay.portal.security.sso.opensso.constants
+Bundle-Version: 4.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks

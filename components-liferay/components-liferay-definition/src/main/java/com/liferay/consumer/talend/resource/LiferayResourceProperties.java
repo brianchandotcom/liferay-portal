@@ -20,6 +20,8 @@ import com.liferay.consumer.talend.connection.LiferayProvideConnectionProperties
 import com.liferay.consumer.talend.exception.ExceptionUtils;
 import com.liferay.consumer.talend.runtime.LiferaySourceOrSinkRuntime;
 
+import java.io.IOException;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -50,6 +52,10 @@ public class LiferayResourceProperties
 		super(name);
 	}
 
+	/**
+	 * @deprecated This method need to be updated
+	 */
+	@Deprecated
 	public ValidationResult afterModuleName() throws Exception {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
@@ -70,9 +76,9 @@ public class LiferayResourceProperties
 
 					main.schema.setValue(schema);
 				}
-				catch (Exception ex) {
+				catch (IOException ioe) {
 					throw new ComponentException(
-						ExceptionUtils.exceptionToValidationResult(ex));
+						ExceptionUtils.exceptionToValidationResult(ioe));
 				}
 			}
 			else {

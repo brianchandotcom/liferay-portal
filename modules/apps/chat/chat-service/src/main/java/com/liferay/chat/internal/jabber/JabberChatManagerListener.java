@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.jabber;
+package com.liferay.chat.internal.jabber;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ChatManagerListener;

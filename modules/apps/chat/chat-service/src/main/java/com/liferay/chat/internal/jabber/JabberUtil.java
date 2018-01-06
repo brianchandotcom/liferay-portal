@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.chat.jabber;
+package com.liferay.chat.internal.jabber;
 
 import com.liferay.chat.internal.configuration.ChatGroupServiceConfiguration;
+import com.liferay.chat.jabber.Jabber;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 
 import java.util.List;

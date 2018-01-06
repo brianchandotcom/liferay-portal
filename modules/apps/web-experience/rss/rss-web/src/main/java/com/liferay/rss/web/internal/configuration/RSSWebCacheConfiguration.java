@@ -12,18 +12,23 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration;
+package com.liferay.rss.web.internal.configuration;
 
-import com.liferay.portal.kernel.util.GetterUtil;
+import aQute.bnd.annotation.metatype.Meta;
+
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
- * @author     Eudaldo Alonso
- * @deprecated As of 2.2.0, with no direct replacement
+ * @author Juergen Kappler
  */
-@Deprecated
-public class RSSWebConfigurationValues {
+@ExtendedObjectClassDefinition(category = "web-experience")
+@Meta.OCD(
+	id = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
+	localization = "content/Language", name = "rss-web-cache-configuration-name"
+)
+public interface RSSWebCacheConfiguration {
 
-	public static final String DISPLAY_TEMPLATES_CONFIG = GetterUtil.getString(
-		RSSWebConfigurationUtil.get("display.templates.config"));
+	@Meta.AD(deflt = "20", name = "feed-time", required = false)
+	public int feedTime();
 
 }

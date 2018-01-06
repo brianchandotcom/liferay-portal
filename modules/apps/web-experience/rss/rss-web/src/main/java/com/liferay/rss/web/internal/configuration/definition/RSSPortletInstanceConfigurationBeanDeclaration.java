@@ -12,23 +12,23 @@
  * details.
  */
 
-package com.liferay.rss.web.configuration;
+package com.liferay.rss.web.internal.configuration.definition;
 
-import aQute.bnd.annotation.metatype.Meta;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.rss.web.internal.configuration.RSSPortletInstanceConfiguration;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Juergen Kappler
+ * @author Iván Zaera
  */
-@ExtendedObjectClassDefinition(category = "web-experience")
-@Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
-	localization = "content/Language", name = "rss-web-cache-configuration-name"
-)
-public interface RSSWebCacheConfiguration {
+@Component
+public class RSSPortletInstanceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
-	@Meta.AD(deflt = "20", name = "feed-time", required = false)
-	public int feedTime();
+	@Override
+	public Class<?> getConfigurationBeanClass() {
+		return RSSPortletInstanceConfiguration.class;
+	}
 
 }

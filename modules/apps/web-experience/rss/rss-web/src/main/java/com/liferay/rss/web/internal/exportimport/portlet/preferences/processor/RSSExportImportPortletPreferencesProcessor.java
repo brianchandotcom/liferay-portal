@@ -21,7 +21,7 @@ import com.liferay.exportimport.portlet.preferences.processor.ExportImportPortle
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateExportCapability;
 import com.liferay.portlet.display.template.exportimport.portlet.preferences.processor.PortletDisplayTemplateImportCapability;
-import com.liferay.rss.web.constants.RSSPortletKeys;
+import com.liferay.rss.constants.RSSPortletKeys;
 
 import java.util.List;
 

@@ -1,10 +1,6 @@
 Bundle-Name: Liferay RSS Web
 Bundle-SymbolicName: com.liferay.rss.web
-Bundle-Version: 2.2.17
-Export-Package:\
-	com.liferay.rss.web.configuration,\
-	com.liferay.rss.web.constants,\
-	com.liferay.rss.web.util
+Bundle-Version: 3.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Publication Tools
 Web-ContextPath: /rss-web

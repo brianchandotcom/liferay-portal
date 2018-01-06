@@ -14,8 +14,8 @@
 
 package com.liferay.chat.internal.poller;
 
-import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.constants.ChatPortletKeys;
+import com.liferay.chat.internal.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.EntryLocalServiceUtil;

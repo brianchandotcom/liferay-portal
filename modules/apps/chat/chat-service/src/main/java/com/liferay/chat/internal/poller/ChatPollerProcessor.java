@@ -20,7 +20,7 @@ import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.EntryLocalServiceUtil;
 import com.liferay.chat.service.StatusLocalServiceUtil;
-import com.liferay.chat.util.BuddyFinderUtil;
+import com.liferay.chat.util.BuddyFinder;
 import com.liferay.chat.util.ChatConstants;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
@@ -115,7 +115,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws Exception {
 
-		List<Object[]> buddies = BuddyFinderUtil.getBuddies(
+		List<Object[]> buddies = _buddyFinder.getBuddies(
 			pollerRequest.getCompanyId(), pollerRequest.getUserId());
 
 		JSONArray buddiesJSONArray = JSONFactoryUtil.createJSONArray();
@@ -322,6 +322,9 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 	@Reference
 	private Http _http;
+
+	@Reference
+	private BuddyFinder _buddyFinder;
 
 	private LayoutSetLocalService _layoutSetLocalService;
 

@@ -1,9 +1,5 @@
 Bundle-Name: Liferay Chat Service
 Bundle-SymbolicName: com.liferay.chat.service
 Bundle-Version: 1.0.27
-Export-Package:\
-	com.liferay.chat.configuration,\
-	com.liferay.chat.jabber,\
-	com.liferay.chat.util
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true

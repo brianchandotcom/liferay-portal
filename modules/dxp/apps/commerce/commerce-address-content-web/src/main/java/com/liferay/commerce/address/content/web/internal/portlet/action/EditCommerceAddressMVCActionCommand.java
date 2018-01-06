@@ -21,6 +21,7 @@ import com.liferay.commerce.exception.CommerceAddressStreetException;
 import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.service.CommerceAddressService;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -136,9 +137,10 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
 		if (commerceAddressId <= 0) {
 			_commerceAddressService.addCommerceAddress(
-				addressUserId, name, description, street1, street2, street3,
-				city, zip, commerceRegionId, commerceCountryId, phoneNumber,
-				defaultBilling, defaultShipping, serviceContext);
+				User.class.getName(), addressUserId, name, description, street1,
+				street2, street3, city, zip, commerceRegionId,
+				commerceCountryId, phoneNumber, defaultBilling, defaultShipping,
+				serviceContext);
 		}
 		else {
 			_commerceAddressService.updateCommerceAddress(

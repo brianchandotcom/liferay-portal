@@ -24,7 +24,8 @@
 
 		<!-- Other fields -->
 
-		<column name="addressUserId" type="long" />
+		<column name="classNameId" type="long" />
+		<column name="classPK" type="long" />
 		<column name="name" type="String" />
 		<column name="description" type="String" />
 		<column name="street1" type="String" />
@@ -48,27 +49,31 @@
 
 		<!-- Finder methods -->
 
-		<finder name="AddressUserId" return-type="Collection">
-			<finder-column name="addressUserId" />
-		</finder>
 		<finder name="CommerceRegionId" return-type="Collection">
 			<finder-column name="commerceRegionId" />
 		</finder>
 		<finder name="CommerceCountryId" return-type="Collection">
 			<finder-column name="commerceCountryId" />
 		</finder>
-		<finder name="G_A" return-type="Collection">
-			<finder-column name="groupId" />
-			<finder-column name="addressUserId" />
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 		</finder>
-		<finder name="G_A_DB" return-type="Collection">
+		<finder name="G_C_C" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="addressUserId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
+		<finder name="G_C_C_DB" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 			<finder-column name="defaultBilling" />
 		</finder>
-		<finder name="G_A_DS" return-type="Collection">
+		<finder name="G_C_C_DS" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="addressUserId" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
 			<finder-column name="defaultShipping" />
 		</finder>
 	</entity>

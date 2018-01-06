@@ -29,6 +29,7 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -110,9 +111,9 @@ public abstract class BaseAddressCommerceCheckoutStep
 			CommerceAddress.class.getName(), actionRequest);
 
 		return commerceAddressService.addCommerceAddress(
-			addressUserId, name, description, street1, street2, street3, city,
-			zip, commerceRegionId, commerceCountryId, phoneNumber, false, false,
-			serviceContext);
+			User.class.getName(), addressUserId, name, description, street1,
+			street2, street3, city, zip, commerceRegionId, commerceCountryId,
+			phoneNumber, false, false, serviceContext);
 	}
 
 	protected abstract BaseAddressCheckoutStepDisplayContext

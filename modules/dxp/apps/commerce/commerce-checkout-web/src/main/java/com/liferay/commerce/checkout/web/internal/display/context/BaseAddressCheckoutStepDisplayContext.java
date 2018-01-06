@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
@@ -47,7 +48,8 @@ public abstract class BaseAddressCheckoutStepDisplayContext {
 
 	public List<CommerceAddress> getCommerceAddresses() throws PortalException {
 		return _commerceAddressService.getCommerceAddresses(
-			_commerceCart.getGroupId(), _commerceCart.getUserId());
+			_commerceCart.getGroupId(), User.class.getName(),
+			_commerceCart.getUserId());
 	}
 
 	public CommerceCart getCommerceCart() {

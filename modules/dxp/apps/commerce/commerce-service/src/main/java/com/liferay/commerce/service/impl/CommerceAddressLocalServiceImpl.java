@@ -39,10 +39,10 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public CommerceAddress addCommerceAddress(
-			long addressUserId, String name, String description, String street1,
-			String street2, String street3, String city, String zip,
-			long commerceRegionId, long commerceCountryId, String phoneNumber,
-			boolean defaultBilling, boolean defaultShipping,
+			String className, long classPK, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, boolean defaultBilling, boolean defaultShipping,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -50,8 +50,8 @@ public class CommerceAddressLocalServiceImpl
 		long groupId = serviceContext.getScopeGroupId();
 
 		validate(
-			0, groupId, addressUserId, name, street1, city, commerceCountryId,
-			defaultBilling, defaultShipping);
+			0, groupId, className, classPK, name, street1, city,
+			commerceCountryId, defaultBilling, defaultShipping);
 
 		long commerceAddressId = counterLocalService.increment();
 
@@ -62,7 +62,8 @@ public class CommerceAddressLocalServiceImpl
 		commerceAddress.setCompanyId(user.getCompanyId());
 		commerceAddress.setUserId(user.getUserId());
 		commerceAddress.setUserName(user.getFullName());
-		commerceAddress.setAddressUserId(addressUserId);
+		commerceAddress.setClassName(className);
+		commerceAddress.setClassPK(classPK);
 		commerceAddress.setName(name);
 		commerceAddress.setDescription(description);
 		commerceAddress.setStreet1(street1);
@@ -121,6 +122,20 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@Override
+	public void deleteCommerceAddresses(String className, long classPK)
+		throws PortalException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		List<CommerceAddress> commerceAddresses =
+			commerceAddressPersistence.findByC_C(classNameId, classPK);
+
+		for (CommerceAddress commerceAddress : commerceAddresses) {
+			commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
+		}
+	}
+
+	@Override
 	public void deleteCountryCommerceAddresses(long commerceCountryId)
 		throws PortalException {
 
@@ -139,18 +154,6 @@ public class CommerceAddressLocalServiceImpl
 
 		List<CommerceAddress> commerceAddresses =
 			commerceAddressPersistence.findByCommerceRegionId(commerceRegionId);
-
-		for (CommerceAddress commerceAddress : commerceAddresses) {
-			commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
-		}
-	}
-
-	@Override
-	public void deleteUserCommerceAddresses(long addressUserId)
-		throws PortalException {
-
-		List<CommerceAddress> commerceAddresses =
-			commerceAddressPersistence.findByAddressUserId(addressUserId);
 
 		for (CommerceAddress commerceAddress : commerceAddresses) {
 			commerceAddressLocalService.deleteCommerceAddress(commerceAddress);
@@ -177,23 +180,33 @@ public class CommerceAddressLocalServiceImpl
 
 	@Override
 	public List<CommerceAddress> getCommerceAddresses(
-		long groupId, long addressUserId) {
+		long groupId, String className, long classPK) {
 
-		return commerceAddressPersistence.findByG_A(groupId, addressUserId);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return commerceAddressPersistence.findByG_C_C(
+			groupId, classNameId, classPK);
 	}
 
 	@Override
 	public List<CommerceAddress> getCommerceAddresses(
-		long groupId, long addressUserId, int start, int end,
+		long groupId, String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator) {
 
-		return commerceAddressPersistence.findByG_A(
-			groupId, addressUserId, start, end, orderByComparator);
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return commerceAddressPersistence.findByG_C_C(
+			groupId, classNameId, classPK, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceAddressesCount(long groupId, long addressUserId) {
-		return commerceAddressPersistence.countByG_A(groupId, addressUserId);
+	public int getCommerceAddressesCount(
+		long groupId, String className, long classPK) {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return commerceAddressPersistence.countByG_C_C(
+			groupId, classNameId, classPK);
 	}
 
 	@Override
@@ -212,9 +225,9 @@ public class CommerceAddressLocalServiceImpl
 
 		validate(
 			commerceAddress.getCommerceAddressId(),
-			commerceAddress.getGroupId(), commerceAddress.getAddressUserId(),
-			name, street1, city, commerceCountryId, defaultBilling,
-			defaultShipping);
+			commerceAddress.getGroupId(), commerceAddress.getClassName(),
+			commerceAddress.getClassPK(), name, street1, city,
+			commerceCountryId, defaultBilling, defaultShipping);
 
 		commerceAddress.setName(name);
 		commerceAddress.setDescription(description);
@@ -280,9 +293,10 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	protected void validate(
-			long commerceAddressId, long groupId, long addressUserId,
-			String name, String street1, String city, long commerceCountryId,
-			boolean defaultBilling, boolean defaultShipping)
+			long commerceAddressId, long groupId, String className,
+			long classPK, String name, String street1, String city,
+			long commerceCountryId, boolean defaultBilling,
+			boolean defaultShipping)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -301,10 +315,12 @@ public class CommerceAddressLocalServiceImpl
 			throw new CommerceAddressCountryException();
 		}
 
+		long classNameId = classNameLocalService.getClassNameId(className);
+
 		if (defaultBilling) {
 			List<CommerceAddress> commerceAddresses =
-				commerceAddressPersistence.findByG_A_DB(
-					groupId, addressUserId, true);
+				commerceAddressPersistence.findByG_C_C_DB(
+					groupId, classNameId, classPK, true);
 
 			for (CommerceAddress commerceAddress : commerceAddresses) {
 				if (commerceAddress.getCommerceAddressId() !=
@@ -319,8 +335,8 @@ public class CommerceAddressLocalServiceImpl
 
 		if (defaultShipping) {
 			List<CommerceAddress> commerceAddresses =
-				commerceAddressPersistence.findByG_A_DS(
-					groupId, addressUserId, true);
+				commerceAddressPersistence.findByG_C_C_DS(
+					groupId, classNameId, classPK, true);
 
 			for (CommerceAddress commerceAddress : commerceAddresses) {
 				if (commerceAddress.getCommerceAddressId() !=

@@ -34,8 +34,8 @@ public class UserModelListener extends BaseModelListener<User> {
 	@Override
 	public void onBeforeRemove(User user) {
 		try {
-			_commerceAddressLocalService.deleteUserCommerceAddresses(
-				user.getUserId());
+			_commerceAddressLocalService.deleteCommerceAddresses(
+				user.getModelClassName(), user.getUserId());
 		}
 		catch (PortalException pe) {
 			if (_log.isWarnEnabled()) {

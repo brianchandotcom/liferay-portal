@@ -65,7 +65,8 @@ public class CommerceShipmentDisplayContext
 				WebKeys.THEME_DISPLAY);
 
 		return _commerceAddressService.getCommerceAddresses(
-			themeDisplay.getScopeGroupId(), getShipmentUserId());
+			themeDisplay.getScopeGroupId(), User.class.getName(),
+			getShipmentUserId());
 	}
 
 	public long getCommerceAddressId() throws PortalException {

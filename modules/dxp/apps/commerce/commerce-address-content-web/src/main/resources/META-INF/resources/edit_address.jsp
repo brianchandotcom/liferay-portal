@@ -39,7 +39,7 @@ long commerceRegionId = commerceAddressDisplayContext.getCommerceRegionId();
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
 	<aui:input name="commerceAddressId" type="hidden" value="<%= commerceAddressId %>" />
-	<aui:input name="addressUserId" type="hidden" value="<%= (commerceAddress == null) ? themeDisplay.getUserId() : commerceAddress.getAddressUserId() %>" />
+	<aui:input name="addressUserId" type="hidden" value="<%= (commerceAddress == null) ? themeDisplay.getUserId() : commerceAddress.getClassPK() %>" />
 
 	<aui:model-context bean="<%= commerceAddress %>" model="<%= CommerceAddress.class %>" />
 

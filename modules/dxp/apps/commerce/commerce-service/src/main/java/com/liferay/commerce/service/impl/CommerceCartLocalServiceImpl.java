@@ -254,7 +254,11 @@ public class CommerceCartLocalServiceImpl
 				commerceAddressLocalService.getCommerceAddress(
 					billingAddressId);
 
-			if (userId != commerceAddress.getAddressUserId()) {
+			String className = commerceAddress.getClassName();
+
+			if (!className.equals(User.class.getName()) ||
+				(userId != commerceAddress.getClassPK())) {
+
 				throw new CommerceCartBillingAddressException();
 			}
 
@@ -273,7 +277,11 @@ public class CommerceCartLocalServiceImpl
 				commerceAddressLocalService.getCommerceAddress(
 					shippingAddressId);
 
-			if (userId != commerceAddress.getAddressUserId()) {
+			String className = commerceAddress.getClassName();
+
+			if (!className.equals(User.class.getName()) ||
+				(userId != commerceAddress.getClassPK())) {
+
 				throw new CommerceCartShippingAddressException();
 			}
 

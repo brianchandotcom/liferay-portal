@@ -14,7 +14,7 @@
 
 package com.liferay.chat.internal.portal.profile;
 
-import com.liferay.chat.configuration.ChatGroupServiceConfigurationBeanDeclaration;
+import com.liferay.chat.internal.configuration.ChatGroupServiceConfigurationBeanDeclaration;
 import com.liferay.chat.internal.events.LoginPostAction;
 import com.liferay.chat.internal.events.SessionDestroyAction;
 import com.liferay.chat.internal.model.listener.UserModelListener;

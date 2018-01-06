@@ -4,7 +4,9 @@ Bundle-Version: 1.0.5
 Export-Package:\
 	com.liferay.chat.constants,\
 	com.liferay.chat.exception,\
+	com.liferay.chat.jabber,\
 	com.liferay.chat.model,\
 	com.liferay.chat.service,\
 	com.liferay.chat.service.persistence,\
+	com.liferay.chat.util,\
 	com.liferay.chat.util.comparator

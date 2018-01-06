@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
 import com.liferay.portal.kernel.model.Repository;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -72,9 +71,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		Group group = getGroup();
-
-		_user = UserTestUtil.addGroupUser(group, RoleConstants.USER);
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test

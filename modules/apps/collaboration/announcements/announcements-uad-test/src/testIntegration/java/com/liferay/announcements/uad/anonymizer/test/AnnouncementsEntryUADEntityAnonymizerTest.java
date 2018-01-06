@@ -20,8 +20,6 @@ import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -59,11 +57,10 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		Group group = getGroup();
+		_defaultUser = _userLocalService.getDefaultUser(
+			TestPropsValues.getCompanyId());
 
-		_defaultUser = _userLocalService.getDefaultUser(group.getCompanyId());
-
-		_user = UserTestUtil.addGroupUser(group, RoleConstants.USER);
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test

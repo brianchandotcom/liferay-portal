@@ -18,7 +18,6 @@ import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -54,7 +53,7 @@ public class AnnouncementsEntryUADEntityAggregatorTest
 	public void setUp() throws Exception {
 		super.setUp();
 
-		_user = UserTestUtil.addGroupUser(getGroup(), RoleConstants.USER);
+		_user = UserTestUtil.addUser();
 	}
 
 	@Test

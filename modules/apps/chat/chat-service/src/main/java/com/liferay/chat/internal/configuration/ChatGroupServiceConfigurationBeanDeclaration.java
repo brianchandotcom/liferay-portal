@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.configuration;
+package com.liferay.chat.internal.configuration;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
 

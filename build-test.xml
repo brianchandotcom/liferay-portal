@@ -768,12 +768,12 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
-	<macrodef name="get-poshi-jvm-opts">
+	<macrodef name="get-poshi-java-jdk-opts">
 		<sequential>
 			<propertyregex
 				input="${env.ANT_OPTS}"
 				override="true"
-				property="poshi.jvm.opts"
+				property="poshi.java.jdk.opts"
 				regexp="(-Xmx)(\d*\w*)"
 				replace="\12048m"
 			/>
@@ -1496,18 +1496,18 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 				<isset property="env.JENKINS_HOME" />
 				<then>
 					<local name="java.jdk.home" />
-					<local name="poshi.jvm.opts" />
+					<local name="poshi.java.jdk.opts" />
 
 					<get-java-jdk-home architecture="x32" />
 
-					<get-poshi-jvm-opts />
+					<get-poshi-java-jdk-opts />
 
-					<gradle-execute failonerror="false" gradleopts="${poshi.jvm.opts}" task="@{task}">
+					<gradle-execute failonerror="false" gradleopts="${poshi.java.jdk.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
-						<env key="ANT_OPTS" value="${poshi.jvm.opts}" />
+						<env key="ANT_OPTS" value="${poshi.java.jdk.opts}" />
 						<env key="JAVA_HOME" path="${java.jdk.home}" />
 					</gradle-execute>
 				</then>

@@ -14,7 +14,7 @@
 
 package com.liferay.chat.internal.events;
 
-import com.liferay.chat.jabber.JabberUtil;
+import com.liferay.chat.internal.jabber.JabberUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.util.Portal;

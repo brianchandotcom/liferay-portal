@@ -124,7 +124,7 @@ public class DefaultExportImportContentProcessorTest {
 	public static void setUpClass() {
 		Registry registry = RegistryUtil.getRegistry();
 
-		StringBundler sb = new StringBundler(5);
+		StringBundler sb = new StringBundler(3);
 
 		sb.append("(&(content.processor.type=LayoutReferences)(objectClass=");
 		sb.append(ExportImportContentProcessor.class.getName());

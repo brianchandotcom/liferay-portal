@@ -154,7 +154,7 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 
 						instance._eventHandlers = [
-							A.one('body').delegate('hover', instance.openSidebarByButton, '.lfr-ddm-add-field', instance),
+							A.one('body').delegate('click', instance.openSidebarByButton, '.lfr-ddm-add-field', instance),
 							boundingBox.delegate('click', A.bind('_afterFieldClick', instance), '.' + CSS_FIELD, instance),
 							boundingBox.delegate('click', instance._onClickDuplicateFieldButton, '.' + CSS_DUPLICATE_FIELD_BUTTON, instance),
 							boundingBox.delegate('click', instance._onClickPaginationItem, '.pagination li a'),

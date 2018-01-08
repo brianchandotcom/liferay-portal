@@ -58,7 +58,7 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 		MockHttpServletRequest mockHttpServletRequest = createHttpRequest(
 			"/open/run2");
 
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(16);
 
 		sb.append("{\"class\":");
 		sb.append("\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\",");
@@ -70,9 +70,9 @@ public class JSONWebServiceSecureTest extends BaseJSONWebServiceTestCase {
 		sb.append("\"com.liferay.portal.cache.MultiVMPoolImpl\",");
 
 		sb.append("\"portalCacheManager\":{\"class\":");
-		sb.append(
-			"\"com.liferay.portal.cache.memcached.MemcachePortalCacheManager");
-		sb.append("\",\"timeout\":60,\"timeoutTimeUnit\":\"SECONDS\",");
+		sb.append("\"com.liferay.portal.cache.memcached.");
+		sb.append("MemcachePortalCacheManager\",\"timeout\":60,\"");
+		sb.append("timeoutTimeUnit\":\"SECONDS\",");
 
 		sb.append("\"memcachedClientPool\":{\"class\":");
 		sb.append("\"com.liferay.portal.cache.memcached.");

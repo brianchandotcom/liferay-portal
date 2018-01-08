@@ -471,9 +471,8 @@ public class ServiceProxyFactoryTest {
 				sb.append("}");
 			}
 
-			sb.append(
-				"\" is unavailable in 0 milliseconds while setting field \"");
-			sb.append("testService\" for class \"");
+			sb.append("\" is unavailable in 0 milliseconds while setting ");
+			sb.append("field \"testService\" for class \"");
 			sb.append(TestServiceUtil.class.getName());
 			sb.append("\", will retry...");
 

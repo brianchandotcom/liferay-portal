@@ -129,29 +129,24 @@ public class DebugUtil {
 
 			sb.append("line ");
 			sb.append(originalChunk.getPosition() + 1);
-			sb.append(" changed:");
-			sb.append("\n");
+			sb.append(" changed:\n");
 
-			sb.append("before: ");
-			sb.append("\n");
+			sb.append("before:\n");
 
 			for (String line : originalChunk.getLines()) {
 				sb.append("[");
 				sb.append(line);
-				sb.append("]");
-				sb.append("\n");
+				sb.append("]\n");
 			}
 
-			sb.append("after: ");
-			sb.append("\n");
+			sb.append("after:\n");
 
 			Chunk<String> revisedChunk = delta.getRevised();
 
 			for (String line : revisedChunk.getLines()) {
 				sb.append("[");
 				sb.append(line);
-				sb.append("]");
-				sb.append("\n");
+				sb.append("]\n");
 			}
 
 			sb.setIndex(sb.index() - 1);
@@ -223,8 +218,7 @@ public class DebugUtil {
 		sb.append("\n");
 		sb.append("==== Processing Time Information for '");
 		sb.append(checkType.getValue());
-		sb.append("' ====");
-		sb.append("\n\n");
+		sb.append("' ====\n\n");
 
 		System.out.println(sb.toString());
 

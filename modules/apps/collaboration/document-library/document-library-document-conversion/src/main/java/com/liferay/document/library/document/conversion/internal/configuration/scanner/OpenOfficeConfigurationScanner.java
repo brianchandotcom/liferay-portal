@@ -49,9 +49,9 @@ public class OpenOfficeConfigurationScanner {
 
 			StringBundler sb = new StringBundler(3);
 
-			sb.append("Conversion using a remote OpenOffice instance is ");
-			sb.append("not fully supported. Please use a local instance ");
-			sb.append("to prevent any limitations and problems.");
+			sb.append("Conversion using a remote OpenOffice instance is not ");
+			sb.append("fully supported. Please use a local instance to ");
+			sb.append("prevent any limitations and problems.");
 
 			_log.warn(sb.toString());
 		}

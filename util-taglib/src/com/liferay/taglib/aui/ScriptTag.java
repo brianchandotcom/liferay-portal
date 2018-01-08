@@ -124,14 +124,13 @@ public class ScriptTag extends BaseScriptTag {
 			}
 
 			if (getSandbox() || (require != null) || (use != null)) {
-				StringBundler sb = new StringBundler(5);
+				StringBundler sb = new StringBundler(4);
 
 				if ((require == null) && (use == null)) {
 					sb.append("(function() {");
 				}
 
-				sb.append("var $ = AUI.$;");
-				sb.append("var _ = AUI._;");
+				sb.append("var $ = AUI.$;var _ = AUI._;");
 				sb.append(bodyContentSB);
 
 				if ((require == null) && (use == null)) {

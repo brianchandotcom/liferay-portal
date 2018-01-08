@@ -28,12 +28,12 @@ public class UpgradeDDLRecordVersion extends UpgradeProcess {
 
 	@Override
 	protected void doUpgrade() throws Exception {
-		StringBundler sb = new StringBundler(3);
+		StringBundler sb = new StringBundler(4);
 
-		sb.append(
-			"select DDLRecordVersion.recordVersionId, DDLRecordSet.version ");
-		sb.append("from DDLRecordVersion inner join DDLRecordSet on ");
-		sb.append("DDLRecordVersion.recordSetId = DDLRecordSet.recordSetId ");
+		sb.append("select DDLRecordVersion.recordVersionId, ");
+		sb.append("DDLRecordSet.version from DDLRecordVersion inner join ");
+		sb.append("DDLRecordSet on DDLRecordVersion.recordSetId = ");
+		sb.append("DDLRecordSet.recordSetId");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =

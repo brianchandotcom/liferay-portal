@@ -1330,9 +1330,8 @@ public class DefaultTextExportImportContentProcessor
 					StringBundler sb = new StringBundler(4);
 
 					sb.append("Validation failed for a referenced file entry ");
-					sb.append(
-						"because a file entry could not be found with the ");
-					sb.append("following parameters: ");
+					sb.append("because a file entry could not be found with ");
+					sb.append("the following parameters: ");
 					sb.append(dlReferenceParameters);
 
 					throw new NoSuchFileEntryException(sb.toString());

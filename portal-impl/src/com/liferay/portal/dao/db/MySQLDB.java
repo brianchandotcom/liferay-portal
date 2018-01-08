@@ -66,9 +66,9 @@ public class MySQLDB extends BaseDB {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select distinct(index_name), table_name, non_unique ");
-			sb.append("from information_schema.statistics where ");
-			sb.append("index_schema = database() and (index_name like ");
-			sb.append("'LIFERAY_%' or index_name like 'IX_%')");
+			sb.append("from information_schema.statistics where index_schema ");
+			sb.append("= database() and (index_name like 'LIFERAY_%' or ");
+			sb.append("index_name like 'IX_%')");
 
 			String sql = sb.toString();
 

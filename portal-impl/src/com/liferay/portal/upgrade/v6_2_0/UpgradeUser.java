@@ -36,13 +36,13 @@ public class UpgradeUser extends UpgradeProcess {
 
 			runSQL("update Contact_ set classNameId = " + classNameId);
 
-			StringBundler sb = new StringBundler(4);
+			StringBundler sb = new StringBundler(5);
 
-			sb.append(
-				"update Contact_ set classPK = (select User_.userId from ");
-			sb.append("User_ where User_.contactId = Contact_.contactId), ");
-			sb.append("emailAddress = (select User_.emailAddress from User_ ");
-			sb.append("where User_.contactId = Contact_.contactId)");
+			sb.append("update Contact_ set classPK = (select User_.userId ");
+			sb.append("from User_ where User_.contactId = ");
+			sb.append("Contact_.contactId), emailAddress = (select ");
+			sb.append("User_.emailAddress from User_ where User_.contactId = ");
+			sb.append("Contact_.contactId)");
 
 			runSQL(sb.toString());
 		}

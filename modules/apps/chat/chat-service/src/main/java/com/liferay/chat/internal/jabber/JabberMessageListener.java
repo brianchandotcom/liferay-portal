@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.chat.jabber;
+package com.liferay.chat.internal.jabber;
 
-import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
+import com.liferay.chat.internal.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.service.EntryLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

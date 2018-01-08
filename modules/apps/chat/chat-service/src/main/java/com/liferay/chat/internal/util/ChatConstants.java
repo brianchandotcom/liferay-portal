@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.util;
+package com.liferay.chat.internal.util;
 
 import com.liferay.portal.kernel.util.Time;
 

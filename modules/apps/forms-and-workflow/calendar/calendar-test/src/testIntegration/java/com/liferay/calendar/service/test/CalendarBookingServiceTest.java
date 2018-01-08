@@ -37,8 +37,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.context.ContextUserReplace;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
@@ -62,7 +60,6 @@ import org.junit.runner.RunWith;
  * @author Lino Alves
  */
 @RunWith(Arquillian.class)
-@Sync
 public class CalendarBookingServiceTest {
 
 	@ClassRule
@@ -71,7 +68,6 @@ public class CalendarBookingServiceTest {
 		new AggregateTestRule(
 			new LiferayIntegrationTestRule(),
 			PermissionCheckerTestRule.INSTANCE,
-			SynchronousDestinationTestRule.INSTANCE,
 			SynchronousMailTestRule.INSTANCE);
 
 	@Before

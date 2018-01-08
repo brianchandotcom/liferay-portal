@@ -26,10 +26,7 @@ import com.liferay.portal.kernel.search.facet.Facet;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -53,14 +50,11 @@ import org.junit.runner.RunWith;
  * @author Wade Cao
  */
 @RunWith(Arquillian.class)
-@Sync
 public class UserFacetedSearcherTest extends BaseFacetedSearcherTestCase {
 
 	@ClassRule
 	@Rule
-	public static final TestRule testRule = new AggregateTestRule(
-		new LiferayIntegrationTestRule(),
-		SynchronousDestinationTestRule.INSTANCE);
+	public static final TestRule testRule = new LiferayIntegrationTestRule();
 
 	@Test
 	public void testUserFacet() throws Exception {

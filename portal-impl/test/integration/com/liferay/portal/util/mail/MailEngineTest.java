@@ -17,7 +17,6 @@ package com.liferay.portal.util.mail;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.petra.mail.MailEngine;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.test.mail.MailServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SynchronousMailTestRule;
@@ -34,7 +33,6 @@ import org.junit.Test;
 /**
  * @author Manuel de la Peña
  */
-@Sync
 public class MailEngineTest {
 
 	@ClassRule

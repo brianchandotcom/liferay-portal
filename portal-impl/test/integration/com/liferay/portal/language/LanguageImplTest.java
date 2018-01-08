@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.CompanyTestUtil;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -57,15 +55,12 @@ import org.junit.runner.RunWith;
 @RunWith(Enclosed.class)
 public class LanguageImplTest {
 
-	@Sync
 	public static final class GetAvailableLocales {
 
 		@ClassRule
 		@Rule
 		public static final AggregateTestRule aggregateTestRule =
-			new AggregateTestRule(
-				new LiferayIntegrationTestRule(),
-				SynchronousDestinationTestRule.INSTANCE);
+			new LiferayIntegrationTestRule();
 
 		@Before
 		public void setUp() throws Exception {

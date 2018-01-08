@@ -22,8 +22,6 @@ import com.liferay.bookmarks.util.test.BookmarksTestUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
@@ -43,16 +41,13 @@ import org.junit.runner.RunWith;
  * @author Shinn Lok
  */
 @RunWith(Arquillian.class)
-@Sync
 public class BookmarksEntryPermissionCheckerTest
 	extends BasePermissionTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new AggregateTestRule(
-			new LiferayIntegrationTestRule(),
-			SynchronousDestinationTestRule.INSTANCE);
+		new LiferayIntegrationTestRule();
 
 	@Before
 	@Override

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.messaging.SynchronousDestination;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
 import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
 import com.liferay.portal.kernel.test.rule.Sync;
-import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.rule.callback.SynchronousDestinationTestCallback.SyncHandler;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.TransactionConfig;
@@ -44,14 +43,11 @@ import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
 import com.liferay.registry.dependency.ServiceDependencyManager;
 
-import java.lang.reflect.Method;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
-import org.junit.Test;
 import org.junit.runner.Description;
 
 /**
@@ -85,33 +81,7 @@ public class SynchronousDestinationTestCallback
 	public SyncHandler beforeClass(Description description) throws Throwable {
 		Class<?> testClass = description.getTestClass();
 
-		Sync sync = testClass.getAnnotation(Sync.class);
-
-		if (sync != null) {
-			return _createSyncHandler(sync);
-		}
-
-		boolean hasSyncedMethod = false;
-
-		for (Method method : testClass.getMethods()) {
-			if ((method.getAnnotation(Sync.class) != null) &&
-				(method.getAnnotation(Test.class) != null)) {
-
-				hasSyncedMethod = true;
-
-				break;
-			}
-		}
-
-		if (!hasSyncedMethod) {
-			throw new AssertionError(
-				StringBundler.concat(
-					testClass.getName(), " uses ",
-					SynchronousDestinationTestRule.class.getName(),
-					" without any usage of ", Sync.class.getName()));
-		}
-
-		return null;
+		return _createSyncHandler(testClass.getAnnotation(Sync.class));
 	}
 
 	@Override
@@ -154,10 +124,6 @@ public class SynchronousDestinationTestCallback
 		}
 
 		public void enableSync() {
-			if (_sync == null) {
-				return;
-			}
-
 			ServiceDependencyManager serviceDependencyManager =
 				new ServiceDependencyManager();
 
@@ -211,8 +177,10 @@ public class SynchronousDestinationTestCallback
 			replaceDestination("liferay/report_request");
 			replaceDestination("liferay/reports_admin");
 
-			for (String name : _sync.destinationNames()) {
-				replaceDestination(name);
+			if (_sync != null) {
+				for (String name : _sync.destinationNames()) {
+					replaceDestination(name);
+				}
 			}
 
 			if (schedulerEnabled) {
@@ -314,10 +282,6 @@ public class SynchronousDestinationTestCallback
 		}
 
 		public void restorePreviousSync() {
-			if (_sync == null) {
-				return;
-			}
-
 			ProxyModeThreadLocal.setForceSync(_forceSync);
 
 			MessageBus messageBus = MessageBusUtil.getMessageBus();

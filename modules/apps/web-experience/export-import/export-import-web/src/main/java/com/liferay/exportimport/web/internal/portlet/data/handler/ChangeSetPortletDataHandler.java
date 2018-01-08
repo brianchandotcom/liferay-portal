@@ -41,10 +41,10 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ExportImportPortletKeys.ENTITY_SET},
+	property = {"javax.portlet.name=" + ExportImportPortletKeys.CHANGE_SET},
 	service = PortletDataHandler.class
 )
-public class EntitySetPortletDataHandler extends BasePortletDataHandler {
+public class ChangeSetPortletDataHandler extends BasePortletDataHandler {
 
 	public static final String SCHEMA_VERSION = "1.0.0";
 

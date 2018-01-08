@@ -135,6 +135,22 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceOrder updateBillingAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderLocalService.updateBillingAddress(
+			commerceOrderId, name, description, street1, street2, street3, city,
+			zip, commerceRegionId, commerceCountryId, phoneNumber,
+			serviceContext);
+	}
+
+	@Override
 	public CommerceOrder updatePurchaseOrderNumber(
 			long commerceOrderId, String purchaseOrderNumber)
 		throws PortalException {
@@ -143,6 +159,22 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 		return commerceOrderLocalService.updatePurchaseOrderNumber(
 			commerceOrderId, purchaseOrderNumber);
+	}
+
+	@Override
+	public CommerceOrder updateShippingAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderLocalService.updateShippingAddress(
+			commerceOrderId, name, description, street1, street2, street3, city,
+			zip, commerceRegionId, commerceCountryId, phoneNumber,
+			serviceContext);
 	}
 
 	protected void checkCommerceOrder(CommerceOrder commerceOrder)

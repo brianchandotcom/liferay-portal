@@ -39,6 +39,8 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 /**
  * @author Andrea Di Giorgi
@@ -242,6 +244,21 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public CommerceOrder updateBillingAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateAddress(
+			commerceOrderId, name, description, street1, street2, street3, city,
+			zip, commerceRegionId, commerceCountryId, phoneNumber,
+			CommerceOrder::getBillingAddressId,
+			CommerceOrder::setBillingAddressId, serviceContext);
+	}
+
+	@Override
 	public CommerceOrder updatePaymentStatus(
 			long commerceOrderId, int paymentStatus, int status)
 		throws PortalException {
@@ -272,6 +289,58 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrderPersistence.update(commerceOrder);
 
 		return commerceOrder;
+	}
+
+	@Override
+	public CommerceOrder updateShippingAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber, ServiceContext serviceContext)
+		throws PortalException {
+
+		return updateAddress(
+			commerceOrderId, name, description, street1, street2, street3, city,
+			zip, commerceRegionId, commerceCountryId, phoneNumber,
+			CommerceOrder::getShippingAddressId,
+			CommerceOrder::setShippingAddressId, serviceContext);
+	}
+
+	protected CommerceOrder updateAddress(
+			long commerceOrderId, String name, String description,
+			String street1, String street2, String street3, String city,
+			String zip, long commerceRegionId, long commerceCountryId,
+			String phoneNumber,
+			Function<CommerceOrder, Long> commerceAddressIdGetter,
+			BiConsumer<CommerceOrder, Long> commerceAddressIdSetter,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		CommerceAddress commerceAddress = null;
+
+		long commerceAddressId = commerceAddressIdGetter.apply(commerceOrder);
+
+		if (commerceAddressId > 0) {
+			commerceAddress = commerceAddressLocalService.updateCommerceAddress(
+				commerceAddressId, name, description, street1, street2, street3,
+				city, zip, commerceRegionId, commerceCountryId, phoneNumber,
+				false, false, serviceContext);
+		}
+		else {
+			commerceAddress = commerceAddressLocalService.addCommerceAddress(
+				commerceOrder.getModelClassName(),
+				commerceOrder.getCommerceOrderId(), name, description, street1,
+				street2, street3, city, zip, commerceRegionId,
+				commerceCountryId, phoneNumber, false, false, serviceContext);
+		}
+
+		commerceAddressIdSetter.accept(
+			commerceOrder, commerceAddress.getCommerceAddressId());
+
+		return commerceOrderPersistence.update(commerceOrder);
 	}
 
 	protected void validate(CommerceCart commerceCart) throws PortalException {

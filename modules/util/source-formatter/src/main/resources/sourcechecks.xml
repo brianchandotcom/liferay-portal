@@ -20,12 +20,7 @@
 		<check name="BNDBundleInformationCheck" />
 		<check name="BNDDirectoryNameCheck" />
 		<check name="BNDExportsCheck">
-			<property name="allowedExportPackageDirName" value="adaptive-media-image-service" />
-			<property name="allowedExportPackageDirName" value="adaptive-media-web" />
-			<property name="allowedExportPackageDirName" value="analytics-java-client" />
-			<property name="allowedExportPackageDirName" value="apio-architect-liferay-portal" />
 			<property name="allowedExportPackageDirName" value="apio-architect-sample-liferay-portal" />
-			<property name="allowedExportPackageDirName" value="apio-architect-wiring-osgi" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-data-provider" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-expression" />
 			<property name="allowedExportPackageDirName" value="dynamic-data-mapping-form-builder" />
@@ -45,8 +40,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-recent-bloggers-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/bookmarks/bookmarks-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/document-library/document-library-document-conversion" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/document-library/document-library-repository-search" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/document-library/document-library-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/message-boards/message-boards-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/microblogs/microblogs-service" />
@@ -60,17 +53,13 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-js/frontend-js-top-head-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-theme/frontend-theme-contributor-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/mobile-device-rules/mobile-device-rules-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-collection" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-concurrent" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-content" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-doulos" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-encryptor" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-io-delta" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-json-web-service-client" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-lang" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-log4j" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-mail" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-memory" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-model-adapter" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-salesforce-client" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-xml" />
@@ -78,7 +67,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-dao-orm-custom-sql" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-instance-lifecycle" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-jmx" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-messaging" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-output-stream-container" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-spring-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-upgrade" />
@@ -90,21 +78,18 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-configuration/portal-configuration-upgrade-util" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-portlet-bridge/portal-portlet-bridge-soy" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-remote/portal-remote-soap-extender" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-search/portal-search" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-search/portal-search-elasticsearch" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-search/portal-search-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-auth-verifier" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-auto-login" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-ldap" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-service-access-policy-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-cas" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-facebook-connect" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-google" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-ntlm" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-openid" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-openid-connect" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-opensso" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-token" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-settings/portal-settings-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-template/portal-template-soy" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/text-localizer/text-localizer-address" />
@@ -126,7 +111,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-display-template-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-publisher-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-resources-importer" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/export-import/export-import-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/fragment/fragment-service" />
@@ -136,12 +120,8 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/product-navigation/product-navigation-product-menu-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-util" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/rss/rss-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-breadcrumb-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/staging/staging-portlet-data-handler" />
-			<property name="allowedExportPackageDirName" value="vulcan-liferay-portal" />
-			<property name="allowedExportPackageDirName" value="vulcan-sample-liferay-portal" />
-			<property name="allowedExportPackageDirName" value="vulcan-wiring-osgi" />
 		</check>
 		<check name="BNDIncludeResourceCheck" />
 		<check name="BNDWebContextPathCheck" />

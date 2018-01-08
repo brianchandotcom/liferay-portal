@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Export Import Changeset Web
+Bundle-SymbolicName: com.liferay.exportimport.changeset.web
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Data Management
+Web-ContextPath: /exportimport-changeset-web
+-dsannotations-options: inherit
+-includeresource: content=../../staging/staging-lang/src/main/resources/content

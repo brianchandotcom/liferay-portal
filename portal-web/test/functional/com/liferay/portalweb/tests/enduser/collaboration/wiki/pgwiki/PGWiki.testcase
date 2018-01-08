@@ -831,6 +831,13 @@
 
 		<execute macro="WikiNavigator#gotoAddPageViaPG" />
 
+		<execute function="AssertElementNotPresent" locator1="Message#ERROR" />
+		<execute function="AssertTextNotPresent" value1="The format of this page is not supported. The page content will be shown unformatted." />
+
+		<execute macro="WikiEntry#viewPageFormat">
+			<var name="pageFormat" value="Creole" />
+		</execute>
+
 		<execute macro="WikiEntry#addPageTitle">
 			<var name="wikiPageTitle" value="Wiki Page With JSPWiki Content" />
 		</execute>

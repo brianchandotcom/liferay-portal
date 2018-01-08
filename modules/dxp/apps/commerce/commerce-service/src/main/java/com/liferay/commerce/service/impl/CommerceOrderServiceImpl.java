@@ -54,12 +54,9 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public void deleteCommerceOrder(long commerceOrderId)
 		throws PortalException {
 
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
+		checkCommerceOrder(commerceOrderId);
 
-		checkCommerceOrder(commerceOrder);
-
-		commerceOrderLocalService.deleteCommerceOrder(commerceOrder);
+		commerceOrderLocalService.deleteCommerceOrder(commerceOrderId);
 	}
 
 	@Override
@@ -142,13 +139,10 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			long commerceOrderId, String purchaseOrderNumber)
 		throws PortalException {
 
-		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
-			commerceOrderId);
-
-		checkCommerceOrder(commerceOrder);
+		checkCommerceOrder(commerceOrderId);
 
 		return commerceOrderLocalService.updatePurchaseOrderNumber(
-			commerceOrder.getCommerceOrderId(), purchaseOrderNumber);
+			commerceOrderId, purchaseOrderNumber);
 	}
 
 	protected void checkCommerceOrder(CommerceOrder commerceOrder)
@@ -168,6 +162,15 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 			throw new PrincipalException();
 		}
+	}
+
+	protected void checkCommerceOrder(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		checkCommerceOrder(commerceOrder);
 	}
 
 }

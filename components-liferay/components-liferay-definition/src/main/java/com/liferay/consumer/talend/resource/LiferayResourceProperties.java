@@ -52,11 +52,11 @@ public class LiferayResourceProperties
 		super(name);
 	}
 
-	/**
-	 * @deprecated This method need to be updated
-	 */
-	@Deprecated
-	public ValidationResult afterModuleName() throws Exception {
+	public ValidationResult afterResourceURL() throws Exception {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Resource URL: " + resourceURL.getValue());
+		}
+
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -87,14 +87,6 @@ public class LiferayResourceProperties
 
 			return ValidationResult.OK;
 		}
-	}
-
-	public ValidationResult afterResourceURL() throws Exception {
-		if (_log.isDebugEnabled()) {
-			_log.debug("Resource URL:" + resourceURL.getValue());
-		}
-
-		return ValidationResult.OK;
 	}
 
 	public ValidationResult beforeResourceURL() throws Exception {

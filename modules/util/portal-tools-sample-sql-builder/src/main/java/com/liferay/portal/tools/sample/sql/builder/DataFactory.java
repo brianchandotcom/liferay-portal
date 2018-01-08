@@ -1462,7 +1462,7 @@ public class DataFactory {
 	public DDMStructureLayoutModel newDDLDDMStructureLayoutModel(
 		long groupId, DDMStructureVersionModel ddmStructureVersionModel) {
 
-		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 3);
+		StringBundler sb = new StringBundler(3 + _maxDDLCustomFieldCount * 4);
 
 		sb.append("{\"defaultLanguageId\": \"en_US\", \"pages\": [{\"rows\": ");
 		sb.append("[");
@@ -1470,7 +1470,8 @@ public class DataFactory {
 		for (int i = 0; i < _maxDDLCustomFieldCount; i++) {
 			sb.append("{\"columns\": [{\"fieldNames\": [\"");
 			sb.append(nextDDLCustomFieldName(groupId, i));
-			sb.append("\"], \"size\": 12}]}, ");
+			sb.append("\"], \"size\": 12}]}");
+			sb.append(", ");
 		}
 
 		if (_maxDDLCustomFieldCount > 0) {
@@ -1499,7 +1500,8 @@ public class DataFactory {
 			sb.append(nextDDLCustomFieldName(groupId, i));
 			sb.append("\", \"readOnly\": false, \"repeatable\": false,");
 			sb.append("\"required\": false, \"showLabel\": true, \"type\": ");
-			sb.append("\"text\"},");
+			sb.append("\"text\"}");
+			sb.append(",");
 		}
 
 		if (_maxDDLCustomFieldCount > 0) {

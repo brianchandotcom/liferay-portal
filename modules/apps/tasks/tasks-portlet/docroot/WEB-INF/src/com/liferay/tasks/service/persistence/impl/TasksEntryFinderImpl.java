@@ -406,12 +406,13 @@ public class TasksEntryFinderImpl
 			return StringPool.BLANK;
 		}
 
-		StringBundler sb = new StringBundler(statuses.length + 1);
+		StringBundler sb = new StringBundler((statuses.length * 2) + 1);
 
 		sb.append(" (");
 
 		for (int i = 0; i < statuses.length; i++) {
-			sb.append("TMS_TasksEntry.status = ? OR ");
+			sb.append("TMS_TasksEntry.status = ? ");
+			sb.append("OR ");
 		}
 
 		sb.setIndex(sb.index() - 1);

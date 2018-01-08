@@ -114,8 +114,8 @@ public class KBArticleExportImportPortletPreferencesProcessor
 			sb.append("Unable to save converted portlet preference ");
 			sb.append("resourcePrimKey=");
 			sb.append(resourcePrimKey);
-			sb.append(" (the root article)  ");
-			sb.append("while importing KB Article portlet. (portletId=");
+			sb.append(" (the root article) while importing KB Article ");
+			sb.append("portlet. (portletId=");
 			sb.append(portletDataContext.getPortletId());
 			sb.append(")");
 

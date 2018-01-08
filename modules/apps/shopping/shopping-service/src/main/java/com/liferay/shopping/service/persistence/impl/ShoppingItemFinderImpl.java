@@ -69,8 +69,8 @@ public class ShoppingItemFinderImpl
 				sb.append(") AND ");
 			}
 
-			sb.append("ShoppingItem.featured = ? AND ");
-			sb.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.featured = ? AND ShoppingItem.smallImage ");
+			sb.append("= ?");
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
@@ -145,9 +145,8 @@ public class ShoppingItemFinderImpl
 				sb.append(") AND ");
 			}
 
-			sb.append("(ShoppingItem.name LIKE ? OR ");
-			sb.append("ShoppingItem.description LIKE ? OR ");
-			sb.append("ShoppingItem.properties LIKE ?))");
+			sb.append("(ShoppingItem.name LIKE ? OR ShoppingItem.description ");
+			sb.append("LIKE ? OR ShoppingItem.properties LIKE ?))");
 
 			String sql = CustomSQLUtil.replaceOrderBy(sb.toString(), obc);
 
@@ -296,8 +295,8 @@ public class ShoppingItemFinderImpl
 				sb.append(") AND ");
 			}
 
-			sb.append("ShoppingItem.featured = ? AND ");
-			sb.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.featured = ? AND ShoppingItem.smallImage ");
+			sb.append("= ?");
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
@@ -363,9 +362,8 @@ public class ShoppingItemFinderImpl
 				sb.append(") AND ");
 			}
 
-			sb.append("(ShoppingItem.name LIKE ? OR ");
-			sb.append("ShoppingItem.description LIKE ? OR ");
-			sb.append("ShoppingItem.properties LIKE ?))");
+			sb.append("(ShoppingItem.name LIKE ? OR ShoppingItem.description ");
+			sb.append("LIKE ? OR ShoppingItem.properties LIKE ?))");
 
 			String sql = CustomSQLUtil.replaceOrderBy(sb.toString(), obc);
 

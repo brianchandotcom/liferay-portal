@@ -75,8 +75,8 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		StringBundler sb = new StringBundler(2);
 
-		sb.append("select DDLRecordSet.* from DDLRecordSet ");
-		sb.append("where DDLRecordSet.scope = ?");
+		sb.append("select DDLRecordSet.* from DDLRecordSet where ");
+		sb.append("DDLRecordSet.scope = ?");
 
 		try (PreparedStatement ps1 =
 				connection.prepareStatement(sb.toString())) {

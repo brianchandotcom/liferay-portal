@@ -80,8 +80,8 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 			StringBundler sb = new StringBundler(8);
 
 			sb.append("select distinct AssetEntry.classPK as classPK, ");
-			sb.append("Organization_.uuid_ as uuid from ");
-			sb.append("AssetEntry, Organization_ where ");
+			sb.append("Organization_.uuid_ as uuid from AssetEntry, ");
+			sb.append("Organization_ where ");
 			sb.append("AssetEntry.classNameId = ");
 
 			long classNameId = _classNameLocalService.getClassNameId(

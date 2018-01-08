@@ -163,8 +163,8 @@ public class DeclarativeServiceDependencyManagerTest {
 
 			sb.append("name: ");
 			sb.append(DeclarativeServiceTestComponent.class.getName());
-			sb.append(", unsatisfied references: ");
-			sb.append("{name: declarativeServiceTestReference, target: null}");
+			sb.append(", unsatisfied references: {name: ");
+			sb.append("declarativeServiceTestReference, target: null}");
 
 			String s = sb.toString();
 

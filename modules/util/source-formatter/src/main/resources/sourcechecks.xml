@@ -57,7 +57,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/alloy/alloy-mvc" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-editor/frontend-editor-lang" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-js/frontend-js-loader-modules-extender" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-js/frontend-js-top-head-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-theme/frontend-theme-contributor-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/mobile-device-rules/mobile-device-rules-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-collection" />

@@ -664,9 +664,6 @@ AUI.add(
 				}
 				else {
 					instance.createNewField(fieldType);
-					instance._formatNewDropRows(instance._getActiveLayoutIndex());
-					instance._destroySortable(instance.sortable1);
-					instance._applyDragAndDrop();
 				}
 			}
 		};

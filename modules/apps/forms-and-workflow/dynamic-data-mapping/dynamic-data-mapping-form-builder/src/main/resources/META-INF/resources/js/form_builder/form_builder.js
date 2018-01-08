@@ -1028,6 +1028,7 @@ AUI.add(
 							instance._newFieldContainer = null;
 						}
 
+						instance._destroySortable(instance.sortable1);
 						instance._traverseFormPages();
 						instance._applyDragAndDrop();
 

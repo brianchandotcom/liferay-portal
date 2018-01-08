@@ -76,15 +76,13 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>
+		<liferay-frontend:management-bar-button href="javascript:;" icon="import-export" id="exportSelectedFragmentEntries" label="export" />
+
 		<liferay-frontend:management-bar-button href="javascript:;" icon="trash" id="deleteSelectedFragmentEntries" label="delete" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntriesURL">
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:actionURL>
-
-<aui:form action="<%= deleteFragmentEntriesURL %>" cssClass="container-fluid-1280" name="fm">
+<aui:form cssClass="container-fluid-1280" name="fm">
 	<liferay-ui:search-container
 		id="fragmentEntries"
 		searchContainer="<%= fragmentDisplayContext.getFragmentEntriesSearchContainer() %>"
@@ -211,9 +209,19 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 			'click',
 			function() {
 				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					submitForm(document.querySelector('#<portlet:namespace />fm'));
+					submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/fragment/delete_fragment_entries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
 				}
 			}
 		);
 	</aui:script>
 </c:if>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	dom.on(
+		'#<portlet:namespace />exportSelectedFragmentEntries',
+		'click',
+		function() {
+			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_entries" />');
+		}
+	);
+</aui:script>

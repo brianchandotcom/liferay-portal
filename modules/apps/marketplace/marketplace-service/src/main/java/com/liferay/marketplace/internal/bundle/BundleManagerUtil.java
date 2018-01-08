@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.marketplace.bundle;
+package com.liferay.marketplace.internal.bundle;
+
+import com.liferay.marketplace.bundle.BundleManager;
 
 import java.io.File;
 

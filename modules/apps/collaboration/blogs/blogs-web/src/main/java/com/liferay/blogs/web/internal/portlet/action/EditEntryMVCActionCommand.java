@@ -485,11 +485,14 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 				coverImageImageSelector, smallImageImageSelector,
 				serviceContext);
 
-			content = _updateContent(entry, content, themeDisplay);
+			String updatedContent = _updateContent(
+				entry, content, themeDisplay);
 
-			entry.setContent(content);
+			if (!content.equals(updatedContent)) {
+				entry.setContent(updatedContent);
 
-			_blogsEntryLocalService.updateBlogsEntry(entry);
+				_blogsEntryLocalService.updateBlogsEntry(entry);
+			}
 		}
 		else {
 

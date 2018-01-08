@@ -36,7 +36,7 @@
 	<command name="closeSidebar">
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Click" locator1="Portlet#HEADER" />
+		<execute function="Click" locator1="Form#SIDEBAR_CLOSE" />
 
 		<execute function="Pause" locator1="1000" />
 
@@ -212,6 +212,8 @@
 				<var name="key_columnSize" value="${columnSize}" />
 
 				<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
+
+				<execute function="Click" locator1="Form#ADD_FIELD" />
 
 				<var name="key_fieldType" value="${fieldType}" />
 

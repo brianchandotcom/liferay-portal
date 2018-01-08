@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.util;
+package com.liferay.chat.web.internal.util;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

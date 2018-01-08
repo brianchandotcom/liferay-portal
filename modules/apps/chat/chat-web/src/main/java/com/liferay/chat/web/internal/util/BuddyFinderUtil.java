@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.chat.util;
+package com.liferay.chat.web.internal.util;
 
+import com.liferay.chat.util.BuddyFinder;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;

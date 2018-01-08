@@ -24,11 +24,11 @@
 	</command>
 
 	<command name="gotoFrontStoreProductPage">
-		<var method="StringUtil#replace('${productTitle}', ' ', '-')" name="urlProductTitle" />
+		<execute function="Click" locator1="CommerceEntry#FRONT_STORE_PRODUCT_LINK" />
+ 
+		<execute function="Pause" locator1="30000" />
 
-		<execute macro="Navigator#openSpecificURL">
-			<var name="url" value="http://localhost:8080/web/guest/${urlProductTitle}" />
-		</execute>
+ 		<execute function="SelectWindow" locator1="title=${productTitle} - Product - Liferay DXP" />
 	</command>
 
 	<command name="gotoOptionValues">

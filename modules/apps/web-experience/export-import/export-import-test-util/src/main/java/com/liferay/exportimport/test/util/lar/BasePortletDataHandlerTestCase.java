@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.lar.test;
+package com.liferay.exportimport.test.util.lar;
 
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -24,14 +24,18 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
+import com.liferay.exportimport.lar.PortletDataContextImpl;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.PortletKeys;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
@@ -46,6 +50,9 @@ import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,6 +74,7 @@ import org.junit.Test;
 /**
  * @author Zsolt Berentey
  * @author Zoltan Csaszi
+ * @author Gergely Mathe
  */
 public abstract class BasePortletDataHandlerTestCase {
 
@@ -127,6 +135,13 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
+	public void testDeletionSystemEventStagedModelTypes() throws Exception {
+		Assert.assertArrayEquals(
+			getDeletionSystemEventStagedModelTypes(),
+			portletDataHandler.getDeletionSystemEventStagedModelTypes());
+	}
+
+	@Test
 	public void testExportImportData() throws Exception {
 		if (!isExportImportDataTested()) {
 			return;
@@ -177,6 +192,8 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		ZipWriter exportZipWriter = portletDataContext.getZipWriter();
 
+		Set<String> missingReferences = _getMissingReferences();
+
 		initContext();
 
 		Group cleanGroup = GroupTestUtil.addGroup();
@@ -207,6 +224,8 @@ public abstract class BasePortletDataHandlerTestCase {
 		portletDataContext.setGroupId(cleanGroup.getGroupId());
 
 		portletDataContext.clearScopedPrimaryKeys();
+
+		_setMissingReferences(missingReferences);
 
 		portletDataHandler.importData(
 			portletDataContext, portletId, portletPreferences, exportData);
@@ -244,12 +263,6 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		initContext();
 
-		PortletDataHandlerControl[] portletDataHandlerControls = null;
-
-		if (portletDataHandler.isDisplayPortlet()) {
-			portletDataHandlerControls = portletDataHandler.getExportControls();
-		}
-
 		PortletDataHandlerControl[] testPortletDataHandlerControls =
 			portletDataHandler.getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
@@ -258,8 +271,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portletDataHandlerControls, -1,
-				false),
+				portletDataContext.getGroupId(), portlet, -1, false),
 			testPortletDataHandlerControls);
 
 		testPortletDataHandlerControls =
@@ -270,8 +282,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portletDataHandlerControls, -1,
-				true),
+				portletDataContext.getGroupId(), portlet, -1, true),
 			testPortletDataHandlerControls);
 
 		testPortletDataHandlerControls =
@@ -283,7 +294,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portletDataHandlerControls,
+				portletDataContext.getGroupId(), portlet,
 				portletDataContext.getPlid(), false),
 			testPortletDataHandlerControls);
 
@@ -296,7 +307,7 @@ public abstract class BasePortletDataHandlerTestCase {
 		_assertControls(
 			getExportConfigurationControls(
 				portletDataContext.getCompanyId(),
-				portletDataContext.getGroupId(), portletDataHandlerControls,
+				portletDataContext.getGroupId(), portlet,
 				portletDataContext.getPlid(), true),
 			testPortletDataHandlerControls);
 	}
@@ -389,9 +400,48 @@ public abstract class BasePortletDataHandlerTestCase {
 	}
 
 	@Test
+	public void testGetNamespace() {
+		Assert.assertEquals(getNamespace(), portletDataHandler.getNamespace());
+	}
+
+	@Test
+	public void testGetPortletId() {
+		Assert.assertEquals(getPortletId(), portletDataHandler.getPortletId());
+	}
+
+	@Test
+	public void testGetRank() {
+		Assert.assertEquals(getRank(), portletDataHandler.getRank());
+	}
+
+	@Test
+	public void testGetSchemaVersion() {
+		Assert.assertEquals(
+			getSchemaVersion(), portletDataHandler.getSchemaVersion());
+	}
+
+	@Test
+	public void testGetServiceName() {
+		Assert.assertEquals(
+			getServiceName(), portletDataHandler.getServiceName());
+	}
+
+	@Test
 	public void testGetStagingControls() throws Exception {
 		_assertControls(
 			getStagingControls(), portletDataHandler.getStagingControls());
+	}
+
+	@Test
+	public void testIsDataAlwaysStaged() {
+		Assert.assertEquals(
+			isDataAlwaysStaged(), portletDataHandler.isDataAlwaysStaged());
+	}
+
+	@Test
+	public void testIsDataLocalized() {
+		Assert.assertEquals(
+			isDataLocalized(), portletDataHandler.isDataLocalized());
 	}
 
 	@Test
@@ -417,6 +467,34 @@ public abstract class BasePortletDataHandlerTestCase {
 	public void testIsDisplayPortlet() throws Exception {
 		Assert.assertEquals(
 			isDisplayPortlet(), portletDataHandler.isDisplayPortlet());
+	}
+
+	@Test
+	public void testIsPublishToLiveByDefault() {
+		Assert.assertEquals(
+			isPublishToLiveByDefault(),
+			portletDataHandler.isPublishToLiveByDefault());
+	}
+
+	@Test
+	public void testIsRollbackOnException() {
+		Assert.assertEquals(
+			isRollbackOnException(),
+			portletDataHandler.isRollbackOnException());
+	}
+
+	@Test
+	public void testIsSupportsDataStrategyCopyAsNew() {
+		Assert.assertEquals(
+			isSupportsDataStrategyCopyAsNew(),
+			portletDataHandler.isSupportsDataStrategyCopyAsNew());
+	}
+
+	@Test
+	public void testIsSupportsDataStrategyMirrorWithOverwriting() {
+		Assert.assertEquals(
+			isSupportsDataStrategyMirrorWithOverwriting(),
+			portletDataHandler.isSupportsDataStrategyMirrorWithOverwriting());
 	}
 
 	@Test
@@ -526,25 +604,75 @@ public abstract class BasePortletDataHandlerTestCase {
 		return StringPool.EMPTY_ARRAY;
 	}
 
+	protected StagedModelType[] getDeletionSystemEventStagedModelTypes() {
+		return new StagedModelType[0];
+	}
+
 	protected Date getEndDate() {
 		return new Date();
 	}
 
 	protected PortletDataHandlerControl[] getExportConfigurationControls(
-		long companyId, long groupId,
-		PortletDataHandlerControl[] portletDataHandlerControls, long plid,
+		long companyId, long groupId, Portlet portlet, long plid,
 		boolean privateLayout) {
 
-		if (plid < 0) {
-			return new PortletDataHandlerControl[] {
+		List<PortletDataHandlerBoolean> configurationControls =
+			new ArrayList<>();
+
+		// Setup
+
+		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portlet, false) >
+					0) ||
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP,
+				portlet.getRootPortletId(), false) > 0) ||
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY,
+				portlet.getRootPortletId(), false) > 0)) {
+
+			PortletDataHandlerControl[] portletDataHandlerControls = null;
+
+			if (isDisplayPortlet()) {
+				portletDataHandlerControls = getExportControls();
+			}
+
+			configurationControls.add(
 				new PortletDataHandlerBoolean(
 					null, PortletDataHandlerKeys.PORTLET_SETUP, "setup", true,
-					false, portletDataHandlerControls, null, null)
-			};
+					false, portletDataHandlerControls, null, null));
 		}
-		else {
-			return new PortletDataHandlerControl[0];
+
+		// Archived setups
+
+		if (PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				-1, PortletKeys.PREFS_OWNER_TYPE_ARCHIVED,
+				portlet.getRootPortletId(), false) > 0) {
+
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_ARCHIVED_SETUPS,
+					"configuration-templates", true, false, null, null, null));
 		}
+
+		// User preferences
+
+		if ((PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				-1, PortletKeys.PREFS_OWNER_TYPE_USER, plid, portlet, false) >
+					0) ||
+			(PortletPreferencesLocalServiceUtil.getPortletPreferencesCount(
+				groupId, PortletKeys.PREFS_OWNER_TYPE_USER,
+				PortletKeys.PREFS_PLID_SHARED, portlet, false) > 0)) {
+
+			configurationControls.add(
+				new PortletDataHandlerBoolean(
+					null, PortletDataHandlerKeys.PORTLET_USER_PREFERENCES,
+					"user-preferences", true, false, null, null, null));
+		}
+
+		return configurationControls.toArray(
+			new PortletDataHandlerBoolean[configurationControls.size()]);
 	}
 
 	protected PortletDataHandlerControl[] getExportControls() {
@@ -569,6 +697,10 @@ public abstract class BasePortletDataHandlerTestCase {
 		return new PortletDataHandlerControl[0];
 	}
 
+	protected String getNamespace() {
+		return StringPool.BLANK;
+	}
+
 	protected PortletDataHandler getPortletDataHandler(String portletId) {
 		try {
 			Registry registry = RegistryUtil.getRegistry();
@@ -590,8 +722,16 @@ public abstract class BasePortletDataHandlerTestCase {
 
 	protected abstract String getPortletId();
 
+	protected int getRank() {
+		return 100;
+	}
+
 	protected String getSchemaVersion() {
 		return "1.0.0";
+	}
+
+	protected String getServiceName() {
+		return null;
 	}
 
 	protected List<StagedModel> getStagedModels() {
@@ -627,6 +767,14 @@ public abstract class BasePortletDataHandlerTestCase {
 
 		portletDataContext.setMissingReferencesElement(
 			missingReferencesElement);
+	}
+
+	protected boolean isDataAlwaysStaged() {
+		return false;
+	}
+
+	protected boolean isDataLocalized() {
+		return false;
 	}
 
 	protected boolean isDataPortalLevel() {
@@ -674,6 +822,22 @@ public abstract class BasePortletDataHandlerTestCase {
 		return false;
 	}
 
+	protected boolean isPublishToLiveByDefault() {
+		return false;
+	}
+
+	protected boolean isRollbackOnException() {
+		return true;
+	}
+
+	protected boolean isSupportsDataStrategyCopyAsNew() {
+		return true;
+	}
+
+	protected boolean isSupportsDataStrategyMirrorWithOverwriting() {
+		return true;
+	}
+
 	protected void validateDefaultData(PortletPreferences portletPreferences)
 		throws Exception {
 	}
@@ -705,7 +869,7 @@ public abstract class BasePortletDataHandlerTestCase {
 						expectedControl.getControlLabel(),
 						actualControl.getControlLabel()) &&
 					(expectedControl.isDisabled() ==
-						actualControl.isDisabled())) {
+					 	actualControl.isDisabled())) {
 
 					contains = true;
 
@@ -715,6 +879,31 @@ public abstract class BasePortletDataHandlerTestCase {
 
 			Assert.assertTrue(contains);
 		}
+	}
+
+	private Set<String> _getMissingReferences() throws Exception {
+		Field field = ReflectionUtil.getDeclaredField(
+			PortletDataContextImpl.class, "_missingReferences");
+
+		field.setAccessible(true);
+
+		return (Set<String>)field.get(portletDataContext);
+	}
+
+	private void _setMissingReferences(Set<String> missingReferences)
+		throws Exception {
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PortletDataContextImpl.class, "_missingReferences");
+
+		field.setAccessible(true);
+
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+		field.set(portletDataContext, missingReferences);
 	}
 
 }

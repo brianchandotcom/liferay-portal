@@ -6,4 +6,5 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:subscription:subscription-api")
 	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-api")
 	testIntegrationCompile project(":apps:knowledge-base:knowledge-base-service")
+	testIntegrationCompile project(":apps:web-experience:export-import:export-import-test-util")
 }

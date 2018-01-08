@@ -74,6 +74,7 @@ public class TLiferayInputProperties
 		Widget guessButton = Widget.widget(guessSchema);
 
 		guessButton.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
+		guessButton.setLongRunning(true);
 
 		mainForm.addRow(guessButton);
 	}
@@ -108,7 +109,7 @@ public class TLiferayInputProperties
 					Schema runtimeSchema = ss.guessSchema(
 						resource.resourceURL.getValue());
 
-					//resource.main.schema.setValue(runtimeSchema);
+					resource.main.schema.setValue(runtimeSchema);
 				}
 				catch (IOException ioe) {
 					/* result = new ValidationResult(

@@ -151,6 +151,20 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
+	public CommerceOrder updateCommerceOrder(
+			long commerceOrderId, long commercePaymentMethodId,
+			String purchaseOrderNumber, double subtotal, double shippingPrice,
+			double total, int paymentStatus, int status)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderLocalService.updateCommerceOrder(
+			commerceOrderId, commercePaymentMethodId, purchaseOrderNumber,
+			subtotal, shippingPrice, total, paymentStatus, status);
+	}
+
+	@Override
 	public CommerceOrder updatePurchaseOrderNumber(
 			long commerceOrderId, String purchaseOrderNumber)
 		throws PortalException {

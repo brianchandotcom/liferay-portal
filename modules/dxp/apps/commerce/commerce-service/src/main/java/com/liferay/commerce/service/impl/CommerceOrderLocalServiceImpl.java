@@ -259,6 +259,29 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
+	public CommerceOrder updateCommerceOrder(
+			long commerceOrderId, long commercePaymentMethodId,
+			String purchaseOrderNumber, double subtotal, double shippingPrice,
+			double total, int paymentStatus, int status)
+		throws PortalException {
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
+		commerceOrder.setPurchaseOrderNumber(purchaseOrderNumber);
+		commerceOrder.setSubtotal(subtotal);
+		commerceOrder.setShippingPrice(shippingPrice);
+		commerceOrder.setTotal(total);
+		commerceOrder.setPaymentStatus(paymentStatus);
+		commerceOrder.setStatus(status);
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrder;
+	}
+
+	@Override
 	public CommerceOrder updatePaymentStatus(
 			long commerceOrderId, int paymentStatus, int status)
 		throws PortalException {

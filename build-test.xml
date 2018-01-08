@@ -549,6 +549,40 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 		</sequential>
 	</macrodef>
 
+	<macrodef name="get-java-jdk-home">
+		<attribute default="x64" name="architecture" />
+
+		<sequential>
+			<if>
+				<and>
+					<equals arg1="${ant.java.version}" arg2="1.7" />
+					<isset property="java.jdk.7.@{architecture}.home" />
+				</and>
+				<then>
+					<property name="java.jdk.home" value="${java.jdk.7.@{architecture}.home}" />
+				</then>
+				<elseif>
+					<isset property="java.jdk.8.@{architecture}.home" />
+					<then>
+						<property name="java.jdk.home" value="${java.jdk.8.@{architecture}.home}" />
+					</then>
+				</elseif>
+				<else>
+					<property name="java.jdk.home" value="${java.home}" />
+				</else>
+			</if>
+
+			<if>
+				<not>
+					<available file="${java.jdk.home}" />
+				</not>
+				<then>
+					<var name="java.jdk.home" value="${java.home}" />
+				</then>
+			</if>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="get-jstack-output">
 		<attribute name="process.name" />
 
@@ -731,6 +765,18 @@ jdbc.counter.connectionProperties=oracle.jdbc.ReadTimeout=0;oracle.net.CONNECT_T
 					</antelope:stringutil>
 				</then>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="get-poshi-java-jdk-opts">
+		<sequential>
+			<propertyregex
+				input="${env.ANT_OPTS}"
+				override="true"
+				property="poshi.java.jdk.opts"
+				regexp="(-Xmx)(\d*\w*)"
+				replace="\12048m"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -1446,48 +1492,27 @@ war.path=${app.server.weblogic.portal.dir}/</echo>
 				</then>
 			</if>
 
-			<local name="java.jdk.home" />
-
 			<if>
-				<and>
-					<equals arg1="${ant.java.version}" arg2="1.7" />
-					<isset property="java.jdk.7.x32.home" />
-				</and>
+				<isset property="env.JENKINS_HOME" />
 				<then>
-					<property name="java.jdk.home" value="${java.jdk.7.x32.home}" />
-				</then>
-				<elseif>
-					<isset property="java.jdk.8.x32.home" />
-					<then>
-						<property name="java.jdk.home" value="${java.jdk.8.x32.home}" />
-					</then>
-				</elseif>
-			</if>
+					<local name="java.jdk.home" />
+					<local name="poshi.java.jdk.opts" />
 
-			<propertyregex
-				input="${env.ANT_OPTS}"
-				override="true"
-				property="gradle.opts"
-				regexp="(-Xmx)(\d*\w*)"
-				replace="\12048m"
-			/>
+					<get-java-jdk-home architecture="x32" />
 
-			<if>
-				<and>
-					<isset property="env.JENKINS_HOME" />
-					<available file="${java.jdk.home}" />
-				</and>
-				<then>
-					<gradle-execute failonerror="false" gradleopts="${gradle.opts}" task="@{task}">
+					<get-poshi-java-jdk-opts />
+
+					<gradle-execute failonerror="false" gradleopts="${poshi.java.jdk.opts}" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
 						<arg value="-Ptmp.maven.repository.dir=../.m2-tmp" />
+						<env key="ANT_OPTS" value="${poshi.java.jdk.opts}" />
 						<env key="JAVA_HOME" path="${java.jdk.home}" />
 					</gradle-execute>
 				</then>
 				<else>
-					<gradle-execute failonerror="false" gradleopts="${gradle.opts}" task="@{task}">
+					<gradle-execute failonerror="false" task="@{task}">
 						<arg value="--build-file=portal-web/build-test.gradle" />
 						<arg value="-Plocal=${test.poshi.runner.local.release}" />
 						<arg value="-PposhiRunnerExtProperties=${test.ext.properties.file}" />
@@ -3675,8 +3700,13 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 					<if>
 						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
 						<then>
+							<local name="java.jdk.home" />
+
+							<get-java-jdk-home />
+
 							<exec dir="${test.app.server.bin.dir}" executable="${app.server.start.executable}" resolveexecutable="true">
 								<arg line="${app.server.start.executable.arg.line}" />
+								<env key="JAVA_HOME" path="${java.jdk.home}" />
 							</exec>
 
 							<wait-for-app-server app.server.bin.dir="@{app.server.bin.dir}" app.server.bundle.index="@{app.server.bundle.index}" />
@@ -3864,9 +3894,24 @@ org.apache.catalina.startup.ClassLoaderFactory.level=INFO]]>
 
 			<parallel>
 				<daemons>
-					<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
-						<arg line="${app.server.stop.executable.arg.line}" />
-					</exec>
+					<if>
+						<equals arg1="${test.ant.launched.by.selenium}" arg2="true" />
+						<then>
+							<local name="java.jdk.home" />
+
+							<get-java-jdk-home />
+
+							<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+								<arg line="${app.server.stop.executable.arg.line}" />
+								<env key="JAVA_HOME" path="${java.jdk.home}" />
+							</exec>
+						</then>
+						<else>
+							<exec dir="${test.app.server.bin.dir}" executable="${app.server.stop.executable}" resolveexecutable="true">
+								<arg line="${app.server.stop.executable.arg.line}" />
+							</exec>
+						</else>
+					</if>
 				</daemons>
 				<sequential>
 					<if>

@@ -37,8 +37,8 @@ public class ExportEntityTag extends IncludeTag {
 		_classNameId = classNameId;
 	}
 
-	public void setClassPK(long classPK) {
-		_classPK = classPK;
+	public void setGroupId(long groupId) {
+		_groupId = groupId;
 	}
 
 	@Override
@@ -48,11 +48,16 @@ public class ExportEntityTag extends IncludeTag {
 		servletContext = ServletContextUtil.getServletContext();
 	}
 
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	@Override
 	protected void cleanUp() {
 		_className = StringPool.BLANK;
 		_classNameId = 0;
-		_classPK = 0;
+		_groupId = 0;
+		_uuid = StringPool.BLANK;
 	}
 
 	@Override
@@ -66,13 +71,15 @@ public class ExportEntityTag extends IncludeTag {
 			"liferay-staging:export-entity:className", _className);
 		request.setAttribute(
 			"liferay-staging:export-entity:classNameId", _classNameId);
-		request.setAttribute("liferay-staging:export-entity:classPK", _classPK);
+		request.setAttribute("liferay-staging:export-entity:groupId", _groupId);
+		request.setAttribute("liferay-staging:export-entity:uuid", _uuid);
 	}
 
 	private static final String _PAGE = "/export_entity/page.jsp";
 
 	private String _className = StringPool.BLANK;
 	private long _classNameId;
-	private long _classPK;
+	private long _groupId;
+	private String _uuid = StringPool.BLANK;
 
 }

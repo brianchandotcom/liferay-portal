@@ -25,7 +25,8 @@
 	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
 	portletURL.setParameter("cmd", Constants.EXPORT);
 	portletURL.setParameter("className", className);
-	portletURL.setParameter("classPK", String.valueOf(classPK));
+	portletURL.setParameter("groupId", groupId);
+	portletURL.setParameter("uuid", uuid);
 	%>
 
 	<liferay-ui:icon

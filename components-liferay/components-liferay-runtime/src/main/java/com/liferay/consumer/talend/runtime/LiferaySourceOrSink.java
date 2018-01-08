@@ -17,6 +17,7 @@ package com.liferay.consumer.talend.runtime;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.liferay.consumer.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.consumer.talend.connection.LiferayConnectionProperties;
 import com.liferay.consumer.talend.connection.LiferayProvideConnectionProperties;
 import com.liferay.consumer.talend.runtime.client.ApioException;
@@ -42,7 +43,6 @@ import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.SimpleNamedThing;
-import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.i18n.GlobalI18N;
 import org.talend.daikon.i18n.I18nMessages;
 import org.talend.daikon.i18n.TranslatableImpl;
@@ -113,10 +113,10 @@ public class LiferaySourceOrSink
 
 	@Override
 	public Schema getEndpointSchema(
-			RuntimeContainer container, String schemaName)
+			RuntimeContainer container, String resourceURL)
 		throws IOException {
 
-		return null;
+		return guessSchema(resourceURL);
 	}
 
 	public RestClient getRestClient(RuntimeContainer container)
@@ -183,11 +183,7 @@ public class LiferaySourceOrSink
 
 	@Override
 	public Schema guessSchema(String resourceURL) throws IOException {
-		_getResourceCollectionSchema(resourceURL);
-
-		//FIXME
-
-		return null;
+		return _getResourceCollectionSchema(resourceURL);
 	}
 
 	@Override
@@ -283,7 +279,7 @@ public class LiferaySourceOrSink
 		return vr;
 	}
 
-	protected static Map<String, String> getApioLdJsonResourceCollections(
+	protected Map<String, String> getApioLdJsonResourceCollections(
 		JsonNode node) {
 
 		Map<String, String> resourcesMap = new HashMap<>();
@@ -353,8 +349,8 @@ public class LiferaySourceOrSink
 		return getApioLdJsonResourceCollections(jsonNode);
 	}
 
-	private Map<String, String> _getResourceCollectionSchema(
-		String resourceURL) {
+	private Schema _getResourceCollectionSchema(String resourceURL)
+		throws IOException {
 
 		final ObjectMapper mapper = new ObjectMapper();
 
@@ -371,7 +367,7 @@ public class LiferaySourceOrSink
 				_log.debug(ae.toString());
 			}
 
-			return Collections.emptyMap();
+			throw new IOException(ae);
 		}
 
 		JsonNode jsonNode = null;
@@ -388,16 +384,11 @@ public class LiferaySourceOrSink
 				_log.debug("Cannot read JSON object", ioe);
 			}
 
-			return Collections.emptyMap();
+			throw ioe;
 		}
 
-		_log.debug("Returning null");
-
-		return null;
+		return ResourceCollectionSchemaInferrer.inferSchema(jsonNode);
 	}
-
-	private static final transient Schema _DEFAULT_GUESS_SCHEMA_TYPE =
-		AvroUtils._string();
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferaySourceOrSink.class);

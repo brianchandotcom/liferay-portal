@@ -25,10 +25,10 @@
 
 	<command name="gotoFrontStoreProductPage">
 		<execute function="Click" locator1="CommerceEntry#FRONT_STORE_PRODUCT_LINK" />
- 
+
 		<execute function="Pause" locator1="30000" />
 
- 		<execute function="SelectWindow" locator1="title=${productTitle} - Product - Liferay DXP" />
+		<execute function="SelectWindow" locator1="title=${productTitle} - Product - Liferay DXP" />
 	</command>
 
 	<command name="gotoOptionValues">

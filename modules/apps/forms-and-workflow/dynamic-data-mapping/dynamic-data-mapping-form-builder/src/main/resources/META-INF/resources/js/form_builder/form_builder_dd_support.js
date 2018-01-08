@@ -25,9 +25,9 @@ AUI.add(
 			initializer: function() {
 				var instance = this;
 
-				instance._eventHandlers = [
+				instance._eventHandlers.push(
 					instance.after('render', instance._afterDragAndDropRender, instance)
-				];
+				);
 			},
 
 			_afterDragAndDropRender: function() {

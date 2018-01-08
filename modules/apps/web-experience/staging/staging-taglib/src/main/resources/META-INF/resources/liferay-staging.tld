@@ -138,7 +138,7 @@
 		<attribute>
 			<description>The groupId of the entity that will be exported.</description>
 			<name>groupId</name>
-			<required>true</required>
+			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>

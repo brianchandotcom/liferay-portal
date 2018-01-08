@@ -227,7 +227,7 @@
 </tr>
 <tr>
 	<td>TEXT_FIELD_2</td>
-	<td>//div[contains(@class,'ddm-form')][2]//input[@type='text' and contains(@id,'${key_fieldName}')]</td>
+	<td>xpath=(//input[@type='text' and contains(@id,'${key_fieldName}')])[2]</td>
 	<td></td>
 </tr>
 <tr>

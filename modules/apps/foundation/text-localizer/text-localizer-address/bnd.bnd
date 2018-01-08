@@ -1,9 +1,0 @@
-Bundle-Name: Liferay Text Localizer Address
-Bundle-SymbolicName: com.liferay.text.localizer.address
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.text.localizer.address,\
-	com.liferay.text.localizer.address.util
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:
--dsannotations-options: inherit

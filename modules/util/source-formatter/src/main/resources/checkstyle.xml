@@ -176,7 +176,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.OperatorOrder">
 			<message key="left.argument.literal.or.num" value="''{0}'' should be on the right hand side of the operator" />
 		</module>
-		<module name="com.liferay.source.formatter.checkstyle.checks.Plus">
+		<module name="com.liferay.source.formatter.checkstyle.checks.PlusStatement">
 			<message key="end.character.invalid" value="When concatenating multiple literal strings using '+', only the last literal string can end with ''{0}''" />
 			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
 			<message key="literal.string.move" value="Add the string ''{0}'' to the previous literal string" />

@@ -119,7 +119,7 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		configuration = CheckstyleUtil.addAttribute(
 			configuration, "maxLineLength",
 			String.valueOf(sourceFormatterArgs.getMaxLineLength()),
-			"com.liferay.source.formatter.checkstyle.checks.Plus");
+			"com.liferay.source.formatter.checkstyle.checks.PlusStatement");
 		configuration = CheckstyleUtil.addAttribute(
 			configuration, "showDebugInformation",
 			String.valueOf(sourceFormatterArgs.isShowDebugInformation()),

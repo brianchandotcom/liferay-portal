@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author Hugo Huijser
  */
-public class PlusCheck extends StringConcatenationCheck {
+public class PlusStatementCheck extends StringConcatenationCheck {
 
 	@Override
 	public int[] getDefaultTokens() {

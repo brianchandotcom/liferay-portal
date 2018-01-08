@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.exportimport.web.internal.portlet.data.handler;
+package com.liferay.exportimport.changeset.web.internal.portlet.data.handler;
 
-import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.changeset.constants.ChangeSetPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + ExportImportPortletKeys.CHANGE_SET},
+	property = {"javax.portlet.name=" + ChangeSetPortletKeys.CHANGE_SET},
 	service = PortletDataHandler.class
 )
 public class ChangeSetPortletDataHandler extends BasePortletDataHandler {

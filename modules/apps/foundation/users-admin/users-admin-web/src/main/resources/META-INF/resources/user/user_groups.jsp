@@ -17,8 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = (User)request.getAttribute("user.selUser");
-List<UserGroup> userGroups = (List<UserGroup>)request.getAttribute("user.userGroups");
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
+
+User selUser = userDisplayContext.getSelectedUser();
+List<UserGroup> userGroups = userDisplayContext.getUserGroups();
 
 currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "userGroups");
 %>

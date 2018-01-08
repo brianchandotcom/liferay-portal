@@ -118,13 +118,14 @@ public class FileResponseTest {
 
 	@Test
 	public void testToString() {
-		StringBundler sb = new StringBundler(9);
+		StringBundler sb = new StringBundler(10);
 
 		sb.append("{folder=");
 		sb.append(_FOLDER);
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
-		sb.append(", localFile=null, pathHolder=");
+		sb.append(", localFile=null");
+		sb.append(", pathHolder=");
 		sb.append(_path);
 		sb.append(", size=");
 		sb.append(_SIZE);

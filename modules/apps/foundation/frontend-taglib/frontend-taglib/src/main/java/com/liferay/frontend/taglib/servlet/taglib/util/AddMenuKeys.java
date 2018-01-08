@@ -14,7 +14,7 @@
 
 package com.liferay.frontend.taglib.servlet.taglib.util;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 /**
  * @author Eudaldo Alonso

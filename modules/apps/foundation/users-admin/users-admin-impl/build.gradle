@@ -3,6 +3,7 @@ targetCompatibility = "1.8"
 
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.exportimport.api", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.users.admin.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

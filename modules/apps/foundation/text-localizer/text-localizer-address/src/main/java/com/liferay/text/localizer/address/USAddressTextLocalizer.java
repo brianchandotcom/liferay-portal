@@ -14,10 +14,10 @@
 
 package com.liferay.text.localizer.address;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.text.localizer.address.util.AddressUtil;
 

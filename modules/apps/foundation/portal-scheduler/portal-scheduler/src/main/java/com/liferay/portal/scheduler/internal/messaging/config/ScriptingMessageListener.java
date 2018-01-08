@@ -14,11 +14,11 @@
 
 package com.liferay.portal.scheduler.internal.messaging.config;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.scheduler.SchedulerEngine;
 import com.liferay.portal.kernel.scripting.ScriptingUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;

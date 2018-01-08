@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.DocumentImpl;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.search.suggest.SuggesterResult;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.suggest.BaseQuerySuggester;

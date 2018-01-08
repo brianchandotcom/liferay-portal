@@ -6,6 +6,7 @@ targetCompatibility = "1.8"
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.security.ldap", version: "2.2.0"
 	provided group: "com.liferay", name: "com.liferay.portal.settings.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.settings.web", version: "1.0.0"

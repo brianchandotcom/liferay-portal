@@ -14,10 +14,10 @@
 
 package com.liferay.users.admin.internal.user.initials.generator;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.users.admin.kernel.util.UserInitialsGenerator;
 
 import java.util.Locale;

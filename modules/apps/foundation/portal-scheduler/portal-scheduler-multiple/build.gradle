@@ -1,5 +1,6 @@
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.petra.reflect", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.scheduler", version: "4.0.0"
 	provided group: "com.liferay", name: "com.liferay.registry.api", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.52.0"

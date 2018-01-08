@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.web.internal.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.settings.ParameterMapSettings;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author André de Oliveira

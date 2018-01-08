@@ -14,9 +14,9 @@
 
 package com.liferay.portal.search.elasticsearch.internal.document;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchDocumentFactory;
 import com.liferay.portal.search.test.util.indexing.DocumentFixture;
 

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.cache.ehcache.internal.event;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.cache.AggregatedPortalCacheListener;
 import com.liferay.portal.cache.ehcache.internal.SerializableEhcachePortalCache;
 import com.liferay.portal.cache.io.SerializableObjectWrapper;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.cache.PortalCacheListener;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.Serializable;
 

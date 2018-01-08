@@ -15,6 +15,7 @@
 package com.liferay.frontend.js.spa.web.internal.servlet.taglib;
 
 import com.liferay.frontend.js.spa.web.internal.servlet.taglib.util.SPAUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.Language;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.servlet.taglib.BaseJSPDynamicInclude;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 

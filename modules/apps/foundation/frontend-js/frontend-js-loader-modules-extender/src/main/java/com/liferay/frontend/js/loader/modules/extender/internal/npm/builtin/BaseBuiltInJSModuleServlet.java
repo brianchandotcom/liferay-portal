@@ -16,9 +16,9 @@ package com.liferay.frontend.js.loader.modules.extender.internal.npm.builtin;
 
 import com.liferay.frontend.js.loader.modules.extender.npm.JSModule;
 import com.liferay.frontend.js.loader.modules.extender.npm.ModuleNameUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.InputStream;

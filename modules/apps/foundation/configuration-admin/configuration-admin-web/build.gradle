@@ -22,6 +22,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.persistence", version: "2.1.0"
 	provided group: "com.liferay", name: "org.apache.felix.fileinstall", version: "3.5.4.LIFERAY-PATCHED-2"

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.search.test.util.mappings;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.analysis.FieldQueryBuilder;
 import com.liferay.portal.search.internal.analysis.SimpleKeywordTokenizer;

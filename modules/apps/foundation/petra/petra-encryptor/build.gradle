@@ -1,4 +1,5 @@
 dependencies {
+	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.49.0"
 
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"

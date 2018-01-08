@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.exportimport.web.internal.portlet;
+package com.liferay.exportimport.changeset.web.internal.portlet;
 
-import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.changeset.constants.ChangeSetPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=false",
-		"javax.portlet.name=" + ExportImportPortletKeys.CHANGE_SET,
+		"javax.portlet.name=" + ChangeSetPortletKeys.CHANGE_SET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},

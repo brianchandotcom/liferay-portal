@@ -52,6 +52,15 @@ FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
 		/>
 	</c:if>
 
+	<portlet:resourceURL id="/fragment/export_fragment_collections" var="exportFragmentCollectionsURL">
+		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
+	</portlet:resourceURL>
+
+	<liferay-ui:icon
+		message="export"
+		url="<%= exportFragmentCollectionsURL %>"
+	/>
+
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />

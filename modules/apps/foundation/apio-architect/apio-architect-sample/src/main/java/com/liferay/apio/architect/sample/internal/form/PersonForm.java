@@ -36,7 +36,11 @@ public class PersonForm {
 	public static Form<PersonForm> buildForm(
 		Form.Builder<PersonForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The person form"
+		).description(
+			__ -> "This form can be used to create or update a person"
+		).constructor(
 			PersonForm::new
 		).addRequiredDate(
 			"birthDate", PersonForm::_setBirthDate

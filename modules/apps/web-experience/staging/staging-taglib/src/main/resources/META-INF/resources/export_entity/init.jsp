@@ -24,11 +24,13 @@ page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
 <%
 String className = GetterUtil.getString(request.getAttribute("liferay-staging:export-entity:className"));
 long classNameId = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:classNameId"));
-long classPK = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:classPK"));
 
 if (Validator.isNotNull(classNameId)) {
 	ClassName classNameObject = ClassNameLocalServiceUtil.getClassName(classNameId);
 
 	className = classNameObject.getClassName();
 }
+
+long groupId = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:groupId"));
+String uuid = GetterUtil.getString(request.getAttribute("liferay-staging:export-entity:uuid"));
 %>

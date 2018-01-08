@@ -14,6 +14,7 @@
 
 package com.liferay.apio.architect.writer.url;
 
+import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageType;
 import com.liferay.apio.architect.uri.Path;
@@ -75,6 +76,17 @@ public final class URLCreator {
 	 */
 	public static String createCollectionURL(ServerURL serverURL, String name) {
 		return serverURL.get() + "/p/" + name;
+	}
+
+	/**
+	 * Returns the URL for a {@code Form}.
+	 *
+	 * @param  serverURL the server URL
+	 * @param  form the form
+	 * @return the URL for a {@code Form}
+	 */
+	public static String createFormURL(ServerURL serverURL, Form form) {
+		return String.join("/", serverURL.get(), "f", form.id);
 	}
 
 	/**

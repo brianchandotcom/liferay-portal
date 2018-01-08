@@ -12,22 +12,20 @@
  * details.
  */
 
-package com.liferay.apio.architect.alias.form;
+package com.liferay.apio.architect.form;
 
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
+import nl.jqno.equalsverifier.EqualsVerifier;
+
+import org.junit.Test;
 
 /**
- * Defines a type alias for a consumer that receives a {@code String} (the key)
- * and a function that receives a {@code T} (the type of the form store) and
- * returns a consumer of {@code S} (the type of field).
- *
  * @author Alejandro Hernández
- * @param  <T> the form's type
- * @param  <S> the field's type
- * @review
  */
-public interface FieldFormConsumer<T, S>
-	extends BiConsumer<String, Function<T, Consumer<S>>> {
+public class FormFieldTest {
+
+	@Test
+	public void testEquals() {
+		EqualsVerifier.forClass(FormField.class).verify();
+	}
+
 }

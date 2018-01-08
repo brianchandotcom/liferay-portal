@@ -27,7 +27,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import com.liferay.apio.architect.test.json.Conditions;
-import com.liferay.apio.architect.test.resource.model.RootModel;
+import com.liferay.apio.architect.test.model.RootModel;
 import com.liferay.apio.architect.test.writer.MockSingleModelWriter;
 
 import javax.ws.rs.core.HttpHeaders;
@@ -147,6 +147,8 @@ public class PlainJSONSingleModelMessageMapperTest {
 			"boolean", is(aJsonBoolean(true))
 		).where(
 			"link", _isALinkTo("www.liferay.com")
+		).where(
+			"localizedString", is(aJsonString(equalTo("Translated")))
 		).where(
 			"number", is(aJsonInt(equalTo(42)))
 		).where(

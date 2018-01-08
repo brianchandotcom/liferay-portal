@@ -37,7 +37,11 @@ public class RoutesTestUtil {
 	 * @review
 	 */
 	public static final FormBuilderFunction<Map<String, Object>>
-		FORM_BUILDER_FUNCTION = builder -> builder.constructor(
+		FORM_BUILDER_FUNCTION = builder -> builder.title(
+			__ -> ""
+		).description(
+			__ -> ""
+		).constructor(
 			HashMap::new
 		).addRequiredString(
 			"key", (map, value) -> map.put("key", value)

@@ -36,7 +36,11 @@ public class CommentForm {
 	public static Form<CommentForm> buildForm(
 		Builder<CommentForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The comment form"
+		).description(
+			__ -> "This form can be used to create or update a comment"
+		).constructor(
 			CommentForm::new
 		).addRequiredString(
 			"text", CommentForm::_setText

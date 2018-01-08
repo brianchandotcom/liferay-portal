@@ -30,6 +30,7 @@ import com.liferay.apio.architect.pagination.PageType;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
+import com.liferay.apio.architect.url.ServerURL;
 import com.liferay.apio.architect.writer.alias.PathFunction;
 import com.liferay.apio.architect.writer.alias.RepresentorFunction;
 import com.liferay.apio.architect.writer.alias.ResourceNameFunction;
@@ -265,12 +266,13 @@ public class PageWriter<T> {
 			name -> {
 				Optional<Path> pathOptional = _page.getPathOptional();
 
-				if (pathOptional.isPresent()) {
-					return createNestedCollectionURL(
-						_requestInfo.getServerURL(), pathOptional.get(), name);
-				}
+				ServerURL serverURL = _requestInfo.getServerURL();
 
-				return createCollectionURL(_requestInfo.getServerURL(), name);
+				return pathOptional.map(
+					path -> createNestedCollectionURL(serverURL, path, name)
+				).orElseGet(
+					() -> createCollectionURL(serverURL, name)
+				);
 			});
 	}
 

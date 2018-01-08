@@ -36,7 +36,11 @@ public class PersonUpdaterForm {
 	public static Form<PersonUpdaterForm> buildForm(
 		Builder<PersonUpdaterForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The person updater form"
+		).description(
+			__ -> "This form can be used to update a person"
+		).constructor(
 			PersonUpdaterForm::new
 		).addOptionalString(
 			"alternateName", PersonUpdaterForm::setAlternateName

@@ -43,7 +43,11 @@ public class WebPageElementCreatorForm {
 	public static Form<WebPageElementCreatorForm> buildForm(
 		Builder<WebPageElementCreatorForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The web page element creator form"
+		).description(
+			__ -> "This form can be used to create a web page element"
+		).constructor(
 			WebPageElementCreatorForm::new
 		).addOptionalLong(
 			"folder", WebPageElementCreatorForm::_setFolder

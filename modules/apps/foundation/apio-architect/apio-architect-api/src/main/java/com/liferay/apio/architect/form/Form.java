@@ -14,24 +14,36 @@
 
 package com.liferay.apio.architect.form;
 
+import static com.liferay.apio.architect.form.FieldType.BOOLEAN;
+import static com.liferay.apio.architect.form.FieldType.DATE;
+import static com.liferay.apio.architect.form.FieldType.DOUBLE;
+import static com.liferay.apio.architect.form.FieldType.LONG;
+import static com.liferay.apio.architect.form.FieldType.STRING;
 import static com.liferay.apio.architect.form.FormUtil.getOptionalBoolean;
 import static com.liferay.apio.architect.form.FormUtil.getOptionalDate;
 import static com.liferay.apio.architect.form.FormUtil.getOptionalDouble;
+import static com.liferay.apio.architect.form.FormUtil.getOptionalFormFieldStream;
 import static com.liferay.apio.architect.form.FormUtil.getOptionalLong;
 import static com.liferay.apio.architect.form.FormUtil.getOptionalString;
 import static com.liferay.apio.architect.form.FormUtil.getRequiredBoolean;
 import static com.liferay.apio.architect.form.FormUtil.getRequiredDate;
 import static com.liferay.apio.architect.form.FormUtil.getRequiredDouble;
+import static com.liferay.apio.architect.form.FormUtil.getRequiredFormFieldStream;
 import static com.liferay.apio.architect.form.FormUtil.getRequiredLong;
 import static com.liferay.apio.architect.form.FormUtil.getRequiredString;
 
+import com.liferay.apio.architect.language.Language;
+
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Holds information about the form of an operation. The {@link #get(Map)}
@@ -75,6 +87,60 @@ public class Form<T> {
 	}
 
 	/**
+	 * Returns the description of the {@code Form}. Dependant on the HTTP
+	 * request language.
+	 *
+	 * @param  language the HTTP request language information
+	 * @return the form's description
+	 * @review
+	 */
+	public String getDescription(Language language) {
+		return _descriptionFunction.apply(language);
+	}
+
+	/**
+	 * Returns the list of fields from this {@code Form}.
+	 *
+	 * @return the list of form fields.
+	 */
+	public List<FormField> getFormFields() {
+		Stream<Stream<FormField>> stream = Stream.of(
+			getOptionalFormFieldStream(_optionalBooleans, BOOLEAN),
+			getOptionalFormFieldStream(_optionalDates, DATE),
+			getOptionalFormFieldStream(_optionalDoubles, DOUBLE),
+			getOptionalFormFieldStream(_optionalLongs, LONG),
+			getOptionalFormFieldStream(_optionalStrings, STRING),
+			getRequiredFormFieldStream(_requiredBooleans, BOOLEAN),
+			getRequiredFormFieldStream(_requiredDates, DATE),
+			getRequiredFormFieldStream(_requiredDoubles, DOUBLE),
+			getRequiredFormFieldStream(_requiredLongs, LONG),
+			getRequiredFormFieldStream(_requiredStrings, STRING));
+
+		return stream.flatMap(
+			Function.identity()
+		).collect(
+			Collectors.toList()
+		);
+	}
+
+	/**
+	 * Returns the title of the {@code Form}. Dependant on the HTTP request
+	 * language.
+	 *
+	 * @param  language the HTTP request language information
+	 * @return the form's title
+	 * @review
+	 */
+	public String getTitle(Language language) {
+		return _titleFunction.apply(language);
+	}
+
+	/**
+	 * The {@code Form} ID.
+	 */
+	public final String id;
+
+	/**
 	 * Populates and creates a {@code Form} of type {@code T}.
 	 *
 	 * @param  <T> the type used to store the {@code Form} information
@@ -82,18 +148,63 @@ public class Form<T> {
 	 */
 	public static class Builder<T> {
 
+		public Builder(List<String> paths) {
+			_form = new Form<>(paths);
+		}
+
 		/**
-		 * Adds a supplier that provides an instance of the class where the form
-		 * values are going to be stored.
+		 * Adds the function that provides the title for this {@code Form},
+		 * dependant on the {@link Language}.
 		 *
-		 * @param  supplier the supplier that provides the class
+		 * @param  titleFunction a function that receives the HTTP request
+		 *         language and returns the {@code Form}'s title
 		 * @return the updated builder
 		 * @review
 		 */
-		public FieldStep constructor(Supplier<T> supplier) {
-			_form._supplier = supplier;
+		public DescriptionStep title(Function<Language, String> titleFunction) {
+			_form._titleFunction = titleFunction;
 
-			return new FieldStep();
+			return new DescriptionStep();
+		}
+
+		public class ConstructorStep {
+
+			/**
+			 * Adds a supplier that provides an instance of the class where the
+			 * form values are going to be stored.
+			 *
+			 * @param  supplier the supplier that provides the class
+			 * @return the updated builder
+			 * @review
+			 */
+			public FieldStep constructor(Supplier<T> supplier) {
+				_form._supplier = supplier;
+
+				return new FieldStep();
+			}
+
+		}
+
+		public class DescriptionStep {
+
+			/**
+			 * Adds the function that provides the description for this {@code
+			 * Form}, dependant on the {@link Language}.
+			 *
+			 * @param  descriptionFunction a function that receives the HTTP
+			 *         request language and returns the {@code Form}'s
+			 *         description
+			 * @return the updated builder
+			 * @review
+			 */
+			public ConstructorStep description(
+				Function<Language, String> descriptionFunction) {
+
+				_form._descriptionFunction = descriptionFunction;
+
+				return new ConstructorStep();
+			}
+
 		}
 
 		public class FieldStep {
@@ -101,8 +212,8 @@ public class Form<T> {
 			/**
 			 * Requests an optional boolean from the HTTP request body. Calls
 			 * the provided consumer with the store instance (provided with the
-			 * {@link #constructor(Supplier)} method and the field value if the
-			 * field is present. Throws a {@link
+			 * {@link ConstructorStep#constructor(Supplier)} method and the
+			 * field value if the field is present. Throws a {@link
 			 * javax.ws.rs.BadRequestException} if the field is found but it
 			 * isn't a boolean.
 			 *
@@ -123,8 +234,8 @@ public class Form<T> {
 			/**
 			 * Requests an optional date from the HTTP request body. Calls the
 			 * provided consumer with the store instance (provided with the
-			 * {@link #constructor(Supplier)} method and the field value if the
-			 * field is present. Throws a {@link
+			 * {@link ConstructorStep#constructor(Supplier)} method and the
+			 * field value if the field is present. Throws a {@link
 			 * javax.ws.rs.BadRequestException} if the field is found but it
 			 * isn't a date.
 			 *
@@ -145,8 +256,8 @@ public class Form<T> {
 			/**
 			 * Requests an optional double number from the HTTP request body.
 			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link #constructor(Supplier)} method and the field
-			 * value if the field is present. Throws a {@link
+			 * with the {@link ConstructorStep#constructor(Supplier)} method and
+			 * the field value if the field is present. Throws a {@link
 			 * javax.ws.rs.BadRequestException} if the field is found but it
 			 * isn't a double number.
 			 *
@@ -167,8 +278,8 @@ public class Form<T> {
 			/**
 			 * Requests an optional long number from the HTTP request body.
 			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link #constructor(Supplier)} method and the field
-			 * value if the field is present. Throws a {@link
+			 * with the {@link ConstructorStep#constructor(Supplier)} method and
+			 * the field value if the field is present. Throws a {@link
 			 * javax.ws.rs.BadRequestException} if the field is found but it
 			 * isn't a long number.
 			 *
@@ -189,8 +300,8 @@ public class Form<T> {
 			/**
 			 * Requests an optional string from the HTTP request body. Calls the
 			 * provided consumer with the store instance (provided with the
-			 * {@link #constructor(Supplier)} method and the field value if the
-			 * field is present. Throws a {@link
+			 * {@link ConstructorStep#constructor(Supplier)} method and the
+			 * field value if the field is present. Throws a {@link
 			 * javax.ws.rs.BadRequestException} if the field is found but it
 			 * isn't a string.
 			 *
@@ -211,9 +322,9 @@ public class Form<T> {
 			/**
 			 * Requests a mandatory boolean from the HTTP request body. Calls
 			 * the provided consumer with the store instance (provided with the
-			 * {@link #constructor(Supplier)} method and the field value. Throws
-			 * a {@link javax.ws.rs.BadRequestException} if the field is not
-			 * found, or it's found but it isn't a boolean.
+			 * {@link ConstructorStep#constructor(Supplier)} method and the
+			 * field value. Throws a {@link javax.ws.rs.BadRequestException} if
+			 * the field is not found, or it's found but it isn't a boolean.
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
@@ -232,9 +343,9 @@ public class Form<T> {
 			/**
 			 * Requests a mandatory date from the HTTP request body. Calls the
 			 * provided consumer with the store instance (provided with the
-			 * {@link #constructor(Supplier)} method and the field value. Throws
-			 * a {@link javax.ws.rs.BadRequestException} if the field is not
-			 * found, or it's found but it isn't a date.
+			 * {@link ConstructorStep#constructor(Supplier)} method and the
+			 * field value. Throws a {@link javax.ws.rs.BadRequestException} if
+			 * the field is not found, or it's found but it isn't a date.
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
@@ -253,9 +364,10 @@ public class Form<T> {
 			/**
 			 * Requests a mandatory double number from the HTTP request body.
 			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link #constructor(Supplier)} method and the field
-			 * value. Throws a {@link javax.ws.rs.BadRequestException} if the
-			 * field is not found, or it's found but it isn't a double number.
+			 * with the {@link ConstructorStep#constructor(Supplier)} method and
+			 * the field value. Throws a {@link javax.ws.rs.BadRequestException}
+			 * if the field is not found, or it's found but it isn't a double
+			 * number.
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
@@ -274,9 +386,10 @@ public class Form<T> {
 			/**
 			 * Requests a mandatory long number from the HTTP request body.
 			 * Calls the provided consumer with the store instance (provided
-			 * with the {@link #constructor(Supplier)} method and the field
-			 * value. Throws a {@link javax.ws.rs.BadRequestException} if the
-			 * field is not found, or it's found but it isn't a long number.
+			 * with the {@link ConstructorStep#constructor(Supplier)} method and
+			 * the field value. Throws a {@link javax.ws.rs.BadRequestException}
+			 * if the field is not found, or it's found but it isn't a long
+			 * number.
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
@@ -295,9 +408,9 @@ public class Form<T> {
 			/**
 			 * Requests a mandatory string from the HTTP request body. Calls the
 			 * provided consumer with the store instance (provided with the
-			 * {@link #constructor(Supplier)} method and the field value. Throws
-			 * a {@link javax.ws.rs.BadRequestException} if the field is not
-			 * found, or it's found but it isn't a string.
+			 * {@link ConstructorStep#constructor(Supplier)} method and the
+			 * field value. Throws a {@link javax.ws.rs.BadRequestException} if
+			 * the field is not found, or it's found but it isn't a string.
 			 *
 			 * @param  key the field's key
 			 * @param  biConsumer the consumer to call
@@ -325,13 +438,15 @@ public class Form<T> {
 
 		}
 
-		private final Form<T> _form = new Form<>();
+		private final Form<T> _form;
 
 	}
 
-	private Form() {
+	private Form(List<String> paths) {
+		id = String.join("/", paths);
 	}
 
+	private Function<Language, String> _descriptionFunction;
 	private final Map<String, Function<T, Consumer<Boolean>>>
 		_optionalBooleans = new HashMap<>();
 	private final Map<String, Function<T, Consumer<Date>>> _optionalDates =
@@ -353,5 +468,6 @@ public class Form<T> {
 	private final Map<String, Function<T, Consumer<String>>> _requiredStrings =
 		new HashMap<>();
 	private Supplier<T> _supplier;
+	private Function<Language, String> _titleFunction;
 
 }

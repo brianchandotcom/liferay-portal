@@ -34,7 +34,11 @@ public class FolderForm {
 	 * @review
 	 */
 	public static Form<FolderForm> buildForm(Builder<FolderForm> formBuilder) {
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The folder form"
+		).description(
+			__ -> "This form can be used to create or update a folder"
+		).constructor(
 			FolderForm::new
 		).addRequiredString(
 			"description", FolderForm::_setDescription

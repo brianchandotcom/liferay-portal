@@ -23,6 +23,7 @@ import com.liferay.apio.architect.documentation.APITitle;
 import com.liferay.apio.architect.documentation.Documentation;
 import com.liferay.apio.architect.endpoint.RootEndpoint;
 import com.liferay.apio.architect.error.ApioDeveloperError;
+import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.function.ThrowableFunction;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.Page;
@@ -231,6 +232,20 @@ public class RootEndpointImpl implements RootEndpoint {
 	}
 
 	@Override
+	public Try<Form> getCreatorFormTry(String name) {
+		Try<CollectionRoutes<Object>> collectionRoutesTry =
+			_getCollectionRoutesTry(name);
+
+		return collectionRoutesTry.map(
+			CollectionRoutes::getForm
+		).map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class, NotFoundException::new
+		);
+	}
+
+	@Override
 	public Documentation getDocumentation() {
 		return _documentation;
 	}
@@ -289,6 +304,33 @@ public class RootEndpointImpl implements RootEndpoint {
 			NoSuchElementException.class,
 			_getNotFoundExceptionSupplier(
 				String.join("/", name, id, nestedName))
+		);
+	}
+
+	@Override
+	public Try<Form> getNestedCreatorFormTry(String name, String nestedName) {
+		Try<NestedCollectionRoutes<Object>> nestedCollectionRoutesTry =
+			_getNestedCollectionRoutesTry(name, nestedName);
+
+		return nestedCollectionRoutesTry.map(
+			NestedCollectionRoutes::getForm
+		).map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class, NotFoundException::new
+		);
+	}
+
+	@Override
+	public Try<Form> getUpdaterFormTry(String name) {
+		Try<ItemRoutes<Object>> itemRoutesTry = _getItemRoutesTry(name);
+
+		return itemRoutesTry.map(
+			ItemRoutes::getForm
+		).map(
+			Optional::get
+		).mapFailMatching(
+			NoSuchElementException.class, NotFoundException::new
 		);
 	}
 

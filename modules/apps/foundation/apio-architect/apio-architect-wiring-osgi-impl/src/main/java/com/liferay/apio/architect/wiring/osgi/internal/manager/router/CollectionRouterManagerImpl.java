@@ -15,6 +15,7 @@
 package com.liferay.apio.architect.wiring.osgi.internal.manager.router;
 
 import com.liferay.apio.architect.alias.ProvideFunction;
+import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
 import com.liferay.apio.architect.router.CollectionRouter;
 import com.liferay.apio.architect.routes.CollectionRoutes;
 import com.liferay.apio.architect.routes.CollectionRoutes.Builder;
@@ -91,7 +92,13 @@ public class CollectionRouterManagerImpl
 			httpServletRequest -> clazz -> _providerManager.provideOptional(
 				clazz, httpServletRequest);
 
-		Builder builder = new Builder<>(modelClass, provideFunction);
+		Optional<String> optional = _nameManager.getNameOptional(
+			modelClass.getName());
+
+		String name = optional.orElseThrow(
+			() -> new MustHaveValidGenericType(modelClass));
+
+		Builder builder = new Builder<>(modelClass, name, provideFunction);
 
 		return collectionRouter.collectionRoutes(builder);
 	}

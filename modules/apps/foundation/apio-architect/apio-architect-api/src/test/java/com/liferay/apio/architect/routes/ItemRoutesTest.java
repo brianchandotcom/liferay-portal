@@ -29,6 +29,7 @@ import static org.hamcrest.core.Is.is;
 import com.liferay.apio.architect.alias.routes.DeleteItemConsumer;
 import com.liferay.apio.architect.alias.routes.GetItemFunction;
 import com.liferay.apio.architect.alias.routes.UpdateItemFunction;
+import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
@@ -46,7 +47,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testEmptyBuilderBuildsEmptyRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.build();
 
@@ -69,7 +70,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testFiveParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnFourParameterGetterRoute, String.class,
@@ -88,7 +89,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testFourParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnThreeParameterGetterRoute, String.class,
@@ -107,7 +108,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testOneParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnNoParameterGetterRoute
@@ -123,7 +124,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testThreeParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnTwoParameterGetterRoute, String.class,
@@ -141,7 +142,7 @@ public class ItemRoutesTest {
 	@Test
 	public void testTwoParameterBuilderMethodsCreatesValidRoutes() {
 		Builder<String, Long> builder = new Builder<>(
-			String.class, PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
+			String.class, "name", PROVIDE_FUNCTION, IDENTIFIER_FUNCTION);
 
 		ItemRoutes<String> itemRoutes = builder.addGetter(
 			this::_testAndReturnOneParameterGetterRoute, String.class
@@ -254,6 +255,16 @@ public class ItemRoutesTest {
 	}
 
 	private void _testItemRoutes(ItemRoutes<String> itemRoutes) {
+		Optional<Form> optional = itemRoutes.getForm();
+
+		Form form = optional.get();
+
+		assertThat(form.id, is(equalTo("u/name")));
+
+		Map body = (Map)form.get(_body);
+
+		assertThat(body, is(equalTo(_body)));
+
 		Path path = new Path("name", "42");
 
 		Optional<DeleteItemConsumer> deleteItemConsumerOptional =

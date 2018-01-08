@@ -20,6 +20,7 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.Manag
 
 import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHavePathIdentifierMapper;
+import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
 import com.liferay.apio.architect.router.ItemRouter;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
@@ -27,6 +28,7 @@ import com.liferay.apio.architect.wiring.osgi.internal.manager.base.BaseManager;
 import com.liferay.apio.architect.wiring.osgi.manager.PathIdentifierMapperManager;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 
 import java.util.Optional;
@@ -75,8 +77,14 @@ public class ItemRouterManagerImpl
 			serviceReference, ITEM_IDENTIFIER_CLASS,
 			() -> getTypeParamOrFail(itemRouter, ItemRouter.class, 1));
 
+		Optional<String> nameOptional = _nameManager.getNameOptional(
+			modelClass.getName());
+
+		String name = nameOptional.orElseThrow(
+			() -> new MustHaveValidGenericType(modelClass));
+
 		Builder builder = new Builder<>(
-			modelClass, provideFunction,
+			modelClass, name, provideFunction,
 			path -> {
 				Optional<?> optional = _pathIdentifierMapperManager.map(
 					identifierClass, path);
@@ -90,6 +98,9 @@ public class ItemRouterManagerImpl
 
 	@Reference
 	private ModelClassManager _modelClassManager;
+
+	@Reference
+	private NameManager _nameManager;
 
 	@Reference
 	private PathIdentifierMapperManager _pathIdentifierMapperManager;

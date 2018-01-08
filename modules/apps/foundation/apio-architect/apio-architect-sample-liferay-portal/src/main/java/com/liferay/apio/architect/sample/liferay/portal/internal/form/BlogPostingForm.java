@@ -40,7 +40,11 @@ public class BlogPostingForm {
 	public static Form<BlogPostingForm> buildForm(
 		Builder<BlogPostingForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The blog posting form"
+		).description(
+			__ -> "This form can be used to create or update a blog posting"
+		).constructor(
 			BlogPostingForm::new
 		).addRequiredDate(
 			"displayDate", BlogPostingForm::_setDisplayDate

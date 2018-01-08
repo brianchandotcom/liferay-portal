@@ -30,6 +30,7 @@ import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.alias.routes.CreateItemFunction;
 import com.liferay.apio.architect.alias.routes.GetPageFunction;
+import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
 import com.liferay.apio.architect.pagination.Pagination;
@@ -49,7 +50,8 @@ public class CollectionRoutesTest {
 
 	@Test
 	public void testEmptyBuilderBuildsEmptyRoutes() {
-		Builder<String> builder = new Builder<>(String.class, PROVIDE_FUNCTION);
+		Builder<String> builder = new Builder<>(
+			String.class, "name", PROVIDE_FUNCTION);
 
 		CollectionRoutes<String> collectionRoutes = builder.build();
 
@@ -66,7 +68,8 @@ public class CollectionRoutesTest {
 
 	@Test
 	public void testFiveParameterBuilderMethodsCreatesValidRoutes() {
-		Builder<String> builder = new Builder<>(String.class, PROVIDE_FUNCTION);
+		Builder<String> builder = new Builder<>(
+			String.class, "name", PROVIDE_FUNCTION);
 
 		CollectionRoutes<String> collectionRoutes = builder.addCreator(
 			this::_testAndReturnFourParameterCreatorRoute, String.class,
@@ -81,7 +84,8 @@ public class CollectionRoutesTest {
 
 	@Test
 	public void testFourParameterBuilderMethodsCreatesValidRoutes() {
-		Builder<String> builder = new Builder<>(String.class, PROVIDE_FUNCTION);
+		Builder<String> builder = new Builder<>(
+			String.class, "name", PROVIDE_FUNCTION);
 
 		CollectionRoutes<String> collectionRoutes = builder.addCreator(
 			this::_testAndReturnThreeParameterCreatorRoute, String.class,
@@ -96,7 +100,8 @@ public class CollectionRoutesTest {
 
 	@Test
 	public void testOneParameterBuilderMethodsCreatesValidRoutes() {
-		Builder<String> builder = new Builder<>(String.class, PROVIDE_FUNCTION);
+		Builder<String> builder = new Builder<>(
+			String.class, "name", PROVIDE_FUNCTION);
 
 		CollectionRoutes<String> collectionRoutes = builder.addCreator(
 			this::_testAndReturnNoParameterCreatorRoute, FORM_BUILDER_FUNCTION
@@ -109,7 +114,8 @@ public class CollectionRoutesTest {
 
 	@Test
 	public void testThreeParameterBuilderMethodsCreatesValidRoutes() {
-		Builder<String> builder = new Builder<>(String.class, PROVIDE_FUNCTION);
+		Builder<String> builder = new Builder<>(
+			String.class, "name", PROVIDE_FUNCTION);
 
 		CollectionRoutes<String> collectionRoutes = builder.addCreator(
 			this::_testAndReturnTwoParameterCreatorRoute, String.class,
@@ -124,7 +130,8 @@ public class CollectionRoutesTest {
 
 	@Test
 	public void testTwoParameterBuilderMethodsCreatesValidRoutes() {
-		Builder<String> builder = new Builder<>(String.class, PROVIDE_FUNCTION);
+		Builder<String> builder = new Builder<>(
+			String.class, "name", PROVIDE_FUNCTION);
 
 		CollectionRoutes<String> collectionRoutes = builder.addCreator(
 			this::_testAndReturnOneParameterCreatorRoute, String.class,
@@ -222,6 +229,16 @@ public class CollectionRoutesTest {
 
 	private void _testCollectionRoutes(
 		CollectionRoutes<String> collectionRoutes) {
+
+		Optional<Form> optional = collectionRoutes.getForm();
+
+		Form form = optional.get();
+
+		assertThat(form.id, is(equalTo("c/name")));
+
+		Map body = (Map)form.get(_body);
+
+		assertThat(body, is(equalTo(_body)));
 
 		Optional<CreateItemFunction<String>> createItemFunctionOptional =
 			collectionRoutes.getCreateItemFunctionOptional();

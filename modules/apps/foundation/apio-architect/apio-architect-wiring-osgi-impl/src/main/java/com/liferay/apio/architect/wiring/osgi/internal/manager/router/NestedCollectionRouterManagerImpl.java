@@ -20,6 +20,7 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.Manag
 import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.ManagerUtil.getTypeParamOrFail;
 
 import com.liferay.apio.architect.alias.ProvideFunction;
+import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
 import com.liferay.apio.architect.router.NestedCollectionRouter;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes;
 import com.liferay.apio.architect.routes.NestedCollectionRoutes.Builder;
@@ -27,6 +28,7 @@ import com.liferay.apio.architect.wiring.osgi.internal.manager.base.BaseManager;
 import com.liferay.apio.architect.wiring.osgi.internal.service.reference.mapper.CustomServiceReferenceMapper;
 import com.liferay.apio.architect.wiring.osgi.manager.ProviderManager;
 import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassManager;
+import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.NestedCollectionRouterManager;
 import com.liferay.osgi.service.tracker.collections.map.ServiceReferenceMapper.Emitter;
 
@@ -111,6 +113,11 @@ public class NestedCollectionRouterManagerImpl
 		ServiceReference<NestedCollectionRouter> serviceReference,
 		Class<?> modelClass) {
 
+		Class<?> parentClass = getGenericClassFromPropertyOrElse(
+			serviceReference, PARENT_MODEL_CLASS,
+			() -> getTypeParamOrFail(
+				nestedCollectionRouter, NestedCollectionRouter.class, 1));
+
 		Class<?> identifierClass = getGenericClassFromPropertyOrElse(
 			serviceReference, PARENT_IDENTIFIER_CLASS,
 			() -> getTypeParamOrFail(
@@ -120,14 +127,29 @@ public class NestedCollectionRouterManagerImpl
 			httpServletRequest -> clazz -> _providerManager.provideOptional(
 				clazz, httpServletRequest);
 
+		Optional<String> nameOptional = _nameManager.getNameOptional(
+			modelClass.getName());
+
+		String name = nameOptional.orElseThrow(
+			() -> new MustHaveValidGenericType(modelClass));
+
+		Optional<String> nestedNameOptional = _nameManager.getNameOptional(
+			parentClass.getName());
+
+		String nestedName = nestedNameOptional.orElseThrow(
+			() -> new MustHaveValidGenericType(modelClass));
+
 		Builder builder = new Builder<>(
-			modelClass, identifierClass, provideFunction);
+			modelClass, name, nestedName, identifierClass, provideFunction);
 
 		return nestedCollectionRouter.collectionRoutes(builder);
 	}
 
 	@Reference
 	private ModelClassManager _modelClassManager;
+
+	@Reference
+	private NameManager _nameManager;
 
 	@Reference
 	private ProviderManager _providerManager;

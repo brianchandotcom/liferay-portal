@@ -39,7 +39,11 @@ public class PersonCreatorForm {
 	public static Form<PersonCreatorForm> buildForm(
 		Form.Builder<PersonCreatorForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The person creator form"
+		).description(
+			__ -> "This form can be used to create a person"
+		).constructor(
 			PersonCreatorForm::new
 		).addOptionalString(
 			"gender", PersonCreatorForm::_setGender

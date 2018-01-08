@@ -17,6 +17,7 @@ package com.liferay.apio.architect.endpoint;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.apio.architect.documentation.Documentation;
+import com.liferay.apio.architect.form.Form;
 import com.liferay.apio.architect.functional.Try;
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.single.model.SingleModel;
@@ -130,6 +131,17 @@ public interface RootEndpoint {
 	public <T> Try<Page<T>> getCollectionPageTry(
 		@PathParam("name") String name);
 
+	/**
+	 * Returns the creator {@link Form} for the specified resource.
+	 *
+	 * @param  name the resource's name, extracted from the URL
+	 * @return the {@link Form} for the specified resource, or an exception if
+	 *         an error occurred
+	 */
+	@GET
+	@Path("/f/c/{name}")
+	public Try<Form> getCreatorFormTry(@PathParam("name") String name);
+
 	@GET
 	@Path("/doc")
 	public Documentation getDocumentation();
@@ -157,6 +169,31 @@ public interface RootEndpoint {
 	public <T> Try<Page<T>> getNestedCollectionPageTry(
 		@PathParam("name") String name, @PathParam("id") String id,
 		@PathParam("nestedName") String nestedName);
+
+	/**
+	 * Returns the nested creator {@link Form} for the specified resource.
+	 *
+	 * @param  name the parent resource's name, extracted from the URL
+	 * @param  nestedName the nested resource's name, extracted from the URL
+	 * @return the {@link Form} for the specified resource, or an exception if
+	 *         an error occurred
+	 */
+	@GET
+	@Path("/f/c/{name}/{nestedName}")
+	public Try<Form> getNestedCreatorFormTry(
+		@PathParam("name") String name,
+		@PathParam("nestedName") String nestedName);
+
+	/**
+	 * Returns the updater {@link Form} for the specified resource.
+	 *
+	 * @param  name the resource's name, extracted from the URL
+	 * @return the {@link Form} for the specified resource, or an exception if
+	 *         an error occurred
+	 */
+	@GET
+	@Path("/f/u/{name}")
+	public Try<Form> getUpdaterFormTry(@PathParam("name") String name);
 
 	/**
 	 * Updates the specified collection item.

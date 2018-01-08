@@ -12,7 +12,9 @@
  * details.
  */
 
-package com.liferay.apio.architect.test.resource;
+package com.liferay.apio.architect.test.representor;
+
+import com.liferay.apio.architect.test.form.MockFormCreator;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -22,12 +24,12 @@ import org.junit.Test;
 /**
  * @author Alejandro Hernández
  */
-public class MockRepresentorCreatorTest {
+public class MockFormCreatorTest {
 
 	@Test(expected = UnsupportedOperationException.class)
 	public void testConstructorThrowsException() throws Throwable {
 		Constructor<?> constructor =
-			MockRepresentorCreator.class.getDeclaredConstructors()[0];
+			MockFormCreator.class.getDeclaredConstructors()[0];
 
 		constructor.setAccessible(true);
 

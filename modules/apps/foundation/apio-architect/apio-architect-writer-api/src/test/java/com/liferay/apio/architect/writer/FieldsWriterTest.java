@@ -31,9 +31,9 @@ import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.related.RelatedModel;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
-import com.liferay.apio.architect.test.resource.MockRepresentorCreator;
-import com.liferay.apio.architect.test.resource.model.FirstEmbeddedModel;
-import com.liferay.apio.architect.test.resource.model.RootModel;
+import com.liferay.apio.architect.test.model.FirstEmbeddedModel;
+import com.liferay.apio.architect.test.model.RootModel;
+import com.liferay.apio.architect.test.representor.MockRepresentorCreator;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.ArrayList;

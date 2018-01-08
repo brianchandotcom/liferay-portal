@@ -126,7 +126,7 @@ public class SingleModelWriter<T> {
 		fieldsWriter.writeRelatedModels(
 			singleModel -> getPathOptional(
 				singleModel, _pathFunction, _representorFunction),
-			this::_writeEmbeddedModelFields,
+			this::writeEmbeddedModelFields,
 			(resourceURL, embeddedPathElements) ->
 				_singleModelMessageMapper.mapLinkedResourceURL(
 					_jsonObjectBuilder, embeddedPathElements, resourceURL),
@@ -147,6 +147,86 @@ public class SingleModelWriter<T> {
 		JsonObject jsonObject = _jsonObjectBuilder.build();
 
 		return Optional.of(jsonObject.toString());
+	}
+
+	/**
+	 * Writes a related {@link SingleModel} with the {@code
+	 * SingleModelMessageMapper}. This method uses a {@link FieldsWriter} to
+	 * write the different fields of its {@link
+	 * com.liferay.apio.architect.representor.Representor}. If no {@code
+	 * Representor} or {@code Path} exists for the model, this method doesn't
+	 * perform any action.
+	 *
+	 * @param  singleModel the {@code SingleModel} to write
+	 * @param  embeddedPathElements the embedded path elements of the related
+	 *         model
+	 * @review
+	 */
+	public <S> void writeEmbeddedModelFields(
+		SingleModel<S> singleModel,
+		FunctionalList<String> embeddedPathElements) {
+
+		Optional<FieldsWriter<S, ?>> optional = getFieldsWriter(
+			singleModel, embeddedPathElements, _requestInfo, _pathFunction,
+			_representorFunction);
+
+		if (!optional.isPresent()) {
+			return;
+		}
+
+		FieldsWriter<S, ?> fieldsWriter = optional.get();
+
+		fieldsWriter.writeBooleanFields(
+			(field, value) ->
+				_singleModelMessageMapper.mapEmbeddedResourceBooleanField(
+					_jsonObjectBuilder, embeddedPathElements, field, value));
+
+		fieldsWriter.writeLocalizedStringFields(
+			(field, value) ->
+				_singleModelMessageMapper.mapEmbeddedResourceStringField(
+					_jsonObjectBuilder, embeddedPathElements, field, value));
+
+		fieldsWriter.writeNumberFields(
+			(field, value) ->
+				_singleModelMessageMapper.mapEmbeddedResourceNumberField(
+					_jsonObjectBuilder, embeddedPathElements, field, value));
+
+		fieldsWriter.writeStringFields(
+			(field, value) ->
+				_singleModelMessageMapper.mapEmbeddedResourceStringField(
+					_jsonObjectBuilder, embeddedPathElements, field, value));
+
+		fieldsWriter.writeLinks(
+			(fieldName, link) ->
+				_singleModelMessageMapper.mapEmbeddedResourceLink(
+					_jsonObjectBuilder, embeddedPathElements, fieldName, link));
+
+		fieldsWriter.writeTypes(
+			types -> _singleModelMessageMapper.mapEmbeddedResourceTypes(
+				_jsonObjectBuilder, embeddedPathElements, types));
+
+		fieldsWriter.writeBinaries(
+			(field, value) -> _singleModelMessageMapper.mapEmbeddedResourceLink(
+				_jsonObjectBuilder, embeddedPathElements, field, value));
+
+		fieldsWriter.writeRelatedModels(
+			embeddedSingleModel -> getPathOptional(
+				embeddedSingleModel, _pathFunction, _representorFunction),
+			this::writeEmbeddedModelFields,
+			(resourceURL, resourceEmbeddedPathElements) ->
+				_singleModelMessageMapper.mapLinkedResourceURL(
+					_jsonObjectBuilder, resourceEmbeddedPathElements,
+					resourceURL),
+			(resourceURL, resourceEmbeddedPathElements) ->
+				_singleModelMessageMapper.mapEmbeddedResourceURL(
+					_jsonObjectBuilder, resourceEmbeddedPathElements,
+					resourceURL));
+
+		fieldsWriter.writeRelatedCollections(
+			_resourceNameFunction,
+			(url, resourceEmbeddedPathElements) ->
+				_singleModelMessageMapper.mapLinkedResourceURL(
+					_jsonObjectBuilder, resourceEmbeddedPathElements, url));
 	}
 
 	/**
@@ -291,73 +371,6 @@ public class SingleModelWriter<T> {
 		private SingleModel<T> _singleModel;
 		private SingleModelMessageMapper<T> _singleModelMessageMapper;
 
-	}
-
-	private <S> void _writeEmbeddedModelFields(
-		SingleModel<S> singleModel,
-		FunctionalList<String> embeddedPathElements) {
-
-		Optional<FieldsWriter<S, ?>> optional = getFieldsWriter(
-			singleModel, embeddedPathElements, _requestInfo, _pathFunction,
-			_representorFunction);
-
-		if (!optional.isPresent()) {
-			return;
-		}
-
-		FieldsWriter<S, ?> fieldsWriter = optional.get();
-
-		fieldsWriter.writeBooleanFields(
-			(field, value) ->
-				_singleModelMessageMapper.mapEmbeddedResourceBooleanField(
-					_jsonObjectBuilder, embeddedPathElements, field, value));
-
-		fieldsWriter.writeLocalizedStringFields(
-			(field, value) ->
-				_singleModelMessageMapper.mapEmbeddedResourceStringField(
-					_jsonObjectBuilder, embeddedPathElements, field, value));
-
-		fieldsWriter.writeNumberFields(
-			(field, value) ->
-				_singleModelMessageMapper.mapEmbeddedResourceNumberField(
-					_jsonObjectBuilder, embeddedPathElements, field, value));
-
-		fieldsWriter.writeStringFields(
-			(field, value) ->
-				_singleModelMessageMapper.mapEmbeddedResourceStringField(
-					_jsonObjectBuilder, embeddedPathElements, field, value));
-
-		fieldsWriter.writeLinks(
-			(fieldName, link) ->
-				_singleModelMessageMapper.mapEmbeddedResourceLink(
-					_jsonObjectBuilder, embeddedPathElements, fieldName, link));
-
-		fieldsWriter.writeTypes(
-			types -> _singleModelMessageMapper.mapEmbeddedResourceTypes(
-				_jsonObjectBuilder, embeddedPathElements, types));
-
-		fieldsWriter.writeBinaries(
-			(field, value) -> _singleModelMessageMapper.mapEmbeddedResourceLink(
-				_jsonObjectBuilder, embeddedPathElements, field, value));
-
-		fieldsWriter.writeRelatedModels(
-			embeddedSingleModel -> getPathOptional(
-				embeddedSingleModel, _pathFunction, _representorFunction),
-			this::_writeEmbeddedModelFields,
-			(resourceURL, resourceEmbeddedPathElements) ->
-				_singleModelMessageMapper.mapLinkedResourceURL(
-					_jsonObjectBuilder, resourceEmbeddedPathElements,
-					resourceURL),
-			(resourceURL, resourceEmbeddedPathElements) ->
-				_singleModelMessageMapper.mapEmbeddedResourceURL(
-					_jsonObjectBuilder, resourceEmbeddedPathElements,
-					resourceURL));
-
-		fieldsWriter.writeRelatedCollections(
-			_resourceNameFunction,
-			(url, resourceEmbeddedPathElements) ->
-				_singleModelMessageMapper.mapLinkedResourceURL(
-					_jsonObjectBuilder, resourceEmbeddedPathElements, url));
 	}
 
 	private final JSONObjectBuilder _jsonObjectBuilder;

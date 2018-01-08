@@ -37,7 +37,11 @@ public class BlogPostingCommentCreatorForm {
 	public static Form<BlogPostingCommentCreatorForm> buildForm(
 		Builder<BlogPostingCommentCreatorForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The blog posting comment creator form"
+		).description(
+			__ -> "This form can be used to create a blog posting comment"
+		).constructor(
 			BlogPostingCommentCreatorForm::new
 		).addRequiredString(
 			"text", BlogPostingCommentCreatorForm::_setText

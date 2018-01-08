@@ -128,10 +128,10 @@ public class DocumentationWriter {
 
 			/**
 			 * Adds information to the builder about the {@link
-			 * DocumentationMessageMapper} to the builder.
+			 * DocumentationMessageMapper}.
 			 *
 			 * @param  documentationMessageMapper the {@code
-			 *         DocumentationMessageMapper} headers
+			 *         DocumentationMessageMapper}
 			 * @return the updated builder
 			 */
 			public RequestInfoStep documentationMessageMapper(

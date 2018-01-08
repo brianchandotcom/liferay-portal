@@ -14,10 +14,10 @@
 
 package com.liferay.apio.architect.test.writer;
 
-import static com.liferay.apio.architect.test.resource.MockRepresentorCreator.createFirstEmbeddedModelRepresentor;
-import static com.liferay.apio.architect.test.resource.MockRepresentorCreator.createRootModelRepresentor;
-import static com.liferay.apio.architect.test.resource.MockRepresentorCreator.createSecondEmbeddedModelRepresentor;
-import static com.liferay.apio.architect.test.resource.MockRepresentorCreator.createThirdEmbeddedModelRepresentor;
+import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createFirstEmbeddedModelRepresentor;
+import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createRootModelRepresentor;
+import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createSecondEmbeddedModelRepresentor;
+import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createThirdEmbeddedModelRepresentor;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -26,9 +26,9 @@ import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.single.model.SingleModel;
-import com.liferay.apio.architect.test.resource.model.FirstEmbeddedModel;
-import com.liferay.apio.architect.test.resource.model.RootModel;
-import com.liferay.apio.architect.test.resource.model.SecondEmbeddedModel;
+import com.liferay.apio.architect.test.model.FirstEmbeddedModel;
+import com.liferay.apio.architect.test.model.RootModel;
+import com.liferay.apio.architect.test.model.SecondEmbeddedModel;
 import com.liferay.apio.architect.uri.Path;
 import com.liferay.apio.architect.writer.SingleModelWriter;
 

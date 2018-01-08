@@ -41,7 +41,11 @@ public class WebPageElementUpdaterForm {
 	public static Form<WebPageElementUpdaterForm> buildForm(
 		Builder<WebPageElementUpdaterForm> formBuilder) {
 
-		return formBuilder.constructor(
+		return formBuilder.title(
+			__ -> "The web page element updater form"
+		).description(
+			__ -> "This form can be used to update a web page element"
+		).constructor(
 			WebPageElementUpdaterForm::new
 		).addOptionalLong(
 			"folder", WebPageElementUpdaterForm::_setFolder

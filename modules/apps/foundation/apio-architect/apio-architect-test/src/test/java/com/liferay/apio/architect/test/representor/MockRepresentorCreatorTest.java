@@ -12,23 +12,31 @@
  * details.
  */
 
-package com.liferay.apio.architect.test.resource.model;
+package com.liferay.apio.architect.test.representor;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import org.junit.Test;
 
 /**
- * Represents a third-layer embeddable mock model that can be mapped to a {@link
- * com.liferay.apio.architect.representor.Representor} using {@link
- * com.liferay.apio.architect.test.resource.MockRepresentorCreator} methods.
- *
  * @author Alejandro Hernández
  */
-@FunctionalInterface
-public interface ThirdEmbeddedModel {
+public class MockRepresentorCreatorTest {
 
-	/**
-	 * Returns the ID.
-	 *
-	 * @return the ID
-	 */
-	public String getId();
+	@Test(expected = UnsupportedOperationException.class)
+	public void testConstructorThrowsException() throws Throwable {
+		Constructor<?> constructor =
+			MockRepresentorCreator.class.getDeclaredConstructors()[0];
+
+		constructor.setAccessible(true);
+
+		try {
+			constructor.newInstance();
+		}
+		catch (InvocationTargetException ite) {
+			throw ite.getTargetException();
+		}
+	}
 
 }

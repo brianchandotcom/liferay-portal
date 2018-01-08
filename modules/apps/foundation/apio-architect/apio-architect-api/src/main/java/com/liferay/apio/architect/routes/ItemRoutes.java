@@ -34,6 +34,7 @@ import com.liferay.apio.architect.function.TriFunction;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -59,6 +60,7 @@ public class ItemRoutes<T> {
 
 	public ItemRoutes(Builder<T, ?> builder) {
 		_deleteItemConsumer = builder._deleteItemConsumer;
+		_form = builder._form;
 		_singleModelFunction = builder._singleModelFunction;
 		_updateItemFunction = builder._updateItemFunction;
 	}
@@ -73,6 +75,18 @@ public class ItemRoutes<T> {
 	 */
 	public Optional<DeleteItemConsumer> getDeleteConsumerOptional() {
 		return Optional.ofNullable(_deleteItemConsumer);
+	}
+
+	/**
+	 * Returns the form that is used to update a collection item, if it was
+	 * added through the {@link Builder}. Returns {@code Optional#empty()}
+	 * otherwise.
+	 *
+	 * @return the form used to update a collection item; {@code
+	 *         Optional#empty()} otherwise
+	 */
+	public Optional<Form> getForm() {
+		return Optional.ofNullable(_form);
 	}
 
 	/**
@@ -112,10 +126,11 @@ public class ItemRoutes<T> {
 	public static class Builder<T, S> {
 
 		public Builder(
-			Class<T> modelClass, ProvideFunction provideFunction,
+			Class<T> modelClass, String name, ProvideFunction provideFunction,
 			IdentifierFunction identifierFunction) {
 
 			_modelClass = modelClass;
+			_name = name;
 			_provideFunction = provideFunction;
 			_identifierFunction = identifierFunction;
 		}
@@ -340,17 +355,19 @@ public class ItemRoutes<T> {
 		 * @param  biFunction the updater function that removes the item
 		 * @return the updated builder
 		 */
+		@SuppressWarnings("unchecked")
 		public <R> Builder<T, S> addUpdater(
 			BiFunction<S, R, T> biFunction,
 			FormBuilderFunction<R> formBuilderFunction) {
 
-			Form<R> form = formBuilderFunction.apply(new Form.Builder<>());
+			_form = formBuilderFunction.apply(
+				new Form.Builder<>(Arrays.asList("u", _name)));
 
 			_updateItemFunction =
 				httpServletRequest -> path -> body -> biFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					_getIdentifier(path), form.get(body)
+					_getIdentifier(path), (R)_form.get(body)
 				);
 
 			return this;
@@ -370,12 +387,14 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
+		@SuppressWarnings("unchecked")
 		public <A, B, C, D, R> Builder<T, S> addUpdater(
 			HexaFunction<S, R, A, B, C, D, T> hexaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass, Class<D> dClass,
 			FormBuilderFunction<R> formBuilderFunction) {
 
-			Form<R> form = formBuilderFunction.apply(new Form.Builder<>());
+			_form = formBuilderFunction.apply(
+				new Form.Builder<>(Arrays.asList("u", _name)));
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
 				_provideFunction, httpServletRequest, aClass, bClass, cClass,
@@ -383,7 +402,7 @@ public class ItemRoutes<T> {
 				a -> b -> c -> d -> hexaFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					_getIdentifier(path), form.get(body), a, b, c, d
+					_getIdentifier(path), (R)_form.get(body), a, b, c, d
 				));
 
 			return this;
@@ -401,19 +420,21 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
+		@SuppressWarnings("unchecked")
 		public <A, B, C, R> Builder<T, S> addUpdater(
 			PentaFunction<S, R, A, B, C, T> pentaFunction, Class<A> aClass,
 			Class<B> bClass, Class<C> cClass,
 			FormBuilderFunction<R> formBuilderFunction) {
 
-			Form<R> form = formBuilderFunction.apply(new Form.Builder<>());
+			_form = formBuilderFunction.apply(
+				new Form.Builder<>(Arrays.asList("u", _name)));
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
 				_provideFunction, httpServletRequest, aClass, bClass, cClass,
 				a -> b -> c -> pentaFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					_getIdentifier(path), form.get(body), a, b, c
+					_getIdentifier(path), (R)_form.get(body), a, b, c
 				));
 
 			return this;
@@ -429,18 +450,20 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
+		@SuppressWarnings("unchecked")
 		public <A, B, R> Builder<T, S> addUpdater(
 			TetraFunction<S, R, A, B, T> tetraFunction, Class<A> aClass,
 			Class<B> bClass, FormBuilderFunction<R> formBuilderFunction) {
 
-			Form<R> form = formBuilderFunction.apply(new Form.Builder<>());
+			_form = formBuilderFunction.apply(
+				new Form.Builder<>(Arrays.asList("u", _name)));
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
 				_provideFunction, httpServletRequest, aClass, bClass,
 				a -> b -> tetraFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					_getIdentifier(path), form.get(body), a, b
+					_getIdentifier(path), (R)_form.get(body), a, b
 				));
 
 			return this;
@@ -454,18 +477,20 @@ public class ItemRoutes<T> {
 		 *         parameter
 		 * @return the updated builder
 		 */
+		@SuppressWarnings("unchecked")
 		public <A, R> Builder<T, S> addUpdater(
 			TriFunction<S, R, A, T> triFunction, Class<A> aClass,
 			FormBuilderFunction<R> formBuilderFunction) {
 
-			Form<R> form = formBuilderFunction.apply(new Form.Builder<>());
+			_form = formBuilderFunction.apply(
+				new Form.Builder<>(Arrays.asList("u", _name)));
 
 			_updateItemFunction = httpServletRequest -> path -> body -> provide(
 				_provideFunction, httpServletRequest, aClass,
 				a -> triFunction.andThen(
 					t -> new SingleModel<>(t, _modelClass)
 				).apply(
-					_getIdentifier(path), form.get(body), a
+					_getIdentifier(path), (R)_form.get(body), a
 				));
 
 			return this;
@@ -487,8 +512,10 @@ public class ItemRoutes<T> {
 		}
 
 		private DeleteItemConsumer _deleteItemConsumer;
+		private Form _form;
 		private final IdentifierFunction _identifierFunction;
 		private final Class<T> _modelClass;
+		private final String _name;
 		private final ProvideFunction _provideFunction;
 		private GetItemFunction<T> _singleModelFunction;
 		private UpdateItemFunction<T> _updateItemFunction;
@@ -496,6 +523,7 @@ public class ItemRoutes<T> {
 	}
 
 	private DeleteItemConsumer _deleteItemConsumer;
+	private Form _form;
 	private GetItemFunction<T> _singleModelFunction;
 	private UpdateItemFunction<T> _updateItemFunction;
 

@@ -53,8 +53,7 @@ public class ShoppingItemFinderImpl
 			StringBundler sb = new StringBundler();
 
 			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
-			sb.append("WHERE ");
-			sb.append("ShoppingItem.groupId = ? AND (");
+			sb.append("WHERE ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
@@ -130,8 +129,7 @@ public class ShoppingItemFinderImpl
 			StringBundler sb = new StringBundler();
 
 			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
-			sb.append("WHERE ");
-			sb.append("ShoppingItem.groupId = ? AND (");
+			sb.append("WHERE ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
@@ -203,8 +201,7 @@ public class ShoppingItemFinderImpl
 			StringBundler sb = new StringBundler();
 
 			sb.append("SELECT COUNT(*) AS COUNT_VALUE FROM ShoppingItem ");
-			sb.append("WHERE ");
-			sb.append("ShoppingItem.groupId = ? AND (");
+			sb.append("WHERE ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
 				sb.append(StringPool.OPEN_PARENTHESIS);
@@ -220,8 +217,7 @@ public class ShoppingItemFinderImpl
 				sb.append(") AND ");
 			}
 
-			sb.append("ShoppingItem.sale = ? AND ");
-			sb.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.sale = ? AND ShoppingItem.smallImage = ?");
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 
@@ -283,8 +279,7 @@ public class ShoppingItemFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
-			sb.append("WHERE ");
+			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem WHERE ");
 			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
@@ -351,8 +346,7 @@ public class ShoppingItemFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
-			sb.append("WHERE ");
+			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem WHERE ");
 			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
@@ -419,8 +413,7 @@ public class ShoppingItemFinderImpl
 
 			StringBundler sb = new StringBundler();
 
-			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem ");
-			sb.append("WHERE ");
+			sb.append("SELECT {ShoppingItem.*} FROM ShoppingItem WHERE ");
 			sb.append("ShoppingItem.groupId = ? AND (");
 
 			if (ArrayUtil.isNotEmpty(categoryIds)) {
@@ -437,8 +430,7 @@ public class ShoppingItemFinderImpl
 				sb.append(") AND ");
 			}
 
-			sb.append("ShoppingItem.sale = ? AND ");
-			sb.append("ShoppingItem.smallImage = ?");
+			sb.append("ShoppingItem.sale = ? AND ShoppingItem.smallImage = ?");
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sb.toString());
 

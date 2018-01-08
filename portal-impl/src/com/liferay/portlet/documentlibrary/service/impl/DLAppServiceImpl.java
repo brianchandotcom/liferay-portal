@@ -1163,10 +1163,9 @@ public class DLAppServiceImpl extends DLAppServiceBaseImpl {
 			}
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append("No DLFileEntry exists with the key {");
-		sb.append("uuid=");
+		sb.append("No DLFileEntry exists with the key {uuid=");
 		sb.append(uuid);
 		sb.append(", groupId=");
 		sb.append(groupId);

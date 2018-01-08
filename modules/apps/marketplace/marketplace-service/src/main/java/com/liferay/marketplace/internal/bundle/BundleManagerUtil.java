@@ -14,8 +14,6 @@
 
 package com.liferay.marketplace.internal.bundle;
 
-import com.liferay.marketplace.bundle.BundleManager;
-
 import java.io.File;
 
 import java.util.List;
@@ -32,46 +30,46 @@ import org.osgi.service.component.annotations.Reference;
 public class BundleManagerUtil {
 
 	public static Bundle getBundle(String symbolicName, String version) {
-		return _bundleManager.getBundle(symbolicName, version);
+		return _bundleManagerImpl.getBundle(symbolicName, version);
 	}
 
 	public static List<Bundle> getBundles() {
-		return _bundleManager.getBundles();
+		return _bundleManagerImpl.getBundles();
 	}
 
 	public static List<Bundle> getInstalledBundles() {
-		return _bundleManager.getInstalledBundles();
+		return _bundleManagerImpl.getInstalledBundles();
 	}
 
 	public static Manifest getManifest(File file) {
-		return _bundleManager.getManifest(file);
+		return _bundleManagerImpl.getManifest(file);
 	}
 
 	public static List<Bundle> installLPKG(File file) throws Exception {
-		return _bundleManager.installLPKG(file);
+		return _bundleManagerImpl.installLPKG(file);
 	}
 
 	public static boolean isInstalled(Bundle bundle) {
-		return _bundleManager.isInstalled(bundle);
+		return _bundleManagerImpl.isInstalled(bundle);
 	}
 
 	public static boolean isInstalled(String symbolicName, String version) {
-		return _bundleManager.isInstalled(symbolicName, version);
+		return _bundleManagerImpl.isInstalled(symbolicName, version);
 	}
 
 	public static void uninstallBundle(Bundle bundle) {
-		_bundleManager.uninstallBundle(bundle);
+		_bundleManagerImpl.uninstallBundle(bundle);
 	}
 
 	public static void uninstallBundle(String symbolicName, String version) {
-		_bundleManager.uninstallBundle(symbolicName, version);
+		_bundleManagerImpl.uninstallBundle(symbolicName, version);
 	}
 
 	@Reference(unbind = "-")
-	protected void setBundleManager(BundleManager bundleManager) {
-		_bundleManager = bundleManager;
+	protected void setBundleManager(BundleManagerImpl bundleManagerImpl) {
+		_bundleManagerImpl = bundleManagerImpl;
 	}
 
-	private static BundleManager _bundleManager;
+	private static BundleManagerImpl _bundleManagerImpl;
 
 }

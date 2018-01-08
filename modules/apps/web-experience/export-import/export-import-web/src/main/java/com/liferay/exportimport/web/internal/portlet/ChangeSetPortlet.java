@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=false",
-		"javax.portlet.name=" + ExportImportPortletKeys.ENTITY_SET,
+		"javax.portlet.name=" + ExportImportPortletKeys.CHANGE_SET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class EntitySetPortlet extends MVCPortlet {
+public class ChangeSetPortlet extends MVCPortlet {
 }

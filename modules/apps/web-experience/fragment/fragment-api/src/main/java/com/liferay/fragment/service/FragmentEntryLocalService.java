@@ -222,6 +222,9 @@ public interface FragmentEntryLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getFragmentEntriesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getFragmentEntriesCount(long fragmentCollectionId);
+
 	/**
 	* Returns the fragment entry with the primary key.
 	*

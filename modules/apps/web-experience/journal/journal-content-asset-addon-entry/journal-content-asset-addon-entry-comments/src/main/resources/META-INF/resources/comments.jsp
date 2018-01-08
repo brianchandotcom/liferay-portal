@@ -16,7 +16,8 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
+<%@taglib uri="http://liferay.com/tld/comment" prefix="liferay-comment" %><%@
+taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.journal.content.asset.addon.entry.comments.internal.CommentsContentMetadataAssetAddonEntry" %><%@
@@ -43,7 +44,7 @@ String viewMode = ParamUtil.getString(request, "viewMode");
 		/>
 	</c:if>
 
-	<liferay-ui:discussion
+	<liferay-comment:discussion
 		className="<%= JournalArticle.class.getName() %>"
 		classPK="<%= articleDisplay.getResourcePrimKey() %>"
 		hideControls="<%= viewMode.equals(Constants.PRINT) %>"

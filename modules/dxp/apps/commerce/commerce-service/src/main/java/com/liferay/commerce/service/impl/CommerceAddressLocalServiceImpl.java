@@ -83,6 +83,25 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@Override
+	public CommerceAddress copyCommerceAddress(
+			long commerceAddressId, String className, long classPK,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		CommerceAddress commerceAddress =
+			commerceAddressPersistence.findByPrimaryKey(commerceAddressId);
+
+		return commerceAddressLocalService.addCommerceAddress(
+			className, classPK, commerceAddress.getName(),
+			commerceAddress.getDescription(), commerceAddress.getStreet1(),
+			commerceAddress.getStreet2(), commerceAddress.getStreet3(),
+			commerceAddress.getCity(), commerceAddress.getZip(),
+			commerceAddress.getCommerceRegionId(),
+			commerceAddress.getCommerceCountryId(),
+			commerceAddress.getPhoneNumber(), false, false, serviceContext);
+	}
+
+	@Override
 	public CommerceAddress deleteCommerceAddress(
 			CommerceAddress commerceAddress)
 		throws PortalException {

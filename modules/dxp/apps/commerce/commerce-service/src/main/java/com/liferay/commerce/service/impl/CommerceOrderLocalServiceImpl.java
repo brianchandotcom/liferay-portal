@@ -19,6 +19,7 @@ import com.liferay.commerce.exception.CommerceCartPaymentMethodException;
 import com.liferay.commerce.exception.CommerceCartShippingAddressException;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.exception.CommerceOrderPurchaseOrderNumberException;
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceOrder;
@@ -47,10 +48,10 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public CommerceOrder addCommerceOrder(
-			long orderUserId, long billingAddressId, long shippingAddressId,
-			long commercePaymentMethodId, long commerceShippingMethodId,
-			String shippingOptionName, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int shippingStatus, int status,
+			long orderUserId, long commercePaymentMethodId,
+			long commerceShippingMethodId, String shippingOptionName,
+			double subtotal, double shippingPrice, double total,
+			int paymentStatus, int shippingStatus, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -68,8 +69,6 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
 		commerceOrder.setOrderUserId(orderUserId);
-		commerceOrder.setBillingAddressId(billingAddressId);
-		commerceOrder.setShippingAddressId(shippingAddressId);
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
 		commerceOrder.setShippingOptionName(shippingOptionName);
@@ -105,14 +104,44 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
-				commerceCart.getUserId(), commerceCart.getBillingAddressId(),
-				commerceCart.getShippingAddressId(),
+				commerceCart.getUserId(),
 				commerceCart.getCommercePaymentMethodId(),
 				commerceCart.getCommerceShippingMethodId(),
 				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
 				total, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 				CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
 				CommerceOrderConstants.STATUS_PENDING, serviceContext);
+
+		// Commerce addresses
+
+		long billingAddressId = commerceCart.getBillingAddressId();
+
+		if (billingAddressId > 0) {
+			CommerceAddress commerceAddress =
+				commerceAddressLocalService.copyCommerceAddress(
+					billingAddressId, commerceOrder.getModelClassName(),
+					commerceOrder.getCommerceOrderId(), serviceContext);
+
+			billingAddressId = commerceAddress.getCommerceAddressId();
+		}
+
+		long shippingAddressId = commerceCart.getShippingAddressId();
+
+		if (shippingAddressId > 0) {
+			CommerceAddress commerceAddress =
+				commerceAddressLocalService.copyCommerceAddress(
+					shippingAddressId, commerceOrder.getModelClassName(),
+					commerceOrder.getCommerceOrderId(), serviceContext);
+
+			shippingAddressId = commerceAddress.getCommerceAddressId();
+		}
+
+		if ((billingAddressId > 0) || (shippingAddressId > 0)) {
+			commerceOrder.setBillingAddressId(billingAddressId);
+			commerceOrder.setShippingAddressId(shippingAddressId);
+
+			commerceOrder = commerceOrderPersistence.update(commerceOrder);
+		}
 
 		// Commerce order items
 
@@ -157,6 +186,12 @@ public class CommerceOrderLocalServiceImpl
 		// Commerce order payments
 
 		commerceOrderPaymentLocalService.deleteCommerceOrderPayments(
+			commerceOrder.getCommerceOrderId());
+
+		// Commerce addresses
+
+		commerceAddressLocalService.deleteCommerceAddresses(
+			commerceOrder.getModelClassName(),
 			commerceOrder.getCommerceOrderId());
 
 		// Expando

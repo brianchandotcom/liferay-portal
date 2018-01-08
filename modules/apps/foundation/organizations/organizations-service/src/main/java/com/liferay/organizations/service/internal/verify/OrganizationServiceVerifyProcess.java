@@ -77,21 +77,21 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 	protected Void updateOrganizationAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(6);
+			StringBundler sb = new StringBundler(8);
 
 			sb.append("select distinct AssetEntry.classPK as classPK, ");
 			sb.append("Organization_.uuid_ as uuid from ");
-			sb.append(
-				"AssetEntry, Organization_ where AssetEntry.classNameId = ");
+			sb.append("AssetEntry, Organization_ where ");
+			sb.append("AssetEntry.classNameId = ");
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				Organization.class.getName());
 
 			sb.append(classNameId);
 
-			sb.append(
-				" and AssetEntry.classPK = Organization_.organizationId ");
-			sb.append("and AssetEntry.classUuid is null");
+			sb.append(" and AssetEntry.classPK = ");
+			sb.append("Organization_.organizationId and AssetEntry.classUuid ");
+			sb.append("is null");
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					sb.toString());

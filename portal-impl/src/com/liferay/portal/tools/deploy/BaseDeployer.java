@@ -1177,7 +1177,7 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 			double webXmlVersion, File srcFile, String displayName)
 		throws Exception {
 
-		StringBundler sb = new StringBundler(61);
+		StringBundler sb = new StringBundler(62);
 
 		sb.append("<display-name>");
 		sb.append(displayName);
@@ -1228,8 +1228,8 @@ public class BaseDeployer implements AutoDeployer, Deployer {
 
 		if (Validator.isNotNull(portletTaglibDTD)) {
 			sb.append("<taglib>");
-			sb.append(
-				"<taglib-uri>http://java.sun.com/portlet_2_0</taglib-uri>");
+			sb.append("<taglib-uri>http://java.sun.com/portlet_2_0");
+			sb.append("</taglib-uri>");
 			sb.append("<taglib-location>");
 			sb.append("/WEB-INF/tld/liferay-portlet.tld");
 			sb.append("</taglib-location>");

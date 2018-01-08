@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.chat.util;
+package com.liferay.chat.internal.util;
 
 import com.liferay.chat.internal.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.internal.jabber.JabberUtil;
 import com.liferay.chat.service.StatusLocalServiceUtil;
+import com.liferay.chat.util.BuddyFinder;
 import com.liferay.chat.util.comparator.BuddyComparator;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 

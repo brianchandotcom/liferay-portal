@@ -12,23 +12,14 @@
  * details.
  */
 
-package com.liferay.exportimport.constants;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.exportimport.changeset.constants;
 
 /**
- * @author Daniel Kocsis
+ * @author Mate Thurzo
  */
-@ProviderType
-public class ExportImportPortletKeys {
+public class ChangeSetPortletKeys {
 
-	public static final String EXPORT =
-		"com_liferay_exportimport_web_portlet_ExportPortlet";
-
-	public static final String EXPORT_IMPORT =
-		"com_liferay_exportimport_web_portlet_ExportImportPortlet";
-
-	public static final String IMPORT =
-		"com_liferay_exportimport_web_portlet_ImportPortlet";
+	public static final String CHANGE_SET =
+		"com_liferay_exportimport_web_portlet_ChangeSetPortlet";
 
 }

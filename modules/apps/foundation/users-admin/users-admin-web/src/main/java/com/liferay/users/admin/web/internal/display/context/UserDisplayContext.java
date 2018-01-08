@@ -58,6 +58,7 @@ public class UserDisplayContext {
 		throws PortalException {
 
 		_request = request;
+		_initDisplayContext = initDisplayContext;
 
 		_selUser = PortalUtil.getSelectedUser(request);
 
@@ -65,15 +66,6 @@ public class UserDisplayContext {
 			WebKeys.THEME_DISPLAY);
 
 		_permissionChecker = _themeDisplay.getPermissionChecker();
-
-		_filterManageableGroups = initDisplayContext.isFilterManageableGroups();
-		_filterManageableOrganizations =
-			initDisplayContext.isFilterManageableOrganizations();
-		_filterManageableRoles = initDisplayContext.isFilterManageableRoles();
-		_filterManageableUserGroupRoles =
-			initDisplayContext.isFilterManageableUserGroupRoles();
-		_filterManageableUserGroups =
-			initDisplayContext.isFilterManageableUserGroups();
 	}
 
 	public List<Group> getAllGroups() throws PortalException {
@@ -104,7 +96,7 @@ public class UserDisplayContext {
 		if (_selUser != null) {
 			groups = _selUser.getGroups();
 
-			if (_filterManageableGroups) {
+			if (_initDisplayContext.isFilterManageableGroups()) {
 				groups = UsersAdminUtil.filterGroups(
 					_themeDisplay.getPermissionChecker(), groups);
 			}
@@ -154,7 +146,7 @@ public class UserDisplayContext {
 		if (_selUser != null) {
 			organizations = _selUser.getOrganizations();
 
-			if (_filterManageableOrganizations) {
+			if (_initDisplayContext.isFilterManageableOrganizations()) {
 				organizations = UsersAdminUtil.filterOrganizations(
 					_themeDisplay.getPermissionChecker(), organizations);
 			}
@@ -201,7 +193,7 @@ public class UserDisplayContext {
 		if (_selUser != null) {
 			roles = _selUser.getRoles();
 
-			if (_filterManageableRoles) {
+			if (_initDisplayContext.isFilterManageableRoles()) {
 				roles = UsersAdminUtil.filterRoles(_permissionChecker, roles);
 			}
 		}
@@ -230,7 +222,7 @@ public class UserDisplayContext {
 			userGroupRoles = UserGroupRoleLocalServiceUtil.getUserGroupRoles(
 				_selUser.getUserId());
 
-			if (_filterManageableUserGroupRoles) {
+			if (_initDisplayContext.isFilterManageableUserGroupRoles()) {
 				userGroupRoles = UsersAdminUtil.filterUserGroupRoles(
 					_permissionChecker, userGroupRoles);
 			}
@@ -245,33 +237,13 @@ public class UserDisplayContext {
 		if (_selUser != null) {
 			userGroups = _selUser.getUserGroups();
 
-			if (_filterManageableUserGroups) {
+			if (_initDisplayContext.isFilterManageableUserGroups()) {
 				userGroups = UsersAdminUtil.filterUserGroups(
 					_permissionChecker, userGroups);
 			}
 		}
 
 		return userGroups;
-	}
-
-	public boolean isFilterManageableGroups() {
-		return _filterManageableGroups;
-	}
-
-	public boolean isFilterManageableOrganizations() {
-		return _filterManageableOrganizations;
-	}
-
-	public boolean isFilterManageableRoles() {
-		return _filterManageableRoles;
-	}
-
-	public boolean isFilterManageableUserGroupRoles() {
-		return _filterManageableUserGroupRoles;
-	}
-
-	public boolean isFilterManageableUserGroups() {
-		return _filterManageableUserGroups;
 	}
 
 	private List<Group> _getOrganizationRelatedGroups() throws PortalException {
@@ -313,11 +285,7 @@ public class UserDisplayContext {
 		return false;
 	}
 
-	private final boolean _filterManageableGroups;
-	private final boolean _filterManageableOrganizations;
-	private final boolean _filterManageableRoles;
-	private final boolean _filterManageableUserGroupRoles;
-	private final boolean _filterManageableUserGroups;
+	private final InitDisplayContext _initDisplayContext;
 	private final PermissionChecker _permissionChecker;
 	private final HttpServletRequest _request;
 	private final User _selUser;

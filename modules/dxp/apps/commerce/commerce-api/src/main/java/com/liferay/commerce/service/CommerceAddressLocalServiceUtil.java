@@ -54,7 +54,7 @@ public class CommerceAddressLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-		long addressUserId, java.lang.String name,
+		java.lang.String className, long classPK, java.lang.String name,
 		java.lang.String description, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
@@ -63,9 +63,18 @@ public class CommerceAddressLocalServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceAddress(addressUserId, name, description,
+				   .addCommerceAddress(className, classPK, name, description,
 			street1, street2, street3, city, zip, commerceRegionId,
 			commerceCountryId, phoneNumber, defaultBilling, defaultShipping,
+			serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceAddress copyCommerceAddress(
+		long commerceAddressId, java.lang.String className, long classPK,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .copyCommerceAddress(commerceAddressId, className, classPK,
 			serviceContext);
 	}
 
@@ -106,6 +115,12 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().deleteCommerceAddress(commerceAddressId);
 	}
 
+	public static void deleteCommerceAddresses(java.lang.String className,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceAddresses(className, classPK);
+	}
+
 	public static void deleteCountryCommerceAddresses(long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCountryCommerceAddresses(commerceCountryId);
@@ -123,11 +138,6 @@ public class CommerceAddressLocalServiceUtil {
 	public static void deleteRegionCommerceAddresses(long commerceRegionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteRegionCommerceAddresses(commerceRegionId);
-	}
-
-	public static void deleteUserCommerceAddresses(long addressUserId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		getService().deleteUserCommerceAddresses(addressUserId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
@@ -253,16 +263,17 @@ public class CommerceAddressLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, long addressUserId) {
-		return getService().getCommerceAddresses(groupId, addressUserId);
+		long groupId, java.lang.String className, long classPK) {
+		return getService().getCommerceAddresses(groupId, className, classPK);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, long addressUserId, int start, int end,
+		long groupId, java.lang.String className, long classPK, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator) {
 		return getService()
-				   .getCommerceAddresses(groupId, addressUserId, start, end,
-			orderByComparator);
+				   .getCommerceAddresses(groupId, className, classPK, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -274,8 +285,10 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().getCommerceAddressesCount();
 	}
 
-	public static int getCommerceAddressesCount(long groupId, long addressUserId) {
-		return getService().getCommerceAddressesCount(groupId, addressUserId);
+	public static int getCommerceAddressesCount(long groupId,
+		java.lang.String className, long classPK) {
+		return getService()
+				   .getCommerceAddressesCount(groupId, className, classPK);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

@@ -71,13 +71,17 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress addCommerceAddress(CommerceAddress commerceAddress);
 
-	public CommerceAddress addCommerceAddress(long addressUserId,
-		java.lang.String name, java.lang.String description,
+	public CommerceAddress addCommerceAddress(java.lang.String className,
+		long classPK, java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId,
 		java.lang.String phoneNumber, boolean defaultBilling,
 		boolean defaultShipping, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceAddress copyCommerceAddress(long commerceAddressId,
+		java.lang.String className, long classPK, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**
@@ -110,6 +114,9 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public CommerceAddress deleteCommerceAddress(long commerceAddressId)
 		throws PortalException;
 
+	public void deleteCommerceAddresses(java.lang.String className, long classPK)
+		throws PortalException;
+
 	public void deleteCountryCommerceAddresses(long commerceCountryId)
 		throws PortalException;
 
@@ -121,9 +128,6 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteRegionCommerceAddresses(long commerceRegionId)
-		throws PortalException;
-
-	public void deleteUserCommerceAddresses(long addressUserId)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -221,11 +225,11 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
-		long addressUserId);
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
-		long addressUserId, int start, int end,
+		java.lang.String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator);
 
 	/**
@@ -237,7 +241,8 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public int getCommerceAddressesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceAddressesCount(long groupId, long addressUserId);
+	public int getCommerceAddressesCount(long groupId,
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

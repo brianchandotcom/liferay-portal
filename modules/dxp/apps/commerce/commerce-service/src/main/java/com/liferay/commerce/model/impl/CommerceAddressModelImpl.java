@@ -33,8 +33,10 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.Serializable;
 
@@ -77,7 +79,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "addressUserId", Types.BIGINT },
+			{ "classNameId", Types.BIGINT },
+			{ "classPK", Types.BIGINT },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
 			{ "street1", Types.VARCHAR },
@@ -103,7 +106,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("addressUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classNameId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("classPK", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street1", Types.VARCHAR);
@@ -120,7 +124,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		TABLE_COLUMNS_MAP.put("defaultShipping", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,addressUserId LONG,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceAddress (commerceAddressId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,classNameId LONG,classPK LONG,name VARCHAR(75) null,description STRING null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE,phoneNumber VARCHAR(75) null,defaultBilling BOOLEAN,defaultShipping BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceAddress";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceAddress.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceAddress.createDate DESC";
@@ -136,13 +140,14 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceAddress"),
 			true);
-	public static final long ADDRESSUSERID_COLUMN_BITMASK = 1L;
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
-	public static final long COMMERCEREGIONID_COLUMN_BITMASK = 4L;
-	public static final long DEFAULTBILLING_COLUMN_BITMASK = 8L;
-	public static final long DEFAULTSHIPPING_COLUMN_BITMASK = 16L;
-	public static final long GROUPID_COLUMN_BITMASK = 32L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 64L;
+	public static final long CLASSNAMEID_COLUMN_BITMASK = 1L;
+	public static final long CLASSPK_COLUMN_BITMASK = 2L;
+	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 4L;
+	public static final long COMMERCEREGIONID_COLUMN_BITMASK = 8L;
+	public static final long DEFAULTBILLING_COLUMN_BITMASK = 16L;
+	public static final long DEFAULTSHIPPING_COLUMN_BITMASK = 32L;
+	public static final long GROUPID_COLUMN_BITMASK = 64L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -164,7 +169,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
-		model.setAddressUserId(soapModel.getAddressUserId());
+		model.setClassNameId(soapModel.getClassNameId());
+		model.setClassPK(soapModel.getClassPK());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
 		model.setStreet1(soapModel.getStreet1());
@@ -251,7 +257,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("addressUserId", getAddressUserId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("street1", getStreet1());
@@ -317,10 +324,16 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			setModifiedDate(modifiedDate);
 		}
 
-		Long addressUserId = (Long)attributes.get("addressUserId");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (addressUserId != null) {
-			setAddressUserId(addressUserId);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		String name = (String)attributes.get("name");
@@ -526,43 +539,70 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		_modifiedDate = modifiedDate;
 	}
 
-	@JSON
 	@Override
-	public long getAddressUserId() {
-		return _addressUserId;
-	}
-
-	@Override
-	public void setAddressUserId(long addressUserId) {
-		_columnBitmask |= ADDRESSUSERID_COLUMN_BITMASK;
-
-		if (!_setOriginalAddressUserId) {
-			_setOriginalAddressUserId = true;
-
-			_originalAddressUserId = _addressUserId;
-		}
-
-		_addressUserId = addressUserId;
-	}
-
-	@Override
-	public String getAddressUserUuid() {
-		try {
-			User user = UserLocalServiceUtil.getUserById(getAddressUserId());
-
-			return user.getUuid();
-		}
-		catch (PortalException pe) {
+	public String getClassName() {
+		if (getClassNameId() <= 0) {
 			return "";
 		}
+
+		return PortalUtil.getClassName(getClassNameId());
 	}
 
 	@Override
-	public void setAddressUserUuid(String addressUserUuid) {
+	public void setClassName(String className) {
+		long classNameId = 0;
+
+		if (Validator.isNotNull(className)) {
+			classNameId = PortalUtil.getClassNameId(className);
+		}
+
+		setClassNameId(classNameId);
 	}
 
-	public long getOriginalAddressUserId() {
-		return _originalAddressUserId;
+	@JSON
+	@Override
+	public long getClassNameId() {
+		return _classNameId;
+	}
+
+	@Override
+	public void setClassNameId(long classNameId) {
+		_columnBitmask |= CLASSNAMEID_COLUMN_BITMASK;
+
+		if (!_setOriginalClassNameId) {
+			_setOriginalClassNameId = true;
+
+			_originalClassNameId = _classNameId;
+		}
+
+		_classNameId = classNameId;
+	}
+
+	public long getOriginalClassNameId() {
+		return _originalClassNameId;
+	}
+
+	@JSON
+	@Override
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	@Override
+	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
+		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -857,7 +897,8 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		commerceAddressImpl.setUserName(getUserName());
 		commerceAddressImpl.setCreateDate(getCreateDate());
 		commerceAddressImpl.setModifiedDate(getModifiedDate());
-		commerceAddressImpl.setAddressUserId(getAddressUserId());
+		commerceAddressImpl.setClassNameId(getClassNameId());
+		commerceAddressImpl.setClassPK(getClassPK());
 		commerceAddressImpl.setName(getName());
 		commerceAddressImpl.setDescription(getDescription());
 		commerceAddressImpl.setStreet1(getStreet1());
@@ -941,9 +982,13 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 		commerceAddressModelImpl._setModifiedDate = false;
 
-		commerceAddressModelImpl._originalAddressUserId = commerceAddressModelImpl._addressUserId;
+		commerceAddressModelImpl._originalClassNameId = commerceAddressModelImpl._classNameId;
 
-		commerceAddressModelImpl._setOriginalAddressUserId = false;
+		commerceAddressModelImpl._setOriginalClassNameId = false;
+
+		commerceAddressModelImpl._originalClassPK = commerceAddressModelImpl._classPK;
+
+		commerceAddressModelImpl._setOriginalClassPK = false;
 
 		commerceAddressModelImpl._originalCommerceRegionId = commerceAddressModelImpl._commerceRegionId;
 
@@ -1002,7 +1047,9 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 			commerceAddressCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
-		commerceAddressCacheModel.addressUserId = getAddressUserId();
+		commerceAddressCacheModel.classNameId = getClassNameId();
+
+		commerceAddressCacheModel.classPK = getClassPK();
 
 		commerceAddressCacheModel.name = getName();
 
@@ -1085,7 +1132,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{commerceAddressId=");
 		sb.append(getCommerceAddressId());
@@ -1101,8 +1148,10 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", addressUserId=");
-		sb.append(getAddressUserId());
+		sb.append(", classNameId=");
+		sb.append(getClassNameId());
+		sb.append(", classPK=");
+		sb.append(getClassPK());
 		sb.append(", name=");
 		sb.append(getName());
 		sb.append(", description=");
@@ -1138,7 +1187,7 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(70);
+		StringBundler sb = new StringBundler(73);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceAddress");
@@ -1173,8 +1222,12 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>addressUserId</column-name><column-value><![CDATA[");
-		sb.append(getAddressUserId());
+			"<column><column-name>classNameId</column-name><column-value><![CDATA[");
+		sb.append(getClassNameId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>classPK</column-name><column-value><![CDATA[");
+		sb.append(getClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
@@ -1252,9 +1305,12 @@ public class CommerceAddressModelImpl extends BaseModelImpl<CommerceAddress>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
-	private long _addressUserId;
-	private long _originalAddressUserId;
-	private boolean _setOriginalAddressUserId;
+	private long _classNameId;
+	private long _originalClassNameId;
+	private boolean _setOriginalClassNameId;
+	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _name;
 	private String _description;
 	private String _street1;

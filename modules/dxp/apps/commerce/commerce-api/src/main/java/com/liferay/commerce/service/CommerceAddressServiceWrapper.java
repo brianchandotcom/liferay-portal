@@ -35,7 +35,7 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceAddress addCommerceAddress(
-		long addressUserId, java.lang.String name,
+		java.lang.String className, long classPK, java.lang.String name,
 		java.lang.String description, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
@@ -43,8 +43,8 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 		boolean defaultBilling, boolean defaultShipping,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceAddressService.addCommerceAddress(addressUserId, name,
-			description, street1, street2, street3, city, zip,
+		return _commerceAddressService.addCommerceAddress(className, classPK,
+			name, description, street1, street2, street3, city, zip,
 			commerceRegionId, commerceCountryId, phoneNumber, defaultBilling,
 			defaultShipping, serviceContext);
 	}
@@ -71,26 +71,28 @@ public class CommerceAddressServiceWrapper implements CommerceAddressService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, long addressUserId)
+		long groupId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceAddressService.getCommerceAddresses(groupId,
-			addressUserId);
+		return _commerceAddressService.getCommerceAddresses(groupId, className,
+			classPK);
 	}
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceAddress> getCommerceAddresses(
-		long groupId, long addressUserId, int start, int end,
+		long groupId, java.lang.String className, long classPK, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceAddress> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceAddressService.getCommerceAddresses(groupId,
-			addressUserId, start, end, orderByComparator);
+		return _commerceAddressService.getCommerceAddresses(groupId, className,
+			classPK, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceAddressesCount(long groupId, long addressUserId)
+	public int getCommerceAddressesCount(long groupId,
+		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceAddressService.getCommerceAddressesCount(groupId,
-			addressUserId);
+			className, classPK);
 	}
 
 	/**

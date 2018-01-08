@@ -135,7 +135,9 @@ public class CommerceAddressPersistenceTest {
 
 		newCommerceAddress.setModifiedDate(RandomTestUtil.nextDate());
 
-		newCommerceAddress.setAddressUserId(RandomTestUtil.nextLong());
+		newCommerceAddress.setClassNameId(RandomTestUtil.nextLong());
+
+		newCommerceAddress.setClassPK(RandomTestUtil.nextLong());
 
 		newCommerceAddress.setName(RandomTestUtil.randomString());
 
@@ -185,8 +187,10 @@ public class CommerceAddressPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceAddress.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceAddress.getModifiedDate()));
-		Assert.assertEquals(existingCommerceAddress.getAddressUserId(),
-			newCommerceAddress.getAddressUserId());
+		Assert.assertEquals(existingCommerceAddress.getClassNameId(),
+			newCommerceAddress.getClassNameId());
+		Assert.assertEquals(existingCommerceAddress.getClassPK(),
+			newCommerceAddress.getClassPK());
 		Assert.assertEquals(existingCommerceAddress.getName(),
 			newCommerceAddress.getName());
 		Assert.assertEquals(existingCommerceAddress.getDescription(),
@@ -218,13 +222,6 @@ public class CommerceAddressPersistenceTest {
 	}
 
 	@Test
-	public void testCountByAddressUserId() throws Exception {
-		_persistence.countByAddressUserId(RandomTestUtil.nextLong());
-
-		_persistence.countByAddressUserId(0L);
-	}
-
-	@Test
 	public void testCountByCommerceRegionId() throws Exception {
 		_persistence.countByCommerceRegionId(RandomTestUtil.nextLong());
 
@@ -239,27 +236,37 @@ public class CommerceAddressPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_A() throws Exception {
-		_persistence.countByG_A(RandomTestUtil.nextLong(),
+	public void testCountByC_C() throws Exception {
+		_persistence.countByC_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
-		_persistence.countByG_A(0L, 0L);
+		_persistence.countByC_C(0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_A_DB() throws Exception {
-		_persistence.countByG_A_DB(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+	public void testCountByG_C_C() throws Exception {
+		_persistence.countByG_C_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong());
 
-		_persistence.countByG_A_DB(0L, 0L, RandomTestUtil.randomBoolean());
+		_persistence.countByG_C_C(0L, 0L, 0L);
 	}
 
 	@Test
-	public void testCountByG_A_DS() throws Exception {
-		_persistence.countByG_A_DS(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean());
+	public void testCountByG_C_C_DB() throws Exception {
+		_persistence.countByG_C_C_DB(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
 
-		_persistence.countByG_A_DS(0L, 0L, RandomTestUtil.randomBoolean());
+		_persistence.countByG_C_C_DB(0L, 0L, 0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_C_C_DS() throws Exception {
+		_persistence.countByG_C_C_DS(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_C_C_DS(0L, 0L, 0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -288,11 +295,12 @@ public class CommerceAddressPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceAddress",
 			"commerceAddressId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "addressUserId", true, "name", true,
-			"description", true, "street1", true, "street2", true, "street3",
-			true, "city", true, "zip", true, "commerceRegionId", true,
-			"commerceCountryId", true, "latitude", true, "longitude", true,
-			"phoneNumber", true, "defaultBilling", true, "defaultShipping", true);
+			"modifiedDate", true, "classNameId", true, "classPK", true, "name",
+			true, "description", true, "street1", true, "street2", true,
+			"street3", true, "city", true, "zip", true, "commerceRegionId",
+			true, "commerceCountryId", true, "latitude", true, "longitude",
+			true, "phoneNumber", true, "defaultBilling", true,
+			"defaultShipping", true);
 	}
 
 	@Test
@@ -506,7 +514,9 @@ public class CommerceAddressPersistenceTest {
 
 		commerceAddress.setModifiedDate(RandomTestUtil.nextDate());
 
-		commerceAddress.setAddressUserId(RandomTestUtil.nextLong());
+		commerceAddress.setClassNameId(RandomTestUtil.nextLong());
+
+		commerceAddress.setClassPK(RandomTestUtil.nextLong());
 
 		commerceAddress.setName(RandomTestUtil.randomString());
 

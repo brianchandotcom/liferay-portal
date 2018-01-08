@@ -12,11 +12,11 @@ create index IX_566A7482 on CPLQualificationTypeRel (commercePriceListId);
 create index IX_F3C1E4E9 on CPLQualificationTypeRel (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_732091AB on CPLQualificationTypeRel (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_6DCF2DAB on CommerceAddress (addressUserId);
+create index IX_15EA4714 on CommerceAddress (classNameId, classPK);
 create index IX_CD76FE87 on CommerceAddress (commerceCountryId);
 create index IX_71C5A9DD on CommerceAddress (commerceRegionId);
-create index IX_B2D4128D on CommerceAddress (groupId, addressUserId, defaultBilling);
-create index IX_F3EF45C0 on CommerceAddress (groupId, addressUserId, defaultShipping);
+create index IX_EEACF18E on CommerceAddress (groupId, classNameId, classPK, defaultBilling);
+create index IX_333246DF on CommerceAddress (groupId, classNameId, classPK, defaultShipping);
 
 create unique index IX_495311F8 on CommerceAddressRestriction (classNameId, classPK, commerceCountryId);
 create index IX_69DBF5AD on CommerceAddressRestriction (commerceCountryId);

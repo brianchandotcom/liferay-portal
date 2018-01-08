@@ -75,7 +75,6 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
 	public CommerceOrder addCommerceOrder(long orderUserId,
-		long billingAddressId, long shippingAddressId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
 		double shippingPrice, double total, int paymentStatus,

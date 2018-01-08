@@ -65,7 +65,8 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("addressUserId", getAddressUserId());
+		attributes.put("classNameId", getClassNameId());
+		attributes.put("classPK", getClassPK());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
 		attributes.put("street1", getStreet1());
@@ -128,10 +129,16 @@ public class CommerceAddressWrapper implements CommerceAddress,
 			setModifiedDate(modifiedDate);
 		}
 
-		Long addressUserId = (Long)attributes.get("addressUserId");
+		Long classNameId = (Long)attributes.get("classNameId");
 
-		if (addressUserId != null) {
-			setAddressUserId(addressUserId);
+		if (classNameId != null) {
+			setClassNameId(classNameId);
+		}
+
+		Long classPK = (Long)attributes.get("classPK");
+
+		if (classPK != null) {
+			setClassPK(classPK);
 		}
 
 		String name = (String)attributes.get("name");
@@ -230,26 +237,6 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	}
 
 	/**
-	* Returns the address user ID of this commerce address.
-	*
-	* @return the address user ID of this commerce address
-	*/
-	@Override
-	public long getAddressUserId() {
-		return _commerceAddress.getAddressUserId();
-	}
-
-	/**
-	* Returns the address user uuid of this commerce address.
-	*
-	* @return the address user uuid of this commerce address
-	*/
-	@Override
-	public java.lang.String getAddressUserUuid() {
-		return _commerceAddress.getAddressUserUuid();
-	}
-
-	/**
 	* Returns the city of this commerce address.
 	*
 	* @return the city of this commerce address
@@ -257,6 +244,36 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	@Override
 	public java.lang.String getCity() {
 		return _commerceAddress.getCity();
+	}
+
+	/**
+	* Returns the fully qualified class name of this commerce address.
+	*
+	* @return the fully qualified class name of this commerce address
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _commerceAddress.getClassName();
+	}
+
+	/**
+	* Returns the class name ID of this commerce address.
+	*
+	* @return the class name ID of this commerce address
+	*/
+	@Override
+	public long getClassNameId() {
+		return _commerceAddress.getClassNameId();
+	}
+
+	/**
+	* Returns the class pk of this commerce address.
+	*
+	* @return the class pk of this commerce address
+	*/
+	@Override
+	public long getClassPK() {
+		return _commerceAddress.getClassPK();
 	}
 
 	/**
@@ -551,26 +568,6 @@ public class CommerceAddressWrapper implements CommerceAddress,
 		_commerceAddress.persist();
 	}
 
-	/**
-	* Sets the address user ID of this commerce address.
-	*
-	* @param addressUserId the address user ID of this commerce address
-	*/
-	@Override
-	public void setAddressUserId(long addressUserId) {
-		_commerceAddress.setAddressUserId(addressUserId);
-	}
-
-	/**
-	* Sets the address user uuid of this commerce address.
-	*
-	* @param addressUserUuid the address user uuid of this commerce address
-	*/
-	@Override
-	public void setAddressUserUuid(java.lang.String addressUserUuid) {
-		_commerceAddress.setAddressUserUuid(addressUserUuid);
-	}
-
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_commerceAddress.setCachedModel(cachedModel);
@@ -584,6 +581,31 @@ public class CommerceAddressWrapper implements CommerceAddress,
 	@Override
 	public void setCity(java.lang.String city) {
 		_commerceAddress.setCity(city);
+	}
+
+	@Override
+	public void setClassName(java.lang.String className) {
+		_commerceAddress.setClassName(className);
+	}
+
+	/**
+	* Sets the class name ID of this commerce address.
+	*
+	* @param classNameId the class name ID of this commerce address
+	*/
+	@Override
+	public void setClassNameId(long classNameId) {
+		_commerceAddress.setClassNameId(classNameId);
+	}
+
+	/**
+	* Sets the class pk of this commerce address.
+	*
+	* @param classPK the class pk of this commerce address
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_commerceAddress.setClassPK(classPK);
 	}
 
 	/**

@@ -56,8 +56,8 @@ public interface CommerceAddressService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceAddressServiceUtil} to access the commerce address remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceAddressServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public CommerceAddress addCommerceAddress(long addressUserId,
-		java.lang.String name, java.lang.String description,
+	public CommerceAddress addCommerceAddress(java.lang.String className,
+		long classPK, java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId,
@@ -78,17 +78,17 @@ public interface CommerceAddressService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
-		long addressUserId) throws PortalException;
+		java.lang.String className, long classPK) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceAddress> getCommerceAddresses(long groupId,
-		long addressUserId, int start, int end,
+		java.lang.String className, long classPK, int start, int end,
 		OrderByComparator<CommerceAddress> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceAddressesCount(long groupId, long addressUserId)
-		throws PortalException;
+	public int getCommerceAddressesCount(long groupId,
+		java.lang.String className, long classPK) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

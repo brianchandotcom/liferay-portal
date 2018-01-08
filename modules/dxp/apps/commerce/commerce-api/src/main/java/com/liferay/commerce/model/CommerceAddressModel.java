@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
 import com.liferay.portal.kernel.bean.AutoEscape;
+import com.liferay.portal.kernel.model.AttachedModel;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
@@ -43,8 +44,8 @@ import java.util.Date;
  * @generated
  */
 @ProviderType
-public interface CommerceAddressModel extends BaseModel<CommerceAddress>,
-	GroupedModel, ShardedModel {
+public interface CommerceAddressModel extends AttachedModel,
+	BaseModel<CommerceAddress>, GroupedModel, ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -193,32 +194,46 @@ public interface CommerceAddressModel extends BaseModel<CommerceAddress>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
-	 * Returns the address user ID of this commerce address.
+	 * Returns the fully qualified class name of this commerce address.
 	 *
-	 * @return the address user ID of this commerce address
+	 * @return the fully qualified class name of this commerce address
 	 */
-	public long getAddressUserId();
+	@Override
+	public String getClassName();
+
+	public void setClassName(String className);
 
 	/**
-	 * Sets the address user ID of this commerce address.
+	 * Returns the class name ID of this commerce address.
 	 *
-	 * @param addressUserId the address user ID of this commerce address
+	 * @return the class name ID of this commerce address
 	 */
-	public void setAddressUserId(long addressUserId);
+	@Override
+	public long getClassNameId();
 
 	/**
-	 * Returns the address user uuid of this commerce address.
+	 * Sets the class name ID of this commerce address.
 	 *
-	 * @return the address user uuid of this commerce address
+	 * @param classNameId the class name ID of this commerce address
 	 */
-	public String getAddressUserUuid();
+	@Override
+	public void setClassNameId(long classNameId);
 
 	/**
-	 * Sets the address user uuid of this commerce address.
+	 * Returns the class pk of this commerce address.
 	 *
-	 * @param addressUserUuid the address user uuid of this commerce address
+	 * @return the class pk of this commerce address
 	 */
-	public void setAddressUserUuid(String addressUserUuid);
+	@Override
+	public long getClassPK();
+
+	/**
+	 * Sets the class pk of this commerce address.
+	 *
+	 * @param classPK the class pk of this commerce address
+	 */
+	@Override
+	public void setClassPK(long classPK);
 
 	/**
 	 * Returns the name of this commerce address.

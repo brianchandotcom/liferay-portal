@@ -65,7 +65,7 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(45);
+		StringBundler sb = new StringBundler(47);
 
 		sb.append("{commerceAddressId=");
 		sb.append(commerceAddressId);
@@ -81,8 +81,10 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", addressUserId=");
-		sb.append(addressUserId);
+		sb.append(", classNameId=");
+		sb.append(classNameId);
+		sb.append(", classPK=");
+		sb.append(classPK);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", description=");
@@ -146,7 +148,8 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 			commerceAddressImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		commerceAddressImpl.setAddressUserId(addressUserId);
+		commerceAddressImpl.setClassNameId(classNameId);
+		commerceAddressImpl.setClassPK(classPK);
 
 		if (name == null) {
 			commerceAddressImpl.setName("");
@@ -230,7 +233,9 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		addressUserId = objectInput.readLong();
+		classNameId = objectInput.readLong();
+
+		classPK = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
 		street1 = objectInput.readUTF();
@@ -274,7 +279,9 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(addressUserId);
+		objectOutput.writeLong(classNameId);
+
+		objectOutput.writeLong(classPK);
 
 		if (name == null) {
 			objectOutput.writeUTF("");
@@ -352,7 +359,8 @@ public class CommerceAddressCacheModel implements CacheModel<CommerceAddress>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long addressUserId;
+	public long classNameId;
+	public long classPK;
 	public String name;
 	public String description;
 	public String street1;

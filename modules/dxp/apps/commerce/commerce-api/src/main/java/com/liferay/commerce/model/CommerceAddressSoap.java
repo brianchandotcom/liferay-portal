@@ -41,7 +41,8 @@ public class CommerceAddressSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setAddressUserId(model.getAddressUserId());
+		soapModel.setClassNameId(model.getClassNameId());
+		soapModel.setClassPK(model.getClassPK());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStreet1(model.getStreet1());
@@ -166,12 +167,20 @@ public class CommerceAddressSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getAddressUserId() {
-		return _addressUserId;
+	public long getClassNameId() {
+		return _classNameId;
 	}
 
-	public void setAddressUserId(long addressUserId) {
-		_addressUserId = addressUserId;
+	public void setClassNameId(long classNameId) {
+		_classNameId = classNameId;
+	}
+
+	public long getClassPK() {
+		return _classPK;
+	}
+
+	public void setClassPK(long classPK) {
+		_classPK = classPK;
 	}
 
 	public String getName() {
@@ -301,7 +310,8 @@ public class CommerceAddressSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _addressUserId;
+	private long _classNameId;
+	private long _classPK;
 	private String _name;
 	private String _description;
 	private String _street1;

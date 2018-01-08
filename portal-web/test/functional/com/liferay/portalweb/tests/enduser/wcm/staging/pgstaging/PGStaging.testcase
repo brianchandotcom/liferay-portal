@@ -704,7 +704,7 @@
 
 		<execute macro="Navigator#gotoStagedView" />
 
-		<execute macro="Page#changeLogoViaPageCP">
+		<execute macro="Page#changeLayoutLogo">
 			<var name="logoFile" value="Document_3.png" />
 			<var name="page" value="Staging Test Page" />
 		</execute>
@@ -726,6 +726,11 @@
 
 		<execute macro="Page#deleteLogoPG">
 			<var name="page" value="Staging Test Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoStagedSitePage">
+			<var name="pageName" value="Staging Test Page" />
+			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute macro="Staging#gotoPublishToLive" />

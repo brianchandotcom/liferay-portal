@@ -118,14 +118,13 @@ public class FileResponseTest {
 
 	@Test
 	public void testToString() {
-		StringBundler sb = new StringBundler(10);
+		StringBundler sb = new StringBundler(9);
 
 		sb.append("{folder=");
 		sb.append(_FOLDER);
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
-		sb.append(", localFile=null");
-		sb.append(", pathHolder=");
+		sb.append(", localFile=null, pathHolder=");
 		sb.append(_path);
 		sb.append(", size=");
 		sb.append(_SIZE);
@@ -144,17 +143,15 @@ public class FileResponseTest {
 		FileResponse fileResponse = new FileResponse(
 			_path, FileResponse.FILE_NOT_FOUND, _LAST_MODIFIED_TIME, _FOLDER);
 
-		sb = new StringBundler(9);
+		sb = new StringBundler(7);
 
 		sb.append("{folder=");
 		sb.append(_FOLDER);
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
-		sb.append(", localFile=null");
-		sb.append(", pathHolder=");
+		sb.append(", localFile=null, pathHolder=");
 		sb.append(_path);
-		sb.append(", status=File Not Found");
-		sb.append("}");
+		sb.append(", status=File Not Found}");
 
 		Assert.assertEquals(sb.toString(), fileResponse.toString());
 
@@ -162,17 +159,15 @@ public class FileResponseTest {
 			_path, FileResponse.FILE_NOT_MODIFIED, _LAST_MODIFIED_TIME,
 			_FOLDER);
 
-		sb = new StringBundler(9);
+		sb = new StringBundler(7);
 
 		sb.append("{folder=");
 		sb.append(_FOLDER);
 		sb.append(", lastModifiedTime=");
 		sb.append(_LAST_MODIFIED_TIME);
-		sb.append(", localFile=null");
-		sb.append(", pathHolder=");
+		sb.append(", localFile=null, pathHolder=");
 		sb.append(_path);
-		sb.append(", status=File Not Modified");
-		sb.append("}");
+		sb.append(", status=File Not Modified}");
 
 		Assert.assertEquals(sb.toString(), fileResponse.toString());
 	}

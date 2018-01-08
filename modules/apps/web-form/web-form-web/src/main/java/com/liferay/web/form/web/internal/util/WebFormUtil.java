@@ -237,8 +237,8 @@ public class WebFormUtil {
 		sb.append("function validation(currentFieldValue, fieldsMap) {\n");
 		sb.append(validationScript);
 		sb.append("}\n");
-		sb.append("internalValidationResult = ");
-		sb.append("validation(currentFieldValue, fieldsMap);");
+		sb.append("internalValidationResult = validation(currentFieldValue, ");
+		sb.append("fieldsMap);");
 
 		String script = sb.toString();
 

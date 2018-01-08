@@ -41,10 +41,10 @@ public class ReleaseDAO {
 
 		StringBundler sb = new StringBundler(4);
 
-		sb.append("insert into Release_ (mvccVersion, releaseId, ");
-		sb.append("createDate, modifiedDate, servletContextName, ");
-		sb.append("schemaVersion, buildNumber, buildDate, verified, state_, ");
-		sb.append("testString) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+		sb.append("insert into Release_ (mvccVersion, releaseId, createDate, ");
+		sb.append("modifiedDate, servletContextName, schemaVersion, ");
+		sb.append("buildNumber, buildDate, verified, state_, testString) ");
+		sb.append("values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {

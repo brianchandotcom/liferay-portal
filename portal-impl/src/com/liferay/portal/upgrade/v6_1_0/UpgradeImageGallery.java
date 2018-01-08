@@ -149,8 +149,8 @@ public class UpgradeImageGallery extends UpgradeProcess {
 
 		sb.append("insert into DLFileVersion (fileVersionId, groupId, ");
 		sb.append("companyId, userId, userName, createDate, modifiedDate, ");
-		sb.append("repositoryId, folderId, fileEntryId, extension, ");
-		sb.append("mimeType, title, description, changeLog, extraSettings, ");
+		sb.append("repositoryId, folderId, fileEntryId, extension, mimeType, ");
+		sb.append("title, description, changeLog, extraSettings, ");
 		sb.append("fileEntryTypeId, version, size_, status, statusByUserId, ");
 		sb.append("statusByUserName, statusDate) values (?, ?, ?, ?, ?, ?, ");
 		sb.append("?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");

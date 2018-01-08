@@ -19,16 +19,7 @@ import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
-import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.StagedModel;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-
-import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -68,20 +59,6 @@ public class ChangeSetPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
-		Map<String, String[]> parameterMap =
-			portletDataContext.getParameterMap();
-
-		String[] classNameClassPKArray = parameterMap.get("classNameClassPK");
-
-		if (classNameClassPKArray != null) {
-			for (String classNameClassPK : classNameClassPKArray) {
-				String className = _getClassName(classNameClassPK);
-				long classPK = _getClassPK(classNameClassPK);
-
-				_exportEntity(portletDataContext, className, classPK);
-			}
-		}
-
 		return getExportDataRootElementString(rootElement);
 	}
 
@@ -91,48 +68,7 @@ public class ChangeSetPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		Element importDataRootElement =
-			portletDataContext.getImportDataRootElement();
-
-		List<Element> entityTypeElements = importDataRootElement.elements();
-
-		for (Element entityTypeElement : entityTypeElements) {
-			List<Element> entityElements = entityTypeElement.elements();
-
-			for (Element entityElement : entityElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, entityElement);
-			}
-		}
-
 		return portletPreferences;
-	}
-
-	private void _exportEntity(
-			PortletDataContext portletDataContext, String className,
-			long classPK)
-		throws PortalException {
-
-		StagedModelRepository<?> stagedModelRepository =
-			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
-				className);
-
-		StagedModel stagedModel =
-			stagedModelRepository.fetchStagedModelByClassPK(classPK);
-
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
-	}
-
-	private String _getClassName(String classNameClassPK) {
-		return classNameClassPK.substring(
-			0, classNameClassPK.indexOf(StringPool.POUND));
-	}
-
-	private long _getClassPK(String classNameClassPK) {
-		return Long.valueOf(
-			classNameClassPK.substring(
-				classNameClassPK.indexOf(StringPool.POUND) + 1));
 	}
 
 }

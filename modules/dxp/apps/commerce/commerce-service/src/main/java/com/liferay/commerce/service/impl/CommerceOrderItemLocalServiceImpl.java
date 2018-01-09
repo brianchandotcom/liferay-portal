@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
+import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
@@ -23,10 +25,24 @@ import com.liferay.commerce.service.base.CommerceOrderItemLocalServiceBaseImpl;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.QueryConfig;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -36,6 +52,7 @@ import java.util.List;
 public class CommerceOrderItemLocalServiceImpl
 	extends CommerceOrderItemLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrderItem addCommerceOrderItem(
 			long commerceOrderId, long cpInstanceId, int quantity,
@@ -76,6 +93,7 @@ public class CommerceOrderItemLocalServiceImpl
 		return commerceOrderItem;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceOrderItem deleteCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem)
@@ -177,6 +195,37 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
+	public BaseModelSearchResult<CommerceOrderItem> search(
+			long commerceOrderId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			commerceOrderId, start, end, sort);
+
+		searchContext.setKeywords(keywords);
+
+		return searchCommerceOrderItems(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceOrderItem> search(
+			long commerceOrderId, String sku, String title, boolean andOperator,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = buildSearchContext(
+			commerceOrderId, start, end, sort);
+
+		searchContext.setAndSearch(andOperator);
+		searchContext.setAttribute(CommerceOrderItemIndexer.FIELD_SKU, sku);
+		searchContext.setAttribute(Field.TITLE, title);
+
+		return searchCommerceOrderItems(searchContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CommerceOrderItem updateCommerceOrderItem(
 			long commerceOrderItemId, int quantity, String json, double price)
 		throws PortalException {
@@ -192,6 +241,94 @@ public class CommerceOrderItemLocalServiceImpl
 
 		return commerceOrderItem;
 	}
+
+	protected SearchContext buildSearchContext(
+			long commerceOrderId, int start, int end, Sort sort)
+		throws PortalException {
+
+		SearchContext searchContext = new SearchContext();
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		searchContext.setAttribute(
+			CommerceOrderItemIndexer.FIELD_COMMERCE_ORDER_ID, commerceOrderId);
+		searchContext.setCompanyId(commerceOrder.getCompanyId());
+		searchContext.setEnd(end);
+
+		QueryConfig queryConfig = searchContext.getQueryConfig();
+
+		queryConfig.setHighlightEnabled(false);
+		queryConfig.setScoreEnabled(false);
+
+		if (sort != null) {
+			searchContext.setSorts(sort);
+		}
+
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
+	protected List<CommerceOrderItem> getCommerceOrderItems(Hits hits)
+		throws PortalException {
+
+		List<Document> documents = hits.toList();
+
+		List<CommerceOrderItem> commerceOrderItems = new ArrayList<>(
+			documents.size());
+
+		for (Document document : documents) {
+			long commerceOrderItemId = GetterUtil.getLong(
+				document.get(Field.ENTRY_CLASS_PK));
+
+			CommerceOrderItem commerceOrderItem = fetchCommerceOrderItem(
+				commerceOrderItemId);
+
+			if (commerceOrderItem == null) {
+				commerceOrderItems = null;
+
+				Indexer<CommerceOrderItem> indexer =
+					IndexerRegistryUtil.getIndexer(CommerceOrderItem.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (commerceOrderItems != null) {
+				commerceOrderItems.add(commerceOrderItem);
+			}
+		}
+
+		return commerceOrderItems;
+	}
+
+	protected BaseModelSearchResult<CommerceOrderItem> searchCommerceOrderItems(
+			SearchContext searchContext)
+		throws PortalException {
+
+		Indexer<CommerceOrderItem> indexer =
+			IndexerRegistryUtil.nullSafeGetIndexer(CommerceOrderItem.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext, _SELECTED_FIELD_NAMES);
+
+			List<CommerceOrderItem> commerceOrderItems = getCommerceOrderItems(
+				hits);
+
+			if (commerceOrderItems != null) {
+				return new BaseModelSearchResult<>(
+					commerceOrderItems, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
+	}
+
+	private static final String[] _SELECTED_FIELD_NAMES =
+		{Field.ENTRY_CLASS_PK, Field.COMPANY_ID};
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

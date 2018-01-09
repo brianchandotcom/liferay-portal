@@ -14,11 +14,46 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.service.base.CommerceOrderItemServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceOrderItemServiceImpl
 	extends CommerceOrderItemServiceBaseImpl {
+
+	@Override
+	public BaseModelSearchResult<CommerceOrderItem> search(
+			long commerceOrderId, String keywords, int start, int end,
+			Sort sort)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderItemLocalService.search(
+			commerceOrderId, keywords, start, end, sort);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceOrderItem> search(
+			long commerceOrderId, String sku, String title, boolean andOperator,
+			int start, int end, Sort sort)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderItemLocalService.search(
+			commerceOrderId, sku, title, andOperator, start, end, sort);
+	}
+
+	protected void checkCommerceOrder(long commerceOrderId)
+		throws PortalException {
+
+		commerceOrderService.getCommerceOrder(commerceOrderId);
+	}
+
 }

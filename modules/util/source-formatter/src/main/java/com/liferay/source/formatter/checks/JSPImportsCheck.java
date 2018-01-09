@@ -35,10 +35,10 @@ public class JSPImportsCheck extends BaseFileCheck {
 		throws Exception {
 
 		content = _formatJSPImportsOrTaglibs(
-			fileName, content, _compressedJSPImportPattern,
+			fileName, content, _jspImportPattern,
 			_uncompressedJSPImportPattern);
 		content = _formatJSPImportsOrTaglibs(
-			fileName, content, _compressedJSPTaglibPattern,
+			fileName, content, _jspTaglibPattern,
 			_uncompressedJSPTaglibPattern);
 
 		if ((isPortalSource() || isSubrepository()) &&
@@ -87,16 +87,16 @@ public class JSPImportsCheck extends BaseFileCheck {
 
 		String imports = StringUtil.merge(groups, "\n");
 
-		String newImports = StringUtil.replace(
-			imports, new String[] {"<%@\r\n", "<%@\n", " %><%@ "},
-			new String[] {"\r\n<%@ ", "\n<%@ ", " %>\n<%@ "});
+		matcher = _taglibSingleLinePattern.matcher(imports);
+
+		String newImports = matcher.replaceAll("$1 $2 $3 $5\n");
 
 		for (int i = 1; i < groups.size(); i++) {
 			content = StringUtil.removeSubstring(content, groups.get(i));
 		}
 
 		content = StringUtil.replaceFirst(
-			content, groups.get(0), newImports + "\n\n");
+			content, groups.get(0), newImports + "\n");
 
 		content = StringUtil.replaceFirst(content, imports, newImports);
 
@@ -105,12 +105,14 @@ public class JSPImportsCheck extends BaseFileCheck {
 		return importsFormatter.format(content, uncompressedPattern);
 	}
 
-	private final Pattern _compressedJSPImportPattern = Pattern.compile(
-		"(<.*\n*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
-	private final Pattern _compressedJSPTaglibPattern = Pattern.compile(
-		"(<.*\n*taglib uri=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _incorrectTaglibPattern = Pattern.compile(
 		"(taglib )(prefix=\".+\") (uri=\".*\")");
+	private final Pattern _jspImportPattern = Pattern.compile(
+		"(<%@\\s+(page|tag)\\s+import=\".+?\\s+%>\\s*)+");
+	private final Pattern _jspTaglibPattern = Pattern.compile(
+		"(<%@\\s+taglib\\s+uri=\".+?\\s+%>\\s*)+");
+	private final Pattern _taglibSingleLinePattern = Pattern.compile(
+		"(<%@)\\s+(page|tag|taglib)\\s+((import|uri)=.+?)\\s+(%>)\\s*");
 	private final Pattern _uncompressedJSPImportPattern = Pattern.compile(
 		"(<.*(?:page|tag) import=\".*>\n*)+", Pattern.MULTILINE);
 	private final Pattern _uncompressedJSPTaglibPattern = Pattern.compile(

@@ -4651,7 +4651,9 @@
 		</execute>
 	</command>
 
-	<command name="UserSegmentViewAnyContentWithCategorizationViaContentListPortlet" priority="4">
+	<command name="UserSegmentViewAnyContentWithCategorizationViaContentListPortletAndExportImportLAR" priority="4">
+		<description message="This is a use case for WCM-1347." />
+
 		<property name="content.targeting.release" value="true" />
 
 		<execute macro="ProductMenu#gotoSite">
@@ -4708,6 +4710,91 @@
 
 		<execute macro="Portlet#addPG">
 			<var name="portletName" value="User Segment Content List" />
+		</execute>
+
+		<execute macro="UserSegmentContentListPortlet#viewContent">
+			<var name="viewEntryContentList" value="Web Content Content" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="Audience_Targeting.lar" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="Web_Content.portlet.lar" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Site Name" />
+		</execute>
+
+		<execute macro="LAR#exportPortlet">
+			<var name="larFileName" value="User_Segment_Content_List.portlet.lar" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Sites" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Sites" />
+		</execute>
+
+		<execute macro="Site#addBlankCP">
+			<var name="siteName" value="Import Site Name" />
+		</execute>
+
+		<execute macro="Page#add">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Import Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Audience Targeting" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="Audience_Targeting.lar" />
+		</execute>
+
+		<execute macro="Navigator#openSiteURL">
+			<var name="siteName" value="Import Site Name" />
+		</execute>
+		
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="Web_Content.portlet.lar" />
+		</execute>
+
+		<execute macro="Navigator#gotoSitePage">
+			<var name="pageName" value="Test Page Name" />
+			<var name="siteName" value="Import Site Name" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="User Segment Content List" />
+		</execute>
+
+		<execute macro="LAR#importPortlet">
+			<var name="larFileName" value="User_Segment_Content_List.portlet.lar" />
 		</execute>
 
 		<execute macro="UserSegmentContentListPortlet#viewContent">

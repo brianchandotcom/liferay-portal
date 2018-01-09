@@ -16,10 +16,13 @@ package com.liferay.site.navigation.menu.item.layout.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.item.selector.ItemSelector;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.LayoutLocalService;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
@@ -63,20 +66,7 @@ public class LayoutSiteNavigationMenuItemType
 	public String getTitle(
 		SiteNavigationMenuItem siteNavigationMenuItem, Locale locale) {
 
-		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
-
-		typeSettingsProperties.fastLoad(
-			siteNavigationMenuItem.getTypeSettings());
-
-		String layoutUuid = typeSettingsProperties.get("layoutUuid");
-
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-			layoutUuid, siteNavigationMenuItem.getGroupId(), false);
-
-		if (layout == null) {
-			layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
-				layoutUuid, siteNavigationMenuItem.getGroupId(), true);
-		}
+		Layout layout = getLayout(siteNavigationMenuItem);
 
 		if (layout != null) {
 			return layout.getName(locale);
@@ -88,6 +78,20 @@ public class LayoutSiteNavigationMenuItemType
 	@Override
 	public String getType() {
 		return SiteNavigationMenuItemTypeLayoutConstants.LAYOUT;
+	}
+
+	@Override
+	public String getURL(
+			HttpServletRequest request,
+			SiteNavigationMenuItem siteNavigationMenuItem)
+		throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = getLayout(siteNavigationMenuItem);
+
+		return _portal.getLayoutFullURL(layout, themeDisplay, true);
 	}
 
 	@Override
@@ -113,6 +117,15 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
 
+		Layout layout = getLayout(siteNavigationMenuItem);
+
+		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+
+		_jspRenderer.renderJSP(
+			_servletContext, request, response, "/edit_layout.jsp");
+	}
+
+	protected Layout getLayout(SiteNavigationMenuItem siteNavigationMenuItem) {
 		UnicodeProperties typeSettingsProperties = new UnicodeProperties();
 
 		typeSettingsProperties.fastLoad(
@@ -124,13 +137,8 @@ public class LayoutSiteNavigationMenuItemType
 		boolean privateLayout = GetterUtil.getBoolean(
 			typeSettingsProperties.get("privateLayout"));
 
-		Layout layout = _layoutLocalService.fetchLayoutByUuidAndGroupId(
+		return _layoutLocalService.fetchLayoutByUuidAndGroupId(
 			layoutUuid, groupId, privateLayout);
-
-		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
-
-		_jspRenderer.renderJSP(
-			_servletContext, request, response, "/edit_layout.jsp");
 	}
 
 	@Reference
@@ -141,6 +149,9 @@ public class LayoutSiteNavigationMenuItemType
 
 	@Reference
 	private LayoutLocalService _layoutLocalService;
+
+	@Reference
+	private Portal _portal;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.menu.item.layout)",

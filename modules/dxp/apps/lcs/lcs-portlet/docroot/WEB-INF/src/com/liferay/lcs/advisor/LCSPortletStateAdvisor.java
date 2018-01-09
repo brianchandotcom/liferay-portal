@@ -65,9 +65,9 @@ public class LCSPortletStateAdvisor {
 					sb.append("credentials were revoked, the LCS portlet ");
 					sb.append("will not be able to communicate to the LCS ");
 					sb.append("platform after the server is rebooted or ");
-					sb.append("after the LCS portlet is redeployed. ");
-					sb.append("The LCS platform returned the following ");
-					sb.append("error message: ");
+					sb.append("after the LCS portlet is redeployed. The LCS ");
+					sb.append("platform returned the following error ");
+					sb.append("message: ");
 					sb.append(message);
 
 					_log.warn(sb.toString());

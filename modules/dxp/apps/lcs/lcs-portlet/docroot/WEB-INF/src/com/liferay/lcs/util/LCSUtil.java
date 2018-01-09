@@ -389,8 +389,8 @@ public class LCSUtil {
 
 		StringBundler sb = new StringBundler(5);
 
-		sb.append("This node is clustered but it was already registered ");
-		sb.append("at the LCS portal as a member of an nonclustered parent ");
+		sb.append("This node is clustered but it was already registered at ");
+		sb.append("the LCS portal as a member of an nonclustered parent ");
 		sb.append("environment. Please go to the LCS Portal and unregister ");
 		sb.append("this node and register it as a member of clustered ");
 		sb.append("environment.");

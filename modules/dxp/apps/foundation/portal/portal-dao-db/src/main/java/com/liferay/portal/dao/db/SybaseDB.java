@@ -62,18 +62,16 @@ public class SybaseDB extends BaseDB {
 
 		String suffix = getSuffix(population);
 
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("use master\n");
 		sb.append("exec sp_dboption '");
 		sb.append(databaseName);
-		sb.append("', ");
-		sb.append("'allow nulls by default' , true\n");
+		sb.append("', 'allow nulls by default' , true\n");
 		sb.append("go\n\n");
 		sb.append("exec sp_dboption '");
 		sb.append(databaseName);
-		sb.append("', ");
-		sb.append("'select into/bulkcopy/pllsort' , true\n");
+		sb.append("', 'select into/bulkcopy/pllsort' , true\n");
 		sb.append("go\n\n");
 
 		if (population != BARE) {

@@ -281,12 +281,12 @@ public class ItemSelectorImplTest extends PowerMockito {
 		String namespace = PortalUtil.getPortletNamespace(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
-		for (String itemSelectorParameterKey :
-				itemSelectorParameters.keySet()) {
+		for (Map.Entry<String, String[]> entry :
+				itemSelectorParameters.entrySet()) {
 
 			itemSelectorURL = HttpUtil.addParameter(
-				itemSelectorURL, namespace + itemSelectorParameterKey,
-				itemSelectorParameters.get(itemSelectorParameterKey)[0]);
+				itemSelectorURL, namespace + entry.getKey(),
+				entry.getValue()[0]);
 		}
 
 		return itemSelectorURL;

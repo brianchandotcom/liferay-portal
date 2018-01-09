@@ -797,11 +797,11 @@ public class BasicRegistryImpl implements Registry {
 			BasicServiceReference<S> basicServiceReference =
 				(BasicServiceReference<S>)serviceReference;
 
-			for (ServiceReference<S> curServiceReference :
-					_trackedServices.keySet()) {
+			for (Map.Entry<ServiceReference<S>, T> entry :
+					_trackedServices.entrySet()) {
 
-				if (basicServiceReference.matches(curServiceReference)) {
-					return _trackedServices.get(curServiceReference);
+				if (basicServiceReference.matches(entry.getKey())) {
+					return entry.getValue();
 				}
 			}
 

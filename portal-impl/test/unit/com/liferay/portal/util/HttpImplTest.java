@@ -266,9 +266,11 @@ public class HttpImplTest extends PowerMockito {
 			"Actual parameter map size: " + actualParameterMap.size(),
 			expectedParameterMap.size(), actualParameterMap.size());
 
-		for (String key : actualParameterMap.keySet()) {
+		for (Map.Entry<String, String[]> entry :
+				actualParameterMap.entrySet()) {
+
 			Assert.assertArrayEquals(
-				expectedParameterMap.get(key), actualParameterMap.get(key));
+				expectedParameterMap.get(entry.getKey()), entry.getValue());
 		}
 	}
 

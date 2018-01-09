@@ -262,8 +262,8 @@ public class LayoutTestUtil {
 		PortletPreferences portletPreferences = getPortletPreferences(
 			layout, newPortletId);
 
-		for (String key : preferenceMap.keySet()) {
-			portletPreferences.setValues(key, preferenceMap.get(key));
+		for (Map.Entry<String, String[]> entry : preferenceMap.entrySet()) {
+			portletPreferences.setValues(entry.getKey(), entry.getValue());
 		}
 
 		portletPreferences.store();

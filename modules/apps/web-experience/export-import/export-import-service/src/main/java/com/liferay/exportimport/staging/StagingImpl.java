@@ -1408,11 +1408,10 @@ public class StagingImpl implements Staging {
 
 		JSONArray warningMessagesJSONArray = JSONFactoryUtil.createJSONArray();
 
-		for (String missingReferenceReferrerClassName :
-				missingReferences.keySet()) {
+		for (Map.Entry<String, MissingReference> entry :
+				missingReferences.entrySet()) {
 
-			MissingReference missingReference = missingReferences.get(
-				missingReferenceReferrerClassName);
+			MissingReference missingReference = entry.getValue();
 
 			Map<String, String> referrers = missingReference.getReferrers();
 
@@ -1434,8 +1433,7 @@ public class StagingImpl implements Staging {
 			errorMessageJSONObject.put("size", referrers.size());
 			errorMessageJSONObject.put(
 				"type",
-				ResourceActionsUtil.getModelResource(
-					locale, missingReferenceReferrerClassName));
+				ResourceActionsUtil.getModelResource(locale, entry.getKey()));
 
 			warningMessagesJSONArray.put(errorMessageJSONObject);
 		}

@@ -78,24 +78,28 @@ public class UpgradePortletPreferences
 
 		String rootPortletId = PortletIdCodec.decodePortletName(portletId);
 
-		for (String oldName : preferencesMap.keySet()) {
+		for (Map.Entry<String, String[]> entry : preferencesMap.entrySet()) {
+			String oldName = entry.getKey();
+
 			String newName = getName(rootPortletId, oldName);
-			String[] oldValues = preferencesMap.get(oldName);
 
 			preferences.reset(oldName);
 
 			if (newName != null) {
-				preferences.setValues(newName, oldValues);
+				preferences.setValues(newName, entry.getValue());
 			}
 		}
 
 		Map<String, String> defaultPreferencesMap = getDefaultPreferencesMap(
 			rootPortletId);
 
-		for (String name : defaultPreferencesMap.keySet()) {
+		for (Map.Entry<String, String> entry :
+				defaultPreferencesMap.entrySet()) {
+
+			String name = entry.getKey();
+
 			if (preferences.getValues(name, null) == null) {
-				preferences.setValues(
-					name, StringUtil.split(defaultPreferencesMap.get(name)));
+				preferences.setValues(name, StringUtil.split(entry.getValue()));
 			}
 		}
 

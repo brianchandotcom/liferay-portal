@@ -116,13 +116,14 @@ public class ItemSelectorImpl implements ItemSelector {
 		String namespace = _portal.getPortletNamespace(
 			ItemSelectorPortletKeys.ITEM_SELECTOR);
 
-		for (String parameterName : parameters.keySet()) {
+		for (Map.Entry<String, String[]> entry : parameters.entrySet()) {
+			String parameterName = entry.getKey();
+
 			if (parameterName.contains(namespace)) {
 				String key = StringUtil.removeSubstring(
 					parameterName, namespace);
 
-				itemSelectorURLParameterMap.put(
-					key, parameters.get(parameterName));
+				itemSelectorURLParameterMap.put(key, entry.getValue());
 			}
 		}
 

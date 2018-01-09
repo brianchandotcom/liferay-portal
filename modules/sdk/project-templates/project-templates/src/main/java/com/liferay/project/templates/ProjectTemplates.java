@@ -273,8 +273,8 @@ public class ProjectTemplates {
 	private static void _printList() throws Exception {
 		Map<String, String> templates = getTemplates();
 
-		for (String template : templates.keySet()) {
-			System.out.println(template + " - " + templates.get(template));
+		for (Map.Entry<String, String> entry : templates.entrySet()) {
+			System.out.println(entry.getKey() + " - " + entry.getValue());
 		}
 	}
 

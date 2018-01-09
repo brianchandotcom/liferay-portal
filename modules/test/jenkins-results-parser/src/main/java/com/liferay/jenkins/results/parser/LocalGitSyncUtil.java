@@ -202,12 +202,13 @@ public class LocalGitSyncUtil {
 			remoteBranches.put(remoteBranch.getName(), remoteBranch);
 		}
 
-		for (String remoteBranchName : remoteBranches.keySet()) {
-			GitWorkingDirectory.Branch remoteBranch = remoteBranches.get(
-				remoteBranchName);
+		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
+				remoteBranches.entrySet()) {
+
+			GitWorkingDirectory.Branch remoteBranch = entry.getValue();
 
 			Matcher matcher = _cacheTimestampBranchPattern.matcher(
-				remoteBranchName);
+				entry.getKey());
 
 			if (matcher.matches()) {
 				branchCount++;
@@ -304,13 +305,17 @@ public class LocalGitSyncUtil {
 		String cacheBranchName, GitWorkingDirectory gitWorkingDirectory,
 		Map<String, GitWorkingDirectory.Branch> remoteBranches) {
 
-		for (String remoteBranchName : remoteBranches.keySet()) {
+		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
+				remoteBranches.entrySet()) {
+
+			String remoteBranchName = entry.getKey();
+
 			if (!remoteBranchName.startsWith(cacheBranchName)) {
 				continue;
 			}
 
 			deleteRemoteRepositoryCacheBranch(
-				gitWorkingDirectory, remoteBranches.get(remoteBranchName));
+				gitWorkingDirectory, entry.getValue());
 		}
 	}
 
@@ -405,11 +410,14 @@ public class LocalGitSyncUtil {
 			remoteBranches.put(remoteBranch.getName(), remoteBranch);
 		}
 
-		for (String remoteBranchName : remoteBranches.keySet()) {
+		for (Map.Entry<String, GitWorkingDirectory.Branch> entry :
+				remoteBranches.entrySet()) {
+
+			String remoteBranchName = entry.getKey();
+
 			if (remoteBranchName.matches(_cacheBranchRegex)) {
 				if (hasTimestampBranch(remoteBranchName, remoteBranches)) {
-					remoteCacheBranches.add(
-						remoteBranches.get(remoteBranchName));
+					remoteCacheBranches.add(entry.getValue());
 				}
 				else {
 					deleteRemoteCacheBranch(

@@ -20,6 +20,7 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;

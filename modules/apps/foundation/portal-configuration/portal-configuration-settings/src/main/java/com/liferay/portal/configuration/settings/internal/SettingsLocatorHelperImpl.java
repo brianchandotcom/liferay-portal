@@ -14,6 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal;
 
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -68,6 +69,15 @@ import org.osgi.util.tracker.ServiceTracker;
 @DoPrivileged
 public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
+	@Override
+	public Settings getCompanyConfigurationBeanSettings(
+		long companyId, String configurationPid, Settings parentSettings) {
+
+		return _getScopedConfigurationBeanSettings(
+			Scope.COMPANY, String.valueOf(companyId), configurationPid,
+			parentSettings);
+	}
+
 	public PortletPreferences getCompanyPortletPreferences(
 		long companyId, String settingsId) {
 
@@ -116,6 +126,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 		return getConfigurationBeanSettings(configurationPid);
 	}
 
+	@Override
+	public Settings getGroupConfigurationBeanSettings(
+		long groupId, String configurationPid, Settings parentSettings) {
+
+		return _getScopedConfigurationBeanSettings(
+			Scope.GROUP, String.valueOf(groupId), configurationPid,
+			parentSettings);
+	}
+
 	public PortletPreferences getGroupPortletPreferences(
 		long groupId, String settingsId) {
 
@@ -154,6 +173,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	@Override
 	public Settings getPortalPropertiesSettings() {
 		return _portalPropertiesSettings;
+	}
+
+	@Override
+	public Settings getPortletInstanceConfigurationBeanSettings(
+		String portletId, String configurationPid, Settings parentSettings) {
+
+		return _getScopedConfigurationBeanSettings(
+			Scope.PORTLET_INSTANCE, portletId, configurationPid,
+			parentSettings);
 	}
 
 	public PortletPreferences getPortletInstancePortletPreferences(
@@ -288,6 +316,28 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			configurationPidMapping.getConfigurationPid());
 	}
 
+	private Settings _getScopedConfigurationBeanSettings(
+		Scope scope, String scopePrimKey, String configurationPid,
+		Settings parentSettings) {
+
+		if (!_configurationBeanClasses.containsKey(configurationPid)) {
+			return parentSettings;
+		}
+
+		ScopeKey scopeKey = new ScopeKey(
+			_configurationBeanClasses.get(configurationPid), scope,
+			scopePrimKey);
+
+		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
+			return parentSettings;
+		}
+
+		return new ConfigurationBeanSettings(
+			_configurationBeanLocationVariableResolvers.get(
+				scopeKey.getObjectClass()),
+			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SettingsLocatorHelperImpl.class);
 
@@ -296,6 +346,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private ServiceTracker
 		<ConfigurationBeanDeclaration, ConfigurationBeanManagedService>
 			_configurationBeanDeclarationServiceTracker;
+	private final Map<Class<?>, LocationVariableResolver>
+		_configurationBeanLocationVariableResolvers = new ConcurrentHashMap<>();
 	private final Map<Class<?>, Settings> _configurationBeanSettings =
 		new ConcurrentHashMap<>();
 	private GroupLocalService _groupLocalService;
@@ -303,6 +355,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private Settings _portalPropertiesSettings;
 	private PortletPreferencesFactory _portletPreferencesFactory;
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
+
+	@Reference
+	private ScopedConfigurationBeanProvider _scopedConfigurationBeanProvider;
 
 	private class ConfigurationBeanDeclarationServiceTracker
 		extends ServiceTracker
@@ -330,6 +385,9 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 								new ClassLoaderResourceManager(classLoader),
 								SettingsLocatorHelperImpl.this);
 
+						_configurationBeanLocationVariableResolvers.put(
+							configurationBeanClass, locationVariableResolver);
+
 						_configurationBeanSettings.put(
 							configurationBeanClass,
 							new ConfigurationBeanSettings(
@@ -355,8 +413,11 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 
 			configurationBeanManagedService.unregister();
 
-			_configurationBeanClasses.remove(
+			Class<?> configurationBeanClass = _configurationBeanClasses.remove(
 				configurationBeanManagedService.getConfigurationPid());
+
+			_configurationBeanLocationVariableResolvers.remove(
+				configurationBeanClass);
 
 			_configurationBeanSettings.remove(
 				configurationBeanManagedService.getConfigurationPid());

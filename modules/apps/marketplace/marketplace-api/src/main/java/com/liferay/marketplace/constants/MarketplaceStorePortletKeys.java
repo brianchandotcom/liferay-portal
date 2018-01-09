@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.constants;
+package com.liferay.marketplace.constants;
 
 /**
  * @author Ryan Park

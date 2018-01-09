@@ -14,7 +14,7 @@
 
 package com.liferay.marketplace.store.web.internal.portlet;
 
-import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
+import com.liferay.marketplace.constants.MarketplaceStorePortletKeys;
 
 import javax.portlet.Portlet;
 

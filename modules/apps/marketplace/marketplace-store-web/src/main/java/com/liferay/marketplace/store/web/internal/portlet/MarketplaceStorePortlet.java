@@ -14,10 +14,10 @@
 
 package com.liferay.marketplace.store.web.internal.portlet;
 
+import com.liferay.marketplace.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.model.App;
 import com.liferay.marketplace.service.AppLocalService;
 import com.liferay.marketplace.service.AppService;
-import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.store.web.internal.configuration.MarketplaceStoreWebConfigurationValues;
 import com.liferay.marketplace.store.web.internal.constants.MarketplaceConstants;
 import com.liferay.marketplace.store.web.internal.constants.MarketplaceStoreWebKeys;

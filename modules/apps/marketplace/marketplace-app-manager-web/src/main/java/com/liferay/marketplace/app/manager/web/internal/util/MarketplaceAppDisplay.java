@@ -14,8 +14,8 @@
 
 package com.liferay.marketplace.app.manager.web.internal.util;
 
+import com.liferay.marketplace.constants.MarketplaceStorePortletKeys;
 import com.liferay.marketplace.model.App;
-import com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;

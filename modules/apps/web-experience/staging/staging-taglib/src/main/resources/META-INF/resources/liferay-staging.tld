@@ -10,12 +10,12 @@
 	<short-name>liferay-staging</short-name>
 	<uri>http://liferay.com/tld/staging</uri>
 	<tag>
-		<description>Renders the UI section for an <![CDATA[<code>exportImportConfiguration</code>]]> object's basic information.</description>
+		<description>Renders the UI section for an <![CDATA[<code>ExportImportConfiguration</code>]]> object's basic information.</description>
 		<name>configuration-header</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ConfigurationHeaderTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The <![CDATA[<code>exportImportConfiguration</code>]]> UI to display.</description>
+			<description>The Export/Import Configuration UI to display.</description>
 			<name>exportImportConfiguration</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -47,7 +47,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -99,7 +99,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -123,13 +123,13 @@
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportEntityTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The class name of the entity that will be exported. Either class name or class name ID should be passed.</description>
+			<description>The class name of the entity that will be exported. Either the class name or class name ID should be passed.</description>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The class name ID of the entity that will be exported. Either class name or class name ID should be passed.</description>
+			<description>The class name ID of the entity that will be exported. Either the class name or class name ID should be passed.</description>
 			<name>classNameId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -143,7 +143,7 @@
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>The uuid of the entity that will be exported.</description>
+			<description>The UUID of the entity that will be exported.</description>
 			<name>uuid</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -247,7 +247,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -280,7 +280,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -320,7 +320,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -353,7 +353,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The ID of the <![CDATA[<code>exportImportConfiguration</code>]]>. If the <![CDATA[<code>exportImportConfigurationId</code>]]> is valid, the content settings are used from the corresponding <![CDATA[<code>exportImportConfiguration</code>]]>.</description>
+			<description>The ID of the export/import configuration. If the ID is valid, the content settings are used from the corresponding configuration.</description>
 			<name>exportImportConfigurationId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

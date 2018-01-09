@@ -51,27 +51,27 @@
 		<tag-class>com.liferay.application.list.taglib.servlet.taglib.PanelAppTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
-			<description>Whether to mark the link active if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
+			<description>Whether to mark the link active if no panel app is passed.</description>
 			<name>active</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.lang.Boolean</type>
 		</attribute>
 		<attribute>
-			<description>The data attribute to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
+			<description>The data attribute to use in the link if no panel app is passed.</description>
 			<name>data</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>java.util.Map</type>
 		</attribute>
 		<attribute>
-			<description>The ID to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
+			<description>The ID to use in the link if no panel app is passed.</description>
 			<name>id</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The text to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
+			<description>The text to use in the link if no panel app is passed.</description>
 			<name>label</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
@@ -89,7 +89,7 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The URL to use in the link if no <![CDATA[<code>panelApp</code>]]> is passed.</description>
+			<description>The URL to use in the link if no panel app is passed.</description>
 			<name>url</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

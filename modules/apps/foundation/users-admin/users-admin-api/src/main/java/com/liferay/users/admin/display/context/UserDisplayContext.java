@@ -60,10 +60,12 @@ public class UserDisplayContext {
 		_request = request;
 		_initDisplayContext = initDisplayContext;
 
-		_permissionChecker = _themeDisplay.getPermissionChecker();
-		_selUser = PortalUtil.getSelectedUser(request);
-		_themeDisplay = (ThemeDisplay)request.getAttribute(
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
+
+		_permissionChecker = themeDisplay.getPermissionChecker();
+		_selUser = PortalUtil.getSelectedUser(request);
+		_themeDisplay = themeDisplay;
 	}
 
 	public List<Group> getAllGroups() throws PortalException {

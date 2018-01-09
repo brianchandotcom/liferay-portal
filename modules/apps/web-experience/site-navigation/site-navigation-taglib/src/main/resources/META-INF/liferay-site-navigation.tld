@@ -66,4 +66,67 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>
+	<tag>
+	<description>Creates a component for users to navigate through a set of specified navigation menu items.</description>
+	<name>navigation-menu</name>
+	<tag-class>com.liferay.site.navigation.taglib.servlet.taglib.NavigationMenuTag</tag-class>
+	<body-content>JSP</body-content>
+		<attribute>
+			<description>The group ID of the DDM template to use for rendering the navigation menu (see Application Display Templates).</description>
+			<name>ddmTemplateGroupId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+		<attribute>
+			<description>The key of the DDM template to use for rendering the navigation menu(see Application Display Templates). If not set, the default ADT is used.</description>
+			<name>ddmTemplateKey</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The depth of children pages displayed.</description>
+			<name>displayDepth</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<name>expandedLevels</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Whether to display help messages intended for page administrators.</description>
+			<name>preview</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>boolean</type>
+		</attribute>
+		<attribute>
+			<description>The ID of the root menu item to be used in the navigation menu.</description>
+			<name>rootItemId</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>rootItemLevel</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>int</type>
+		</attribute>
+		<attribute>
+			<description>The item type of the root item to be used in the navigation menu. The accepted layout type values are <![CDATA[<code>relative</code>]]>, <![CDATA[<code>select</code>]]>, and <![CDATA[<code>absolute</code>]]>.</description>
+			<name>rootItemType</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>The ID of the Site Navigation Menu to render.</description>
+			<name>siteNavigationMenuId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<type>long</type>
+		</attribute>
+	</tag>
 </taglib>

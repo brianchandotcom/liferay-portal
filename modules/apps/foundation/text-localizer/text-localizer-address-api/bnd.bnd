@@ -1,0 +1,7 @@
+Bundle-Name: Liferay Text Localizer Address API
+Bundle-SymbolicName: com.liferay.text.localizer.address.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.text.localizer.address
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:
+-dsannotations-options: inherit

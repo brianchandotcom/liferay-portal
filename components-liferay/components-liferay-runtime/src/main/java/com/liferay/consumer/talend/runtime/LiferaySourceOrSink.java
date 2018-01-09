@@ -14,15 +14,15 @@
 
 package com.liferay.consumer.talend.runtime;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.consumer.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.consumer.talend.connection.LiferayConnectionProperties;
 import com.liferay.consumer.talend.connection.LiferayProvideConnectionProperties;
 import com.liferay.consumer.talend.runtime.client.ApioException;
 import com.liferay.consumer.talend.runtime.client.ApioResult;
 import com.liferay.consumer.talend.runtime.client.RestClient;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -37,6 +37,7 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
@@ -118,6 +119,47 @@ public class LiferaySourceOrSink
 		return guessSchema(resourceURL);
 	}
 
+	public JsonNode getResourceCollection(String resourceURL)
+		throws IOException {
+
+		final ObjectMapper mapper = new ObjectMapper();
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getRestClient(null, resourceURL);
+
+			apioResult = restClient.executeGetRequest();
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			throw new IOException(ae);
+		}
+
+		JsonNode jsonNode = null;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(apioResult.getBody());
+		}
+
+		try {
+			jsonNode = mapper.readTree(apioResult.getBody());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot read JSON object", ioe);
+			}
+
+			throw ioe;
+		}
+
+		return jsonNode;
+	}
+
 	public RestClient getRestClient(RuntimeContainer container)
 		throws ApioException {
 
@@ -156,45 +198,6 @@ public class LiferaySourceOrSink
 		}
 
 		return new RestClient(conn);
-	}
-
-	public JsonNode getResourceCollection(String resourceURL)
-		throws IOException {
-		final ObjectMapper mapper = new ObjectMapper();
-
-		RestClient restClient = null;
-		ApioResult apioResult = null;
-
-		try {
-			restClient = getRestClient(null, resourceURL);
-
-			apioResult = restClient.executeGetRequest();
-		}
-		catch (ApioException ae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ae.toString());
-			}
-
-			throw new IOException(ae);
-		}
-
-		JsonNode jsonNode = null;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(apioResult.getBody());
-		}
-
-		try {
-			jsonNode = mapper.readTree(apioResult.getBody());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Cannot read JSON object", ioe);
-			}
-
-			throw ioe;
-		}
-		return jsonNode;
 	}
 
 	@Override
@@ -270,8 +273,8 @@ public class LiferaySourceOrSink
 		}
 
 		if (!anonymousLogin) {
-			vr.setStatus(_validateCredentials(
-				userId, password, vr).getStatus());
+			vr.setStatus(
+				_validateCredentials(userId, password, vr).getStatus());
 
 			if (vr.getStatus() == ValidationResult.Result.ERROR) {
 				return vr;
@@ -279,33 +282,6 @@ public class LiferaySourceOrSink
 		}
 
 		return validateConnection(conn);
-	}
-
-	private ValidationResultMutable _validateCredentials(
-		String userId, String password, ValidationResultMutable vr) {
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Validating credentials...");
-		}
-
-		if ((userId == null) || userId.isEmpty()) {
-			vr.setMessage(
-				translations.getMessage("error.validation.connection.userId"));
-			vr.setStatus(ValidationResult.Result.ERROR);
-
-			return vr;
-		}
-
-		if ((password == null) || password.isEmpty()) {
-			vr.setMessage(
-				translations.getMessage(
-					"error.validation.connection.password"));
-			vr.setStatus(ValidationResult.Result.ERROR);
-
-			return vr;
-		}
-
-		return vr;
 	}
 
 	@Override
@@ -413,6 +389,33 @@ public class LiferaySourceOrSink
 		JsonNode jsonNode = getResourceCollection(resourceURL);
 
 		return ResourceCollectionSchemaInferrer.inferSchema(jsonNode);
+	}
+
+	private ValidationResultMutable _validateCredentials(
+		String userId, String password, ValidationResultMutable vr) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Validating credentials...");
+		}
+
+		if ((userId == null) || userId.isEmpty()) {
+			vr.setMessage(
+				translations.getMessage("error.validation.connection.userId"));
+			vr.setStatus(ValidationResult.Result.ERROR);
+
+			return vr;
+		}
+
+		if ((password == null) || password.isEmpty()) {
+			vr.setMessage(
+				translations.getMessage(
+					"error.validation.connection.password"));
+			vr.setStatus(ValidationResult.Result.ERROR);
+
+			return vr;
+		}
+
+		return vr;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

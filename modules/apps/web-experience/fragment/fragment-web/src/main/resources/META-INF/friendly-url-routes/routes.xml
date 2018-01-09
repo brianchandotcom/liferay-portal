@@ -4,32 +4,32 @@
 <routes>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/fragment_entry/{fragmentEntryId:\d+}/edit</pattern>
-		<implicit-parameter name="mvcPath">/edit_fragment_entry.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_entry</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}/edit</pattern>
-		<implicit-parameter name="mvcPath">/edit_fragment_collection.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_collection</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collection/{fragmentCollectionId:\d+}</pattern>
-		<implicit-parameter name="mvcPath">/view_fragment_entries.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/view_fragment_entries</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collection/new</pattern>
-		<implicit-parameter name="mvcPath">/edit_fragment_collection.jsp</implicit-parameter>
+		<implicit-parameter name="mvcRenderCommandName">/fragment/edit_fragment_collection</implicit-parameter>
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern>/fragment_collections</pattern>
-		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="mvcRenderCommandName" />
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 	<route>
 		<pattern></pattern>
-		<ignored-parameter name="mvcPath" />
+		<ignored-parameter name="mvcRenderCommandName" />
 		<implicit-parameter name="p_p_state">maximized</implicit-parameter>
 	</route>
 </routes>

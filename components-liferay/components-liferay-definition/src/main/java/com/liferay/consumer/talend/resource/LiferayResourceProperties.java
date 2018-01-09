@@ -31,11 +31,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.ISchemaListener;
-import org.talend.components.api.exception.ComponentException;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
+import org.talend.daikon.properties.ValidationResult.Result;
+import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
 import org.talend.daikon.properties.property.PropertyFactory;
@@ -57,6 +58,9 @@ public class LiferayResourceProperties
 			_log.debug("Resource URL: " + resourceURL.getValue());
 		}
 
+		ValidationResultMutable vr =
+			new ValidationResultMutable().setStatus(Result.OK);
+
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
@@ -67,7 +71,10 @@ public class LiferayResourceProperties
 
 			ss.initialize(null, _getEffectiveConnectionProperties());
 
-			ValidationResult vr = ss.validate(null);
+			ValidationResult v = ss.validate(null);
+
+			vr.setStatus(v.getStatus());
+			vr.setMessage(v.getMessage());
 
 			if (vr.getStatus() == ValidationResult.Result.OK) {
 				try {
@@ -77,16 +84,19 @@ public class LiferayResourceProperties
 					main.schema.setValue(schema);
 				}
 				catch (IOException ioe) {
-					throw new ComponentException(
-						ExceptionUtils.exceptionToValidationResult(ioe));
+					v = ExceptionUtils.exceptionToValidationResult(ioe);
+
+					vr.setStatus(v.getStatus());
+					vr.setMessage(v.getMessage());
 				}
 			}
-			else {
-				throw new ComponentException(vr);
-			}
-
-			return ValidationResult.OK;
 		}
+
+		if (vr.getStatus() == ValidationResult.Result.ERROR) {
+			resourceURL.setPossibleValues(Collections.emptyList());
+		}
+
+		return vr;
 	}
 
 	public ValidationResult beforeResourceURL() throws Exception {
@@ -163,9 +173,9 @@ public class LiferayResourceProperties
 	@Override
 	public void setupProperties() {
 		super.setupProperties();
-	}
 
-	// consider beforeActivate and beforeRender (change after to afterActivate)
+		resourceURL.setValue("");
+	}
 
 	public LiferayConnectionProperties connection =
 		new LiferayConnectionProperties("connection");

@@ -26,6 +26,7 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.runtime.AbstractBoundedReader;
 import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.container.RuntimeContainer;
@@ -36,17 +37,8 @@ import org.talend.daikon.avro.AvroUtils;
  */
 public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 
-	protected transient Schema runtimeSchema;
-
-	protected LiferayConnectionResourceBaseProperties properties;
-
-	protected int dataCount;
-
-	protected RuntimeContainer container;
-
-	protected LiferayBaseReader(RuntimeContainer container, LiferaySource source) {
-		super(source);
-		this.container = container;
+	@Override
+	public void close() throws IOException {
 	}
 
 	@Override
@@ -58,26 +50,38 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 		return result.toMap();
 	}
 
+	protected LiferayBaseReader(
+		RuntimeContainer container, LiferaySource source) {
+
+		super(source);
+		this.container = container;
+	}
+
 	protected Schema getSchema() throws IOException {
 		if (runtimeSchema == null) {
 			runtimeSchema = properties.getSchema();
+
 			if (AvroUtils.isIncludeAllFields(runtimeSchema)) {
 				String resourceURL = null;
+
 				if (properties instanceof TLiferayInputProperties) {
 					resourceURL = properties.resource.resourceURL.getValue();
 				}
-				runtimeSchema =
-					getCurrentSource().getEndpointSchema(container, resourceURL);
+
+				runtimeSchema = getCurrentSource().getEndpointSchema(
+					container, resourceURL);
 			}
 		}
+
 		return runtimeSchema;
 	}
 
-	@Override
-	public void close() throws IOException {
-	}
+	protected RuntimeContainer container;
+	protected int dataCount;
+	protected LiferayConnectionResourceBaseProperties properties;
+	protected transient Schema runtimeSchema;
 
-	private static final Logger _log =
-		LoggerFactory.getLogger(LiferayBaseReader.class);
+	private static final Logger _log = LoggerFactory.getLogger(
+		LiferayBaseReader.class);
 
 }

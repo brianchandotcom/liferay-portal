@@ -14,9 +14,9 @@
 
 package com.liferay.consumer.talend.avro;
 
-import com.liferay.consumer.talend.runtime.client.ApioJsonLDUtils;
-
 import com.fasterxml.jackson.databind.JsonNode;
+
+import com.liferay.consumer.talend.runtime.client.ApioJsonLDUtils;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -28,6 +28,7 @@ import org.apache.avro.Schema.Field;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
 

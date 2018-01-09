@@ -19,25 +19,23 @@ package com.liferay.consumer.talend.runtime.client;
  */
 public abstract class ApioJsonLDConstants {
 
-	public static final String PER_PAGE = "per_page";
-
-	public static final String PAGE = "page";
-
-	public static final String TYPE = "@type";
-
-	public static final String ID = "@id";
-
-	public static final String CONTEXT = "@context";
-
-	public static final String VOCAB = "@vocab";
-
 	public static final String COLLECTION_MEMBERS = "members";
-
-	public static final String COLLECTION_VIEW = "view";
 
 	public static final String COLLECTION_NUMBER_OF_ITEMS = "numberOfItems";
 
 	public static final String COLLECTION_TOTAL_ITEMS = "totalItems";
+
+	public static final String COLLECTION_VIEW = "view";
+
+	public static final String CONTEXT = "@context";
+
+	public static final String ID = "@id";
+
+	public static final String PAGE = "page";
+
+	public static final String PER_PAGE = "per_page";
+
+	public static final String TYPE = "@type";
 
 	public static final String VIEW_FIRST = "first";
 
@@ -46,5 +44,7 @@ public abstract class ApioJsonLDConstants {
 	public static final String VIEW_NEXT = "next";
 
 	public static final String VIEW_PREVIOUS = "previous";
+
+	public static final String VOCAB = "@vocab";
 
 }

@@ -13,5 +13,4 @@ dependencies {
 	provided project(":apps:collaboration:comment:comment-api")
 	provided project(":apps:collaboration:message-boards:message-boards-api")
 	provided project(":apps:web-experience:asset:asset-api")
-	provided project(":apps:web-experience:asset:asset-service")
 }

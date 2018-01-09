@@ -29,7 +29,6 @@ dependencies {
 	provided project(":apps:collaboration:flags:flags-taglib")
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:web-experience:asset:asset-api")
-	provided project(":apps:web-experience:asset:asset-service")
 	provided project(":apps:web-experience:asset:asset-tag-stats-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:journal:journal-api")

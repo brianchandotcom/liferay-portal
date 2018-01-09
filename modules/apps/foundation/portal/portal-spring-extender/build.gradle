@@ -23,7 +23,6 @@ dependencies {
 	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
-	testCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	testCompile group: "com.liferay.portal", name: "com.liferay.util.java", version: "2.0.0"
 	testCompile group: "easyconf", name: "easyconf", version: "0.9.5"
 	testCompile group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1"

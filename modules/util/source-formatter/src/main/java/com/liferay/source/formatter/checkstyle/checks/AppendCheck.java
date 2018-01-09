@@ -89,6 +89,14 @@ public class AppendCheck extends StringConcatenationCheck {
 		}
 	}
 
+	private void _checkIncorrectLineBreaks(DetailAST methodCallAST) {
+		if (DetailASTUtil.getStartLine(methodCallAST) !=
+				DetailASTUtil.getEndLine(methodCallAST)) {
+
+			log(methodCallAST.getLineNo(), _MSG_INCORRECT_LINE_BREAK);
+		}
+	}
+
 	private void _checkLiteralStrings(
 		DetailAST methodCallAST, DetailAST previousMethodCallAST,
 		String literalStringValue, String previousLiteralStringValue) {
@@ -112,6 +120,9 @@ public class AppendCheck extends StringConcatenationCheck {
 		checkLiteralStringStartAndEndCharacter(
 			previousLiteralStringValue, literalStringValue,
 			previousMethodCallAST.getLineNo());
+
+		_checkIncorrectLineBreaks(methodCallAST);
+		_checkIncorrectLineBreaks(previousMethodCallAST);
 	}
 
 	private void _checkPlusOperator(DetailAST parameterDetailAST) {
@@ -177,6 +188,9 @@ public class AppendCheck extends StringConcatenationCheck {
 
 		return true;
 	}
+
+	private static final String _MSG_INCORRECT_LINE_BREAK =
+		"line.break.incorrect";
 
 	private static final String _MSG_INCORRECT_PLUS = "plus.incorrect";
 

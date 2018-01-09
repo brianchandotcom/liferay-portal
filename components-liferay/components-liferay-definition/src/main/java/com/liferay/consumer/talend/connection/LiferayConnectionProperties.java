@@ -22,7 +22,6 @@ import java.util.EnumSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.daikon.properties.PresentationItem;
@@ -79,6 +78,11 @@ public class LiferayConnectionProperties
 		refreshLayout(getForm(Form.REFERENCE));
 	}
 
+	public void afterAnonymousLogin() {
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(FORM_WIZARD));
+	}
+
 	@Override
 	public LiferayConnectionProperties getConnectionProperties() {
 		return this;
@@ -125,6 +129,13 @@ public class LiferayConnectionProperties
 			form.getWidget(endpoint.getName()).setHidden(useOtherConnection);
 			form.getWidget(userId.getName()).setHidden(useOtherConnection);
 			form.getWidget(password.getName()).setHidden(useOtherConnection);
+			form.getWidget(
+				anonymousLogin.getName()).setHidden(useOtherConnection);
+
+			if (!useOtherConnection && anonymousLogin.getValue()) {
+				form.getWidget(userId.getName()).setHidden(true);
+				form.getWidget(password.getName()).setHidden(true);
+			}
 		}
 	}
 
@@ -145,6 +156,7 @@ public class LiferayConnectionProperties
 		wizardForm.addRow(endpoint);
 		wizardForm.addRow(userId);
 		wizardForm.addColumn(password);
+		wizardForm.addRow(anonymousLogin);
 
 		Widget testConn = Widget.widget(testConnection);
 
@@ -159,6 +171,7 @@ public class LiferayConnectionProperties
 		mainForm.addRow(endpoint);
 		mainForm.addRow(userId);
 		mainForm.addColumn(password);
+		mainForm.addRow(anonymousLogin);
 
 		// A form for a reference to a connection, used in a tLiferayInput
 		// for example
@@ -179,6 +192,8 @@ public class LiferayConnectionProperties
 		super.setupProperties();
 
 		endpoint.setValue(_DEFAULT_HOST);
+		userId.setValue("");
+		password.setValue("");
 	}
 
 	public ValidationResult validateTestConnection() {
@@ -190,7 +205,7 @@ public class LiferayConnectionProperties
 
 			sos.initialize(null, this);
 
-			ValidationResult vr = sos.validateConnection(this);
+			ValidationResult vr = sos.validate(null);
 
 			if (vr.getStatus() == ValidationResult.Result.OK) {
 				getForm(FORM_WIZARD).setAllowForward(true);
@@ -207,11 +222,14 @@ public class LiferayConnectionProperties
 		}
 	}
 
+	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
+		"anonymousLogin"); //$NON-NLS-1$
+
 	public Property<String> endpoint =
 		PropertyFactory.newString("endpoint"); //$NON-NLS-1$
 
 	public Property<String> name = PropertyFactory.newString(
-		"name").setRequired();
+		"name").setRequired(); //$NON-NLS-1$
 
 	public Property<String> password =
 		PropertyFactory.newString("password").setFlags(

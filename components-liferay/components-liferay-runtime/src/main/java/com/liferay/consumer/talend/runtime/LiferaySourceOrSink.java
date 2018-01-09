@@ -250,6 +250,7 @@ public class LiferaySourceOrSink
 		String endpoint = conn.endpoint.getValue();
 		String userId = conn.userId.getValue();
 		String password = conn.password.getValue();
+		boolean anonymousLogin = conn.anonymousLogin.getValue();
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Validate Endpoint: {}", conn.endpoint.getValue());
@@ -266,6 +267,25 @@ public class LiferaySourceOrSink
 			vr.setStatus(ValidationResult.Result.ERROR);
 
 			return vr;
+		}
+
+		if (!anonymousLogin) {
+			vr.setStatus(_validateCredentials(
+				userId, password, vr).getStatus());
+
+			if (vr.getStatus() == ValidationResult.Result.ERROR) {
+				return vr;
+			}
+		}
+
+		return validateConnection(conn);
+	}
+
+	private ValidationResultMutable _validateCredentials(
+		String userId, String password, ValidationResultMutable vr) {
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Validating credentials...");
 		}
 
 		if ((userId == null) || userId.isEmpty()) {
@@ -285,7 +305,7 @@ public class LiferaySourceOrSink
 			return vr;
 		}
 
-		return validateConnection(conn);
+		return vr;
 	}
 
 	@Override

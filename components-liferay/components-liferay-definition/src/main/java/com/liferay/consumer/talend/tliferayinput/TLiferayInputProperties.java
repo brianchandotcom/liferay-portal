@@ -29,7 +29,6 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
@@ -61,6 +60,20 @@ public class TLiferayInputProperties
 		}
 
 		refreshLayout(getForm(Form.MAIN));
+	}
+
+	@Override
+	public void refreshLayout(Form form) {
+		super.refreshLayout(form);
+	
+		boolean hideDevWidgets = true;
+	
+		if (form.getName().equals(Form.MAIN) ||
+			form.getName().equals(LiferayConnectionProperties.FORM_WIZARD)) {
+	
+			form.getWidget(guessSchema.getName()).setHidden(hideDevWidgets);
+			form.getWidget(queryString.getName()).setHidden(hideDevWidgets);
+		}
 	}
 
 	@Override

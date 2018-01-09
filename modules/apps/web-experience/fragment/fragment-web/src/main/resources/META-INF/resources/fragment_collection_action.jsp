@@ -25,7 +25,7 @@ FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editFragmentCollectionURL">
-			<portlet:param name="mvcPath" value="/edit_fragment_collection.jsp" />
+			<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 		</portlet:renderURL>
 

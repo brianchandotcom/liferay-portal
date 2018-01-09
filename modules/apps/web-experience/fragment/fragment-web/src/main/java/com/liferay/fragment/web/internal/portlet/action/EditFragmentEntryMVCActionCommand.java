@@ -67,7 +67,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultErrorMessage(actionRequest);
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/edit_fragment_entry.jsp");
+				"mvcRenderCommandName", "/fragment/edit_fragment_entry");
 			actionResponse.setRenderParameter(
 				"fragmentEntryId", String.valueOf(fragmentEntryId));
 			actionResponse.setRenderParameter("cssContent", css);

@@ -34,7 +34,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 </aui:nav-bar>
 
 <portlet:actionURL name="editFragmentEntry" var="editFragmentEntryURL">
-	<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
+	<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
 </portlet:actionURL>
 
 <liferay-ui:error exception="<%= FragmentEntryContentException.class %>">

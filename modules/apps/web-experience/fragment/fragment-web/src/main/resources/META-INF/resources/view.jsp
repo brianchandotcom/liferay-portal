@@ -29,7 +29,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 
 	<c:if test="<%= fragmentDisplayContext.isShowFragmentCollectionsSearch() %>">
 		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcPath" value="/view.jsp" />
+			<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
 		</portlet:renderURL>
@@ -89,7 +89,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 			modelVar="fragmentCollection"
 		>
 			<portlet:renderURL var="rowURL">
-				<portlet:param name="mvcPath" value="/view_fragment_entries.jsp" />
+				<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entries" />
 				<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 			</portlet:renderURL>
 
@@ -123,7 +123,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 
 <c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_COLLECTION) %>">
 	<portlet:renderURL var="addFragmentCollectionURL">
-		<portlet:param name="mvcPath" value="/edit_fragment_collection.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 	</portlet:renderURL>
 
 	<liferay-frontend:add-menu>

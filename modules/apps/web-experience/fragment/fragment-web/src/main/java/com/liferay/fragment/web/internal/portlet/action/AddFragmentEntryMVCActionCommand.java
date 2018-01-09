@@ -93,7 +93,8 @@ public class AddFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/edit_fragment_entry.jsp");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/fragment/edit_fragment_entry");
 		portletURL.setParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentEntry.getFragmentCollectionId()));

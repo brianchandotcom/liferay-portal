@@ -34,7 +34,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 	<c:if test="<%= fragmentDisplayContext.isShowFragmentEntriesSearch() %>">
 		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcPath" value="/view_fragment_entries.jsp" />
+			<portlet:param name="mvcRenderCommandName" value="/fragment/view_fragment_entries" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 			<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
@@ -144,7 +144,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 <c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
 	<portlet:actionURL name="addFragmentEntry" var="addFragmentEntryURL">
-		<portlet:param name="mvcPath" value="/edit_fragment_entry.jsp" />
+		<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
 		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 	</portlet:actionURL>
 

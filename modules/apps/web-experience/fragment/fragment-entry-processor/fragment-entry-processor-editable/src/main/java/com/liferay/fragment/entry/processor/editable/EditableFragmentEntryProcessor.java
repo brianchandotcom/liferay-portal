@@ -62,10 +62,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 				de);
 		}
 
-		XPath editableXPath = SAXReaderUtil.createXPath("//" + _LFR_EDITABLE);
 		XPath uniqueXPath = SAXReaderUtil.createXPath("//*[@id]");
-
-		List<Node> editableNodes = editableXPath.selectNodes(document);
 
 		List<Node> uniqueNodes = uniqueXPath.selectNodes(document);
 
@@ -86,6 +83,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					resourceBundle,
 					"each-editable-element-should-have-a-unique-id"));
 		}
+
+		XPath editableXPath = SAXReaderUtil.createXPath("//" + _LFR_EDITABLE);
+
+		List<Node> editableNodes = editableXPath.selectNodes(document);
 
 		if (!editableNodes.stream().allMatch(
 				node -> Validator.isNotNull(

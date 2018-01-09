@@ -24,6 +24,10 @@ import org.osgi.framework.Bundle;
  */
 public interface BundleManager {
 
+	public Bundle getBundle(String symbolicName, String versionString);
+
+	public List<Bundle> getBundles();
+
 	public List<Bundle> getInstalledBundles();
 
 }

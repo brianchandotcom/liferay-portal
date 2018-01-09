@@ -130,18 +130,19 @@
 
 		<execute macro="SitePages#configurePage">
 			<var name="columnName" value="1 Column" />
-			<var name="pageName" value="Wiki Test Page" />
+			<var name="pageName" value="Child Site Page" />
 			<var name="privacy" value="Private" />
 			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Page#view">
+			<var name="pageName" value="Child Site Page" />
+			<var name="privacy" value="Private" />
 		</execute>
 
 		<execute macro="Navigator#gotoSpecificURLPage">
 			<var name="pageName" value="Child Site Page" />
 			<var name="url" value="${portalURL}/group/child-sitename/child-site-page" />
-		</execute>
-
-		<execute macro="Page#view">
-			<var name="pageName" value="Child Site Page" />
 		</execute>
 
 		<execute macro="Portlet#addPG">

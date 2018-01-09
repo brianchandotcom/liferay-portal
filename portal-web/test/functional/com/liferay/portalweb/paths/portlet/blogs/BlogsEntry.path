@@ -135,12 +135,12 @@
 </tr>
 <tr>
 	<td>FLAG_LINK</td>
-	<td>//div[contains(@class,'taglib-flags')]//span[contains(@class,'taglib-text')]</td>
+	<td>//div[contains(@class,'taglib-flags')]//button[contains(@class,'btn-link')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>FLAG_MODAL</td>
-	<td>//div[contains(@class,'modal-body')]/div/form[contains(@id,'flagsForm')]</td>
+	<td>//section[contains(@class,'modal-body')]/form[contains(@name,'flagsForm')]</td>
 	<td></td>
 </tr>
 <tr>

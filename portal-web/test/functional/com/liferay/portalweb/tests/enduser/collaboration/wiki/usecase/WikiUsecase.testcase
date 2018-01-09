@@ -340,10 +340,6 @@
 			<var name="uploadFrom" value="dependencies" />
 		</execute>
 
-		<execute macro="IFrame#closeFrame" />
-
-		<execute macro="IFrame#selectTopFrame" />
-
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="descriptive" />
 		</execute>

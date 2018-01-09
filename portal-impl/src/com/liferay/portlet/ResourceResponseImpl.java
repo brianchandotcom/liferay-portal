@@ -14,8 +14,12 @@
 
 package com.liferay.portlet;
 
+import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfig;
+import com.liferay.portlet.extraconfig.ExtraPortletAppConfigRegistry;
 
 import java.util.Locale;
 
@@ -105,6 +109,8 @@ public class ResourceResponseImpl
 	@Override
 	public void setCharacterEncoding(String charset) {
 		response.setCharacterEncoding(charset);
+
+		_canSetLocaleEncoding = false;
 	}
 
 	@Override
@@ -136,7 +142,32 @@ public class ResourceResponseImpl
 
 	@Override
 	public void setLocale(Locale locale) {
+		if (locale == null) {
+			return;
+		}
+
 		response.setLocale(locale);
+
+		if (_canSetLocaleEncoding) {
+			Portlet portlet = getPortlet();
+
+			PortletApp portletApp = portlet.getPortletApp();
+
+			ExtraPortletAppConfig extraPortletAppConfig =
+				ExtraPortletAppConfigRegistry.getExtraPortletAppConfig(
+					portletApp.getServletContextName());
+
+			String characterEncoding = extraPortletAppConfig.getEncoding(
+				locale.toString());
+
+			if (characterEncoding != null) {
+				setCharacterEncoding(characterEncoding);
+
+				_canSetLocaleEncoding = true;
+			}
+		}
 	}
+
+	private boolean _canSetLocaleEncoding = true;
 
 }

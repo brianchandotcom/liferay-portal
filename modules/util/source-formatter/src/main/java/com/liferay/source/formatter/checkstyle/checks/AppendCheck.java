@@ -146,6 +146,17 @@ public class AppendCheck extends StringConcatenationCheck {
 				methodCallAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
 				previousLiteralStringValue, literalStringValue);
 		}
+		else {
+			int pos = getStringBreakPos(
+				previousLiteralStringValue, literalStringValue,
+				maxLineLength - previousLineLength);
+
+			if (pos != -1) {
+				log(
+					methodCallAST.getLineNo(), MSG_MOVE_LITERAL_STRING,
+					literalStringValue.substring(0, pos + 1));
+			}
+		}
 	}
 
 	private void _checkPlusOperator(DetailAST parameterDetailAST) {

@@ -2,6 +2,10 @@ import com.liferay.gradle.util.FileUtil
 import com.liferay.gradle.util.copy.StripPathSegmentsAction
 import com.liferay.gradle.util.tasks.ConcatenateTask
 
+configurations {
+	ckEditor
+}
+
 task buildCKEditor(type: Copy)
 task buildCKEditorBBCode(type: ConcatenateTask)
 task buildCKEditorScayt(type: Copy)
@@ -17,7 +21,6 @@ File editorSrcDir = file("src/main/resources/META-INF/resources")
 
 buildCKEditor {
 	File ckEditorDestinationDir = new File(editorDestinationDir, "ckeditor")
-	File ckEditorZipFile = file("third-party/ckeditor_${ckEditorVersion}_liferay.zip")
 
 	doFirst {
 		delete ckEditorDestinationDir
@@ -25,19 +28,20 @@ buildCKEditor {
 
 	duplicatesStrategy = "exclude"
 
-	from(zipTree(ckEditorZipFile)) {
-		eachFile new StripPathSegmentsAction(1)
-		exclude "ckeditor/samples/"
-		include "ckeditor/"
+	from {
+		zipTree(configurations.ckEditor.singleFile)
+	} {
+		eachFile new StripPathSegmentsAction(5)
+
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/ckeditor/"
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/maven-dist/"
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/samples/"
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/gulpfile.js"
 	}
 
 	from new File(editorSrcDir, "_diffs")
 	includeEmptyDirs = false
 	into ckEditorDestinationDir
-
-	onlyIf {
-		!FileUtil.isUpToDate(project, ckEditorZipFile, ckEditorDestinationDir)
-	}
 }
 
 buildCKEditorBBCode {
@@ -88,6 +92,8 @@ clean {
 }
 
 dependencies {
+	ckEditor group: "com.liferay.webjars", name: "com.liferay.webjars.ckeditor", version: ckEditorVersion
+
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"

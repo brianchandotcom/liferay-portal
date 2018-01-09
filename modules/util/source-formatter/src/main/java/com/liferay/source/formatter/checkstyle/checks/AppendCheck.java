@@ -18,6 +18,7 @@ import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
 import java.util.List;
 import java.util.Set;
@@ -74,6 +75,12 @@ public class AppendCheck extends StringConcatenationCheck {
 				continue;
 			}
 
+			if (_containsMethodCall(
+					detailAST, variableName, "setIndex", "setStringAt")) {
+
+				continue;
+			}
+
 			DetailAST previousParameterDetailAST = _getParameterDetailAST(
 				previousMethodCallAST);
 
@@ -86,14 +93,6 @@ public class AppendCheck extends StringConcatenationCheck {
 					parameterDetailAST.getText(),
 					previousParameterDetailAST.getText());
 			}
-		}
-	}
-
-	private void _checkIncorrectLineBreaks(DetailAST methodCallAST) {
-		if (DetailASTUtil.getStartLine(methodCallAST) !=
-				DetailASTUtil.getEndLine(methodCallAST)) {
-
-			log(methodCallAST.getLineNo(), _MSG_INCORRECT_LINE_BREAK);
 		}
 	}
 
@@ -121,8 +120,32 @@ public class AppendCheck extends StringConcatenationCheck {
 			previousLiteralStringValue, literalStringValue,
 			previousMethodCallAST.getLineNo());
 
-		_checkIncorrectLineBreaks(methodCallAST);
-		_checkIncorrectLineBreaks(previousMethodCallAST);
+		if (_hasIncorrectLineBreaks(methodCallAST) |
+			_hasIncorrectLineBreaks(previousMethodCallAST)) {
+
+			return;
+		}
+
+		if (literalStringValue.startsWith("<") ||
+			literalStringValue.endsWith(">") ||
+			previousLiteralStringValue.startsWith("<") ||
+			previousLiteralStringValue.endsWith(">")) {
+
+			return;
+		}
+
+		String previousLine = getLine(previousMethodCallAST.getLineNo() - 1);
+
+		int previousLineLength = CommonUtils.lengthExpandedTabs(
+			previousLine, previousLine.length(), getTabWidth());
+
+		if ((previousLineLength + literalStringValue.length()) <=
+				maxLineLength) {
+
+			log(
+				methodCallAST.getLineNo(), MSG_COMBINE_LITERAL_STRINGS,
+				previousLiteralStringValue, literalStringValue);
+		}
 	}
 
 	private void _checkPlusOperator(DetailAST parameterDetailAST) {
@@ -136,6 +159,21 @@ public class AppendCheck extends StringConcatenationCheck {
 		if (!literalStringASTList.isEmpty()) {
 			log(parameterDetailAST.getLineNo(), _MSG_INCORRECT_PLUS);
 		}
+	}
+
+	private boolean _containsMethodCall(
+		DetailAST detailAST, String variableName, String... methodNames) {
+
+		for (String methodName : methodNames) {
+			List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+				detailAST, variableName, methodName);
+
+			if (!methodCallASTList.isEmpty()) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private DetailAST _getParameterDetailAST(DetailAST methodCallAST) {
@@ -164,6 +202,18 @@ public class AppendCheck extends StringConcatenationCheck {
 		}
 
 		return nameAST.getText();
+	}
+
+	private boolean _hasIncorrectLineBreaks(DetailAST methodCallAST) {
+		if (DetailASTUtil.getStartLine(methodCallAST) !=
+				DetailASTUtil.getEndLine(methodCallAST)) {
+
+			log(methodCallAST.getLineNo(), _MSG_INCORRECT_LINE_BREAK);
+
+			return true;
+		}
+
+		return false;
 	}
 
 	private boolean _isVariableType(

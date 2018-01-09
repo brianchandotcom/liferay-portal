@@ -84,6 +84,7 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.Append">
 			<message key="end.character.invalid" value="When appending multiple literal strings, only the last literal string can end with ''{0}''" />
 			<message key="line.break.incorrect" value="Avoid using line break when appending multiple literal strings" />
+			<message key="literal.string.combine" value="Combine the literal strings ''{0}'' and ''{1}''" />
 			<message key="plus.incorrect" value="Incorrect use of ''+'' inside StringBundler" />
 			<message key="start.character.invalid" value="When appending multiple literal strings, only the first literal string can start with ''{0}''" />
 		</module>

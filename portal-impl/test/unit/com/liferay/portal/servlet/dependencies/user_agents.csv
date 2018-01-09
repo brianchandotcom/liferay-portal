@@ -64,10 +64,6 @@ Firefox 21 var2, 21.0, 16.0, mozilla/5.0 (windows nt 6.1; win64; x64; rv:16.0.1)
 IE 11 var1, , 11.0, mozilla/5.0 (windows nt 6.3; trident/7.0; rv:11.0) like gecko
 IE 11 var2, , 11.0, mozilla/5.0 (windows nt 6.1; trident/7.0; rv:11.0) like gecko
 
-## IE 10.6
-
-IE 10.6, , 10.6, mozilla/5.0 (compatible; msie 10.6; windows nt 6.1; trident/5.0; infopath.2; slcc1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 2.0.50727) 3gpp-gba untrusted/1.0
-
 ## IE 10.0
 
 IE 10 var1, , 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; wow64; trident/6.0)

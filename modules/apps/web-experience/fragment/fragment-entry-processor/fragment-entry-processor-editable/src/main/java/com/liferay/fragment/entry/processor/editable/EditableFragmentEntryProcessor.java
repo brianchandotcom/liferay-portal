@@ -75,9 +75,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Stream<String> idStream = ids.stream().filter(id -> idMap.get(id) > 1);
 
-		List<String> nonUniqueIds = idStream.collect(Collectors.toList());
-
-		if (!nonUniqueIds.isEmpty()) {
+		if (idStream.count() > 0) {
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,

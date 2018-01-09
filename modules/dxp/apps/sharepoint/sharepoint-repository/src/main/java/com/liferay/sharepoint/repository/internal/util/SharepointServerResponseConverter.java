@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
@@ -48,11 +49,13 @@ public class SharepointServerResponseConverter {
 
 	public SharepointServerResponseConverter(
 		SharepointURLHelper sharepointURLHelper, ExtRepository extRepository,
-		String siteAbsoluteURL) {
+		String siteAbsoluteURL, String libraryPath) {
 
 		_sharepointURLHelper = sharepointURLHelper;
 		_extRepository = extRepository;
 		_siteAbsoluteURL = siteAbsoluteURL;
+		_rootDocumentPath = _join(
+			StringPool.SLASH, siteAbsoluteURL, libraryPath);
 	}
 
 	public <T extends ExtRepositoryObject> List<T> getExtRepositoryFileEntries(
@@ -199,7 +202,7 @@ public class SharepointServerResponseConverter {
 				}
 			}
 
-			if (Validator.isNull(path)) {
+			if (Validator.isNull(path) || !path.startsWith(_rootDocumentPath)) {
 				continue;
 			}
 
@@ -313,6 +316,26 @@ public class SharepointServerResponseConverter {
 		return low | (high << 32);
 	}
 
+	private String _join(String delimiter, String... strings) {
+		if (strings.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(strings.length * 2 - 1);
+
+		sb.append(strings[0]);
+
+		for (int i = 1; i < strings.length; i++) {
+			if (!strings[i - 1].endsWith(delimiter)) {
+				sb.append(delimiter);
+			}
+
+			sb.append(strings[i]);
+		}
+
+		return sb.toString();
+	}
+
 	private Date _parseDate(String dateString) {
 		try {
 			DateFormat simpleDateFormat =
@@ -327,6 +350,7 @@ public class SharepointServerResponseConverter {
 	}
 
 	private final ExtRepository _extRepository;
+	private final String _rootDocumentPath;
 	private final SharepointURLHelper _sharepointURLHelper;
 	private final String _siteAbsoluteURL;
 

@@ -536,7 +536,7 @@ public class SharepointExtRepository implements ExtRepository {
 
 		_sharepointServerResponseConverter =
 			new SharepointServerResponseConverter(
-				_sharepointURLHelper, this, _siteAbsoluteURL);
+				_sharepointURLHelper, this, _siteAbsoluteURL, _libraryPath);
 	}
 
 	@Override

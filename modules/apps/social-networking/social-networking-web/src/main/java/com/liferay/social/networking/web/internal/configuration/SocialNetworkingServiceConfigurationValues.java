@@ -12,23 +12,17 @@
  * details.
  */
 
-package com.liferay.social.networking.configuration;
+package com.liferay.social.networking.web.internal.configuration;
 
-import com.liferay.portal.kernel.configuration.Configuration;
-import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 /**
  * @author Adolfo Pérez
  */
-public class SocialNetworkingServiceConfigurationUtil {
+public class SocialNetworkingServiceConfigurationValues {
 
-	public static String get(String key) {
-		return _configuration.get(key);
-	}
-
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			SocialNetworkingServiceConfigurationUtil.class.getClassLoader(),
-			"portlet");
+	public static final String WALL_LAYOUT_FRIENDLY_URL = GetterUtil.getString(
+		SocialNetworkingServiceConfigurationUtil.get(
+			"wall.layout.friendly.url"));
 
 }

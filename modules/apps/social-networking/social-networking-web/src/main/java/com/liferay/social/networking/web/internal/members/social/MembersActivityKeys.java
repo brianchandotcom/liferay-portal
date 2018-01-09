@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.social.networking.members.social;
+package com.liferay.social.networking.web.internal.members.social;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class MembersRequestKeys {
+public class MembersActivityKeys {
 
 	public static final int ADD_MEMBER = 1;
 

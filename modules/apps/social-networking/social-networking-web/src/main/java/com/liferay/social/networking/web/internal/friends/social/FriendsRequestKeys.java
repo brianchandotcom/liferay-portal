@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.social.networking.configuration;
-
-import com.liferay.portal.kernel.util.GetterUtil;
+package com.liferay.social.networking.web.internal.friends.social;
 
 /**
- * @author Adolfo Pérez
+ * @author Brian Wing Shun Chan
  */
-public class SocialNetworkingServiceConfigurationValues {
+public class FriendsRequestKeys {
 
-	public static final String WALL_LAYOUT_FRIENDLY_URL = GetterUtil.getString(
-		SocialNetworkingServiceConfigurationUtil.get(
-			"wall.layout.friendly.url"));
+	public static final int ADD_FRIEND = 1;
 
 }

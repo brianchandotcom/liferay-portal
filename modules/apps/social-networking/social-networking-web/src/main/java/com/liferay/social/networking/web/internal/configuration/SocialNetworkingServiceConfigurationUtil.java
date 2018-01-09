@@ -12,13 +12,23 @@
  * details.
  */
 
-package com.liferay.social.networking.friends.social;
+package com.liferay.social.networking.web.internal.configuration;
+
+import com.liferay.portal.kernel.configuration.Configuration;
+import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Adolfo Pérez
  */
-public class FriendsActivityKeys {
+public class SocialNetworkingServiceConfigurationUtil {
 
-	public static final int ADD_FRIEND = 1;
+	public static String get(String key) {
+		return _configuration.get(key);
+	}
+
+	private static final Configuration _configuration =
+		ConfigurationFactoryUtil.getConfiguration(
+			SocialNetworkingServiceConfigurationUtil.class.getClassLoader(),
+			"portlet");
 
 }

@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.social.networking.friends.social;
+package com.liferay.social.networking.web.internal.members.social;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class FriendsRequestKeys {
+public class MembersRequestKeys {
 
-	public static final int ADD_FRIEND = 1;
+	public static final int ADD_MEMBER = 1;
 
 }

@@ -79,7 +79,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,
-					"each-editable-element-should-have-a-unique-id"));
+					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
 
 		XPath editableXPath = SAXReaderUtil.createXPath("//" + _LFR_EDITABLE);
@@ -93,7 +93,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle,
-					"each-editable-element-should-have-a-unique-id"));
+					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
 	}
 

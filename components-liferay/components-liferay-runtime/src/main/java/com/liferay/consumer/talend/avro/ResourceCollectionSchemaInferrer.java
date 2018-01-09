@@ -14,12 +14,12 @@
 
 package com.liferay.consumer.talend.avro;
 
+import com.liferay.consumer.talend.runtime.client.ApioJsonLDUtils;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +28,6 @@ import org.apache.avro.Schema.Field;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
 
@@ -50,7 +49,7 @@ public class ResourceCollectionSchemaInferrer {
 	 * @return Runtime AVRO schema
 	 */
 	public static Schema inferSchema(JsonNode jsonNode) {
-		List<String> fields = _getResourceFields(jsonNode);
+		List<String> fields = ApioJsonLDUtils.getResourceFieldNames(jsonNode);
 
 		int size = fields.size();
 
@@ -73,46 +72,6 @@ public class ResourceCollectionSchemaInferrer {
 			"Runtime", null, null, false, schemaFields);
 
 		return schema;
-	}
-
-	/**
-	 * Parses the given jsonNode (Resource Collection) and looks for the members
-	 * array. If it's located then the array node's first item will be checked
-	 * to get the fields of the resource.
-	 *
-	 * @param jsonNode
-	 * @return <code>List<String></code> The names of the resource fields
-	 */
-	private static List<String> _getResourceFields(JsonNode jsonNode) {
-		JsonNode members = jsonNode.findPath("members");
-
-		if (members.isMissingNode()) {
-			_log.error("Cannot find the \"members\" ArrayNode!");
-
-			return Collections.<String>emptyList();
-		}
-
-		if (!members.isArray() || (members.size() == 0)) {
-			_log.error("The \"members\" ArrayNode is empty!");
-
-			return Collections.<String>emptyList();
-		}
-
-		if (_log.isDebugEnabled()) {
-			_log.debug("Size of the \"members\" ArrayNode: {}", members.size());
-		}
-
-		List<String> fieldNames = new ArrayList<>();
-
-		JsonNode firstItem = members.get(0);
-
-		Iterator<String> fieldIter = firstItem.fieldNames();
-
-		while (fieldIter.hasNext()) {
-			fieldNames.add(fieldIter.next());
-		}
-
-		return fieldNames;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

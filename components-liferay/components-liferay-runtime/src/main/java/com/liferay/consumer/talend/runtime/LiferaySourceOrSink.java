@@ -14,15 +14,15 @@
 
 package com.liferay.consumer.talend.runtime;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.consumer.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.consumer.talend.connection.LiferayConnectionProperties;
 import com.liferay.consumer.talend.connection.LiferayProvideConnectionProperties;
 import com.liferay.consumer.talend.runtime.client.ApioException;
 import com.liferay.consumer.talend.runtime.client.ApioResult;
 import com.liferay.consumer.talend.runtime.client.RestClient;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -37,7 +37,6 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
@@ -157,6 +156,45 @@ public class LiferaySourceOrSink
 		}
 
 		return new RestClient(conn);
+	}
+
+	public JsonNode getResourceCollection(String resourceURL)
+		throws IOException {
+		final ObjectMapper mapper = new ObjectMapper();
+
+		RestClient restClient = null;
+		ApioResult apioResult = null;
+
+		try {
+			restClient = getRestClient(null, resourceURL);
+
+			apioResult = restClient.executeGetRequest();
+		}
+		catch (ApioException ae) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(ae.toString());
+			}
+
+			throw new IOException(ae);
+		}
+
+		JsonNode jsonNode = null;
+
+		if (_log.isDebugEnabled()) {
+			_log.debug(apioResult.getBody());
+		}
+
+		try {
+			jsonNode = mapper.readTree(apioResult.getBody());
+		}
+		catch (IOException ioe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Cannot read JSON object", ioe);
+			}
+
+			throw ioe;
+		}
+		return jsonNode;
 	}
 
 	@Override
@@ -279,7 +317,7 @@ public class LiferaySourceOrSink
 		return vr;
 	}
 
-	protected Map<String, String> getApioLdJsonResourceCollections(
+	protected Map<String, String> getApioLdJsonResourceCollectionsDescriptor(
 		JsonNode node) {
 
 		Map<String, String> resourcesMap = new HashMap<>();
@@ -346,46 +384,13 @@ public class LiferaySourceOrSink
 			return Collections.emptyMap();
 		}
 
-		return getApioLdJsonResourceCollections(jsonNode);
+		return getApioLdJsonResourceCollectionsDescriptor(jsonNode);
 	}
 
 	private Schema _getResourceCollectionSchema(String resourceURL)
 		throws IOException {
 
-		final ObjectMapper mapper = new ObjectMapper();
-
-		RestClient restClient = null;
-		ApioResult apioResult = null;
-
-		try {
-			restClient = getRestClient(null, resourceURL);
-
-			apioResult = restClient.executeGetRequest();
-		}
-		catch (ApioException ae) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(ae.toString());
-			}
-
-			throw new IOException(ae);
-		}
-
-		JsonNode jsonNode = null;
-
-		if (_log.isDebugEnabled()) {
-			_log.debug(apioResult.getBody());
-		}
-
-		try {
-			jsonNode = mapper.readTree(apioResult.getBody());
-		}
-		catch (IOException ioe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Cannot read JSON object", ioe);
-			}
-
-			throw ioe;
-		}
+		JsonNode jsonNode = getResourceCollection(resourceURL);
 
 		return ResourceCollectionSchemaInferrer.inferSchema(jsonNode);
 	}

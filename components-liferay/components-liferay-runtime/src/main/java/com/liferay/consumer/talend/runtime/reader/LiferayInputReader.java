@@ -53,9 +53,9 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		LiferaySource source = (LiferaySource)getCurrentSource();
 		String resourceURL = properties.resource.resourceURL.getValue();
 
-		JsonNode mainResource = source.getResourceCollection(resourceURL);
+		resource = source.getResourceCollection(resourceURL);
 
-		inputRecords = ApioJsonLDUtils.getResourceMemberArrayNode(mainResource);
+		inputRecords = ApioJsonLDUtils.getCollectionMemberNode(resource);
 
 		boolean start = (inputRecords.size() > 0);
 
@@ -66,6 +66,7 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		inputRecordsIndex = 0;
 		dataCount++;
 		started = true;
+		hasMore = true;
 
 		return start;
 	}
@@ -81,29 +82,43 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		// Fast return conditions.
 		if (inputRecordsIndex < inputRecords.size()) {
 			dataCount++;
+			hasMore = true;
 
 			return true;
 		}
 		else {
+			JsonNode view = ApioJsonLDUtils.getCollectionViewNode(resource);
 
-			// TODO handle paginated resources!
-			return false;
+			String actual = ApioJsonLDUtils.getResourceActualPage(view);
+			String last = ApioJsonLDUtils.getResourceLastPage(view);
+
+			if (actual.equals(last)) {
+				hasMore = false;
+
+				return false;
+			}
+
+			hasMore = true;
 		}
 
-		// TODO this is here to handle paginated collections
-/*		if (inputResult.isDone()) {
-			return false;
-		}*/
+		LiferaySource source = (LiferaySource)getCurrentSource();
 
+		JsonNode view = ApioJsonLDUtils.getCollectionViewNode(resource);
+		String next = ApioJsonLDUtils.getResourceNextPage(view);
 
+		resource = source.getResourceCollection(next);
 
-/*		hasMore = rows.hasNext();
+		inputRecords = ApioJsonLDUtils.getCollectionMemberNode(resource);
+		inputRecordsIndex = 0;
+
+		hasMore = (inputRecords.size() > 0);
+
 		if (hasMore) {
-			List<Object> row = rows.next();
-			currentRecord = getConverter().convertToAvro(row);
-		}*/
+			// New result set available to retrieve
+			dataCount++;
+		}
 
-		//return hasMore;
+		return hasMore;
 	}
 
 	public List getCurrentObject() throws NoSuchElementException {
@@ -116,13 +131,6 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		}
 
 		List<String> resourceValues = new ArrayList<>();
-
-/*		Iterator<String> fieldIter = resourceNode.fieldNames();
-
-		while (fieldIter.hasNext()) {
-			resourceNode.get(fieldName)
-		}
-		*/
 
 		Iterator<JsonNode> elements = resourceNode.elements();
 		while(elements.hasNext()){
@@ -142,9 +150,9 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		if (!started) {
 			throw new NoSuchElementException("Reader wasn't started");
 		}
-/*		if (!hasMore) {
-			throw new NoSuchElementException("Has no more elements");
-		}*/
+		if (!hasMore) {
+			throw new NoSuchElementException("Resource doesn't have more elements");
+		}
 
 		try {
 			return getConverter().convertToAvro(getCurrentObject());
@@ -187,6 +195,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private transient JsonNode inputRecords;
 
 	private transient int inputRecordsIndex;
+
+	private transient JsonNode resource;
 
 	/**
 	 * Represents state of this Reader: whether it was started or not

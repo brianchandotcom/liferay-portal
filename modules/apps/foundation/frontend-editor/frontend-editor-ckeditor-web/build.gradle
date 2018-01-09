@@ -12,6 +12,7 @@ task buildCKEditorScayt(type: Copy)
 task buildCKEditorWsc(type: Copy)
 
 String ckEditorVersion = "4.6.0"
+String ckEditorVersionLfr = "4.6.0.0"
 
 String ckEditorScaytUrl = "http://download.ckeditor.com/scayt/releases/scayt_${ckEditorVersion}.zip"
 String ckEditorWscUrl = "http://download.ckeditor.com/wsc/releases/wsc_${ckEditorVersion}.zip"
@@ -33,9 +34,9 @@ buildCKEditor {
 	} {
 		eachFile new StripPathSegmentsAction(5)
 
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/ckeditor/"
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/samples/"
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/gulpfile.js"
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersionLfr}/ckeditor/"
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersionLfr}/samples/"
+		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersionLfr}/gulpfile.js"
 	}
 
 	from new File(editorSrcDir, "_diffs")
@@ -91,7 +92,7 @@ clean {
 }
 
 dependencies {
-	ckEditor group: "com.liferay.webjars", name: "com.liferay.webjars.ckeditor", version: ckEditorVersion
+	ckEditor group: "com.liferay.webjars", name: "com.liferay.webjars.ckeditor", version: ckEditorVersionLfr
 
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"

@@ -198,7 +198,9 @@ AUI.add(
 						instance._contentBox = contentBox;
 						instance._guid = baseRows.size();
 
+						instance.namespace = config.namespace;
 						instance.url = config.url;
+						instance.urlNamespace = config.urlNamespace;
 
 						instance._undoManager = new Liferay.UndoManager().render(contentBox);
 
@@ -415,7 +417,7 @@ AUI.add(
 
 						var clone = currentRow.clone();
 
-						var guid = ++instance._guid;
+						var guid = instance._guid++;
 
 						var formValidator = instance._getFormValidator(node);
 
@@ -529,14 +531,20 @@ AUI.add(
 
 						contentBox.plug(A.Plugin.ParseContent);
 
+						var index = {
+							index: guid
+						};
+
+						var namespaceData = instance.ns(index);
+
+						if (instance.urlNamespace && instance.namespace != instance.urlNamespace) {
+							namespaceData = Liferay.Util.ns(instance.urlNamespace, index);
+						}
+
 						A.io.request(
 							instance.url,
 							{
-								data: instance.ns(
-									{
-										index: guid
-									}
-								),
+								data: namespaceData,
 								on: {
 									success: function(event, id, obj) {
 										var responseData = this.get('responseData');

@@ -37,7 +37,6 @@ import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -293,38 +292,40 @@ public class AssetBrowserDisplayContext {
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>();
 
-		long[] selectedGroupIds = ArrayUtil.append(
-			new long[] {0}, getSelectedGroupIds());
+		PortletURL groupURL = getPortletURL();
 
-		for (long curGroupId : selectedGroupIds) {
-			Group curGroup = GroupLocalServiceUtil.fetchGroup(curGroupId);
+		groupURL.setParameter("groupId", "0");
 
-			if ((curGroup == null) && (curGroupId > 0)) {
-				continue;
-			}
+		String label = LanguageUtil.get(_request, "all");
 
+		ManagementBarFilterItem managementBarFilterItem =
+			new ManagementBarFilterItem(false, label, groupURL.toString());
+
+		managementBarFilterItems.add(managementBarFilterItem);
+
+		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
+
+		long[] selectedGroupIds = PortalUtil.getSharedContentSiteGroupIds(
+			themeDisplay.getCompanyId(), selectedGroupId,
+			themeDisplay.getUserId());
+
+		List<Group> groups = GroupLocalServiceUtil.getGroups(selectedGroupIds);
+
+		for (Group curGroup : groups) {
 			boolean active = false;
 
-			if (getGroupId() == curGroupId) {
+			if (getGroupId() == curGroup.getGroupId()) {
 				active = true;
 			}
 
-			String label = StringPool.BLANK;
+			label = HtmlUtil.escape(
+				curGroup.getDescriptiveName(themeDisplay.getLocale()));
 
-			if (curGroup != null) {
-				label = HtmlUtil.escape(
-					curGroup.getDescriptiveName(themeDisplay.getLocale()));
-			}
-			else {
-				label = LanguageUtil.get(_request, "all");
-			}
+			groupURL.setParameter(
+				"groupId", String.valueOf(curGroup.getGroupId()));
 
-			PortletURL groupURL = getPortletURL();
-
-			groupURL.setParameter("groupId", String.valueOf(curGroupId));
-
-			ManagementBarFilterItem managementBarFilterItem =
-				new ManagementBarFilterItem(active, label, groupURL.toString());
+			managementBarFilterItem = new ManagementBarFilterItem(
+				active, label, groupURL.toString());
 
 			managementBarFilterItems.add(managementBarFilterItem);
 		}
@@ -378,13 +379,6 @@ public class AssetBrowserDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
-
-		long[] selectedGroupIds = getSelectedGroupIds();
-
-		if (selectedGroupIds.length > 0) {
-			portletURL.setParameter(
-				"selectedGroupIds", StringUtil.merge(selectedGroupIds));
-		}
 
 		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
 

@@ -30,23 +30,285 @@ AUI.add(
 				);
 			},
 
-			_afterDragAndDropRender: function() {
+			addColumnOnDragAction: function(dragNode, dropNode) {
 				var instance = this;
 
-				var layoutBuilder = instance._layoutBuilder;
+				instance.addedColumWhileDragging = true;
 
-				instance._applyDragAndDrop();
+				if (!instance.isValidNewLayoutColumn(dragNode.getData('layout-col1')) || !instance.isValidNewLayoutColumn(dragNode.getData('layout-col2'))) {
+					return;
+				}
 
-				layoutBuilder.detach('layout-row:colsChange');
+				var newCol = new A.LayoutCol(
+					{
+						size: 1
+					}
+				);
+				var rowNode = dragNode.ancestor(SELECTOR_ROW);
 
-				layoutBuilder._delegateDrag.detach('drag:end');
+				var draggable = A.Node.create(instance._layoutBuilder.TPL_RESIZE_COL_DRAGGABLE);
 
-				layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
-				layoutBuilder._delegateDrag.after('drag:align', A.bind(instance._afterDragAlign, instance));
-				layoutBuilder._delegateDrag.after('drag:start', A.bind(instance._afterDragStart, instance));
+				rowNode.append(draggable);
 
-				layoutBuilder.set('enableRemoveRows', false);
-				layoutBuilder.set('enableMoveRows', false);
+				instance.addNewColumnInLayout(newCol, dropNode, rowNode);
+				instance._syncDragHandles(rowNode);
+			},
+
+			addNewColumnInLayout: function(newCol, dropNode, rowNode) {
+				var instance = this;
+
+				var colNode = newCol.get('node');
+				var cols = rowNode.getData('layout-row').get('cols');
+
+				instance.lastColumnAdd = colNode;
+
+				colNode.addClass('col-empty');
+
+				if (dropNode.getData('layout-position') == 1) {
+					cols.unshift(newCol);
+					rowNode.prepend(colNode);
+					instance.hasColumnLeftCreated = true;
+					instance.startedPosition = true;
+				}
+				else {
+					cols.push(newCol);
+					rowNode.append(colNode);
+					instance.hasColumnRightCreated = true;
+					instance.endedPosition = true;
+				}
+			},
+
+			afterDragEnd: function(sortable) {
+				var instance = this;
+
+				sortable.on(
+					'drag:end',
+					function(event) {
+						var fieldColumnStart = A.one('.current-dragging');
+						var fieldNodeEnd = event.target.get('node');
+						var layoutRows = instance.get('layouts')[instance._getActiveLayoutIndex()].get('rows');
+						var positions = {};
+
+						var fieldColumnEnd = fieldNodeEnd.ancestor('.col');
+
+						if (instance.sidebarSortable) {
+							instance.sidebarSortable.set('groups', ['sortable-layout']);
+						}
+
+						if (fieldNodeEnd.attr('data-field-type-name') || fieldNodeEnd.getData('field-set-id')) {
+							return instance.updateDragAndDropBySidebar(event, fieldNodeEnd);
+						}
+
+						if (!fieldColumnStart) {
+							return false;
+						}
+
+						instance.gridDOM.forEach(
+							function(cols, indexRow) {
+								cols.forEach(
+									function(col, indexCol) {
+										if (fieldColumnStart._node.id == col._node.id) {
+											positions.positionRowStart = indexRow;
+											positions.positionColumnStart = indexCol;
+										}
+									}
+								);
+
+								cols.forEach(
+									function(col, indexCol) {
+										if (fieldColumnEnd._node.id == col._node.id) {
+											positions.positionRowEnd = indexRow;
+											positions.positionColumnEnd = indexCol;
+										}
+									}
+								);
+							}
+						);
+
+						if ((positions.positionRowEnd == positions.positionRowStart - 1) && (layoutRows[positions.positionRowStart].get('cols').length == 1)) {
+							return instance._updateDragAndDropUI(fieldNodeEnd, sortable, positions);
+						}
+
+						return instance._updateDragAndDropContext(fieldNodeEnd, sortable, positions);
+					}
+				);
+			},
+
+			afterDragStart: function(sortable1) {
+				var instance = this;
+
+				sortable1.after(
+					'drag:start',
+					function(event) {
+						var fieldNodeStart = event.target.get('node');
+						var proxyActive;
+
+						var fieldColumnStart = fieldNodeStart.ancestor('.col');
+
+						fieldNodeStart.addClass('hidden');
+						fieldColumnStart.addClass('current-dragging');
+						fieldColumnStart.addClass('col-empty');
+
+						sortable1.addDropNode(fieldColumnStart);
+
+						A.all('.list-group-item').each(
+							function(item) {
+								instance._removeDropTarget(item, sortable1);
+							}
+						);
+
+						if (instance._sidebar.isOpen()) {
+							instance._sidebar.close();
+						}
+
+						A.DD.DDM._activateTargets();
+
+						instance._addToStack(fieldColumnStart);
+
+						proxyActive = A.one('.yui3-dd-proxy');
+
+						if (proxyActive) {
+							proxyActive.empty();
+							proxyActive.append(fieldNodeStart._node.innerHTML);
+						}
+					}
+				);
+			},
+
+			afterPlaceholderAlign: function(sortable) {
+				var instance = this;
+
+				sortable.after(
+					'placeholderAlign',
+					function(event) {
+						var activeDropNode = event.drop.get('node');
+
+						instance._addToStack(activeDropNode);
+					}
+				);
+			},
+
+			beforeSidebarDragStart: function() {
+				var instance = this;
+
+				instance.sidebarSortable.before(
+					'drag:start',
+					function(event) {
+						var clonedNode = A.DD.DDM.activeDrag.get('node').clone();
+						var fieldNodeStart = event.target.get('node');
+						var fieldParent = fieldNodeStart.ancestor();
+						var proxyActive = A.one('.yui3-dd-proxy');
+
+						if (fieldParent.getData('added-as-drop')) {
+							fieldParent.setData('added-as-drop', true);
+							instance.sidebarSortable.addDropNode(fieldParent);
+						}
+
+						A.DD.DDM._activateTargets();
+
+						instance._addToStack(fieldNodeStart);
+
+						if (proxyActive) {
+							proxyActive.empty();
+							proxyActive.append(clonedNode);
+						}
+
+						if (fieldNodeStart.getData('field-set-id')) {
+							instance.formatDragRowsToReceiveFieldset();
+						}
+					}
+				);
+			},
+
+			bindSidebarFieldDragAction: function() {
+				var instance = this;
+				var rows = instance.getActiveLayout().get('rows');
+
+				instance._newFieldContainer = rows[rows.length - 1].get('cols')[0];
+
+				if (instance.sidebarSortable) {
+					return;
+				}
+
+				instance.sidebarSortable = new A.SortableLayout(
+					{
+						delegateConfig: {
+							target: true,
+							useShim: true
+						},
+						dragNodes: '.lfr-ddm-form-builder-draggable-item',
+						dropNodes: '.col-empty',
+						proxy: null
+					}
+				);
+
+				instance.sidebarSortable._getAppendNode = function() {
+					this.appendNode = A.one(document.createElement('div'));
+					return this.appendNode;
+				};
+
+				instance.beforeSidebarDragStart();
+				instance.afterPlaceholderAlign(instance.sidebarSortable);
+				instance.afterDragEnd(instance.sidebarSortable);
+			},
+
+			formatDragRowsToReceiveFieldset: function() {
+				var instance = this;
+
+				A.all('.col-empty').each(
+					function(col) {
+						if (!col.hasClass('col-md-12')) {
+							col.removeClass('col-empty');
+							col.setAttribute('data-removed-col-empty', true);
+						}
+					}
+				);
+			},
+
+			showResizeableColumnsDrop: function(columnSide, dropNode, increment) {
+				var instance = this;
+
+				var rowNode = dropNode.ancestor(SELECTOR_ROW);
+
+				var columnsBreakPoints = rowNode.all('.' + CSS_RESIZE_COL_BREAKPOINT);
+
+				for (var i = 0; i < columnSide.get('size'); i++) {
+					if (increment && columnsBreakPoints.item(dropNode.getData('layout-position') + i)) {
+						columnsBreakPoints.item(dropNode.getData('layout-position') + i).setStyle('display', 'block');
+					}
+					else if (!increment && columnsBreakPoints.item(dropNode.getData('layout-position') - i)) {
+						columnsBreakPoints.item(dropNode.getData('layout-position') - i).setStyle('display', 'block');
+					}
+				}
+			},
+
+			updateDragAndDropBySidebar: function(event, dragFieldNode) {
+				var instance = this;
+
+				var appendNode = event.currentTarget.appendNode;
+				var fieldSetId = dragFieldNode.getData('field-set-id');
+				var fieldType = FieldTypes.get(dragFieldNode.attr('data-field-type-name'));
+
+				if (!appendNode) {
+					return;
+				}
+				else if (!appendNode.ancestor('.col') || appendNode.ancestor('.col').one('.' + CSS_FIELD)) {
+					appendNode.remove();
+					return;
+				}
+
+				instance._newFieldContainer = appendNode.ancestor('.col').getData('layout-col');
+				appendNode.remove();
+
+				if (fieldSetId) {
+					instance._addFieldSetInDragAndDropLayout(fieldSetId);
+				}
+				else {
+					instance.createNewField(fieldType);
+					instance._traverseFormPages();
+					instance._destroySortable(instance.sortable1);
+					instance._applyDragAndDrop();
+				}
 			},
 
 			_addDragAndDropActions: function() {
@@ -119,6 +381,25 @@ AUI.add(
 				}
 
 				instance._syncColsSize(dragNode);
+			},
+
+			_afterDragAndDropRender: function() {
+				var instance = this;
+
+				var layoutBuilder = instance._layoutBuilder;
+
+				instance._applyDragAndDrop();
+
+				layoutBuilder.detach('layout-row:colsChange');
+
+				layoutBuilder._delegateDrag.detach('drag:end');
+
+				layoutBuilder._delegateDrag.after('drag:end', A.bind(instance._afterResizeColEnd, instance));
+				layoutBuilder._delegateDrag.after('drag:align', A.bind(instance._afterDragAlign, instance));
+				layoutBuilder._delegateDrag.after('drag:start', A.bind(instance._afterDragStart, instance));
+
+				layoutBuilder.set('enableRemoveRows', false);
+				layoutBuilder.set('enableMoveRows', false);
 			},
 
 			_afterDragStart: function(event) {
@@ -410,261 +691,8 @@ AUI.add(
 				return instance._removeDropTarget(fieldColumnStart, sortable);
 			},
 
-			afterDragEnd: function(sortable) {
-				var instance = this;
-
-				sortable.on(
-					'drag:end',
-					function(event) {
-						var fieldColumnStart = A.one('.current-dragging');
-						var fieldNodeEnd = event.target.get('node');
-						var layoutRows = instance.get('layouts')[instance._getActiveLayoutIndex()].get('rows');
-						var positions = {};
-
-						var fieldColumnEnd = fieldNodeEnd.ancestor('.col');
-
-						if (fieldNodeEnd.attr('data-field-type-name') || fieldNodeEnd.getData('field-set-id')) {
-							return instance.updateDragAndDropBySidebar(event, fieldNodeEnd);
-						}
-
-						if (!fieldColumnStart) {
-							return false;
-						}
-
-						instance.gridDOM.forEach(
-							function(cols, indexRow) {
-								cols.forEach(
-									function(col, indexCol) {
-										if (fieldColumnStart._node.id == col._node.id) {
-											positions.positionRowStart = indexRow;
-											positions.positionColumnStart = indexCol;
-										}
-									}
-								);
-
-								cols.forEach(
-									function(col, indexCol) {
-										if (fieldColumnEnd._node.id == col._node.id) {
-											positions.positionRowEnd = indexRow;
-											positions.positionColumnEnd = indexCol;
-										}
-									}
-								);
-							}
-						);
-
-						if ((positions.positionRowEnd == positions.positionRowStart - 1) && (layoutRows[positions.positionRowStart].get('cols').length == 1)) {
-							return instance._updateDragAndDropUI(fieldNodeEnd, sortable, positions);
-						}
-
-						return instance._updateDragAndDropContext(fieldNodeEnd, sortable, positions);
-					}
-				);
-			},
-
-			afterDragStart: function(sortable1) {
-				var instance = this;
-
-				sortable1.after(
-					'drag:start',
-					function(event) {
-						var fieldNodeStart = event.target.get('node');
-						var proxyActive;
-
-						var fieldColumnStart = fieldNodeStart.ancestor('.col');
-
-						fieldNodeStart.addClass('hidden');
-						fieldColumnStart.addClass('current-dragging');
-						fieldColumnStart.addClass('col-empty');
-
-						sortable1.addDropNode(fieldColumnStart);
-						A.DD.DDM._activateTargets();
-
-						instance._addToStack(fieldColumnStart);
-
-						proxyActive = A.one('.yui3-dd-proxy');
-
-						if (proxyActive) {
-							proxyActive.empty();
-							proxyActive.append(fieldNodeStart._node.innerHTML);
-						}
-					}
-				);
-			},
-
-			afterPlaceholderAlign: function(sortable) {
-				var instance = this;
-
-				sortable.after(
-					'placeholderAlign',
-					function(event) {
-						var activeDropNode = event.drop.get('node');
-
-						instance._addToStack(activeDropNode);
-					}
-				);
-			},
-
-			beforeSidebarDragStart: function() {
-				var instance = this;
-
-				instance.sidebarSortable.after(
-					'drag:start',
-					function(event) {
-						var clonedNode = A.DD.DDM.activeDrag.get('node').clone();
-						var fieldNodeStart = event.target.get('node');
-						var proxyActive = A.one('.yui3-dd-proxy');
-
-						instance.sidebarSortable.addDropNode(fieldNodeStart.ancestor());
-						A.DD.DDM._activateTargets();
-
-						instance._addToStack(fieldNodeStart);
-
-						if (proxyActive) {
-							proxyActive.empty();
-							proxyActive.append(clonedNode);
-						}
-
-						if (fieldNodeStart.getData('field-set-id')) {
-							instance.formatDragRowsToReceiveFieldset();
-						}
-					}
-				);
-			},
-
-			bindSidebarFieldDragAction: function() {
-				var instance = this;
-				var rows = instance.getActiveLayout().get('rows');
-
-				instance._newFieldContainer = rows[rows.length - 1].get('cols')[0];
-
-				if (instance.sidebarSortable) {
-					return;
-				}
-
-				instance.sidebarSortable = new A.SortableLayout(
-					{
-						delegateConfig: {
-							target: true,
-							useShim: true
-						},
-						dragNodes: '.lfr-ddm-form-builder-draggable-item',
-						dropNodes: '.layout-row .col-empty',
-						proxy: null
-					}
-				);
-
-				instance.sidebarSortable._getAppendNode = function() {
-					this.appendNode = A.one(document.createElement('div'));
-					return this.appendNode;
-				};
-
-				instance.beforeSidebarDragStart();
-				instance.afterPlaceholderAlign(instance.sidebarSortable);
-				instance.afterDragEnd(instance.sidebarSortable);
-			},
-
-			formatDragRowsToReceiveFieldset: function() {
-				var instance = this;
-
-				A.all('.col-empty').each(
-					function(col) {
-						if (!col.hasClass('col-md-12')) {
-							col.removeClass('col-empty');
-							col.setAttribute('data-removed-col-empty', true);
-						}
-					}
-				);
-			},
-
-			addColumnOnDragAction: function(dragNode, dropNode) {
-				var instance = this;
-
-				instance.addedColumWhileDragging = true;
-
-				if (!instance.isValidNewLayoutColumn(dragNode.getData('layout-col1')) || !instance.isValidNewLayoutColumn(dragNode.getData('layout-col2'))) {
-					return;
-				}
-
-				var newCol = new A.LayoutCol(
-					{
-						size: 1
-					}
-				);
-				var rowNode = dragNode.ancestor(SELECTOR_ROW);
-
-				var draggable = A.Node.create(instance._layoutBuilder.TPL_RESIZE_COL_DRAGGABLE);
-
-				rowNode.append(draggable);
-
-				instance.addNewColumnInLayout(newCol, dropNode, rowNode);
-				instance._syncDragHandles(rowNode);
-			},
-
-			addNewColumnInLayout: function(newCol, dropNode, rowNode) {
-				var instance = this;
-
-				var colNode = newCol.get('node');
-				var cols = rowNode.getData('layout-row').get('cols');
-
-				instance.lastColumnAdd = colNode;
-
-				colNode.addClass('col-empty');
-
-				if (dropNode.getData('layout-position') == 1) {
-					cols.unshift(newCol);
-					rowNode.prepend(colNode);
-					instance.hasColumnLeftCreated = true;
-					instance.startedPosition = true;
-				}
-				else {
-					cols.push(newCol);
-					rowNode.append(colNode);
-					instance.hasColumnRightCreated = true;
-					instance.endedPosition = true;
-				}
-			},
-
 			_updateFieldsetDraggingStatus: function(fieldset, status) {
 				return fieldset.set('isDragging', status);
-			},
-
-			showResizeableColumnsDrop: function(columnSide, dropNode, increment) {
-				var instance = this;
-
-				var rowNode = dropNode.ancestor(SELECTOR_ROW);
-
-				var columnsBreakPoints = rowNode.all('.' + CSS_RESIZE_COL_BREAKPOINT);
-
-				for (var i = 0; i < columnSide.get('size'); i++) {
-					if (increment && columnsBreakPoints.item(dropNode.getData('layout-position') + i)) {
-						columnsBreakPoints.item(dropNode.getData('layout-position') + i).setStyle('display', 'block');
-					}
-					else if (!increment && columnsBreakPoints.item(dropNode.getData('layout-position') - i)) {
-						columnsBreakPoints.item(dropNode.getData('layout-position') - i).setStyle('display', 'block');
-					}
-				}
-			},
-
-			updateDragAndDropBySidebar: function(event, dragFieldNode) {
-				var instance = this;
-
-				var fieldSetId = dragFieldNode.getData('field-set-id');
-				var fieldType = FieldTypes.get(dragFieldNode.attr('data-field-type-name'));
-				var appendNode = event.currentTarget.appendNode;
-
-				if (!appendNode ||  !appendNode.ancestor('.col')) {
-					return;
-				}
-
-				instance._newFieldContainer = appendNode.ancestor('.col').getData('layout-col');
-
-				if (fieldSetId) {
-					instance._addFieldSetInDragAndDropLayout(fieldSetId);
-				}
-				else {
-					instance.createNewField(fieldType);
-				}
 			}
 		};
 

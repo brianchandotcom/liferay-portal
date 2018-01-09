@@ -166,6 +166,16 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 			if (rs.next()) {
 				statement.executeUpdate("DROP TABLE " + tableName);
 			}
+			else {
+				try (ResultSet rs2 = databaseMetaData.getTables(
+						null, null, tableName.toUpperCase(),
+						new String[] {"TABLE"})) {
+
+					if (rs2.next()) {
+						statement.executeUpdate("DROP TABLE " + tableName);
+					}
+				}
+			}
 		}
 	}
 

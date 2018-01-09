@@ -1,7 +1,6 @@
 Bundle-Name: Liferay Marketplace Store Web
 Bundle-SymbolicName: com.liferay.marketplace.store.web
 Bundle-Version: 2.0.19
-Export-Package: com.liferay.marketplace.store.web.constants
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:
 Web-ContextPath: /marketplace-store-web

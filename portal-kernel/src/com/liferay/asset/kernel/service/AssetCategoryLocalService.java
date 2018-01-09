@@ -428,6 +428,10 @@ public interface AssetCategoryLocalService extends BaseLocalService,
 	public List<java.lang.Long> getSubcategoryIds(long parentCategoryId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getViewableCategoryIds(java.lang.String className,
+		long classPK, long[] categoryIds) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<AssetCategory> getVocabularyCategories(long vocabularyId,
 		int start, int end, OrderByComparator<AssetCategory> obc);
 

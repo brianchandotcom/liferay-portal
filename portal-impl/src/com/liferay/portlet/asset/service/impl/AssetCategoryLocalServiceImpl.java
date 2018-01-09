@@ -38,10 +38,14 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.permission.ModelPermissions;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -50,6 +54,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.service.base.AssetCategoryLocalServiceBaseImpl;
+import com.liferay.portlet.asset.service.permission.AssetCategoryPermission;
 import com.liferay.portlet.asset.util.comparator.AssetCategoryLeftCategoryIdComparator;
 
 import java.io.Serializable;
@@ -450,6 +455,34 @@ public class AssetCategoryLocalServiceImpl
 		return ListUtil.toList(
 			assetCategoryPersistence.getDescendants(parentAssetCategory),
 			AssetCategory.CATEGORY_ID_ACCESSOR);
+	}
+
+	@Override
+	public long[] getViewableCategoryIds(
+			String className, long classPK, long[] categoryIds)
+		throws PortalException {
+
+		PermissionChecker permissionChecker =
+			PermissionThreadLocal.getPermissionChecker();
+
+		if (permissionChecker == null) {
+			return categoryIds;
+		}
+
+		List<AssetCategory> oldCategories =
+			assetCategoryLocalService.getCategories(className, classPK);
+
+		for (AssetCategory category : oldCategories) {
+			if (!ArrayUtil.contains(categoryIds, category.getCategoryId()) &&
+				!AssetCategoryPermission.contains(
+					permissionChecker, category, ActionKeys.VIEW)) {
+
+				categoryIds = ArrayUtil.append(
+					categoryIds, category.getCategoryId());
+			}
+		}
+
+		return categoryIds;
 	}
 
 	@Override

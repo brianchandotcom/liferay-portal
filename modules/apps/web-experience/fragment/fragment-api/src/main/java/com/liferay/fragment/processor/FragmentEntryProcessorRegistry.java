@@ -14,15 +14,17 @@
 
 package com.liferay.fragment.processor;
 
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
+import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;
+import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReferenceComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.Collections;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Pavel Savinov
@@ -30,32 +32,29 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
 public class FragmentEntryProcessorRegistry {
 
-	@Reference(
-		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unregisterFragmentEntryProcessor"
-	)
-	public void registerFragmentEntryProcessor(
-		FragmentEntryProcessor fragmentEntryProcessor) {
-
-		_fragmentEntryProcessors.add(fragmentEntryProcessor);
-	}
-
-	public void unregisterFragmentEntryProcessor(
-		FragmentEntryProcessor fragmentEntryProcessor) {
-
-		_fragmentEntryProcessors.remove(fragmentEntryProcessor);
-	}
-
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		for (FragmentEntryProcessor fragmentEntryProcessor :
-				_fragmentEntryProcessors) {
+				_serviceTrackerList) {
 
 			fragmentEntryProcessor.validateFragmentEntryHTML(html);
 		}
 	}
 
-	private final List<FragmentEntryProcessor> _fragmentEntryProcessors =
-		new CopyOnWriteArrayList<>();
+	@Activate
+	protected void activate(final BundleContext bundleContext) {
+		_serviceTrackerList = ServiceTrackerListFactory.open(
+			bundleContext, FragmentEntryProcessor.class,
+			Collections.reverseOrder(
+				new PropertyServiceReferenceComparator(
+					"fragment.entry.processor.priority")));
+	}
+
+	@Deactivate
+	protected void deactivate() {
+		_serviceTrackerList.close();
+	}
+
+	private ServiceTrackerList<FragmentEntryProcessor, FragmentEntryProcessor>
+		_serviceTrackerList;
 
 }

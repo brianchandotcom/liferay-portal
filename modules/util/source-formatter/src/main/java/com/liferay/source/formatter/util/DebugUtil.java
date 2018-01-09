@@ -146,7 +146,8 @@ public class DebugUtil {
 			for (String line : revisedChunk.getLines()) {
 				sb.append("[");
 				sb.append(line);
-				sb.append("]\n");
+				sb.append("]");
+				sb.append("\n");
 			}
 
 			sb.setIndex(sb.index() - 1);

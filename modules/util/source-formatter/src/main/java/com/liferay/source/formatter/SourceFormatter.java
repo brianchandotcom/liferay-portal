@@ -452,7 +452,7 @@ public class SourceFormatter {
 			_sourceFormatterArgs.getBaseDirName(), "gradle.properties",
 			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
 
-		if (!file.exists()) {
+		if (file == null) {
 			return null;
 		}
 

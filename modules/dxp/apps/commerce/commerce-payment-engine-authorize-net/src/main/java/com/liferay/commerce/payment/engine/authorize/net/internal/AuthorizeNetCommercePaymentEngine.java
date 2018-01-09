@@ -29,7 +29,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.engine.authorize.net.internal.configuration.AuthorizeNetCommercePaymentEngineGroupServiceConfiguration;
 import com.liferay.commerce.payment.engine.authorize.net.internal.constants.AuthorizeNetCommercePaymentEngineConstants;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.petra.content.ContentUtil;
@@ -384,14 +383,13 @@ public class AuthorizeNetCommercePaymentEngine
 				commerceOrder.getCommerceOrderItems()) {
 
 			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
 			LineItemType lineItem = new LineItemType();
 
 			lineItem.setDescription(
 				cpDefinition.getShortDescription(languageId));
-			lineItem.setItemId(cpInstance.getSku());
-			lineItem.setName(cpDefinition.getTitle(languageId));
+			lineItem.setItemId(commerceOrderItem.getSku());
+			lineItem.setName(commerceOrderItem.getTitle(languageId));
 			lineItem.setQuantity(
 				BigDecimal.valueOf(commerceOrderItem.getQuantity()));
 

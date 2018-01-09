@@ -28,7 +28,6 @@ import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.payment.engine.paypal.internal.configuration.PayPalCommercePaymentEngineGroupServiceConfiguration;
 import com.liferay.commerce.payment.engine.paypal.internal.constants.PayPalCommercePaymentEngineConstants;
 import com.liferay.commerce.product.model.CPDefinition;
-import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
@@ -306,15 +305,14 @@ public class PayPalCommercePaymentEngine implements CommercePaymentEngine {
 			Item item = new Item();
 
 			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-			CPInstance cpInstance = commerceOrderItem.getCPInstance();
 
 			item.setCurrency(
 				StringUtil.toUpperCase(commerceCurrency.getCode()));
 			item.setDescription(cpDefinition.getShortDescription(languageId));
-			item.setName(cpDefinition.getTitle(languageId));
+			item.setName(commerceOrderItem.getTitle(languageId));
 			item.setPrice(String.valueOf(commerceOrderItem.getPrice()));
 			item.setQuantity(String.valueOf(commerceOrderItem.getQuantity()));
-			item.setSku(cpInstance.getSku());
+			item.setSku(commerceOrderItem.getSku());
 
 			items.add(item);
 		}

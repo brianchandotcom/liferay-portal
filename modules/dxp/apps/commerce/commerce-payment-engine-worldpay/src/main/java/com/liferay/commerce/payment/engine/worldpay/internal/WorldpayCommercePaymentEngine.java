@@ -26,7 +26,6 @@ import com.liferay.commerce.model.CommercePaymentEngineResult;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.payment.engine.worldpay.internal.configuration.WorldpayCommercePaymentEngineGroupServiceConfiguration;
 import com.liferay.commerce.payment.engine.worldpay.internal.constants.WorldpayCommercePaymentEngineConstants;
-import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -329,9 +328,7 @@ public class WorldpayCommercePaymentEngine implements CommercePaymentEngine {
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}
 
-			CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
-
-			sb.append(cpDefinition.getTitle(languageId));
+			sb.append(commerceOrderItem.getTitle(languageId));
 		}
 
 		return sb.toString();

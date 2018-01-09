@@ -886,6 +886,8 @@ AUI.add(
 						fieldCopy.render();
 
 						column.get('value').addField(fieldCopy, column.get('value').get('fields').length);
+
+						instance.editField(fieldCopy);
 					},
 
 					_formatGridLayout: function() {

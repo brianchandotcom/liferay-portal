@@ -22,6 +22,7 @@ import java.util.EnumSet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.properties.ComponentPropertiesImpl;
 import org.talend.components.api.properties.ComponentReferenceProperties;
 import org.talend.daikon.properties.PresentationItem;
@@ -46,6 +47,11 @@ public class LiferayConnectionProperties
 
 	public LiferayConnectionProperties(String name) {
 		super(name);
+	}
+
+	public void afterAnonymousLogin() {
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(FORM_WIZARD));
 	}
 
 	public ValidationResult afterFormFinishWizard(Repository<Properties> repo) {
@@ -76,11 +82,6 @@ public class LiferayConnectionProperties
 	public void afterReferencedComponent() {
 		refreshLayout(getForm(Form.MAIN));
 		refreshLayout(getForm(Form.REFERENCE));
-	}
-
-	public void afterAnonymousLogin() {
-		refreshLayout(getForm(Form.MAIN));
-		refreshLayout(getForm(FORM_WIZARD));
 	}
 
 	@Override
@@ -235,6 +236,7 @@ public class LiferayConnectionProperties
 		PropertyFactory.newString("password").setFlags(
 			EnumSet.of(
 				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
+
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);

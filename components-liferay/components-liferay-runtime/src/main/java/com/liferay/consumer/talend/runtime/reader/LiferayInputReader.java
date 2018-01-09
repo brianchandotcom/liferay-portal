@@ -14,12 +14,12 @@
 
 package com.liferay.consumer.talend.runtime.reader;
 
+import com.fasterxml.jackson.databind.JsonNode;
+
 import com.liferay.consumer.talend.avro.ResourceEntityConverter;
 import com.liferay.consumer.talend.runtime.LiferaySource;
 import com.liferay.consumer.talend.runtime.client.ApioJsonLDUtils;
 import com.liferay.consumer.talend.tliferayinput.TLiferayInputProperties;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 
@@ -32,16 +32,17 @@ import org.apache.avro.generic.IndexedRecord;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.exception.ComponentException;
-import org.talend.daikon.avro.converter.AvroConverter;
 
 /**
  * @author Zoltán Takács
  */
 public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
-	public LiferayInputReader(RuntimeContainer container, LiferaySource source,
+	public LiferayInputReader(
+		RuntimeContainer container, LiferaySource source,
 		TLiferayInputProperties props) {
 
 		super(container, source);
@@ -49,92 +50,95 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	@Override
-	public boolean start() throws IOException {
-		LiferaySource source = (LiferaySource)getCurrentSource();
-		String resourceURL = properties.resource.resourceURL.getValue();
-
-		resource = source.getResourceCollection(resourceURL);
-
-		inputRecords = ApioJsonLDUtils.getCollectionMemberNode(resource);
-
-		boolean start = (inputRecords.size() > 0);
-
-		if (start == false) {
-			return false;
-		}
-
-		inputRecordsIndex = 0;
-		dataCount++;
-		started = true;
-		hasMore = true;
-
-		return start;
-	}
-
-	@Override
 	public boolean advance() throws IOException {
-		if (!started) {
+		if (!_started) {
 			throw new IllegalStateException("Reader wasn't started");
 		}
 
-		inputRecordsIndex++;
+		_inputRecordsIndex++;
 
 		// Fast return conditions.
-		if (inputRecordsIndex < inputRecords.size()) {
+
+		if (_inputRecordsIndex < _inputRecords.size()) {
 			dataCount++;
-			hasMore = true;
+			_hasMore = true;
 
 			return true;
 		}
 		else {
-			JsonNode view = ApioJsonLDUtils.getCollectionViewNode(resource);
+			JsonNode view = ApioJsonLDUtils.getCollectionViewNode(_resource);
 
 			String actual = ApioJsonLDUtils.getResourceActualPage(view);
 			String last = ApioJsonLDUtils.getResourceLastPage(view);
 
 			if (actual.equals(last)) {
-				hasMore = false;
+				_hasMore = false;
 
 				return false;
 			}
 
-			hasMore = true;
+			_hasMore = true;
 		}
 
 		LiferaySource source = (LiferaySource)getCurrentSource();
 
-		JsonNode view = ApioJsonLDUtils.getCollectionViewNode(resource);
+		JsonNode view = ApioJsonLDUtils.getCollectionViewNode(_resource);
+
 		String next = ApioJsonLDUtils.getResourceNextPage(view);
 
-		resource = source.getResourceCollection(next);
+		_resource = source.getResourceCollection(next);
 
-		inputRecords = ApioJsonLDUtils.getCollectionMemberNode(resource);
-		inputRecordsIndex = 0;
+		_inputRecords = ApioJsonLDUtils.getCollectionMemberNode(_resource);
 
-		hasMore = (inputRecords.size() > 0);
+		_inputRecordsIndex = 0;
 
-		if (hasMore) {
+		_hasMore = _inputRecords.size() > 0;
+
+		if (_hasMore) {
+
 			// New result set available to retrieve
+
 			dataCount++;
 		}
 
-		return hasMore;
+		return _hasMore;
+	}
+
+	@Override
+	public IndexedRecord getCurrent() throws NoSuchElementException {
+		if (!_started) {
+			throw new NoSuchElementException("Reader wasn't started");
+		}
+
+		if (!_hasMore) {
+			throw new NoSuchElementException(
+				"Resource doesn't have more elements");
+		}
+
+		try {
+			return getConverter().convertToAvro(getCurrentObject());
+		}
+		catch (IOException ioe) {
+			throw new ComponentException(ioe);
+		}
 	}
 
 	public List getCurrentObject() throws NoSuchElementException {
-		JsonNode resourceNode = inputRecords.get(inputRecordsIndex);
+		JsonNode resourceNode = _inputRecords.get(_inputRecordsIndex);
 
 		if (resourceNode == null) {
-			_log.error("Index: {}", inputRecordsIndex);
+			_log.error("Index: {}", _inputRecordsIndex);
 
-			throw new NoSuchElementException("Index: " + inputRecordsIndex);
+			throw new NoSuchElementException("Index: " + _inputRecordsIndex);
 		}
 
 		List<String> resourceValues = new ArrayList<>();
 
 		Iterator<JsonNode> elements = resourceNode.elements();
-		while(elements.hasNext()){
+
+		while (elements.hasNext()) {
 			JsonNode node = elements.next();
+
 			resourceValues.add(node.toString());
 		}
 
@@ -146,20 +150,30 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	@Override
-	public IndexedRecord getCurrent() throws NoSuchElementException {
-		if (!started) {
-			throw new NoSuchElementException("Reader wasn't started");
-		}
-		if (!hasMore) {
-			throw new NoSuchElementException("Resource doesn't have more elements");
+	public boolean start() throws IOException {
+		LiferaySource source = (LiferaySource)getCurrentSource();
+		String resourceURL = properties.resource.resourceURL.getValue();
+
+		_resource = source.getResourceCollection(resourceURL);
+
+		_inputRecords = ApioJsonLDUtils.getCollectionMemberNode(_resource);
+
+		boolean start = false;
+
+		if (_inputRecords.size() > 0) {
+			start = true;
 		}
 
-		try {
-			return getConverter().convertToAvro(getCurrentObject());
+		if (start == false) {
+			return false;
 		}
-		catch (IOException ioe) {
-			throw new ComponentException(ioe);
-		}
+
+		_inputRecordsIndex = 0;
+		dataCount++;
+		_started = true;
+		_hasMore = true;
+
+		return start;
 	}
 
 	/**
@@ -170,40 +184,38 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	 * @throws IOException
 	 */
 	protected ResourceEntityConverter getConverter() throws IOException {
-		if (converter == null) {
-			converter = new ResourceEntityConverter(getSchema());
+		if (_converter == null) {
+			_converter = new ResourceEntityConverter(getSchema());
 		}
 
-		return converter;
+		return _converter;
 	}
 
-	private IndexedRecord currentRecord;
+	private static final Logger _log = LoggerFactory.getLogger(
+		LiferayInputReader.class);
 
 	/**
 	 * Converts row retrieved from data source to Avro format
 	 * {@link IndexedRecord}
 	 */
-	private ResourceEntityConverter converter;
-	/*
+	private ResourceEntityConverter _converter;
+
+	/**
 	 * Represents state of this Reader: whether it has more records
 	 */
-	private boolean hasMore = false;
+	private boolean _hasMore;
 
 	/**
 	 * Resource collection members field
 	 */
-	private transient JsonNode inputRecords;
+	private transient JsonNode _inputRecords;
 
-	private transient int inputRecordsIndex;
-
-	private transient JsonNode resource;
+	private transient int _inputRecordsIndex;
+	private transient JsonNode _resource;
 
 	/**
 	 * Represents state of this Reader: whether it was started or not
 	 */
-	private boolean started = false;
-
-	private static final Logger _log =
-		LoggerFactory.getLogger(LiferayInputReader.class);
+	private boolean _started;
 
 }

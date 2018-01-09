@@ -126,15 +126,13 @@ public class UnavailableComponentScanner {
 			}
 
 			if (!unavailableComponentDeclarations.isEmpty()) {
-				sb.append("Found unavailable component in bundle ");
-				sb.append("{id: ");
+				sb.append("Found unavailable component in bundle {id: ");
 				sb.append(bundle.getBundleId());
 				sb.append(", name: ");
 				sb.append(bundle.getSymbolicName());
 				sb.append(", version: ");
 				sb.append(bundle.getVersion());
-				sb.append("}");
-				sb.append(".\n");
+				sb.append("}.\n");
 
 				for (Map.Entry
 						<ComponentDeclaration,

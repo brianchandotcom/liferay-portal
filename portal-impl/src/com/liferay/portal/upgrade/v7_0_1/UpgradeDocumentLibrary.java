@@ -123,10 +123,10 @@ public class UpgradeDocumentLibrary extends UpgradeProcess {
 			StringBundler sb = new StringBundler(5);
 
 			sb.append("select fileVersionId, ddmStructureId from ");
-			sb.append("DLFileEntryMetadata where fileVersionId in ");
-			sb.append("(select fileVersionId from DLFileEntryMetadata ");
-			sb.append("group by fileVersionId having count(*) = 2) and ");
-			sb.append("ddmStructureId = ?");
+			sb.append("DLFileEntryMetadata where fileVersionId in (select ");
+			sb.append("fileVersionId from DLFileEntryMetadata group by ");
+			sb.append("fileVersionId having count(*) = 2) and ddmStructureId ");
+			sb.append("= ?");
 
 			try (PreparedStatement ps1 = connection.prepareStatement(
 					sb.toString());

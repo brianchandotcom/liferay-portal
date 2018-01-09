@@ -30,8 +30,8 @@ public class UpgradeDDLRecord extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		StringBundler sb = new StringBundler(3);
 
-		sb.append("select DDLRecord.recordId, DDLRecordSet.version ");
-		sb.append("from DDLRecord inner join DDLRecordSet on ");
+		sb.append("select DDLRecord.recordId, DDLRecordSet.version from ");
+		sb.append("DDLRecord inner join DDLRecordSet on ");
 		sb.append("DDLRecord.recordSetId = DDLRecordSet.recordSetId ");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());

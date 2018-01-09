@@ -201,14 +201,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 		String fileName, String portletDefineObjectProperty,
 		Set<String> checkedFileNames, Set<String> includeFileNames) {
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
 		sb.append(portletDefineObjectProperty);
-		sb.append("( )?(\\.");
-		sb.append("|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
-		sb.append("|(\\+(\\+)?)|(-(-)?)");
-		sb.append("|(\\)))?");
+		sb.append("( )?(\\.|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
+		sb.append("|(\\+(\\+)?)|(-(-)?)|(\\)))?");
 
 		return _hasUnusedJSPTerm(
 			fileName, sb.toString(), "portletDefineObjectProperty",
@@ -231,14 +229,12 @@ public class JSPUnusedTermsCheck extends BaseFileCheck {
 			return false;
 		}
 
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("((/)|(\\*)|(\\+(\\+)?)|(-(-)?)|\\(|=)?( )?");
 		sb.append(variableName);
-		sb.append("( )?(\\.");
-		sb.append("|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
-		sb.append("|(\\+(\\+)?)|(-(-)?)");
-		sb.append("|(\\)))?");
+		sb.append("( )?(\\.|(((\\+)|(-)|(\\*)|(/)|(%)|(\\|)|(&)|(\\^))?(=))");
+		sb.append("|(\\+(\\+)?)|(-(-)?)|(\\)))?");
 
 		return _hasUnusedJSPTerm(
 			fileName, sb.toString(), "variable", checkedFileNames,

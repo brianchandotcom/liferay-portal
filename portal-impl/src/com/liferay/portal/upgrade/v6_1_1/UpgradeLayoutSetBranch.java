@@ -89,9 +89,9 @@ public class UpgradeLayoutSetBranch extends UpgradeProcess {
 		StringBundler sb = new StringBundler(4);
 
 		sb.append("select themeId, colorSchemeId, wapThemeId, ");
-		sb.append("wapColorSchemeId, css, settings_, ");
-		sb.append("layoutSetPrototypeUuid, layoutSetPrototypeLinkEnabled ");
-		sb.append("from LayoutSet where groupId = ? and privateLayout = ?");
+		sb.append("wapColorSchemeId, css, settings_, layoutSetPrototypeUuid, ");
+		sb.append("layoutSetPrototypeLinkEnabled from LayoutSet where ");
+		sb.append("groupId = ? and privateLayout = ?");
 
 		try (PreparedStatement ps = connection.prepareStatement(
 				sb.toString())) {

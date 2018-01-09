@@ -205,9 +205,8 @@ public class JavadocFormatter {
 				sb.append(limit);
 
 				if (limit.contains(".")) {
-					sb.append(
-						" Specify limit filename without package path or ");
-					sb.append("file type suffix.");
+					sb.append(" Specify limit filename without package path ");
+					sb.append("or file type suffix.");
 				}
 
 				System.out.println(sb.toString());

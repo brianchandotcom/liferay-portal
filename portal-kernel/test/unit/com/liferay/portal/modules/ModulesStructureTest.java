@@ -606,7 +606,7 @@ public class ModulesStructureTest {
 
 			});
 
-		StringBundler sb = new StringBundler(pluginNames.size() * 5 - 1);
+		StringBundler sb = new StringBundler(pluginNames.size() * 4 - 1);
 
 		int i = 0;
 
@@ -615,8 +615,7 @@ public class ModulesStructureTest {
 				sb.append(CharPool.NEW_LINE);
 			}
 
-			sb.append("\t\t");
-			sb.append("classpath group: \"com.liferay\", name: \"");
+			sb.append("\t\tclasspath group: \"com.liferay\", name: \"");
 			sb.append(pluginName);
 			sb.append("\", version: \"latest.release\"");
 

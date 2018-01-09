@@ -377,9 +377,9 @@ public class AssetEntryFinderImpl
 
 		if (entryQuery.getAnyTagIds().length > 0) {
 			sb.append("INNER JOIN AssetEntries_AssetTags ON ");
-			sb.append("(AssetEntries_AssetTags.entryId = ");
-			sb.append("AssetEntry.entryId) INNER JOIN AssetTag ON ");
-			sb.append("(AssetTag.tagId = AssetEntries_AssetTags.tagId) ");
+			sb.append("(AssetEntries_AssetTags.entryId = AssetEntry.entryId) ");
+			sb.append("INNER JOIN AssetTag ON (AssetTag.tagId = ");
+			sb.append("AssetEntries_AssetTags.tagId) ");
 		}
 
 		if (entryQuery.getLinkedAssetEntryId() > 0) {
@@ -392,8 +392,8 @@ public class AssetEntryFinderImpl
 			entryQuery.getOrderByCol2().equals("ratings")) {
 
 			sb.append(" LEFT JOIN RatingsStats ON (RatingsStats.classNameId ");
-			sb.append("= AssetEntry.classNameId) AND (RatingsStats.classPK ");
-			sb.append("= AssetEntry.classPK)");
+			sb.append("= AssetEntry.classNameId) AND (RatingsStats.classPK = ");
+			sb.append("AssetEntry.classPK)");
 		}
 
 		sb.append("WHERE ");

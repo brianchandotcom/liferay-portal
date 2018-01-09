@@ -603,8 +603,8 @@ public class ClusterSchedulerEngine
 					"Unable to load memory clustered jobs from master in ");
 				sb.append(_callMasterTimeout);
 				sb.append(" seconds, you might need to increase value set to ");
-				sb.append("\"clusterable.advice.call.master.timeout\", ");
-				sb.append("will retry again");
+				sb.append("\"clusterable.advice.call.master.timeout\", will ");
+				sb.append("retry again");
 
 				_log.error(sb.toString(), e);
 			}

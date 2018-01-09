@@ -175,8 +175,8 @@ public class AdminUtil {
 					sb.append("background-color: #C6C6FD; ");
 				}
 				else if (classValue.contains("diff-html-removed")) {
-					sb.append("background-color: #FDC6C6; ");
-					sb.append("text-decoration: line-through; ");
+					sb.append("background-color: #FDC6C6; text-decoration: ");
+					sb.append("line-through; ");
 				}
 			}
 

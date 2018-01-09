@@ -117,9 +117,8 @@ public class UpgradePostgreSQL extends UpgradeProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			StringBundler sb = new StringBundler();
 
-			sb.append(
-				"select lo_unlink(l.oid) from pg_largeobject_metadata l ");
-			sb.append("where ");
+			sb.append("select lo_unlink(l.oid) from pg_largeobject_metadata ");
+			sb.append("l where ");
 
 			int i = 1;
 

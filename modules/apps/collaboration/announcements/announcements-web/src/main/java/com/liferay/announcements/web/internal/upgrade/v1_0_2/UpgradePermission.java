@@ -224,8 +224,8 @@ public class UpgradePermission extends UpgradeProcess {
 		StringBundler sb2 = new StringBundler(5);
 
 		sb2.append("select resourcePermissionId, companyId, scope, primKey, ");
-		sb2.append("primKeyId, roleId, actionIds from ");
-		sb2.append("ResourcePermission where name = '");
+		sb2.append("primKeyId, roleId, actionIds from ResourcePermission ");
+		sb2.append("where name = '");
 		sb2.append(name);
 		sb2.append("'");
 

@@ -37,9 +37,8 @@ public class UpgradeLayoutSet extends UpgradeProcess {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append("select Group_.groupId, Group_.liveGroupId, ");
-			sb.append(
-				"LayoutSet.layoutSetId from LayoutSet inner join Group_ ");
-			sb.append("on (LayoutSet.groupId = Group_.groupId and ");
+			sb.append("LayoutSet.layoutSetId from LayoutSet inner join ");
+			sb.append("Group_ on (LayoutSet.groupId = Group_.groupId and ");
 			sb.append("Group_.liveGroupId > 0 and LayoutSet.logo = ?)");
 
 			try (PreparedStatement ps = connection.prepareStatement(

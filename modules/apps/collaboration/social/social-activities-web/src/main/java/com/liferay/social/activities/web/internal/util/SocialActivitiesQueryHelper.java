@@ -42,7 +42,7 @@ public class SocialActivitiesQueryHelper {
 					group.getGroupId(), start, end);
 			}
 
-			return _socialActivitySetLocalService.getUserActivitySets(
+			return _socialActivitySetLocalService.getUserViewableActivitySets(
 				group.getClassPK(), start, end);
 		}
 		else if (group.isOrganization()) {
@@ -85,8 +85,8 @@ public class SocialActivitiesQueryHelper {
 					group.getGroupId());
 			}
 
-			return _socialActivitySetLocalService.getUserActivitySetsCount(
-				group.getClassPK());
+			return _socialActivitySetLocalService
+				.getUserViewableActivitySetsCount(group.getClassPK());
 		}
 		else if (group.isOrganization()) {
 			return _socialActivitySetLocalService.

@@ -76,8 +76,8 @@ public class ConfigurationScopedPidUtilTest {
 				_basePid, Scope.COMPANY, null);
 
 			Assert.fail(
-				"Build configuration scoped PID must not allow a null " +
-					"scope primary key");
+				"Build configuration scoped PID must not allow a null scope " +
+					"primary key");
 		}
 		catch (NullPointerException npe) {
 		}

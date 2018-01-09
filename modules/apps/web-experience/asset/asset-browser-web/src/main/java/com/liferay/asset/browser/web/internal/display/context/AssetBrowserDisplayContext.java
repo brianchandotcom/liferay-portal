@@ -292,11 +292,11 @@ public class AssetBrowserDisplayContext {
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>();
 
-		String label = LanguageUtil.get(_request, "all");
-
 		PortletURL groupURL = getPortletURL();
 
 		groupURL.setParameter("groupId", "0");
+
+		String label = LanguageUtil.get(_request, "all");
 
 		ManagementBarFilterItem managementBarFilterItem =
 			new ManagementBarFilterItem(false, label, groupURL.toString());

@@ -211,20 +211,6 @@ public interface CommerceOrderItemModel extends BaseModel<CommerceOrderItem>,
 	public void setCommerceOrderId(long commerceOrderId);
 
 	/**
-	 * Returns the cp definition ID of this commerce order item.
-	 *
-	 * @return the cp definition ID of this commerce order item
-	 */
-	public long getCPDefinitionId();
-
-	/**
-	 * Sets the cp definition ID of this commerce order item.
-	 *
-	 * @param CPDefinitionId the cp definition ID of this commerce order item
-	 */
-	public void setCPDefinitionId(long CPDefinitionId);
-
-	/**
 	 * Returns the cp instance ID of this commerce order item.
 	 *
 	 * @return the cp instance ID of this commerce order item

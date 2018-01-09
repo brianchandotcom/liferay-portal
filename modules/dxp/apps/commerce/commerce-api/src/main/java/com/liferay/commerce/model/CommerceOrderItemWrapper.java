@@ -66,7 +66,6 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceOrderId", getCommerceOrderId());
-		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
 		attributes.put("shippedQuantity", getShippedQuantity());
@@ -126,12 +125,6 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 
 		if (commerceOrderId != null) {
 			setCommerceOrderId(commerceOrderId);
-		}
-
-		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
-
-		if (CPDefinitionId != null) {
-			setCPDefinitionId(CPDefinitionId);
 		}
 
 		Long CPInstanceId = (Long)attributes.get("CPInstanceId");
@@ -226,16 +219,6 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	public com.liferay.commerce.product.model.CPDefinition getCPDefinition()
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItem.getCPDefinition();
-	}
-
-	/**
-	* Returns the cp definition ID of this commerce order item.
-	*
-	* @return the cp definition ID of this commerce order item
-	*/
-	@Override
-	public long getCPDefinitionId() {
-		return _commerceOrderItem.getCPDefinitionId();
 	}
 
 	@Override
@@ -537,16 +520,6 @@ public class CommerceOrderItemWrapper implements CommerceOrderItem,
 	@Override
 	public void setCompanyId(long companyId) {
 		_commerceOrderItem.setCompanyId(companyId);
-	}
-
-	/**
-	* Sets the cp definition ID of this commerce order item.
-	*
-	* @param CPDefinitionId the cp definition ID of this commerce order item
-	*/
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_commerceOrderItem.setCPDefinitionId(CPDefinitionId);
 	}
 
 	/**

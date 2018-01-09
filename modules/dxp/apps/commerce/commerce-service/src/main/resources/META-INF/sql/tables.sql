@@ -190,7 +190,6 @@ create table CommerceOrderItem (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceOrderId LONG,
-	CPDefinitionId LONG,
 	CPInstanceId LONG,
 	quantity INTEGER,
 	shippedQuantity INTEGER,

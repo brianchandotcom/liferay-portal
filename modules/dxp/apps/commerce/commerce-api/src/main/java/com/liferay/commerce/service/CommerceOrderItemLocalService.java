@@ -73,12 +73,7 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 		CommerceOrderItem commerceOrderItem);
 
 	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
-		long cpDefinitionId, long cpInstanceId, int quantity,
-		int shippedQuantity, java.lang.String json, double price,
-		ServiceContext serviceContext) throws PortalException;
-
-	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
-		long cpDefinitionId, long cpInstanceId, int quantity,
+		long cpInstanceId, int quantity, int shippedQuantity,
 		java.lang.String json, double price, ServiceContext serviceContext)
 		throws PortalException;
 
@@ -113,9 +108,6 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 		throws PortalException;
 
 	public void deleteCommerceOrderItems(long commerceOrderId)
-		throws PortalException;
-
-	public void deleteCommerceOrderItemsByCPDefinitionId(long cpDefinitionId)
 		throws PortalException;
 
 	public void deleteCommerceOrderItemsByCPInstanceId(long cpInstanceId)
@@ -273,8 +265,5 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	public CommerceOrderItem updateCommerceOrderItem(long commerceOrderItemId,
 		int quantity, java.lang.String json, double price)
-		throws PortalException;
-
-	public void validate(long cpDefinitionId, long cpInstanceId)
 		throws PortalException;
 }

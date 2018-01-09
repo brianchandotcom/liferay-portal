@@ -85,7 +85,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "commerceOrderId", Types.BIGINT },
-			{ "CPDefinitionId", Types.BIGINT },
 			{ "CPInstanceId", Types.BIGINT },
 			{ "quantity", Types.INTEGER },
 			{ "shippedQuantity", Types.INTEGER },
@@ -105,7 +104,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("commerceOrderId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("CPDefinitionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("CPInstanceId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("quantity", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("shippedQuantity", Types.INTEGER);
@@ -115,7 +113,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		TABLE_COLUMNS_MAP.put("price", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPDefinitionId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderItem (commerceOrderItemId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,CPInstanceId LONG,quantity INTEGER,shippedQuantity INTEGER,json TEXT null,title STRING null,sku VARCHAR(75) null,price DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderItem";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderItem.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderItem.createDate ASC";
@@ -131,10 +129,9 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceOrderItem"),
 			true);
-	public static final long CPDEFINITIONID_COLUMN_BITMASK = 1L;
-	public static final long CPINSTANCEID_COLUMN_BITMASK = 2L;
-	public static final long COMMERCEORDERID_COLUMN_BITMASK = 4L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static final long CPINSTANCEID_COLUMN_BITMASK = 1L;
+	public static final long COMMERCEORDERID_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -157,7 +154,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setCommerceOrderId(soapModel.getCommerceOrderId());
-		model.setCPDefinitionId(soapModel.getCPDefinitionId());
 		model.setCPInstanceId(soapModel.getCPInstanceId());
 		model.setQuantity(soapModel.getQuantity());
 		model.setShippedQuantity(soapModel.getShippedQuantity());
@@ -238,7 +234,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("commerceOrderId", getCommerceOrderId());
-		attributes.put("CPDefinitionId", getCPDefinitionId());
 		attributes.put("CPInstanceId", getCPInstanceId());
 		attributes.put("quantity", getQuantity());
 		attributes.put("shippedQuantity", getShippedQuantity());
@@ -301,12 +296,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		if (commerceOrderId != null) {
 			setCommerceOrderId(commerceOrderId);
-		}
-
-		Long CPDefinitionId = (Long)attributes.get("CPDefinitionId");
-
-		if (CPDefinitionId != null) {
-			setCPDefinitionId(CPDefinitionId);
 		}
 
 		Long CPInstanceId = (Long)attributes.get("CPInstanceId");
@@ -479,29 +468,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	public long getOriginalCommerceOrderId() {
 		return _originalCommerceOrderId;
-	}
-
-	@JSON
-	@Override
-	public long getCPDefinitionId() {
-		return _CPDefinitionId;
-	}
-
-	@Override
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_columnBitmask |= CPDEFINITIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalCPDefinitionId) {
-			_setOriginalCPDefinitionId = true;
-
-			_originalCPDefinitionId = _CPDefinitionId;
-		}
-
-		_CPDefinitionId = CPDefinitionId;
-	}
-
-	public long getOriginalCPDefinitionId() {
-		return _originalCPDefinitionId;
 	}
 
 	@JSON
@@ -791,7 +757,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		commerceOrderItemImpl.setCreateDate(getCreateDate());
 		commerceOrderItemImpl.setModifiedDate(getModifiedDate());
 		commerceOrderItemImpl.setCommerceOrderId(getCommerceOrderId());
-		commerceOrderItemImpl.setCPDefinitionId(getCPDefinitionId());
 		commerceOrderItemImpl.setCPInstanceId(getCPInstanceId());
 		commerceOrderItemImpl.setQuantity(getQuantity());
 		commerceOrderItemImpl.setShippedQuantity(getShippedQuantity());
@@ -866,10 +831,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		commerceOrderItemModelImpl._setOriginalCommerceOrderId = false;
 
-		commerceOrderItemModelImpl._originalCPDefinitionId = commerceOrderItemModelImpl._CPDefinitionId;
-
-		commerceOrderItemModelImpl._setOriginalCPDefinitionId = false;
-
 		commerceOrderItemModelImpl._originalCPInstanceId = commerceOrderItemModelImpl._CPInstanceId;
 
 		commerceOrderItemModelImpl._setOriginalCPInstanceId = false;
@@ -917,8 +878,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 		commerceOrderItemCacheModel.commerceOrderId = getCommerceOrderId();
 
-		commerceOrderItemCacheModel.CPDefinitionId = getCPDefinitionId();
-
 		commerceOrderItemCacheModel.CPInstanceId = getCPInstanceId();
 
 		commerceOrderItemCacheModel.quantity = getQuantity();
@@ -956,7 +915,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{commerceOrderItemId=");
 		sb.append(getCommerceOrderItemId());
@@ -974,8 +933,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(getModifiedDate());
 		sb.append(", commerceOrderId=");
 		sb.append(getCommerceOrderId());
-		sb.append(", CPDefinitionId=");
-		sb.append(getCPDefinitionId());
 		sb.append(", CPInstanceId=");
 		sb.append(getCPInstanceId());
 		sb.append(", quantity=");
@@ -997,7 +954,7 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrderItem");
@@ -1034,10 +991,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 		sb.append(
 			"<column><column-name>commerceOrderId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceOrderId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>CPDefinitionId</column-name><column-value><![CDATA[");
-		sb.append(getCPDefinitionId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>CPInstanceId</column-name><column-value><![CDATA[");
@@ -1088,9 +1041,6 @@ public class CommerceOrderItemModelImpl extends BaseModelImpl<CommerceOrderItem>
 	private long _commerceOrderId;
 	private long _originalCommerceOrderId;
 	private boolean _setOriginalCommerceOrderId;
-	private long _CPDefinitionId;
-	private long _originalCPDefinitionId;
-	private boolean _setOriginalCPDefinitionId;
 	private long _CPInstanceId;
 	private long _originalCPInstanceId;
 	private boolean _setOriginalCPInstanceId;

@@ -42,7 +42,6 @@ public class CommerceOrderItemSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCommerceOrderId(model.getCommerceOrderId());
-		soapModel.setCPDefinitionId(model.getCPDefinitionId());
 		soapModel.setCPInstanceId(model.getCPInstanceId());
 		soapModel.setQuantity(model.getQuantity());
 		soapModel.setShippedQuantity(model.getShippedQuantity());
@@ -169,14 +168,6 @@ public class CommerceOrderItemSoap implements Serializable {
 		_commerceOrderId = commerceOrderId;
 	}
 
-	public long getCPDefinitionId() {
-		return _CPDefinitionId;
-	}
-
-	public void setCPDefinitionId(long CPDefinitionId) {
-		_CPDefinitionId = CPDefinitionId;
-	}
-
 	public long getCPInstanceId() {
 		return _CPInstanceId;
 	}
@@ -241,7 +232,6 @@ public class CommerceOrderItemSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private long _commerceOrderId;
-	private long _CPDefinitionId;
 	private long _CPInstanceId;
 	private int _quantity;
 	private int _shippedQuantity;

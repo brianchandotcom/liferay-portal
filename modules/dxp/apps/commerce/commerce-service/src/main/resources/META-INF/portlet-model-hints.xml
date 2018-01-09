@@ -155,7 +155,6 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceOrderId" type="long" />
-		<field name="CPDefinitionId" type="long" />
 		<field name="CPInstanceId" type="long" />
 		<field name="quantity" type="int" />
 		<field name="shippedQuantity" type="int" />

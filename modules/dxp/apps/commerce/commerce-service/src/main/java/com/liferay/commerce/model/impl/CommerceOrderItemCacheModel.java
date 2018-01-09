@@ -65,7 +65,7 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{commerceOrderItemId=");
 		sb.append(commerceOrderItemId);
@@ -83,8 +83,6 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		sb.append(modifiedDate);
 		sb.append(", commerceOrderId=");
 		sb.append(commerceOrderId);
-		sb.append(", CPDefinitionId=");
-		sb.append(CPDefinitionId);
 		sb.append(", CPInstanceId=");
 		sb.append(CPInstanceId);
 		sb.append(", quantity=");
@@ -135,7 +133,6 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		}
 
 		commerceOrderItemImpl.setCommerceOrderId(commerceOrderId);
-		commerceOrderItemImpl.setCPDefinitionId(CPDefinitionId);
 		commerceOrderItemImpl.setCPInstanceId(CPInstanceId);
 		commerceOrderItemImpl.setQuantity(quantity);
 		commerceOrderItemImpl.setShippedQuantity(shippedQuantity);
@@ -183,8 +180,6 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 
 		commerceOrderId = objectInput.readLong();
 
-		CPDefinitionId = objectInput.readLong();
-
 		CPInstanceId = objectInput.readLong();
 
 		quantity = objectInput.readInt();
@@ -219,8 +214,6 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(commerceOrderId);
-
-		objectOutput.writeLong(CPDefinitionId);
 
 		objectOutput.writeLong(CPInstanceId);
 
@@ -260,7 +253,6 @@ public class CommerceOrderItemCacheModel implements CacheModel<CommerceOrderItem
 	public long createDate;
 	public long modifiedDate;
 	public long commerceOrderId;
-	public long CPDefinitionId;
 	public long CPInstanceId;
 	public int quantity;
 	public int shippedQuantity;

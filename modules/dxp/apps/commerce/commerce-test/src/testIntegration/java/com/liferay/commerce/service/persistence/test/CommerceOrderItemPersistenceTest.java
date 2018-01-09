@@ -137,8 +137,6 @@ public class CommerceOrderItemPersistenceTest {
 
 		newCommerceOrderItem.setCommerceOrderId(RandomTestUtil.nextLong());
 
-		newCommerceOrderItem.setCPDefinitionId(RandomTestUtil.nextLong());
-
 		newCommerceOrderItem.setCPInstanceId(RandomTestUtil.nextLong());
 
 		newCommerceOrderItem.setQuantity(RandomTestUtil.nextInt());
@@ -175,8 +173,6 @@ public class CommerceOrderItemPersistenceTest {
 			Time.getShortTimestamp(newCommerceOrderItem.getModifiedDate()));
 		Assert.assertEquals(existingCommerceOrderItem.getCommerceOrderId(),
 			newCommerceOrderItem.getCommerceOrderId());
-		Assert.assertEquals(existingCommerceOrderItem.getCPDefinitionId(),
-			newCommerceOrderItem.getCPDefinitionId());
 		Assert.assertEquals(existingCommerceOrderItem.getCPInstanceId(),
 			newCommerceOrderItem.getCPInstanceId());
 		Assert.assertEquals(existingCommerceOrderItem.getQuantity(),
@@ -198,13 +194,6 @@ public class CommerceOrderItemPersistenceTest {
 		_persistence.countByCommerceOrderId(RandomTestUtil.nextLong());
 
 		_persistence.countByCommerceOrderId(0L);
-	}
-
-	@Test
-	public void testCountByCPDefinitionId() throws Exception {
-		_persistence.countByCPDefinitionId(RandomTestUtil.nextLong());
-
-		_persistence.countByCPDefinitionId(0L);
 	}
 
 	@Test
@@ -240,9 +229,9 @@ public class CommerceOrderItemPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceOrderItem",
 			"commerceOrderItemId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "commerceOrderId", true, "CPDefinitionId",
-			true, "CPInstanceId", true, "quantity", true, "shippedQuantity",
-			true, "title", true, "sku", true, "price", true);
+			"modifiedDate", true, "commerceOrderId", true, "CPInstanceId",
+			true, "quantity", true, "shippedQuantity", true, "title", true,
+			"sku", true, "price", true);
 	}
 
 	@Test
@@ -458,8 +447,6 @@ public class CommerceOrderItemPersistenceTest {
 		commerceOrderItem.setModifiedDate(RandomTestUtil.nextDate());
 
 		commerceOrderItem.setCommerceOrderId(RandomTestUtil.nextLong());
-
-		commerceOrderItem.setCPDefinitionId(RandomTestUtil.nextLong());
 
 		commerceOrderItem.setCPInstanceId(RandomTestUtil.nextLong());
 

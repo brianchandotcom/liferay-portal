@@ -48,23 +48,12 @@ public class CommerceOrderItemLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
-		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
-		int quantity, int shippedQuantity, java.lang.String json, double price,
+		long commerceOrderId, long cpInstanceId, int quantity,
+		int shippedQuantity, java.lang.String json, double price,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.addCommerceOrderItem(commerceOrderId,
-			cpDefinitionId, cpInstanceId, quantity, shippedQuantity, json,
-			price, serviceContext);
-	}
-
-	@Override
-	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
-		long commerceOrderId, long cpDefinitionId, long cpInstanceId,
-		int quantity, java.lang.String json, double price,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderItemLocalService.addCommerceOrderItem(commerceOrderId,
-			cpDefinitionId, cpInstanceId, quantity, json, price, serviceContext);
+			cpInstanceId, quantity, shippedQuantity, json, price, serviceContext);
 	}
 
 	/**
@@ -111,12 +100,6 @@ public class CommerceOrderItemLocalServiceWrapper
 	public void deleteCommerceOrderItems(long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceOrderItemLocalService.deleteCommerceOrderItems(commerceOrderId);
-	}
-
-	@Override
-	public void deleteCommerceOrderItemsByCPDefinitionId(long cpDefinitionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceOrderItemLocalService.deleteCommerceOrderItemsByCPDefinitionId(cpDefinitionId);
 	}
 
 	@Override
@@ -349,12 +332,6 @@ public class CommerceOrderItemLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderItemLocalService.updateCommerceOrderItem(commerceOrderItemId,
 			quantity, json, price);
-	}
-
-	@Override
-	public void validate(long cpDefinitionId, long cpInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceOrderItemLocalService.validate(cpDefinitionId, cpInstanceId);
 	}
 
 	@Override

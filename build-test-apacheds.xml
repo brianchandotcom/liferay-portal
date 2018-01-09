@@ -52,6 +52,15 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-apacheds-log4j-level">
+		<sequential>
+			<replace file="${apacheds.dir}/instances/liferay/conf/log4j.properties">
+				<replacetoken><![CDATA[log4j.rootCategory=WARN, F, stdout]]></replacetoken>
+				<replacevalue><![CDATA[log4j.rootCategory=INFO, F, stdout]]></replacevalue>
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<target name="start-apacheds">
 		<unzip-apacheds />
 
@@ -72,6 +81,8 @@
 				/>
 			</else>
 		</if>
+
+		<update-apacheds-log4j-level />
 
 		<if>
 			<os family="unix" />

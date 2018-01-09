@@ -175,10 +175,10 @@ public class CommerceTierPriceEntryIndexer
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceTierPriceEntry(companyId);
+		reindexCommerceTierPriceEntries(companyId);
 	}
 
-	protected void reindexCommerceTierPriceEntry(long companyId)
+	protected void reindexCommerceTierPriceEntries(long companyId)
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =

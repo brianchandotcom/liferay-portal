@@ -163,10 +163,10 @@ public class CommerceShipmentIndexer extends BaseIndexer<CommerceShipment> {
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexCommerceShipment(companyId);
+		reindexCommerceShipments(companyId);
 	}
 
-	protected void reindexCommerceShipment(long companyId)
+	protected void reindexCommerceShipments(long companyId)
 		throws PortalException {
 
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =

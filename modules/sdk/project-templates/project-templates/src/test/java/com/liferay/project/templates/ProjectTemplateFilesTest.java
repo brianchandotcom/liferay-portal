@@ -158,6 +158,7 @@ public class ProjectTemplateFilesTest {
 
 	private void _testArchetypeMetadataXml(
 			Path projectTemplateDirPath, String projectTemplateDirName,
+			Path archetypeResourcesDirPath, Properties bndProperties,
 			boolean requireAuthorProperty,
 			Set<String> archetypeResourcePropertyNames)
 		throws IOException {
@@ -189,9 +190,27 @@ public class ProjectTemplateFilesTest {
 				"<?xml version=\"1.0\"?>\n\n<archetype-descriptor name=\"" +
 					archetypeDescriptorName + "\">"));
 
+		Matcher matcher = _archetypeMetadataXmlIncludePattern.matcher(
+			archetypeMetadataXml);
+
+		while (matcher.find()) {
+			String fileName = matcher.group(1);
+
+			if (fileName.equals(".gitignore")) {
+				fileName = "gitignore";
+			}
+
+			Path path = archetypeResourcesDirPath.resolve(fileName);
+
+			Assert.assertTrue(
+				"Included file " + path + " in " + archetypeMetadataXmlPath +
+					" not found",
+				Files.isRegularFile(path));
+		}
+
 		List<String> requiredPropertyNames = new ArrayList<>();
 
-		Matcher matcher = _archetypeMetadataXmlRequiredPropertyPattern.matcher(
+		matcher = _archetypeMetadataXmlRequiredPropertyPattern.matcher(
 			archetypeMetadataXml);
 
 		while (matcher.find()) {
@@ -239,10 +258,59 @@ public class ProjectTemplateFilesTest {
 
 		requiredPropertyNames.addAll(_archetypeMetadataXmlDefaultPropertyNames);
 
+		List<Path> definitionsVmPaths = new ArrayList<>();
+
+		Path definitionsVmPath = projectTemplateDirPath.resolve(
+			"src/main/resources/definitions.vm");
+
+		if (Files.exists(definitionsVmPath)) {
+			definitionsVmPaths.add(definitionsVmPath);
+		}
+
+		String includeResource = bndProperties.getProperty(
+			Constants.INCLUDERESOURCE);
+
+		if (Validator.isNotNull(includeResource)) {
+			for (String fileName : includeResource.split(",")) {
+				if (!fileName.endsWith("/definitions.vm")) {
+					continue;
+				}
+
+				definitionsVmPath = projectTemplateDirPath.resolve(fileName);
+
+				if (Files.exists(definitionsVmPath)) {
+					definitionsVmPaths.add(definitionsVmPath);
+				}
+			}
+		}
+
+		Set<String> declaredVariables = new HashSet<>();
+		StringBuilder messageSuffix = new StringBuilder(
+			archetypeMetadataXmlPath.toString());
+
+		for (int i = 0; i < definitionsVmPaths.size(); i++) {
+			definitionsVmPath = definitionsVmPaths.get(i);
+
+			String definitionsVm = FileUtil.read(definitionsVmPath);
+
+			matcher = _velocitySetDirectivePattern.matcher(definitionsVm);
+
+			while (matcher.find()) {
+				declaredVariables.add(matcher.group(1));
+			}
+
+			messageSuffix.append(", ");
+
+			if (i == (definitionsVmPaths.size() - 1)) {
+				messageSuffix.append("or ");
+			}
+		}
+
 		for (String name : archetypeResourcePropertyNames) {
 			Assert.assertTrue(
 				"Undeclared \"" + name + "\" property. Please add it to " +
 					archetypeMetadataXmlPath,
+				declaredVariables.contains(name) ||
 				requiredPropertyNames.contains(name));
 		}
 	}
@@ -694,7 +762,8 @@ public class ProjectTemplateFilesTest {
 		String projectTemplateDirName = String.valueOf(
 			projectTemplateDirPath.getFileName());
 
-		_testBndBnd(projectTemplateDirPath);
+		Properties bndProperties = _testBndBnd(projectTemplateDirPath);
+
 		_testBuildGradle(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGitIgnore(projectTemplateDirName, archetypeResourcesDirPath);
 		_testGradleWrapper(archetypeResourcesDirPath);
@@ -775,6 +844,7 @@ public class ProjectTemplateFilesTest {
 
 		_testArchetypeMetadataXml(
 			projectTemplateDirPath, projectTemplateDirName,
+			archetypeResourcesDirPath, bndProperties,
 			requireAuthorProperty.get(), archetypeResourcePropertyNames);
 	}
 
@@ -858,6 +928,8 @@ public class ProjectTemplateFilesTest {
 	private static final List<String>
 		_archetypeMetadataXmlDefaultPropertyNames = Arrays.asList(
 			"artifactId", "groupId", "package", "version");
+	private static final Pattern _archetypeMetadataXmlIncludePattern =
+		Pattern.compile("<include>([^\\*]+?)<\\/include>");
 	private static final Pattern _archetypeMetadataXmlRequiredPropertyPattern =
 		Pattern.compile("<requiredProperty key=\"(\\w+)\">");
 	private static final Pattern _archetypeResourcePropertyNamePattern =
@@ -908,6 +980,8 @@ public class ProjectTemplateFilesTest {
 			"vm", "xml"));
 	private static final Pattern _velocityDirectivePattern = Pattern.compile(
 		"#(if|set)\\s*\\(\\s*(.+)\\s*\\)");
+	private static final Pattern _velocitySetDirectivePattern = Pattern.compile(
+		"#set\\s*\\(\\s*\\$(\\S+)\\s*=");
 	private static final Map<String, String> _xmlDeclarations = new HashMap<>();
 
 	static {

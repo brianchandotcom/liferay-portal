@@ -79,6 +79,7 @@ public class Archetyper {
 		String artifactId = projectTemplatesArgs.getName();
 		String author = projectTemplatesArgs.getAuthor();
 		String className = projectTemplatesArgs.getClassName();
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
 		String packageName = projectTemplatesArgs.getPackageName();
 
 		File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
@@ -114,6 +115,7 @@ public class Archetyper {
 		_setProperty(properties, "author", author);
 		_setProperty(properties, "buildType", "gradle");
 		_setProperty(properties, "className", className);
+		_setProperty(properties, "liferayVersion", liferayVersion);
 		_setProperty(properties, "package", packageName);
 		_setProperty(properties, "projectType", projectType);
 
@@ -146,7 +148,8 @@ public class Archetyper {
 
 		if (projectTemplateCustomizer != null) {
 			projectTemplateCustomizer.onAfterGenerateProject(
-				destinationDir, archetypeGenerationResult);
+				projectTemplatesArgs, destinationDir,
+				archetypeGenerationResult);
 		}
 
 		return archetypeGenerationResult;

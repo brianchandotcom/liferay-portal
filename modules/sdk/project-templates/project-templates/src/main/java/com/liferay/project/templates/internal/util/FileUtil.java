@@ -73,6 +73,32 @@ public class FileUtil {
 			});
 	}
 
+	public static void deleteFileInPath(String fileName, Path rootDirPath)
+		throws IOException {
+
+		Files.walkFileTree(
+			rootDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path path = dirPath.resolve(fileName);
+
+					if (Files.exists(path)) {
+						Files.delete(path);
+
+						return FileVisitResult.TERMINATE;
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	public static void deleteFiles(Path dirPath, final String... fileNames)
 		throws IOException {
 

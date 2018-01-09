@@ -19,6 +19,8 @@ import com.liferay.project.templates.ProjectTemplatesArgs;
 
 import java.io.File;
 
+import java.nio.file.Path;
+
 import java.util.Properties;
 
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
@@ -32,14 +34,30 @@ public class NpmReactPortletProjectTemplateCustomizer
 
 	@Override
 	public void onAfterGenerateProject(
-		File destinationDir,
-		ArchetypeGenerationResult archetypeGenerationResult) {
+			ProjectTemplatesArgs projectTemplatesArgs, File destinationDir,
+			ArchetypeGenerationResult archetypeGenerationResult)
+		throws Exception {
+
+		String liferayVersion = projectTemplatesArgs.getLiferayVersion();
+
+		if (!liferayVersion.equals("7.1")) {
+			String className = projectTemplatesArgs.getClassName();
+
+			Path destinationDirPath = destinationDir.toPath();
+
+			Path projectDirPath = destinationDirPath.resolve(
+				projectTemplatesArgs.getName());
+
+			ProjectTemplateCustomizer.deleteFileInPath(
+				className + "WebKeys.java", projectDirPath);
+		}
 	}
 
 	@Override
 	public void onBeforeGenerateProject(
-		ProjectTemplatesArgs projectTemplatesArgs,
-		ArchetypeGenerationRequest archetypeGenerationRequest) {
+			ProjectTemplatesArgs projectTemplatesArgs,
+			ArchetypeGenerationRequest archetypeGenerationRequest)
+		throws Exception {
 
 		Properties properties = archetypeGenerationRequest.getProperties();
 

@@ -6,7 +6,8 @@ create table SiteNavigationMenu (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(75) null
+	name VARCHAR(75) null,
+	primary_ BOOLEAN
 );
 
 create table SiteNavigationMenuItem (

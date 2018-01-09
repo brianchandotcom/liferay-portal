@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.settings.internal;
+package com.liferay.portal.configuration.settings.internal.scoped.configuration;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
@@ -40,10 +40,13 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  */
 @Component(
 	immediate = true,
-	service =
-		{ConfigurationListener.class, ScopedConfigurationBeanProvider.class}
+	service = {
+		ConfigurationListener.class,
+		ScopedConfigurationBeanConfigurationListener.class
+	}
 )
-public class ScopedConfigurationBeanProvider implements ConfigurationListener {
+public class ScopedConfigurationBeanConfigurationListener
+	implements ConfigurationListener {
 
 	@Override
 	public void configurationEvent(ConfigurationEvent event) {
@@ -157,7 +160,7 @@ public class ScopedConfigurationBeanProvider implements ConfigurationListener {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ScopedConfigurationBeanProvider.class);
+		ScopedConfigurationBeanConfigurationListener.class);
 
 	private BundleContext _bundleContext;
 	private final Map<String, Class<?>> _configurationBeanClasses =

@@ -17,9 +17,9 @@ package com.liferay.exportimport.changeset.constants;
 /**
  * @author Mate Thurzo
  */
-public class ChangeSetPortletKeys {
+public class ChangesetPortletKeys {
 
-	public static final String CHANGE_SET =
-		"com_liferay_exportimport_web_portlet_ChangeSetPortlet";
+	public static final String CHANGESET =
+		"com_liferay_exportimport_web_portlet_ChangesetPortlet";
 
 }

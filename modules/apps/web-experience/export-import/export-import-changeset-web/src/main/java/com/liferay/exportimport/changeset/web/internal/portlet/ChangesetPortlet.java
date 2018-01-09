@@ -14,7 +14,7 @@
 
 package com.liferay.exportimport.changeset.web.internal.portlet;
 
-import com.liferay.exportimport.changeset.constants.ChangeSetPortletKeys;
+import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import javax.portlet.Portlet;
@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
 		"com.liferay.portlet.scopeable=false",
-		"javax.portlet.name=" + ChangeSetPortletKeys.CHANGE_SET,
+		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user"
 	},
 	service = Portlet.class
 )
-public class ChangeSetPortlet extends MVCPortlet {
+public class ChangesetPortlet extends MVCPortlet {
 }

@@ -21,8 +21,10 @@ import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -56,6 +58,7 @@ public class PortalImplAlternateURLTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_defaultLocale = LocaleUtil.getDefault();
+		_defaultPrependStyle = PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
 
 		LocaleUtil.setDefault(
 			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
@@ -233,9 +236,36 @@ public class PortalImplAlternateURLTest {
 		Assert.assertEquals(
 			expectedAssetPublisherContentAlternateURL,
 			actualAssetPublisherContentAlternateURL);
+
+		TestPropsUtil.set(
+			com.liferay.portal.kernel.util.PropsKeys.
+				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			"2");
+
+		String actualAlternateURL2 = PortalUtil.getAlternateURL(
+			canonicalURL, getThemeDisplay(_group, canonicalURL),
+			alternateLocale, layout);
+
+		Assert.assertEquals(expectedAlternateURL, actualAlternateURL2);
+
+		String actualAssetPublisherContentAlternateURL2 =
+			PortalUtil.getAlternateURL(
+				canonicalAssetPublisherContentURL,
+				getThemeDisplay(_group, canonicalAssetPublisherContentURL),
+				alternateLocale, layout);
+
+		Assert.assertEquals(
+			expectedAssetPublisherContentAlternateURL,
+			actualAssetPublisherContentAlternateURL2);
+
+		TestPropsUtil.set(
+			com.liferay.portal.kernel.util.PropsKeys.
+				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			GetterUtil.getString(_defaultPrependStyle));
 	}
 
 	private static Locale _defaultLocale;
+	private static int _defaultPrependStyle;
 
 	@DeleteAfterTestRun
 	private Group _group;

@@ -25,7 +25,7 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Matthew Tambara
  */
-@Component(enabled = true, immediate = true)
+@Component(immediate = true)
 public class BundleManagerUtil {
 
 	public static Bundle getBundle(String symbolicName, String version) {

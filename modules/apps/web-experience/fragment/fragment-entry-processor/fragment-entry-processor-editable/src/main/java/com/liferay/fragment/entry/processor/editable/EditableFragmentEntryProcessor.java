@@ -82,7 +82,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
 
-		XPath editableXPath = SAXReaderUtil.createXPath("//" + _LFR_EDITABLE);
+		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
 
 		List<Node> editableNodes = editableXPath.selectNodes(document);
 
@@ -96,7 +96,5 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
 	}
-
-	private static final String _LFR_EDITABLE = "lfr-editable";
 
 }

@@ -3104,7 +3104,7 @@ information. Make sure to commit in all build services results.
 
 				<trycatch property="failure.property">
 					<try>
-						<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="assemble" />
+						<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="assemble" />
 					</try>
 					<catch>
 						<echo message="${gradle.output.error}" />
@@ -3135,7 +3135,7 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="compileJava" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="compileJava" />
 			</try>
 			<catch>
 				<echo message="${gradle.output.error}" />
@@ -3162,7 +3162,7 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" task="pmdMain">
+				<gradle-execute checktask="true" dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="pmdMain">
 					<arg value="pmdTest" />
 					<arg value="pmdTestIntegration" />
 				</gradle-execute>
@@ -3195,7 +3195,7 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" task="baseline" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="baseline" />
 			</try>
 			<catch>
 				<echo message="${gradle.output.error}" />
@@ -3240,7 +3240,7 @@ information. Make sure to commit in all build services results.
 
 		<trycatch property="failure.property">
 			<try>
-				<gradle-execute dir="${module.base.dir}" outputproperty="gradle.output" task="checkSourceFormatting">
+				<gradle-execute dir="${module.base.dir}" outputproperty="gradle.output" refreshdependencies="true" task="checkSourceFormatting">
 					<arg value="-PdependencyCheckerIgnoreFailures=false" />
 				</gradle-execute>
 			</try>
@@ -3263,7 +3263,7 @@ information. Make sure to commit in all build services results.
 					<arg value="-Dportal.build=true" />
 				</gradle-execute>
 
-				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" task="test" />
+				<gradle-execute checktask="true" dir="${module.base.dir}" forcedcacheenabled="false" outputproperty="gradle.output" refreshdependencies="true" task="test" />
 			</try>
 			<catch>
 				<echo message="${gradle.output.error}" />

@@ -33,6 +33,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.ProcessingException;
+
 import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
@@ -308,6 +310,13 @@ public class LiferaySourceOrSink
 				translations.getMessage(
 					"error.validation.connection.testconnection",
 					ae.getLocalizedMessage(), ae.getCode()));
+		}
+		catch (ProcessingException pe) {
+			vr.setStatus(Result.ERROR);
+			vr.setMessage(
+				translations.getMessage(
+					"error.validation.connection.testconnection.jersey",
+					pe.getLocalizedMessage()));
 		}
 
 		return vr;

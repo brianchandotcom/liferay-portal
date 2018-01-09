@@ -201,6 +201,7 @@ import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.impl.CookieRemotePreference;
 import com.liferay.portal.model.impl.LayoutTypeImpl;
+import com.liferay.portal.model.impl.LayoutTypePortletImpl;
 import com.liferay.portal.plugin.PluginPackageUtil;
 import com.liferay.portal.security.jaas.JAASHelper;
 import com.liferay.portal.security.lang.DoPrivilegedUtil;
@@ -312,6 +313,7 @@ import org.apache.struts.Globals;
  * @author Hugo Huijser
  * @author Juan Fernández
  * @author Marco Leo
+ * @author Neil Griffin
  */
 @DoPrivileged
 public class PortalImpl implements Portal {
@@ -7171,6 +7173,20 @@ public class PortalImpl implements Portal {
 
 				updateLayout = true;
 			}
+			else if (layoutType instanceof LayoutTypePortletImpl) {
+				LayoutTypePortletImpl layoutTypePortletImpl =
+					(LayoutTypePortletImpl)layoutType;
+
+				if (_isCustomPortletMode(portletMode) &&
+					!layoutTypePortletImpl.hasModeCustomPortletId(
+						portletId, portletMode.toString())) {
+
+					layoutTypePortletImpl.addModeCustomPortletId(
+						portletId, portletMode.toString());
+
+					updateLayout = true;
+				}
+			}
 
 			if (updateLayout &&
 				PortletPermissionUtil.contains(
@@ -8687,6 +8703,23 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
+	}
+
+	private boolean _isCustomPortletMode(PortletMode portletMode) {
+		if (LiferayPortletMode.VIEW.equals(portletMode) ||
+			LiferayPortletMode.EDIT.equals(portletMode) ||
+			LiferayPortletMode.HELP.equals(portletMode) ||
+			LiferayPortletMode.ABOUT.equals(portletMode) ||
+			LiferayPortletMode.CONFIG.equals(portletMode) ||
+			LiferayPortletMode.EDIT_DEFAULTS.equals(portletMode) ||
+			LiferayPortletMode.EDIT_GUEST.equals(portletMode) ||
+			LiferayPortletMode.PREVIEW.equals(portletMode) ||
+			LiferayPortletMode.PRINT.equals(portletMode)) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private boolean _isSameHostName(

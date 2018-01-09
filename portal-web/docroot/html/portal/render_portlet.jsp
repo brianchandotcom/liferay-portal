@@ -122,6 +122,15 @@ else if (modePreview) {
 else if (modePrint) {
 	portletMode = LiferayPortletMode.PRINT;
 }
+else if (layoutTypePortlet instanceof LayoutTypePortletImpl) {
+	LayoutTypePortletImpl layoutTypePortletImpl = (LayoutTypePortletImpl)layoutTypePortlet;
+
+	String customPortletMode = layoutTypePortletImpl.getAddedCustomPortletMode();
+
+	if (customPortletMode != null) {
+		portletMode = new PortletMode(customPortletMode);
+	}
+}
 
 InvokerPortlet invokerPortlet = null;
 

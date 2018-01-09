@@ -25,7 +25,7 @@
 	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
 	portletURL.setParameter("cmd", Constants.EXPORT);
 	portletURL.setParameter("className", className);
-	portletURL.setParameter("groupId", groupId);
+	portletURL.setParameter("groupId", String.valueOf(modelGroupId));
 	portletURL.setParameter("uuid", uuid);
 	%>
 

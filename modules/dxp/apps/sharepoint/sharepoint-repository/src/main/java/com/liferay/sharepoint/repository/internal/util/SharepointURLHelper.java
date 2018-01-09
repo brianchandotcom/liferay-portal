@@ -202,7 +202,7 @@ public class SharepointURLHelper {
 			"%s/_api/search/query?QueryText='%s'&SourceID='%s'&StartRow=%d&" +
 				"RowsPerPage=%d",
 			_siteAbsoluteURL, HtmlUtil.escapeURL(queryText),
-			_DOCUMENTS_SOURCE_ID, start, end - start);
+			_LOCAL_SHAREPOINT_RESULTS_SOURCE_ID, start, end - start);
 	}
 
 	public String getUpdateFileURL(String extRepositoryFileEntryKey) {
@@ -211,8 +211,8 @@ public class SharepointURLHelper {
 			_siteAbsoluteURL, extRepositoryFileEntryKey);
 	}
 
-	private static final String _DOCUMENTS_SOURCE_ID =
-		"e7ec8cee-ded8-43c9-beb5-436b54b31e84";
+	private static final String _LOCAL_SHAREPOINT_RESULTS_SOURCE_ID =
+		"8413cd39-2156-4e00-b54d-11efd9abdb89";
 
 	private static final String _FIELDS_EXPANDED_FILE = StringUtil.merge(
 		Arrays.asList("Author", "CheckedOutByUser", "ListItemAllFields"));

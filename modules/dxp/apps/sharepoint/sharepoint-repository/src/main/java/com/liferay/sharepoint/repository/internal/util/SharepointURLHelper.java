@@ -211,9 +211,6 @@ public class SharepointURLHelper {
 			_siteAbsoluteURL, extRepositoryFileEntryKey);
 	}
 
-	private static final String _LOCAL_SHAREPOINT_RESULTS_SOURCE_ID =
-		"8413cd39-2156-4e00-b54d-11efd9abdb89";
-
 	private static final String _FIELDS_EXPANDED_FILE = StringUtil.merge(
 		Arrays.asList("Author", "CheckedOutByUser", "ListItemAllFields"));
 
@@ -230,6 +227,9 @@ public class SharepointURLHelper {
 		Arrays.asList(
 			"Name", "ListItemAllFields/EffectiveBasePermissions",
 			"ServerRelativeUrl", "TimeCreated", "TimeLastModified"));
+
+	private static final String _LOCAL_SHAREPOINT_RESULTS_SOURCE_ID =
+		"8413cd39-2156-4e00-b54d-11efd9abdb89";
 
 	private final String _siteAbsoluteURL;
 

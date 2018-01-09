@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Portal Custom JSP Bag
-Bundle-SymbolicName: com.liferay.portal.custom.jsp.bag
-Bundle-Version: 1.0.2
-Export-Package: com.liferay.portal.custom.jsp.bag
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title:

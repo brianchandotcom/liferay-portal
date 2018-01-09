@@ -249,6 +249,10 @@ private void _cherryPickApply(Commit commit) {
 
 	for (String fileName in status.unstaged.modified) {
 		if (!fileName.endsWith("/build.gradle")) {
+			grgit.add patterns: [fileName]
+
+			addedFiles = true
+
 			continue
 		}
 

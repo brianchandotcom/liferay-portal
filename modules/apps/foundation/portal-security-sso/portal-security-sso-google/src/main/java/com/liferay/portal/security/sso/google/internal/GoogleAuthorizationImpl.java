@@ -46,7 +46,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.security.sso.google.GoogleAuthorization;
 import com.liferay.portal.security.sso.google.configuration.GoogleAuthorizationConfiguration;
 import com.liferay.portal.security.sso.google.constants.GoogleConstants;
-import com.liferay.portal.security.sso.google.constants.GoogleWebKeys;
+import com.liferay.portal.security.sso.google.internal.constants.GoogleWebKeys;
 
 import java.lang.reflect.Method;
 

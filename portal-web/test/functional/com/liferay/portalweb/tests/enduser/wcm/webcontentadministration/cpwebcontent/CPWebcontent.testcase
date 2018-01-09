@@ -281,7 +281,8 @@
 			<var name="webContentTitle" value="WC WebContent Title" />
 		</execute>
 
-		<execute function="AssertConsoleTextNotPresent" value1="Expecting a string, date or number here, Expression Separator is instead a com.liferay.portal.freemarker.LiferayTemplateModel" />
+		<execute function="AssertConsoleTextNotPresent" value1="NonStringException" />
+		<execute function="AssertConsoleTextNotPresent" value1="Expression Separator is instead a com.liferay.portal.freemarker.LiferayTemplateModel" />
 	</command>
 
 	<command name="AddStructureWithSubfield" priority="4">

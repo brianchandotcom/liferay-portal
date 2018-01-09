@@ -127,8 +127,8 @@ public class XugglerImpl implements Xuggler {
 		sb.append("installed. In order to generate video and audio previews, ");
 		sb.append("please follow the instructions for Xuggler in the Server ");
 		sb.append("Administration section of the Control Panel at: ");
-		sb.append("http://<server>/group/control_panel/manage/-/server/");
-		sb.append("external-services. Error message is: ");
+		sb.append("http://<server>/group/control_panel/manage/-/server");
+		sb.append("/external-services. Error message is: ");
 		sb.append(errorMessage);
 
 		_log.error(sb.toString());

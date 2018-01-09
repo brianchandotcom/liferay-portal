@@ -231,7 +231,6 @@
 		<check name="PrimitiveWrapperInstantiationCheck" />
 		<check name="PrincipalExceptionCheck" />
 		<check name="SessionKeysCheck" />
-		<check name="StringBundlerCheck" />
 		<check name="StringUtilCheck" />
 		<check name="UnparameterizedClassCheck" />
 		<check name="ValidatorEqualsCheck" />

@@ -75,8 +75,8 @@ public class WabBuildAutoUpgradeTest extends BaseBuildAutoUpgradeTestCase {
 			sb.append(url.getPath());
 			sb.append("?");
 			sb.append(Constants.BUNDLE_SYMBOLICNAME);
-			sb.append("=BuildAutoUpgradeTest&Web-ContextPath=/");
-			sb.append("BuildAutoUpgradeTest&protocol=file");
+			sb.append("=BuildAutoUpgradeTest&Web-ContextPath=");
+			sb.append("/BuildAutoUpgradeTest&protocol=file");
 
 			_warURLs[i] = new URL("webbundle", null, sb.toString());
 		}

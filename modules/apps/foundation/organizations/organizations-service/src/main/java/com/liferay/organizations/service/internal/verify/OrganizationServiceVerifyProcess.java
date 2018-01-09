@@ -77,12 +77,11 @@ public class OrganizationServiceVerifyProcess extends VerifyProcess {
 
 	protected Void updateOrganizationAssetEntries() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
-			StringBundler sb = new StringBundler(8);
+			StringBundler sb = new StringBundler(7);
 
 			sb.append("select distinct AssetEntry.classPK as classPK, ");
 			sb.append("Organization_.uuid_ as uuid from AssetEntry, ");
-			sb.append("Organization_ where ");
-			sb.append("AssetEntry.classNameId = ");
+			sb.append("Organization_ where AssetEntry.classNameId = ");
 
 			long classNameId = _classNameLocalService.getClassNameId(
 				Organization.class.getName());

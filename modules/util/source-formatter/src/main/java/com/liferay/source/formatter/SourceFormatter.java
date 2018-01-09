@@ -408,18 +408,6 @@ public class SourceFormatter {
 		return excludeSyntaxPatterns;
 	}
 
-	private int _getMaxDirLevel() {
-		File portalImplDir = SourceFormatterUtil.getFile(
-			_sourceFormatterArgs.getBaseDirName(), "portal-impl",
-			ToolsUtil.PORTAL_MAX_DIR_LEVEL);
-
-		if (portalImplDir != null) {
-			return ToolsUtil.PORTAL_MAX_DIR_LEVEL;
-		}
-
-		return ToolsUtil.PLUGINS_MAX_DIR_LEVEL;
-	}
-
 	private List<String> _getPluginsInsideModulesDirectoryNames()
 		throws Exception {
 
@@ -504,7 +492,7 @@ public class SourceFormatter {
 
 		String parentDirName = _sourceFormatterArgs.getBaseDirName();
 
-		for (int i = 0; i < _getMaxDirLevel(); i++) {
+		for (int i = 0; i < ToolsUtil.PORTAL_MAX_DIR_LEVEL; i++) {
 			_readProperties(new File(parentDirName + _PROPERTIES_FILE_NAME));
 
 			parentDirName += "../";

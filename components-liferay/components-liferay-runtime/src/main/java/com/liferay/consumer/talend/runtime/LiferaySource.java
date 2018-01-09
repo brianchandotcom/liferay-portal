@@ -14,12 +14,14 @@
 
 package com.liferay.consumer.talend.runtime;
 
+import com.liferay.consumer.talend.runtime.reader.LiferayInputReader;
+import com.liferay.consumer.talend.tliferayinput.TLiferayInputProperties;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.runtime.BoundedReader;
 import org.talend.components.api.component.runtime.BoundedSource;
 import org.talend.components.api.container.RuntimeContainer;
@@ -37,7 +39,16 @@ public class LiferaySource
 				"Creating reader for source, currently not implemented!");
 		}
 
-		return null;
+		if (properties instanceof TLiferayInputProperties) {
+			TLiferayInputProperties lrInProperties = (TLiferayInputProperties) properties;
+
+			return new LiferayInputReader(adaptor, this, lrInProperties);
+		}
+
+		_log.error("Not expected property instance");
+
+		return new LiferayInputReader(
+			adaptor, this, (TLiferayInputProperties)properties);
 	}
 
 	@Override

@@ -16,9 +16,10 @@ package com.liferay.consumer.talend.connection;
 
 import com.liferay.consumer.talend.resource.LiferayResourceProperties;
 
+import org.apache.avro.Schema;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
@@ -38,6 +39,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 	@Override
 	public LiferayConnectionProperties getConnectionProperties() {
 		return connection;
+	}
+
+	public Schema getSchema() {
+		return resource.main.schema.getValue();
 	}
 
 	@Override

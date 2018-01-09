@@ -85,6 +85,7 @@ public class ResourceEntityConverter
 	 */
 	private void _initConverters(Schema schema) {
 		_converters = new AvroConverter[schema.getFields().size()];
+
 		List<Field> fields = schema.getFields();
 
 		for (int i = 0; i < schema.getFields().size(); i++) {

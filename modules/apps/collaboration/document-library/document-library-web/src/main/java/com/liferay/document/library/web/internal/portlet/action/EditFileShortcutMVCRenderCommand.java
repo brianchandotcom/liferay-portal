@@ -14,8 +14,8 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileShortcutException;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.FileShortcut;
 import com.liferay.portal.kernel.security.auth.PrincipalException;

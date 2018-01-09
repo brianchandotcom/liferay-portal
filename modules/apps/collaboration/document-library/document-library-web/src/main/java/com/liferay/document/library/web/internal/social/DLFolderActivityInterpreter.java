@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.document.library.web.social;
+package com.liferay.document.library.web.internal.social;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
@@ -35,7 +35,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"model.class.name=com.liferay.document.library.kernel.model.DLFolder"
+	},
 	service = SocialActivityInterpreter.class
 )
 public class DLFolderActivityInterpreter extends BaseSocialActivityInterpreter {

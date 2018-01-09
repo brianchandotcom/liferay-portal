@@ -12,20 +12,23 @@
  * details.
  */
 
-package com.liferay.document.library.web.constants;
+package com.liferay.document.library.web.internal.constants;
 
 /**
- * @author Sergio González
+ * @author Brian Wing Shun Chan
  */
-public class DLPortletKeys {
+public class DLWebKeys {
 
-	public static final String DOCUMENT_LIBRARY =
-		"com_liferay_document_library_web_portlet_DLPortlet";
+	public static final String DOCUMENT_LIBRARY_GROUP_SERVICE_SETTINGS =
+		"DOCUMENT_LIBRARY_GROUP_SERVICE_SETTINGS";
 
-	public static final String DOCUMENT_LIBRARY_ADMIN =
-		"com_liferay_document_library_web_portlet_DLAdminPortlet";
+	public static final String DOCUMENT_LIBRARY_PORTLET_INSTANCE_SETTINGS =
+		"DOCUMENT_LIBRARY_PORTLET_INSTANCE_SETTINGS";
 
-	public static final String MEDIA_GALLERY_DISPLAY =
-		"com_liferay_document_library_web_portlet_IGDisplayPortlet";
+	public static final String DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR =
+		"DOCUMENT_LIBRARY_PORTLET_TOOLBAR_CONTRIBUTOR";
+
+	public static final String DOCUMENT_LIBRARY_TRASH_UTIL =
+		"DOCUMENT_LIBRARY_TRASH_UTIL";
 
 }

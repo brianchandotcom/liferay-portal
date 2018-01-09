@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.document.library.web.social;
+package com.liferay.document.library.web.internal.social;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -46,7 +46,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Zsolt Berentey
  */
 @Component(
-	property = {"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY},
+	property = {
+		"javax.portlet.name=" + DLPortletKeys.DOCUMENT_LIBRARY,
+		"model.class.name=com.liferay.document.library.kernel.model.DLFileEntry"
+	},
 	service = SocialActivityInterpreter.class
 )
 public class DLFileEntryActivityInterpreter

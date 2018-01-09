@@ -14,7 +14,7 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
-import com.liferay.document.library.web.constants.DLPortletKeys;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 

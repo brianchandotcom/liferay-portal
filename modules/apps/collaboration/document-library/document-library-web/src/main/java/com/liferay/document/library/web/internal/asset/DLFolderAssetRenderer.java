@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.document.library.web.asset;
+package com.liferay.document.library.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFolder;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

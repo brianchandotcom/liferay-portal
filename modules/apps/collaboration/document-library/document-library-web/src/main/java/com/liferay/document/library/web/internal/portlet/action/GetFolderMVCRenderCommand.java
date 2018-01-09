@@ -15,7 +15,7 @@
 package com.liferay.document.library.web.internal.portlet.action;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.web.constants.DLWebKeys;
+import com.liferay.document.library.web.internal.constants.DLWebKeys;
 import com.liferay.document.library.web.internal.util.DLTrashUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.repository.model.Folder;

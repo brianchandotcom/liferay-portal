@@ -14,11 +14,11 @@
 
 package com.liferay.frontend.image.editor.integration.document.library.internal.portlet.action;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.kernel.service.DLAppService;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

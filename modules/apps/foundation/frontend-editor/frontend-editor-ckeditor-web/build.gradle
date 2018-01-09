@@ -34,7 +34,6 @@ buildCKEditor {
 		eachFile new StripPathSegmentsAction(5)
 
 		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/ckeditor/"
-		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/maven-dist/"
 		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/samples/"
 		exclude "META-INF/resources/webjars/ckeditor/${ckEditorVersion}/gulpfile.js"
 	}

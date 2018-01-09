@@ -15,7 +15,6 @@
 package com.liferay.consumer.talend.runtime.client;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -32,46 +31,101 @@ public class ApioJsonLDUtils {
 	/**
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and looks for the members array node.
-	 * If it's located then the first entry will be processed to get the fields
-	 * of the resource.
 	 *
-	 * @param collectionJson
+	 * @param resourceJson
 	 * @return <code>JsonNode</code> The ArrayNode which contains the
-	 * resource entries of a given (partial)collection (Members)
+	 * resource entries of a given (partial)collection (Members) or MissingNode
+	 * if it's not present
 	 */
-	public static JsonNode getResourceMemberArrayNode(JsonNode collectionJson) {
-		JsonNode members = collectionJson.findPath("members");
+	public static JsonNode getCollectionMemberNode(JsonNode resourceJson) {
+		return _findCollectionNode(
+			resourceJson, ApioJsonLDConstants.COLLECTION_MEMBERS);
+	}
 
-		if (members.isMissingNode()) {
-			_log.error("Cannot find the \"members\" ArrayNode!");
+	/**
+	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
+	 * and looks for the view node.
+	 *
+	 * @param resourceJson
+	 * @return <code>JsonNode</code> The JsonNode for the view section or
+	 * MissingNode if it's not present
+	 */
+	public static JsonNode getCollectionViewNode(JsonNode resourceJson) {
+		return _findCollectionNode(
+			resourceJson, ApioJsonLDConstants.COLLECTION_VIEW);
+	}
 
-			return JsonNodeFactory.instance.arrayNode();
-		}
+	/**
+	 * Parses the view JsonNode of the resource
+	 *
+	 * @param resourceViewJsonNode
+	 * @return first collection page or empty string if not present in the
+	 * JsonNode
+	 */
+	public static String getResourceFirstPage(JsonNode resourceViewJsonNode) {
+		JsonNode node = resourceViewJsonNode.findValue(
+			ApioJsonLDConstants.VIEW_FIRST);
 
-		if (!members.isArray() || (members.size() == 0)) {
-			_log.error("The \"members\" ArrayNode is empty!");
+		return _safeReturnValue(node);
+	}
 
-			return JsonNodeFactory.instance.arrayNode();
-		}
+	/**
+	 * Parses the view JsonNode of the resource
+	 *
+	 * @param resourceViewJsonNode
+	 * @return last collection page or empty string if not present in the
+	 * JsonNode
+	 */
+	public static String getResourceLastPage(JsonNode resourceViewJsonNode) {
+		JsonNode node = resourceViewJsonNode.findValue(
+			ApioJsonLDConstants.VIEW_LAST);
 
-		if (_log.isDebugEnabled()) {
-			_log.debug("Size of the \"members\" ArrayNode: {}", members.size());
-		}
+		return _safeReturnValue(node);
+	}
 
-		return members;
+	/**
+	 * Parses the view JsonNode of the resource
+	 *
+	 * @param resourceViewJsonNode
+	 * @return relative upcoming collection page or empty string if not present
+	 * in the JsonNode
+	 */
+	public static String getResourceNextPage(JsonNode resourceViewJsonNode) {
+		JsonNode node = resourceViewJsonNode.findValue(
+			ApioJsonLDConstants.VIEW_NEXT);
+
+		return _safeReturnValue(node);
+	}
+
+	/**
+	 * Parses the view JsonNode of the resource
+	 *
+	 * @param resourceViewJsonNode
+	 * @return actual collection page or empty string if not present in the
+	 * JsonNode
+	 */
+	public static String getResourceActualPage(JsonNode resourceViewJsonNode) {
+		JsonNode node = resourceViewJsonNode.findValue(
+			ApioJsonLDConstants.ID);
+
+		return _safeReturnValue(node);
 	}
 
 	/**
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and returns the name of the resource fields
 	 *
-	 * @param collectionJson
+	 * @param resourceJson
 	 * @return <code>List<String></code> Name of the resource fields
 	 */
-	public static List<String> getResourceFieldNames(JsonNode collectionJson) {
-		JsonNode members = getResourceMemberArrayNode(collectionJson);
+	public static List<String> getResourceFieldNames(JsonNode resourceJson) {
+		JsonNode members = getCollectionMemberNode(resourceJson);
 
 		List<String> fieldNames = new ArrayList<>();
+
+		if (!members.isArray()) {
+			_log.error("Not able to fetch the resource fields");
+		}
 
 		JsonNode firstItem = members.get(0);
 
@@ -82,6 +136,32 @@ public class ApioJsonLDUtils {
 		}
 
 		return fieldNames;
+	}
+
+	private static JsonNode _findCollectionNode(
+		JsonNode collectionJson, String nodeName) {
+
+		JsonNode jsonNode = collectionJson.findPath(nodeName);
+
+		if (jsonNode.isMissingNode()) {
+			_log.error("Cannot find the \"{}\" node!", nodeName);
+
+			return jsonNode;
+		}
+
+		if (jsonNode.isArray() && (jsonNode.size() == 0)) {
+			_log.error("The \"{}\" ArrayNode is empty!", jsonNode);
+		}
+
+		return jsonNode;
+	}
+
+	private static String _safeReturnValue(JsonNode jsonNode) {
+		if (jsonNode == null) {
+			return "";
+		}
+
+		return jsonNode.asText();
 	}
 
 	private static final Logger _log =

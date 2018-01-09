@@ -264,8 +264,8 @@ public abstract class BaseUpgradeResourceBlock extends UpgradeProcess {
 		sb.append("(ResourceBlock.resourceBlockId = ");
 		sb.append(tableName);
 		sb.append(".resourceBlockId) inner join ResourceBlockPermission on ");
-		sb.append("(ResourceBlockPermission.resourceBlockId = ResourceBlock");
-		sb.append(".resourceBlockId) where ResourceBlock.name = ?");
+		sb.append("(ResourceBlockPermission.resourceBlockId = ResourceBlock.");
+		sb.append("resourceBlockId) where ResourceBlock.name = ?");
 
 		try (PreparedStatement selectPS = connection.prepareStatement(
 				SQLTransformer.transform(sb.toString()))) {

@@ -16,9 +16,12 @@ package com.liferay.commerce.internal.test.util;
 
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderConstants;
+import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.service.CommerceCountryLocalServiceUtil;
+import com.liferay.commerce.service.CommerceOrderItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceOrderLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalServiceUtil;
 import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
@@ -46,6 +49,13 @@ public class CommerceTestUtil {
 			serviceContext);
 	}
 
+	public static CommerceOrder addCommerceOrder(long groupId)
+		throws Exception {
+
+		return addCommerceOrder(
+			groupId, CommerceOrderConstants.STATUS_COMPLETED);
+	}
+
 	public static CommerceOrder addCommerceOrder(long groupId, int status)
 		throws Exception {
 
@@ -56,6 +66,23 @@ public class CommerceTestUtil {
 			serviceContext.getUserId(), 0, 0, null,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
 			RandomTestUtil.randomDouble(), 0, 0, status, serviceContext);
+	}
+
+	public static CommerceOrderItem addCommerceOrderItem(
+			long commerceOrderId, long cpInstanceId)
+		throws Exception {
+
+		CommerceOrder commerceOrder =
+			CommerceOrderLocalServiceUtil.getCommerceOrder(commerceOrderId);
+
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				commerceOrder.getGroupId());
+
+		return CommerceOrderItemLocalServiceUtil.addCommerceOrderItem(
+			commerceOrderId, cpInstanceId, RandomTestUtil.randomInt(),
+			RandomTestUtil.randomInt(), null, RandomTestUtil.randomDouble(),
+			serviceContext);
 	}
 
 	public static CommerceWarehouse addCommerceWarehouse(

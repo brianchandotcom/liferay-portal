@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
@@ -69,8 +70,12 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertTrue(fieldLabelValueMap.containsKey("label"));
 		Assert.assertTrue(fieldLabelValueMap.containsKey("value"));
 
+		SoyHTMLContextValue soyHTMLContextValue =
+			(SoyHTMLContextValue)fieldLabelValueMap.get("value");
+
 		Assert.assertNull(fieldLabelValueMap.get("label"));
-		Assert.assertEquals("test", fieldLabelValueMap.get("value"));
+
+		Assert.assertEquals("test", soyHTMLContextValue.getValue().toString());
 	}
 
 	@Test
@@ -87,8 +92,13 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertTrue(fieldLabelValueMap.containsKey("label"));
 		Assert.assertTrue(fieldLabelValueMap.containsKey("value"));
 
+		SoyHTMLContextValue soyHTMLContextValue =
+			(SoyHTMLContextValue)fieldLabelValueMap.get("value");
+
 		Assert.assertNull(fieldLabelValueMap.get("label"));
-		Assert.assertEquals(StringPool.BLANK, fieldLabelValueMap.get("value"));
+
+		Assert.assertEquals(
+			StringPool.BLANK, soyHTMLContextValue.getValue().toString());
 	}
 
 	protected DDMFormValues createDDMFormValues(Value value) {

@@ -12,25 +12,28 @@
  * details.
  */
 
-package com.liferay.user.associated.data.aggregator;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.user.associated.data.exception;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.entity.UADEntity;
-
-import java.util.List;
 
 /**
- * @author William Newbury
+ * @author Noah Sherrill
  */
-@ProviderType
-public interface UADEntityAggregator {
+public class UADEntityExporterException extends PortalException {
 
-	public long count(long userId);
+	public UADEntityExporterException() {
+	}
 
-	public List<UADEntity> getUADEntities(long userId);
+	public UADEntityExporterException(String msg) {
+		super(msg);
+	}
 
-	public UADEntity getUADEntity(String uadEntityId) throws PortalException;
+	public UADEntityExporterException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public UADEntityExporterException(Throwable cause) {
+		super(cause);
+	}
 
 }

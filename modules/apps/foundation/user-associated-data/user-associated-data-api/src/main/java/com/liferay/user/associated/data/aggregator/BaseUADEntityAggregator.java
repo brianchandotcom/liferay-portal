@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.aggregator;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
 	public abstract List<UADEntity> getUADEntities(long userId);
 
 	@Override
-	public abstract UADEntity getUADEntity(String uadEntityId);
+	public abstract UADEntity getUADEntity(String uadEntityId)
+		throws PortalException;
 
 }

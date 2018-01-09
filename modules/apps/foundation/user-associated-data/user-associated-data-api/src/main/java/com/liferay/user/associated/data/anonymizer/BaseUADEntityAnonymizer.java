@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.anonymizer;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
 import java.util.List;
@@ -24,20 +25,21 @@ import java.util.List;
 public abstract class BaseUADEntityAnonymizer implements UADEntityAnonymizer {
 
 	@Override
-	public abstract void autoAnonymize(UADEntity uadEntity);
+	public abstract void autoAnonymize(UADEntity uadEntity)
+		throws PortalException;
 
 	@Override
-	public void autoAnonymizeAll(long userId) {
+	public void autoAnonymizeAll(long userId) throws PortalException {
 		for (UADEntity uadEntity : getUADEntities(userId)) {
 			autoAnonymize(uadEntity);
 		}
 	}
 
 	@Override
-	public abstract void delete(UADEntity uadEntity);
+	public abstract void delete(UADEntity uadEntity) throws PortalException;
 
 	@Override
-	public void deleteAll(long userId) {
+	public void deleteAll(long userId) throws PortalException {
 		for (UADEntity uadEntity : getUADEntities(userId)) {
 			delete(uadEntity);
 		}

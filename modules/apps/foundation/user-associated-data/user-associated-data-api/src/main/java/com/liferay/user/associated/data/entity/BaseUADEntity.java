@@ -29,9 +29,6 @@ public abstract class BaseUADEntity implements UADEntity {
 	}
 
 	@Override
-	public abstract String getEditURL();
-
-	@Override
 	public String getUADEntityId() {
 		return _uadEntityId;
 	}

@@ -56,7 +56,6 @@ public class ServiceBuilderInvoker {
 			serviceBuilderArgs.getBeanLocatorUtil(),
 			serviceBuilderArgs.getBuildNumber(),
 			serviceBuilderArgs.isBuildNumberIncrement(),
-			serviceBuilderArgs.isDatabaseNameMaxLengthCheckEnabled(),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getHbmFileName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getImplDirName()),
 			_getAbsolutePath(baseDir, serviceBuilderArgs.getInputFileName()),

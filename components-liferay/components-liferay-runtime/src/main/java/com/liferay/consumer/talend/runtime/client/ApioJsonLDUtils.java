@@ -32,27 +32,67 @@ public class ApioJsonLDUtils {
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and looks for the members array node.
 	 *
-	 * @param resourceJson
+	 * @param resource
 	 * @return <code>JsonNode</code> The ArrayNode which contains the
 	 * resource entries of a given (partial)collection (Members) or MissingNode
 	 * if it's not present
 	 */
-	public static JsonNode getCollectionMemberNode(JsonNode resourceJson) {
+	public static JsonNode getCollectionMemberNode(JsonNode resource) {
 		return _findCollectionNode(
-			resourceJson, ApioJsonLDConstants.COLLECTION_MEMBERS);
+			resource, ApioJsonLDConstants.COLLECTION_MEMBERS);
 	}
 
 	/**
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and looks for the view node.
 	 *
-	 * @param resourceJson
+	 * @param resource
 	 * @return <code>JsonNode</code> The JsonNode for the view section or
 	 * MissingNode if it's not present
 	 */
-	public static JsonNode getCollectionViewNode(JsonNode resourceJson) {
+	public static JsonNode getCollectionViewNode(JsonNode resource) {
 		return _findCollectionNode(
-			resourceJson, ApioJsonLDConstants.COLLECTION_VIEW);
+			resource, ApioJsonLDConstants.COLLECTION_VIEW);
+	}
+
+	/**
+	 * Parses the view JsonNode of the resource
+	 *
+	 * @param resourceViewJsonNode
+	 * @return actual collection page or empty string if not present in the
+	 * JsonNode
+	 */
+	public static String getResourceActualPage(JsonNode resourceViewJsonNode) {
+		JsonNode node = resourceViewJsonNode.findValue(ApioJsonLDConstants.ID);
+
+		return _safeReturnValue(node);
+	}
+
+	/**
+	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
+	 * and returns the name of the resource fields
+	 *
+	 * @param resource
+	 * @return <code>List<String></code> Name of the resource fields
+	 */
+	public static List<String> getResourceFieldNames(JsonNode resource) {
+		JsonNode members = getCollectionMemberNode(resource);
+
+		List<String> fieldNames = new ArrayList<>();
+
+		if (!members.isArray()) {
+			_log.error("Not able to fetch the resource fields");
+		}
+
+		JsonNode firstItem = members.get(0);
+
+		Iterator<String> fieldIter = firstItem.fieldNames();
+
+		while (fieldIter.hasNext()) {
+			fieldNames.add(fieldIter.next());
+		}
+
+		return fieldNames;
 	}
 
 	/**
@@ -97,51 +137,10 @@ public class ApioJsonLDUtils {
 		return _safeReturnValue(node);
 	}
 
-	/**
-	 * Parses the view JsonNode of the resource
-	 *
-	 * @param resourceViewJsonNode
-	 * @return actual collection page or empty string if not present in the
-	 * JsonNode
-	 */
-	public static String getResourceActualPage(JsonNode resourceViewJsonNode) {
-		JsonNode node = resourceViewJsonNode.findValue(
-			ApioJsonLDConstants.ID);
-
-		return _safeReturnValue(node);
-	}
-
-	/**
-	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
-	 * and returns the name of the resource fields
-	 *
-	 * @param resourceJson
-	 * @return <code>List<String></code> Name of the resource fields
-	 */
-	public static List<String> getResourceFieldNames(JsonNode resourceJson) {
-		JsonNode members = getCollectionMemberNode(resourceJson);
-
-		List<String> fieldNames = new ArrayList<>();
-
-		if (!members.isArray()) {
-			_log.error("Not able to fetch the resource fields");
-		}
-
-		JsonNode firstItem = members.get(0);
-
-		Iterator<String> fieldIter = firstItem.fieldNames();
-
-		while (fieldIter.hasNext()) {
-			fieldNames.add(fieldIter.next());
-		}
-
-		return fieldNames;
-	}
-
 	private static JsonNode _findCollectionNode(
-		JsonNode collectionJson, String nodeName) {
+		JsonNode resource, String nodeName) {
 
-		JsonNode jsonNode = collectionJson.findPath(nodeName);
+		JsonNode jsonNode = resource.findPath(nodeName);
 
 		if (jsonNode.isMissingNode()) {
 			_log.error("Cannot find the \"{}\" node!", nodeName);
@@ -164,7 +163,7 @@ public class ApioJsonLDUtils {
 		return jsonNode.asText();
 	}
 
-	private static final Logger _log =
-		LoggerFactory.getLogger(ApioJsonLDUtils.class);
+	private static final Logger _log = LoggerFactory.getLogger(
+		ApioJsonLDUtils.class);
 
 }

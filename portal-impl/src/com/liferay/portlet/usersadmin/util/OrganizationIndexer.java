@@ -41,9 +41,11 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -55,6 +57,7 @@ import javax.portlet.PortletResponse;
  * @author Raymond Augé
  * @author Zsigmond Rab
  * @author Hugo Huijser
+ * @author Marco Leo
  */
 @OSGiBeanProperties
 public class OrganizationIndexer extends BaseIndexer<Organization> {
@@ -162,6 +165,38 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 		}
 	}
 
+	protected String buildNameTreePath(Organization organization)
+		throws PortalException {
+
+		List<Organization> organizations = new ArrayList<>();
+
+		while (organization != null) {
+			organizations.add(organization);
+
+			organization = OrganizationLocalServiceUtil.fetchOrganization(
+				organization.getParentOrganizationId());
+		}
+
+		int size = organizations.size();
+
+		StringBundler sb = new StringBundler(((size - 1) * 4) + 1);
+
+		organization = organizations.get(size - 1);
+
+		sb.append(organization.getName());
+
+		for (int i = size - 2; i >= 0; i--) {
+			organization = organizations.get(i);
+
+			sb.append(StringPool.SPACE);
+			sb.append(StringPool.GREATER_THAN);
+			sb.append(StringPool.SPACE);
+			sb.append(organization.getName());
+		}
+
+		return sb.toString();
+	}
+
 	@Override
 	protected void doDelete(Organization organization) throws Exception {
 		deleteDocument(
@@ -180,9 +215,10 @@ public class OrganizationIndexer extends BaseIndexer<Organization> {
 			Field.ORGANIZATION_ID, organization.getOrganizationId());
 		document.addKeyword(Field.TREE_PATH, organization.buildTreePath());
 		document.addKeyword(Field.TYPE, organization.getType());
-
 		document.addKeyword(
 			"parentOrganizationId", organization.getParentOrganizationId());
+		document.addTextSortable(
+			"nameTreePath", buildNameTreePath(organization));
 
 		populateAddresses(
 			document, organization.getAddresses(), organization.getRegionId(),

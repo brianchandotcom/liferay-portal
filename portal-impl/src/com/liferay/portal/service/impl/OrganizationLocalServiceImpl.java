@@ -1875,7 +1875,9 @@ public class OrganizationLocalServiceImpl
 		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);
 
-		if (oldParentOrganizationId != parentOrganizationId) {
+		if (!oldName.equals(name) ||
+			(oldParentOrganizationId != parentOrganizationId)) {
+
 			long[] reindexOrganizationIds = getReindexOrganizationIds(
 				organization);
 

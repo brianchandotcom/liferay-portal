@@ -6,4 +6,5 @@ Export-Package:\
 	com.liferay.social.networking.exception,\
 	com.liferay.social.networking.model,\
 	com.liferay.social.networking.service,\
-	com.liferay.social.networking.service.persistence
+	com.liferay.social.networking.service.persistence,\
+	com.liferay.social.networking.wall.social

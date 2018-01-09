@@ -5863,7 +5863,6 @@
 		<execute macro="Workflow#updateDueDateAssignedToMeTaskByActions">
 			<var name="workflowAssetTitle" value="Kaleo Forms Process" />
 			<var name="workflowAssetType" value="${workflowAssetType}" />
-			<var name="workflowDueDate" value="09/30/2017" />
 			<var name="workflowDueDateTime" value="04:30 PM" />
 			<var name="workflowTask" value="Review" />
 		</execute>

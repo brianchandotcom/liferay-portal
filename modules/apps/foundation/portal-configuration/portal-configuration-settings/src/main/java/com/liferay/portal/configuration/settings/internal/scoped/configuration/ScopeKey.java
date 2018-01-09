@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.configuration.settings.internal;
+package com.liferay.portal.configuration.settings.internal.scoped.configuration;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.kernel.util.StringBundler;

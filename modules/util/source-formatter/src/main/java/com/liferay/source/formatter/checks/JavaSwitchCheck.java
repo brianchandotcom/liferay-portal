@@ -32,10 +32,6 @@ public class JavaSwitchCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return content;
-		}
-
 		Matcher matcher = _switchStatementPattern.matcher(content);
 
 		while (matcher.find()) {

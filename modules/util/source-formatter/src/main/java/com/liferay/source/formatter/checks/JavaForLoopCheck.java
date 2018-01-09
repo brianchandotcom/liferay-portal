@@ -34,10 +34,6 @@ public class JavaForLoopCheck extends BaseJavaTermCheck {
 		String fileName, String absolutePath, JavaTerm javaTerm,
 		String fileContent) {
 
-		if (isSubrepository() || isReadOnly(absolutePath)) {
-			return javaTerm.getContent();
-		}
-
 		String javaTermContent = _formatForLoop(
 			javaTerm.getContent(), _arrayPattern);
 

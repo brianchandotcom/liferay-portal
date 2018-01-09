@@ -1,0 +1,189 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package com.liferay.source.formatter.checkstyle.checks;
+
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+
+import com.puppycrawl.tools.checkstyle.api.DetailAST;
+import com.puppycrawl.tools.checkstyle.api.TokenTypes;
+
+import java.util.List;
+import java.util.Set;
+
+/**
+ * @author Hugo Huijser
+ */
+public class AppendCheck extends StringConcatenationCheck {
+
+	@Override
+	public int[] getDefaultTokens() {
+		return new int[] {TokenTypes.CTOR_DEF, TokenTypes.METHOD_DEF};
+	}
+
+	@Override
+	protected void doVisitToken(DetailAST detailAST) {
+		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
+			detailAST, "append");
+
+		boolean previousParameterIsLiteralString = false;
+
+		for (int i = 0; i < methodCallASTList.size(); i++) {
+			DetailAST methodCallAST = methodCallASTList.get(i);
+
+			String variableName = _getVariableName(methodCallAST);
+
+			if (!_isVariableType(variableName, detailAST, "StringBundler")) {
+				continue;
+			}
+
+			DetailAST parameterDetailAST = _getParameterDetailAST(
+				methodCallAST);
+
+			if (parameterDetailAST == null) {
+				continue;
+			}
+
+			_checkPlusOperator(parameterDetailAST);
+
+			if (parameterDetailAST.getType() != TokenTypes.STRING_LITERAL) {
+				previousParameterIsLiteralString = false;
+
+				continue;
+			}
+			else if (!previousParameterIsLiteralString) {
+				previousParameterIsLiteralString = true;
+
+				continue;
+			}
+
+			DetailAST previousMethodCallAST = methodCallASTList.get(i - 1);
+
+			if (!variableName.equals(_getVariableName(previousMethodCallAST))) {
+				continue;
+			}
+
+			DetailAST previousParameterDetailAST = _getParameterDetailAST(
+				previousMethodCallAST);
+
+			if ((previousParameterDetailAST != null) &&
+				(previousParameterDetailAST.getType() ==
+					TokenTypes.STRING_LITERAL)) {
+
+				_checkLiteralStrings(
+					methodCallAST, previousMethodCallAST,
+					parameterDetailAST.getText(),
+					previousParameterDetailAST.getText());
+			}
+		}
+	}
+
+	private void _checkLiteralStrings(
+		DetailAST methodCallAST, DetailAST previousMethodCallAST,
+		String literalStringValue, String previousLiteralStringValue) {
+
+		if (DetailASTUtil.getEndLine(previousMethodCallAST) !=
+				(methodCallAST.getLineNo() - 1)) {
+
+			return;
+		}
+
+		previousLiteralStringValue = previousLiteralStringValue.substring(
+			1, previousLiteralStringValue.length() - 1);
+
+		if (previousLiteralStringValue.endsWith("\\n")) {
+			return;
+		}
+
+		literalStringValue = literalStringValue.substring(
+			1, literalStringValue.length() - 1);
+
+		if (literalStringValue.startsWith(StringPool.SPACE)) {
+			log(
+				methodCallAST.getLineNo(), _MSG_INVALID_START_CHARACTER,
+				StringPool.SPACE);
+		}
+	}
+
+	private void _checkPlusOperator(DetailAST parameterDetailAST) {
+		if (parameterDetailAST.getType() != TokenTypes.PLUS) {
+			return;
+		}
+
+		List<DetailAST> literalStringASTList = DetailASTUtil.getAllChildTokens(
+			parameterDetailAST, true, TokenTypes.STRING_LITERAL);
+
+		if (!literalStringASTList.isEmpty()) {
+			log(parameterDetailAST.getLineNo(), _MSG_INCORRECT_PLUS);
+		}
+	}
+
+	private DetailAST _getParameterDetailAST(DetailAST methodCallAST) {
+		DetailAST elistAST = methodCallAST.findFirstToken(TokenTypes.ELIST);
+
+		DetailAST exprAST = elistAST.findFirstToken(TokenTypes.EXPR);
+
+		if (exprAST == null) {
+			return null;
+		}
+
+		return exprAST.getFirstChild();
+	}
+
+	private String _getVariableName(DetailAST methodCallAST) {
+		DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
+
+		if (dotAST == null) {
+			return null;
+		}
+
+		DetailAST nameAST = dotAST.findFirstToken(TokenTypes.IDENT);
+
+		if (nameAST == null) {
+			return null;
+		}
+
+		return nameAST.getText();
+	}
+
+	private boolean _isVariableType(
+		String variableName, DetailAST detailAST, String typeName) {
+
+		if (variableName == null) {
+			return false;
+		}
+
+		Set<String> variableTypeNames = DetailASTUtil.getVariableTypeNames(
+			detailAST, variableName);
+
+		if (variableTypeNames.isEmpty()) {
+			return false;
+		}
+
+		for (String variableTypeName : variableTypeNames) {
+			if (!variableTypeName.equals(typeName)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	private static final String _MSG_INCORRECT_PLUS = "plus.incorrect";
+
+	private static final String _MSG_INVALID_START_CHARACTER =
+		"start.character.invalid";
+
+}

@@ -157,7 +157,6 @@ public class CommerceOrderLocalServiceImpl
 
 			commerceOrderItemLocalService.addCommerceOrderItem(
 				commerceOrder.getCommerceOrderId(),
-				commerceCartItem.getCPDefinitionId(),
 				commerceCartItem.getCPInstanceId(),
 				commerceCartItem.getQuantity(), commerceCartItem.getJson(),
 				price, serviceContext);

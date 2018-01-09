@@ -18,7 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
-import com.liferay.commerce.product.service.CPDefinitionLocalServiceUtil;
 import com.liferay.commerce.product.service.CPInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -34,8 +33,9 @@ public class CommerceOrderItemImpl extends CommerceOrderItemBaseImpl {
 
 	@Override
 	public CPDefinition getCPDefinition() throws PortalException {
-		return CPDefinitionLocalServiceUtil.getCPDefinition(
-			getCPDefinitionId());
+		CPInstance cpInstance = getCPInstance();
+
+		return cpInstance.getCPDefinition();
 	}
 
 	@Override

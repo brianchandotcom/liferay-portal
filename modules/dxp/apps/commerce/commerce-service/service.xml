@@ -401,7 +401,6 @@
 		<!-- Other fields -->
 
 		<column name="commerceOrderId" type="long" />
-		<column name="CPDefinitionId" type="long" />
 		<column name="CPInstanceId" type="long" />
 		<column name="quantity" type="int" />
 		<column name="shippedQuantity" type="int" />
@@ -420,9 +419,6 @@
 
 		<finder name="CommerceOrderId" return-type="Collection">
 			<finder-column name="commerceOrderId" />
-		</finder>
-		<finder name="CPDefinitionId" return-type="Collection">
-			<finder-column name="CPDefinitionId" />
 		</finder>
 		<finder name="CPInstanceId" return-type="Collection">
 			<finder-column name="CPInstanceId" />

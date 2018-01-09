@@ -14,7 +14,6 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -110,11 +109,9 @@ public class AppendCheck extends StringConcatenationCheck {
 		literalStringValue = literalStringValue.substring(
 			1, literalStringValue.length() - 1);
 
-		if (literalStringValue.startsWith(StringPool.SPACE)) {
-			log(
-				methodCallAST.getLineNo(), _MSG_INVALID_START_CHARACTER,
-				StringPool.SPACE);
-		}
+		checkLiteralStringStartAndEndCharacter(
+			previousLiteralStringValue, literalStringValue,
+			previousMethodCallAST.getLineNo());
 	}
 
 	private void _checkPlusOperator(DetailAST parameterDetailAST) {
@@ -182,8 +179,5 @@ public class AppendCheck extends StringConcatenationCheck {
 	}
 
 	private static final String _MSG_INCORRECT_PLUS = "plus.incorrect";
-
-	private static final String _MSG_INVALID_START_CHARACTER =
-		"start.character.invalid";
 
 }

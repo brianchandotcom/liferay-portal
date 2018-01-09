@@ -61,7 +61,7 @@
 			<type>boolean</type>
 		</attribute>
 		<attribute>
-			<description>The type of staging to be used. The possible values for the staging type are <![CDATA[<code>publish_to_live</code>]]> or <![CDATA[<code>publish_to_remote</code>]]>.</description>
+			<description>The staging type to be used. The possible values for the staging type are <![CDATA[<code>publish_to_live</code>]]> or <![CDATA[<code>publish_to_remote</code>]]>.</description>
 			<name>type</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

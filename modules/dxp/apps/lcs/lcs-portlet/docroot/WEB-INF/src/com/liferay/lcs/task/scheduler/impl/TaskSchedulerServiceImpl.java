@@ -75,8 +75,8 @@ public class TaskSchedulerServiceImpl implements TaskSchedulerService {
 				taskName);
 
 			if (scheduledTask == null) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(taskName + " task is not supported");
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to find task " + taskName);
 				}
 
 				return;

@@ -44,6 +44,12 @@ public class ServerMetricsTaskFactory {
 			serverMetricsTask = new WeblogicServerMetricsTask();
 		}
 		else {
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					ServerDetector.getServerId() +
+						" server metrics are not supported in LCS");
+			}
+
 			return null;
 		}
 

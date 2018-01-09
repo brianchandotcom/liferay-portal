@@ -23,8 +23,8 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.marketplace.store.web.constants.MarketplaceStorePortletKeys" %><%@
-page import="com.liferay.marketplace.store.web.constants.MarketplaceStoreWebKeys" %><%@
+<%@ page import="com.liferay.marketplace.constants.MarketplaceStorePortletKeys" %><%@
+page import="com.liferay.marketplace.store.web.internal.constants.MarketplaceStoreWebKeys" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@

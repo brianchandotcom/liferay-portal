@@ -77,17 +77,6 @@ public class CommerceOrderItemLocalServiceImpl
 	}
 
 	@Override
-	public CommerceOrderItem addCommerceOrderItem(
-			long commerceOrderId, long cpInstanceId, int quantity, String json,
-			double price, ServiceContext serviceContext)
-		throws PortalException {
-
-		return addCommerceOrderItem(
-			commerceOrderId, cpInstanceId, quantity, 0, json, price,
-			serviceContext);
-	}
-
-	@Override
 	public CommerceOrderItem deleteCommerceOrderItem(
 			CommerceOrderItem commerceOrderItem)
 		throws PortalException {

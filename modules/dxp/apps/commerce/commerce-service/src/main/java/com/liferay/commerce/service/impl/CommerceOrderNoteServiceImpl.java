@@ -14,11 +14,113 @@
 
 package com.liferay.commerce.service.impl;
 
+import com.liferay.commerce.constants.CommerceActionKeys;
+import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderNote;
 import com.liferay.commerce.service.base.CommerceOrderNoteServiceBaseImpl;
+import com.liferay.commerce.service.permission.CommercePermission;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.List;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 public class CommerceOrderNoteServiceImpl
 	extends CommerceOrderNoteServiceBaseImpl {
+
+	@Override
+	public CommerceOrderNote addCommerceOrderNote(
+			long commerceOrderId, String content, boolean restricted,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderNoteLocalService.addCommerceOrderNote(
+			commerceOrderId, content, restricted, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceOrderNote(long commerceOrderNoteId)
+		throws PortalException {
+
+		CommerceOrderNote commerceOrderNote =
+			commerceOrderNoteLocalService.getCommerceOrderNote(
+				commerceOrderNoteId);
+
+		checkCommerceOrder(commerceOrderNote.getCommerceOrderId());
+
+		commerceOrderNoteLocalService.deleteCommerceOrderNote(
+			commerceOrderNote);
+	}
+
+	@Override
+	public CommerceOrderNote getCommerceOrderNote(long commerceOrderNoteId)
+		throws PortalException {
+
+		CommerceOrderNote commerceOrderNote =
+			commerceOrderNoteLocalService.getCommerceOrderNote(
+				commerceOrderNoteId);
+
+		long commerceOrderId = commerceOrderNote.getCommerceOrderId();
+
+		if (commerceOrderNote.isRestricted()) {
+			checkCommerceOrder(commerceOrderId);
+		}
+		else {
+			commerceOrderService.getCommerceOrder(commerceOrderId);
+		}
+
+		return commerceOrderNote;
+	}
+
+	@Override
+	public List<CommerceOrderNote> getCommerceOrderNotes(
+			long commerceOrderId, int start, int end)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderNoteLocalService.getCommerceOrderNotes(
+			commerceOrderId, start, end);
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(long commerceOrderId)
+		throws PortalException {
+
+		checkCommerceOrder(commerceOrderId);
+
+		return commerceOrderNoteLocalService.getCommerceOrderNotesCount(
+			commerceOrderId);
+	}
+
+	@Override
+	public CommerceOrderNote updateCommerceOrderNote(
+			long commerceOrderNoteId, String content, boolean restricted)
+		throws PortalException {
+
+		CommerceOrderNote commerceOrderNote =
+			commerceOrderNoteLocalService.getCommerceOrderNote(
+				commerceOrderNoteId);
+
+		checkCommerceOrder(commerceOrderNote.getCommerceOrderId());
+
+		return commerceOrderNoteLocalService.updateCommerceOrderNote(
+			commerceOrderNote.getCommerceOrderNoteId(), content, restricted);
+	}
+
+	protected void checkCommerceOrder(long commerceOrderId)
+		throws PortalException {
+
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
+
+		CommercePermission.check(
+			getPermissionChecker(), commerceOrder.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
+	}
+
 }

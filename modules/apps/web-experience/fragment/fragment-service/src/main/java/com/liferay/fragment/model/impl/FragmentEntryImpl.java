@@ -14,22 +14,15 @@
 
 package com.liferay.fragment.model.impl;
 
-import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.util.FragmentRenderUtil;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.sanitizer.Sanitizer;
-import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.ContentTypes;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
-
-import java.util.Optional;
 
 /**
  * @author Eudaldo Alonso
@@ -38,31 +31,8 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getContent() throws PortalException {
-		StringBundler sb = new StringBundler(7);
-
-		sb.append("<html><head><style>");
-		sb.append(getCss());
-		sb.append("</style><script>");
-		sb.append(getJs());
-		sb.append("</script></head><body>");
-
-		Optional<ServiceContext> serviceContextOptional = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext());
-
-		ServiceContext serviceContext = serviceContextOptional.orElse(
-			new ServiceContext());
-
-		String html = SanitizerUtil.sanitize(
-			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), FragmentEntry.class.getName(),
-			getPrimaryKey(), ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
-			getHtml(), null);
-
-		sb.append(html);
-
-		sb.append("</body></html>");
-
-		return sb.toString();
+		return FragmentRenderUtil.renderFragment(
+			getFragmentEntryId(), getCss(), getHtml(), getJs());
 	}
 
 	@Override

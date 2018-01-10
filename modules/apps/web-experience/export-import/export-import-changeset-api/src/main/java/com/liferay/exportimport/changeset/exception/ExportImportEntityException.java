@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.taglib.exception;
+package com.liferay.exportimport.changeset.exception;
 
 /**
  * @author Akos Thurzo

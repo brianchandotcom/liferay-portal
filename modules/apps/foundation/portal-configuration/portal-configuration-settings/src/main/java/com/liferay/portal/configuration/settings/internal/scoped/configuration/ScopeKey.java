@@ -14,11 +14,14 @@
 
 package com.liferay.portal.configuration.settings.internal.scoped.configuration;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author Drew Brokke
@@ -28,26 +31,39 @@ public class ScopeKey {
 	public ScopeKey(Class<?> objectClass, Scope scope, String scopePrimKey) {
 		Objects.requireNonNull(
 			objectClass,
-			"The objectClass parameter must not be null. A ScopeKey must " +
+			"The object class parameter must not be null. A scope key must " +
 				"correspond to an existing configuration bean class.");
 
 		Objects.requireNonNull(
 			scope,
-			"The scope parameter must not be null. A ScopeKey must " +
-				"correspond to an existing scope from " +
-					"ExtendedObjectClassDefinition.Scope.");
+			StringBundler.concat(
+				"The scope parameter must not be null. A scope key must ",
+				"correspond to an existing scope from ", Scope.class.getName(),
+				"."));
 
 		if (scope.equals(Scope.SYSTEM)) {
+			Stream<Scope> scopeStream = Arrays.stream(Scope.values());
+
+			String scopeNames = scopeStream.filter(
+				scope1 -> !scope1.equals(Scope.SYSTEM)
+			).map(
+				scope1 -> scope1.name()
+			).collect(
+				Collectors.joining(", ")
+			);
+
 			throw new IllegalArgumentException(
-				"A ScopeKey can only be used for the following scopes from " +
-					"ExtendedObjectClassDefinition.Scope: COMPANY, GROUP, " +
-						"PORTLET_INSTANCE.");
+				StringBundler.concat(
+					"A scope key can only be used for the following scopes ",
+					"from ", Scope.class.getName(), ": ", scopeNames, "."));
 		}
 
 		if (Validator.isNull(scopePrimKey)) {
 			throw new IllegalArgumentException(
-				"The scopePrimKey parameter must not be null. A ScopeKey " +
-					"must correspond to a primary key for the given scope.");
+				StringBundler.concat(
+					"The scope primary key parameter must not be null. A ",
+					"scope key must correspond to a primary key for the given ",
+					"scope."));
 		}
 
 		_objectClass = objectClass;

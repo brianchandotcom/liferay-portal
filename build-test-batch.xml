@@ -1917,9 +1917,7 @@ app.server.type=@{app.server.type}]]></echo>
 			test.plugin.zip.url="${test.plugin.zip.url}"
 			test.plugins.war.zip.url="${test.plugins.war.zip.url}"
 			test.portal.bundle.version="${test.portal.bundle.version}"
-			test.portal.bundle.dependencies.zip.url="${test.portal.bundle.dependencies.zip.url}"
-			test.portal.bundle.osgi.zip.url="${test.portal.bundle.osgi.zip.url}"
-			test.portal.bundle.war.url="${test.portal.bundle.war.url}"
+			test.portal.bundle.zip.url="${test.portal.bundle.zip.url}"
 			test.portal.lpkg.name="${test.portal.lpkg.name}"
 			test.sql.zip.url="${test.sql.zip.url}"
 		/>

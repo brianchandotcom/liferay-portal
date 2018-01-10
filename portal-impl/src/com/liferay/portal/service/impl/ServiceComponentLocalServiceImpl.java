@@ -168,12 +168,12 @@ public class ServiceComponentLocalServiceImpl
 				serviceComponent.setBuildNumber(buildNumber);
 				serviceComponent.setBuildDate(buildDate);
 			}
-			else if (serviceComponent.getBuildNumber() > buildNumber) {
+			else if (previousBuildNumber > buildNumber) {
 				throw new OldServiceComponentException(
 					StringBundler.concat(
 						"Build namespace ", buildNamespace,
 						" has build number ",
-						String.valueOf(serviceComponent.getBuildNumber()),
+						String.valueOf(previousBuildNumber),
 						" which is newer than ", String.valueOf(buildNumber)));
 			}
 			else {

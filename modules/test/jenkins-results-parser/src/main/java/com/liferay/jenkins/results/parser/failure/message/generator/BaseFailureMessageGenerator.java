@@ -18,7 +18,6 @@ import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
-import java.util.Hashtable;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -30,10 +29,6 @@ import org.dom4j.Element;
  */
 public abstract class BaseFailureMessageGenerator
 	implements FailureMessageGenerator {
-
-	@Override
-	public abstract String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties);
 
 	@Override
 	public abstract Element getMessageElement(Build build);

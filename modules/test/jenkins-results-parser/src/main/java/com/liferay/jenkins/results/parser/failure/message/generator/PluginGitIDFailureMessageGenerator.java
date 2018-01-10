@@ -18,7 +18,6 @@ import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
-import java.util.Hashtable;
 import java.util.Map;
 
 import org.dom4j.Element;
@@ -28,43 +27,6 @@ import org.dom4j.Element;
  */
 public class PluginGitIDFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		if (!consoleText.contains("fatal: Could not parse object")) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<p>Please update ");
-
-		sb.append("<strong><a href=\"https://github.com/");
-		sb.append(properties.get("github.origin.name"));
-		sb.append("/");
-		sb.append(properties.get("portal.repository"));
-		sb.append("/blob/");
-		sb.append(properties.get("github.sender.branch.name"));
-		sb.append("/git-commit-plugins\">git-commit-plugins</a></strong> to ");
-		sb.append("an existing Git ID from <strong>");
-		sb.append("<a href=\"https://github.com/liferay/");
-		sb.append(properties.get("plugins.repository"));
-		sb.append("/commits/");
-		sb.append(properties.get("plugins.branch.name"));
-		sb.append("\">");
-		sb.append(properties.get("plugins.repository"));
-		sb.append("/");
-		sb.append(properties.get("plugins.branch.name"));
-		sb.append("</a>.</strong></p>");
-
-		int end = consoleText.indexOf("merge-test-results:");
-
-		sb.append(getConsoleTextSnippet(consoleText, true, end));
-
-		return sb.toString();
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

@@ -17,52 +17,12 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
-import java.util.Hashtable;
-
 import org.dom4j.Element;
 
 /**
  * @author Peter Yoo
  */
 public class RebaseFailureMessageGenerator extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		if (!consoleText.contains(_TOKEN_REBASE_END) ||
-			!consoleText.contains(_TOKEN_REBASE_START)) {
-
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<p>Please fix <strong>rebase errors</strong> on <strong>");
-		sb.append("<a href=\"https://github.com/");
-		sb.append(properties.get("github.origin.name"));
-		sb.append("/");
-		sb.append(properties.get("repository"));
-		sb.append("/tree/");
-		sb.append(properties.get("github.sender.branch.name"));
-		sb.append("\">");
-		sb.append(properties.get("github.origin.name"));
-		sb.append("/");
-		sb.append(properties.get("github.sender.branch.name"));
-		sb.append("</a></strong>.</p>");
-
-		int end = consoleText.indexOf(_TOKEN_REBASE_END);
-
-		end = consoleText.lastIndexOf("\n", end);
-
-		int start = consoleText.lastIndexOf(_TOKEN_REBASE_START, end);
-
-		start = consoleText.lastIndexOf("\n", start);
-
-		sb.append(getConsoleTextSnippet(consoleText, true, start, end));
-
-		return sb.toString();
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

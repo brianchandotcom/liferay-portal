@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.staging.taglib.action;
+package com.liferay.exportimport.changeset.web.internal.portlet.action;
 
-import com.liferay.exportimport.constants.ExportImportPortletKeys;
+import com.liferay.exportimport.changeset.constants.ChangesetPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 
 import javax.portlet.PortletException;

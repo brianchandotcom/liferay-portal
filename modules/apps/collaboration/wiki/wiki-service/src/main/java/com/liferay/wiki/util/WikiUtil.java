@@ -159,7 +159,9 @@ public class WikiUtil {
 
 		for (String visibleNodeName : visibleNodeNames) {
 			for (WikiNode node : nodes) {
-				if (node.getName().equals(visibleNodeName)) {
+				String name = node.getName();
+
+				if (name.equals(visibleNodeName)) {
 					orderedNodes.add(node);
 
 					nodes.remove(node);

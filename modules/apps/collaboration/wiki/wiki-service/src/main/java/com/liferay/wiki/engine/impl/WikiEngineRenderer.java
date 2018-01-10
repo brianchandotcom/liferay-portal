@@ -307,7 +307,9 @@ public class WikiEngineRenderer {
 			matcher.appendReplacement(sb, replacement);
 		}
 
-		return matcher.appendTail(sb).toString();
+		sb = matcher.appendTail(sb);
+
+		return sb.toString();
 	}
 
 	private String _replaceAttachments(

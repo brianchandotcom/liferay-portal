@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.search.generic.WildcardQueryImpl;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.util.BytesRef;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -196,7 +198,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 			}
 
 			TermQuery termQuery = new TermQueryImpl(
-				terms[0].field(), sb.toString().trim());
+				terms[0].field(), StringUtil.trim(sb.toString()));
 
 			booleanQuery.add(termQuery, booleanClauseOccur);
 		}
@@ -217,10 +219,12 @@ public class LuceneRepositorySearchQueryTermBuilder
 			org.apache.lucene.search.TermRangeQuery termRangeQuery =
 				(org.apache.lucene.search.TermRangeQuery)query;
 
+			BytesRef lowerTerm = termRangeQuery.getLowerTerm();
+			BytesRef upperTerm = termRangeQuery.getUpperTerm();
+
 			booleanQuery.addRangeTerm(
-				termRangeQuery.getField(),
-				termRangeQuery.getLowerTerm().utf8ToString(),
-				termRangeQuery.getUpperTerm().utf8ToString());
+				termRangeQuery.getField(), lowerTerm.utf8ToString(),
+				upperTerm.utf8ToString());
 		}
 		else if (query instanceof org.apache.lucene.search.WildcardQuery) {
 			org.apache.lucene.search.WildcardQuery luceneWildcardQuery =

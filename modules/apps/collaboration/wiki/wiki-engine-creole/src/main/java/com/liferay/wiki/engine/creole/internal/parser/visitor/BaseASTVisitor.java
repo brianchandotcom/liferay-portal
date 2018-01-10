@@ -121,7 +121,9 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	@Override
 	public void visit(ImageNode imageNode) {
 		if (imageNode.hasAltCollectionNode()) {
-			traverse(imageNode.getAltNode().getASTNodes());
+			CollectionNode altNode = imageNode.getAltNode();
+
+			traverse(altNode.getASTNodes());
 		}
 	}
 
@@ -144,7 +146,9 @@ public abstract class BaseASTVisitor implements ASTVisitor {
 	@Override
 	public void visit(LinkNode linkNode) {
 		if (linkNode.hasAltCollectionNode()) {
-			traverse(linkNode.getAltCollectionNode().getASTNodes());
+			CollectionNode altCollectionNode = linkNode.getAltCollectionNode();
+
+			traverse(altCollectionNode.getASTNodes());
 		}
 	}
 

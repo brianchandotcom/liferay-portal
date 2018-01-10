@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -136,8 +137,10 @@ public class MBThreadIndexer extends BaseIndexer<MBThread> {
 			document.addKeyword("discussion", true);
 		}
 
-		document.addKeyword(
-			"lastPostDate", mbThread.getLastPostDate().getTime());
+		Date lastPostDate = mbThread.getLastPostDate();
+
+		document.addKeyword("lastPostDate", lastPostDate.getTime());
+
 		document.addKeyword(
 			"participantUserIds", mbThread.getParticipantUserIds());
 

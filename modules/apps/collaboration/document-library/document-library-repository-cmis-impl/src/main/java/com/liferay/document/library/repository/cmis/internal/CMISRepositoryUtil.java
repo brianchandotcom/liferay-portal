@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -117,7 +118,10 @@ public class CMISRepositoryUtil {
 				new ContextClassLoaderSetter(
 					CMISRepositoryUtil.class.getClassLoader())) {
 
-			return _sessionFactory.getRepositories(parameters).get(0);
+			List<org.apache.chemistry.opencmis.client.api.Repository>
+				repositories = _sessionFactory.getRepositories(parameters);
+
+			return repositories.get(0);
 		}
 	}
 

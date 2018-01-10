@@ -44,11 +44,10 @@ public class CategoryTitleComparator<T> extends OrderByComparator<T> {
 
 	@Override
 	public int compare(T t1, T t2) {
-		String name1 = getCategoryName(t1);
-		String name2 = getCategoryName(t2);
+		String name1 = StringUtil.toLowerCase(getCategoryName(t1));
+		String name2 = StringUtil.toLowerCase(getCategoryName(t2));
 
-		int value = StringUtil.toLowerCase(name1).compareTo(
-			StringUtil.toLowerCase(name2));
+		int value = name1.compareTo(name2);
 
 		if (_ascending) {
 			return value;

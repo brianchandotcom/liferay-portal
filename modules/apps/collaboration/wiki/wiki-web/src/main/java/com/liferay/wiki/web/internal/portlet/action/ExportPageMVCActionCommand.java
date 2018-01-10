@@ -182,8 +182,10 @@ public class ExportPageMVCActionCommand extends BaseMVCActionCommand {
 		sb.append("</body>");
 		sb.append("</html>");
 
+		String s = sb.toString();
+
 		InputStream is = new UnsyncByteArrayInputStream(
-			sb.toString().getBytes(StringPool.UTF8));
+			s.getBytes(StringPool.UTF8));
 
 		String sourceExtension = "html";
 

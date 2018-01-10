@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.PortletURLUtil;
@@ -98,9 +99,9 @@ public class FlagsTag extends TemplateRendererTag {
 			putValue("signedIn", signedIn);
 
 			if (signedIn) {
-				putValue(
-					"reporterEmailAddress",
-					themeDisplay.getUser().getEmailAddress());
+				User user = themeDisplay.getUser();
+
+				putValue("reporterEmailAddress", user.getEmailAddress());
 			}
 
 			String title = message;

@@ -16,6 +16,7 @@ package com.liferay.portal.security.sso.ntlm.internal;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonAuthenticator;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonIdentityInfo;
 import com.liferay.portal.security.sso.ntlm.internal.msrpc.NetlogonNetworkInfo;
@@ -92,8 +93,16 @@ public class Netlogon {
 			SmbException smbe = new SmbException(
 				netrLogonSamLogon.getStatus(), false);
 
-			throw new NtlmLogonException(
-				"Unable to authenticate user: " + smbe.getMessage());
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Unable to authenticate user ");
+			sb.append(userName);
+			sb.append(": ");
+			sb.append(smbe.getMessage());
+
+			_log.warn(sb.toString());
+
+			return null;
 		}
 		catch (NoSuchAlgorithmException nsae) {
 			throw new NtlmLogonException(

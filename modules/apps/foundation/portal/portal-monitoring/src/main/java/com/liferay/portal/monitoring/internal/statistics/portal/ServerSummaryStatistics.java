@@ -72,8 +72,10 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		for (CompanyStatistics companyStatistics :
 				_serverStatistics.getCompanyStatisticsSet()) {
 
-			errorCount +=
-				companyStatistics.getRequestStatistics().getErrorCount();
+			RequestStatistics requestStatistics =
+				companyStatistics.getRequestStatistics();
+
+			errorCount += requestStatistics.getErrorCount();
 		}
 
 		return errorCount;
@@ -150,8 +152,10 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		for (CompanyStatistics companyStatistics :
 				_serverStatistics.getCompanyStatisticsSet()) {
 
-			requestCount +=
-				companyStatistics.getRequestStatistics().getRequestCount();
+			RequestStatistics requestStatistics =
+				companyStatistics.getRequestStatistics();
+
+			requestCount += requestStatistics.getRequestCount();
 		}
 
 		return requestCount;
@@ -178,8 +182,10 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		for (CompanyStatistics companyStatistics :
 				_serverStatistics.getCompanyStatisticsSet()) {
 
-			successCount +=
-				companyStatistics.getRequestStatistics().getSuccessCount();
+			RequestStatistics requestStatistics =
+				companyStatistics.getRequestStatistics();
+
+			successCount += requestStatistics.getSuccessCount();
 		}
 
 		return successCount;
@@ -206,8 +212,10 @@ public class ServerSummaryStatistics implements SummaryStatistics {
 		for (CompanyStatistics companyStatistics :
 				_serverStatistics.getCompanyStatisticsSet()) {
 
-			timeoutCount +=
-				companyStatistics.getRequestStatistics().getTimeoutCount();
+			RequestStatistics requestStatistics =
+				companyStatistics.getRequestStatistics();
+
+			timeoutCount += requestStatistics.getTimeoutCount();
 		}
 
 		return timeoutCount;

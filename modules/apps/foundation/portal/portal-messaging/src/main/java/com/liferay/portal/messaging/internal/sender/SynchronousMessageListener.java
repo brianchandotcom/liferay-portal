@@ -49,7 +49,9 @@ public class SynchronousMessageListener implements MessageListener {
 
 	@Override
 	public void receive(Message message) {
-		if (!message.getResponseId().equals(_responseId)) {
+		String responseId = message.getResponseId();
+
+		if (!responseId.equals(_responseId)) {
 			return;
 		}
 

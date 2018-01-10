@@ -283,9 +283,10 @@ public class OpenSSOImpl implements OpenSSO {
 		int responseCode = httpURLConnection.getResponseCode();
 
 		if (responseCode == HttpURLConnection.HTTP_OK) {
-			String data = StringUtil.read(httpURLConnection.getInputStream());
+			String data = StringUtil.toLowerCase(
+				StringUtil.read(httpURLConnection.getInputStream()));
 
-			if (StringUtil.toLowerCase(data).contains("boolean=true")) {
+			if (data.contains("boolean=true")) {
 				authenticated = true;
 			}
 		}

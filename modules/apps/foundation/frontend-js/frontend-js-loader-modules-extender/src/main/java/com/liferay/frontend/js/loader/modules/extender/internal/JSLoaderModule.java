@@ -309,7 +309,10 @@ public class JSLoaderModule {
 	}
 
 	private boolean _matchesWildcard(String text, String pattern) {
-		return text.matches(pattern.replace("?", ".?").replace("*", ".*?"));
+		pattern = StringUtil.replace(
+			pattern, new String[] {"?", "*"}, new String[] {".?", ".*"});
+
+		return text.matches(pattern);
 	}
 
 	private final boolean _applyVersioning;

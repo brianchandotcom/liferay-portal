@@ -71,10 +71,12 @@ public class UserGroupPagesPermissionsPortletConfigurationIcon
 		try {
 			UserGroup userGroup = ActionUtil.getUserGroup(portletRequest);
 
+			Group userGroupGroup = userGroup.getGroup();
+
 			url = PermissionsURLTag.doTag(
 				StringPool.BLANK, Group.class.getName(),
 				themeDisplay.getScopeGroupName(), null,
-				String.valueOf(userGroup.getGroup().getGroupId()),
+				String.valueOf(userGroupGroup.getGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,
 				themeDisplay.getRequest());
 		}

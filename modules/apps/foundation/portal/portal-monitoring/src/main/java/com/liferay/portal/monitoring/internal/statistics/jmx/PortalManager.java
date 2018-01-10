@@ -16,6 +16,7 @@ package com.liferay.portal.monitoring.internal.statistics.jmx;
 
 import com.liferay.portal.kernel.monitoring.MonitoringException;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.monitoring.internal.statistics.portal.CompanyStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portal.ServerStatistics;
 import com.liferay.portal.monitoring.internal.statistics.portal.ServerSummaryStatistics;
 
@@ -142,11 +143,17 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 	}
 
 	public long getStartTime(long companyId) throws MonitoringException {
-		return _serverStatistics.getCompanyStatistics(companyId).getStartTime();
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return companyStatistics.getStartTime();
 	}
 
 	public long getStartTime(String webId) throws MonitoringException {
-		return _serverStatistics.getCompanyStatistics(webId).getStartTime();
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return companyStatistics.getStartTime();
 	}
 
 	@Override
@@ -189,12 +196,18 @@ public class PortalManager extends StandardMBean implements PortalManagerMBean {
 
 	@Override
 	public long getUptime(long companyId) throws MonitoringException {
-		return _serverStatistics.getCompanyStatistics(companyId).getUptime();
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(companyId);
+
+		return companyStatistics.getUptime();
 	}
 
 	@Override
 	public long getUptime(String webId) throws MonitoringException {
-		return _serverStatistics.getCompanyStatistics(webId).getUptime();
+		CompanyStatistics companyStatistics =
+			_serverStatistics.getCompanyStatistics(webId);
+
+		return companyStatistics.getUptime();
 	}
 
 	@Override

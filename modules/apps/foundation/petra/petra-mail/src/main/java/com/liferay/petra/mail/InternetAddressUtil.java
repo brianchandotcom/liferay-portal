@@ -50,7 +50,9 @@ public class InternetAddressUtil {
 	}
 
 	public static boolean isValid(String emailAddress) {
-		return EmailValidator.getInstance().isValid(emailAddress);
+		EmailValidator emailValidator = EmailValidator.getInstance();
+
+		return emailValidator.isValid(emailAddress);
 	}
 
 	public static InternetAddress[] removeEntry(

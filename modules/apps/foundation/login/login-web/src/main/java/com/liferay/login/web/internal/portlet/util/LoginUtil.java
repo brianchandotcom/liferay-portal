@@ -153,9 +153,11 @@ public class LoginUtil {
 		if ((login == null) || login.equals(StringPool.NULL)) {
 			login = CookieKeys.getCookie(request, CookieKeys.LOGIN, false);
 
+			String authType = company.getAuthType();
+
 			if (PropsValues.COMPANY_LOGIN_PREPOPULATE_DOMAIN &&
 				Validator.isNull(login) &&
-				company.getAuthType().equals(CompanyConstants.AUTH_TYPE_EA)) {
+				authType.equals(CompanyConstants.AUTH_TYPE_EA)) {
 
 				login = "@".concat(company.getMx());
 			}

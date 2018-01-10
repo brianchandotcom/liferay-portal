@@ -64,8 +64,10 @@ public class AuditFilter extends BaseFilter implements TryFilter {
 			auditRequestThreadLocal.setRealUserId(userId.longValue());
 		}
 
-		auditRequestThreadLocal.setRequestURL(
-			request.getRequestURL().toString());
+		StringBuffer sb = request.getRequestURL();
+
+		auditRequestThreadLocal.setRequestURL(sb.toString());
+
 		auditRequestThreadLocal.setServerName(request.getServerName());
 		auditRequestThreadLocal.setServerPort(request.getServerPort());
 		auditRequestThreadLocal.setSessionID(session.getId());

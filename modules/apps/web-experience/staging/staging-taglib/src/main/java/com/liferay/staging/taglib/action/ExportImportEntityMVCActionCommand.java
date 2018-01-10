@@ -61,7 +61,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ExportImportPortletKeys.ENTITY_SET,
+		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"mvc.command.name=exportImportEntity"
 	},
 	service = MVCActionCommand.class
@@ -161,7 +161,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 					buildExportPortletSettingsMap(
 						themeDisplay.getUser(), themeDisplay.getPlid(),
 						themeDisplay.getScopeGroupId(),
-						ExportImportPortletKeys.ENTITY_SET, parameterMap,
+						ChangesetPortletKeys.CHANGESET, parameterMap,
 						_exportImportHelper.getPortletExportFileName(portlet));
 
 			ExportImportConfiguration exportImportConfiguration =
@@ -214,7 +214,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 						themeDisplay.getUser(), themeDisplay.getScopeGroupId(),
 						themeDisplay.getPlid(), liveGroupId,
 						themeDisplay.getPlid(),
-						ExportImportPortletKeys.ENTITY_SET, parameterMap);
+						ChangesetPortletKeys.CHANGESET, parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.

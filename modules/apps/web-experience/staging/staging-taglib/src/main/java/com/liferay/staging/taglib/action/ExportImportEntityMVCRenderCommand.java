@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + ExportImportPortletKeys.ENTITY_SET,
+		"javax.portlet.name=" + ChangesetPortletKeys.CHANGESET,
 		"mvc.command.name=exportImportEntity"
 	},
 	service = MVCRenderCommand.class

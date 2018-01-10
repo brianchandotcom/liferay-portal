@@ -134,10 +134,9 @@ public class AnnouncementsEntryUADEntityExporterTest
 			repository.getRepositoryId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "UADExport");
 
-		String fileName = uadEntityId + StringPool.PERIOD + "json";
-
 		return PortletFileRepositoryUtil.getPortletFileEntry(
-			guestGroup.getGroupId(), folder.getFolderId(), fileName);
+			guestGroup.getGroupId(), folder.getFolderId(),
+			uadEntityId + ".json");
 	}
 
 	private void _verifyFileEntry(

@@ -131,6 +131,23 @@ public class FragmentEntryServiceTest {
 			StringPool.BLANK, serviceContext);
 	}
 
+	@Test(expected = FragmentEntryContentException.class)
+	public void testAddFragmentEntryWithInvalidHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", null, "<div><broken-tag</div>", null,
+			serviceContext);
+	}
+
 	@Test(expected = FragmentEntryNameException.class)
 	public void testAddFragmentEntryWithNullName() throws Exception {
 		ServiceContext serviceContext =
@@ -145,6 +162,22 @@ public class FragmentEntryServiceTest {
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			null, serviceContext);
+	}
+
+	@Test
+	public void testAddFragmentEntryWithoutHTML() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", null, "Text only fragment", null, serviceContext);
 	}
 
 	@Test

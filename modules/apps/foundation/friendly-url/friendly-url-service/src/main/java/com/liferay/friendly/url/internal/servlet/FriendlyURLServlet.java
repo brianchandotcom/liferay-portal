@@ -220,15 +220,10 @@ public class FriendlyURLServlet extends HttpServlet {
 					localeUnavailable = true;
 				}
 
-				if (localeUnavailable ||
-					(!StringUtil.equalsIgnoreCase(
-						layoutFriendlyURLSeparatorCompositeFriendlyURL,
-						layout.getFriendlyURL(locale)) &&
-					 !StringUtil.equalsIgnoreCase(
-						 FriendlyURLNormalizerUtil.normalizeWithEncoding(
-							 layoutFriendlyURLSeparatorCompositeFriendlyURL),
-						 layout.getFriendlyURL(locale))) ||
-					(alternativeSiteFriendlyURL != null)) {
+				if (localeUnavailable || (alternativeSiteFriendlyURL != null) ||
+					!_equalsLayoutFriendlyURL(
+						layoutFriendlyURLSeparatorCompositeFriendlyURL, layout,
+						locale)) {
 
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(
 						request, layout,
@@ -542,6 +537,26 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private boolean _equalsLayoutFriendlyURL(
+		String layoutFriendlyURLSeparatorCompositeFriendlyURL, Layout layout,
+		Locale locale) {
+
+		String layoutFriendlyURL = layout.getFriendlyURL(locale);
+
+		if (StringUtil.equalsIgnoreCase(
+				layoutFriendlyURLSeparatorCompositeFriendlyURL,
+				layoutFriendlyURL) ||
+			StringUtil.equalsIgnoreCase(
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+					layoutFriendlyURLSeparatorCompositeFriendlyURL),
+				layoutFriendlyURL)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

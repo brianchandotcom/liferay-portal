@@ -78,7 +78,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-auto-login" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-ldap" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security/portal-security-service-access-policy-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-openid" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-openid-connect" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-security-sso/portal-security-sso-token" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-settings/portal-settings-web" />

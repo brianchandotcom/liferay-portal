@@ -57,7 +57,9 @@ public class AnnouncementsFlagUADEntityAggregator
 
 		for (AnnouncementsFlag announcementsFlag : announcementsFlags) {
 			uadEntities.add(
-				_createAnnouncementsFlagUADEntity(announcementsFlag));
+				new AnnouncementsFlagUADEntity(
+					userId, Long.toString(announcementsFlag.getFlagId()),
+					announcementsFlag));
 		}
 
 		return uadEntities;
@@ -69,15 +71,8 @@ public class AnnouncementsFlagUADEntityAggregator
 			_announcementsFlagLocalService.getAnnouncementsFlag(
 				Long.parseLong(uadEntityId));
 
-		return _createAnnouncementsFlagUADEntity(announcementsFlag);
-	}
-
-	private AnnouncementsFlagUADEntity
-		_createAnnouncementsFlagUADEntity(AnnouncementsFlag announcementsFlag) {
-
 		return new AnnouncementsFlagUADEntity(
-			announcementsFlag.getUserId(),
-			Long.toString(announcementsFlag.getFlagId()), announcementsFlag);
+			announcementsFlag.getUserId(), uadEntityId, announcementsFlag);
 	}
 
 	@Reference

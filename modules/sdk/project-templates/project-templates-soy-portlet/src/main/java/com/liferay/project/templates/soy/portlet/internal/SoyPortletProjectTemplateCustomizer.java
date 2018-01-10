@@ -18,7 +18,6 @@ import com.liferay.project.templates.ProjectTemplateCustomizer;
 import com.liferay.project.templates.ProjectTemplatesArgs;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -48,12 +47,7 @@ public class SoyPortletProjectTemplateCustomizer
 
 			Path gulpfileJsPath = projectPath.resolve("gulpfile.js");
 
-			try {
-				Files.deleteIfExists(gulpfileJsPath);
-			}
-			catch (IOException ioe) {
-				archetypeGenerationResult.setCause(ioe);
-			}
+			Files.deleteIfExists(gulpfileJsPath);
 		}
 	}
 

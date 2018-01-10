@@ -19,7 +19,6 @@ import com.liferay.project.templates.ProjectTemplatesArgs;
 import com.liferay.project.templates.WorkspaceUtil;
 
 import java.io.File;
-import java.io.IOException;
 
 import java.nio.file.Path;
 
@@ -54,25 +53,21 @@ public class ServiceBuilderProjectTemplateCustomizer
 		File destinationDir = new File(
 			archetypeGenerationRequest.getOutputDirectory());
 
-		try {
-			File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
+		File workspaceDir = WorkspaceUtil.getWorkspaceDir(destinationDir);
 
-			if (workspaceDir != null) {
-				Path destinationDirPath = destinationDir.toPath();
-				Path workspaceDirPath = workspaceDir.toPath();
+		if (workspaceDir != null) {
+			Path destinationDirPath = destinationDir.toPath();
+			Path workspaceDirPath = workspaceDir.toPath();
 
-				destinationDirPath = destinationDirPath.toAbsolutePath();
-				workspaceDirPath = workspaceDirPath.toAbsolutePath();
+			destinationDirPath = destinationDirPath.toAbsolutePath();
+			workspaceDirPath = workspaceDirPath.toAbsolutePath();
 
-				String relativePath = String.valueOf(
-					workspaceDirPath.relativize(destinationDirPath));
+			String relativePath = String.valueOf(
+				workspaceDirPath.relativize(destinationDirPath));
 
-				relativePath = relativePath.replace(File.separatorChar, ':');
+			relativePath = relativePath.replace(File.separatorChar, ':');
 
-				apiPath = ":" + relativePath + ":" + artifactId + apiPath;
-			}
-		}
-		catch (IOException ioe) {
+			apiPath = ":" + relativePath + ":" + artifactId + apiPath;
 		}
 
 		Properties properties = archetypeGenerationRequest.getProperties();

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.text.localizer.taglib.util.test;
+package com.liferay.text.localizer.taglib.internal.address.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.Address;

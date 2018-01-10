@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.text.localizer.taglib.util;
+package com.liferay.text.localizer.taglib.internal.address.util;
 
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Country;
@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.text.localizer.taglib.internal.address.util.AddressUtil;
 
 import java.util.Locale;
 import java.util.Optional;

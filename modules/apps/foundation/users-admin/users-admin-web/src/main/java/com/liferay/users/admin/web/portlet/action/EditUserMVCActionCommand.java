@@ -181,8 +181,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
-		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
-			actionRequest);
 		long[] roleIds = UsersAdminUtil.getRoleIds(actionRequest);
 		List<UserGroupRole> userGroupRoles = UsersAdminUtil.getUserGroupRoles(
 			actionRequest);
@@ -202,8 +200,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			autoScreenName, screenName, emailAddress, facebookId, openId,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, organizationIds, roleIds,
-			userGroupIds, addresses, emailAddresses, phones, websites,
+			birthdayYear, jobTitle, groupIds, null, roleIds, userGroupIds,
+			addresses, emailAddresses, phones, websites,
 			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);
 
 		if (!userGroupRoles.isEmpty()) {
@@ -219,10 +217,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				languageId, user.getTimeZoneId(), user.getGreeting(), comments,
 				firstName, middleName, lastName, prefixId, suffixId, male,
 				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-				jabberSn, skypeSn, twitterSn, jobTitle, groupIds,
-				organizationIds, roleIds, userGroupRoles, userGroupIds,
-				addresses, emailAddresses, phones, websites, null,
-				serviceContext);
+				jabberSn, skypeSn, twitterSn, jobTitle, groupIds, null, roleIds,
+				userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+				websites, null, serviceContext);
 		}
 
 		long publicLayoutSetPrototypeId = ParamUtil.getLong(
@@ -644,8 +641,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String jobTitle = BeanParamUtil.getString(
 			user, actionRequest, "jobTitle");
 		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
-		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
-			actionRequest);
 		long[] roleIds = UsersAdminUtil.getRoleIds(actionRequest);
 
 		List<UserGroupRole> userGroupRoles = null;
@@ -678,9 +673,9 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			portraitBytes, languageId, user.getTimeZoneId(), user.getGreeting(),
 			comments, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, organizationIds,
-			roleIds, userGroupRoles, userGroupIds, addresses, emailAddresses,
-			phones, websites, null, serviceContext);
+			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, null, roleIds,
+			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+			websites, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;

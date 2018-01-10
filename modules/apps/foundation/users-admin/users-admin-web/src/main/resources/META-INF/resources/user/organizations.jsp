@@ -17,9 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = (User)request.getAttribute("user.selUser");
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
 
-List<Organization> organizations = (List<Organization>)request.getAttribute("user.organizations");
+User selUser = userDisplayContext.getSelectedUser();
+
+List<Organization> organizations = userDisplayContext.getOrganizations();
 
 String organizationIdsString = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
 

@@ -15,17 +15,13 @@
 package com.liferay.users.admin.web.servlet.taglib.ui;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pei-Jung Lan
+ * @deprecated As of 2.5.0, replaced by {@link
+ * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserOrganizationsScreenNavigationEntry}
  */
-@Component(
-	property = {"form.navigator.entry.order:Integer=60"},
-	service = FormNavigatorEntry.class
-)
+@Deprecated
 public class UserOrganizationsFormNavigatorEntry
 	extends BaseUserFormNavigatorEntry {
 

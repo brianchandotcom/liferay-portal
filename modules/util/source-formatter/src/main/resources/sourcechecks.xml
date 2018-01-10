@@ -93,7 +93,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/mail-reader/mail-reader-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/marketplace/marketplace-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/marketplace/marketplace-store-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/portal-mobile-device-detection-fiftyonedegrees/portal-mobile-device-detection-fiftyonedegrees" />
 			<property name="allowedExportPackageDirName" value="modules/apps/portal-security-wedeploy-auth/portal-security-wedeploy-auth-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/push-notifications/push-notifications-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/shopping/shopping-service" />

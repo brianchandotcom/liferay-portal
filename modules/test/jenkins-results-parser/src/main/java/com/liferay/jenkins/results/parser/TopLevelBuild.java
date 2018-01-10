@@ -1127,11 +1127,6 @@ public class TopLevelBuild extends BaseBuild {
 				UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(this);
 			}
 
-			Dom4JUtil.addToElement(
-				rootElement, Dom4JUtil.getNewElement("hr"),
-				Dom4JUtil.getNewElement(
-					"h4", null, "Failures unique to this pull:"));
-
 			Map<Build, Element> downstreamBuildFailureMessages =
 				getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
 
@@ -1175,6 +1170,23 @@ public class TopLevelBuild extends BaseBuild {
 			}
 
 			failureElements.add(0, super.getGitHubMessageElement());
+
+			Dom4JUtil.addToElement(rootElement, Dom4JUtil.getNewElement("hr"));
+
+			if ((failureElements.size() == 1) &&
+				(upstreamJobFailureElements.size() > 0)) {
+
+				Dom4JUtil.addToElement(
+					rootElement,
+					Dom4JUtil.getNewElement(
+						"h4", null, "This pull contains no unique failures."));
+			}
+			else {
+				Dom4JUtil.addToElement(
+					rootElement,
+					Dom4JUtil.getNewElement(
+						"h4", null, "Failures unique to this pull:"));
+			}
 
 			Dom4JUtil.getOrderedListElement(
 				failureElements, rootElement, maxFailureCount);

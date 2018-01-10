@@ -426,18 +426,7 @@
 
 		<execute macro="Button#clickSave" />
 
-		<if>
-			<condition function="IsElementPresent" locator1="Message#SUCCESS" />
-			<then>
-				<execute macro="Alert#waitForSuccessMessageHide" />
-				<execute function="SelectFrame" value1="relative=top" />
-			</then>
-			<else>
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute macro="Alert#waitForSuccessMessageHide" />
-			</else>
-		</if>
+		<execute macro="Alert#waitForSuccessMessageHide" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

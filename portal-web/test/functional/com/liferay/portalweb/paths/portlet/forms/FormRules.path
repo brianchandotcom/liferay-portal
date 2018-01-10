@@ -51,7 +51,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_SELECT_CONDITION_FIELD</td>
-	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-first')]/following-sibling::div[@class='drop-chosen']//li[contains(.,'${key_conditionField}')]</td>
+	<td>//li[contains(@class,'form-builder-rule-condition')][${key_conditionRowNumber}]//div[contains(@id,'condition-first')]/following-sibling::div[@class='drop-chosen']//span[text()='${key_conditionField}']</td>
 	<td></td>
 </tr>
 <tr>

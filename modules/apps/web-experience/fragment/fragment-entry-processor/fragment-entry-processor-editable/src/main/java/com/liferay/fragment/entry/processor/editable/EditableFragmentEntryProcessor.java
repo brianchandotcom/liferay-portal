@@ -16,12 +16,12 @@ package com.liferay.fragment.entry.processor.editable;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
-import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.kernel.xml.Node;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -35,6 +35,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -51,17 +52,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
 			"content.Language", getClass());
 
-		Document document = null;
-
-		try {
-			document = SAXReaderUtil.read(html);
-		}
-		catch (DocumentException de) {
-			throw new FragmentEntryContentException(
-				LanguageUtil.get(
-					resourceBundle, "fragment-entry-html-is-invalid"),
-				de);
-		}
+		Document document = _htmlParserUtil.parse(html);
 
 		XPath uniqueXPath = SAXReaderUtil.createXPath("//*[@id]");
 
@@ -115,5 +106,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
 	}
+
+	@Reference
+	private HtmlParserUtil _htmlParserUtil;
 
 }

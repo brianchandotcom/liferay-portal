@@ -1186,10 +1186,10 @@ public class TopLevelBuild extends BaseBuild {
 					rootElement,
 					Dom4JUtil.getNewElement(
 						"h4", null, "Failures unique to this pull:"));
-			}
 
-			Dom4JUtil.getOrderedListElement(
-				failureElements, rootElement, maxFailureCount);
+				Dom4JUtil.getOrderedListElement(
+					failureElements, rootElement, maxFailureCount);
+			}
 
 			String acceptanceUpstreamJobURL = getAcceptanceUpstreamURL();
 

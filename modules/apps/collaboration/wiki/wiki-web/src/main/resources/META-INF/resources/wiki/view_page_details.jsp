@@ -102,7 +102,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 		</td>
 	</tr>
 
-	<c:if test="<%= DocumentConversionUtil.isEnabled() && WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.VIEW) %>">
+	<c:if test="<%= DocumentConversionUtil.isEnabled() && WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.VIEW) %>">
 
 		<%
 		String[] conversions = DocumentConversionUtil.getConversions("html");
@@ -167,14 +167,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 		</tr>
 	</c:if>
 
-	<c:if test="<%= (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
+	<c:if test="<%= (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) || WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE)) && (wikiGroupServiceOverriddenConfiguration.emailPageAddedEnabled() || wikiGroupServiceOverriddenConfiguration.emailPageUpdatedEnabled()) %>">
 		<tr>
 			<th class="table-header">
 				<liferay-ui:message key="email-subscription" />
 			</th>
 			<td>
 				<table class="lfr-table subscription-info">
-					<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) %>">
+					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.SUBSCRIBE) %>">
 						<tr>
 							<c:choose>
 								<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiPage.class.getName(), wikiPage.getResourcePrimKey()) %>">
@@ -221,7 +221,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						</tr>
 					</c:if>
 
-					<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) %>">
+					<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.SUBSCRIBE) %>">
 						<tr>
 							<c:choose>
 								<c:when test="<%= SubscriptionLocalServiceUtil.isSubscribed(user.getCompanyId(), user.getUserId(), WikiNode.class.getName(), node.getNodeId()) %>">
@@ -270,14 +270,14 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 		</tr>
 	</c:if>
 
-	<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) || (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE)) || WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+	<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) || (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE)) || WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 		<tr>
 			<th class="table-header">
 				<liferay-ui:message key="advanced-actions" />
 			</th>
 			<td class="table-cell">
 				<liferay-ui:icon-list>
-					<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) %>">
+					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.PERMISSIONS) %>">
 						<liferay-security:permissionsURL
 							modelResource="<%= WikiPage.class.getName() %>"
 							modelResourceDescription="<%= wikiPage.getTitle() %>"
@@ -296,7 +296,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						/>
 					</c:if>
 
-					<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
+					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
 
 						<%
 						PortletURL copyPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
@@ -317,7 +317,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						/>
 					</c:if>
 
-					<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) && WikiNodePermissionChecker.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
+					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) && WikiNodePermission.contains(permissionChecker, wikiPage.getNodeId(), ActionKeys.ADD_PAGE) %>">
 
 						<%
 						PortletURL movePageURL = PortletURLUtil.clone(viewPageURL, renderResponse);
@@ -334,7 +334,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "details
 						/>
 					</c:if>
 
-					<c:if test="<%= WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
+					<c:if test="<%= WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.DELETE) %>">
 
 						<%
 						PortletURL frontPageURL = PortletURLUtil.clone(viewPageURL, renderResponse);

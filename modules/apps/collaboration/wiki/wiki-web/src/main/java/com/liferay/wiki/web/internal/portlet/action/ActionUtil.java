@@ -44,9 +44,9 @@ import com.liferay.wiki.service.WikiNodeLocalServiceUtil;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
 import com.liferay.wiki.service.WikiPageServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 import com.liferay.wiki.util.WikiUtil;
 import com.liferay.wiki.web.configuration.WikiPortletInstanceConfiguration;
+import com.liferay.wiki.web.internal.security.permission.WikiNodePermission;
 import com.liferay.wiki.web.internal.util.WikiWebComponentProvider;
 
 import java.util.ArrayList;
@@ -124,7 +124,7 @@ public class ActionUtil {
 
 		for (WikiNode node : nodes) {
 			if ((Arrays.binarySearch(hiddenNodes, node.getName()) < 0) &&
-				WikiNodePermissionChecker.contains(
+				WikiNodePermission.contains(
 					permissionChecker, node, ActionKeys.VIEW)) {
 
 				return node;

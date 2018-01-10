@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.asset;
+package com.liferay.wiki.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseJSPAssetRenderer;
@@ -39,7 +39,7 @@ import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.internal.security.permission.WikiPagePermission;
 
 import java.util.Date;
 import java.util.Locale;
@@ -55,9 +55,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Julio Camarero
  * @author Sergio González
- * @deprecated As of 1.7.0, with no direct replacement
  */
-@Deprecated
 public class WikiPageAssetRenderer
 	extends BaseJSPAssetRenderer<WikiPage> implements TrashRenderer {
 
@@ -321,7 +319,7 @@ public class WikiPageAssetRenderer
 	public boolean hasDeletePermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.DELETE);
 	}
 
@@ -329,7 +327,7 @@ public class WikiPageAssetRenderer
 	public boolean hasEditPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.UPDATE);
 	}
 
@@ -337,7 +335,7 @@ public class WikiPageAssetRenderer
 	public boolean hasViewPermission(PermissionChecker permissionChecker)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, _page, ActionKeys.VIEW);
 	}
 

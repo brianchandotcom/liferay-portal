@@ -67,7 +67,7 @@ viewPageActivitiesURL.setParameter("mvcRenderCommandName", "/wiki/view_page_acti
 String[] tabs1Names = {"details", "history", "incoming-links", "outgoing-links", "attachments"};
 String[] tabs1URLs = {viewPageDetailsURL.toString(), viewPageHistoryURL.toString(), viewPageIncomingLinksURL.toString(), viewPageOutgoingLinksURL.toString(), viewPageAttachmentsURL.toString()};
 
-if (WikiPagePermissionChecker.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
+if (WikiPagePermission.contains(permissionChecker, wikiPage, ActionKeys.UPDATE)) {
 	tabs1Names = ArrayUtil.append(new String[] {"content"}, tabs1Names);
 	tabs1URLs = ArrayUtil.append(new String[] {editPageURL.toString()}, tabs1URLs);
 }

@@ -35,7 +35,6 @@ import com.liferay.trash.test.util.WhenIsAssetable;
 import com.liferay.trash.test.util.WhenIsAssetableBaseModel;
 import com.liferay.trash.test.util.WhenIsIndexableBaseModel;
 import com.liferay.trash.test.util.WhenIsUpdatableBaseModel;
-import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.util.test.WikiPageTrashHandlerTestUtil;
@@ -147,7 +146,9 @@ public class WikiPageTrashHandlerTest
 
 	@Override
 	protected Long getAssetClassPK(ClassedModel classedModel) {
-		return WikiPageAssetRenderer.getClassPK((WikiPage)classedModel);
+		WikiPage page = (WikiPage)classedModel;
+
+		return page.getResourcePrimKey();
 	}
 
 	@Override

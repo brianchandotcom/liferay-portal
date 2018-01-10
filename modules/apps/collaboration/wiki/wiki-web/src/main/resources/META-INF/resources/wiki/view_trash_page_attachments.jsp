@@ -41,7 +41,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "attachm
 <div class="container-fluid-1280">
 	<liferay-trash:undo portletURL="<%= undoTrashURL %>" />
 
-	<c:if test="<%= WikiNodePermissionChecker.contains(permissionChecker, node.getNodeId(), ActionKeys.ADD_ATTACHMENT) %>">
+	<c:if test="<%= WikiNodePermission.contains(permissionChecker, node, ActionKeys.ADD_ATTACHMENT) %>">
 		<portlet:actionURL name="/wiki/edit_page_attachment" var="emptyTrashURL">
 			<portlet:param name="nodeId" value="<%= String.valueOf(wikiPage.getNodeId()) %>" />
 			<portlet:param name="title" value="<%= wikiPage.getTitle() %>" />

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.Portal;
@@ -28,7 +29,6 @@ import com.liferay.wiki.configuration.WikiGroupServiceOverriddenConfiguration;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.web.internal.display.context.util.WikiRequestHelper;
 import com.liferay.wiki.web.internal.portlet.action.ActionUtil;
 
@@ -128,7 +128,7 @@ public class PageSubscriptionPortletConfigurationIcon
 		try {
 			WikiPage page = ActionUtil.getPage(portletRequest);
 
-			if (WikiPagePermissionChecker.contains(
+			if (_wikiPageModelResourcePermission.contains(
 					wikiRequestHelper.getPermissionChecker(), page,
 					ActionKeys.SUBSCRIBE) &&
 				(wikiGroupServiceOverriddenConfiguration.
@@ -167,5 +167,8 @@ public class PageSubscriptionPortletConfigurationIcon
 	private Portal _portal;
 
 	private SubscriptionLocalService _subscriptionLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
 
 }

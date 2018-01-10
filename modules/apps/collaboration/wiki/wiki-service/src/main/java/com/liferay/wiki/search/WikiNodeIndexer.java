@@ -30,12 +30,12 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeLocalService;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import java.util.Locale;
 
@@ -74,7 +74,7 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 
 		WikiNode node = _wikiNodeLocalService.getNode(entryClassPK);
 
-		return WikiNodePermissionChecker.contains(
+		return _wikiNodeModelResourcePermission.contains(
 			permissionChecker, node, ActionKeys.VIEW);
 	}
 
@@ -199,5 +199,8 @@ public class WikiNodeIndexer extends BaseIndexer<WikiNode> {
 	private TrashHelper _trashHelper;
 
 	private WikiNodeLocalService _wikiNodeLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 }

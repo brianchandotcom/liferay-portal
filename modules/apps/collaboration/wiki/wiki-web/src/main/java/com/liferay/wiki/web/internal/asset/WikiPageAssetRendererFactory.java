@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.wiki.asset;
+package com.liferay.wiki.web.internal.asset;
 
 import com.liferay.asset.kernel.model.AssetRenderer;
+import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -27,7 +28,7 @@ import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
+import com.liferay.wiki.web.internal.security.permission.WikiPagePermission;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -36,6 +37,7 @@ import javax.portlet.WindowStateException;
 
 import javax.servlet.ServletContext;
 
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -44,9 +46,11 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jorge Ferrer
  * @author Raymond Augé
  * @author Sergio González
- * @deprecated As of 1.7.0, with no direct replacement
  */
-@Deprecated
+@Component(
+	immediate = true, property = {"javax.portlet.name=" + WikiPortletKeys.WIKI},
+	service = AssetRendererFactory.class
+)
 public class WikiPageAssetRendererFactory
 	extends BaseAssetRendererFactory<WikiPage> {
 
@@ -131,7 +135,7 @@ public class WikiPageAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return WikiPagePermissionChecker.contains(
+		return WikiPagePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 

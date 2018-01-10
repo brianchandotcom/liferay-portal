@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
+import com.liferay.wiki.web.internal.security.permission.WikiNodePermission;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -90,10 +90,17 @@ public class NodesChecker extends EmptyOnClickRowChecker {
 		String name = WikiNode.class.getSimpleName();
 		boolean showInput = false;
 
-		if (WikiNodePermissionChecker.contains(
-				_permissionChecker, node, ActionKeys.DELETE)) {
+		try {
+			if (WikiNodePermission.contains(
+					_permissionChecker, node, ActionKeys.DELETE)) {
 
-			showInput = true;
+				showInput = true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		if (!showInput) {

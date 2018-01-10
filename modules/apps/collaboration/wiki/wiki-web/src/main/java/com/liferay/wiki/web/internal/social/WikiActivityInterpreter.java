@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -39,7 +40,6 @@ import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.social.WikiActivityKeys;
 
 import org.osgi.service.component.annotations.Component;
@@ -245,7 +245,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		if (!WikiPagePermissionChecker.contains(
+		if (!_wikiPageModelResourcePermission.contains(
 				permissionChecker, activity.getClassPK(), ActionKeys.VIEW)) {
 
 			return false;
@@ -265,7 +265,7 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 				pageResource.getNodeId(), pageResource.getTitle(), version);
 
 			if (!page.isApproved() &&
-				!WikiPagePermissionChecker.contains(
+				!_wikiPageModelResourcePermission.contains(
 					permissionChecker, activity.getClassPK(),
 					ActionKeys.UPDATE)) {
 
@@ -308,6 +308,10 @@ public class WikiActivityInterpreter extends BaseSocialActivityInterpreter {
 
 	private ResourceBundleLoader _resourceBundleLoader;
 	private WikiPageLocalService _wikiPageLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
+
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 
 }

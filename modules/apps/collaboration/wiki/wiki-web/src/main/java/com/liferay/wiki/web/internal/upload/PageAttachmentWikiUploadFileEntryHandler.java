@@ -17,6 +17,7 @@ package com.liferay.wiki.web.internal.upload;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -25,9 +26,9 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.upload.UploadFileEntryHandler;
 import com.liferay.wiki.exception.WikiAttachmentMimeTypeException;
+import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.service.WikiPageService;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,7 +57,7 @@ public class PageAttachmentWikiUploadFileEntryHandler
 
 		WikiPage page = _wikiPageService.getPage(resourcePrimKey);
 
-		WikiNodePermissionChecker.check(
+		_wikiNodeModelResourcePermission.check(
 			themeDisplay.getPermissionChecker(), page.getNodeId(),
 			ActionKeys.ADD_ATTACHMENT);
 
@@ -98,6 +99,9 @@ public class PageAttachmentWikiUploadFileEntryHandler
 	}
 
 	private static final String _PARAMETER_NAME = "imageSelectorFileName";
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
 
 	@Reference
 	private WikiPageService _wikiPageService;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.wiki.internal.trash;
+package com.liferay.wiki.web.internal.trash;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.trash.TrashRenderer;
@@ -37,7 +38,6 @@ import com.liferay.trash.TrashHelper;
 import com.liferay.trash.kernel.exception.RestoreEntryException;
 import com.liferay.trash.kernel.model.TrashEntry;
 import com.liferay.trash.kernel.model.TrashEntryConstants;
-import com.liferay.wiki.asset.WikiPageAssetRenderer;
 import com.liferay.wiki.constants.WikiPortletKeys;
 import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiNode;
@@ -46,9 +46,8 @@ import com.liferay.wiki.model.WikiPageResource;
 import com.liferay.wiki.service.WikiPageLocalService;
 import com.liferay.wiki.service.WikiPageResourceLocalService;
 import com.liferay.wiki.service.WikiPageService;
-import com.liferay.wiki.service.permission.WikiNodePermissionChecker;
-import com.liferay.wiki.service.permission.WikiPagePermissionChecker;
 import com.liferay.wiki.util.WikiPageAttachmentsUtil;
+import com.liferay.wiki.web.internal.asset.WikiPageAssetRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -284,13 +283,13 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 				classPK, WorkflowConstants.STATUS_ANY, true);
 
 			if (page != null) {
-				WikiPagePermissionChecker.check(
+				_wikiPageModelResourcePermission.check(
 					permissionChecker, page, ActionKeys.DELETE);
 
 				classPK = page.getNodeId();
 			}
 
-			return WikiNodePermissionChecker.contains(
+			return _wikiNodeModelResourcePermission.contains(
 				permissionChecker, classPK, ActionKeys.ADD_PAGE);
 		}
 
@@ -440,7 +439,7 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return WikiPagePermissionChecker.contains(
+		return _wikiPageModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -477,7 +476,15 @@ public class WikiPageTrashHandler extends BaseWikiTrashHandler {
 	private TrashHelper _trashHelper;
 
 	private WikiEngineRenderer _wikiEngineRenderer;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiNode)")
+	private ModelResourcePermission<WikiNode> _wikiNodeModelResourcePermission;
+
 	private WikiPageLocalService _wikiPageLocalService;
+
+	@Reference(target = "(model.class.name=com.liferay.wiki.model.WikiPage)")
+	private ModelResourcePermission<WikiPage> _wikiPageModelResourcePermission;
+
 	private WikiPageResourceLocalService _wikiPageResourceLocalService;
 	private WikiPageService _wikiPageService;
 

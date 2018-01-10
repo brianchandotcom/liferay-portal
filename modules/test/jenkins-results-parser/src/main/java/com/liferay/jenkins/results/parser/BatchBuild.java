@@ -147,22 +147,19 @@ public class BatchBuild extends BaseBuild {
 		String escapedJobName = getJobName();
 
 		escapedJobName = escapedJobName.replace("(", "\\(");
-
 		escapedJobName = escapedJobName.replace(")", "\\)");
 
-		String invokedTimePatternString = JenkinsResultsParserUtil.combine(
-			"\\s*\\[echo\\]\\s*", escapedJobName, "/", getJobVariant(),
-			"\\s*invoked time: (?<invokedTime>[^\\n]*)");
-
-		Pattern buildInvokedTimestampPattern = Pattern.compile(
-			invokedTimePatternString);
+		Pattern pattern = Pattern.compile(
+			JenkinsResultsParserUtil.combine(
+				"\\s*\\[echo\\]\\s*", escapedJobName, "/", getJobVariant(),
+				"\\s*invoked time: (?<invokedTime>[^\\n]*)"));
 
 		Build parentBuild = getParentBuild();
 
 		String parentConsoleText = parentBuild.getConsoleText();
 
 		for (String line : parentConsoleText.split("\n")) {
-			Matcher matcher = buildInvokedTimestampPattern.matcher(line);
+			Matcher matcher = pattern.matcher(line);
 
 			if (!matcher.find()) {
 				continue;
@@ -174,7 +171,8 @@ public class BatchBuild extends BaseBuild {
 				buildProperties = JenkinsResultsParserUtil.getBuildProperties();
 			}
 			catch (IOException ioe) {
-				throw new RuntimeException("Unable to get build properties");
+				throw new RuntimeException(
+					"Unable to get build properties", ioe);
 			}
 
 			SimpleDateFormat sdf = new SimpleDateFormat(
@@ -191,15 +189,10 @@ public class BatchBuild extends BaseBuild {
 
 			invokedTime = date.getTime();
 
-			break;
-		}
-
-		if (invokedTime != null) {
 			return invokedTime;
 		}
-		else {
-			return getStartTime();
-		}
+
+		return getStartTime();
 	}
 
 	@Override

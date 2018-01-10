@@ -9,7 +9,7 @@ import Uri from 'metal-uri/src/Uri';
 import utils from 'senna/src/utils/utils';
 import {match} from 'metal-dom';
 
-var initSPA = function(callback) {
+var initSPA = function() {
 	let app = new App();
 
 	app.addRoutes(

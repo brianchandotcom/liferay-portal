@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.text.localizer.address;
+package com.liferay.text.localizer.taglib;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Address;
@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Html;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.HtmlImpl;
+import com.liferay.text.localizer.address.AddressTextLocalizer;
+import com.liferay.text.localizer.taglib.internal.USAddressTextLocalizer;
 
 import org.junit.Assert;
 import org.junit.Before;

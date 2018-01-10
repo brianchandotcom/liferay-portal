@@ -66,74 +66,24 @@
 							<goal>npm</goal>
 						</goals>
 					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>exec-maven-plugin</artifactId>
-				<version>1.5.0</version>
-				<executions>
 					<execution>
 						<id>transpile-js</id>
 						<phase>process-classes</phase>
 						<goals>
-							<goal>exec</goal>
+							<goal>gulp</goal>
 						</goals>
 						<configuration>
-							<executable>${project.build.directory}/node/node</executable>
-							<workingDirectory>${project.build.outputDirectory}/META-INF/resources</workingDirectory>
-							<arguments>
-								<argument>${node.modules.dir}/metal-cli/index.js</argument>
-								<argument>build</argument>
-								<argument>--bundleFileName=</argument>
-								<argument>--dest</argument>
-								<argument>${project.build.outputDirectory}/META-INF/resources</argument>
-								<argument>--format</argument>
-								<argument>amd</argument>
-								<argument>--globalName=</argument>
-								<argument>--moduleName=</argument>
-								<argument>--soyDeps</argument>
-								<argument>${node.modules.dir}/lexicon*/src/**/*.soy</argument>
-								<argument>${node.modules.dir}/metal*/src/**/*.soy</argument>
-								<argument>--soyDest</argument>
-								<argument>${project.build.outputDirectory}/META-INF/resources</argument>
-								<argument>--soySrc</argument>
-								<argument>**/*.soy</argument>
-								<argument>--src</argument>
-								<argument>**/*.es.js</argument>
-								<argument>**/*.soy.js</argument>
-							</arguments>
+							<arguments>transpile-js</arguments>
 						</configuration>
 					</execution>
 					<execution>
-						<id>config-js-modules</id>
 						<phase>process-classes</phase>
+						<id>config-js-modules</id>
 						<goals>
-							<goal>exec</goal>
+							<goal>gulp</goal>
 						</goals>
 						<configuration>
-							<executable>${project.build.directory}/node/node</executable>
-							<workingDirectory>${project.build.outputDirectory}/META-INF/resources</workingDirectory>
-							<arguments>
-								<argument>${node.modules.dir}/liferay-module-config-generator/bin/index.js</argument>
-								<argument>--config=</argument>
-								<argument>--extension=</argument>
-								<argument>--filePattern</argument>
-								<argument>**/resources/*.js</argument>
-								<argument>--format</argument>
-								<argument>/_/g,-</argument>
-								<argument>--ignorePath</argument>
-								<argument>true</argument>
-								<argument>--moduleConfig</argument>
-								<argument>${project.basedir}/package.json</argument>
-								<argument>--namespace</argument>
-								<argument>Liferay.Loader</argument>
-								<argument>--output</argument>
-								<argument>${project.build.outputDirectory}/META-INF/config.json</argument>
-								<argument>--moduleRoot</argument>
-								<argument>${project.build.outputDirectory}/META-INF/resources</argument>
-								<argument>${project.build.outputDirectory}/META-INF</argument>
-							</arguments>
+							<arguments>config-js-modules</arguments>
 						</configuration>
 					</execution>
 				</executions>
@@ -217,41 +167,5 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-
-				<!--
-				This plugin's configuration is used to store Eclipse m2e
-				settings only. It has no influence on the Maven build itself.
-				-->
-
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>exec-maven-plugin</artifactId>
-										<versionRange>[1.5.0,)</versionRange>
-										<goals>
-											<goal>exec</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<execute>
-											<runOnIncremental>true</runOnIncremental>
-										</execute>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 </project>

@@ -38,7 +38,7 @@ public class FragmentEntryPermission {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.fragment.model.FragmentCollection)",
+		target = "(model.class.name=com.liferay.fragment.model.FragmentEntry)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(

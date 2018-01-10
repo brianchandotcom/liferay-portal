@@ -47,7 +47,7 @@ public class LayoutPageTemplateEntryPermission {
 	}
 
 	@Reference(
-		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateCollection)",
+		target = "(model.class.name=com.liferay.layout.page.template.model.LayoutPageTemplateEntry)",
 		unbind = "-"
 	)
 	protected void setModelResourcePermission(

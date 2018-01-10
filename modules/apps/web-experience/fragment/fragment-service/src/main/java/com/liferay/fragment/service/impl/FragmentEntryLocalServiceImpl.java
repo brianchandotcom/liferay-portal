@@ -51,7 +51,7 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, 0, name);
+		validate(groupId, fragmentCollectionId, 0, name);
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -87,7 +87,7 @@ public class FragmentEntryLocalServiceImpl
 
 		User user = userLocalService.getUser(userId);
 
-		validate(groupId, 0, name);
+		validate(groupId, fragmentCollectionId, 0, name);
 		validateContent(html);
 
 		long fragmentEntryId = counterLocalService.increment();
@@ -212,6 +212,12 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public int getFragmentEntriesCount(long fragmentCollectionId) {
+		return fragmentEntryPersistence.countByFragmentCollectionId(
+			fragmentCollectionId);
+	}
+
+	@Override
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException {
 
@@ -222,7 +228,9 @@ public class FragmentEntryLocalServiceImpl
 			return fragmentEntry;
 		}
 
-		validate(fragmentEntry.getGroupId(), fragmentEntryId, name);
+		validate(
+			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
+			fragmentEntryId, name);
 
 		fragmentEntry.setName(name);
 
@@ -238,7 +246,9 @@ public class FragmentEntryLocalServiceImpl
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
-		validate(fragmentEntry.getGroupId(), fragmentEntryId, name);
+		validate(
+			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
+			fragmentEntryId, name);
 
 		validateContent(html);
 
@@ -255,7 +265,9 @@ public class FragmentEntryLocalServiceImpl
 		return fragmentEntry;
 	}
 
-	protected void validate(long groupId, long fragmentEntryId, String name)
+	protected void validate(
+			long groupId, long fragmentCollectionId, long fragmentEntryId,
+			String name)
 		throws PortalException {
 
 		if (Validator.isNull(name)) {
@@ -263,8 +275,8 @@ public class FragmentEntryLocalServiceImpl
 				"Name must not be null for group " + groupId);
 		}
 
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_N(
-			groupId, name);
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.fetchByG_FCI_N(
+			groupId, fragmentCollectionId, name);
 
 		if ((fragmentEntry != null) &&
 			(fragmentEntry.getFragmentEntryId() != fragmentEntryId)) {

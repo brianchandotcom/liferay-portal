@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.Optional;
 
@@ -78,6 +79,18 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 		}
 
 		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
+	}
+
+	@Override
+	public void populateZipWriter(ZipWriter zipWriter, String path)
+		throws Exception {
+
+		path = path + StringPool.SLASH + getFragmentEntryId();
+
+		zipWriter.addEntry(path + "/name.txt", getName());
+		zipWriter.addEntry(path + "/css.css", getCss());
+		zipWriter.addEntry(path + "/js.js", getJs());
+		zipWriter.addEntry(path + "/html.html", getHtml());
 	}
 
 }

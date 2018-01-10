@@ -261,6 +261,10 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().getFragmentEntriesCount();
 	}
 
+	public static int getFragmentEntriesCount(long fragmentCollectionId) {
+		return getService().getFragmentEntriesCount(fragmentCollectionId);
+	}
+
 	/**
 	* Returns the fragment entry with the primary key.
 	*

@@ -97,8 +97,9 @@
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionId" />
 		</finder>
-		<finder name="G_N" return-type="FragmentEntry" unique="true">
+		<finder name="G_FCI_N" return-type="FragmentEntry" unique="true">
 			<finder-column name="groupId" />
+			<finder-column name="fragmentCollectionId" />
 			<finder-column name="name" />
 		</finder>
 		<finder name="G_FCI_LikeN" return-type="Collection">

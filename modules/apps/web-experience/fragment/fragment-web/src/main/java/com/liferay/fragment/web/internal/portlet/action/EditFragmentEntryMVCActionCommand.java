@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=editFragmentEntry"
+		"mvc.command.name=/fragment/edit_fragment_entry"
 	},
 	service = MVCActionCommand.class
 )
@@ -67,7 +67,7 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			hideDefaultErrorMessage(actionRequest);
 
 			actionResponse.setRenderParameter(
-				"mvcPath", "/edit_fragment_entry.jsp");
+				"mvcRenderCommandName", "/fragment/edit_fragment_entry");
 			actionResponse.setRenderParameter(
 				"fragmentEntryId", String.valueOf(fragmentEntryId));
 			actionResponse.setRenderParameter("cssContent", css);

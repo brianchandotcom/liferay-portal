@@ -589,54 +589,63 @@ public interface FragmentEntryPersistence extends BasePersistence<FragmentEntry>
 	public int filterCountByG_FCI(long groupId, long fragmentCollectionId);
 
 	/**
-	* Returns the fragment entry where groupId = &#63; and name = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
+	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; or throws a {@link NoSuchEntryException} if it could not be found.
 	*
 	* @param groupId the group ID
+	* @param fragmentCollectionId the fragment collection ID
 	* @param name the name
 	* @return the matching fragment entry
 	* @throws NoSuchEntryException if a matching fragment entry could not be found
 	*/
-	public FragmentEntry findByG_N(long groupId, java.lang.String name)
-		throws NoSuchEntryException;
+	public FragmentEntry findByG_FCI_N(long groupId, long fragmentCollectionId,
+		java.lang.String name) throws NoSuchEntryException;
 
 	/**
-	* Returns the fragment entry where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
+	* @param fragmentCollectionId the fragment collection ID
 	* @param name the name
 	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
-	public FragmentEntry fetchByG_N(long groupId, java.lang.String name);
+	public FragmentEntry fetchByG_FCI_N(long groupId,
+		long fragmentCollectionId, java.lang.String name);
 
 	/**
-	* Returns the fragment entry where groupId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
+	* @param fragmentCollectionId the fragment collection ID
 	* @param name the name
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching fragment entry, or <code>null</code> if a matching fragment entry could not be found
 	*/
-	public FragmentEntry fetchByG_N(long groupId, java.lang.String name,
+	public FragmentEntry fetchByG_FCI_N(long groupId,
+		long fragmentCollectionId, java.lang.String name,
 		boolean retrieveFromCache);
 
 	/**
-	* Removes the fragment entry where groupId = &#63; and name = &#63; from the database.
+	* Removes the fragment entry where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63; from the database.
 	*
 	* @param groupId the group ID
+	* @param fragmentCollectionId the fragment collection ID
 	* @param name the name
 	* @return the fragment entry that was removed
 	*/
-	public FragmentEntry removeByG_N(long groupId, java.lang.String name)
+	public FragmentEntry removeByG_FCI_N(long groupId,
+		long fragmentCollectionId, java.lang.String name)
 		throws NoSuchEntryException;
 
 	/**
-	* Returns the number of fragment entries where groupId = &#63; and name = &#63;.
+	* Returns the number of fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name = &#63;.
 	*
 	* @param groupId the group ID
+	* @param fragmentCollectionId the fragment collection ID
 	* @param name the name
 	* @return the number of matching fragment entries
 	*/
-	public int countByG_N(long groupId, java.lang.String name);
+	public int countByG_FCI_N(long groupId, long fragmentCollectionId,
+		java.lang.String name);
 
 	/**
 	* Returns all the fragment entries where groupId = &#63; and fragmentCollectionId = &#63; and name LIKE &#63;.

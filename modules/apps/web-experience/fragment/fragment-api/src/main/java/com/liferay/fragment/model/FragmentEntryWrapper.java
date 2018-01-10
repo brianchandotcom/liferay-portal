@@ -364,6 +364,13 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	@Override
+	public void populateZipWriter(
+		com.liferay.portal.kernel.zip.ZipWriter zipWriter, java.lang.String path)
+		throws java.lang.Exception {
+		_fragmentEntry.populateZipWriter(zipWriter, path);
+	}
+
+	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_fragmentEntry.setCachedModel(cachedModel);
 	}

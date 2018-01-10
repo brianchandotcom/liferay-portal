@@ -42,7 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=updateFragmentEntry"
+		"mvc.command.name=/fragment/update_fragment_entry"
 	},
 	service = MVCActionCommand.class
 )
@@ -87,7 +87,8 @@ public class UpdateFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", "/view_fragment_entries.jsp");
+		portletURL.setParameter(
+			"mvcRenderCommandName", "/fragment/view_fragment_entries");
 		portletURL.setParameter(
 			"fragmentCollectionId",
 			String.valueOf(fragmentEntry.getFragmentCollectionId()));

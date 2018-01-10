@@ -284,6 +284,13 @@ public class FragmentCollectionWrapper implements FragmentCollection,
 	}
 
 	@Override
+	public void populateZipWriter(
+		com.liferay.portal.kernel.zip.ZipWriter zipWriter, java.lang.String path)
+		throws java.lang.Exception {
+		_fragmentCollection.populateZipWriter(zipWriter, path);
+	}
+
+	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_fragmentCollection.setCachedModel(cachedModel);
 	}

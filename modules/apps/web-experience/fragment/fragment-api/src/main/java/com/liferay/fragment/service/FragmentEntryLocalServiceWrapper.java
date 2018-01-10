@@ -272,6 +272,11 @@ public class FragmentEntryLocalServiceWrapper
 		return _fragmentEntryLocalService.getFragmentEntriesCount();
 	}
 
+	@Override
+	public int getFragmentEntriesCount(long fragmentCollectionId) {
+		return _fragmentEntryLocalService.getFragmentEntriesCount(fragmentCollectionId);
+	}
+
 	/**
 	* Returns the fragment entry with the primary key.
 	*

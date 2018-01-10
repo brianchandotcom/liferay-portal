@@ -2124,8 +2124,10 @@ public class CMISRepository extends BaseCmisRepository {
 	}
 
 	protected void processException(Exception e) throws PortalException {
+		String message = e.getMessage();
+
 		if ((e instanceof CmisRuntimeException &&
-			 e.getMessage().contains("authorized")) ||
+			 message.contains("authorized")) ||
 			(e instanceof CmisPermissionDeniedException)) {
 
 			String login = null;

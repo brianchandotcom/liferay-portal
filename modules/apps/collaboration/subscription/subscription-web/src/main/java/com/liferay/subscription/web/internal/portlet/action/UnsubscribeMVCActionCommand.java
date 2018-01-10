@@ -130,9 +130,10 @@ public class UnsubscribeMVCActionCommand extends BaseMVCActionCommand {
 			throw new NoSuchTicketException("Invalid type " + ticket.getType());
 		}
 
-		if (!Subscription.class.getName().equals(ticket.getClassName())) {
-			throw new NoSuchTicketException(
-				"Invalid className " + ticket.getClassName());
+		String className = ticket.getClassName();
+
+		if (!className.equals(Subscription.class.getName())) {
+			throw new NoSuchTicketException("Invalid className " + className);
 		}
 
 		return ticket;

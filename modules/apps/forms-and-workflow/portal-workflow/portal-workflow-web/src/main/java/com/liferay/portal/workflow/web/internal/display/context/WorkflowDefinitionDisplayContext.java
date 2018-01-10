@@ -240,8 +240,23 @@ public class WorkflowDefinitionDisplayContext {
 		ThemeDisplay themeDisplay =
 			_workflowDefinitionRequestHelper.getThemeDisplay();
 
+		ResourceBundle resourceBundle =
+			_resourceBundleLoader.loadResourceBundle(
+				_workflowDefinitionRequestHelper.getLocale());
+
+		if (workflowDefinition != null) {
+			if (Validator.isNull(workflowDefinition.getTitle())) {
+				return HtmlUtil.escape(
+					LanguageUtil.get(resourceBundle, "untitled-workflow"));
+			}
+			else {
+				return HtmlUtil.escape(
+					workflowDefinition.getTitle(themeDisplay.getLanguageId()));
+			}
+		}
+
 		return HtmlUtil.escape(
-			workflowDefinition.getTitle(themeDisplay.getLanguageId()));
+			LanguageUtil.get(resourceBundle, "new-workflow"));
 	}
 
 	public String getUserName(WorkflowDefinition workflowDefinition) {
@@ -296,6 +311,30 @@ public class WorkflowDefinitionDisplayContext {
 		Collections.reverse(workFlowDefinitions);
 
 		return workFlowDefinitions;
+	}
+
+	public boolean isShowDraftButton(
+			WorkflowDefinition workflowDefinitionVersion)
+		throws PortalException {
+
+		if (workflowDefinitionVersion == null) {
+			return true;
+		}
+
+		if (workflowDefinitionVersion.isActive()) {
+			return false;
+		}
+
+		try {
+			WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
+				_workflowDefinitionRequestHelper.getCompanyId(),
+				workflowDefinitionVersion.getName());
+		}
+		catch (Exception e) {
+			return true;
+		}
+
+		return false;
 	}
 
 	protected PredicateFilter<WorkflowDefinition> createPredicateFilter(

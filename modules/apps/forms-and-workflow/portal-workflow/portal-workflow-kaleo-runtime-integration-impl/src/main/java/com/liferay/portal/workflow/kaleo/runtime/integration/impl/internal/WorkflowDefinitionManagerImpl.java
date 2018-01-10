@@ -14,12 +14,15 @@
 
 package com.liferay.portal.workflow.kaleo.runtime.integration.impl.internal;
 
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.uuid.PortalUUID;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -86,6 +89,56 @@ public class WorkflowDefinitionManagerImpl
 
 		return _workflowEngine.deployWorkflowDefinition(
 			title, name, new UnsyncByteArrayInputStream(bytes), serviceContext);
+	}
+
+	@Override
+	public WorkflowDefinition draftWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
+
+		try {
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setCompanyId(companyId);
+
+			Definition definition = null;
+
+			String version = "1.0";
+
+			try {
+				definition = workflowModelParser.parse(
+					new UnsyncByteArrayInputStream(bytes));
+			}
+			catch (Exception e) {
+				definition = new Definition(
+					StringPool.BLANK, StringPool.BLANK,
+					new String(bytes, StringPool.UTF8), 0);
+			}
+
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				_kaleoDefinitionVersionLocalService.
+					fetchLatestKaleoDefinitionVersion(companyId, name, null);
+
+			if (kaleoDefinitionVersion != null) {
+				version = getNextMajorVersion(
+					kaleoDefinitionVersion.getVersion());
+			}
+
+			kaleoDefinitionVersion =
+				_kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
+					name, title, definition.getDescription(),
+					definition.getContent(), version, serviceContext);
+
+			WorkflowDefinition workflowDefinition =
+				_kaleoWorkflowModelConverter.toWorkflowDefinition(
+					kaleoDefinitionVersion);
+
+			return workflowDefinition;
+		}
+		catch (Exception e) {
+			throw new WorkflowException(e);
+		}
 	}
 
 	@Override
@@ -376,13 +429,36 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 			serviceContext.setUserId(userId);
 
+			KaleoDefinition kaleoDefinition =
+				_kaleoDefinitionLocalService.fetchKaleoDefinition(
+					name, serviceContext);
+
+			KaleoDefinitionVersion kaleoDefinitionVersion =
+				_kaleoDefinitionVersionLocalService.
+					fetchLatestKaleoDefinitionVersion(companyId, name, null);
+
 			if (active) {
-				_kaleoDefinitionLocalService.activateKaleoDefinition(
-					name, version, serviceContext);
+				if (kaleoDefinition != null) {
+					_kaleoDefinitionLocalService.activateKaleoDefinition(
+						name, version, serviceContext);
+				}
+
+				if (kaleoDefinitionVersion != null) {
+					_changeStatusKaleoDefinitionVersion(
+						kaleoDefinitionVersion,
+						WorkflowConstants.STATUS_APPROVED);
+				}
 			}
 			else {
-				_kaleoDefinitionLocalService.deactivateKaleoDefinition(
-					name, version, serviceContext);
+				if (kaleoDefinition != null) {
+					_kaleoDefinitionLocalService.deactivateKaleoDefinition(
+						name, version, serviceContext);
+				}
+
+				if (kaleoDefinitionVersion != null) {
+					_changeStatusKaleoDefinitionVersion(
+						kaleoDefinitionVersion, WorkflowConstants.STATUS_DRAFT);
+				}
 			}
 
 			return getWorkflowDefinition(companyId, name, version);
@@ -424,6 +500,18 @@ public class WorkflowDefinitionManagerImpl
 
 		_workflowEngine.validateWorkflowDefinition(
 			new UnsyncByteArrayInputStream(bytes));
+	}
+
+	protected String getNextMajorVersion(String version) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		return ++versionParts[0] + StringPool.PERIOD + versionParts[1];
+	}
+
+	protected String getNextVersion(String version) {
+		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
+
+		return versionParts[0] + StringPool.PERIOD + ++versionParts[1];
 	}
 
 	protected String getVersion(int version) {
@@ -469,6 +557,19 @@ public class WorkflowDefinitionManagerImpl
 
 	@Reference
 	protected PortalUUID portalUUID;
+
+	@Reference
+	protected WorkflowModelParser workflowModelParser;
+
+	private void _changeStatusKaleoDefinitionVersion(
+		KaleoDefinitionVersion kaleoDefinitionVersion, int status) {
+
+		kaleoDefinitionVersion.setModifiedDate(DateUtil.newDate());
+		kaleoDefinitionVersion.setStatus(status);
+
+		_kaleoDefinitionVersionLocalService.updateKaleoDefinitionVersion(
+			kaleoDefinitionVersion);
+	}
 
 	@Reference
 	private KaleoDefinitionLocalService _kaleoDefinitionLocalService;

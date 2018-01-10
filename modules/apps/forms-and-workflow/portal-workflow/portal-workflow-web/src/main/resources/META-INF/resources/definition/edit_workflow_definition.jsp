@@ -29,11 +29,12 @@ String content = BeanParamUtil.getString(workflowDefinition, request, "content")
 boolean active = BeanParamUtil.getBoolean(workflowDefinition, request, "active");
 
 String duplicationTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workflowDefinition);
+boolean showDraftButton = workflowDefinitionDisplayContext.isShowDraftButton(workflowDefinition);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, "new-workflow") : workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)));
+renderResponse.setTitle(workflowDefinitionDisplayContext.getTitle(workflowDefinition));
 %>
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
@@ -56,6 +57,10 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 <liferay-portlet:actionURL name="duplicateWorkflowDefinition" var="duplicateWorkflowDefinition">
 	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
+</liferay-portlet:actionURL>
+
+<liferay-portlet:actionURL name="updateWorkflowDefinitionDraft" var="saveWorkflowAsDraftURL">
+	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
 </liferay-portlet:actionURL>
 
 <c:if test="<%= workflowDefinition != null %>">
@@ -190,7 +195,7 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	</c:if>
 
 	<div class="sidenav-content">
-		<aui:form action="<%= editWorkflowDefinitionURL %>" method="post" name="fm">
+		<aui:form method="post" name="fm">
 			<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 			<aui:input name="name" type="hidden" value="<%= name %>" />
 			<aui:input name="version" type="hidden" value="<%= version %>" />
@@ -231,10 +236,19 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 			<aui:button-row>
 
 				<%
-				String taglibOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
+				String taglibUpdateOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "publishDefinition');";
 				%>
 
-				<aui:button onClick="<%= taglibOnClick %>" primary="<%= true %>" value='<%= (workflowDefinition == null || !active) ? "publish" : "update" %>' />
+				<aui:button onClick="<%= taglibUpdateOnClick %>" primary="<%= true %>" value='<%= (workflowDefinition == null || !active) ? "publish" : "update" %>' />
+
+				<c:if test="<%= showDraftButton %>">
+
+					<%
+					String taglibSaveAsDraftOnClick = "Liferay.fire('" + liferayPortletResponse.getNamespace() + "saveDefinitionAsDraft');";
+					%>
+
+					<aui:button onClick="<%= taglibSaveAsDraftOnClick %>" primary="<%= true %>" value="save-as-draft" />
+				</c:if>
 			</aui:button-row>
 		</aui:form>
 	</div>
@@ -329,6 +343,21 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 		'<portlet:namespace />publishDefinition',
 		function(event) {
 			var form = AUI.$('#<portlet:namespace />fm');
+
+			form.attr('action', '<%= editWorkflowDefinitionURL %>')
+
+			form.fm('content').val(contentEditor.get(STR_VALUE));
+
+			submitForm(form);
+		}
+	);
+
+	Liferay.on(
+		'<portlet:namespace />saveDefinitionAsDraft',
+		function(event) {
+			var form = AUI.$('#<portlet:namespace />fm');
+
+			form.attr('action', '<%= saveWorkflowAsDraftURL %>')
 
 			form.fm('content').val(contentEditor.get(STR_VALUE));
 

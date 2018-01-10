@@ -78,8 +78,25 @@ public class DefaultWorkflowEngineImpl
 		throws WorkflowException {
 
 		try {
-			kaleoDefinitionLocalService.deleteKaleoDefinition(
-				name, serviceContext);
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionLocalService.fetchKaleoDefinition(
+					name, serviceContext);
+
+			if (kaleoDefinition != null) {
+				kaleoDefinitionLocalService.deleteKaleoDefinition(
+					name, serviceContext);
+			}
+			else {
+				List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+					kaleoDefinitionVersionLocalService.
+						getKaleoDefinitionVersions(
+							serviceContext.getCompanyId(), name);
+
+				if (!kaleoDefinitionVersions.isEmpty()) {
+					kaleoDefinitionVersionLocalService.
+						deleteKaleoDefinitionVersions(kaleoDefinitionVersions);
+				}
+			}
 		}
 		catch (Exception e) {
 			throw new WorkflowException(e);

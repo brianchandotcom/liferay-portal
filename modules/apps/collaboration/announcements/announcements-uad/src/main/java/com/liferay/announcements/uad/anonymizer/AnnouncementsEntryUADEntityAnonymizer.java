@@ -26,6 +26,7 @@ import com.liferay.user.associated.data.anonymizer.BaseUADEntityAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
+import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.List;
 
@@ -48,11 +49,10 @@ public class AnnouncementsEntryUADEntityAnonymizer
 		AnnouncementsEntry announcementsEntry = _getAnnouncementsEntry(
 			uadEntity);
 
-		User defaultUser = _userLocalService.getDefaultUser(
-			announcementsEntry.getCompanyId());
+		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
 
-		announcementsEntry.setUserId(defaultUser.getUserId());
-		announcementsEntry.setUserName(defaultUser.getFullName());
+		announcementsEntry.setUserId(anonymousUser.getUserId());
+		announcementsEntry.setUserName(anonymousUser.getFullName());
 
 		_announcementsEntryLocalService.updateAnnouncementsEntry(
 			announcementsEntry);
@@ -90,6 +90,9 @@ public class AnnouncementsEntryUADEntityAnonymizer
 
 	@Reference
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+
+	@Reference
+	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 	@Reference(
 		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY + ")"

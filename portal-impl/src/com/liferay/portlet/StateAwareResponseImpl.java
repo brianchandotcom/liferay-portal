@@ -319,9 +319,20 @@ public abstract class StateAwareResponseImpl
 
 		try {
 			setPortletMode(PortletMode.VIEW);
+		}
+		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to reset portlet mode to VIEW", e);
+			}
+		}
+
+		try {
 			setWindowState(WindowState.NORMAL);
 		}
 		catch (Exception e) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to reset window state to NORMAL", e);
+			}
 		}
 
 		_portletMode = null;

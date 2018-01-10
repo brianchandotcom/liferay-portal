@@ -19,14 +19,30 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import java.util.Locale;
 
 /**
+ * Represents fragment entry settings to be used in the processing of
+ * fragment entry HTML.
+ *
  * @author Pavel Savinov
  */
 public interface FragmentEntrySettings {
 
+	/**
+	 * Returns the setting value for specific setting ID and default locale.
+	 *
+	 * @param id Setting ID
+	 * @return the setting value
+	 */
 	public default String getValue(String id) {
 		return getValue(id, LocaleUtil.getSiteDefault());
 	};
 
+	/**
+	 * Returns the setting value for specific setting ID and locale.
+	 *
+	 * @param id Setting ID
+	 * @param locale Locale
+	 * @return the setting value
+	 */
 	public String getValue(String id, Locale locale);
 
 }

@@ -72,4 +72,7 @@ Liferay-Releng-Module-Group-Title: Runtime
 Provide-Capability:\
 	liferay.extender;\
 		liferay.extender="spring.extender";\
-		version:Version="${springExtenderApiVersion}"
+		version:Version="${springExtenderApiVersion}",\
+	liferay.extender;\
+		liferay.extender="spring.extender";\
+		version:Version="2.0.0"

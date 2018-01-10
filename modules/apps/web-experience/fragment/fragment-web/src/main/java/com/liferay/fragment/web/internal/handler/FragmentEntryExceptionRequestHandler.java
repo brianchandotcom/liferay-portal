@@ -51,19 +51,28 @@ public class FragmentEntryExceptionRequestHandler {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String errorMessage = "an-unexpected-error-occurred";
+		String errorMessage;
 
-		if (pe instanceof DuplicateFragmentEntryException) {
-			errorMessage = "a-fragment-entry-with-that-name-already-exists";
+		if (pe instanceof FragmentEntryNameException) {
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "this-field-is-required"));
 		}
-		else if (pe instanceof FragmentEntryNameException) {
-			errorMessage = "this-field-is-required";
+		else {
+			errorMessage = "an-unexpected-error-occurred";
+
+			if (pe instanceof DuplicateFragmentEntryException) {
+				errorMessage = "a-fragment-entry-with-that-name-already-exists";
+			}
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
+
+			jsonObject.put(
+				"error", LanguageUtil.get(resourceBundle, errorMessage));
 		}
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
-
-		jsonObject.put("error", LanguageUtil.get(resourceBundle, errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

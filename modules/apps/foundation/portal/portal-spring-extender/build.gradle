@@ -1,6 +1,14 @@
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+afterEvaluate {
+	File springExtenderApiFile = configurations.provided.find {
+		it.name.startsWith "com.liferay.portal.spring.extender.api-"
+	}
+
+	ext.springExtenderApiVersion = springExtenderApiFile.name.substring("com.liferay.portal.spring.extender.api-".length(), springExtenderApiFile.name.length() - 4)
+}
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.felix.util", version: "1.0.0"

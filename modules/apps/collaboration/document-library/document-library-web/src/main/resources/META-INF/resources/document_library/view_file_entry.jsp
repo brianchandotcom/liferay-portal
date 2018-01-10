@@ -306,7 +306,7 @@ if (portletTitleBasedNavigation) {
 												ddmFormValues="<%= ddmFormValues %>"
 												fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 												readOnly="<%= true %>"
-												requestedLocale="<%= (ddmFormValues != null) ? ddmFormValues.getDefaultLocale() : locale %>"
+												requestedLocale="<%= locale %>"
 												showEmptyFieldLabel="<%= false %>"
 											/>
 										</liferay-ui:panel>
@@ -358,7 +358,7 @@ if (portletTitleBasedNavigation) {
 											ddmFormValues="<%= ddmFormValues %>"
 											fieldsNamespace="<%= String.valueOf(ddmStructure.getPrimaryKey()) %>"
 											readOnly="<%= true %>"
-											requestedLocale="<%= locale %>"
+											requestedLocale="<%= ddmFormValues.getDefaultLocale() %>"
 											showEmptyFieldLabel="<%= false %>"
 										/>
 									</liferay-ui:panel>

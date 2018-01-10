@@ -27,6 +27,20 @@ public class CommerceOrderItemServiceImpl
 	extends CommerceOrderItemServiceBaseImpl {
 
 	@Override
+	public void deleteCommerceOrderItem(long commerceOrderItemId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.getCommerceOrderItem(
+				commerceOrderItemId);
+
+		checkCommerceOrder(commerceOrderItem.getCommerceOrderId());
+
+		commerceOrderItemLocalService.deleteCommerceOrderItem(
+			commerceOrderItem);
+	}
+
+	@Override
 	public BaseModelSearchResult<CommerceOrderItem> search(
 			long commerceOrderId, String keywords, int start, int end,
 			Sort sort)

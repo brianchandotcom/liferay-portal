@@ -55,6 +55,12 @@ public abstract class BaseUserScreenNavigationEntry
 		return UserFormConstants.SCREEN_NAVIGATION_KEY_USERS;
 	}
 
+	public boolean isEditable(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		return true;
+	}
+
 	@Override
 	public void render(HttpServletRequest request, HttpServletResponse response)
 		throws IOException {
@@ -65,6 +71,8 @@ public abstract class BaseUserScreenNavigationEntry
 
 		request.setAttribute(
 			UsersAdminWebKeys.ACTION_COMMAND_NAME, getActionCommandName());
+		request.setAttribute(
+			UsersAdminWebKeys.IS_EDITABLE, isEditable(request, response));
 		request.setAttribute(UsersAdminWebKeys.JSP_PATH, getJspPath());
 
 		jspRenderer.renderJSP(request, response, "/edit_user_navigation.jsp");

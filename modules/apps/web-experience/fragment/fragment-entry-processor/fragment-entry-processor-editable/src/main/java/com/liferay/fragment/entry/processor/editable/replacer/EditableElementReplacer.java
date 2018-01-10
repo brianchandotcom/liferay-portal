@@ -17,10 +17,18 @@ package com.liferay.fragment.entry.processor.editable.replacer;
 import com.liferay.portal.kernel.xml.Element;
 
 /**
+ * This service provides a utility to replace editable element value.
+ *
  * @author Pavel Savinov
  */
 public interface EditableElementReplacer {
 
+	/**
+	 * Replaces editable element value with the provided one.
+	 *
+	 * @param element Editable element to replace
+	 * @param value New element value
+	 */
 	public void replace(Element element, String value);
 
 }

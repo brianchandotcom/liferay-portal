@@ -170,7 +170,13 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 	};
 
 	var isViewTabActive = function() {
-		return !A.one('#<portlet:namespace />formBuilderTab').ancestor().hasClass('hide');
+		var formBuilderTab = A.one('#<portlet:namespace />formBuilderTab');
+
+		if (!formBuilderTab) {
+			return false;
+		}
+
+		return !formBuilderTab.ancestor().hasClass('hide');
 	};
 
 	var reloadFormBuilderData = function(content) {

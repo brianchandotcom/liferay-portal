@@ -225,14 +225,16 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 	protected SuggesterResult.Entry.Option translate(
 		Suggest.Suggestion.Entry.Option suggestionEntryOption) {
 
+		Text text = suggestionEntryOption.getText();
+
 		SuggesterResult.Entry.Option suggesterResultEntryOption =
 			new SuggesterResult.Entry.Option(
-				suggestionEntryOption.getText().string(),
-				suggestionEntryOption.getScore());
+				text.string(), suggestionEntryOption.getScore());
+
+		Text highlighted = suggestionEntryOption.getHighlighted();
 
 		if (suggestionEntryOption.getHighlighted() != null) {
-			suggesterResultEntryOption.setHighlightedText(
-				suggestionEntryOption.getHighlighted().string());
+			suggesterResultEntryOption.setHighlightedText(highlighted.string());
 		}
 
 		if (suggestionEntryOption instanceof TermSuggestion.Entry.Option) {

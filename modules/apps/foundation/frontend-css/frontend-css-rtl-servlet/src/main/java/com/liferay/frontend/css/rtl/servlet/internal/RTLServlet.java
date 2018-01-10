@@ -123,13 +123,14 @@ public class RTLServlet extends HttpServlet {
 
 		File dataFile = _bundle.getDataFile(rtlPath);
 
-		if (dataFile.exists() &&
-			(dataFile.lastModified() >
-				url.openConnection().getLastModified())) {
+		if (dataFile.exists()) {
+			URLConnection urlConnection = url.openConnection();
 
-			URI uri = dataFile.toURI();
+			if (dataFile.lastModified() > urlConnection.getLastModified()) {
+				URI uri = dataFile.toURI();
 
-			return uri.toURL();
+				return uri.toURL();
+			}
 		}
 
 		CSSRTLConverter cssRTLConverter = new CSSRTLConverter(false);
@@ -142,7 +143,9 @@ public class RTLServlet extends HttpServlet {
 		OutputStream outputStream = null;
 
 		try {
-			dataFile.getParentFile().mkdirs();
+			File parentFile = dataFile.getParentFile();
+
+			parentFile.mkdirs();
 
 			dataFile.createNewFile();
 

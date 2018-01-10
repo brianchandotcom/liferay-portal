@@ -314,7 +314,9 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	protected void gc() throws Exception {
-		Runtime.getRuntime().gc();
+		Runtime runtime = Runtime.getRuntime();
+
+		runtime.gc();
 	}
 
 	protected String getFileExtensions(

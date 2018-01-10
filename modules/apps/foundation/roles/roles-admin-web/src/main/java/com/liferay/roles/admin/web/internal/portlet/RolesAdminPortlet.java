@@ -246,8 +246,10 @@ public class RolesAdminPortlet extends MVCPortlet {
 
 		Role role = _roleLocalService.getRole(roleId);
 
-		if (role.getName().equals(RoleConstants.OWNER)) {
-			throw new RoleAssignmentException(role.getName());
+		String roleName = role.getName();
+
+		if (roleName.equals(RoleConstants.OWNER)) {
+			throw new RoleAssignmentException(roleName);
 		}
 
 		long[] addUserIds = StringUtil.split(

@@ -39,6 +39,7 @@ import com.liferay.portal.security.ldap.configuration.SystemLDAPConfiguration;
 import com.liferay.portal.security.ldap.validator.LDAPFilterValidator;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 
@@ -653,8 +654,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 
 		PropertiesUtil.merge(userMappings, contactMappings);
 
+		Collection<Object> values = userMappings.values();
+
 		String[] mappedUserAttributeIds = ArrayUtil.toStringArray(
-			userMappings.values().toArray(new Object[userMappings.size()]));
+			values.toArray(new Object[userMappings.size()]));
 
 		Attributes attributes = _getAttributes(
 			ldapContext, fullDistinguishedName, mappedUserAttributeIds);

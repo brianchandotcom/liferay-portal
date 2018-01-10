@@ -170,8 +170,9 @@ public abstract class BaseSpellCheckIndexWriter
 	}
 
 	protected URL getResource(String name) {
-		ClassLoader contextClassLoader =
-			Thread.currentThread().getContextClassLoader();
+		Thread thread = Thread.currentThread();
+
+		ClassLoader contextClassLoader = thread.getContextClassLoader();
 
 		URL url = contextClassLoader.getResource(name);
 

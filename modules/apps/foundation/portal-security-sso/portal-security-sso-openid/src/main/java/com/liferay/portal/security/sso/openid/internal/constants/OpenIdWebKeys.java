@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.constants;
+package com.liferay.portal.security.sso.openid.internal.constants;
 
 /**
  * @author Michael C. Han

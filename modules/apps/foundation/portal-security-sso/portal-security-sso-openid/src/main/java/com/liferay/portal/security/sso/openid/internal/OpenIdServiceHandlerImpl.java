@@ -39,7 +39,7 @@ import com.liferay.portal.security.sso.openid.OpenIdProvider;
 import com.liferay.portal.security.sso.openid.OpenIdProviderRegistry;
 import com.liferay.portal.security.sso.openid.OpenIdServiceException;
 import com.liferay.portal.security.sso.openid.OpenIdServiceHandler;
-import com.liferay.portal.security.sso.openid.constants.OpenIdWebKeys;
+import com.liferay.portal.security.sso.openid.internal.constants.OpenIdWebKeys;
 
 import java.io.IOException;
 

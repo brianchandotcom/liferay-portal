@@ -19,13 +19,13 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsFlagUADEntity;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.BaseUADEntityAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
+import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
 import java.util.List;
 
@@ -47,10 +47,7 @@ public class AnnouncementsFlagUADEntityAnonymizer
 	public void autoAnonymize(UADEntity uadEntity) throws PortalException {
 		AnnouncementsFlag announcementsFlag = _getAnnouncementsFlag(uadEntity);
 
-		User defaultUser = _userLocalService.getDefaultUser(
-			announcementsFlag.getCompanyId());
-
-		announcementsFlag.setUserId(defaultUser.getUserId());
+		announcementsFlag.setUserId(_uadAnonymizerHelper.getAnonymousUserId());
 
 		_announcementsFlagLocalService.updateAnnouncementsFlag(
 			announcementsFlag);
@@ -87,6 +84,9 @@ public class AnnouncementsFlagUADEntityAnonymizer
 
 	@Reference
 	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
+
+	@Reference
+	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 	@Reference(
 		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG + ")"

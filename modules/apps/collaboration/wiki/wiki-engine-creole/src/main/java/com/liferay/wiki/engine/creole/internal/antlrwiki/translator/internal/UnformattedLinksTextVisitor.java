@@ -14,6 +14,7 @@
 
 package com.liferay.wiki.engine.creole.internal.antlrwiki.translator.internal;
 
+import com.liferay.wiki.engine.creole.internal.parser.ast.CollectionNode;
 import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
 
 /**
@@ -22,7 +23,9 @@ import com.liferay.wiki.engine.creole.internal.parser.ast.link.LinkNode;
 public class UnformattedLinksTextVisitor extends UnformattedTextVisitor {
 
 	public String getUnformattedText(LinkNode linkNode) {
-		traverse(linkNode.getAltCollectionNode().getASTNodes());
+		CollectionNode altCollectionNode = linkNode.getAltCollectionNode();
+
+		traverse(altCollectionNode.getASTNodes());
 
 		return getText();
 	}

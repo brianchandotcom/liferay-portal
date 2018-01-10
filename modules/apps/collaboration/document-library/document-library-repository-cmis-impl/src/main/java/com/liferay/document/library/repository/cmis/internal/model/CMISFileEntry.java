@@ -55,6 +55,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -172,7 +173,9 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public Date getCreateDate() {
-		return _document.getCreationDate().getTime();
+		GregorianCalendar creationDate = _document.getCreationDate();
+
+		return creationDate.getTime();
 	}
 
 	@Override
@@ -418,7 +421,10 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 
 	@Override
 	public Date getModifiedDate() {
-		return _document.getLastModificationDate().getTime();
+		GregorianCalendar lastModificationDate =
+			_document.getLastModificationDate();
+
+		return lastModificationDate.getTime();
 	}
 
 	@Override

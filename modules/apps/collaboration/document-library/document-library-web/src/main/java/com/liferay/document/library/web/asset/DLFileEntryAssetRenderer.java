@@ -113,10 +113,11 @@ public class DLFileEntryAssetRenderer
 
 	@Override
 	public long getClassPK() {
+		String version = _fileVersion.getVersion();
+
 		if (!_fileVersion.isApproved() && _fileVersion.isDraft() &&
 			!_fileVersion.isPending() &&
-			!_fileVersion.getVersion().equals(
-				DLFileEntryConstants.VERSION_DEFAULT)) {
+			!version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
 
 			return _fileVersion.getFileVersionId();
 		}

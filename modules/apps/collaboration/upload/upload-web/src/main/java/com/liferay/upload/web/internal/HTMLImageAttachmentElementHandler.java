@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Alejandro Tardín
@@ -96,7 +97,10 @@ public class HTMLImageAttachmentElementHandler
 		_TEMP_ATTACHMENT_PATTERN = Pattern.compile(sb.toString());
 	}
 
-	@Reference(target = "(&(format=html)(html.tag.name=img))")
+	@Reference(
+		policyOption = ReferencePolicyOption.GREEDY,
+		target = "(&(format=html)(html.tag.name=img))"
+	)
 	private AttachmentElementReplacer _attachmentElementReplacer;
 
 }

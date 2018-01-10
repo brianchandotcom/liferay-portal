@@ -6,7 +6,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd"
 >
-	<description>This tag is used for display expando custom fields.</description>
+	<description>Provides the Liferay Expando component tags, prefixed with <![CDATA[<code>liferay-expando:</code>]]>. These tags are used to display Expando custom fields.</description>
 	<tlib-version>1.0</tlib-version>
 	<short-name>liferay-expando</short-name>
 	<uri>http://liferay.com/tld/expando</uri>

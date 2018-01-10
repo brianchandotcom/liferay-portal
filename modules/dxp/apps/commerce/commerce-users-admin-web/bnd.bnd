@@ -1,4 +1,0 @@
-Bundle-Name: Liferay Commerce Users Admin Web
-Bundle-SymbolicName: com.liferay.commerce.users.admin.web
-Bundle-Version: 1.0.0
-Web-ContextPath: /commerce-users-admin-web

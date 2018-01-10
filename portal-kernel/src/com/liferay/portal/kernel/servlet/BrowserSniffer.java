@@ -40,10 +40,58 @@ public interface BrowserSniffer {
 
 	public BrowserMetadata getBrowserMetadata(HttpServletRequest request);
 
+	/**
+	 * <p>
+	 * Get the browser's version number as a float. Same as
+	 * {@link BrowserSniffer#getVersion(HttpServletRequest)} but as a float
+	 * instead of as a {@link String}.
+	 * </p>
+	 * <p>
+	 * Note that the version returned by this method is defined as the real
+	 * version of the browser software, not the one used to render the page.
+	 * This is an important detail because, for example, the browser can be an
+	 * IE10 but it may be using a compatibility view emulating IE8 to render the
+	 * page. In such case, this method would return 10.0, not 8.0.
+	 * </p>
+	 * @param request
+	 * @return a float representing the version number
+	 * @see BrowserSniffer#getVersion(HttpServletRequest)
+	 * @review
+	 */
 	public float getMajorVersion(HttpServletRequest request);
 
+	/**
+	 * <p>
+	 * Get the browser's revision.
+	 * </p>
+	 * <p>
+	 * Note that the revision returned by this method is defined as the real
+	 * revision of the browser software, not the one used to render the page.
+	 * This is an important detail because, for example, the browser can be an
+	 * IE10 but it may be using a compatibility view emulating IE8 to render the
+	 * page. In such case, this method would return "10.0", not "8.0".
+	 * </p>
+	 * @param request
+	 * @return a String containing the revision number
+	 * @review
+	 */
 	public String getRevision(HttpServletRequest request);
 
+	/**
+	 * <p>
+	 * Get the browser's version.
+	 * </p>
+	 * <p>
+	 * Note that the version returned by this method is defined as the real
+	 * version of the browser software, not the one used to render the page.
+	 * This is an important detail because, for example, the browser can be an
+	 * IE10 but it may be using a compatibility view emulating IE8 to render the
+	 * page. In such case, this method would return "10.0", not "8.0".
+	 * </p>
+	 * @param request
+	 * @return a String containing the version number
+	 * @review
+	 */
 	public String getVersion(HttpServletRequest request);
 
 	public boolean isAir(HttpServletRequest request);

@@ -61,68 +61,64 @@ Firefox 21 var2, 21.0, 16.0, mozilla/5.0 (windows nt 6.1; win64; x64; rv:16.0.1)
 
 ## IE 11.0
 
-IE 11 var1, , 11.0, mozilla/5.0 (windows nt 6.3; trident/7.0; rv:11.0) like gecko
-IE 11 var2, , 11.0, mozilla/5.0 (windows nt 6.1; trident/7.0; rv:11.0) like gecko
-
-## IE 10.6
-
-IE 10.6, , 10.6, mozilla/5.0 (compatible; msie 10.6; windows nt 6.1; trident/5.0; infopath.2; slcc1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 2.0.50727) 3gpp-gba untrusted/1.0
+IE 11 var1, 11.0, 11.0, mozilla/5.0 (windows nt 6.3; trident/7.0; rv:11.0) like gecko
+IE 11 var2, 11.0, 11.0, mozilla/5.0 (windows nt 6.1; trident/7.0; rv:11.0) like gecko
 
 ## IE 10.0
 
-IE 10 var1, , 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; wow64; trident/6.0)
-IE 10 var2, , 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; trident/6.0)
-IE 10 var3, , 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; trident/5.0)
-IE 10 var4, , 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; trident/4.0; infopath.2; sv1; .net clr 2.0.50727; wow64)
-IE 10 var5, , 10.0, mozilla/5.0 (compatible; msie 10.0; macintosh; intel mac os x 10_7_3; trident/6.0)
-IE 10 var6, , 10.0, mozilla/4.0 (compatible; msie 10.0; windows nt 6.1; trident/5.0)
+IE 10 var1, 10.0, 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; wow64; trident/6.0)
+IE 10 var2, 10.0, 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; trident/6.0)
+IE 10 var3, 10.0, 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; trident/6.0)
+IE 10 var4, 10.0, 10.0, mozilla/5.0 (compatible; msie 10.0; windows nt 6.1; trident/6.0; infopath.2; sv1; .net clr 2.0.50727; wow64)
+IE 10 var5, 10.0, 10.0, mozilla/5.0 (compatible; msie 10.0; macintosh; intel mac os x 10_7_3; trident/6.0)
+IE 10 var6, 10.0, 10.0, mozilla/4.0 (compatible; msie 10.0; windows nt 6.1; trident/6.0)
 IE 10 var7, , 10.0, mozilla/1.22 (compatible; msie 10.0; windows 3.1)
 
 ## IE 9.0
 
 IE 9 var1, , 9.0, mozilla/5.0 (windows; u; msie 9.0; windows nt 9.0; en-us))
 IE 9 var2, , 9.0, mozilla/5.0 (windows; u; msie 9.0; windows nt 9.0; en-us)
-IE 9 var3, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 7.1; trident/5.0)
-IE 9 var4, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; slcc2; media center pc 6.0; infopath.3; ms-rtc lm 8; zune 4.7)
-IE 9 var5, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; slcc2; media center pc 6.0; infopath.3; ms-rtc lm 8; zune 4.7
-IE 9 var6, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; zune 4.0; infopath.3; ms-rtc lm 8; .net4.0c; .net4.0e)
-IE 9 var7, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; chromeframe/12.0.742.112)
-IE 9 var8, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 2.0.50727; media center pc 6.0)
-IE 9 var9, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; win64; x64; trident/5.0; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 2.0.50727; media center pc 6.0)
-IE 9 var10, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; win64; x64; trident/5.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; zune 4.0; tablet pc 2.0; infopath.3; .net4.0c; .net4.0e)
-IE 9 var11, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; win64; x64; trident/5.0
-IE 9 var12, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; yie8)
-IE 9 var13, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; infopath.2; .net clr 1.1.4322; .net4.0c; tablet pc 2.0)
-IE 9 var14, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; funwebproducts)
-IE 9 var15, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; chromeframe/13.0.782.215)
-IE 9 var16, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; chromeframe/11.0.696.57)
-IE 9 var17, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0) chromeframe/10.0.648.205
-IE 9 var18, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/4.0; gtb7.4; infopath.1; sv1; .net clr 2.8.52393; wow64; en-us)
-IE 9 var19, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.0; trident/5.0; chromeframe/11.0.696.57)
-IE 9 var20, , 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.0; trident/4.0; gtb7.4; infopath.3; sv1; .net clr 3.1.76908; wow64; en-us)
+IE 9 var3, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 7.1; trident/5.0)
+IE 9 var4, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; slcc2; media center pc 6.0; infopath.3; ms-rtc lm 8; zune 4.7)
+IE 9 var5, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; slcc2; media center pc 6.0; infopath.3; ms-rtc lm 8; zune 4.7
+IE 9 var6, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; zune 4.0; infopath.3; ms-rtc lm 8; .net4.0c; .net4.0e)
+IE 9 var7, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; chromeframe/12.0.742.112)
+IE 9 var8, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; wow64; trident/5.0; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 2.0.50727; media center pc 6.0)
+IE 9 var9, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; win64; x64; trident/5.0; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 2.0.50727; media center pc 6.0)
+IE 9 var10, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; win64; x64; trident/5.0; .net clr 2.0.50727; slcc2; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; zune 4.0; tablet pc 2.0; infopath.3; .net4.0c; .net4.0e)
+IE 9 var11, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; win64; x64; trident/5.0
+IE 9 var12, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; yie8)
+IE 9 var13, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; infopath.2; .net clr 1.1.4322; .net4.0c; tablet pc 2.0)
+IE 9 var14, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; funwebproducts)
+IE 9 var15, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; chromeframe/13.0.782.215)
+IE 9 var16, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; chromeframe/11.0.696.57)
+IE 9 var17, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0) chromeframe/10.0.648.205
+IE 9 var18, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.1; trident/5.0; gtb7.4; infopath.1; sv1; .net clr 2.8.52393; wow64; en-us)
+IE 9 var19, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.0; trident/5.0; chromeframe/11.0.696.57)
+IE 9 var20, 9.0, 9.0, mozilla/5.0 (compatible; msie 9.0; windows nt 6.0; trident/5.0; gtb7.4; infopath.3; sv1; .net clr 3.1.76908; wow64; en-us)
 
 ## IE 8.0
 
-IE 8 var1, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.1; trident/4.0; gtb7.4; infopath.2; sv1; .net clr 3.3.69573; wow64; en-us)
-IE 8 var2, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.0; trident/4.0; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 1.0.3705; .net clr 1.1.4322)
-IE 8 var3, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.0; trident/4.0; infopath.1; sv1; .net clr 3.8.36217; wow64; en-us)
-IE 8 var4, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.0; trident/4.0; .net clr 2.7.58687; slcc2; media center pc 5.0; zune 3.4; tablet pc 3.6; infopath.3)
-IE 8 var5, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.2; trident/4.0; media center pc 4.0; slcc1; .net clr 3.0.04320)
-IE 8 var6, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0; slcc1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 1.1.4322)
-IE 8 var7, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0; infopath.2; slcc1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 2.0.50727)
-IE 8 var8, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0; .net clr 1.1.4322; .net clr 2.0.50727)
+IE 8 var1, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.1; trident/4.0; gtb7.4; infopath.2; sv1; .net clr 3.3.69573; wow64; en-us)
+IE 8 var2, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.0; trident/4.0; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 1.0.3705; .net clr 1.1.4322)
+IE 8 var3, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.0; trident/4.0; infopath.1; sv1; .net clr 3.8.36217; wow64; en-us)
+IE 8 var4, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 6.0; trident/4.0; .net clr 2.7.58687; slcc2; media center pc 5.0; zune 3.4; tablet pc 3.6; infopath.3)
+IE 8 var5, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.2; trident/4.0; media center pc 4.0; slcc1; .net clr 3.0.04320)
+IE 8 var6, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0; slcc1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 1.1.4322)
+IE 8 var7, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0; infopath.2; slcc1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 2.0.50727)
+IE 8 var8, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; trident/4.0; .net clr 1.1.4322; .net clr 2.0.50727)
 IE 8 var9, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.1; slcc1; .net clr 1.1.4322)
-IE 8 var10, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.0; trident/4.0; infopath.1; sv1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 3.0.04506.30)
-IE 8 var11, , 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.0; trident/4.0; fbsmtwb; .net clr 2.0.34861; .net clr 3.0.3746.3218; .net clr 3.5.33652; msn optimizedie8;enus)
-IE 8 var12, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.2; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0)
-IE 8 var13, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; media center pc 6.0; infopath.2; ms-rtc lm 8)
-IE 8 var14, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; media center pc 6.0; infopath.2; ms-rtc lm 8
-IE 8 var15, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; media center pc 6.0; .net clr 3.5.30729; .net clr 3.0.30729; .net4.0c)
-IE 8 var16, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; infopath.3; .net4.0c; .net4.0e; .net clr 3.5.30729; .net clr 3.0.30729; ms-rtc lm 8)
-IE 8 var17, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; infopath.2)
-IE 8 var18, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; zune 3.0)
-IE 8 var19, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; msn optimizedie8;zhcn)
-IE 8 var20, , 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; ms-rtc lm 8; infopath.3; .net4.0c; .net4.0e) chromeframe/8.0.552.224
+IE 8 var10, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.0; trident/4.0; infopath.1; sv1; .net clr 3.0.4506.2152; .net clr 3.5.30729; .net clr 3.0.04506.30)
+IE 8 var11, 8.0, 8.0, mozilla/5.0 (compatible; msie 8.0; windows nt 5.0; trident/4.0; fbsmtwb; .net clr 2.0.34861; .net clr 3.0.3746.3218; .net clr 3.5.33652; msn optimizedie8;enus)
+IE 8 var12, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.2; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0)
+IE 8 var13, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; media center pc 6.0; infopath.2; ms-rtc lm 8)
+IE 8 var14, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; media center pc 6.0; infopath.2; ms-rtc lm 8
+IE 8 var15, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; media center pc 6.0; .net clr 3.5.30729; .net clr 3.0.30729; .net4.0c)
+IE 8 var16, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; infopath.3; .net4.0c; .net4.0e; .net clr 3.5.30729; .net clr 3.0.30729; ms-rtc lm 8)
+IE 8 var17, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; infopath.2)
+IE 8 var18, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; zune 3.0)
+IE 8 var19, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; msn optimizedie8;zhcn)
+IE 8 var20, 8.0, 8.0, mozilla/4.0 (compatible; msie 8.0; windows nt 6.1; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; ms-rtc lm 8; infopath.3; .net4.0c; .net4.0e) chromeframe/8.0.552.224
 
 ## IE 7.0
 
@@ -141,10 +137,10 @@ IE 7 var12, , 7.0, mozilla/4.0 (windows; msie 7.0; windows nt 5.1; sv1; .net clr
 IE 7 var13, , 7.0, mozilla/4.0 (mozilla/4.0; msie 7.0; windows nt 5.1; fdm; sv1; .net clr 3.0.04506.30)
 IE 7 var14, , 7.0, mozilla/4.0 (mozilla/4.0; msie 7.0; windows nt 5.1; fdm; sv1)
 IE 7 var15, , 7.0, mozilla/4.0 (compatible;msie 7.0;windows nt 6.0)
-IE 7 var16, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.2; win64; x64; trident/6.0; .net4.0e; .net4.0c)
+IE 7 var16, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.2; win64; x64; .net4.0e; .net4.0c)
 IE 7 var17, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.1; wow64; slcc2; .net clr 2.0.50727; infopath.3; .net4.0c; .net4.0e; .net clr 3.5.30729; .net clr 3.0.30729; ms-rtc lm 8)
 IE 7 var18, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.1; wow64; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; ms-rtc lm 8; .net4.0c; .net4.0e; infopath.3)
-IE 7 var19, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.1; trident/6.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; .net4.0c; .net4.0e)
+IE 7 var19, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.1; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; .net4.0c; .net4.0e)
 IE 7 var20, , 7.0, mozilla/4.0 (compatible; msie 7.0; windows nt 6.1; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; chromeframe/12.0.742.100)
 
 ## IE 6.0
@@ -165,10 +161,10 @@ IE 6 var13, , 6.0, mozilla/4.0 (msie 6.0; windows nt 5.1)
 IE 6 var14, , 6.0, mozilla/4.0 (msie 6.0; windows nt 5.0)
 IE 6 var15, , 6.0, mozilla/4.0 (compatible;msie 6.0;windows 98;q312461)
 IE 6 var16, , 6.0, mozilla/4.0 (compatible; windows nt 5.1; msie 6.0) (compatible; msie 6.0; windows nt 5.1; .net clr 1.1.4322; .net clr 2.0.50727)
-IE 6 var17, , 6.0, mozilla/4.0 (compatible; u; msie 6.0; windows nt 5.1) (compatible; ; ; trident/4.0; wow64; trident/4.0; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 1.0.3705; .net clr 1.1.4322)
+IE 6 var17, , 6.0, mozilla/4.0 (compatible; u; msie 6.0; windows nt 5.1) (compatible; ; ; wow64; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; .net clr 1.0.3705; .net clr 1.1.4322)
 IE 6 var18, , 6.0, mozilla/4.0 (compatible; u; msie 6.0; windows nt 5.1)
-IE 6 var19, , 6.0, mozilla/4.0 (compatible; msie 6.0; windows nt 6.1; trident/4.0; mozilla/4.0 (compatible; msie 6.0; windows nt 5.1; sv1) ; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; infopath.3; tablet pc 2.0)
-IE 6 var20, , 6.0, mozilla/4.0 (compatible; msie 6.0; windows nt 6.1; trident/4.0; gtb6.5; qqdownload 534; mozilla/4.0 (compatible; msie 6.0; windows nt 5.1; sv1) ; slcc2; .net clr 2.0.50727; media center pc 6.0; .net clr 3.5.30729; .net clr 3.0.30729)
+IE 6 var19, , 6.0, mozilla/4.0 (compatible; msie 6.0; windows nt 6.1; mozilla/4.0 (compatible; msie 6.0; windows nt 5.1; sv1) ; slcc2; .net clr 2.0.50727; .net clr 3.5.30729; .net clr 3.0.30729; media center pc 6.0; .net4.0c; infopath.3; tablet pc 2.0)
+IE 6 var20, , 6.0, mozilla/4.0 (compatible; msie 6.0; windows nt 6.1; gtb6.5; qqdownload 534; mozilla/4.0 (compatible; msie 6.0; windows nt 5.1; sv1) ; slcc2; .net clr 2.0.50727; media center pc 6.0; .net clr 3.5.30729; .net clr 3.0.30729)
 
 ## Mobile
 

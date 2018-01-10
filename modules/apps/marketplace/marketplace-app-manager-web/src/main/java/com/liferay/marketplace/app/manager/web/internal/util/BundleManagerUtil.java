@@ -12,21 +12,20 @@
  * details.
  */
 
-package com.liferay.marketplace.bundle;
+package com.liferay.marketplace.app.manager.web.internal.util;
 
-import java.io.File;
+import com.liferay.marketplace.bundle.BundleManager;
 
 import java.util.List;
-import java.util.jar.Manifest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Ryan Park
+ * @author Matthew Tambara
  */
-@Component
+@Component(immediate = true)
 public class BundleManagerUtil {
 
 	public static Bundle getBundle(String symbolicName, String version) {
@@ -37,36 +36,8 @@ public class BundleManagerUtil {
 		return _bundleManager.getBundles();
 	}
 
-	public static List<Bundle> getInstalledBundles() {
-		return _bundleManager.getInstalledBundles();
-	}
-
-	public static Manifest getManifest(File file) {
-		return _bundleManager.getManifest(file);
-	}
-
-	public static List<Bundle> installLPKG(File file) throws Exception {
-		return _bundleManager.installLPKG(file);
-	}
-
-	public static boolean isInstalled(Bundle bundle) {
-		return _bundleManager.isInstalled(bundle);
-	}
-
-	public static boolean isInstalled(String symbolicName, String version) {
-		return _bundleManager.isInstalled(symbolicName, version);
-	}
-
-	public static void uninstallBundle(Bundle bundle) {
-		_bundleManager.uninstallBundle(bundle);
-	}
-
-	public static void uninstallBundle(String symbolicName, String version) {
-		_bundleManager.uninstallBundle(symbolicName, version);
-	}
-
 	@Reference(unbind = "-")
-	protected void setBundleManager(BundleManager bundleManager) {
+	protected void setBundleManger(BundleManager bundleManager) {
 		_bundleManager = bundleManager;
 	}
 

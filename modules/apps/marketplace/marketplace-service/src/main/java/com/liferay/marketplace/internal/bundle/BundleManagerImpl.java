@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.marketplace.bundle;
+package com.liferay.marketplace.internal.bundle;
 
+import com.liferay.marketplace.bundle.BundleManager;
 import com.liferay.portal.kernel.deploy.auto.AutoDeployException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,8 +53,10 @@ import org.osgi.service.component.annotations.Reference;
  * @author Joan Kim
  * @author Ryan Park
  */
-@Component(immediate = true, service = BundleManager.class)
-public class BundleManager {
+@Component(
+	immediate = true, service = {BundleManager.class, BundleManagerImpl.class}
+)
+public class BundleManagerImpl implements BundleManager {
 
 	public Bundle getBundle(String symbolicName, String versionString) {
 		Version version = Version.parseVersion(versionString);
@@ -73,6 +76,7 @@ public class BundleManager {
 		return ListUtil.fromArray(_bundleContext.getBundles());
 	}
 
+	@Override
 	public List<Bundle> getInstalledBundles() {
 		List<Bundle> bundles = getBundles();
 
@@ -231,7 +235,8 @@ public class BundleManager {
 	private static final int[] _INSTALLED_BUNDLE_STATES =
 		{Bundle.ACTIVE, Bundle.INSTALLED, Bundle.RESOLVED};
 
-	private static final Log _log = LogFactoryUtil.getLog(BundleManager.class);
+	private static final Log _log = LogFactoryUtil.getLog(
+		BundleManagerImpl.class);
 
 	private BundleContext _bundleContext;
 

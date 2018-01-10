@@ -185,6 +185,11 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrderItemLocalService.deleteCommerceOrderItems(
 			commerceOrder.getCommerceOrderId());
 
+		// Commerce order notes
+
+		commerceOrderNoteLocalService.deleteCommerceOrderNotes(
+			commerceOrder.getCommerceOrderId());
+
 		// Commerce order payments
 
 		commerceOrderPaymentLocalService.deleteCommerceOrderPayments(

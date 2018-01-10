@@ -130,7 +130,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 </c:if>
 
 <aui:script require="metal-dom/src/all/dom as dom">
-	dom.on(
+	var deleteSelectedFragmentCollectionsHandler = dom.on(
 		'#<portlet:namespace />deleteSelectedFragmentCollections',
 		'click',
 		function() {
@@ -140,11 +140,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 		}
 	);
 
-	dom.on(
+	var exportSelectedFragmentCollectionsHandler = dom.on(
 		'#<portlet:namespace />exportSelectedFragmentCollections',
 		'click',
 		function() {
 			submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:resourceURL id="/fragment/export_fragment_collections" />');
 		}
 	);
+
+	function handleDestroyPortlet () {
+		deleteSelectedFragmentCollectionsHandler.removeListener();
+		exportSelectedFragmentCollectionsHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

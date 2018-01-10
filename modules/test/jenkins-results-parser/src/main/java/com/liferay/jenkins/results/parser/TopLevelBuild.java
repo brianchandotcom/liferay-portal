@@ -1174,7 +1174,7 @@ public class TopLevelBuild extends BaseBuild {
 			Dom4JUtil.addToElement(rootElement, Dom4JUtil.getNewElement("hr"));
 
 			if ((failureElements.size() == 1) &&
-				(upstreamJobFailureElements.size() > 0)) {
+				!upstreamJobFailureElements.isEmpty()) {
 
 				Dom4JUtil.addToElement(
 					rootElement,

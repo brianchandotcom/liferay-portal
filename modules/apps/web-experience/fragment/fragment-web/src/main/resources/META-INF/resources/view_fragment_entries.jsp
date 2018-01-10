@@ -80,7 +80,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="deleteFragmentEntries" var="deleteFragmentEntriesURL">
+<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntriesURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 
@@ -143,7 +143,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 </aui:form>
 
 <c:if test="<%= fragmentDisplayContext.isShowAddButton(FragmentActionKeys.ADD_FRAGMENT_ENTRY) %>">
-	<portlet:actionURL name="addFragmentEntry" var="addFragmentEntryURL">
+	<portlet:actionURL name="/fragment/add_fragment_entry" var="addFragmentEntryURL">
 		<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
 		<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentCollectionId()) %>" />
 	</portlet:actionURL>

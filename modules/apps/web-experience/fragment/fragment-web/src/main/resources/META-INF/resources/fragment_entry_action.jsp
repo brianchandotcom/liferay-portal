@@ -37,7 +37,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 	</c:if>
 
 	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.UPDATE) %>">
-		<portlet:actionURL name="updateFragmentEntry" var="updateFragmentEntryURL">
+		<portlet:actionURL name="/fragment/update_fragment_entry" var="updateFragmentEntryURL">
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentEntry.getFragmentCollectionId()) %>" />
 			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
 		</portlet:actionURL>
@@ -76,7 +76,7 @@ FragmentEntry fragmentEntry = (FragmentEntry)row.getObject();
 	</c:if>
 
 	<c:if test="<%= FragmentEntryPermission.contains(permissionChecker, fragmentEntry, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteFragmentEntries" var="deleteFragmentEntryURL">
+		<portlet:actionURL name="/fragment/delete_fragment_entries" var="deleteFragmentEntryURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentEntry.getFragmentEntryId()) %>" />
 		</portlet:actionURL>

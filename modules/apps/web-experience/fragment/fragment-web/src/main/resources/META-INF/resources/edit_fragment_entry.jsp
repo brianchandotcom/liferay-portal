@@ -33,7 +33,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	</aui:nav>
 </aui:nav-bar>
 
-<portlet:actionURL name="editFragmentEntry" var="editFragmentEntryURL">
+<portlet:actionURL name="/fragment/edit_fragment_entry" var="editFragmentEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />
 </portlet:actionURL>
 

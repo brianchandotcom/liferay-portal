@@ -53,7 +53,7 @@ FragmentCollection fragmentCollection = (FragmentCollection)row.getObject();
 	</c:if>
 
 	<c:if test="<%= FragmentCollectionPermission.contains(permissionChecker, fragmentCollection, ActionKeys.DELETE) %>">
-		<portlet:actionURL name="deleteFragmentCollection" var="deleteFragmentCollectionURL">
+		<portlet:actionURL name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL">
 			<portlet:param name="redirect" value="<%= currentURL %>" />
 			<portlet:param name="fragmentCollectionId" value="<%= String.valueOf(fragmentCollection.getFragmentCollectionId()) %>" />
 		</portlet:actionURL>

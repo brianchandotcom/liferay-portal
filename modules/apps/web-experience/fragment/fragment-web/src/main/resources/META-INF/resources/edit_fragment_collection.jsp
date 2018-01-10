@@ -25,7 +25,7 @@ portletDisplay.setURLBack(redirect);
 renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 %>
 
-<portlet:actionURL name="editFragmentCollection" var="editFragmentCollectionURL">
+<portlet:actionURL name="/fragment/edit_fragment_collection" var="editFragmentCollectionURL">
 	<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_collection" />
 </portlet:actionURL>
 

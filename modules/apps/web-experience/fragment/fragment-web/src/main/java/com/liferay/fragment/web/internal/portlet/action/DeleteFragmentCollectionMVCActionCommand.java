@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=deleteFragmentCollection"
+		"mvc.command.name=/fragment/delete_fragment_collection"
 	},
 	service = MVCActionCommand.class
 )

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
-		"mvc.command.name=editFragmentEntry"
+		"mvc.command.name=/fragment/edit_fragment_entry"
 	},
 	service = MVCActionCommand.class
 )

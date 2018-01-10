@@ -74,7 +74,7 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 
-<portlet:actionURL name="deleteFragmentCollection" var="deleteFragmentCollectionURL">
+<portlet:actionURL name="/fragment/delete_fragment_collection" var="deleteFragmentCollectionURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />
 </portlet:actionURL>
 

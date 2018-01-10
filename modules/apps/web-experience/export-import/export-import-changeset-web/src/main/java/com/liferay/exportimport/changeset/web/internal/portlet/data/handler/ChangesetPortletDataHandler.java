@@ -19,9 +19,9 @@ import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
-import com.liferay.exportimport.staged.model.repository.StagedModelRepositoryRegistryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
@@ -71,14 +71,15 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		Map<String, String[]> parameterMap =
 			portletDataContext.getParameterMap();
 
-		String[] classNameClassPKArray = parameterMap.get("classNameClassPK");
+		String[] exportingEntities = parameterMap.get("exportingEntities");
 
-		if (classNameClassPKArray != null) {
-			for (String classNameClassPK : classNameClassPKArray) {
-				String className = _getClassName(classNameClassPK);
-				long classPK = _getClassPK(classNameClassPK);
+		if (exportingEntities != null) {
+			for (String exportingEntity : exportingEntities) {
+				String className = _getClassName(exportingEntity);
+				long groupId = _getGroupId(exportingEntity);
+				String uuid = _getUuid(exportingEntity);
 
-				_exportEntity(portletDataContext, className, classPK);
+				_exportEntity(portletDataContext, uuid, groupId, className);
 			}
 		}
 
@@ -109,30 +110,37 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private void _exportEntity(
-			PortletDataContext portletDataContext, String className,
-			long classPK)
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			String className)
 		throws PortalException {
 
-		StagedModelRepository<?> stagedModelRepository =
-			StagedModelRepositoryRegistryUtil.getStagedModelRepository(
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				className);
 
 		StagedModel stagedModel =
-			stagedModelRepository.fetchStagedModelByClassPK(classPK);
+			stagedModelDataHandler.fetchStagedModelByUuidAndGroupId(
+				uuid, groupId);
 
 		StagedModelDataHandlerUtil.exportStagedModel(
 			portletDataContext, stagedModel);
 	}
 
-	private String _getClassName(String classNameClassPK) {
-		return classNameClassPK.substring(
-			0, classNameClassPK.indexOf(StringPool.POUND));
+	private String _getClassName(String exportingEntity) {
+		return exportingEntity.substring(
+			0, exportingEntity.indexOf(StringPool.POUND));
 	}
 
-	private long _getClassPK(String classNameClassPK) {
+	private long _getGroupId(String exportingEntity) {
 		return Long.valueOf(
-			classNameClassPK.substring(
-				classNameClassPK.indexOf(StringPool.POUND) + 1));
+			exportingEntity.substring(
+				exportingEntity.indexOf(StringPool.POUND),
+				exportingEntity.lastIndexOf(StringPool.POUND)));
+	}
+
+	private String _getUuid(String exportingEntity) {
+		return exportingEntity.substring(
+			exportingEntity.lastIndexOf(StringPool.POUND) + 1);
 	}
 
 }

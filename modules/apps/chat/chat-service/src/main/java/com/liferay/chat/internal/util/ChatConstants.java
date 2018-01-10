@@ -12,22 +12,17 @@
  * details.
  */
 
-package com.liferay.chat.configuration;
+package com.liferay.chat.internal.util;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-
-import org.osgi.service.component.annotations.Component;
+import com.liferay.portal.kernel.util.Time;
 
 /**
- * @author Peter Fellwock
+ * @author Brian Wing Shun Chan
  */
-@Component (enabled = false)
-public class ChatGroupServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class ChatConstants {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return ChatGroupServiceConfiguration.class;
-	}
+	public static final long MAX_POLL_LATENCY = Time.SECOND * 15;
+
+	public static final long ONLINE_DELTA = Time.MINUTE;
 
 }

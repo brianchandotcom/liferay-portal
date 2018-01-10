@@ -14,14 +14,14 @@
 
 package com.liferay.chat.internal.poller;
 
-import com.liferay.chat.configuration.ChatGroupServiceConfiguration;
 import com.liferay.chat.constants.ChatPortletKeys;
+import com.liferay.chat.internal.configuration.ChatGroupServiceConfiguration;
+import com.liferay.chat.internal.util.ChatConstants;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.model.Status;
 import com.liferay.chat.service.EntryLocalServiceUtil;
 import com.liferay.chat.service.StatusLocalServiceUtil;
-import com.liferay.chat.util.BuddyFinderUtil;
-import com.liferay.chat.util.ChatConstants;
+import com.liferay.chat.util.BuddyFinder;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.NoSuchLayoutSetException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
@@ -115,7 +115,7 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 			PollerRequest pollerRequest, PollerResponse pollerResponse)
 		throws Exception {
 
-		List<Object[]> buddies = BuddyFinderUtil.getBuddies(
+		List<Object[]> buddies = _buddyFinder.getBuddies(
 			pollerRequest.getCompanyId(), pollerRequest.getUserId());
 
 		JSONArray buddiesJSONArray = JSONFactoryUtil.createJSONArray();
@@ -317,6 +317,9 @@ public class ChatPollerProcessor extends BasePollerProcessor {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ChatPollerProcessor.class);
+
+	@Reference
+	private BuddyFinder _buddyFinder;
 
 	private ChatGroupServiceConfiguration _chatGroupServiceConfiguration;
 

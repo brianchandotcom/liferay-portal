@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.chat.configuration;
+package com.liferay.chat.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

@@ -90,17 +90,19 @@ public class Netlogon {
 				return new NtlmUserAccount(name.toString());
 			}
 
-			SmbException smbe = new SmbException(
-				netrLogonSamLogon.getStatus(), false);
+			if (_log.isWarnEnabled()) {
+				SmbException smbe = new SmbException(
+					netrLogonSamLogon.getStatus(), false);
 
-			StringBundler sb = new StringBundler(4);
+				StringBundler sb = new StringBundler(4);
 
-			sb.append("Unable to authenticate user ");
-			sb.append(userName);
-			sb.append(": ");
-			sb.append(smbe.getMessage());
+				sb.append("Unable to authenticate user ");
+				sb.append(userName);
+				sb.append(": ");
+				sb.append(smbe.getMessage());
 
-			_log.warn(sb.toString());
+				_log.warn(sb.toString());
+			}
 
 			return null;
 		}

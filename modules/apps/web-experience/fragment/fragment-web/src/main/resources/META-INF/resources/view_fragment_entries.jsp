@@ -203,20 +203,20 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 		addFragmentEntryMenuItem.addEventListener('click', handleAddFragmentEntryMenuItemClick);
 
 		Liferay.on('destroyPortlet', handleDestroyPortlet);
-
-		dom.on(
-			'#<portlet:namespace />deleteSelectedFragmentEntries',
-			'click',
-			function() {
-				if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
-					submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/fragment/delete_fragment_entries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
-				}
-			}
-		);
 	</aui:script>
 </c:if>
 
 <aui:script require="metal-dom/src/all/dom as dom">
+	dom.on(
+		'#<portlet:namespace />deleteSelectedFragmentEntries',
+		'click',
+		function() {
+			if (confirm('<liferay-ui:message key="are-you-sure-you-want-to-delete-this" />')) {
+				submitForm(document.querySelector('#<portlet:namespace />fm'), '<portlet:actionURL name="/fragment/delete_fragment_entries"><portlet:param name="redirect" value="<%= currentURL %>" /></portlet:actionURL>');
+			}
+		}
+	);
+
 	dom.on(
 		'#<portlet:namespace />exportSelectedFragmentEntries',
 		'click',

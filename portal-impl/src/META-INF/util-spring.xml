@@ -524,9 +524,6 @@
 	<bean class="com.liferay.portal.verify.model.LayoutSetBranchVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutSetPrototypeVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.LayoutVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.MBCategoryVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.MBMessageVerifiableModel" />
-	<bean class="com.liferay.portal.verify.model.MBThreadVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.OrganizationVerifiableAuditedModel" />
 	<bean class="com.liferay.portal.verify.model.PasswordPolicyVerifiableModel" />
 	<bean class="com.liferay.portal.verify.model.PhoneVerifiableModel" />

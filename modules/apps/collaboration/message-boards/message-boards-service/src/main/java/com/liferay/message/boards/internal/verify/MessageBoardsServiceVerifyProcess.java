@@ -16,8 +16,11 @@ package com.liferay.message.boards.internal.verify;
 
 import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.message.boards.internal.verify.model.MBBanVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBCategoryVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBDiscussionVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBMessageVerifiableModel;
 import com.liferay.message.boards.internal.verify.model.MBThreadFlagVerifiableModel;
+import com.liferay.message.boards.internal.verify.model.MBThreadVerifiableModel;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBThread;
 import com.liferay.message.boards.kernel.service.MBMessageLocalService;
@@ -31,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.verify.VerifyAuditedModel;
 import com.liferay.portal.verify.VerifyGroupedModel;
 import com.liferay.portal.verify.VerifyProcess;
+import com.liferay.portal.verify.VerifyResourcePermissions;
 import com.liferay.portal.verify.VerifyUUID;
 
 import java.util.List;
@@ -53,6 +57,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 	protected void doVerify() throws Exception {
 		verifyAuditedModels();
 		verifyGroupedModels();
+		verifyResourcedModels();
 		verifyStatisticsForCategories();
 		verifyStatisticsForThreads();
 		verifyAssetsForMessages();
@@ -156,6 +161,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			_verifyAuditedModel.verify(
 				new MBDiscussionVerifiableModel(),
+				new MBThreadVerifiableModel(),
 				new MBThreadFlagVerifiableModel());
 		}
 	}
@@ -165,6 +171,14 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 			_verifyGroupedModel.verify(
 				new MBDiscussionVerifiableModel(),
 				new MBThreadFlagVerifiableModel());
+		}
+	}
+
+	protected void verifyResourcedModels() throws Exception {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			_verifyResourcePermissions.verify(
+				new MBCategoryVerifiableModel(),
+				new MBMessageVerifiableModel());
 		}
 	}
 
@@ -228,6 +242,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		try (LoggingTimer loggingTimer = new LoggingTimer()) {
 			VerifyUUID.verify(
 				new MBBanVerifiableModel(), new MBDiscussionVerifiableModel(),
+				new MBThreadVerifiableModel(),
 				new MBThreadFlagVerifiableModel());
 		}
 	}
@@ -248,5 +263,7 @@ public class MessageBoardsServiceVerifyProcess extends VerifyProcess {
 		new VerifyAuditedModel();
 	private final VerifyGroupedModel _verifyGroupedModel =
 		new VerifyGroupedModel();
+	private final VerifyResourcePermissions _verifyResourcePermissions =
+		new VerifyResourcePermissions();
 
 }

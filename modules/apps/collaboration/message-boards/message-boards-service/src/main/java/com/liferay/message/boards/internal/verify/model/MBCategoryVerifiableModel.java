@@ -12,31 +12,34 @@
  * details.
  */
 
-package com.liferay.message.boards.kernel.exception;
+package com.liferay.message.boards.internal.verify.model;
 
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.message.boards.kernel.model.MBCategory;
+import com.liferay.portal.kernel.verify.model.VerifiableResourcedModel;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.exception.MailingListOutUserNameException}
  */
-@Deprecated
-public class MailingListOutUserNameException extends PortalException {
+public class MBCategoryVerifiableModel implements VerifiableResourcedModel {
 
-	public MailingListOutUserNameException() {
+	@Override
+	public String getModelName() {
+		return MBCategory.class.getName();
 	}
 
-	public MailingListOutUserNameException(String msg) {
-		super(msg);
+	@Override
+	public String getPrimaryKeyColumnName() {
+		return "categoryId";
 	}
 
-	public MailingListOutUserNameException(String msg, Throwable cause) {
-		super(msg, cause);
+	@Override
+	public String getTableName() {
+		return "MBCategory";
 	}
 
-	public MailingListOutUserNameException(Throwable cause) {
-		super(cause);
+	@Override
+	public String getUserIdColumnName() {
+		return "userId";
 	}
 
 }

@@ -40,10 +40,10 @@ public class SoyPortletProjectTemplateCustomizer
 		if (projectTemplatesArgs.isGradle()) {
 			Path destinationDirPath = destinationDir.toPath();
 
-			Path projectPath = destinationDirPath.resolve(
+			Path projectDirPath = destinationDirPath.resolve(
 				projectTemplatesArgs.getName());
 
-			Path gulpfileJsPath = projectPath.resolve("gulpfile.js");
+			Path gulpfileJsPath = projectDirPath.resolve("gulpfile.js");
 
 			Files.deleteIfExists(gulpfileJsPath);
 		}

@@ -135,6 +135,8 @@ public class ServiceComponentLocalServiceImpl
 		ServiceComponent serviceComponent = null;
 		ServiceComponent previousServiceComponent = null;
 
+		long previousBuildNumber = 0;
+
 		List<ServiceComponent> serviceComponents =
 			serviceComponentPersistence.findByBuildNamespace(
 				buildNamespace, 0, 1);
@@ -152,7 +154,9 @@ public class ServiceComponentLocalServiceImpl
 		else {
 			serviceComponent = serviceComponents.get(0);
 
-			if (serviceComponent.getBuildNumber() < buildNumber) {
+			previousBuildNumber = serviceComponent.getBuildNumber();
+
+			if (previousBuildNumber < buildNumber) {
 				previousServiceComponent = serviceComponent;
 
 				long serviceComponentId = counterLocalService.increment();
@@ -209,24 +213,6 @@ public class ServiceComponentLocalServiceImpl
 			serviceComponent.setData(dataXML);
 
 			serviceComponentPersistence.update(serviceComponent);
-
-			Release release = releaseLocalService.fetchRelease(
-				serviceComponentConfiguration.getServletContextName());
-
-			int previousBuildNumber = 0;
-
-			if (release == null) {
-				release = releaseLocalService.addRelease(
-					serviceComponentConfiguration.getServletContextName(),
-					(int)buildNumber);
-			}
-			else {
-				previousBuildNumber = release.getBuildNumber();
-
-				release.setBuildNumber((int)buildNumber);
-
-				releaseLocalService.updateRelease(release);
-			}
 
 			if (((serviceComponentConfiguration instanceof
 					ServletServiceContextComponentConfiguration) &&

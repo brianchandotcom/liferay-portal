@@ -1084,7 +1084,10 @@ public class DDLRecordLocalServiceImpl extends DDLRecordLocalServiceBaseImpl {
 						WorkflowConstants.STATUS_APPROVED);
 
 				if (!approvedRecordVersions.isEmpty()) {
-					newVersion = approvedRecordVersions.get(0).getVersion();
+					DDLRecordVersion approvedRecordVersion =
+						approvedRecordVersions.get(0);
+
+					newVersion = approvedRecordVersion.getVersion();
 				}
 
 				record.setVersion(newVersion);

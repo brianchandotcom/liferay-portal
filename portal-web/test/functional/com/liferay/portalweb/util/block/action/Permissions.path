@@ -163,7 +163,7 @@
 </tr>
 <tr>
 	<td>CONTENT_PERMISSIONS_ADD_FORM_INSTANCE_RECORD_CHECKBOX</td>
-	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_FORM_INSTANCE_RECORD')]</td>
+	<td>//input[contains(@id,'${key_roleTitle}_ACTION_ADD_FORM_INSTANCE_RECORD')] | //input[contains(@id,'${key_roleTitle}_ACTION_ADD_RECORD')]</td>
 	<td></td>
 </tr>
 <tr>

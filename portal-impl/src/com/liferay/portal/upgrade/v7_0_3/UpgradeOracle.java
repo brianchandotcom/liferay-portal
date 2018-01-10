@@ -60,12 +60,7 @@ public class UpgradeOracle extends UpgradeProcess {
 				String columnName = rs.getString(2);
 				int dataLength = rs.getInt(3);
 
-				if (isBetweenBuildNumbers(
-						buildNumber, ReleaseInfo.RELEASE_5_2_9_BUILD_NUMBER,
-						ReleaseInfo.RELEASE_6_0_0_BUILD_NUMBER) ||
-					isBetweenBuildNumbers(
-						buildNumber, ReleaseInfo.RELEASE_6_0_5_BUILD_NUMBER,
-						ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER)) {
+				if (buildNumber < ReleaseInfo.RELEASE_6_2_0_BUILD_NUMBER) {
 
 					// LPS-33903
 
@@ -130,18 +125,6 @@ public class UpgradeOracle extends UpgradeProcess {
 				return rs.getInt(1);
 			}
 		}
-	}
-
-	protected boolean isBetweenBuildNumbers(
-		int buildNumber, int startBuildNumber, int endBuildNumber) {
-
-		if ((buildNumber >= startBuildNumber) &&
-			(buildNumber < endBuildNumber)) {
-
-			return true;
-		}
-
-		return false;
 	}
 
 	private static final int[] _ORIGINAL_DATA_LENGTH_VALUES =

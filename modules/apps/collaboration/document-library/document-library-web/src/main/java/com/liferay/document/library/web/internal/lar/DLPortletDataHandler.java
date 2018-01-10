@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.document.library.web.lar;
+package com.liferay.document.library.web.internal.lar;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.model.DLFileEntryConstants;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
@@ -27,7 +28,6 @@ import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalService;
 import com.liferay.document.library.kernel.service.DLFileShortcutLocalService;
 import com.liferay.document.library.kernel.service.DLFolderLocalService;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;

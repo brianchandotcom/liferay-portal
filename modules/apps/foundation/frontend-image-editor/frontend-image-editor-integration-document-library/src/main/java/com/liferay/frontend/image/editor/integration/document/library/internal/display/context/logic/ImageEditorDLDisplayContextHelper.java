@@ -14,8 +14,8 @@
 
 package com.liferay.frontend.image.editor.integration.document.library.internal.display.context.logic;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.util.DLUtil;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

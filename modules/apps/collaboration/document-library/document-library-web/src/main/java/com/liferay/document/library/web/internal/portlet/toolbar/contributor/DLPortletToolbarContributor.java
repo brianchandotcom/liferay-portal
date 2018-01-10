@@ -14,12 +14,12 @@
 
 package com.liferay.document.library.web.internal.portlet.toolbar.contributor;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.model.DLFolder;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeService;
 import com.liferay.document.library.portlet.toolbar.contributor.DLPortletToolbarContributorContext;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.document.library.web.internal.portlet.toolbar.contributor.helper.DLPortletToolbarContributorHelper;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList;
 import com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory;

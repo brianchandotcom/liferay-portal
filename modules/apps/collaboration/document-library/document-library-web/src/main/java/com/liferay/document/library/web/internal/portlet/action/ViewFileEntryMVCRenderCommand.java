@@ -14,10 +14,10 @@
 
 package com.liferay.document.library.web.internal.portlet.action;
 
+import com.liferay.document.library.constants.DLPortletKeys;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.exception.NoSuchFileVersionException;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
-import com.liferay.document.library.web.constants.DLPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchRepositoryEntryException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;

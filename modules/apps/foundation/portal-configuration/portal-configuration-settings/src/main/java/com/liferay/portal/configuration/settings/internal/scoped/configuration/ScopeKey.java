@@ -99,13 +99,8 @@ public class ScopeKey {
 
 	@Override
 	public int hashCode() {
-		StringBundler sb = new StringBundler(3);
-
-		sb.append(_objectClass.getName());
-		sb.append(_scope.getValue());
-		sb.append(_scopePrimKey);
-
-		String s = sb.toString();
+		String s = StringBundler.concat(
+			_objectClass.getName(), _scope.getValue(), _scopePrimKey);
 
 		return s.hashCode();
 	}

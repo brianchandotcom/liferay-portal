@@ -1,6 +1,6 @@
 Bundle-Name: Liferay Blogs Recent Bloggers Web
 Bundle-SymbolicName: com.liferay.blogs.recent.bloggers.web
-Bundle-Version: 1.1.6
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 Web-ContextPath: /blogs-recent-bloggers-web

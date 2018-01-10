@@ -3,3 +3,4 @@ Bundle-SymbolicName: com.liferay.layout.impl
 Bundle-Version: 2.0.5
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Site Management
+Liferay-Require-SchemaVersion: 1.0.0

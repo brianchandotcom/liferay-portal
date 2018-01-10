@@ -82,6 +82,12 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 					continue;
 				}
 
+				if (StringUtil.startsWith(trimmedLine, StringPool.AT) &&
+					!trimmedLine.matches(".*\\s+.*")) {
+
+					continue;
+				}
+
 				String truncateLongLinesContent = _getTruncateLongLinesContent(
 					content, line, trimmedLine, lineCount);
 

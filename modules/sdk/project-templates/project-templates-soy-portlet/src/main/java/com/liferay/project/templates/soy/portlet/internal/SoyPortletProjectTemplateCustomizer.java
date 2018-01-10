@@ -44,7 +44,7 @@ public class SoyPortletProjectTemplateCustomizer
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectPath = destinationDirPath.resolve(
-				_projectTemplateArgs.getName());
+				projectTemplatesArgs.getName());
 
 			Path gulpfileJsPath = projectPath.resolve("gulpfile.js");
 

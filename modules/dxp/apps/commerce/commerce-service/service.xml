@@ -432,6 +432,42 @@
 
 		<reference entity="ExpandoRow" package-path="com.liferay.portlet.expando" />
 	</entity>
+	<entity local-service="true" name="CommerceOrderNote" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="commerceOrderNoteId" primary="true" type="long" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="commerceOrderId" type="long" />
+		<column name="content" type="String" />
+		<column name="restricted" type="boolean" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CommerceOrderId" return-type="Collection">
+			<finder-column name="commerceOrderId" />
+		</finder>
+	</entity>
 	<entity local-service="true" name="CommerceOrderPayment" remote-service="false">
 
 		<!-- PK fields -->
@@ -1077,6 +1113,7 @@
 		<exception>CommerceCountryThreeLettersISOCode</exception>
 		<exception>CommerceCountryTwoLettersISOCode</exception>
 		<exception>CommerceGeocoder</exception>
+		<exception>CommerceOrderNoteContent</exception>
 		<exception>CommerceOrderPurchaseOrderNumber</exception>
 		<exception>CommercePaymentEngine</exception>
 		<exception>CommercePaymentMethodEngineKey</exception>

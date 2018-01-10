@@ -52,20 +52,27 @@ public class LayoutPageTemplateEntryExceptionRequestHandler {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		String errorMessage = "an-unexpected-error-occurred";
-
-		if (pe instanceof DuplicateLayoutPageTemplateEntryException) {
-			errorMessage =
-				"a-page-template-entry-with-that-name-already-exists";
+		if (pe instanceof LayoutPageTemplateEntryNameException) {
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					themeDisplay.getLocale(), "this-field-is-required"));
 		}
-		else if (pe instanceof LayoutPageTemplateEntryNameException) {
-			errorMessage = "this-field-is-required";
+		else {
+			String errorMessage = "an-unexpected-error-occurred";
+
+			if (pe instanceof DuplicateLayoutPageTemplateEntryException) {
+				errorMessage =
+					"a-page-template-entry-with-that-name-already-exists";
+			}
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
+
+			jsonObject.put(
+				"error", LanguageUtil.get(resourceBundle, errorMessage));
 		}
-
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(themeDisplay.getLocale());
-
-		jsonObject.put("error", LanguageUtil.get(resourceBundle, errorMessage));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

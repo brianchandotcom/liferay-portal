@@ -128,11 +128,7 @@ PortletURL portletURL = cpAttachmentFileEntriesDisplayContext.getPortletURL();
 						>
 
 							<%
-							Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-								cpDefinitionOptionRelListMap =
-									cpAttachmentFileEntriesDisplayContext.
-										parseCPAttachmentFileEntry(
-											cpAttachmentFileEntry.getCPAttachmentFileEntryId());
+							Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelListMap = cpAttachmentFileEntriesDisplayContext.parseCPAttachmentFileEntry(cpAttachmentFileEntry.getCPAttachmentFileEntryId());
 
 							PortletURL rowURL = renderResponse.createRenderURL();
 

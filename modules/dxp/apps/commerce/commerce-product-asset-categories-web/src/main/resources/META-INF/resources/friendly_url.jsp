@@ -28,19 +28,16 @@ String friendlyURLBase = themeDisplay.getPortalURL() + CPConstants.SEPARATOR_ASS
 
 PortletURL categoryRedirectURL = renderResponse.createRenderURL();
 
-long parentCategoryId = BeanParamUtil.getLong(
-		category, request, "parentCategoryId");
+long parentCategoryId = BeanParamUtil.getLong(category, request, "parentCategoryId");
 
 categoryRedirectURL.setParameter("mvcPath", "/view_categories.jsp");
 
 if (parentCategoryId > 0) {
-	categoryRedirectURL.setParameter(
-			"categoryId", String.valueOf(parentCategoryId));
+	categoryRedirectURL.setParameter("categoryId", String.valueOf(parentCategoryId));
 }
 
 if (vocabularyId > 0) {
-	categoryRedirectURL.setParameter(
-			"vocabularyId", String.valueOf(vocabularyId));
+	categoryRedirectURL.setParameter("vocabularyId", String.valueOf(vocabularyId));
 }
 
 portletDisplay.setShowBackIcon(true);

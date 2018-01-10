@@ -232,12 +232,8 @@ public class EditCommercePriceListMVCActionCommand
 				"deleteCommercePriceListQualificationTypeRelIds");
 
 		if (deleteCommercePriceListQualificationTypeRelIds.length > 0) {
-			for (int i = 0;
-				 i < deleteCommercePriceListQualificationTypeRelIds.length;
-				 i++) {
-
-				long commercePriceListQualificationTypeRelId =
-					deleteCommercePriceListQualificationTypeRelIds[i];
+			for (long commercePriceListQualificationTypeRelId :
+					deleteCommercePriceListQualificationTypeRelIds) {
 
 				_commercePriceListQualificationTypeRelService.
 					deleteCommercePriceListQualificationTypeRel(

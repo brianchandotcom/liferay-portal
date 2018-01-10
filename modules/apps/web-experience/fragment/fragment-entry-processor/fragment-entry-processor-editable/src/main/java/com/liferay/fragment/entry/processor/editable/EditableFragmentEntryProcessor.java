@@ -14,11 +14,16 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.fragment.entry.processor.editable.replacer.EditableElementReplacer;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
+import com.liferay.fragment.processor.FragmentEntrySettings;
 import com.liferay.fragment.util.HtmlParserUtil;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -29,11 +34,14 @@ import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.osgi.framework.BundleContext;
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -46,6 +54,38 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentEntryProcessor.class
 )
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
+
+	@Override
+	public String processFragmentEntryHTML(
+			String html, Locale locale,
+			FragmentEntrySettings fragmentEntrySettings)
+		throws PortalException {
+
+		Document document = _htmlParserUtil.parse(html);
+
+		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
+
+		List<Node> editableNodes = editableXPath.selectNodes(document);
+
+		for (Node editableNode : editableNodes) {
+			Element element = (Element)editableNode;
+
+			boolean localizable = GetterUtil.getBoolean(
+				element.attributeValue("localizable"));
+
+			String id = element.attributeValue("id");
+
+			String value = fragmentEntrySettings.getValue(id);
+
+			if (localizable) {
+				value = fragmentEntrySettings.getValue(id, locale);
+			}
+
+			_replaceEditableValue(element, value);
+		}
+
+		return document.asXML();
+	}
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
@@ -107,7 +147,41 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
+	@Activate
+	protected void activate(BundleContext bundleContext) {
+		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
+			bundleContext, EditableElementReplacer.class, "editable.tag.name");
+	}
+
+	private void _replaceEditableValue(Element element, String value) {
+		if (element.isTextOnly()) {
+			element.setText(value);
+
+			return;
+		}
+
+		List<Element> elements = element.elements();
+
+		if (elements.size() != 1) {
+			return;
+		}
+
+		Element replaceableElement = elements.get(0);
+
+		EditableElementReplacer editableTagReplacer =
+			_serviceTrackerMap.getService(replaceableElement.getName());
+
+		if (editableTagReplacer == null) {
+			return;
+		}
+
+		editableTagReplacer.replace(replaceableElement, value);
+	}
+
 	@Reference
 	private HtmlParserUtil _htmlParserUtil;
+
+	private ServiceTrackerMap<String, EditableElementReplacer>
+		_serviceTrackerMap;
 
 }

@@ -18,27 +18,16 @@ import com.liferay.announcements.constants.AnnouncementsPortletKeys;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
-import com.liferay.document.library.kernel.exception.NoSuchFolderException;
-import com.liferay.document.library.kernel.model.DLFolderConstants;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
-import com.liferay.portal.kernel.model.GroupConstants;
-import com.liferay.portal.kernel.model.Repository;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
-import com.liferay.portal.kernel.service.GroupLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.exception.UADEntityExporterException;
-import com.liferay.user.associated.data.exporter.BaseUADEntityExporter;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.io.InputStream;
@@ -57,7 +46,8 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY,
 	service = UADEntityExporter.class
 )
-public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
+public class AnnouncementsEntryUADEntityExporter
+	extends BaseAnnouncementsUADEntityExporter {
 
 	@Override
 	public void export(UADEntity uadEntity) throws PortalException {
@@ -66,7 +56,8 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 
 		String json = getJSON(announcementsEntry);
 
-		Folder folder = _getFolder(announcementsEntry.getCompanyId());
+		Folder folder = getFolder(
+			announcementsEntry.getCompanyId(), _FOLDER_NAME);
 
 		try {
 			InputStream is = new UnsyncByteArrayInputStream(
@@ -100,45 +91,6 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 		return announcementsEntryUADEntity.getAnnouncementsEntry();
 	}
 
-	private Folder _getFolder(long companyId) throws PortalException {
-		Group guestGroup = _groupLocalService.getGroup(
-			companyId, GroupConstants.GUEST);
-
-		Repository repository =
-			PortletFileRepositoryUtil.fetchPortletRepository(
-				guestGroup.getGroupId(),
-				AnnouncementsPortletKeys.ANNOUNCEMENTS);
-
-		ServiceContext serviceContext = new ServiceContext();
-
-		if (repository == null) {
-			repository = PortletFileRepositoryUtil.addPortletRepository(
-				guestGroup.getGroupId(), AnnouncementsPortletKeys.ANNOUNCEMENTS,
-				serviceContext);
-		}
-
-		Folder folder = null;
-
-		try {
-			folder = PortletFileRepositoryUtil.getPortletFolder(
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FOLDER_NAME);
-		}
-		catch (NoSuchFolderException nsfe) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(nsfe, nsfe);
-			}
-
-			folder = PortletFileRepositoryUtil.addPortletFolder(
-				_userLocalService.getDefaultUserId(companyId),
-				repository.getRepositoryId(),
-				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, _FOLDER_NAME,
-				serviceContext);
-		}
-
-		return folder;
-	}
-
 	private void _validate(UADEntity uadEntity) throws PortalException {
 		if (!(uadEntity instanceof AnnouncementsEntryUADEntity)) {
 			throw new UADEntityException();
@@ -147,18 +99,9 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 
 	private static final String _FOLDER_NAME = "UADExport";
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		AnnouncementsEntryUADEntityExporter.class);
-
-	@Reference
-	private GroupLocalService _groupLocalService;
-
 	@Reference(
 		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

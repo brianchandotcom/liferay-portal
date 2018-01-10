@@ -37,7 +37,7 @@
 </tr>
 <tr>
 	<td>UPDATE_BUTTON</td>
-	<td>//button[contains(@id,'StagingBarPortlet_wldt') and contains(.,'Update')]</td>
+	<td>//div[contains(@class,'button-holder')]//button[contains(@id,'StagingBarPortlet') and contains(.,'Update')]</td>
 	<td></td>
 </tr>
 <tr>

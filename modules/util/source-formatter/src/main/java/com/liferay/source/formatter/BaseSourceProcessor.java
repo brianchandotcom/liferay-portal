@@ -297,6 +297,10 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			return content;
 		}
 
+		if (newContent == null) {
+			return null;
+		}
+
 		if (!modifiedContents.add(newContent)) {
 			_sourceFormatterMessagesMap.remove(fileName);
 
@@ -401,7 +405,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (sourceFormatterArgs.isAutoFix()) {
-				FileUtil.write(file, newContent);
+				if (newContent != null) {
+					FileUtil.write(file, newContent);
+				}
+				else {
+					file.delete();
+				}
 			}
 			else if (_firstSourceMismatchException == null) {
 				_firstSourceMismatchException = new SourceMismatchException(

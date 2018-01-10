@@ -67,14 +67,23 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 
 		processProvideCapability(analyzer);
 
-		Jar portalSpringExtenderJar = getClasspathJar(
-			analyzer, "com.liferay.portal.spring.extender");
+		// Use the api jar if available, otherwise fallback to spring extender
+		// itself.
 
-		if (portalSpringExtenderJar == null) {
+		Jar jar = getClasspathJar(
+			analyzer, "com.liferay.portal.spring.extender.api");
+
+		if (jar == null) {
+			jar = getClasspathJar(
+				analyzer, "com.liferay.portal.spring.extender");
+		}
+
+		if (jar == null) {
 			return false;
 		}
 
-		processRequireCapability(analyzer, portalSpringExtenderJar);
+		processRequireCapability(
+			analyzer, Version.parseVersion(jar.getVersion()));
 		processSpringContext(analyzer);
 		processSpringDependency(analyzer);
 
@@ -278,7 +287,7 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected void processRequireCapability(
-			Analyzer analyzer, Jar portalSpringExtenderJar)
+			Analyzer analyzer, Version portalSpringExtenderVersion)
 		throws Exception {
 
 		Parameters requireCapabilityHeaders = new Parameters(
@@ -287,9 +296,6 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 		Parameters parameters = new Parameters();
 
 		Attrs attrs = new Attrs();
-
-		Version portalSpringExtenderVersion = Version.parseVersion(
-			portalSpringExtenderJar.getVersion());
 
 		StringBuilder sb = new StringBuilder();
 

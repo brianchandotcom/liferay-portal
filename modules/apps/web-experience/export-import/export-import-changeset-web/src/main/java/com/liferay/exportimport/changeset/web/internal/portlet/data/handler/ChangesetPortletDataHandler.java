@@ -19,12 +19,24 @@ import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.DataLevel;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
+
+import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -59,6 +71,21 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		rootElement.addAttribute(
 			"group-id", String.valueOf(portletDataContext.getScopeGroupId()));
 
+		Map<String, String[]> parameterMap =
+			portletDataContext.getParameterMap();
+
+		String[] exportingEntities = parameterMap.get("exportingEntities");
+
+		if (exportingEntities != null) {
+			for (String exportingEntity : exportingEntities) {
+				String className = _getClassName(exportingEntity);
+				long groupId = _getGroupId(exportingEntity);
+				String uuid = _getUuid(exportingEntity);
+
+				_exportEntity(portletDataContext, uuid, groupId, className);
+			}
+		}
+
 		return getExportDataRootElementString(rootElement);
 	}
 
@@ -68,7 +95,77 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		List<Element> entityTypeElements = importDataRootElement.elements();
+
+		for (Element entityTypeElement : entityTypeElements) {
+			List<Element> entityElements = entityTypeElement.elements();
+
+			for (Element entityElement : entityElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, entityElement);
+			}
+		}
+
 		return portletPreferences;
 	}
+
+	private void _exportEntity(
+			PortletDataContext portletDataContext, String uuid, long groupId,
+			String className)
+		throws PortalException {
+
+		StagedModelDataHandler<?> stagedModelDataHandler =
+			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
+				className);
+
+		StagedModel stagedModel = null;
+
+		if (groupId > 0) {
+			stagedModel =
+				stagedModelDataHandler.fetchStagedModelByUuidAndGroupId(
+					uuid, groupId);
+		}
+		else {
+			List<StagedModel> companyStagedModels =
+				(List<StagedModel>)stagedModelDataHandler.
+					fetchStagedModelsByUuidAndCompanyId(
+						uuid, portletDataContext.getCompanyId());
+
+			if (ListUtil.isNotEmpty(companyStagedModels)) {
+				stagedModel = companyStagedModels.get(0);
+			}
+		}
+
+		if (stagedModel != null) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, stagedModel);
+		}
+	}
+
+	private String _getClassName(String exportingEntity) {
+		long classNameId = Long.valueOf(
+			exportingEntity.substring(
+				0, exportingEntity.indexOf(StringPool.POUND)));
+
+		return _portal.getClassName(classNameId);
+	}
+
+	private long _getGroupId(String exportingEntity) {
+		return Long.valueOf(
+			exportingEntity.substring(
+				exportingEntity.indexOf(StringPool.POUND),
+				exportingEntity.lastIndexOf(StringPool.POUND)));
+	}
+
+	private String _getUuid(String exportingEntity) {
+		return exportingEntity.substring(
+			exportingEntity.lastIndexOf(StringPool.POUND) + 1);
+	}
+
+	@Reference
+	private Portal _portal;
 
 }

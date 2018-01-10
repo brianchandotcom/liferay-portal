@@ -209,26 +209,23 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 	}
 
 	protected Object getSoyMapValue(Object value) {
-		Object soyMapValue = null;
-
 		if (value == null) {
-			soyMapValue = null;
+			return null;
 		}
-		else if (value instanceof SoyHTMLContextValue) {
+
+		if (value instanceof SoyHTMLContextValue) {
 			SoyHTMLContextValue htmlValue = (SoyHTMLContextValue)value;
 
-			soyMapValue = htmlValue.getValue();
+			return htmlValue.getValue();
 		}
-		else if (value instanceof SoyRawData) {
+
+		if (value instanceof SoyRawData) {
 			SoyRawData soyRawData = (SoyRawData)value;
 
-			soyMapValue = soyRawData.getValue();
-		}
-		else {
-			soyMapValue = _templateContextHelper.deserializeValue(value);
+			return soyRawData.getValue();
 		}
 
-		return soyMapValue;
+		return _templateContextHelper.deserializeValue(value);
 	}
 
 	protected Optional<SoyMsgBundle> getSoyMsgBundle(

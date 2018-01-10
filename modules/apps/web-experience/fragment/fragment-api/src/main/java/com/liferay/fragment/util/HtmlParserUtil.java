@@ -16,11 +16,13 @@ package com.liferay.fragment.util;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -38,6 +40,10 @@ public class HtmlParserUtil {
 		Document document = null;
 
 		try {
+			if (Objects.equals(HtmlUtil.stripHtml(html), html)) {
+				html = "<span>" + html + "</span>";
+			}
+
 			document = SAXReaderUtil.read(html);
 		}
 		catch (DocumentException de) {

@@ -73,11 +73,13 @@ public class MessageListenerSchedulerServiceImpl
 			return;
 		}
 
-		for (String messageListenerName :
-				_messageListenerNamesDestinationNames.keySet()) {
+		for (Map.Entry<String, String> entry :
+				_messageListenerNamesDestinationNames.entrySet()) {
+
+			String messageListenerName = entry.getKey();
 
 			MessageBusUtil.unregisterMessageListener(
-				_messageListenerNamesDestinationNames.get(messageListenerName),
+				entry.getValue(),
 				(MessageListener)beanLocator.locate(messageListenerName));
 
 			if (_log.isDebugEnabled()) {

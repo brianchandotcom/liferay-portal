@@ -48,10 +48,8 @@ public class LCSMessageListenerWrapperMessageListener
 
 			Map<String, Object> values = message.getValues();
 
-			for (String key : values.keySet()) {
-				String stringValue = String.valueOf(values.get(key));
-
-				metadata.put(key, stringValue);
+			for (Map.Entry<String, Object> entry : values.entrySet()) {
+				metadata.put(entry.getKey(), String.valueOf(entry.getValue()));
 			}
 
 			_lcsMessageListener.receive(

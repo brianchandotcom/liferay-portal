@@ -37,15 +37,16 @@ public class LCSClusterNodeStatusTest extends PowerMockito {
 		Map<LCSClusterNodeStatus, Object[]> lcsClusterNodeStatusObjectArrays =
 			LCSClusterNodeStatus.getObjectArrays(status);
 
-		for (LCSClusterNodeStatus lcsClusterNodeStatus :
-				lcsClusterNodeStatusObjectArrays.keySet()) {
+		for (Map.Entry<LCSClusterNodeStatus, Object[]> entry :
+				lcsClusterNodeStatusObjectArrays.entrySet()) {
 
-			Object[] objectArray = lcsClusterNodeStatusObjectArrays.get(
-				lcsClusterNodeStatus);
+			Object[] objectArray = entry.getValue();
 
 			String label = (String)objectArray[0];
 			Boolean statusEnabled = (Boolean)objectArray[1];
 			Boolean statusExpected = (Boolean)objectArray[2];
+
+			LCSClusterNodeStatus lcsClusterNodeStatus = entry.getKey();
 
 			if ((lcsClusterNodeStatus == LCSClusterNodeStatus.ACTIVE) ||
 				(lcsClusterNodeStatus ==

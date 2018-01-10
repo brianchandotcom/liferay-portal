@@ -66,7 +66,9 @@ public class DownloadPatchesCommand implements Command {
 		Map<String, String> payload =
 			(Map<String, String>)commandMessage.getPayload();
 
-		for (String fileName : payload.keySet()) {
+		for (Map.Entry<String, String> entry : payload.entrySet()) {
+			String fileName = entry.getKey();
+
 			if (fileName.endsWith(LCSConstants.PATCHES_MD5SUM_SUFFIX)) {
 				continue;
 			}
@@ -88,7 +90,7 @@ public class DownloadPatchesCommand implements Command {
 			File localFile = new File(
 				LCSPatcherUtil.getPatchDirectory(), fileName);
 
-			String remoteFileURL = payload.get(fileName);
+			String remoteFileURL = entry.getValue();
 
 			if (_log.isDebugEnabled()) {
 				_log.debug("Remote file URL " + remoteFileURL);

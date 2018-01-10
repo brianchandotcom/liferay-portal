@@ -15,10 +15,12 @@ import templates from './CardsTreeview.soy';
  * - Node selection management, both single and multiple
  * - Custom tree node template using Lexicon Horizontal Cards
  * - Improved accessibility for keyboard navigation following common tree widget patterns
+ * @review
  */
 class CardsTreeview extends Treeview {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	created() {
 		this.expandSelectedNodesParentNodes_(this.nodes);
@@ -28,9 +30,9 @@ class CardsTreeview extends Treeview {
 	/**
 	 * Adds nodes with selected attribute to selectedNodes list in case when
 	 * they are still not there.
-	 *
 	 * @param nodes Nodes to check and add to selectedNodes list.
 	 * @protected
+	 * @review
 	 */
 	addSelectedNodes_(nodes) {
 		nodes.forEach(
@@ -48,8 +50,8 @@ class CardsTreeview extends Treeview {
 
 	/**
 	 * Deselects all selected tree nodes
-	 *
 	 * @protected
+	 * @review
 	 */
 	deselectAll_() {
 		for (let i = this.selectedNodes.length - 1; i >= 0; i--) {
@@ -60,9 +62,9 @@ class CardsTreeview extends Treeview {
 
 	/**
 	 * Selects specific nodes
-	 *
 	 * @param node to deselect.
 	 * @protected
+	 * @review
 	 */
 	deselectNode_(node) {
 		node.selected = false;
@@ -74,9 +76,9 @@ class CardsTreeview extends Treeview {
 
 	/**
 	 * Expands all parent nodes of expanded children.
-	 *
 	 * @param nodes List of nodes to expand all parent nodes of expanded children.
 	 * @protected
+	 * @review
 	 */
 	expandSelectedNodesParentNodes_(nodes) {
 		let expanded,
@@ -106,6 +108,7 @@ class CardsTreeview extends Treeview {
 	 * Focus the given tree node.
 	 * @param {!Object} nodeObj
 	 * @protected
+	 * @review
 	 */
 	focus_(nodeObj) {
 		if (nodeObj) {
@@ -117,6 +120,7 @@ class CardsTreeview extends Treeview {
 	 * Focus the next tree node of given tree node.
 	 * @param {!Element} node
 	 * @protected
+	 * @review
 	 */
 	focusNextNode_(node) {
 		let path = node.getAttribute('data-treeview-path').split('-');
@@ -147,6 +151,7 @@ class CardsTreeview extends Treeview {
 	 * Focus the previous tree node of given tree node.
 	 * @param {!Element} node
 	 * @protected
+	 * @review
 	 */
 	focusPrevNode_(node) {
 		let path = node.getAttribute('data-treeview-path').split('-');
@@ -175,6 +180,7 @@ class CardsTreeview extends Treeview {
 	 * This is called when one of this tree view's nodes is clicked.
 	 * @param {!Event} event
 	 * @protected
+	 * @review
 	 */
 	handleNodeClicked_(event) {
 		let path = event.delegateTarget.parentNode.parentNode.parentNode.getAttribute('data-treeview-path').split('-');
@@ -209,6 +215,7 @@ class CardsTreeview extends Treeview {
 	 * - RIGHT ARROW: Expand the current node
 	 * @param {!Event} event
 	 * @protected
+	 * @review
 	 */
 	handleNodeKeyUp_(event) {
 		let node = event.delegateTarget.parentNode.parentNode.parentNode;
@@ -234,6 +241,7 @@ class CardsTreeview extends Treeview {
 	 * This is called when one of this tree view's nodes toggler is clicked.
 	 * @param {!Event} event
 	 * @protected
+	 * @review
 	 */
 	handleNodeTogglerClicked_(event) {
 		this.toggleExpandedState_(event.delegateTarget.parentNode.parentNode.parentNode);
@@ -241,9 +249,9 @@ class CardsTreeview extends Treeview {
 
 	/**
 	 * Selects specific node.
-	 *
 	 * @param node to select.
 	 * @protected
+	 * @review
 	 */
 	selectNode_(node) {
 		node.selected = true;
@@ -258,6 +266,7 @@ class CardsTreeview extends Treeview {
 	 * @param {!Element} node The tree node we want to change the expanded state to
 	 * @param {!Object} state A state object with the new value of the expanded state
 	 * @protected
+	 * @review
 	 */
 	setNodeExpandedState_(node, state) {
 		let path = node.getAttribute('data-treeview-path').split('-');
@@ -273,23 +282,27 @@ class CardsTreeview extends Treeview {
 /**
  * CardsTreeview state definition.
  * @type {!Object}
+ * @review
  * @static
  */
 CardsTreeview.STATE = {
 	/**
 	 * Enables multiple selection of tree elements
+	 * @review
 	 * @type {boolean}
 	 */
 	multiSelection: Config.bool().value(false),
 
 	/**
 	 * List of selected nodes
+	 * @review
 	 * @type {Array.<Object>}
 	 */
 	selectedNodes: Config.array().value([]),
 
 	/**
 	 * Type of view to render. Accepted values are 'tree' and 'flat'
+	 * @review
 	 * @type {String}
 	 */
 	viewType: Config.string().value('tree')

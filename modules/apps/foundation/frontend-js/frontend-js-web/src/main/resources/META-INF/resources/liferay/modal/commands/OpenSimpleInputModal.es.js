@@ -20,6 +20,7 @@ import SimpleInputModal from '../components/SimpleInputModal.es';
  * @param {!string} spritemap
  *
  * @return {SimpleInputModal} SimpleInputModal component instance
+ * @review
  *
  * @see SimpleInputModal
  *
@@ -73,6 +74,7 @@ function openSimpleInputModal({
 	/**
 	 * Callback executed when the SimpleInputModal component
 	 * is closed or the form cancel button is pressed.
+	 * @review
 	 */
 	function handleSimpleInputModalDisposal() {
 		if (simpleInputModal) {
@@ -88,6 +90,7 @@ function openSimpleInputModal({
 	 * Callback executed when the SimpleInputModal form receives a successful
 	 * response from server.
 	 * @param {{redirectURL: string}} serverResponseContent
+	 * @review
 	 */
 	function handleSimpleInputModalSubmission(serverResponseContent) {
 		if (serverResponseContent.redirectURL) {

@@ -5,11 +5,13 @@ import {isInputNode} from 'map-common/js/validators.es';
 
 /**
  * GoogleMapsSearch
+ * @review
  */
 class GoogleMapsSearch extends State {
 	/**
 	 * Creates a new search handler using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -22,6 +24,7 @@ class GoogleMapsSearch extends State {
 
 	/**
 	 * Removes the listeners that have been added to the search input.
+	 * @review
 	 */
 	destructor() {
 		this._eventHandlers.forEach(
@@ -36,6 +39,7 @@ class GoogleMapsSearch extends State {
 	 * It listens for a custom 'place_changed' event and executes
 	 * GoogleMapsSearch._handlePlaceChanged.
 	 * @protected
+	 * @review
 	 */
 	_bindUI() {
 		this._eventHandlers = [
@@ -51,6 +55,7 @@ class GoogleMapsSearch extends State {
 	 * Gets the new place that has been processed by Google Maps and emits a
 	 * 'search' event with the location information and the address.
 	 * @protected
+	 * @review
 	 */
 	_handlePlaceChanged() {
 		const place = this._autocomplete.getPlace();
@@ -76,12 +81,14 @@ class GoogleMapsSearch extends State {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 GoogleMapsSearch.STATE = {
 	/**
 	 * Input element that will be used for searching addresses.
+	 * @review
 	 * @type {HTMLInputElement}
 	 */
 	inputNode: Config.validator(isInputNode).value(null),

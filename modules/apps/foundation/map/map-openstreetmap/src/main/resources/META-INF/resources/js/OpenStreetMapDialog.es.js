@@ -2,11 +2,13 @@ import State, {Config} from 'metal-state';
 
 /**
  * OpenStreetMapDialog
+ * @review
  */
 class OpenStreetMapDialog extends State {
 	/**
 	 * Creates a new map dialog using OpenStreetMap's API
 	 * @param  {Array} args List of arguments to be passed to State
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -23,6 +25,7 @@ class OpenStreetMapDialog extends State {
 	 * Opens the dialog with the given map attribute and passes
 	 * the given configuration to the dialog object.
 	 * @param {Object} cfg
+	 * @review
 	 */
 	open(cfg) {
 		this._dialog.setContent(cfg.content);
@@ -36,12 +39,14 @@ class OpenStreetMapDialog extends State {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 OpenStreetMapDialog.STATE = {
 	/**
 	 * Map used for creating the dialog content
+	 * @review
 	 * @type {Object}
 	 */
 	map: Config.object(),

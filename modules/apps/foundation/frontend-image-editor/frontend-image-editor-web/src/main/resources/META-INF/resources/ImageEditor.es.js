@@ -21,17 +21,19 @@ import templates from './ImageEditor.soy';
  * - A common way of exposing the functionality.
  * - Some registration points which can be used by the image editor capability implementors
  * to provide UI controls.
+ * @review
  */
 class ImageEditor extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	attached() {
 		/**
 		 * This index points to the current state in the history.
-		 *
-		 * @type {Number}
 		 * @protected
+		 * @review
+		 * @type {Number}
 		 */
 		this.historyIndex_ = 0;
 
@@ -42,9 +44,9 @@ class ImageEditor extends Component {
 		 * - History entries are objects with
 		 *     - url (optional): the url representing the image
 		 *     - data: the ImageData object of the image
-		 *
-		 * @type {Array.<Object>}
 		 * @protected
+		 * @review
+		 * @type {Array.<Object>}
 		 */
 		this.history_ = [
 			new ImageEditorHistoryEntry(
@@ -77,6 +79,7 @@ class ImageEditor extends Component {
 	 * Accepts the current changes applied by the active control and creates
 	 * a new entry in the history stack. Doing this will wipe out any
 	 * stale redo states.
+	 * @review
 	 */
 	accept() {
 		let selectedControl = this.components[this.id + '_selected_control_' + this.selectedControl.variant];
@@ -94,8 +97,8 @@ class ImageEditor extends Component {
 	/**
 	 * Notifies the opener app that the user wants to close the
 	 * editor without saving the changes
-	 *
 	 * @protected
+	 * @review
 	 */
 	close_() {
 		Liferay.Util.getWindow().hide();
@@ -103,9 +106,9 @@ class ImageEditor extends Component {
 
 	/**
 	 * Creates a new history entry state.
-	 *
 	 * @param  {ImageData} imageData The ImageData of the new image.
 	 * @protected
+	 * @review
 	 */
 	createHistoryEntry_(imageData) {
 		// Push new state and discard stale redo states
@@ -119,6 +122,7 @@ class ImageEditor extends Component {
 	/**
 	 * Discards the current changes applied by the active control and reverts
 	 * the image to its state before the control activation.
+	 * @review
 	 */
 	discard() {
 		this.selectedControl = null;
@@ -128,8 +132,8 @@ class ImageEditor extends Component {
 
 	/**
 	 * Retrieves the editor canvas DOM node.
-	 *
 	 * @return {Element} The canvas element.
+	 * @review
 	 */
 	getImageEditorCanvas() {
 		return this.element.querySelector('.lfr-image-editor-image-container canvas');
@@ -137,8 +141,8 @@ class ImageEditor extends Component {
 
 	/**
 	 * Retrieves the Blob representation of the current image.
-	 *
 	 * @return {CancellablePromise} A promise that will resolve with the image blob.
+	 * @review
 	 */
 	getImageEditorImageBlob() {
 		return new CancellablePromise((resolve, reject) => {
@@ -170,8 +174,8 @@ class ImageEditor extends Component {
 
 	/**
 	 * Retrieves the ImageData representation of the current image.
-	 *
 	 * @return {CancellablePromise} A promise that will resolve with the image data.
+	 * @review
 	 */
 	getImageEditorImageData() {
 		return this.history_[this.historyIndex_].getImageData();
@@ -180,11 +184,10 @@ class ImageEditor extends Component {
 	/**
 	 * Normalizes different mime types to the most similar mime type
 	 * available to canvas implementations.
-	 *
-	 * @see http://kangax.github.io/jstests/toDataUrl_mime_type_test/
-	 *
 	 * @param  {String} mimeType Original mime type
 	 * @return {String} The normalized mime type
+	 * @review
+	 * @see http://kangax.github.io/jstests/toDataUrl_mime_type_test/
 	 */
 	normalizeCanvasMimeType_(mimeType) {
 		return mimeType.replace('jpg', 'jpeg');
@@ -192,9 +195,9 @@ class ImageEditor extends Component {
 
 	/**
 	 * Notifies the opener app of the result of the save action
-	 *
 	 * @param  {Object} result The server response to the save action
 	 * @protected
+	 * @review
 	 */
 	notifySaveResult_(result) {
 		this.components.loading.show = false;
@@ -218,6 +221,7 @@ class ImageEditor extends Component {
 	 * Updates the image back to a previously undone state in the history.
 	 * Redoing an action recovers the undone image changes and enables the
 	 * undo stack in case the user wants to undo the changes again.
+	 * @review
 	 */
 	redo() {
 		this.historyIndex_++;
@@ -226,8 +230,8 @@ class ImageEditor extends Component {
 
 	/**
 	 * Selects a control and starts the edition phase for it.
-	 *
 	 * @param  {MouseEvent} event
+	 * @review
 	 */
 	requestImageEditorEdit(event) {
 		let controls = this.imageEditorCapabilities.tools.reduce(
@@ -247,6 +251,7 @@ class ImageEditor extends Component {
 	/**
 	 * Queues a request for a preview process of the current image by the
 	 * currently selected control.
+	 * @review
 	 */
 	requestImageEditorPreview() {
 		let selectedControl = this.components[this.id + '_selected_control_' + this.selectedControl.variant];
@@ -261,6 +266,7 @@ class ImageEditor extends Component {
 	/**
 	 * Discards all changes and restores the original state of the image.
 	 * Unlike the undo/redo methods, reset will wipe out all the history.
+	 * @review
 	 */
 	reset() {
 		this.historyIndex_ = 0;
@@ -270,9 +276,9 @@ class ImageEditor extends Component {
 
 	/**
 	 * Tries to save the current image using the provided save url.
-	 *
 	 * @param {MouseEvent} event The MouseEvent that triggered the save action
 	 * @protected
+	 * @review
 	 */
 	save_(event) {
 		if (!event.delegateTarget.disabled) {
@@ -285,10 +291,10 @@ class ImageEditor extends Component {
 
 	/**
 	 * Setter function for the `saveMimeType` state key
-	 *
 	 * @param  {!String} saveMimeType The optional passed value for the attribute
-	 * @return {String} The computed value for the attribute
 	 * @protected
+	 * @return {String} The computed value for the attribute
+	 * @review
 	 */
 	setterSaveMimeTypeFn_(saveMimeType) {
 		if (!saveMimeType) {
@@ -303,9 +309,9 @@ class ImageEditor extends Component {
 
 	/**
 	 * Shows an error message in the editor
-	 *
 	 * @param  {String} message The error message to show
 	 * @protected
+	 * @review
 	 */
 	showError_(message) {
 		this.components.loading.show = false;
@@ -329,10 +335,10 @@ class ImageEditor extends Component {
 	/**
 	 * Sends a given image blob to the server for processing
 	 * and storing.
-	 *
 	 * @param  {Blob} imageBlob The image blob to send to the server
-	 * @return {CancellablePromise} A promise that follows the xhr submission process
 	 * @protected
+	 * @return {CancellablePromise} A promise that follows the xhr submission process
+	 * @review
 	 */
 	submitBlob_(imageBlob) {
 		let saveFileName = this.saveFileName;
@@ -365,8 +371,8 @@ class ImageEditor extends Component {
 	/**
 	 * Syncs the image and history values after changes to the
 	 * history stack.
-	 *
 	 * @protected
+	 * @review
 	 */
 	syncHistory_() {
 		return new CancellablePromise((resolve, reject) => {
@@ -387,9 +393,9 @@ class ImageEditor extends Component {
 
 	/**
 	 * Updates the image data showed in the editable area
-	 *
 	 * @param  {ImageData} imageData The new ImageData value to show on the editor
 	 * @protected
+	 * @review
 	 */
 	syncImageData_(imageData) {
 		let width = imageData.width;
@@ -442,6 +448,7 @@ class ImageEditor extends Component {
 	 * Reverts the image to the previous state in the history. Undoing
 	 * an action brings back the previous version of the image and enables
 	 * the redo stack in case the user wants to reapply the change again.
+	 * @review
 	 */
 	undo() {
 		this.historyIndex_--;
@@ -451,12 +458,14 @@ class ImageEditor extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 ImageEditor.STATE = {
 	/**
 	 * Indicates that the editor is ready for user interaction
+	 * @review
 	 * @type {Object}
 	 */
 	imageEditorReady: {
@@ -466,6 +475,7 @@ ImageEditor.STATE = {
 
 	/**
 	 * Event to dispatch when the edition has been completed
+	 * @review
 	 * @type {String}
 	 */
 	saveEventName: {
@@ -475,6 +485,7 @@ ImageEditor.STATE = {
 	/**
 	 * Name of the saved image that should be sent
 	 * to the server for the save action
+	 * @review
 	 * @type {String}
 	 */
 	saveFileName: {
@@ -484,6 +495,7 @@ ImageEditor.STATE = {
 	/**
 	 * Mime type of the saved image. If not explicitly set,
 	 * the image mime type will be infered from the image url.
+	 * @review
 	 * @type {String}
 	 */
 	saveMimeType: {
@@ -494,6 +506,7 @@ ImageEditor.STATE = {
 	/**
 	 * Name of the param where the image should be sent
 	 * to the server for the save action
+	 * @review
 	 * @type {String}
 	 */
 	saveParamName: {
@@ -502,6 +515,7 @@ ImageEditor.STATE = {
 
 	/**
 	 * Url to save the image changes
+	 * @review
 	 * @type {String}
 	 */
 	saveURL: {
@@ -509,7 +523,6 @@ ImageEditor.STATE = {
 	}
 };
 
-// Register component
 Soy.register(ImageEditor, templates);
 
 export default ImageEditor;

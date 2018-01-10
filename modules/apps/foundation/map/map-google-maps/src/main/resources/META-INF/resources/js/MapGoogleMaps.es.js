@@ -9,11 +9,13 @@ import GoogleMapsSearch from './GoogleMapsSearch.es';
 
 /**
  * MapGoogleMaps
+ * @review
  */
 class MapGoogleMaps extends MapBase {
 	/**
 	 * Creates a new map using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -23,6 +25,7 @@ class MapGoogleMaps extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	_createMap(location, controlsConfig) {
 		const mapConfig = {
@@ -39,6 +42,7 @@ class MapGoogleMaps extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	addControl(control, position) {
 		if (this._map.controls[position]) {
@@ -48,6 +52,7 @@ class MapGoogleMaps extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	getBounds() {
 		let bounds = this._map.getBounds() || this._bounds;
@@ -63,6 +68,7 @@ class MapGoogleMaps extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	setCenter(location) {
 		if (this._map) {

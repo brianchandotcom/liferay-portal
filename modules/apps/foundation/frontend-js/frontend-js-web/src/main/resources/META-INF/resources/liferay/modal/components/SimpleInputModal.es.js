@@ -7,10 +7,12 @@ import templates from './SimpleInputModal.soy';
 
 /**
  * SimpleInputModal
+ * @review
  */
 class SimpleInputModal extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	attached() {
 		this.addListener('formSubmit', this._defaultFormSubmit.bind(this), true);
@@ -20,6 +22,7 @@ class SimpleInputModal extends Component {
 	 * Default event listener for form submission.
 	 * @param {Event} event
 	 * @private
+	 * @review
 	 */
 	_defaultFormSubmit(event) {
 		fetch(this.formSubmitURL, {
@@ -48,6 +51,7 @@ class SimpleInputModal extends Component {
 	 * Callback executed when the SimpleInputModal cancel button
 	 * has been clicked.
 	 * @private
+	 * @review
 	 */
 	_handleCancelButtonClick() {
 		this.emit('cancelButtonClicked');
@@ -59,6 +63,7 @@ class SimpleInputModal extends Component {
 	 * It emits a formError event with the errorMessage received.
 	 * @param {{error: string}} responseContent
 	 * @private
+	 * @review
 	 */
 	_handleFormError(responseContent) {
 		this._errorMessage = responseContent.error || '';
@@ -74,6 +79,7 @@ class SimpleInputModal extends Component {
 	 * using a fetch request.
 	 * @param {Event} event
 	 * @private
+	 * @review
 	 */
 	_handleFormSubmit(event) {
 		event.preventDefault();
@@ -89,6 +95,7 @@ class SimpleInputModal extends Component {
 	 * It emits a formSuccess event with the redirectURL received.
 	 * @param {{redirectURL: string}} responseContent
 	 * @private
+	 * @review
 	 */
 	_handleFormSuccess(responseContent) {
 		this.emit('formSuccess', {
@@ -99,6 +106,7 @@ class SimpleInputModal extends Component {
 	/**
 	 * Callback executed when the modal visibility property changes
 	 * @private
+	 * @review
 	 */
 	_handleModalVisibleChanged() {
 		this.emit('dialogHidden');
@@ -107,8 +115,9 @@ class SimpleInputModal extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 SimpleInputModal.STATE = {
 	/**
@@ -116,6 +125,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	checkboxFieldLabel: Config.string().value(''),
@@ -125,6 +135,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	checkboxFieldName: Config.string().value(''),
@@ -134,6 +145,7 @@ SimpleInputModal.STATE = {
 	 * @default false
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {boolean}
 	 */
 	checkboxFieldValue: Config.bool().value(false),
@@ -143,6 +155,7 @@ SimpleInputModal.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {!string}
 	 */
 	dialogTitle: Config.string().required(),
@@ -152,6 +165,7 @@ SimpleInputModal.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {!string}
 	 */
 	formSubmitURL: Config.string().required(),
@@ -161,6 +175,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	id: Config.string().value(''),
@@ -170,6 +185,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	idFieldName: Config.string().value(''),
@@ -179,6 +195,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	idFieldValue: Config.string().value(''),
@@ -188,6 +205,7 @@ SimpleInputModal.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {!string}
 	 */
 	mainFieldLabel: Config.string().required(),
@@ -197,6 +215,7 @@ SimpleInputModal.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {!string}
 	 */
 	mainFieldName: Config.string().required(),
@@ -206,6 +225,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	mainFieldPlaceholder: Config.string().value(''),
@@ -215,6 +235,7 @@ SimpleInputModal.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {string}
 	 */
 	mainFieldValue: Config.string().value(''),
@@ -224,6 +245,7 @@ SimpleInputModal.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {!string}
 	 */
 	namespace: Config.string().required(),
@@ -233,6 +255,7 @@ SimpleInputModal.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf SimpleInputModal
+	 * @review
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),
@@ -243,6 +266,7 @@ SimpleInputModal.STATE = {
 	 * @instance
 	 * @memberOf SimpleInputModal
 	 * @private
+	 * @review
 	 * @type {!string}
 	 */
 	_errorMessage: Config.string()
@@ -256,6 +280,7 @@ SimpleInputModal.STATE = {
 	 * @instance
 	 * @memberOf SimpleInputModal
 	 * @private
+	 * @review
 	 * @type {boolean}
 	 */
 	_loadingResponse: Config.bool()

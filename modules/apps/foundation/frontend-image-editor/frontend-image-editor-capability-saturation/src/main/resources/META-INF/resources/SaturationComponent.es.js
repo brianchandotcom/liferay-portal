@@ -10,10 +10,12 @@ import controlsTemplates from './SaturationControls.soy';
 
 /**
  * Saturation Component
+ * @review
  */
 class SaturationComponent extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	attached() {
 		// Debounced version of requestImageEditorPreview
@@ -24,6 +26,7 @@ class SaturationComponent extends Component {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	detached() {
 		this.cache_ = {};
@@ -31,10 +34,10 @@ class SaturationComponent extends Component {
 
 	/**
 	 * Applies a saturation filter to the image.
-	 *
 	 * @param  {ImageData} imageData ImageData representation of the image.
 	 * @return {CancellablePromise} A promise that will resolve when the webworker
 	 * finishes processing the image.
+	 * @review
 	 */
 	preview(imageData) {
 		return this.process(imageData);
@@ -42,10 +45,10 @@ class SaturationComponent extends Component {
 
 	/**
 	 * Applies a saturation filter to the image.
-	 *
 	 * @param  {ImageData} imageData ImageData representation of the image.
 	 * @return {CancellablePromise} A promise that will resolve when the webworker
 	 * finishes processing the image.
+	 * @review
 	 */
 	process(imageData) {
 		let saturationValue = this.components.slider.value;
@@ -67,6 +70,7 @@ class SaturationComponent extends Component {
 	 * Notifies the editor that this component wants to generate
 	 * a different preview version of the current image. It debounces
 	 * the calls
+	 * @review
 	 */
 	requestPreview() {
 		this.requestImageEditorPreview_();
@@ -74,10 +78,10 @@ class SaturationComponent extends Component {
 
 	/**
 	 * Spawns the a webworker to do the image processing in a different thread.
-	 *
 	 * @param  {Object} message An object with the image and saturation value.
 	 * @return {CancellablePromise} A promise that will resolve when the webworker
 	 * finishes processing the image.
+	 * @review
 	 */
 	spawnWorker_(message) {
 		return new CancellablePromise((resolve, reject) => {
@@ -92,12 +96,14 @@ class SaturationComponent extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 SaturationComponent.STATE = {
 	/**
 	 * Path of this module
+	 * @review
 	 * @type {String}
 	 */
 	modulePath: {
@@ -107,6 +113,7 @@ SaturationComponent.STATE = {
 	/**
 	 * Injected method to notify the editor this component
 	 * wants to generate a preview version of the image.
+	 * @review
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
@@ -114,7 +121,6 @@ SaturationComponent.STATE = {
 	}
 };
 
-// Register component
 Soy.register(SaturationComponent, componentTemplates);
 
 export default SaturationComponent;

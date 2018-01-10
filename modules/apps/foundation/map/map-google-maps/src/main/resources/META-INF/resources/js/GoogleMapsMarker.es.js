@@ -2,11 +2,13 @@ import MarkerBase from 'map-common/js/MarkerBase.es';
 
 /**
  * GoogleMapsMarker
+ * @review
  */
 class GoogleMapsMarker extends MarkerBase {
 	/**
 	 * If a marked has been created, sets the marker location to the given one
 	 * @param {Object} location Location to set the native marker in
+	 * @review
 	 */
 	setPosition(location) {
 		if (this._nativeMarker) {
@@ -16,6 +18,7 @@ class GoogleMapsMarker extends MarkerBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	_getNativeMarker(location, map) {
 		if (!this._nativeMarker) {
@@ -81,6 +84,7 @@ class GoogleMapsMarker extends MarkerBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	_getNormalizedEventData(nativeEvent) {
 		return {

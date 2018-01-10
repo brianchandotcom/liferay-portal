@@ -12,6 +12,7 @@ import templates from './DiffVersionComparator.soy';
  *
  * Adds functionality for dynamically comparing the html of differing versions
  * of assets.
+ * @review
  */
 class DiffVersionComparator extends Component {
 	/**

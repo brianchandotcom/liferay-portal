@@ -9,11 +9,13 @@ import OpenStreetMapMarker from './OpenStreetMapMarker.es';
 
 /**
  * MapOpenStreetMap
+ * @review
  */
 class MapOpenStreetMap extends MapBase {
 	/**
 	 * Creates a new map using OpenStreetMap's API
 	 * @param  {Array} args List of arguments to be passed to State
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -23,6 +25,7 @@ class MapOpenStreetMap extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	_createMap(location, controlsConfig) {
 		const mapConfig = {
@@ -39,6 +42,7 @@ class MapOpenStreetMap extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	addControl(control, position) {
 		const LeafLetControl = L.Control.extend(
@@ -58,6 +62,7 @@ class MapOpenStreetMap extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	getBounds() {
 		return this._map.getBounds();
@@ -65,6 +70,7 @@ class MapOpenStreetMap extends MapBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	setCenter(location) {
 		if (this._map) {

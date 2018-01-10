@@ -8,10 +8,12 @@ import controlsTemplates from './ResizeControls.soy';
 
 /**
  * Resize Component
+ * @review
  */
 class ResizeComponent extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	attached() {
 		this.getImageEditorImageData()
@@ -30,10 +32,10 @@ class ResizeComponent extends Component {
 
 	/**
 	 * Executes the resize operation to get the final version of the image.
-	 *
 	 * @param  {ImageData} imageData ImageData representation of the image.
 	 * @return {CancellablePromise} A promise that will resolve with the
 	 * resized image data representation.
+	 * @review
 	 */
 	process(imageData) {
 		return CancellablePromise.resolve(this.resizeImageData_(imageData));
@@ -41,10 +43,10 @@ class ResizeComponent extends Component {
 
 	/**
 	 * Resizes a given ImageData to the user selected width and height values.
-	 *
 	 * @param  {ImageData} imageData The original ImageData
 	 * @return {ImageData} Resized ImageData to the component width and
 	 * height user selected values.
+	 * @review
 	 */
 	resizeImageData_(imageData) {
 		let rawCanvas = document.createElement('canvas');
@@ -65,8 +67,8 @@ class ResizeComponent extends Component {
 
 	/**
 	 * Keeps the width/height ratio when the lockProportions is set to true.
-	 *
 	 * @param  {InputEvent} event
+	 * @review
 	 */
 	syncDimensions(event) {
 		let newValue = parseInt(event.delegateTarget.value, 10);
@@ -92,8 +94,8 @@ class ResizeComponent extends Component {
 	 * Toggles the value of the lockProportions attribute. When enabled, changes
 	 * in one of the dimensions will cascade changes to the other in order to keep
 	 * the original image ratio.
-	 *
 	 * @param  {MouseEvent} event
+	 * @review
 	 */
 	toggleLockProportions(event) {
 		this.lockProportions = !this.lockProportions;
@@ -102,12 +104,14 @@ class ResizeComponent extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 ResizeComponent.STATE = {
 	/**
 	 * Injected helper to get the editor image data
+	 * @review
 	 * @type {Function}
 	 */
 	getImageEditorImageData: {
@@ -115,7 +119,6 @@ ResizeComponent.STATE = {
 	}
 };
 
-// Register component
 Soy.register(ResizeComponent, componentTemplates);
 
 export default ResizeComponent;

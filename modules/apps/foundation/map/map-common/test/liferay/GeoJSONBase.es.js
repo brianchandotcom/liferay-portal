@@ -13,10 +13,6 @@ describe('GeoJSONBase', () => {
 	let geoJSONBase;
 	let geoJSONChild;
 
-	/**
-	 * Class extending the GeoJSONBase class
-	 * We need to implement some methods with dummy content
-	 */
 	class GeoJSONChild extends GeoJSONBase {
 		_getNativeFeatures(data) {
 			return data ? features : [];

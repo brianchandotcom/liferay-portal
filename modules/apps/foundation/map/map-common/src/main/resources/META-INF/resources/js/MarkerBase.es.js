@@ -6,12 +6,14 @@ import State, {Config} from 'metal-state';
  * The implemented abstract methods will allow adding markers
  * to the map instance and detecting click events on them.
  * @abstract
+ * @review
  */
 class MarkerBase extends State {
 	/**
 	 * Initializes the instance with a native marker which will handle all
 	 * the execution. This function may be moved to the class constructor in
 	 * the future, but currently it supports the legacy API.
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -25,6 +27,7 @@ class MarkerBase extends State {
 	 * @param {string} externalEventType Event that will be emited when the
 	 * 	function is executed.
 	 * @return {function} Generated event handler.
+	 * @review
 	 */
 	_getNativeEventFunction(externalEventType) {
 		const functionName = `_nativeEventHandler_${externalEventType}`;
@@ -46,6 +49,7 @@ class MarkerBase extends State {
 	 * @param {Object} location
 	 * @param {Object} map
 	 * @return {Object} Generated native marker
+	 * @review
 	 */
 	_getNativeMarker(location, map) {
 		throw new Error('Must be implemented');
@@ -57,6 +61,7 @@ class MarkerBase extends State {
 	 * @abstract
 	 * @param {Event} nativeEvent
 	 * @return {{ lat: number, lng: number }}
+	 * @review
 	 */
 	_getNormalizedEventData(nativeEvent) {
 		throw new Error('Must be implemented');
@@ -67,6 +72,7 @@ class MarkerBase extends State {
 	 * event type.
 	 * @param {Event} nativeEvent Native event that will be parsed.
 	 * @param {string} externalEventType Event type that will be emitted.
+	 * @review
 	 */
 	_handleNativeEvent(nativeEvent, externalEventType) {
 		this.emit(externalEventType, this._getNormalizedEventData(nativeEvent));
@@ -75,18 +81,21 @@ class MarkerBase extends State {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 MarkerBase.STATE = {
 	/**
 	 * Map to be used
+	 * @review
 	 * @type {Object}
 	 */
 	map: Config.object().value({}),
 
 	/**
 	 * Location to be used
+	 * @review
 	 * @type {Object}
 	 */
 	location: Config.shapeOf(

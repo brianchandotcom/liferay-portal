@@ -37,9 +37,7 @@ public class SoyPortletProjectTemplateCustomizer
 			ArchetypeGenerationResult archetypeGenerationResult)
 		throws Exception {
 
-		if ((archetypeGenerationResult.getCause() == null) &&
-			projectTemplatesArgs.isGradle()) {
-
+		if (projectTemplatesArgs.isGradle()) {
 			Path destinationDirPath = destinationDir.toPath();
 
 			Path projectPath = destinationDirPath.resolve(

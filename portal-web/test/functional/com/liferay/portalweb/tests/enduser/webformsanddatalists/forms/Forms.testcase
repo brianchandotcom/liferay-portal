@@ -162,7 +162,7 @@
 		</execute>
 
 		<execute macro="Role#definePermissionPG">
-			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_RECORD_CHECKBOX" />
+			<var name="permissionDefinitionKey" value="CONTENT_PERMISSIONS_ADD_FORM_INSTANCE_RECORD_CHECKBOX" />
 			<var name="roleTitle" value="Power User" />
 		</execute>
 
@@ -2083,6 +2083,7 @@
 	</command>
 
 	<command name="SubmitForm3x3Layout" priority="4">
+		<property name="portal.subrepo" value="false" />
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -2575,7 +2576,7 @@
 			<var name="fieldName" value="Checkbox" />
 		</execute>
 
-		<execute macro="FormPortlet#submit" />
+		<execute macro="FormPortlet#submitSuccessfully" />
 
 		<execute macro="Navigator#openURL" />
 

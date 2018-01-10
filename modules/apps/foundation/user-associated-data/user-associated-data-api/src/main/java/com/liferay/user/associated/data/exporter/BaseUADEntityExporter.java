@@ -26,9 +26,6 @@ import java.util.List;
 public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
-	public abstract void export(UADEntity uadEntity) throws PortalException;
-
-	@Override
 	public void exportAll(long userId) throws PortalException {
 		for (UADEntity uadEntity : getUADEntities(userId)) {
 			export(uadEntity);

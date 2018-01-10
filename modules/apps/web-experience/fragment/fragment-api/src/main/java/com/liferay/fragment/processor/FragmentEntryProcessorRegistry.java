@@ -20,6 +20,7 @@ import com.liferay.osgi.service.tracker.collections.map.PropertyServiceReference
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
@@ -31,6 +32,23 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
 public class FragmentEntryProcessorRegistry {
+
+	public String processFragmentEntryHTML(
+			String html, Locale locale,
+			FragmentEntrySettings fragmentEntrySettings)
+		throws PortalException {
+
+		String result = html;
+
+		for (FragmentEntryProcessor fragmentEntryProcessor :
+				_serviceTrackerList) {
+
+			result = fragmentEntryProcessor.processFragmentEntryHTML(
+				html, locale, fragmentEntrySettings);
+		}
+
+		return result;
+	}
 
 	public void validateFragmentEntryHTML(String html) throws PortalException {
 		for (FragmentEntryProcessor fragmentEntryProcessor :

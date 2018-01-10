@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.user">
+	<author>Marco Leo</author>
+	<namespace>Commerce</namespace>
+	<entity local-service="false" name="CommerceUser" remote-service="true">
+		<reference entity="Address" package-path="com.liferay.portal" />
+		<reference entity="EmailAddress" package-path="com.liferay.portal" />
+		<reference entity="Organization" package-path="com.liferay.portal" />
+		<reference entity="User" package-path="com.liferay.portal" />
+	</entity>
+</service-builder>

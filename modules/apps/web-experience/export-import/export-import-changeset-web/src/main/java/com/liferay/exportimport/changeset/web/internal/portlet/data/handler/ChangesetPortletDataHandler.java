@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.util.List;
@@ -34,6 +35,7 @@ import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Mate Thurzo
@@ -127,8 +129,11 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 	}
 
 	private String _getClassName(String exportingEntity) {
-		return exportingEntity.substring(
-			0, exportingEntity.indexOf(StringPool.POUND));
+		long classNameId = Long.valueOf(
+			exportingEntity.substring(
+				0, exportingEntity.indexOf(StringPool.POUND)));
+
+		return _portal.getClassName(classNameId);
 	}
 
 	private long _getGroupId(String exportingEntity) {
@@ -142,5 +147,8 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 		return exportingEntity.substring(
 			exportingEntity.lastIndexOf(StringPool.POUND) + 1);
 	}
+
+	@Reference
+	private Portal _portal;
 
 }

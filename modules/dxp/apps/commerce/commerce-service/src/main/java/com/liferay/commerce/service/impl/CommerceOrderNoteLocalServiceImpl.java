@@ -17,24 +17,8 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.service.base.CommerceOrderNoteLocalServiceBaseImpl;
 
 /**
- * The implementation of the commerce order note local service.
- *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.commerce.service.CommerceOrderNoteLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
  * @author Alessio Antonio Rendina
- * @see CommerceOrderNoteLocalServiceBaseImpl
- * @see com.liferay.commerce.service.CommerceOrderNoteLocalServiceUtil
  */
 public class CommerceOrderNoteLocalServiceImpl
 	extends CommerceOrderNoteLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. Always use {@link com.liferay.commerce.service.CommerceOrderNoteLocalServiceUtil} to access the commerce order note local service.
-	 */
 }

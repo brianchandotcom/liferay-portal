@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.xml.Element;
 
@@ -120,12 +121,28 @@ public class ChangesetPortletDataHandler extends BasePortletDataHandler {
 			StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(
 				className);
 
-		StagedModel stagedModel =
-			stagedModelDataHandler.fetchStagedModelByUuidAndGroupId(
-				uuid, groupId);
+		StagedModel stagedModel = null;
 
-		StagedModelDataHandlerUtil.exportStagedModel(
-			portletDataContext, stagedModel);
+		if (groupId > 0) {
+			stagedModel =
+				stagedModelDataHandler.fetchStagedModelByUuidAndGroupId(
+					uuid, groupId);
+		}
+		else {
+			List<StagedModel> companyStagedModels =
+				(List<StagedModel>)stagedModelDataHandler.
+					fetchStagedModelsByUuidAndCompanyId(
+						uuid, portletDataContext.getCompanyId());
+
+			if (ListUtil.isNotEmpty(companyStagedModels)) {
+				stagedModel = companyStagedModels.get(0);
+			}
+		}
+
+		if (stagedModel != null) {
+			StagedModelDataHandlerUtil.exportStagedModel(
+				portletDataContext, stagedModel);
+		}
 	}
 
 	private String _getClassName(String exportingEntity) {

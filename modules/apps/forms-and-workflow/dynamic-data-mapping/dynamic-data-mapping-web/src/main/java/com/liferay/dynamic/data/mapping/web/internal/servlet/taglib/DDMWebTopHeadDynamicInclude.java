@@ -63,7 +63,7 @@ public class DDMWebTopHeadDynamicInclude extends BaseDynamicInclude {
 
 		PrintWriter printWriter = response.getWriter();
 
-		String content = "<link href=\"".concat(themeDisplay.getPortalURL());
+		String content = "<link href=\"".concat(themeDisplay.getCDNBaseURL());
 
 		printWriter.println(content.concat(_postfix));
 	}

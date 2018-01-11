@@ -16,40 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-String backURL = ParamUtil.getString(request, "backURL");
-
-if (Validator.isNotNull(backURL)) {
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
-}
-%>
-
-<liferay-ui:error exception="<%= ExportImportEntityException.class %>">
-
-	<%
-	ExportImportEntityException eiee = (ExportImportEntityException)errorException;
-	%>
-
-	<c:choose>
-		<c:when test="<%= eiee.getType() == ExportImportEntityException.TYPE_GROUP_NOT_STAGED %>">
-			<liferay-ui:message key="group-not-staged" />
-		</c:when>
-		<c:when test="<%= eiee.getType() == ExportImportEntityException.TYPE_INVALID_COMMAND %>">
-			<liferay-ui:message key="invalid-command" />
-		</c:when>
-		<c:when test="<%= eiee.getType() == ExportImportEntityException.TYPE_NO_DATA_FOUND %>">
-			<liferay-ui:message key="no-data-found" />
-		</c:when>
-		<c:when test="<%= eiee.getType() == ExportImportEntityException.TYPE_PORTLET_NOT_STAGED %>">
-			<liferay-ui:message key="portlet-not-staged" />
-		</c:when>
-		<c:otherwise>
-			<liferay-ui:message key="an-unexpected-error-occurred" />
-		</c:otherwise>
-	</c:choose>
-</liferay-ui:error>
-
 <liferay-ui:error exception="<%= LARFileException.class %>" message="please-specify-a-lar-file-to-import" />
 <liferay-ui:error exception="<%= LARFileNameException.class %>" message="please-enter-a-file-with-a-valid-file-name" />
 

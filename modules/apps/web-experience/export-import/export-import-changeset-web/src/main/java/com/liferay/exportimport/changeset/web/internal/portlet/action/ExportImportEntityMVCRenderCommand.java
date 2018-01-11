@@ -41,7 +41,7 @@ public class ExportImportEntityMVCRenderCommand implements MVCRenderCommand {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
 
-		return "/export_import_error.jsp";
+		return "/error.jsp";
 	}
 
 }

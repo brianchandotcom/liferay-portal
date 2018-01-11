@@ -17,7 +17,7 @@
 				</execute>
 			</then>
 			<elseif>
-				<equals arg1="${pageType}" arg2="Link to a Page of This Site" />
+				<equals arg1="${sitePageType}" arg2="Link to a Page of This Site" />
 				<then>
 					<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 

@@ -15,17 +15,14 @@
 package com.liferay.fragment.processor;
 
 import com.liferay.portal.kernel.exception.PortalException;
-
-import java.util.Locale;
+import com.liferay.portal.kernel.json.JSONObject;
 
 /**
  * @author Pavel Savinov
  */
 public interface FragmentEntryProcessor {
 
-	public String processFragmentEntryHTML(
-			String html, Locale locale,
-			FragmentEntrySettings fragmentEntrySettings)
+	public String processFragmentEntryHTML(String html, JSONObject settings)
 		throws PortalException;
 
 	public void validateFragmentEntryHTML(String html) throws PortalException;

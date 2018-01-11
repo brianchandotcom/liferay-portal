@@ -19,8 +19,6 @@ import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntrySettings;
 import com.liferay.fragment.util.HtmlParserUtil;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
-import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -33,6 +31,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -40,10 +39,10 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Pavel Savinov
@@ -85,6 +84,29 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 
 		return document.asXML();
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		unbind = "unregisterEditableElementReplacer"
+	)
+	public void registerEditableElementReplacer(
+		EditableElementReplacer editableElementReplacer,
+		Map<String, Object> properties) {
+
+		String editableTagName = (String)properties.get("editable.tag.name");
+
+		_editableElementReplacers.put(editableTagName, editableElementReplacer);
+	}
+
+	public void unregisterEditableElementReplacer(
+		EditableElementReplacer editableElementReplacer,
+		Map<String, Object> properties) {
+
+		String editableTagName = (String)properties.get("editable.tag.name");
+
+		_editableElementReplacers.remove(editableTagName);
 	}
 
 	@Override
@@ -147,12 +169,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		}
 	}
 
-	@Activate
-	protected void activate(BundleContext bundleContext) {
-		_serviceTrackerMap = ServiceTrackerMapFactory.openSingleValueMap(
-			bundleContext, EditableElementReplacer.class, "editable.tag.name");
-	}
-
 	private void _replaceEditableValue(Element element, String value) {
 		if (element.isTextOnly()) {
 			element.setText(value);
@@ -169,7 +185,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		Element replaceableElement = elements.get(0);
 
 		EditableElementReplacer editableTagReplacer =
-			_serviceTrackerMap.getService(replaceableElement.getName());
+			_editableElementReplacers.get(replaceableElement.getName());
 
 		if (editableTagReplacer == null) {
 			return;
@@ -178,10 +194,10 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		editableTagReplacer.replace(replaceableElement, value);
 	}
 
+	private final Map<String, EditableElementReplacer>
+		_editableElementReplacers = new HashMap<>();
+
 	@Reference
 	private HtmlParserUtil _htmlParserUtil;
-
-	private ServiceTrackerMap<String, EditableElementReplacer>
-		_serviceTrackerMap;
 
 }

@@ -38,16 +38,14 @@ public class FragmentEntryProcessorRegistry {
 			FragmentEntrySettings fragmentEntrySettings)
 		throws PortalException {
 
-		String result = html;
-
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
-			result = fragmentEntryProcessor.processFragmentEntryHTML(
+			html = fragmentEntryProcessor.processFragmentEntryHTML(
 				html, locale, fragmentEntrySettings);
 		}
 
-		return result;
+		return html;
 	}
 
 	public void validateFragmentEntryHTML(String html) throws PortalException {

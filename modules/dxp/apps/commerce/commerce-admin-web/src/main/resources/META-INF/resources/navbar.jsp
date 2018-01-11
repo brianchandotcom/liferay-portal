@@ -42,20 +42,22 @@ if (searchURL != null) {
 			String commerceAdminModuleKey = entry.getKey();
 			CommerceAdminModule commerceAdminModule = entry.getValue();
 
-			if (commerceAdminModule.isVisible(request)) {
-				PortletURL commerceAdminModuleURL = renderResponse.createRenderURL();
+			if (!commerceAdminModule.isVisible(request)) {
+				continue;
+			}
 
-				commerceAdminModuleURL.setParameter("commerceAdminModuleKey", commerceAdminModuleKey);
+			PortletURL commerceAdminModuleURL = renderResponse.createRenderURL();
+
+			commerceAdminModuleURL.setParameter("commerceAdminModuleKey", commerceAdminModuleKey);
 		%>
 
-				<aui:nav-item
-					href="<%= commerceAdminModuleURL.toString() %>"
-					label="<%= commerceAdminModule.getLabel(locale) %>"
-					selected="<%= commerceAdminModuleKey.equals(selectedCommerceAdminModuleKey) %>"
-				/>
+			<aui:nav-item
+				href="<%= commerceAdminModuleURL.toString() %>"
+				label="<%= commerceAdminModule.getLabel(locale) %>"
+				selected="<%= commerceAdminModuleKey.equals(selectedCommerceAdminModuleKey) %>"
+			/>
 
 		<%
-			}
 		}
 		%>
 

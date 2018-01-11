@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.internal.permission;
+package com.liferay.blogs.internal.security.permission;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.constants.BlogsPortletKeys;

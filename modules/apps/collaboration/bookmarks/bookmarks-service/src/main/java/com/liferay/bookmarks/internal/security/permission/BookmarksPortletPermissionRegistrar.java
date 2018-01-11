@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.permission;
+package com.liferay.bookmarks.internal.security.permission;
 
 import com.liferay.bookmarks.constants.BookmarksConstants;
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;

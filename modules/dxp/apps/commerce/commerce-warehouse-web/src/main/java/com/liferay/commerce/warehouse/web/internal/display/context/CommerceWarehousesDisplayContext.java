@@ -82,7 +82,7 @@ public class CommerceWarehousesDisplayContext {
 
 		List<CommerceCountry> commerceCountries =
 			_commerceCountryService.getWarehouseCommerceCountries(
-				_cpRequestHelper.getScopeGroupId());
+				_cpRequestHelper.getScopeGroupId(), true);
 
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>(commerceCountries.size() + 2);
@@ -189,10 +189,10 @@ public class CommerceWarehousesDisplayContext {
 
 		if (_searchContainer.isSearch()) {
 			total = _commerceWarehouseService.searchCount(
-				_cpRequestHelper.getScopeGroupId(), getKeywords(),
+				_cpRequestHelper.getScopeGroupId(), getKeywords(), true,
 				commerceCountryId);
 			results = _commerceWarehouseService.search(
-				_cpRequestHelper.getScopeGroupId(), getKeywords(),
+				_cpRequestHelper.getScopeGroupId(), getKeywords(), true,
 				commerceCountryId, _searchContainer.getStart(),
 				_searchContainer.getEnd(),
 				_searchContainer.getOrderByComparator());

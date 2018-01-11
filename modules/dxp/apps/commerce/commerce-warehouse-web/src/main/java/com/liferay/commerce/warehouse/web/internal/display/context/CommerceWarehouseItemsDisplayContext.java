@@ -27,6 +27,8 @@ import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -99,18 +101,25 @@ public class CommerceWarehouseItemsDisplayContext {
 			cpInstance.getCPInstanceId());
 	}
 
-	public List<CommerceWarehouse> getCommerceWarehouses() {
-		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+	public List<CommerceWarehouse> getCommerceWarehouses()
+		throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		List<CommerceWarehouse> commerceWarehouses = _getCommerceWarehouses();
 
-		OrderByComparator<CommerceWarehouse> orderByComparator =
-			CommerceUtil.getCommerceWarehouseOrderByComparator("name", "asc");
+		if (!commerceWarehouses.isEmpty()) {
+			return commerceWarehouses;
+		}
 
-		return _commerceWarehouseService.getCommerceWarehouses(
-			themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, orderByComparator);
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			cpRequestHelper.getRenderRequest());
+
+		CommerceWarehouse commerceWarehouse =
+			_commerceWarehouseService.getDefaultCommerceWarehouse(
+				serviceContext);
+
+		commerceWarehouses.add(commerceWarehouse);
+
+		return commerceWarehouses;
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -146,6 +155,20 @@ public class CommerceWarehouseItemsDisplayContext {
 	}
 
 	protected final CPRequestHelper cpRequestHelper;
+
+	private List<CommerceWarehouse> _getCommerceWarehouses() {
+		RenderRequest renderRequest = cpRequestHelper.getRenderRequest();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		OrderByComparator<CommerceWarehouse> orderByComparator =
+			CommerceUtil.getCommerceWarehouseOrderByComparator("name", "asc");
+
+		return _commerceWarehouseService.getCommerceWarehouses(
+			themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, orderByComparator);
+	}
 
 	private final CommerceWarehouseItemService _commerceWarehouseItemService;
 	private final CommerceWarehouseService _commerceWarehouseService;

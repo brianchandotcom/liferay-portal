@@ -36,10 +36,10 @@ public class UpgradeLayoutPermissions extends UpgradeProcess {
 	protected void doUpgrade() throws Exception {
 		StringBundler sb = new StringBundler(9);
 
-		sb.append("select Layout.companyId, Layout.plid, ");
-		sb.append("Layout.privateLayout, Layout.groupId from Layout left ");
-		sb.append("join ResourcePermission on (ResourcePermission.companyId ");
-		sb.append("= Layout.companyId and ResourcePermission.name = '");
+		sb.append("select Layout.companyId, Layout.plid, Layout.privateLayout");
+		sb.append(", Layout.groupId, Layout.userId from Layout left join ");
+		sb.append("ResourcePermission on (ResourcePermission.companyId = ");
+		sb.append("Layout.companyId and ResourcePermission.name = '");
 		sb.append(Layout.class.getName());
 		sb.append("' and ResourcePermission.scope = ");
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
@@ -57,6 +57,7 @@ public class UpgradeLayoutPermissions extends UpgradeProcess {
 				long plid = rs.getLong("plid");
 				boolean privateLayout = rs.getBoolean("privateLayout");
 				long groupId = rs.getLong("groupId");
+				long userId = rs.getLong("userId");
 
 				boolean addGroupPermission = true;
 				boolean addGuestPermission = true;
@@ -72,8 +73,8 @@ public class UpgradeLayoutPermissions extends UpgradeProcess {
 				}
 
 				ResourceLocalServiceUtil.addResources(
-					companyId, groupId, 0, Layout.class.getName(), plid, false,
-					addGroupPermission, addGuestPermission);
+					companyId, groupId, userId, Layout.class.getName(), plid,
+					false, addGroupPermission, addGuestPermission);
 			}
 		}
 	}

@@ -45,7 +45,7 @@ public interface CommerceCartValidatorRegistry {
 		throws PortalException;
 
 	public List<CommerceCartValidatorResult> validate(
-			CPInstance cpInstance, CommerceCart commerceCart, int quantity)
+			CPInstance cpInstance, int quantity)
 		throws PortalException;
 
 }

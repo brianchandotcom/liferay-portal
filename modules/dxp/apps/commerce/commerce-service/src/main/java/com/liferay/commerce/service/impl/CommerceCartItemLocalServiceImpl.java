@@ -236,8 +236,7 @@ public class CommerceCartItemLocalServiceImpl
 			commerceCartId);
 
 		List<CommerceCartValidatorResult> commerceCartValidatorResults =
-			commerceCartValidatorRegistry.validate(
-				cpInstance, commerceCart, quantity);
+			commerceCartValidatorRegistry.validate(cpInstance, quantity);
 
 		if (!commerceCartValidatorResults.isEmpty()) {
 			throw new CommerceCartValidatorException(

@@ -190,7 +190,7 @@ public class CommerceCartValidatorRegistryImpl
 
 	@Override
 	public List<CommerceCartValidatorResult> validate(
-			CPInstance cpInstance, CommerceCart commerceCart, int quantity)
+			CPInstance cpInstance, int quantity)
 		throws PortalException {
 
 		List<CommerceCartValidatorResult> commerceCartValidatorResults =

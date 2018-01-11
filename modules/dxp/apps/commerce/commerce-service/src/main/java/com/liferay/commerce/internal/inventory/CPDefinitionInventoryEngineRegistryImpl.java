@@ -49,7 +49,10 @@ public class CPDefinitionInventoryEngineRegistryImpl
 	public CPDefinitionInventoryEngine getCPDefinitionInventoryEngine(
 		CPDefinitionInventory cpDefinitionInventory) {
 
-		if (cpDefinitionInventory == null) {
+		if ((cpDefinitionInventory == null) ||
+			Validator.isNull(cpDefinitionInventory.
+				getCPDefinitionInventoryEngine())) {
+
 			return getCPDefinitionInventoryEngine(
 				CPDefinitionInventoryEngineImpl.KEY);
 		}

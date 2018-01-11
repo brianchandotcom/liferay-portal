@@ -16,6 +16,8 @@ package com.liferay.dynamic.data.lists.service.base;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionService;
+import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
+import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -127,6 +129,81 @@ public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 		this.counterLocalService = counterLocalService;
 	}
 
+	/**
+	 * Returns the ddl record local service.
+	 *
+	 * @return the ddl record local service
+	 */
+	public com.liferay.dynamic.data.lists.service.DDLRecordLocalService getDDLRecordLocalService() {
+		return ddlRecordLocalService;
+	}
+
+	/**
+	 * Sets the ddl record local service.
+	 *
+	 * @param ddlRecordLocalService the ddl record local service
+	 */
+	public void setDDLRecordLocalService(
+		com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService) {
+		this.ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	/**
+	 * Returns the ddl record remote service.
+	 *
+	 * @return the ddl record remote service
+	 */
+	public com.liferay.dynamic.data.lists.service.DDLRecordService getDDLRecordService() {
+		return ddlRecordService;
+	}
+
+	/**
+	 * Sets the ddl record remote service.
+	 *
+	 * @param ddlRecordService the ddl record remote service
+	 */
+	public void setDDLRecordService(
+		com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService) {
+		this.ddlRecordService = ddlRecordService;
+	}
+
+	/**
+	 * Returns the ddl record persistence.
+	 *
+	 * @return the ddl record persistence
+	 */
+	public DDLRecordPersistence getDDLRecordPersistence() {
+		return ddlRecordPersistence;
+	}
+
+	/**
+	 * Sets the ddl record persistence.
+	 *
+	 * @param ddlRecordPersistence the ddl record persistence
+	 */
+	public void setDDLRecordPersistence(
+		DDLRecordPersistence ddlRecordPersistence) {
+		this.ddlRecordPersistence = ddlRecordPersistence;
+	}
+
+	/**
+	 * Returns the ddl record finder.
+	 *
+	 * @return the ddl record finder
+	 */
+	public DDLRecordFinder getDDLRecordFinder() {
+		return ddlRecordFinder;
+	}
+
+	/**
+	 * Sets the ddl record finder.
+	 *
+	 * @param ddlRecordFinder the ddl record finder
+	 */
+	public void setDDLRecordFinder(DDLRecordFinder ddlRecordFinder) {
+		this.ddlRecordFinder = ddlRecordFinder;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -183,4 +260,12 @@ public abstract class DDLRecordVersionServiceBaseImpl extends BaseServiceImpl
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordService ddlRecordService;
+	@BeanReference(type = DDLRecordPersistence.class)
+	protected DDLRecordPersistence ddlRecordPersistence;
+	@BeanReference(type = DDLRecordFinder.class)
+	protected DDLRecordFinder ddlRecordFinder;
 }

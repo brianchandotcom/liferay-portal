@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.DDLRecordVersionLocalService;
+import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
+import com.liferay.dynamic.data.lists.service.persistence.DDLRecordPersistence;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordVersionPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -372,6 +374,62 @@ public abstract class DDLRecordVersionLocalServiceBaseImpl
 		this.counterLocalService = counterLocalService;
 	}
 
+	/**
+	 * Returns the ddl record local service.
+	 *
+	 * @return the ddl record local service
+	 */
+	public com.liferay.dynamic.data.lists.service.DDLRecordLocalService getDDLRecordLocalService() {
+		return ddlRecordLocalService;
+	}
+
+	/**
+	 * Sets the ddl record local service.
+	 *
+	 * @param ddlRecordLocalService the ddl record local service
+	 */
+	public void setDDLRecordLocalService(
+		com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService) {
+		this.ddlRecordLocalService = ddlRecordLocalService;
+	}
+
+	/**
+	 * Returns the ddl record persistence.
+	 *
+	 * @return the ddl record persistence
+	 */
+	public DDLRecordPersistence getDDLRecordPersistence() {
+		return ddlRecordPersistence;
+	}
+
+	/**
+	 * Sets the ddl record persistence.
+	 *
+	 * @param ddlRecordPersistence the ddl record persistence
+	 */
+	public void setDDLRecordPersistence(
+		DDLRecordPersistence ddlRecordPersistence) {
+		this.ddlRecordPersistence = ddlRecordPersistence;
+	}
+
+	/**
+	 * Returns the ddl record finder.
+	 *
+	 * @return the ddl record finder
+	 */
+	public DDLRecordFinder getDDLRecordFinder() {
+		return ddlRecordFinder;
+	}
+
+	/**
+	 * Sets the ddl record finder.
+	 *
+	 * @param ddlRecordFinder the ddl record finder
+	 */
+	public void setDDLRecordFinder(DDLRecordFinder ddlRecordFinder) {
+		this.ddlRecordFinder = ddlRecordFinder;
+	}
+
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.lists.model.DDLRecordVersion",
 			ddlRecordVersionLocalService);
@@ -430,6 +488,12 @@ public abstract class DDLRecordVersionLocalServiceBaseImpl
 	protected DDLRecordVersionPersistence ddlRecordVersionPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.lists.service.DDLRecordLocalService.class)
+	protected com.liferay.dynamic.data.lists.service.DDLRecordLocalService ddlRecordLocalService;
+	@BeanReference(type = DDLRecordPersistence.class)
+	protected DDLRecordPersistence ddlRecordPersistence;
+	@BeanReference(type = DDLRecordFinder.class)
+	protected DDLRecordFinder ddlRecordFinder;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

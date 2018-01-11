@@ -16,13 +16,21 @@ package com.liferay.commerce.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceOrderNoteImpl extends CommerceOrderNoteBaseImpl {
 
 	public CommerceOrderNoteImpl() {
+	}
+
+	@Override
+	public User getUser() {
+		return UserLocalServiceUtil.fetchUser(getUserId());
 	}
 
 }

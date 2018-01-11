@@ -117,7 +117,9 @@ public class ChainingCheck extends BaseCheck {
 		String firstMethodName = chainedMethodNames.get(0);
 
 		if (firstMethodName.equals(methodName) &&
-			!_isInsideConstructorThisCall(methodCallAST, detailAST)) {
+			!_isInsideConstructorThisCall(methodCallAST, detailAST) &&
+			!DetailASTUtil.hasParentWithTokenType(
+				methodCallAST, TokenTypes.SUPER_CTOR_CALL)) {
 
 			log(methodCallAST.getLineNo(), _MSG_AVOID_CHAINING, methodName);
 		}
@@ -164,6 +166,13 @@ public class ChainingCheck extends BaseCheck {
 	private boolean _isAllowedChainingMethodCall(
 		DetailAST detailAST, DetailAST methodCallAST,
 		List<String> chainedMethodNames) {
+
+		if (_isInsideConstructorThisCall(methodCallAST, detailAST) ||
+			DetailASTUtil.hasParentWithTokenType(
+				methodCallAST, TokenTypes.SUPER_CTOR_CALL)) {
+
+			return true;
+		}
 
 		for (String allowedMethodName : _allowedMethodNames) {
 			if (chainedMethodNames.contains(allowedMethodName)) {

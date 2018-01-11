@@ -14,32 +14,22 @@
 
 package com.liferay.commerce.internal.inventory;
 
-import com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration;
-import com.liferay.commerce.constants.CommerceConstants;
-import com.liferay.commerce.exception.CommerceShippingEngineException;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.model.CPDefinitionAvailabilityRange;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CPDefinitionInventoryConstants;
 import com.liferay.commerce.model.CommerceAvailabilityRange;
-import com.liferay.commerce.model.CommerceOrder;
-import com.liferay.commerce.model.CommerceOrderItem;
-import com.liferay.commerce.model.CommerceShippingOriginLocator;
-import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionAvailabilityRangeLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
-import com.liferay.commerce.util.CommerceShippingOriginLocatorRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
-import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.osgi.service.component.annotations.Component;
@@ -190,8 +180,15 @@ public class CPDefinitionInventoryEngineImpl
 
 	@Override
 	public int getStockQuantity(CPInstance cpInstance) {
-		return _commerceWarehouseItemLocalService.getCPInstanceQuantity(
-			cpInstance.getCPInstanceId());
+		int warehouseCPInstanceQuantity =
+			_commerceWarehouseItemLocalService.getCPInstanceQuantity(
+				cpInstance.getCPInstanceId());
+
+		int orderCPInstanceQuantity =
+			_commerceOrderItemLocalService.getCPInstanceQuantity(
+				cpInstance.getCPInstanceId());
+
+		return warehouseCPInstanceQuantity - orderCPInstanceQuantity;
 	}
 
 	@Override
@@ -227,86 +224,25 @@ public class CPDefinitionInventoryEngineImpl
 	}
 
 	@Override
-	public int updateStockQuantity(CommerceOrderItem commerceOrderItem)
-		throws PortalException {
+	public int updateStockQuantity(
+		CommerceWarehouseItem commerceWarehouseItem, int quantity) {
 
-		int quantity = 0;
+		quantity = commerceWarehouseItem.getQuantity() - quantity;
 
-		CommerceOrder commerceOrder = commerceOrderItem.getCommerceOrder();
+		commerceWarehouseItem.setQuantity(quantity);
 
-		CommerceShippingOriginLocator commerceShippingOriginLocator =
-			_getCommerceShippingOriginLocator(commerceOrderItem.getGroupId());
-
-		CommerceWarehouse commerceWarehouse =
-			commerceShippingOriginLocator.getClosestCommerceWarehouse(
-				commerceOrder.getShippingAddress(),
-				commerceOrderItem.getCPInstanceId(),
-				commerceOrderItem.getQuantity());
-
-		List<CommerceWarehouseItem> commerceWarehouseItems =
-			commerceWarehouse.getCommerceWarehouseItems();
-
-		for (CommerceWarehouseItem commerceWarehouseItem :
-				commerceWarehouseItems) {
-
-			if (commerceWarehouseItem.getCPInstanceId() ==
-					commerceOrderItem.getCPInstanceId()) {
-
-				quantity =
-					commerceWarehouseItem.getQuantity() -
-						commerceOrderItem.getQuantity();
-
-				commerceWarehouseItem.setQuantity(quantity);
-
-				_commerceWarehouseItemLocalService.updateCommerceWarehouseItem(
-					commerceWarehouseItem);
-
-				break;
-			}
-		}
+		_commerceWarehouseItemLocalService.updateCommerceWarehouseItem(
+			commerceWarehouseItem);
 
 		return quantity;
 	}
 
-	private CommerceShippingOriginLocator _getCommerceShippingOriginLocator(
-			long groupId)
-		throws PortalException {
-
-		CommerceShippingGroupServiceConfiguration
-			commerceShippingGroupServiceConfiguration =
-				_configurationProvider.getConfiguration(
-					CommerceShippingGroupServiceConfiguration.class,
-					new GroupServiceSettingsLocator(
-						groupId, CommerceConstants.SHIPPING_SERVICE_NAME));
-
-		String commerceShippingOriginLocatorKey =
-			commerceShippingGroupServiceConfiguration.
-				commerceShippingOriginLocatorKey();
-
-		CommerceShippingOriginLocator commerceShippingOriginLocator =
-			_commerceShippingOriginLocatorRegistry.
-				getCommerceShippingOriginLocator(
-					commerceShippingOriginLocatorKey);
-
-		if (commerceShippingOriginLocator == null) {
-			throw new
-				CommerceShippingEngineException.MustSetShippingOriginLocator(
-					commerceShippingOriginLocatorKey);
-		}
-
-		return commerceShippingOriginLocator;
-	}
-
 	@Reference
-	private CommerceShippingOriginLocatorRegistry
-		_commerceShippingOriginLocatorRegistry;
+	private CommerceOrderItemLocalService _commerceOrderItemLocalService;
 
 	@Reference
 	private CommerceWarehouseItemLocalService
 		_commerceWarehouseItemLocalService;
-
-	@Reference
-	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private CPDefinitionAvailabilityRangeLocalService

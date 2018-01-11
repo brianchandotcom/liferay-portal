@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.inventory;
 
-import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -55,7 +55,7 @@ public interface CPDefinitionInventoryEngine {
 	public boolean isDisplayStockQuantity(CPInstance cpInstance)
 		throws PortalException;
 
-	public int updateStockQuantity(CommerceOrderItem commerceOrderItem)
-		throws PortalException;
+	public int updateStockQuantity(
+		CommerceWarehouseItem commerceWarehouseItem, int quantity);
 
 }

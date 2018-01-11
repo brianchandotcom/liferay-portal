@@ -75,10 +75,21 @@ PortletURL portletURL = commerceOrderItemItemSelectorViewDisplayContext.getPortl
 				<%= HtmlUtil.escape(String.valueOf(commerceOrderItem.getQuantity() - commerceOrderItem.getShippedQuantity())) %>
 			</liferay-ui:search-container-column-text>
 
+			<%
+			long commerceOrderItemId = commerceOrderItem.getCommerceOrderItemId();
+			%>
+
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="warehouse-quantity"
+			>
+				<%= HtmlUtil.escape(String.valueOf(commerceOrderItemItemSelectorViewDisplayContext.getCommerceWarehouseItemQuantity(commerceOrderItemId))) %>
+			</liferay-ui:search-container-column-text>
+
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
 				name="price"
-				value="<%= commerceOrderItemItemSelectorViewDisplayContext.getFormattedPrice(commerceOrderItem.getCommerceOrderItemId()) %>"
+				value="<%= commerceOrderItemItemSelectorViewDisplayContext.getFormattedPrice(commerceOrderItemId) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -21,9 +21,7 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -52,6 +50,13 @@ public class CommerceOrderItemItemSelectorViewDisplayContext
 		setDefaultOrderByType("desc");
 	}
 
+	public int getCommerceWarehouseItemQuantity(long commerceOrderItemId)
+		throws PortalException {
+
+		return _commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
+			commerceOrderItemId, getCommerceWarehouseId());
+	}
+
 	public String getFormattedPrice(long commerceOrderItemId)
 		throws PortalException {
 
@@ -70,10 +75,6 @@ public class CommerceOrderItemItemSelectorViewDisplayContext
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		searchContainer = new SearchContainer<>(
 			cpRequestHelper.getRenderRequest(), getPortletURL(), null, null);
 
@@ -88,7 +89,7 @@ public class CommerceOrderItemItemSelectorViewDisplayContext
 
 		List<CommerceOrderItem> results =
 			_commerceOrderItemLocalService.getCommerceOrderItems(
-				themeDisplay.getScopeGroupId(), getCommerceAddressId(),
+				getCommerceWarehouseId(), getCommerceAddressId(),
 				searchContainer.getStart(), searchContainer.getEnd());
 
 		searchContainer.setResults(results);
@@ -98,7 +99,11 @@ public class CommerceOrderItemItemSelectorViewDisplayContext
 	}
 
 	protected long getCommerceAddressId() {
-		return ParamUtil.getLong(httpServletRequest, "commerceAddressId", 0);
+		return ParamUtil.getLong(httpServletRequest, "commerceAddressId", 0L);
+	}
+
+	protected long getCommerceWarehouseId() {
+		return ParamUtil.getLong(httpServletRequest, "commerceWarehouseId", 0L);
 	}
 
 	private final CommerceOrderItemLocalService _commerceOrderItemLocalService;

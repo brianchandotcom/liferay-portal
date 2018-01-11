@@ -159,12 +159,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	private void _replaceEditableValue(Element element, String value) {
-		if (element.isTextOnly()) {
-			element.setText(value);
-
-			return;
-		}
-
 		EditableElementParser editableTagReplacer =
 			_editableElementReplacers.get(element.getName());
 

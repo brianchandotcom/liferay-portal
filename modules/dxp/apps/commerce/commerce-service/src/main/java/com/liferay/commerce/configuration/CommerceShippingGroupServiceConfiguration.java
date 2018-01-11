@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CommerceShippingGroupServiceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(deflt = "address", required = false)
 	public String commerceShippingOriginLocatorKey();
 
 }

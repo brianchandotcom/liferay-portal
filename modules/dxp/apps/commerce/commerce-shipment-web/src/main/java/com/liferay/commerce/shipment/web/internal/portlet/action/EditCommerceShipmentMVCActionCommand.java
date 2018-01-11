@@ -147,6 +147,8 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 			actionRequest, "commerceAddressId");
 		long commerceShippingMethodId = ParamUtil.getLong(
 			actionRequest, "commerceShippingMethodId");
+		long commerceWarehouseId = ParamUtil.getLong(
+			actionRequest, "commerceWarehouseId");
 
 		String carrier = ParamUtil.getString(actionRequest, "carrier");
 		String trackingNumber = ParamUtil.getString(
@@ -196,11 +198,11 @@ public class EditCommerceShipmentMVCActionCommand extends BaseMVCActionCommand {
 		if (commerceShipmentId <= 0) {
 			commerceShipment = _commerceShipmentService.addCommerceShipment(
 				shipmentUserId, commerceAddressId, commerceShippingMethodId,
-				carrier, trackingNumber, expectedDuration, 0, shippingDateMonth,
-				shippingDateDay, shippingDateYear, shippingDateHour,
-				shippingDateMinute, expectedDateMonth, expectedDateDay,
-				expectedDateYear, expectedDateHour, expectedDateMinute,
-				serviceContext);
+				commerceWarehouseId, carrier, trackingNumber, expectedDuration,
+				0, shippingDateMonth, shippingDateDay, shippingDateYear,
+				shippingDateHour, shippingDateMinute, expectedDateMonth,
+				expectedDateDay, expectedDateYear, expectedDateHour,
+				expectedDateMinute, serviceContext);
 		}
 		else {
 			commerceShipment = _commerceShipmentService.updateCommerceShipment(

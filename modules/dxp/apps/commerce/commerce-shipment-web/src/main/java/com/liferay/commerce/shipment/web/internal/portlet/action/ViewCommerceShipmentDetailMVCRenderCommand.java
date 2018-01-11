@@ -17,6 +17,7 @@ package com.liferay.commerce.shipment.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentItemDisplayContext;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -62,7 +63,7 @@ public class ViewCommerceShipmentDetailMVCRenderCommand
 					new CommerceShipmentItemDisplayContext(
 						_actionHelper, _commerceShippingMethodLocalService,
 						httpServletRequest, _commerceShipmentItemService,
-						_itemSelector);
+						_commerceWarehouseService, _itemSelector);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -84,6 +85,9 @@ public class ViewCommerceShipmentDetailMVCRenderCommand
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private CommerceWarehouseService _commerceWarehouseService;
 
 	@Reference
 	private ItemSelector _itemSelector;

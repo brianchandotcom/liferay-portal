@@ -18,6 +18,7 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentDisplayContext;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -80,7 +81,8 @@ public class CommerceShipmentPortlet extends MVCPortlet {
 				new CommerceShipmentDisplayContext(
 					_actionHelper, _commerceShippingMethodLocalService,
 					httpServletRequest, _commerceAddressService,
-					_commerceShipmentService, _userLocalService);
+					_commerceShipmentService, _commerceWarehouseService,
+					_userLocalService);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -105,6 +107,9 @@ public class CommerceShipmentPortlet extends MVCPortlet {
 	@Reference
 	private CommerceShippingMethodLocalService
 		_commerceShippingMethodLocalService;
+
+	@Reference
+	private CommerceWarehouseService _commerceWarehouseService;
 
 	@Reference
 	private Portal _portal;

@@ -17,11 +17,11 @@ package com.liferay.commerce.shipment.web.internal.portlet.action;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
 import com.liferay.commerce.exception.NoSuchShipmentItemException;
-import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.service.CommerceOrderItemLocalService;
 import com.liferay.commerce.service.CommerceShipmentItemService;
+import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
 import com.liferay.portal.kernel.portlet.PortletProviderUtil;
@@ -77,21 +77,21 @@ public class EditCommerceShipmentItemMVCActionCommand
 				ParamUtil.getString(actionRequest, "commerceOrderItemIds"), 0L);
 		}
 
+		CommerceShipment commerceShipment =
+			_commerceShipmentService.getCommerceShipment(commerceShipmentId);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceShipmentItem.class.getName(), actionRequest);
 
 		for (long addCommerceOrderItemId : addCommerceOrderItemIds) {
-			CommerceOrderItem commerceOrderItem =
-				_commerceOrderItemLocalService.getCommerceOrderItem(
-					addCommerceOrderItemId);
-
-			int availableQuantity =
-				commerceOrderItem.getQuantity() -
-					commerceOrderItem.getShippedQuantity();
+			int commerceWarehouseItemQuantity =
+				_commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
+					addCommerceOrderItemId,
+					commerceShipment.getCommerceWarehouseId());
 
 			_commerceShipmentItemService.addCommerceShipmentItem(
-				commerceShipmentId, addCommerceOrderItemId, availableQuantity,
-				serviceContext);
+				commerceShipmentId, addCommerceOrderItemId,
+				commerceWarehouseItemQuantity, serviceContext);
 		}
 	}
 
@@ -211,6 +211,9 @@ public class EditCommerceShipmentItemMVCActionCommand
 
 	@Reference
 	private CommerceShipmentItemService _commerceShipmentItemService;
+
+	@Reference
+	private CommerceShipmentService _commerceShipmentService;
 
 	@Reference
 	private Portal _portal;

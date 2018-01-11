@@ -157,9 +157,8 @@ public class CustomServletContextHelper
 			return true;
 		}
 
-		for (WebResourceCollectionDefinition
-				webResourceCollectionDefinition :
-					_webResourceCollectionDefinitions) {
+		for (WebResourceCollectionDefinition webResourceCollectionDefinition :
+				_webResourceCollectionDefinitions) {
 
 			boolean forbidden = false;
 

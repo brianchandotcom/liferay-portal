@@ -7,7 +7,27 @@ import templates from './LayoutColumn.soy';
 /**
  * LayoutColumn
  */
-class LayoutColumn extends Component {}
+class LayoutColumn extends Component {
+
+	/**
+	 * Handle permission item click in order to open the target href
+	 * in a dialog.
+	 * @param {Event} event
+	 * @private
+	 */
+	_handlePermissionLinkClick(event) {
+		Liferay.Util.openInDialog(event, {
+			dialog: {
+				destroyOnHide: true
+			},
+			dialogIframe: {
+				bodyCssClass: 'dialog-with-footer'
+			},
+			uri: event.delegateTarget.href
+		});
+	}
+
+}
 
 /**
  * State definition.

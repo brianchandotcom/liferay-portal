@@ -1662,7 +1662,7 @@
 
 		<execute function="Click" locator1="NavBar#HOME" />
 
-		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS" >
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS">
 			<var name="key_itemName" value="MB Thread Message Subject 1" />
 		</execute>
 

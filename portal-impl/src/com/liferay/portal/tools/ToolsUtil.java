@@ -282,6 +282,8 @@ public class ToolsUtil {
 
 		afterImportsContent = _stripFullyQualifiedClassNames(
 			imports, afterImportsContent, packagePath);
+		afterImportsContent = _stripFullyQualifiedClassNames(
+			imports, afterImportsContent, "java.lang");
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {

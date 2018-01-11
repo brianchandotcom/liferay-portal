@@ -1,6 +1,7 @@
 dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.announcements.api", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.arquillian.extension.junit.bridge", version: "1.0.7"
+	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	testIntegrationCompile project(":apps:collaboration:announcements:announcements-uad")
 	testIntegrationCompile project(":apps:foundation:user-associated-data:user-associated-data-api")
 }

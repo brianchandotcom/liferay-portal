@@ -16,12 +16,12 @@ package com.liferay.document.library.internal.upgrade.v1_0_1;
 
 import com.liferay.document.library.configuration.DLConfiguration;
 import com.liferay.document.library.internal.constants.LegacyDLKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeItem;
 import com.liferay.portal.configuration.upgrade.util.PrefsPropsToConfigurationUpgradeUtil;
 import com.liferay.portal.configuration.upgrade.util.PrefsPropsValueType;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletPreferences;
 

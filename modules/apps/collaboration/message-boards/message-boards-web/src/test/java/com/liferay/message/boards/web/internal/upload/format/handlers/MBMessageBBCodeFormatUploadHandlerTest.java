@@ -15,10 +15,10 @@
 package com.liferay.message.boards.web.internal.upload.format.handlers;
 
 import com.liferay.message.boards.web.internal.util.MBAttachmentFileEntryReference;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;

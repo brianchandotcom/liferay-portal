@@ -14,10 +14,10 @@
 
 package com.liferay.upload.web.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepository;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.upload.AttachmentElementReplacer;
 
 import org.jsoup.Jsoup;

@@ -14,8 +14,8 @@
 
 package com.liferay.wiki.web.internal.display.context.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.wiki.configuration.WikiGroupServiceConfiguration;
 import com.liferay.wiki.model.WikiNode;
 

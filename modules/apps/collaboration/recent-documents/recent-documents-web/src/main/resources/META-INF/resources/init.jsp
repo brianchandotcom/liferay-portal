@@ -25,8 +25,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 page import="com.liferay.document.library.file.rank.service.DLFileRankLocalServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.service.DLAppLocalServiceUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
-page import="com.liferay.portal.kernel.repository.model.FileEntry" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %>
+page import="com.liferay.petra.string.StringPool" %><%@
+page import="com.liferay.portal.kernel.repository.model.FileEntry" %>
 
 <%@ page import="java.util.List" %>
 

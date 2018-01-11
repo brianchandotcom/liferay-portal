@@ -17,12 +17,12 @@ package com.liferay.document.library.demo.data.creator.internal;
 import com.liferay.document.library.demo.data.creator.BaseFolderDemoDataCreator;
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;

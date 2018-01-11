@@ -15,11 +15,11 @@
 package com.liferay.blogs.web.internal.search;
 
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.OpenSearch;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 

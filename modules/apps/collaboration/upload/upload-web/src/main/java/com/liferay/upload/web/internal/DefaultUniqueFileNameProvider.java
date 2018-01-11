@@ -14,9 +14,9 @@
 
 package com.liferay.upload.web.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.upload.UniqueFileNameProvider;
 
 import java.util.function.Predicate;

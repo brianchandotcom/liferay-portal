@@ -43,8 +43,8 @@ public class UpgradeLayoutPermissions extends UpgradeProcess {
 		sb.append(Layout.class.getName());
 		sb.append("' and ResourcePermission.scope = ");
 		sb.append(ResourceConstants.SCOPE_INDIVIDUAL);
-		sb.append(" and ResourcePermission.primKey = CAST_TEXT(Layout.plid)) ");
-		sb.append("where ResourcePermission.resourcePermissionId is null");
+		sb.append(" and ResourcePermission.primKeyId = Layout.plid) where ");
+		sb.append("ResourcePermission.resourcePermissionId is null");
 
 		String sql = SQLTransformer.transform(sb.toString());
 

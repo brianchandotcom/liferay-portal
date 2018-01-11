@@ -786,6 +786,7 @@
 		<column name="shipmentUserId" type="long" />
 		<column name="commerceAddressId" type="long" />
 		<column name="commerceShippingMethodId" type="long" />
+		<column name="commerceWarehouseId" type="long" />
 		<column name="carrier" type="String" />
 		<column name="trackingNumber" type="String" />
 		<column name="expectedDuration" type="int" />
@@ -840,8 +841,7 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_C" return-type="Collection">
-			<finder-column name="groupId" />
+		<finder name="CommerceShipment" return-type="Collection">
 			<finder-column name="commerceShipmentId" />
 		</finder>
 	</entity>
@@ -965,6 +965,7 @@
 
 		<column name="name" type="String" />
 		<column name="description" type="String" />
+		<column name="active" type="boolean" />
 		<column name="street1" type="String" />
 		<column name="street2" type="String" />
 		<column name="street3" type="String" />
@@ -986,8 +987,17 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
+		</finder>
 		<finder name="G_C" return-type="Collection">
 			<finder-column name="groupId" />
+			<finder-column name="commerceCountryId" />
+		</finder>
+		<finder name="G_A_C" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="active" />
 			<finder-column name="commerceCountryId" />
 		</finder>
 	</entity>
@@ -1127,6 +1137,7 @@
 		<exception>CommerceShippingEngine</exception>
 		<exception>CommerceShippingMethodEngineKey</exception>
 		<exception>CommerceShippingMethodName</exception>
+		<exception>CommerceWarehouseActive</exception>
 		<exception>CommerceWarehouseCommerceRegionId</exception>
 		<exception>CommerceWarehouseName</exception>
 	</exceptions>

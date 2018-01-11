@@ -15,6 +15,7 @@ import org.ajoberstar.grgit.CommitDiff
 import org.ajoberstar.grgit.Grgit
 import org.ajoberstar.grgit.Repository
 import org.ajoberstar.grgit.Status
+import org.ajoberstar.grgit.operation.ResetOp
 import org.ajoberstar.grgit.util.JGitUtil
 
 import org.eclipse.jgit.api.CheckoutCommand
@@ -240,6 +241,8 @@ private void _cherryPickApply(Commit commit) {
 
 		return
 	}
+
+	grgit.reset commit: "HEAD", mode: ResetOp.Mode.HARD
 
 	_executeGradle(moduleDir, ["updateFileVersions"], ["forced.update.files.version": moduleVersion], true)
 

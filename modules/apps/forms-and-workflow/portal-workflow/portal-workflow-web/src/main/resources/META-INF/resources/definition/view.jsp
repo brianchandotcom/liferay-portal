@@ -65,11 +65,9 @@ WorkflowDefinitionSearch workflowDefinitionSearch = new WorkflowDefinitionSearch
 	<%
 	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
 
-	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(
-			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
 
-	String messageKey = workflowDefinitionDisplayContext.getMessageKey(
-			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	String messageKey = workflowDefinitionDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
 	%>
 
 	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />

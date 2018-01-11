@@ -334,51 +334,17 @@
 		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
-	<command name="deactivateAddedWorkflowDefinition">
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
-
-		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
-	</command>
-
-	<command name="deactivateSpecificWorkflowDefinition">
-		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
-
-		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
-	</command>
-
-	<command name="deactivateWorkflowDefinition">
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
-
-		<execute macro="Workflow#deactivateWorkflowDefinitionCmd" />
-	</command>
-
-	<command name="deactivateWorkflowDefinitionCmd">
-		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Unpublish">
-			<var name="key_menuItem" value="Unpublish" />
-		</execute>
-
-		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow unpublished successfully." />
-
-		<execute macro="Workflow#waitForSuccessMessageHide" />
-	</command>
-
 	<command name="deleteSpecificWorkflowDefinition">
-		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
-
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
-
-		<execute macro="Workflow#deleteWorkflowDefinitionCmd" />
+		<execute macro="Workflow#deleteWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+		</execute>
 	</command>
 
 	<command name="deleteWorkflowDefinition">
-		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute macro="Workflow#deleteWorkflowDefinitionCmd" />
-	</command>
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 
-	<command name="deleteWorkflowDefinitionCmd">
 		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
 			<var name="key_menuItem" value="Delete" />
 		</execute>
@@ -392,6 +358,8 @@
 		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow deleted successfully." />
 
 		<execute macro="Workflow#waitForSuccessMessageHide" />
+
+		<execute function="AssertElementNotPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" />
 	</command>
 
 	<command name="gotoAssetViaTableTitle">
@@ -460,6 +428,28 @@
 		<execute function="Click" locator1="WorkflowSubmissions#COMPLETED_TABLE_ASSET_TITLE" />
 
 		<execute macro="Workflow#gotoPreviewView" />
+	</command>
+
+	<command name="publishExistingWorkflowDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+
+		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
+			<var name="key_menuItem" value="Edit" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinitionPublicationStatus">
+			<var name="status" value="Not Published" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
+
+		<execute macro="Workflow#viewDefinitionPublicationStatus">
+			<var name="status" value="Published" />
+		</execute>
 	</command>
 
 	<command name="reactivateInactiveWorkflowDefinition">
@@ -668,11 +658,13 @@
 		<while>
 			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
 			<then>
-				<execute macro="Workflow#deactivateSpecificWorkflowDefinition">
+				<execute macro="Workflow#unpublishWorkflowDefinition">
 					<var name="workflowDefinitionTitle" value="Join Xor" />
 				</execute>
 
-				<execute macro="Workflow#deleteWorkflowDefinition" />
+				<execute macro="Workflow#deleteWorkflowDefinition">
+					<var name="workflowDefinitionTitle" value="Join Xor" />
+				</execute>
 			</then>
 		</while>
 	</command>
@@ -709,11 +701,25 @@
 		<while>
 			<condition function="IsElementPresent" locator1="WorkflowDefinition#DEFINITION_TABLE_ADDED_DEFINITION_ELLIPSIS" />
 			<then>
-				<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
+				<execute macro="Workflow#unpublishWorkflowDefinition" />
 
 				<execute macro="Workflow#deleteWorkflowDefinition" />
 			</then>
 		</while>
+	</command>
+
+	<command name="unpublishWorkflowDefinition">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="Click" locator1="WorkflowDefinition#DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS" />
+
+		<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Unpublish">
+			<var name="key_menuItem" value="Unpublish" />
+		</execute>
+
+		<execute function="AssertTextEquals" locator1="Message#SUCCESS" value1="Workflow unpublished successfully." />
+
+		<execute macro="Workflow#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="updateDueDateAssignedToMeTaskByActions">
@@ -736,7 +742,10 @@
 			<var name="key_menuItem" value="Update Due Date" />
 		</execute>
 
-		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
+		<var method="DateUtil#getCurrentYear()" name="currentYear" />
+		<var method="MathUtil#sum('${currentYear}', '1')" name="futureYear" />
+
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="4/11/${futureYear}" />
 		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
 
 		<if>
@@ -780,7 +789,10 @@
 			<var name="key_menuItem" value="Update Due Date" />
 		</execute>
 
-		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="${workflowDueDate}" />
+		<var method="DateUtil#getCurrentYear()" name="currentYear" />
+		<var method="MathUtil#sum('${currentYear}', '1')" name="futureYear" />
+
+		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE" value1="4/11/${futureYear}" />
 		<execute function="Type" locator1="MyWorkflowTasks#DIALOG_BOX_DUE_DATE_TIME" value1="${workflowDueDateTime}" />
 
 		<if>
@@ -815,12 +827,7 @@
 
 		<execute macro="PortletEntry#publish" />
 
-		<if>
-			<isset var="workflowDefinitionUploadTitle" />
-			<then>
-				<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${workflowDefinitionUploadTitle}" />
-			</then>
-		</if>
+		<execute function="AssertTextEquals#assertPartialText" locator1="Portlet#HEADER" value1="${workflowDefinitionTitle}" />
 
 		<execute macro="Navigator#gotoBack" />
 	</command>
@@ -975,6 +982,22 @@
 				<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionName}" />
 			</else>
 		</if>
+	</command>
+
+	<command name="viewDefinitionPublicationStatus">
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#PUBLICATION_STATUS" value1="${status}" />
+	</command>
+
+	<command name="viewDefinitionPublished">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED" value1="${workflowDefinitionTitle}" />
+	</command>
+
+	<command name="viewDefinitionUnpublished">
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
+
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED" value1="${workflowDefinitionTitle}" />
 	</command>
 
 	<command name="viewMySubmissions">

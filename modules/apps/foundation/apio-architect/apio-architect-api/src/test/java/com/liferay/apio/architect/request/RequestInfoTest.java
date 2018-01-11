@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.request;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -64,14 +63,13 @@ public class RequestInfoTest {
 				_language
 			).build());
 
-		assertThat(requestInfo.getEmbedded(), is(equalTo(_embedded)));
-		assertThat(requestInfo.getFields(), is(equalTo(_fields)));
-		assertThat(requestInfo.getHttpHeaders(), is(equalTo(_httpHeaders)));
+		assertThat(requestInfo.getEmbedded(), is(_embedded));
+		assertThat(requestInfo.getFields(), is(_fields));
+		assertThat(requestInfo.getHttpHeaders(), is(_httpHeaders));
 		assertThat(
-			requestInfo.getHttpServletRequest(),
-			is(equalTo(_httpServletRequest)));
-		assertThat(requestInfo.getLanguage(), is(equalTo(_language)));
-		assertThat(requestInfo.getServerURL(), is(equalTo(_serverURL)));
+			requestInfo.getHttpServletRequest(), is(_httpServletRequest));
+		assertThat(requestInfo.getLanguage(), is(_language));
+		assertThat(requestInfo.getServerURL(), is(_serverURL));
 	}
 
 	private Embedded _embedded;

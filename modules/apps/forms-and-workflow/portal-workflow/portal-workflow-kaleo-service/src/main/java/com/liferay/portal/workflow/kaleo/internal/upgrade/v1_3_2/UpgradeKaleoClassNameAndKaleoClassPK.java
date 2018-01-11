@@ -52,8 +52,8 @@ public class UpgradeKaleoClassNameAndKaleoClassPK extends UpgradeProcess {
 		sb.append(tableName);
 		sb.append(" set kaleoClassName = ?, kaleoClassPK = ");
 		sb.append(columnName);
-		sb.append(" where kaleoClassName is null and ");
-		sb.append("kaleoClassPK is null and ");
+		sb.append(" where kaleoClassName is null and kaleoClassPK is null ");
+		sb.append("and ");
 		sb.append(columnName);
 		sb.append(" is not null and ");
 		sb.append(columnName);

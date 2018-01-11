@@ -105,12 +105,12 @@ public class FormTest {
 				new FormField("long2", true, LONG),
 				new FormField("string2", true, STRING)));
 
-		assertThat(title, is(equalTo("title")));
-		assertThat(description, is(equalTo("description")));
+		assertThat(title, is("title"));
+		assertThat(description, is("description"));
 
 		Map<String, Object> map = form.get(_body);
 
-		assertThat(map.size(), is(equalTo(10)));
+		assertThat(map.size(), is(10));
 		assertThat(map, hasEntry(equalTo("b1"), equalTo(true)));
 		assertThat(map, hasEntry(equalTo("b2"), equalTo(false)));
 		assertThat(
@@ -147,7 +147,7 @@ public class FormTest {
 
 		Map<String, Object> map = form.get(_body);
 
-		assertThat(map.size(), is(equalTo(1)));
+		assertThat(map.size(), is(1));
 		assertThat(map, hasEntry(equalTo("s1"), equalTo("Apio")));
 	}
 

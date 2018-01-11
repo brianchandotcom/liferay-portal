@@ -55,7 +55,7 @@ public class IsJsonStringMatcherTest {
 		String expected =
 			"was a string element with a value that was \"Live long\"";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -69,7 +69,7 @@ public class IsJsonStringMatcherTest {
 		String expected =
 			"a string element with a value that is \"and prosper\"";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test

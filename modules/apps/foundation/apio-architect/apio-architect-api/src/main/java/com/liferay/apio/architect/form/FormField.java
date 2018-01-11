@@ -24,9 +24,9 @@ import java.util.Objects;
  */
 public final class FormField {
 
-	public FormField(String name, boolean isRequired, FieldType fieldType) {
+	public FormField(String name, boolean required, FieldType fieldType) {
 		this.name = name;
-		this.isRequired = isRequired;
+		this.required = required;
 		this.fieldType = fieldType;
 	}
 
@@ -42,9 +42,9 @@ public final class FormField {
 
 		FormField formField = (FormField)object;
 
-		if (Objects.equals(name, formField.name) &&
-			Objects.equals(isRequired, formField.isRequired) &&
-			Objects.equals(fieldType, formField.fieldType)) {
+		if (Objects.equals(fieldType, formField.fieldType) &&
+			Objects.equals(name, formField.name) &&
+			Objects.equals(required, formField.required)) {
 
 			return true;
 		}
@@ -54,7 +54,7 @@ public final class FormField {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(name, isRequired, fieldType);
+		return Objects.hash(name, required, fieldType);
 	}
 
 	/**
@@ -63,14 +63,14 @@ public final class FormField {
 	public final FieldType fieldType;
 
 	/**
-	 * {@code true} if the field is required in this {@code Form}; {@code false}
-	 * otherwise.
-	 */
-	public final boolean isRequired;
-
-	/**
 	 * The name of the field.
 	 */
 	public final String name;
+
+	/**
+	 * {@code true} if the field is required in this {@code Form}; {@code false}
+	 * otherwise.
+	 */
+	public final boolean required;
 
 }

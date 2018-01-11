@@ -138,7 +138,7 @@ public class TryTest {
 
 		Integer integer = stringTry.fold(exception -> 3, string -> 5);
 
-		assertThat(integer, is(equalTo(3)));
+		assertThat(integer, is(3));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -148,7 +148,7 @@ public class TryTest {
 
 		Integer integer = stringTry.fold(exception -> 3, string -> 5);
 
-		assertThat(integer, is(equalTo(5)));
+		assertThat(integer, is(5));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -167,7 +167,7 @@ public class TryTest {
 				throw new IllegalArgumentException();
 			});
 
-		assertThat(integer, is(equalTo(3)));
+		assertThat(integer, is(3));
 	}
 
 	@Test
@@ -192,7 +192,7 @@ public class TryTest {
 	public void testInvokingGetOnSuccessShouldReturnValue(Try<String> stringTry)
 		throws Exception {
 
-		assertThat(stringTry.get(), is(equalTo("Live long")));
+		assertThat(stringTry.get(), is("Live long"));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -202,7 +202,7 @@ public class TryTest {
 
 		Try.Success success = (Try.Success)stringTry;
 
-		assertThat(success.getValue(), is(equalTo("Live long")));
+		assertThat(success.getValue(), is("Live long"));
 	}
 
 	@Parameters(method = FAIL)
@@ -210,7 +210,7 @@ public class TryTest {
 	public void testInvokingIsFailureOnFailureReturnsTrue(
 		Try<String> stringTry) {
 
-		assertThat(stringTry.isFailure(), is(equalTo(true)));
+		assertThat(stringTry.isFailure(), is(true));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -218,7 +218,7 @@ public class TryTest {
 	public void testInvokingIsFailureOnSuccessReturnsFalse(
 		Try<String> stringTry) {
 
-		assertThat(stringTry.isFailure(), is(equalTo(false)));
+		assertThat(stringTry.isFailure(), is(false));
 	}
 
 	@Parameters(method = FAIL)
@@ -226,7 +226,7 @@ public class TryTest {
 	public void testInvokingIsSuccessOnFailureReturnsFalse(
 		Try<String> stringTry) {
 
-		assertThat(stringTry.isSuccess(), is(equalTo(false)));
+		assertThat(stringTry.isSuccess(), is(false));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -234,7 +234,7 @@ public class TryTest {
 	public void testInvokingIsSuccessOnSuccessReturnsFalse(
 		Try<String> stringTry) {
 
-		assertThat(stringTry.isSuccess(), is(equalTo(true)));
+		assertThat(stringTry.isSuccess(), is(true));
 	}
 
 	@Parameters(method = FAIL)
@@ -295,9 +295,7 @@ public class TryTest {
 	public void testInvokingOrElseGetOnFailureShouldReturnValue(
 		Try<String> stringTry) {
 
-		assertThat(
-			stringTry.orElseGet(() -> "and prosper"),
-			is(equalTo("and prosper")));
+		assertThat(stringTry.orElseGet(() -> "and prosper"), is("and prosper"));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -305,8 +303,7 @@ public class TryTest {
 	public void testInvokingOrElseGetOnSuccessShouldReturnPreviousValue(
 		Try<String> stringTry) {
 
-		assertThat(
-			stringTry.orElseGet(() -> "and prosper"), is(equalTo("Live long")));
+		assertThat(stringTry.orElseGet(() -> "and prosper"), is("Live long"));
 	}
 
 	@Parameters(method = FAIL)
@@ -314,7 +311,7 @@ public class TryTest {
 	public void testInvokingOrElseOnFailureShouldReturnValue(
 		Try<String> stringTry) {
 
-		assertThat(stringTry.orElse("and prosper"), is(equalTo("and prosper")));
+		assertThat(stringTry.orElse("and prosper"), is("and prosper"));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -322,7 +319,7 @@ public class TryTest {
 	public void testInvokingOrElseOnSuccessShouldReturnPreviousValue(
 		Try<String> stringTry) {
 
-		assertThat(stringTry.orElse("and prosper"), is(equalTo("Live long")));
+		assertThat(stringTry.orElse("and prosper"), is("Live long"));
 	}
 
 	@Parameters(method = FAIL)
@@ -340,7 +337,7 @@ public class TryTest {
 
 		assertThat(
 			stringTry.orElseThrow(UnsupportedOperationException::new),
-			is(equalTo("Live long")));
+			is("Live long"));
 	}
 
 	@Parameters(method = FAIL)
@@ -488,7 +485,7 @@ public class TryTest {
 
 		stringTry.recoverWith(
 			exception -> {
-				assertThat(failure.getException(), is(equalTo(exception)));
+				assertThat(failure.getException(), is(exception));
 
 				return Try.success("and prosper");
 			});
@@ -521,7 +518,7 @@ public class TryTest {
 
 		String string = stringTry.recover(__ -> "and prosper");
 
-		assertThat(string, is(equalTo("and prosper")));
+		assertThat(string, is("and prosper"));
 	}
 
 	@Parameters(method = SUCCESS)
@@ -531,7 +528,7 @@ public class TryTest {
 
 		String string = stringTry.recover(__ -> "and prosper");
 
-		assertThat(string, is(equalTo("Live long")));
+		assertThat(string, is("Live long"));
 	}
 
 	@Parameters(method = SUCCESS)

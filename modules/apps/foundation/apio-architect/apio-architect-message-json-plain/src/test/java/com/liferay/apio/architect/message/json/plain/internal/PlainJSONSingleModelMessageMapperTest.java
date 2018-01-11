@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json.plain.internal;
 
 import static com.liferay.apio.architect.message.json.plain.internal.PlainJSONTestUtil.aRootElementJsonObjectWithId;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -41,7 +40,7 @@ public class PlainJSONSingleModelMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _singleModelMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/json")));
+		assertThat(mediaType, is("application/json"));
 	}
 
 	@Test

@@ -94,6 +94,17 @@ public class WorkflowDefinitionDisplayContext {
 		return firstWorkflowDefinition.getModifiedDate();
 	}
 
+	public String getCreatorUserName(WorkflowDefinition workflowDefinition)
+		throws PortalException {
+
+		List<WorkflowDefinition> workflowDefinitions = getWorkflowDefinitions(
+			workflowDefinition.getName());
+
+		WorkflowDefinition firstWorkflowDefinition = workflowDefinitions.get(0);
+
+		return getUserName(firstWorkflowDefinition);
+	}
+
 	public String getDescription(WorkflowDefinition workflowDefinition) {
 		return HtmlUtil.escape(workflowDefinition.getDescription());
 	}

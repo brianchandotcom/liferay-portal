@@ -784,8 +784,6 @@
 		<execute macro="Workflow#updateDueDateTaskByActions">
 			<var name="workflowAssetTitle" value="Blogs Entry Title" />
 			<var name="workflowAssetType" value="Blogs Entry" />
-			<var name="workflowDueDate" value="10/02/2020" />
-			<var name="workflowDueDateFormatted" value="10/2/20" />
 			<var name="workflowDueDateTime" value="12:45 PM" />
 			<var name="workflowTask" value="Review" />
 		</execute>

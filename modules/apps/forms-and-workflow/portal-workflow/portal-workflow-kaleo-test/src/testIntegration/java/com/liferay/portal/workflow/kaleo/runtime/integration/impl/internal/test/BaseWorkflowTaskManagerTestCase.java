@@ -493,7 +493,7 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 				adminUser.getCompanyId(), adminUser.getUserId(), JOIN_XOR,
-				content.getBytes());
+				JOIN_XOR, content.getBytes());
 		}
 	}
 
@@ -532,7 +532,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 
 			WorkflowDefinitionManagerUtil.deployWorkflowDefinition(
 				adminUser.getCompanyId(), adminUser.getUserId(),
-				SCRIPTED_SINGLE_APPROVER, content.getBytes());
+				SCRIPTED_SINGLE_APPROVER, SCRIPTED_SINGLE_APPROVER,
+				content.getBytes());
 		}
 	}
 

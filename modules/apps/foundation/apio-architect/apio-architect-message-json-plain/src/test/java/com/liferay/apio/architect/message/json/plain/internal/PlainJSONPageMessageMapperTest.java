@@ -52,7 +52,7 @@ public class PlainJSONPageMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _pageMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/json")));
+		assertThat(mediaType, is("application/json"));
 	}
 
 	@Test
@@ -101,7 +101,6 @@ public class PlainJSONPageMessageMapperTest {
 
 		_isAJsonObjectWithThePages = is(aJsonObjectWith(pagesConditions));
 
-		//noinspection unchecked
 		_containsTheElements = contains(
 			aRootElementJsonObjectWithId("1"),
 			aRootElementJsonObjectWithId("2"),

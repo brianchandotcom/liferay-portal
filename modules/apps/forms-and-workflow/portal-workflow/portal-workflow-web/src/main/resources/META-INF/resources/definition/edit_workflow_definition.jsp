@@ -29,7 +29,7 @@ boolean active = BeanParamUtil.getBoolean(workflowDefinition, request, "active")
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, "new-workflow") : workflowDefinition.getName());
+renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request, "new-workflow") : workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)));
 %>
 
 <liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
@@ -37,11 +37,9 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 	<%
 	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
 
-	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(
-			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	Object[] messageArguments = workflowDefinitionDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
 
-	String messageKey = workflowDefinitionDisplayContext.getMessageKey(
-			requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	String messageKey = workflowDefinitionDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
 	%>
 
 	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
@@ -102,16 +100,16 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 					<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 
 					<h4>
-						<%= workflowDefinition.getName() %>
+						<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>
 					</h4>
 				</div>
 
-				<liferay-ui:tabs cssClass="navbar-no-collapse panel panel-default" names="details,revision-history" refresh="<%= false %>" type="nav-tabs-default tabs">
+				<liferay-ui:tabs cssClass="navbar-no-collapse panel panel-default" names="details,revision-history" refresh="<%= false %>" type="tabs nav-tabs-default ">
 					<liferay-ui:section>
 						<div class="sidebar-list">
 
 							<%
-							String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
+							String creatorUserName = workflowDefinitionDisplayContext.getCreatorUserName(workflowDefinition);
 							%>
 
 							<div class="card-row-padded created-date">
@@ -122,9 +120,20 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 								</div>
 
 								<span class="info-content lfr-card-modified-by-text">
-									<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+									<c:choose>
+										<c:when test="<%= creatorUserName == null %>">
+											<%= dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)) %>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinitionDisplayContext.getCreatedDate(workflowDefinition)), creatorUserName} %>" key="x-by-x" translateArguments="<%= false %>" />
+										</c:otherwise>
+									</c:choose>
 								</span>
 							</div>
+
+							<%
+							String userName = workflowDefinitionDisplayContext.getUserName(workflowDefinition);
+							%>
 
 							<div class="card-row-padded last-modified">
 								<div>
@@ -134,7 +143,14 @@ renderResponse.setTitle((workflowDefinition == null) ? LanguageUtil.get(request,
 								</div>
 
 								<span class="info-content lfr-card-modified-by-text">
-									<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+									<c:choose>
+										<c:when test="<%= userName == null %>">
+											<%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %>
+										</c:when>
+										<c:otherwise>
+											<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(workflowDefinition.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+										</c:otherwise>
+									</c:choose>
 								</span>
 							</div>
 

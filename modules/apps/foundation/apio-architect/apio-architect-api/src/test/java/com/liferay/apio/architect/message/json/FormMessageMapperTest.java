@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.form.Form;
 
@@ -39,8 +38,7 @@ public class FormMessageMapperTest {
 
 		Form form = Mockito.mock(Form.class);
 
-		assertThat(
-			formMessageMapper.supports(form, httpHeaders), is(equalTo(true)));
+		assertThat(formMessageMapper.supports(form, httpHeaders), is(true));
 	}
 
 }

@@ -192,8 +192,8 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 		StringBundler sb1 = new StringBundler(3);
 
 		sb1.append("select * from KaleoDefinition kd where not exists ");
-		sb1.append("(select 1 from KaleoDefinitionVersion kdv where ");
-		sb1.append("kdv.name = kd.name and kdv.companyId = kd.companyId)");
+		sb1.append("(select 1 from KaleoDefinitionVersion kdv where kdv.name ");
+		sb1.append("= kd.name and kdv.companyId = kd.companyId)");
 
 		StringBundler sb2 = new StringBundler(6);
 
@@ -219,8 +219,8 @@ public class UpgradeKaleoDefinitionVersion extends UpgradeProcess {
 
 					sb3.append("update ");
 					sb3.append(tableName);
-					sb3.append(" set kaleoDefinitionVersionId = ? ");
-					sb3.append("where kaleoDefinitionId = ? ");
+					sb3.append(" set kaleoDefinitionVersionId = ? where ");
+					sb3.append("kaleoDefinitionId = ? ");
 
 					preparedStatements.add(
 						AutoBatchPreparedStatementUtil.concurrentAutoBatch(

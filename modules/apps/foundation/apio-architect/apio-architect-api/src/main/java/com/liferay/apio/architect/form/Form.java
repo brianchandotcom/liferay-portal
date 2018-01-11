@@ -34,6 +34,7 @@ import static com.liferay.apio.architect.form.FormUtil.getRequiredString;
 
 import com.liferay.apio.architect.language.Language;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -147,6 +148,16 @@ public class Form<T> {
 	 * @review
 	 */
 	public static class Builder<T> {
+
+		/**
+		 * Creates an new builder with empty paths.
+		 *
+		 * @return a new builder with empty paths.
+		 * @review
+		 */
+		public static <T> Builder<T> empty() {
+			return new Builder<>(Collections.emptyList());
+		}
 
 		public Builder(List<String> paths) {
 			_form = new Form<>(paths);

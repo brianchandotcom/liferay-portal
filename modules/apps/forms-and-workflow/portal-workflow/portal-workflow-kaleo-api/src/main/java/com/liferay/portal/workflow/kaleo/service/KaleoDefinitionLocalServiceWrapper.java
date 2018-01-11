@@ -375,11 +375,11 @@ public class KaleoDefinitionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition incrementKaleoDefinition(
 		com.liferay.portal.workflow.kaleo.definition.Definition definition,
-		java.lang.String title,
+		java.lang.String name, java.lang.String title,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDefinitionLocalService.incrementKaleoDefinition(definition,
-			title, serviceContext);
+			name, title, serviceContext);
 	}
 
 	@Override

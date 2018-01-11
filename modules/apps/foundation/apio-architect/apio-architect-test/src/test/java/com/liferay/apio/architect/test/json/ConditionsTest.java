@@ -53,7 +53,7 @@ public class ConditionsTest {
 				"that is \"Live long and prosper\"\n  geek: is a boolean " +
 					"element with a value that is <true>\n}";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -109,7 +109,7 @@ public class ConditionsTest {
 				"number, other";
 
 		assertThat(matchesElement, is(false));
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -141,7 +141,7 @@ public class ConditionsTest {
 					"element, but a number element\n  ...\n}";
 
 		assertThat(matchesElement, is(false));
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 }

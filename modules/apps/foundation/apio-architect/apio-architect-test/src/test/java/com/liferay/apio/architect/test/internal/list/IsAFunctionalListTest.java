@@ -16,7 +16,6 @@ package com.liferay.apio.architect.test.internal.list;
 
 import static com.liferay.apio.architect.test.list.FunctionalListMatchers.aFunctionalListThat;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -45,7 +44,7 @@ public class IsAFunctionalListTest {
 			"a functional list that conforms with an iterable containing " +
 				"[<2>, <3>, <4>]";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -69,7 +68,7 @@ public class IsAFunctionalListTest {
 
 		String expected = "was a functional list whose item 0: was <1>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test

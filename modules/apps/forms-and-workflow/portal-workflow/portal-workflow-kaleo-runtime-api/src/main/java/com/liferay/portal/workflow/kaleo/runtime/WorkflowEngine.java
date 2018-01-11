@@ -43,10 +43,25 @@ public interface WorkflowEngine {
 			long workflowInstanceId, ServiceContext serviceContext)
 		throws WorkflowException;
 
+	/**
+	 * @deprecated As of 1.0.0, replaced by {@link
+	 *             #deployWorkflowDefinition(String, String, InputStream,
+	 *             ServiceContext)}
+	 * @review
+	 */
+	@Deprecated
 	public WorkflowDefinition deployWorkflowDefinition(
 			String title, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws WorkflowException;
+
+	public default WorkflowDefinition deployWorkflowDefinition(
+			String title, String name, InputStream inputStream,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
 
 	public ExecutionContext executeTimerWorkflowInstance(
 			long kaleoTimerInstanceTokenId, ServiceContext serviceContext,

@@ -16,7 +16,6 @@ package com.liferay.apio.architect.function;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import java.util.function.Function;
 
@@ -44,7 +43,7 @@ public class EnneaFunctionTest {
 			"Li", "ve", " ", "lo", "ng", " ", "an", "d", " "
 		);
 
-		assertThat(string, is(equalTo("Live long and prosper")));
+		assertThat(string, is("Live long and prosper"));
 	}
 
 	@Test(expected = NullPointerException.class)

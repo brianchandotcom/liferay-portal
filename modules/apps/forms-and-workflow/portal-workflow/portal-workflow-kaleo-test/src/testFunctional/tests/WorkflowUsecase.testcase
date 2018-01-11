@@ -422,7 +422,6 @@
 		<execute macro="Workflow#uploadDefinition">
 			<var name="workflowDefinitionFile" value="workflow_definition_legal_marketing.xml" />
 			<var name="workflowDefinitionTitle" value="Double Approver Definition" />
-			<var name="workflowDefinitionUploadTitle" value="Legal and Marketing Approval" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -463,7 +462,7 @@
 		</execute>
 
 		<execute macro="DDLList#addCP">
-			<var name="workflowDefinition" value="Legal and Marketing Approval (Version 1)" />
+			<var name="workflowDefinition" value="Double Approver Definition (Version 1)" />
 		</execute>
 
 		<execute macro="DDLDataDefinition#selectCP" />
@@ -680,7 +679,7 @@
 		</execute>
 
 		<execute macro="Workflow#configureWorkflowViaFolderInfo">
-			<var name="workflowDefinition" value="Category Specific Approval (Version 1)" />
+			<var name="workflowDefinition" value="Category Specific (Version 1)" />
 		</execute>
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
@@ -1032,7 +1031,7 @@
 		</execute>
 	</command>
 
-	<command name="DeactivateAndActivateUploadedDefinition" priority="3">
+	<command name="UnpublishAndDeleteUploadedDefinition" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Control Panel" />
@@ -1044,35 +1043,12 @@
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
 		</execute>
 
-		<execute macro="Workflow#viewDefinition">
-			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-			<var name="workflowDefinitionVersionNumber" value="1" />
-		</execute>
-
-		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#reactivateInactiveWorkflowDefinition">
+		<execute macro="Workflow#viewDefinitionPublished">
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
 		</execute>
-	</command>
 
-	<command name="DeactivateAndDeleteUploadedDefinition" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Configuration" />
-			<var name="panel" value="Control Panel" />
-			<var name="portlet" value="Workflow" />
-		</execute>
-
-		<execute macro="Workflow#uploadDefinition">
-			<var name="workflowDefinitionFile" value="workflow_definition_1.xml" />
+		<execute macro="Workflow#unpublishWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-			<var name="workflowDefinitionUploadTitle" value="Uploaded Definition" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -1081,12 +1057,19 @@
 			<var name="portlet" value="Workflow" />
 		</execute>
 
-		<execute macro="Workflow#viewDefinition">
+		<execute macro="Workflow#viewDefinitionUnpublished">
 			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
-			<var name="workflowDefinitionVersionNumber" value="1" />
 		</execute>
 
-		<execute macro="Workflow#deactivateAddedWorkflowDefinition" />
+		<execute macro="Workflow#publishExistingWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
+
+		<execute macro="Navigator#gotoBack" />
+
+		<execute macro="Workflow#viewDefinitionPublished">
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
@@ -1094,7 +1077,23 @@
 			<var name="portlet" value="Workflow" />
 		</execute>
 
-		<execute macro="Workflow#deleteWorkflowDefinition" />
+		<execute macro="Workflow#unpublishWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Workflow" />
+		</execute>
+
+		<execute macro="Workflow#viewDefinitionUnpublished">
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
+
+		<execute macro="Workflow#deleteWorkflowDefinition">
+			<var name="workflowDefinitionTitle" value="New Uploaded Definition" />
+		</execute>
 	</command>
 
 	<command name="ViewBlogsEntryWorkflowViaNotifications" priority="3">

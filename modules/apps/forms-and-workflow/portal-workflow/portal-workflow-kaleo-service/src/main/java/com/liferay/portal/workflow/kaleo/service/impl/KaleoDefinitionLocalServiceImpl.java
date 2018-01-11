@@ -282,11 +282,12 @@ public class KaleoDefinitionLocalServiceImpl
 
 	@Override
 	public KaleoDefinition incrementKaleoDefinition(
-			Definition definition, String title, ServiceContext serviceContext)
+			Definition definition, String name, String title,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		KaleoDefinition kaleoDefinition = getKaleoDefinition(
-			definition.getName(), serviceContext);
+			name, serviceContext);
 
 		return updatedKaleoDefinition(
 			kaleoDefinition.getKaleoDefinitionId(), title,

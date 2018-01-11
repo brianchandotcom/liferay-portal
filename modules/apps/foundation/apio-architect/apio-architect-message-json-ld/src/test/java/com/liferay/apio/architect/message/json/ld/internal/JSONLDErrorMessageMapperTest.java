@@ -67,7 +67,7 @@ public class JSONLDErrorMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _errorMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/ld+json")));
+		assertThat(mediaType, is("application/ld+json"));
 	}
 
 	private final ErrorMessageMapper _errorMessageMapper =

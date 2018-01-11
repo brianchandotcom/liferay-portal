@@ -16,7 +16,6 @@ package com.liferay.apio.architect.consumer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,8 +51,7 @@ public class HexaConsumerTest {
 		String string = String.join("", list);
 
 		assertThat(
-			string,
-			is(equalTo("| Live long and prosper || Live long and prosper |")));
+			string, is("| Live long and prosper || Live long and prosper |"));
 	}
 
 	@Test(expected = NullPointerException.class)

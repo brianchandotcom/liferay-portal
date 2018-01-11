@@ -67,7 +67,7 @@ public class ProblemJSONErrorMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _errorMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/problem+json")));
+		assertThat(mediaType, is("application/problem+json"));
 	}
 
 	private final ErrorMessageMapper _errorMessageMapper =

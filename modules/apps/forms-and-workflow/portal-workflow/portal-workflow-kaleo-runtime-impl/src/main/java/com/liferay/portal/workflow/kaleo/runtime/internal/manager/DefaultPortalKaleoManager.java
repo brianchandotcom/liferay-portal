@@ -165,7 +165,7 @@ public class DefaultPortalKaleoManager
 
 			_workflowDefinitionManager.deployWorkflowDefinition(
 				serviceContext.getCompanyId(), defaultUser.getUserId(),
-				definitionName, FileUtil.getBytes(inputStream));
+				definitionName, definitionName, FileUtil.getBytes(inputStream));
 		}
 	}
 

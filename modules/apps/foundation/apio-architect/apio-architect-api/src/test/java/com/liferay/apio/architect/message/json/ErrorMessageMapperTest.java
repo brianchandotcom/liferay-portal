@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.test.result.MockAPIError;
 
@@ -40,8 +39,7 @@ public class ErrorMessageMapperTest {
 		MockAPIError apiError = new MockAPIError();
 
 		assertThat(
-			errorMessageMapper.supports(apiError, httpHeaders),
-			is(equalTo(true)));
+			errorMessageMapper.supports(apiError, httpHeaders), is(true));
 	}
 
 }

@@ -106,10 +106,9 @@ public class FieldsWriterTest {
 
 		optional.ifPresent(
 			singleModel -> {
-				assertThat(
-					singleModel.getModelClass(), is(equalTo(String.class)));
+				assertThat(singleModel.getModelClass(), is(String.class));
 
-				assertThat(singleModel.getModel(), is(equalTo("3")));
+				assertThat(singleModel.getModel(), is("3"));
 			});
 	}
 
@@ -614,7 +613,7 @@ public class FieldsWriterTest {
 	@Test
 	public void testWriteSingleURL() {
 		_fieldsWriter.writeSingleURL(
-			url -> assertThat(url, is(equalTo("www.liferay.com/p/name/id"))));
+			url -> assertThat(url, is("www.liferay.com/p/name/id")));
 	}
 
 	@Test

@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.test.internal.json;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -54,7 +53,7 @@ public class IsJsonBooleanMatcherTest {
 
 		String expected = "was a boolean element with a value that was <true>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -67,7 +66,7 @@ public class IsJsonBooleanMatcherTest {
 
 		String expected = "a boolean element with a value that is <false>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test

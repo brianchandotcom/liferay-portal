@@ -117,6 +117,8 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 			throw new WorkflowDefinitionTitleException();
 		}
 
+		String name = ParamUtil.getString(actionRequest, "name");
+
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		if (Validator.isNull(content)) {
@@ -128,7 +130,7 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), content.getBytes());
+				getTitle(titleMap), name, content.getBytes());
 
 		addSuccessMessage(actionRequest, actionResponse);
 

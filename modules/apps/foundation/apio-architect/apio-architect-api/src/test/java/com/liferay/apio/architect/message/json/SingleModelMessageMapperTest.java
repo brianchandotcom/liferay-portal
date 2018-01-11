@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.single.model.SingleModel;
 
@@ -42,7 +41,7 @@ public class SingleModelMessageMapperTest {
 
 		assertThat(
 			singleModelMessageMapper.supports(singleModel, httpHeaders),
-			is(equalTo(true)));
+			is(true));
 	}
 
 }

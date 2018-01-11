@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.documentation.Documentation;
 
@@ -42,7 +41,7 @@ public class DocumentationMessageMapperTest {
 
 		assertThat(
 			documentationMessageMapper.supports(documentation, httpHeaders),
-			is(equalTo(true)));
+			is(true));
 	}
 
 }

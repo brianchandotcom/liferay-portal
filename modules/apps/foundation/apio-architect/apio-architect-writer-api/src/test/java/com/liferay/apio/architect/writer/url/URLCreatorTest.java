@@ -18,7 +18,6 @@ import static java.util.Collections.emptyList;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.pagination.Page;
 import com.liferay.apio.architect.pagination.PageItems;
@@ -60,7 +59,7 @@ public class URLCreatorTest {
 
 		String url = URLCreator.createBinaryURL(_serverURL, binaryId, _path);
 
-		assertThat(url, is(equalTo("www.liferay.com/b/name/id/binary")));
+		assertThat(url, is("www.liferay.com/b/name/id/binary"));
 	}
 
 	@Test
@@ -86,15 +85,14 @@ public class URLCreatorTest {
 		String firstPageURL = URLCreator.createCollectionPageURL(
 			"www.liferay.com", page, PageType.FIRST);
 
-		assertThat(
-			firstPageURL, is(equalTo("www.liferay.com?page=1&per_page=30")));
+		assertThat(firstPageURL, is("www.liferay.com?page=1&per_page=30"));
 	}
 
 	@Test
 	public void testCreateCollectionURL() {
 		String url = URLCreator.createCollectionURL(_serverURL, "resource");
 
-		assertThat(url, is(equalTo("www.liferay.com/p/resource")));
+		assertThat(url, is("www.liferay.com/p/resource"));
 	}
 
 	@Test
@@ -102,14 +100,14 @@ public class URLCreatorTest {
 		String url = URLCreator.createNestedCollectionURL(
 			_serverURL, _path, "related");
 
-		assertThat(url, is(equalTo("www.liferay.com/p/name/id/related")));
+		assertThat(url, is("www.liferay.com/p/name/id/related"));
 	}
 
 	@Test
 	public void testCreateSingleURL() {
 		String url = URLCreator.createSingleURL(_serverURL, _path);
 
-		assertThat(url, is(equalTo("www.liferay.com/p/name/id")));
+		assertThat(url, is("www.liferay.com/p/name/id"));
 	}
 
 	private final Path _path = new Path("name", "id");

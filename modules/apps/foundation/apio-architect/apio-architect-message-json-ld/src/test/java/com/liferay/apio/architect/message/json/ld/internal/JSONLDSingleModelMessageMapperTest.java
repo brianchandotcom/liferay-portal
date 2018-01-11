@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json.ld.internal;
 
 import static com.liferay.apio.architect.message.json.ld.internal.JSONLDTestUtil.aRootElementJsonObjectWithId;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -52,7 +51,7 @@ public class JSONLDSingleModelMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _singleModelMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/ld+json")));
+		assertThat(mediaType, is("application/ld+json"));
 	}
 
 	private final SingleModelMessageMapper<RootModel>

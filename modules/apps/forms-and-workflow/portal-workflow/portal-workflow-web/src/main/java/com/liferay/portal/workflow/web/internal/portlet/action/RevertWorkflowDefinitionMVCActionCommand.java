@@ -125,7 +125,8 @@ public class RevertWorkflowDefinitionMVCActionCommand
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				previousWorkflowDefinition.getTitle(), content.getBytes());
+				previousWorkflowDefinition.getTitle(), name,
+				content.getBytes());
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

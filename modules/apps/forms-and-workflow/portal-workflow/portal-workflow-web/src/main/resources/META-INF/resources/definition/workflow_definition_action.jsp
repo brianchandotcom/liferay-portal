@@ -47,19 +47,6 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		url="<%= editURL %>"
 	/>
 
-	<c:if test="<%= !workflowDefinition.isActive() %>">
-		<liferay-portlet:actionURL name="restoreWorkflowDefinition" var="restoreWorkflowDefinitionURL">
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-			<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
-		</liferay-portlet:actionURL>
-
-		<liferay-ui:icon
-			message="publish"
-			url="<%= restoreWorkflowDefinitionURL %>"
-		/>
-	</c:if>
-
 	<c:choose>
 		<c:when test="<%= workflowDefinition.isActive() %>">
 			<liferay-portlet:actionURL name="deactivateWorkflowDefinition" var="deactivateWorkflowDefinitionURL">

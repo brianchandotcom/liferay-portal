@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowException;
@@ -98,9 +99,28 @@ public class DefaultWorkflowEngineImpl
 		}
 	}
 
+	/**
+	 * @deprecated As of 1.0.0, replaced by {@link
+	 *             #deployWorkflowDefinition(String, String, InputStream,
+	 *             ServiceContext)}
+	 * @review
+	 */
+	@Deprecated
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
 			String title, InputStream inputStream,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		Definition definition = _workflowModelParser.parse(inputStream);
+
+		return deployWorkflowDefinition(
+			title, definition.getName(), inputStream, serviceContext);
+	}
+
+	@Override
+	public WorkflowDefinition deployWorkflowDefinition(
+			String title, String name, InputStream inputStream,
 			ServiceContext serviceContext)
 		throws WorkflowException {
 
@@ -111,12 +131,14 @@ public class DefaultWorkflowEngineImpl
 				_workflowValidator.validate(definition);
 			}
 
+			String definitionName = getDefinitionName(definition, name);
+
 			KaleoDefinition kaleoDefinition =
 				kaleoDefinitionLocalService.fetchKaleoDefinition(
-					definition.getName(), serviceContext);
+					definitionName, serviceContext);
 
 			WorkflowDefinition workflowDefinition = _workflowDeployer.deploy(
-				title, definition, serviceContext);
+				title, definitionName, definition, serviceContext);
 
 			if (kaleoDefinition != null) {
 				List<WorkflowDefinitionLink> workflowDefinitionLinks =
@@ -605,6 +627,18 @@ public class DefaultWorkflowEngineImpl
 			workflowInstanceId, workflowContext, serviceContext);
 	}
 
+	protected String getDefinitionName(Definition definition, String name) {
+		if (Validator.isNotNull(name)) {
+			return name;
+		}
+
+		if (Validator.isNotNull(definition.getName())) {
+			return definition.getName();
+		}
+
+		return portalUUID.generate();
+	}
+
 	protected void getNextTransitionNames(
 			KaleoInstanceToken kaleoInstanceToken, List<String> transitionNames)
 		throws Exception {
@@ -660,6 +694,9 @@ public class DefaultWorkflowEngineImpl
 
 		return workflowInstances;
 	}
+
+	@ServiceReference(type = PortalUUID.class)
+	protected PortalUUID portalUUID;
 
 	@ServiceReference(type = GroupLocalService.class)
 	private GroupLocalService _groupLocalService;

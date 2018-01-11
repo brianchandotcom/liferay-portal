@@ -73,7 +73,7 @@ public class JSONLDFormMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _formMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/ld+json")));
+		assertThat(mediaType, is("application/ld+json"));
 	}
 
 	private static Conditions _conditionsForField(

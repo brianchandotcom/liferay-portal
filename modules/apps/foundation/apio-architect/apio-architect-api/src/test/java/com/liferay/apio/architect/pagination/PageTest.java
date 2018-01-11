@@ -19,7 +19,6 @@ import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInOrder.contains;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.uri.Path;
 
@@ -47,7 +46,7 @@ public class PageTest {
 
 	@Test
 	public void testGetItemsPerPageReturnsItemsPerPage() {
-		assertThat(_page.getItemsPerPage(), is(equalTo(1)));
+		assertThat(_page.getItemsPerPage(), is(1));
 	}
 
 	@Test
@@ -57,17 +56,17 @@ public class PageTest {
 
 	@Test
 	public void testGetLastPageNumberReturnsLastPageNumber() {
-		assertThat(_page.getLastPageNumber(), is(equalTo(10)));
+		assertThat(_page.getLastPageNumber(), is(10));
 	}
 
 	@Test
 	public void testGetModelClassReturnsModelClass() {
-		assertThat(_page.getModelClass(), is(equalTo(String.class)));
+		assertThat(_page.getModelClass(), is(String.class));
 	}
 
 	@Test
 	public void testGetPageNumberReturnsPageNumber() {
-		assertThat(_page.getPageNumber(), is(equalTo(4)));
+		assertThat(_page.getPageNumber(), is(4));
 	}
 
 	@Test
@@ -78,14 +77,14 @@ public class PageTest {
 
 		optional.ifPresent(
 			path -> {
-				assertThat(path.getId(), is(equalTo("id")));
-				assertThat(path.getName(), is(equalTo("name")));
+				assertThat(path.getId(), is("id"));
+				assertThat(path.getName(), is("name"));
 			});
 	}
 
 	@Test
 	public void testGetTotalCountReturnsTotalCount() {
-		assertThat(_page.getTotalCount(), is(equalTo(10)));
+		assertThat(_page.getTotalCount(), is(10));
 	}
 
 	@Test

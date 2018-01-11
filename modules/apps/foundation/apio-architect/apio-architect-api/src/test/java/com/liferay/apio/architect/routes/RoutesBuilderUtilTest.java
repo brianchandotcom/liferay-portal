@@ -20,7 +20,6 @@ import static com.liferay.apio.architect.routes.RoutesTestUtil.PROVIDE_FUNCTION;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveProvider;
 import com.liferay.apio.architect.language.Language;
@@ -76,16 +75,16 @@ public class RoutesBuilderUtilTest {
 			PROVIDE_FUNCTION, null, String.class, Long.class, Integer.class,
 			Boolean.class, Float.class,
 			string -> aLong -> integer -> aBoolean -> aFloat -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
-				assertThat(integer, is(equalTo(2017)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
+				assertThat(integer, is(2017));
 				assertThat(aBoolean, is(true));
-				assertThat(aFloat, is(equalTo(0.1F)));
+				assertThat(aFloat, is(0.1F));
 
 				return "The result";
 			});
 
-		assertThat(result, is(equalTo("The result")));
+		assertThat(result, is("The result"));
 	}
 
 	@Test(expected = MustHaveProvider.class)
@@ -104,9 +103,9 @@ public class RoutesBuilderUtilTest {
 			PROVIDE_FUNCTION, null, String.class, Long.class, Integer.class,
 			Boolean.class,
 			string -> aLong -> integer -> aBoolean -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
-				assertThat(integer, is(equalTo(2017)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
+				assertThat(integer, is(2017));
 				assertThat(aBoolean, is(true));
 			});
 	}
@@ -127,15 +126,15 @@ public class RoutesBuilderUtilTest {
 			PROVIDE_FUNCTION, null, String.class, Long.class, Integer.class,
 			Boolean.class,
 			string -> aLong -> integer -> aBoolean -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
-				assertThat(integer, is(equalTo(2017)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
+				assertThat(integer, is(2017));
 				assertThat(aBoolean, is(true));
 
 				return "The result";
 			});
 
-		assertThat(result, is(equalTo("The result")));
+		assertThat(result, is("The result"));
 	}
 
 	@Test(expected = MustHaveProvider.class)
@@ -151,7 +150,7 @@ public class RoutesBuilderUtilTest {
 	public void testOneParameterProvideConsumerMethodProvides() {
 		provideConsumer(
 			PROVIDE_FUNCTION, null, String.class,
-			string -> assertThat(string, is(equalTo("Apio"))));
+			string -> assertThat(string, is("Apio")));
 	}
 
 	@Test(expected = MustHaveProvider.class)
@@ -168,12 +167,12 @@ public class RoutesBuilderUtilTest {
 		String result = provide(
 			PROVIDE_FUNCTION, null, String.class,
 			string -> {
-				assertThat(string, is(equalTo("Apio")));
+				assertThat(string, is("Apio"));
 
 				return "The result";
 			});
 
-		assertThat(result, is(equalTo("The result")));
+		assertThat(result, is("The result"));
 	}
 
 	@Test(expected = MustHaveProvider.class)
@@ -190,9 +189,9 @@ public class RoutesBuilderUtilTest {
 		provideConsumer(
 			PROVIDE_FUNCTION, null, String.class, Long.class, Integer.class,
 			string -> aLong -> integer -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
-				assertThat(integer, is(equalTo(2017)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
+				assertThat(integer, is(2017));
 			});
 	}
 
@@ -210,14 +209,14 @@ public class RoutesBuilderUtilTest {
 		String result = provide(
 			PROVIDE_FUNCTION, null, String.class, Long.class, Integer.class,
 			string -> aLong -> integer -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
-				assertThat(integer, is(equalTo(2017)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
+				assertThat(integer, is(2017));
 
 				return "The result";
 			});
 
-		assertThat(result, is(equalTo("The result")));
+		assertThat(result, is("The result"));
 	}
 
 	@Test(expected = MustHaveProvider.class)
@@ -234,8 +233,8 @@ public class RoutesBuilderUtilTest {
 		provideConsumer(
 			PROVIDE_FUNCTION, null, String.class, Long.class,
 			string -> aLong -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
 			});
 	}
 
@@ -253,13 +252,13 @@ public class RoutesBuilderUtilTest {
 		String result = provide(
 			PROVIDE_FUNCTION, null, String.class, Long.class,
 			string -> aLong -> {
-				assertThat(string, is(equalTo("Apio")));
-				assertThat(aLong, is(equalTo(42L)));
+				assertThat(string, is("Apio"));
+				assertThat(aLong, is(42L));
 
 				return "The result";
 			});
 
-		assertThat(result, is(equalTo("The result")));
+		assertThat(result, is("The result"));
 	}
 
 }

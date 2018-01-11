@@ -17,10 +17,12 @@ package com.liferay.commerce.internal.stock.activity;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
-import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
+import com.liferay.commerce.service.CommerceWarehouseItemLocalService;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
@@ -38,30 +40,37 @@ import org.osgi.service.component.annotations.Reference;
 		"commerce.low.stock.activity.key=" + CommerceLowStockActivityImpl.KEY,
 		"commerce.low.stock.activity.priority:Integer=10"
 	},
-	service = com.liferay.commerce.stock.activity.CommerceLowStockActivity.class
+	service = CommerceLowStockActivity.class
 )
-public class CommerceLowStockActivityImpl
-	implements com.liferay.commerce.stock.activity.CommerceLowStockActivity {
+public class CommerceLowStockActivityImpl implements CommerceLowStockActivity {
 
 	public static final String KEY = "default";
 
 	@Override
-	public void check(CommerceOrderItem commerceOrderItem)
+	public void check(CommerceWarehouseItem commerceWarehouseItem, int quantity)
 		throws PortalException {
+
+		if (commerceWarehouseItem == null) {
+			return;
+		}
+
+		CPInstance cpInstance = commerceWarehouseItem.getCPInstance();
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
-					commerceOrderItem.getCPDefinitionId());
+					cpInstance.getCPDefinitionId());
 
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		int stockQuantity = cpDefinitionInventoryEngine.updateStockQuantity(
-			commerceOrderItem);
+		cpDefinitionInventoryEngine.updateStockQuantity(
+			commerceWarehouseItem, quantity);
 
-		CPInstance cpInstance = commerceOrderItem.getCPInstance();
+		int stockQuantity =
+			_commerceWarehouseItemLocalService.getCPInstanceQuantity(
+				cpInstance.getCPInstanceId());
 
 		if (stockQuantity <=
 				cpDefinitionInventoryEngine.getMinStockQuantity(cpInstance)) {
@@ -87,6 +96,10 @@ public class CommerceLowStockActivityImpl
 			_cpInstanceLocalService.updateCPInstance(cpInstance);
 		}
 	}
+
+	@Reference
+	private CommerceWarehouseItemLocalService
+		_commerceWarehouseItemLocalService;
 
 	@Reference
 	private CPDefinitionInventoryEngineRegistry

@@ -170,6 +170,21 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public long getAverageDelayTime() {
+		if (getDownstreamBuildCount(null) == 0) {
+			return 0;
+		}
+
+		long totalDelayTime = 0;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			totalDelayTime += downstreamBuild.getDelayTime();
+		}
+
+		return totalDelayTime / getDownstreamBuildCount(null);
+	}
+
+	@Override
 	public List<String> getBadBuildURLs() {
 		List<String> badBuildURLs = new ArrayList<>();
 
@@ -351,6 +366,11 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getDatabase() {
 		return null;
+	}
+
+	@Override
+	public Long getDelayTime() {
+		return getStartTime() - getInvokedTime();
 	}
 
 	@Override
@@ -557,6 +577,17 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
+	public Long getInvokedTime() {
+		if (invokedTime != null) {
+			return invokedTime;
+		}
+
+		invokedTime = getStartTime();
+
+		return invokedTime;
+	}
+
+	@Override
 	public String getJDK() {
 		return null;
 	}
@@ -681,6 +712,22 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return latestStartTimestamp;
+	}
+
+	@Override
+	public Build getLongestDelayedDownstreamBuild() {
+		Build longestDelayedDownstreamBuild = null;
+
+		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+			if ((longestDelayedDownstreamBuild == null) ||
+				(downstreamBuild.getDelayTime() >
+					longestDelayedDownstreamBuild.getDelayTime())) {
+
+				longestDelayedDownstreamBuild = downstreamBuild;
+			}
+		}
+
+		return longestDelayedDownstreamBuild;
 	}
 
 	@Override
@@ -2301,6 +2348,7 @@ public abstract class BaseBuild implements Build {
 	protected int consoleReadCursor;
 	protected List<Build> downstreamBuilds = new ArrayList<>();
 	protected boolean fromArchive;
+	protected Long invokedTime;
 	protected String jobName;
 	protected List<ReinvokeRule> reinvokeRules =
 		ReinvokeRule.getReinvokeRules();

@@ -100,6 +100,17 @@
 				</button>
 
 				<div class="dropdown-menu">
+					<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['editLayoutURL']}" rel="noopener" target="_blank">
+						{msg desc=""}edit{/msg}
+
+						<span class="inline-item inline-item-after">
+							{call .lexiconIcon}
+								{param name: 'shortcut' /}
+								{param pathThemeImages: $pathThemeImages /}
+							{/call}
+						</span>
+					</a>
+
 					{if $layoutColumnItem.actionURLs['configureURL']}
 						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['configureURL']}">
 							{msg desc=""}configure{/msg}
@@ -130,10 +141,6 @@
 							{msg desc=""}orphan-portlets{/msg}
 						</a>
 					{/if}
-
-					<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['editLayoutURL']}" target="_blank">
-						{msg desc=""}view-page{/msg}
-					</a>
 
 					{if $layoutColumnItem.actionURLs['deleteURL']}
 						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['deleteURL']}">

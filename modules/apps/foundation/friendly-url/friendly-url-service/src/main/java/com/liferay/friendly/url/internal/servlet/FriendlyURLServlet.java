@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.servlet.PortalMessages;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.struts.LastPath;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
@@ -219,11 +220,10 @@ public class FriendlyURLServlet extends HttpServlet {
 					localeUnavailable = true;
 				}
 
-				if (localeUnavailable ||
-					!StringUtil.equalsIgnoreCase(
-						layoutFriendlyURLSeparatorCompositeFriendlyURL,
-						layout.getFriendlyURL(locale)) ||
-					(alternativeSiteFriendlyURL != null)) {
+				if (localeUnavailable || (alternativeSiteFriendlyURL != null) ||
+					!_equalsLayoutFriendlyURL(
+						layoutFriendlyURLSeparatorCompositeFriendlyURL, layout,
+						locale)) {
 
 					Locale originalLocale = setAlternativeLayoutFriendlyURL(
 						request, layout,
@@ -537,6 +537,26 @@ public class FriendlyURLServlet extends HttpServlet {
 
 	@Reference
 	protected UserLocalService userLocalService;
+
+	private boolean _equalsLayoutFriendlyURL(
+		String layoutFriendlyURLSeparatorCompositeFriendlyURL, Layout layout,
+		Locale locale) {
+
+		String layoutFriendlyURL = layout.getFriendlyURL(locale);
+
+		if (StringUtil.equalsIgnoreCase(
+				layoutFriendlyURLSeparatorCompositeFriendlyURL,
+				layoutFriendlyURL) ||
+			StringUtil.equalsIgnoreCase(
+				FriendlyURLNormalizerUtil.normalizeWithEncoding(
+					layoutFriendlyURLSeparatorCompositeFriendlyURL),
+				layoutFriendlyURL)) {
+
+			return true;
+		}
+
+		return false;
+	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		FriendlyURLServlet.class);

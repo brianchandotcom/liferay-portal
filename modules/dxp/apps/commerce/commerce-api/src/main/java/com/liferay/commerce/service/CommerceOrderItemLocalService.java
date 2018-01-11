@@ -80,6 +80,10 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 		java.lang.String json, double price, ServiceContext serviceContext)
 		throws PortalException;
 
+	public CommerceOrderItem addCommerceOrderItem(long commerceOrderId,
+		long cpInstanceId, int quantity, java.lang.String json, double price,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.
 	*

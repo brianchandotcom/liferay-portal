@@ -56,6 +56,16 @@ public class CommerceOrderItemLocalServiceWrapper
 			cpInstanceId, quantity, shippedQuantity, json, price, serviceContext);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrderItem addCommerceOrderItem(
+		long commerceOrderId, long cpInstanceId, int quantity,
+		java.lang.String json, double price,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderItemLocalService.addCommerceOrderItem(commerceOrderId,
+			cpInstanceId, quantity, json, price, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce order item with the primary key. Does not add the commerce order item to the database.
 	*

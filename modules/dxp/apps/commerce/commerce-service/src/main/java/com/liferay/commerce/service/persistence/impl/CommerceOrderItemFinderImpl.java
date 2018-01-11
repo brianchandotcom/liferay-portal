@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
+import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -32,27 +34,33 @@ import java.util.List;
 public class CommerceOrderItemFinderImpl
 	extends CommerceOrderItemFinderBaseImpl implements CommerceOrderItemFinder {
 
-	public static final String FIND_BY_G_C =
-		CommerceOrderItemFinder.class.getName() + ".findByG_C";
+	public static final String FIND_BY_C_C =
+		CommerceOrderItemFinder.class.getName() + ".findByC_C";
+
+	public static final String GET_CP_INSTANCE_QUANTITY =
+		CommerceOrderItemFinder.class.getName() + ".getCPInstanceQuantity";
+
+	public static final String SUM_VALUE = "SUM_VALUE";
 
 	@Override
-	public List<CommerceOrderItem> findByG_C(
-		long groupId, long commerceAddressId) {
+	public List<CommerceOrderItem> findByC_C(
+		long commerceWarehouseId, long commerceAddressId) {
 
-		return findByG_C(
-			groupId, commerceAddressId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		return findByC_C(
+			commerceWarehouseId, commerceAddressId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
 	}
 
 	@Override
-	public List<CommerceOrderItem> findByG_C(
-		long groupId, long commerceAddressId, int start, int end) {
+	public List<CommerceOrderItem> findByC_C(
+		long commerceWarehouseId, long commerceAddressId, int start, int end) {
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C);
+			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_C);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -60,11 +68,50 @@ public class CommerceOrderItemFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(groupId);
+			qPos.add(commerceWarehouseId);
 			qPos.add(commerceAddressId);
 
 			return (List<CommerceOrderItem>)QueryUtil.list(
 				q, getDialect(), start, end);
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public int getCPInstanceQuantity(long cpInstanceId, int status) {
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(
+				getClass(), GET_CP_INSTANCE_QUANTITY);
+
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
+
+			q.addScalar(SUM_VALUE, Type.LONG);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(cpInstanceId);
+			qPos.add(status);
+
+			Iterator<Long> itr = q.iterate();
+
+			if (itr.hasNext()) {
+				Long sum = itr.next();
+
+				if (sum != null) {
+					return sum.intValue();
+				}
+			}
+
+			return 0;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

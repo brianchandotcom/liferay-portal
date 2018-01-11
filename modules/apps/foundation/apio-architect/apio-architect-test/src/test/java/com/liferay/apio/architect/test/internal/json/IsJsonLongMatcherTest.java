@@ -54,7 +54,7 @@ public class IsJsonLongMatcherTest {
 
 		String expected = "was a number element with a value that was <42L>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class IsJsonLongMatcherTest {
 
 		String expected = "a number element with a value that is <23L>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test

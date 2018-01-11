@@ -55,8 +55,7 @@ public class IsJsonObjectStringMatcherTest {
 
 		stringMatcher.describeMismatch("{", description);
 
-		assertThat(
-			description.toString(), is(equalTo("was not a JSON object")));
+		assertThat(description.toString(), is("was not a JSON object"));
 	}
 
 	@Test
@@ -76,7 +75,7 @@ public class IsJsonObjectStringMatcherTest {
 		String expected =
 			"was a JSON object {\n  apio: was null\n  geek: was null\n}";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -89,8 +88,7 @@ public class IsJsonObjectStringMatcherTest {
 
 		stringMatcher.describeTo(description);
 
-		assertThat(
-			description.toString(), is(equalTo("a JSON object where {\n}")));
+		assertThat(description.toString(), is("a JSON object where {\n}"));
 	}
 
 	@Test

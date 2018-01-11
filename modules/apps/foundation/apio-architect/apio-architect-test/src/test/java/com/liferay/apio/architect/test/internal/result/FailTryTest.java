@@ -16,7 +16,6 @@ package com.liferay.apio.architect.test.internal.result;
 
 import static com.liferay.apio.architect.test.result.TryMatchers.aFailTry;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -41,7 +40,7 @@ public class FailTryTest {
 
 		String expected = "a Failure";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -70,7 +69,7 @@ public class FailTryTest {
 
 		String expected = "was a Success";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 }

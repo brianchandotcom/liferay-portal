@@ -95,7 +95,7 @@ public class HALPageMessageMapperTest implements RepresentableManager {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _pageMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/hal+json")));
+		assertThat(mediaType, is("application/hal+json"));
 	}
 
 	private static final Matcher<JsonElement> _isAJsonObjectWithTheEmbedded;

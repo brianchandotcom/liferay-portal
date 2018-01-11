@@ -40,7 +40,7 @@ public class FunctionalListTest {
 
 		String head = stringFunctionalList.head();
 
-		assertThat(head, is(equalTo("element1")));
+		assertThat(head, is("element1"));
 	}
 
 	@Test
@@ -50,7 +50,7 @@ public class FunctionalListTest {
 
 		String head = stringFunctionalList.head();
 
-		assertThat(head, is(equalTo("test")));
+		assertThat(head, is("test"));
 	}
 
 	@Test

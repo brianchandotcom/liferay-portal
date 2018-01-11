@@ -16,7 +16,6 @@ package com.liferay.apio.architect.uri;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import org.junit.Test;
 
@@ -29,7 +28,7 @@ public class PathTest {
 	public void testInvokingAsURIReturnsPathInURIFormat() {
 		Path path = new Path("name", "id");
 
-		assertThat(path.asURI(), is(equalTo("name/id")));
+		assertThat(path.asURI(), is("name/id"));
 	}
 
 }

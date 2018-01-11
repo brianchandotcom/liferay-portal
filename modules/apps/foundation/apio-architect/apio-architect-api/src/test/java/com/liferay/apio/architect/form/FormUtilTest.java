@@ -33,7 +33,6 @@ import static com.liferay.apio.architect.form.FormUtil.getRequiredString;
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.singletonMap;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
@@ -138,7 +137,7 @@ public class FormUtilTest {
 
 		Date date = list.get(0);
 
-		assertThat(date, is(equalTo(new Date(1491244560000L))));
+		assertThat(date, is(new Date(1491244560000L)));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -176,7 +175,7 @@ public class FormUtilTest {
 
 		Double aDouble = list.get(0);
 
-		assertThat(aDouble, is(equalTo(42.3D)));
+		assertThat(aDouble, is(42.3D));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -231,7 +230,7 @@ public class FormUtilTest {
 
 		Long aLong = list.get(0);
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -269,7 +268,7 @@ public class FormUtilTest {
 
 		String string = list.get(0);
 
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -331,7 +330,7 @@ public class FormUtilTest {
 
 		Date date = list.get(0);
 
-		assertThat(date, is(equalTo(new Date(1491244560000L))));
+		assertThat(date, is(new Date(1491244560000L)));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -367,7 +366,7 @@ public class FormUtilTest {
 
 		Double aDouble = list.get(0);
 
-		assertThat(aDouble, is(equalTo(42.3D)));
+		assertThat(aDouble, is(42.3D));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -420,7 +419,7 @@ public class FormUtilTest {
 
 		Long aLong = list.get(0);
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 	}
 
 	@Test(expected = BadRequestException.class)
@@ -456,7 +455,7 @@ public class FormUtilTest {
 
 		String string = list.get(0);
 
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 	}
 
 	@Test(expected = BadRequestException.class)

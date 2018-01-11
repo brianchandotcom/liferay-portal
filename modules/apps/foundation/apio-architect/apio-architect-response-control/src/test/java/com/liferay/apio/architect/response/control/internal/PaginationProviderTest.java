@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.response.control.internal;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -47,8 +46,8 @@ public class PaginationProviderTest {
 		Pagination pagination = paginationProvider.createContext(
 			httpServletRequest);
 
-		assertThat(pagination.getPageNumber(), is(equalTo(1)));
-		assertThat(pagination.getItemsPerPage(), is(equalTo(30)));
+		assertThat(pagination.getPageNumber(), is(1));
+		assertThat(pagination.getItemsPerPage(), is(30));
 	}
 
 	@Test
@@ -73,8 +72,8 @@ public class PaginationProviderTest {
 		Pagination pagination = paginationProvider.createContext(
 			httpServletRequest);
 
-		assertThat(pagination.getPageNumber(), is(equalTo(1)));
-		assertThat(pagination.getItemsPerPage(), is(equalTo(30)));
+		assertThat(pagination.getPageNumber(), is(1));
+		assertThat(pagination.getItemsPerPage(), is(30));
 	}
 
 	@Test
@@ -99,8 +98,8 @@ public class PaginationProviderTest {
 		Pagination pagination = paginationProvider.createContext(
 			httpServletRequest);
 
-		assertThat(pagination.getPageNumber(), is(equalTo(6)));
-		assertThat(pagination.getItemsPerPage(), is(equalTo(42)));
+		assertThat(pagination.getPageNumber(), is(6));
+		assertThat(pagination.getItemsPerPage(), is(42));
 	}
 
 }

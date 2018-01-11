@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.test.json;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.core.Is.is;
 
 import com.google.gson.JsonElement;
@@ -60,7 +59,7 @@ public final class JsonMatchers {
 	 *         JsonElement}
 	 */
 	public static Matcher<JsonElement> aJsonBoolean(boolean bool) {
-		return new IsJsonBoolean(is(equalTo(bool)));
+		return new IsJsonBoolean(is(bool));
 	}
 
 	/**

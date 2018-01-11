@@ -72,7 +72,7 @@ public class JSONLDDocumentationMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _documentationMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/ld+json")));
+		assertThat(mediaType, is("application/ld+json"));
 	}
 
 	private final DocumentationMessageMapper _documentationMessageMapper =

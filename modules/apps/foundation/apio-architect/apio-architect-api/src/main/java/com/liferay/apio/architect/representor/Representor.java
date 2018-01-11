@@ -14,14 +14,13 @@
 
 package com.liferay.apio.architect.representor;
 
+import static com.liferay.apio.architect.date.DateTransformer.asString;
+
 import com.liferay.apio.architect.alias.BinaryFunction;
 import com.liferay.apio.architect.consumer.TriConsumer;
 import com.liferay.apio.architect.language.Language;
 import com.liferay.apio.architect.related.RelatedCollection;
 import com.liferay.apio.architect.related.RelatedModel;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TimeZone;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -292,14 +290,7 @@ public class Representor<T, S> {
 						return null;
 					}
 
-					TimeZone timeZone = TimeZone.getTimeZone("UTC");
-
-					DateFormat dateFormat = new SimpleDateFormat(
-						"yyyy-MM-dd'T'HH:mm'Z'");
-
-					dateFormat.setTimeZone(timeZone);
-
-					return dateFormat.format(date);
+					return asString(date);
 				};
 
 				_representor._stringFunctions.put(

@@ -54,7 +54,7 @@ public class IsJsonIntMatcherTest {
 
 		String expected = "was a number element with a value that was <42>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -67,7 +67,7 @@ public class IsJsonIntMatcherTest {
 
 		String expected = "a number element with a value that is <23>";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test

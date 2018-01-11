@@ -74,15 +74,15 @@ public class JSONLDFormMessageMapper implements FormMessageMapper {
 				);
 
 				builder.field(
-					"required"
-				).booleanValue(
-					formField.isRequired
-				);
-
-				builder.field(
 					"readable"
 				).booleanValue(
 					false
+				);
+
+				builder.field(
+					"required"
+				).booleanValue(
+					formField.required
 				);
 
 				builder.field(

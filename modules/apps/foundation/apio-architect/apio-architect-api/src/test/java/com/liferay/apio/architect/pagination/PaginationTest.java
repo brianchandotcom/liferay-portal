@@ -16,7 +16,6 @@ package com.liferay.apio.architect.pagination;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import org.junit.Test;
 
@@ -29,14 +28,14 @@ public class PaginationTest {
 	public void testEndPositionReturnsEndPosition() {
 		Pagination pagination = new Pagination(30, 3);
 
-		assertThat(pagination.getEndPosition(), is(equalTo(90)));
+		assertThat(pagination.getEndPosition(), is(90));
 	}
 
 	@Test
 	public void testStartPositionReturnsStartPosition() {
 		Pagination pagination = new Pagination(30, 3);
 
-		assertThat(pagination.getStartPosition(), is(equalTo(60)));
+		assertThat(pagination.getStartPosition(), is(60));
 	}
 
 }

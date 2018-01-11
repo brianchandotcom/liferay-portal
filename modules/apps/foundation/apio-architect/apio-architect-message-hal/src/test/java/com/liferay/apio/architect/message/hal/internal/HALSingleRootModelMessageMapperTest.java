@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.hal.internal;
 
 import static com.liferay.apio.architect.message.hal.internal.HALTestUtil.aRootElementJsonObjectWithId;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -50,7 +49,7 @@ public class HALSingleRootModelMessageMapperTest {
 	public void testMediaTypeIsCorrect() {
 		String mediaType = _singleModelMessageMapper.getMediaType();
 
-		assertThat(mediaType, is(equalTo("application/hal+json")));
+		assertThat(mediaType, is("application/hal+json"));
 	}
 
 	private final HALSingleModelMessageMapper<RootModel>

@@ -22,7 +22,6 @@ import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
 
 import static java.util.Collections.singletonMap;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -160,7 +159,7 @@ public class ItemRoutesTest {
 		Long identifier, String string, Long aLong, Boolean aBoolean,
 		Integer integer) {
 
-		assertThat(integer, is(equalTo(2017)));
+		assertThat(integer, is(2017));
 
 		return _testAndReturnThreeParameterGetterRoute(
 			identifier, string, aLong, aBoolean);
@@ -170,27 +169,27 @@ public class ItemRoutesTest {
 		Long identifier, Map<String, Object> body, String string, Long aLong,
 		Boolean aBoolean, Integer integer) {
 
-		assertThat(integer, is(equalTo(2017)));
+		assertThat(integer, is(2017));
 
 		return _testAndReturnThreeParameterUpdaterRoute(
 			identifier, body, string, aLong, aBoolean);
 	}
 
 	private String _testAndReturnNoParameterGetterRoute(Long identifier) {
-		assertThat(identifier, is(equalTo(42L)));
+		assertThat(identifier, is(42L));
 
 		return "Apio";
 	}
 
 	private void _testAndReturnNoParameterRemoverRoute(Long identifier) {
-		assertThat(identifier, is(equalTo(42L)));
+		assertThat(identifier, is(42L));
 	}
 
 	private String _testAndReturnNoParameterUpdaterRoute(
 		Long identifier, Map<String, Object> body) {
 
-		assertThat(identifier, is(equalTo(42L)));
-		assertThat(body, is(equalTo(_body)));
+		assertThat(identifier, is(42L));
+		assertThat(body, is(_body));
 
 		return "Updated";
 	}
@@ -198,7 +197,7 @@ public class ItemRoutesTest {
 	private String _testAndReturnOneParameterGetterRoute(
 		Long identifier, String string) {
 
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 
 		return _testAndReturnNoParameterGetterRoute(identifier);
 	}
@@ -206,7 +205,7 @@ public class ItemRoutesTest {
 	private String _testAndReturnOneParameterUpdaterRoute(
 		Long identifier, Map<String, Object> body, String string) {
 
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 
 		return _testAndReturnNoParameterUpdaterRoute(identifier, body);
 	}
@@ -232,7 +231,7 @@ public class ItemRoutesTest {
 	private String _testAndReturnTwoParameterGetterRoute(
 		Long identifier, String string, Long aLong) {
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 
 		return _testAndReturnOneParameterGetterRoute(identifier, string);
 	}
@@ -240,7 +239,7 @@ public class ItemRoutesTest {
 	private String _testAndReturnTwoParameterUpdaterRoute(
 		Long identifier, Map<String, Object> body, String string, Long aLong) {
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 
 		return _testAndReturnOneParameterUpdaterRoute(identifier, body, string);
 	}
@@ -249,7 +248,7 @@ public class ItemRoutesTest {
 		Long identifier, String string, Long aLong, Boolean aBoolean,
 		Integer integer) {
 
-		assertThat(integer, is(equalTo(2017)));
+		assertThat(integer, is(2017));
 
 		_testThreeParameterRemoverRoute(identifier, string, aLong, aBoolean);
 	}
@@ -259,11 +258,11 @@ public class ItemRoutesTest {
 
 		Form form = optional.get();
 
-		assertThat(form.id, is(equalTo("u/name")));
+		assertThat(form.id, is("u/name"));
 
 		Map body = (Map)form.get(_body);
 
-		assertThat(body, is(equalTo(_body)));
+		assertThat(body, is(_body));
 
 		Path path = new Path("name", "42");
 
@@ -290,8 +289,8 @@ public class ItemRoutesTest {
 			path
 		);
 
-		assertThat(singleModel.getModelClass(), is(equalTo(String.class)));
-		assertThat(singleModel.getModel(), is(equalTo("Apio")));
+		assertThat(singleModel.getModelClass(), is(String.class));
+		assertThat(singleModel.getModel(), is("Apio"));
 
 		Optional<UpdateItemFunction<String>> updateItemFunctionOptional =
 			itemRoutes.getUpdateItemFunctionOptional();
@@ -307,13 +306,12 @@ public class ItemRoutesTest {
 			_body
 		);
 
-		assertThat(
-			updatedSingleModel.getModelClass(), is(equalTo(String.class)));
-		assertThat(updatedSingleModel.getModel(), is(equalTo("Updated")));
+		assertThat(updatedSingleModel.getModelClass(), is(String.class));
+		assertThat(updatedSingleModel.getModel(), is("Updated"));
 	}
 
 	private void _testOneParameterRemoverRoute(Long identifier, String string) {
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 
 		_testAndReturnNoParameterRemoverRoute(identifier);
 	}
@@ -329,7 +327,7 @@ public class ItemRoutesTest {
 	private void _testTwoParameterRemoverRoute(
 		Long identifier, String string, Long aLong) {
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 
 		_testOneParameterRemoverRoute(identifier, string);
 	}

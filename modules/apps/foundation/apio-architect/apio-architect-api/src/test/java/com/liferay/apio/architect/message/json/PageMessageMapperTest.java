@@ -16,7 +16,6 @@ package com.liferay.apio.architect.message.json;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import com.liferay.apio.architect.pagination.Page;
 
@@ -38,8 +37,7 @@ public class PageMessageMapperTest {
 
 		HttpHeaders httpHeaders = Mockito.mock(HttpHeaders.class);
 
-		assertThat(
-			pageMessageMapper.supports(page, httpHeaders), is(equalTo(true)));
+		assertThat(pageMessageMapper.supports(page, httpHeaders), is(true));
 	}
 
 	@Mock

@@ -243,7 +243,7 @@ public class NestedCollectionRoutesTest {
 		Long identifier, Map<String, Object> body, String string, Long aLong,
 		Boolean aBoolean, Integer integer) {
 
-		assertThat(integer, is(equalTo(2017)));
+		assertThat(integer, is(2017));
 
 		return _testAndReturnThreeParameterCreatorRoute(
 			identifier, body, string, aLong, aBoolean);
@@ -253,7 +253,7 @@ public class NestedCollectionRoutesTest {
 		Pagination pagination, Long identifier, String string, Long aLong,
 		Boolean aBoolean, Integer integer) {
 
-		assertThat(integer, is(equalTo(2017)));
+		assertThat(integer, is(2017));
 
 		return _testAndReturnThreeParameterGetterRoute(
 			pagination, identifier, string, aLong, aBoolean);
@@ -262,8 +262,8 @@ public class NestedCollectionRoutesTest {
 	private String _testAndReturnNoParameterCreatorRoute(
 		Long identifier, Map<String, Object> body) {
 
-		assertThat(identifier, is(equalTo(42L)));
-		assertThat(body, is(equalTo(_body)));
+		assertThat(identifier, is(42L));
+		assertThat(body, is(_body));
 
 		return "Apio";
 	}
@@ -271,8 +271,8 @@ public class NestedCollectionRoutesTest {
 	private PageItems<String> _testAndReturnNoParameterGetterRoute(
 		Pagination pagination, Long identifier) {
 
-		assertThat(identifier, is(equalTo(42L)));
-		assertThat(pagination, is(equalTo(PAGINATION)));
+		assertThat(identifier, is(42L));
+		assertThat(pagination, is(PAGINATION));
 
 		return new PageItems<>(Collections.singletonList("Apio"), 1);
 	}
@@ -280,7 +280,7 @@ public class NestedCollectionRoutesTest {
 	private String _testAndReturnOneParameterCreatorRoute(
 		Long identifier, Map<String, Object> body, String string) {
 
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 
 		return _testAndReturnNoParameterCreatorRoute(identifier, body);
 	}
@@ -288,7 +288,7 @@ public class NestedCollectionRoutesTest {
 	private PageItems<String> _testAndReturnOneParameterGetterRoute(
 		Pagination pagination, Long identifier, String string) {
 
-		assertThat(string, is(equalTo("Apio")));
+		assertThat(string, is("Apio"));
 
 		return _testAndReturnNoParameterGetterRoute(pagination, identifier);
 	}
@@ -316,7 +316,7 @@ public class NestedCollectionRoutesTest {
 	private String _testAndReturnTwoParameterCreatorRoute(
 		Long identifier, Map<String, Object> body, String string, Long aLong) {
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 
 		return _testAndReturnOneParameterCreatorRoute(identifier, body, string);
 	}
@@ -324,7 +324,7 @@ public class NestedCollectionRoutesTest {
 	private PageItems<String> _testAndReturnTwoParameterGetterRoute(
 		Pagination pagination, Long identifier, String string, Long aLong) {
 
-		assertThat(aLong, is(equalTo(42L)));
+		assertThat(aLong, is(42L));
 
 		return _testAndReturnOneParameterGetterRoute(
 			pagination, identifier, string);
@@ -338,11 +338,11 @@ public class NestedCollectionRoutesTest {
 
 		Form form = optional.get();
 
-		assertThat(form.id, is(equalTo("c/name/nested")));
+		assertThat(form.id, is("c/name/nested"));
 
 		Map body = (Map)form.get(_body);
 
-		assertThat(body, is(equalTo(_body)));
+		assertThat(body, is(_body));
 
 		Optional<NestedCreateItemFunction<String>>
 			nestedCreateItemFunctionOptional =
@@ -361,8 +361,8 @@ public class NestedCollectionRoutesTest {
 			_body
 		);
 
-		assertThat(singleModel.getModelClass(), is(equalTo(String.class)));
-		assertThat(singleModel.getModel(), is(equalTo("Apio")));
+		assertThat(singleModel.getModelClass(), is(String.class));
+		assertThat(singleModel.getModel(), is("Apio"));
 
 		Optional<NestedGetPageFunction<String>> nestedGetPageFunctionOptional =
 			nestedCollectionRoutes.getNestedGetPageFunctionOptional();
@@ -383,7 +383,7 @@ public class NestedCollectionRoutesTest {
 		assertThat(page.getItems(), hasSize(1));
 		assertThat(page.getItems(), hasItem("Apio"));
 		assertThat(page.getPathOptional(), optionalWithValue(equalTo(path)));
-		assertThat(page.getTotalCount(), is(equalTo(1)));
+		assertThat(page.getTotalCount(), is(1));
 	}
 
 	private final Map<String, Object> _body = singletonMap("key", "value");

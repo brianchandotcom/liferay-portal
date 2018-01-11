@@ -14,18 +14,12 @@
 
 package com.liferay.apio.architect.documentation;
 
+import java.util.function.Supplier;
+
 /**
- * Represents the API title.
+ * Returns the API title.
  *
  * @author Alejandro Hernández
  */
-public interface APITitle {
-
-	/**
-	 * Returns the title.
-	 *
-	 * @return the title
-	 */
-	public String get();
-
+public interface APITitle extends Supplier<String> {
 }

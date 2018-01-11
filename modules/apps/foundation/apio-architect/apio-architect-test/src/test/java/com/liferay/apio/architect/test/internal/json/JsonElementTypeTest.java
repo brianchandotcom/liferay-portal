@@ -14,7 +14,6 @@
 
 package com.liferay.apio.architect.test.internal.json;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -66,30 +65,22 @@ public class JsonElementTypeTest {
 		JsonElementType stringJsonElementType =
 			JsonElementType.getJsonElementType(stringJsonElement);
 
-		assertThat(arrayJsonElementType, is(equalTo(JsonElementType.ARRAY)));
-		assertThat(
-			booleanJsonElementType, is(equalTo(JsonElementType.BOOLEAN)));
-		assertThat(numberJsonElementType, is(equalTo(JsonElementType.NUMBER)));
-		assertThat(objectJsonElementType, is(equalTo(JsonElementType.OBJECT)));
-		assertThat(otherJsonElementType, is(equalTo(JsonElementType.OTHER)));
-		assertThat(stringJsonElementType, is(equalTo(JsonElementType.STRING)));
+		assertThat(arrayJsonElementType, is(JsonElementType.ARRAY));
+		assertThat(booleanJsonElementType, is(JsonElementType.BOOLEAN));
+		assertThat(numberJsonElementType, is(JsonElementType.NUMBER));
+		assertThat(objectJsonElementType, is(JsonElementType.OBJECT));
+		assertThat(otherJsonElementType, is(JsonElementType.OTHER));
+		assertThat(stringJsonElementType, is(JsonElementType.STRING));
 	}
 
 	@Test
 	public void testInvokingGetReadableNameReturnsCorrectName() {
-		assertThat(
-			JsonElementType.ARRAY.getReadableName(), is(equalTo("an array")));
-		assertThat(
-			JsonElementType.BOOLEAN.getReadableName(),
-			is(equalTo("a boolean")));
-		assertThat(
-			JsonElementType.NUMBER.getReadableName(), is(equalTo("a number")));
-		assertThat(
-			JsonElementType.OBJECT.getReadableName(), is(equalTo("an object")));
-		assertThat(
-			JsonElementType.OTHER.getReadableName(), is(equalTo("other")));
-		assertThat(
-			JsonElementType.STRING.getReadableName(), is(equalTo("a string")));
+		assertThat(JsonElementType.ARRAY.getReadableName(), is("an array"));
+		assertThat(JsonElementType.BOOLEAN.getReadableName(), is("a boolean"));
+		assertThat(JsonElementType.NUMBER.getReadableName(), is("a number"));
+		assertThat(JsonElementType.OBJECT.getReadableName(), is("an object"));
+		assertThat(JsonElementType.OTHER.getReadableName(), is("other"));
+		assertThat(JsonElementType.STRING.getReadableName(), is("a string"));
 	}
 
 }

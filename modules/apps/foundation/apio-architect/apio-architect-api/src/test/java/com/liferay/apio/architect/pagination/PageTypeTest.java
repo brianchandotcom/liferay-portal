@@ -15,7 +15,6 @@
 package com.liferay.apio.architect.pagination;
 
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.core.IsEqual.equalTo;
 
 import static org.springframework.test.util.MatcherAssertionErrors.assertThat;
 
@@ -52,28 +51,28 @@ public class PageTypeTest {
 	public void testCallingPageNumberOnCurrentReturnsCurrent() {
 		Integer pageNumber = PageType.CURRENT.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(3)));
+		assertThat(pageNumber, is(3));
 	}
 
 	@Test
 	public void testCallingPageNumberOnFirstReturnsOne() {
 		Integer pageNumber = PageType.FIRST.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(1)));
+		assertThat(pageNumber, is(1));
 	}
 
 	@Test
 	public void testCallingPageNumberOnLastReturnsLast() {
 		Integer pageNumber = PageType.LAST.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(5)));
+		assertThat(pageNumber, is(5));
 	}
 
 	@Test
 	public void testCallingPageNumberOnNextReturnsNext() {
 		Integer pageNumber = PageType.NEXT.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(4)));
+		assertThat(pageNumber, is(4));
 	}
 
 	@Test
@@ -86,14 +85,14 @@ public class PageTypeTest {
 
 		Integer pageNumber = PageType.NEXT.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(3)));
+		assertThat(pageNumber, is(3));
 	}
 
 	@Test
 	public void testCallingPageNumberOnPreviousReturnsPrevious() {
 		Integer pageNumber = PageType.PREVIOUS.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(2)));
+		assertThat(pageNumber, is(2));
 	}
 
 	@Test
@@ -106,7 +105,7 @@ public class PageTypeTest {
 
 		Integer pageNumber = PageType.PREVIOUS.getPageNumber(_page);
 
-		assertThat(pageNumber, is(equalTo(1)));
+		assertThat(pageNumber, is(1));
 	}
 
 	@Mock

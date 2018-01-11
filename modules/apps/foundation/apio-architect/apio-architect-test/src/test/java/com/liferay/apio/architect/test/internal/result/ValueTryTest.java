@@ -17,7 +17,6 @@ package com.liferay.apio.architect.test.internal.result;
 import static com.liferay.apio.architect.test.result.TryMatchers.aSuccessTry;
 import static com.liferay.apio.architect.test.result.TryMatchers.aTryWithValueThat;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -38,7 +37,7 @@ public class ValueTryTest {
 	public void testFailureTryFails() {
 		Try<String> stringTry = Try.fail(new Exception());
 
-		assertThat(stringTry, is(not(aTryWithValueThat(is(equalTo("apio"))))));
+		assertThat(stringTry, is(not(aTryWithValueThat(is("apio")))));
 	}
 
 	@Test
@@ -47,12 +46,11 @@ public class ValueTryTest {
 
 		Description description = new StringDescription();
 
-		aTryWithValueThat(is(equalTo("apio"))).describeMismatch(
-			stringTry, description);
+		aTryWithValueThat(is("apio")).describeMismatch(stringTry, description);
 
 		String expected = "was a Failure";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
@@ -61,24 +59,23 @@ public class ValueTryTest {
 
 		Description description = new StringDescription();
 
-		aTryWithValueThat(is(equalTo("apio"))).describeMismatch(
-			stringTry, description);
+		aTryWithValueThat(is("apio")).describeMismatch(stringTry, description);
 
 		String expected =
 			"was a Success whose value was \"Live long and prosper\"";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test
 	public void testSuccessTryMatcherUpdatesDescription() {
 		Description description = new StringDescription();
 
-		aTryWithValueThat(is(equalTo("apio"))).describeTo(description);
+		aTryWithValueThat(is("apio")).describeTo(description);
 
 		String expected = "a Success with a value that is \"apio\"";
 
-		assertThat(description.toString(), is(equalTo(expected)));
+		assertThat(description.toString(), is(expected));
 	}
 
 	@Test

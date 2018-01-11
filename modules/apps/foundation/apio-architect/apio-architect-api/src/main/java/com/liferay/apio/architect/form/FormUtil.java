@@ -14,16 +14,14 @@
 
 package com.liferay.apio.architect.form;
 
+import static com.liferay.apio.architect.date.DateTransformer.asDate;
+
 import com.liferay.apio.architect.alias.form.FieldFormBiConsumer;
 import com.liferay.apio.architect.functional.Try;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 import java.util.Date;
 import java.util.Map;
 import java.util.Set;
-import java.util.TimeZone;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
@@ -266,15 +264,7 @@ public class FormUtil {
 		_getString(
 			body, key, required, message,
 			string -> {
-				TimeZone timeZone = TimeZone.getTimeZone("UTC");
-
-				DateFormat dateFormat = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm'Z'");
-
-				dateFormat.setTimeZone(timeZone);
-
-				Try<Date> dateTry = Try.fromFallible(
-					() -> dateFormat.parse(string));
+				Try<Date> dateTry = asDate(string);
 
 				Date date = dateTry.orElseThrow(
 					() -> new BadRequestException(message));

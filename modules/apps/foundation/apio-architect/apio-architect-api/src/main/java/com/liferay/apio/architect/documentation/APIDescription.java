@@ -14,18 +14,12 @@
 
 package com.liferay.apio.architect.documentation;
 
+import java.util.function.Supplier;
+
 /**
- * Represents the API description.
+ * Returns the API description.
  *
  * @author Alejandro Hernández
  */
-public interface APIDescription {
-
-	/**
-	 * Returns the description.
-	 *
-	 * @return the description
-	 */
-	public String get();
-
+public interface APIDescription extends Supplier<String> {
 }

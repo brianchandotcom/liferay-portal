@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.fragment.entry.processor.editable.replacer.EditableElementReplacer;
+import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntrySettings;
@@ -92,7 +92,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		unbind = "unregisterEditableElementReplacer"
 	)
 	public void registerEditableElementReplacer(
-		EditableElementReplacer editableElementReplacer,
+		EditableElementParser editableElementReplacer,
 		Map<String, Object> properties) {
 
 		String editableTagName = (String)properties.get("editable.tag.name");
@@ -101,7 +101,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	}
 
 	public void unregisterEditableElementReplacer(
-		EditableElementReplacer editableElementReplacer,
+		EditableElementParser editableElementReplacer,
 		Map<String, Object> properties) {
 
 		String editableTagName = (String)properties.get("editable.tag.name");
@@ -184,7 +184,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Element replaceableElement = elements.get(0);
 
-		EditableElementReplacer editableTagReplacer =
+		EditableElementParser editableTagReplacer =
 			_editableElementReplacers.get(replaceableElement.getName());
 
 		if (editableTagReplacer == null) {
@@ -194,8 +194,8 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		editableTagReplacer.replace(replaceableElement, value);
 	}
 
-	private final Map<String, EditableElementReplacer>
-		_editableElementReplacers = new HashMap<>();
+	private final Map<String, EditableElementParser> _editableElementReplacers =
+		new HashMap<>();
 
 	@Reference
 	private HtmlParserUtil _htmlParserUtil;

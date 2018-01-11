@@ -23,7 +23,9 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 /**
  * @author Marcellus Tavares
+ * @deprecated As of 1.2.0, with no direct replacement
  */
+@Deprecated
 public class DDLRecordPermission {
 
 	public static void check(

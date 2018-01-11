@@ -93,11 +93,11 @@ public class CommerceTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CommerceWarehouseLocalServiceUtil.addCommerceWarehouse(
-			name, RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			name, RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
-			RandomTestUtil.randomString(), RandomTestUtil.randomString(), 0, 0,
-			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			serviceContext);
+			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
+			RandomTestUtil.randomString(), 0, 0, RandomTestUtil.randomDouble(),
+			RandomTestUtil.randomDouble(), serviceContext);
 	}
 
 	public static CommerceWarehouseItem addCommerceWarehouseItem(

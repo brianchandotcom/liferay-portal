@@ -71,14 +71,11 @@ public class CommerceWarehouseFinderTest {
 	}
 
 	@Test
-	public void testFindByCommerceWarehouseItemQuantity() {
-		_testFindByCommerceWarehouseItemQuantity(
-			_cpInstances[0], 50, "Commerce Warehouse 1",
-			"Commerce Warehouse 4");
-		_testFindByCommerceWarehouseItemQuantity(
-			_cpInstances[0], 80, "Commerce Warehouse 4");
-		_testFindByCommerceWarehouseItemQuantity(
-			_cpInstances[2], 100, "Commerce Warehouse 3");
+	public void testFindByCPInstance() {
+		_testFindByCPInstance(
+			_cpInstances[0], "Commerce Warehouse 1", "Commerce Warehouse 4");
+		_testFindByCPInstance(_cpInstances[0], "Commerce Warehouse 4");
+		_testFindByCPInstance(_cpInstances[2], "Commerce Warehouse 3");
 	}
 
 	private CommerceWarehouse _addCommerceWarehouse(
@@ -104,13 +101,12 @@ public class CommerceWarehouseFinderTest {
 		return commerceWarehouse;
 	}
 
-	private void _testFindByCommerceWarehouseItemQuantity(
-		CPInstance cpInstance, int quantity,
-		String... expectedCommerceWarehouseNames) {
+	private void _testFindByCPInstance(
+		CPInstance cpInstance, String... expectedCommerceWarehouseNames) {
 
 		List<CommerceWarehouse> commerceWarehouses =
 			CommerceWarehouseLocalServiceUtil.getCommerceWarehouses(
-				cpInstance.getCPInstanceId(), quantity, QueryUtil.ALL_POS,
+				cpInstance.getCPInstanceId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
 		Assert.assertEquals(

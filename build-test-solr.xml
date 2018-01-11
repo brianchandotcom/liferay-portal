@@ -389,7 +389,7 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 				<then>
 					<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
 						<arg value="/c" />
-						<arg value="solr -p 8983" />
+						<arg value="solr stop -p 8983" />
 					</exec>
 
 					<if>
@@ -397,7 +397,7 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 						<then>
 							<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
 								<arg value="/c" />
-								<arg value="solr -p 7574" />
+								<arg value="solr stop -p 7574" />
 							</exec>
 						</then>
 					</if>

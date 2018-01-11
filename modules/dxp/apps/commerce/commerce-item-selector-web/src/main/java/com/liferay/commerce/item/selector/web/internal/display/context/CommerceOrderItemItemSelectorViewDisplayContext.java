@@ -99,11 +99,11 @@ public class CommerceOrderItemItemSelectorViewDisplayContext
 	}
 
 	protected long getCommerceAddressId() {
-		return ParamUtil.getLong(httpServletRequest, "commerceAddressId", 0L);
+		return ParamUtil.getLong(httpServletRequest, "commerceAddressId");
 	}
 
 	protected long getCommerceWarehouseId() {
-		return ParamUtil.getLong(httpServletRequest, "commerceWarehouseId", 0L);
+		return ParamUtil.getLong(httpServletRequest, "commerceWarehouseId");
 	}
 
 	private final CommerceOrderItemLocalService _commerceOrderItemLocalService;

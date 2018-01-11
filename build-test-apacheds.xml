@@ -52,6 +52,15 @@
 		</sequential>
 	</macrodef>
 
+	<macrodef name="update-apacheds-log4j-level">
+		<sequential>
+			<replace file="${apacheds.dir}/instances/liferay/conf/log4j.properties">
+				<replacetoken><![CDATA[log4j.rootCategory=WARN, F, stdout]]></replacetoken>
+				<replacevalue><![CDATA[log4j.rootCategory=INFO, F, stdout]]></replacevalue>
+			</replace>
+		</sequential>
+	</macrodef>
+
 	<target name="start-apacheds">
 		<unzip-apacheds />
 
@@ -73,6 +82,8 @@
 			</else>
 		</if>
 
+		<update-apacheds-log4j-level />
+
 		<if>
 			<os family="unix" />
 			<then>
@@ -92,6 +103,25 @@
 					</exec>
 				</then>
 			</elseif>
+		</if>
+
+		<waitfor checkevery="5" maxwait="60" maxwaitunit="second">
+			<available file="${apacheds.dir}/instances/liferay/log/apacheds.log" />
+		</waitfor>
+
+		<waitfor maxwait="60" maxwaitunit="second">
+			<socket port="10389" server="localhost" />
+		</waitfor>
+
+		<loadfile property="apacheds.log.content" srcfile="${apacheds.dir}/instances/liferay/log/apacheds.log" />
+
+		<if>
+			<not>
+				<contains string="${apacheds.log.content}" substring="DirectoryService initialized" />
+			</not>
+			<then>
+				<fail message="ApacheDS server failed to initialize." />
+			</then>
 		</if>
 	</target>
 

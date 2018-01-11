@@ -33,7 +33,7 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 			<aui:row>
 				<aui:col width="<%= 50 %>">
 					<aui:fieldset-group markupView="lexicon">
-						<aui:fieldset>
+						<aui:fieldset cssClass="ml-3">
 							<div class="display-template">
 								<liferay-ddm:template-selector
 									className="<%= NavItem.class.getName() %>"
@@ -42,56 +42,74 @@ String rootLayoutType = siteNavigationMenuDisplayContext.getRootLayoutType();
 									refreshURL="<%= configurationRenderURL %>"
 								/>
 							</div>
+						</aui:fieldset>
 
+						<aui:fieldset cssClass="p-3" label="menu-items-to-show">
 							<div id="<portlet:namespace />customDisplayOptions">
-								<aui:select id="rootLayoutType" label="root-layout" name="preferences--rootLayoutType--" value="<%= rootLayoutType %>">
-									<aui:option label="parent-at-level" value="absolute" />
-									<aui:option label="relative-parent-up-by" value="relative" />
-									<aui:option label="select" value="select" />
-								</aui:select>
+								<aui:row>
+									<aui:col width="<%= 80 %>">
+										<aui:select id="rootLayoutType" label="start-with-menu-items-in" name="preferences--rootLayoutType--" value="<%= rootLayoutType %>">
+											<aui:option label="level" value="absolute" />
+											<aui:option label="level-relative-to-the-current-menu-item" value="relative" />
+											<aui:option label="select" value="select" />
+										</aui:select>
+									</aui:col>
 
-								<div class="<%= rootLayoutType.equals("parent-at-level") || rootLayoutType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootLayoutLevel">
-									<aui:select name="preferences--rootLayoutLevel--">
+									<aui:col width="<%= 20 %>">
+										<div class="mt-4 <%= rootLayoutType.equals("parent-at-level") || rootLayoutType.equals("relative-parent-up-by") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootLayoutLevel">
+											<aui:select label="" name="preferences--rootLayoutLevel--">
 
-										<%
-										for (int i = 0; i <= 4; i++) {
-										%>
+												<%
+												for (int i = 0; i <= 4; i++) {
+												%>
 
-											<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() == i %>" />
+													<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getRootLayoutLevel() == i %>" />
 
-										<%
-										}
-										%>
+												<%
+												}
+												%>
 
-									</aui:select>
-								</div>
+											</aui:select>
+										</div>
+									</aui:col>
+								</aui:row>
 
-								<div class="<%= rootLayoutType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootLayoutUuidPanel">
-									<aui:input label="" name="rootLayoutName" type="resource" value="<%= siteNavigationMenuDisplayContext.getRootLayoutName() %>" />
-									<aui:input id="rootLayoutUuid" ignoreRequestValue="<%= true %>" name="preferences--rootLayoutUuid--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootLayoutUuid() %>" />
+								<aui:row>
+									<aui:col width="<%= 80 %>">
+										<div class="mb-3 <%= rootLayoutType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootLayoutUuidPanel">
+											<aui:input label="" name="rootLayoutName" type="resource" value="<%= siteNavigationMenuDisplayContext.getRootLayoutName() %>" />
+											<aui:input id="rootLayoutUuid" ignoreRequestValue="<%= true %>" name="preferences--rootLayoutUuid--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootLayoutUuid() %>" />
 
-									<aui:button name="chooseRootPage" value="choose" />
-								</div>
+											<aui:button name="chooseRootPage" value="choose" />
+										</div>
+									</aui:col>
+								</aui:row>
 
-								<aui:select name="preferences--displayDepth--">
-									<aui:option label="unlimited" value="0" />
+								<aui:row>
+									<aui:col width="<%= 50 %>">
+										<aui:select label="sublevels-to-display" name="preferences--displayDepth--">
+											<aui:option label="unlimited" value="0" />
 
-									<%
-									for (int i = 1; i <= 20; i++) {
-									%>
+											<%
+											for (int i = 1; i <= 20; i++) {
+											%>
 
-										<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getDisplayDepth() == i %>" />
+												<aui:option label="<%= i %>" selected="<%= siteNavigationMenuDisplayContext.getDisplayDepth() == i %>" />
 
-									<%
-									}
-									%>
+											<%
+											}
+											%>
 
-								</aui:select>
+										</aui:select>
+									</aui:col>
 
-								<aui:select name="preferences--includedLayouts--" value="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>">
-									<aui:option label="auto" />
-									<aui:option label="all" />
-								</aui:select>
+									<aui:col width="<%= 50 %>">
+										<aui:select label="expand-sublevels" name="preferences--includedLayouts--" value="<%= siteNavigationMenuDisplayContext.getIncludedLayouts() %>">
+											<aui:option label="auto" />
+											<aui:option label="all" />
+										</aui:select>
+									</aui:col>
+								</aui:row>
 							</div>
 						</aui:fieldset>
 					</aui:fieldset-group>

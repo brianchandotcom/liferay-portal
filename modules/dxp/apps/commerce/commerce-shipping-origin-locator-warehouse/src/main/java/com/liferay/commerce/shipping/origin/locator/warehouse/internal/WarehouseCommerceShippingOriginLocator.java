@@ -57,12 +57,12 @@ public class WarehouseCommerceShippingOriginLocator
 
 	@Override
 	public CommerceWarehouse getClosestCommerceWarehouse(
-			CommerceAddress commerceAddress, long cpInstanceId, int quantity)
+			CommerceAddress commerceAddress, long cpInstanceId)
 		throws PortalException {
 
 		List<CommerceWarehouse> commerceWarehouses =
 			_commerceWarehouseLocalService.getCommerceWarehouses(
-				cpInstanceId, quantity, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				cpInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		CommerceWarehouse closestCommerceWarehouse = null;
 		double closestDistance = Double.MAX_VALUE;
@@ -122,8 +122,7 @@ public class WarehouseCommerceShippingOriginLocator
 
 		for (CommerceCartItem commerceCartItem : commerceCartItems) {
 			CommerceWarehouse commerceWarehouse = getClosestCommerceWarehouse(
-				commerceAddress, commerceCartItem.getCPInstanceId(),
-				commerceCartItem.getQuantity());
+				commerceAddress, commerceCartItem.getCPInstanceId());
 
 			List<CommerceCartItem> commerceWarehouseCartItems =
 				commerceWarehouseCartItemsMap.get(commerceWarehouse);

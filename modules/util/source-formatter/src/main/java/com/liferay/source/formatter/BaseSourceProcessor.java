@@ -293,12 +293,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String newContent = _processSourceChecks(
 			file, fileName, absolutePath, content);
 
-		if (content.equals(newContent)) {
-			return content;
-		}
-
-		if (newContent == null) {
-			return null;
+		if ((newContent == null) || content.equals(newContent)) {
+			return newContent;
 		}
 
 		if (!modifiedContents.add(newContent)) {

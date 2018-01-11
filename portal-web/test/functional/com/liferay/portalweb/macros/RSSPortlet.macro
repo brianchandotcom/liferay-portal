@@ -1,0 +1,192 @@
+<definition>
+	<command name="addFeed">
+		<var name="key_buttonRowIndexNumber" value="${buttonRowIndexNumber}" />
+		<var name="key_feedRowIndexNumber" value="${feedRowIndexNumber}" />
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
+		<if>
+			<isset var="buttonRowIndexNumber" />
+			<then>
+				<execute function="Click" locator1="RSSFeed#FEEDS_ADD_ROW_BUTTON" />
+			</then>
+		</if>
+
+		<execute function="Type" locator1="RSSFeed#FEEDS_TITLE_NAME_FIELD" value1="${feedTitle}" />
+
+		<if>
+			<equals arg1="${feedType}" arg2="file" />
+			<then>
+				<execute function="Type" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="file://" />
+				<execute function="UploadCommonFile" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
+			</then>
+			<else>
+				<execute function="Type" locator1="RSSFeed#FEEDS_URL_NAME_FIELD" value1="${feedUrlLink}" />
+			</else>
+		</if>
+	</command>
+
+	<command name="changeFeedsOrder">
+		<var name="key_fromRowNumber" value="${fromRowNumber}" />
+		<var name="key_toRowNumber" value="${toRowNumber}" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
+		<execute function="DragAndDrop" locator1="RSSFeed#FEEDS_1" locator2="RSSFeed#FEEDS_2" value1="${rowLocation}" />
+	</command>
+
+	<command name="configureFeedDisplayStyle">
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
+		<execute function="Select" locator1="RSSFeed#DISPLAY_SETTINGS_DISPLAY_TEMPLATE_OPTION" value1="${feedDisplayStyle}" />
+	</command>
+
+	<command name="deleteFeed">
+		<var name="key_buttonRowIndexNumber" value="${buttonRowIndexNumber}" />
+
+		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
+		<execute function="Click" locator1="RSSFeed#FEEDS_DELETE_ROW_BUTTON" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#UNDO_LINK" value1="Undo" />
+	</command>
+
+	<command name="disableShowFeedTitle">
+		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_TITLE" value1="Show Feed Title" />
+		<execute function="Uncheck#uncheckToggleSwitch" locator1="RSSFeed#DISPLAY_SETTINGS_SHOW_FEED_DESCRIPTION" value1="Show Feed Description" />
+	</command>
+
+	<command name="openFeed">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertClick#assertPartialTextClickAt" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
+
+		<execute function="SelectWindow" locator1="title=Site Page Name 2 - Site Name - ${siteName}" />
+	</command>
+
+	<command name="updateFeedTime">
+		<execute function="Type" locator1="RSSFeed#FEED_TIME" value1="${feedTime}" />
+
+		<execute macro="Button#clickSave" />
+	</command>
+
+	<command name="viewCorruptScript">
+		<execute function="AssertTextPresent" value1="An error occurred while processing the template." />
+		<execute function="AssertTextPresent" value1="Unexpected end of file reached." />
+	</command>
+
+	<command name="viewCustomADT">
+		<var name="key_feedContentTitle" value="${feedContentTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CUSTOM_ADT_TITLE" value1="${feedContentTitle}" />
+	</command>
+
+	<command name="viewDeleteFeed">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertTextNotPresent" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
+	</command>
+
+	<command name="viewDisplayFeedTitle">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_TITLE" value1="${feedTitle}" />
+	</command>
+
+	<command name="viewFeedContent">
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="${feedEntryTitle}" />
+		</execute>
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="RSSFeed#FEEDS_CONTENT" value1="${feedEntryContent}" />
+	</command>
+
+	<command name="viewNavigationDisplayFeedTitle">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertTextEquals" locator1="RSSFeed#FEED_NAVIGATION_DISPLAY_STYLE" value1="${feedTitle}" />
+
+		<if>
+			<equals arg1="${navigationNullADT}" arg2="true" />
+			<then>
+				<execute function="AssertElementNotPresent" locator1="RSSFeed#FEED_PANEL_TOGGLE" />
+			</then>
+		</if>
+	</command>
+
+	<command name="viewNoFeedTitle">
+		<var name="key_feedTitle" value="${feedTitle}" />
+
+		<execute function="AssertElementNotPresent" locator1="RSSFeed#FEEDS_TITLE" />
+	</command>
+
+	<command name="viewPG">
+		<var name="key_feedRowIndexNumber" value="${feedRowIndexNumber}" />
+		<var name="key_rowIndexNumber" value="${rowIndexNumber}" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+		<execute function="SelectFrame" locator1="RSSFeed#RSS_CONFIGURATION_IFRAME" />
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Feeds" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="RSSFeed#FEEDS_DEFAULT" />
+		<execute function="AssertTextEquals" locator1="RSSFeed#FEEDS_TITLE_NAME_FIELD" value1="${feedTitle}" />
+	</command>
+
+	<command name="viewPortletConfigurationInfo">
+		<execute function="AssertTextEquals" locator1="Message#INFO" value1="Please configure this portlet and select at least one valid RSS feed." />
+	</command>
+
+	<command name="viewUpdateFeedTitle">
+		<var name="key_feedHeading" value="${feedHeading}" />
+
+		<if>
+			<isset var="updateFeed" />
+			<then>
+				<execute function="Pause" locator1="60000" />
+
+				<execute macro="Navigator#_gotoPage">
+					<var name="pageName" value="${pageName}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertTextEquals" locator1="RSSFeed#FEED_PANEL_HEADING" value1="${feedHeading}" />
+	</command>
+
+	<command name="viewWarningMessageDisplay">
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#viewRequestFailedToComplete" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="${errorMessage}" />
+	</command>
+
+	<command name="waitForRSSLoad">
+		<execute function="AssertVisible" locator1="Portlet#H2_HEADER" />
+		<execute function="AssertTextEquals" locator1="Portlet#H2_HEADER" value1="RSS Publisher" />
+	</command>
+</definition>

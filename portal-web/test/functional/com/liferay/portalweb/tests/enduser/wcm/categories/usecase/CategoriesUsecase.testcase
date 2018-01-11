@@ -490,7 +490,7 @@
 			<var name="configurationName" value="Asset Categories Web" />
 		</execute>
 
-		<execute macro="SystemSettings#configureCategoryNavigationDisplayStyle">
+		<execute macro="SystemSettings#configureDisplayStyle">
 			<var name="displayStyle" value="Flattened Tree" />
 		</execute>
 
@@ -2277,7 +2277,7 @@
 			<var name="configurationName" value="Asset Categories Web" />
 		</execute>
 
-		<execute macro="SystemSettings#configureCategoryNavigationDisplayStyle">
+		<execute macro="SystemSettings#configureDisplayStyle">
 			<var name="displayStyle" value="Flattened Tree" />
 		</execute>
 

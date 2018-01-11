@@ -145,8 +145,6 @@ public class EditCommerceShippingMethodMVCActionCommand
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceShippingMethod");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

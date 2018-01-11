@@ -165,8 +165,6 @@ public class EditCommercePaymentMethodMVCActionCommand
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommercePaymentMethod");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

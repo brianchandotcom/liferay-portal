@@ -108,8 +108,6 @@ public class EditCPOptionCategoryMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editProductOptionCategory");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

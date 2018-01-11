@@ -120,8 +120,6 @@ public class EditCommerceCountryMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceCountry");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

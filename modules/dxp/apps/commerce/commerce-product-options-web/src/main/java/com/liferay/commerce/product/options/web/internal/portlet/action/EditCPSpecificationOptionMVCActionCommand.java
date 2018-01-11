@@ -113,8 +113,6 @@ public class EditCPSpecificationOptionMVCActionCommand
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editProductSpecificationOption");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

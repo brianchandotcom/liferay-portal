@@ -110,8 +110,6 @@ public class EditCPMeasurementUnitMVCActionCommand
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCPMeasurementUnit");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

@@ -112,8 +112,6 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 				actionResponse.setRenderParameter(
 					"mvcRenderCommandName", "editCommerceCurrency");
-
-				SessionErrors.add(actionRequest, e.getClass());
 			}
 			else {
 				throw e;

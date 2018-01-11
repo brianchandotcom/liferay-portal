@@ -341,6 +341,19 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
+		if (numNextLinesRemoveLeadingTab > 0) {
+			int nextLineStartPos = getLineStartPos(content, lineCount + 1);
+
+			for (int i = 0; i < numNextLinesRemoveLeadingTab; i++) {
+				content = StringUtil.replaceFirst(
+					content, StringPool.TAB, StringPool.BLANK,
+					nextLineStartPos);
+
+				nextLineStartPos =
+					content.indexOf(CharPool.NEW_LINE, nextLineStartPos) + 1;
+			}
+		}
+
 		firstLine = StringUtil.trimTrailing(firstLine);
 
 		return StringUtil.replaceFirst(
@@ -687,6 +700,35 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					content, line, trimmedLine, lineLength, lineCount,
 					previousLine, trimmedLine.substring(0, x + 2), true, true,
 					0);
+			}
+		}
+
+		if (trimmedPreviousLine.matches("for \\(\\w+")) {
+			int x = trimmedLine.indexOf(" :");
+
+			if ((x != -1) &&
+				((previousLineLength + x + 3) <= getMaxLineLength())) {
+
+				String s = trimmedLine.substring(0, x);
+
+				if (Validator.isVariableName(s)) {
+					if ((x + 2) == trimmedLine.length()) {
+						s += " :";
+					}
+					else {
+						s += " : ";
+					}
+
+					for (int i = 0;; i++) {
+						String nextLine = getLine(content, lineCount + i);
+
+						if (nextLine.endsWith(") {")) {
+							return _getCombinedLinesContent(
+								content, line, trimmedLine, lineLength,
+								lineCount, previousLine, s, true, true, i);
+						}
+					}
+				}
 			}
 		}
 

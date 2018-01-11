@@ -33,7 +33,7 @@ import javax.portlet.RenderResponse;
 public interface CommerceShippingOriginLocator {
 
 	public CommerceWarehouse getClosestCommerceWarehouse(
-			CommerceAddress commerceAddress, long cpInstanceId, int quantity)
+			CommerceAddress commerceAddress, long cpInstanceId)
 		throws PortalException;
 
 	public String getDescription(Locale locale);

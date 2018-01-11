@@ -192,7 +192,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 </portlet:actionURL>
 
 <aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
-	var addNavigationMenuMenuItemClickHandler = dom.on(
+	var addNavigationMenuClickHandler = dom.on(
 		'#<portlet:namespace />addNavigationMenuMenuItem',
 		'click',
 		function(event) {
@@ -212,7 +212,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		}
 	);
 
-	var updateSiteNavigationMenuMenuItemClickHandler = dom.delegate(
+	var renameSiteNavigationMenuClickHandler = dom.delegate(
 		document.body,
 		'click',
 		'.<portlet:namespace />update-site-navigation-menu-action-option > a',
@@ -249,8 +249,8 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 	);
 
 	function handleDestroyPortlet() {
-		addNavigationMenuMenuItemClickHandler.removeListener();
-		updateSiteNavigationMenuMenuItemClickHandler.removeListener();
+		addNavigationMenuClickHandler.removeListener();
+		renameSiteNavigationMenuClickHandler.removeListener();
 		deleteSelectedSiteNavigationMenusClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', handleDestroyPortlet);

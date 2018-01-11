@@ -14,12 +14,14 @@
 
 package com.liferay.commerce.shipping.origin.locator.address.internal;
 
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressLocalService;
+import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration;
 import com.liferay.commerce.shipping.origin.locator.address.internal.constants.AddressCommerceShippingOriginLocatorConstants;
 import com.liferay.commerce.util.SuffixParameterMapSettingsLocator;
@@ -69,10 +71,10 @@ public class AddressCommerceShippingOriginLocator
 
 	@Override
 	public CommerceWarehouse getClosestCommerceWarehouse(
-			CommerceAddress commerceAddress, long cpInstanceId, int quantity)
+			CommerceAddress commerceAddress, long cpInstanceId)
 		throws PortalException {
 
-		return null;
+		return _getDefaultCommerceWarehouse();
 	}
 
 	@Override
@@ -98,42 +100,20 @@ public class AddressCommerceShippingOriginLocator
 		CommerceAddress commerceAddress =
 			_commerceAddressLocalService.createCommerceAddress(0);
 
-		AddressCommerceShippingOriginLocatorGroupServiceConfiguration
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration =
-				_configurationProvider.getConfiguration(
-					AddressCommerceShippingOriginLocatorGroupServiceConfiguration.class,
-					new GroupServiceSettingsLocator(
-						commerceCart.getGroupId(),
-						AddressCommerceShippingOriginLocatorConstants.
-							SERVICE_NAME));
+		CommerceWarehouse commerceWarehouse = _getDefaultCommerceWarehouse();
 
-		commerceAddress.setName(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				name());
-		commerceAddress.setStreet1(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				street1());
-		commerceAddress.setStreet2(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				street2());
-		commerceAddress.setStreet3(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				street3());
-		commerceAddress.setCity(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				city());
-		commerceAddress.setZip(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				zip());
+		commerceAddress.setName(commerceWarehouse.getName());
+		commerceAddress.setStreet1(commerceWarehouse.getStreet1());
+		commerceAddress.setStreet2(commerceWarehouse.getStreet2());
+		commerceAddress.setStreet3(commerceWarehouse.getStreet3());
+		commerceAddress.setCity(commerceWarehouse.getCity());
+		commerceAddress.setZip(commerceWarehouse.getZip());
 		commerceAddress.setCommerceRegionId(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				commerceRegionId());
+			commerceWarehouse.getCommerceRegionId());
 		commerceAddress.setCommerceCountryId(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				commerceCountryId());
-		commerceAddress.setPhoneNumber(
-			addressCommerceShippingOriginLocatorGroupServiceConfiguration.
-				phoneNumber());
+			commerceWarehouse.getCommerceCountryId());
+		commerceAddress.setLatitude(commerceWarehouse.getLatitude());
+		commerceAddress.setLongitude(commerceWarehouse.getLongitude());
 
 		return Collections.singletonMap(
 			commerceAddress, commerceCart.getCommerceCartItems());
@@ -194,6 +174,11 @@ public class AddressCommerceShippingOriginLocator
 		modifiableSettings.store();
 	}
 
+	private CommerceWarehouse _getDefaultCommerceWarehouse() {
+		return _commerceWarehouseLocalService.fetchCommerceWarehouse(
+			CommerceConstants.WAREHOUSE_DEFAULT_ID);
+	}
+
 	private ResourceBundle _getResourceBundle(Locale locale) {
 		return ResourceBundleUtil.getBundle(
 			"content.Language", locale, getClass());
@@ -201,6 +186,9 @@ public class AddressCommerceShippingOriginLocator
 
 	@Reference
 	private CommerceAddressLocalService _commerceAddressLocalService;
+
+	@Reference
+	private CommerceWarehouseLocalService _commerceWarehouseLocalService;
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;

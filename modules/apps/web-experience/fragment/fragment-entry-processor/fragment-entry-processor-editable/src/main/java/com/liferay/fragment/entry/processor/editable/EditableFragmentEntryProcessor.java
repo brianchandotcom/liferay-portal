@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
-import com.liferay.fragment.entry.processor.editable.replacer.EditableElementReplacer;
+import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.processor.FragmentEntrySettings;
@@ -89,24 +89,24 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 	@Reference(
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC,
-		unbind = "unregisterEditableElementReplacer"
+		unbind = "unregisterEditableElementParser"
 	)
-	public void registerEditableElementReplacer(
-		EditableElementReplacer editableElementReplacer,
+	public void registerEditableElementParser(
+		EditableElementParser editableElementParser,
 		Map<String, Object> properties) {
 
 		String editableTagName = (String)properties.get("editable.tag.name");
 
-		_editableElementReplacers.put(editableTagName, editableElementReplacer);
+		_editableElementParsers.put(editableTagName, editableElementParser);
 	}
 
-	public void unregisterEditableElementReplacer(
-		EditableElementReplacer editableElementReplacer,
+	public void unregisterEditableElementParser(
+		EditableElementParser editableElementParser,
 		Map<String, Object> properties) {
 
 		String editableTagName = (String)properties.get("editable.tag.name");
 
-		_editableElementReplacers.remove(editableTagName);
+		_editableElementParsers.remove(editableTagName);
 	}
 
 	@Override
@@ -184,18 +184,18 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		Element replaceableElement = elements.get(0);
 
-		EditableElementReplacer editableTagReplacer =
-			_editableElementReplacers.get(replaceableElement.getName());
+		EditableElementParser editableTagParser =
+			_editableElementParsers.get(replaceableElement.getName());
 
-		if (editableTagReplacer == null) {
+		if (editableTagParser == null) {
 			return;
 		}
 
-		editableTagReplacer.replace(replaceableElement, value);
+		editableTagParser.replace(replaceableElement, value);
 	}
 
-	private final Map<String, EditableElementReplacer>
-		_editableElementReplacers = new HashMap<>();
+	private final Map<String, EditableElementParser> _editableElementParsers =
+		new HashMap<>();
 
 	@Reference
 	private HtmlParserUtil _htmlParserUtil;

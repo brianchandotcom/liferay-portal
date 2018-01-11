@@ -60,7 +60,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-model-adapter" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-salesforce-client" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/petra/petra-xml" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-custom-jsp-bag" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-dao-orm-custom-sql" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-instance-lifecycle" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-spring-extender" />

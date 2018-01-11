@@ -156,7 +156,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
-		if (cmd.equals("export")) {
+		if (cmd.equals(Constants.EXPORT)) {
 			Map<String, Serializable> settingsMap =
 				ExportImportConfigurationSettingsMapFactory.
 					buildExportPortletSettingsMap(
@@ -177,7 +177,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 				_exportImportLocalService.exportPortletInfoAsFileInBackground(
 					themeDisplay.getUserId(), exportImportConfiguration));
 		}
-		else if (cmd.equals("publish")) {
+		else if (cmd.equals(Constants.PUBLISH)) {
 			Group scopeGroup = themeDisplay.getScopeGroup();
 
 			if (!scopeGroup.isStagingGroup() &&

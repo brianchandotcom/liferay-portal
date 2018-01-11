@@ -1218,6 +1218,10 @@
 		<execute function="Confirm" value1="Are you sure you want to undo your last changes?" />
 	</command>
 
+	<command name="viewAddButtonDoesNotExist">
+		<execute function="IsElementNotPresent" locator1="Button#PLUS" />
+	</command>
+
 	<command name="viewAddButtonExists">
 		<execute function="AssertVisible" locator1="Button#PLUS" />
 	</command>

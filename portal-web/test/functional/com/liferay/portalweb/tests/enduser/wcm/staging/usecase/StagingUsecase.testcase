@@ -57,6 +57,48 @@
 		</if>
 	</tear-down>
 
+	<command name="ContentCannotBeCreatedOnLive" priority="5">
+		<execute macro="ProductMenu#gotoSite">
+			<var name="site" value="Site Name" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Tags" />
+		</execute>
+
+		<execute macro="Staging#viewAddButtonDoesNotExist" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Categories" />
+		</execute>
+
+		<execute macro="Staging#viewAddButtonDoesNotExist" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageTemplates" />
+
+		<execute macro="Staging#viewAddButtonDoesNotExist" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Web Content" />
+		</execute>
+
+		<execute macro="WebContentNavigator#gotoManageStructures" />
+
+		<execute macro="Staging#viewAddButtonDoesNotExist" />
+	</command>
+
 	<command name="DeleteLivePage" priority="5">
 		<property name="portal.acceptance" value="quarantine" />
 

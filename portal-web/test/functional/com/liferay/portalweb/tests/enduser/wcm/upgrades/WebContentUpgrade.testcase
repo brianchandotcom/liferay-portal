@@ -25,7 +25,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT" value1="There was an unexpected error. Please refresh the current page." />
+		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
 	</command>
 
 	<command name="ViewLayoutArchive625" priority="5">
@@ -40,7 +40,7 @@
 			<var name="portletName" value="Web Content Display" />
 		</execute>
 
-		<execute function="AssertTextNotPresent" locator1="Home#PAGE_COLUMN_1_LAYOUT_2_COLUMNS_30_SPLIT" value1="There was an unexpected error. Please refresh the current page." />
+		<execute function="AssertTextNotPresent" value1="There was an unexpected error. Please refresh the current page." />
 	</command>
 
 	<command name="ViewWebContentArchive6012" priority="5">

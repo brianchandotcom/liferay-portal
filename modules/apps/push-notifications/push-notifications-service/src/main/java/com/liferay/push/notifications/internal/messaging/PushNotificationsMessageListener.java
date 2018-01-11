@@ -44,13 +44,24 @@ public class PushNotificationsMessageListener extends BaseMessageListener {
 		JSONArray toUserIdsJSONArray = payloadJSONObject.getJSONArray(
 			PushNotificationsConstants.KEY_TO_USER_IDS);
 
-		long[] toUserIds = new long[toUserIdsJSONArray.length()];
+		long[] toUserIds = null;
 
-		for (int i = 0; i < toUserIdsJSONArray.length(); i++) {
-			toUserIds[i] = toUserIdsJSONArray.getLong(i);
+		if (toUserIdsJSONArray != null) {
+			toUserIds = new long[toUserIdsJSONArray.length()];
+
+			for (int i = 0; i < toUserIdsJSONArray.length(); i++) {
+				toUserIds[i] = toUserIdsJSONArray.getLong(i);
+			}
+
+			payloadJSONObject.remove(
+				PushNotificationsConstants.KEY_TO_USER_IDS);
 		}
+		else {
+			long userId = payloadJSONObject.getLong(
+				PushNotificationsConstants.KEY_USER_ID);
 
-		payloadJSONObject.remove(PushNotificationsConstants.KEY_TO_USER_IDS);
+			toUserIds = new long[] {userId};
+		}
 
 		try {
 			_pushNotificationsDeviceLocalService.sendPushNotification(

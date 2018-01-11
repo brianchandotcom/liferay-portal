@@ -176,7 +176,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="commerceOrderId" type="long" />
-		<field name="content" type="String" />
+		<field name="content" type="String">
+			<hint-collection name="TEXTAREA" />
+			<validator name="required" />
+		</field>
 		<field name="restricted" type="boolean" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderPayment">

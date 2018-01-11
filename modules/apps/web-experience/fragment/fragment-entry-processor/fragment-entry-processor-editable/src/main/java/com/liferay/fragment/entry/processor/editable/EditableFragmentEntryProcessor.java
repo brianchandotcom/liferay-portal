@@ -70,7 +70,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			_replaceEditableValue(element, settings.getString(id));
 		}
 
-		return document.asXML();
+		Element rootElement = document.getRootElement();
+
+		return rootElement.asXML();
 	}
 
 	@Reference(

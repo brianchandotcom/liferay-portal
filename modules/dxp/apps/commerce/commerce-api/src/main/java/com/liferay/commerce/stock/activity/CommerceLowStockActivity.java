@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.stock.activity;
 
-import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.portal.kernel.exception.PortalException;
 
 import java.util.Locale;
@@ -24,7 +24,7 @@ import java.util.Locale;
  */
 public interface CommerceLowStockActivity {
 
-	public void check(CommerceOrderItem commerceOrderItem)
+	public void check(CommerceWarehouseItem commerceWarehouseItem, int quantity)
 		throws PortalException;
 
 	public String getKey();

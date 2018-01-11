@@ -47,7 +47,7 @@ public class ModularTrashVersionLocalServiceWrapper
 
 	@Override
 	public TrashVersion addTrashVersion(
-		long trashEntryId, java.lang.String className, long classPK, int status,
+		long trashEntryId, String className, long classPK, int status,
 		UnicodeProperties typeSettingsProperties) {
 
 		return ModelAdapterUtil.adapt(
@@ -74,11 +74,11 @@ public class ModularTrashVersionLocalServiceWrapper
 	}
 
 	@Override
-	public TrashVersion deleteTrashVersion(
-		java.lang.String className, long classPK) {
+	public TrashVersion deleteTrashVersion(long versionId)
+		throws PortalException {
 
 		com.liferay.trash.model.TrashVersion trashVersion =
-			_trashVersionLocalService.deleteTrashVersion(className, classPK);
+			_trashVersionLocalService.deleteTrashVersion(versionId);
 
 		if (trashVersion == null) {
 			return null;
@@ -88,11 +88,9 @@ public class ModularTrashVersionLocalServiceWrapper
 	}
 
 	@Override
-	public TrashVersion deleteTrashVersion(long versionId)
-		throws PortalException {
-
+	public TrashVersion deleteTrashVersion(String className, long classPK) {
 		com.liferay.trash.model.TrashVersion trashVersion =
-			_trashVersionLocalService.deleteTrashVersion(versionId);
+			_trashVersionLocalService.deleteTrashVersion(className, classPK);
 
 		if (trashVersion == null) {
 			return null;

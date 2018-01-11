@@ -207,10 +207,9 @@ public class Deserializer {
 	}
 
 	/**
-	 * Detects a buffer underflow throwing an {@link
-	 * java.lang.IllegalStateException} if the input data is shorter than the
-	 * reserved space. This method is final so JIT can perform an inline
-	 * expansion.
+	 * Detects a buffer underflow throwing an {@link IllegalStateException} if
+	 * the input data is shorter than the reserved space. This method is final
+	 * so JIT can perform an inline expansion.
 	 *
 	 * @param availableBytes number of bytes available in input buffer
 	 */

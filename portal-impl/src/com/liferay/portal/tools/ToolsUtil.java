@@ -280,43 +280,10 @@ public class ToolsUtil {
 			afterImportsContent = content.substring(pos);
 		}
 
-		Pattern pattern1 = Pattern.compile(
-			"\n(.*)" + StringUtil.replace(packagePath, CharPool.PERIOD, "\\.") +
-				"\\.([A-Z]\\w+)\\W");
-
-		outerLoop:
-		while (true) {
-			Matcher matcher1 = pattern1.matcher(afterImportsContent);
-
-			while (matcher1.find()) {
-				String lineStart = StringUtil.trimLeading(matcher1.group(1));
-
-				if (lineStart.contains("//") ||
-					isInsideQuotes(afterImportsContent, matcher1.start(2))) {
-
-					continue;
-				}
-
-				String className = matcher1.group(2);
-
-				Pattern pattern2 = Pattern.compile(
-					"import [\\w.]+\\." + className + ";");
-
-				Matcher matcher2 = pattern2.matcher(imports);
-
-				if (matcher2.find()) {
-					continue;
-				}
-
-				afterImportsContent = StringUtil.replaceFirst(
-					afterImportsContent, packagePath + ".", StringPool.BLANK,
-					matcher1.start());
-
-				continue outerLoop;
-			}
-
-			break;
-		}
+		afterImportsContent = _stripFullyQualifiedClassNames(
+			imports, afterImportsContent, packagePath);
+		afterImportsContent = _stripFullyQualifiedClassNames(
+			imports, afterImportsContent, "java.lang");
 
 		try (UnsyncBufferedReader unsyncBufferedReader =
 				new UnsyncBufferedReader(new UnsyncStringReader(imports))) {
@@ -639,6 +606,50 @@ public class ToolsUtil {
 		}
 
 		return url;
+	}
+
+	private static String _stripFullyQualifiedClassNames(
+		String imports, String afterImportsContent, String packagePath) {
+
+		Pattern pattern1 = Pattern.compile(
+			"\n(.*)" + StringUtil.replace(packagePath, CharPool.PERIOD, "\\.") +
+				"\\.([A-Z]\\w+)\\W");
+
+		outerLoop:
+		while (true) {
+			Matcher matcher1 = pattern1.matcher(afterImportsContent);
+
+			while (matcher1.find()) {
+				String lineStart = StringUtil.trimLeading(matcher1.group(1));
+
+				if (lineStart.contains("//") ||
+					isInsideQuotes(afterImportsContent, matcher1.start(2))) {
+
+					continue;
+				}
+
+				String className = matcher1.group(2);
+
+				Pattern pattern2 = Pattern.compile(
+					"import [\\w.]+\\." + className + ";");
+
+				Matcher matcher2 = pattern2.matcher(imports);
+
+				if (matcher2.find()) {
+					continue;
+				}
+
+				afterImportsContent = StringUtil.replaceFirst(
+					afterImportsContent, packagePath + ".", StringPool.BLANK,
+					matcher1.start());
+
+				continue outerLoop;
+			}
+
+			break;
+		}
+
+		return afterImportsContent;
 	}
 
 	private static void _write(File file, String s) throws IOException {

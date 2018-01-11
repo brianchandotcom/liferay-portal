@@ -16,14 +16,13 @@ package com.liferay.fragment.entry.processor.nullable;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.FragmentEntrySettings;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
@@ -39,9 +38,7 @@ import org.osgi.service.component.annotations.Component;
 public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryHTML(
-			String html, Locale locale,
-			FragmentEntrySettings fragmentEntrySettings)
+	public String processFragmentEntryHTML(String html, JSONObject settings)
 		throws PortalException {
 
 		return StringPool.BLANK;

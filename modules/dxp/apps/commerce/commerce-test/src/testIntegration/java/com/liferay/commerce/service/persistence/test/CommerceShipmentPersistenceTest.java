@@ -140,6 +140,8 @@ public class CommerceShipmentPersistenceTest {
 
 		newCommerceShipment.setCommerceShippingMethodId(RandomTestUtil.nextLong());
 
+		newCommerceShipment.setCommerceWarehouseId(RandomTestUtil.nextLong());
+
 		newCommerceShipment.setCarrier(RandomTestUtil.randomString());
 
 		newCommerceShipment.setTrackingNumber(RandomTestUtil.randomString());
@@ -178,6 +180,8 @@ public class CommerceShipmentPersistenceTest {
 			newCommerceShipment.getCommerceAddressId());
 		Assert.assertEquals(existingCommerceShipment.getCommerceShippingMethodId(),
 			newCommerceShipment.getCommerceShippingMethodId());
+		Assert.assertEquals(existingCommerceShipment.getCommerceWarehouseId(),
+			newCommerceShipment.getCommerceWarehouseId());
 		Assert.assertEquals(existingCommerceShipment.getCarrier(),
 			newCommerceShipment.getCarrier());
 		Assert.assertEquals(existingCommerceShipment.getTrackingNumber(),
@@ -228,9 +232,9 @@ public class CommerceShipmentPersistenceTest {
 			"commerceShipmentId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
 			"modifiedDate", true, "shipmentUserId", true, "commerceAddressId",
-			true, "commerceShippingMethodId", true, "carrier", true,
-			"trackingNumber", true, "expectedDuration", true, "status", true,
-			"shippingDate", true, "expectedDate", true);
+			true, "commerceShippingMethodId", true, "commerceWarehouseId",
+			true, "carrier", true, "trackingNumber", true, "expectedDuration",
+			true, "status", true, "shippingDate", true, "expectedDate", true);
 	}
 
 	@Test
@@ -449,6 +453,8 @@ public class CommerceShipmentPersistenceTest {
 		commerceShipment.setCommerceAddressId(RandomTestUtil.nextLong());
 
 		commerceShipment.setCommerceShippingMethodId(RandomTestUtil.nextLong());
+
+		commerceShipment.setCommerceWarehouseId(RandomTestUtil.nextLong());
 
 		commerceShipment.setCarrier(RandomTestUtil.randomString());
 

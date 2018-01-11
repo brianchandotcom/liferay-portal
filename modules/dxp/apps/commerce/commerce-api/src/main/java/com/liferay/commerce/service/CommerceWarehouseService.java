@@ -57,7 +57,7 @@ public interface CommerceWarehouseService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link CommerceWarehouseServiceUtil} to access the commerce warehouse remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public CommerceWarehouse addCommerceWarehouse(java.lang.String name,
-		java.lang.String description, java.lang.String street1,
+		java.lang.String description, boolean active, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
 		long commerceCountryId, double latitude, double longitude,
@@ -75,18 +75,30 @@ public interface CommerceWarehouseService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
-		int start, int end,
+		boolean active, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
-		long commerceCountryId, int start, int end,
+		boolean active, long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceWarehousesCount(long groupId, long commerceCountryId)
-		throws PortalException;
+	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
+		long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWarehousesCount(long groupId, boolean active,
+		long commerceCountryId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWarehousesCount(long groupId, long commerceCountryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWarehouse getDefaultCommerceWarehouse(
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -97,16 +109,28 @@ public interface CommerceWarehouseService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> search(long groupId,
-		java.lang.String keywords, long commerceCountryId, int start, int end,
+		java.lang.String keywords, boolean all, long commerceCountryId,
+		int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, java.lang.String keywords,
-		long commerceCountryId) throws PortalException;
+		boolean all, long commerceCountryId) throws PortalException;
+
+	public CommerceWarehouse setActive(long commerceWarehouseId, boolean active)
+		throws PortalException;
 
 	public CommerceWarehouse updateCommerceWarehouse(long commerceWarehouseId,
-		java.lang.String name, java.lang.String description,
+		java.lang.String name, java.lang.String description, boolean active,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceWarehouse updateDefaultCommerceWarehouse(
+		long commerceWarehouseId, java.lang.String name,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,

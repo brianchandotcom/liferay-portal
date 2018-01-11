@@ -898,6 +898,7 @@ public class CommerceShipmentPersistenceImpl extends BasePersistenceImpl<Commerc
 		commerceShipmentImpl.setShipmentUserId(commerceShipment.getShipmentUserId());
 		commerceShipmentImpl.setCommerceAddressId(commerceShipment.getCommerceAddressId());
 		commerceShipmentImpl.setCommerceShippingMethodId(commerceShipment.getCommerceShippingMethodId());
+		commerceShipmentImpl.setCommerceWarehouseId(commerceShipment.getCommerceWarehouseId());
 		commerceShipmentImpl.setCarrier(commerceShipment.getCarrier());
 		commerceShipmentImpl.setTrackingNumber(commerceShipment.getTrackingNumber());
 		commerceShipmentImpl.setExpectedDuration(commerceShipment.getExpectedDuration());

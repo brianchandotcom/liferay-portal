@@ -43,6 +43,7 @@ public class CommerceWarehouseSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setActive(model.getActive());
 		soapModel.setStreet1(model.getStreet1());
 		soapModel.setStreet2(model.getStreet2());
 		soapModel.setStreet3(model.getStreet3());
@@ -179,6 +180,18 @@ public class CommerceWarehouseSoap implements Serializable {
 		_description = description;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	public String getStreet1() {
 		return _street1;
 	}
@@ -260,6 +273,7 @@ public class CommerceWarehouseSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private boolean _active;
 	private String _street1;
 	private String _street2;
 	private String _street3;

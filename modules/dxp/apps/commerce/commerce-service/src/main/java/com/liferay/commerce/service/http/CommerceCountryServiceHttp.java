@@ -354,14 +354,15 @@ public class CommerceCountryServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
-		HttpPrincipal httpPrincipal, long groupId)
+		HttpPrincipal httpPrincipal, long groupId, boolean all)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCountryServiceUtil.class,
 					"getWarehouseCommerceCountries",
 					_getWarehouseCommerceCountriesParameterTypes10);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
+			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+					all);
 
 			Object returnObj = null;
 
@@ -463,7 +464,7 @@ public class CommerceCountryServiceHttp {
 	private static final Class<?>[] _getShippingCommerceCountriesParameterTypes9 =
 		new Class[] { long.class, boolean.class, boolean.class };
 	private static final Class<?>[] _getWarehouseCommerceCountriesParameterTypes10 =
-		new Class[] { long.class };
+		new Class[] { long.class, boolean.class };
 	private static final Class<?>[] _updateCommerceCountryParameterTypes11 = new Class[] {
 			long.class, java.util.Map.class, boolean.class, boolean.class,
 			java.lang.String.class, java.lang.String.class, int.class,

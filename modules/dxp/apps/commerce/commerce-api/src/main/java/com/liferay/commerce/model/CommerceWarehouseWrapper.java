@@ -67,6 +67,7 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("active", getActive());
 		attributes.put("street1", getStreet1());
 		attributes.put("street2", getStreet2());
 		attributes.put("street3", getStreet3());
@@ -136,6 +137,12 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 			setDescription(description);
 		}
 
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
+		}
+
 		String street1 = (String)attributes.get("street1");
 
 		if (street1 != null) {
@@ -199,6 +206,16 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public int compareTo(CommerceWarehouse commerceWarehouse) {
 		return _commerceWarehouse.compareTo(commerceWarehouse);
+	}
+
+	/**
+	* Returns the active of this commerce warehouse.
+	*
+	* @return the active of this commerce warehouse
+	*/
+	@Override
+	public boolean getActive() {
+		return _commerceWarehouse.getActive();
 	}
 
 	/**
@@ -433,6 +450,16 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 		return _commerceWarehouse.hashCode();
 	}
 
+	/**
+	* Returns <code>true</code> if this commerce warehouse is active.
+	*
+	* @return <code>true</code> if this commerce warehouse is active; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActive() {
+		return _commerceWarehouse.isActive();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _commerceWarehouse.isCachedModel();
@@ -456,6 +483,16 @@ public class CommerceWarehouseWrapper implements CommerceWarehouse,
 	@Override
 	public void persist() {
 		_commerceWarehouse.persist();
+	}
+
+	/**
+	* Sets whether this commerce warehouse is active.
+	*
+	* @param active the active of this commerce warehouse
+	*/
+	@Override
+	public void setActive(boolean active) {
+		_commerceWarehouse.setActive(active);
 	}
 
 	@Override

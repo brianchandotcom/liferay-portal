@@ -176,11 +176,10 @@ public class CommerceShipmentItemPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_C() throws Exception {
-		_persistence.countByG_C(RandomTestUtil.nextLong(),
-			RandomTestUtil.nextLong());
+	public void testCountByCommerceShipment() throws Exception {
+		_persistence.countByCommerceShipment(RandomTestUtil.nextLong());
 
-		_persistence.countByG_C(0L, 0L);
+		_persistence.countByCommerceShipment(0L);
 	}
 
 	@Test

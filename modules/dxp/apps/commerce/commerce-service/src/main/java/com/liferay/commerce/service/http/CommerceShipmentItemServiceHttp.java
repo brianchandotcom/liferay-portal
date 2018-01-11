@@ -149,15 +149,15 @@ public class CommerceShipmentItemServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
-		HttpPrincipal httpPrincipal, long groupId, long commerceShipmentId,
-		int start, int end,
+		HttpPrincipal httpPrincipal, long commerceShipmentId, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipmentItem> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentItemServiceUtil.class,
 					"getCommerceShipmentItems",
 					_getCommerceShipmentItemsParameterTypes3);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShipmentId, start, end, orderByComparator);
 
 			Object returnObj = null;
@@ -179,13 +179,13 @@ public class CommerceShipmentItemServiceHttp {
 	}
 
 	public static int getCommerceShipmentItemsCount(
-		HttpPrincipal httpPrincipal, long groupId, long commerceShipmentId) {
+		HttpPrincipal httpPrincipal, long commerceShipmentId) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentItemServiceUtil.class,
 					"getCommerceShipmentItemsCount",
 					_getCommerceShipmentItemsCountParameterTypes4);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
+			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShipmentId);
 
 			Object returnObj = null;
@@ -251,11 +251,11 @@ public class CommerceShipmentItemServiceHttp {
 			long.class
 		};
 	private static final Class<?>[] _getCommerceShipmentItemsParameterTypes3 = new Class[] {
-			long.class, long.class, int.class, int.class,
+			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCommerceShipmentItemsCountParameterTypes4 =
-		new Class[] { long.class, long.class };
+		new Class[] { long.class };
 	private static final Class<?>[] _updateCommerceShipmentItemParameterTypes5 = new Class[] {
 			long.class, int.class
 		};

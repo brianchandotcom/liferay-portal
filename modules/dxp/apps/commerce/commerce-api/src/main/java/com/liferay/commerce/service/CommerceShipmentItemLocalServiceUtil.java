@@ -97,9 +97,8 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().deleteCommerceShipmentItem(commerceShipmentItemId);
 	}
 
-	public static void deleteCommerceShipmentItems(long groupId,
-		long commerceShipment) {
-		getService().deleteCommerceShipmentItems(groupId, commerceShipment);
+	public static void deleteCommerceShipmentItems(long commerceShipment) {
+		getService().deleteCommerceShipmentItems(commerceShipment);
 	}
 
 	/**
@@ -228,11 +227,11 @@ public class CommerceShipmentItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipmentItem> orderByComparator) {
 		return getService()
-				   .getCommerceShipmentItems(groupId, commerceShipmentId,
-			start, end, orderByComparator);
+				   .getCommerceShipmentItems(commerceShipmentId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -244,10 +243,8 @@ public class CommerceShipmentItemLocalServiceUtil {
 		return getService().getCommerceShipmentItemsCount();
 	}
 
-	public static int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId) {
-		return getService()
-				   .getCommerceShipmentItemsCount(groupId, commerceShipmentId);
+	public static int getCommerceShipmentItemsCount(long commerceShipmentId) {
+		return getService().getCommerceShipmentItemsCount(commerceShipmentId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

@@ -18,7 +18,15 @@ import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.persistence.CommerceWarehousePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+
+import java.lang.reflect.Field;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Alessio Antonio Rendina
@@ -27,6 +35,29 @@ import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 public class CommerceWarehouseFinderBaseImpl extends BasePersistenceImpl<CommerceWarehouse> {
 	public CommerceWarehouseFinderBaseImpl() {
 		setModelClass(CommerceWarehouse.class);
+
+		try {
+			Field field = BasePersistenceImpl.class.getDeclaredField(
+					"_dbColumnNames");
+
+			field.setAccessible(true);
+
+			Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+			dbColumnNames.put("active", "active_");
+
+			field.set(this, dbColumnNames);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
+	}
+
+	@Override
+	public Set<String> getBadColumnNames() {
+		return getCommerceWarehousePersistence().getBadColumnNames();
 	}
 
 	/**
@@ -50,4 +81,5 @@ public class CommerceWarehouseFinderBaseImpl extends BasePersistenceImpl<Commerc
 
 	@BeanReference(type = CommerceWarehousePersistence.class)
 	protected CommerceWarehousePersistence commerceWarehousePersistence;
+	private static final Log _log = LogFactoryUtil.getLog(CommerceWarehouseFinderBaseImpl.class);
 }

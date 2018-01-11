@@ -117,9 +117,9 @@ public class CommerceCountryServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
-		long groupId)
+		long groupId, boolean all)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getWarehouseCommerceCountries(groupId);
+		return getService().getWarehouseCommerceCountries(groupId, all);
 	}
 
 	public static com.liferay.commerce.model.CommerceCountry updateCommerceCountry(

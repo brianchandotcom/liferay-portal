@@ -73,7 +73,7 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 		CommerceWarehouse commerceWarehouse);
 
 	public CommerceWarehouse addCommerceWarehouse(java.lang.String name,
-		java.lang.String description, java.lang.String street1,
+		java.lang.String description, boolean active, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
 		long commerceCountryId, double latitude, double longitude,
@@ -211,13 +211,18 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	public List<CommerceWarehouse> getCommerceWarehouses(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceWarehouse> getCommerceWarehouses(long cpInstanceId,
-		int quantity, int start, int end);
+	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
+		boolean active, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
-		int start, int end,
+		boolean active, long commerceCountryId, int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceWarehouse> getCommerceWarehouses(long cpInstanceId,
+		int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> getCommerceWarehouses(long groupId,
@@ -233,7 +238,15 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 	public int getCommerceWarehousesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWarehousesCount(long groupId, boolean active,
+		long commerceCountryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceWarehousesCount(long groupId, long commerceCountryId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceWarehouse getDefaultCommerceWarehouse(
+		ServiceContext serviceContext) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -252,12 +265,16 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceWarehouse> search(long groupId,
-		java.lang.String keywords, long commerceCountryId, int start, int end,
+		java.lang.String keywords, boolean all, long commerceCountryId,
+		int start, int end,
 		OrderByComparator<CommerceWarehouse> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int searchCount(long groupId, java.lang.String keywords,
-		long commerceCountryId);
+		boolean all, long commerceCountryId);
+
+	public CommerceWarehouse setActive(long commerceWarehouseId, boolean active)
+		throws PortalException;
 
 	/**
 	* Updates the commerce warehouse in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -270,7 +287,15 @@ public interface CommerceWarehouseLocalService extends BaseLocalService,
 		CommerceWarehouse commerceWarehouse);
 
 	public CommerceWarehouse updateCommerceWarehouse(long commerceWarehouseId,
-		java.lang.String name, java.lang.String description,
+		java.lang.String name, java.lang.String description, boolean active,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude, ServiceContext serviceContext)
+		throws PortalException;
+
+	public CommerceWarehouse updateDefaultCommerceWarehouse(
+		long commerceWarehouseId, java.lang.String name,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,

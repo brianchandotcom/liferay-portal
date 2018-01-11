@@ -223,6 +223,27 @@ public interface CommerceWarehouseModel extends BaseModel<CommerceWarehouse>,
 	public void setDescription(String description);
 
 	/**
+	 * Returns the active of this commerce warehouse.
+	 *
+	 * @return the active of this commerce warehouse
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this commerce warehouse is active.
+	 *
+	 * @return <code>true</code> if this commerce warehouse is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this commerce warehouse is active.
+	 *
+	 * @param active the active of this commerce warehouse
+	 */
+	public void setActive(boolean active);
+
+	/**
 	 * Returns the street1 of this commerce warehouse.
 	 *
 	 * @return the street1 of this commerce warehouse

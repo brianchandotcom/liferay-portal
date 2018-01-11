@@ -94,9 +94,8 @@ public class CommerceShipmentItemLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteCommerceShipmentItems(long groupId, long commerceShipment) {
-		_commerceShipmentItemLocalService.deleteCommerceShipmentItems(groupId,
-			commerceShipment);
+	public void deleteCommerceShipmentItems(long commerceShipment) {
+		_commerceShipmentItemLocalService.deleteCommerceShipmentItems(commerceShipment);
 	}
 
 	/**
@@ -240,10 +239,10 @@ public class CommerceShipmentItemLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipmentItem> orderByComparator) {
-		return _commerceShipmentItemLocalService.getCommerceShipmentItems(groupId,
-			commerceShipmentId, start, end, orderByComparator);
+		return _commerceShipmentItemLocalService.getCommerceShipmentItems(commerceShipmentId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -257,10 +256,8 @@ public class CommerceShipmentItemLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId) {
-		return _commerceShipmentItemLocalService.getCommerceShipmentItemsCount(groupId,
-			commerceShipmentId);
+	public int getCommerceShipmentItemsCount(long commerceShipmentId) {
+		return _commerceShipmentItemLocalService.getCommerceShipmentItemsCount(commerceShipmentId);
 	}
 
 	@Override

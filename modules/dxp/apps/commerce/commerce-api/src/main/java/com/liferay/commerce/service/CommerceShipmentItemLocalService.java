@@ -110,7 +110,7 @@ public interface CommerceShipmentItemLocalService extends BaseLocalService,
 	public CommerceShipmentItem deleteCommerceShipmentItem(
 		long commerceShipmentItemId) throws PortalException;
 
-	public void deleteCommerceShipmentItems(long groupId, long commerceShipment);
+	public void deleteCommerceShipmentItems(long commerceShipment);
 
 	/**
 	* @throws PortalException
@@ -212,7 +212,7 @@ public interface CommerceShipmentItemLocalService extends BaseLocalService,
 		int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShipmentItem> getCommerceShipmentItems(long groupId,
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
 		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator);
 
@@ -225,8 +225,7 @@ public interface CommerceShipmentItemLocalService extends BaseLocalService,
 	public int getCommerceShipmentItemsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId);
+	public int getCommerceShipmentItemsCount(long commerceShipmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

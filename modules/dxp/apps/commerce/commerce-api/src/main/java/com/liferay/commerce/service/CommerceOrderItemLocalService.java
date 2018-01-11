@@ -223,8 +223,8 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 		OrderByComparator<CommerceOrderItem> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrderItem> getCommerceOrderItems(long groupId,
-		long commerceAddressId, int start, int end);
+	public List<CommerceOrderItem> getCommerceOrderItems(
+		long commerceWarehouseId, long commerceAddressId, int start, int end);
 
 	/**
 	* Returns the number of commerce order items.
@@ -236,6 +236,13 @@ public interface CommerceOrderItemLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderItemsCount(long commerceOrderId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceWarehouseItemQuantity(long commerceOrderItemId,
+		long commerceWarehouseId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCPInstanceQuantity(long cpInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

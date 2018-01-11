@@ -68,6 +68,7 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 		attributes.put("shipmentUserId", getShipmentUserId());
 		attributes.put("commerceAddressId", getCommerceAddressId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
+		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
 		attributes.put("carrier", getCarrier());
 		attributes.put("trackingNumber", getTrackingNumber());
 		attributes.put("expectedDuration", getExpectedDuration());
@@ -141,6 +142,12 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 			setCommerceShippingMethodId(commerceShippingMethodId);
 		}
 
+		Long commerceWarehouseId = (Long)attributes.get("commerceWarehouseId");
+
+		if (commerceWarehouseId != null) {
+			setCommerceWarehouseId(commerceWarehouseId);
+		}
+
 		String carrier = (String)attributes.get("carrier");
 
 		if (carrier != null) {
@@ -198,6 +205,11 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 		return _commerceShipment.fetchCommerceShippingMethod();
 	}
 
+	@Override
+	public CommerceWarehouse fetchCommerceWarehouse() {
+		return _commerceShipment.fetchCommerceWarehouse();
+	}
+
 	/**
 	* Returns the carrier of this commerce shipment.
 	*
@@ -236,6 +248,16 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	@Override
 	public long getCommerceShippingMethodId() {
 		return _commerceShipment.getCommerceShippingMethodId();
+	}
+
+	/**
+	* Returns the commerce warehouse ID of this commerce shipment.
+	*
+	* @return the commerce warehouse ID of this commerce shipment
+	*/
+	@Override
+	public long getCommerceWarehouseId() {
+		return _commerceShipment.getCommerceWarehouseId();
 	}
 
 	/**
@@ -466,6 +488,16 @@ public class CommerceShipmentWrapper implements CommerceShipment,
 	@Override
 	public void setCommerceShippingMethodId(long commerceShippingMethodId) {
 		_commerceShipment.setCommerceShippingMethodId(commerceShippingMethodId);
+	}
+
+	/**
+	* Sets the commerce warehouse ID of this commerce shipment.
+	*
+	* @param commerceWarehouseId the commerce warehouse ID of this commerce shipment
+	*/
+	@Override
+	public void setCommerceWarehouseId(long commerceWarehouseId) {
+		_commerceShipment.setCommerceWarehouseId(commerceWarehouseId);
 	}
 
 	/**

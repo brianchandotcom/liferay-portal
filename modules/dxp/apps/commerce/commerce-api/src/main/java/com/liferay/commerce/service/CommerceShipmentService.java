@@ -58,14 +58,19 @@ public interface CommerceShipmentService extends BaseService {
 	 */
 	public CommerceShipment addCommerceShipment(long shipmentUserId,
 		long commerceAddressId, long commerceShippingMethodId,
-		java.lang.String carrier, java.lang.String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
-		ServiceContext serviceContext) throws PortalException;
+		long commerceWarehouseId, java.lang.String carrier,
+		java.lang.String trackingNumber, int expectedDuration, int status,
+		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
+		int expectedDateDay, int expectedDateYear, int expectedDateHour,
+		int expectedDateMinute, ServiceContext serviceContext)
+		throws PortalException;
 
 	public void deleteCommerceShipment(long commerceShipmentId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceShipment getCommerceShipment(long commerceShipmentId)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

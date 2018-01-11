@@ -58,4 +58,6 @@ public interface CommerceShipment extends CommerceShipmentModel, PersistedModel 
 	public CommerceAddress fetchCommerceAddress();
 
 	public CommerceShippingMethod fetchCommerceShippingMethod();
+
+	public CommerceWarehouse fetchCommerceWarehouse();
 }

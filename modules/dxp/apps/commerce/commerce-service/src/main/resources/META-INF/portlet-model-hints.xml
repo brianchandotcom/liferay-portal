@@ -300,6 +300,7 @@
 		<field name="shipmentUserId" type="long" />
 		<field name="commerceAddressId" type="long" />
 		<field name="commerceShippingMethodId" type="long" />
+		<field name="commerceWarehouseId" type="long" />
 		<field name="carrier" type="String" />
 		<field name="trackingNumber" type="String" />
 		<field name="expectedDuration" type="int" />
@@ -360,6 +361,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
 		<field name="description" type="String" />
+		<field name="active" type="boolean" />
 		<field name="street1" type="String" />
 		<field name="street2" type="String" />
 		<field name="street3" type="String" />

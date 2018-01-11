@@ -42,7 +42,7 @@ public class CommerceWarehouseServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceWarehouseServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceWarehouse addCommerceWarehouse(
-		java.lang.String name, java.lang.String description,
+		java.lang.String name, java.lang.String description, boolean active,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,
@@ -50,9 +50,9 @@ public class CommerceWarehouseServiceUtil {
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceWarehouse(name, description, street1, street2,
-			street3, city, zip, commerceRegionId, commerceCountryId, latitude,
-			longitude, serviceContext);
+				   .addCommerceWarehouse(name, description, active, street1,
+			street2, street3, city, zip, commerceRegionId, commerceCountryId,
+			latitude, longitude, serviceContext);
 	}
 
 	public static void deleteCommerceWarehouse(long commerceWarehouseId)
@@ -73,26 +73,49 @@ public class CommerceWarehouseServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
-		long groupId, int start, int end,
+		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
 		return getService()
-				   .getCommerceWarehouses(groupId, start, end, orderByComparator);
+				   .getCommerceWarehouses(groupId, active, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
+		long groupId, boolean active, long commerceCountryId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceWarehouses(groupId, active, commerceCountryId,
+			start, end, orderByComparator);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> getCommerceWarehouses(
 		long groupId, long commerceCountryId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator) {
 		return getService()
 				   .getCommerceWarehouses(groupId, commerceCountryId, start,
 			end, orderByComparator);
 	}
 
-	public static int getCommerceWarehousesCount(long groupId,
+	public static int getCommerceWarehousesCount(long groupId, boolean active,
 		long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
+				   .getCommerceWarehousesCount(groupId, active,
+			commerceCountryId);
+	}
+
+	public static int getCommerceWarehousesCount(long groupId,
+		long commerceCountryId) {
+		return getService()
 				   .getCommerceWarehousesCount(groupId, commerceCountryId);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouse getDefaultCommerceWarehouse(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getDefaultCommerceWarehouse(serviceContext);
 	}
 
 	/**
@@ -105,24 +128,31 @@ public class CommerceWarehouseServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceWarehouse> search(
-		long groupId, java.lang.String keywords, long commerceCountryId,
-		int start, int end,
+		long groupId, java.lang.String keywords, boolean all,
+		long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .search(groupId, keywords, commerceCountryId, start, end,
-			orderByComparator);
+				   .search(groupId, keywords, all, commerceCountryId, start,
+			end, orderByComparator);
 	}
 
 	public static int searchCount(long groupId, java.lang.String keywords,
-		long commerceCountryId)
+		boolean all, long commerceCountryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().searchCount(groupId, keywords, commerceCountryId);
+		return getService()
+				   .searchCount(groupId, keywords, all, commerceCountryId);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouse setActive(
+		long commerceWarehouseId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceWarehouseId, active);
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouse updateCommerceWarehouse(
 		long commerceWarehouseId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
+		java.lang.String description, boolean active, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
 		long commerceCountryId, double latitude, double longitude,
@@ -130,9 +160,23 @@ public class CommerceWarehouseServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceWarehouse(commerceWarehouseId, name,
-			description, street1, street2, street3, city, zip,
+			description, active, street1, street2, street3, city, zip,
 			commerceRegionId, commerceCountryId, latitude, longitude,
 			serviceContext);
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouse updateDefaultCommerceWarehouse(
+		long commerceWarehouseId, java.lang.String name,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateDefaultCommerceWarehouse(commerceWarehouseId, name,
+			street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, latitude, longitude, serviceContext);
 	}
 
 	public static CommerceWarehouseService getService() {

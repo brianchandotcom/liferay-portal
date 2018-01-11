@@ -44,6 +44,7 @@ public class CommerceShipmentSoap implements Serializable {
 		soapModel.setShipmentUserId(model.getShipmentUserId());
 		soapModel.setCommerceAddressId(model.getCommerceAddressId());
 		soapModel.setCommerceShippingMethodId(model.getCommerceShippingMethodId());
+		soapModel.setCommerceWarehouseId(model.getCommerceWarehouseId());
 		soapModel.setCarrier(model.getCarrier());
 		soapModel.setTrackingNumber(model.getTrackingNumber());
 		soapModel.setExpectedDuration(model.getExpectedDuration());
@@ -184,6 +185,14 @@ public class CommerceShipmentSoap implements Serializable {
 		_commerceShippingMethodId = commerceShippingMethodId;
 	}
 
+	public long getCommerceWarehouseId() {
+		return _commerceWarehouseId;
+	}
+
+	public void setCommerceWarehouseId(long commerceWarehouseId) {
+		_commerceWarehouseId = commerceWarehouseId;
+	}
+
 	public String getCarrier() {
 		return _carrier;
 	}
@@ -242,6 +251,7 @@ public class CommerceShipmentSoap implements Serializable {
 	private long _shipmentUserId;
 	private long _commerceAddressId;
 	private long _commerceShippingMethodId;
+	private long _commerceWarehouseId;
 	private String _carrier;
 	private String _trackingNumber;
 	private int _expectedDuration;

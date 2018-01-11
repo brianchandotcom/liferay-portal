@@ -80,6 +80,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 			{ "shipmentUserId", Types.BIGINT },
 			{ "commerceAddressId", Types.BIGINT },
 			{ "commerceShippingMethodId", Types.BIGINT },
+			{ "commerceWarehouseId", Types.BIGINT },
 			{ "carrier", Types.VARCHAR },
 			{ "trackingNumber", Types.VARCHAR },
 			{ "expectedDuration", Types.INTEGER },
@@ -100,6 +101,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		TABLE_COLUMNS_MAP.put("shipmentUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("commerceShippingMethodId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("commerceWarehouseId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("carrier", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("trackingNumber", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("expectedDuration", Types.INTEGER);
@@ -108,7 +110,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		TABLE_COLUMNS_MAP.put("expectedDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceShipment (commerceShipmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,shipmentUserId LONG,commerceAddressId LONG,commerceShippingMethodId LONG,carrier VARCHAR(75) null,trackingNumber VARCHAR(75) null,expectedDuration INTEGER,status INTEGER,shippingDate DATE null,expectedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceShipment (commerceShipmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,shipmentUserId LONG,commerceAddressId LONG,commerceShippingMethodId LONG,commerceWarehouseId LONG,carrier VARCHAR(75) null,trackingNumber VARCHAR(75) null,expectedDuration INTEGER,status INTEGER,shippingDate DATE null,expectedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceShipment";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceShipment.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceShipment.createDate DESC";
@@ -150,6 +152,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		model.setShipmentUserId(soapModel.getShipmentUserId());
 		model.setCommerceAddressId(soapModel.getCommerceAddressId());
 		model.setCommerceShippingMethodId(soapModel.getCommerceShippingMethodId());
+		model.setCommerceWarehouseId(soapModel.getCommerceWarehouseId());
 		model.setCarrier(soapModel.getCarrier());
 		model.setTrackingNumber(soapModel.getTrackingNumber());
 		model.setExpectedDuration(soapModel.getExpectedDuration());
@@ -231,6 +234,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		attributes.put("shipmentUserId", getShipmentUserId());
 		attributes.put("commerceAddressId", getCommerceAddressId());
 		attributes.put("commerceShippingMethodId", getCommerceShippingMethodId());
+		attributes.put("commerceWarehouseId", getCommerceWarehouseId());
 		attributes.put("carrier", getCarrier());
 		attributes.put("trackingNumber", getTrackingNumber());
 		attributes.put("expectedDuration", getExpectedDuration());
@@ -305,6 +309,12 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 
 		if (commerceShippingMethodId != null) {
 			setCommerceShippingMethodId(commerceShippingMethodId);
+		}
+
+		Long commerceWarehouseId = (Long)attributes.get("commerceWarehouseId");
+
+		if (commerceWarehouseId != null) {
+			setCommerceWarehouseId(commerceWarehouseId);
 		}
 
 		String carrier = (String)attributes.get("carrier");
@@ -513,6 +523,17 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 
 	@JSON
 	@Override
+	public long getCommerceWarehouseId() {
+		return _commerceWarehouseId;
+	}
+
+	@Override
+	public void setCommerceWarehouseId(long commerceWarehouseId) {
+		_commerceWarehouseId = commerceWarehouseId;
+	}
+
+	@JSON
+	@Override
 	public String getCarrier() {
 		if (_carrier == null) {
 			return "";
@@ -628,6 +649,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		commerceShipmentImpl.setShipmentUserId(getShipmentUserId());
 		commerceShipmentImpl.setCommerceAddressId(getCommerceAddressId());
 		commerceShipmentImpl.setCommerceShippingMethodId(getCommerceShippingMethodId());
+		commerceShipmentImpl.setCommerceWarehouseId(getCommerceWarehouseId());
 		commerceShipmentImpl.setCarrier(getCarrier());
 		commerceShipmentImpl.setTrackingNumber(getTrackingNumber());
 		commerceShipmentImpl.setExpectedDuration(getExpectedDuration());
@@ -750,6 +772,8 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 
 		commerceShipmentCacheModel.commerceShippingMethodId = getCommerceShippingMethodId();
 
+		commerceShipmentCacheModel.commerceWarehouseId = getCommerceWarehouseId();
+
 		commerceShipmentCacheModel.carrier = getCarrier();
 
 		String carrier = commerceShipmentCacheModel.carrier;
@@ -793,7 +817,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{commerceShipmentId=");
 		sb.append(getCommerceShipmentId());
@@ -815,6 +839,8 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		sb.append(getCommerceAddressId());
 		sb.append(", commerceShippingMethodId=");
 		sb.append(getCommerceShippingMethodId());
+		sb.append(", commerceWarehouseId=");
+		sb.append(getCommerceWarehouseId());
 		sb.append(", carrier=");
 		sb.append(getCarrier());
 		sb.append(", trackingNumber=");
@@ -834,7 +860,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceShipment");
@@ -879,6 +905,10 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 		sb.append(
 			"<column><column-name>commerceShippingMethodId</column-name><column-value><![CDATA[");
 		sb.append(getCommerceShippingMethodId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>commerceWarehouseId</column-name><column-value><![CDATA[");
+		sb.append(getCommerceWarehouseId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>carrier</column-name><column-value><![CDATA[");
@@ -927,6 +957,7 @@ public class CommerceShipmentModelImpl extends BaseModelImpl<CommerceShipment>
 	private long _shipmentUserId;
 	private long _commerceAddressId;
 	private long _commerceShippingMethodId;
+	private long _commerceWarehouseId;
 	private String _carrier;
 	private String _trackingNumber;
 	private int _expectedDuration;

@@ -139,6 +139,8 @@ public class CommerceWarehousePersistenceTest {
 
 		newCommerceWarehouse.setDescription(RandomTestUtil.randomString());
 
+		newCommerceWarehouse.setActive(RandomTestUtil.randomBoolean());
+
 		newCommerceWarehouse.setStreet1(RandomTestUtil.randomString());
 
 		newCommerceWarehouse.setStreet2(RandomTestUtil.randomString());
@@ -181,6 +183,8 @@ public class CommerceWarehousePersistenceTest {
 			newCommerceWarehouse.getName());
 		Assert.assertEquals(existingCommerceWarehouse.getDescription(),
 			newCommerceWarehouse.getDescription());
+		Assert.assertEquals(existingCommerceWarehouse.getActive(),
+			newCommerceWarehouse.getActive());
 		Assert.assertEquals(existingCommerceWarehouse.getStreet1(),
 			newCommerceWarehouse.getStreet1());
 		Assert.assertEquals(existingCommerceWarehouse.getStreet2(),
@@ -209,11 +213,27 @@ public class CommerceWarehousePersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_A() throws Exception {
+		_persistence.countByG_A(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_A(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
 	public void testCountByG_C() throws Exception {
 		_persistence.countByG_C(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong());
 
 		_persistence.countByG_C(0L, 0L);
+	}
+
+	@Test
+	public void testCountByG_A_C() throws Exception {
+		_persistence.countByG_A_C(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean(), RandomTestUtil.nextLong());
+
+		_persistence.countByG_A_C(0L, RandomTestUtil.randomBoolean(), 0L);
 	}
 
 	@Test
@@ -242,10 +262,10 @@ public class CommerceWarehousePersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceWarehouse",
 			"commerceWarehouseId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "description", true, "street1",
-			true, "street2", true, "street3", true, "city", true, "zip", true,
-			"commerceRegionId", true, "commerceCountryId", true, "latitude",
-			true, "longitude", true);
+			"modifiedDate", true, "name", true, "description", true, "active",
+			true, "street1", true, "street2", true, "street3", true, "city",
+			true, "zip", true, "commerceRegionId", true, "commerceCountryId",
+			true, "latitude", true, "longitude", true);
 	}
 
 	@Test
@@ -463,6 +483,8 @@ public class CommerceWarehousePersistenceTest {
 		commerceWarehouse.setName(RandomTestUtil.randomString());
 
 		commerceWarehouse.setDescription(RandomTestUtil.randomString());
+
+		commerceWarehouse.setActive(RandomTestUtil.randomBoolean());
 
 		commerceWarehouse.setStreet1(RandomTestUtil.randomString());
 

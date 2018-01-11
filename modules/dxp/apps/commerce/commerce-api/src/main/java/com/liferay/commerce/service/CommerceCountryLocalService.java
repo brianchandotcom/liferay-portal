@@ -323,7 +323,8 @@ public interface CommerceCountryLocalService extends BaseLocalService,
 		boolean shippingAllowed, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId);
+	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId,
+		boolean all);
 
 	public void importDefaultCountries(ServiceContext serviceContext)
 		throws java.lang.Exception;

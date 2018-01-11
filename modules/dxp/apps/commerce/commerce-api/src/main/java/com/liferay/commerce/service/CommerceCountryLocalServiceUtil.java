@@ -372,8 +372,8 @@ public class CommerceCountryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
-		long groupId) {
-		return getService().getWarehouseCommerceCountries(groupId);
+		long groupId, boolean all) {
+		return getService().getWarehouseCommerceCountries(groupId, all);
 	}
 
 	public static void importDefaultCountries(

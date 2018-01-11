@@ -12,21 +12,31 @@
  * details.
  */
 
-package com.liferay.commerce.service.persistence;
+package com.liferay.commerce.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 /**
  * @author Alessio Antonio Rendina
- * @generated
  */
 @ProviderType
-public interface CommerceOrderItemFinder {
-	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByC_C(
-		long commerceWarehouseId, long commerceAddressId);
+public class CommerceWarehouseActiveException extends PortalException {
 
-	public java.util.List<com.liferay.commerce.model.CommerceOrderItem> findByC_C(
-		long commerceWarehouseId, long commerceAddressId, int start, int end);
+	public CommerceWarehouseActiveException() {
+	}
 
-	public int getCPInstanceQuantity(long cpInstanceId, int status);
+	public CommerceWarehouseActiveException(String msg) {
+		super(msg);
+	}
+
+	public CommerceWarehouseActiveException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public CommerceWarehouseActiveException(Throwable cause) {
+		super(cause);
+	}
+
 }

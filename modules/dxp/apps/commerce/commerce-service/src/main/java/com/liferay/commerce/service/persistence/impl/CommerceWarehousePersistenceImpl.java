@@ -37,10 +37,13 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
+
+import java.lang.reflect.Field;
 
 import java.util.Collections;
 import java.util.Date;
@@ -595,6 +598,552 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 	}
 
 	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "commerceWarehouse.groupId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED,
+			CommerceWarehouseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED,
+			CommerceWarehouseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			CommerceWarehouseModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceWarehouseModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceWarehouseModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_A = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns all the commerce warehouses where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @return the matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A(long groupId, boolean active) {
+		return findByG_A(groupId, active, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the commerce warehouses where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce warehouses
+	 * @param end the upper bound of the range of commerce warehouses (not inclusive)
+	 * @return the range of matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A(long groupId, boolean active,
+		int start, int end) {
+		return findByG_A(groupId, active, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce warehouses where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce warehouses
+	 * @param end the upper bound of the range of commerce warehouses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A(long groupId, boolean active,
+		int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+		return findByG_A(groupId, active, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce warehouses where groupId = &#63; and active = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param start the lower bound of the range of commerce warehouses
+	 * @param end the upper bound of the range of commerce warehouses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A(long groupId, boolean active,
+		int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A;
+			finderArgs = new Object[] { groupId, active };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A;
+			finderArgs = new Object[] {
+					groupId, active,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceWarehouse> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceWarehouse>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceWarehouse commerceWarehouse : list) {
+					if ((groupId != commerceWarehouse.getGroupId()) ||
+							(active != commerceWarehouse.getActive())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEWAREHOUSE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceWarehouseModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(active);
+
+				if (!pagination) {
+					list = (List<CommerceWarehouse>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceWarehouse>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce warehouse in the ordered set where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce warehouse
+	 * @throws NoSuchWarehouseException if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse findByG_A_First(long groupId, boolean active,
+		OrderByComparator<CommerceWarehouse> orderByComparator)
+		throws NoSuchWarehouseException {
+		CommerceWarehouse commerceWarehouse = fetchByG_A_First(groupId, active,
+				orderByComparator);
+
+		if (commerceWarehouse != null) {
+			return commerceWarehouse;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append("}");
+
+		throw new NoSuchWarehouseException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce warehouse in the ordered set where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce warehouse, or <code>null</code> if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse fetchByG_A_First(long groupId, boolean active,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+		List<CommerceWarehouse> list = findByG_A(groupId, active, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce warehouse in the ordered set where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce warehouse
+	 * @throws NoSuchWarehouseException if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse findByG_A_Last(long groupId, boolean active,
+		OrderByComparator<CommerceWarehouse> orderByComparator)
+		throws NoSuchWarehouseException {
+		CommerceWarehouse commerceWarehouse = fetchByG_A_Last(groupId, active,
+				orderByComparator);
+
+		if (commerceWarehouse != null) {
+			return commerceWarehouse;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append("}");
+
+		throw new NoSuchWarehouseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce warehouse in the ordered set where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce warehouse, or <code>null</code> if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse fetchByG_A_Last(long groupId, boolean active,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+		int count = countByG_A(groupId, active);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceWarehouse> list = findByG_A(groupId, active, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce warehouses before and after the current commerce warehouse in the ordered set where groupId = &#63; and active = &#63;.
+	 *
+	 * @param commerceWarehouseId the primary key of the current commerce warehouse
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce warehouse
+	 * @throws NoSuchWarehouseException if a commerce warehouse with the primary key could not be found
+	 */
+	@Override
+	public CommerceWarehouse[] findByG_A_PrevAndNext(long commerceWarehouseId,
+		long groupId, boolean active,
+		OrderByComparator<CommerceWarehouse> orderByComparator)
+		throws NoSuchWarehouseException {
+		CommerceWarehouse commerceWarehouse = findByPrimaryKey(commerceWarehouseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceWarehouse[] array = new CommerceWarehouseImpl[3];
+
+			array[0] = getByG_A_PrevAndNext(session, commerceWarehouse,
+					groupId, active, orderByComparator, true);
+
+			array[1] = commerceWarehouse;
+
+			array[2] = getByG_A_PrevAndNext(session, commerceWarehouse,
+					groupId, active, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceWarehouse getByG_A_PrevAndNext(Session session,
+		CommerceWarehouse commerceWarehouse, long groupId, boolean active,
+		OrderByComparator<CommerceWarehouse> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(4);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEWAREHOUSE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_A_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceWarehouseModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(active);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceWarehouse);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceWarehouse> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce warehouses where groupId = &#63; and active = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 */
+	@Override
+	public void removeByG_A(long groupId, boolean active) {
+		for (CommerceWarehouse commerceWarehouse : findByG_A(groupId, active,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceWarehouse);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce warehouses where groupId = &#63; and active = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @return the number of matching commerce warehouses
+	 */
+	@Override
+	public int countByG_A(long groupId, boolean active) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_A;
+
+		Object[] finderArgs = new Object[] { groupId, active };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_COMMERCEWAREHOUSE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_A_ACTIVE_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(active);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_A_GROUPID_2 = "commerceWarehouse.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_ACTIVE_2 = "commerceWarehouse.active = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_C = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
 			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED,
 			CommerceWarehouseImpl.class,
@@ -1148,9 +1697,621 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 	private static final String _FINDER_COLUMN_G_C_GROUPID_2 = "commerceWarehouse.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_C_COMMERCECOUNTRYID_2 = "commerceWarehouse.commerceCountryId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_C = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED,
+			CommerceWarehouseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByG_A_C",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_C = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED,
+			CommerceWarehouseImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByG_A_C",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName()
+			},
+			CommerceWarehouseModelImpl.GROUPID_COLUMN_BITMASK |
+			CommerceWarehouseModelImpl.ACTIVE_COLUMN_BITMASK |
+			CommerceWarehouseModelImpl.COMMERCECOUNTRYID_COLUMN_BITMASK |
+			CommerceWarehouseModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_A_C = new FinderPath(CommerceWarehouseModelImpl.ENTITY_CACHE_ENABLED,
+			CommerceWarehouseModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_A_C",
+			new String[] {
+				Long.class.getName(), Boolean.class.getName(),
+				Long.class.getName()
+			});
+
+	/**
+	 * Returns all the commerce warehouses where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @return the matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A_C(long groupId, boolean active,
+		long commerceCountryId) {
+		return findByG_A_C(groupId, active, commerceCountryId,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the commerce warehouses where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param start the lower bound of the range of commerce warehouses
+	 * @param end the upper bound of the range of commerce warehouses (not inclusive)
+	 * @return the range of matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A_C(long groupId, boolean active,
+		long commerceCountryId, int start, int end) {
+		return findByG_A_C(groupId, active, commerceCountryId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce warehouses where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param start the lower bound of the range of commerce warehouses
+	 * @param end the upper bound of the range of commerce warehouses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A_C(long groupId, boolean active,
+		long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+		return findByG_A_C(groupId, active, commerceCountryId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the commerce warehouses where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CommerceWarehouseModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param start the lower bound of the range of commerce warehouses
+	 * @param end the upper bound of the range of commerce warehouses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching commerce warehouses
+	 */
+	@Override
+	public List<CommerceWarehouse> findByG_A_C(long groupId, boolean active,
+		long commerceCountryId, int start, int end,
+		OrderByComparator<CommerceWarehouse> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_C;
+			finderArgs = new Object[] { groupId, active, commerceCountryId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_G_A_C;
+			finderArgs = new Object[] {
+					groupId, active, commerceCountryId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CommerceWarehouse> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CommerceWarehouse>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CommerceWarehouse commerceWarehouse : list) {
+					if ((groupId != commerceWarehouse.getGroupId()) ||
+							(active != commerceWarehouse.getActive()) ||
+							(commerceCountryId != commerceWarehouse.getCommerceCountryId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_COMMERCEWAREHOUSE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_C_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_A_C_ACTIVE_2);
+
+			query.append(_FINDER_COLUMN_G_A_C_COMMERCECOUNTRYID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CommerceWarehouseModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(active);
+
+				qPos.add(commerceCountryId);
+
+				if (!pagination) {
+					list = (List<CommerceWarehouse>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CommerceWarehouse>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first commerce warehouse in the ordered set where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce warehouse
+	 * @throws NoSuchWarehouseException if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse findByG_A_C_First(long groupId, boolean active,
+		long commerceCountryId,
+		OrderByComparator<CommerceWarehouse> orderByComparator)
+		throws NoSuchWarehouseException {
+		CommerceWarehouse commerceWarehouse = fetchByG_A_C_First(groupId,
+				active, commerceCountryId, orderByComparator);
+
+		if (commerceWarehouse != null) {
+			return commerceWarehouse;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(", commerceCountryId=");
+		msg.append(commerceCountryId);
+
+		msg.append("}");
+
+		throw new NoSuchWarehouseException(msg.toString());
+	}
+
+	/**
+	 * Returns the first commerce warehouse in the ordered set where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching commerce warehouse, or <code>null</code> if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse fetchByG_A_C_First(long groupId, boolean active,
+		long commerceCountryId,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+		List<CommerceWarehouse> list = findByG_A_C(groupId, active,
+				commerceCountryId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last commerce warehouse in the ordered set where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce warehouse
+	 * @throws NoSuchWarehouseException if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse findByG_A_C_Last(long groupId, boolean active,
+		long commerceCountryId,
+		OrderByComparator<CommerceWarehouse> orderByComparator)
+		throws NoSuchWarehouseException {
+		CommerceWarehouse commerceWarehouse = fetchByG_A_C_Last(groupId,
+				active, commerceCountryId, orderByComparator);
+
+		if (commerceWarehouse != null) {
+			return commerceWarehouse;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("groupId=");
+		msg.append(groupId);
+
+		msg.append(", active=");
+		msg.append(active);
+
+		msg.append(", commerceCountryId=");
+		msg.append(commerceCountryId);
+
+		msg.append("}");
+
+		throw new NoSuchWarehouseException(msg.toString());
+	}
+
+	/**
+	 * Returns the last commerce warehouse in the ordered set where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching commerce warehouse, or <code>null</code> if a matching commerce warehouse could not be found
+	 */
+	@Override
+	public CommerceWarehouse fetchByG_A_C_Last(long groupId, boolean active,
+		long commerceCountryId,
+		OrderByComparator<CommerceWarehouse> orderByComparator) {
+		int count = countByG_A_C(groupId, active, commerceCountryId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CommerceWarehouse> list = findByG_A_C(groupId, active,
+				commerceCountryId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the commerce warehouses before and after the current commerce warehouse in the ordered set where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param commerceWarehouseId the primary key of the current commerce warehouse
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next commerce warehouse
+	 * @throws NoSuchWarehouseException if a commerce warehouse with the primary key could not be found
+	 */
+	@Override
+	public CommerceWarehouse[] findByG_A_C_PrevAndNext(
+		long commerceWarehouseId, long groupId, boolean active,
+		long commerceCountryId,
+		OrderByComparator<CommerceWarehouse> orderByComparator)
+		throws NoSuchWarehouseException {
+		CommerceWarehouse commerceWarehouse = findByPrimaryKey(commerceWarehouseId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CommerceWarehouse[] array = new CommerceWarehouseImpl[3];
+
+			array[0] = getByG_A_C_PrevAndNext(session, commerceWarehouse,
+					groupId, active, commerceCountryId, orderByComparator, true);
+
+			array[1] = commerceWarehouse;
+
+			array[2] = getByG_A_C_PrevAndNext(session, commerceWarehouse,
+					groupId, active, commerceCountryId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CommerceWarehouse getByG_A_C_PrevAndNext(Session session,
+		CommerceWarehouse commerceWarehouse, long groupId, boolean active,
+		long commerceCountryId,
+		OrderByComparator<CommerceWarehouse> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_COMMERCEWAREHOUSE_WHERE);
+
+		query.append(_FINDER_COLUMN_G_A_C_GROUPID_2);
+
+		query.append(_FINDER_COLUMN_G_A_C_ACTIVE_2);
+
+		query.append(_FINDER_COLUMN_G_A_C_COMMERCECOUNTRYID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CommerceWarehouseModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(groupId);
+
+		qPos.add(active);
+
+		qPos.add(commerceCountryId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(commerceWarehouse);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CommerceWarehouse> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the commerce warehouses where groupId = &#63; and active = &#63; and commerceCountryId = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 */
+	@Override
+	public void removeByG_A_C(long groupId, boolean active,
+		long commerceCountryId) {
+		for (CommerceWarehouse commerceWarehouse : findByG_A_C(groupId, active,
+				commerceCountryId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(commerceWarehouse);
+		}
+	}
+
+	/**
+	 * Returns the number of commerce warehouses where groupId = &#63; and active = &#63; and commerceCountryId = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param active the active
+	 * @param commerceCountryId the commerce country ID
+	 * @return the number of matching commerce warehouses
+	 */
+	@Override
+	public int countByG_A_C(long groupId, boolean active, long commerceCountryId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_A_C;
+
+		Object[] finderArgs = new Object[] { groupId, active, commerceCountryId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_COMMERCEWAREHOUSE_WHERE);
+
+			query.append(_FINDER_COLUMN_G_A_C_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_A_C_ACTIVE_2);
+
+			query.append(_FINDER_COLUMN_G_A_C_COMMERCECOUNTRYID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(active);
+
+				qPos.add(commerceCountryId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_A_C_GROUPID_2 = "commerceWarehouse.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_C_ACTIVE_2 = "commerceWarehouse.active = ? AND ";
+	private static final String _FINDER_COLUMN_G_A_C_COMMERCECOUNTRYID_2 = "commerceWarehouse.commerceCountryId = ?";
 
 	public CommerceWarehousePersistenceImpl() {
 		setModelClass(CommerceWarehouse.class);
+
+		try {
+			Field field = BasePersistenceImpl.class.getDeclaredField(
+					"_dbColumnNames");
+
+			field.setAccessible(true);
+
+			Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+			dbColumnNames.put("active", "active_");
+
+			field.set(this, dbColumnNames);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e, e);
+			}
+		}
 	}
 
 	/**
@@ -1401,11 +2562,30 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 			args = new Object[] {
 					commerceWarehouseModelImpl.getGroupId(),
+					commerceWarehouseModelImpl.getActive()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+				args);
+
+			args = new Object[] {
+					commerceWarehouseModelImpl.getGroupId(),
 					commerceWarehouseModelImpl.getCommerceCountryId()
 				};
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+				args);
+
+			args = new Object[] {
+					commerceWarehouseModelImpl.getGroupId(),
+					commerceWarehouseModelImpl.getActive(),
+					commerceWarehouseModelImpl.getCommerceCountryId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_C, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_C,
 				args);
 
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
@@ -1432,6 +2612,27 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 			}
 
 			if ((commerceWarehouseModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceWarehouseModelImpl.getOriginalGroupId(),
+						commerceWarehouseModelImpl.getOriginalActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+					args);
+
+				args = new Object[] {
+						commerceWarehouseModelImpl.getGroupId(),
+						commerceWarehouseModelImpl.getActive()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A,
+					args);
+			}
+
+			if ((commerceWarehouseModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						commerceWarehouseModelImpl.getOriginalGroupId(),
@@ -1449,6 +2650,29 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_C, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_C,
+					args);
+			}
+
+			if ((commerceWarehouseModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_C.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						commerceWarehouseModelImpl.getOriginalGroupId(),
+						commerceWarehouseModelImpl.getOriginalActive(),
+						commerceWarehouseModelImpl.getOriginalCommerceCountryId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_C,
+					args);
+
+				args = new Object[] {
+						commerceWarehouseModelImpl.getGroupId(),
+						commerceWarehouseModelImpl.getActive(),
+						commerceWarehouseModelImpl.getCommerceCountryId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_G_A_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_G_A_C,
 					args);
 			}
 		}
@@ -1482,6 +2706,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 		commerceWarehouseImpl.setModifiedDate(commerceWarehouse.getModifiedDate());
 		commerceWarehouseImpl.setName(commerceWarehouse.getName());
 		commerceWarehouseImpl.setDescription(commerceWarehouse.getDescription());
+		commerceWarehouseImpl.setActive(commerceWarehouse.isActive());
 		commerceWarehouseImpl.setStreet1(commerceWarehouse.getStreet1());
 		commerceWarehouseImpl.setStreet2(commerceWarehouse.getStreet2());
 		commerceWarehouseImpl.setStreet3(commerceWarehouse.getStreet3());
@@ -1877,6 +3102,11 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 	}
 
 	@Override
+	public Set<String> getBadColumnNames() {
+		return _badColumnNames;
+	}
+
+	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CommerceWarehouseModelImpl.TABLE_COLUMNS_MAP;
 	}
@@ -1909,4 +3139,7 @@ public class CommerceWarehousePersistenceImpl extends BasePersistenceImpl<Commer
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CommerceWarehouse exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CommerceWarehouse exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CommerceWarehousePersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+				"active"
+			});
 }

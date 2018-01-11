@@ -23,36 +23,37 @@ import aQute.bnd.annotation.ProviderType;
 @ProviderType
 public interface CommerceWarehouseFinder {
 	public int countByKeywords(long groupId, java.lang.String keywords,
-		long commerceCountryId);
+		boolean all, long commerceCountryId);
 
 	public int countByG_N_D_S_C_Z_C(long groupId, java.lang.String name,
 		java.lang.String description, java.lang.String street,
-		java.lang.String city, java.lang.String zip, long commerceCountryId,
-		boolean andOperator);
+		java.lang.String city, java.lang.String zip, boolean all,
+		long commerceCountryId, boolean andOperator);
 
 	public int countByG_N_D_S_C_Z_C(long groupId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] streets,
-		java.lang.String[] cities, java.lang.String[] zips,
+		java.lang.String[] cities, java.lang.String[] zips, boolean all,
 		long commerceCountryId, boolean andOperator);
 
-	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> findByCommerceWarehouseItemQuantity(
-		long cpInstanceId, int quantity, int start, int end);
+	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> findByCPInstanceId(
+		long cpInstanceId, int start, int end);
 
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> findByKeywords(
-		long groupId, java.lang.String keywords, long commerceCountryId,
-		int start, int end,
+		long groupId, java.lang.String keywords, boolean all,
+		long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator);
 
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> findByG_N_D_S_C_Z_C(
 		long groupId, java.lang.String name, java.lang.String description,
 		java.lang.String street, java.lang.String city, java.lang.String zip,
-		long commerceCountryId, boolean andOperator, int start, int end,
+		boolean all, long commerceCountryId, boolean andOperator, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator);
 
 	public java.util.List<com.liferay.commerce.model.CommerceWarehouse> findByG_N_D_S_C_Z_C(
 		long groupId, java.lang.String[] names,
 		java.lang.String[] descriptions, java.lang.String[] streets,
-		java.lang.String[] cities, java.lang.String[] zips,
+		java.lang.String[] cities, java.lang.String[] zips, boolean all,
 		long commerceCountryId, boolean andOperator, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator);
 }

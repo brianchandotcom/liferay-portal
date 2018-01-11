@@ -66,7 +66,7 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceWarehouseServiceSoap {
 	public static com.liferay.commerce.model.CommerceWarehouseSoap addCommerceWarehouse(
-		java.lang.String name, java.lang.String description,
+		java.lang.String name, java.lang.String description, boolean active,
 		java.lang.String street1, java.lang.String street2,
 		java.lang.String street3, java.lang.String city, java.lang.String zip,
 		long commerceRegionId, long commerceCountryId, double latitude,
@@ -75,7 +75,7 @@ public class CommerceWarehouseServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.addCommerceWarehouse(name,
-					description, street1, street2, street3, city, zip,
+					description, active, street1, street2, street3, city, zip,
 					commerceRegionId, commerceCountryId, latitude, longitude,
 					serviceContext);
 
@@ -129,13 +129,32 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceWarehouseSoap[] getCommerceWarehouses(
-		long groupId, int start, int end,
+		long groupId, boolean active, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceWarehouse> returnValue =
 				CommerceWarehouseServiceUtil.getCommerceWarehouses(groupId,
-					start, end, orderByComparator);
+					active, start, end, orderByComparator);
+
+			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseSoap[] getCommerceWarehouses(
+		long groupId, boolean active, long commerceCountryId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceWarehouse> returnValue =
+				CommerceWarehouseServiceUtil.getCommerceWarehouses(groupId,
+					active, commerceCountryId, start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModels(returnValue);
 		}
@@ -164,6 +183,21 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
+	public static int getCommerceWarehousesCount(long groupId, boolean active,
+		long commerceCountryId) throws RemoteException {
+		try {
+			int returnValue = CommerceWarehouseServiceUtil.getCommerceWarehousesCount(groupId,
+					active, commerceCountryId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static int getCommerceWarehousesCount(long groupId,
 		long commerceCountryId) throws RemoteException {
 		try {
@@ -179,14 +213,29 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseSoap getDefaultCommerceWarehouse(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.getDefaultCommerceWarehouse(serviceContext);
+
+			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceWarehouseSoap[] search(
-		long groupId, java.lang.String keywords, long commerceCountryId,
-		int start, int end,
+		long groupId, java.lang.String keywords, boolean all,
+		long commerceCountryId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceWarehouse> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceWarehouse> returnValue =
-				CommerceWarehouseServiceUtil.search(groupId, keywords,
+				CommerceWarehouseServiceUtil.search(groupId, keywords, all,
 					commerceCountryId, start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModels(returnValue);
@@ -199,10 +248,10 @@ public class CommerceWarehouseServiceSoap {
 	}
 
 	public static int searchCount(long groupId, java.lang.String keywords,
-		long commerceCountryId) throws RemoteException {
+		boolean all, long commerceCountryId) throws RemoteException {
 		try {
 			int returnValue = CommerceWarehouseServiceUtil.searchCount(groupId,
-					keywords, commerceCountryId);
+					keywords, all, commerceCountryId);
 
 			return returnValue;
 		}
@@ -213,9 +262,24 @@ public class CommerceWarehouseServiceSoap {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceWarehouseSoap setActive(
+		long commerceWarehouseId, boolean active) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.setActive(commerceWarehouseId,
+					active);
+
+			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceWarehouseSoap updateCommerceWarehouse(
 		long commerceWarehouseId, java.lang.String name,
-		java.lang.String description, java.lang.String street1,
+		java.lang.String description, boolean active, java.lang.String street1,
 		java.lang.String street2, java.lang.String street3,
 		java.lang.String city, java.lang.String zip, long commerceRegionId,
 		long commerceCountryId, double latitude, double longitude,
@@ -223,7 +287,30 @@ public class CommerceWarehouseServiceSoap {
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.updateCommerceWarehouse(commerceWarehouseId,
-					name, description, street1, street2, street3, city, zip,
+					name, description, active, street1, street2, street3, city,
+					zip, commerceRegionId, commerceCountryId, latitude,
+					longitude, serviceContext);
+
+			return com.liferay.commerce.model.CommerceWarehouseSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceWarehouseSoap updateDefaultCommerceWarehouse(
+		long commerceWarehouseId, java.lang.String name,
+		java.lang.String street1, java.lang.String street2,
+		java.lang.String street3, java.lang.String city, java.lang.String zip,
+		long commerceRegionId, long commerceCountryId, double latitude,
+		double longitude,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceWarehouse returnValue = CommerceWarehouseServiceUtil.updateDefaultCommerceWarehouse(commerceWarehouseId,
+					name, street1, street2, street3, city, zip,
 					commerceRegionId, commerceCountryId, latitude, longitude,
 					serviceContext);
 

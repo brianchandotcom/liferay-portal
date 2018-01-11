@@ -249,9 +249,10 @@ public class CommerceOrderItemLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrderItem> getCommerceOrderItems(
-		long groupId, long commerceAddressId, int start, int end) {
+		long commerceWarehouseId, long commerceAddressId, int start, int end) {
 		return getService()
-				   .getCommerceOrderItems(groupId, commerceAddressId, start, end);
+				   .getCommerceOrderItems(commerceWarehouseId,
+			commerceAddressId, start, end);
 	}
 
 	/**
@@ -265,6 +266,18 @@ public class CommerceOrderItemLocalServiceUtil {
 
 	public static int getCommerceOrderItemsCount(long commerceOrderId) {
 		return getService().getCommerceOrderItemsCount(commerceOrderId);
+	}
+
+	public static int getCommerceWarehouseItemQuantity(
+		long commerceOrderItemId, long commerceWarehouseId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCommerceWarehouseItemQuantity(commerceOrderItemId,
+			commerceWarehouseId);
+	}
+
+	public static int getCPInstanceQuantity(long cpInstanceId) {
+		return getService().getCPInstanceQuantity(cpInstanceId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {

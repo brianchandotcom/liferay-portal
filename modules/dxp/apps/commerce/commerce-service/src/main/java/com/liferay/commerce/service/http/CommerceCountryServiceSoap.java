@@ -236,10 +236,11 @@ public class CommerceCountryServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceCountrySoap[] getWarehouseCommerceCountries(
-		long groupId) throws RemoteException {
+		long groupId, boolean all) throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceCountry> returnValue =
-				CommerceCountryServiceUtil.getWarehouseCommerceCountries(groupId);
+				CommerceCountryServiceUtil.getWarehouseCommerceCountries(groupId,
+					all);
 
 			return com.liferay.commerce.model.CommerceCountrySoap.toSoapModels(returnValue);
 		}

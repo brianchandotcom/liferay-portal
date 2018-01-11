@@ -58,11 +58,12 @@ public class CommerceShipmentServiceHttp {
 	public static com.liferay.commerce.model.CommerceShipment addCommerceShipment(
 		HttpPrincipal httpPrincipal, long shipmentUserId,
 		long commerceAddressId, long commerceShippingMethodId,
-		java.lang.String carrier, java.lang.String trackingNumber,
-		int expectedDuration, int status, int shippingDateMonth,
-		int shippingDateDay, int shippingDateYear, int shippingDateHour,
-		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
-		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
+		long commerceWarehouseId, java.lang.String carrier,
+		java.lang.String trackingNumber, int expectedDuration, int status,
+		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
+		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
+		int expectedDateDay, int expectedDateYear, int expectedDateHour,
+		int expectedDateMinute,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -71,12 +72,12 @@ public class CommerceShipmentServiceHttp {
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					shipmentUserId, commerceAddressId,
-					commerceShippingMethodId, carrier, trackingNumber,
-					expectedDuration, status, shippingDateMonth,
-					shippingDateDay, shippingDateYear, shippingDateHour,
-					shippingDateMinute, expectedDateMonth, expectedDateDay,
-					expectedDateYear, expectedDateHour, expectedDateMinute,
-					serviceContext);
+					commerceShippingMethodId, commerceWarehouseId, carrier,
+					trackingNumber, expectedDuration, status,
+					shippingDateMonth, shippingDateDay, shippingDateYear,
+					shippingDateHour, shippingDateMinute, expectedDateMonth,
+					expectedDateDay, expectedDateYear, expectedDateHour,
+					expectedDateMinute, serviceContext);
 
 			Object returnObj = null;
 
@@ -129,12 +130,44 @@ public class CommerceShipmentServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceShipment getCommerceShipment(
+		HttpPrincipal httpPrincipal, long commerceShipmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
+					"getCommerceShipment", _getCommerceShipmentParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceShipmentId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceShipment)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipments(
 		HttpPrincipal httpPrincipal, long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipment> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
-					"getCommerceShipments", _getCommerceShipmentsParameterTypes2);
+					"getCommerceShipments", _getCommerceShipmentsParameterTypes3);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					start, end, orderByComparator);
@@ -162,7 +195,7 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"getCommerceShipmentsCount",
-					_getCommerceShipmentsCountParameterTypes3);
+					_getCommerceShipmentsCountParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
 
@@ -197,7 +230,7 @@ public class CommerceShipmentServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceShipmentServiceUtil.class,
 					"updateCommerceShipment",
-					_updateCommerceShipmentParameterTypes4);
+					_updateCommerceShipmentParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceShipmentId, shipmentUserId, commerceAddressId,
@@ -231,23 +264,26 @@ public class CommerceShipmentServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceShipmentServiceHttp.class);
 	private static final Class<?>[] _addCommerceShipmentParameterTypes0 = new Class[] {
-			long.class, long.class, long.class, java.lang.String.class,
-			java.lang.String.class, int.class, int.class, int.class, int.class,
+			long.class, long.class, long.class, long.class,
+			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,
-			int.class, int.class,
+			int.class, int.class, int.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceShipmentParameterTypes1 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsParameterTypes2 = new Class[] {
+	private static final Class<?>[] _getCommerceShipmentParameterTypes2 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _getCommerceShipmentsParameterTypes3 = new Class[] {
 			long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCommerceShipmentsCountParameterTypes3 = new Class[] {
+	private static final Class<?>[] _getCommerceShipmentsCountParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _updateCommerceShipmentParameterTypes4 = new Class[] {
+	private static final Class<?>[] _updateCommerceShipmentParameterTypes5 = new Class[] {
 			long.class, long.class, long.class, long.class,
 			java.lang.String.class, java.lang.String.class, int.class, int.class,
 			int.class, int.class, int.class, int.class, int.class, int.class,

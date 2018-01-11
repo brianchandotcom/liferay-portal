@@ -402,8 +402,9 @@ public class CommerceCountryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
-		long groupId) {
-		return _commerceCountryLocalService.getWarehouseCommerceCountries(groupId);
+		long groupId, boolean all) {
+		return _commerceCountryLocalService.getWarehouseCommerceCountries(groupId,
+			all);
 	}
 
 	@Override

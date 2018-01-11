@@ -109,13 +109,13 @@ public class CommerceShipmentItemServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceShipmentItemSoap[] getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipmentItem> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceShipmentItem> returnValue =
-				CommerceShipmentItemServiceUtil.getCommerceShipmentItems(groupId,
-					commerceShipmentId, start, end, orderByComparator);
+				CommerceShipmentItemServiceUtil.getCommerceShipmentItems(commerceShipmentId,
+					start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceShipmentItemSoap.toSoapModels(returnValue);
 		}
@@ -126,11 +126,10 @@ public class CommerceShipmentItemServiceSoap {
 		}
 	}
 
-	public static int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId) throws RemoteException {
+	public static int getCommerceShipmentItemsCount(long commerceShipmentId)
+		throws RemoteException {
 		try {
-			int returnValue = CommerceShipmentItemServiceUtil.getCommerceShipmentItemsCount(groupId,
-					commerceShipmentId);
+			int returnValue = CommerceShipmentItemServiceUtil.getCommerceShipmentItemsCount(commerceShipmentId);
 
 			return returnValue;
 		}

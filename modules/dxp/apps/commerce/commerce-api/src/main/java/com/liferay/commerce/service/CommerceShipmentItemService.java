@@ -68,13 +68,12 @@ public interface CommerceShipmentItemService extends BaseService {
 		long commerceShipmentItemId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceShipmentItem> getCommerceShipmentItems(long groupId,
+	public List<CommerceShipmentItem> getCommerceShipmentItems(
 		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId);
+	public int getCommerceShipmentItemsCount(long commerceShipmentId);
 
 	/**
 	* Returns the OSGi service identifier.

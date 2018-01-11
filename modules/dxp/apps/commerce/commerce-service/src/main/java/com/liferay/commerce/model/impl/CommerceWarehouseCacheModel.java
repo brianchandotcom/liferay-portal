@@ -65,7 +65,7 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{commerceWarehouseId=");
 		sb.append(commerceWarehouseId);
@@ -85,6 +85,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		sb.append(name);
 		sb.append(", description=");
 		sb.append(description);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append(", street1=");
 		sb.append(street1);
 		sb.append(", street2=");
@@ -152,6 +154,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 			commerceWarehouseImpl.setDescription(description);
 		}
 
+		commerceWarehouseImpl.setActive(active);
+
 		if (street1 == null) {
 			commerceWarehouseImpl.setStreet1("");
 		}
@@ -211,6 +215,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		modifiedDate = objectInput.readLong();
 		name = objectInput.readUTF();
 		description = objectInput.readUTF();
+
+		active = objectInput.readBoolean();
 		street1 = objectInput.readUTF();
 		street2 = objectInput.readUTF();
 		street3 = objectInput.readUTF();
@@ -260,6 +266,8 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 		else {
 			objectOutput.writeUTF(description);
 		}
+
+		objectOutput.writeBoolean(active);
 
 		if (street1 == null) {
 			objectOutput.writeUTF("");
@@ -314,6 +322,7 @@ public class CommerceWarehouseCacheModel implements CacheModel<CommerceWarehouse
 	public long modifiedDate;
 	public String name;
 	public String description;
+	public boolean active;
 	public String street1;
 	public String street2;
 	public String street3;

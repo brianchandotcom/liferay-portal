@@ -78,6 +78,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR },
+			{ "active_", Types.BOOLEAN },
 			{ "street1", Types.VARCHAR },
 			{ "street2", Types.VARCHAR },
 			{ "street3", Types.VARCHAR },
@@ -100,6 +101,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("active_", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("street1", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street2", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("street3", Types.VARCHAR);
@@ -111,7 +113,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		TABLE_COLUMNS_MAP.put("longitude", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceWarehouse (commerceWarehouseId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description VARCHAR(75) null,active_ BOOLEAN,street1 VARCHAR(75) null,street2 VARCHAR(75) null,street3 VARCHAR(75) null,city VARCHAR(75) null,zip VARCHAR(75) null,commerceRegionId LONG,commerceCountryId LONG,latitude DOUBLE,longitude DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceWarehouse";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceWarehouse.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceWarehouse.name ASC";
@@ -127,9 +129,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.commerce.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.commerce.model.CommerceWarehouse"),
 			true);
-	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long ACTIVE_COLUMN_BITMASK = 1L;
+	public static final long COMMERCECOUNTRYID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -153,6 +156,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setActive(soapModel.getActive());
 		model.setStreet1(soapModel.getStreet1());
 		model.setStreet2(soapModel.getStreet2());
 		model.setStreet3(soapModel.getStreet3());
@@ -236,6 +240,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("active", getActive());
 		attributes.put("street1", getStreet1());
 		attributes.put("street2", getStreet2());
 		attributes.put("street3", getStreet3());
@@ -306,6 +311,12 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 
 		String street1 = (String)attributes.get("street1");
@@ -515,6 +526,35 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 	@JSON
 	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@JSON
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		_columnBitmask |= ACTIVE_COLUMN_BITMASK;
+
+		if (!_setOriginalActive) {
+			_setOriginalActive = true;
+
+			_originalActive = _active;
+		}
+
+		_active = active;
+	}
+
+	public boolean getOriginalActive() {
+		return _originalActive;
+	}
+
+	@JSON
+	@Override
 	public String getStreet1() {
 		if (_street1 == null) {
 			return "";
@@ -689,6 +729,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		commerceWarehouseImpl.setModifiedDate(getModifiedDate());
 		commerceWarehouseImpl.setName(getName());
 		commerceWarehouseImpl.setDescription(getDescription());
+		commerceWarehouseImpl.setActive(getActive());
 		commerceWarehouseImpl.setStreet1(getStreet1());
 		commerceWarehouseImpl.setStreet2(getStreet2());
 		commerceWarehouseImpl.setStreet3(getStreet3());
@@ -764,6 +805,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 		commerceWarehouseModelImpl._setModifiedDate = false;
 
+		commerceWarehouseModelImpl._originalActive = commerceWarehouseModelImpl._active;
+
+		commerceWarehouseModelImpl._setOriginalActive = false;
+
 		commerceWarehouseModelImpl._originalCommerceCountryId = commerceWarehouseModelImpl._commerceCountryId;
 
 		commerceWarehouseModelImpl._setOriginalCommerceCountryId = false;
@@ -825,6 +870,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 			commerceWarehouseCacheModel.description = null;
 		}
 
+		commerceWarehouseCacheModel.active = getActive();
+
 		commerceWarehouseCacheModel.street1 = getStreet1();
 
 		String street1 = commerceWarehouseCacheModel.street1;
@@ -878,7 +925,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(39);
 
 		sb.append("{commerceWarehouseId=");
 		sb.append(getCommerceWarehouseId());
@@ -898,6 +945,8 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append(", street1=");
 		sb.append(getStreet1());
 		sb.append(", street2=");
@@ -923,7 +972,7 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(58);
+		StringBundler sb = new StringBundler(61);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceWarehouse");
@@ -964,6 +1013,10 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 		sb.append(
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>street1</column-name><column-value><![CDATA[");
@@ -1023,6 +1076,9 @@ public class CommerceWarehouseModelImpl extends BaseModelImpl<CommerceWarehouse>
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _description;
+	private boolean _active;
+	private boolean _originalActive;
+	private boolean _setOriginalActive;
 	private String _street1;
 	private String _street2;
 	private String _street3;

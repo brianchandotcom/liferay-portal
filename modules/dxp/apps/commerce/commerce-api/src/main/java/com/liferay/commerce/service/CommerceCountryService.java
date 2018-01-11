@@ -107,8 +107,8 @@ public interface CommerceCountryService extends BaseService {
 		boolean shippingAllowed, boolean active);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId)
-		throws PortalException;
+	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId,
+		boolean all) throws PortalException;
 
 	public CommerceCountry updateCommerceCountry(long commerceCountryId,
 		Map<Locale, java.lang.String> nameMap, boolean billingAllowed,

@@ -57,17 +57,15 @@ public class CommerceShipmentItemServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipmentItem> orderByComparator) {
-		return _commerceShipmentItemService.getCommerceShipmentItems(groupId,
-			commerceShipmentId, start, end, orderByComparator);
+		return _commerceShipmentItemService.getCommerceShipmentItems(commerceShipmentId,
+			start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId) {
-		return _commerceShipmentItemService.getCommerceShipmentItemsCount(groupId,
-			commerceShipmentId);
+	public int getCommerceShipmentItemsCount(long commerceShipmentId) {
+		return _commerceShipmentItemService.getCommerceShipmentItemsCount(commerceShipmentId);
 	}
 
 	/**

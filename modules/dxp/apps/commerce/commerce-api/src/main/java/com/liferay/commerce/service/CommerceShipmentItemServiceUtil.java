@@ -61,17 +61,15 @@ public class CommerceShipmentItemServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceShipmentItem> getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceShipmentItem> orderByComparator) {
 		return getService()
-				   .getCommerceShipmentItems(groupId, commerceShipmentId,
-			start, end, orderByComparator);
+				   .getCommerceShipmentItems(commerceShipmentId, start, end,
+			orderByComparator);
 	}
 
-	public static int getCommerceShipmentItemsCount(long groupId,
-		long commerceShipmentId) {
-		return getService()
-				   .getCommerceShipmentItemsCount(groupId, commerceShipmentId);
+	public static int getCommerceShipmentItemsCount(long commerceShipmentId) {
+		return getService().getCommerceShipmentItemsCount(commerceShipmentId);
 	}
 
 	/**

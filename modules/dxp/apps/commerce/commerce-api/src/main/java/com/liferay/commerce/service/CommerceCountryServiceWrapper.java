@@ -119,9 +119,10 @@ public class CommerceCountryServiceWrapper implements CommerceCountryService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceCountry> getWarehouseCommerceCountries(
-		long groupId)
+		long groupId, boolean all)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCountryService.getWarehouseCommerceCountries(groupId);
+		return _commerceCountryService.getWarehouseCommerceCountries(groupId,
+			all);
 	}
 
 	@Override

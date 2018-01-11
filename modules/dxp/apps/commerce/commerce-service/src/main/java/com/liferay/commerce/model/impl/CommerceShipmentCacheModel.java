@@ -65,7 +65,7 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{commerceShipmentId=");
 		sb.append(commerceShipmentId);
@@ -87,6 +87,8 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		sb.append(commerceAddressId);
 		sb.append(", commerceShippingMethodId=");
 		sb.append(commerceShippingMethodId);
+		sb.append(", commerceWarehouseId=");
+		sb.append(commerceWarehouseId);
 		sb.append(", carrier=");
 		sb.append(carrier);
 		sb.append(", trackingNumber=");
@@ -137,6 +139,7 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		commerceShipmentImpl.setShipmentUserId(shipmentUserId);
 		commerceShipmentImpl.setCommerceAddressId(commerceAddressId);
 		commerceShipmentImpl.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceShipmentImpl.setCommerceWarehouseId(commerceWarehouseId);
 
 		if (carrier == null) {
 			commerceShipmentImpl.setCarrier("");
@@ -192,6 +195,8 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 		commerceAddressId = objectInput.readLong();
 
 		commerceShippingMethodId = objectInput.readLong();
+
+		commerceWarehouseId = objectInput.readLong();
 		carrier = objectInput.readUTF();
 		trackingNumber = objectInput.readUTF();
 
@@ -229,6 +234,8 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 
 		objectOutput.writeLong(commerceShippingMethodId);
 
+		objectOutput.writeLong(commerceWarehouseId);
+
 		if (carrier == null) {
 			objectOutput.writeUTF("");
 		}
@@ -260,6 +267,7 @@ public class CommerceShipmentCacheModel implements CacheModel<CommerceShipment>,
 	public long shipmentUserId;
 	public long commerceAddressId;
 	public long commerceShippingMethodId;
+	public long commerceWarehouseId;
 	public String carrier;
 	public String trackingNumber;
 	public int expectedDuration;

@@ -43,26 +43,33 @@ public class CommerceShipmentServiceUtil {
 	 */
 	public static com.liferay.commerce.model.CommerceShipment addCommerceShipment(
 		long shipmentUserId, long commerceAddressId,
-		long commerceShippingMethodId, java.lang.String carrier,
-		java.lang.String trackingNumber, int expectedDuration, int status,
-		int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-		int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-		int expectedDateDay, int expectedDateYear, int expectedDateHour,
-		int expectedDateMinute,
+		long commerceShippingMethodId, long commerceWarehouseId,
+		java.lang.String carrier, java.lang.String trackingNumber,
+		int expectedDuration, int status, int shippingDateMonth,
+		int shippingDateDay, int shippingDateYear, int shippingDateHour,
+		int shippingDateMinute, int expectedDateMonth, int expectedDateDay,
+		int expectedDateYear, int expectedDateHour, int expectedDateMinute,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceShipment(shipmentUserId, commerceAddressId,
-			commerceShippingMethodId, carrier, trackingNumber,
-			expectedDuration, status, shippingDateMonth, shippingDateDay,
-			shippingDateYear, shippingDateHour, shippingDateMinute,
-			expectedDateMonth, expectedDateDay, expectedDateYear,
-			expectedDateHour, expectedDateMinute, serviceContext);
+			commerceShippingMethodId, commerceWarehouseId, carrier,
+			trackingNumber, expectedDuration, status, shippingDateMonth,
+			shippingDateDay, shippingDateYear, shippingDateHour,
+			shippingDateMinute, expectedDateMonth, expectedDateDay,
+			expectedDateYear, expectedDateHour, expectedDateMinute,
+			serviceContext);
 	}
 
 	public static void deleteCommerceShipment(long commerceShipmentId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteCommerceShipment(commerceShipmentId);
+	}
+
+	public static com.liferay.commerce.model.CommerceShipment getCommerceShipment(
+		long commerceShipmentId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceShipment(commerceShipmentId);
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceShipment> getCommerceShipments(

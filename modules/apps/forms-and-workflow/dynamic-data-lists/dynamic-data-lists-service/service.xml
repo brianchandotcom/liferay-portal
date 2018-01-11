@@ -206,6 +206,10 @@
 			<finder-column name="recordSetVersion" />
 			<finder-column name="status" type="int" />
 		</finder>
+
+		<!-- References -->
+
+		<reference entity="DDLRecord" package-path="com.liferay.dynamic.data.lists" />
 	</entity>
 	<exceptions>
 		<exception>RecordGroupId</exception>

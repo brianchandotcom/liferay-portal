@@ -25,7 +25,7 @@
 						FROM
 							CommerceWarehouse
 						WHERE
-							CommerceWarehouse.groupId = ?
+							(CommerceWarehouse.groupId = ?) [$ALL$]
 					)
 			ORDER BY
 				CommerceCountry.priority
@@ -43,7 +43,7 @@
 				CommerceOrder.status
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByG_C">
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByC_C">
 		<![CDATA[
 			SELECT
 				{CommerceOrderItem.*}
@@ -52,10 +52,31 @@
 			INNER JOIN
 				CommerceOrder ON
 					CommerceOrder.commerceOrderId = CommerceOrderItem.commerceOrderId
+			INNER JOIN
+				CommerceWarehouseItem ON
+					CommerceWarehouseItem.CPInstanceId = CommerceOrderItem.CPInstanceId
 			WHERE
-				(CommerceOrderItem.groupId = ?) AND
+				(CommerceWarehouseItem.commerceWarehouseId = ?) AND
 				(CommerceOrder.shippingAddressId = ?) AND
 				(CommerceOrderItem.quantity > CommerceOrderItem.shippedQuantity)
+		]]>
+	</sql>
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.getCPInstanceQuantity">
+		<![CDATA[
+			SELECT
+				SUM(CommerceOrderItem.quantity) AS SUM_VALUE
+			FROM
+				CommerceOrderItem
+			INNER JOIN
+				CommerceOrder ON
+					CommerceOrderItem.commerceOrderId = CommerceOrder.commerceOrderId
+			LEFT JOIN
+				CommerceShipmentItem ON
+					CommerceShipmentItem.commerceOrderItemId = CommerceOrderItem.commerceOrderItemId
+			WHERE
+				(CommerceOrderItem.CPInstanceId = ?) AND
+				(CommerceShipmentItem.commerceOrderItemId IS NULL) AND
+				(CommerceOrder.status <> ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommercePriceListFinder.findByExpirationDate">
@@ -89,26 +110,21 @@
 					(lower(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
-				(CommerceWarehouse.commerceCountryId = ?)
+				(CommerceWarehouse.commerceCountryId = ?) [$ALL$]
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByCommerceWarehouseItemQuantity">
+	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByCPInstanceId">
 		<![CDATA[
 			SELECT
 				{CommerceWarehouse.*}
 			FROM
 				CommerceWarehouse
+			INNER JOIN
+				CommerceWarehouseItem ON
+					CommerceWarehouse.commerceWarehouseId = CommerceWarehouseItem.commerceWarehouseId
 			WHERE
-				CommerceWarehouse.commerceWarehouseId IN
-					(
-						SELECT
-							commerceWarehouseId
-						FROM
-							CommerceWarehouseItem
-						WHERE
-							(CommerceWarehouseItem.CPInstanceId = ?) AND
-							(CommerceWarehouseItem.quantity >= ?)
-					)
+				(CommerceWarehouse.active_ = true) AND
+				(CommerceWarehouseItem.CPInstanceId = ?)
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByG_N_D_S_C_Z_C">
@@ -130,7 +146,7 @@
 					(lower(CommerceWarehouse.city) LIKE ? [$AND_OR_NULL_CHECK$]) [$AND_OR_CONNECTOR$]
 					(lower(CommerceWarehouse.zip) LIKE ? [$AND_OR_NULL_CHECK$])
 				) AND
-				(CommerceWarehouse.commerceCountryId = ?)
+				(CommerceWarehouse.commerceCountryId = ?) [$ALL$]
 			ORDER BY
 				CommerceWarehouse.name ASC
 		]]>

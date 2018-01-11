@@ -94,6 +94,12 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 				property="city"
 			/>
 
+			<liferay-ui:search-container-column-text
+				cssClass="table-cell-content"
+				name="active"
+				value='<%= LanguageUtil.get(request, commerceWarehouse.isActive() ? "yes" : "no") %>'
+			/>
+
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"
 				path="/warehouse_action.jsp"

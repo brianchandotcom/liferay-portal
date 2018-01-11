@@ -15,6 +15,8 @@
 package com.liferay.commerce.warehouse.web.internal.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
+import com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration;
+import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.commerce.service.CommerceWarehouseService;
@@ -23,7 +25,10 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -117,6 +122,29 @@ public class WarehousesCommerceAdminModule implements CommerceAdminModule {
 	}
 
 	@Override
+	public boolean isVisible(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		CommerceShippingGroupServiceConfiguration
+			commerceShippingGroupServiceConfiguration =
+				_configurationProvider.getConfiguration(
+					CommerceShippingGroupServiceConfiguration.class,
+					new GroupServiceSettingsLocator(
+						_portal.getScopeGroupId(httpServletRequest),
+						CommerceConstants.SHIPPING_SERVICE_NAME));
+
+		String commerceShippingOriginLocatorKey =
+			commerceShippingGroupServiceConfiguration.
+				commerceShippingOriginLocatorKey();
+
+		if (commerceShippingOriginLocatorKey.equals("address")) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws Exception {
 	}
@@ -168,6 +196,9 @@ public class WarehousesCommerceAdminModule implements CommerceAdminModule {
 
 	@Reference
 	private CommerceWarehouseService _commerceWarehouseService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

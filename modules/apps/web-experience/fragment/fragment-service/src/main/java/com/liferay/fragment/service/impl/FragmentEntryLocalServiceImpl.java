@@ -110,7 +110,11 @@ public class FragmentEntryLocalServiceImpl
 
 		// HTML preview
 
-		_updateHtmlPreviewEntry(fragmentEntry, serviceContext);
+		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
+			fragmentEntry, serviceContext);
+
+		fragmentEntry.setHtmlPreviewEntryId(
+			htmlPreviewEntry.getHtmlPreviewEntryId());
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
@@ -239,6 +243,8 @@ public class FragmentEntryLocalServiceImpl
 			String js, ServiceContext serviceContext)
 		throws PortalException {
 
+		// Fragment entry
+
 		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
 			fragmentEntryId);
 
@@ -254,7 +260,13 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
 
-		_updateHtmlPreviewEntry(fragmentEntry, serviceContext);
+		// HTML preview
+
+		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
+			fragmentEntry, serviceContext);
+
+		fragmentEntry.setHtmlPreviewEntryId(
+			htmlPreviewEntry.getHtmlPreviewEntryId());
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
@@ -300,16 +312,11 @@ public class FragmentEntryLocalServiceImpl
 				serviceContext);
 		}
 
-		htmlPreviewEntry = _htmlPreviewEntryLocalService.addHtmlPreviewEntry(
+		return _htmlPreviewEntryLocalService.addHtmlPreviewEntry(
 			fragmentEntry.getUserId(), fragmentEntry.getGroupId(),
 			classNameLocalService.getClassNameId(FragmentEntry.class),
 			fragmentEntry.getFragmentEntryId(), fragmentEntry.getContent(),
 			ContentTypes.IMAGE_PNG, serviceContext);
-
-		fragmentEntry.setHtmlPreviewEntryId(
-			htmlPreviewEntry.getHtmlPreviewEntryId());
-
-		return htmlPreviewEntry;
 	}
 
 	@ServiceReference(type = FragmentEntryProcessorRegistry.class)

@@ -165,22 +165,14 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 			return;
 		}
 
-		List<Element> elements = element.elements();
-
-		if (elements.size() != 1) {
-			return;
-		}
-
-		Element replaceableElement = elements.get(0);
-
 		EditableElementParser editableTagParser =
-			_editableElementParsers.get(replaceableElement.getName());
+			_editableElementParsers.get(element.getName());
 
 		if (editableTagParser == null) {
 			return;
 		}
 
-		editableTagParser.replace(replaceableElement, value);
+		editableTagParser.replace(element, value);
 	}
 
 	private final Map<String, EditableElementParser> _editableElementParsers =

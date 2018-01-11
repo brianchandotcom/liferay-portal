@@ -18,6 +18,8 @@ import com.liferay.fragment.entry.processor.editable.parser.EditableElementParse
 import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 
+import java.util.List;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -31,7 +33,15 @@ public class ImgEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {
-		Attribute attribute = element.attribute("src");
+		List<Element> elements = element.elements();
+
+		if (elements.size() != 1) {
+			return;
+		}
+
+		Element replaceableElement = elements.get(0);
+
+		Attribute attribute = replaceableElement.attribute("src");
 
 		attribute.setValue(value);
 	}

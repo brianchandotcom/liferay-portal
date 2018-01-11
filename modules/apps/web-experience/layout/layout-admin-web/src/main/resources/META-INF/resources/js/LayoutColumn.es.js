@@ -27,6 +27,19 @@ class LayoutColumn extends Component {
 		});
 	}
 
+	/**
+	 * Handle delete item click in order to show a previous confirmation
+	 * alert.
+	 * @param {Event} event
+	 * @private
+	 */
+	_handleDeleteItemClick(event) {
+		if (!confirm(Liferay.Language.get(
+			'are-you-sure-you-want-to-delete-this'
+		))) {
+			event.preventDefault();
+		}
+	}
 }
 
 /**

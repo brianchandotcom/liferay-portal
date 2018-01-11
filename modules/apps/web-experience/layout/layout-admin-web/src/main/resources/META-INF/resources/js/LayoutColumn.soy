@@ -143,7 +143,11 @@
 					{/if}
 
 					{if $layoutColumnItem.actionURLs['deleteURL']}
-						<a class="dropdown-item" href="{$layoutColumnItem.actionURLs['deleteURL']}">
+						<a
+							class="dropdown-item"
+							href="{$layoutColumnItem.actionURLs['deleteURL']}"
+							data-onclick="_handleDeleteItemClick"
+						>
 							{msg desc=""}delete{/msg}
 						</a>
 					{/if}

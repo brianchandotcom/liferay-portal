@@ -255,7 +255,7 @@
 			<var name="viewEntryContentList" value="WC Campaign Content,WC User Segment Content" />
 		</execute>
 
-		<execute macro="ProductMenu#gotoPortlet">
+		<!-- <execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
 			<var name="portlet" value="Audience Targeting" />
@@ -269,6 +269,6 @@
 		<execute macro="ContentTargetingCampaign#viewContentReportCP">
 			<var name="reportsContentTableList" value="Content Metric Name,View,3" />
 			<var name="reportTitle" value="Content Metric Name" />
-		</execute>
+		</execute> -->
 	</command>
 </definition>

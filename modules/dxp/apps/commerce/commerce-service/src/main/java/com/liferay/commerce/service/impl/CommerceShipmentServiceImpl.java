@@ -33,12 +33,13 @@ public class CommerceShipmentServiceImpl
 	@Override
 	public CommerceShipment addCommerceShipment(
 			long shipmentUserId, long commerceAddressId,
-			long commerceShippingMethodId, String carrier,
-			String trackingNumber, int expectedDuration, int status,
-			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute, ServiceContext serviceContext)
+			long commerceShippingMethodId, long commerceWarehouseId,
+			String carrier, String trackingNumber, int expectedDuration,
+			int status, int shippingDateMonth, int shippingDateDay,
+			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
+			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
+			int expectedDateHour, int expectedDateMinute,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		CommerceShipmentPermission.check(
@@ -47,8 +48,8 @@ public class CommerceShipmentServiceImpl
 
 		return commerceShipmentLocalService.addCommerceShipment(
 			shipmentUserId, commerceAddressId, commerceShippingMethodId,
-			carrier, trackingNumber, expectedDuration, status,
-			shippingDateMonth, shippingDateDay, shippingDateYear,
+			commerceWarehouseId, carrier, trackingNumber, expectedDuration,
+			status, shippingDateMonth, shippingDateDay, shippingDateYear,
 			shippingDateHour, shippingDateMinute, expectedDateMonth,
 			expectedDateDay, expectedDateYear, expectedDateHour,
 			expectedDateMinute, serviceContext);
@@ -66,6 +67,21 @@ public class CommerceShipmentServiceImpl
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
 		commerceShipmentLocalService.deleteCommerceShipment(commerceShipment);
+	}
+
+	@Override
+	public CommerceShipment getCommerceShipment(long commerceShipmentId)
+		throws PortalException {
+
+		CommerceShipment commerceShipment =
+			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
+
+		CommerceShipmentPermission.check(
+			getPermissionChecker(), commerceShipment.getGroupId(),
+			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+
+		return commerceShipmentLocalService.getCommerceShipment(
+			commerceShipmentId);
 	}
 
 	@Override

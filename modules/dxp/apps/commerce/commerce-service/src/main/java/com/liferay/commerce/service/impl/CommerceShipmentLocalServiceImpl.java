@@ -41,12 +41,13 @@ public class CommerceShipmentLocalServiceImpl
 	@Override
 	public CommerceShipment addCommerceShipment(
 			long shipmentUserId, long commerceAddressId,
-			long commerceShippingMethodId, String carrier,
-			String trackingNumber, int expectedDuration, int status,
-			int shippingDateMonth, int shippingDateDay, int shippingDateYear,
-			int shippingDateHour, int shippingDateMinute, int expectedDateMonth,
-			int expectedDateDay, int expectedDateYear, int expectedDateHour,
-			int expectedDateMinute, ServiceContext serviceContext)
+			long commerceShippingMethodId, long commerceWarehouseId,
+			String carrier, String trackingNumber, int expectedDuration,
+			int status, int shippingDateMonth, int shippingDateDay,
+			int shippingDateYear, int shippingDateHour, int shippingDateMinute,
+			int expectedDateMonth, int expectedDateDay, int expectedDateYear,
+			int expectedDateHour, int expectedDateMinute,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -74,6 +75,7 @@ public class CommerceShipmentLocalServiceImpl
 		commerceShipment.setShipmentUserId(shipmentUserId);
 		commerceShipment.setCommerceAddressId(commerceAddressId);
 		commerceShipment.setCommerceShippingMethodId(commerceShippingMethodId);
+		commerceShipment.setCommerceWarehouseId(commerceWarehouseId);
 		commerceShipment.setCarrier(carrier);
 		commerceShipment.setTrackingNumber(trackingNumber);
 		commerceShipment.setExpectedDuration(expectedDuration);
@@ -97,7 +99,6 @@ public class CommerceShipmentLocalServiceImpl
 		// Commerce shipment items
 
 		commerceShipmentItemLocalService.deleteCommerceShipmentItems(
-			commerceShipment.getGroupId(),
 			commerceShipment.getCommerceShipmentId());
 
 		return commerceShipment;

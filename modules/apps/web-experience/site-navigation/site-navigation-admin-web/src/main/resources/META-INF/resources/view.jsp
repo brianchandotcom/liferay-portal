@@ -192,23 +192,27 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 </portlet:actionURL>
 
 <aui:script require="metal-dom/src/all/dom as dom" sandbox="<%= true %>">
-	function handleAddNavigationMenuMenuItemClick(event) {
-		event.preventDefault();
+	var addNavigationMenuClickHandler = dom.on(
+		'#<portlet:namespace />addNavigationMenuMenuItem',
+		'click',
+		function(event) {
+			event.preventDefault();
 
-		Liferay.Util.openSimpleInputModal(
-			{
-				dialogTitle: '<liferay-ui:message key="add-menu" />',
-				formSubmitURL: '<%= addSiteNavigationMenuURL %>',
-				mainFieldLabel: '<liferay-ui:message key="name" />',
-				mainFieldName: 'name',
-				mainFieldPlaceholder: '<liferay-ui:message key="name" />',
-				namespace: '<portlet:namespace />',
-				spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
-			}
-		);
-	}
+			Liferay.Util.openSimpleInputModal(
+				{
+					dialogTitle: '<liferay-ui:message key="add-menu" />',
+					formSubmitURL: '<%= addSiteNavigationMenuURL %>',
+					mainFieldLabel: '<liferay-ui:message key="name" />',
+					mainFieldName: 'name',
+					mainFieldPlaceholder: '<liferay-ui:message key="name" />',
+					namespace: '<portlet:namespace />',
+					spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
+				}
+			);
+		}
+	);
 
-	var updateSiteNavigationMenuMenuItemClickHandler = dom.delegate(
+	var renameSiteNavigationMenuClickHandler = dom.delegate(
 		document.body,
 		'click',
 		'.<portlet:namespace />update-site-navigation-menu-action-option > a',
@@ -234,20 +238,7 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		}
 	);
 
-	function handleDestroyPortlet() {
-		addNavigationMenuMenuItem.removeEventListener('click', handleAddNavigationMenuMenuItemClick);
-		updateSiteNavigationMenuMenuItemClickHandler.removeListener();
-
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	var addNavigationMenuMenuItem = document.getElementById('<portlet:namespace />addNavigationMenuMenuItem');
-
-	addNavigationMenuMenuItem.addEventListener('click', handleAddNavigationMenuMenuItemClick);
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
-
-	dom.on(
+	var deleteSelectedSiteNavigationMenusClickHandler = dom.on(
 		'#<portlet:namespace />deleteSelectedSiteNavigationMenus',
 		'click',
 		function() {
@@ -256,4 +247,14 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			}
 		}
 	);
+
+	function handleDestroyPortlet() {
+		addNavigationMenuClickHandler.removeListener();
+		renameSiteNavigationMenuClickHandler.removeListener();
+		deleteSelectedSiteNavigationMenusClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

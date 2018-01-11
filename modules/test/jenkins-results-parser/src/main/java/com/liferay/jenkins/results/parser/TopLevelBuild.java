@@ -1169,7 +1169,9 @@ public class TopLevelBuild extends BaseBuild {
 				}
 			}
 
-			failureElements.add(0, super.getGitHubMessageElement());
+			if (failureElements.isEmpty()) {
+				failureElements.add(0, super.getGitHubMessageElement());
+			}
 
 			Dom4JUtil.addToElement(rootElement, Dom4JUtil.getNewElement("hr"));
 

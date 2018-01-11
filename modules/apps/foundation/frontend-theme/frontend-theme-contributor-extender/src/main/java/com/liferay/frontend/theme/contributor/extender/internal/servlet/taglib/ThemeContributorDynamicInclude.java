@@ -14,8 +14,19 @@
 
 package com.liferay.frontend.theme.contributor.extender.internal.servlet.taglib;
 
+import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
+import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.TreeSet;
@@ -30,16 +41,6 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-
-import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
-import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
-import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
-import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.WebKeys;
 
 /**
  * @author Carlos Sierra Andrés
@@ -80,13 +81,12 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		if (themeDisplay.isThemeJsFastLoad()) {
 			_renderComboJS(
-				themeLastModified, request, portalCDNURL,
-				response.getWriter());
+				themeLastModified, request, portalCDNURL, response.getWriter());
 		}
 		else {
 			_renderSimpleJS(
-				themeLastModified, request, portalCDNURL,
-				response.getWriter(), _jsResourceURLs);
+				themeLastModified, request, portalCDNURL, response.getWriter(),
+				_jsResourceURLs);
 		}
 	}
 
@@ -209,9 +209,9 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		printWriter.write(
 			portalURL +
-			_portal.getStaticResourceURL(
-				request, _comboContextPath, "minifierType=css",
-				themeLastModified));
+				_portal.getStaticResourceURL(
+					request, _comboContextPath, "minifierType=css",
+					themeLastModified));
 
 		printWriter.write(_mergedCSSResourceURLs);
 	}
@@ -224,9 +224,9 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 
 		printWriter.write(
 			portalURL +
-			_portal.getStaticResourceURL(
-				request, _comboContextPath, "minifierType=js",
-				themeLastModified));
+				_portal.getStaticResourceURL(
+					request, _comboContextPath, "minifierType=js",
+					themeLastModified));
 
 		printWriter.write(_mergedJSResourceURLs);
 	}

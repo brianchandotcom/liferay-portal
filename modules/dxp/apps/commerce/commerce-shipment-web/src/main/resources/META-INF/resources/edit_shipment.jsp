@@ -79,7 +79,7 @@ portletDisplay.setURLBack(shipmentsURL);
 
 	</aui:select>
 
-	<aui:select label="carrier" name="commerceShippingMethodId" showEmptyOption="<%= true %>">
+	<aui:select label="method" name="commerceShippingMethodId" showEmptyOption="<%= true %>">
 
 		<%
 		List<CommerceShippingMethod> commerceShippingMethods = commerceShipmentDisplayContext.getCommerceShippingMethods();
@@ -91,6 +91,26 @@ portletDisplay.setURLBack(shipmentsURL);
 				label="<%= commerceShippingMethod.getName() %>"
 				selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceShippingMethodId() == commerceShippingMethod.getCommerceShippingMethodId()) %>"
 				value="<%= commerceShippingMethod.getCommerceShippingMethodId() %>"
+			/>
+
+		<%
+		}
+		%>
+
+	</aui:select>
+
+	<aui:select label="warehouse" name="commerceWarehouseId">
+
+		<%
+		List<CommerceWarehouse> commerceWarehouses = commerceShipmentDisplayContext.getCommerceWarehouses();
+
+		for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
+		%>
+
+			<aui:option
+				label="<%= commerceWarehouse.getName() %>"
+				selected="<%= (commerceShipment != null) && (commerceShipment.getCommerceWarehouseId() == commerceWarehouse.getCommerceWarehouseId()) %>"
+				value="<%= commerceWarehouse.getCommerceWarehouseId() %>"
 			/>
 
 		<%

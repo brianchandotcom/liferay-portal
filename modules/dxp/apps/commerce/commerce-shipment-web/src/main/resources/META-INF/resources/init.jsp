@@ -33,6 +33,7 @@ page import="com.liferay.commerce.model.CommerceRegion" %><%@
 page import="com.liferay.commerce.model.CommerceShipment" %><%@
 page import="com.liferay.commerce.model.CommerceShipmentItem" %><%@
 page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
+page import="com.liferay.commerce.model.CommerceWarehouse" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
 page import="com.liferay.commerce.service.permission.CommerceShipmentPermission" %><%@

@@ -125,6 +125,10 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 						<p><%= HtmlUtil.escape(commerceShipment.getTrackingNumber()) %></p>
 					</c:otherwise>
 				</c:choose>
+
+				<p class="text-muted"><liferay-ui:message key="warehouse" /></p>
+
+				<p><%= HtmlUtil.escape(commerceShipmentItemDisplayContext.getCommerceWarehouseName(commerceShipment.getCommerceWarehouseId())) %></p>
 			</div>
 
 			<div class="col-md-2">

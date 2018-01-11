@@ -62,7 +62,6 @@ public class ConfigurationBeanManagedService implements ManagedService {
 
 	public void unregister() {
 		_managedServiceServiceRegistration.unregister();
-		_configurationBeanServiceRegistration.unregister();
 	}
 
 	@Override
@@ -85,14 +84,6 @@ public class ConfigurationBeanManagedService implements ManagedService {
 			_configurationBeanClass, properties);
 
 		_configurationBeanConsumer.accept(_configurationBean);
-
-		if (_configurationBeanServiceRegistration != null) {
-			_configurationBeanServiceRegistration.unregister();
-		}
-
-		_configurationBeanServiceRegistration = _bundleContext.registerService(
-			_configurationBeanClass.getName(), _configurationBean,
-			new HashMapDictionary<>());
 	}
 
 	protected class UpdatePrivilegedAction implements PrivilegedAction<Void> {
@@ -116,7 +107,6 @@ public class ConfigurationBeanManagedService implements ManagedService {
 	private volatile Object _configurationBean;
 	private final Class<?> _configurationBeanClass;
 	private final Consumer<Object> _configurationBeanConsumer;
-	private ServiceRegistration<?> _configurationBeanServiceRegistration;
 	private final String _configurationPid;
 	private ServiceRegistration<ManagedService>
 		_managedServiceServiceRegistration;

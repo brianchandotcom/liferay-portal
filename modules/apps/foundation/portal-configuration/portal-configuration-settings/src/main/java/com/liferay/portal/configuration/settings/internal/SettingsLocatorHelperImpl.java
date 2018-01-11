@@ -15,6 +15,8 @@
 package com.liferay.portal.configuration.settings.internal;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.settings.internal.scoped.configuration.ScopeKey;
+import com.liferay.portal.configuration.settings.internal.scoped.configuration.ScopedConfigurationBeanConfigurationListener;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -328,14 +330,15 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			_configurationBeanClasses.get(configurationPid), scope,
 			scopePrimKey);
 
-		if (!_scopedConfigurationBeanProvider.has(scopeKey)) {
+		if (!_scopedConfigurationBeanConfigurationListener.has(scopeKey)) {
 			return parentSettings;
 		}
 
 		return new ConfigurationBeanSettings(
 			_configurationBeanLocationVariableResolvers.get(
 				scopeKey.getObjectClass()),
-			_scopedConfigurationBeanProvider.get(scopeKey), parentSettings);
+			_scopedConfigurationBeanConfigurationListener.get(scopeKey),
+			parentSettings);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -357,7 +360,8 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 	private PortletPreferencesLocalService _portletPreferencesLocalService;
 
 	@Reference
-	private ScopedConfigurationBeanProvider _scopedConfigurationBeanProvider;
+	private ScopedConfigurationBeanConfigurationListener
+		_scopedConfigurationBeanConfigurationListener;
 
 	private class ConfigurationBeanDeclarationServiceTracker
 		extends ServiceTracker

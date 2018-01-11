@@ -3306,6 +3306,8 @@ to version 2.3.61.
 ## 3.5.85 - 2018-01-10
 
 ### Changed
+- [LPS-73124]: Update the [Liferay Portal Tools DB Support] dependency to
+version 1.0.7.
 - [LPS-76226]: Update the [Liferay Gradle Plugins Source Formatter] dependency
 to version 2.3.62.
 - [LPS-76226]: Update the [Liferay Source Formatter] dependency to version

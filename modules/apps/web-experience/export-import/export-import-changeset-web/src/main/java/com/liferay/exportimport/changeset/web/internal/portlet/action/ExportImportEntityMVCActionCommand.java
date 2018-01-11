@@ -165,6 +165,8 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 
 		Portlet portlet = _portletLocalService.getPortletById(portletId);
 
+		long backgroundTaskId = 0;
+
 		if (cmd.equals(Constants.EXPORT)) {
 			Map<String, Serializable> settingsMap =
 				ExportImportConfigurationSettingsMapFactory.
@@ -181,10 +183,9 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 						ExportImportConfigurationConstants.TYPE_EXPORT_PORTLET,
 						settingsMap);
 
-			sendRedirect(
-				actionRequest, actionResponse,
+			backgroundTaskId =
 				_exportImportLocalService.exportPortletInfoAsFileInBackground(
-					themeDisplay.getUserId(), exportImportConfiguration));
+					themeDisplay.getUserId(), exportImportConfiguration);
 		}
 		else if (cmd.equals(Constants.PUBLISH)) {
 			Group scopeGroup = themeDisplay.getScopeGroup();
@@ -223,8 +224,8 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 					buildPublishPortletSettingsMap(
 						themeDisplay.getUser(), themeDisplay.getScopeGroupId(),
 						themeDisplay.getPlid(), liveGroupId,
-						themeDisplay.getPlid(),
-						ChangesetPortletKeys.CHANGESET, parameterMap);
+						themeDisplay.getPlid(), ChangesetPortletKeys.CHANGESET,
+						parameterMap);
 
 			ExportImportConfiguration exportImportConfiguration =
 				_exportImportConfigurationLocalService.
@@ -233,11 +234,11 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 						ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
 						settingsMap);
 
-			sendRedirect(
-				actionRequest, actionResponse,
-				_staging.publishPortlet(
-					themeDisplay.getUserId(), exportImportConfiguration));
+			backgroundTaskId = _staging.publishPortlet(
+				themeDisplay.getUserId(), exportImportConfiguration);
 		}
+
+		sendRedirect(actionRequest, actionResponse, backgroundTaskId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

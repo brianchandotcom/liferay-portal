@@ -159,7 +159,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			CommerceUtil.getCommerceWarehouseOrderByComparator("name", "asc");
 
 		return _commerceWarehouseService.getCommerceWarehouses(
-			themeDisplay.getScopeGroupId(), QueryUtil.ALL_POS,
+			themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, orderByComparator);
 	}
 

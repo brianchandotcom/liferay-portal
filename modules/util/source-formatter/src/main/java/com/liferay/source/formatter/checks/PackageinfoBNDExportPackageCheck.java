@@ -41,18 +41,11 @@ public class PackageinfoBNDExportPackageCheck extends BaseFileCheck {
 			String fileName, String absolutePath, String content)
 		throws Exception {
 
-		_checkBNDExportPackage(fileName);
-
-		return content;
-	}
-
-	private void _checkBNDExportPackage(String fileName) throws Exception {
-		if (_hasBNDExportPackage(fileName)) {
-			return;
+		if (!_hasBNDExportPackage(fileName)) {
+			return null;
 		}
 
-		addMessage(
-			fileName, "'packageinfo' not needed", "bnd_packageinfo.markdown");
+		return content;
 	}
 
 	private List<String> _getBNDExportPackages(String fileName)

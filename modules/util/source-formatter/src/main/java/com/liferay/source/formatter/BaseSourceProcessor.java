@@ -293,8 +293,8 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		String newContent = _processSourceChecks(
 			file, fileName, absolutePath, content);
 
-		if (content.equals(newContent)) {
-			return content;
+		if ((newContent == null) || content.equals(newContent)) {
+			return newContent;
 		}
 
 		if (!modifiedContents.add(newContent)) {
@@ -401,7 +401,12 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 			}
 
 			if (sourceFormatterArgs.isAutoFix()) {
-				FileUtil.write(file, newContent);
+				if (newContent != null) {
+					FileUtil.write(file, newContent);
+				}
+				else {
+					file.delete();
+				}
 			}
 			else if (_firstSourceMismatchException == null) {
 				_firstSourceMismatchException = new SourceMismatchException(

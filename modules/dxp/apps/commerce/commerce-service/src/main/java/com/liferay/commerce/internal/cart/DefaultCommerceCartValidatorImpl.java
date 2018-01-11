@@ -81,7 +81,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
+		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
 			return new CommerceCartValidatorResult(true);
 		}
 
@@ -145,7 +145,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
+		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
 			return new CommerceCartValidatorResult(true);
 		}
 

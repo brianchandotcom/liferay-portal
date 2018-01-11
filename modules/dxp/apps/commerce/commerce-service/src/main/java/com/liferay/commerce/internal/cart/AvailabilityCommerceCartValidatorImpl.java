@@ -69,7 +69,7 @@ public class AvailabilityCommerceCartValidatorImpl
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
+		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
 			return new CommerceCartValidatorResult(true);
 		}
 
@@ -106,7 +106,7 @@ public class AvailabilityCommerceCartValidatorImpl
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
 				cpDefinitionInventory);
 
-		if (cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
+		if (cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
 			return new CommerceCartValidatorResult(true);
 		}
 

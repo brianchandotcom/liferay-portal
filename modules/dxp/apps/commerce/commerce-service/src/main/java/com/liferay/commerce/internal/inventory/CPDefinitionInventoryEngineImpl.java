@@ -52,22 +52,6 @@ public class CPDefinitionInventoryEngineImpl
 	public static final String KEY = "default";
 
 	@Override
-	public boolean allowBackOrder(CPInstance cpInstance)
-		throws PortalException {
-
-		CPDefinitionInventory cpDefinitionInventory =
-			_cpDefinitionInventoryLocalService.
-				fetchCPDefinitionInventoryByCPDefinitionId(
-					cpInstance.getCPDefinitionId());
-
-		if (cpDefinitionInventory == null) {
-			return false;
-		}
-
-		return cpDefinitionInventory.getBackOrders();
-	}
-
-	@Override
 	public String[] getAllowedCartQuantities(CPInstance cpInstance)
 		throws PortalException {
 
@@ -189,6 +173,22 @@ public class CPDefinitionInventoryEngineImpl
 				cpInstance.getCPInstanceId());
 
 		return warehouseCPInstanceQuantity - orderCPInstanceQuantity;
+	}
+
+	@Override
+	public boolean isBackOrderAllowed(CPInstance cpInstance)
+		throws PortalException {
+
+		CPDefinitionInventory cpDefinitionInventory =
+			_cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					cpInstance.getCPDefinitionId());
+
+		if (cpDefinitionInventory == null) {
+			return false;
+		}
+
+		return cpDefinitionInventory.getBackOrders();
 	}
 
 	@Override

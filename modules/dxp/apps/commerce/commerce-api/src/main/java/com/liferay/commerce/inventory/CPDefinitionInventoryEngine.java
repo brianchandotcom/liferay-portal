@@ -25,8 +25,6 @@ import java.util.Locale;
  */
 public interface CPDefinitionInventoryEngine {
 
-	public boolean allowBackOrder(CPInstance cpInstance) throws PortalException;
-
 	public String[] getAllowedCartQuantities(CPInstance cpInstance)
 		throws PortalException;
 
@@ -48,6 +46,9 @@ public interface CPDefinitionInventoryEngine {
 		throws PortalException;
 
 	public int getStockQuantity(CPInstance cpInstance);
+
+	public boolean isBackOrderAllowed(CPInstance cpInstance)
+		throws PortalException;
 
 	public boolean isDisplayAvailability(CPInstance cpInstance)
 		throws PortalException;

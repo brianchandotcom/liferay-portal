@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.List;
 
@@ -36,7 +38,9 @@ public class CommerceCountryFinderImpl
 		CommerceCountryFinder.class.getName() + ".findByCommerceWarehouses";
 
 	@Override
-	public List<CommerceCountry> findByCommerceWarehouses(long groupId) {
+	public List<CommerceCountry> findByCommerceWarehouses(
+		long groupId, boolean all) {
+
 		Session session = null;
 
 		try {
@@ -44,6 +48,13 @@ public class CommerceCountryFinderImpl
 
 			String sql = CustomSQLUtil.get(
 				getClass(), FIND_BY_COMMERCE_WAREHOUSES);
+
+			if (all) {
+				sql = StringUtil.replace(sql, _ALL_SQL, StringPool.BLANK);
+			}
+			else {
+				sql = StringUtil.replace(sql, _ALL_SQL, _ACTIVE_SQL);
+			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -63,5 +74,10 @@ public class CommerceCountryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	private static final String _ACTIVE_SQL =
+		"AND (CommerceWarehouse.active_ = true)";
+
+	private static final String _ALL_SQL = "[$ALL$]";
 
 }

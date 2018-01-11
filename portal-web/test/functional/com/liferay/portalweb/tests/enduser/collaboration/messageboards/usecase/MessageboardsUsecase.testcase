@@ -1617,7 +1617,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewMessageBoardsRSS" priority="3">
+	<command name="ViewMessageBoardsRSS" priority="4">
 		<execute macro="TestCase#getSiteName">
 			<return from="siteName" name="siteName" />
 			<var name="siteName" value="${siteName}" />

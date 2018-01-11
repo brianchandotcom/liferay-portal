@@ -70,6 +70,11 @@ public class PortalImplAlternateURLTest {
 		LocaleUtil.setDefault(
 			_defaultLocale.getLanguage(), _defaultLocale.getCountry(),
 			_defaultLocale.getVariant());
+
+		TestPropsUtil.set(
+			com.liferay.portal.kernel.util.PropsKeys.
+				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			GetterUtil.getString(_defaultPrependStyle));
 	}
 
 	@Test
@@ -257,11 +262,6 @@ public class PortalImplAlternateURLTest {
 		Assert.assertEquals(
 			expectedAssetPublisherContentAlternateURL,
 			actualAssetPublisherContentAlternateURL2);
-
-		TestPropsUtil.set(
-			com.liferay.portal.kernel.util.PropsKeys.
-				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			GetterUtil.getString(_defaultPrependStyle));
 	}
 
 	private static Locale _defaultLocale;

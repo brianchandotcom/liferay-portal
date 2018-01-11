@@ -77,6 +77,11 @@ public class PortalImplCanonicalURLTest {
 		LocaleUtil.setDefault(
 			_defaultLocale.getLanguage(), _defaultLocale.getCountry(),
 			_defaultLocale.getVariant());
+
+		TestPropsUtil.set(
+			com.liferay.portal.kernel.util.PropsKeys.
+				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			GetterUtil.getString(_defaultPrependStyle));
 	}
 
 	@Before
@@ -475,11 +480,6 @@ public class PortalImplCanonicalURLTest {
 			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
 
 		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL2);
-
-		TestPropsUtil.set(
-			com.liferay.portal.kernel.util.PropsKeys.
-				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			GetterUtil.getString(_defaultPrependStyle));
 	}
 
 	private static Locale _defaultLocale;

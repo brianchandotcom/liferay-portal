@@ -18,8 +18,10 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceShippingMethodLocalServiceUtil;
+import com.liferay.commerce.service.CommerceWarehouseLocalServiceUtil;
 
 /**
  * @author Alessio Antonio Rendina
@@ -41,6 +43,12 @@ public class CommerceShipmentImpl extends CommerceShipmentBaseImpl {
 		return
 			CommerceShippingMethodLocalServiceUtil.fetchCommerceShippingMethod(
 				getCommerceShippingMethodId());
+	}
+
+	@Override
+	public CommerceWarehouse fetchCommerceWarehouse() {
+		return CommerceWarehouseLocalServiceUtil.fetchCommerceWarehouse(
+			getCommerceWarehouseId());
 	}
 
 }

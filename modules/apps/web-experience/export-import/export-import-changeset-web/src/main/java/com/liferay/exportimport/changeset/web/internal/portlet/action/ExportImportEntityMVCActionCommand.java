@@ -25,6 +25,7 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.service.ExportImportLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -115,22 +116,30 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws IOException, PortalException {
 
-		String[] classNameClassPKArray;
+		String[] exportingEntities;
 
 		if (Validator.isNotNull(
-				actionRequest.getParameter("classNameClassPK"))) {
+				actionRequest.getParameter("exportingEntities"))) {
 
-			classNameClassPKArray = ParamUtil.getStringValues(
-				actionRequest, "classNameClassPK");
+			exportingEntities = ParamUtil.getStringValues(
+				actionRequest, "exportingEntities");
 		}
 		else if (Validator.isNotNull(actionRequest.getParameter("className")) &&
-				 Validator.isNotNull(actionRequest.getParameter("classPK"))) {
+				 Validator.isNotNull(actionRequest.getParameter("uuid"))) {
 
 			String className = ParamUtil.getString(actionRequest, "className");
-			long classPK = ParamUtil.getLong(actionRequest, "classPK");
+			long groupId = ParamUtil.getLong(actionRequest, "groupId");
+			String uuid = ParamUtil.getString(actionRequest, "uuid");
 
-			classNameClassPKArray =
-				new String[] {className + StringPool.POUND + classPK};
+			StringBundler sb = new StringBundler(5);
+
+			sb.append(className);
+			sb.append(StringPool.POUND);
+			sb.append(groupId);
+			sb.append(StringPool.POUND);
+			sb.append(uuid);
+
+			exportingEntities = new String[] {sb.toString()};
 		}
 		else {
 			SessionErrors.add(
@@ -144,7 +153,7 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 		Map<String, String[]> parameterMap =
 			ExportImportConfigurationParameterMapFactory.buildParameterMap();
 
-		parameterMap.put("classNameClassPK", classNameClassPKArray);
+		parameterMap.put("exportingEntities", exportingEntities);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);

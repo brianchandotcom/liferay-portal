@@ -170,20 +170,18 @@ public abstract class BaseBuild implements Build {
 	}
 
 	@Override
-	public long getAverageWaitTime() {
+	public long getAverageDelayTime() {
 		if (getDownstreamBuildCount(null) == 0) {
 			return 0;
 		}
 
-		long totalWaitTime = 0;
+		long totalDelayTime = 0;
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			totalWaitTime += downstreamBuild.getWaitTime();
+			totalDelayTime += downstreamBuild.getDelayTime();
 		}
 
-		long averageWaitTime = totalWaitTime / getDownstreamBuildCount(null);
-
-		return averageWaitTime;
+		return totalDelayTime / getDownstreamBuildCount(null);
 	}
 
 	@Override
@@ -368,6 +366,11 @@ public abstract class BaseBuild implements Build {
 	@Override
 	public String getDatabase() {
 		return null;
+	}
+
+	@Override
+	public Long getDelayTime() {
+		return getStartTime() - getInvokedTime();
 	}
 
 	@Override
@@ -717,8 +720,8 @@ public abstract class BaseBuild implements Build {
 
 		for (Build downstreamBuild : getDownstreamBuilds(null)) {
 			if ((longestDelayedDownstreamBuild == null) ||
-				(downstreamBuild.getWaitTime() >
-					longestDelayedDownstreamBuild.getWaitTime())) {
+				(downstreamBuild.getDelayTime() >
+					longestDelayedDownstreamBuild.getDelayTime())) {
 
 				longestDelayedDownstreamBuild = downstreamBuild;
 			}
@@ -998,11 +1001,6 @@ public abstract class BaseBuild implements Build {
 		}
 
 		return totalSlavesUsedCount;
-	}
-
-	@Override
-	public Long getWaitTime() {
-		return getStartTime() - getInvokedTime();
 	}
 
 	@Override

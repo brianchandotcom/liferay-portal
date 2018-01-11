@@ -34,7 +34,7 @@ public interface Build {
 
 	public String getArchivePath();
 
-	public long getAverageWaitTime();
+	public long getAverageDelayTime();
 
 	public List<String> getBadBuildURLs();
 
@@ -57,6 +57,8 @@ public interface Build {
 	public String getConsoleText();
 
 	public String getDatabase();
+
+	public Long getDelayTime();
 
 	public String getDisplayName();
 
@@ -139,8 +141,6 @@ public interface Build {
 	public long getTotalDuration();
 
 	public int getTotalSlavesUsedCount();
-
-	public Long getWaitTime();
 
 	public boolean hasBuildURL(String buildURL);
 

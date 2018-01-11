@@ -800,9 +800,9 @@ public class TopLevelBuild extends BaseBuild {
 				"p", null, "Total number of Jenkins slaves used: ",
 				Integer.toString(getTotalSlavesUsedCount())),
 			Dom4JUtil.getNewElement(
-				"p", null, "Average wait time for invoked build to start: ",
+				"p", null, "Average delay time for invoked build to start: ",
 				JenkinsResultsParserUtil.toDurationString(
-					getAverageWaitTime())));
+					getAverageDelayTime())));
 
 		Build longestDelayedDownstreamBuild =
 			getLongestDelayedDownstreamBuild();
@@ -810,13 +810,13 @@ public class TopLevelBuild extends BaseBuild {
 		if (longestDelayedDownstreamBuild != null) {
 			Dom4JUtil.getNewElement(
 				"p", summaryElement,
-				"Longest wait time for invoked build to start: ",
+				"Longest delay time for invoked build to start: ",
 				Dom4JUtil.getNewAnchorElement(
 					longestDelayedDownstreamBuild.getBuildURL(),
 					longestDelayedDownstreamBuild.getDisplayName()),
 				" in: ",
 				JenkinsResultsParserUtil.toDurationString(
-					longestDelayedDownstreamBuild.getWaitTime()));
+					longestDelayedDownstreamBuild.getDelayTime()));
 		}
 
 		Build longestRunningDownstreamBuild =

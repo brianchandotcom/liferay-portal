@@ -1399,11 +1399,14 @@ public class PortalImpl implements Portal {
 				}
 			}
 
+			StringBundler sb = new StringBundler(5);
+
 			if ((pos <= 0) || (pos >= groupFriendlyURL.length())) {
-				groupFriendlyURL += buildI18NPath(siteDefaultLocale);
+				sb.append(groupFriendlyURL);
+				sb.append(buildI18NPath(siteDefaultLocale));
 
 				if (!canonicalLayoutFriendlyURL.startsWith(StringPool.SLASH)) {
-					groupFriendlyURL += StringPool.SLASH;
+					sb.append(StringPool.SLASH);
 				}
 			}
 			else {
@@ -1412,14 +1415,15 @@ public class PortalImpl implements Portal {
 
 				String groupFriendlyURLSuffix = groupFriendlyURL.substring(pos);
 
-				StringBundler sb = new StringBundler(3);
-
 				sb.append(groupFriendlyURLPrefix);
 				sb.append(buildI18NPath(siteDefaultLocale));
 				sb.append(groupFriendlyURLSuffix);
-
-				groupFriendlyURL = sb.toString();
 			}
+
+			sb.append(canonicalLayoutFriendlyURL);
+			sb.append(parametersURL);
+
+			return sb.toString();
 		}
 
 		return groupFriendlyURL.concat(canonicalLayoutFriendlyURL).concat(

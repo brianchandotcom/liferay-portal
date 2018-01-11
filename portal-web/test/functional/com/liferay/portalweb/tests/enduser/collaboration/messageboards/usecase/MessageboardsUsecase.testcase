@@ -1617,6 +1617,72 @@
 		</execute>
 	</command>
 
+	<command name="ViewMessageBoardsRSS" priority="4">
+		<execute macro="TestCase#getSiteName">
+			<return from="siteName" name="siteName" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Navigation" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Site Pages" />
+		</execute>
+
+		<execute macro="SitePages#addPublicPage">
+			<var name="columnName" value="1 Column" />
+			<var name="pageName" value="Message Boards Page" />
+			<var name="sitePageType" value="Empty Page" />
+		</execute>
+
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Message Boards Page" />
+		</execute>
+
+		<execute macro="Portlet#addPG">
+			<var name="portletName" value="Message Boards" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body 1" />
+			<var name="threadSubject" value="MB Thread Message Subject 1" />
+		</execute>
+
+		<execute macro="MessageboardsThread#addPG">
+			<var name="threadBody" value="MB Thread Message Body 2" />
+			<var name="threadSubject" value="MB Thread Message Subject 2" />
+		</execute>
+
+		<execute macro="RSS#viewFeed">
+			<var name="entryContent" value="MB Thread Message Body 2" />
+			<var name="entryTitle" value="MB Thread Message Subject 2" />
+			<var name="rssURL" value="message_boards" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute function="Click" locator1="NavBar#HOME" />
+
+		<execute function="Click" locator1="ListGroupItem#ITEM_ACTIONS">
+			<var name="key_itemName" value="MB Thread Message Subject 1" />
+		</execute>
+
+		<execute macro="RSS#viewFeed">
+			<var name="entryContent" value="MB Thread Message Body 1" />
+			<var name="entryTitle" value="MB Thread Message Subject 1" />
+			<var name="rssURL" value="message_boards" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+
+		<execute function="Click" locator1="NavBar#HOME" />
+
+		<execute macro="RSS#viewFeed">
+			<var name="entryContent" value="MB Thread Message Body 1,MB Thread Message Body 2" />
+			<var name="entryTitle" value="MB Thread Message Subject 1,MB Thread Message Subject 2" />
+			<var name="rssURL" value="message_boards" />
+			<var name="siteName" value="${siteName}" />
+		</execute>
+	</command>
+
 	<command name="ViewMessageBoardsThreadStatistics" priority="4">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

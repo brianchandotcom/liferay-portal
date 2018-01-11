@@ -17,11 +17,10 @@ package com.liferay.fragment.entry.processor.editable;
 import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
-import com.liferay.fragment.processor.FragmentEntrySettings;
 import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Document;
@@ -33,7 +32,6 @@ import com.liferay.portal.kernel.xml.XPath;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
@@ -55,9 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryHTML(
-			String html, Locale locale,
-			FragmentEntrySettings fragmentEntrySettings)
+	public String processFragmentEntryHTML(String html, JSONObject settings)
 		throws PortalException {
 
 		Document document = _htmlParserUtil.parse(html);
@@ -69,18 +65,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		for (Node editableNode : editableNodes) {
 			Element element = (Element)editableNode;
 
-			boolean localizable = GetterUtil.getBoolean(
-				element.attributeValue("localizable"));
-
 			String id = element.attributeValue("id");
 
-			String value = fragmentEntrySettings.getValue(id);
-
-			if (localizable) {
-				value = fragmentEntrySettings.getValue(id, locale);
-			}
-
-			_replaceEditableValue(element, value);
+			_replaceEditableValue(element, settings.getString(id));
 		}
 
 		return document.asXML();

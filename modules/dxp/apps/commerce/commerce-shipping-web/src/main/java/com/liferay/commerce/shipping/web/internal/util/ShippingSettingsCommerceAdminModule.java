@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.util.Portal;
@@ -97,6 +98,13 @@ public class ShippingSettingsCommerceAdminModule
 	public void importData(
 			String namespace, PortletDataContext portletDataContext)
 		throws Exception {
+	}
+
+	@Override
+	public boolean isVisible(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return true;
 	}
 
 	@Override

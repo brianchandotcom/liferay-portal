@@ -27,6 +27,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -138,6 +139,13 @@ public class CommerceAvailabilityRangeAdminModule
 					portletDataContext, modelElement);
 			}
 		}
+	}
+
+	@Override
+	public boolean isVisible(HttpServletRequest httpServletRequest)
+		throws PortalException {
+
+		return true;
 	}
 
 	@Override

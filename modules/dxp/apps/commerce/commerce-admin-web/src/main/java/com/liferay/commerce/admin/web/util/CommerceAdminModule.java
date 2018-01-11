@@ -19,6 +19,7 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.exception.PortalException;
 
 import java.io.IOException;
 
@@ -28,6 +29,8 @@ import java.util.Locale;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Andrea Di Giorgi
@@ -54,6 +57,9 @@ public interface CommerceAdminModule {
 	public void importData(
 			String namespace, PortletDataContext portletDataContext)
 		throws Exception;
+
+	public boolean isVisible(HttpServletRequest httpServletRequest)
+		throws PortalException;
 
 	public void prepareManifestSummary(PortletDataContext portletDataContext)
 		throws Exception;

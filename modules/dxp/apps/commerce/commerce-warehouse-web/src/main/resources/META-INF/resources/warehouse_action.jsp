@@ -46,6 +46,18 @@ CommerceWarehouse commerceWarehouse = (CommerceWarehouse)row.getObject();
 			url="<%= geolocateURL %>"
 		/>
 
+		<portlet:actionURL name="editCommerceWarehouse" var="setActiveURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceWarehouseId" value="<%= String.valueOf(commerceWarehouse.getCommerceWarehouseId()) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!commerceWarehouse.getActive()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= (commerceWarehouse.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			url="<%= setActiveURL %>"
+		/>
+
 		<portlet:actionURL name="editCommerceWarehouse" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

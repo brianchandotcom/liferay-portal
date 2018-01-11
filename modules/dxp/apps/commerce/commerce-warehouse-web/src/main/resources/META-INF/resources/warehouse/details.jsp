@@ -24,6 +24,7 @@ CommerceWarehouse commerceWarehouse = commerceWarehousesDisplayContext.getCommer
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
 
+<liferay-ui:error exception="<%= CommerceWarehouseActiveException.class %>" message="please-geolocate-warehouse-to-set-as-active" />
 <liferay-ui:error exception="<%= CommerceWarehouseNameException.class %>" message="please-enter-a-valid-name" />
 
 <aui:model-context bean="<%= commerceWarehouse %>" model="<%= CommerceWarehouse.class %>" />
@@ -32,4 +33,6 @@ CommerceWarehouse commerceWarehouse = commerceWarehousesDisplayContext.getCommer
 	<aui:input name="name" />
 
 	<aui:input name="description" />
+
+	<aui:input name="active" />
 </aui:fieldset>

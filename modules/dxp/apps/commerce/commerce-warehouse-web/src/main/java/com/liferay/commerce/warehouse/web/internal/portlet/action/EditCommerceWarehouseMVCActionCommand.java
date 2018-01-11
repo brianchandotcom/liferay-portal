@@ -16,6 +16,7 @@ package com.liferay.commerce.warehouse.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.exception.CommerceGeocoderException;
+import com.liferay.commerce.exception.CommerceWarehouseActiveException;
 import com.liferay.commerce.exception.CommerceWarehouseCommerceRegionIdException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.exception.NoSuchWarehouseException;
@@ -96,6 +97,9 @@ public class EditCommerceWarehouseMVCActionCommand
 			else if (cmd.equals("geolocate")) {
 				geolocateCommerceWarehouse(actionRequest);
 			}
+			else if (cmd.equals("setActive")) {
+				setActive(actionRequest);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof CommerceGeocoderException) {
@@ -114,7 +118,8 @@ public class EditCommerceWarehouseMVCActionCommand
 
 				actionResponse.setRenderParameter("mvcPath", "/error.jsp");
 			}
-			else if (e instanceof CommerceWarehouseCommerceRegionIdException ||
+			else if (e instanceof CommerceWarehouseActiveException ||
+					 e instanceof CommerceWarehouseCommerceRegionIdException ||
 					 e instanceof CommerceWarehouseNameException) {
 
 				hideDefaultErrorMessage(actionRequest);
@@ -141,6 +146,15 @@ public class EditCommerceWarehouseMVCActionCommand
 			commerceWarehouseId);
 	}
 
+	protected void setActive(ActionRequest actionRequest) throws Exception {
+		long commerceWarehouseId = ParamUtil.getLong(
+			actionRequest, "commerceWarehouseId");
+
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		_commerceWarehouseService.setActive(commerceWarehouseId, active);
+	}
+
 	protected CommerceWarehouse updateCommerceWarehouse(
 			ActionRequest actionRequest)
 		throws PortalException {
@@ -150,6 +164,7 @@ public class EditCommerceWarehouseMVCActionCommand
 
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
 		String street1 = ParamUtil.getString(actionRequest, "street1");
 		String street2 = ParamUtil.getString(actionRequest, "street2");
 		String street3 = ParamUtil.getString(actionRequest, "street3");
@@ -169,16 +184,16 @@ public class EditCommerceWarehouseMVCActionCommand
 
 		if (commerceWarehouseId <= 0) {
 			commerceWarehouse = _commerceWarehouseService.addCommerceWarehouse(
-				name, description, street1, street2, street3, city, zip,
+				name, description, active, street1, street2, street3, city, zip,
 				commerceRegionId, commerceCountryId, latitude, longitude,
 				serviceContext);
 		}
 		else {
 			commerceWarehouse =
 				_commerceWarehouseService.updateCommerceWarehouse(
-					commerceWarehouseId, name, description, street1, street2,
-					street3, city, zip, commerceRegionId, commerceCountryId,
-					latitude, longitude, serviceContext);
+					commerceWarehouseId, name, description, active, street1,
+					street2, street3, city, zip, commerceRegionId,
+					commerceCountryId, latitude, longitude, serviceContext);
 		}
 
 		return commerceWarehouse;

@@ -54,9 +54,9 @@ public class UpgradeLayoutPermissions extends UpgradeProcess {
 
 			while (rs.next()) {
 				long companyId = rs.getLong("companyId");
+				long groupId = rs.getLong("groupId");
 				long plid = rs.getLong("plid");
 				boolean privateLayout = rs.getBoolean("privateLayout");
-				long groupId = rs.getLong("groupId");
 				long userId = rs.getLong("userId");
 
 				boolean addGroupPermission = true;

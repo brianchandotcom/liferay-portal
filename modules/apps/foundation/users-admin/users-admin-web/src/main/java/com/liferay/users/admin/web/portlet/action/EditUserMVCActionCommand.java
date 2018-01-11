@@ -23,17 +23,12 @@ import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanParamUtil;
-import com.liferay.portal.kernel.exception.AddressCityException;
-import com.liferay.portal.kernel.exception.AddressStreetException;
-import com.liferay.portal.kernel.exception.AddressZipException;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
 import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
-import com.liferay.portal.kernel.exception.NoSuchCountryException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
-import com.liferay.portal.kernel.exception.NoSuchRegionException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PhoneNumberException;
 import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
@@ -185,7 +180,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		List<UserGroupRole> userGroupRoles = UsersAdminUtil.getUserGroupRoles(
 			actionRequest);
 		long[] userGroupIds = UsersAdminUtil.getUserGroupIds(actionRequest);
-		List<Address> addresses = UsersAdminUtil.getAddresses(actionRequest);
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
 			actionRequest);
 		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
@@ -201,7 +195,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, null, roleIds, userGroupIds,
-			addresses, emailAddresses, phones, websites,
+			new ArrayList<Address>(), emailAddresses, phones, websites,
 			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);
 
 		if (!userGroupRoles.isEmpty()) {
@@ -218,7 +212,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				firstName, middleName, lastName, prefixId, suffixId, male,
 				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 				jabberSn, skypeSn, twitterSn, jobTitle, groupIds, null, roleIds,
-				userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+				userGroupRoles, userGroupIds, null, emailAddresses, phones,
 				websites, null, serviceContext);
 		}
 
@@ -388,10 +382,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 				mvcPath = "/error.jsp";
 			}
-			else if (e instanceof AddressCityException ||
-					 e instanceof AddressStreetException ||
-					 e instanceof AddressZipException ||
-					 e instanceof AssetCategoryException ||
+			else if (e instanceof AssetCategoryException ||
 					 e instanceof AssetTagException ||
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactBirthdayException ||
@@ -399,9 +390,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof EmailAddressException ||
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof MembershipPolicyException ||
-					 e instanceof NoSuchCountryException ||
 					 e instanceof NoSuchListTypeException ||
-					 e instanceof NoSuchRegionException ||
 					 e instanceof PhoneNumberException ||
 					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof RequiredUserException ||
@@ -654,8 +643,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		long[] userGroupIds = UsersAdminUtil.getUserGroupIds(actionRequest);
-		List<Address> addresses = UsersAdminUtil.getAddresses(
-			actionRequest, user.getAddresses());
 		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
 			actionRequest, user.getEmailAddresses());
 		List<Phone> phones = UsersAdminUtil.getPhones(
@@ -674,7 +661,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			comments, firstName, middleName, lastName, prefixId, suffixId, male,
 			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
 			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, null, roleIds,
-			userGroupRoles, userGroupIds, addresses, emailAddresses, phones,
+			userGroupRoles, userGroupIds, null, emailAddresses, phones,
 			websites, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {

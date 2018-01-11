@@ -79,19 +79,16 @@ List<UserGroup> userGroups = userDisplayContext.getUserGroups();
 	request.setAttribute("user.siteRoles", siteRoles);
 	request.setAttribute("user.userGroups", userGroups);
 
-	request.setAttribute("addresses.className", Contact.class.getName());
 	request.setAttribute("emailAddresses.className", Contact.class.getName());
 	request.setAttribute("phones.className", Contact.class.getName());
 	request.setAttribute("websites.className", Contact.class.getName());
 
 	if (selContact != null) {
-		request.setAttribute("addresses.classPK", selContact.getContactId());
 		request.setAttribute("emailAddresses.classPK", selContact.getContactId());
 		request.setAttribute("phones.classPK", selContact.getContactId());
 		request.setAttribute("websites.classPK", selContact.getContactId());
 	}
 	else {
-		request.setAttribute("addresses.classPK", 0L);
 		request.setAttribute("emailAddresses.classPK", 0L);
 		request.setAttribute("phones.classPK", 0L);
 		request.setAttribute("websites.classPK", 0L);

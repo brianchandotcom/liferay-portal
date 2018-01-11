@@ -70,19 +70,17 @@ public class CommerceShipmentItemServiceImpl
 
 	@Override
 	public List<CommerceShipmentItem> getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
 		return commerceShipmentItemLocalService.getCommerceShipmentItems(
-			groupId, commerceShipmentId, start, end, orderByComparator);
+			commerceShipmentId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceShipmentItemsCount(
-		long groupId, long commerceShipmentId) {
-
+	public int getCommerceShipmentItemsCount(long commerceShipmentId) {
 		return commerceShipmentItemLocalService.getCommerceShipmentItemsCount(
-			groupId, commerceShipmentId);
+			commerceShipmentId);
 	}
 
 	@Override

@@ -15,9 +15,14 @@
 package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.exception.CommerceShipmentItemQuantityException;
+import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
+import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -28,6 +33,7 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.systemevent.SystemEvent;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.List;
 
@@ -67,8 +73,14 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Commerce order item
 
-		commerceOrderItemLocalService.incrementShippedQuantity(
-			commerceOrderItemId, quantity);
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemLocalService.incrementShippedQuantity(
+				commerceOrderItemId, quantity);
+
+		// Commerce low stock activity
+
+		_checkCommerceLowStockActivity(
+			commerceOrderItem, commerceShipmentId, quantity);
 
 		return commerceShipmentItem;
 	}
@@ -85,11 +97,26 @@ public class CommerceShipmentItemLocalServiceImpl
 
 		// Commerce order item
 
-		try {
-			int shippedQuantity = commerceShipmentItem.getQuantity() * -1;
+		CommerceOrderItem commerceOrderItem = null;
 
-			commerceOrderItemLocalService.incrementShippedQuantity(
-				commerceShipmentItem.getCommerceOrderItemId(), shippedQuantity);
+		int shippedQuantity = commerceShipmentItem.getQuantity() * -1;
+
+		try {
+			commerceOrderItem =
+				commerceOrderItemLocalService.incrementShippedQuantity(
+					commerceShipmentItem.getCommerceOrderItemId(),
+					shippedQuantity);
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		// Commerce low stock activity
+
+		try {
+			_checkCommerceLowStockActivity(
+				commerceOrderItem, commerceShipmentItem.getCommerceShipmentId(),
+				shippedQuantity);
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
@@ -112,12 +139,10 @@ public class CommerceShipmentItemLocalServiceImpl
 	}
 
 	@Override
-	public void deleteCommerceShipmentItems(
-		long groupId, long commerceShipment) {
-
+	public void deleteCommerceShipmentItems(long commerceShipment) {
 		List<CommerceShipmentItem> commerceShipmentItems =
-			commerceShipmentItemPersistence.findByG_C(
-				groupId, commerceShipment);
+			commerceShipmentItemPersistence.findByCommerceShipment(
+				commerceShipment);
 
 		for (CommerceShipmentItem commerceShipmentItem :
 				commerceShipmentItems) {
@@ -129,19 +154,17 @@ public class CommerceShipmentItemLocalServiceImpl
 
 	@Override
 	public List<CommerceShipmentItem> getCommerceShipmentItems(
-		long groupId, long commerceShipmentId, int start, int end,
+		long commerceShipmentId, int start, int end,
 		OrderByComparator<CommerceShipmentItem> orderByComparator) {
 
-		return commerceShipmentItemPersistence.findByG_C(
-			groupId, commerceShipmentId, start, end, orderByComparator);
+		return commerceShipmentItemPersistence.findByCommerceShipment(
+			commerceShipmentId, start, end, orderByComparator);
 	}
 
 	@Override
-	public int getCommerceShipmentItemsCount(
-		long groupId, long commerceShipmentId) {
-
-		return commerceShipmentItemPersistence.countByG_C(
-			groupId, commerceShipmentId);
+	public int getCommerceShipmentItemsCount(long commerceShipmentId) {
+		return commerceShipmentItemPersistence.countByCommerceShipment(
+			commerceShipmentId);
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
@@ -169,28 +192,88 @@ public class CommerceShipmentItemLocalServiceImpl
 			commerceOrderItemLocalService.getCommerceOrderItem(
 				commerceShipmentItem.getCommerceOrderItemId());
 
-		validate(commerceOrderItem, quantity, newQuantity);
+		validate(
+			commerceOrderItem, commerceShipmentItem.getCommerceShipmentId(),
+			quantity, newQuantity);
 
 		commerceOrderItemLocalService.incrementShippedQuantity(
 			commerceOrderItem.getCommerceOrderItemId(), newQuantity);
+
+		// Commerce low stock activity
+
+		_checkCommerceLowStockActivity(
+			commerceOrderItem, commerceShipmentItem.getCommerceShipmentId(),
+			newQuantity);
 
 		return commerceShipmentItem;
 	}
 
 	protected void validate(
-			CommerceOrderItem commerceOrderItem, int quantity, int newQuantity)
+			CommerceOrderItem commerceOrderItem, long commerceShipmentId,
+			int quantity, int newQuantity)
 		throws PortalException {
 
 		int availableQuantity =
 			commerceOrderItem.getQuantity() -
 				commerceOrderItem.getShippedQuantity();
 
-		if ((quantity == 0) || (newQuantity > availableQuantity)) {
+		CommerceShipment commerceShipment =
+			commerceShipmentLocalService.getCommerceShipment(
+				commerceShipmentId);
+
+		int commerceWarehouseQuantity =
+			commerceOrderItemLocalService.getCommerceWarehouseItemQuantity(
+				commerceOrderItem.getCommerceOrderItemId(),
+				commerceShipment.getCommerceWarehouseId());
+
+		if ((quantity == 0) || (newQuantity > availableQuantity) ||
+			(newQuantity > commerceWarehouseQuantity)) {
+
 			throw new CommerceShipmentItemQuantityException();
 		}
 	}
 
+	private void _checkCommerceLowStockActivity(
+			CommerceOrderItem commerceOrderItem, long commerceShipmentId,
+			int quantity)
+		throws PortalException {
+
+		if (commerceOrderItem == null) {
+			return;
+		}
+
+		CPDefinitionInventory cpDefinitionInventory =
+			cpDefinitionInventoryLocalService.
+				fetchCPDefinitionInventoryByCPDefinitionId(
+					commerceOrderItem.getCPDefinitionId());
+
+		CommerceLowStockActivity commerceLowStockActivity =
+			_commerceLowStockActivityRegistry.getCommerceLowStockActivity(
+				cpDefinitionInventory);
+
+		CommerceWarehouseItem commerceWarehouseItem =
+			_fetchCommerceWarehouseItem(
+				commerceShipmentId, commerceOrderItem.getCPInstanceId());
+
+		commerceLowStockActivity.check(commerceWarehouseItem, quantity);
+	}
+
+	private CommerceWarehouseItem _fetchCommerceWarehouseItem(
+			long commerceShipmentId, long cpInstanceId)
+		throws PortalException {
+
+		CommerceShipment commerceShipment =
+			commerceShipmentLocalService.getCommerceShipment(
+				commerceShipmentId);
+
+		return commerceWarehouseItemLocalService.fetchCommerceWarehouseItem(
+			commerceShipment.getCommerceWarehouseId(), cpInstanceId);
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceShipmentItemLocalServiceImpl.class);
+
+	@ServiceReference(type = CommerceLowStockActivityRegistry.class)
+	private CommerceLowStockActivityRegistry _commerceLowStockActivityRegistry;
 
 }

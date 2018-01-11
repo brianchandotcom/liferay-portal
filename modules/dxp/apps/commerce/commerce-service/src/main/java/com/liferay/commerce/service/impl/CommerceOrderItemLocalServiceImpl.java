@@ -166,16 +166,35 @@ public class CommerceOrderItemLocalServiceImpl
 
 	@Override
 	public List<CommerceOrderItem> getCommerceOrderItems(
-		long groupId, long commerceAddressId, int start, int end) {
+		long commerceWarehouseId, long commerceAddressId, int start, int end) {
 
-		return commerceOrderItemFinder.findByG_C(
-			groupId, commerceAddressId, start, end);
+		return commerceOrderItemFinder.findByC_C(
+			commerceWarehouseId, commerceAddressId, start, end);
 	}
 
 	@Override
 	public int getCommerceOrderItemsCount(long commerceOrderId) {
 		return commerceOrderItemPersistence.countByCommerceOrderId(
 			commerceOrderId);
+	}
+
+	@Override
+	public int getCommerceWarehouseItemQuantity(
+			long commerceOrderItemId, long commerceWarehouseId)
+		throws PortalException {
+
+		CommerceOrderItem commerceOrderItem =
+			commerceOrderItemPersistence.findByPrimaryKey(commerceOrderItemId);
+
+		CommerceWarehouseItem commerceWarehouseItem =
+			commerceWarehouseItemLocalService.fetchCommerceWarehouseItem(
+				commerceWarehouseId, commerceOrderItem.getCPInstanceId());
+
+		if (commerceWarehouseItem == null) {
+			return 0;
+		}
+
+		return commerceWarehouseItem.getQuantity();
 	}
 
 	@Override

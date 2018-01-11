@@ -144,14 +144,10 @@ public class BatchBuild extends BaseBuild {
 			return invokedTime;
 		}
 
-		String escapedJobName = getJobName();
-
-		escapedJobName = escapedJobName.replace("(", "\\(");
-		escapedJobName = escapedJobName.replace(")", "\\)");
-
 		Pattern pattern = Pattern.compile(
 			JenkinsResultsParserUtil.combine(
-				"\\s*\\[echo\\]\\s*", escapedJobName, "/", getJobVariant(),
+				"\\s*\\[echo\\]\\s*", Pattern.quote(getJobName()), "/",
+				Pattern.quote(getJobVariant()),
 				"\\s*invoked time: (?<invokedTime>[^\\n]*)"));
 
 		Build parentBuild = getParentBuild();

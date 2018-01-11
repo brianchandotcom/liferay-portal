@@ -28,6 +28,8 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 page import="com.liferay.commerce.configuration.CommerceShippingGroupServiceConfiguration" %><%@
 page import="com.liferay.commerce.constants.CommerceActionKeys" %><%@
 page import="com.liferay.commerce.exception.CommerceShippingMethodNameException" %><%@
+page import="com.liferay.commerce.exception.CommerceWarehouseActiveException" %><%@
+page import="com.liferay.commerce.exception.CommerceWarehouseNameException" %><%@
 page import="com.liferay.commerce.model.CommerceAddressRestriction" %><%@
 page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@

@@ -127,7 +127,8 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 	}
 
 	@Override
-	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId)
+	public List<CommerceCountry> getWarehouseCommerceCountries(
+			long groupId, boolean all)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -135,7 +136,7 @@ public class CommerceCountryServiceImpl extends CommerceCountryServiceBaseImpl {
 			CommerceActionKeys.MANAGE_COMMERCE_WAREHOUSES);
 
 		return commerceCountryLocalService.getWarehouseCommerceCountries(
-			groupId);
+			groupId, all);
 	}
 
 	@Override

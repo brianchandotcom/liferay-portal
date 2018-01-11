@@ -195,8 +195,10 @@ public class CommerceCountryLocalServiceImpl
 	}
 
 	@Override
-	public List<CommerceCountry> getWarehouseCommerceCountries(long groupId) {
-		return commerceCountryFinder.findByCommerceWarehouses(groupId);
+	public List<CommerceCountry> getWarehouseCommerceCountries(
+		long groupId, boolean all) {
+
+		return commerceCountryFinder.findByCommerceWarehouses(groupId, all);
 	}
 
 	@Override

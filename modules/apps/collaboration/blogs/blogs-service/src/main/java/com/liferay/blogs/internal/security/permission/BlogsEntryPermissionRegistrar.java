@@ -12,24 +12,20 @@
  * details.
  */
 
-package com.liferay.bookmarks.internal.permission;
+package com.liferay.blogs.internal.security.permission;
 
-import com.liferay.bookmarks.constants.BookmarksConstants;
-import com.liferay.bookmarks.constants.BookmarksPortletKeys;
-import com.liferay.bookmarks.model.BookmarksFolder;
-import com.liferay.bookmarks.model.BookmarksFolderConstants;
-import com.liferay.bookmarks.service.BookmarksFolderLocalService;
+import com.liferay.blogs.constants.BlogsConstants;
+import com.liferay.blogs.constants.BlogsPortletKeys;
+import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermission;
-import com.liferay.petra.function.UnsafeFunction;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.StagedModelPermissionLogic;
+import com.liferay.portal.kernel.security.permission.resource.WorkflowedModelPermissionLogic;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.kernel.workflow.permission.WorkflowPermission;
 
 import java.util.Dictionary;
 
@@ -44,39 +40,28 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true)
-public class BookmarksFolderPermissionRegistrar {
+public class BlogsEntryPermissionRegistrar {
 
 	@Activate
 	public void activate(BundleContext bundleContext) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put("model.class.name", BookmarksFolder.class.getName());
+		properties.put("model.class.name", BlogsEntry.class.getName());
 
 		_serviceRegistration = bundleContext.registerService(
 			ModelResourcePermission.class,
 			ModelResourcePermissionFactory.create(
-				BookmarksFolder.class, BookmarksFolder::getFolderId,
-				_bookmarksFolderLocalService::getFolder,
-				_portletResourcePermission,
+				BlogsEntry.class, BlogsEntry::getEntryId,
+				_blogsEntryLocalService::getEntry, _portletResourcePermission,
 				(modelResourcePermission, consumer) -> {
 					consumer.accept(
 						new StagedModelPermissionLogic<>(
-							_stagingPermission, BookmarksPortletKeys.BOOKMARKS,
-							BookmarksFolder::getFolderId));
-
-					if (PropsValues.PERMISSIONS_VIEW_DYNAMIC_INHERITANCE) {
-						consumer.accept(
-							new DynamicInheritancePermissionLogic<>(
-								modelResourcePermission,
-								_getFetchParentFunction(), true));
-					}
-				},
-				actionId -> {
-					if (ActionKeys.ADD_FOLDER.equals(actionId)) {
-						return ActionKeys.ADD_SUBFOLDER;
-					}
-
-					return actionId;
+							_stagingPermission, BlogsPortletKeys.BLOGS,
+							BlogsEntry::getEntryId));
+					consumer.accept(
+						new WorkflowedModelPermissionLogic<>(
+							_workflowPermission, modelResourcePermission,
+							BlogsEntry::getEntryId));
 				}),
 			properties);
 	}
@@ -86,36 +71,18 @@ public class BookmarksFolderPermissionRegistrar {
 		_serviceRegistration.unregister();
 	}
 
-	private UnsafeFunction<BookmarksFolder, BookmarksFolder, PortalException>
-		_getFetchParentFunction() {
-
-		return folder -> {
-			long folderId = folder.getParentFolderId();
-
-			if (BookmarksFolderConstants.DEFAULT_PARENT_FOLDER_ID == folderId) {
-				return null;
-			}
-
-			if (folder.isInTrash()) {
-				return _bookmarksFolderLocalService.fetchBookmarksFolder(
-					folderId);
-			}
-
-			return _bookmarksFolderLocalService.getFolder(folderId);
-		};
-	}
-
 	@Reference
-	private BookmarksFolderLocalService _bookmarksFolderLocalService;
+	private BlogsEntryLocalService _blogsEntryLocalService;
 
-	@Reference(
-		target = "(resource.name=" + BookmarksConstants.RESOURCE_NAME + ")"
-	)
+	@Reference(target = "(resource.name=" + BlogsConstants.RESOURCE_NAME + ")")
 	private PortletResourcePermission _portletResourcePermission;
 
 	private ServiceRegistration<ModelResourcePermission> _serviceRegistration;
 
 	@Reference
 	private StagingPermission _stagingPermission;
+
+	@Reference
+	private WorkflowPermission _workflowPermission;
 
 }

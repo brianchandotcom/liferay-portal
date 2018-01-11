@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ResourceBundle;
@@ -41,7 +40,7 @@ public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryHTML(String html, JSONObject settings)
 		throws PortalException {
 
-		return StringPool.BLANK;
+		return html;
 	}
 
 	@Override

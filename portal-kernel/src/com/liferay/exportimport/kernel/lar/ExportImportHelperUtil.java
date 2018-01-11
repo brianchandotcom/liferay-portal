@@ -291,6 +291,10 @@ public class ExportImportHelperUtil {
 			portletDataContext, stagedModelType);
 	}
 
+	public static String getPortletExportFileName(Portlet portlet) {
+		return _exportImportHelper.getPortletExportFileName(portlet);
+	}
+
 	public static ZipWriter getPortletZipWriter(String portletId) {
 		return _exportImportHelper.getPortletZipWriter(portletId);
 	}

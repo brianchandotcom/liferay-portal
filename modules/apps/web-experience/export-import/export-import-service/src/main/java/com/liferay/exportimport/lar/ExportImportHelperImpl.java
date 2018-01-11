@@ -686,6 +686,13 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 	}
 
 	@Override
+	public String getPortletExportFileName(Portlet portlet) {
+		return StringBundler.concat(
+			StringUtil.replace(portlet.getDisplayName(), ' ', '_'), "-",
+			Time.getShortTimestamp(), ".portlet.lar");
+	}
+
+	@Override
 	public ZipWriter getPortletZipWriter(String portletId) {
 		StringBundler sb = new StringBundler(4);
 

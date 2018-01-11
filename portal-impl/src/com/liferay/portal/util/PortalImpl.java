@@ -1383,28 +1383,23 @@ public class PortalImpl implements Portal {
 			layout.getLayoutSet(), themeDisplay, true,
 			layout.isTypeControlPanel());
 
-		String groupFriendlyURLDomain = HttpUtil.getDomain(groupFriendlyURL);
-
-		int pos = groupFriendlyURL.indexOf(groupFriendlyURLDomain);
-
-		if (pos > 0) {
-			pos = groupFriendlyURL.indexOf(
-				CharPool.SLASH, pos + groupFriendlyURLDomain.length());
-
-			if (Validator.isNotNull(_pathContext)) {
-				pos = groupFriendlyURL.indexOf(
-					CharPool.SLASH, pos + _pathContext.length());
-			}
-		}
-
-		boolean rootURL = false;
-
-		if ((pos <= 0) || (pos >= groupFriendlyURL.length())) {
-			rootURL = true;
-		}
-
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			if (rootURL) {
+			String groupFriendlyURLDomain = HttpUtil.getDomain(
+				groupFriendlyURL);
+
+			int pos = groupFriendlyURL.indexOf(groupFriendlyURLDomain);
+
+			if (pos > 0) {
+				pos = groupFriendlyURL.indexOf(
+					CharPool.SLASH, pos + groupFriendlyURLDomain.length());
+
+				if (Validator.isNotNull(_pathContext)) {
+					pos = groupFriendlyURL.indexOf(
+						CharPool.SLASH, pos + _pathContext.length());
+				}
+			}
+
+			if ((pos <= 0) || (pos >= groupFriendlyURL.length())) {
 				groupFriendlyURL += buildI18NPath(siteDefaultLocale);
 
 				if (!canonicalLayoutFriendlyURL.startsWith(StringPool.SLASH)) {

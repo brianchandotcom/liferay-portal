@@ -53,6 +53,15 @@ public class CommerceOrderNoteLocalServiceUtil {
 		return getService().addCommerceOrderNote(commerceOrderNote);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
+		long commerceOrderId, java.lang.String content, boolean restricted,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceOrderNote(commerceOrderId, content, restricted,
+			serviceContext);
+	}
+
 	/**
 	* Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
 	*
@@ -86,6 +95,10 @@ public class CommerceOrderNoteLocalServiceUtil {
 		long commerceOrderNoteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	public static void deleteCommerceOrderNotes(long commerceOrderId) {
+		getService().deleteCommerceOrderNotes(commerceOrderId);
 	}
 
 	/**
@@ -213,6 +226,11 @@ public class CommerceOrderNoteLocalServiceUtil {
 		return getService().getCommerceOrderNotes(start, end);
 	}
 
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, int start, int end) {
+		return getService().getCommerceOrderNotes(commerceOrderId, start, end);
+	}
+
 	/**
 	* Returns the number of commerce order notes.
 	*
@@ -220,6 +238,10 @@ public class CommerceOrderNoteLocalServiceUtil {
 	*/
 	public static int getCommerceOrderNotesCount() {
 		return getService().getCommerceOrderNotesCount();
+	}
+
+	public static int getCommerceOrderNotesCount(long commerceOrderId) {
+		return getService().getCommerceOrderNotesCount(commerceOrderId);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
@@ -250,6 +272,14 @@ public class CommerceOrderNoteLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
 		com.liferay.commerce.model.CommerceOrderNote commerceOrderNote) {
 		return getService().updateCommerceOrderNote(commerceOrderNote);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
+		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrderNote(commerceOrderNoteId, content,
+			restricted);
 	}
 
 	public static CommerceOrderNoteLocalService getService() {

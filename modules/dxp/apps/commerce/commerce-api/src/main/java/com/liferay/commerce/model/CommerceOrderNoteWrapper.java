@@ -245,6 +245,11 @@ public class CommerceOrderNoteWrapper implements CommerceOrderNote,
 		return _commerceOrderNote.getRestricted();
 	}
 
+	@Override
+	public com.liferay.portal.kernel.model.User getUser() {
+		return _commerceOrderNote.getUser();
+	}
+
 	/**
 	* Returns the user ID of this commerce order note.
 	*

@@ -16,9 +16,16 @@ package com.liferay.commerce.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.service.CommerceOrderNoteServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.commerce.service.CommerceOrderNoteServiceUtil} service utility. The
+ * {@link CommerceOrderNoteServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,99 @@ import aQute.bnd.annotation.ProviderType;
  * @author Alessio Antonio Rendina
  * @see CommerceOrderNoteServiceHttp
  * @see com.liferay.commerce.model.CommerceOrderNoteSoap
- * @see com.liferay.commerce.service.CommerceOrderNoteServiceUtil
+ * @see CommerceOrderNoteServiceUtil
  * @generated
  */
 @ProviderType
 public class CommerceOrderNoteServiceSoap {
+	public static com.liferay.commerce.model.CommerceOrderNoteSoap addCommerceOrderNote(
+		long commerceOrderId, java.lang.String content, boolean restricted,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrderNote returnValue = CommerceOrderNoteServiceUtil.addCommerceOrderNote(commerceOrderId,
+					content, restricted, serviceContext);
+
+			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void deleteCommerceOrderNote(long commerceOrderNoteId)
+		throws RemoteException {
+		try {
+			CommerceOrderNoteServiceUtil.deleteCommerceOrderNote(commerceOrderNoteId);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNoteSoap getCommerceOrderNote(
+		long commerceOrderNoteId) throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrderNote returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNote(commerceOrderNoteId);
+
+			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNoteSoap[] getCommerceOrderNotes(
+		long commerceOrderId, int start, int end) throws RemoteException {
+		try {
+			java.util.List<com.liferay.commerce.model.CommerceOrderNote> returnValue =
+				CommerceOrderNoteServiceUtil.getCommerceOrderNotes(commerceOrderId,
+					start, end);
+
+			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getCommerceOrderNotesCount(long commerceOrderId)
+		throws RemoteException {
+		try {
+			int returnValue = CommerceOrderNoteServiceUtil.getCommerceOrderNotesCount(commerceOrderId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNoteSoap updateCommerceOrderNote(
+		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		throws RemoteException {
+		try {
+			com.liferay.commerce.model.CommerceOrderNote returnValue = CommerceOrderNoteServiceUtil.updateCommerceOrderNote(commerceOrderNoteId,
+					content, restricted);
+
+			return com.liferay.commerce.model.CommerceOrderNoteSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CommerceOrderNoteServiceSoap.class);
 }

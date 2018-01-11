@@ -208,7 +208,7 @@ create table CommerceOrderNote (
 	createDate DATE null,
 	modifiedDate DATE null,
 	commerceOrderId LONG,
-	content VARCHAR(75) null,
+	content STRING null,
 	restricted BOOLEAN
 );
 

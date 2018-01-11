@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -71,6 +72,10 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	public CommerceOrderNote addCommerceOrderNote(
 		CommerceOrderNote commerceOrderNote);
 
+	public CommerceOrderNote addCommerceOrderNote(long commerceOrderId,
+		java.lang.String content, boolean restricted,
+		ServiceContext serviceContext) throws PortalException;
+
 	/**
 	* Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
 	*
@@ -99,6 +104,8 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrderNote deleteCommerceOrderNote(long commerceOrderNoteId)
 		throws PortalException;
+
+	public void deleteCommerceOrderNotes(long commerceOrderId);
 
 	/**
 	* @throws PortalException
@@ -197,6 +204,10 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CommerceOrderNote> getCommerceOrderNotes(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderNote> getCommerceOrderNotes(long commerceOrderId,
+		int start, int end);
+
 	/**
 	* Returns the number of commerce order notes.
 	*
@@ -204,6 +215,9 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCommerceOrderNotesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderNotesCount(long commerceOrderId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -229,4 +243,7 @@ public interface CommerceOrderNoteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrderNote updateCommerceOrderNote(
 		CommerceOrderNote commerceOrderNote);
+
+	public CommerceOrderNote updateCommerceOrderNote(long commerceOrderNoteId,
+		java.lang.String content, boolean restricted) throws PortalException;
 }

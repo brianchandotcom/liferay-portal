@@ -96,7 +96,7 @@ public class CommerceOrderNoteModelImpl extends BaseModelImpl<CommerceOrderNote>
 		TABLE_COLUMNS_MAP.put("restricted", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrderNote (commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content VARCHAR(75) null,restricted BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrderNote (commerceOrderNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,commerceOrderId LONG,content STRING null,restricted BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrderNote";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrderNote.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrderNote.createDate DESC";

@@ -46,6 +46,15 @@ public class CommerceOrderNoteLocalServiceWrapper
 		return _commerceOrderNoteLocalService.addCommerceOrderNote(commerceOrderNote);
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
+		long commerceOrderId, java.lang.String content, boolean restricted,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteLocalService.addCommerceOrderNote(commerceOrderId,
+			content, restricted, serviceContext);
+	}
+
 	/**
 	* Creates a new commerce order note with the primary key. Does not add the commerce order note to the database.
 	*
@@ -82,6 +91,11 @@ public class CommerceOrderNoteLocalServiceWrapper
 		long commerceOrderNoteId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderNoteLocalService.deleteCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	@Override
+	public void deleteCommerceOrderNotes(long commerceOrderId) {
+		_commerceOrderNoteLocalService.deleteCommerceOrderNotes(commerceOrderId);
 	}
 
 	/**
@@ -222,6 +236,13 @@ public class CommerceOrderNoteLocalServiceWrapper
 		return _commerceOrderNoteLocalService.getCommerceOrderNotes(start, end);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, int start, int end) {
+		return _commerceOrderNoteLocalService.getCommerceOrderNotes(commerceOrderId,
+			start, end);
+	}
+
 	/**
 	* Returns the number of commerce order notes.
 	*
@@ -230,6 +251,11 @@ public class CommerceOrderNoteLocalServiceWrapper
 	@Override
 	public int getCommerceOrderNotesCount() {
 		return _commerceOrderNoteLocalService.getCommerceOrderNotesCount();
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(long commerceOrderId) {
+		return _commerceOrderNoteLocalService.getCommerceOrderNotesCount(commerceOrderId);
 	}
 
 	@Override
@@ -264,6 +290,14 @@ public class CommerceOrderNoteLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
 		com.liferay.commerce.model.CommerceOrderNote commerceOrderNote) {
 		return _commerceOrderNoteLocalService.updateCommerceOrderNote(commerceOrderNote);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
+		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteLocalService.updateCommerceOrderNote(commerceOrderNoteId,
+			content, restricted);
 	}
 
 	@Override

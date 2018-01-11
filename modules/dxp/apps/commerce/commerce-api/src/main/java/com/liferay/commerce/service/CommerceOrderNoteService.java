@@ -16,14 +16,20 @@ package com.liferay.commerce.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.commerce.model.CommerceOrderNote;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
+
+import java.util.List;
 
 /**
  * Provides the remote service interface for CommerceOrderNote. Methods of this
@@ -49,6 +55,24 @@ public interface CommerceOrderNoteService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrderNoteServiceUtil} to access the commerce order note remote service. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderNoteServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CommerceOrderNote addCommerceOrderNote(long commerceOrderId,
+		java.lang.String content, boolean restricted,
+		ServiceContext serviceContext) throws PortalException;
+
+	public void deleteCommerceOrderNote(long commerceOrderNoteId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CommerceOrderNote getCommerceOrderNote(long commerceOrderNoteId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CommerceOrderNote> getCommerceOrderNotes(long commerceOrderId,
+		int start, int end) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCommerceOrderNotesCount(long commerceOrderId)
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -56,4 +80,7 @@ public interface CommerceOrderNoteService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public CommerceOrderNote updateCommerceOrderNote(long commerceOrderNoteId,
+		java.lang.String content, boolean restricted) throws PortalException;
 }

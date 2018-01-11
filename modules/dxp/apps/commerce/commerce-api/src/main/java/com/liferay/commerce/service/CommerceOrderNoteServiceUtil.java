@@ -41,6 +41,36 @@ public class CommerceOrderNoteServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceOrderNoteServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
+		long commerceOrderId, java.lang.String content, boolean restricted,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addCommerceOrderNote(commerceOrderId, content, restricted,
+			serviceContext);
+	}
+
+	public static void deleteCommerceOrderNote(long commerceOrderNoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().deleteCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNote getCommerceOrderNote(
+		long commerceOrderNoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	public static java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderNotes(commerceOrderId, start, end);
+	}
+
+	public static int getCommerceOrderNotesCount(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCommerceOrderNotesCount(commerceOrderId);
+	}
 
 	/**
 	* Returns the OSGi service identifier.
@@ -49,6 +79,14 @@ public class CommerceOrderNoteServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
+		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateCommerceOrderNote(commerceOrderNoteId, content,
+			restricted);
 	}
 
 	public static CommerceOrderNoteService getService() {

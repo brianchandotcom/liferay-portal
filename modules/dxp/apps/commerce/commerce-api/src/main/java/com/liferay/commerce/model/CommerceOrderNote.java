@@ -54,4 +54,6 @@ public interface CommerceOrderNote extends CommerceOrderNoteModel, PersistedMode
 				return CommerceOrderNote.class;
 			}
 		};
+
+	public com.liferay.portal.kernel.model.User getUser();
 }

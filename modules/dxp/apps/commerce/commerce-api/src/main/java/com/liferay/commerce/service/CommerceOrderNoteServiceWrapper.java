@@ -33,6 +33,42 @@ public class CommerceOrderNoteServiceWrapper implements CommerceOrderNoteService
 		_commerceOrderNoteService = commerceOrderNoteService;
 	}
 
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote addCommerceOrderNote(
+		long commerceOrderId, java.lang.String content, boolean restricted,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteService.addCommerceOrderNote(commerceOrderId,
+			content, restricted, serviceContext);
+	}
+
+	@Override
+	public void deleteCommerceOrderNote(long commerceOrderNoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceOrderNoteService.deleteCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote getCommerceOrderNote(
+		long commerceOrderNoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteService.getCommerceOrderNote(commerceOrderNoteId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.commerce.model.CommerceOrderNote> getCommerceOrderNotes(
+		long commerceOrderId, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteService.getCommerceOrderNotes(commerceOrderId,
+			start, end);
+	}
+
+	@Override
+	public int getCommerceOrderNotesCount(long commerceOrderId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteService.getCommerceOrderNotesCount(commerceOrderId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -41,6 +77,14 @@ public class CommerceOrderNoteServiceWrapper implements CommerceOrderNoteService
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceOrderNoteService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceOrderNote updateCommerceOrderNote(
+		long commerceOrderNoteId, java.lang.String content, boolean restricted)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderNoteService.updateCommerceOrderNote(commerceOrderNoteId,
+			content, restricted);
 	}
 
 	@Override

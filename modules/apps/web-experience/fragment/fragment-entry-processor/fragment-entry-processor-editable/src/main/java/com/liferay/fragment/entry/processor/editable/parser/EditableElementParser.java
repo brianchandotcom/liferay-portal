@@ -12,28 +12,23 @@
  * details.
  */
 
-package com.liferay.fragment.entry.processor.editable.replacer.impl;
+package com.liferay.fragment.entry.processor.editable.parser;
 
-import com.liferay.fragment.entry.processor.editable.replacer.EditableElementReplacer;
-import com.liferay.portal.kernel.xml.Attribute;
 import com.liferay.portal.kernel.xml.Element;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
+ * This service provides a utility to replace editable element value.
+ *
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true, property = {"editable.tag.name=img"},
-	service = EditableElementReplacer.class
-)
-public class ImgEditableElementReplacer implements EditableElementReplacer {
+public interface EditableElementParser {
 
-	@Override
-	public void replace(Element element, String value) {
-		Attribute attribute = element.attribute("src");
-
-		attribute.setValue(value);
-	}
+	/**
+	 * Replaces editable element value with the provided one.
+	 *
+	 * @param element Editable element to replace
+	 * @param value New element value
+	 */
+	public void replace(Element element, String value);
 
 }

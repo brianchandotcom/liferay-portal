@@ -13,11 +13,11 @@
 		<execute macro="Upgrade#reindexSearches" />
 	</set-up>
 
-	<command name="ViewLayoutArchive62105" priority="5">
+	<command name="ViewLayoutArchive621015" priority="5">
 		<description message="This is a use case for LPS-75561." />
 
 		<property name="data.archive.type" value="data-archive-pages-administration" />
-		<property name="portal.version" value="6.2.10.5" />
+		<property name="portal.version" value="6.2.10.15" />
 
 		<execute macro="Navigator#openURL" />
 

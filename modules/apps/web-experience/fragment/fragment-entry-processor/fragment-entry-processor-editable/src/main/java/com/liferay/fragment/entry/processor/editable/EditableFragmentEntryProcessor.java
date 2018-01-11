@@ -60,14 +60,19 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
 
-		List<Node> editableNodes = editableXPath.selectNodes(document);
-
-		for (Node editableNode : editableNodes) {
+		for (Node editableNode : editableXPath.selectNodes(document)) {
 			Element element = (Element)editableNode;
+
+			EditableElementParser editableElementParser =
+				_editableElementParsers.get(element.attributeValue("type"));
+
+			if (editableElementParser == null) {
+				continue;
+			}
 
 			String id = element.attributeValue("id");
 
-			_replaceEditableValue(element, settings.getString(id));
+			editableElementParser.replace(element, settings.getString(id));
 		}
 
 		Element rootElement = document.getRootElement();
@@ -156,17 +161,6 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					resourceBundle,
 					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
-	}
-
-	private void _replaceEditableValue(Element element, String value) {
-		EditableElementParser editableTagParser =
-			_editableElementParsers.get(element.attributeValue("type"));
-
-		if (editableTagParser == null) {
-			return;
-		}
-
-		editableTagParser.replace(element, value);
 	}
 
 	private final Map<String, EditableElementParser> _editableElementParsers =

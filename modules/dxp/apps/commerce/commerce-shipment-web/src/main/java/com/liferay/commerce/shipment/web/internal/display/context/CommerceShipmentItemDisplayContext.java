@@ -19,10 +19,12 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
+import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CommerceShipmentItemService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.shipment.web.internal.util.CommerceShipmentPortletUtil;
 import com.liferay.item.selector.ItemSelector;
@@ -32,9 +34,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactory;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Collections;
 import java.util.List;
@@ -55,6 +55,7 @@ public class CommerceShipmentItemDisplayContext
 				commerceShippingMethodLocalService,
 			HttpServletRequest httpServletRequest,
 			CommerceShipmentItemService commerceShipmentItemService,
+			CommerceWarehouseService commerceWarehouseService,
 			ItemSelector itemSelector)
 		throws PortalException {
 
@@ -63,6 +64,7 @@ public class CommerceShipmentItemDisplayContext
 			httpServletRequest, CommerceShipmentItem.class.getSimpleName());
 
 		_commerceShipmentItemService = commerceShipmentItemService;
+		_commerceWarehouseService = commerceWarehouseService;
 		_itemSelector = itemSelector;
 	}
 
@@ -87,6 +89,15 @@ public class CommerceShipmentItemDisplayContext
 		}
 
 		return commerceShipmentItem.getCommerceShipmentItemId();
+	}
+
+	public String getCommerceWarehouseName(long commerceWarehouseId)
+		throws PortalException {
+
+		CommerceWarehouse commerceWarehouse =
+			_commerceWarehouseService.getCommerceWarehouse(commerceWarehouseId);
+
+		return commerceWarehouse.getName();
 	}
 
 	public CPDefinition getCPDefinition(long commerceShipmentItemId)
@@ -143,6 +154,8 @@ public class CommerceShipmentItemDisplayContext
 			commerceOrderItemItemSelectorCriterion);
 
 		itemSelectorURL.setParameter(
+			"commerceWarehouseId", String.valueOf(getCommerceWarehouseId()));
+		itemSelectorURL.setParameter(
 			"commerceAddressId", String.valueOf(getCommerceAddressId()));
 
 		return itemSelectorURL.toString();
@@ -166,10 +179,6 @@ public class CommerceShipmentItemDisplayContext
 			return searchContainer;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		searchContainer = new SearchContainer<>(
 			liferayPortletRequest, getPortletURL(), null, null);
 
@@ -184,15 +193,14 @@ public class CommerceShipmentItemDisplayContext
 		searchContainer.setOrderByType(getOrderByType());
 
 		int total = _commerceShipmentItemService.getCommerceShipmentItemsCount(
-			themeDisplay.getScopeGroupId(), getCommerceShipmentId());
+			getCommerceShipmentId());
 
 		searchContainer.setTotal(total);
 
 		List<CommerceShipmentItem> results =
 			_commerceShipmentItemService.getCommerceShipmentItems(
-				themeDisplay.getScopeGroupId(), getCommerceShipmentId(),
-				searchContainer.getStart(), searchContainer.getEnd(),
-				orderByComparator);
+				getCommerceShipmentId(), searchContainer.getStart(),
+				searchContainer.getEnd(), orderByComparator);
 
 		searchContainer.setResults(results);
 
@@ -216,8 +224,27 @@ public class CommerceShipmentItemDisplayContext
 		return commerceAddressId;
 	}
 
+	protected long getCommerceWarehouseId() throws PortalException {
+		long commerceWarehouseId = 0;
+
+		CommerceShipment commerceShipment = getCommerceShipment();
+
+		if (commerceShipment != null) {
+			CommerceWarehouse commerceWarehouse =
+				commerceShipment.fetchCommerceWarehouse();
+
+			if (commerceWarehouse != null) {
+				commerceWarehouseId =
+					commerceWarehouse.getCommerceWarehouseId();
+			}
+		}
+
+		return commerceWarehouseId;
+	}
+
 	private CommerceShipmentItem _commerceShipmentItem;
 	private final CommerceShipmentItemService _commerceShipmentItemService;
+	private final CommerceWarehouseService _commerceWarehouseService;
 	private final ItemSelector _itemSelector;
 
 }

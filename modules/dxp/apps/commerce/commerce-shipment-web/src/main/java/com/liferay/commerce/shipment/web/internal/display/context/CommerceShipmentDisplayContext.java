@@ -16,11 +16,14 @@ package com.liferay.commerce.shipment.web.internal.display.context;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceShipment;
+import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceShipmentService;
 import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.service.CommerceWarehouseService;
 import com.liferay.commerce.shipment.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.shipment.web.internal.util.CommerceShipmentPortletUtil;
+import com.liferay.commerce.util.comparator.CommerceWarehouseNameComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,6 +50,7 @@ public class CommerceShipmentDisplayContext
 			HttpServletRequest httpServletRequest,
 			CommerceAddressService commerceAddressService,
 			CommerceShipmentService commerceShipmentService,
+			CommerceWarehouseService commerceWarehouseService,
 			UserLocalService userLocalService)
 		throws PortalException {
 
@@ -56,6 +60,7 @@ public class CommerceShipmentDisplayContext
 
 		_commerceAddressService = commerceAddressService;
 		_commerceShipmentService = commerceShipmentService;
+		_commerceWarehouseService = commerceWarehouseService;
 		_userLocalService = userLocalService;
 	}
 
@@ -79,6 +84,16 @@ public class CommerceShipmentDisplayContext
 		}
 
 		return commerceAddressId;
+	}
+
+	public List<CommerceWarehouse> getCommerceWarehouses() {
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		return _commerceWarehouseService.getCommerceWarehouses(
+			themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, new CommerceWarehouseNameComparator(true));
 	}
 
 	@Override
@@ -145,6 +160,7 @@ public class CommerceShipmentDisplayContext
 
 	private final CommerceAddressService _commerceAddressService;
 	private final CommerceShipmentService _commerceShipmentService;
+	private final CommerceWarehouseService _commerceWarehouseService;
 	private final UserLocalService _userLocalService;
 
 }

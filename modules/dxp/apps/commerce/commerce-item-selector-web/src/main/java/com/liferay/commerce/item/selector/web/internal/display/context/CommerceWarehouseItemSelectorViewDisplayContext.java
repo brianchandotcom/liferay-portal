@@ -69,7 +69,7 @@ public class CommerceWarehouseItemSelectorViewDisplayContext
 
 		List<CommerceCountry> commerceCountries =
 			_commerceCountryService.getWarehouseCommerceCountries(
-				cpRequestHelper.getScopeGroupId());
+				cpRequestHelper.getScopeGroupId(), false);
 
 		List<ManagementBarFilterItem> managementBarFilterItems =
 			new ArrayList<>(commerceCountries.size() + 2);
@@ -153,19 +153,19 @@ public class CommerceWarehouseItemSelectorViewDisplayContext
 
 		if (searchContainer.isSearch()) {
 			total = _commerceWarehouseService.searchCount(
-				cpRequestHelper.getScopeGroupId(), getKeywords(),
+				cpRequestHelper.getScopeGroupId(), getKeywords(), false,
 				commerceCountryId);
 			results = _commerceWarehouseService.search(
-				cpRequestHelper.getScopeGroupId(), getKeywords(),
+				cpRequestHelper.getScopeGroupId(), getKeywords(), false,
 				commerceCountryId, searchContainer.getStart(),
 				searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 		}
 		else {
 			total = _commerceWarehouseService.getCommerceWarehousesCount(
-				cpRequestHelper.getScopeGroupId(), commerceCountryId);
+				cpRequestHelper.getScopeGroupId(), true, commerceCountryId);
 			results = _commerceWarehouseService.getCommerceWarehouses(
-				cpRequestHelper.getScopeGroupId(), commerceCountryId,
+				cpRequestHelper.getScopeGroupId(), true, commerceCountryId,
 				searchContainer.getStart(), searchContainer.getEnd(),
 				searchContainer.getOrderByComparator());
 		}

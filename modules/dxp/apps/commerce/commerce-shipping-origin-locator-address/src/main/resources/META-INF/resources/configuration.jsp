@@ -20,63 +20,71 @@
 AddressCommerceShippingOriginLocatorGroupServiceConfiguration addressCommerceShippingOriginLocatorGroupServiceConfiguration = (AddressCommerceShippingOriginLocatorGroupServiceConfiguration)request.getAttribute(AddressCommerceShippingOriginLocatorGroupServiceConfiguration.class.getName());
 %>
 
-<div class="col-md-6">
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>'
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.name() %>"
-	/>
+<div class="row">
+	<div class="col-md-6">
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--name--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.name() %>"
+		/>
 
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street1--" %>'
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street1--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street1() %>"
-	/>
+		<aui:select
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceCountryId--" %>'
+			label="country"
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceCountryId--" %>'
+		/>
 
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street2--" %>'
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street2--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street2() %>"
-	/>
+		<aui:select
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceRegionId--" %>'
+			label="region"
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceRegionId--" %>'
+		/>
 
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street3--" %>'
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street3--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street3() %>"
-	/>
-</div>
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--zip--" %>'
+			label="postal-code"
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--zip--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.zip() %>"
+		/>
 
-<div class="col-md-6">
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--city--" %>'
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--city--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.city() %>"
-	/>
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--city--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--city--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.city() %>"
+		/>
+	</div>
 
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--zip--" %>'
-		label="postal-code"
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--zip--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.zip() %>"
-	/>
+	<div class="col-md-6">
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street1--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street1--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street1() %>"
+		/>
 
-	<aui:select
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceCountryId--" %>'
-		label="country"
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceCountryId--" %>'
-	/>
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street2--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street2--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street2() %>"
+		/>
 
-	<aui:select
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceRegionId--" %>'
-		label="region"
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--commerceRegionId--" %>'
-	/>
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street3--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--street3--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.street3() %>"
+		/>
 
-	<aui:input
-		id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--phoneNumber--" %>'
-		name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--phoneNumber--" %>'
-		value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.phoneNumber() %>"
-	/>
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--latitude--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--latitude--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.latitude() %>"
+		/>
+
+		<aui:input
+			id='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--longitude--" %>'
+			name='<%= AddressCommerceShippingOriginLocator.KEY + "Origin--longitude--" %>'
+			value="<%= addressCommerceShippingOriginLocatorGroupServiceConfiguration.longitude() %>"
+		/>
+	</div>
 </div>
 
 <aui:script use="liferay-dynamic-select">

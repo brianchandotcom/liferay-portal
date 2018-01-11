@@ -47,7 +47,10 @@ public interface AddressCommerceShippingOriginLocatorGroupServiceConfiguration {
 	public long commerceRegionId();
 
 	@Meta.AD(required = false)
-	public String phoneNumber();
+	public double latitude();
+
+	@Meta.AD(required = false)
+	public double longitude();
 
 	@Meta.AD(required = false)
 	public String street1();

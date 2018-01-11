@@ -5,12 +5,12 @@
 		<execute function="Pause" locator1="3000" />
 
 		<execute function="SelectWindow#selectPopUp" locator1="null" />
+
+		<execute function="AssertLocation#assertPartialLocation" value1="${rssURL}/rss" />
 	</command>
 
 	<command name="viewFeed">
 		<execute macro="RSS#gotoFeed" />
-
-		<execute function="AssertLocation#assertPartialLocation" value1="${rssURL}/rss" />
 
 		<execute macro="RSS#viewFeedTitle">
 			<var name="siteName" value="${siteName}" />

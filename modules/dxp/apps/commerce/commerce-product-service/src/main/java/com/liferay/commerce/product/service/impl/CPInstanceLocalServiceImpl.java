@@ -237,13 +237,13 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 
 			JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-			StringBundler sku = new StringBundler(
+			StringBundler skuSB = new StringBundler(
 				cpDefinitionOptionValueRels.length + 1);
 
 			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
 					cpDefinitionOptionValueRels) {
 
-				sku.append(
+				skuSB.append(
 					StringUtil.toUpperCase(
 						cpDefinitionOptionValueRel.getTitle(
 							serviceContext.getLanguageId())));
@@ -264,14 +264,14 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			}
 
 			CPInstance cpInstance = cpInstancePersistence.fetchByC_S(
-				cpDefinitionId, sku.toString());
+				cpDefinitionId, skuSB.toString());
 
 			if (cpInstance != null) {
 				continue;
 			}
 
 			addCPInstance(
-				cpDefinitionId, sku.toString(), StringPool.BLANK,
+				cpDefinitionId, skuSB.toString(), StringPool.BLANK,
 				StringPool.BLANK, true, jsonArray.toString(),
 				cpDefinition.getWidth(), cpDefinition.getHeight(),
 				cpDefinition.getDepth(), cpDefinition.getWeight(), 0, 0, true,

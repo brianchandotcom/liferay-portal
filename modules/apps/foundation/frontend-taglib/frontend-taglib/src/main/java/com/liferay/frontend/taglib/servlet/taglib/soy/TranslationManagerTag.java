@@ -91,19 +91,19 @@ public class TranslationManagerTag extends TemplateRendererTag {
 		putValue("changeableDefaultLanguage", changeableDefaultLanguage);
 	}
 
-	public void setCssClass(java.lang.String cssClass) {
+	public void setCssClass(String cssClass) {
 		putValue("elementClasses", cssClass);
 	}
 
-	public void setDefaultLanguageId(java.lang.String defaultLanguageId) {
+	public void setDefaultLanguageId(String defaultLanguageId) {
 		putValue("defaultLocale", defaultLanguageId);
 	}
 
-	public void setEditingLanguageId(java.lang.String editingLanguageId) {
+	public void setEditingLanguageId(String editingLanguageId) {
 		putValue("editingLanguageId", editingLanguageId);
 	}
 
-	public void setId(java.lang.String id) {
+	public void setId(String id) {
 		putValue("id", id);
 	}
 

@@ -71,7 +71,7 @@ import java.util.Arrays;
  * For ordinary Objects, all primary type wrappers are encoded to their raw
  * values with one byte type headers. This is much more efficient than
  * ObjectOutputStream's serialization format for primary type wrappers. Strings
- * are output in the same way as {@link #writeString(java.lang.String)}, but
+ * are output in the same way as {@link #writeString(String)}, but
  * also with one byte type headers. Objects are serialized by a new
  * ObjectOutputStream, so no reference handler can be used across Object
  * serialization. This is done intentionally to isolate each object. The

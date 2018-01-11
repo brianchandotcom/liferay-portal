@@ -84,7 +84,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		EditableElementParser editableElementReplacer,
 		Map<String, Object> properties) {
 
-		String editableTagName = (String)properties.get("editable.tag.name");
+		String editableTagName = (String)properties.get("type");
 
 		_editableElementReplacers.put(editableTagName, editableElementReplacer);
 	}
@@ -93,7 +93,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 		EditableElementParser editableElementReplacer,
 		Map<String, Object> properties) {
 
-		String editableTagName = (String)properties.get("editable.tag.name");
+		String editableTagName = (String)properties.get("type");
 
 		_editableElementReplacers.remove(editableTagName);
 	}
@@ -160,7 +160,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	private void _replaceEditableValue(Element element, String value) {
 		EditableElementParser editableTagReplacer =
-			_editableElementReplacers.get(element.getName());
+			_editableElementReplacers.get(element.attributeValue("type"));
 
 		if (editableTagReplacer == null) {
 			return;

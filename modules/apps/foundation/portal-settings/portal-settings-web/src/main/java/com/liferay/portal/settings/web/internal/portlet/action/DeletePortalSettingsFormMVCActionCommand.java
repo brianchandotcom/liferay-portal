@@ -32,8 +32,7 @@ public class DeletePortalSettingsFormMVCActionCommand
 
 	public DeletePortalSettingsFormMVCActionCommand(
 		PortletPreferencesLocalService portletPreferencesLocalService,
-		PortalSettingsFormContributor
-			portalSettingsFormContributor) {
+		PortalSettingsFormContributor portalSettingsFormContributor) {
 
 		super(portalSettingsFormContributor);
 

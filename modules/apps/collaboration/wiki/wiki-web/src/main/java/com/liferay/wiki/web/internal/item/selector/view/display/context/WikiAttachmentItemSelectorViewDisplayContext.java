@@ -41,8 +41,7 @@ public class WikiAttachmentItemSelectorViewDisplayContext {
 
 	public WikiAttachmentItemSelectorViewDisplayContext(
 		WikiAttachmentItemSelectorCriterion wikiAttachmentItemSelectorCriterion,
-		WikiAttachmentItemSelectorView
-			wikiAttachmentItemSelectorView,
+		WikiAttachmentItemSelectorView wikiAttachmentItemSelectorView,
 		ItemSelectorReturnTypeResolverHandler
 			itemSelectorReturnTypeResolverHandler,
 		String itemSelectedEventName, boolean search, PortletURL portletURL) {

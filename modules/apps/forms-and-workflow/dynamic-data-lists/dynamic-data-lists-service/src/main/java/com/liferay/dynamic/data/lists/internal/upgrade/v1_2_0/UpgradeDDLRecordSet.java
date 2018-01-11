@@ -43,10 +43,8 @@ public class UpgradeDDLRecordSet extends UpgradeProcess {
 	public UpgradeDDLRecordSet(
 		ClassNameLocalService classNameLocalService,
 		DDMFormInstanceLocalService ddmFormInstanceLocalService,
-		DDMStructureLinkLocalService
-			ddmStructureLinkLocalService,
-		PortletPreferencesLocalService
-			portletPreferencesLocalService,
+		DDMStructureLinkLocalService ddmStructureLinkLocalService,
+		PortletPreferencesLocalService portletPreferencesLocalService,
 		ResourcePermissionLocalService resourcePermissionLocalService) {
 
 		_classNameLocalService = classNameLocalService;

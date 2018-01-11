@@ -511,8 +511,7 @@ public class ServiceTrackerMapFactoryImpl implements ServiceTrackerMapFactory {
 
 		public ServiceTrackerMapWrapper(
 			com.liferay.osgi.service.tracker.collections.map.
-				ServiceTrackerMap<K, S>
-					serviceTrackerMap) {
+				ServiceTrackerMap<K, S> serviceTrackerMap) {
 
 			_serviceTrackerMap = serviceTrackerMap;
 		}

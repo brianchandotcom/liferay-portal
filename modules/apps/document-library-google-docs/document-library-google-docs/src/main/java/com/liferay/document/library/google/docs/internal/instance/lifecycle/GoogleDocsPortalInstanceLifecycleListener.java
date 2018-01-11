@@ -60,8 +60,7 @@ public class GoogleDocsPortalInstanceLifecycleListener
 		unbind = "-"
 	)
 	protected void setDDMStructurePermissionSupport(
-		DDMStructurePermissionSupport
-			ddmStructurePermissionSupport) {
+		DDMStructurePermissionSupport ddmStructurePermissionSupport) {
 	}
 
 	@Reference(unbind = "-")

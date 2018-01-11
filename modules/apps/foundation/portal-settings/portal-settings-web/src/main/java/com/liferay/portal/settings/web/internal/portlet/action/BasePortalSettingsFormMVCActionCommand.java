@@ -32,8 +32,7 @@ public abstract class BasePortalSettingsFormMVCActionCommand
 	extends BaseFormMVCActionCommand {
 
 	public BasePortalSettingsFormMVCActionCommand(
-		PortalSettingsFormContributor
-			portalSettingsFormContributor) {
+		PortalSettingsFormContributor portalSettingsFormContributor) {
 
 		this.portalSettingsFormContributor = portalSettingsFormContributor;
 	}

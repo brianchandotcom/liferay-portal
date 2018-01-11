@@ -417,6 +417,18 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 		int previousLineLength = getLineLength(previousLine);
 
 		if ((trimmedLine.length() + previousLineLength) < getMaxLineLength()) {
+			if (trimmedLine.matches("\\w.*") &&
+				(Validator.isVariableName(trimmedPreviousLine) ||
+				 (trimmedPreviousLine.matches("\\w+\\[.*\\]") &&
+				  (getLevel(trimmedPreviousLine, "[", "]") == 0)) ||
+				 (trimmedPreviousLine.matches("\\w+<.*>") &&
+				  (getLevel(trimmedPreviousLine, "<", ">") == 0)))) {
+
+				return _getCombinedLinesContent(
+					content, line, trimmedLine, lineLength, lineCount,
+					previousLine, null, false, true, 0);
+			}
+
 			if (trimmedPreviousLine.startsWith("for ") &&
 				(previousLine.endsWith(StringPool.COLON) ||
 				 previousLine.endsWith(StringPool.SEMICOLON)) &&

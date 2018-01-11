@@ -135,8 +135,7 @@ public class CPOptionPermission implements BaseModelPermissionChecker {
 
 	@Reference(unbind = "-")
 	protected void setCPOptionValueLocalService(
-		CPOptionValueLocalService
-			cpOptionValueLocalService) {
+		CPOptionValueLocalService cpOptionValueLocalService) {
 
 		_cpOptionValueLocalService = cpOptionValueLocalService;
 	}

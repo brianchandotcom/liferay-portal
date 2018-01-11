@@ -182,9 +182,8 @@ public class CPDefinitionOptionRelLocalServiceImpl
 			cpDefinitionOptionRelLocalService.getCPDefinitionOptionRels(
 				cpDefinitionId, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		for (CPDefinitionOptionRel
-				cpDefinitionOptionRel :
-					cpDefinitionOptionRels) {
+		for (CPDefinitionOptionRel cpDefinitionOptionRel :
+				cpDefinitionOptionRels) {
 
 			cpDefinitionOptionRelLocalService.deleteCPDefinitionOptionRel(
 				cpDefinitionOptionRel);

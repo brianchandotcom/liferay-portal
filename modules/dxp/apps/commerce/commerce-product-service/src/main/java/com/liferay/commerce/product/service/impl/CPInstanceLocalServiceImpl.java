@@ -237,9 +237,8 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			StringBundler sb = new StringBundler(
 				cpDefinitionOptionValueRels.length + 1);
 
-			for (CPDefinitionOptionValueRel
-					cpDefinitionOptionValueRel :
-						cpDefinitionOptionValueRels) {
+			for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+					cpDefinitionOptionValueRels) {
 
 				sb.append(
 					StringUtil.toUpperCase(

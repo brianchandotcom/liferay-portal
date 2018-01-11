@@ -437,9 +437,8 @@ public class CPDefinitionLocalServiceImpl
 
 		List<String> availableLanguageIds = new ArrayList<>();
 
-		for (CPDefinitionLocalization
-				cpDefinitionLocalization :
-					cpDefinitionLocalizationList) {
+		for (CPDefinitionLocalization cpDefinitionLocalization :
+				cpDefinitionLocalizationList) {
 
 			availableLanguageIds.add(cpDefinitionLocalization.getLanguageId());
 		}
@@ -1484,9 +1483,8 @@ public class CPDefinitionLocalServiceImpl
 
 		oldCPDefinitionLocalizations.removeAll(newCPDefinitionLocalizations);
 
-		for (CPDefinitionLocalization
-				oldCPDefinitionLocalization :
-					oldCPDefinitionLocalizations) {
+		for (CPDefinitionLocalization oldCPDefinitionLocalization :
+				oldCPDefinitionLocalizations) {
 
 			cpDefinitionLocalizationPersistence.remove(
 				oldCPDefinitionLocalization);

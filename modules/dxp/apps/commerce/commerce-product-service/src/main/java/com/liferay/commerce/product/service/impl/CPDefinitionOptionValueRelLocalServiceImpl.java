@@ -172,9 +172,8 @@ public class CPDefinitionOptionValueRelLocalServiceImpl
 					cpDefinitionOptionRelId, QueryUtil.ALL_POS,
 					QueryUtil.ALL_POS);
 
-		for (CPDefinitionOptionValueRel
-				cpDefinitionOptionValueRel :
-					cpDefinitionOptionValueRels) {
+		for (CPDefinitionOptionValueRel cpDefinitionOptionValueRel :
+				cpDefinitionOptionValueRels) {
 
 			cpDefinitionOptionValueRelLocalService.
 				deleteCPDefinitionOptionValueRel(cpDefinitionOptionValueRel);

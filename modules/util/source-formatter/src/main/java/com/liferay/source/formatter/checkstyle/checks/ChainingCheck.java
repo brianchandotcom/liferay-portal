@@ -165,6 +165,10 @@ public class ChainingCheck extends BaseCheck {
 		DetailAST detailAST, DetailAST methodCallAST,
 		List<String> chainedMethodNames) {
 
+		if (_isInsideConstructorThisCall(methodCallAST, detailAST)) {
+			return true;
+		}
+
 		for (String allowedMethodName : _allowedMethodNames) {
 			if (chainedMethodNames.contains(allowedMethodName)) {
 				return true;

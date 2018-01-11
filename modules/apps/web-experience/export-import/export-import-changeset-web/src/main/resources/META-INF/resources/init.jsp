@@ -16,20 +16,14 @@
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<%@ taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/trash" prefix="liferay-trash" %><%@
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.exportimport.changeset.exception.ExportImportEntityException" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %>
 
-<liferay-frontend:defineObjects />
-
 <liferay-theme:defineObjects />
-
-<liferay-trash:defineObjects />
 
 <%
 String portletResource = ParamUtil.getString(request, "portletResource");

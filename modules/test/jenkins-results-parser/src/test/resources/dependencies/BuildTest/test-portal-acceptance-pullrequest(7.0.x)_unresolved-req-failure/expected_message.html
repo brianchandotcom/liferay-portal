@@ -989,22 +989,6 @@
     <li>
       <div>
         <h5>
-          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(7.0.x)_unresolved-req-failure/test-1-14/test-portal-acceptance-pullrequest(7.0.x)/103/">test-portal-acceptance-pullrequest(7.0.x)</a>
-        </h5>
-        <div>
-          <h6>Job Results:</h6>
-          <p>17 Jobs Passed.
-            <br/>129 Jobs Failed.
-          </p>
-        </div>
-        <pre>
-          <code>Downstream jobs FAILED.</code>
-        </pre>
-      </div>
-    </li>
-    <li>
-      <div>
-        <h5>
           <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(7.0.x)_unresolved-req-failure/test-1-21/test-portal-acceptance-pullrequest-batch(7.0.x)/2725/">test-portal-acceptance-pullrequest-batch(7.0.x)/empty-temp-dir-jdk8</a>
         </h5>
         <div>
@@ -1167,6 +1151,55 @@
      [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.doProcess(DirectoryWatcher.java:512)
      [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.process(DirectoryWatcher.java:361)
      [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.run(DirectoryWatcher.java:312)</code>
+                </pre>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </li>
+    <li>
+      <div>
+        <h5>
+          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(7.0.x)_unresolved-req-failure/test-1-1/test-portal-acceptance-pullrequest-batch(7.0.x)/5800/">test-portal-acceptance-pullrequest-batch(7.0.x)/functional-smoke-tomcat80-db2105-jdk8/0</a>
+        </h5>
+        <div>
+          <h6>Job Results:</h6>
+          <p>0 Tests Passed.
+            <br/>1 Test Failed.
+          </p>
+        </div>
+        <ol>
+          <li>
+            <div>
+              <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(7.0.x)_unresolved-req-failure/test-1-1/test-portal-acceptance-pullrequest-batch(7.0.x)/AXIS_VARIABLE=0,label_exp=!master/5800//consoleText">AXIS_VARIABLE=0,label_exp=!master #5800</a>
+              <div>
+                <p>Startup error:
+                  <strong>Unresolved Requirement(s)</strong>
+                </p>
+                <pre>
+                  <code>     [exec]   Unresolved requirement: Import-Package: com.liferay.portal.kernel.repository.model; version="[7.1.0,7.2.0)"
+     [exec]
+     [exec] 	at org.eclipse.osgi.container.Module.start(Module.java:429)
+     [exec] 	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:402)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.startBundle(DirectoryWatcher.java:1253)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.startBundles(DirectoryWatcher.java:1225)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.doProcess(DirectoryWatcher.java:512)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.process(DirectoryWatcher.java:361)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.run(DirectoryWatcher.java:312)
+     [exec] 12:32:27,390 ERROR [fileinstall-/opt/dev/projects/github/liferay-portal-7.0.x/bundles/osgi/modules][org_apache_felix_fileinstall:112] Exiting the JVM
+     [exec] org.osgi.framework.BundleException: Could not resolve module: com.liferay.document.library.repository.external [272]
+     [exec]   Unresolved requirement: Import-Package: com.liferay.portal.kernel.repository.model; version="[7.1.0,7.2.0)"
+     [exec]
+     [exec] 	at org.eclipse.osgi.container.Module.start(Module.java:429)
+     [exec] 	at org.eclipse.osgi.internal.framework.EquinoxBundle.start(EquinoxBundle.java:402)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.startBundle(DirectoryWatcher.java:1253)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.startBundles(DirectoryWatcher.java:1225)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.doProcess(DirectoryWatcher.java:512)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.process(DirectoryWatcher.java:361)
+     [exec] 	at org.apache.felix.fileinstall.internal.DirectoryWatcher.run(DirectoryWatcher.java:312)
+     [exec] 12:32:27,473 INFO  [fileinstall-/opt/dev/projects/github/liferay-portal-7.0.x/bundles/osgi/portal][BundleStartStopLogger:35] STARTED com.liferay.portal.scripting.ruby_2.0.9 [105]
+     [exec] 12:32:27,610 INFO  [fileinstall-/opt/dev/projects/github/liferay-portal-7.0.x/bundles/osgi/portal][BundleStartStopLogger:35] STARTED com.liferay.portal.security.service.access.policy.api_2.0.7 [125]</code>
                 </pre>
               </div>
             </div>

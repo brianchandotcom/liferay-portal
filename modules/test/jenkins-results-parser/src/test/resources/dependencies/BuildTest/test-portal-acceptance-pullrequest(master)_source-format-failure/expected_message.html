@@ -464,22 +464,6 @@
     <li>
       <div>
         <h5>
-          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_source-format-failure/test-1-2/test-portal-acceptance-pullrequest(master)/2209/">test-portal-acceptance-pullrequest(master)</a>
-        </h5>
-        <div>
-          <h6>Job Results:</h6>
-          <p>129 Jobs Passed.
-            <br/>6 Jobs Failed.
-          </p>
-        </div>
-        <pre>
-          <code>Downstream jobs FAILED.</code>
-        </pre>
-      </div>
-    </li>
-    <li>
-      <div>
-        <h5>
           <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_source-format-failure/test-1-23/test-portal-acceptance-pullrequest-batch(master)/8220/">test-portal-acceptance-pullrequest-batch(master)/functional-smoke-wildfly100-mariadb100-jdk8/0</a>
         </h5>
         <div>
@@ -628,7 +612,75 @@
         </ol>
       </div>
     </li>
-    <li>...</li>
+    <li>
+      <div>
+        <h5>
+          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_source-format-failure/test-1-15/test-portal-acceptance-pullrequest-batch(master)/94121/">test-portal-acceptance-pullrequest-batch(master)/source-format-jdk8</a>
+        </h5>
+        <div>
+          <h6>Job Results:</h6>
+          <p>0 Tests Passed.
+            <br/>1 Test Failed.
+          </p>
+        </div>
+        <ol>
+          <li>
+            <div>
+              <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_source-format-failure/test-1-15/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/94121//consoleText">AXIS_VARIABLE=0,label_exp=!master #94121</a>
+              <pre>
+                <code>     [java] 	@Override
+     [java] 	public [List&lt;AssetDisplayTemplate&gt; getAssetDisplayTemplates(long groupId) {
+     [java] 		return assetDisplayTemplatePersistence.findByGroupId(groupId);
+     [java] 	}
+     [java]
+     [java] 	@Override
+     [java] 	public List&lt;AssetDisplayTemplate&gt; getAssetDisplayTemplates(
+     [java] 		long groupId, int start, int end,
+     [java] 		OrderByComparator&lt;AssetDisplayTemplate&gt; orderByComparator) {
+     [java]
+     [java] 		return assetDisplayTemplatePersistence.findByGroupId(
+     [java] 			groupId, start, end, orderByComparator);
+     [java] 	}
+     [java]
+     [java] 	@Override
+     [java] 	public int getAssetDisplayTemplatesCount(long groupId) {
+     [java] 		return assetDisplayTemplatePersistence.countByGroupId(groupId]);
+     [java] 	}
+     [java]
+     [java] 	@Override
+     [java] 	p...&gt; but was:&lt;...
+     [java] 	@Override
+     [java] 	public [int getAssetDisplayTemplatesCount(long groupId) {
+     [java] 		return assetDisplayTemplatePersistence.countByGroupId(groupId);
+     [java] 	}
+     [java]
+     [java] 	@Override
+     [java] 	public List&lt;AssetDisplayTemplate&gt; getAssetDisplayTemplates(long groupId) {
+     [java] 		return assetDisplayTemplatePersistence.findByGroupId(groupId);
+     [java] 	}
+     [java]
+     [java] 	@Override
+     [java] 	public List&lt;AssetDisplayTemplate&gt; getAssetDisplayTemplates(
+     [java] 		long groupId, int start, int end,
+     [java] 		OrderByComparator&lt;AssetDisplayTemplate&gt; orderByComparator) {
+     [java]
+     [java] 		return assetDisplayTemplatePersistence.findByGroupId(
+     [java] 			groupId, start, end, orderByComparator]);
+     [java] 	}
+     [java]
+     [java] 	@Override
+     [java] 	p...&gt;
+     [java] 	at com.liferay.source.formatter.BaseSourceProcessor.processFormattedFile(BaseSourceProcessor.java:351)
+     [java] 	at com.liferay.source.formatter.BaseSourceProcessor._format(BaseSourceProcessor.java:526)
+     [java] 	at com.liferay.source.formatter.BaseSourceProcessor.access$000(BaseSourceProcessor.java:67)
+     [java] 	at com.liferay.source.formatter.BaseSourceProcessor$1.call(BaseSourceProcessor.java:103)
+     [java] 	at com.liferay.source.formatter.BaseSourceProcessor$1.call(BaseSourceProcessor.java:98)</code>
+              </pre>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </li>
   </ol>
   <h4>For upstream results, click
     <a href="https://test-1-1.liferay.com/job/test-portal-acceptance-upstream(master)">here</a>.

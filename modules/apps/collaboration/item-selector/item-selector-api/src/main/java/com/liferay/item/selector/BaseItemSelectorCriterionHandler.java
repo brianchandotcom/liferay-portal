@@ -37,8 +37,8 @@ public abstract class BaseItemSelectorCriterionHandler
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<ItemSelectorView<T>>
-		getItemSelectorViews(ItemSelectorCriterion itemSelectorCriterion) {
+	public List<ItemSelectorView<T>> getItemSelectorViews(
+		ItemSelectorCriterion itemSelectorCriterion) {
 
 		List<ItemSelectorView<T>> filteredItemSelectedViews = new ArrayList<>();
 

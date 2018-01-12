@@ -94,12 +94,10 @@ public class GoogleDocsDLDisplayContextFactory
 	}
 
 	@Override
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut) {
+	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
+		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileShortcut fileShortcut) {
 
 		try {
 			long fileEntryId = fileShortcut.getToFileEntryId();
@@ -121,12 +119,10 @@ public class GoogleDocsDLDisplayContextFactory
 	}
 
 	@Override
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
-			DLViewFileVersionDisplayContext
-				parentDLViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
+		DLViewFileVersionDisplayContext parentDLViewFileVersionDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		Object model = fileVersion.getModel();
 

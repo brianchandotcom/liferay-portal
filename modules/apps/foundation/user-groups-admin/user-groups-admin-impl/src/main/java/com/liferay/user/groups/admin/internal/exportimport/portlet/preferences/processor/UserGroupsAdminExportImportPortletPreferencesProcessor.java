@@ -76,20 +76,18 @@ public class UserGroupsAdminExportImportPortletPreferencesProcessor
 	}
 
 	@Reference(unbind = "-")
-	protected void
-		setUserGroupsAdminPortletDisplayTemplateExportCapability(
-			UserGroupsAdminPortletDisplayTemplateExportCapability
-				userGroupsAdminPortletDisplayTemplateExportCapability) {
+	protected void setUserGroupsAdminPortletDisplayTemplateExportCapability(
+		UserGroupsAdminPortletDisplayTemplateExportCapability
+			userGroupsAdminPortletDisplayTemplateExportCapability) {
 
 		_userGroupsAdminPortletDisplayTemplateExportCapability =
 			userGroupsAdminPortletDisplayTemplateExportCapability;
 	}
 
 	@Reference(unbind = "-")
-	protected void
-		setUserGroupsAdminPortletDisplayTemplateImportCapability(
-			UserGroupsAdminPortletDisplayTemplateImportCapability
-				userGroupsAdminPortletDisplayTemplateImportCapability) {
+	protected void setUserGroupsAdminPortletDisplayTemplateImportCapability(
+		UserGroupsAdminPortletDisplayTemplateImportCapability
+			userGroupsAdminPortletDisplayTemplateImportCapability) {
 
 		_userGroupsAdminPortletDisplayTemplateImportCapability =
 			userGroupsAdminPortletDisplayTemplateImportCapability;

@@ -26,18 +26,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface IGDisplayContextFactory extends DisplayContextFactory {
 
-	public IGViewFileVersionDisplayContext
-		getIGViewFileVersionDisplayContext(
-			IGViewFileVersionDisplayContext
-				parentIGViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut);
+	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
+		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileShortcut fileShortcut);
 
-	public IGViewFileVersionDisplayContext
-		getIGViewFileVersionDisplayContext(
-			IGViewFileVersionDisplayContext
-				parentIGViewFileVersionDisplayContext,
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion);
+	public IGViewFileVersionDisplayContext getIGViewFileVersionDisplayContext(
+		IGViewFileVersionDisplayContext parentIGViewFileVersionDisplayContext,
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion);
 
 }

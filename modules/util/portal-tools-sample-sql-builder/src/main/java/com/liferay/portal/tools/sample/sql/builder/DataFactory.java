@@ -1515,8 +1515,8 @@ public class DataFactory {
 			"Test DDM Structure", sb.toString());
 	}
 
-	public List<PortletPreferencesModel>
-		newDDLPortletPreferencesModels(long plid) {
+	public List<PortletPreferencesModel> newDDLPortletPreferencesModels(
+		long plid) {
 
 		List<PortletPreferencesModel> portletPreferencesModels =
 			new ArrayList<>(3);
@@ -2038,8 +2038,8 @@ public class DataFactory {
 		return journalContentSearchModel;
 	}
 
-	public List<PortletPreferencesModel>
-		newJournalPortletPreferencesModels(long plid) {
+	public List<PortletPreferencesModel> newJournalPortletPreferencesModels(
+		long plid) {
 
 		return Collections.singletonList(
 			newPortletPreferencesModel(

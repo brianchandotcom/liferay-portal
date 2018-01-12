@@ -58,9 +58,9 @@ page import="com.liferay.wiki.web.internal.display.context.util.WikiRequestHelpe
 page import="com.liferay.wiki.web.internal.display.context.util.WikiSocialActivityHelper" %><%@
 page import="com.liferay.wiki.web.internal.display.context.util.WikiURLHelper" %><%@
 page import="com.liferay.wiki.web.internal.portlet.toolbar.item.WikiPortletToolbarContributor" %><%@
-page import="com.liferay.wiki.web.internal.security.permission.WikiNodePermission" %><%@
-page import="com.liferay.wiki.web.internal.security.permission.WikiPagePermission" %><%@
-page import="com.liferay.wiki.web.internal.security.permission.WikiResourcePermission" %><%@
+page import="com.liferay.wiki.web.internal.security.permission.resource.WikiNodePermission" %><%@
+page import="com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission" %><%@
+page import="com.liferay.wiki.web.internal.security.permission.resource.WikiResourcePermission" %><%@
 page import="com.liferay.wiki.web.internal.util.WikiWebComponentProvider" %>
 
 <%

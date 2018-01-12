@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.wiki.model.WikiNode;
 import com.liferay.wiki.service.WikiNodeServiceUtil;
-import com.liferay.wiki.web.internal.security.permission.WikiNodePermission;
+import com.liferay.wiki.web.internal.security.permission.resource.WikiNodePermission;
 
 import javax.servlet.http.HttpServletRequest;
 

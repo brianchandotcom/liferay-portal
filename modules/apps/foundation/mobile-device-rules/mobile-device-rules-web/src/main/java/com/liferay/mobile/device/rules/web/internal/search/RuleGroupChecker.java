@@ -15,7 +15,7 @@
 package com.liferay.mobile.device.rules.web.internal.search;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.web.internal.security.permission.MDRRuleGroupPermission;
+import com.liferay.mobile.device.rules.web.internal.security.permission.resource.MDRRuleGroupPermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

@@ -28,7 +28,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.asset.display.template.model.AssetDisplayTemplate" %><%@
 page import="com.liferay.asset.display.template.web.internal.constants.AssetDisplayTemplateWebKeys" %><%@
 page import="com.liferay.asset.display.template.web.internal.display.context.AssetDisplayTemplateDisplayContext" %><%@
-page import="com.liferay.asset.display.template.web.internal.security.permission.AssetDisplayTemplatePermission" %><%@
+page import="com.liferay.asset.display.template.web.internal.security.permission.resource.AssetDisplayTemplatePermission" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMTemplate" %><%@
 page import="com.liferay.dynamic.data.mapping.util.DDMDisplay" %><%@
 page import="com.liferay.petra.string.CharPool" %><%@

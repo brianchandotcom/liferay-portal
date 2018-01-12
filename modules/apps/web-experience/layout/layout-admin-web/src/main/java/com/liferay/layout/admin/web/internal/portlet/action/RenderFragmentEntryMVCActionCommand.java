@@ -16,13 +16,23 @@ package com.liferay.layout.admin.web.internal.portlet.action;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.fragment.util.FragmentRenderUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -37,11 +47,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/fragment_entry"
+		"mvc.command.name=/layout/render_fragment_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -50,17 +60,38 @@ public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.fetchFragmentEntry(
-			fragmentEntryId);
+		long fragmentInstanceId = ParamUtil.getLong(
+			actionRequest, "fragmentInstanceId");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (fragmentEntry != null) {
-			jsonObject.put("css", fragmentEntry.getCss());
-			jsonObject.put("html", fragmentEntry.getHtml());
-			jsonObject.put("js", fragmentEntry.getJs());
-			jsonObject.put("name", fragmentEntry.getName());
+		try {
+			FragmentEntry fragmentEntry =
+				_fragmentEntryService.fetchFragmentEntry(fragmentEntryId);
+
+			String content = FragmentRenderUtil.renderFragment(
+				fragmentInstanceId, fragmentEntryId, fragmentEntry.getCss(),
+				fragmentEntry.getHtml(), fragmentEntry.getJs());
+
+			jsonObject.put("content", content);
+		}
+		catch (PortalException pe) {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				actionRequest);
+
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
+
+			ResourceBundle resourceBundle =
+				_resourceBundleLoader.loadResourceBundle(
+					themeDisplay.getLocale());
+
+			hideDefaultSuccessMessage(actionRequest);
+
+			jsonObject.put(
+				"error",
+				LanguageUtil.get(
+					resourceBundle, "an-unexpected-error-occurred"));
 		}
 
 		JSONPortletResponseUtil.writeJSON(
@@ -69,5 +100,10 @@ public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)", unbind = "-"
+	)
+	private ResourceBundleLoader _resourceBundleLoader;
 
 }

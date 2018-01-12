@@ -44,14 +44,15 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
 		String code = StringPool.BLANK;
+		String roundingTypeName = null;
 
 		if (commerceCurrency != null) {
 			code = commerceCurrency.getCode();
+			roundingTypeName = commerceCurrency.getRoundingType();
 		}
 
 		RoundingType roundingType =
-			_roundingTypeServicesTracker.getRoundingType(
-				commerceCurrency.getRoundingType());
+			_roundingTypeServicesTracker.getRoundingType(roundingTypeName);
 
 		return code + StringPool.SPACE + roundingType.round(price);
 	}

@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.price;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marco Leo
  * @author Alessio Antonio Rendina
  */
+@ProviderType
 public interface CommercePriceListQualificationType {
 
 	public String getKey();

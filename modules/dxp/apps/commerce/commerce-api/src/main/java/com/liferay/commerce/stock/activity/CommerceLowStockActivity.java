@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.stock.activity;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.portal.kernel.exception.PortalException;
 
@@ -22,6 +24,7 @@ import java.util.Locale;
 /**
  * @author Alessio Antonio Rendina
  */
+@ProviderType
 public interface CommerceLowStockActivity {
 
 	public void check(CommerceWarehouseItem commerceWarehouseItem, int quantity)

@@ -14,11 +14,14 @@
 
 package com.liferay.commerce.price;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.util.List;
 
 /**
  * @author Marco Leo
  */
+@ProviderType
 public interface CommercePriceListQualificationTypeRegistry {
 
 	public CommercePriceListQualificationType

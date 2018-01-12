@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.inventory;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CPDefinitionInventory;
 
 import java.util.List;
@@ -21,6 +23,7 @@ import java.util.List;
 /**
  * @author Alessio Antonio Rendina
  */
+@ProviderType
 public interface CPDefinitionInventoryEngineRegistry {
 
 	public CPDefinitionInventoryEngine getCPDefinitionInventoryEngine(

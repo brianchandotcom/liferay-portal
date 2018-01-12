@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.inventory;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -23,6 +25,7 @@ import java.util.Locale;
 /**
  * @author Alessio Antonio Rendina
  */
+@ProviderType
 public interface CPDefinitionInventoryEngine {
 
 	public String[] getAllowedCartQuantities(CPInstance cpInstance)

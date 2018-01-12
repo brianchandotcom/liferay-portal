@@ -238,6 +238,13 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int status) {
+		return _fragmentEntryLocalService.getFragmentEntries(fragmentCollectionId,
+			status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long fragmentCollectionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLocalService.getFragmentEntries(fragmentCollectionId,

@@ -229,6 +229,11 @@ public class FragmentEntryLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int status) {
+		return getService().getFragmentEntries(fragmentCollectionId, status);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long fragmentCollectionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getFragmentEntries(fragmentCollectionId, start, end);

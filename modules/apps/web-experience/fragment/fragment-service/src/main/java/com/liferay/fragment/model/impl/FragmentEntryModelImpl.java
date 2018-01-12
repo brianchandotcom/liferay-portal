@@ -129,6 +129,7 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	public static final long FRAGMENTCOLLECTIONID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -585,7 +586,19 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 	@Override
 	public void setStatus(int status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (!_setOriginalStatus) {
+			_setOriginalStatus = true;
+
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public int getOriginalStatus() {
+		return _originalStatus;
 	}
 
 	@JSON
@@ -842,6 +855,10 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 
 		fragmentEntryModelImpl._originalName = fragmentEntryModelImpl._name;
 
+		fragmentEntryModelImpl._originalStatus = fragmentEntryModelImpl._status;
+
+		fragmentEntryModelImpl._setOriginalStatus = false;
+
 		fragmentEntryModelImpl._columnBitmask = 0;
 	}
 
@@ -1092,6 +1109,8 @@ public class FragmentEntryModelImpl extends BaseModelImpl<FragmentEntry>
 	private String _js;
 	private long _htmlPreviewEntryId;
 	private int _status;
+	private int _originalStatus;
+	private boolean _setOriginalStatus;
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;

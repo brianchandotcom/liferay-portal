@@ -186,44 +186,12 @@ public class FragmentEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
-		HttpPrincipal httpPrincipal, long fragmentCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
-					"getFragmentEntries", _getFragmentEntriesParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					fragmentCollectionId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<com.liferay.fragment.model.FragmentEntry>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
 	public static com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
 		HttpPrincipal httpPrincipal, long fragmentEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
-					"fetchFragmentEntry", _fetchFragmentEntryParameterTypes5);
+					"fetchFragmentEntry", _fetchFragmentEntryParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fragmentEntryId);
@@ -255,7 +223,7 @@ public class FragmentEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
 					"getFragmentCollectionsCount",
-					_getFragmentCollectionsCountParameterTypes6);
+					_getFragmentCollectionsCountParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					fragmentCollectionId);
@@ -283,7 +251,7 @@ public class FragmentEntryServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
 					"getFragmentCollectionsCount",
-					_getFragmentCollectionsCountParameterTypes7);
+					_getFragmentCollectionsCountParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
 					fragmentCollectionId, name);
@@ -298,6 +266,38 @@ public class FragmentEntryServiceHttp {
 			}
 
 			return ((Integer)returnObj).intValue();
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		HttpPrincipal httpPrincipal, long fragmentCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
+					"getFragmentEntries", _getFragmentEntriesParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					fragmentCollectionId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.fragment.model.FragmentEntry>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -486,17 +486,17 @@ public class FragmentEntryServiceHttp {
 	private static final Class<?>[] _deleteFragmentEntryParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getFragmentEntriesParameterTypes4 = new Class[] {
+	private static final Class<?>[] _fetchFragmentEntryParameterTypes4 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchFragmentEntryParameterTypes5 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes5 = new Class[] {
 			long.class, long.class
 		};
-	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getFragmentCollectionsCountParameterTypes6 = new Class[] {
 			long.class, long.class, java.lang.String.class
+		};
+	private static final Class<?>[] _getFragmentEntriesParameterTypes7 = new Class[] {
+			long.class
 		};
 	private static final Class<?>[] _getFragmentEntriesParameterTypes8 = new Class[] {
 			long.class, long.class, int.class, int.class

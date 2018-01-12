@@ -222,6 +222,14 @@ public class FragmentEntryPersistenceTest {
 	}
 
 	@Test
+	public void testCountByFCI_S() throws Exception {
+		_persistence.countByFCI_S(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByFCI_S(0L, 0);
+	}
+
+	@Test
 	public void testCountByG_FCI_N() throws Exception {
 		_persistence.countByG_FCI_N(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextLong(), "");

@@ -137,11 +137,15 @@
 
 		<execute macro="Notifications#gotoNotifications" />
 
-		<execute macro="Notifications#goToReadFilter" />
+		<execute macro="Notifications#goToFilterValues">
+			<var name="filterValue" value="Read" />
+		</execute>
 
 		<execute macro="Notifications#viewDefaultContent" />
 
-		<execute macro="Notifications#goToUnreadFilter" />
+		<execute macro="Notifications#goToFilterValues">
+			<var name="filterValue" value="Unread" />
+		</execute>
 
 		<execute macro="Notifications#viewNewContent">
 			<var name="assetType" value="message boards message" />

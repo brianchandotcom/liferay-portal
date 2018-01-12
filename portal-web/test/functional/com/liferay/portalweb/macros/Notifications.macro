@@ -19,6 +19,14 @@
 		<execute function="AssertElementNotPresent" locator1="Notifications#NOTIFICATIONS_CONTENT" value1="${contentBody}" />
 	</command>
 
+	<command name="goToFilterValues">
+		<var name="key_filterValue" value="${filterValue}" />
+
+		<execute function="Click" locator1="Dropdown#FILTER" />
+
+		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="${filterValue}" />
+	</command>
+
 	<command name="gotoNotifications">
 		<if>
 			<condition function="IsElementPresent" locator1="Notifications#USER_BAR_BADGE_COUNT" />
@@ -54,22 +62,6 @@
 				<execute function="Click" locator1="Notifications#USER_NAVIGATION_BAR_BADGE_COUNT" />
 			</then>
 		</if>
-	</command>
-
-	<command name="goToReadFilter">
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Read" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Read" />
-	</command>
-
-	<command name="goToUnreadFilter">
-		<execute function="Click" locator1="Dropdown#FILTER" />
-
-		<var name="key_filterValue" value="Unread" />
-
-		<execute function="AssertClick" locator1="Dropdown#FILTER_VALUES" value1="Unread" />
 	</command>
 
 	<command name="markAllAsRead">

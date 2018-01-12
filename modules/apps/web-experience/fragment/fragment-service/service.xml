@@ -78,6 +78,10 @@
 		<column name="html" type="String" />
 		<column name="js" type="String" />
 		<column name="htmlPreviewEntryId" type="long" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 

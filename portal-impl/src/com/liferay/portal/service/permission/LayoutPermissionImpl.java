@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.ResourceLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
@@ -257,30 +256,6 @@ public class LayoutPermissionImpl
 
 				parentLayoutId = parentLayout.getParentLayoutId();
 			}
-		}
-
-		int resourcePermissionsCount =
-			ResourcePermissionLocalServiceUtil.getResourcePermissionsCount(
-				layout.getCompanyId(), Layout.class.getName(),
-				ResourceConstants.SCOPE_INDIVIDUAL,
-				String.valueOf(layout.getPlid()));
-
-		if (resourcePermissionsCount == 0) {
-			boolean addGroupPermission = true;
-			boolean addGuestPermission = true;
-
-			if (layout.isPrivateLayout()) {
-				addGuestPermission = false;
-
-				if (group.isUser() || group.isUserGroup()) {
-					addGroupPermission = false;
-				}
-			}
-
-			ResourceLocalServiceUtil.addResources(
-				layout.getCompanyId(), layout.getGroupId(), 0,
-				Layout.class.getName(), layout.getPlid(), false,
-				addGroupPermission, addGuestPermission);
 		}
 
 		if (permissionChecker.hasPermission(

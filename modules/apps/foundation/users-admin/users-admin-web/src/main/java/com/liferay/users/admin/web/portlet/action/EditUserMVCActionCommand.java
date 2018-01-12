@@ -26,12 +26,9 @@ import com.liferay.portal.kernel.bean.BeanParamUtil;
 import com.liferay.portal.kernel.exception.CompanyMaxUsersException;
 import com.liferay.portal.kernel.exception.ContactBirthdayException;
 import com.liferay.portal.kernel.exception.ContactNameException;
-import com.liferay.portal.kernel.exception.EmailAddressException;
 import com.liferay.portal.kernel.exception.GroupFriendlyURLException;
 import com.liferay.portal.kernel.exception.NoSuchListTypeException;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
-import com.liferay.portal.kernel.exception.PhoneNumberException;
-import com.liferay.portal.kernel.exception.PhoneNumberExtensionException;
 import com.liferay.portal.kernel.exception.RequiredUserException;
 import com.liferay.portal.kernel.exception.UserEmailAddressException;
 import com.liferay.portal.kernel.exception.UserFieldException;
@@ -39,8 +36,6 @@ import com.liferay.portal.kernel.exception.UserIdException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.exception.UserReminderQueryException;
 import com.liferay.portal.kernel.exception.UserScreenNameException;
-import com.liferay.portal.kernel.exception.UserSmsException;
-import com.liferay.portal.kernel.exception.WebsiteURLException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.Company;
@@ -156,7 +151,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String emailAddress = ParamUtil.getString(
 			actionRequest, "emailAddress");
 		long facebookId = 0;
-		String openId = ParamUtil.getString(actionRequest, "openId");
 		String languageId = ParamUtil.getString(actionRequest, "languageId");
 		String firstName = ParamUtil.getString(actionRequest, "firstName");
 		String middleName = ParamUtil.getString(actionRequest, "middleName");
@@ -169,21 +163,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		int birthdayDay = ParamUtil.getInteger(actionRequest, "birthdayDay");
 		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
 		String comments = ParamUtil.getString(actionRequest, "comments");
-		String smsSn = ParamUtil.getString(actionRequest, "smsSn");
-		String facebookSn = ParamUtil.getString(actionRequest, "facebookSn");
-		String jabberSn = ParamUtil.getString(actionRequest, "jabberSn");
-		String skypeSn = ParamUtil.getString(actionRequest, "skypeSn");
-		String twitterSn = ParamUtil.getString(actionRequest, "twitterSn");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
 		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
 		long[] roleIds = UsersAdminUtil.getRoleIds(actionRequest);
 		List<UserGroupRole> userGroupRoles = UsersAdminUtil.getUserGroupRoles(
 			actionRequest);
 		long[] userGroupIds = UsersAdminUtil.getUserGroupIds(actionRequest);
-		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
-			actionRequest);
-		List<Phone> phones = UsersAdminUtil.getPhones(actionRequest);
-		List<Website> websites = UsersAdminUtil.getWebsites(actionRequest);
 		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -191,11 +176,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		User user = _userService.addUser(
 			themeDisplay.getCompanyId(), autoPassword, password1, password2,
-			autoScreenName, screenName, emailAddress, facebookId, openId,
+			autoScreenName, screenName, emailAddress, facebookId, null,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
 			birthdayYear, jobTitle, groupIds, null, roleIds, userGroupIds,
-			new ArrayList<Address>(), emailAddresses, phones, websites,
+			new ArrayList<Address>(), new ArrayList<EmailAddress>(),
+			new ArrayList<Phone>(), new ArrayList<Website>(),
 			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);
 
 		if (!userGroupRoles.isEmpty()) {
@@ -207,13 +193,13 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				user.getUserId(), StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, false, reminderQueryQuestion,
 				reminderQueryAnswer, user.getScreenName(),
-				user.getEmailAddress(), facebookId, openId, true, null,
-				languageId, user.getTimeZoneId(), user.getGreeting(), comments,
-				firstName, middleName, lastName, prefixId, suffixId, male,
-				birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-				jabberSn, skypeSn, twitterSn, jobTitle, groupIds, null, roleIds,
-				userGroupRoles, userGroupIds, null, emailAddresses, phones,
-				websites, null, serviceContext);
+				user.getEmailAddress(), facebookId, user.getOpenId(), true,
+				null, languageId, user.getTimeZoneId(), user.getGreeting(),
+				comments, firstName, middleName, lastName, prefixId, suffixId,
+				male, birthdayMonth, birthdayDay, birthdayYear, null, null,
+				null, null, null, jobTitle, groupIds, null, roleIds,
+				userGroupRoles, userGroupIds, null, null, null, null, null,
+				serviceContext);
 		}
 
 		long publicLayoutSetPrototypeId = ParamUtil.getLong(
@@ -387,21 +373,16 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 					 e instanceof CompanyMaxUsersException ||
 					 e instanceof ContactBirthdayException ||
 					 e instanceof ContactNameException ||
-					 e instanceof EmailAddressException ||
 					 e instanceof GroupFriendlyURLException ||
 					 e instanceof MembershipPolicyException ||
 					 e instanceof NoSuchListTypeException ||
-					 e instanceof PhoneNumberException ||
-					 e instanceof PhoneNumberExtensionException ||
 					 e instanceof RequiredUserException ||
 					 e instanceof UserEmailAddressException ||
 					 e instanceof UserFieldException ||
 					 e instanceof UserIdException ||
 					 e instanceof UserPasswordException ||
 					 e instanceof UserReminderQueryException ||
-					 e instanceof UserScreenNameException ||
-					 e instanceof UserSmsException ||
-					 e instanceof WebsiteURLException) {
+					 e instanceof UserScreenNameException) {
 
 				if (e instanceof NoSuchListTypeException) {
 					NoSuchListTypeException nslte = (NoSuchListTypeException)e;
@@ -577,7 +558,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		String emailAddress = BeanParamUtil.getString(
 			user, actionRequest, "emailAddress");
 		long facebookId = user.getFacebookId();
-		String openId = BeanParamUtil.getString(user, actionRequest, "openId");
+
 		boolean deleteLogo = ParamUtil.getBoolean(actionRequest, "deleteLogo");
 
 		byte[] portraitBytes = null;
@@ -618,15 +599,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 
 		String comments = BeanParamUtil.getString(
 			user, actionRequest, "comments");
-		String smsSn = BeanParamUtil.getString(contact, actionRequest, "smsSn");
-		String facebookSn = BeanParamUtil.getString(
-			contact, actionRequest, "facebookSn");
-		String jabberSn = BeanParamUtil.getString(
-			contact, actionRequest, "jabberSn");
-		String skypeSn = BeanParamUtil.getString(
-			contact, actionRequest, "skypeSn");
-		String twitterSn = BeanParamUtil.getString(
-			contact, actionRequest, "twitterSn");
 		String jobTitle = BeanParamUtil.getString(
 			user, actionRequest, "jobTitle");
 		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
@@ -643,12 +615,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		}
 
 		long[] userGroupIds = UsersAdminUtil.getUserGroupIds(actionRequest);
-		List<EmailAddress> emailAddresses = UsersAdminUtil.getEmailAddresses(
-			actionRequest, user.getEmailAddresses());
-		List<Phone> phones = UsersAdminUtil.getPhones(
-			actionRequest, user.getPhones());
-		List<Website> websites = UsersAdminUtil.getWebsites(
-			actionRequest, user.getWebsites());
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
@@ -656,13 +622,12 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		user = _userService.updateUser(
 			user.getUserId(), oldPassword, newPassword1, newPassword2,
 			passwordReset, reminderQueryQuestion, reminderQueryAnswer,
-			screenName, emailAddress, facebookId, openId, !deleteLogo,
+			screenName, emailAddress, facebookId, user.getOpenId(), !deleteLogo,
 			portraitBytes, languageId, user.getTimeZoneId(), user.getGreeting(),
 			comments, firstName, middleName, lastName, prefixId, suffixId, male,
-			birthdayMonth, birthdayDay, birthdayYear, smsSn, facebookSn,
-			jabberSn, skypeSn, twitterSn, jobTitle, groupIds, null, roleIds,
-			userGroupRoles, userGroupIds, null, emailAddresses, phones,
-			websites, null, serviceContext);
+			birthdayMonth, birthdayDay, birthdayYear, null, null, null, null,
+			null, jobTitle, groupIds, null, roleIds, userGroupRoles,
+			userGroupIds, null, null, null, null, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;

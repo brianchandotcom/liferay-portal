@@ -20,15 +20,11 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 
 import java.util.Locale;
 
-import org.osgi.service.component.annotations.Component;
-
 /**
  * @author Sergio González
+ * @deprecated As of 2.5.0, with no direct replacement
  */
-@Component(
-	property = {"form.navigator.category.order:Integer=20"},
-	service = FormNavigatorCategory.class
-)
+@Deprecated
 public class UserIdentificationFormNavigatorCategory
 	implements FormNavigatorCategory {
 

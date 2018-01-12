@@ -121,9 +121,6 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 		CommerceAddress commerceAddress,
 		CommerceShippingFixedOption commerceShippingFixedOption) {
 
-		String name = commerceShippingFixedOption.getName(locale);
-		double amount = commerceShippingFixedOption.getAmount();
-
 		List<CommerceCartItem> commerceCartItems =
 			commerceCart.getCommerceCartItems();
 
@@ -144,19 +141,16 @@ public class ByWeightCommerceShippingEngine implements CommerceShippingEngine {
 			return null;
 		}
 
-		int rate = 1;
+		String name = commerceShippingFixedOption.getName(locale);
+
+		double amount = commerceShippingFixedOptionRel.getFixedPrice();
+
 		double rateUnitWeightPrice =
 			commerceShippingFixedOptionRel.getRateUnitWeightPrice();
 
 		if (rateUnitWeightPrice > 0) {
-			rate = (int)Math.ceil(cartWeight / rateUnitWeightPrice);
+			amount += cartWeight * rateUnitWeightPrice;
 		}
-
-		if (rate >= 1) {
-			amount = amount * rate;
-		}
-
-		amount += commerceShippingFixedOptionRel.getFixedPrice();
 
 		amount +=
 			(cartPrice / 100) *

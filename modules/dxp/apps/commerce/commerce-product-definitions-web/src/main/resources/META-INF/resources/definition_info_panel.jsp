@@ -33,8 +33,6 @@ if (cpDefinitions == null) {
 				int carouselItemsCount = 1;
 
 				for (CPDefinition cpDefinition : cpDefinitions) {
-					request.setAttribute("info_panel.jsp-entry", cpDefinition);
-
 					String carouselItemCssClass = "carousel-item ";
 
 					if (carouselItemsCount == 1) {
@@ -44,15 +42,6 @@ if (cpDefinitions == null) {
 
 					<div class="<%= carouselItemCssClass %>">
 						<div class="sidebar-header">
-							<ul class="sidebar-header-actions">
-								<li>
-									<liferay-util:include
-										page="/definition_action.jsp"
-										servletContext="<%= application %>"
-									/>
-								</li>
-							</ul>
-
 							<h1><%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %></h1>
 
 							<div class="lfr-asset-categories sidebar-block">

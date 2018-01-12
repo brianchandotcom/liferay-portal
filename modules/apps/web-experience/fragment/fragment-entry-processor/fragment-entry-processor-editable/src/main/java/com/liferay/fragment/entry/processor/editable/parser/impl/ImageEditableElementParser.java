@@ -29,7 +29,7 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true, property = {"type=image"},
 	service = EditableElementParser.class
 )
-public class ImgEditableElementParser implements EditableElementParser {
+public class ImageEditableElementParser implements EditableElementParser {
 
 	@Override
 	public void replace(Element element, String value) {

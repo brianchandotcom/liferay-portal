@@ -113,8 +113,17 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 							title="<%= fragmentEntry.getName() %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+								<%
+								Date statusDate = fragmentEntry.getStatusDate();
+								%>
+
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fragmentEntry.getStatus() %>" />
+							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:vertical-card>
 					</c:when>
 					<c:otherwise>
@@ -128,8 +137,17 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 							title="<%= fragmentEntry.getName() %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getCreateDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+								<%
+								Date statusDate = fragmentEntry.getStatusDate();
+								%>
+
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
+
+							<liferay-frontend:vertical-card-footer>
+								<aui:workflow-status markupView="lexicon" showIcon="<%= false %>" showLabel="<%= false %>" status="<%= fragmentEntry.getStatus() %>" />
+							</liferay-frontend:vertical-card-footer>
 						</liferay-frontend:icon-vertical-card>
 					</c:otherwise>
 				</c:choose>

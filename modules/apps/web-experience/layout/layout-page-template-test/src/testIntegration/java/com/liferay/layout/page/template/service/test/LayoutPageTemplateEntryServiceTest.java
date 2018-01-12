@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -173,13 +174,15 @@ public class LayoutPageTemplateEntryServiceTest {
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 1", serviceContext);
+				"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 2", serviceContext);
+				"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 
 		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 
@@ -298,13 +301,15 @@ public class LayoutPageTemplateEntryServiceTest {
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 1", serviceContext);
+				"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 
 		FragmentEntry fragmentEntry2 =
 			FragmentEntryServiceUtil.addFragmentEntry(
 				_group.getGroupId(),
 				fragmentCollection.getFragmentCollectionId(),
-				"Fragment Entry 2", serviceContext);
+				"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
+				serviceContext);
 
 		List<FragmentEntry> fragmentEntries = new ArrayList<>();
 

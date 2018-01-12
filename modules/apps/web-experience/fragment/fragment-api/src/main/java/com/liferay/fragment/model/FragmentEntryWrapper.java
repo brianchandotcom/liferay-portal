@@ -71,6 +71,10 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		attributes.put("html", getHtml());
 		attributes.put("js", getJs());
 		attributes.put("htmlPreviewEntryId", getHtmlPreviewEntryId());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -153,6 +157,30 @@ public class FragmentEntryWrapper implements FragmentEntry,
 
 		if (htmlPreviewEntryId != null) {
 			setHtmlPreviewEntryId(htmlPreviewEntryId);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -309,6 +337,56 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	}
 
 	/**
+	* Returns the status of this fragment entry.
+	*
+	* @return the status of this fragment entry
+	*/
+	@Override
+	public int getStatus() {
+		return _fragmentEntry.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this fragment entry.
+	*
+	* @return the status by user ID of this fragment entry
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _fragmentEntry.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this fragment entry.
+	*
+	* @return the status by user name of this fragment entry
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _fragmentEntry.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this fragment entry.
+	*
+	* @return the status by user uuid of this fragment entry
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _fragmentEntry.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this fragment entry.
+	*
+	* @return the status date of this fragment entry
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _fragmentEntry.getStatusDate();
+	}
+
+	/**
 	* Returns the user ID of this fragment entry.
 	*
 	* @return the user ID of this fragment entry
@@ -343,9 +421,39 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		return _fragmentEntry.hashCode();
 	}
 
+	/**
+	* Returns <code>true</code> if this fragment entry is approved.
+	*
+	* @return <code>true</code> if this fragment entry is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _fragmentEntry.isApproved();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _fragmentEntry.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this fragment entry is denied.
+	*
+	* @return <code>true</code> if this fragment entry is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _fragmentEntry.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this fragment entry is a draft.
+	*
+	* @return <code>true</code> if this fragment entry is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _fragmentEntry.isDraft();
 	}
 
 	@Override
@@ -353,9 +461,59 @@ public class FragmentEntryWrapper implements FragmentEntry,
 		return _fragmentEntry.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this fragment entry is expired.
+	*
+	* @return <code>true</code> if this fragment entry is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _fragmentEntry.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this fragment entry is inactive.
+	*
+	* @return <code>true</code> if this fragment entry is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _fragmentEntry.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this fragment entry is incomplete.
+	*
+	* @return <code>true</code> if this fragment entry is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _fragmentEntry.isIncomplete();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _fragmentEntry.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this fragment entry is pending.
+	*
+	* @return <code>true</code> if this fragment entry is pending; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPending() {
+		return _fragmentEntry.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this fragment entry is scheduled.
+	*
+	* @return <code>true</code> if this fragment entry is scheduled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isScheduled() {
+		return _fragmentEntry.isScheduled();
 	}
 
 	@Override
@@ -519,6 +677,56 @@ public class FragmentEntryWrapper implements FragmentEntry,
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_fragmentEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the status of this fragment entry.
+	*
+	* @param status the status of this fragment entry
+	*/
+	@Override
+	public void setStatus(int status) {
+		_fragmentEntry.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this fragment entry.
+	*
+	* @param statusByUserId the status by user ID of this fragment entry
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_fragmentEntry.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this fragment entry.
+	*
+	* @param statusByUserName the status by user name of this fragment entry
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_fragmentEntry.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this fragment entry.
+	*
+	* @param statusByUserUuid the status by user uuid of this fragment entry
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_fragmentEntry.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this fragment entry.
+	*
+	* @param statusDate the status date of this fragment entry
+	*/
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_fragmentEntry.setStatusDate(statusDate);
 	}
 
 	/**

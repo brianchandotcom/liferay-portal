@@ -49,22 +49,22 @@ public class FragmentEntryLocalServiceWrapper
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		long userId, long groupId, long fragmentCollectionId,
-		java.lang.String name,
+		java.lang.String name, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLocalService.addFragmentEntry(userId, groupId,
-			fragmentCollectionId, name, serviceContext);
+			fragmentCollectionId, name, status, serviceContext);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry addFragmentEntry(
 		long userId, long groupId, long fragmentCollectionId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js,
+		java.lang.String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLocalService.addFragmentEntry(userId, groupId,
-			fragmentCollectionId, name, css, html, js, serviceContext);
+			fragmentCollectionId, name, css, html, js, status, serviceContext);
 	}
 
 	/**
@@ -203,12 +203,6 @@ public class FragmentEntryLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntry> fetchFragmentEntries(
-		long fragmentCollectionId) {
-		return _fragmentEntryLocalService.fetchFragmentEntries(fragmentCollectionId);
-	}
-
-	@Override
 	public com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
 		long fragmentEntryId) {
 		return _fragmentEntryLocalService.fetchFragmentEntry(fragmentEntryId);
@@ -234,6 +228,19 @@ public class FragmentEntryLocalServiceWrapper
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		int start, int end) {
 		return _fragmentEntryLocalService.getFragmentEntries(start, end);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId) {
+		return _fragmentEntryLocalService.getFragmentEntries(fragmentCollectionId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int status) {
+		return _fragmentEntryLocalService.getFragmentEntries(fragmentCollectionId,
+			status);
 	}
 
 	@Override
@@ -327,20 +334,21 @@ public class FragmentEntryLocalServiceWrapper
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-		long fragmentEntryId, java.lang.String name)
+		long userId, long fragmentEntryId, java.lang.String name,
+		java.lang.String css, java.lang.String html, java.lang.String js,
+		int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryLocalService.updateFragmentEntry(fragmentEntryId,
-			name);
+		return _fragmentEntryLocalService.updateFragmentEntry(userId,
+			fragmentEntryId, name, css, html, js, status, serviceContext);
 	}
 
 	@Override
 	public com.liferay.fragment.model.FragmentEntry updateFragmentEntry(
-		long fragmentEntryId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		long fragmentEntryId, java.lang.String name)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryLocalService.updateFragmentEntry(fragmentEntryId,
-			name, css, html, js, serviceContext);
+			name);
 	}
 
 	@Override

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.IOException;
 
@@ -70,7 +71,7 @@ public class FragmentEntryDemoDataCreatorImpl
 		FragmentEntry fragmentEntry =
 			_fragmentEntryLocalService.addFragmentEntry(
 				userId, groupId, fragmentCollectionId, name, css, html, js,
-				serviceContext);
+				WorkflowConstants.STATUS_APPROVED, serviceContext);
 
 		_fragmentEntryIds.add(fragmentEntry.getFragmentEntryId());
 

@@ -78,6 +78,10 @@
 		<column name="html" type="String" />
 		<column name="js" type="String" />
 		<column name="htmlPreviewEntryId" type="long" />
+		<column name="status" type="int" />
+		<column name="statusByUserId" type="long" />
+		<column name="statusByUserName" type="String" />
+		<column name="statusDate" type="Date" />
 
 		<!-- Order -->
 
@@ -96,6 +100,10 @@
 		<finder name="G_FCI" return-type="Collection">
 			<finder-column name="groupId" />
 			<finder-column name="fragmentCollectionId" />
+		</finder>
+		<finder name="FCI_S" return-type="Collection">
+			<finder-column name="fragmentCollectionId" />
+			<finder-column name="status" />
 		</finder>
 		<finder name="G_FCI_N" return-type="FragmentEntry" unique="true">
 			<finder-column name="groupId" />

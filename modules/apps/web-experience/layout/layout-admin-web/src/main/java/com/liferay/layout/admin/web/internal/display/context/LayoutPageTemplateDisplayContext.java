@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 
@@ -113,8 +114,9 @@ public class LayoutPageTemplateDisplayContext {
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.fetchFragmentEntries(
-					fragmentCollection.getFragmentCollectionId());
+				FragmentEntryServiceUtil.getFragmentEntries(
+					fragmentCollection.getFragmentCollectionId(),
+					WorkflowConstants.STATUS_APPROVED);
 
 			if (ListUtil.isEmpty(fragmentEntries)) {
 				continue;

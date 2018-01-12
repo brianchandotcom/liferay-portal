@@ -26,10 +26,11 @@
 
 		data.put("rowPK", resultRow.getPrimaryKey());
 
-		ClassedModel classedModel = (ClassedModel)resultRow.getObject();
+		StagedModel stagedModel = (StagedModel)resultRow.getObject();
 
-		data.put("className", ExportImportClassedModelUtil.getClassName(classedModel));
-		data.put("classPK", ExportImportClassedModelUtil.getClassPK(classedModel));
+		data.put("classNameId", ExportImportClassedModelUtil.getClassNameId(stagedModel));
+		data.put("groupId", BeanPropertiesUtil.getLong(stagedModel, "groupId"));
+		data.put("uuid", stagedModel.getUuid());
 	%>
 
 		<div <%= HtmlUtil.buildData(data) %>></div>

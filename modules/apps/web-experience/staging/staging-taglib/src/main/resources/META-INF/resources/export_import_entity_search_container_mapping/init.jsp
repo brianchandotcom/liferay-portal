@@ -17,8 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%@ page import="com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil" %><%@
+page import="com.liferay.portal.kernel.bean.BeanPropertiesUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
-page import="com.liferay.portal.kernel.model.ClassedModel" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%

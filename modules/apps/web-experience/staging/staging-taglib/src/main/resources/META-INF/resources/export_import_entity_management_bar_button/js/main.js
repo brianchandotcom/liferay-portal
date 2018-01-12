@@ -80,8 +80,8 @@ AUI.add(
 
 								var input = $("<input>")
 									.attr("type", "hidden")
-									.attr("name", instance.get('actionNamespace') + "classNameClassPK")
-									.val(node.attr('data-classname') + '#' + node.attr('data-classpk'));
+									.attr("name", instance.get('actionNamespace') + "exportingEntities")
+									.val(node.attr('data-classNameId') + '#' + node.attr('data-groupId') + "#" + node.attr('data-uuid'));
 
 								form.append(input);
 							});

@@ -30,7 +30,10 @@ class FragmentPreview extends Component {
 	 * @inheritDoc
 	 */
 	attached() {
-		this._updatePreview = debounce(this._updatePreview.bind(this), 100);
+		this._updatePreview = debounce(
+			this._updatePreview.bind(this),
+			500
+		);
 
 		this._updatePreviewSize = debounce(
 			this._updatePreviewSize.bind(this),
@@ -53,6 +56,24 @@ class FragmentPreview extends Component {
 		this.off('cssChanged', this._updatePreview);
 		this.off('htmlChanged', this._updatePreview);
 		this.off('jsChanged', this._updatePreview);
+	}
+
+	/**
+	 * After each render, script tags need to be reapended to the DOM
+	 * in order to trigger an execution (content changes do not trigger it).
+	 * @inheritDoc
+	 */
+	rendered() {
+		if (this.refs.preview) {
+			this.refs.preview.querySelectorAll('script').forEach((script) => {
+				const parentNode = script.parentNode;
+				const newScript = document.createElement('script');
+
+				newScript.innerHTML = script.innerHTML;
+				parentNode.removeChild(script);
+				parentNode.appendChild(newScript);
+			});
+		}
 	}
 
 	/**
@@ -90,22 +111,26 @@ class FragmentPreview extends Component {
 	 * @protected
 	 */
 	_updatePreview() {
-		this._previewContent =
-			'data:text/html;charset=utf-8,' +
-			encodeURIComponent(`
-			<!DOCTYPE html>
-			<html>
-			<head>
-				<meta name="viewport" content="width=device-width, initial-scale=1">
-				<meta charset="utf-8">
-				<style>${this.css || ''}</style>
-			</head>
-			<body>
-				${this.html || ''}
-				<script>${this.js || ''}</script>
-			</body>
-			</html>
-		`);
+		if (!this._loading) {
+			this._loading = true;
+
+			const formData = new FormData();
+
+			formData.append(`${this.namespace}css`, this.css);
+			formData.append(`${this.namespace}html`, this.html);
+			formData.append(`${this.namespace}js`, this.js);
+
+			fetch(this.renderFragmentEntryURL, {
+				body: formData,
+				credentials: 'include',
+				method: 'post'
+			})
+				.then(response => response.json())
+				.then(response => {
+					this._loading = false;
+					this._previewContent = Soy.toIncDom(response.content);
+				});
+		}
 	}
 
 	/**
@@ -170,6 +195,24 @@ FragmentPreview.STATE = {
 	js: Config.string().required(),
 
 	/**
+	 * Namespace of the portlet being used.
+	 * Necesary for getting the real inputs which interact with the server.
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	namespace: Config.string().required(),
+
+	/**
+	 * Render fragment entry URL
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	renderFragmentEntryURL: Config.string().required(),
+
+	/**
 	 * Path of the available icons.
 	 * @instance
 	 * @memberOf FragmentEditor
@@ -178,16 +221,28 @@ FragmentPreview.STATE = {
 	spritemap: Config.string().required(),
 
 	/**
+	 * Flag for checking if the preview content is being loaded
+	 * @default false
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @protected
+	 * @type {boolean}
+	 */
+	_loading: Config.bool()
+		.internal()
+		.value(false),
+
+	/**
 	 * Processed iframe content
 	 * @default ''
 	 * @instance
 	 * @memberOf FragmentPreview
 	 * @protected
-	 * @type {?string}
+	 * @type {function}
 	 */
-	_previewContent: Config.string()
+	_previewContent: Config.func()
 		.internal()
-		.value(''),
+		.value(Soy.toIncDom('')),
 
 	/**
 	 * Ratio of the preview being rendered.

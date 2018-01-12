@@ -19,13 +19,13 @@
 		background-color: white;
 		border: none;
 		border-top: solid thin #DDD;
-		height: calc(100% - 2.5em);
+		height: calc(100% - 2em);
 		left: 0;
 		margin-top: calc(2em - 1px);
+		overflow: auto;
 		position: absolute;
 		top: 0;
 		width: 100%;
-		z-index: -1;
 
 		&--resized {
 			border-top: none;
@@ -39,6 +39,20 @@
 				width ease 0.2s,
 				height ease 0.3s
 			;
+		}
+
+		&--loading {
+			overflow: hidden;
+		}
+
+		&__loading-indicator {
+			background-color: rgba(255, 255, 255, 0.9);
+			height: 100%;
+			left: 0;
+			position: absolute;
+			top: 0;
+			width: 100%;
+			z-index: 1;
 		}
 	}
 

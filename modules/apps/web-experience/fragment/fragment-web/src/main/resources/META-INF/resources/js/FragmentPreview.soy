@@ -7,7 +7,8 @@
 	{@param spritemap: string}
 	{@param? _currentPreviewSize: string}
 	{@param? _handlePreviewSizeButtonClick: any}
-	{@param? _previewContent: string}
+	{@param? _loading: bool}
+	{@param? _previewContent: html}
 	{@param? _previewSizes: list<string>}
 
 	<div class="fragment-preview" ref="wrapper">
@@ -58,19 +59,30 @@
 			</button>
 		</div>
 
-		{let $iframeClasses kind="text"}
+		{let $previewClasses kind="text"}
 			fragment-preview__frame
 			{if $_currentPreviewSize}
 				{sp}fragment-preview__frame--resized
 			{/if}
+			{if $_loading}
+				{sp}fragment-preview__frame--loading
+			{/if}
 		{/let}
 
-		<iframe
-			class="{$iframeClasses}"
+		<div
+			class="{$previewClasses}"
 			ref="preview"
 			sandbox="allow-scripts"
-			src="{$_previewContent}"
 		>
-		</iframe>
+			{if $_loading}
+				<div class="fragment-preview__frame__loading-indicator">
+					<span class="loading-icon loading-icon-dotted">
+						<span class="loading-indicator"></span>
+					</span>
+				</div>
+			{/if}
+
+			{$_previewContent}
+		</div>
 	</div>
 {/template}

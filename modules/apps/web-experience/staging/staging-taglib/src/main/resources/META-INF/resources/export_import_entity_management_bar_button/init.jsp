@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
+<%@ page import="com.liferay.exportimport.changeset.constants.ChangesetPortletKeys" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 
 <%@ page import="java.util.Objects" %>

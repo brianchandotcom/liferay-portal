@@ -22,7 +22,7 @@
 	PortletURL portletURL = PortletURLFactoryUtil.create(request, ExportImportPortletKeys.EXPORT_IMPORT, PortletRequest.RENDER_PHASE);
 
 	portletURL.setParameter("mvcPath", "/import_portlet.jsp");
-	portletURL.setParameter("portletResource", ExportImportPortletKeys.ENTITY_SET);
+	portletURL.setParameter("portletResource", ChangesetPortletKeys.CHANGESET);
 	%>
 
 	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "import-entity") %>' url="<%= portletURL.toString() %>" />

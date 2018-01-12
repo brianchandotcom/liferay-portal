@@ -29,7 +29,7 @@ scopeGroup = themeDisplay.getScopeGroup();
 	<liferay-frontend:management-bar-button href="<%= taglibURL %>" icon="import-export" label="<%= cmd %>" />
 
 	<%
-	PortletURL portletURL = PortletURLFactoryUtil.create(request, ExportImportPortletKeys.ENTITY_SET, PortletRequest.ACTION_PHASE);
+	PortletURL portletURL = PortletURLFactoryUtil.create(request, ChangesetPortletKeys.CHANGESET, PortletRequest.ACTION_PHASE);
 
 	portletURL.setParameter(ActionRequest.ACTION_NAME, "exportImportEntity");
 	portletURL.setParameter("mvcRenderCommandName", "exportImportEntity");
@@ -41,7 +41,7 @@ scopeGroup = themeDisplay.getScopeGroup();
 	<aui:script use="liferay-export-import-management-bar-button">
 		var exportImportManagementBarButton = new Liferay.ExportImportManagementBarButton(
 			{
-				actionNamespace: '<%= PortalUtil.getPortletNamespace(ExportImportPortletKeys.ENTITY_SET) %>',
+				actionNamespace: '<%= PortalUtil.getPortletNamespace(ChangesetPortletKeys.CHANGESET) %>',
 				cmd: '<%= cmd %>',
 				exportImportEntityUrl: '<%= portletURL.toString() %>',
 				namespace: '<portlet:namespace />',

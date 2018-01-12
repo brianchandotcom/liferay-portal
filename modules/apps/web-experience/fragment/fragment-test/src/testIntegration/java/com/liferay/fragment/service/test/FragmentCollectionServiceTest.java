@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -167,7 +168,8 @@ public class FragmentCollectionServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", serviceContext);
+			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentCollectionServiceUtil.deleteFragmentCollection(
 			fragmentCollection.getFragmentCollectionId());

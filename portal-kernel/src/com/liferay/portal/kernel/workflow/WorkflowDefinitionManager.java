@@ -52,6 +52,26 @@ public interface WorkflowDefinitionManager {
 		throw new UnsupportedOperationException();
 	}
 
+	/**
+	 * Creates a draft version of a workflow definition
+	 * @param companyId
+	 * @param userId
+	 * @param title
+	 * @param name
+	 * @param bytes
+	 * @return {@link WorkflowDefinition}
+	 * @throws WorkflowException
+	 *
+	 * @review
+	 */
+	public default WorkflowDefinition draftWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public int getActiveWorkflowDefinitionCount(long companyId)
 		throws WorkflowException;
 

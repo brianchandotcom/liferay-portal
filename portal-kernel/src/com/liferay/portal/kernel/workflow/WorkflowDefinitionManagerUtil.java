@@ -53,6 +53,27 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, title, name, bytes);
 	}
 
+	/**
+	 * Creates a draft version of a workflow definition
+	 * @param companyId
+	 * @param userId
+	 * @param title
+	 * @param name
+	 * @param bytes
+	 * @return {@link WorkflowDefinition}
+	 * @throws WorkflowException
+	 *
+	 * @review
+	 */
+	public static WorkflowDefinition draftWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().draftWorkflowDefinition(
+			companyId, userId, title, name, bytes);
+	}
+
 	public static int getActiveWorkflowDefinitionCount(long companyId)
 		throws WorkflowException {
 

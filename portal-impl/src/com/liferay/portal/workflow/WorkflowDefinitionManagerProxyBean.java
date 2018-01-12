@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 
 import java.util.List;
 
@@ -52,6 +53,27 @@ public class WorkflowDefinitionManagerProxyBean
 	@Override
 	public WorkflowDefinition deployWorkflowDefinition(
 		long companyId, long userId, String title, String name, byte[] bytes) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Creates a draft version of a workflow definition
+	 *
+	 * @param  companyId
+	 * @param  userId
+	 * @param  title
+	 * @param  name
+	 * @param  bytes
+	 * @return {@link WorkflowDefinition}
+	 * @throws WorkflowException
+	 * @review
+	 */
+	@Override
+	public WorkflowDefinition draftWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
 	}

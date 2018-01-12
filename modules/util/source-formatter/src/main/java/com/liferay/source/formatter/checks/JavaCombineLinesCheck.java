@@ -754,8 +754,8 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 					for (int i = 0;; i++) {
 						String nextLine = getLine(content, lineCount + i + 1);
 
-						if (nextLine.endsWith(StringPool.SEMICOLON) ||
-							nextLine.endsWith(") {")) {
+						if (nextLine.endsWith(StringPool.OPEN_CURLY_BRACE) ||
+							nextLine.endsWith(StringPool.SEMICOLON)) {
 
 							return _getCombinedLinesContent(
 								content, line, trimmedLine, lineLength, lineCount,

@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
-import java.util.Hashtable;
-
 import org.dom4j.Element;
 
 /**
@@ -28,46 +26,6 @@ import org.dom4j.Element;
  */
 public class SemanticVersioningFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		if (!consoleText.contains(_TOKEN_SEMVER_INCORRECT) ||
-			!consoleText.contains(_TOKEN_SEMVER_PACKAGE)) {
-
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<p>Please fix <strong>semantic versioning</strong> on ");
-		sb.append("<strong><a href=\"https://github.com/");
-		sb.append(properties.get("github.origin.name"));
-		sb.append("/");
-		sb.append(properties.get("repository"));
-		sb.append("/tree/");
-		sb.append(properties.get("github.sender.branch.name"));
-		sb.append("\">");
-		sb.append(properties.get("github.origin.name"));
-		sb.append("/");
-		sb.append(properties.get("github.sender.branch.name"));
-		sb.append("</a></strong>.</p>");
-
-		int end = consoleText.indexOf(_TOKEN_SEMVER_INCORRECT);
-
-		end = consoleText.indexOf("\n", end);
-
-		int start = consoleText.lastIndexOf(_TOKEN_BASELINE_CHECK, end);
-
-		start = consoleText.indexOf(_TOKEN_SEMVER_PACKAGE, start);
-
-		start = consoleText.lastIndexOf("\n", start);
-
-		sb.append(getConsoleTextSnippet(consoleText, true, start, end));
-
-		return sb.toString();
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

@@ -17,7 +17,6 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
-import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -28,30 +27,6 @@ import org.dom4j.Element;
  */
 public class IntegrationTestTimeoutFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		Matcher matcher = _pattern.matcher(consoleText);
-
-		if (!matcher.find()) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append("<p><strong>");
-		sb.append(matcher.group("testName"));
-		sb.append("</strong> was aborted because it exceeded the timeout ");
-		sb.append("period.</p>");
-
-		String snippet = matcher.group(0);
-
-		sb.append(getConsoleTextSnippet(snippet, false, 0, snippet.length()));
-
-		return sb.toString();
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

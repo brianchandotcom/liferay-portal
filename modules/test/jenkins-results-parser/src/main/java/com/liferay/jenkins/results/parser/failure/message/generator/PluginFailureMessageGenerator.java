@@ -16,107 +16,17 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
-import com.liferay.jenkins.results.parser.JenkinsResultsParserUtil;
 import com.liferay.jenkins.results.parser.TopLevelBuild;
 
-import java.io.IOException;
-
-import java.util.Hashtable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.dom4j.Element;
 
-import org.json.JSONObject;
-
 /**
  * @author Peter Yoo
  */
 public class PluginFailureMessageGenerator extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		if (!buildURL.contains("portal-acceptance")) {
-			return null;
-		}
-
-		JSONObject jsonObject = null;
-
-		try {
-			jsonObject = JenkinsResultsParserUtil.toJSONObject(
-				JenkinsResultsParserUtil.getLocalURL(buildURL + "api/json"));
-		}
-		catch (IOException ioe) {
-			throw new RuntimeException("Unable to download JSON", ioe);
-		}
-
-		String jobVariant = JenkinsResultsParserUtil.getJobVariant(jsonObject);
-
-		if (!buildURL.contains("plugins") && !jobVariant.contains("plugins")) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		Matcher matcher = _pattern.matcher(consoleText);
-
-		if (matcher.find()) {
-			String group = matcher.group(0);
-
-			sb.append("<p>");
-			sb.append(group);
-			sb.append("</p>");
-			sb.append("<ul>");
-
-			int x = matcher.start() + group.length() + 1;
-
-			int count = Integer.parseInt(matcher.group(1));
-
-			for (int i = 0; i < count; i++) {
-				if (i == 10) {
-					sb.append("<li>...</li>");
-
-					break;
-				}
-
-				int y = consoleText.indexOf("\n", x);
-
-				String pluginName = consoleText.substring(x, y);
-
-				sb.append("<li>");
-				sb.append(pluginName.replace("[echo] ", ""));
-				sb.append("</li>");
-
-				x = y + 1;
-			}
-
-			sb.append("</ul>");
-		}
-		else {
-			sb.append(
-				"<p>To include a plugin fix for this pull request, please ");
-			sb.append("edit your <a href=\"https://github.com/");
-			sb.append(properties.get("github.origin.name"));
-			sb.append("/");
-			sb.append(properties.get("portal.repository"));
-			sb.append("/blob/");
-			sb.append(properties.get("github.sender.branch.name"));
-			sb.append("/git-commit-plugins\">git-commit-plugins</a>. ");
-
-			sb.append("Click <a href=\"https://in.liferay.com/web/");
-			sb.append(
-				"global.engineering/blog/-/blogs/new-tests-for-the-pull-");
-			sb.append("request-tester-\">here</a> for more details.</p>");
-
-			int end = consoleText.indexOf("merge-test-results:");
-
-			sb.append(getConsoleTextSnippet(consoleText, true, end));
-		}
-
-		return sb.toString();
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

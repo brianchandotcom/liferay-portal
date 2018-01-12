@@ -16,8 +16,6 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 
-import java.util.Hashtable;
-
 import org.dom4j.Element;
 
 /**
@@ -25,27 +23,6 @@ import org.dom4j.Element;
  */
 public class ModulesCompilationFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		if (!consoleText.contains(_TOKEN_COULD_NOT_RESOLVE_CONFIG)) {
-			return null;
-		}
-
-		int end = consoleText.indexOf(_TOKEN_MERGE_TEST_RESULTS);
-
-		end = consoleText.lastIndexOf(_TOKEN_TRY, end);
-
-		end = consoleText.lastIndexOf("\n", end);
-
-		int start = consoleText.lastIndexOf(_TOKEN_WHAT_WENT_WRONG, end);
-
-		start = consoleText.lastIndexOf("\n", start);
-
-		return getConsoleTextSnippet(consoleText, true, start, end);
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

@@ -17,8 +17,6 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 import com.liferay.jenkins.results.parser.Build;
 import com.liferay.jenkins.results.parser.Dom4JUtil;
 
-import java.util.Hashtable;
-
 import org.dom4j.Element;
 
 /**
@@ -26,34 +24,6 @@ import org.dom4j.Element;
  */
 public class StartupFailureMessageGenerator
 	extends BaseFailureMessageGenerator {
-
-	@Override
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties) {
-
-		if (!consoleText.contains(_TOKEN_UNRESOLVED_REQUIREMENT)) {
-			return null;
-		}
-
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(
-			"<p>Startup error: <strong>Unresolved Requirement(s)</strong></p>");
-
-		int start = consoleText.indexOf(_TOKEN_UNRESOLVED_REQUIREMENT);
-
-		start = consoleText.lastIndexOf(_TOKEN_COULD_NOT_RESOLVE_MODULE, start);
-
-		start = consoleText.lastIndexOf("\n", start);
-
-		int end = consoleText.indexOf(_TOKEN_DELETING);
-
-		end = consoleText.lastIndexOf("\n", end);
-
-		sb.append(getConsoleTextSnippet(consoleText, true, start, end));
-
-		return sb.toString();
-	}
 
 	@Override
 	public Element getMessageElement(Build build) {

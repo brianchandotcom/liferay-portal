@@ -16,17 +16,12 @@ package com.liferay.jenkins.results.parser.failure.message.generator;
 
 import com.liferay.jenkins.results.parser.Build;
 
-import java.util.Hashtable;
-
 import org.dom4j.Element;
 
 /**
  * @author Peter Yoo
  */
 public interface FailureMessageGenerator {
-
-	public String getMessage(
-		String buildURL, String consoleText, Hashtable<?, ?> properties);
 
 	public Element getMessageElement(Build build);
 

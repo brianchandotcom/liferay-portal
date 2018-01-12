@@ -155,9 +155,9 @@ public class CommerceWarehouseItemServiceImpl
 	}
 
 	@ServiceReference(type = CPDefinitionService.class)
-	protected CPDefinitionService cpDefinitionService;
+	private CPDefinitionService _cpDefinitionService;
 
 	@ServiceReference(type = CPInstanceService.class)
-	protected CPInstanceService cpInstanceService;
+	private CPInstanceService _cpInstanceService;
 
 }

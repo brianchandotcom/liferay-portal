@@ -233,7 +233,7 @@ public class CommerceCartItemLocalServiceImpl
 			cpInstanceId);
 
 		List<CommerceCartValidatorResult> commerceCartValidatorResults =
-			commerceCartValidatorRegistry.validate(cpInstance, quantity);
+			_commerceCartValidatorRegistry.validate(cpInstance, quantity);
 
 		if (!commerceCartValidatorResults.isEmpty()) {
 			throw new CommerceCartValidatorException(
@@ -242,7 +242,7 @@ public class CommerceCartItemLocalServiceImpl
 	}
 
 	@ServiceReference(type = CommerceCartValidatorRegistry.class)
-	protected CommerceCartValidatorRegistry commerceCartValidatorRegistry;
+	private CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
 	private CPDefinitionLocalService _cpDefinitionLocalService;

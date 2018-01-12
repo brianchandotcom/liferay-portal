@@ -125,7 +125,7 @@ public class CommerceWarehouseLocalServiceImpl
 		CommerceWarehouse commerceWarehouse =
 			commerceWarehousePersistence.findByPrimaryKey(commerceWarehouseId);
 
-		double[] coordinates = commerceGeocoder.getCoordinates(
+		double[] coordinates = _commerceGeocoder.getCoordinates(
 			commerceWarehouse.getStreet1(), commerceWarehouse.getCity(),
 			commerceWarehouse.getZip(), commerceWarehouse.getCommerceRegion(),
 			commerceWarehouse.getCommerceCountry());
@@ -348,9 +348,6 @@ public class CommerceWarehouseLocalServiceImpl
 		}
 	}
 
-	@ServiceReference(type = CommerceGeocoder.class)
-	protected CommerceGeocoder commerceGeocoder;
-
 	private CommerceWarehouse _addDefaultCommerceWarehouse(
 			long commerceWarehouseId, String name, String street1,
 			String street2, String street3, String city, String zip,
@@ -388,5 +385,8 @@ public class CommerceWarehouseLocalServiceImpl
 
 		return commerceWarehouse;
 	}
+
+	@ServiceReference(type = CommerceGeocoder.class)
+	private CommerceGeocoder _commerceGeocoder;
 
 }

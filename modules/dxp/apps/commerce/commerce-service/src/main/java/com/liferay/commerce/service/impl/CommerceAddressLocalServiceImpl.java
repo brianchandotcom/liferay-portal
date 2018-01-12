@@ -186,7 +186,7 @@ public class CommerceAddressLocalServiceImpl
 		CommerceAddress commerceAddress =
 			commerceAddressPersistence.findByPrimaryKey(commerceAddressId);
 
-		double[] coordinates = commerceGeocoder.getCoordinates(
+		double[] coordinates = _commerceGeocoder.getCoordinates(
 			commerceAddress.getStreet1(), commerceAddress.getCity(),
 			commerceAddress.getZip(), commerceAddress.getCommerceRegion(),
 			commerceAddress.getCommerceCountry());
@@ -370,6 +370,6 @@ public class CommerceAddressLocalServiceImpl
 	}
 
 	@ServiceReference(type = CommerceGeocoder.class)
-	protected CommerceGeocoder commerceGeocoder;
+	private CommerceGeocoder _commerceGeocoder;
 
 }

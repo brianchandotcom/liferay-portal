@@ -53,7 +53,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 			int quantity, ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinition cpDefinition = cpDefinitionLocalService.getCPDefinition(
+		CPDefinition cpDefinition = _cpDefinitionLocalService.getCPDefinition(
 			cpDefinitionId);
 		User user = userLocalService.getUser(serviceContext.getUserId());
 
@@ -152,7 +152,7 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 		throws PortalException {
 
 		CPDefinition entryCPDefinition =
-			cpDefinitionLocalService.getCPDefinition(entryCPDefinitionId);
+			_cpDefinitionLocalService.getCPDefinition(entryCPDefinitionId);
 
 		if ((cpDefinitionId == entryCPDefinition.getCPDefinitionId()) ||
 			GroupedCPTypeConstants.NAME.equals(
@@ -167,6 +167,6 @@ public class CPDefinitionGroupedEntryLocalServiceImpl
 	}
 
 	@ServiceReference(type = CPDefinitionLocalService.class)
-	protected CPDefinitionLocalService cpDefinitionLocalService;
+	private CPDefinitionLocalService _cpDefinitionLocalService;
 
 }

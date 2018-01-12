@@ -341,7 +341,7 @@ public class CPDefinitionLocalServiceImpl
 
 		// Commerce product type
 
-		CPType cpType = cpTypeServicesTracker.getCPType(
+		CPType cpType = _cpTypeServicesTracker.getCPType(
 			cpDefinition.getProductTypeName());
 
 		if (cpType != null) {
@@ -1294,26 +1294,21 @@ public class CPDefinitionLocalServiceImpl
 			long classNameId = classNameLocalService.getClassNameId(
 				CPDefinition.class.getName());
 
-			DDMStructure ddmStructure = ddmStructureLocalService.fetchStructure(
-				groupId, classNameId, ddmStructureKey, true);
+			DDMStructure ddmStructure =
+				_ddmStructureLocalService.fetchStructure(
+					groupId, classNameId, ddmStructureKey, true);
 
 			if (ddmStructure == null) {
 				throw new NoSuchStructureException();
 			}
 		}
 
-		CPType cpType = cpTypeServicesTracker.getCPType(productTypeName);
+		CPType cpType = _cpTypeServicesTracker.getCPType(productTypeName);
 
 		if (cpType == null) {
 			throw new CPDefinitionProductTypeNameException();
 		}
 	}
-
-	@ServiceReference(type = CPTypeServicesTracker.class)
-	protected CPTypeServicesTracker cpTypeServicesTracker;
-
-	@ServiceReference(type = DDMStructureLocalService.class)
-	protected DDMStructureLocalService ddmStructureLocalService;
 
 	private List<CPDefinitionLocalization> _addCPDefinitionLocalizedFields(
 			long companyId, long cpDefinitionId, Map<Locale, String> titleMap,
@@ -1506,5 +1501,11 @@ public class CPDefinitionLocalServiceImpl
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CPDefinitionLocalServiceImpl.class);
+
+	@ServiceReference(type = CPTypeServicesTracker.class)
+	private CPTypeServicesTracker _cpTypeServicesTracker;
+
+	@ServiceReference(type = DDMStructureLocalService.class)
+	private DDMStructureLocalService _ddmStructureLocalService;
 
 }

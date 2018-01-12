@@ -198,11 +198,6 @@ public class FragmentEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry> fetchFragmentEntries(
-		long fragmentCollectionId) {
-		return getService().fetchFragmentEntries(fragmentCollectionId);
-	}
-
 	public static com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
 		long fragmentEntryId) {
 		return getService().fetchFragmentEntry(fragmentEntryId);
@@ -226,6 +221,11 @@ public class FragmentEntryLocalServiceUtil {
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		int start, int end) {
 		return getService().getFragmentEntries(start, end);
+	}
+
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId) {
+		return getService().getFragmentEntries(fragmentCollectionId);
 	}
 
 	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(

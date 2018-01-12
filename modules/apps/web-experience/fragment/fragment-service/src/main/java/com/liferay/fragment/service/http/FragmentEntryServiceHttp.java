@@ -186,12 +186,12 @@ public class FragmentEntryServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentEntry> fetchFragmentEntries(
+	public static java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		HttpPrincipal httpPrincipal, long fragmentCollectionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentEntryServiceUtil.class,
-					"fetchFragmentEntries", _fetchFragmentEntriesParameterTypes4);
+					"getFragmentEntries", _getFragmentEntriesParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fragmentCollectionId);
@@ -486,7 +486,7 @@ public class FragmentEntryServiceHttp {
 	private static final Class<?>[] _deleteFragmentEntryParameterTypes3 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _fetchFragmentEntriesParameterTypes4 = new Class[] {
+	private static final Class<?>[] _getFragmentEntriesParameterTypes4 = new Class[] {
 			long.class
 		};
 	private static final Class<?>[] _fetchFragmentEntryParameterTypes5 = new Class[] {

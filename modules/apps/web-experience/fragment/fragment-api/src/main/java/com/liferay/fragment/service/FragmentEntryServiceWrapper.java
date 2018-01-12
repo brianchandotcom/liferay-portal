@@ -68,13 +68,6 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.fragment.model.FragmentEntry> fetchFragmentEntries(
-		long fragmentCollectionId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _fragmentEntryService.fetchFragmentEntries(fragmentCollectionId);
-	}
-
-	@Override
 	public com.liferay.fragment.model.FragmentEntry fetchFragmentEntry(
 		long fragmentEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -93,6 +86,13 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 		long fragmentCollectionId, java.lang.String name) {
 		return _fragmentEntryService.getFragmentCollectionsCount(groupId,
 			fragmentCollectionId, name);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _fragmentEntryService.getFragmentEntries(fragmentCollectionId);
 	}
 
 	@Override

@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 
@@ -74,11 +75,13 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", serviceContext);
+			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", serviceContext);
+			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	@Test
@@ -94,7 +97,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", serviceContext);
+			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		Assert.assertEquals("Fragment Entry", fragmentEntry.getName());
 	}
@@ -112,7 +116,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, null, null, serviceContext);
+			"Fragment Entry", null, null, null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Test(expected = FragmentEntryNameException.class)
@@ -128,7 +133,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			StringPool.BLANK, serviceContext);
+			StringPool.BLANK, WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 	}
 
 	@Test(expected = FragmentEntryContentException.class)
@@ -145,7 +151,7 @@ public class FragmentEntryServiceTest {
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
 			"Fragment Entry", null, "<div><broken-tag</div>", null,
-			serviceContext);
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Test(expected = FragmentEntryNameException.class)
@@ -161,7 +167,7 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			null, serviceContext);
+			null, WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Test
@@ -177,7 +183,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", null, "Text only fragment", null, serviceContext);
+			"Fragment Entry", null, "Text only fragment", null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
 	}
 
 	@Test
@@ -197,11 +204,13 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 1", serviceContext);
+			"Fragment Entry 1", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry 2", serviceContext);
+			"Fragment Entry 2", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		List<FragmentEntry> actualFragmentEntries =
 			FragmentEntryServiceUtil.fetchFragmentEntries(
@@ -225,7 +234,8 @@ public class FragmentEntryServiceTest {
 
 		FragmentEntry fragmentEntry = FragmentEntryServiceUtil.addFragmentEntry(
 			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
-			"Fragment Entry", serviceContext);
+			"Fragment Entry", WorkflowConstants.STATUS_APPROVED,
+			serviceContext);
 
 		FragmentEntryServiceUtil.deleteFragmentEntry(
 			fragmentEntry.getFragmentEntryId());

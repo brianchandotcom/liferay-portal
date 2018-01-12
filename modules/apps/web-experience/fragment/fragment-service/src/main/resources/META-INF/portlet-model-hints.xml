@@ -38,6 +38,10 @@
 			<hint name="max-length">4000</hint>
 		</field>
 		<field name="htmlPreviewEntryId" type="long" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.fragment.model.FragmentEntryInstanceLink">
 		<field name="fragmentEntryInstanceLinkId" type="long" />

@@ -65,7 +65,7 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{fragmentEntryId=");
 		sb.append(fragmentEntryId);
@@ -93,6 +93,14 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		sb.append(js);
 		sb.append(", htmlPreviewEntryId=");
 		sb.append(htmlPreviewEntryId);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -159,6 +167,22 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		}
 
 		fragmentEntryImpl.setHtmlPreviewEntryId(htmlPreviewEntryId);
+		fragmentEntryImpl.setStatus(status);
+		fragmentEntryImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			fragmentEntryImpl.setStatusByUserName("");
+		}
+		else {
+			fragmentEntryImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			fragmentEntryImpl.setStatusDate(null);
+		}
+		else {
+			fragmentEntryImpl.setStatusDate(new Date(statusDate));
+		}
 
 		fragmentEntryImpl.resetOriginalValues();
 
@@ -185,6 +209,12 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		js = objectInput.readUTF();
 
 		htmlPreviewEntryId = objectInput.readLong();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -239,6 +269,19 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 		}
 
 		objectOutput.writeLong(htmlPreviewEntryId);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public long fragmentEntryId;
@@ -254,4 +297,8 @@ public class FragmentEntryCacheModel implements CacheModel<FragmentEntry>,
 	public String html;
 	public String js;
 	public long htmlPreviewEntryId;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

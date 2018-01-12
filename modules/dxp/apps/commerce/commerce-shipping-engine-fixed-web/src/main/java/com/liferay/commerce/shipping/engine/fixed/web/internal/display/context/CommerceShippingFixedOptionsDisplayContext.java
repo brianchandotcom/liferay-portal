@@ -14,18 +14,27 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
+import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
 import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
 import com.liferay.commerce.shipping.engine.fixed.util.CommerceShippingEngineFixedUtil;
+import com.liferay.commerce.shipping.engine.fixed.web.internal.FixedCommerceShippingEngine;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
@@ -38,14 +47,60 @@ public class CommerceShippingFixedOptionsDisplayContext
 		<CommerceShippingFixedOption> {
 
 	public CommerceShippingFixedOptionsDisplayContext(
+		CommerceCurrencyService commerceCurrencyService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(commerceShippingMethodService, renderRequest, renderResponse);
+		super(
+			commerceCurrencyService, commerceShippingMethodService,
+			renderRequest, renderResponse);
 
 		_commerceShippingFixedOptionService =
 			commerceShippingFixedOptionService;
+	}
+
+	public List<Locale> getAvailableLocales() {
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			getCommerceShippingFixedOption();
+
+		if (commerceShippingFixedOption == null) {
+			return Collections.emptyList();
+		}
+
+		List<Locale> availableLocales = new ArrayList<>();
+
+		for (String languageId :
+				commerceShippingFixedOption.getAvailableLanguageIds()) {
+
+			availableLocales.add(LocaleUtil.fromLanguageId(languageId));
+		}
+
+		return availableLocales;
+	}
+
+	public CommerceShippingFixedOption getCommerceShippingFixedOption() {
+		CommerceShippingFixedOption commerceShippingFixedOption =
+			(CommerceShippingFixedOption)renderRequest.getAttribute(
+				CommerceShippingEngineFixedWebKeys.
+					COMMERCE_SHIPPING_FIXED_OPTION);
+
+		if (commerceShippingFixedOption != null) {
+			return commerceShippingFixedOption;
+		}
+
+		long commerceShippingFixedOptionId = ParamUtil.getLong(
+			renderRequest, "commerceShippingFixedOptionId");
+
+		commerceShippingFixedOption =
+			_commerceShippingFixedOptionService.
+				fetchCommerceShippingFixedOption(commerceShippingFixedOptionId);
+
+		renderRequest.setAttribute(
+			CommerceShippingEngineFixedWebKeys.COMMERCE_SHIPPING_FIXED_OPTION,
+			commerceShippingFixedOption);
+
+		return commerceShippingFixedOption;
 	}
 
 	public String getEditURL(String functionName, boolean isNew, String url) {
@@ -109,6 +164,19 @@ public class CommerceShippingFixedOptionsDisplayContext
 		searchContainer.setResults(results);
 
 		return searchContainer;
+	}
+
+	public boolean isFixed() throws PortalException {
+		CommerceShippingMethod commerceShippingMethod =
+			getCommerceShippingMethod();
+
+		String engineKey = commerceShippingMethod.getEngineKey();
+
+		if (engineKey.equals(FixedCommerceShippingEngine.KEY)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private final CommerceShippingFixedOptionService

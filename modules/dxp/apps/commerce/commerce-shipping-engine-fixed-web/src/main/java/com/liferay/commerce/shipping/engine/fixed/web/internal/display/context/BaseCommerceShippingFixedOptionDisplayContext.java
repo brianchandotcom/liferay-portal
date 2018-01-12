@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
@@ -22,8 +24,11 @@ import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -35,15 +40,32 @@ import javax.portlet.RenderResponse;
 public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 
 	public BaseCommerceShippingFixedOptionDisplayContext(
+		CommerceCurrencyService commerceCurrencyService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
+		this.commerceCurrencyService = commerceCurrencyService;
 		this.commerceShippingMethodService = commerceShippingMethodService;
 		this.renderRequest = renderRequest;
 		this.renderResponse = renderResponse;
 
 		_defaultOrderByCol = "priority";
 		_defaultOrderByType = "asc";
+	}
+
+	public String getCommerceCurrencyCode() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyService.fetchPrimaryCommerceCurrency(
+				themeDisplay.getScopeGroupId());
+
+		if (commerceCurrency != null) {
+			return commerceCurrency.getCode();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public CommerceShippingMethod getCommerceShippingMethod()
@@ -156,6 +178,7 @@ public abstract class BaseCommerceShippingFixedOptionDisplayContext<T> {
 			getScreenNavigationEntryKey());
 	}
 
+	protected final CommerceCurrencyService commerceCurrencyService;
 	protected final CommerceShippingMethodService commerceShippingMethodService;
 	protected final RenderRequest renderRequest;
 	protected final RenderResponse renderResponse;

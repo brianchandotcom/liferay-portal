@@ -14,9 +14,12 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.display.context;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.product.model.CPMeasurementUnit;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -34,6 +37,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
@@ -50,15 +54,19 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 
 	public CommerceShippingFixedOptionRelsDisplayContext(
 		CommerceCountryService commerceCountryService,
+		CommerceCurrencyService commerceCurrencyService,
 		CommerceRegionService commerceRegionService,
 		CommerceShippingMethodService commerceShippingMethodService,
 		CommerceShippingFixedOptionService commerceShippingFixedOptionService,
 		CommerceWarehouseService commerceWarehouseService,
 		CommerceShippingFixedOptionRelService
 			commerceShippingFixedOptionRelService,
+		CPMeasurementUnitService cpMeasurementUnitService,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
-		super(commerceShippingMethodService, renderRequest, renderResponse);
+		super(
+			commerceCurrencyService, commerceShippingMethodService,
+			renderRequest, renderResponse);
 
 		_commerceCountryService = commerceCountryService;
 		_commerceRegionService = commerceRegionService;
@@ -67,6 +75,7 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 		_commerceWarehouseService = commerceWarehouseService;
 		_commerceShippingFixedOptionRelService =
 			commerceShippingFixedOptionRelService;
+		_cpMeasurementUnitService = cpMeasurementUnitService;
 
 		setDefaultOrderByCol("country");
 	}
@@ -163,6 +172,21 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 			QueryUtil.ALL_POS, orderByComparator);
 	}
 
+	public String getCPMeasurementUnitName(int type) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		CPMeasurementUnit cpMeasurementUnit =
+			_cpMeasurementUnitService.fetchPrimaryCPMeasurementUnit(
+				themeDisplay.getScopeGroupId(), type);
+
+		if (cpMeasurementUnit != null) {
+			return cpMeasurementUnit.getName(themeDisplay.getLanguageId());
+		}
+
+		return StringPool.BLANK;
+	}
+
 	@Override
 	public String getScreenNavigationEntryKey() {
 		return "shipping-option-settings";
@@ -228,5 +252,6 @@ public class CommerceShippingFixedOptionRelsDisplayContext
 	private final CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
 	private final CommerceWarehouseService _commerceWarehouseService;
+	private final CPMeasurementUnitService _cpMeasurementUnitService;
 
 }

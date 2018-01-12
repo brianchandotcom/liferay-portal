@@ -55,7 +55,6 @@ public interface BrowserSniffer {
 	 *
 	 * @param  request the servlet request
 	 * @return a float representing the version number
-	 * @see    BrowserSniffer#getVersion(HttpServletRequest)
 	 */
 	public float getMajorVersion(HttpServletRequest request);
 

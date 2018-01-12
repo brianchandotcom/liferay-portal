@@ -732,6 +732,40 @@ public class JavaCombineLinesCheck extends BaseFileCheck {
 			}
 		}
 
+		if (trimmedPreviousLine.matches(
+				"(private|protected|public) [\\w<>\\[\\] ]+")) {
+
+			int x = trimmedLine.indexOf(StringPool.OPEN_PARENTHESIS);
+
+			if ((x != -1) &&
+				((previousLineLength + x + 2) <= getMaxLineLength())) {
+
+				if ((x + 1) < trimmedLine.length()) {
+					char nextChar = trimmedLine.charAt(x + 1);
+
+					if (nextChar != CharPool.CLOSE_PARENTHESIS) {
+						return _getCombinedLinesContent(
+							content, line, trimmedLine, lineLength, lineCount,
+							previousLine, trimmedLine.substring(0, x + 1), true,
+							true, 0);
+					}
+				}
+				else {
+					for (int i = 0;; i++) {
+						String nextLine = getLine(content, lineCount + i + 1);
+
+						if (nextLine.endsWith(StringPool.SEMICOLON) ||
+							nextLine.endsWith(") {")) {
+
+							return _getCombinedLinesContent(
+								content, line, trimmedLine, lineLength, lineCount,
+								previousLine, null, false, true, i + 1);
+						}
+					}
+				}
+			}
+		}
+
 		if (previousLine.endsWith(StringPool.PLUS) &&
 			(lineTabCount == (previousLineTabCount + 1))) {
 

@@ -241,7 +241,7 @@ public class CPDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCPDefinition(
+		return cpDefinitionLocalService.addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, shippable, freeShipping, shipSeparately,
@@ -269,7 +269,7 @@ public class CPDefinitionLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return addCPDefinition(
+		return cpDefinitionLocalService.addCPDefinition(
 			titleMap, shortDescriptionMap, descriptionMap, urlTitleMap,
 			metaTitleMap, metaKeywordsMap, metaDescriptionMap, productTypeName,
 			ignoreSKUCombinations, false, false, false, 0, 0, 0, 0, 0,
@@ -946,7 +946,7 @@ public class CPDefinitionLocalServiceImpl
 		CPDefinition cpDefinition = cpDefinitionPersistence.findByPrimaryKey(
 			cpDefinitionId);
 
-		return updateCPDefinition(
+		return cpDefinitionLocalService.updateCPDefinition(
 			cpDefinitionId, titleMap, shortDescriptionMap, descriptionMap,
 			urlTitleMap, metaTitleMap, metaKeywordsMap, metaDescriptionMap,
 			ignoreSKUCombinations, cpDefinition.isShippable(),

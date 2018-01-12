@@ -60,6 +60,7 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	<aui:input name="cssContent" type="hidden" value="" />
 	<aui:input name="htmlContent" type="hidden" value="" />
 	<aui:input name="jsContent" type="hidden" value="" />
+	<aui:input name="status" type="hidden" value="<%= WorkflowConstants.STATUS_DRAFT %>" />
 
 	<aui:model-context bean="<%= fragmentEntry %>" model="<%= FragmentEntry.class %>" />
 
@@ -68,11 +69,13 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 	<div id="<portlet:namespace />fragmentEditor"></div>
 
 	<aui:button-row cssClass="fragment-submit-buttons">
-		<aui:button cssClass="btn btn-lg" type="submit" />
+		<aui:button cssClass="btn btn-lg" primary="<%= false %>" type="submit" value="save-as-draft" />
+
+		<aui:button cssClass="btn btn-lg" name="publishButton" type="submit" value="publish" />
 	</aui:button-row>
 </aui:form>
 
-<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor">
+<aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
 	var jsInput = document.getElementById('<portlet:namespace />jsContent');
@@ -96,8 +99,22 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
 		wrapper
 	);
 
+	var publishButtonClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'#<portlet:namespace />publishButton',
+		function(event) {
+			event.preventDefault();
+
+			dom.toElement('#<portlet:namespace />status').value = '<%= WorkflowConstants.STATUS_APPROVED %>';
+
+			submitForm(document.querySelector('#<portlet:namespace />fm'));
+		}
+	);
+
 	function destroyFragmentEditor () {
 		fragmentEditor.dispose();
+		publishButtonClickHandler.removeListener();
 
 		Liferay.detach('destroyPortlet', destroyFragmentEditor);
 	}

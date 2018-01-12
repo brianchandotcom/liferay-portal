@@ -218,11 +218,13 @@ public class CPFileImporterImpl implements CPFileImporter {
 		fetchOrAddDDMStructure(
 			ddmStructureKey, classLoader, ddmStructureFileName, serviceContext);
 
+		Locale locale = themeDisplay.getSiteDefaultLocale();
+
 		Map<Locale, String> titleMap = new HashMap<>();
 		Map<Locale, String> descriptionMap = new HashMap<>();
 
-		titleMap.put(Locale.US, title);
-		descriptionMap.put(Locale.US, description);
+		titleMap.put(locale, title);
+		descriptionMap.put(locale, description);
 
 		content = getNormalizedContent(
 			content, classLoader, dependenciesFilePath, serviceContext,

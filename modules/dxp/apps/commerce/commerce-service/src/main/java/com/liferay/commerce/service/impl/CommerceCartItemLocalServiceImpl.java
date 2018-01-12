@@ -17,7 +17,6 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.exception.CommerceCartValidatorException;
-import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -232,8 +231,6 @@ public class CommerceCartItemLocalServiceImpl
 
 		CPInstance cpInstance = _cpInstanceLocalService.fetchCPInstance(
 			cpInstanceId);
-		CommerceCart commerceCart = commerceCartLocalService.fetchCommerceCart(
-			commerceCartId);
 
 		List<CommerceCartValidatorResult> commerceCartValidatorResults =
 			commerceCartValidatorRegistry.validate(cpInstance, quantity);

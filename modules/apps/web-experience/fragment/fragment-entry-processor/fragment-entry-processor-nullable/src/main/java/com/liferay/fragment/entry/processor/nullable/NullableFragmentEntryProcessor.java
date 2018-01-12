@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Component;
 public class NullableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryHTML(String html, JSONObject settings)
+	public String processFragmentEntryHTML(String html, JSONObject data)
 		throws PortalException {
 
 		return html;

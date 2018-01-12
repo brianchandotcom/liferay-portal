@@ -179,14 +179,14 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
-	public List<FragmentEntry> fetchFragmentEntries(long fragmentCollectionId) {
-		return fragmentEntryPersistence.findByFragmentCollectionId(
-			fragmentCollectionId);
+	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
+		return fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
 	}
 
 	@Override
-	public FragmentEntry fetchFragmentEntry(long fragmentEntryId) {
-		return fragmentEntryPersistence.fetchByPrimaryKey(fragmentEntryId);
+	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId) {
+		return fragmentEntryPersistence.findByFragmentCollectionId(
+			fragmentCollectionId);
 	}
 
 	@Override

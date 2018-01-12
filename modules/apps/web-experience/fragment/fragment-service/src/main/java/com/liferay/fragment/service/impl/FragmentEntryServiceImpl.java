@@ -89,14 +89,6 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	}
 
 	@Override
-	public List<FragmentEntry> fetchFragmentEntries(long fragmentCollectionId)
-		throws PortalException {
-
-		return fragmentEntryLocalService.fetchFragmentEntries(
-			fragmentCollectionId);
-	}
-
-	@Override
 	public FragmentEntry fetchFragmentEntry(long fragmentEntryId)
 		throws PortalException {
 
@@ -125,6 +117,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryPersistence.filterCountByG_FCI_LikeN(
 			groupId, fragmentCollectionId, name);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(long fragmentCollectionId)
+		throws PortalException {
+
+		return fragmentEntryLocalService.getFragmentEntries(
+			fragmentCollectionId);
 	}
 
 	@Override

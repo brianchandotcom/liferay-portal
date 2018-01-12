@@ -113,7 +113,7 @@ public class LayoutPageTemplateDisplayContext {
 
 		for (FragmentCollection fragmentCollection : fragmentCollections) {
 			List<FragmentEntry> fragmentEntries =
-				FragmentEntryServiceUtil.fetchFragmentEntries(
+				FragmentEntryServiceUtil.getFragmentEntries(
 					fragmentCollection.getFragmentCollectionId());
 
 			if (ListUtil.isEmpty(fragmentEntries)) {

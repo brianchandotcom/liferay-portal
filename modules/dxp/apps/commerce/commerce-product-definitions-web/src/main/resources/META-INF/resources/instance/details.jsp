@@ -27,8 +27,6 @@ long cpInstanceId = cpInstanceDisplayContext.getCPInstanceId();
 
 List<CPDefinitionOptionRel> cpDefinitionOptionRels = cpInstanceDisplayContext.getCPDefinitionOptionRels();
 
-Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>> cpDefinitionOptionRelListMap = cpInstanceDisplayContext.parseCPInstanceDDMContent(cpInstanceDisplayContext.getCPInstanceId());
-
 boolean neverExpire = ParamUtil.getBoolean(request, "neverExpire", true);
 
 if ((cpInstance != null) && (cpInstance.getExpirationDate() != null)) {
@@ -76,7 +74,7 @@ productSkusURL.setParameter("screenNavigationCategoryKey", cpInstanceDisplayCont
 
 							<%
 							for (CPDefinitionOptionRel cpDefinitionOptionRel : cpDefinitionOptionRels) {
-								List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+								List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels = cpInstanceDisplayContext.getCPDefinitionOptionValueRels(cpDefinitionOptionRel);
 
 								StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 							%>

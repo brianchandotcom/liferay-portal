@@ -86,6 +86,21 @@ public class CPInstanceDisplayContext
 	}
 
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
+			CPDefinitionOptionRel cpDefinitionOptionRel)
+		throws PortalException {
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelListMap = parseCPInstanceDDMContent(
+				getCPInstanceId());
+
+		if (cpDefinitionOptionRelListMap.isEmpty()) {
+			return Collections.emptyList();
+		}
+
+		return cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+	}
+
+	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRels(
 			long cpDefinitionOptionValueRelId)
 		throws PortalException {
 

@@ -97,6 +97,15 @@
 		}
 	}
 
+	.management-bar-nav > li > .form {
+		padding-top: 12px;
+		padding-left: 20px;
+
+		.form-control {
+			width: 100%;
+		}
+	}
+
 	.management-bar-header {
 		@include clearfix;
 

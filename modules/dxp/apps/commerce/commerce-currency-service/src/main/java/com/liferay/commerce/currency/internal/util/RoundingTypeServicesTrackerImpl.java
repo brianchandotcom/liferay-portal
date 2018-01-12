@@ -46,7 +46,7 @@ public class RoundingTypeServicesTrackerImpl
 	@Override
 	public RoundingType getRoundingType(String name) {
 		if (Validator.isNull(name)) {
-			name = RoundingTypeImpl.NAME;
+			name = DefaultRoundingTypeImpl.NAME;
 		}
 
 		ServiceTrackerCustomizerFactory.ServiceWrapper<RoundingType>

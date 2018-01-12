@@ -31,12 +31,12 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"rounding.type.name=" + RoundingTypeImpl.NAME,
+		"rounding.type.name=" + DefaultRoundingTypeImpl.NAME,
 		"rounding.type.priority:Integer=10"
 	},
 	service = RoundingType.class
 )
-public class RoundingTypeImpl implements RoundingType {
+public class DefaultRoundingTypeImpl implements RoundingType {
 
 	public static final String NAME = "default";
 

@@ -442,22 +442,6 @@
     <li>
       <div>
         <h5>
-          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-21/test-portal-acceptance-pullrequest(master)/999/">test-portal-acceptance-pullrequest(master)</a>
-        </h5>
-        <div>
-          <h6>Job Results:</h6>
-          <p>123 Jobs Passed.
-            <br/>6 Jobs Failed.
-          </p>
-        </div>
-        <pre>
-          <code>Downstream jobs FAILED.</code>
-        </pre>
-      </div>
-    </li>
-    <li>
-      <div>
-        <h5>
           <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-23/test-portal-acceptance-pullrequest-batch(master)/7862/">test-portal-acceptance-pullrequest-batch(master)/functional-tomcat80-mysql56-jdk8/11</a>
         </h5>
         <div>
@@ -663,9 +647,35 @@
         </ol>
       </div>
     </li>
-    <li>...</li>
-  </ol>
-  <h4>For upstream results, click
+    <li>
+      <div>
+        <h5>
+          <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-21/test-portal-acceptance-pullrequest-batch(master)/85911/">test-portal-acceptance-pullrequest-batch(master)/unit-jdk8</a>
+        </h5>
+        <div>
+          <h6>Job Results:</h6>
+          <p>2673 Tests Passed.
+            <br/>2 Tests Failed.
+          </p>
+        </div>
+        <ol>
+          <li>
+            <div>
+              <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-21/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/85911//consoleText">AXIS_VARIABLE=0,label_exp=!master #85911</a>
+              <ol>
+                <li>
+                  <div>
+                    <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-21/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/85911//testReport/com.liferay.portal.library/LibraryReferenceTest/testEclipseJarsInLib">LibraryReferenceTest.testEclipseJarsInLib</a>
+                    <pre>
+                      <code>junit.framework.AssertionFailedError: .classpath has a nonexistent reference to lib/development/com.liferay.util.taglib.compat.jar
+	at com.liferay.portal.library.LibraryReferenceTest.testNonexistentJarReferences(LibraryReferenceTest.java:212)
+	at com.liferay.portal.library.LibraryReferenceTest.testEclipseJarsInLib(LibraryReferenceTest.java:84)
+</code>                    </pre>                  </div>                </li>                <li>                  <div>                    <a href="${dependencies.url}/BuildTest/test-portal-acceptance-pullrequest(master)_modules-compile-failure/test-1-21/test-portal-acceptance-pullrequest-batch(master)/AXIS_VARIABLE=0,label_exp=!master/85911//testReport/com.liferay.portal.library/LibraryReferenceTest/testNetBeansJarsInLib">LibraryReferenceTest.testNetBeansJarsInLib</a>
+                    <pre>
+                      <code>junit.framework.AssertionFailedError: nbproject/project.xml has a nonexistent reference to lib/development/com.liferay.util.taglib.compat.jar
+	at com.liferay.portal.library.LibraryReferenceTest.testNonexistentJarReferences(LibraryReferenceTest.java:212)
+	at com.liferay.portal.library.LibraryReferenceTest.testNetBeansJarsInLib(LibraryReferenceTest.java:137)
+</code>                    </pre>                  </div>                </li>              </ol>            </div>          </li>        </ol>      </div>    </li>  </ol>  <h4>For upstream results, click
     <a href="https://test-1-1.liferay.com/job/test-portal-acceptance-upstream(master)">here</a>.
   </h4>
 </html>

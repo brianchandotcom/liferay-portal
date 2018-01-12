@@ -5,8 +5,8 @@
  */
 {template .render}
 	{@param fragmentCollections: list<?>}
-	{@param fragmentEntryURL: string}
 	{@param portletNamespace: string}
+	{@param renderFragmentEntryURL: string}
 	{@param spritemap: string}
 	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
@@ -57,10 +57,10 @@
 								{call LayoutPageTemplateFragment.render}
 									{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
 									{param fragmentEntryId: $fragment.fragmentEntryId /}
-									{param fragmentEntryURL: $fragmentEntryURL /}
 									{param index: index($fragment) /}
 									{param name: $fragment.name /}
 									{param portletNamespace: $portletNamespace /}
+									{param renderFragmentEntryURL: $renderFragmentEntryURL /}
 									{param spritemap: $spritemap /}
 								{/call}
 							</div>

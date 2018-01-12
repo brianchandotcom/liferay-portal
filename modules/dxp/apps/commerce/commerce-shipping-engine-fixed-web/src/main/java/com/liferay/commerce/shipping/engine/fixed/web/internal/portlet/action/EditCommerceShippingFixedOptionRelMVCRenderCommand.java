@@ -15,6 +15,8 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -69,11 +71,12 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 			CommerceShippingFixedOptionRelsDisplayContext
 				commerceShippingFixedOptionRelsDisplayContext =
 					new CommerceShippingFixedOptionRelsDisplayContext(
-						_commerceCountryService, _commerceRegionService,
-						_commerceShippingMethodService,
+						_commerceCountryService, _commerceCurrencyService,
+						_commerceRegionService, _commerceShippingMethodService,
 						_commerceShippingFixedOptionService,
 						_commerceWarehouseService,
-						_commerceShippingFixedOptionRelService, renderRequest,
+						_commerceShippingFixedOptionRelService,
+						_cpMeasurementUnitService, renderRequest,
 						renderResponse);
 
 			renderRequest.setAttribute(
@@ -108,6 +111,9 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 	private CommerceCountryService _commerceCountryService;
 
 	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
 	private CommerceRegionService _commerceRegionService;
 
 	@Reference
@@ -123,6 +129,9 @@ public class EditCommerceShippingFixedOptionRelMVCRenderCommand
 
 	@Reference
 	private CommerceWarehouseService _commerceWarehouseService;
+
+	@Reference
+	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 	@Reference
 	private Portal _portal;

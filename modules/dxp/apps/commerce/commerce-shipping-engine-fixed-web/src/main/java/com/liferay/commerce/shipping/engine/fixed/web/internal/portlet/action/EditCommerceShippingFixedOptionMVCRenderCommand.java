@@ -15,16 +15,17 @@
 package com.liferay.commerce.shipping.engine.fixed.web.internal.portlet.action;
 
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
-import com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.exception.NoSuchShippingFixedOptionException;
-import com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
+import com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.SessionErrors;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -61,18 +62,17 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 			_servletContext.getRequestDispatcher("/edit_shipping_option.jsp");
 
 		try {
-			long commerceShippingFixedOptionId = ParamUtil.getLong(
-				renderRequest, "commerceShippingFixedOptionId");
-
-			CommerceShippingFixedOption commerceShippingFixedOption =
-				_commerceShippingFixedOptionService.
-					fetchCommerceShippingFixedOption(
-						commerceShippingFixedOptionId);
+			CommerceShippingFixedOptionsDisplayContext
+				commerceShippingFixedOptionsDisplayContext =
+					new CommerceShippingFixedOptionsDisplayContext(
+						_commerceCurrencyService,
+						_commerceShippingMethodService,
+						_commerceShippingFixedOptionService, renderRequest,
+						renderResponse);
 
 			renderRequest.setAttribute(
-				CommerceShippingEngineFixedWebKeys.
-					COMMERCE_SHIPPING_FIXED_OPTION,
-				commerceShippingFixedOption);
+				WebKeys.PORTLET_DISPLAY_CONTEXT,
+				commerceShippingFixedOptionsDisplayContext);
 
 			HttpServletRequest httpServletRequest =
 				_portal.getHttpServletRequest(renderRequest);
@@ -99,8 +99,14 @@ public class EditCommerceShippingFixedOptionMVCRenderCommand
 	}
 
 	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
 	private CommerceShippingFixedOptionService
 		_commerceShippingFixedOptionService;
+
+	@Reference
+	private CommerceShippingMethodService _commerceShippingMethodService;
 
 	@Reference
 	private Portal _portal;

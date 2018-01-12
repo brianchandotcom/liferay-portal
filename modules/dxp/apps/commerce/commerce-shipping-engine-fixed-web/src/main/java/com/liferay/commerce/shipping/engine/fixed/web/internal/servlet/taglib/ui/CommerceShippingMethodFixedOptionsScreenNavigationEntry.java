@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.service.CommerceShippingMethodService;
 import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionService;
@@ -110,7 +111,7 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 		CommerceShippingFixedOptionsDisplayContext
 			commerceShippingFixedOptionsDisplayContext =
 				new CommerceShippingFixedOptionsDisplayContext(
-					_commerceShippingMethodService,
+					_commerceCurrencyService, _commerceShippingMethodService,
 					_commerceShippingFixedOptionService, renderRequest,
 					renderResponse);
 
@@ -122,6 +123,9 @@ public class CommerceShippingMethodFixedOptionsScreenNavigationEntry
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/shipping_options.jsp");
 	}
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CommerceShippingFixedOptionService

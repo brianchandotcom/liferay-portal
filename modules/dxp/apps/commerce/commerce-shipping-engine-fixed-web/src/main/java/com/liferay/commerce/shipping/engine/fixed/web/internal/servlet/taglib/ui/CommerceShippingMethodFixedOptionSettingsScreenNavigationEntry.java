@@ -14,7 +14,9 @@
 
 package com.liferay.commerce.shipping.engine.fixed.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceShippingMethod;
+import com.liferay.commerce.product.service.CPMeasurementUnitService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.commerce.service.CommerceShippingMethodService;
@@ -111,12 +113,12 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 		CommerceShippingFixedOptionRelsDisplayContext
 			commerceShippingFixedOptionRelsDisplayContext =
 				new CommerceShippingFixedOptionRelsDisplayContext(
-					_commerceCountryService, _commerceRegionService,
-					_commerceShippingMethodService,
+					_commerceCountryService, _commerceCurrencyService,
+					_commerceRegionService, _commerceShippingMethodService,
 					_commerceShippingFixedOptionService,
 					_commerceWarehouseService,
-					_commerceShippingFixedOptionRelService, renderRequest,
-					renderResponse);
+					_commerceShippingFixedOptionRelService,
+					_cpMeasurementUnitService, renderRequest, renderResponse);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -129,6 +131,9 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 
 	@Reference
 	private CommerceCountryService _commerceCountryService;
+
+	@Reference
+	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference
 	private CommerceRegionService _commerceRegionService;
@@ -146,6 +151,9 @@ public class CommerceShippingMethodFixedOptionSettingsScreenNavigationEntry
 
 	@Reference
 	private CommerceWarehouseService _commerceWarehouseService;
+
+	@Reference
+	private CPMeasurementUnitService _cpMeasurementUnitService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

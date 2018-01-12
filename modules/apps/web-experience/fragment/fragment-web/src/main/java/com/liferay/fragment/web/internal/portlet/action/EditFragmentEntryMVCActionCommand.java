@@ -55,13 +55,14 @@ public class EditFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		String css = ParamUtil.getString(actionRequest, "cssContent");
 		String js = ParamUtil.getString(actionRequest, "jsContent");
 		String html = ParamUtil.getString(actionRequest, "htmlContent");
+		int status = ParamUtil.getInteger(actionRequest, "status");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		try {
 			_fragmentEntryService.updateFragmentEntry(
-				fragmentEntryId, name, css, html, js, serviceContext);
+				fragmentEntryId, name, css, html, js, status, serviceContext);
 		}
 		catch (FragmentEntryContentException fece) {
 			hideDefaultErrorMessage(actionRequest);

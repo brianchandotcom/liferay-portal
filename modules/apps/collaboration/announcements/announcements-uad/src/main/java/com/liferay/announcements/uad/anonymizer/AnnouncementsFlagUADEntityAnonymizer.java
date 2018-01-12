@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG,
+	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG},
 	service = UADEntityAnonymizer.class
 )
 public class AnnouncementsFlagUADEntityAnonymizer

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG,
+	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG},
 	service = UADEntityExporter.class
 )
 public class AnnouncementsFlagUADEntityExporter extends BaseUADEntityExporter {

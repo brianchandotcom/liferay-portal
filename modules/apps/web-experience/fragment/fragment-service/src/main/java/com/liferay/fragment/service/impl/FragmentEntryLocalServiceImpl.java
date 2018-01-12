@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
@@ -93,7 +94,10 @@ public class FragmentEntryLocalServiceImpl
 		User user = userLocalService.getUser(userId);
 
 		validate(groupId, fragmentCollectionId, 0, name);
-		validateContent(html);
+
+		if (WorkflowConstants.STATUS_APPROVED == status) {
+			validateContent(html);
+		}
 
 		long fragmentEntryId = counterLocalService.increment();
 
@@ -237,7 +241,9 @@ public class FragmentEntryLocalServiceImpl
 			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
 			fragmentEntryId, name);
 
-		validateContent(html);
+		if (WorkflowConstants.STATUS_APPROVED == status) {
+			validateContent(html);
+		}
 
 		User user = userLocalService.getUser(userId);
 

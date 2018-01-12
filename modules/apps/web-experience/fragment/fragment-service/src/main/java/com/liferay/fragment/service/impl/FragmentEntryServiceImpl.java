@@ -38,7 +38,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public FragmentEntry addFragmentEntry(
-			long groupId, long fragmentCollectionId, String name,
+			long groupId, long fragmentCollectionId, String name, int status,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -47,13 +47,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 			FragmentActionKeys.ADD_FRAGMENT_ENTRY);
 
 		return fragmentEntryLocalService.addFragmentEntry(
-			getUserId(), groupId, fragmentCollectionId, name, serviceContext);
+			getUserId(), groupId, fragmentCollectionId, name, status,
+			serviceContext);
 	}
 
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long groupId, long fragmentCollectionId, String name, String css,
-			String html, String js, ServiceContext serviceContext)
+			String html, String js, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		_portletResourcePermission.check(
@@ -62,7 +63,7 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 		return fragmentEntryLocalService.addFragmentEntry(
 			getUserId(), groupId, fragmentCollectionId, name, css, html, js,
-			serviceContext);
+			status, serviceContext);
 	}
 
 	@Override
@@ -168,14 +169,15 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 	@Override
 	public FragmentEntry updateFragmentEntry(
 			long fragmentEntryId, String name, String css, String html,
-			String js, ServiceContext serviceContext)
+			String js, int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		_fragmentEntryModelResourcePermission.check(
 			getPermissionChecker(), fragmentEntryId, ActionKeys.UPDATE);
 
 		return fragmentEntryLocalService.updateFragmentEntry(
-			fragmentEntryId, name, css, html, js, serviceContext);
+			getUserId(), fragmentEntryId, name, css, html, js, status,
+			serviceContext);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

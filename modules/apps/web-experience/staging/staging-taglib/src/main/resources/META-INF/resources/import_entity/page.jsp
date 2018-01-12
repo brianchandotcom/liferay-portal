@@ -25,5 +25,5 @@
 	portletURL.setParameter("portletResource", ChangesetPortletKeys.CHANGESET);
 	%>
 
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "import-entity") %>' url="<%= portletURL.toString() %>" />
+	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "import") %>' url="<%= portletURL.toString() %>" />
 </c:if>

@@ -24,10 +24,12 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.portletfilerepository.PortletFileRepositoryUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.exception.UADEntityExporterException;
+import com.liferay.user.associated.data.exporter.BaseUADEntityExporter;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 
 import java.io.InputStream;
@@ -46,8 +48,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY,
 	service = UADEntityExporter.class
 )
-public class AnnouncementsEntryUADEntityExporter
-	extends BaseAnnouncementsUADEntityExporter {
+public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 
 	@Override
 	public void export(UADEntity uadEntity) throws PortalException {
@@ -57,7 +58,8 @@ public class AnnouncementsEntryUADEntityExporter
 		String json = getJSON(announcementsEntry);
 
 		Folder folder = getFolder(
-			announcementsEntry.getCompanyId(), _FOLDER_NAME);
+			announcementsEntry.getCompanyId(),
+			AnnouncementsPortletKeys.ANNOUNCEMENTS, _FOLDER_NAME);
 
 		try {
 			InputStream is = new UnsyncByteArrayInputStream(

@@ -98,9 +98,9 @@ public class PropertiesSourceFormatterContentCheck extends BaseFileCheck {
 		}
 
 		return StringBundler.concat(
-			exclusionsComments, "\n\n", s, "\n\n", gitComments, "\n\n",
-			StringPool.FOUR_SPACES, "git.liferay.portal.branch=",
-			gitLiferayPortalBranch);
+			exclusionsComments, "\n\n", StringPool.FOUR_SPACES, s, "\n\n",
+			gitComments, "\n\n", StringPool.FOUR_SPACES,
+			"git.liferay.portal.branch=", gitLiferayPortalBranch);
 	}
 
 	private static final String[][] _CONVERTED_KEYS = {

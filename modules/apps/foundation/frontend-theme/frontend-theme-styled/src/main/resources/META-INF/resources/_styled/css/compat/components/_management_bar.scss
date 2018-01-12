@@ -42,7 +42,7 @@
 
 		@if (variable-exists(atlas-theme)) {
 			@include media-breakpoint-up(md) {
-				margin: 14.5px 0 14.5px 15px;
+				margin: 13px 0 13px 15px;
 			}
 		}
 	}
@@ -91,8 +91,8 @@
 
 		@if (variable-exists(atlas-theme)) {
 			@include media-breakpoint-up(md) {
-				padding-bottom: 19.5px;
-				padding-top: 19.5px;
+				padding-bottom: 18px;
+				padding-top: 18px;
 			}
 		}
 	}

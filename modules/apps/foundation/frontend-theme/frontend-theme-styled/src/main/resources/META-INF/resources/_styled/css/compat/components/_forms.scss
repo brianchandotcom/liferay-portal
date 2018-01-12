@@ -128,6 +128,22 @@
 		}
 	}
 
+	.input-group-input + .input-group-btn {
+		margin-left: -$btn-border-width;
+	}
+
+	.input-group-btn {
+		z-index: 1;
+	}
+
+	.input-group .form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group > .btn, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
+		@include border-right-radius(0);
+	}
+
+	.input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+		@include border-left-radius(0);
+	}
+
 	.form-horizontal > .form-group {
 		@extend .row;
 	}

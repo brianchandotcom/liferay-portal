@@ -113,7 +113,12 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 							title="<%= fragmentEntry.getName() %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+								<%
+								Date statusDate = fragmentEntry.getStatusDate();
+								%>
+
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>
@@ -132,7 +137,12 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 							title="<%= fragmentEntry.getName() %>"
 						>
 							<liferay-frontend:vertical-card-header>
-								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - fragmentEntry.getStatusDate().getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
+
+								<%
+								Date statusDate = fragmentEntry.getStatusDate();
+								%>
+
+								<liferay-ui:message arguments="<%= LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - statusDate.getTime(), true) %>" key="x-ago" translateArguments="<%= false %>" />
 							</liferay-frontend:vertical-card-header>
 
 							<liferay-frontend:vertical-card-footer>

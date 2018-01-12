@@ -12,19 +12,25 @@
  * details.
  */
 
-package com.liferay.fragment.processor;
+package com.liferay.fragment.entry.processor.editable.parser.impl;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
+import com.liferay.portal.kernel.xml.Element;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
-public interface FragmentEntryProcessor {
+@Component(
+	immediate = true, property = {"type=text"},
+	service = EditableElementParser.class
+)
+public class TextEditableElementParser implements EditableElementParser {
 
-	public String processFragmentEntryHTML(String html, JSONObject data)
-		throws PortalException;
-
-	public void validateFragmentEntryHTML(String html) throws PortalException;
+	@Override
+	public void replace(Element element, String value) {
+		element.setText(value);
+	}
 
 }

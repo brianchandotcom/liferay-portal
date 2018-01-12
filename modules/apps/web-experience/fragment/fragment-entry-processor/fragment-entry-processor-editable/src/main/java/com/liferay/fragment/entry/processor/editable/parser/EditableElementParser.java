@@ -12,19 +12,23 @@
  * details.
  */
 
-package com.liferay.fragment.processor;
+package com.liferay.fragment.entry.processor.editable.parser;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.xml.Element;
 
 /**
+ * This service provides a utility to replace editable element value.
+ *
  * @author Pavel Savinov
  */
-public interface FragmentEntryProcessor {
+public interface EditableElementParser {
 
-	public String processFragmentEntryHTML(String html, JSONObject data)
-		throws PortalException;
-
-	public void validateFragmentEntryHTML(String html) throws PortalException;
+	/**
+	 * Replaces editable element value with the provided one.
+	 *
+	 * @param element Editable element to replace
+	 * @param value New element value
+	 */
+	public void replace(Element element, String value);
 
 }

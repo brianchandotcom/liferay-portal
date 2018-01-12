@@ -362,7 +362,7 @@
 			<var name="portlet" value="Workflow" />
 		</execute>
 
-		<execute macro="Workflow#deleteSpecificWorkflowDefinition">
+		<execute macro="Workflow#deleteWorkflowDefinition">
 			<var name="workflowDefinitionTitle" value="Workflow Definition Title" />
 		</execute>
 

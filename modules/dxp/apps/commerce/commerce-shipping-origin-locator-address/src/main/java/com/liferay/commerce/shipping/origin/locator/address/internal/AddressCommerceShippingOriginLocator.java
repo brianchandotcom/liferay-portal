@@ -14,12 +14,12 @@
 
 package com.liferay.commerce.shipping.origin.locator.address.internal;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceShippingOriginLocator;
 import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.model.CommerceWarehouseConstants;
 import com.liferay.commerce.service.CommerceAddressLocalService;
 import com.liferay.commerce.service.CommerceWarehouseLocalService;
 import com.liferay.commerce.shipping.origin.locator.address.internal.configuration.AddressCommerceShippingOriginLocatorGroupServiceConfiguration;
@@ -167,7 +167,7 @@ public class AddressCommerceShippingOriginLocator
 
 	private CommerceWarehouse _getDefaultCommerceWarehouse() {
 		return _commerceWarehouseLocalService.fetchCommerceWarehouse(
-			CommerceConstants.WAREHOUSE_DEFAULT_ID);
+			CommerceWarehouseConstants.DEFAULT_ID);
 	}
 
 	private ResourceBundle _getResourceBundle(Locale locale) {

@@ -12,16 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.constants;
+package com.liferay.commerce.model;
 
 /**
  * @author Andrea Di Giorgi
  */
-public class CommerceConstants {
+public class CommerceWarehouseConstants {
 
-	public static final String PAYMENT_SERVLET_PATH = "commerce-payment";
+	public static final long DEFAULT_ID = 0;
 
-	public static final String SHIPPING_SERVICE_NAME =
-		"com.liferay.commerce.shipping";
+	public static final String DEFAULT_NAME = "default";
 
 }

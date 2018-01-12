@@ -14,13 +14,13 @@
 
 package com.liferay.commerce.service.impl;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.exception.CommerceWarehouseActiveException;
 import com.liferay.commerce.exception.CommerceWarehouseCommerceRegionIdException;
 import com.liferay.commerce.exception.CommerceWarehouseNameException;
 import com.liferay.commerce.model.CommerceGeocoder;
 import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceWarehouse;
+import com.liferay.commerce.model.CommerceWarehouseConstants;
 import com.liferay.commerce.service.base.CommerceWarehouseLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -213,15 +213,15 @@ public class CommerceWarehouseLocalServiceImpl
 
 		CommerceWarehouse commerceWarehouse =
 			commerceWarehousePersistence.fetchByPrimaryKey(
-				CommerceConstants.WAREHOUSE_DEFAULT_ID);
+				CommerceWarehouseConstants.DEFAULT_ID);
 
 		if (commerceWarehouse != null) {
 			return commerceWarehouse;
 		}
 
 		return _addDefaultCommerceWarehouse(
-			CommerceConstants.WAREHOUSE_DEFAULT_ID,
-			CommerceConstants.WAREHOUSE_DEFAULT_NAME, null, null, null, null,
+			CommerceWarehouseConstants.DEFAULT_ID,
+			CommerceWarehouseConstants.DEFAULT_NAME, null, null, null, null,
 			null, 0L, 0L, -1, -1, serviceContext);
 	}
 

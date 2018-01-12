@@ -24,7 +24,7 @@ public class CommerceConstants {
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
 
-	public static final long WAREHOUSE_DEFAULT_ID = 0L;
+	public static final long WAREHOUSE_DEFAULT_ID = 0;
 
 	public static final String WAREHOUSE_DEFAULT_NAME = "default";
 

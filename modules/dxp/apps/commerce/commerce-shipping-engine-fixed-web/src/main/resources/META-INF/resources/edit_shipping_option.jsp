@@ -19,13 +19,24 @@
 <%
 long commerceShippingMethodId = ParamUtil.getLong(request, "commerceShippingMethodId");
 
-CommerceShippingFixedOption commerceShippingFixedOption = (CommerceShippingFixedOption)request.getAttribute(CommerceShippingEngineFixedWebKeys.COMMERCE_SHIPPING_FIXED_OPTION);
+CommerceShippingFixedOptionsDisplayContext commerceShippingFixedOptionsDisplayContext = (CommerceShippingFixedOptionsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+
+CommerceShippingFixedOption commerceShippingFixedOption = commerceShippingFixedOptionsDisplayContext.getCommerceShippingFixedOption();
 
 long commerceShippingFixedOptionId = 0;
 
 if (commerceShippingFixedOption != null) {
 	commerceShippingFixedOptionId = commerceShippingFixedOption.getCommerceShippingFixedOptionId();
 }
+
+String defaultLanguageId = LocaleUtil.toLanguageId(LocaleUtil.getSiteDefault());
+
+Set<Locale> availableLocalesSet = new HashSet<>();
+
+availableLocalesSet.add(LocaleUtil.fromLanguageId(defaultLanguageId));
+availableLocalesSet.addAll(commerceShippingFixedOptionsDisplayContext.getAvailableLocales());
+
+Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLocalesSet.size()]);
 %>
 
 <portlet:actionURL name="editCommerceShippingFixedOption" var="editCommerceShippingFixedOptionActionURL" />
@@ -38,11 +49,21 @@ if (commerceShippingFixedOption != null) {
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceShippingFixedOption %>" model="<%= CommerceShippingFixedOption.class %>" />
 
-		<aui:input name="name" />
+		<liferay-frontend:translation-manager
+			availableLocales="<%= availableLocales %>"
+			changeableDefaultLanguage="<%= true %>"
+			componentId='<%= renderResponse.getNamespace() + "translationManager" %>'
+			defaultLanguageId="<%= defaultLanguageId %>"
+			id="translationManager"
+		/>
 
-		<aui:input name="description" />
+		<aui:input autoFocus="<%= true %>" name="name" wrapperCssClass="commerce-shipping-fixed-option-name" />
 
-		<aui:input name="amount" />
+		<aui:input name="description" wrapperCssClass="commerce-shipping-fixed-option-description" />
+
+		<c:if test="<%= commerceShippingFixedOptionsDisplayContext.isFixed() %>">
+			<aui:input name="amount" suffix="<%= commerceShippingFixedOptionsDisplayContext.getCommerceCurrencyCode() %>" />
+		</c:if>
 
 		<aui:input name="priority" />
 	</div>
@@ -53,6 +74,40 @@ if (commerceShippingFixedOption != null) {
 		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base">
+	function afterDeletingAvailableLocale(event) {
+		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
+		var nameInputLocalized = Liferay.component('<portlet:namespace />name');
+
+		var locale = event.locale;
+
+		descriptionInputLocalized.removeInputLanguage(locale);
+		nameInputLocalized.removeInputLanguage(locale);
+	}
+
+	function afterEditingLocaleChange(event) {
+		var descriptionInputLocalized = Liferay.component('<portlet:namespace />description');
+		var nameInputLocalized = Liferay.component('<portlet:namespace />name');
+
+		var editingLocale = event.newVal;
+		var items = descriptionInputLocalized.get('items');
+		var selectedIndex = items.indexOf(editingLocale);
+
+		descriptionInputLocalized.set('selected', selectedIndex);
+		descriptionInputLocalized.selectFlag(editingLocale);
+
+		nameInputLocalized.set('selected', selectedIndex);
+		nameInputLocalized.selectFlag(editingLocale);
+	}
+
+	var translationManager = Liferay.component('<portlet:namespace />translationManager');
+
+	if (translationManager) {
+		translationManager.on('deleteAvailableLocale', afterDeletingAvailableLocale);
+		translationManager.on('editingLocaleChange', afterEditingLocaleChange);
+	}
+</aui:script>
 
 <aui:script use="aui-base,aui-io-request">
 	A.one('#<portlet:namespace/>saveButton').on(

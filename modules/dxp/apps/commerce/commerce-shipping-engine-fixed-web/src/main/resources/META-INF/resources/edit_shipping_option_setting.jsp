@@ -70,100 +70,126 @@ renderResponse.setTitle(LanguageUtil.get(request, "settings"));
 	<aui:input name="commerceShippingFixedOptionRelId" type="hidden" value="<%= commerceShippingFixedOptionRelId %>" />
 	<aui:input name="commerceShippingMethodId" type="hidden" value="<%= commerceShippingMethodId %>" />
 
+	<div class="alert alert-info">
+		<liferay-ui:message key="commerce-shipping-fixed-option-rel-info" />
+	</div>
+
 	<div class="lfr-form-content">
 		<aui:model-context bean="<%= commerceShippingFixedOptionRel %>" model="<%= CommerceShippingFixedOptionRel.class %>" />
 
 		<aui:fieldset-group markupView="lexicon">
 			<aui:fieldset>
-				<aui:select label="shipping-option" name="commerceShippingFixedOptionId" required="<%= true %>">
+				<div class="row">
+					<div class="col-md-6">
+						<aui:select label="shipping-option" name="commerceShippingFixedOptionId" required="<%= true %>">
 
-					<%
-					List<CommerceShippingFixedOption> commerceShippingFixedOptions = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
+							<%
+							List<CommerceShippingFixedOption> commerceShippingFixedOptions = commerceShippingFixedOptionRelsDisplayContext.getCommerceShippingFixedOptions();
 
-					for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptions) {
-					%>
+							for (CommerceShippingFixedOption commerceShippingFixedOption : commerceShippingFixedOptions) {
+							%>
 
-						<aui:option
-							label="<%= commerceShippingFixedOption.getName(languageId) %>"
-							value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>"
-						/>
+								<aui:option
+									label="<%= commerceShippingFixedOption.getName(languageId) %>"
+									value="<%= commerceShippingFixedOption.getCommerceShippingFixedOptionId() %>"
+								/>
 
-					<%
-					}
-					%>
+							<%
+							}
+							%>
 
-				</aui:select>
+						</aui:select>
+					</div>
 
-				<aui:select label="warehouse" name="commerceWarehouseId" showEmptyOption="<%= true %>">
+					<div class="col-md-6">
+						<aui:select label="warehouse" name="commerceWarehouseId" showEmptyOption="<%= true %>">
 
-					<%
-					List<CommerceWarehouse> commerceWarehouses = commerceShippingFixedOptionRelsDisplayContext.getCommerceWarehouses();
+							<%
+							List<CommerceWarehouse> commerceWarehouses = commerceShippingFixedOptionRelsDisplayContext.getCommerceWarehouses();
 
-					for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
-					%>
+							for (CommerceWarehouse commerceWarehouse : commerceWarehouses) {
+							%>
 
-						<aui:option
-							label="<%= commerceWarehouse.getName() %>"
-							value="<%= commerceWarehouse.getCommerceWarehouseId() %>"
-						/>
+								<aui:option
+									label="<%= commerceWarehouse.getName() %>"
+									value="<%= commerceWarehouse.getCommerceWarehouseId() %>"
+								/>
 
-					<%
-					}
-					%>
+							<%
+							}
+							%>
 
-				</aui:select>
+						</aui:select>
+					</div>
+				</div>
 
-				<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
+				<div class="row">
+					<div class="col-md-4">
+						<aui:select label="country" name="commerceCountryId" showEmptyOption="<%= true %>">
 
-					<%
-					List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
+							<%
+							List<CommerceCountry> commerceCountries = commerceShippingFixedOptionRelsDisplayContext.getCommerceCountries();
 
-					for (CommerceCountry commerceCountry : commerceCountries) {
-					%>
+							for (CommerceCountry commerceCountry : commerceCountries) {
+							%>
 
-						<aui:option
-							label="<%= commerceCountry.getName(languageId) %>"
-							selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
-							value="<%= commerceCountry.getCommerceCountryId() %>"
-						/>
+								<aui:option
+									label="<%= commerceCountry.getName(languageId) %>"
+									selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceCountryId() == commerceCountry.getCommerceCountryId()) %>"
+									value="<%= commerceCountry.getCommerceCountryId() %>"
+								/>
 
-					<%
-					}
-					%>
+							<%
+							}
+							%>
 
-				</aui:select>
+						</aui:select>
+					</div>
 
-				<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
+					<div class="col-md-4">
+						<aui:select label="region" name="commerceRegionId" showEmptyOption="<%= true %>">
 
-					<%
-					List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
+							<%
+							List<CommerceRegion> commerceRegions = commerceShippingFixedOptionRelsDisplayContext.getCommerceRegions();
 
-					for (CommerceRegion commerceRegion : commerceRegions) {
-					%>
+							for (CommerceRegion commerceRegion : commerceRegions) {
+							%>
 
-						<aui:option
-							label="<%= commerceRegion.getName() %>"
-							selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
-							value="<%= commerceRegion.getCommerceRegionId() %>"
-						/>
+								<aui:option
+									label="<%= commerceRegion.getName() %>"
+									selected="<%= (commerceShippingFixedOptionRel != null) && (commerceShippingFixedOptionRel.getCommerceRegionId() == commerceRegion.getCommerceRegionId()) %>"
+									value="<%= commerceRegion.getCommerceRegionId() %>"
+								/>
 
-					<%
-					}
-					%>
+							<%
+							}
+							%>
 
-				</aui:select>
+						</aui:select>
+					</div>
 
-				<aui:input name="zip" />
+					<div class="col-md-4">
+						<aui:input name="zip" />
+					</div>
+				</div>
+			</aui:fieldset>
 
-				<aui:input name="weightFrom" />
+			<aui:fieldset collapsed="<%= false %>" collapsible="<%= true %>" label="settings">
+				<div class="row">
+					<div class="col-md-6">
+						<aui:input name="weightFrom" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
+					</div>
 
-				<aui:input name="weightTo" />
+					<div class="col-md-6">
+						<aui:input name="weightTo" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCPMeasurementUnitName(CPMeasurementUnitConstants.TYPE_WEIGHT) %>" />
+					</div>
+				</div>
 
-				<aui:input name="fixedPrice" />
+				<aui:input name="fixedPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" />
 
-				<aui:input name="rateUnitWeightPrice" />
+				<aui:input name="rateUnitWeightPrice" suffix="<%= commerceShippingFixedOptionRelsDisplayContext.getCommerceCurrencyCode() %>" />
 
-				<aui:input name="ratePercentage" />
+				<aui:input name="ratePercentage" suffix="<%= StringPool.PERCENT %>" />
 			</aui:fieldset>
 		</aui:fieldset-group>
 	</div>

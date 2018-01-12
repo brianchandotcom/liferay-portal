@@ -31,8 +31,8 @@ page import="com.liferay.commerce.model.CommerceCountry" %><%@
 page import="com.liferay.commerce.model.CommerceRegion" %><%@
 page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
 page import="com.liferay.commerce.model.CommerceWarehouse" %><%@
+page import="com.liferay.commerce.product.model.CPMeasurementUnitConstants" %><%@
 page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
-page import="com.liferay.commerce.shipping.engine.fixed.constants.CommerceShippingEngineFixedWebKeys" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOption" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.model.CommerceShippingFixedOptionRel" %><%@
 page import="com.liferay.commerce.shipping.engine.fixed.web.internal.display.context.CommerceShippingFixedOptionRelsDisplayContext" %><%@
@@ -45,14 +45,18 @@ page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.LocaleUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.util.HashMap" %><%@
+page import="java.util.HashSet" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Locale" %><%@
+page import="java.util.Map" %><%@
+page import="java.util.Set" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

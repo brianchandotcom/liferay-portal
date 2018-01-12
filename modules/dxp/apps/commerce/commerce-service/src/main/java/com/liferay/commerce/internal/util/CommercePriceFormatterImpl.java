@@ -30,6 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(immediate = true)
 public class CommercePriceFormatterImpl implements CommercePriceFormatter {
@@ -40,21 +41,32 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
+		String roundingTypeName = null;
+
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 
-		String code = StringPool.BLANK;
-		String roundingTypeName = null;
-
 		if (commerceCurrency != null) {
-			code = commerceCurrency.getCode();
 			roundingTypeName = commerceCurrency.getRoundingType();
 		}
+
+		String value = null;
 
 		RoundingType roundingType =
 			_roundingTypeServicesTracker.getRoundingType(roundingTypeName);
 
-		return code + StringPool.SPACE + roundingType.round(price);
+		if (roundingType != null) {
+			value = roundingType.round(price);
+		}
+		else {
+			value = Double.toString(price);
+		}
+
+		if (commerceCurrency == null) {
+			return value;
+		}
+
+		return commerceCurrency.getCode() + StringPool.SPACE + value;
 	}
 
 	@Reference

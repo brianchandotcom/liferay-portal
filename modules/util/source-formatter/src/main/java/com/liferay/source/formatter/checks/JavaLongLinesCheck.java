@@ -82,9 +82,7 @@ public class JavaLongLinesCheck extends BaseFileCheck {
 					continue;
 				}
 
-				if (StringUtil.startsWith(trimmedLine, StringPool.AT) &&
-					!trimmedLine.matches(".*\\s+.*")) {
-
+				if (trimmedLine.matches("@\\S+")) {
 					continue;
 				}
 

@@ -26,7 +26,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -155,8 +157,25 @@ public class CleanServiceBuilderCommand extends BaseCommand {
 	private void _dropTable(Connection connection, String tableName)
 		throws SQLException {
 
-		try (Statement statement = connection.createStatement()) {
-			statement.executeUpdate("DROP TABLE IF EXISTS " + tableName);
+		DatabaseMetaData databaseMetaData = connection.getMetaData();
+
+		try (Statement statement = connection.createStatement();
+			ResultSet rs = databaseMetaData.getTables(
+				null, null, tableName, new String[] {"TABLE"})) {
+
+			if (rs.next()) {
+				statement.executeUpdate("DROP TABLE " + tableName);
+			}
+			else {
+				try (ResultSet rs2 = databaseMetaData.getTables(
+						null, null, tableName.toUpperCase(),
+						new String[] {"TABLE"})) {
+
+					if (rs2.next()) {
+						statement.executeUpdate("DROP TABLE " + tableName);
+					}
+				}
+			}
 		}
 	}
 

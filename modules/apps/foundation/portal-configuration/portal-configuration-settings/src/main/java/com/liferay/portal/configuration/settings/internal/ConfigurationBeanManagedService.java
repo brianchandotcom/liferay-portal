@@ -60,9 +60,11 @@ public class ConfigurationBeanManagedService implements ManagedService {
 			ManagedService.class, this, properties);
 	}
 
-	public void unregister() {
+	public synchronized void unregister() {
 		_managedServiceServiceRegistration.unregister();
 		_configurationBeanServiceRegistration.unregister();
+
+		_unregistered = true;
 	}
 
 	@Override
@@ -76,7 +78,11 @@ public class ConfigurationBeanManagedService implements ManagedService {
 		}
 	}
 
-	protected void doUpdated(Dictionary<String, ?> properties) {
+	protected synchronized void doUpdated(Dictionary<String, ?> properties) {
+		if (_unregistered) {
+			return;
+		}
+
 		if (properties == null) {
 			properties = new HashMapDictionary<>();
 		}
@@ -120,5 +126,6 @@ public class ConfigurationBeanManagedService implements ManagedService {
 	private final String _configurationPid;
 	private ServiceRegistration<ManagedService>
 		_managedServiceServiceRegistration;
+	private boolean _unregistered;
 
 }

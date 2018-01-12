@@ -18,13 +18,16 @@ import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class CommerceLowStockActivityServiceWrapperPriorityComparator
-	implements Comparator<ServiceWrapper<CommerceLowStockActivity>> {
+	implements Comparator<ServiceWrapper<CommerceLowStockActivity>>,
+			   Serializable {
 
 	public CommerceLowStockActivityServiceWrapperPriorityComparator() {
 		this(true);
@@ -54,7 +57,7 @@ public class CommerceLowStockActivityServiceWrapperPriorityComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

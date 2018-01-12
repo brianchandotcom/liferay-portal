@@ -18,13 +18,15 @@ import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerCustomizerFactory.ServiceWrapper;
 import com.liferay.portal.kernel.util.MapUtil;
 
+import java.io.Serializable;
+
 import java.util.Comparator;
 
 /**
  * @author Alessio Antonio Rendina
  */
 public class RoundingTypeServiceWrapperPriorityComparator
-	implements Comparator<ServiceWrapper<RoundingType>> {
+	implements Comparator<ServiceWrapper<RoundingType>>, Serializable {
 
 	public RoundingTypeServiceWrapperPriorityComparator() {
 		this(true);
@@ -52,7 +54,7 @@ public class RoundingTypeServiceWrapperPriorityComparator
 			return value;
 		}
 		else {
-			return -value;
+			return Math.negateExact(value);
 		}
 	}
 

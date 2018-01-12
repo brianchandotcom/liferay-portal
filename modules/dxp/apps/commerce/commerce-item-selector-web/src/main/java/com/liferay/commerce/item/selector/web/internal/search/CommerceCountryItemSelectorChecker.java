@@ -16,7 +16,9 @@ package com.liferay.commerce.item.selector.web.internal.search;
 
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
-import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.SetUtil;
+
+import java.util.Set;
 
 import javax.portlet.RenderResponse;
 
@@ -30,15 +32,16 @@ public class CommerceCountryItemSelectorChecker extends EmptyOnClickRowChecker {
 
 		super(renderResponse);
 
-		_checkedCommerceCountryIds = checkedCommerceCountryIds;
+		_checkedCommerceCountryIds = SetUtil.fromArray(
+			checkedCommerceCountryIds);
 	}
 
 	@Override
 	public boolean isChecked(Object obj) {
 		CommerceCountry commerceCountry = (CommerceCountry)obj;
 
-		return ArrayUtil.contains(
-			_checkedCommerceCountryIds, commerceCountry.getCommerceCountryId());
+		return _checkedCommerceCountryIds.contains(
+			commerceCountry.getCommerceCountryId());
 	}
 
 	@Override
@@ -46,6 +49,6 @@ public class CommerceCountryItemSelectorChecker extends EmptyOnClickRowChecker {
 		return isChecked(obj);
 	}
 
-	private final long[] _checkedCommerceCountryIds;
+	private final Set<Long> _checkedCommerceCountryIds;
 
 }

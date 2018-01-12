@@ -129,6 +129,14 @@ public class FragmentEntryServiceImpl extends FragmentEntryServiceBaseImpl {
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int status) {
+
+		return fragmentEntryLocalService.getFragmentEntries(
+			fragmentCollectionId, status);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
 			long groupId, long fragmentCollectionId, int start, int end)
 		throws PortalException {
 

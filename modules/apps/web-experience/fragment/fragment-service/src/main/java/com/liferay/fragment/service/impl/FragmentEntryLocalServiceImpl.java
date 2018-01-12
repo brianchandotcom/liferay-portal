@@ -191,6 +191,14 @@ public class FragmentEntryLocalServiceImpl
 
 	@Override
 	public List<FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int status) {
+
+		return fragmentEntryPersistence.findByFCI_S(
+			fragmentCollectionId, status);
+	}
+
+	@Override
+	public List<FragmentEntry> getFragmentEntries(
 			long fragmentCollectionId, int start, int end)
 		throws PortalException {
 

@@ -709,6 +709,10 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 		return getMessageListenerGroupName();
 	}
 
+	protected StorageType getSchedulerStorageType() {
+		return StorageType.MEMORY_CLUSTERED;
+	}
+
 	protected Trigger getSchedulerTrigger() {
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
 
@@ -870,7 +874,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 						SchedulerEngineHelperUtil.unschedule(
 							getSchedulerJobName(),
 							getMessageListenerGroupName(),
-							StorageType.MEMORY_CLUSTERED);
+							getSchedulerStorageType());
 					}
 
 					MessageBusUtil.unregisterMessageListener(
@@ -901,7 +905,7 @@ public abstract class BaseAlloyControllerImpl implements AlloyController {
 
 			if (enableScheduler) {
 				SchedulerEngineHelperUtil.schedule(
-					getSchedulerTrigger(), StorageType.MEMORY_CLUSTERED, null,
+					getSchedulerTrigger(), getSchedulerStorageType(), null,
 					destinationName, null, 0);
 			}
 		}

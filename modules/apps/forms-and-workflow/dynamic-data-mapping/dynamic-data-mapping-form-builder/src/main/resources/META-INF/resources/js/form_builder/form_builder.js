@@ -176,6 +176,12 @@ AUI.add(
 						visitor.set('fieldHandler', instance.destroyField);
 
 						instance._sidebar.destroy();
+
+						if(instance.sidebarSortable){
+							instance.sidebarSortable.delegate.destroy();
+							instance.sidebarSortable.destroy();
+						}
+
 						instance.sortable1.delegate.destroy();
 						instance.sortable1.destroy();
 

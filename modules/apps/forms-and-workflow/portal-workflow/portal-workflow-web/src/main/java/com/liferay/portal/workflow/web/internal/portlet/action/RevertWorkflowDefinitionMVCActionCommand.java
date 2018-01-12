@@ -86,6 +86,8 @@ public class RevertWorkflowDefinitionMVCActionCommand
 				previousWorkflowDefinition.getTitle(), name,
 				content.getBytes());
 
+		addSuccessMessage(actionRequest, actionResponse);
+
 		setRedirectAttribute(actionRequest, workflowDefinition);
 
 		sendRedirect(actionRequest, actionResponse);
@@ -115,9 +117,8 @@ public class RevertWorkflowDefinitionMVCActionCommand
 				"MMM d, yyyy, HH:mm", locale);
 		}
 
-		Date workflowDefinitionModifiedDate = ParamUtil.getDate(
-			actionRequest, WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE,
-			dateTimeFormat);
+		Date workflowDefinitionModifiedDate = (Date)actionRequest.getAttribute(
+			WorkflowWebKeys.WORKFLOW_DEFINITION_MODIFIED_DATE);
 
 		String dateTime = dateTimeFormat.format(workflowDefinitionModifiedDate);
 

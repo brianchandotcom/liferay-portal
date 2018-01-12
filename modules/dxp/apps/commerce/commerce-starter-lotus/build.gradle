@@ -12,4 +12,5 @@ dependencies {
 	provided project(":private:apps:commerce:commerce-currency-api")
 	provided project(":private:apps:commerce:commerce-product-api")
 	provided project(":private:apps:commerce:commerce-product-demo-data-creator-api")
+	provided project(":private:apps:commerce:commerce-shipping-engine-fixed-api")
 }

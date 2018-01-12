@@ -15,6 +15,8 @@
 package com.liferay.message.boards.internal.messaging;
 
 import com.liferay.mail.kernel.model.Account;
+import com.liferay.message.boards.internal.util.MBMailMessage;
+import com.liferay.message.boards.internal.util.MBMailUtil;
 import com.liferay.message.boards.internal.util.MailingListThreadLocal;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
@@ -36,7 +38,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
-import com.liferay.portlet.messageboards.util.MBMailMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.IOException;
@@ -223,7 +224,7 @@ public class MailingListMessageListener extends BaseMessageListener {
 
 		MBMailMessage mbMailMessage = new MBMailMessage();
 
-		MBUtil.collectPartContent(mailMessage, mbMailMessage);
+		MBMailUtil.collectPartContent(mailMessage, mbMailMessage);
 
 		PermissionCheckerUtil.setThreadValues(user);
 

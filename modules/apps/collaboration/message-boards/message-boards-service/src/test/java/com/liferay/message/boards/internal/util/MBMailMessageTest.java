@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.internal.util;
 
 import com.liferay.portal.kernel.util.ObjectValuePair;
 

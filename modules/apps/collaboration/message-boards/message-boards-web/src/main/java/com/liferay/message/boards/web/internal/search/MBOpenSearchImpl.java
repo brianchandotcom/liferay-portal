@@ -12,20 +12,21 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util;
+package com.liferay.message.boards.web.internal.search;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.search.HitsOpenSearchImpl;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.OpenSearch;
 import com.liferay.portal.kernel.util.StringPool;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Brian Wing Shun Chan
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.web.internal.search.MBOpenSearchImpl}
  */
-@Deprecated
+@Component(immediate = true, service = OpenSearch.class)
 public class MBOpenSearchImpl extends HitsOpenSearchImpl {
 
 	public static final String TITLE = "Liferay Message Boards Search: ";

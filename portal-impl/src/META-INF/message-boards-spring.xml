@@ -11,5 +11,4 @@
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" id="com.liferay.portlet.messageboards.service.permission.MBMessagePermission" />
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" id="com.liferay.portlet.messageboards.service.permission.MBThreadPermission" />
 	<bean class="com.liferay.portlet.messageboards.service.permission.MBPermission" id="com.liferay.portlet.messageboards.service.permission.MBPermission" />
-	<bean class="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" id="com.liferay.portlet.messageboards.util.MBOpenSearchImpl" />
 </beans>

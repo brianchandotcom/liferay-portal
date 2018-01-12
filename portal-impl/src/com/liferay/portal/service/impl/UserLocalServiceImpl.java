@@ -20,7 +20,6 @@ import com.liferay.mail.kernel.template.MailTemplate;
 import com.liferay.mail.kernel.template.MailTemplateContext;
 import com.liferay.mail.kernel.template.MailTemplateContextBuilder;
 import com.liferay.mail.kernel.template.MailTemplateFactoryUtil;
-import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.petra.encryptor.EncryptorException;
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -5432,15 +5431,6 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				serviceContext.getAssetTagNames());
 		}
 
-		// Message boards
-
-		if (GetterUtil.getBoolean(
-				PropsKeys.USERS_UPDATE_USER_NAME + MBMessage.class.getName()) &&
-			!oldFullName.equals(user.getFullName())) {
-
-			mbMessageLocalService.updateUserName(userId, user.getFullName());
-		}
-
 		// Indexer
 
 		if ((serviceContext == null) || serviceContext.isIndexingEnabled()) {
@@ -5531,7 +5521,7 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		return updateUser(
+		return userLocalService.updateUser(
 			userId, oldPassword, newPassword1, newPassword2, passwordReset,
 			reminderQueryQuestion, reminderQueryAnswer, screenName,
 			emailAddress, facebookId, openId, true, null, languageId,

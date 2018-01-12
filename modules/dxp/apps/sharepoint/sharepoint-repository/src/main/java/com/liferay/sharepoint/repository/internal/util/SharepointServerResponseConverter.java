@@ -108,8 +108,8 @@ public class SharepointServerResponseConverter {
 		return _createFolder(jsonObject.getJSONObject("d"));
 	}
 
-	public <T extends ExtRepositoryObject> List<T>
-		getExtRepositoryFolders(JSONObject jsonObject) {
+	public <T extends ExtRepositoryObject> List<T> getExtRepositoryFolders(
+		JSONObject jsonObject) {
 
 		List<T> extRepositoryFolders = new ArrayList<>();
 

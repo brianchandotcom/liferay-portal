@@ -29,8 +29,8 @@ import javax.portlet.PortletRequest;
  */
 public class LCSProjectServiceUtil {
 
-	public static List<LCSProject>
-		getUserManageableLCSProjects(PortletRequest portletRequest) {
+	public static List<LCSProject> getUserManageableLCSProjects(
+		PortletRequest portletRequest) {
 
 		try {
 			return _lcsProjectService.getUserManageableLCSProjects();

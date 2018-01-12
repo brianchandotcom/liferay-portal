@@ -17,7 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommercePriceList;
 import com.liferay.commerce.service.base.CommercePriceListServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommercePriceListPermission;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Hits;
@@ -44,7 +44,7 @@ public class CommercePriceListServiceImpl
 			boolean neverExpire, ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePriceListPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
@@ -65,7 +65,7 @@ public class CommercePriceListServiceImpl
 				commercePriceListId);
 
 		if (commercePriceList != null) {
-			CommercePriceListPermission.check(
+			CommercePermission.check(
 				getPermissionChecker(), commercePriceList.getGroupId(),
 				CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 
@@ -129,7 +129,7 @@ public class CommercePriceListServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommercePriceListPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PRICE_LISTS);
 

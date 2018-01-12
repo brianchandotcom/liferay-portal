@@ -17,7 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.service.base.CPDefinitionInventoryServiceBaseImpl;
-import com.liferay.commerce.service.permission.CPDefinitionInventoryPermission;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -37,7 +37,7 @@ public class CPDefinitionInventoryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionInventoryPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY);
 
@@ -56,7 +56,7 @@ public class CPDefinitionInventoryServiceImpl
 			cpDefinitionInventoryPersistence.findByPrimaryKey(
 				cpDefinitionInventoryId);
 
-		CPDefinitionInventoryPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), cpDefinitionInventory.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY);
 
@@ -91,7 +91,7 @@ public class CPDefinitionInventoryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CPDefinitionInventoryPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_PRODUCT_DEFINITION_INVENTORY);
 

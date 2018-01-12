@@ -17,7 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.constants.CommerceActionKeys;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.service.base.CommerceShipmentServiceBaseImpl;
-import com.liferay.commerce.service.permission.CommerceShipmentPermission;
+import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -42,7 +42,7 @@ public class CommerceShipmentServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CommerceShipmentPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -62,7 +62,7 @@ public class CommerceShipmentServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommerceShipmentPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), commerceShipment.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -76,7 +76,7 @@ public class CommerceShipmentServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommerceShipmentPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), commerceShipment.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 
@@ -112,7 +112,7 @@ public class CommerceShipmentServiceImpl
 		CommerceShipment commerceShipment =
 			commerceShipmentPersistence.findByPrimaryKey(commerceShipmentId);
 
-		CommerceShipmentPermission.check(
+		CommercePermission.check(
 			getPermissionChecker(), commerceShipment.getGroupId(),
 			CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 

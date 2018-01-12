@@ -54,16 +54,14 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long orderUserId, long billingAddressId, long shippingAddressId,
-		long commercePaymentMethodId, long commerceShippingMethodId,
-		java.lang.String shippingOptionName, double subtotal,
-		double shippingPrice, double total, int paymentStatus,
+		long orderUserId, long commercePaymentMethodId,
+		long commerceShippingMethodId, java.lang.String shippingOptionName,
+		double subtotal, double shippingPrice, double total, int paymentStatus,
 		int shippingStatus, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addCommerceOrder(orderUserId, billingAddressId,
-			shippingAddressId, commercePaymentMethodId,
+				   .addCommerceOrder(orderUserId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, subtotal,
 			shippingPrice, total, paymentStatus, shippingStatus, status,
 			serviceContext);

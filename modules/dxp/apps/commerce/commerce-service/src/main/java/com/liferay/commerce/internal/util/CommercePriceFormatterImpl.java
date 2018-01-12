@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
@@ -40,14 +38,8 @@ public class CommercePriceFormatterImpl implements CommercePriceFormatter {
 	public String format(HttpServletRequest httpServletRequest, double price)
 		throws PortalException {
 
-		Locale locale = _portal.getLocale(httpServletRequest);
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
-		return format(locale, groupId, price);
-	}
-
-	@Override
-	public String format(Locale locale, long groupId, double price) {
 		CommerceCurrency commerceCurrency =
 			_commerceCurrencyService.fetchPrimaryCommerceCurrency(groupId);
 

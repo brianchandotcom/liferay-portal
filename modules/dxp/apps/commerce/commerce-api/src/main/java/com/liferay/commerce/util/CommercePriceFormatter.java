@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -30,7 +28,5 @@ public interface CommercePriceFormatter {
 
 	public String format(HttpServletRequest httpServletRequest, double price)
 		throws PortalException;
-
-	public String format(Locale locale, long groupId, double price);
 
 }

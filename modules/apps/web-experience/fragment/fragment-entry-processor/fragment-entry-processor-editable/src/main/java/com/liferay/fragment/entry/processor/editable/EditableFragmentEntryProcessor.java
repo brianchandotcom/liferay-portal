@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Override
-	public String processFragmentEntryHTML(String html, JSONObject settings)
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
 		Document document = _htmlParserUtil.parse(html);
@@ -72,7 +72,7 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 
 			String id = element.attributeValue("id");
 
-			editableElementParser.replace(element, settings.getString(id));
+			editableElementParser.replace(element, jsonObject.getString(id));
 		}
 
 		Element rootElement = document.getRootElement();

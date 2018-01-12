@@ -33,14 +33,14 @@ import org.osgi.service.component.annotations.Deactivate;
 @Component(immediate = true, service = FragmentEntryProcessorRegistry.class)
 public class FragmentEntryProcessorRegistry {
 
-	public String processFragmentEntryHTML(String html, JSONObject settings)
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
 		for (FragmentEntryProcessor fragmentEntryProcessor :
 				_serviceTrackerList) {
 
 			html = fragmentEntryProcessor.processFragmentEntryHTML(
-				html, settings);
+				html, jsonObject);
 		}
 
 		return html;

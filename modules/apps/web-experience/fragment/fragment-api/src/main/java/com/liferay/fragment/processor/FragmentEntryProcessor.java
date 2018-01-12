@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSONObject;
  */
 public interface FragmentEntryProcessor {
 
-	public String processFragmentEntryHTML(String html, JSONObject settings)
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException;
 
 	public void validateFragmentEntryHTML(String html) throws PortalException;

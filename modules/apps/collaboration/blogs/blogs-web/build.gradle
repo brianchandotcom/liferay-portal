@@ -39,7 +39,6 @@ dependencies {
 	provided project(":apps:web-experience:asset:asset-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:export-import:export-import-api")
-	provided project(":apps:web-experience:staging:staging-taglib")
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
 }

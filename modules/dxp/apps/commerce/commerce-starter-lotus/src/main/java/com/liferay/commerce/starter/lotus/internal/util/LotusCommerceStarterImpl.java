@@ -17,13 +17,21 @@ package com.liferay.commerce.starter.lotus.internal.util;
 import com.liferay.asset.kernel.model.AssetVocabulary;
 import com.liferay.asset.kernel.service.AssetVocabularyLocalService;
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
+import com.liferay.commerce.model.CommercePaymentEngine;
+import com.liferay.commerce.model.CommerceShippingEngine;
+import com.liferay.commerce.model.CommerceShippingMethod;
 import com.liferay.commerce.product.demo.data.creator.CPDemoDataCreator;
 import com.liferay.commerce.product.importer.CPFileImporter;
 import com.liferay.commerce.product.service.CPGroupLocalService;
 import com.liferay.commerce.product.service.CPMeasurementUnitLocalService;
 import com.liferay.commerce.product.util.CommerceStarter;
 import com.liferay.commerce.service.CommerceCountryLocalService;
+import com.liferay.commerce.service.CommercePaymentMethodLocalService;
 import com.liferay.commerce.service.CommerceRegionLocalService;
+import com.liferay.commerce.service.CommerceShippingMethodLocalService;
+import com.liferay.commerce.shipping.engine.fixed.service.CommerceShippingFixedOptionLocalService;
+import com.liferay.commerce.util.CommercePaymentEngineRegistry;
+import com.liferay.commerce.util.CommerceShippingEngineRegistry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -42,6 +50,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.ThemeLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -50,8 +59,14 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.portlet.PortletPreferences;
@@ -85,6 +100,8 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+		Locale siteDefaultLocale = themeDisplay.getSiteDefaultLocale();
+
 		ServiceContext serviceContext = getServiceContext(httpServletRequest);
 
 		_cpFileImporter.cleanLayouts(serviceContext);
@@ -106,6 +123,10 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		_cpMeasurementUnitLocalService.importDefaultValues(serviceContext);
 
 		_commerceCurrencyLocalService.importDefaultValues(serviceContext);
+
+		setPaymentMethod(siteDefaultLocale, serviceContext);
+
+		setShippingMethod(siteDefaultLocale, serviceContext);
 
 		setThemePortletSettings(serviceContext);
 	}
@@ -287,6 +308,76 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		}
 	}
 
+	protected void setPaymentMethod(
+			Locale locale, ServiceContext serviceContext)
+		throws Exception {
+
+		String engineKey = "money-order";
+
+		CommercePaymentEngine commercePaymentEngine =
+			_commercePaymentEngineRegistry.getCommercePaymentEngine(engineKey);
+
+		if (commercePaymentEngine == null) {
+			return;
+		}
+
+		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		nameMap.put(locale, commercePaymentEngine.getName(locale));
+		descriptionMap.put(
+			locale, commercePaymentEngine.getDescription(locale));
+
+		String imageFilePath = _DEPENDENCY_PATH + "money_order.png";
+
+		File imageFile = _getFile(imageFilePath);
+
+		_commercePaymentMethodLocalService.addCommercePaymentMethod(
+			nameMap, descriptionMap, imageFile, engineKey,
+			new HashMap<String, String>(), 1, true, serviceContext);
+	}
+
+	protected void setShippingMethod(
+			Locale locale, ServiceContext serviceContext)
+		throws Exception {
+
+		String engineKey = "fixed";
+
+		CommerceShippingEngine commerceShippingEngine =
+			_commerceShippingEngineRegistry.getCommerceShippingEngine(
+				engineKey);
+
+		if (commerceShippingEngine == null) {
+			return;
+		}
+
+		Map<Locale, String> nameMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		nameMap.put(locale, commerceShippingEngine.getName(locale));
+		descriptionMap.put(
+			locale, commerceShippingEngine.getDescription(locale));
+
+		String imageFilePath = _DEPENDENCY_PATH + "fixed_price.png";
+
+		File imageFile = _getFile(imageFilePath);
+
+		CommerceShippingMethod commerceShippingMethod =
+			_commerceShippingMethodLocalService.addCommerceShippingMethod(
+				nameMap, descriptionMap, imageFile, engineKey, 1, true,
+				serviceContext);
+
+		Map<Locale, String> shippingFixedOptionNameMap = new HashMap<>();
+		Map<Locale, String> shippingFixedOptionDescriptionMap = new HashMap<>();
+
+		shippingFixedOptionNameMap.put(locale, "Free Shipping");
+
+		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
+			commerceShippingMethod.getCommerceShippingMethodId(),
+			shippingFixedOptionNameMap, shippingFixedOptionDescriptionMap, 0, 1,
+			serviceContext);
+	}
+
 	protected void setSiteNavigationMenuPortletSettings(
 			JSONObject jsonObject, String portletName,
 			ServiceContext serviceContext)
@@ -361,6 +452,16 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		}
 	}
 
+	private File _getFile(String filePath) throws IOException {
+		Class<?> clazz = getClass();
+
+		ClassLoader classLoader = clazz.getClassLoader();
+
+		InputStream is = classLoader.getResourceAsStream(filePath);
+
+		return FileUtil.createTempFile(is);
+	}
+
 	private static final String _CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =
 		"com_liferay_commerce_product_asset_categories_navigation_web_" +
 			"internal_portlet_CPAssetCategoriesNavigationPortlet";
@@ -388,7 +489,25 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	private CommerceCurrencyLocalService _commerceCurrencyLocalService;
 
 	@Reference
+	private CommercePaymentEngineRegistry _commercePaymentEngineRegistry;
+
+	@Reference
+	private CommercePaymentMethodLocalService
+		_commercePaymentMethodLocalService;
+
+	@Reference
 	private CommerceRegionLocalService _commerceRegionLocalService;
+
+	@Reference
+	private CommerceShippingEngineRegistry _commerceShippingEngineRegistry;
+
+	@Reference
+	private CommerceShippingFixedOptionLocalService
+		_commerceShippingFixedOptionLocalService;
+
+	@Reference
+	private CommerceShippingMethodLocalService
+		_commerceShippingMethodLocalService;
 
 	@Reference
 	private CPDemoDataCreator _cpDemoDataCreator;

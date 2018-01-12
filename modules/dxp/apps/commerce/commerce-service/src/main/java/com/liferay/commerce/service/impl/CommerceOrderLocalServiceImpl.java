@@ -32,6 +32,8 @@ import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
@@ -49,6 +51,7 @@ import java.util.function.Function;
 public class CommerceOrderLocalServiceImpl
 	extends CommerceOrderLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
 			long orderUserId, long commercePaymentMethodId,
@@ -172,6 +175,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CommerceOrder deleteCommerceOrder(CommerceOrder commerceOrder)
 		throws PortalException {
@@ -248,6 +252,7 @@ public class CommerceOrderLocalServiceImpl
 		}
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateBillingAddress(
 			long commerceOrderId, String name, String description,
@@ -263,6 +268,7 @@ public class CommerceOrderLocalServiceImpl
 			CommerceOrder::setBillingAddressId, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateCommerceOrder(
 			long commerceOrderId, long commercePaymentMethodId,
@@ -286,6 +292,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updatePaymentStatus(
 			long commerceOrderId, int paymentStatus, int status)
@@ -302,6 +309,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updatePurchaseOrderNumber(
 			long commerceOrderId, String purchaseOrderNumber)
@@ -319,6 +327,7 @@ public class CommerceOrderLocalServiceImpl
 		return commerceOrder;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updateShippingAddress(
 			long commerceOrderId, String name, String description,

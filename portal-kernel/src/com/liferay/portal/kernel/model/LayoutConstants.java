@@ -31,8 +31,6 @@ public class LayoutConstants {
 
 	public static final String NAME_CONTROL_PANEL_DEFAULT = "Control Panel";
 
-	public static final String NAME_HOME_DEFAULT = "Home";
-
 	/**
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */

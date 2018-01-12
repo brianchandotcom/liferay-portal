@@ -107,8 +107,7 @@ public class LayoutSetPrototypeLocalServiceImpl
 
 			layoutLocalService.addLayout(
 				userId, group.getGroupId(), true,
-				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
-				LayoutConstants.NAME_HOME_DEFAULT, null, null,
+				LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "home", null, null,
 				LayoutConstants.TYPE_PORTLET, false, "/home", serviceContext);
 		}
 

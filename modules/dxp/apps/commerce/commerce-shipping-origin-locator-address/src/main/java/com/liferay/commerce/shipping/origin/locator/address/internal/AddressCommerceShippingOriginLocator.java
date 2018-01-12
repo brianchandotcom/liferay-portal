@@ -26,7 +26,6 @@ import com.liferay.commerce.shipping.origin.locator.address.internal.configurati
 import com.liferay.commerce.shipping.origin.locator.address.internal.constants.AddressCommerceShippingOriginLocatorConstants;
 import com.liferay.commerce.util.SuffixParameterMapSettingsLocator;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -68,14 +67,6 @@ public class AddressCommerceShippingOriginLocator
 	implements CommerceShippingOriginLocator {
 
 	public static final String KEY = "address";
-
-	@Override
-	public CommerceWarehouse getClosestCommerceWarehouse(
-			CommerceAddress commerceAddress, long cpInstanceId)
-		throws PortalException {
-
-		return _getDefaultCommerceWarehouse();
-	}
 
 	@Override
 	public String getDescription(Locale locale) {

@@ -16,7 +16,7 @@
 
 <%@ include file="/init.jsp" %>
 
-<%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
+<%@ page import="com.liferay.exportimport.changeset.constants.ChangesetPortletKeys" %><%@
 page import="com.liferay.portal.kernel.model.ClassName" %><%@
 page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
@@ -25,10 +25,18 @@ page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
 String className = GetterUtil.getString(request.getAttribute("liferay-staging:export-entity:className"));
 long classNameId = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:classNameId"));
 
-if (Validator.isNotNull(classNameId)) {
-	ClassName classNameObject = ClassNameLocalServiceUtil.getClassName(classNameId);
+ClassName classNameObj = null;
 
-	className = classNameObject.getClassName();
+if (Validator.isNotNull(classNameId)) {
+	classNameObj = ClassNameLocalServiceUtil.getClassName(classNameId);
+}
+else if (Validator.isNotNull(className)) {
+	classNameObj = ClassNameLocalServiceUtil.getClassName(className);
+}
+
+if (classNameObj != null) {
+	className = classNameObj.getClassName();
+	classNameId = classNameObj.getClassNameId();
 }
 
 long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:groupId"));

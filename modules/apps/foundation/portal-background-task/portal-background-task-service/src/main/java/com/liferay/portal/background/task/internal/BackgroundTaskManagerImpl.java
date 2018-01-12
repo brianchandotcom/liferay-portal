@@ -116,10 +116,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-		amendBackgroundTask(
-			long backgroundTaskId, Map<String, Serializable> taskContextMap,
-			int status, ServiceContext serviceContext) {
+	public BackgroundTask amendBackgroundTask(
+		long backgroundTaskId, Map<String, Serializable> taskContextMap,
+		int status, ServiceContext serviceContext) {
 
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.amendBackgroundTask(
@@ -129,10 +128,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-		amendBackgroundTask(
-			long backgroundTaskId, Map<String, Serializable> taskContextMap,
-			int status, String statusMessage, ServiceContext serviceContext) {
+	public BackgroundTask amendBackgroundTask(
+		long backgroundTaskId, Map<String, Serializable> taskContextMap,
+		int status, String statusMessage, ServiceContext serviceContext) {
 
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.amendBackgroundTask(
@@ -156,8 +154,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-			deleteBackgroundTask(long backgroundTaskId)
+	public BackgroundTask deleteBackgroundTask(long backgroundTaskId)
 		throws PortalException {
 
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
@@ -202,10 +199,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-		fetchFirstBackgroundTask(
-			long groupId, String taskExecutorClassName, boolean completed,
-			OrderByComparator<BackgroundTask> orderByComparator) {
+	public BackgroundTask fetchFirstBackgroundTask(
+		long groupId, String taskExecutorClassName, boolean completed,
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchFirstBackgroundTask(
@@ -220,8 +216,8 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-		fetchFirstBackgroundTask(String taskExecutorClassName, int status) {
+	public BackgroundTask fetchFirstBackgroundTask(
+		String taskExecutorClassName, int status) {
 
 		com.liferay.portal.background.task.model.BackgroundTask
 			bcakgroundTaskModel =
@@ -236,10 +232,9 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-		fetchFirstBackgroundTask(
-			String taskExecutorClassName, int status,
-			OrderByComparator<BackgroundTask> orderByComparator) {
+	public BackgroundTask fetchFirstBackgroundTask(
+		String taskExecutorClassName, int status,
+		OrderByComparator<BackgroundTask> orderByComparator) {
 
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =
 			_backgroundTaskLocalService.fetchFirstBackgroundTask(
@@ -253,8 +248,7 @@ public class BackgroundTaskManagerImpl implements BackgroundTaskManager {
 	}
 
 	@Override
-	public BackgroundTask
-			getBackgroundTask(long backgroundTaskId)
+	public BackgroundTask getBackgroundTask(long backgroundTaskId)
 		throws PortalException {
 
 		com.liferay.portal.background.task.model.BackgroundTask backgroundTask =

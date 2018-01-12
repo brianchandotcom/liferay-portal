@@ -146,8 +146,8 @@ public class ScopeSearchFacetDisplayBuilder {
 		return buildTermDisplayContext(groupId, count, isSelected(groupId));
 	}
 
-	protected List<ScopeSearchFacetTermDisplayContext>
-		buildTermDisplayContexts(List<TermCollector> termCollectors) {
+	protected List<ScopeSearchFacetTermDisplayContext> buildTermDisplayContexts(
+		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {
 			return getEmptySearchResultTermDisplayContexts();

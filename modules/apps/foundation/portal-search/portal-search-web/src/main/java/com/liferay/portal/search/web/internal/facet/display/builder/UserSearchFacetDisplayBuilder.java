@@ -110,8 +110,8 @@ public class UserSearchFacetDisplayBuilder {
 		return userSearchFacetTermDisplayContext;
 	}
 
-	protected List<UserSearchFacetTermDisplayContext>
-		buildTermDisplayContexts(List<TermCollector> termCollectors) {
+	protected List<UserSearchFacetTermDisplayContext> buildTermDisplayContexts(
+		List<TermCollector> termCollectors) {
 
 		if (termCollectors.isEmpty()) {
 			return getEmptyTermDisplayContexts();

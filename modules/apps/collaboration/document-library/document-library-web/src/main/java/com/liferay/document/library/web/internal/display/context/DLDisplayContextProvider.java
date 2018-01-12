@@ -130,10 +130,9 @@ public class DLDisplayContextProvider {
 		return dlViewFileEntryHistoryDisplayContext;
 	}
 
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileShortcut fileShortcut) {
+	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		FileShortcut fileShortcut) {
 
 		try {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -168,10 +167,9 @@ public class DLDisplayContextProvider {
 		}
 	}
 
-	public DLViewFileVersionDisplayContext
-		getDLViewFileVersionDisplayContext(
-			HttpServletRequest request, HttpServletResponse response,
-			FileVersion fileVersion) {
+	public DLViewFileVersionDisplayContext getDLViewFileVersionDisplayContext(
+		HttpServletRequest request, HttpServletResponse response,
+		FileVersion fileVersion) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

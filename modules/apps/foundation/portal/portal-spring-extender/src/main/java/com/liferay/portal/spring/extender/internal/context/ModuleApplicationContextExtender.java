@@ -251,8 +251,8 @@ public class ModuleApplicationContextExtender extends AbstractExtender {
 			_component.add(serviceDependency);
 		}
 
-		private List<ServiceRegistration<UpgradeStep>>
-			_processInitialUpgrade(ClassLoader classLoader) {
+		private List<ServiceRegistration<UpgradeStep>> _processInitialUpgrade(
+			ClassLoader classLoader) {
 
 			Dictionary<String, String> headers = _bundle.getHeaders();
 

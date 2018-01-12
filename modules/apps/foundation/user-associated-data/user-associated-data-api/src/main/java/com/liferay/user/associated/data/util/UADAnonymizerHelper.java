@@ -12,22 +12,21 @@
  * details.
  */
 
-package com.liferay.user.associated.data.aggregator;
+package com.liferay.user.associated.data.util;
 
-import com.liferay.user.associated.data.entity.UADEntity;
+import aQute.bnd.annotation.ProviderType;
 
-import java.util.List;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
 
 /**
- * @author William Newbury
+ * @author Drew Brokke
  */
-public abstract class BaseUADEntityAggregator implements UADEntityAggregator {
+@ProviderType
+public interface UADAnonymizerHelper {
 
-	@Override
-	public long count(long userId) {
-		List<UADEntity> userIdUADEntities = getUADEntities(userId);
+	public User getAnonymousUser() throws PortalException;
 
-		return userIdUADEntities.size();
-	}
+	public long getAnonymousUserId() throws PortalException;
 
 }

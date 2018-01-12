@@ -15,9 +15,9 @@
 package com.liferay.announcements.uad.exporter;
 
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
+import com.liferay.announcements.uad.entity.AnnouncementsFlagUADEntity;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.model.Group;
@@ -45,20 +45,19 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY},
+	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG},
 	service = UADEntityExporter.class
 )
-public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
+public class AnnouncementsFlagUADEntityExporter extends BaseUADEntityExporter {
 
 	@Override
 	public void export(UADEntity uadEntity) throws PortalException {
-		AnnouncementsEntry announcementsEntry = _getAnnouncementsEntry(
-			uadEntity);
+		AnnouncementsFlag announcementsFlag = _getAnnouncementsFlag(uadEntity);
 
-		String json = getJSON(announcementsEntry);
+		String json = getJSON(announcementsFlag);
 
 		Folder folder = getFolder(
-			announcementsEntry.getCompanyId(),
+			announcementsFlag.getCompanyId(),
 			AnnouncementsPortletKeys.ANNOUNCEMENTS, _FOLDER_NAME);
 
 		try {
@@ -66,7 +65,7 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 				json.getBytes(StringPool.UTF8));
 
 			PortletFileRepositoryUtil.addPortletFileEntry(
-				folder.getGroupId(), announcementsEntry.getUserId(),
+				folder.getGroupId(), announcementsFlag.getUserId(),
 				Group.class.getName(), folder.getGroupId(),
 				AnnouncementsPortletKeys.ANNOUNCEMENTS, folder.getFolderId(),
 				is, uadEntity.getUADEntityId() + ".json",
@@ -82,19 +81,19 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 		return _uadEntityAggregator.getUADEntities(userId);
 	}
 
-	private AnnouncementsEntry _getAnnouncementsEntry(UADEntity uadEntity)
+	private AnnouncementsFlag _getAnnouncementsFlag(UADEntity uadEntity)
 		throws PortalException {
 
 		_validate(uadEntity);
 
-		AnnouncementsEntryUADEntity announcementsEntryUADEntity =
-			(AnnouncementsEntryUADEntity)uadEntity;
+		AnnouncementsFlagUADEntity announcementsFlagUADEntity =
+			(AnnouncementsFlagUADEntity)uadEntity;
 
-		return announcementsEntryUADEntity.getAnnouncementsEntry();
+		return announcementsFlagUADEntity.getAnnouncementsFlag();
 	}
 
 	private void _validate(UADEntity uadEntity) throws PortalException {
-		if (!(uadEntity instanceof AnnouncementsEntryUADEntity)) {
+		if (!(uadEntity instanceof AnnouncementsFlagUADEntity)) {
 			throw new UADEntityException();
 		}
 	}
@@ -102,7 +101,7 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 	private static final String _FOLDER_NAME = "UADExport";
 
 	@Reference(
-		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY + ")"
+		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

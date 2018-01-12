@@ -14,12 +14,11 @@
 
 package com.liferay.announcements.uad.anonymizer;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
+import com.liferay.announcements.uad.entity.AnnouncementsFlagUADEntity;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.BaseUADEntityAnonymizer;
@@ -38,32 +37,27 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY},
+	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG},
 	service = UADEntityAnonymizer.class
 )
-public class AnnouncementsEntryUADEntityAnonymizer
+public class AnnouncementsFlagUADEntityAnonymizer
 	extends BaseUADEntityAnonymizer {
 
 	@Override
 	public void autoAnonymize(UADEntity uadEntity) throws PortalException {
-		AnnouncementsEntry announcementsEntry = _getAnnouncementsEntry(
-			uadEntity);
+		AnnouncementsFlag announcementsFlag = _getAnnouncementsFlag(uadEntity);
 
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+		announcementsFlag.setUserId(_uadAnonymizerHelper.getAnonymousUserId());
 
-		announcementsEntry.setUserId(anonymousUser.getUserId());
-		announcementsEntry.setUserName(anonymousUser.getFullName());
-
-		_announcementsEntryLocalService.updateAnnouncementsEntry(
-			announcementsEntry);
+		_announcementsFlagLocalService.updateAnnouncementsFlag(
+			announcementsFlag);
 	}
 
 	@Override
 	public void delete(UADEntity uadEntity) throws PortalException {
-		AnnouncementsEntry announcementsEntry = _getAnnouncementsEntry(
-			uadEntity);
+		AnnouncementsFlag announcementsFlag = _getAnnouncementsFlag(uadEntity);
 
-		_announcementsEntryLocalService.deleteEntry(announcementsEntry);
+		_announcementsFlagLocalService.deleteFlag(announcementsFlag);
 	}
 
 	@Override
@@ -71,31 +65,31 @@ public class AnnouncementsEntryUADEntityAnonymizer
 		return _uadEntityAggregator.getUADEntities(userId);
 	}
 
-	private AnnouncementsEntry _getAnnouncementsEntry(UADEntity uadEntity)
+	private AnnouncementsFlag _getAnnouncementsFlag(UADEntity uadEntity)
 		throws PortalException {
 
 		_validate(uadEntity);
 
-		AnnouncementsEntryUADEntity announcementsEntryUADEntity =
-			(AnnouncementsEntryUADEntity)uadEntity;
+		AnnouncementsFlagUADEntity announcementsFlagUADEntity =
+			(AnnouncementsFlagUADEntity)uadEntity;
 
-		return announcementsEntryUADEntity.getAnnouncementsEntry();
+		return announcementsFlagUADEntity.getAnnouncementsFlag();
 	}
 
 	private void _validate(UADEntity uadEntity) throws PortalException {
-		if (!(uadEntity instanceof AnnouncementsEntryUADEntity)) {
+		if (!(uadEntity instanceof AnnouncementsFlagUADEntity)) {
 			throw new UADEntityException();
 		}
 	}
 
 	@Reference
-	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
 
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;
 
 	@Reference(
-		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY + ")"
+		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

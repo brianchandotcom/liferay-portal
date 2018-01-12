@@ -15,14 +15,13 @@
 package com.liferay.announcements.uad.exporter.test;
 
 import com.liferay.announcements.constants.AnnouncementsPortletKeys;
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
+import com.liferay.announcements.uad.test.BaseAnnouncementsFlagUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -59,8 +59,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsEntryUADEntityExporterTest
-	extends BaseAnnouncementsEntryUADEntityTestCase {
+public class AnnouncementsFlagUADEntityExporterTest
+	extends BaseAnnouncementsFlagUADEntityTestCase {
 
 	@ClassRule
 	@Rule
@@ -69,25 +69,23 @@ public class AnnouncementsEntryUADEntityExporterTest
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-
 		_user = UserTestUtil.addUser();
 	}
 
 	@Test
 	public void testExport() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
+		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
 			_user.getUserId());
 
 		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			Long.toString(announcementsEntry.getEntryId()));
+			Long.toString(announcementsFlag.getFlagId()));
 
 		_uadEntityExporter.export(uadEntity);
 
 		FileEntry fileEntry = _getFileEntry(
-			announcementsEntry.getCompanyId(), uadEntity.getUADEntityId());
+			announcementsFlag.getCompanyId(), uadEntity.getUADEntityId());
 
-		_verifyFileEntry(fileEntry, announcementsEntry);
+		_verifyFileEntry(fileEntry, announcementsFlag);
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
@@ -95,29 +93,29 @@ public class AnnouncementsEntryUADEntityExporterTest
 
 	@Test(expected = NoSuchFileEntryException.class)
 	public void testExportAll() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
+		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
 			TestPropsValues.getUserId());
-		AnnouncementsEntry announcementsEntryExported = addAnnouncementsEntry(
+		AnnouncementsFlag announcementsFlagExported = addAnnouncementsFlag(
 			_user.getUserId());
 
 		_uadEntityExporter.exportAll(_user.getUserId());
 
 		FileEntry fileEntry = _getFileEntry(
-			announcementsEntryExported.getCompanyId(),
-			Long.toString(announcementsEntryExported.getEntryId()));
+			announcementsFlagExported.getCompanyId(),
+			Long.toString(announcementsFlagExported.getFlagId()));
 
-		_verifyFileEntry(fileEntry, announcementsEntryExported);
+		_verifyFileEntry(fileEntry, announcementsFlagExported);
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
 
 		_getFileEntry(
-			announcementsEntry.getCompanyId(),
-			Long.toString(announcementsEntry.getEntryId()));
+			announcementsFlag.getCompanyId(),
+			Long.toString(announcementsFlag.getFlagId()));
 	}
 
 	@Test
-	public void testExportAllNoAnnouncementsEntries() throws Exception {
+	public void testExportAllNoAnnouncementsFlags() throws Exception {
 		_uadEntityExporter.exportAll(_user.getUserId());
 	}
 
@@ -140,7 +138,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 	}
 
 	private void _verifyFileEntry(
-			FileEntry fileEntry, AnnouncementsEntry announcementsEntry)
+			FileEntry fileEntry, AnnouncementsFlag announcementsFlag)
 		throws Exception {
 
 		StringWriter stringWriter = new StringWriter();
@@ -154,7 +152,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 			stringWriter.toString());
 
 		Assert.assertEquals(
-			announcementsEntry.getEntryId(), jsonObject.getInt("entryId"));
+			announcementsFlag.getFlagId(), jsonObject.getInt("flagId"));
 	}
 
 	@Inject
@@ -164,12 +162,12 @@ public class AnnouncementsEntryUADEntityExporterTest
 	private GroupLocalService _groupLocalService;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
 	)
 	private UADEntityExporter _uadEntityExporter;
 

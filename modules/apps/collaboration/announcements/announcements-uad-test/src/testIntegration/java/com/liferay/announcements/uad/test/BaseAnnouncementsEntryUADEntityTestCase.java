@@ -63,10 +63,6 @@ public abstract class BaseAnnouncementsEntryUADEntityTestCase {
 		return announcementsEntry;
 	}
 
-	protected Group getGroup() {
-		return _group;
-	}
-
 	@Inject
 	protected AnnouncementsEntryLocalService announcementsEntryLocalService;
 

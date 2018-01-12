@@ -25,18 +25,11 @@ import java.util.List;
 public abstract class BaseUADEntityAnonymizer implements UADEntityAnonymizer {
 
 	@Override
-	public abstract void autoAnonymize(UADEntity uadEntity)
-		throws PortalException;
-
-	@Override
 	public void autoAnonymizeAll(long userId) throws PortalException {
 		for (UADEntity uadEntity : getUADEntities(userId)) {
 			autoAnonymize(uadEntity);
 		}
 	}
-
-	@Override
-	public abstract void delete(UADEntity uadEntity) throws PortalException;
 
 	@Override
 	public void deleteAll(long userId) throws PortalException {

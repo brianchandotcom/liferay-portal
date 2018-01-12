@@ -12,16 +12,24 @@ class LayoutPageTemplateFragment extends Component {
 	 * @inheritDoc
 	 */
 	created() {
-		this._fetchFragmentContent(this.fragmentEntryId);
+		this._fetchFragmentContent(this.index, this.fragmentEntryId);
 	}
 
 	/**
+	 * After each render, script tags need to be reapended to the DOM
+	 * in order to trigger an execution (content changes do not trigger it).
 	 * @inheritDoc
 	 */
 	rendered() {
-		if (!this._loading) {
-			this.refs.style.innerHTML = this._css;
-			this.refs.script.innerHTML = this._js;
+		if (this.refs.content) {
+			this.refs.content.querySelectorAll('script').forEach((script) => {
+				const parentNode = script.parentNode;
+				const newScript = document.createElement('script');
+
+				newScript.innerHTML = script.innerHTML;
+				parentNode.removeChild(script);
+				parentNode.appendChild(newScript);
+			});
 		}
 	}
 
@@ -30,40 +38,47 @@ class LayoutPageTemplateFragment extends Component {
 	 * @param {object} changes
 	 */
 	willUpdate(changes) {
-		if (changes.fragmentEntryId) {
-			this._fetchFragmentContent(changes.fragmentEntryId.newVal);
+		if (changes.fragmentEntryId || changes.index) {
+			const fragmentId = changes.fragmentEntryId
+				? changes.fragmentEntryId.newVal
+				: this.fragmentEntryId;
+			const fragmentInstanceId = changes.index
+				? changes.index.newVal
+				: this.index;
+
+			this._fetchFragmentContent(fragmentInstanceId, fragmentId);
 		}
 	}
 
 	/**
 	 * Fetches a fragment entry from the given ID, and stores the HTML,
 	 * CSS and JS result into component properties.
+	 * @param {!string} fragmentInstanceId
 	 * @param {!string} fragmentEntryId
 	 * @private
 	 */
-	_fetchFragmentContent(fragmentEntryId) {
+	_fetchFragmentContent(fragmentInstanceId, fragmentEntryId) {
 		const formData = new FormData();
 
 		formData.append(
 			`${this.portletNamespace}fragmentEntryId`,
 			fragmentEntryId
 		);
+		formData.append(
+			`${this.portletNamespace}fragmentInstanceId`,
+			fragmentInstanceId
+		);
 
-		this._css = '';
-		this._html = '';
-		this._js = '';
 		this._loading = true;
 
-		fetch(this.fragmentEntryURL, {
+		fetch(this.renderFragmentEntryURL, {
 			body: formData,
 			credentials: 'include',
 			method: 'POST',
 		})
 			.then(response => response.json())
-			.then(responseContent => {
-				this._css = responseContent.css || '';
-				this._html = responseContent.html || '';
-				this._js = responseContent.js || '';
+			.then(response => {
+				this._content = Soy.toIncDom(response.content);
 				this._loading = false;
 			});
 	}
@@ -96,15 +111,6 @@ LayoutPageTemplateFragment.STATE = {
 	fragmentEntryId: Config.string().required(),
 
 	/**
-	 * URL for getting a fragment entry information.
-	 * @default undefined
-	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
-	 * @type {!string}
-	 */
-	fragmentEntryURL: Config.string().required(),
-
-	/**
 	 * Fragment index
 	 * @default undefined
 	 * @instance
@@ -132,6 +138,15 @@ LayoutPageTemplateFragment.STATE = {
 	portletNamespace: Config.string().required(),
 
 	/**
+	 * URL for getting a fragment render result.
+	 * @default undefined
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @type {!string}
+	 */
+	renderFragmentEntryURL: Config.string().required(),
+
+	/**
 	 * Fragment spritemap
 	 * @default undefined
 	 * @instance
@@ -141,50 +156,24 @@ LayoutPageTemplateFragment.STATE = {
 	spritemap: Config.string().required(),
 
 	/**
+	 * Fragment content to be rendered
+	 * @default function(){}
+	 * @instance
+	 * @memberOf LayoutPageTemplateFragment
+	 * @private
+	 * @type {function}
+	 */
+	_content: Config.func().internal().value(Soy.toIncDom('')),
+
+	/**
 	 * Flag indicating that fragment information is being loaded
 	 * @default false
 	 * @instance
 	 * @memberOf LayoutPageTemplateFragment
 	 * @private
-	 * @type {bool}
+	 * @type {boolean}
 	 */
-	_loading: Config.bool().value(false),
-
-	/**
-	 * Fragment CSS to be rendered
-	 * @default ''
-	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
-	 * @private
-	 * @type {string}
-	 */
-	_css: Config.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * Fragment HTML to be rendered
-	 * @default ''
-	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
-	 * @private
-	 * @type {string}
-	 */
-	_html: Config.string()
-		.internal()
-		.value(''),
-
-	/**
-	 * Fragment JS to be rendered
-	 * @default ''
-	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
-	 * @private
-	 * @type {string}
-	 */
-	_js: Config.string()
-		.internal()
-		.value(''),
+	_loading: Config.bool().value(false)
 };
 
 Soy.register(LayoutPageTemplateFragment, templates);

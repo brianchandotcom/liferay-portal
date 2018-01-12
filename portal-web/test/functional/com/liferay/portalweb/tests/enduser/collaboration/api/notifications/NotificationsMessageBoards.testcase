@@ -137,14 +137,14 @@
 
 		<execute macro="Notifications#gotoNotifications" />
 
-		<execute macro="Notifications#goToFilterValues" >
-			<var name="filterValue" value="Read"/>
+		<execute macro="Notifications#goToFilterValues">
+			<var name="filterValue" value="Read" />
 		</execute>
 
 		<execute macro="Notifications#viewDefaultContent" />
 
-		<execute macro="Notifications#goToFilterValues" >
-			<var name="filterValue" value="Unread"/>
+		<execute macro="Notifications#goToFilterValues">
+			<var name="filterValue" value="Unread" />
 		</execute>
 
 		<execute macro="Notifications#viewNewContent">

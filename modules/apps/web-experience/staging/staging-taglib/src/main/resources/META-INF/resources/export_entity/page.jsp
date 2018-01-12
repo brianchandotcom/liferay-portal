@@ -31,7 +31,7 @@
 	%>
 
 	<liferay-ui:icon
-		message="export-entity"
+		message="export"
 		url="<%= portletURL.toString() %>"
 	/>
 </c:if>

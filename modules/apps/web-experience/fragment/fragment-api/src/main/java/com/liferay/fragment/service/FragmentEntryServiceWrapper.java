@@ -97,6 +97,13 @@ public class FragmentEntryServiceWrapper implements FragmentEntryService,
 
 	@Override
 	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
+		long fragmentCollectionId, int status) {
+		return _fragmentEntryService.getFragmentEntries(fragmentCollectionId,
+			status);
+	}
+
+	@Override
+	public java.util.List<com.liferay.fragment.model.FragmentEntry> getFragmentEntries(
 		long groupId, long fragmentCollectionId, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _fragmentEntryService.getFragmentEntries(groupId,

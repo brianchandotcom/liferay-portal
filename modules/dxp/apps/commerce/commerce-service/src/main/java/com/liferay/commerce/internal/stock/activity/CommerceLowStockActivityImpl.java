@@ -86,7 +86,7 @@ public class CommerceLowStockActivityImpl implements CommerceLowStockActivity {
 
 	@Override
 	public String getLabel(Locale locale) {
-		return LanguageUtil.get(locale, "set-as-unpublish");
+		return LanguageUtil.get(locale, "set-as-unpublished");
 	}
 
 	private void _updateCPInstance(CPInstance cpInstance) {

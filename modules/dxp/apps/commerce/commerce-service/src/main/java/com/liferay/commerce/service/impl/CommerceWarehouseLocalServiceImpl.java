@@ -222,7 +222,7 @@ public class CommerceWarehouseLocalServiceImpl
 		return _addDefaultCommerceWarehouse(
 			CommerceWarehouseConstants.DEFAULT_ID,
 			CommerceWarehouseConstants.DEFAULT_NAME, null, null, null, null,
-			null, 0L, 0L, -1, -1, serviceContext);
+			null, 0, 0, -1, -1, serviceContext);
 	}
 
 	@Override

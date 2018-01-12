@@ -4185,6 +4185,10 @@ public class FragmentEntryPersistenceImpl extends BasePersistenceImpl<FragmentEn
 		fragmentEntryImpl.setHtml(fragmentEntry.getHtml());
 		fragmentEntryImpl.setJs(fragmentEntry.getJs());
 		fragmentEntryImpl.setHtmlPreviewEntryId(fragmentEntry.getHtmlPreviewEntryId());
+		fragmentEntryImpl.setStatus(fragmentEntry.getStatus());
+		fragmentEntryImpl.setStatusByUserId(fragmentEntry.getStatusByUserId());
+		fragmentEntryImpl.setStatusByUserName(fragmentEntry.getStatusByUserName());
+		fragmentEntryImpl.setStatusDate(fragmentEntry.getStatusDate());
 
 		return fragmentEntryImpl;
 	}

@@ -67,11 +67,12 @@ import java.rmi.RemoteException;
 public class FragmentEntryServiceSoap {
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
 		long groupId, long fragmentCollectionId, java.lang.String name,
+		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.addFragmentEntry(groupId,
-					fragmentCollectionId, name, serviceContext);
+					fragmentCollectionId, name, status, serviceContext);
 
 			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
 		}
@@ -85,11 +86,13 @@ public class FragmentEntryServiceSoap {
 	public static com.liferay.fragment.model.FragmentEntrySoap addFragmentEntry(
 		long groupId, long fragmentCollectionId, java.lang.String name,
 		java.lang.String css, java.lang.String html, java.lang.String js,
+		int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.addFragmentEntry(groupId,
-					fragmentCollectionId, name, css, html, js, serviceContext);
+					fragmentCollectionId, name, css, html, js, status,
+					serviceContext);
 
 			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
 		}
@@ -257,12 +260,12 @@ public class FragmentEntryServiceSoap {
 
 	public static com.liferay.fragment.model.FragmentEntrySoap updateFragmentEntry(
 		long fragmentEntryId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js,
+		java.lang.String html, java.lang.String js, int status,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.fragment.model.FragmentEntry returnValue = FragmentEntryServiceUtil.updateFragmentEntry(fragmentEntryId,
-					name, css, html, js, serviceContext);
+					name, css, html, js, status, serviceContext);
 
 			return com.liferay.fragment.model.FragmentEntrySoap.toSoapModel(returnValue);
 		}

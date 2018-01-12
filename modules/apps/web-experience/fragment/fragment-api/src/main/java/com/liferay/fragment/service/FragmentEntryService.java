@@ -57,12 +57,12 @@ public interface FragmentEntryService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link FragmentEntryServiceUtil} to access the fragment entry remote service. Add custom service methods to {@link com.liferay.fragment.service.impl.FragmentEntryServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public FragmentEntry addFragmentEntry(long groupId,
-		long fragmentCollectionId, java.lang.String name,
+		long fragmentCollectionId, java.lang.String name, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public FragmentEntry addFragmentEntry(long groupId,
 		long fragmentCollectionId, java.lang.String name, java.lang.String css,
-		java.lang.String html, java.lang.String js,
+		java.lang.String html, java.lang.String js, int status,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteFragmentEntries(long[] fragmentEntriesIds)
@@ -115,6 +115,6 @@ public interface FragmentEntryService extends BaseService {
 
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId,
 		java.lang.String name, java.lang.String css, java.lang.String html,
-		java.lang.String js, ServiceContext serviceContext)
+		java.lang.String js, int status, ServiceContext serviceContext)
 		throws PortalException;
 }

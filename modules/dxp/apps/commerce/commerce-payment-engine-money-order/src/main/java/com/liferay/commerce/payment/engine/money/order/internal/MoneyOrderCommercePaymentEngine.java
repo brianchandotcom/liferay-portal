@@ -52,10 +52,13 @@ import org.osgi.service.component.annotations.Reference;
  * @author Andrea Di Giorgi
  */
 @Component(
-	immediate = true, property = "commerce.payment.engine.key=money-order",
+	immediate = true,
+	property = "commerce.payment.engine.key=" + MoneyOrderCommercePaymentEngine.KEY,
 	service = CommercePaymentEngine.class
 )
 public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
+
+	public static final String KEY = "money-order";
 
 	@Override
 	public CommercePaymentEngineResult cancelPayment(
@@ -84,7 +87,7 @@ public class MoneyOrderCommercePaymentEngine implements CommercePaymentEngine {
 	public String getName(Locale locale) {
 		ResourceBundle resourceBundle = _getResourceBundle(locale);
 
-		return LanguageUtil.get(resourceBundle, "money-order");
+		return LanguageUtil.get(resourceBundle, KEY);
 	}
 
 	@Override

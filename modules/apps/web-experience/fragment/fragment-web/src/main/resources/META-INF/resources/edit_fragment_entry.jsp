@@ -22,7 +22,13 @@ FragmentEntry fragmentEntry = fragmentDisplayContext.getFragmentEntry();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(fragmentDisplayContext.getEditFragmentEntryRedirect());
 
-renderResponse.setTitle(fragmentDisplayContext.getFragmentEntryTitle());
+String title = fragmentDisplayContext.getFragmentEntryTitle();
+
+if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
+	title = fragmentDisplayContext.getFragmentEntryTitle() + " (" + LanguageUtil.get(request, WorkflowConstants.getStatusLabel(fragmentEntry.getStatus())) + ")";
+}
+
+renderResponse.setTitle(title);
 %>
 
 <aui:nav-bar markupView="lexicon">

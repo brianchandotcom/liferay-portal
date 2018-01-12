@@ -180,7 +180,6 @@ entriesSearchContainer.setResults(entriesResults);
 		<liferay-frontend:management-bar-button href='<%= "javascript:" + renderResponse.getNamespace() + "deleteEntries();" %>' icon='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "trash" : "times" %>' label='<%= trashHelper.isTrashEnabled(scopeGroupId) ? "recycle-bin" : "delete" %>' />
 
 		<liferay-staging:export-import-entity-management-bar-button cmd="<%= Constants.EXPORT %>" />
-		<liferay-staging:export-import-entity-management-bar-button cmd="<%= Constants.PUBLISH %>" />
 	</liferay-frontend:management-bar-action-buttons>
 </liferay-frontend:management-bar>
 

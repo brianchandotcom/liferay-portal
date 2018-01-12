@@ -75,6 +75,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder addCommerceOrder(long orderUserId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
@@ -299,6 +300,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateBillingAddress(long commerceOrderId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
@@ -316,17 +318,21 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(CommerceOrder commerceOrder);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
 		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
 		double subtotal, double shippingPrice, double total, int paymentStatus,
 		int status) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePaymentStatus(long commerceOrderId,
 		int paymentStatus, int status) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
 		java.lang.String purchaseOrderNumber) throws PortalException;
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateShippingAddress(long commerceOrderId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,

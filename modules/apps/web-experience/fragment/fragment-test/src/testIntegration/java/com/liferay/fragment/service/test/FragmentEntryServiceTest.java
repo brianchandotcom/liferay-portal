@@ -199,7 +199,7 @@ public class FragmentEntryServiceTest {
 				serviceContext);
 
 		List<FragmentEntry> originalFragmentEntries =
-			FragmentEntryServiceUtil.fetchFragmentEntries(
+			FragmentEntryServiceUtil.getFragmentEntries(
 				fragmentCollection.getFragmentCollectionId());
 
 		FragmentEntryServiceUtil.addFragmentEntry(
@@ -213,7 +213,7 @@ public class FragmentEntryServiceTest {
 			serviceContext);
 
 		List<FragmentEntry> actualFragmentEntries =
-			FragmentEntryServiceUtil.fetchFragmentEntries(
+			FragmentEntryServiceUtil.getFragmentEntries(
 				fragmentCollection.getFragmentCollectionId());
 
 		Assert.assertEquals(

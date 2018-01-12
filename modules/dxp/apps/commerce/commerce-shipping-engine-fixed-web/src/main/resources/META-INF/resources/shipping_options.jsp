@@ -146,9 +146,9 @@ boolean hasManageCommerceShippingMethodsPermission = CommercePermission.contains
 					dialog: {
 						centered: true,
 						destroyOnClose: true,
-						height: 500,
+						height: 600,
 						modal: true,
-						width: 500
+						width: 600
 					},
 					dialogIframe: {
 						bodyCssClass: 'dialog-with-footer'

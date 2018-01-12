@@ -44,7 +44,7 @@ public class FragmentEntryLocalServiceImpl
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
-			ServiceContext serviceContext)
+			int status, ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -67,6 +67,10 @@ public class FragmentEntryLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		fragmentEntry.setFragmentCollectionId(fragmentCollectionId);
 		fragmentEntry.setName(name);
+		fragmentEntry.setStatus(status);
+		fragmentEntry.setStatusByUserId(userId);
+		fragmentEntry.setStatusByUserName(user.getFullName());
+		fragmentEntry.setStatusDate(new Date());
 
 		fragmentEntryPersistence.update(fragmentEntry);
 
@@ -80,7 +84,8 @@ public class FragmentEntryLocalServiceImpl
 	@Override
 	public FragmentEntry addFragmentEntry(
 			long userId, long groupId, long fragmentCollectionId, String name,
-			String css, String html, String js, ServiceContext serviceContext)
+			String css, String html, String js, int status,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Fragment entry
@@ -107,6 +112,10 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setCss(css);
 		fragmentEntry.setHtml(html);
 		fragmentEntry.setJs(js);
+		fragmentEntry.setStatus(status);
+		fragmentEntry.setStatusByUserId(userId);
+		fragmentEntry.setStatusByUserName(user.getFullName());
+		fragmentEntry.setStatusDate(new Date());
 
 		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
 			fragmentEntry, serviceContext);
@@ -216,6 +225,44 @@ public class FragmentEntryLocalServiceImpl
 	}
 
 	@Override
+	public FragmentEntry updateFragmentEntry(
+			long userId, long fragmentEntryId, String name, String css,
+			String html, String js, int status, ServiceContext serviceContext)
+		throws PortalException {
+
+		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
+			fragmentEntryId);
+
+		validate(
+			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
+			fragmentEntryId, name);
+
+		validateContent(html);
+
+		User user = userLocalService.getUser(userId);
+
+		fragmentEntry.setModifiedDate(new Date());
+		fragmentEntry.setName(name);
+		fragmentEntry.setCss(css);
+		fragmentEntry.setHtml(html);
+		fragmentEntry.setJs(js);
+		fragmentEntry.setStatus(status);
+		fragmentEntry.setStatusByUserId(userId);
+		fragmentEntry.setStatusByUserName(user.getFullName());
+		fragmentEntry.setStatusDate(new Date());
+
+		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
+			fragmentEntry, serviceContext);
+
+		fragmentEntry.setHtmlPreviewEntryId(
+			htmlPreviewEntry.getHtmlPreviewEntryId());
+
+		fragmentEntryPersistence.update(fragmentEntry);
+
+		return fragmentEntry;
+	}
+
+	@Override
 	public FragmentEntry updateFragmentEntry(long fragmentEntryId, String name)
 		throws PortalException {
 
@@ -233,38 +280,6 @@ public class FragmentEntryLocalServiceImpl
 		fragmentEntry.setName(name);
 
 		return fragmentEntryPersistence.update(fragmentEntry);
-	}
-
-	@Override
-	public FragmentEntry updateFragmentEntry(
-			long fragmentEntryId, String name, String css, String html,
-			String js, ServiceContext serviceContext)
-		throws PortalException {
-
-		FragmentEntry fragmentEntry = fragmentEntryPersistence.findByPrimaryKey(
-			fragmentEntryId);
-
-		validate(
-			fragmentEntry.getGroupId(), fragmentEntry.getFragmentCollectionId(),
-			fragmentEntryId, name);
-
-		validateContent(html);
-
-		fragmentEntry.setModifiedDate(new Date());
-		fragmentEntry.setName(name);
-		fragmentEntry.setCss(css);
-		fragmentEntry.setHtml(html);
-		fragmentEntry.setJs(js);
-
-		HtmlPreviewEntry htmlPreviewEntry = _updateHtmlPreviewEntry(
-			fragmentEntry, serviceContext);
-
-		fragmentEntry.setHtmlPreviewEntryId(
-			htmlPreviewEntry.getHtmlPreviewEntryId());
-
-		fragmentEntryPersistence.update(fragmentEntry);
-
-		return fragmentEntry;
 	}
 
 	protected void validate(

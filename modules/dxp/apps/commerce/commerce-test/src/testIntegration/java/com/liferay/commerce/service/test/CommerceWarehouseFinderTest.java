@@ -74,8 +74,6 @@ public class CommerceWarehouseFinderTest {
 	public void testFindByCPInstance() {
 		_testFindByCPInstance(
 			_cpInstances[0], "Commerce Warehouse 1", "Commerce Warehouse 4");
-		_testFindByCPInstance(_cpInstances[0], "Commerce Warehouse 4");
-		_testFindByCPInstance(_cpInstances[2], "Commerce Warehouse 3");
 	}
 
 	private CommerceWarehouse _addCommerceWarehouse(

@@ -1,0 +1,23 @@
+<definition>
+	<command name="gotoPassword">
+		<execute macro="UserNavigator#gotoPreferences" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Password" />
+		</execute>
+	</command>
+
+	<command name="gotoPreferences">
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Preferences" />
+		</execute>
+	</command>
+
+	<command name="gotoUser">
+		<var name="key_userScreenName" value="${userScreenName}" />
+
+		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+
+		<execute function="Pause" locator1="1000" />
+	</command>
+</definition>

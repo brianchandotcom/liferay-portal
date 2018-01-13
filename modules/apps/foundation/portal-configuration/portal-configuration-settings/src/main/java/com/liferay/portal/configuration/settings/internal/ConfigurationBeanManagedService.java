@@ -147,8 +147,9 @@ public class ConfigurationBeanManagedService implements ManagedService {
 	private final BundleContext _bundleContext;
 	private final Class<?> _configurationBeanClass;
 	private final Consumer<Object> _configurationBeanConsumer;
-	private AtomicMarkableReference<ServiceRegistration<?>> _configurationBeanServiceRegistrationReference =
-		new AtomicMarkableReference<>(null, false);
+	private AtomicMarkableReference<ServiceRegistration<?>>
+		_configurationBeanServiceRegistrationReference =
+			new AtomicMarkableReference<>(null, false);
 	private final String _configurationPid;
 	private ServiceRegistration<ManagedService>
 		_managedServiceServiceRegistration;

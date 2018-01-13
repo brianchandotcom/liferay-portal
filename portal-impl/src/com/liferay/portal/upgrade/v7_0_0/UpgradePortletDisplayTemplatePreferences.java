@@ -18,10 +18,14 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -38,18 +42,35 @@ public class UpgradePortletDisplayTemplatePreferences
 		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
 
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select templateKey from DDMTemplate where groupId = ? and " +
-					"uuid_ = ?")) {
+				"select groupId, templateKey from DDMTemplate where (groupId " +
+					"= ? or groupId = ?) and uuid_ = ?")) {
 
 			ps.setLong(1, displayStyleGroupId);
-			ps.setString(2, uuid);
+			ps.setLong(2, _companyGroupId);
+			ps.setString(3, uuid);
+
+			Map<Long, String> templateKeys = new HashMap<>();
 
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
-					return rs.getString("templateKey");
+					templateKeys.put(
+						rs.getLong("groupId"), rs.getString("templateKey"));
 				}
+			}
 
+			if (templateKeys.isEmpty()) {
 				return null;
+			}
+			else {
+				String templateKeyGroupId = templateKeys.get(
+					displayStyleGroupId);
+
+				if (templateKeyGroupId != null) {
+					return templateKeyGroupId;
+				}
+				else {
+					return templateKeys.get(_companyGroupId);
+				}
 			}
 		}
 	}
@@ -94,6 +115,8 @@ public class UpgradePortletDisplayTemplatePreferences
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
+		_companyGroupId = _getCompanyGroupId(companyId);
+
 		upgradeDisplayStyle(portletPreferences);
 
 		return PortletPreferencesFactoryUtil.toXML(portletPreferences);
@@ -103,5 +126,40 @@ public class UpgradePortletDisplayTemplatePreferences
 
 	protected static final String UPDATE_PORTLET_PREFERENCES_WHERE_CLAUSE =
 		"(preferences like '%" + DISPLAY_STYLE_PREFIX_6_2 + "%')";
+
+	private long _getCompanyGroupId(long companyId) throws Exception {
+		Long companyGroupId = _companyGroupIds.get(companyId);
+
+		if (companyGroupId != null) {
+			return companyGroupId;
+		}
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId from Group_ where classNameId = ? and " +
+					"classPK = ?")) {
+
+			ps.setLong(1, _COMPANY_CLASS_NAME_ID);
+			ps.setLong(2, companyId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					companyGroupId = rs.getLong("groupId");
+				}
+				else {
+					companyGroupId = 0L;
+				}
+
+				_companyGroupIds.put(companyId, companyGroupId);
+
+				return companyGroupId;
+			}
+		}
+	}
+
+	private static final Long _COMPANY_CLASS_NAME_ID =
+		PortalUtil.getClassNameId("com.liferay.portal.kernel.model.Company");
+
+	private long _companyGroupId = 0L;
+	private final Map<Long, Long> _companyGroupIds = new HashMap<>();
 
 }

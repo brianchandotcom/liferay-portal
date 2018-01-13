@@ -14,7 +14,6 @@
 
 package com.liferay.sync.internal.configurator;
 
-import com.liferay.document.library.sync.service.DLSyncEventLocalService;
 import com.liferay.portal.instance.lifecycle.BasePortalInstanceLifecycleListener;
 import com.liferay.portal.instance.lifecycle.PortalInstanceLifecycleListener;
 import com.liferay.portal.kernel.log.Log;
@@ -23,9 +22,7 @@ import com.liferay.portal.kernel.messaging.Destination;
 import com.liferay.portal.kernel.messaging.DestinationConfiguration;
 import com.liferay.portal.kernel.messaging.DestinationFactory;
 import com.liferay.portal.kernel.messaging.DestinationNames;
-import com.liferay.portal.kernel.messaging.sender.SingleDestinationMessageSenderFactory;
 import com.liferay.portal.kernel.model.Company;
-import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.sync.internal.messaging.SyncMaintenanceMessageListener;
@@ -129,37 +126,16 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 			Destination.class, destination, destinationProperties);
 	}
 
-	@Reference(unbind = "-")
-	protected void setCompanyLocalService(
-		CompanyLocalService companyLocalService) {
-
-		_companyLocalService = companyLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setDLSyncEventLocalService(
-		DLSyncEventLocalService dlSyncEventLocalService) {
-
-		_dlSyncEventLocalService = dlSyncEventLocalService;
-	}
-
 	private static final Log _log = LogFactoryUtil.getLog(
 		SyncConfigurator.class);
 
 	private volatile BundleContext _bundleContext;
-	private CompanyLocalService _companyLocalService;
 
 	@Reference
 	private DestinationFactory _destinationFactory;
 
-	private DLSyncEventLocalService _dlSyncEventLocalService;
 	private ServiceRegistration<Destination>
 		_dlSyncEventProcessorServiceRegistration;
-
-	@Reference
-	private SingleDestinationMessageSenderFactory
-		_singleDestinationMessageSenderFactory;
-
 	private ServiceRegistration<Destination>
 		_syncMaintenanceProcessorServiceRegistration;
 

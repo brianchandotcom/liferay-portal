@@ -1,0 +1,24 @@
+<html>
+<head>
+<title>NavNested</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">NavNested</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>ACTIVE_NAV_NESTED_LINK</td>
+	<td>//ul[contains(@class,'nav-nested')]//li[contains(@class,'active')]//*[normalize-space()='${key_navNested}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>NAV_NESTED_LINK</td>
+	<td>//ul[contains(@class,'nav-nested')]//li//*[normalize-space()='${key_navNested}']</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

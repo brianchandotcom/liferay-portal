@@ -69,7 +69,7 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 
 		try {
 			if (SyncServiceConfigurationValues.SYNC_VERIFY) {
-				VerifyUtil.verify();
+				_verifyUtil.doVerify();
 			}
 		}
 		catch (Exception e) {
@@ -141,5 +141,8 @@ public class SyncConfigurator extends BasePortalInstanceLifecycleListener {
 
 	@Reference
 	private SyncUtil _syncUtil;
+
+	@Reference
+	private VerifyUtil _verifyUtil;
 
 }

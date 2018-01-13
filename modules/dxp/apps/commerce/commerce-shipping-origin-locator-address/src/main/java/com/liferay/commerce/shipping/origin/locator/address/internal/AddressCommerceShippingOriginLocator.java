@@ -26,6 +26,7 @@ import com.liferay.commerce.shipping.origin.locator.address.internal.configurati
 import com.liferay.commerce.shipping.origin.locator.address.internal.constants.AddressCommerceShippingOriginLocatorConstants;
 import com.liferay.commerce.util.SuffixParameterMapSettingsLocator;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -165,8 +166,10 @@ public class AddressCommerceShippingOriginLocator
 		modifiableSettings.store();
 	}
 
-	private CommerceWarehouse _getDefaultCommerceWarehouse() {
-		return _commerceWarehouseLocalService.fetchCommerceWarehouse(
+	private CommerceWarehouse _getDefaultCommerceWarehouse()
+		throws PortalException {
+
+		return _commerceWarehouseLocalService.getCommerceWarehouse(
 			CommerceWarehouseConstants.DEFAULT_ID);
 	}
 

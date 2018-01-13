@@ -990,9 +990,7 @@
 	</command>
 
 	<command name="changePasswordCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password" />
-		</execute>
+		<execute macro="UserNavigator#gotoPassword" />
 
 		<if>
 			<equals arg1="${userPassword}" arg2="Invalid" />
@@ -1265,15 +1263,9 @@
 	</command>
 
 	<command name="editPasswordCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="Pause" locator1="3000" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<if>
 			<not>
@@ -1284,9 +1276,7 @@
 			</then>
 		</if>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password" />
-		</execute>
+		<execute macro="UserNavigator#gotoPassword" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
@@ -1317,11 +1307,9 @@
 	</command>
 
 	<command name="editPasswordInvalidCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
 		<if>
 			<not>
@@ -1332,9 +1320,7 @@
 			</then>
 		</if>
 
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password" />
-		</execute>
+		<execute macro="UserNavigator#gotoPassword" />
 
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_NEW_PASSWORD_FIELD" value1="${newPassword}" />
 		<execute function="Type" locator1="UsersAndOrganizationsEditUser#PASSWORD_ENTER_AGAIN_FIELD" value1="${newPassword}" />
@@ -1381,9 +1367,7 @@
 	</command>
 
 	<command name="editPasswordViaMyAccount">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Password" />
-		</execute>
+		<execute macro="UserNavigator#gotoPassword" />
 
 		<execute function="Type" locator1="TextInput#CURRENT_PASSWORD" value1="${currentPassword}" />
 		<execute function="Type" locator1="TextInput#NEW_PASSWORD" value1="${newPassword}" />

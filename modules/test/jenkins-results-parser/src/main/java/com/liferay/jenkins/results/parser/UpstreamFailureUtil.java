@@ -193,7 +193,6 @@ public class UpstreamFailureUtil {
 			return;
 		}
 
-		String fileContent = null;
 		String jobName = topLevelBuild.getJobName();
 
 		try {
@@ -207,10 +206,10 @@ public class UpstreamFailureUtil {
 				File upstreamJobFailuresJSONFile = new File(
 					jenkinsDir, "upstream-failures.json");
 
-				fileContent = JenkinsResultsParserUtil.read(
-					upstreamJobFailuresJSONFile);
+				if (upstreamJobFailuresJSONFile.exists()) {
+					String fileContent = JenkinsResultsParserUtil.read(
+						upstreamJobFailuresJSONFile);
 
-				if (fileContent != null) {
 					_upstreamFailuresJobJSONObject = new JSONObject(
 						fileContent);
 

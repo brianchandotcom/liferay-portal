@@ -39,10 +39,21 @@ public class DictionaryReader {
 	public DictionaryReader(InputStream inputStream, String encoding)
 		throws UnsupportedEncodingException {
 
-		_encoding = encoding;
+		_utf8 = StringPool.UTF8.equals(encoding);
 
 		_bufferedReader = new BufferedReader(
 			new InputStreamReader(inputStream, encoding));
+	}
+
+	public void accept(DictionaryVisitor dictionaryVisitor) {
+		Iterator<DictionaryEntry> iterator = new DictionaryIterator();
+
+		iterator.forEachRemaining(
+			dictionaryEntry -> {
+				if (!Validator.isBlank(dictionaryEntry.getWord())) {
+					dictionaryVisitor.visitDictionaryEntry(dictionaryEntry);
+				}
+			});
 	}
 
 	public Iterator<DictionaryEntry> getDictionaryEntriesIterator() {
@@ -52,7 +63,7 @@ public class DictionaryReader {
 	private static final int _UNICODE_BYTE_ORDER_MARK = 65279;
 
 	private final BufferedReader _bufferedReader;
-	private final String _encoding;
+	private final boolean _utf8;
 
 	private class DictionaryIterator implements Iterator<DictionaryEntry> {
 
@@ -69,7 +80,7 @@ public class DictionaryReader {
 				}
 			}
 
-			if (Validator.isNotNull(_line)) {
+			if (_line != null) {
 				return true;
 			}
 
@@ -84,7 +95,7 @@ public class DictionaryReader {
 
 			_calledHasNext = false;
 
-			if (StringPool.UTF8.equals(_encoding) &&
+			if (_utf8 && !_line.isEmpty() &&
 				(_line.charAt(0) == _UNICODE_BYTE_ORDER_MARK)) {
 
 				_line = _line.substring(1);

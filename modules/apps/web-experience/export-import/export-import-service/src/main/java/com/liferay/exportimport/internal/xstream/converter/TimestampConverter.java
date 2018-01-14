@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.xstream;
+package com.liferay.exportimport.internal.xstream.converter;
 
 import com.liferay.exportimport.kernel.xstream.BaseXStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamHierarchicalStreamReader;

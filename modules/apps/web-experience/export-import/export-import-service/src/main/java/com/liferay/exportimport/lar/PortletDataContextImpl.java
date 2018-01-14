@@ -39,7 +39,7 @@ import com.liferay.exportimport.kernel.xstream.XStreamAlias;
 import com.liferay.exportimport.kernel.xstream.XStreamConverter;
 import com.liferay.exportimport.kernel.xstream.XStreamType;
 import com.liferay.exportimport.xstream.ConverterAdapter;
-import com.liferay.exportimport.xstream.TimestampConverter;
+import com.liferay.exportimport.internal.xstream.converter.TimestampConverter;
 import com.liferay.exportimport.xstream.XStreamStagedModelTypeHierarchyPermission;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;

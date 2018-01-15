@@ -1,6 +1,8 @@
 Bundle-Name: Liferay Blogs Item Selector API
 Bundle-SymbolicName: com.liferay.blogs.item.selector.api
-Bundle-Version: 1.0.5
-Export-Package: com.liferay.blogs.item.selector.criterion
+Bundle-Version: 1.1.0
+Export-Package:\
+	com.liferay.blogs.item.selector.constants,\
+	com.liferay.blogs.item.selector.criterion
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs

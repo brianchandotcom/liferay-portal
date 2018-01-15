@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.blogs.item.selector.web.constants;
+package com.liferay.blogs.recent.bloggers.constants;
 
 /**
  * @author Sergio González
  */
-public class BlogsItemSelectorViewConstants {
+public class RecentBloggersPortletKeys {
 
-	public static final String ITEM_SELECTOR_VIEW_KEY = "blogs-attachments";
+	public static final String RECENT_BLOGGERS =
+		"com_liferay_blogs_recent_bloggers_web_portlet_RecentBloggersPortlet";
 
 }

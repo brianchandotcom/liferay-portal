@@ -155,9 +155,9 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" type="submit" />
+		<aui:button name="saveButton" type="submit" />
 
-		<aui:button cssClass="btn-lg" type="cancel" />
+		<aui:button type="cancel" />
 	</aui:button-row>
 </div>
 

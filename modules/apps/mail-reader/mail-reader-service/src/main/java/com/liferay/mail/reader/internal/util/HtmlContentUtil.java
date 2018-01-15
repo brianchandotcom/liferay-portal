@@ -16,6 +16,7 @@ package com.liferay.mail.reader.internal.util;
 
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -29,25 +30,45 @@ public class HtmlContentUtil {
 
 		// Lines
 
-		html = _bodyTagPattern.matcher(html).replaceAll(StringPool.BLANK);
-		html = _doctypeTagPattern.matcher(html).replaceAll(StringPool.BLANK);
-		html = _htmlTagPattern.matcher(html).replaceAll(StringPool.BLANK);
-		html = _linkTagPattern.matcher(html).replaceAll(StringPool.BLANK);
+		Matcher matcher = _bodyTagPattern.matcher(html);
+
+		html = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _doctypeTagPattern.matcher(html);
+
+		html = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _htmlTagPattern.matcher(html);
+
+		html = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _linkTagPattern.matcher(html);
+
+		html = matcher.replaceAll(StringPool.BLANK);
 
 		// Blocks
 
-		html = _headTagPattern.matcher(html).replaceAll(StringPool.BLANK);
-		html = _scriptTagPattern.matcher(html).replaceAll(StringPool.BLANK);
-		html = _styleTagPattern.matcher(html).replaceAll(StringPool.BLANK);
+		matcher = _headTagPattern.matcher(html);
 
-		return html;
+		html = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _scriptTagPattern.matcher(html);
+
+		html = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _styleTagPattern.matcher(html);
+
+		return matcher.replaceAll(StringPool.BLANK);
 	}
 
 	public static String getPlainText(String html) {
-		html = _lineBreakPattern.matcher(html).replaceAll(StringPool.BLANK);
-		html = _tagPattern.matcher(html).replaceAll(StringPool.BLANK);
+		Matcher matcher = _lineBreakPattern.matcher(html);
 
-		return html;
+		html = matcher.replaceAll(StringPool.BLANK);
+
+		matcher = _tagPattern.matcher(html);
+
+		return matcher.replaceAll(StringPool.BLANK);
 	}
 
 	private static final Pattern _bodyTagPattern = Pattern.compile(

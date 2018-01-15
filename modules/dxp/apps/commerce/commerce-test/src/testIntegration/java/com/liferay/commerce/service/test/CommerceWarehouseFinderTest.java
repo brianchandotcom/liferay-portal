@@ -73,7 +73,8 @@ public class CommerceWarehouseFinderTest {
 	@Test
 	public void testFindByCPInstance() {
 		_testFindByCPInstance(
-			_cpInstances[0], "Commerce Warehouse 1", "Commerce Warehouse 4");
+			_cpInstances[0], "Commerce Warehouse 1", "Commerce Warehouse 2",
+			"Commerce Warehouse 4");
 	}
 
 	private CommerceWarehouse _addCommerceWarehouse(

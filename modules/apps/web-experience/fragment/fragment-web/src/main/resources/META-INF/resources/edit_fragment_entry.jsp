@@ -66,7 +66,7 @@ renderResponse.setTitle(title);
 	<aui:input name="cssContent" type="hidden" value="" />
 	<aui:input name="htmlContent" type="hidden" value="" />
 	<aui:input name="jsContent" type="hidden" value="" />
-	<aui:input name="status" type="hidden" value="<%= WorkflowConstants.STATUS_DRAFT %>" />
+	<aui:input name="status" type="hidden" value="<%= fragmentEntry.getStatus() %>" />
 
 	<aui:model-context bean="<%= fragmentEntry %>" model="<%= FragmentEntry.class %>" />
 
@@ -75,7 +75,9 @@ renderResponse.setTitle(title);
 	<div id="<portlet:namespace />fragmentEditor"></div>
 
 	<aui:button-row cssClass="fragment-submit-buttons">
-		<aui:button cssClass="btn btn-lg" primary="<%= false %>" type="submit" value="save-as-draft" />
+		<c:if test="<%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>">
+			<aui:button cssClass="btn btn-lg" primary="<%= false %>" type="submit" value="save-as-draft" />
+		</c:if>
 
 		<aui:button cssClass="btn btn-lg" name="publishButton" type="submit" value="publish" />
 	</aui:button-row>

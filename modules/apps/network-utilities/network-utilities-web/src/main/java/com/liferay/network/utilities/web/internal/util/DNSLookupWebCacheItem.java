@@ -39,7 +39,9 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 		try {
 			String results = null;
 
-			char[] array = _domain.trim().toCharArray();
+			String trimmedDomain = _domain.trim();
+
+			char[] array = trimmedDomain.toCharArray();
 
 			for (int i = 0; i < array.length; i++) {
 				if ((array[i] != '.') && !Character.isDigit(array[i])) {

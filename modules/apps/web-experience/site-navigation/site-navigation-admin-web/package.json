@@ -6,6 +6,7 @@
 		"metal-state": "^2.13.2"
 	},
 	"devDependencies": {
+		"check-source-formatting": "^2.0.2",
 		"eslint": "^4.11.0",
 		"eslint-config-liferay": "^2.0.15",
 		"liferay-module-config-generator": "^1.2.1",
@@ -15,7 +16,8 @@
 	"name": "site-navigation-menu-web",
 	"scripts": {
 		"checkFormat": "npm run prettier -- --list-different",
-		"format": "npm run prettier -- --write",
+		"csf": "csf src/**/*.es.js test/**/*.es.js",
+		"format": "npm run csf -- -i",
 		"lint": "eslint src/**/*.es.js",
 		"prettier": "prettier-eslint src/**/*.es.js"
 	},

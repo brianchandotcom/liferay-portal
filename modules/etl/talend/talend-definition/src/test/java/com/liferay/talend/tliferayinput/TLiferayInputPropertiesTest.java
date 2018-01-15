@@ -17,8 +17,6 @@ package com.liferay.talend.tliferayinput;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.notNullValue;
 
-import java.util.Collection;
-
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -69,17 +67,11 @@ public class TLiferayInputPropertiesTest {
 		TLiferayInputProperties properties = new TLiferayInputProperties(
 			"root");
 
-		//properties.schema.init();
-
 		properties.setupLayout();
 
 		Form main = properties.getForm(Form.MAIN);
 
 		assertThat(main, notNullValue());
-
-		Collection<Widget> mainWidgets = main.getWidgets();
-
-		//assertThat(mainWidgets, hasSize(6));
 
 		Widget schemaWidget = main.getWidget("schema");
 

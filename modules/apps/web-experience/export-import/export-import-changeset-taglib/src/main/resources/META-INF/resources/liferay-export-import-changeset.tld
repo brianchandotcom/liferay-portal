@@ -69,6 +69,12 @@
 		</attribute>
 	</tag>
 	<tag>
+		<description>Renders a menu item for the Import Entity screen's UI.</description>
+		<name>import-entity</name>
+		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.ImportEntityTag</tag-class>
+		<body-content>JSP</body-content>
+	</tag>
+	<tag>
 		<description>Renders a menu item for the Publish Entity screen's UI. This menu item is only visible when staging is enabled.</description>
 		<name>publish-entity</name>
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityTag</tag-class>

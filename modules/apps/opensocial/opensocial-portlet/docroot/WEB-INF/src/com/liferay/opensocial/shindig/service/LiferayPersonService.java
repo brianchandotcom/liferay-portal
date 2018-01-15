@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.Phone;
 import com.liferay.portal.kernel.model.User;
@@ -197,8 +198,10 @@ public class LiferayPersonService implements PersonService {
 				user.getCompanyId(), User.class.getName(), user.getUserId());
 
 		for (EmailAddress emailAddress : emailAddresses) {
+			ListType listType = emailAddress.getType();
+
 			email = new ListFieldImpl(
-				emailAddress.getType().getName(), emailAddress.getAddress());
+				listType.getName(), emailAddress.getAddress());
 
 			emails.add(email);
 		}
@@ -248,8 +251,10 @@ public class LiferayPersonService implements PersonService {
 			className, classPK);
 
 		for (Phone liferayPhone : liferayPhones) {
+			ListType listType = liferayPhone.getType();
+
 			ListField phoneNumber = new ListFieldImpl(
-				liferayPhone.getType().getName(), liferayPhone.getNumber());
+				listType.getName(), liferayPhone.getNumber());
 
 			phoneNumbers.add(phoneNumber);
 		}
@@ -345,11 +350,15 @@ public class LiferayPersonService implements PersonService {
 				Long.valueOf(timeZone.getOffset(System.currentTimeMillis())));
 		}
 
-		if (securityToken.getOwnerId().equals(person.getId())) {
+		String ownerId = securityToken.getOwnerId();
+
+		if (ownerId.equals(person.getId())) {
 			person.setIsOwner(true);
 		}
 
-		if (securityToken.getViewerId().equals(person.getId())) {
+		String viewerId = securityToken.getViewerId();
+
+		if (viewerId.equals(person.getId())) {
 			person.setIsViewer(true);
 		}
 

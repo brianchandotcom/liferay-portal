@@ -208,9 +208,9 @@ public class LiferayOAuthStore implements OAuthStore {
 			return _oAuthConsumer;
 		}
 
-		if (oAuthConsumer.getKeyType().equals(
-				OAuthConsumerConstants.KEY_TYPE_RSA_PRIVATE)) {
+		String keyType = oAuthConsumer.getKeyType();
 
+		if (keyType.equals(OAuthConsumerConstants.KEY_TYPE_RSA_PRIVATE)) {
 			if (_oAuthConsumer == null) {
 				throw new GadgetException(
 					GadgetException.Code.INTERNAL_SERVER_ERROR,

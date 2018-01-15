@@ -124,16 +124,17 @@ public class ExportImportEntityMVCActionCommand extends BaseMVCActionCommand {
 			exportingEntities = ParamUtil.getStringValues(
 				actionRequest, "exportingEntities");
 		}
-		else if (Validator.isNotNull(actionRequest.getParameter("className")) &&
+		else if (Validator.isNotNull(
+					actionRequest.getParameter("classNameId")) &&
 				 Validator.isNotNull(actionRequest.getParameter("uuid"))) {
 
-			String className = ParamUtil.getString(actionRequest, "className");
+			long classNameId = ParamUtil.getLong(actionRequest, "classNameId");
 			long groupId = ParamUtil.getLong(actionRequest, "groupId");
 			String uuid = ParamUtil.getString(actionRequest, "uuid");
 
 			StringBundler sb = new StringBundler(5);
 
-			sb.append(className);
+			sb.append(classNameId);
 			sb.append(StringPool.POUND);
 			sb.append(groupId);
 			sb.append(StringPool.POUND);

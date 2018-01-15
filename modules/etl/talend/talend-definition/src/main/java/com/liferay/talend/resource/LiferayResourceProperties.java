@@ -182,6 +182,7 @@ public class LiferayResourceProperties
 
 	public SchemaProperties main = new SchemaProperties("main") {
 
+		@SuppressWarnings("unused")
 		public void afterSchema() {
 			if (schemaListener != null) {
 				schemaListener.afterSchema();

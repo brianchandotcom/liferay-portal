@@ -15,7 +15,7 @@
 package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
-import com.liferay.users.admin.web.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserFormConstants;
 
 import java.io.IOException;
 

@@ -415,7 +415,8 @@ public class WSRPConsumerPortletLocalServiceImpl
 				mimeTypePortletModes.add(portletMode);
 			}
 
-			Map<String, Set<String>> portletPortletModes = portlet.getPortletModes();
+			Map<String, Set<String>> portletPortletModes =
+				portlet.getPortletModes();
 
 			portletPortletModes.put(
 				markupType.getMimeType(), mimeTypePortletModes);
@@ -432,7 +433,8 @@ public class WSRPConsumerPortletLocalServiceImpl
 				mimeTypeWindowStates.add(windowState);
 			}
 
-			Map<String, Set<String>> portletWindowStates = portlet.getWindowStates();
+			Map<String, Set<String>> portletWindowStates =
+				portlet.getWindowStates();
 
 			portletWindowStates.put(
 				markupType.getMimeType(), mimeTypeWindowStates);
@@ -662,11 +664,11 @@ public class WSRPConsumerPortletLocalServiceImpl
 		else if (name.equals("footer-portal-css")) {
 			List<String> footerPortalCss = portlet.getFooterPortalCss();
 
-			footerPortalCss.add(
-				getProxyURL(portlet.getCompanyId(), value));
+			footerPortalCss.add(getProxyURL(portlet.getCompanyId(), value));
 		}
 		else if (name.equals("footer-portal-javascript")) {
-			List<String> footerPortalJavaScript = portlet.getFooterPortalJavaScript();
+			List<String> footerPortalJavaScript =
+				portlet.getFooterPortalJavaScript();
 
 			footerPortalJavaScript.add(
 				getProxyURL(portlet.getCompanyId(), value));
@@ -674,11 +676,11 @@ public class WSRPConsumerPortletLocalServiceImpl
 		else if (name.equals("footer-portlet-css")) {
 			List<String> footerPortletCss = portlet.getFooterPortletCss();
 
-			footerPortletCss.add(
-				getProxyURL(portlet.getCompanyId(), value));
+			footerPortletCss.add(getProxyURL(portlet.getCompanyId(), value));
 		}
 		else if (name.equals("footer-portlet-javascript")) {
-			List<String> footerPortletJavaScript = portlet.getFooterPortletJavaScript();
+			List<String> footerPortletJavaScript =
+				portlet.getFooterPortletJavaScript();
 
 			footerPortletJavaScript.add(
 				getProxyURL(portlet.getCompanyId(), value));
@@ -686,11 +688,11 @@ public class WSRPConsumerPortletLocalServiceImpl
 		else if (name.equals("header-portal-css")) {
 			List<String> headerPortalCss = portlet.getHeaderPortalCss();
 
-			headerPortalCss.add(
-				getProxyURL(portlet.getCompanyId(), value));
+			headerPortalCss.add(getProxyURL(portlet.getCompanyId(), value));
 		}
 		else if (name.equals("header-portal-javascript")) {
-			List<String> headerPortalJavaScript = portlet.getHeaderPortalJavaScript();
+			List<String> headerPortalJavaScript =
+				portlet.getHeaderPortalJavaScript();
 
 			headerPortalJavaScript.add(
 				getProxyURL(portlet.getCompanyId(), value));
@@ -698,11 +700,11 @@ public class WSRPConsumerPortletLocalServiceImpl
 		else if (name.equals("header-portlet-css")) {
 			List<String> headerPortletCss = portlet.getHeaderPortletCss();
 
-			headerPortletCss.add(
-				getProxyURL(portlet.getCompanyId(), value));
+			headerPortletCss.add(getProxyURL(portlet.getCompanyId(), value));
 		}
 		else if (name.equals("header-portlet-javascript")) {
-			List<String> headerPortletJavaScript = portlet.getHeaderPortletJavaScript();
+			List<String> headerPortletJavaScript =
+				portlet.getHeaderPortletJavaScript();
 
 			headerPortletJavaScript.add(
 				getProxyURL(portlet.getCompanyId(), value));

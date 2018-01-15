@@ -40,9 +40,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import oasis.names.tc.wsrp.v2.intf.WSRP_v2_ServiceDescription_PortType;
 import oasis.names.tc.wsrp.v2.types.CookieProtocol;
@@ -154,8 +154,7 @@ public class V2ServiceDescriptionServiceImpl
 
 		HttpSession session = request.getSession();
 
-		ServletContext servletContext =
-				session.getServletContext();
+		ServletContext servletContext = session.getServletContext();
 
 		String title = PortalUtil.getPortletTitle(
 			portlet, servletContext, LocaleUtil.getDefault());

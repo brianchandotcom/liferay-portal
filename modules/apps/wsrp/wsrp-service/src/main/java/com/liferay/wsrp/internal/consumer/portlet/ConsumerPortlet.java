@@ -16,12 +16,12 @@ package com.liferay.wsrp.internal.consumer.portlet;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Region;
-import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.Address;
+import com.liferay.portal.kernel.model.Country;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.Phone;
+import com.liferay.portal.kernel.model.Region;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

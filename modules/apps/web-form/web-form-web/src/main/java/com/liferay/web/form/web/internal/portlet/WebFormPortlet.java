@@ -210,7 +210,7 @@ public class WebFormPortlet extends MVCPortlet {
 		}
 		catch (Exception e) {
 			SessionErrors.add(
-				actionRequest, "validationScriptError", e.getMessage().trim());
+				actionRequest, "validationScriptError", StringUtil.trim(e.getMessage()));
 
 			return;
 		}
@@ -399,7 +399,11 @@ public class WebFormPortlet extends MVCPortlet {
 		}
 
 		String fileName = title + ".csv";
-		byte[] bytes = sb.toString().getBytes();
+
+		String s = sb.toString();
+
+		byte[] bytes = s.getBytes();
+
 		String contentType = ContentTypes.APPLICATION_TEXT;
 
 		PortletResponseUtil.sendFile(

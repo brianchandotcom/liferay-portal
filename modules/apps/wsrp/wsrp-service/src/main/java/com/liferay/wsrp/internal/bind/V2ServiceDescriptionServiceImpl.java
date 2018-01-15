@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.servlet.http.HttpSession;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
@@ -151,8 +152,10 @@ public class V2ServiceDescriptionServiceImpl
 
 		HttpServletRequest request = ServletUtil.getRequest();
 
+		HttpSession session = request.getSession();
+
 		ServletContext servletContext =
-			request.getSession().getServletContext();
+				session.getServletContext();
 
 		String title = PortalUtil.getPortletTitle(
 			portlet, servletContext, LocaleUtil.getDefault());

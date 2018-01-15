@@ -83,11 +83,23 @@ request.setAttribute("cpInstance", cpInstance);
 							<h4 class="sku"><%= cpInstance.getSku() %></h4>
 
 							<div class="price"><%= cpInstance.getPrice() %></div>
+
+							<div class="availability"><%= virtualCPTypeDisplayContext.getAvailabilityLabel() %></div>
+
+							<div class="availabilityRange"><%= virtualCPTypeDisplayContext.getAvailabilityRangeLabel() %></div>
+
+							<div class="stockQuantity"><%= virtualCPTypeDisplayContext.getStockQuantityLabel() %></div>
 						</c:when>
 						<c:otherwise>
 							<h4 class="sku" data-text-cp-instance-sku=""></h4>
 
 							<div class="price" data-text-cp-instance-price="" ></div>
+
+							<div class="availability" data-text-cp-instance-availability="" ></div>
+
+							<div class="availabilityRange" data-text-cp-instance-availability-range="" ></div>
+
+							<div class="stockQuantity" data-text-cp-instance-stock-quantity="" ></div>
 						</c:otherwise>
 					</c:choose>
 

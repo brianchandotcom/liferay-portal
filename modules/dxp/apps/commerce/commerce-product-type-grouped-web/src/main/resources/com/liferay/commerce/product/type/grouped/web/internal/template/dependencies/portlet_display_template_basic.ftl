@@ -42,10 +42,22 @@
 					<h4 class="sku">${cpInstance.getSku()}</h4>
 
 					<div class="price">${cpInstance.getPrice()}</div>
+
+					<div class="availability">${groupedCPTypeDisplayContext.getAvailabilityLabel()}</div>
+
+					<div class="availabilityRange">${groupedCPTypeDisplayContext.getAvailabilityRangeLabel()}</div>
+
+					<div class="stockQuantity">${groupedCPTypeDisplayContext.getStockQuantityLabel()}</div>
 				<#else>
 					<h4 class="sku" data-text-cp-instance-sku=""></h4>
 
 					<div class="price" data-text-cp-instance-price="" ></div>
+
+					<div class="availability" data-text-cp-instance-availability="" ></div>
+
+					<div class="availabilityRange" data-text-cp-instance-availability-range="" ></div>
+
+					<div class="stockQuantity" data-text-cp-instance-stock-quantity="" ></div>
 				</#if>
 
 				<div class="row">

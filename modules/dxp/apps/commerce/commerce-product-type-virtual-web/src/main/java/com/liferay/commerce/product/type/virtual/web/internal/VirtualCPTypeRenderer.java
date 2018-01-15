@@ -22,6 +22,7 @@ import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.virtual.constants.VirtualCPTypeConstants;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.commerce.product.type.virtual.web.internal.display.context.VirtualCPTypeDisplayContext;
+import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -55,9 +56,9 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 		VirtualCPTypeDisplayContext virtualCPTypeDisplayContext =
 			new VirtualCPTypeDisplayContext(
 				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
-				cpDefinition, _cpDefinitionVirtualSettingLocalService,
-				_dlAppService, _cpInstanceHelper,
-				_cpDefinitionSpecificationOptionValueService,
+				_cpContentContributorRegistry, cpDefinition,
+				_cpDefinitionVirtualSettingLocalService, _dlAppService,
+				_cpInstanceHelper, _cpDefinitionSpecificationOptionValueService,
 				httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
@@ -73,6 +74,9 @@ public class VirtualCPTypeRenderer implements CPTypeRenderer {
 
 	@Reference
 	private CPContentConfigurationHelper _cpContentConfigurationHelper;
+
+	@Reference
+	private CPContentContributorRegistry _cpContentContributorRegistry;
 
 	@Reference
 	private CPDefinitionSpecificationOptionValueService

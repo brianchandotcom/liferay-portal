@@ -22,11 +22,11 @@ import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValue
 import com.liferay.commerce.product.type.grouped.model.CPDefinitionGroupedEntry;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
 import com.liferay.commerce.product.type.grouped.util.comparator.CPDefinitionGroupedEntryPriorityComparator;
+import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
@@ -44,17 +44,18 @@ public class GroupedCPTypeDisplayContext extends CPTypeDisplayContext {
 	public GroupedCPTypeDisplayContext(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
+			CPContentContributorRegistry cpContentContributorRegistry,
 			CPDefinition cpDefinition,
 			CPDefinitionGroupedEntryService cpDefinitionGroupedEntryService,
 			CPInstanceHelper cpInstanceHelper,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
 			HttpServletRequest httpServletRequest, Portal portal)
-		throws ConfigurationException {
+		throws Exception {
 
 		super(
 			cpAttachmentFileEntryService, cpContentConfigurationHelper,
-			cpDefinition, cpInstanceHelper,
+			cpContentContributorRegistry, cpDefinition, cpInstanceHelper,
 			cpDefinitionSpecificationOptionValueService, httpServletRequest,
 			portal);
 

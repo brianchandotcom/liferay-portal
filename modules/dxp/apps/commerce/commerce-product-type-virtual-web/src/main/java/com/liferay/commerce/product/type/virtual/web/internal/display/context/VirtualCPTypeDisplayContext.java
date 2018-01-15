@@ -21,11 +21,11 @@ import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
+import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
@@ -41,6 +41,7 @@ public class VirtualCPTypeDisplayContext extends CPTypeDisplayContext {
 	public VirtualCPTypeDisplayContext(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
+			CPContentContributorRegistry cpContentContributorRegistry,
 			CPDefinition cpDefinition,
 			CPDefinitionVirtualSettingLocalService
 				cpDefinitionVirtualSettingLocalService,
@@ -48,11 +49,11 @@ public class VirtualCPTypeDisplayContext extends CPTypeDisplayContext {
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
 			HttpServletRequest httpServletRequest, Portal portal)
-		throws ConfigurationException {
+		throws Exception {
 
 		super(
 			cpAttachmentFileEntryService, cpContentConfigurationHelper,
-			cpDefinition, cpInstanceHelper,
+			cpContentContributorRegistry, cpDefinition, cpInstanceHelper,
 			cpDefinitionSpecificationOptionValueService, httpServletRequest,
 			portal);
 

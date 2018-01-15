@@ -224,8 +224,9 @@ public class UpstreamFailureUtil {
 					"pullrequest", "upstream");
 
 				String url = JenkinsResultsParserUtil.getLocalURL(
-					_UPSTREAM_FAILURES_JOB_BASE_URL + upstreamJobName +
-						"/builds/latest/test.results.json");
+					JenkinsResultsParserUtil.combine(
+						_UPSTREAM_FAILURES_JOB_BASE_URL, upstreamJobName,
+						"/builds/latest/test.results.json"));
 
 				_upstreamFailuresJobJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(url);

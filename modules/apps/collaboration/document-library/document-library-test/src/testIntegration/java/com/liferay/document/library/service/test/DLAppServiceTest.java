@@ -190,7 +190,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			addFileEntry(group.getGroupId(), parentFolder.getFolderId());
 		}
 
-		@Ignore
 		@Test(expected = FileSizeException.class)
 		public void shouldFailIfSizeLimitExceeded() throws Exception {
 			try (ConfigurationTemporarySwapper configurationTemporarySwapper =
@@ -238,7 +237,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				group.getGroupId(), parentFolder.getFolderId(), sourceFileName);
 		}
 
-		@Ignore
 		@Test(expected = FileExtensionException.class)
 		public void shouldFailIfSourceFileNameExtensionNotSupported()
 			throws Exception {
@@ -329,7 +327,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			},
 			level = "ERROR", loggerClass = JDBCExceptionReporter.class
 		)
-		@Ignore
 		@Test
 		public void shouldSucceedWithConcurrentAccess() throws Exception {
 			_users = new User[ServiceTestUtil.THREAD_COUNT];
@@ -373,7 +370,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				_users.length, successCount);
 		}
 
-		@Ignore
 		@Test
 		public void shouldSucceedWithNullBytes() throws Exception {
 			String fileName = RandomTestUtil.randomString();
@@ -1359,7 +1355,6 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			}
 		}
 
-		@Ignore
 		@Test(expected = FileSizeException.class)
 		public void shouldFailIfSizeLimitExceeded() throws Exception {
 			String fileName = RandomTestUtil.randomString();

@@ -544,24 +544,6 @@
 		</execute>
 	</command>
 
-	<command name="AddVocabulary" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Categories" />
-		</execute>
-
-		<execute macro="Vocabulary#addCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-
-		<execute macro="Vocabulary#viewCP">
-			<var name="vocabularyName" value="Vocabulary Name" />
-		</execute>
-	</command>
-
 	<command name="AddVocabularyAssetTypeAllAssetTypes" priority="3">
 		<execute macro="Navigator#openURL" />
 

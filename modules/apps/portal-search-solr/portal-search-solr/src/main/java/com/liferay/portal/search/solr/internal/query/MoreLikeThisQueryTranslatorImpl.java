@@ -62,9 +62,9 @@ public class MoreLikeThisQueryTranslatorImpl
 			luceneMoreLikeThisQuery.setBoost(moreLikeThisQuery.getBoost());
 		}
 
-		if (!moreLikeThisQuery.getStopWords().isEmpty()) {
-			Set<String> stopWords = moreLikeThisQuery.getStopWords();
+		Set<String> stopWords = moreLikeThisQuery.getStopWords();
 
+		if (!stopWords.isEmpty()) {
 			luceneMoreLikeThisQuery.setStopWords(stopWords);
 		}
 

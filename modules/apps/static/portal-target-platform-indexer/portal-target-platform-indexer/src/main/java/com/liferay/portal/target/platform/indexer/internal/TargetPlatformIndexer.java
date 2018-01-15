@@ -51,6 +51,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.Version;
 import org.osgi.framework.namespace.BundleNamespace;
 import org.osgi.framework.namespace.HostNamespace;
 import org.osgi.framework.namespace.IdentityNamespace;
@@ -286,9 +287,10 @@ public class TargetPlatformIndexer implements Indexer {
 
 			attributes.putValue(
 				Constants.BUNDLE_SYMBOLICNAME, _systemBundle.getSymbolicName());
-			attributes.putValue(
-				Constants.BUNDLE_VERSION,
-				_systemBundle.getVersion().toString());
+
+			Version version = _systemBundle.getVersion();
+
+			attributes.putValue(Constants.BUNDLE_VERSION, version.toString());
 
 			String exportPackage = _packagesParamters.toString();
 

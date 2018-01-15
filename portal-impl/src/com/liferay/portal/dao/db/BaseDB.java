@@ -668,9 +668,7 @@ public abstract class BaseDB implements DB {
 		String template = readFile(
 			StringBundler.concat(sqlDir, "/", fileName, ".sql"));
 
-		if (fileName.equals("portal") ||
-			fileName.equals("update-5.0.1-5.1.0")) {
-
+		if (fileName.equals("portal")) {
 			StringBundler sb = new StringBundler();
 
 			try (UnsyncBufferedReader unsyncBufferedReader =

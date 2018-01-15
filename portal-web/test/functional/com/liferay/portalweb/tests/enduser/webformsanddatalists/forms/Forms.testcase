@@ -258,10 +258,10 @@
 			<var name="roleTitle" value="Forms Site Role Name" />
 		</execute>
 
-		<for list="ADD_RECORD_SET,PERMISSIONS,ADD_TEMPLATE,ADD_STRUCTURE" param="resourceActionIndex">
+		<for list="ADD_DATA_PROVIDER_INSTANCE,ADD_FORM_INSTANCE,ADD_STRUCTURE,PERMISSIONS" param="resourceActionIndex">
 			<execute macro="Permissions#definePermissionViaJSONAPI">
 				<var name="resourceAction" value="${resourceActionIndex}" />
-				<var name="resourceName" value="com.liferay.dynamic.data.lists" />
+				<var name="resourceName" value="com.liferay.dynamic.data.mapping" />
 				<var name="roleTitle" value="Forms Site Role Name" />
 				<var name="roleType" value="site" />
 			</execute>
@@ -276,7 +276,7 @@
 
 		<execute macro="Permissions#definePermissionViaJSONAPI">
 			<var name="resourceAction" value="ACCESS_IN_CONTROL_PANEL" />
-			<var name="resourceName" value="com_liferay_dynamic_data_lists_form_web_portlet_DDLFormAdminPortlet" />
+			<var name="resourceName" value="com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet" />
 			<var name="roleTitle" value="Forms Site Role Name" />
 			<var name="roleType" value="site" />
 		</execute>

@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateManager;
 import com.liferay.portal.kernel.upgrade.BaseUpgradePortletPreferences;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -39,39 +40,14 @@ public class UpgradePortletDisplayTemplatePreferences
 			long displayStyleGroupId, String displayStyle)
 		throws Exception {
 
-		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
+		ObjectValuePair<Long, String> objectValuePair = _getTemplateGroupAndKey(
+			displayStyleGroupId, displayStyle);
 
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, templateKey from DDMTemplate where (groupId " +
-					"= ? or groupId = ?) and uuid_ = ?")) {
-
-			ps.setLong(1, displayStyleGroupId);
-			ps.setLong(2, _companyGroupId);
-			ps.setString(3, uuid);
-
-			Map<Long, String> templateKeys = new HashMap<>();
-
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					templateKeys.put(
-						rs.getLong("groupId"), rs.getString("templateKey"));
-				}
-			}
-
-			if (templateKeys.isEmpty()) {
-				return null;
-			}
-			else {
-				String templateKeyGroupId = templateKeys.get(
-					displayStyleGroupId);
-
-				if (templateKeyGroupId != null) {
-					return templateKeyGroupId;
-				}
-				else {
-					return templateKeys.get(_companyGroupId);
-				}
-			}
+		if (objectValuePair == null) {
+			return null;
+		}
+		else {
+			return objectValuePair.getValue();
 		}
 	}
 
@@ -95,13 +71,17 @@ public class UpgradePortletDisplayTemplatePreferences
 		long displayStyleGroupId = GetterUtil.getLong(
 			portletPreferences.getValue("displayStyleGroupId", null));
 
-		String templateKey = getTemplateKey(displayStyleGroupId, displayStyle);
+		ObjectValuePair<Long, String> objectValuePair = _getTemplateGroupAndKey(
+			displayStyleGroupId, displayStyle);
 
-		if (templateKey != null) {
+		if (objectValuePair != null) {
+			portletPreferences.setValue(
+				"displayStyleGroupId", objectValuePair.getKey().toString());
+
 			portletPreferences.setValue(
 				"displayStyle",
 				PortletDisplayTemplateManager.DISPLAY_STYLE_PREFIX +
-					templateKey);
+					objectValuePair.getValue());
 		}
 	}
 
@@ -152,6 +132,48 @@ public class UpgradePortletDisplayTemplatePreferences
 				_companyGroupIds.put(companyId, companyGroupId);
 
 				return companyGroupId;
+			}
+		}
+	}
+
+	private ObjectValuePair<Long, String> _getTemplateGroupAndKey(
+			long displayStyleGroupId, String displayStyle)
+		throws Exception {
+
+		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId, templateKey from DDMTemplate where (groupId " +
+					"= ? or groupId = ?) and uuid_ = ?")) {
+
+			ps.setLong(1, displayStyleGroupId);
+			ps.setLong(2, _companyGroupId);
+			ps.setString(3, uuid);
+
+			Map<Long, String> templateKeys = new HashMap<>();
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					templateKeys.put(
+						rs.getLong("groupId"), rs.getString("templateKey"));
+				}
+			}
+
+			if (templateKeys.isEmpty()) {
+				return null;
+			}
+			else {
+				String templateKeyGroupId = templateKeys.get(
+					displayStyleGroupId);
+
+				if (templateKeyGroupId != null) {
+					return new ObjectValuePair<>(
+						displayStyleGroupId, templateKeyGroupId);
+				}
+				else {
+					return new ObjectValuePair<>(
+						_companyGroupId, templateKeys.get(_companyGroupId));
+				}
 			}
 		}
 	}

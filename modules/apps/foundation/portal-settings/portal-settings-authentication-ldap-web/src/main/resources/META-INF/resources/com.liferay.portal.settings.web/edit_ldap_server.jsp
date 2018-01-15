@@ -194,7 +194,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapConnection');";
 				%>
 
-				<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-ldap-connection" />
+				<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-connection" />
 			</aui:button-row>
 		</aui:fieldset>
 
@@ -239,7 +239,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapUsers');";
 				%>
 
-				<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-ldap-users" />
+				<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-users" />
 			</aui:button-row>
 		</aui:fieldset>
 
@@ -264,7 +264,7 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 				String taglibOnClick = renderResponse.getNamespace() + "testSettings('ldapGroups');";
 				%>
 
-				<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="test-ldap-groups" />
+				<aui:button onClick="<%= taglibOnClick %>" value="test-ldap-groups" />
 			</aui:button-row>
 		</aui:fieldset>
 
@@ -282,9 +282,9 @@ renderResponse.setTitle((ldapServerId == 0) ? LanguageUtil.get(resourceBundle, "
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveLdap();" %>' value="save" />
+		<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "saveLdap();" %>' value="save" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

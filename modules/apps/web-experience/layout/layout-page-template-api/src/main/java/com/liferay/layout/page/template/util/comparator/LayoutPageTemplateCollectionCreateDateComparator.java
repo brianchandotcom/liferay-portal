@@ -18,8 +18,6 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.Objects;
-
 /**
  * @author Jürgen Kappler
  */
@@ -27,12 +25,14 @@ public class LayoutPageTemplateCollectionCreateDateComparator
 	extends OrderByComparator<LayoutPageTemplateCollection> {
 
 	public static final String ORDER_BY_ASC =
-		"LayoutPageTemplateCollection.createDate ASC";
+		"LayoutPageTemplateCollection.type DESC, " +
+			"LayoutPageTemplateCollection.createDate ASC";
 
 	public static final String ORDER_BY_DESC =
-		"LayoutPageTemplateCollection.createDate DESC";
+		"LayoutPageTemplateCollection.type DESC, " +
+			"LayoutPageTemplateCollection.createDate DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"type", "createDate"};
+	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 
 	public LayoutPageTemplateCollectionCreateDateComparator() {
 		this(true);
@@ -76,15 +76,6 @@ public class LayoutPageTemplateCollectionCreateDateComparator
 
 	@Override
 	public boolean isAscending() {
-		return _ascending;
-	}
-
-	@Override
-	public boolean isAscending(String field) {
-		if (Objects.equals(field, "type")) {
-			return false;
-		}
-
 		return _ascending;
 	}
 

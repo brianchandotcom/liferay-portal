@@ -21,6 +21,8 @@ import com.liferay.portal.util.test.AtomicState;
 
 import java.util.Map;
 
+import org.apache.struts.action.Action;
+
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -52,8 +54,7 @@ public class StrutsActionRegistryUtilTest {
 
 	@Test
 	public void testGetActions() throws Exception {
-		Map<String, org.apache.struts.action.Action> actions =
-			StrutsActionRegistryUtil.getActions();
+		Map<String, Action> actions = StrutsActionRegistryUtil.getActions();
 
 		ActionAdapter actionAdapter = (ActionAdapter)actions.get(
 			"TestStrutsAction");

@@ -17,6 +17,8 @@ package com.liferay.portal.search.solr.internal.filter;
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 import com.liferay.portal.search.solr.filter.GeoBoundingBoxFilterTranslator;
 
+import org.apache.lucene.search.Query;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,9 +29,7 @@ public class GeoBoundingBoxFilterTranslatorImpl
 	implements GeoBoundingBoxFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		GeoBoundingBoxFilter geoBoundingBoxFilter) {
-
+	public Query translate(GeoBoundingBoxFilter geoBoundingBoxFilter) {
 		throw new UnsupportedOperationException();
 	}
 

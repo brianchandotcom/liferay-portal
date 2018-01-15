@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.util;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
 
 /**
  * @author     Shuyang Zhou
@@ -62,7 +63,7 @@ public class CentralizedThreadLocal<T> extends ThreadLocal<T> {
 	}
 
 	public CentralizedThreadLocal(boolean shortLived) {
-		java.util.function.Function<T, T> copyFunction = null;
+		Function<T, T> copyFunction = null;
 
 		Class<?> clazz = getClass();
 

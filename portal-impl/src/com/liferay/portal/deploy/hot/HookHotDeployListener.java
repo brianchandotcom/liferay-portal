@@ -19,6 +19,7 @@ import com.liferay.document.library.kernel.antivirus.AntivirusScannerUtil;
 import com.liferay.document.library.kernel.antivirus.AntivirusScannerWrapper;
 import com.liferay.document.library.kernel.util.DLProcessor;
 import com.liferay.document.library.kernel.util.DLProcessorRegistryUtil;
+import com.liferay.mail.kernel.util.Hook;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.bean.ClassLoaderBeanHandler;
@@ -1517,14 +1518,11 @@ public class HookHotDeployListener
 			String mailHookClassName = portalProperties.getProperty(
 				PropsKeys.MAIL_HOOK_IMPL);
 
-			com.liferay.mail.kernel.util.Hook mailHook =
-				(com.liferay.mail.kernel.util.Hook)newInstance(
-					portletClassLoader, com.liferay.mail.kernel.util.Hook.class,
-					mailHookClassName);
+			Hook mailHook = (Hook)newInstance(
+				portletClassLoader, Hook.class, mailHookClassName);
 
 			registerService(
-				servletContextName, mailHookClassName,
-				com.liferay.mail.kernel.util.Hook.class, mailHook);
+				servletContextName, mailHookClassName, Hook.class, mailHook);
 		}
 
 		if (portalProperties.containsKey(

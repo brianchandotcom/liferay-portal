@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.test.ci.AutoBalanceTestCase;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner.BridgeRunListener;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -323,8 +324,7 @@ public class PACLAggregateTest extends AutoBalanceTestCase {
 					"portal:" + PropsKeys.MODULE_FRAMEWORK_STATE_DIR,
 					tempStatePath.toString());
 
-				com.liferay.portal.kernel.util.PropsUtil.setProps(
-					new PropsImpl());
+				PropsUtil.setProps(new PropsImpl());
 
 				SystemProperties.set(
 					"log4j.configure.on.startup", StringPool.FALSE);

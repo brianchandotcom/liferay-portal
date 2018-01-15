@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.orm.ObjectNotFoundException;
 import com.liferay.portal.kernel.model.BaseModel;
 
 import org.hibernate.Session;
+import org.hibernate.StaleObjectStateException;
 
 /**
  * @author Brian Wing Shun Chan
@@ -37,7 +38,7 @@ public class ExceptionTranslator {
 	public static ORMException translate(
 		Exception e, Session session, Object object) {
 
-		if (e instanceof org.hibernate.StaleObjectStateException) {
+		if (e instanceof StaleObjectStateException) {
 			BaseModel<?> baseModel = (BaseModel<?>)object;
 
 			Object currentObject = session.get(

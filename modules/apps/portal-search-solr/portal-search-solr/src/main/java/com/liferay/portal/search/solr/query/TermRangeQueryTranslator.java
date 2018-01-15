@@ -16,13 +16,14 @@ package com.liferay.portal.search.solr.query;
 
 import com.liferay.portal.kernel.search.TermRangeQuery;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
 public interface TermRangeQueryTranslator {
 
-	public org.apache.lucene.search.Query translate(
-		TermRangeQuery termRangeQuery);
+	public Query translate(TermRangeQuery termRangeQuery);
 
 }

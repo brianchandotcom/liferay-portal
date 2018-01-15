@@ -14,6 +14,10 @@
 
 package com.liferay.util.xml;
 
+import org.dom4j.DocumentException;
+import org.dom4j.DocumentFactory;
+import org.dom4j.io.DOMWriter;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -31,9 +35,9 @@ public class XMLConverter {
 
 	public static org.w3c.dom.Document toW3CDocument(
 			org.dom4j.Document dom4jDoc)
-		throws org.dom4j.DocumentException {
+		throws DocumentException {
 
-		org.dom4j.io.DOMWriter dom4jWriter = new org.dom4j.io.DOMWriter();
+		DOMWriter dom4jWriter = new DOMWriter();
 
 		org.w3c.dom.Document w3cDoc = dom4jWriter.write(dom4jDoc);
 
@@ -41,10 +45,10 @@ public class XMLConverter {
 	}
 
 	public static org.w3c.dom.Element toW3CElement(org.dom4j.Element dom4jEl)
-		throws org.dom4j.DocumentException {
+		throws DocumentException {
 
 		org.dom4j.Document dom4jDoc =
-			org.dom4j.DocumentFactory.getInstance().createDocument();
+			DocumentFactory.getInstance().createDocument();
 
 		dom4jDoc.setRootElement(dom4jEl.createCopy());
 

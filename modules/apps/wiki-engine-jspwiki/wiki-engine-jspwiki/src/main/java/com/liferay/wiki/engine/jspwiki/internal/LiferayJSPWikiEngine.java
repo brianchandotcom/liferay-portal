@@ -14,7 +14,9 @@
 
 package com.liferay.wiki.engine.jspwiki.internal;
 
+import com.ecyrd.jspwiki.WikiEngine;
 import com.ecyrd.jspwiki.WikiException;
+import com.ecyrd.jspwiki.WikiPage;
 
 import java.util.Collection;
 import java.util.Properties;
@@ -24,7 +26,7 @@ import javax.servlet.ServletContext;
 /**
  * @author Jorge Ferrer
  */
-public class LiferayJSPWikiEngine extends com.ecyrd.jspwiki.WikiEngine {
+public class LiferayJSPWikiEngine extends WikiEngine {
 
 	public LiferayJSPWikiEngine(Properties properties) throws WikiException {
 		super(properties);
@@ -38,9 +40,7 @@ public class LiferayJSPWikiEngine extends com.ecyrd.jspwiki.WikiEngine {
 	}
 
 	@Override
-	public Collection<String> scanWikiLinks(
-		com.ecyrd.jspwiki.WikiPage page, String pageData) {
-
+	public Collection<String> scanWikiLinks(WikiPage page, String pageData) {
 		return super.scanWikiLinks(page, pageData);
 	}
 

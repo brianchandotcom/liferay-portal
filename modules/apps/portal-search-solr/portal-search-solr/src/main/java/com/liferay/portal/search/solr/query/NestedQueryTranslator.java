@@ -17,13 +17,14 @@ package com.liferay.portal.search.solr.query;
 import com.liferay.portal.kernel.search.generic.NestedQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface NestedQueryTranslator {
 
-	public org.apache.lucene.search.Query translate(
-		NestedQuery nestedQuery,
-		QueryVisitor<org.apache.lucene.search.Query> queryVisitor);
+	public Query translate(
+		NestedQuery nestedQuery, QueryVisitor<Query> queryVisitor);
 
 }

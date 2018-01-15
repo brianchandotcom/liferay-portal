@@ -16,11 +16,13 @@ package com.liferay.portal.search.solr.filter;
 
 import com.liferay.portal.kernel.search.filter.ExistsFilter;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface ExistsFilterTranslator {
 
-	public org.apache.lucene.search.Query translate(ExistsFilter existsFilter);
+	public Query translate(ExistsFilter existsFilter);
 
 }

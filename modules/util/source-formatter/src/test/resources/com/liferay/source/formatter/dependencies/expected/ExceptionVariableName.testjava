@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.dependencies;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 
 import java.io.File;
@@ -33,6 +35,20 @@ public class ExceptionVariableName {
 			return new PropertiesConfiguration(fileName);
 		}
 		catch (org.apache.commons.configuration.ConfigurationException ce) {
+		}
+
+		return null;
+	}
+
+	public <T> T getPortletInstanceConfiguration(Class<T> clazz)
+		throws Exception {
+
+		try {
+			return ConfigurationProviderUtil.getPortletInstanceConfiguration(
+				clazz, null, null);
+		}
+		catch (ConfigurationException ce) {
+			throw new SystemException(ce);
 		}
 
 		return null;

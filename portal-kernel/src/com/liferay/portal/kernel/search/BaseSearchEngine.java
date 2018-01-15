@@ -17,6 +17,9 @@ package com.liferay.portal.kernel.search;
 import com.liferay.portal.kernel.search.dummy.DummyIndexSearcher;
 import com.liferay.portal.kernel.search.dummy.DummyIndexWriter;
 import com.liferay.portal.kernel.search.generic.BooleanClauseFactoryImpl;
+import com.liferay.portal.kernel.search.generic.BooleanQueryFactoryImpl;
+import com.liferay.portal.kernel.search.generic.TermQueryFactoryImpl;
+import com.liferay.portal.kernel.search.generic.TermRangeQueryFactoryImpl;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 
 /**
@@ -57,9 +60,7 @@ public class BaseSearchEngine implements SearchEngine {
 	@Override
 	public BooleanQueryFactory getBooleanQueryFactory() {
 		if (_booleanQueryFactory == null) {
-			_booleanQueryFactory =
-				new com.liferay.portal.kernel.search.generic.
-					BooleanQueryFactoryImpl();
+			_booleanQueryFactory = new BooleanQueryFactoryImpl();
 		}
 
 		return _booleanQueryFactory;
@@ -82,9 +83,7 @@ public class BaseSearchEngine implements SearchEngine {
 	@Override
 	public TermQueryFactory getTermQueryFactory() {
 		if (_termQueryFactory == null) {
-			_termQueryFactory =
-				new com.liferay.portal.kernel.search.generic.
-					TermQueryFactoryImpl();
+			_termQueryFactory = new TermQueryFactoryImpl();
 		}
 
 		return _termQueryFactory;
@@ -97,9 +96,7 @@ public class BaseSearchEngine implements SearchEngine {
 	@Override
 	public TermRangeQueryFactory getTermRangeQueryFactory() {
 		if (_termRangeQueryFactory == null) {
-			_termRangeQueryFactory =
-				new com.liferay.portal.kernel.search.generic.
-					TermRangeQueryFactoryImpl();
+			_termRangeQueryFactory = new TermRangeQueryFactoryImpl();
 		}
 
 		return _termRangeQueryFactory;

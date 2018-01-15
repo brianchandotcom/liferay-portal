@@ -21,6 +21,7 @@ import com.liferay.portal.search.solr.query.WildcardQueryTranslator;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.Query;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -32,9 +33,7 @@ import org.osgi.service.component.annotations.Component;
 public class WildcardQueryTranslatorImpl implements WildcardQueryTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		WildcardQuery wildcardQuery) {
-
+	public Query translate(WildcardQuery wildcardQuery) {
 		QueryTerm queryTerm = wildcardQuery.getQueryTerm();
 
 		org.apache.lucene.search.WildcardQuery luceneWildcardQuery =

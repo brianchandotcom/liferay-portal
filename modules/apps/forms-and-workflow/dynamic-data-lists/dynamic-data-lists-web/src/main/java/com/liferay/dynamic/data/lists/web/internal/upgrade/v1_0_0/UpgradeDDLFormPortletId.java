@@ -28,13 +28,13 @@ import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**
  * @author Marcellus Tavares
  */
-public class UpgradeDDLFormPortletId
-	extends com.liferay.portal.kernel.upgrade.BaseUpgradePortletId {
+public class UpgradeDDLFormPortletId extends BaseUpgradePortletId {
 
 	public UpgradeDDLFormPortletId(
 		PortletPreferencesLocalService portletPreferencesLocalService,

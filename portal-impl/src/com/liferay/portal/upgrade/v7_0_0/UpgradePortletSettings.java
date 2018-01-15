@@ -32,6 +32,8 @@ import java.sql.SQLException;
 
 import java.util.Enumeration;
 
+import javax.portlet.PortletPreferences;
+
 /**
  * @author Sergio González
  * @author Iván Zaera
@@ -173,7 +175,7 @@ public abstract class UpgradePortletSettings extends UpgradeProcess {
 				PortletPreferencesRow portletPreferencesRow =
 					_getPortletPreferencesRow(rs);
 
-				javax.portlet.PortletPreferences jxPortletPreferences =
+				PortletPreferences jxPortletPreferences =
 					PortletPreferencesFactoryUtil.fromDefaultXML(
 						portletPreferencesRow.getPreferences());
 

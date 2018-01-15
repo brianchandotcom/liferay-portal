@@ -16,11 +16,13 @@ package com.liferay.portal.search.solr.filter;
 
 import com.liferay.portal.kernel.search.filter.PrefixFilter;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface PrefixFilterTranslator {
 
-	public org.apache.lucene.search.Query translate(PrefixFilter prefixFilter);
+	public Query translate(PrefixFilter prefixFilter);
 
 }

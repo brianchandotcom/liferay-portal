@@ -16,12 +16,13 @@ package com.liferay.portal.search.solr.filter;
 
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface RangeTermFilterTranslator {
 
-	public org.apache.lucene.search.Query translate(
-		RangeTermFilter rangeTermFilter);
+	public Query translate(RangeTermFilter rangeTermFilter);
 
 }

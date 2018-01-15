@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.search.filter.FilterVisitor;
 import com.liferay.portal.search.solr.filter.BooleanFilterTranslator;
 
 import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.Query;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -31,17 +32,15 @@ import org.osgi.service.component.annotations.Component;
 public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		BooleanFilter booleanFilter,
-		FilterVisitor<org.apache.lucene.search.Query> filterVisitor) {
+	public Query translate(
+		BooleanFilter booleanFilter, FilterVisitor<Query> filterVisitor) {
 
 		BooleanQuery booleanQuery = new BooleanQuery();
 
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustBooleanClauses()) {
 
-			org.apache.lucene.search.Query luceneQuery = translate(
-				booleanClause, filterVisitor);
+			Query luceneQuery = translate(booleanClause, filterVisitor);
 
 			booleanQuery.add(
 				luceneQuery, org.apache.lucene.search.BooleanClause.Occur.MUST);
@@ -50,8 +49,7 @@ public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getMustNotBooleanClauses()) {
 
-			org.apache.lucene.search.Query luceneQuery = translate(
-				booleanClause, filterVisitor);
+			Query luceneQuery = translate(booleanClause, filterVisitor);
 
 			booleanQuery.add(
 				luceneQuery,
@@ -61,8 +59,7 @@ public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 		for (BooleanClause<Filter> booleanClause :
 				booleanFilter.getShouldBooleanClauses()) {
 
-			org.apache.lucene.search.Query luceneQuery = translate(
-				booleanClause, filterVisitor);
+			Query luceneQuery = translate(booleanClause, filterVisitor);
 
 			booleanQuery.add(
 				luceneQuery,
@@ -72,9 +69,9 @@ public class BooleanFilterTranslatorImpl implements BooleanFilterTranslator {
 		return booleanQuery;
 	}
 
-	protected org.apache.lucene.search.Query translate(
+	protected Query translate(
 		BooleanClause<Filter> booleanClause,
-		FilterVisitor<org.apache.lucene.search.Query> filterVisitor) {
+		FilterVisitor<Query> filterVisitor) {
 
 		Filter filter = booleanClause.getClause();
 

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.taglib.util.IncludeTag;
 
 import java.io.IOException;
 
@@ -36,7 +37,7 @@ import javax.servlet.jsp.JspWriter;
 /**
  * @author Brian Wing Shun Chan
  */
-public class MetaTagsTag extends com.liferay.taglib.util.IncludeTag {
+public class MetaTagsTag extends IncludeTag {
 
 	public static void doTag(
 			ServletContext servletContext, HttpServletRequest request,

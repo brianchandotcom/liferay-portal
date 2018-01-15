@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.PersistedModel;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import java.io.InputStream;
 import java.io.Serializable;
 
 import java.util.List;
@@ -68,7 +69,7 @@ public class ModularDLContentLocalServiceWrapper
 	@Override
 	public DLContent addContent(
 		long companyId, long repositoryId, String path, String version,
-		java.io.InputStream inputStream, long size) {
+		InputStream inputStream, long size) {
 
 		return ModelAdapterUtil.adapt(
 			DLContent.class,

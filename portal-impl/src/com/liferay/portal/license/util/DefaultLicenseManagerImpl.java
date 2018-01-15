@@ -17,6 +17,7 @@ package com.liferay.portal.license.util;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.license.LicenseInfo;
+import com.liferay.portal.kernel.license.util.LicenseManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.SecureRandomUtil;
@@ -38,8 +39,7 @@ import java.util.UUID;
  * @author Amos Fong
  */
 @DoPrivileged
-public class DefaultLicenseManagerImpl
-	implements com.liferay.portal.kernel.license.util.LicenseManager {
+public class DefaultLicenseManagerImpl implements LicenseManager {
 
 	@Override
 	public void checkLicense(String productId) {

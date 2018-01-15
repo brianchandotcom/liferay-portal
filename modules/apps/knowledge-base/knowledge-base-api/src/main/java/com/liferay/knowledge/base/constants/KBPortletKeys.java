@@ -15,12 +15,13 @@
 package com.liferay.knowledge.base.constants;
 
 import com.liferay.portal.kernel.model.PortletConstants;
+import com.liferay.portal.kernel.util.PortletKeys;
 
 /**
  * @author Brian Wing Shun Chan
  * @author Peter Shin
  */
-public class KBPortletKeys extends com.liferay.portal.kernel.util.PortletKeys {
+public class KBPortletKeys extends PortletKeys {
 
 	public static final String KNOWLEDGE_BASE_ADMIN =
 		"com_liferay_knowledge_base_web_portlet_AdminPortlet";

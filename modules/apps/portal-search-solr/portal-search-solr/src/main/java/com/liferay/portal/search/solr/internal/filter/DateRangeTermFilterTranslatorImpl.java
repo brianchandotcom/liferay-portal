@@ -17,6 +17,7 @@ package com.liferay.portal.search.solr.internal.filter;
 import com.liferay.portal.kernel.search.filter.DateRangeTermFilter;
 import com.liferay.portal.search.solr.filter.DateRangeTermFilterTranslator;
 
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,9 +30,7 @@ public class DateRangeTermFilterTranslatorImpl
 	implements DateRangeTermFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		DateRangeTermFilter dateRangeTermFilter) {
-
+	public Query translate(DateRangeTermFilter dateRangeTermFilter) {
 		TermRangeQuery termRangeQuery = TermRangeQuery.newStringRange(
 			dateRangeTermFilter.getField(), dateRangeTermFilter.getLowerBound(),
 			dateRangeTermFilter.getUpperBound(),

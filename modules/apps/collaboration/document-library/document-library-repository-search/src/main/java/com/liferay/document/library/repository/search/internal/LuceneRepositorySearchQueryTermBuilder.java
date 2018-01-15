@@ -37,6 +37,12 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.core.KeywordAnalyzer;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.FuzzyQuery;
+import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.PrefixQuery;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.TermRangeQuery;
 import org.apache.lucene.util.BytesRef;
 
 import org.osgi.service.component.annotations.Activate;
@@ -64,7 +70,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 			queryParser.setAllowLeadingWildcard(true);
 			queryParser.setLowercaseExpandedTerms(false);
 
-			org.apache.lucene.search.Query query = null;
+			Query query = null;
 
 			try {
 				query = queryParser.parse(value);
@@ -74,8 +80,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 			}
 
 			translateQuery(
-				booleanQuery, searchContext, query,
-				org.apache.lucene.search.BooleanClause.Occur.SHOULD);
+				booleanQuery, searchContext, query, BooleanClause.Occur.SHOULD);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -87,38 +92,35 @@ public class LuceneRepositorySearchQueryTermBuilder
 		_analyzer = new KeywordAnalyzer();
 	}
 
-	protected org.apache.lucene.search.BooleanClause.Occur
-		getBooleanClauseOccur(BooleanClauseOccur occur) {
-
-		if (occur.equals(BooleanClauseOccur.MUST)) {
-			return org.apache.lucene.search.BooleanClause.Occur.MUST;
-		}
-		else if (occur.equals(BooleanClauseOccur.MUST_NOT)) {
-			return org.apache.lucene.search.BooleanClause.Occur.MUST_NOT;
-		}
-
-		return org.apache.lucene.search.BooleanClause.Occur.SHOULD;
-	}
-
 	protected BooleanClauseOccur getBooleanClauseOccur(
-		org.apache.lucene.search.BooleanClause.Occur occur) {
+		BooleanClause.Occur occur) {
 
-		if (occur.equals(org.apache.lucene.search.BooleanClause.Occur.MUST)) {
+		if (occur.equals(BooleanClause.Occur.MUST)) {
 			return BooleanClauseOccur.MUST;
 		}
-		else if (occur.equals(
-					org.apache.lucene.search.BooleanClause.Occur.MUST_NOT)) {
-
+		else if (occur.equals(BooleanClause.Occur.MUST_NOT)) {
 			return BooleanClauseOccur.MUST_NOT;
 		}
 
 		return BooleanClauseOccur.SHOULD;
 	}
 
+	protected BooleanClause.Occur
+		getBooleanClauseOccur(BooleanClauseOccur occur) {
+
+		if (occur.equals(BooleanClauseOccur.MUST)) {
+			return BooleanClause.Occur.MUST;
+		}
+		else if (occur.equals(BooleanClauseOccur.MUST_NOT)) {
+			return BooleanClause.Occur.MUST_NOT;
+		}
+
+		return BooleanClause.Occur.SHOULD;
+	}
+
 	protected void translateQuery(
-			BooleanQuery booleanQuery, SearchContext searchContext,
-			org.apache.lucene.search.Query query,
-			org.apache.lucene.search.BooleanClause.Occur occur)
+			BooleanQuery booleanQuery, SearchContext searchContext, Query query,
+			BooleanClause.Occur occur)
 		throws Exception {
 
 		BooleanClauseOccur booleanClauseOccur = getBooleanClauseOccur(occur);
@@ -143,9 +145,7 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 			BooleanQuery disjunctionQuery = new BooleanQueryImpl();
 
-			for (org.apache.lucene.search.BooleanClause booleanClause :
-					curBooleanQuery.getClauses()) {
-
+			for (BooleanClause booleanClause : curBooleanQuery.getClauses()) {
 				BooleanClauseOccur curBooleanClauseOccur =
 					getBooleanClauseOccur(booleanClause.getOccur());
 
@@ -171,9 +171,8 @@ public class LuceneRepositorySearchQueryTermBuilder
 				booleanQuery.add(disjunctionQuery, BooleanClauseOccur.SHOULD);
 			}
 		}
-		else if (query instanceof org.apache.lucene.search.FuzzyQuery) {
-			org.apache.lucene.search.FuzzyQuery fuzzyQuery =
-				(org.apache.lucene.search.FuzzyQuery)query;
+		else if (query instanceof FuzzyQuery) {
+			FuzzyQuery fuzzyQuery = (FuzzyQuery)query;
 
 			Term term = fuzzyQuery.getTerm();
 
@@ -184,9 +183,8 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 			booleanQuery.add(wildcardQuery, booleanClauseOccur);
 		}
-		else if (query instanceof org.apache.lucene.search.PhraseQuery) {
-			org.apache.lucene.search.PhraseQuery phraseQuery =
-				(org.apache.lucene.search.PhraseQuery)query;
+		else if (query instanceof PhraseQuery) {
+			PhraseQuery phraseQuery = (PhraseQuery)query;
 
 			Term[] terms = phraseQuery.getTerms();
 
@@ -202,9 +200,8 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 			booleanQuery.add(termQuery, booleanClauseOccur);
 		}
-		else if (query instanceof org.apache.lucene.search.PrefixQuery) {
-			org.apache.lucene.search.PrefixQuery prefixQuery =
-				(org.apache.lucene.search.PrefixQuery)query;
+		else if (query instanceof PrefixQuery) {
+			PrefixQuery prefixQuery = (PrefixQuery)query;
 
 			Term prefixTerm = prefixQuery.getPrefix();
 
@@ -215,9 +212,8 @@ public class LuceneRepositorySearchQueryTermBuilder
 
 			booleanQuery.add(wildcardQuery, booleanClauseOccur);
 		}
-		else if (query instanceof org.apache.lucene.search.TermRangeQuery) {
-			org.apache.lucene.search.TermRangeQuery termRangeQuery =
-				(org.apache.lucene.search.TermRangeQuery)query;
+		else if (query instanceof TermRangeQuery) {
+			TermRangeQuery termRangeQuery = (TermRangeQuery)query;
 
 			BytesRef lowerTerm = termRangeQuery.getLowerTerm();
 			BytesRef upperTerm = termRangeQuery.getUpperTerm();

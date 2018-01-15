@@ -16,11 +16,13 @@ package com.liferay.portal.search.solr.filter;
 
 import com.liferay.portal.kernel.search.filter.TermsFilter;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface TermsFilterTranslator {
 
-	public org.apache.lucene.search.Query translate(TermsFilter termsFilter);
+	public Query translate(TermsFilter termsFilter);
 
 }

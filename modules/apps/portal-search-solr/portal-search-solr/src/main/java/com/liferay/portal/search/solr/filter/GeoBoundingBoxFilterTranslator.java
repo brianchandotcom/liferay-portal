@@ -16,12 +16,13 @@ package com.liferay.portal.search.solr.filter;
 
 import com.liferay.portal.kernel.search.filter.GeoBoundingBoxFilter;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface GeoBoundingBoxFilterTranslator {
 
-	public org.apache.lucene.search.Query translate(
-		GeoBoundingBoxFilter geoBoundingBoxFilter);
+	public Query translate(GeoBoundingBoxFilter geoBoundingBoxFilter);
 
 }

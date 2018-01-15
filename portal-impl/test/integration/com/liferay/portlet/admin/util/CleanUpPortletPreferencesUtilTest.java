@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.model.impl.PortletImpl;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.util.test.PortletKeys;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -87,8 +88,7 @@ public class CleanUpPortletPreferencesUtilTest {
 	public void testCleanUpProperPortletPreferences() throws Exception {
 		LayoutRevision layoutRevision = getLayoutRevision();
 
-		String portletId = PortletIdCodec.encode(
-			com.liferay.portlet.util.test.PortletKeys.TEST);
+		String portletId = PortletIdCodec.encode(PortletKeys.TEST);
 
 		UnicodeProperties typeSettingProperties =
 			layoutRevision.getTypeSettingsProperties();

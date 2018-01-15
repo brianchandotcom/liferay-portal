@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.search.generic.MatchAllQuery;
 import com.liferay.portal.search.solr.query.MatchAllQueryTranslator;
 
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.Query;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -28,9 +29,7 @@ import org.osgi.service.component.annotations.Component;
 public class MatchAllQueryTranslatorImpl implements MatchAllQueryTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		MatchAllQuery matchAllQuery) {
-
+	public Query translate(MatchAllQuery matchAllQuery) {
 		MatchAllDocsQuery matchAllDocsQuery = new MatchAllDocsQuery();
 
 		if (!matchAllQuery.isDefaultBoost()) {

@@ -17,6 +17,7 @@ package com.liferay.portal.search.solr.internal.filter;
 import com.liferay.portal.kernel.search.filter.RangeTermFilter;
 import com.liferay.portal.search.solr.filter.RangeTermFilterTranslator;
 
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -29,9 +30,7 @@ public class RangeTermFilterTranslatorImpl
 	implements RangeTermFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		RangeTermFilter rangeTermFilter) {
-
+	public Query translate(RangeTermFilter rangeTermFilter) {
 		TermRangeQuery termRangeQuery = TermRangeQuery.newStringRange(
 			rangeTermFilter.getField(), rangeTermFilter.getLowerBound(),
 			rangeTermFilter.getUpperBound(), rangeTermFilter.isIncludesLower(),

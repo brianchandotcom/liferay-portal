@@ -9,6 +9,10 @@
 	{@param? _handleContentChanged: any}
 
 	<div class="source-editor">
+		<span class="label label-secondary source-editor__syntax">
+			{$syntax}
+		</span>
+
 		{call AceEditor.render}
 			{param events: ['contentChanged': $_handleContentChanged] /}
 			{param initialContent: $initialContent /}

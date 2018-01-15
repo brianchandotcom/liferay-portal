@@ -14,4 +14,12 @@
 		height: 50%;
 		width: 50%;
 	}
+
+	&__syntax {
+		pointer-events: none;
+		position: absolute;
+		right: 1em;
+		top: 0.5em;
+		z-index: 10;
+	}
 }

@@ -54,6 +54,8 @@ import com.liferay.expando.kernel.service.persistence.ExpandoRowPersistence;
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandler;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerRegistryUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 
@@ -63,12 +65,17 @@ import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.Disjunction;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.dao.orm.Property;
+import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -79,8 +86,10 @@ import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
+import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
@@ -344,8 +353,35 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
+					Criterion modifiedDateCriterion = portletDataContext.getDateRangeCriteria(
+							"modifiedDate");
+
+					Criterion statusDateCriterion = portletDataContext.getDateRangeCriteria(
+							"statusDate");
+
+					if ((modifiedDateCriterion != null) &&
+							(statusDateCriterion != null)) {
+						Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+
+						disjunction.add(modifiedDateCriterion);
+						disjunction.add(statusDateCriterion);
+
+						dynamicQuery.add(disjunction);
+					}
+
+					Property workflowStatusProperty = PropertyFactoryUtil.forName(
+							"status");
+
+					if (portletDataContext.isInitialPublication()) {
+						dynamicQuery.add(workflowStatusProperty.ne(
+								WorkflowConstants.STATUS_IN_TRASH));
+					}
+					else {
+						StagedModelDataHandler<?> stagedModelDataHandler = StagedModelDataHandlerRegistryUtil.getStagedModelDataHandler(CommerceOrder.class.getName());
+
+						dynamicQuery.add(workflowStatusProperty.in(
+								stagedModelDataHandler.getExportableStatuses()));
+					}
 				}
 			});
 
@@ -1583,6 +1619,44 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the workflow instance link local service.
+	 *
+	 * @return the workflow instance link local service
+	 */
+	public com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService getWorkflowInstanceLinkLocalService() {
+		return workflowInstanceLinkLocalService;
+	}
+
+	/**
+	 * Sets the workflow instance link local service.
+	 *
+	 * @param workflowInstanceLinkLocalService the workflow instance link local service
+	 */
+	public void setWorkflowInstanceLinkLocalService(
+		com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService) {
+		this.workflowInstanceLinkLocalService = workflowInstanceLinkLocalService;
+	}
+
+	/**
+	 * Returns the workflow instance link persistence.
+	 *
+	 * @return the workflow instance link persistence
+	 */
+	public WorkflowInstanceLinkPersistence getWorkflowInstanceLinkPersistence() {
+		return workflowInstanceLinkPersistence;
+	}
+
+	/**
+	 * Sets the workflow instance link persistence.
+	 *
+	 * @param workflowInstanceLinkPersistence the workflow instance link persistence
+	 */
+	public void setWorkflowInstanceLinkPersistence(
+		WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence) {
+		this.workflowInstanceLinkPersistence = workflowInstanceLinkPersistence;
+	}
+
+	/**
 	 * Returns the expando row local service.
 	 *
 	 * @return the expando row local service
@@ -1790,6 +1864,10 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService.class)
+	protected com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService workflowInstanceLinkLocalService;
+	@ServiceReference(type = WorkflowInstanceLinkPersistence.class)
+	protected WorkflowInstanceLinkPersistence workflowInstanceLinkPersistence;
 	@ServiceReference(type = com.liferay.expando.kernel.service.ExpandoRowLocalService.class)
 	protected com.liferay.expando.kernel.service.ExpandoRowLocalService expandoRowLocalService;
 	@ServiceReference(type = ExpandoRowPersistence.class)

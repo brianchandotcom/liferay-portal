@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
 import com.liferay.portal.kernel.model.StagedAuditedModel;
+import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -45,7 +46,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
-	GroupedModel, ShardedModel, StagedAuditedModel {
+	GroupedModel, ShardedModel, StagedAuditedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -407,6 +408,151 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	 * @param orderStatus the order status of this commerce order
 	 */
 	public void setOrderStatus(int orderStatus);
+
+	/**
+	 * Returns the status of this commerce order.
+	 *
+	 * @return the status of this commerce order
+	 */
+	@Override
+	public int getStatus();
+
+	/**
+	 * Sets the status of this commerce order.
+	 *
+	 * @param status the status of this commerce order
+	 */
+	@Override
+	public void setStatus(int status);
+
+	/**
+	 * Returns the status by user ID of this commerce order.
+	 *
+	 * @return the status by user ID of this commerce order
+	 */
+	@Override
+	public long getStatusByUserId();
+
+	/**
+	 * Sets the status by user ID of this commerce order.
+	 *
+	 * @param statusByUserId the status by user ID of this commerce order
+	 */
+	@Override
+	public void setStatusByUserId(long statusByUserId);
+
+	/**
+	 * Returns the status by user uuid of this commerce order.
+	 *
+	 * @return the status by user uuid of this commerce order
+	 */
+	@Override
+	public String getStatusByUserUuid();
+
+	/**
+	 * Sets the status by user uuid of this commerce order.
+	 *
+	 * @param statusByUserUuid the status by user uuid of this commerce order
+	 */
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid);
+
+	/**
+	 * Returns the status by user name of this commerce order.
+	 *
+	 * @return the status by user name of this commerce order
+	 */
+	@AutoEscape
+	@Override
+	public String getStatusByUserName();
+
+	/**
+	 * Sets the status by user name of this commerce order.
+	 *
+	 * @param statusByUserName the status by user name of this commerce order
+	 */
+	@Override
+	public void setStatusByUserName(String statusByUserName);
+
+	/**
+	 * Returns the status date of this commerce order.
+	 *
+	 * @return the status date of this commerce order
+	 */
+	@Override
+	public Date getStatusDate();
+
+	/**
+	 * Sets the status date of this commerce order.
+	 *
+	 * @param statusDate the status date of this commerce order
+	 */
+	@Override
+	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns <code>true</code> if this commerce order is approved.
+	 *
+	 * @return <code>true</code> if this commerce order is approved; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isApproved();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is denied.
+	 *
+	 * @return <code>true</code> if this commerce order is denied; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDenied();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is a draft.
+	 *
+	 * @return <code>true</code> if this commerce order is a draft; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isDraft();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is expired.
+	 *
+	 * @return <code>true</code> if this commerce order is expired; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isExpired();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is inactive.
+	 *
+	 * @return <code>true</code> if this commerce order is inactive; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isInactive();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is incomplete.
+	 *
+	 * @return <code>true</code> if this commerce order is incomplete; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isIncomplete();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is pending.
+	 *
+	 * @return <code>true</code> if this commerce order is pending; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isPending();
+
+	/**
+	 * Returns <code>true</code> if this commerce order is scheduled.
+	 *
+	 * @return <code>true</code> if this commerce order is scheduled; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean isScheduled();
 
 	@Override
 	public boolean isNew();

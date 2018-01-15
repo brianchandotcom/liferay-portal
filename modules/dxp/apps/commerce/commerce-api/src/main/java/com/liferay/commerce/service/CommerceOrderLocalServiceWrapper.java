@@ -434,6 +434,16 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.commerce.model.CommerceOrder updateStatus(long userId,
+		long commerceOrderId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.updateStatus(userId, commerceOrderId,
+			status, serviceContext, workflowContext);
+	}
+
+	@Override
 	public CommerceOrderLocalService getWrappedService() {
 		return _commerceOrderLocalService;
 	}

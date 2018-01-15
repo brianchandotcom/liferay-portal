@@ -3003,6 +3003,10 @@ public class CommerceOrderPersistenceImpl extends BasePersistenceImpl<CommerceOr
 		commerceOrderImpl.setPaymentStatus(commerceOrder.getPaymentStatus());
 		commerceOrderImpl.setShippingStatus(commerceOrder.getShippingStatus());
 		commerceOrderImpl.setOrderStatus(commerceOrder.getOrderStatus());
+		commerceOrderImpl.setStatus(commerceOrder.getStatus());
+		commerceOrderImpl.setStatusByUserId(commerceOrder.getStatusByUserId());
+		commerceOrderImpl.setStatusByUserName(commerceOrder.getStatusByUserName());
+		commerceOrderImpl.setStatusDate(commerceOrder.getStatusDate());
 
 		return commerceOrderImpl;
 	}

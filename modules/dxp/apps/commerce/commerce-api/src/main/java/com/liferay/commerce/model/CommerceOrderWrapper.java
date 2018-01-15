@@ -81,6 +81,10 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("paymentStatus", getPaymentStatus());
 		attributes.put("shippingStatus", getShippingStatus());
 		attributes.put("orderStatus", getOrderStatus());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		return attributes;
 	}
@@ -214,6 +218,30 @@ public class CommerceOrderWrapper implements CommerceOrder,
 
 		if (orderStatus != null) {
 			setOrderStatus(orderStatus);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -453,6 +481,56 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Returns the status of this commerce order.
+	*
+	* @return the status of this commerce order
+	*/
+	@Override
+	public int getStatus() {
+		return _commerceOrder.getStatus();
+	}
+
+	/**
+	* Returns the status by user ID of this commerce order.
+	*
+	* @return the status by user ID of this commerce order
+	*/
+	@Override
+	public long getStatusByUserId() {
+		return _commerceOrder.getStatusByUserId();
+	}
+
+	/**
+	* Returns the status by user name of this commerce order.
+	*
+	* @return the status by user name of this commerce order
+	*/
+	@Override
+	public java.lang.String getStatusByUserName() {
+		return _commerceOrder.getStatusByUserName();
+	}
+
+	/**
+	* Returns the status by user uuid of this commerce order.
+	*
+	* @return the status by user uuid of this commerce order
+	*/
+	@Override
+	public java.lang.String getStatusByUserUuid() {
+		return _commerceOrder.getStatusByUserUuid();
+	}
+
+	/**
+	* Returns the status date of this commerce order.
+	*
+	* @return the status date of this commerce order
+	*/
+	@Override
+	public Date getStatusDate() {
+		return _commerceOrder.getStatusDate();
+	}
+
+	/**
 	* Returns the subtotal of this commerce order.
 	*
 	* @return the subtotal of this commerce order
@@ -517,9 +595,39 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.hashCode();
 	}
 
+	/**
+	* Returns <code>true</code> if this commerce order is approved.
+	*
+	* @return <code>true</code> if this commerce order is approved; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isApproved() {
+		return _commerceOrder.isApproved();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _commerceOrder.isCachedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce order is denied.
+	*
+	* @return <code>true</code> if this commerce order is denied; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDenied() {
+		return _commerceOrder.isDenied();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce order is a draft.
+	*
+	* @return <code>true</code> if this commerce order is a draft; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDraft() {
+		return _commerceOrder.isDraft();
 	}
 
 	@Override
@@ -527,9 +635,59 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.isEscapedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this commerce order is expired.
+	*
+	* @return <code>true</code> if this commerce order is expired; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isExpired() {
+		return _commerceOrder.isExpired();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce order is inactive.
+	*
+	* @return <code>true</code> if this commerce order is inactive; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isInactive() {
+		return _commerceOrder.isInactive();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce order is incomplete.
+	*
+	* @return <code>true</code> if this commerce order is incomplete; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIncomplete() {
+		return _commerceOrder.isIncomplete();
+	}
+
 	@Override
 	public boolean isNew() {
 		return _commerceOrder.isNew();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce order is pending.
+	*
+	* @return <code>true</code> if this commerce order is pending; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isPending() {
+		return _commerceOrder.isPending();
+	}
+
+	/**
+	* Returns <code>true</code> if this commerce order is scheduled.
+	*
+	* @return <code>true</code> if this commerce order is scheduled; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isScheduled() {
+		return _commerceOrder.isScheduled();
 	}
 
 	@Override
@@ -746,6 +904,56 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setShippingStatus(int shippingStatus) {
 		_commerceOrder.setShippingStatus(shippingStatus);
+	}
+
+	/**
+	* Sets the status of this commerce order.
+	*
+	* @param status the status of this commerce order
+	*/
+	@Override
+	public void setStatus(int status) {
+		_commerceOrder.setStatus(status);
+	}
+
+	/**
+	* Sets the status by user ID of this commerce order.
+	*
+	* @param statusByUserId the status by user ID of this commerce order
+	*/
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_commerceOrder.setStatusByUserId(statusByUserId);
+	}
+
+	/**
+	* Sets the status by user name of this commerce order.
+	*
+	* @param statusByUserName the status by user name of this commerce order
+	*/
+	@Override
+	public void setStatusByUserName(java.lang.String statusByUserName) {
+		_commerceOrder.setStatusByUserName(statusByUserName);
+	}
+
+	/**
+	* Sets the status by user uuid of this commerce order.
+	*
+	* @param statusByUserUuid the status by user uuid of this commerce order
+	*/
+	@Override
+	public void setStatusByUserUuid(java.lang.String statusByUserUuid) {
+		_commerceOrder.setStatusByUserUuid(statusByUserUuid);
+	}
+
+	/**
+	* Sets the status date of this commerce order.
+	*
+	* @param statusDate the status date of this commerce order
+	*/
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_commerceOrder.setStatusDate(statusDate);
 	}
 
 	/**

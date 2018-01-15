@@ -409,6 +409,16 @@ public class CommerceOrderLocalServiceUtil {
 			commerceCountryId, phoneNumber, serviceContext);
 	}
 
+	public static com.liferay.commerce.model.CommerceOrder updateStatus(
+		long userId, long commerceOrderId, int status,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext,
+		java.util.Map<java.lang.String, java.io.Serializable> workflowContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .updateStatus(userId, commerceOrderId, status,
+			serviceContext, workflowContext);
+	}
+
 	public static CommerceOrderLocalService getService() {
 		return _serviceTracker.getService();
 	}

@@ -145,6 +145,10 @@
 		<field name="paymentStatus" type="int" />
 		<field name="shippingStatus" type="int" />
 		<field name="orderStatus" type="int" />
+		<field name="status" type="int" />
+		<field name="statusByUserId" type="long" />
+		<field name="statusByUserName" type="String" />
+		<field name="statusDate" type="Date" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderItem">
 		<field name="commerceOrderItemId" type="long" />

@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.io.Serializable;
 
@@ -93,7 +94,11 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "total", Types.DOUBLE },
 			{ "paymentStatus", Types.INTEGER },
 			{ "shippingStatus", Types.INTEGER },
-			{ "orderStatus", Types.INTEGER }
+			{ "orderStatus", Types.INTEGER },
+			{ "status", Types.INTEGER },
+			{ "statusByUserId", Types.BIGINT },
+			{ "statusByUserName", Types.VARCHAR },
+			{ "statusDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -119,9 +124,13 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("shippingStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("orderStatus", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -177,6 +186,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setPaymentStatus(soapModel.getPaymentStatus());
 		model.setShippingStatus(soapModel.getShippingStatus());
 		model.setOrderStatus(soapModel.getOrderStatus());
+		model.setStatus(soapModel.getStatus());
+		model.setStatusByUserId(soapModel.getStatusByUserId());
+		model.setStatusByUserName(soapModel.getStatusByUserName());
+		model.setStatusDate(soapModel.getStatusDate());
 
 		return model;
 	}
@@ -262,6 +275,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("paymentStatus", getPaymentStatus());
 		attributes.put("shippingStatus", getShippingStatus());
 		attributes.put("orderStatus", getOrderStatus());
+		attributes.put("status", getStatus());
+		attributes.put("statusByUserId", getStatusByUserId());
+		attributes.put("statusByUserName", getStatusByUserName());
+		attributes.put("statusDate", getStatusDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -398,6 +415,30 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (orderStatus != null) {
 			setOrderStatus(orderStatus);
+		}
+
+		Integer status = (Integer)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		Long statusByUserId = (Long)attributes.get("statusByUserId");
+
+		if (statusByUserId != null) {
+			setStatusByUserId(statusByUserId);
+		}
+
+		String statusByUserName = (String)attributes.get("statusByUserName");
+
+		if (statusByUserName != null) {
+			setStatusByUserName(statusByUserName);
+		}
+
+		Date statusDate = (Date)attributes.get("statusDate");
+
+		if (statusDate != null) {
+			setStatusDate(statusDate);
 		}
 	}
 
@@ -736,10 +777,155 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		return _originalOrderStatus;
 	}
 
+	@JSON
+	@Override
+	public int getStatus() {
+		return _status;
+	}
+
+	@Override
+	public void setStatus(int status) {
+		_status = status;
+	}
+
+	@JSON
+	@Override
+	public long getStatusByUserId() {
+		return _statusByUserId;
+	}
+
+	@Override
+	public void setStatusByUserId(long statusByUserId) {
+		_statusByUserId = statusByUserId;
+	}
+
+	@Override
+	public String getStatusByUserUuid() {
+		try {
+			User user = UserLocalServiceUtil.getUserById(getStatusByUserId());
+
+			return user.getUuid();
+		}
+		catch (PortalException pe) {
+			return "";
+		}
+	}
+
+	@Override
+	public void setStatusByUserUuid(String statusByUserUuid) {
+	}
+
+	@JSON
+	@Override
+	public String getStatusByUserName() {
+		if (_statusByUserName == null) {
+			return "";
+		}
+		else {
+			return _statusByUserName;
+		}
+	}
+
+	@Override
+	public void setStatusByUserName(String statusByUserName) {
+		_statusByUserName = statusByUserName;
+	}
+
+	@JSON
+	@Override
+	public Date getStatusDate() {
+		return _statusDate;
+	}
+
+	@Override
+	public void setStatusDate(Date statusDate) {
+		_statusDate = statusDate;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CommerceOrder.class.getName()));
+	}
+
+	@Override
+	public boolean isApproved() {
+		if (getStatus() == WorkflowConstants.STATUS_APPROVED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDenied() {
+		if (getStatus() == WorkflowConstants.STATUS_DENIED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isDraft() {
+		if (getStatus() == WorkflowConstants.STATUS_DRAFT) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isExpired() {
+		if (getStatus() == WorkflowConstants.STATUS_EXPIRED) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isInactive() {
+		if (getStatus() == WorkflowConstants.STATUS_INACTIVE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isIncomplete() {
+		if (getStatus() == WorkflowConstants.STATUS_INCOMPLETE) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isPending() {
+		if (getStatus() == WorkflowConstants.STATUS_PENDING) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	@Override
+	public boolean isScheduled() {
+		if (getStatus() == WorkflowConstants.STATUS_SCHEDULED) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public long getColumnBitmask() {
@@ -794,6 +980,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setPaymentStatus(getPaymentStatus());
 		commerceOrderImpl.setShippingStatus(getShippingStatus());
 		commerceOrderImpl.setOrderStatus(getOrderStatus());
+		commerceOrderImpl.setStatus(getStatus());
+		commerceOrderImpl.setStatusByUserId(getStatusByUserId());
+		commerceOrderImpl.setStatusByUserName(getStatusByUserName());
+		commerceOrderImpl.setStatusDate(getStatusDate());
 
 		commerceOrderImpl.resetOriginalValues();
 
@@ -959,12 +1149,33 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.orderStatus = getOrderStatus();
 
+		commerceOrderCacheModel.status = getStatus();
+
+		commerceOrderCacheModel.statusByUserId = getStatusByUserId();
+
+		commerceOrderCacheModel.statusByUserName = getStatusByUserName();
+
+		String statusByUserName = commerceOrderCacheModel.statusByUserName;
+
+		if ((statusByUserName != null) && (statusByUserName.length() == 0)) {
+			commerceOrderCacheModel.statusByUserName = null;
+		}
+
+		Date statusDate = getStatusDate();
+
+		if (statusDate != null) {
+			commerceOrderCacheModel.statusDate = statusDate.getTime();
+		}
+		else {
+			commerceOrderCacheModel.statusDate = Long.MIN_VALUE;
+		}
+
 		return commerceOrderCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1008,6 +1219,14 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getShippingStatus());
 		sb.append(", orderStatus=");
 		sb.append(getOrderStatus());
+		sb.append(", status=");
+		sb.append(getStatus());
+		sb.append(", statusByUserId=");
+		sb.append(getStatusByUserId());
+		sb.append(", statusByUserName=");
+		sb.append(getStatusByUserName());
+		sb.append(", statusDate=");
+		sb.append(getStatusDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1015,7 +1234,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(79);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -1105,6 +1324,22 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			"<column><column-name>orderStatus</column-name><column-value><![CDATA[");
 		sb.append(getOrderStatus());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserId</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusByUserName</column-name><column-value><![CDATA[");
+		sb.append(getStatusByUserName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
+		sb.append(getStatusDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1144,6 +1379,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private int _orderStatus;
 	private int _originalOrderStatus;
 	private boolean _setOriginalOrderStatus;
+	private int _status;
+	private long _statusByUserId;
+	private String _statusByUserName;
+	private Date _statusDate;
 	private long _columnBitmask;
 	private CommerceOrder _escapedModel;
 }

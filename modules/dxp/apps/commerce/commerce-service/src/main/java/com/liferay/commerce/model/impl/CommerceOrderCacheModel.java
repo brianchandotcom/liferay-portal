@@ -65,7 +65,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(51);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -109,6 +109,14 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(shippingStatus);
 		sb.append(", orderStatus=");
 		sb.append(orderStatus);
+		sb.append(", status=");
+		sb.append(status);
+		sb.append(", statusByUserId=");
+		sb.append(statusByUserId);
+		sb.append(", statusByUserName=");
+		sb.append(statusByUserName);
+		sb.append(", statusDate=");
+		sb.append(statusDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -177,6 +185,22 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setPaymentStatus(paymentStatus);
 		commerceOrderImpl.setShippingStatus(shippingStatus);
 		commerceOrderImpl.setOrderStatus(orderStatus);
+		commerceOrderImpl.setStatus(status);
+		commerceOrderImpl.setStatusByUserId(statusByUserId);
+
+		if (statusByUserName == null) {
+			commerceOrderImpl.setStatusByUserName("");
+		}
+		else {
+			commerceOrderImpl.setStatusByUserName(statusByUserName);
+		}
+
+		if (statusDate == Long.MIN_VALUE) {
+			commerceOrderImpl.setStatusDate(null);
+		}
+		else {
+			commerceOrderImpl.setStatusDate(new Date(statusDate));
+		}
 
 		commerceOrderImpl.resetOriginalValues();
 
@@ -221,6 +245,12 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		shippingStatus = objectInput.readInt();
 
 		orderStatus = objectInput.readInt();
+
+		status = objectInput.readInt();
+
+		statusByUserId = objectInput.readLong();
+		statusByUserName = objectInput.readUTF();
+		statusDate = objectInput.readLong();
 	}
 
 	@Override
@@ -286,6 +316,19 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		objectOutput.writeInt(shippingStatus);
 
 		objectOutput.writeInt(orderStatus);
+
+		objectOutput.writeInt(status);
+
+		objectOutput.writeLong(statusByUserId);
+
+		if (statusByUserName == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(statusByUserName);
+		}
+
+		objectOutput.writeLong(statusDate);
 	}
 
 	public String uuid;
@@ -309,4 +352,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public int paymentStatus;
 	public int shippingStatus;
 	public int orderStatus;
+	public int status;
+	public long statusByUserId;
+	public String statusByUserName;
+	public long statusDate;
 }

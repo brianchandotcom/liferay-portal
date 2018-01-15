@@ -178,7 +178,11 @@ create table CommerceOrder (
 	total DOUBLE,
 	paymentStatus INTEGER,
 	shippingStatus INTEGER,
-	orderStatus INTEGER
+	orderStatus INTEGER,
+	status INTEGER,
+	statusByUserId LONG,
+	statusByUserName VARCHAR(75) null,
+	statusDate DATE null
 );
 
 create table CommerceOrderItem (

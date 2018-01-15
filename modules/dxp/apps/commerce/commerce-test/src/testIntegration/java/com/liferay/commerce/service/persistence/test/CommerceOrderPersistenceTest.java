@@ -165,6 +165,14 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setOrderStatus(RandomTestUtil.nextInt());
 
+		newCommerceOrder.setStatus(RandomTestUtil.nextInt());
+
+		newCommerceOrder.setStatusByUserId(RandomTestUtil.nextLong());
+
+		newCommerceOrder.setStatusByUserName(RandomTestUtil.randomString());
+
+		newCommerceOrder.setStatusDate(RandomTestUtil.nextDate());
+
 		_commerceOrders.add(_persistence.update(newCommerceOrder));
 
 		CommerceOrder existingCommerceOrder = _persistence.findByPrimaryKey(newCommerceOrder.getPrimaryKey());
@@ -213,6 +221,15 @@ public class CommerceOrderPersistenceTest {
 			newCommerceOrder.getShippingStatus());
 		Assert.assertEquals(existingCommerceOrder.getOrderStatus(),
 			newCommerceOrder.getOrderStatus());
+		Assert.assertEquals(existingCommerceOrder.getStatus(),
+			newCommerceOrder.getStatus());
+		Assert.assertEquals(existingCommerceOrder.getStatusByUserId(),
+			newCommerceOrder.getStatusByUserId());
+		Assert.assertEquals(existingCommerceOrder.getStatusByUserName(),
+			newCommerceOrder.getStatusByUserName());
+		Assert.assertEquals(Time.getShortTimestamp(
+				existingCommerceOrder.getStatusDate()),
+			Time.getShortTimestamp(newCommerceOrder.getStatusDate()));
 	}
 
 	@Test
@@ -288,7 +305,8 @@ public class CommerceOrderPersistenceTest {
 			"commerceShippingMethodId", true, "shippingOptionName", true,
 			"purchaseOrderNumber", true, "subtotal", true, "shippingPrice",
 			true, "total", true, "paymentStatus", true, "shippingStatus", true,
-			"orderStatus", true);
+			"orderStatus", true, "status", true, "statusByUserId", true,
+			"statusByUserName", true, "statusDate", true);
 	}
 
 	@Test
@@ -545,6 +563,14 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setShippingStatus(RandomTestUtil.nextInt());
 
 		commerceOrder.setOrderStatus(RandomTestUtil.nextInt());
+
+		commerceOrder.setStatus(RandomTestUtil.nextInt());
+
+		commerceOrder.setStatusByUserId(RandomTestUtil.nextLong());
+
+		commerceOrder.setStatusByUserName(RandomTestUtil.randomString());
+
+		commerceOrder.setStatusDate(RandomTestUtil.nextDate());
 
 		_commerceOrders.add(_persistence.update(commerceOrder));
 

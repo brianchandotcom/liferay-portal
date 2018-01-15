@@ -340,4 +340,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long commerceRegionId, long commerceCountryId,
 		java.lang.String phoneNumber, ServiceContext serviceContext)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CommerceOrder updateStatus(long userId, long commerceOrderId,
+		int status, ServiceContext serviceContext,
+		Map<java.lang.String, Serializable> workflowContext)
+		throws PortalException;
 }

@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.product.content.web.display.context;
 
+import com.liferay.commerce.product.constants.CPContentContributorConstants;
 import com.liferay.commerce.product.content.web.configuration.CPContentConfigurationHelper;
 import com.liferay.commerce.product.content.web.configuration.CPContentPortletInstanceConfiguration;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
@@ -24,18 +25,19 @@ import com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.util.CPContentContributorRegistry;
 import com.liferay.commerce.product.util.CPInstanceHelper;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -50,20 +52,23 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CPTypeDisplayContext {
 
 	public CPTypeDisplayContext(
 			CPAttachmentFileEntryService cpAttachmentFileEntryService,
 			CPContentConfigurationHelper cpContentConfigurationHelper,
+			CPContentContributorRegistry cpContentContributorRegistry,
 			CPDefinition cpDefinition, CPInstanceHelper cpInstanceHelper,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
 			HttpServletRequest httpServletRequest, Portal portal)
-		throws ConfigurationException {
+		throws Exception {
 
 		this.cpAttachmentFileEntryService = cpAttachmentFileEntryService;
 		this.cpContentConfigurationHelper = cpContentConfigurationHelper;
+		this.cpContentContributorRegistry = cpContentContributorRegistry;
 		this.cpDefinition = cpDefinition;
 		this.cpInstanceHelper = cpInstanceHelper;
 		this.cpDefinitionSpecificationOptionValueService =
@@ -82,9 +87,37 @@ public class CPTypeDisplayContext {
 
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
+		cpContentContributorRegistry.contribute(
+			getDefaultCPInstance(), cpRequestHelper.getRenderRequest());
+
 		cpContentPortletInstanceConfiguration =
 			portletDisplay.getPortletInstanceConfiguration(
 				CPContentPortletInstanceConfiguration.class);
+	}
+
+	public String getAvailabilityLabel() {
+		String availability = (String)getCPContentContributorValue(
+			CPContentContributorConstants.AVAILABILITY_NAME);
+
+		if (Validator.isNull(availability)) {
+			return StringPool.BLANK;
+		}
+
+		return LanguageUtil.format(
+			httpServletRequest, "availability-x", availability, true);
+	}
+
+	public String getAvailabilityRangeLabel() {
+		String availabilityRange = (String)getCPContentContributorValue(
+			CPContentContributorConstants.AVAILABILITY_RANGE_NAME);
+
+		if (Validator.isNull(availabilityRange)) {
+			return StringPool.BLANK;
+		}
+
+		return LanguageUtil.format(
+			httpServletRequest, "product-will-be-available-in-x",
+			availabilityRange);
 	}
 
 	public List<CPAttachmentFileEntry> getCPAttachmentFileEntries()
@@ -200,6 +233,18 @@ public class CPTypeDisplayContext {
 		return LanguageUtil.get(locale, key);
 	}
 
+	public String getStockQuantityLabel() {
+		int stockQuantity = (int)getCPContentContributorValue(
+			CPContentContributorConstants.STOCK_QUANTITY_NAME);
+
+		if (stockQuantity <= 0) {
+			return StringPool.BLANK;
+		}
+
+		return LanguageUtil.format(
+			httpServletRequest, "stock-quantity-x", stockQuantity);
+	}
+
 	public ResourceURL getViewAttachmentURL() {
 		ResourceURL resourceURL = liferayPortletResponse.createResourceURL();
 
@@ -231,8 +276,21 @@ public class CPTypeDisplayContext {
 			renderResponse);
 	}
 
+	protected Object getCPContentContributorValue(String contributorKey) {
+		String key = CPContentContributorConstants.PREFIX + contributorKey;
+
+		Object value = httpServletRequest.getAttribute(key);
+
+		if (Validator.isNull(value)) {
+			return StringPool.BLANK;
+		}
+
+		return value;
+	}
+
 	protected final CPAttachmentFileEntryService cpAttachmentFileEntryService;
 	protected final CPContentConfigurationHelper cpContentConfigurationHelper;
+	protected final CPContentContributorRegistry cpContentContributorRegistry;
 	protected final CPContentPortletInstanceConfiguration
 		cpContentPortletInstanceConfiguration;
 	protected final CPDefinition cpDefinition;

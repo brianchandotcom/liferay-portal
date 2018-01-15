@@ -99,7 +99,7 @@ Collection<ConvertProcess> convertProcesses = ConvertProcessUtil.getEnabledConve
 								</aui:fieldset>
 
 								<aui:button-row>
-									<aui:button cssClass="btn-lg save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
+									<aui:button cssClass="save-server-button" data-cmd='<%= "convertProcess." + clazz.getName() %>' value="execute" />
 								</aui:button-row>
 							</c:otherwise>
 						</c:choose>

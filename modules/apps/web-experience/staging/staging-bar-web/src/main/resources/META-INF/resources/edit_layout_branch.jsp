@@ -84,9 +84,9 @@ if (layoutBranch != null) {
 		<aui:input name="description" />
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value='<%= (layoutBranch != null) ? "update" : "add" %>' />
+			<aui:button type="submit" value='<%= (layoutBranch != null) ? "update" : "add" %>' />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

@@ -1007,15 +1007,14 @@ public class IMAPAccessor {
 			}
 		}
 		else if (Validator.isNull(fileName)) {
+			String contentString = content.toString();
 			String contentType = StringUtil.toLowerCase(part.getContentType());
 
 			if (contentType.startsWith(ContentTypes.TEXT_PLAIN)) {
-				bodyPlainSB.append(
-					content.toString().replaceAll("\r\n", "<br />"));
+				bodyPlainSB.append(contentString.replaceAll("\r\n", "<br />"));
 			}
 			else if (contentType.startsWith(ContentTypes.TEXT_HTML)) {
-				bodyHtmlSB.append(
-					HtmlContentUtil.getInlineHtml(content.toString()));
+				bodyHtmlSB.append(HtmlContentUtil.getInlineHtml(contentString));
 			}
 			//else if (contentType.startsWith(ContentTypes.MESSAGE_RFC822)) {
 			//}

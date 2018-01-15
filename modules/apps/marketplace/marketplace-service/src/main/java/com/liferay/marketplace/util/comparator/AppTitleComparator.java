@@ -39,8 +39,10 @@ public class AppTitleComparator extends OrderByComparator<App> {
 
 	@Override
 	public int compare(App app1, App app2) {
-		int value = StringUtil.toLowerCase(app1.getTitle()).compareTo(
-			StringUtil.toLowerCase(app2.getTitle()));
+		String lowerCaseTitle1 = StringUtil.toLowerCase(app1.getTitle());
+		String lowerCaseTitle2 = StringUtil.toLowerCase(app2.getTitle());
+
+		int value = lowerCaseTitle1.compareTo(lowerCaseTitle2);
 
 		if (_ascending) {
 			return value;

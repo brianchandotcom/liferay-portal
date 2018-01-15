@@ -317,8 +317,10 @@ public class V2MarkupServiceImpl
 		String contentType = response.getContentType();
 
 		if (itemBinary != null) {
-			if (Validator.isNotNull(contentType) &&
-				StringUtil.toLowerCase(contentType).startsWith("text")) {
+			String lowerCaseContentType = StringUtil.toLowerCase(contentType);
+
+			if (Validator.isNotNull(lowerCaseContentType) &&
+				lowerCaseContentType.startsWith("text")) {
 
 				String content = new String(itemBinary);
 

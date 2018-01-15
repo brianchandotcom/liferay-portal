@@ -20,4 +20,9 @@
 	.sidebar-block.tabular-list-group-unstyled {
 		margin-right: -9px;
 	}
+
+	.sidebar-section-flex {
+		@extend %autofit-row;
+		@extend %autofit-row-center;
+	}
 }

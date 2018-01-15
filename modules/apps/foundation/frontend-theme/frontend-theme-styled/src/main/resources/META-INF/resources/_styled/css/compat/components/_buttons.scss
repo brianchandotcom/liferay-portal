@@ -1,6 +1,72 @@
 @if $compat-buttons {
 	.btn-default {
-		@extend .btn-secondary;
+		@include button-variant(theme-color(secondary), theme-color(secondary));
+
+		@include clay-button-variant(map-get($btn-palette, secondary));
+	}
+
+	.btn-primary.btn-default {
+		@include button-variant(theme-color(primary), theme-color(primary));
+
+		@include clay-button-variant(map-get($btn-palette, primary));
+	}
+
+	.btn-success.btn-default {
+		@include button-variant(theme-color(success), theme-color(success));
+
+		@include clay-button-variant(map-get($btn-palette, success));
+	}
+
+	.btn-info.btn-default {
+		@include button-variant(theme-color(info), theme-color(info));
+
+		@include clay-button-variant(map-get($btn-palette, info));
+	}
+
+	.btn-warning.btn-default {
+		@include button-variant(theme-color(warning), theme-color(warning));
+
+		@include clay-button-variant(map-get($btn-palette, warning));
+	}
+
+	.btn-danger.btn-default {
+		@include button-variant(theme-color(danger), theme-color(danger));
+
+		@include clay-button-variant(map-get($btn-palette, danger));
+	}
+
+	.btn-link.btn-default {
+		background-color: transparent;
+		border-color: transparent;
+
+		@include border-radius(1px);
+
+		color: $link-color;
+		font-weight: $font-weight-normal;
+
+		@include hover {
+			background-color: transparent;
+			border-color: transparent;
+			color: $link-hover-color;
+			text-decoration: $link-hover-decoration;
+		}
+
+		&:focus, &.focus {
+			border-color: transparent;
+			box-shadow: $btn-focus-box-shadow;
+			text-decoration: $link-decoration;
+		}
+
+		&:disabled, &.disabled {
+			color: $btn-link-disabled-color;
+		}
+
+		&:active, &.active, &:not([disabled]):not(.disabled):active {
+			background-color: transparent;
+			border-color: transparent;
+			box-shadow: none;
+			color: $link-color;
+		}
 	}
 
 	.btn-bottom-right {

@@ -65,7 +65,9 @@ public class TypeConvertorUtil {
 
 			Class<?> componentType = sourceClass.getComponentType();
 
-			if (componentType.getName().contains(sourcePackage)) {
+			String componentTypeName = componentType.getName();
+
+			if (componentTypeName.contains(sourcePackage)) {
 				Object[] sourceArray = (Object[])source;
 
 				Class<?> destinationComponentType = Class.forName(
@@ -183,7 +185,9 @@ public class TypeConvertorUtil {
 
 			sourceChildClass = sourceChild.getClass();
 
-			if (sourceChildClass.getName().contains(sourcePackage)) {
+			String sourceChildClassName = sourceChildClass.getName();
+
+			if (sourceChildClassName.contains(sourcePackage)) {
 				destinationChild = convert(sourceChild, sourceVersion);
 			}
 		}

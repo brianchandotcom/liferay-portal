@@ -55,7 +55,7 @@ public class VerifyUtil {
 		verifyUtil.doVerify();
 	}
 
-	protected void doVerify() throws Exception {
+	public void doVerify() throws Exception {
 		List<Group> groups = _groupLocalService.getGroups(
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 

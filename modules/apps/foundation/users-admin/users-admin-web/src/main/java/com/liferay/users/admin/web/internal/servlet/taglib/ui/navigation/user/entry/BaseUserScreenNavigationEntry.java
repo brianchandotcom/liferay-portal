@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.users.admin.constants.UserFormConstants;
-import com.liferay.users.admin.web.constants.UsersAdminWebKeys;
+import com.liferay.users.admin.web.internal.constants.UsersAdminWebKeys;
 
 import java.io.IOException;
 

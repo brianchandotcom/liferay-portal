@@ -278,9 +278,9 @@ public class ClassUtil {
 
 		List<String> tokens = new ArrayList<>();
 
-		Matcher annotationNameMatcher = _ANNOTATION_NAME_REGEXP.matcher(s);
+		Matcher annotationNameMatcher = _annotationNamePattern.matcher(s);
 		Matcher annotationParametersMatcher =
-			_ANNOTATION_PARAMETERS_REGEXP.matcher(s);
+			_annotationParametersPattern.matcher(s);
 
 		if (annotationNameMatcher.matches()) {
 			tokens.add(annotationNameMatcher.group(1));
@@ -388,17 +388,14 @@ public class ClassUtil {
 		st.wordChars(',', ',');
 	}
 
-	private static final Pattern _ANNOTATION_NAME_REGEXP = Pattern.compile(
-		"@(\\w+)\\.?(\\w*)$");
-
-	private static final Pattern _ANNOTATION_PARAMETERS_REGEXP =
-		Pattern.compile(
-			"@(\\w+)\\.?(\\w*)\\({0,1}\\{{0,1}([^)}]+)\\}{0,1}\\){0,1}");
-
 	private static final String _CLASS_EXTENSION = ".class";
 
 	private static final Log _log = LogFactoryUtil.getLog(ClassUtil.class);
 
+	private static final Pattern _annotationNamePattern = Pattern.compile(
+		"@(\\w+)\\.?(\\w*)$");
+	private static final Pattern _annotationParametersPattern = Pattern.compile(
+		"@(\\w+)\\.?(\\w*)\\({0,1}\\{{0,1}([^)}]+)\\}{0,1}\\){0,1}");
 	private static final Pattern _fullyQualifiedNamePattern = Pattern.compile(
 		"^([a-z]\\w*\\.){2,}([A-Z]\\w*)(\\.|\\Z)");
 

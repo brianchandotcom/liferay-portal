@@ -55,10 +55,23 @@ public class AvailabilityCommerceCartValidatorImpl
 		throws PortalException {
 
 		if (commerceCartItem == null) {
-			return new CommerceCartValidatorResult(false);
+			return new CommerceCartValidatorResult(
+				false, "product-is-no-longer-available");
 		}
 
-		CPInstance cpInstance = commerceCartItem.getCPInstance();
+		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
+
+		if (cpInstance == null) {
+			return new CommerceCartValidatorResult(
+				commerceCartItem.getCommerceCartItemId(), false,
+				"please-select-a-valid-product");
+		}
+
+		if (!cpInstance.isApproved() || !cpInstance.getPublished()) {
+			return new CommerceCartValidatorResult(
+				commerceCartItem.getCommerceCartItemId(), false,
+				"product-is-no-longer-available");
+		}
 
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
@@ -94,7 +107,13 @@ public class AvailabilityCommerceCartValidatorImpl
 		throws PortalException {
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(false);
+			return new CommerceCartValidatorResult(
+				false, "please-select-a-valid-product");
+		}
+
+		if (!cpInstance.isApproved() || !cpInstance.getPublished()) {
+			return new CommerceCartValidatorResult(
+				false, "product-is-no-longer-available");
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =

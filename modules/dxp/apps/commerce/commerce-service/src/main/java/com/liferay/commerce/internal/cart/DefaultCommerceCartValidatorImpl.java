@@ -54,22 +54,13 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 		throws PortalException {
 
 		if (commerceCartItem == null) {
-			return new CommerceCartValidatorResult(
-				false, "product-is-no-longer-available");
+			return new CommerceCartValidatorResult(false);
 		}
 
-		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
+		CPInstance cpInstance = commerceCartItem.getCPInstance();
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
-				"please-select-a-valid-product");
-		}
-
-		if (!cpInstance.isApproved() || !cpInstance.getPublished()) {
-			return new CommerceCartValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
-				"product-is-no-longer-available");
+			return new CommerceCartValidatorResult(false);
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =
@@ -127,13 +118,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 		throws PortalException {
 
 		if (cpInstance == null) {
-			return new CommerceCartValidatorResult(
-				false, "please-select-a-valid-product");
-		}
-
-		if (!cpInstance.isApproved() || !cpInstance.getPublished()) {
-			return new CommerceCartValidatorResult(
-				false, "product-is-no-longer-available");
+			return new CommerceCartValidatorResult(false);
 		}
 
 		CPDefinitionInventory cpDefinitionInventory =

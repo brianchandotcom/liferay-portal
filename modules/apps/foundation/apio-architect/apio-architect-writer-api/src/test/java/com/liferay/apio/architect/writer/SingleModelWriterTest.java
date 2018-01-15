@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.liferay.apio.architect.single.model.SingleModel;
 
+import java.util.Collections;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -45,6 +46,8 @@ public class SingleModelWriterTest {
 				__ -> Optional.empty()
 			).requestInfo(
 				null
+			).operationsFunction(
+				__ -> Collections.emptyList()
 			).build());
 
 		Optional<String> optional = singleModelWriter.write();

@@ -21,18 +21,14 @@
 			</then>
 		</if>
 
-		<execute function="AssertClick" locator1="CPSAMLAdminAddServiceProvider#SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureIdentityProvider">
 		<execute function="Check" locator1="CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_SIGN_METADATA_CHECKBOX" />
 		<execute function="Check" locator1="CPSAMLAdminIdentityProvider#IDENTITY_PROVIDER_AUTH_REQUEST_SIGNATURE_REQUIRED_CHECKBOX" />
 
-		<execute function="AssertClick" locator1="CPSAMLAdminIdentityProvider#SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureIdentityProviderConnection">
@@ -50,8 +46,6 @@
 			</else>
 		</if>
 
-		<execute function="AssertClick" locator1="CPSAMLAdminIdentityProviderConnection#SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 </definition>

@@ -120,9 +120,9 @@ public class JSONLDPageMessageMapperTest {
 		_isAJsonObjectWithTheContext = is(aJsonObjectWith(contextConditions));
 
 		_containsTheMembers = contains(
-			aRootElementJsonObjectWithId("1", false),
-			aRootElementJsonObjectWithId("2", false),
-			aRootElementJsonObjectWithId("3", false));
+			aRootElementJsonObjectWithId("1", false, true),
+			aRootElementJsonObjectWithId("2", false, true),
+			aRootElementJsonObjectWithId("3", false, true));
 	}
 
 	private final PageMessageMapper<RootModel> _pageMessageMapper =

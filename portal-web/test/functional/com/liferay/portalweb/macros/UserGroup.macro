@@ -2,7 +2,7 @@
 	<command name="addCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${userGroupName}" />
@@ -98,7 +98,7 @@
 			<var name="key_menuItem" value="Assign Members" />
 		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
@@ -130,7 +130,7 @@
 
 		<execute function="AssertVisible" locator1="NavBar#USERS" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertElementPresent#assertVisible" locator1="Button#ADD" />
 

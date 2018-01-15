@@ -112,7 +112,7 @@
 			</then>
 		</if>
 
-		<execute function="Click" locator1="AddTask#SAVE_BUTTON" />
+		<execute macro="Button#clickSave" />
 
 		<var name="key_taskDescription" value="${taskDescription}" />
 

@@ -1,6 +1,6 @@
 <definition>
 	<command name="add">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="New Role" />
 
@@ -30,7 +30,7 @@
 	</command>
 
 	<command name="addAssignees">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
 
@@ -85,7 +85,7 @@
 
 		<execute function="AssertVisible" locator1="NavBar#ACTIVE_NAV_ITEM_LINK" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertTextEquals" locator1="Portlet#HEADER" value1="New Role" />
 
@@ -121,9 +121,7 @@
 
 		<execute function="ScrollWebElementIntoView" locator1="RolesPermissions#SAVE_BUTTON" />
 
-		<execute function="AssertClick" locator1="RolesPermissions#SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addStagingAdminRole">
@@ -231,7 +229,7 @@
 
 		<execute function="AssertClick" locator1="NavTab#USER_GROUPS" value1="User Groups" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
 
@@ -263,7 +261,7 @@
 
 		<execute function="AssertClick" locator1="NavBar#ASSIGNEES" value1="Assignees" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="SelectFrame" locator1="IFrame#SELECT_ASSIGNEES" />
 
@@ -727,9 +725,7 @@
 
 		<execute function="ScrollWebElementIntoView" locator1="RolesPermissions#SAVE_BUTTON" />
 
-		<execute function="AssertClick" locator1="RolesPermissions#SAVE_BUTTON" value1="Save" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="localizeRoleDescriptionCmd">

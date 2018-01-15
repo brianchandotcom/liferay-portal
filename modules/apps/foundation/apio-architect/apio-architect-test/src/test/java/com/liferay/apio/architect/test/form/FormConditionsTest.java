@@ -144,11 +144,17 @@ public class FormConditionsTest {
 
 		formConditions.describeTo(description);
 
-		String expected =
-			"a Form...\n\t...that should have a non empty title\n\t...that " +
-				"should have a non empty description\n\t...that should " +
-					"return something that is <true>\n\t...that should " +
-						"return something that is \"String\"\n";
+		StringBuilder stringBuilder = new StringBuilder();
+
+		String expected = stringBuilder.append(
+			"a Form...\n\t...that should have a non empty title\n\t...that "
+		).append(
+			"should have a non empty description\n\t...that should return "
+		).append(
+			"something that is <true>\n\t...that should return something that "
+		).append(
+			"is \"String\"\n"
+		).toString();
 
 		assertThat(description.toString(), is(expected));
 	}

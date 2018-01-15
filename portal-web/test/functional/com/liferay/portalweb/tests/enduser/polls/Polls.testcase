@@ -178,9 +178,7 @@
 			<var name="pollsQuestionChoice" value="Choice B" />
 		</execute>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="AddViaPollDisplay" priority="4">

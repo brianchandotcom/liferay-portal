@@ -4,7 +4,7 @@
 	<var name="ddlListName" value="List Name" />
 
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type#clickAtType" locator1="TextInput#NAME" value1="${ddlListName}" />
 
@@ -82,7 +82,7 @@
 	</command>
 
 	<command name="clickSave">
-		<execute function="AssertClick" locator1="DDL#SAVE_BUTTON" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="deleteCP">

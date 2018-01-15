@@ -144,7 +144,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 

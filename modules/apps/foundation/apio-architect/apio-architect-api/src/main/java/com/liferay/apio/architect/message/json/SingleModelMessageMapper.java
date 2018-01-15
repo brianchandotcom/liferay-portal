@@ -17,6 +17,8 @@ package com.liferay.apio.architect.message.json;
 import aQute.bnd.annotation.ConsumerType;
 
 import com.liferay.apio.architect.list.FunctionalList;
+import com.liferay.apio.architect.operation.Method;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.single.model.SingleModel;
 
 import java.util.List;
@@ -57,7 +59,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a resource's boolean field to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param fieldName the field's name
 	 * @param value the field's value
 	 */
@@ -66,10 +68,42 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps an embedded resource operation form's URL to its JSON object
+	 * representation.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param url the operation form's URL
+	 */
+	public default void mapEmbeddedOperationFormURL(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String url) {
+	}
+
+	/**
+	 * Maps an embedded resource operation's method to its JSON object
+	 * representation.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param method the operation's method
+	 */
+	public default void mapEmbeddedOperationMethod(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, Method method) {
+	}
+
+	/**
 	 * Maps an embedded resource's boolean field to its JSON object
 	 * representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param fieldName the field's name
 	 * @param value the field's value
@@ -83,7 +117,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps an embedded resource's link to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param fieldName the field's name
 	 * @param url the field's value
@@ -98,7 +132,7 @@ public interface SingleModelMessageMapper<T> {
 	 * Maps an embedded resource's number field to its JSON object
 	 * representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param fieldName the field's name
 	 * @param value the field's value
@@ -113,7 +147,7 @@ public interface SingleModelMessageMapper<T> {
 	 * Maps an embedded resource's string field to its JSON object
 	 * representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param fieldName the field's name
 	 * @param value the field's value
@@ -127,7 +161,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps an embedded resource's types to their JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param types the resource's types
 	 */
@@ -139,7 +173,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps an embedded resource's URL to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param url the resource's URL
 	 */
@@ -151,7 +185,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a resource's link to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param fieldName the field's name
 	 * @param url the link's URL
 	 */
@@ -162,7 +196,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a linked resource's URL to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param embeddedPathElements the current resource's embedded path elements
 	 * @param url the resource's URL
 	 */
@@ -174,7 +208,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a resource's number field to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param fieldName the field's name
 	 * @param value the field's value
 	 */
@@ -183,9 +217,35 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Maps a resource operation form's URL to its JSON object representation.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param url the operation form's URL
+	 */
+	public default void mapOperationFormURL(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, String url) {
+	}
+
+	/**
+	 * Maps a resource operation's method to its JSON object representation.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param method the operation's method
+	 */
+	public default void mapOperationMethod(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, Method method) {
+	}
+
+	/**
 	 * Maps a resource's URL to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param url the resource's URL
 	 */
 	public default void mapSelfURL(
@@ -195,7 +255,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a resource's string field to its JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param fieldName the field's name
 	 * @param value the field's value
 	 */
@@ -206,7 +266,7 @@ public interface SingleModelMessageMapper<T> {
 	/**
 	 * Maps a resource's types to their JSON object representation.
 	 *
-	 * @param jsonObjectBuilder the JSON object builder for the item
+	 * @param jsonObjectBuilder the JSON object builder for the model
 	 * @param types the resource's types
 	 */
 	public default void mapTypes(
@@ -227,6 +287,36 @@ public interface SingleModelMessageMapper<T> {
 	}
 
 	/**
+	 * Finishes an embedded model's operation. This is the final
+	 * embedded-operation-mapper method the writer calls.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param operation the operation
+	 */
+	public default void onFinishEmbeddedOperation(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, Operation operation) {
+	}
+
+	/**
+	 * Finishes the operation. This is the final operation-mapper method the
+	 * writer calls.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param operation the operation
+	 */
+	public default void onFinishOperation(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, Operation operation) {
+	}
+
+	/**
 	 * Starts the model. This is the first mapper method the writer calls for
 	 * the model.
 	 *
@@ -238,6 +328,36 @@ public interface SingleModelMessageMapper<T> {
 	public default void onStart(
 		JSONObjectBuilder jsonObjectBuilder, T model, Class<T> modelClass,
 		HttpHeaders httpHeaders) {
+	}
+
+	/**
+	 * Starts an embedded model's operation. This is the first
+	 * embedded-operation-mapper method the writer calls.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param embeddedPathElements the current resource's embedded path elements
+	 * @param operation the operation
+	 */
+	public default void onStartEmbeddedOperation(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, Operation operation) {
+	}
+
+	/**
+	 * Starts an operation. This is the first operation-mapper method the writer
+	 * calls.
+	 *
+	 * @param singleModelJSONObjectBuilder the JSON object builder for the model
+	 * @param operationJSONObjectBuilder the JSON object builder for the
+	 *        operation
+	 * @param operation the operation
+	 */
+	public default void onStartOperation(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, Operation operation) {
 	}
 
 	/**

@@ -51,7 +51,7 @@ public class MockFormWriter {
 
 		FormWriter formWriter = FormWriter.create(
 			builder -> builder.form(
-				MockFormCreator.createForm()
+				MockFormCreator.createForm("f", "s")
 			).formMessageMapper(
 				formMessageMapper
 			).requestInfo(

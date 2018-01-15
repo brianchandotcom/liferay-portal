@@ -6,7 +6,7 @@
 			<var name="key_menuItem" value="Templates" />
 		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="AlloyEditor#addTitleAndContent">
 			<var name="content" value="${kbTemplateContent}" />

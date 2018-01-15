@@ -22,7 +22,7 @@
 			</else>
 		</if>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="DDLDataDefinition#editName">
 			<var name="ddlDataDefinitionName" value="${ddlDataDefinitionName}" />

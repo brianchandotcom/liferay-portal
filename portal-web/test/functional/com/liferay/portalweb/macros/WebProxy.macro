@@ -4,9 +4,7 @@
 
 		<execute function="Type" locator1="TextInput#INITIAL_URL" value1="${initialURL}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>

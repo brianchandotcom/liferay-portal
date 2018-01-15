@@ -38,6 +38,8 @@
 	</command>
 
 	<command name="inputDescription">
+		<execute function="Click" locator1="TextArea#DESCRIPTION" />
+
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
 	</command>
 
@@ -52,10 +54,14 @@
 	</command>
 
 	<command name="inputName">
+		<execute function="Click" locator1="TextInput#NAME" />
+
 		<execute function="Type" locator1="TextInput#NAME" value1="${name}" />
 	</command>
 
 	<command name="inputTitle">
+		<execute function="Click" locator1="TextInput#TITLE" />
+
 		<execute function="Type" locator1="TextInput#TITLE" value1="${title}" />
 	</command>
 

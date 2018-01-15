@@ -106,9 +106,7 @@
 		<if>
 			<condition function="IsElementPresent" locator1="Button#SAVE" />
 			<then>
-				<execute macro="Button#clickSave" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#save" />
 			</then>
 			<else>
 				<execute macro="Button#clickUpdate" />

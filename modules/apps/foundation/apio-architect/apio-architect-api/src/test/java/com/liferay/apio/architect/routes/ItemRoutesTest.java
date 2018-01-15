@@ -14,25 +14,32 @@
 
 package com.liferay.apio.architect.routes;
 
+import static com.liferay.apio.architect.operation.Method.DELETE;
+import static com.liferay.apio.architect.operation.Method.UPDATE;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.FORM_BUILDER_FUNCTION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.IDENTIFIER_FUNCTION;
 import static com.liferay.apio.architect.routes.RoutesTestUtil.PROVIDE_FUNCTION;
 
 import static com.spotify.hamcrest.optional.OptionalMatchers.emptyOptional;
+import static com.spotify.hamcrest.optional.OptionalMatchers.optionalWithValue;
 
 import static java.util.Collections.singletonMap;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
 
 import com.liferay.apio.architect.alias.routes.DeleteItemConsumer;
 import com.liferay.apio.architect.alias.routes.GetItemFunction;
 import com.liferay.apio.architect.alias.routes.UpdateItemFunction;
 import com.liferay.apio.architect.form.Form;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -64,6 +71,10 @@ public class ItemRoutesTest {
 			itemRoutes.getUpdateItemFunctionOptional();
 
 		assertThat(updateItemFunctionOptional, is(emptyOptional()));
+
+		List<Operation> operations = itemRoutes.getOperations();
+
+		assertThat(operations, is(empty()));
 	}
 
 	@Test
@@ -254,7 +265,7 @@ public class ItemRoutesTest {
 	}
 
 	private void _testItemRoutes(ItemRoutes<String> itemRoutes) {
-		Optional<Form> optional = itemRoutes.getForm();
+		Optional<Form> optional = itemRoutes.getFormOptional();
 
 		Form form = optional.get();
 
@@ -308,6 +319,22 @@ public class ItemRoutesTest {
 
 		assertThat(updatedSingleModel.getModelClass(), is(String.class));
 		assertThat(updatedSingleModel.getModel(), is("Updated"));
+
+		List<Operation> operations = itemRoutes.getOperations();
+
+		assertThat(operations, hasSize(2));
+
+		Operation firstOperation = operations.get(0);
+
+		assertThat(firstOperation.getFormOptional(), is(emptyOptional()));
+		assertThat(firstOperation.method, is(DELETE));
+		assertThat(firstOperation.name, is("name/delete"));
+
+		Operation secondOperation = operations.get(1);
+
+		assertThat(secondOperation.getFormOptional(), is(optionalWithValue()));
+		assertThat(secondOperation.method, is(UPDATE));
+		assertThat(secondOperation.name, is("name/update"));
 	}
 
 	private void _testOneParameterRemoverRoute(Long identifier, String string) {

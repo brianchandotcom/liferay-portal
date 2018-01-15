@@ -21,6 +21,7 @@ import static com.liferay.apio.architect.wiring.osgi.internal.manager.util.Manag
 import com.liferay.apio.architect.alias.ProvideFunction;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHavePathIdentifierMapper;
 import com.liferay.apio.architect.error.ApioDeveloperError.MustHaveValidGenericType;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.router.ItemRouter;
 import com.liferay.apio.architect.routes.ItemRoutes;
 import com.liferay.apio.architect.routes.ItemRoutes.Builder;
@@ -31,6 +32,8 @@ import com.liferay.apio.architect.wiring.osgi.manager.representable.ModelClassMa
 import com.liferay.apio.architect.wiring.osgi.manager.representable.NameManager;
 import com.liferay.apio.architect.wiring.osgi.manager.router.ItemRouterManager;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.osgi.framework.ServiceReference;
@@ -60,6 +63,17 @@ public class ItemRouterManagerImpl
 			this::getServiceOptional
 		).map(
 			routes -> (ItemRoutes<T>)routes
+		);
+	}
+
+	@Override
+	public <T> List<Operation> getOperations(Class<T> modelClass) {
+		Optional<ItemRoutes> optional = getServiceOptional(modelClass);
+
+		return optional.map(
+			ItemRoutes::getOperations
+		).orElseGet(
+			Collections::emptyList
 		);
 	}
 

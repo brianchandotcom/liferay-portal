@@ -14,6 +14,8 @@
 
 package com.liferay.apio.architect.routes;
 
+import static com.liferay.apio.architect.operation.Method.DELETE;
+import static com.liferay.apio.architect.operation.Method.UPDATE;
 import static com.liferay.apio.architect.routes.RoutesBuilderUtil.provide;
 import static com.liferay.apio.architect.routes.RoutesBuilderUtil.provideConsumer;
 
@@ -31,10 +33,13 @@ import com.liferay.apio.architect.function.HexaFunction;
 import com.liferay.apio.architect.function.PentaFunction;
 import com.liferay.apio.architect.function.TetraFunction;
 import com.liferay.apio.architect.function.TriFunction;
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.single.model.SingleModel;
 import com.liferay.apio.architect.uri.Path;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
@@ -61,6 +66,7 @@ public class ItemRoutes<T> {
 	public ItemRoutes(Builder<T, ?> builder) {
 		_deleteItemConsumer = builder._deleteItemConsumer;
 		_form = builder._form;
+		_name = builder._name;
 		_singleModelFunction = builder._singleModelFunction;
 		_updateItemFunction = builder._updateItemFunction;
 	}
@@ -85,7 +91,7 @@ public class ItemRoutes<T> {
 	 * @return the form used to update a collection item; {@code
 	 *         Optional#empty()} otherwise
 	 */
-	public Optional<Form> getForm() {
+	public Optional<Form> getFormOptional() {
 		return Optional.ofNullable(_form);
 	}
 
@@ -99,6 +105,31 @@ public class ItemRoutes<T> {
 	 */
 	public Optional<GetItemFunction<T>> getItemFunctionOptional() {
 		return Optional.ofNullable(_singleModelFunction);
+	}
+
+	/**
+	 * Returns the list of operations for the single item resource.
+	 *
+	 * @return the list of operations for the single item resource
+	 * @review
+	 */
+	public List<Operation> getOperations() {
+		List<Operation> operations = new ArrayList<>();
+
+		Optional<DeleteItemConsumer> deleteConsumerOptional =
+			getDeleteConsumerOptional();
+
+		if (deleteConsumerOptional.isPresent()) {
+			operations.add(new Operation(DELETE, _name + "/delete"));
+		}
+
+		Optional<Form> formOptional = getFormOptional();
+
+		formOptional.ifPresent(
+			form -> operations.add(
+				new Operation(form, UPDATE, _name + "/update")));
+
+		return operations;
 	}
 
 	/**
@@ -524,6 +555,7 @@ public class ItemRoutes<T> {
 
 	private DeleteItemConsumer _deleteItemConsumer;
 	private Form _form;
+	private final String _name;
 	private GetItemFunction<T> _singleModelFunction;
 	private UpdateItemFunction<T> _updateItemFunction;
 

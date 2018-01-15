@@ -48,8 +48,7 @@
 	</command>
 
 	<command name="save">
-		<execute function="AssertClick" locator1="CalendarConfiguration#SAVE_BUTTON" value1="Save" />
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="selectDefaultDuration">

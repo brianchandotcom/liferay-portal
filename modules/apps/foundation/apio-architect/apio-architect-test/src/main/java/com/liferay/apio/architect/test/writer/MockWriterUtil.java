@@ -14,11 +14,15 @@
 
 package com.liferay.apio.architect.test.writer;
 
+import static com.liferay.apio.architect.operation.Method.DELETE;
+import static com.liferay.apio.architect.operation.Method.UPDATE;
+import static com.liferay.apio.architect.test.form.MockFormCreator.createForm;
 import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createFirstEmbeddedModelRepresentor;
 import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createRootModelRepresentor;
 import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createSecondEmbeddedModelRepresentor;
 import static com.liferay.apio.architect.test.representor.MockRepresentorCreator.createThirdEmbeddedModelRepresentor;
 
+import com.liferay.apio.architect.operation.Operation;
 import com.liferay.apio.architect.representor.Representor;
 import com.liferay.apio.architect.request.RequestInfo;
 import com.liferay.apio.architect.test.model.FirstEmbeddedModel;
@@ -27,6 +31,8 @@ import com.liferay.apio.architect.test.model.SecondEmbeddedModel;
 import com.liferay.apio.architect.uri.Path;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
@@ -43,6 +49,31 @@ import javax.ws.rs.core.HttpHeaders;
  * @author Alejandro Hernández
  */
 public class MockWriterUtil {
+
+	/**
+	 * Returns a model class's {@code Operations}.
+	 *
+	 * @param  modelClass the model class
+	 * @return the model class's {@code Operations}
+	 */
+	public static List<Operation> getOperations(Class<?> modelClass) {
+		if (modelClass == RootModel.class) {
+			Operation deleteOperation = new Operation(
+				DELETE, "delete-operation");
+			Operation putOperation = new Operation(
+				createForm("u", "r"), UPDATE, "update-operation");
+
+			return Arrays.asList(deleteOperation, putOperation);
+		}
+
+		if (modelClass == FirstEmbeddedModel.class) {
+			Operation operation = new Operation(DELETE, "delete-operation");
+
+			return Collections.singletonList(operation);
+		}
+
+		return Collections.emptyList();
+	}
 
 	/**
 	 * Returns a model class's {@link Representor}.

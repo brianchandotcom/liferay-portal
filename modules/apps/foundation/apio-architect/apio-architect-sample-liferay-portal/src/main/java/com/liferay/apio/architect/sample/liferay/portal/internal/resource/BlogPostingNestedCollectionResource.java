@@ -184,9 +184,7 @@ public class BlogPostingNestedCollectionResource
 		}
 		catch (NoSuchEntryException | PrincipalException e) {
 			throw new NotFoundException(
-				"Unable to get blogs entry " +
-					blogsEntryId,
-				e);
+				"Unable to get blogs entry " + blogsEntryId, e);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

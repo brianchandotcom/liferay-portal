@@ -33,7 +33,7 @@
 	</command>
 
 	<command name="addImageResolution">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${imageName}" />
@@ -42,7 +42,9 @@
 		<if>
 			<isset var="description" />
 			<then>
-				<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${description}" />
+				</execute>
 			</then>
 		</if>
 
@@ -90,7 +92,7 @@
 	</command>
 
 	<command name="addNonNumericImageResolution">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${imageName}" />

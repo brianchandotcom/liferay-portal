@@ -127,9 +127,7 @@
 
 		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureEmailFrom">
@@ -138,9 +136,7 @@
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="${emailFromName}" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${emailFromAddress}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureNotificationsEmail">
@@ -154,9 +150,7 @@
 
 		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON_2" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="deleteReportEntryFile">
@@ -254,9 +248,7 @@
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_NAME_FIELD" value1="Joe Bloggs" />
 		<execute function="Type" locator1="ReportsAdminConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="test@liferay.com" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="IFrame#closeFrame" />
 
@@ -283,9 +275,7 @@ Sincerely,<br />
 
 		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute macro="IFrame#closeFrame" />
 
@@ -312,9 +302,7 @@ Sincerely,<br />
 
 		<execute function="Click" locator1="CKEditor#TOOLBAR_SOURCE_BUTTON_2" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="tearDownDefinitions">

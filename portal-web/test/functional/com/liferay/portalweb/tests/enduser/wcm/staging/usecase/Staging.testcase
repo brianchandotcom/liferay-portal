@@ -587,7 +587,7 @@
 			<var name="metadataSetName" value="DM Metadata Set Name" />
 		</execute>
 
-		<execute macro="DMMetadataSet#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

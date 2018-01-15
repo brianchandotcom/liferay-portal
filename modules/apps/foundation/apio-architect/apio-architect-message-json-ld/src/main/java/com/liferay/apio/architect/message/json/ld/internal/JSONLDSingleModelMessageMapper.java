@@ -17,6 +17,8 @@ package com.liferay.apio.architect.message.json.ld.internal;
 import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
+import com.liferay.apio.architect.operation.Method;
+import com.liferay.apio.architect.operation.Operation;
 
 import java.util.List;
 import java.util.Optional;
@@ -55,6 +57,32 @@ public class JSONLDSingleModelMessageMapper<T>
 			fieldName
 		).booleanValue(
 			value
+		);
+	}
+
+	@Override
+	public void mapEmbeddedOperationFormURL(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, String url) {
+
+		operationJSONObjectBuilder.field(
+			"expects"
+		).stringValue(
+			url
+		);
+	}
+
+	@Override
+	public void mapEmbeddedOperationMethod(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, Method method) {
+
+		operationJSONObjectBuilder.field(
+			"method"
+		).stringValue(
+			method.name()
 		);
 	}
 
@@ -220,6 +248,30 @@ public class JSONLDSingleModelMessageMapper<T>
 	}
 
 	@Override
+	public void mapOperationFormURL(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, String url) {
+
+		operationJSONObjectBuilder.field(
+			"expects"
+		).stringValue(
+			url
+		);
+	}
+
+	@Override
+	public void mapOperationMethod(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, Method method) {
+
+		operationJSONObjectBuilder.field(
+			"method"
+		).stringValue(
+			method.name()
+		);
+	}
+
+	@Override
 	public void mapSelfURL(JSONObjectBuilder jsonObjectBuilder, String url) {
 		jsonObjectBuilder.field(
 			"@id"
@@ -260,6 +312,64 @@ public class JSONLDSingleModelMessageMapper<T>
 			"@context", "@vocab"
 		).stringValue(
 			"http://schema.org"
+		);
+	}
+
+	@Override
+	public void onFinishEmbeddedOperation(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder,
+		FunctionalList<String> embeddedPathElements, Operation operation) {
+
+		Stream<String> tailStream = embeddedPathElements.tailStream();
+
+		String head = embeddedPathElements.head();
+		String[] tail = tailStream.toArray(String[]::new);
+
+		operationJSONObjectBuilder.field(
+			"@id"
+		).stringValue(
+			operation.name
+		);
+
+		operationJSONObjectBuilder.field(
+			"@type"
+		).stringValue(
+			"Operation"
+		);
+
+		singleModelJSONObjectBuilder.nestedField(
+			head, tail
+		).field(
+			"operation"
+		).arrayValue(
+		).add(
+			operationJSONObjectBuilder
+		);
+	}
+
+	@Override
+	public void onFinishOperation(
+		JSONObjectBuilder singleModelJSONObjectBuilder,
+		JSONObjectBuilder operationJSONObjectBuilder, Operation operation) {
+
+		operationJSONObjectBuilder.field(
+			"@id"
+		).stringValue(
+			operation.name
+		);
+
+		operationJSONObjectBuilder.field(
+			"@type"
+		).stringValue(
+			"Operation"
+		);
+
+		singleModelJSONObjectBuilder.field(
+			"operation"
+		).arrayValue(
+		).add(
+			operationJSONObjectBuilder
 		);
 	}
 

@@ -1510,7 +1510,7 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="Vocabulary Name" />
 		</execute>

@@ -58,7 +58,9 @@
 	<command name="addCustomAbstract">
 		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
 
-		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${entryAbstractDescription}" />
+		<execute macro="PortletEntry#inputDescription">
+			<var name="description" value="${entryAbstractDescription}" />
+		</execute>
 	</command>
 
 	<command name="addCustomURL">
@@ -206,7 +208,10 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="BlogsEntry#TITLE" value1="${entryTitle}" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="${entryTitle}" />
+		</execute>
+
 		<execute function="Type" locator1="BlogsEntry#CONTENT" value1="${entryContent}" />
 
 		<execute function="AssertClick" locator1="Button#SUBMIT_FOR_PUBLICATION" value1="Submit for Publication" />

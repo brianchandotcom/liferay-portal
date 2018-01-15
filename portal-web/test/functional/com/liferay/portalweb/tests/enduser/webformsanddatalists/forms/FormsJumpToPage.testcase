@@ -79,7 +79,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Choose Your Destiny" />=
+			<var name="conditionField" value="Choose Your Destiny" />
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueField" value="Destiny 2" />
@@ -97,7 +97,7 @@
 		<execute macro="FormRules#addRule" />
 
 		<execute macro="FormRules#configureConditionOptions">
-			<var name="conditionField" value="Choose Your Destiny" />=
+			<var name="conditionField" value="Choose Your Destiny" />
 			<var name="conditionOperator" value="Is equal to" />
 			<var name="conditionRowNumber" value="1" />
 			<var name="conditionValueField" value="Destiny 3" />

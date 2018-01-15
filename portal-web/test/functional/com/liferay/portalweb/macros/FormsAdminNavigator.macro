@@ -7,7 +7,7 @@
 	</command>
 
 	<command name="gotoAddForm">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 	</command>
 
 	<command name="gotoBack">

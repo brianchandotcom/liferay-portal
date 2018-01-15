@@ -67,7 +67,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_APPLICATIONS_PANEL_COLLAPSED</td>
-	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='false' and contains(.,'Applications')]</td>]
+	<td>//*[@data-qa-id='addMenuAddApplicationCategory'][@aria-expanded='false' and contains(.,'Applications')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_CONTENT_PANEL_COLLAPSED</td>
-	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='false' and contains(.,'Content')]</td>]
+	<td>//*[@data-qa-id='addMenuAddContentCategory'][@aria-expanded='false' and contains(.,'Content')]</td>
 	<td></td>
 </tr>
 <tr>

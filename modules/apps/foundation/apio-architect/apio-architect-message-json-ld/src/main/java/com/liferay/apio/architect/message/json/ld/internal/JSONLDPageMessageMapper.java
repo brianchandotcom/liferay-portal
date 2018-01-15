@@ -14,13 +14,12 @@
 
 package com.liferay.apio.architect.message.json.ld.internal;
 
-import com.liferay.apio.architect.list.FunctionalList;
 import com.liferay.apio.architect.message.json.JSONObjectBuilder;
 import com.liferay.apio.architect.message.json.PageMessageMapper;
 import com.liferay.apio.architect.message.json.SingleModelMessageMapper;
 import com.liferay.apio.architect.pagination.Page;
 
-import java.util.List;
+import java.util.Optional;
 
 import javax.ws.rs.core.HttpHeaders;
 
@@ -44,6 +43,13 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 	@Override
 	public String getMediaType() {
 		return "application/ld+json";
+	}
+
+	@Override
+	public Optional<SingleModelMessageMapper<T>>
+		getSingleModelMessageMapperOptional() {
+
+		return Optional.of(_singleModelMessageMapper);
 	}
 
 	@Override
@@ -76,127 +82,6 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 	}
 
 	@Override
-	public void mapItemBooleanField(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, String fieldName,
-		Boolean value) {
-
-		_singleModelMessageMapper.mapBooleanField(
-			itemJSONObjectBuilder, fieldName, value);
-	}
-
-	@Override
-	public void mapItemEmbeddedResourceBooleanField(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, String fieldName,
-		Boolean value) {
-
-		_singleModelMessageMapper.mapEmbeddedResourceBooleanField(
-			itemJSONObjectBuilder, embeddedPathElements, fieldName, value);
-	}
-
-	@Override
-	public void mapItemEmbeddedResourceLink(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, String fieldName,
-		String url) {
-
-		_singleModelMessageMapper.mapEmbeddedResourceLink(
-			itemJSONObjectBuilder, embeddedPathElements, fieldName, url);
-	}
-
-	@Override
-	public void mapItemEmbeddedResourceNumberField(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, String fieldName,
-		Number value) {
-
-		_singleModelMessageMapper.mapEmbeddedResourceNumberField(
-			itemJSONObjectBuilder, embeddedPathElements, fieldName, value);
-	}
-
-	@Override
-	public void mapItemEmbeddedResourceStringField(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, String fieldName,
-		String value) {
-
-		_singleModelMessageMapper.mapEmbeddedResourceStringField(
-			itemJSONObjectBuilder, embeddedPathElements, fieldName, value);
-	}
-
-	@Override
-	public void mapItemEmbeddedResourceTypes(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, List<String> types) {
-
-		_singleModelMessageMapper.mapEmbeddedResourceTypes(
-			itemJSONObjectBuilder, embeddedPathElements, types);
-	}
-
-	@Override
-	public void mapItemEmbeddedResourceURL(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, String url) {
-
-		_singleModelMessageMapper.mapEmbeddedResourceURL(
-			itemJSONObjectBuilder, embeddedPathElements, url);
-	}
-
-	@Override
-	public void mapItemLink(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, String fieldName, String url) {
-
-		_singleModelMessageMapper.mapLink(
-			itemJSONObjectBuilder, fieldName, url);
-	}
-
-	@Override
-	public void mapItemLinkedResourceURL(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder,
-		FunctionalList<String> embeddedPathElements, String url) {
-
-		_singleModelMessageMapper.mapLinkedResourceURL(
-			itemJSONObjectBuilder, embeddedPathElements, url);
-	}
-
-	@Override
-	public void mapItemNumberField(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, String fieldName,
-		Number value) {
-
-		_singleModelMessageMapper.mapNumberField(
-			itemJSONObjectBuilder, fieldName, value);
-	}
-
-	@Override
-	public void mapItemSelfURL(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, String url) {
-
-		_singleModelMessageMapper.mapSelfURL(itemJSONObjectBuilder, url);
-	}
-
-	@Override
-	public void mapItemStringField(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, String fieldName,
-		String value) {
-
-		_singleModelMessageMapper.mapStringField(
-			itemJSONObjectBuilder, fieldName, value);
-	}
-
-	@Override
 	public void mapItemTotalCount(
 		JSONObjectBuilder jsonObjectBuilder, int totalCount) {
 
@@ -205,14 +90,6 @@ public class JSONLDPageMessageMapper<T> implements PageMessageMapper<T> {
 		).numberValue(
 			totalCount
 		);
-	}
-
-	@Override
-	public void mapItemTypes(
-		JSONObjectBuilder pageJSONObjectBuilder,
-		JSONObjectBuilder itemJSONObjectBuilder, List<String> types) {
-
-		_singleModelMessageMapper.mapTypes(itemJSONObjectBuilder, types);
 	}
 
 	@Override

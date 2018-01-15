@@ -63,12 +63,14 @@ public class JSONLDTestUtil {
 	 *
 	 * @param  id the ID of the {@code RootElement}
 	 * @param  addVocab {@code true} if the {@code @vocab} check must be added
+	 * @param  member {@code true} if this {@code RootElement} is added as a
+	 *         collection's member
 	 * @return a matcher for a JSON Object of a {@code RootElement} with the
 	 *         provided ID
 	 * @review
 	 */
 	public static Matcher<JsonElement> aRootElementJsonObjectWithId(
-		String id, boolean addVocab) {
+		String id, boolean addVocab, boolean member) {
 
 		Builder builder = new Builder();
 
@@ -98,7 +100,7 @@ public class JSONLDTestUtil {
 		Matcher<JsonElement> isAJsonObjectWithTheContext = is(
 			aJsonObjectWith(contextConditions));
 
-		Conditions conditions = builder.where(
+		Builder rootElementBuilder = builder.where(
 			"@context", isAJsonObjectWithTheContext
 		).where(
 			"@id", isALinkTo("localhost/p/model/" + id)
@@ -117,7 +119,7 @@ public class JSONLDTestUtil {
 		).where(
 			"date2", is(aJsonString(equalTo("2017-04-03T18:36Z")))
 		).where(
-			"embedded1", isAJsonObjectWithTheFirstEmbedded()
+			"embedded1", isAJsonObjectWithTheFirstEmbedded(member)
 		).where(
 			"embedded2", isALinkTo("localhost/p/first-inner-model/second")
 		).where(
@@ -146,9 +148,55 @@ public class JSONLDTestUtil {
 			"string1", is(aJsonString(equalTo("Live long and prosper")))
 		).where(
 			"string2", is(aJsonString(equalTo("Hypermedia")))
+		);
+
+		if (member) {
+			return aJsonObjectWith(rootElementBuilder.build());
+		}
+
+		Conditions conditions = rootElementBuilder.where(
+			"operation", containsTheRootOperations()
 		).build();
 
 		return aJsonObjectWith(conditions);
+	}
+
+	/**
+	 * Returns a {@link Matcher} that checks if the field contains the {@code
+	 * RootModel} operations.
+	 *
+	 * @return a matcher for a type JSON Array
+	 * @review
+	 */
+	@SuppressWarnings("unchecked")
+	public static Matcher<? extends JsonElement> containsTheRootOperations() {
+		Builder builder = new Builder();
+
+		Conditions firstOperationConditions = builder.where(
+			"@id", is(aJsonString(equalTo("delete-operation")))
+		).where(
+			"@type", is(aJsonString(equalTo("Operation")))
+		).where(
+			"method", is(aJsonString(equalTo("DELETE")))
+		).build();
+
+		Conditions secondOperationConditions = builder.where(
+			"@id", is(aJsonString(equalTo("update-operation")))
+		).where(
+			"@type", is(aJsonString(equalTo("Operation")))
+		).where(
+			"expects", is(aJsonString(equalTo("localhost/f/u/r")))
+		).where(
+			"method", is(aJsonString(equalTo("UPDATE")))
+		).build();
+
+		Matcher<? super JsonElement> operation1 = is(
+			aJsonObjectWith(firstOperationConditions));
+
+		Matcher<? super JsonElement> operation2 = is(
+			aJsonObjectWith(secondOperationConditions));
+
+		return is(aJsonArrayThat(contains(operation1, operation2)));
 	}
 
 	/**
@@ -179,10 +227,14 @@ public class JSONLDTestUtil {
 	 * Returns a {@link Matcher} that checks if the field is a JSON Object of
 	 * the first embedded.
 	 *
+	 * @param  member {@code true} if this {@code FirstEmbeddedModel} is added
+	 *         as a collection's member
 	 * @return a matcher for a JSON Object of the first embedded
 	 * @review
 	 */
-	public static Matcher<JsonElement> isAJsonObjectWithTheFirstEmbedded() {
+	public static Matcher<JsonElement> isAJsonObjectWithTheFirstEmbedded(
+		boolean member) {
+
 		Builder builder = new Builder();
 
 		Conditions firstEmbeddedContextConditions = builder.where(
@@ -191,7 +243,7 @@ public class JSONLDTestUtil {
 			"relatedCollection", IS_A_TYPE_ID_JSON_OBJECT
 		).build();
 
-		Conditions firstEmbeddedConditions = builder.where(
+		Builder firstEmbeddedBuilder = builder.where(
 			"@context", is(aJsonObjectWith(firstEmbeddedContextConditions))
 		).where(
 			"@id", isALinkTo("localhost/p/first-inner-model/first")
@@ -216,9 +268,25 @@ public class JSONLDTestUtil {
 			isALinkTo("localhost/p/first-inner-model/first/models")
 		).where(
 			"string", is(aJsonString(equalTo("A string")))
+		);
+
+		if (member) {
+			return aJsonObjectWith(firstEmbeddedBuilder.build());
+		}
+
+		Matcher<? super JsonElement> anOperation = builder.where(
+			"@id", is(aJsonString(equalTo("delete-operation")))
+		).where(
+			"@type", is(aJsonString(equalTo("Operation")))
+		).where(
+			"method", is(aJsonString(equalTo("DELETE")))
 		).build();
 
-		return is(aJsonObjectWith(firstEmbeddedConditions));
+		Conditions conditions = firstEmbeddedBuilder.where(
+			"operation", is(aJsonArrayThat(contains(anOperation)))
+		).build();
+
+		return aJsonObjectWith(conditions);
 	}
 
 	/**

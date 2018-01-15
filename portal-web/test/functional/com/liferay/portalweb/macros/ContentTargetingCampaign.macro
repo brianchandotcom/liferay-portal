@@ -340,7 +340,7 @@
 			<var name="navItem" value="Reports" />
 		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 	</command>
 
 	<command name="gotoEditReport">

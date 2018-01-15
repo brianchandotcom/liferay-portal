@@ -21,6 +21,7 @@ Export-Package:\
 	com.liferay.apio.architect.list,\
 	com.liferay.apio.architect.logger,\
 	com.liferay.apio.architect.message.json,\
+	com.liferay.apio.architect.operation,\
 	com.liferay.apio.architect.pagination,\
 	com.liferay.apio.architect.provider,\
 	com.liferay.apio.architect.related,\

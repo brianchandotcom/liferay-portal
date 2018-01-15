@@ -1,6 +1,6 @@
 <definition>
 	<command name="_gotoAddArticleViaTemplate">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="${kbTemplateTitle}">
 			<var name="key_menuItem" value="${kbTemplateTitle}" />
@@ -8,7 +8,7 @@
 	</command>
 
 	<command name="_gotoAddBasicArticle">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
 			<var name="key_menuItem" value="Basic Article" />
@@ -25,7 +25,7 @@
 	</command>
 
 	<command name="_gotoImportArticle">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Import">
 			<var name="key_menuItem" value="Import" />
@@ -279,7 +279,7 @@
 	</command>
 
 	<command name="addCPWithBooleanCustomField">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
 			<var name="key_menuItem" value="Basic Article" />
@@ -304,7 +304,7 @@
 	</command>
 
 	<command name="addCPWithInvalidAttachmentSize">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
 			<var name="key_menuItem" value="Basic Article" />
@@ -329,7 +329,7 @@
 	</command>
 
 	<command name="addCPWithInvalidTitle">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Basic Article">
 			<var name="key_menuItem" value="Basic Article" />
@@ -418,9 +418,7 @@
 
 				<execute function="Type" locator1="KnowledgeBaseConfiguration#EMAIL_FROM_ADDRESS_FIELD" value1="${userEmailAddress}" />
 
-				<execute macro="Button#clickSave" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#save" />
 			</then>
 		</if>
 
@@ -437,9 +435,7 @@
 
 				<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-				<execute macro="Button#clickSave" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#save" />
 			</then>
 		</if>
 
@@ -456,9 +452,7 @@
 
 				<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-				<execute macro="Button#clickSave" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#save" />
 			</then>
 		</if>
 
@@ -475,9 +469,7 @@
 
 				<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-				<execute macro="Button#clickSave" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#save" />
 			</then>
 		</if>
 
@@ -573,9 +565,7 @@
 			</elseif>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
@@ -602,9 +592,7 @@
 
 		<execute function="SelectFrame" locator1="KnowledgeBaseConfiguration#IFRAME" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureKBRatingTypePG">
@@ -646,9 +634,7 @@
 
 		<execute function="AddSelection" locator1="KnowledgeBaseSection#CONFIGURATION_SECTIONS_SELECT" value1="${kbArticleSection}" />
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="configureKBSocialBookmarkSites">

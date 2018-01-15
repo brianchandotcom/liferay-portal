@@ -67,7 +67,9 @@
 		<execute function="AssertClick" locator1="CalendarResources#RESOURCE_MENULIST_EDIT" value1="Edit" />
 
 		<execute function="AssertTextEquals" locator1="CalendarEditResource#HEADER_TITLE" value1="${calendarResourceName}" />
-		<execute function="Type" locator1="CalendarEditResource#NAME_FIELD" value1="${calendarResourceNameEdit}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${calendarResourceNameEdit}" />
+		</execute>
 
 		<execute macro="CalendarResource#save" />
 

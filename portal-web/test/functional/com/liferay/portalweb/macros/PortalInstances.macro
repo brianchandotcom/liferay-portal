@@ -1,6 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="Type" locator1="TextInput#WEB_ID" value1="${webId}" />
 		<execute function="Type" locator1="TextInput#VIRTUAL_HOST" value1="${virtualHost}" />

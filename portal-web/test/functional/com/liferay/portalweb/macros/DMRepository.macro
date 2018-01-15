@@ -36,7 +36,9 @@
 	</command>
 
 	<command name="edit">
-		<execute function="Type" locator1="DocumentsAndMediaEditRepository#NAME_FIELD" value1="${dmRepositoryName}" />
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${dmRepositoryName}" />
+		</execute>
 	</command>
 
 	<command name="gotoCP">

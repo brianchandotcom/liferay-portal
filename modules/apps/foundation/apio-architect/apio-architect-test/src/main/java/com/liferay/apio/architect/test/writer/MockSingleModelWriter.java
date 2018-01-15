@@ -71,6 +71,8 @@ public class MockSingleModelWriter {
 					MockWriterUtil::getRepresentorOptional
 				).requestInfo(
 					requestInfo
+				).operationsFunction(
+					MockWriterUtil::getOperations
 				).build());
 
 		Optional<String> optional = singleModelWriter.write();

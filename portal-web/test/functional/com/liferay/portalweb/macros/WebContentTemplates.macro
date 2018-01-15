@@ -164,7 +164,9 @@
 		<if>
 			<isset var="templateDescription" />
 			<then>
-				<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${templateDescription}" />
+				<execute macro="PortletEntry#inputDescription">
+					<var name="description" value="${templateDescription}" />
+				</execute>
 			</then>
 		</if>
 
@@ -239,7 +241,7 @@
 	</command>
 
 	<command name="save">
-		<execute function="AssertClick" locator1="DDMEditTemplate#SAVE_BUTTON" value1="Save" />
+		<execute macro="Button#clickSave" />
 	</command>
 
 	<command name="tearDownCP">

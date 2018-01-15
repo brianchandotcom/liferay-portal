@@ -117,7 +117,7 @@
 			<var name="portlet" value="Message Boards" />
 		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Thread">
 			<var name="key_menuItem" value="Thread" />

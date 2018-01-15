@@ -98,7 +98,9 @@
 
 		<execute macro="WebContentNavigator#gotoAddCP" />
 
-		<execute function="Type" locator1="TextInput#TITLE" value1="Web Content Title" />
+		<execute macro="PortletEntry#inputTitle">
+			<var name="title" value="Web Content Title" />
+		</execute>
 
 		<execute function="Click#pauseClickAt" locator1="AlloyEditor#EDITOR">
 			<var name="key_editor" value="content" />

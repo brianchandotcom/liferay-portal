@@ -34,10 +34,11 @@ public class MockFormCreator {
 	/**
 	 * Creates a mock {@code Form}.
 	 *
+	 * @param  paths the list of paths for the form
 	 * @return the mock {@code Form}
 	 */
-	public static Form createForm() {
-		Builder<Object> builder = new Builder<>(Arrays.asList("f", "s"));
+	public static Form createForm(String... paths) {
+		Builder<Object> builder = new Builder<>(Arrays.asList(paths));
 
 		return builder.title(
 			__ -> "title"

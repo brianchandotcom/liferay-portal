@@ -167,9 +167,7 @@ public class WebPageElementNestedCollectionResource
 		}
 		catch (NoSuchArticleException nsae) {
 			throw new NotFoundException(
-				"Unable to get article " +
-					journalArticleId,
-				nsae);
+				"Unable to get article " + journalArticleId, nsae);
 		}
 		catch (PortalException pe) {
 			throw new ServerErrorException(500, pe);

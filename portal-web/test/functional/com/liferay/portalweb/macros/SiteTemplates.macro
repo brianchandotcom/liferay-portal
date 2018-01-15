@@ -27,7 +27,7 @@
 	</command>
 
 	<command name="addCP">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="PortletEntry#inputName">
 			<var name="name" value="${siteTemplateName}" />
@@ -51,9 +51,7 @@
 			</then>
 		</if>
 
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="PortletEntry#save" />
 	</command>
 
 	<command name="addSitePageViaSiteTemplateCP">
@@ -369,7 +367,7 @@
 	</command>
 
 	<command name="viewNoTemplatesDisplay">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 		<var name="key_siteTemplateName" value="${siteTemplateName}" />
 
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${siteTemplateName}">

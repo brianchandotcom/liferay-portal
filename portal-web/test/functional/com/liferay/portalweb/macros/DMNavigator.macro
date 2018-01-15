@@ -2,7 +2,7 @@
 	<var name="dmDocumentTypeName" value="Basic Document" />
 
 	<command name="gotoAddDocumentType">
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<var name="key_dmDocumentTypeName" value="${dmDocumentTypeName}" />
 
@@ -14,7 +14,7 @@
 	<command name="gotoAddRepositoryCP">
 		<execute function="AssertVisible" locator1="Button#PLUS" />
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Repository">
 			<var name="key_menuItem" value="Repository" />

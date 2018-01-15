@@ -1271,7 +1271,7 @@
 			<var name="portlet" value="Export" />
 		</execute>
 
-		<execute function="Click" locator1="Button#PLUS" />
+		<execute macro="LexiconEntry#gotoAdd" />
 
 		<execute macro="LAR#exportSuccess" />
 

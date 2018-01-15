@@ -326,7 +326,7 @@ public class RootEndpointImpl implements RootEndpoint {
 		Try<ItemRoutes<Object>> itemRoutesTry = _getItemRoutesTry(name);
 
 		return itemRoutesTry.map(
-			ItemRoutes::getForm
+			ItemRoutes::getFormOptional
 		).map(
 			Optional::get
 		).mapFailMatching(

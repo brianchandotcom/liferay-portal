@@ -26,6 +26,6 @@
 	<command name="typeFragmentEditor">
 		<var method="StringUtil#toUpperCase('${editor}')" name="key_editor" />
 
-		<execute function="Type#typeAceEditorNoError" locator1="Fragment#${key_editor}_EDITOR" value1="${templateScript}" />"
+		<execute function="Type#typeAceEditorNoError" locator1="Fragment#${key_editor}_EDITOR" value1="${templateScript}" />
 	</command>
 </definition>

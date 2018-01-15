@@ -191,7 +191,7 @@ AUI.add(
 			beforeSidebarDragStart: function() {
 				var instance = this;
 
-				instance.sidebarSortable.before(
+				instance.sidebarSortable.after(
 					'drag:start',
 					function(event) {
 						var clonedNode = A.DD.DDM.activeDrag.get('node').clone();
@@ -265,6 +265,16 @@ AUI.add(
 				);
 			},
 
+			removeEmptyFormClass: function() {
+				var instance = this;
+
+				if (A.one('.lfr-initial-col')) {
+					A.one('#lfr-initial-col-message').remove();
+					A.one('.lfr-initial-col').removeClass('col-empty-over');
+					A.one('.lfr-initial-col').removeClass('lfr-initial-col');
+				}
+			},
+
 			showResizeableColumnsDrop: function(columnSide, dropNode, increment) {
 				var instance = this;
 
@@ -296,6 +306,8 @@ AUI.add(
 					appendNode.remove();
 					return;
 				}
+
+				instance.removeEmptyFormClass();
 
 				instance._newFieldContainer = appendNode.ancestor('.col').getData('layout-col');
 				appendNode.remove();
@@ -332,19 +344,6 @@ AUI.add(
 				instance.afterPlaceholderAlign(instance.sortable1);
 
 				instance.afterDragEnd(instance.sortable1);
-
-				instance._getPageManagerInstance()._getWizard().after(
-					'selectedChange',
-					function() {
-						setTimeout(
-							function() {
-								instance._destroySortable(instance.sortable1);
-								instance._applyDragAndDrop();
-							},
-							0
-						);
-					}
-				);
 			},
 
 			_addFieldSetInDragAndDropLayout: function(fieldSetId) {
@@ -369,6 +368,20 @@ AUI.add(
 
 				node.addClass('col-empty-over');
 				instance.activeDropColStack.push(node);
+			},
+
+			_adjustEmptyForm: function(activeLayout) {
+				var instance = this;
+
+				if (activeLayout.get('rows').length == 1 && instance._verifyEmptyForm(activeLayout.get('rows')[0]) && !A.one('#lfr-initial-col-message')) {
+					var columnMessageNode = A.Node.create('<div/>');
+
+					columnMessageNode.text(Liferay.Language.get('drag-from-sidebar-and-drop-here'));
+					columnMessageNode.setAttribute('id', 'lfr-initial-col-message');
+
+					activeLayout.get('rows')[0].get('cols')[0].get('node').addClass('lfr-initial-col');
+					activeLayout.get('rows')[0].get('cols')[0].get('node').append(columnMessageNode);
+				}
 			},
 
 			_afterDragAlign: function(event) {
@@ -400,6 +413,8 @@ AUI.add(
 
 				layoutBuilder.set('enableRemoveRows', false);
 				layoutBuilder.set('enableMoveRows', false);
+
+				instance._adjustEmptyForm(instance.getActiveLayout());
 			},
 
 			_afterDragStart: function(event) {
@@ -692,7 +707,17 @@ AUI.add(
 			},
 
 			_updateFieldsetDraggingStatus: function(fieldset, status) {
+				var instance = this;
+
 				return fieldset.set('isDragging', status);
+			},
+
+			_verifyEmptyForm: function(row) {
+				var instance = this;
+
+				if (row.get('cols').length == 1 && row.get('cols')[0].get('value') && !row.get('cols')[0].get('value').get('fields').length) {
+					return true;
+				}
 			}
 		};
 

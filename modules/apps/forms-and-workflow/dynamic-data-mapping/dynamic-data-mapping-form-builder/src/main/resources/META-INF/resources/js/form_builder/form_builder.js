@@ -177,7 +177,7 @@ AUI.add(
 
 						instance._sidebar.destroy();
 
-						if(instance.sidebarSortable){
+						if (instance.sidebarSortable) {
 							instance.sidebarSortable.delegate.destroy();
 							instance.sidebarSortable.destroy();
 						}
@@ -992,6 +992,8 @@ AUI.add(
 					_insertField: function(field) {
 						var instance = this;
 
+						instance.removeEmptyFormClass();
+
 						field.set(
 							'context',
 							{
@@ -1096,7 +1098,7 @@ AUI.add(
 						if (listCols) {
 							listCols.get('node').forEach(
 								function(element) {
-									if (!element.ancestor('.col-empty')) {
+									if (!element.ancestor('.col-empty') && !element.ancestor('.lfr-initial-col')) {
 										element.ancestor('.col').addClass('col-empty');
 										element.ancestor('.col').empty();
 									}

@@ -1,4 +1,30 @@
 .form-builder {
+	fieldset[disabled] .form-control, .form-control[disabled] {
+		background-color: #869CAD;
+	}
+
+	.form-builder-layout .layout-row-container-row .layout-row .col.col-empty.col-empty-over {
+		opacity: 1;
+	}
+
+	.form-builder-layout .layout-row-container-row .layout-row {
+		.col.col-empty.col-empty-over, .col.lfr-initial-col {
+			background-color: $light-100;
+			border: 2px dashed $light-blue-200;
+			border-radius: 4px;
+		}
+
+		.col.lfr-initial-col {
+			align-items: center;
+			color: $medium-blue;
+			display: flex;
+			justify-content: center;
+			margin: 44px auto 50px;
+			max-width: 1185px;
+			min-height: 56px;
+		}
+	}
+
 	.layout-builder-resize-col-draggable {
 		width: 3px;
 	}
@@ -7,17 +33,6 @@
 		border-radius: 5px;
 		height: 100%;
 		padding: 0 32px;
-	}
-
-	fieldset[disabled] .form-control, .form-control[disabled] {
-		background-color: #869CAD;
-	}
-
-	.form-builder-layout .layout-row-container-row .layout-row .col.col-empty.col-empty-over {
-		background-color: #F0F5FF;
-		border: 2px dashed #80ACFF;
-		border-radius: 4px;
-		opacity: 1;
 	}
 
 	div.form-builder-field-list-container {
@@ -42,7 +57,10 @@
 
 		.btn {
 			border-color: #CDCED9;
+			display: inline-block;
+			line-height: 26px;
 			margin-left: 7px;
+			text-align: center;
 
 			&:hover {
 				cursor: pointer;
@@ -90,6 +108,15 @@ div.sortable-layout-drag-indicator {
 	.list-group-item {
 		background-color: $light;
 		box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+
+		.flex-col:first-child {
+			margin: 0 16px 0 8px;
+		}
+
+		.list-group-subtitle {
+			font-size: $sidebar-list-subtitle-font-size;
+			margin-bottom: 2px;
+		}
 	}
 }
 

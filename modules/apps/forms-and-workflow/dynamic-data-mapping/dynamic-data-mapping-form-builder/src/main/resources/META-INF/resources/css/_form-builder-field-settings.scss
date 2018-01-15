@@ -201,11 +201,9 @@ div.portlet-forms-admin .form-builder-layout .layout-row-container-row .layout-r
 	display: none;
 }
 
-.lfr-ddm-add-field {
+.lfr-ddm-add-field.btn {
 	cursor: pointer;
-	font-size: 24px;
-	padding-bottom: 4px;
-	padding-top: 0;
+	padding: 0.43125rem 0.67125rem;
 	position: fixed;
 	right: 20px;
 	top: 75px;

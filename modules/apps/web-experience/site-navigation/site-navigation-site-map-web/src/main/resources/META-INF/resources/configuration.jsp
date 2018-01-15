@@ -91,7 +91,7 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
 

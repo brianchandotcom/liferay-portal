@@ -38,6 +38,6 @@ SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTy
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-block btn-lg" type="submit" />
+		<aui:button cssClass="btn-block" type="submit" />
 	</aui:button-row>
 </aui:form>

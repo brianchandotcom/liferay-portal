@@ -41,6 +41,6 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-block btn-lg" type="submit" value="save" />
+		<aui:button cssClass="btn-block" type="submit" value="save" />
 	</aui:button-row>
 </aui:form>

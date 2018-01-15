@@ -19,6 +19,7 @@ import com.liferay.portal.search.solr.filter.PrefixFilterTranslator;
 
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.PrefixQuery;
+import org.apache.lucene.search.Query;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 public class PrefixFilterTranslatorImpl implements PrefixFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(PrefixFilter prefixFilter) {
+	public Query translate(PrefixFilter prefixFilter) {
 		Term term = new Term(prefixFilter.getField(), prefixFilter.getPrefix());
 
 		PrefixQuery prefixQuery = new PrefixQuery(term);

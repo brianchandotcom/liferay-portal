@@ -17,6 +17,8 @@ package com.liferay.portal.search.solr.internal.filter;
 import com.liferay.portal.kernel.search.filter.GeoDistanceRangeFilter;
 import com.liferay.portal.search.solr.filter.GeoDistanceRangeFilterTranslator;
 
+import org.apache.lucene.search.Query;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,9 +29,7 @@ public class GeoDistanceRangeFilterTranslatorImpl
 	implements GeoDistanceRangeFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		GeoDistanceRangeFilter geoDistanceRangeFilter) {
-
+	public Query translate(GeoDistanceRangeFilter geoDistanceRangeFilter) {
 		throw new UnsupportedOperationException();
 	}
 

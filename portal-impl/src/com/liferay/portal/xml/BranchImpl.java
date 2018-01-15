@@ -24,6 +24,11 @@ import com.liferay.portal.kernel.xml.QName;
 import java.util.Iterator;
 import java.util.List;
 
+import org.dom4j.CDATA;
+import org.dom4j.Entity;
+import org.dom4j.Namespace;
+import org.dom4j.Text;
+
 /**
  * @author Brian Wing Shun Chan
  */
@@ -143,8 +148,8 @@ public class BranchImpl extends NodeImpl implements Branch {
 			return null;
 		}
 
-		if (node instanceof org.dom4j.CDATA) {
-			return new CDATAImpl((org.dom4j.CDATA)node);
+		if (node instanceof CDATA) {
+			return new CDATAImpl((CDATA)node);
 		}
 		else if (node instanceof org.dom4j.Comment) {
 			return new CommentImpl((org.dom4j.Comment)node);
@@ -152,14 +157,14 @@ public class BranchImpl extends NodeImpl implements Branch {
 		else if (node instanceof org.dom4j.Element) {
 			return new ElementImpl((org.dom4j.Element)node);
 		}
-		else if (node instanceof org.dom4j.Entity) {
-			return new EntityImpl((org.dom4j.Entity)node);
+		else if (node instanceof Entity) {
+			return new EntityImpl((Entity)node);
 		}
-		else if (node instanceof org.dom4j.Namespace) {
-			return new NamespaceImpl((org.dom4j.Namespace)node);
+		else if (node instanceof Namespace) {
+			return new NamespaceImpl((Namespace)node);
 		}
-		else if (node instanceof org.dom4j.Text) {
-			return new TextImpl((org.dom4j.Text)node);
+		else if (node instanceof Text) {
+			return new TextImpl((Text)node);
 		}
 		else {
 			return new NodeImpl(node);

@@ -15,12 +15,13 @@
 package com.liferay.blogs.internal.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 
 /**
  * @author Alejandro Tardín
  */
 public class BlogsEntryAttachmentFileEntryReferenceAdapter
-	extends com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference {
+	extends BlogsEntryAttachmentFileEntryReference {
 
 	public BlogsEntryAttachmentFileEntryReferenceAdapter(
 		long tempBlogsEntryAttachmentFileEntryId,

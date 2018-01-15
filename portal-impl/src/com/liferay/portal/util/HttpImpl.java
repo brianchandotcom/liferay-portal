@@ -69,6 +69,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.HttpState;
+import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
@@ -439,9 +444,7 @@ public class HttpImpl implements Http {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	public org.apache.commons.httpclient.HttpClient getClient(
-		org.apache.commons.httpclient.HostConfiguration hostConfiguration) {
-
+	public HttpClient getClient(HostConfiguration hostConfiguration) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -516,8 +519,7 @@ public class HttpImpl implements Http {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	public org.apache.commons.httpclient.HostConfiguration getHostConfiguration(
-			String location)
+	public HostConfiguration getHostConfiguration(String location)
 		throws IOException {
 
 		throw new UnsupportedOperationException();
@@ -961,8 +963,7 @@ public class HttpImpl implements Http {
 	 */
 	@Deprecated
 	public void proxifyState(
-		org.apache.commons.httpclient.HttpState httpState,
-		org.apache.commons.httpclient.HostConfiguration hostConfiguration) {
+		HttpState httpState, HostConfiguration hostConfiguration) {
 	}
 
 	@Override
@@ -1453,9 +1454,7 @@ public class HttpImpl implements Http {
 	 * @deprecated As of 7.0.0, with no direct replacement
 	 */
 	@Deprecated
-	protected boolean hasRequestHeader(
-		org.apache.commons.httpclient.HttpMethod httpMethod, String name) {
-
+	protected boolean hasRequestHeader(HttpMethod httpMethod, String name) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -1476,8 +1475,8 @@ public class HttpImpl implements Http {
 	 */
 	@Deprecated
 	protected void processPostMethod(
-		org.apache.commons.httpclient.methods.PostMethod postMethod,
-		List<Http.FilePart> fileParts, Map<String, String> parts) {
+		PostMethod postMethod, List<Http.FilePart> fileParts,
+		Map<String, String> parts) {
 
 		throw new UnsupportedOperationException();
 	}

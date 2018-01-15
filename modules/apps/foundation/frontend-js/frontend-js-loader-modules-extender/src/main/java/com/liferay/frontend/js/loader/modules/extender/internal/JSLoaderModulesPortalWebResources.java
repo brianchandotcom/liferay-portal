@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.loader.modules.extender.internal;
 
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
 
 import javax.servlet.ServletContext;
@@ -34,13 +36,12 @@ public class JSLoaderModulesPortalWebResources {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
-			com.liferay.portal.kernel.servlet.PortalWebResources
-				portalWebResources = new InternalPortalWebResources(
+			PortalWebResources portalWebResources =
+				new InternalPortalWebResources(
 					_jsLoaderModulesServlet.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
-				com.liferay.portal.kernel.servlet.PortalWebResources.class,
-				portalWebResources, null);
+				PortalWebResources.class, portalWebResources, null);
 		}
 		catch (NoClassDefFoundError ncdfe) {
 			throw new RuntimeException(ncdfe);
@@ -62,8 +63,7 @@ public class JSLoaderModulesPortalWebResources {
 
 	private ServiceRegistration<?> _serviceRegistration;
 
-	private class InternalPortalWebResources
-		implements com.liferay.portal.kernel.servlet.PortalWebResources {
+	private class InternalPortalWebResources implements PortalWebResources {
 
 		@Override
 		public String getContextPath() {
@@ -77,8 +77,7 @@ public class JSLoaderModulesPortalWebResources {
 
 		@Override
 		public String getResourceType() {
-			return com.liferay.portal.kernel.servlet.PortalWebResourceConstants.
-				RESOURCE_TYPE_JS_LOADER_MODULES;
+			return PortalWebResourceConstants.RESOURCE_TYPE_JS_LOADER_MODULES;
 		}
 
 		@Override

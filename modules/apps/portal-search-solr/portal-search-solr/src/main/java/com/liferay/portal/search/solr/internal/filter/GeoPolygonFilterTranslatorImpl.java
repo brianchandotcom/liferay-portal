@@ -17,6 +17,8 @@ package com.liferay.portal.search.solr.internal.filter;
 import com.liferay.portal.kernel.search.filter.GeoPolygonFilter;
 import com.liferay.portal.search.solr.filter.GeoPolygonFilterTranslator;
 
+import org.apache.lucene.search.Query;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -27,9 +29,7 @@ public class GeoPolygonFilterTranslatorImpl
 	implements GeoPolygonFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(
-		GeoPolygonFilter geoPolygonFilter) {
-
+	public Query translate(GeoPolygonFilter geoPolygonFilter) {
 		throw new UnsupportedOperationException();
 	}
 

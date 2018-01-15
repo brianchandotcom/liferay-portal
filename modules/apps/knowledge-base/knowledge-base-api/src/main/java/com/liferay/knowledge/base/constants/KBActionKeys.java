@@ -14,12 +14,13 @@
 
 package com.liferay.knowledge.base.constants;
 
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
  */
-public class KBActionKeys
-	extends com.liferay.portal.kernel.security.permission.ActionKeys {
+public class KBActionKeys extends ActionKeys {
 
 	public static final String ADD_KB_ARTICLE = "ADD_KB_ARTICLE";
 

@@ -23,6 +23,7 @@ import com.liferay.portal.search.solr.query.MatchQueryTranslator;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.PhraseQuery;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -35,8 +36,8 @@ import org.osgi.service.component.annotations.Component;
 public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(MatchQuery matchQuery) {
-		org.apache.lucene.search.Query query = translateMatchQuery(matchQuery);
+	public Query translate(MatchQuery matchQuery) {
+		Query query = translateMatchQuery(matchQuery);
 
 		if (!matchQuery.isDefaultBoost()) {
 			query.setBoost(matchQuery.getBoost());
@@ -45,9 +46,7 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 		return query;
 	}
 
-	protected org.apache.lucene.search.Query translateMatchQuery(
-		MatchQuery matchQuery) {
-
+	protected Query translateMatchQuery(MatchQuery matchQuery) {
 		String field = matchQuery.getField();
 		MatchQuery.Type matchQueryType = matchQuery.getType();
 		String value = matchQuery.getValue();
@@ -88,16 +87,14 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 			"Invalid match query type: " + matchQueryType);
 	}
 
-	protected org.apache.lucene.search.Query translateQueryTypeBoolean(
-		String field, String value) {
-
+	protected Query translateQueryTypeBoolean(String field, String value) {
 		value = _encloseMultiword(
 			value, StringPool.OPEN_PARENTHESIS, StringPool.CLOSE_PARENTHESIS);
 
 		return new TermQuery(new Term(field, value));
 	}
 
-	protected org.apache.lucene.search.Query translateQueryTypePhrase(
+	protected Query translateQueryTypePhrase(
 		String field, String value, Integer slop) {
 
 		PhraseQuery phraseQuery = new PhraseQuery();
@@ -111,9 +108,7 @@ public class MatchQueryTranslatorImpl implements MatchQueryTranslator {
 		return phraseQuery;
 	}
 
-	protected org.apache.lucene.search.Query translateQueryTypePhrasePrefix(
-		String field, String value) {
-
+	protected Query translateQueryTypePhrasePrefix(String field, String value) {
 		value = value.concat(StringPool.STAR);
 
 		value = _encloseMultiword(

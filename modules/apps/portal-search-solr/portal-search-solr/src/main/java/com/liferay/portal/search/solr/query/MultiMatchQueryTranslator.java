@@ -16,12 +16,13 @@ package com.liferay.portal.search.solr.query;
 
 import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface MultiMatchQueryTranslator {
 
-	public org.apache.lucene.search.Query translate(
-		MultiMatchQuery multiMatchQuery);
+	public Query translate(MultiMatchQuery multiMatchQuery);
 
 }

@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourceActions;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -316,7 +317,7 @@ public class SearchResultSummaryDisplayBuilderTest {
 		Indexer<?> indexer = Mockito.mock(Indexer.class);
 
 		Mockito.doReturn(
-			new com.liferay.portal.kernel.search.Summary(Locale.US, null, null)
+			new Summary(Locale.US, null, null)
 		).when(
 			indexer
 		).getSummary(

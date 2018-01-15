@@ -28,6 +28,7 @@ import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpSessionContext;
 
 /**
  * @author Brian Wing Shun Chan
@@ -124,7 +125,7 @@ public class SharedSessionWrapper implements HttpSession {
 	 */
 	@Deprecated
 	@Override
-	public javax.servlet.http.HttpSessionContext getSessionContext() {
+	public HttpSessionContext getSessionContext() {
 		HttpSession session = getSessionDelegate();
 
 		return session.getSessionContext();

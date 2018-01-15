@@ -16,11 +16,13 @@ package com.liferay.portal.search.solr.query;
 
 import com.liferay.portal.kernel.search.generic.MatchQuery;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author Michael C. Han
  */
 public interface MatchQueryTranslator {
 
-	public org.apache.lucene.search.Query translate(MatchQuery matchQuery);
+	public Query translate(MatchQuery matchQuery);
 
 }

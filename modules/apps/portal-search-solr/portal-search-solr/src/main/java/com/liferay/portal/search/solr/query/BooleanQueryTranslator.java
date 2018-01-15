@@ -17,14 +17,15 @@ package com.liferay.portal.search.solr.query;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.query.QueryVisitor;
 
+import org.apache.lucene.search.Query;
+
 /**
  * @author André de Oliveira
  * @author Miguel Angelo Caldas Gallindo
  */
 public interface BooleanQueryTranslator {
 
-	public org.apache.lucene.search.Query translate(
-		BooleanQuery booleanQuery,
-		QueryVisitor<org.apache.lucene.search.Query> queryVisitor);
+	public Query translate(
+		BooleanQuery booleanQuery, QueryVisitor<Query> queryVisitor);
 
 }

@@ -14,12 +14,13 @@
 
 package com.liferay.social.privatemessaging.constants;
 
+import com.liferay.portal.kernel.util.PortletKeys;
+
 /**
  * @author Eudaldo Alonso
  * @author Peter Fellwock
  */
-public class PrivateMessagingPortletKeys
-	extends com.liferay.portal.kernel.util.PortletKeys {
+public class PrivateMessagingPortletKeys extends PortletKeys {
 
 	public static final String PRIVATE_MESSAGING =
 		"com_liferay_social_privatemessaging_web_portlet_" +

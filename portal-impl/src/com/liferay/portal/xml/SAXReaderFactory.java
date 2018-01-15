@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.xml.XMLSchema;
 import com.liferay.portal.util.EntityResolver;
 
+import org.dom4j.io.SAXReader;
+
 import org.xml.sax.XMLReader;
 
 /**
@@ -26,13 +28,13 @@ import org.xml.sax.XMLReader;
  */
 public class SAXReaderFactory {
 
-	public static final org.dom4j.io.SAXReader getSAXReader(
+	public static final SAXReader getSAXReader(
 		XMLReader xmlReader, boolean validate, boolean secure) {
 
-		org.dom4j.io.SAXReader reader = null;
+		SAXReader reader = null;
 
 		try {
-			reader = new org.dom4j.io.SAXReader(xmlReader, validate);
+			reader = new SAXReader(xmlReader, validate);
 
 			reader.setEntityResolver(new EntityResolver());
 			reader.setFeature(_FEATURES_DYNAMIC, validate);
@@ -53,7 +55,7 @@ public class SAXReaderFactory {
 					"XSD validation is disabled because " + e.getMessage());
 			}
 
-			reader = new org.dom4j.io.SAXReader(xmlReader, false);
+			reader = new SAXReader(xmlReader, false);
 
 			reader.setEntityResolver(new EntityResolver());
 		}
@@ -61,12 +63,11 @@ public class SAXReaderFactory {
 		return reader;
 	}
 
-	public static final org.dom4j.io.SAXReader getSAXReader(
+	public static final SAXReader getSAXReader(
 		XMLReader xmlReader, XMLSchema xmlSchema, boolean validate,
 		boolean secure) {
 
-		org.dom4j.io.SAXReader saxReader = getSAXReader(
-			xmlReader, validate, secure);
+		SAXReader saxReader = getSAXReader(xmlReader, validate, secure);
 
 		if ((xmlSchema == null) || (validate == false)) {
 			return saxReader;

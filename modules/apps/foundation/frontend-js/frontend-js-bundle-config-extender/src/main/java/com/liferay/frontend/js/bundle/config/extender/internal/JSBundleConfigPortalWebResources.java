@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.js.bundle.config.extender.internal;
 
+import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
+import com.liferay.portal.kernel.servlet.PortalWebResources;
 import com.liferay.portal.servlet.delegate.ServletContextDelegate;
 
 import javax.servlet.ServletContext;
@@ -35,13 +37,12 @@ public class JSBundleConfigPortalWebResources {
 	@Activate
 	protected void activate(BundleContext bundleContext) {
 		try {
-			com.liferay.portal.kernel.servlet.PortalWebResources
-				portalWebResources = new InternalPortalWebResources(
+			PortalWebResources portalWebResources =
+				new InternalPortalWebResources(
 					_jsBundleConfigServlet.getServletContext());
 
 			_serviceRegistration = bundleContext.registerService(
-				com.liferay.portal.kernel.servlet.PortalWebResources.class,
-				portalWebResources, null);
+				PortalWebResources.class, portalWebResources, null);
 		}
 		catch (NoClassDefFoundError ncdfe) {
 			throw new RuntimeException(ncdfe);
@@ -63,8 +64,7 @@ public class JSBundleConfigPortalWebResources {
 
 	private ServiceRegistration<?> _serviceRegistration;
 
-	private class InternalPortalWebResources
-		implements com.liferay.portal.kernel.servlet.PortalWebResources {
+	private class InternalPortalWebResources implements PortalWebResources {
 
 		@Override
 		public String getContextPath() {
@@ -78,8 +78,7 @@ public class JSBundleConfigPortalWebResources {
 
 		@Override
 		public String getResourceType() {
-			return com.liferay.portal.kernel.servlet.PortalWebResourceConstants.
-				RESOURCE_TYPE_JS_BUNDLE_CONFIG;
+			return PortalWebResourceConstants.RESOURCE_TYPE_JS_BUNDLE_CONFIG;
 		}
 
 		@Override

@@ -18,6 +18,7 @@ import com.liferay.registry.Filter;
 import com.liferay.registry.Registry;
 import com.liferay.registry.ServiceReference;
 import com.liferay.registry.ServiceRegistrar;
+import com.liferay.registry.ServiceRegistration;
 import com.liferay.registry.ServiceTracker;
 import com.liferay.registry.ServiceTrackerCustomizer;
 import com.liferay.registry.dependency.ServiceDependencyManager;
@@ -167,42 +168,42 @@ public class RegistryWrapper implements Registry {
 	}
 
 	@Override
-	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
+	public <T> ServiceRegistration<T> registerService(
 		Class<T> clazz, T service) {
 
 		return _registry.registerService(clazz, service);
 	}
 
 	@Override
-	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
+	public <T> ServiceRegistration<T> registerService(
 		Class<T> clazz, T service, Map<String, Object> properties) {
 
 		return _registry.registerService(clazz, service, properties);
 	}
 
 	@Override
-	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
+	public <T> ServiceRegistration<T> registerService(
 		String className, T service) {
 
 		return _registry.registerService(className, service);
 	}
 
 	@Override
-	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
+	public <T> ServiceRegistration<T> registerService(
 		String className, T service, Map<String, Object> properties) {
 
 		return _registry.registerService(className, service, properties);
 	}
 
 	@Override
-	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
+	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service) {
 
 		return _registry.registerService(classNames, service);
 	}
 
 	@Override
-	public <T> com.liferay.registry.ServiceRegistration<T> registerService(
+	public <T> ServiceRegistration<T> registerService(
 		String[] classNames, T service, Map<String, Object> properties) {
 
 		return _registry.registerService(classNames, service, properties);

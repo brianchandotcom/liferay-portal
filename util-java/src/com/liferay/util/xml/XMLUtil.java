@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.xml.Document;
 
 import java.io.IOException;
 
+import org.dom4j.DocumentException;
+
 /**
  * @author Leonardo Barros
  * @see    com.liferay.petra.xml.XMLUtil
@@ -71,7 +73,7 @@ public class XMLUtil {
 		catch (IOException ioe) {
 			throw new SystemException(ioe);
 		}
-		catch (org.dom4j.DocumentException de) {
+		catch (DocumentException de) {
 			throw new SystemException(de);
 		}
 	}

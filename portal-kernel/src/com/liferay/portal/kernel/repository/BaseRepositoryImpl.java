@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.repository.capabilities.CapabilityProvider;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.repository.search.RepositorySearchQueryBuilderUtil;
+import com.liferay.portal.kernel.repository.util.RepositoryUserUtil;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -102,10 +103,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return addFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			folderId, sourceFileName, mimeType, title, description, changeLog,
-			file, serviceContext);
+			RepositoryUserUtil.getUserId(), folderId, sourceFileName, mimeType,
+			title, description, changeLog, file, serviceContext);
 	}
 
 	/**
@@ -122,10 +121,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return addFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			sourceFileName, mimeType, title, description, changeLog, is, size,
-			serviceContext);
+			RepositoryUserUtil.getUserId(), sourceFileName, mimeType, title,
+			description, changeLog, is, size, serviceContext);
 	}
 
 	@Override
@@ -146,9 +143,7 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return addFolder(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			name, description, serviceContext);
+			RepositoryUserUtil.getUserId(), name, description, serviceContext);
 	}
 
 	/**
@@ -163,9 +158,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		checkInFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, major, changeLog, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, major, changeLog,
+			serviceContext);
 	}
 
 	/**
@@ -179,9 +173,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		checkInFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, lockUuid, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, lockUuid,
+			serviceContext);
 	}
 
 	@Override
@@ -207,9 +200,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return copyFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			groupId, fileEntryId, destFolderId, serviceContext);
+			RepositoryUserUtil.getUserId(), groupId, fileEntryId, destFolderId,
+			serviceContext);
 	}
 
 	@Override
@@ -455,9 +447,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return moveFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, newFolderId, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, newFolderId,
+			serviceContext);
 	}
 
 	/**
@@ -472,9 +463,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return moveFolder(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			folderId, newParentFolderId, serviceContext);
+			RepositoryUserUtil.getUserId(), folderId, newParentFolderId,
+			serviceContext);
 	}
 
 	/**
@@ -488,9 +478,8 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		revertFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, version, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, version,
+			serviceContext);
 	}
 
 	@Override
@@ -620,10 +609,9 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return updateFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, file, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, file,
+			serviceContext);
 	}
 
 	/**
@@ -641,10 +629,9 @@ public abstract class BaseRepositoryImpl
 		throws PortalException {
 
 		return updateFileEntry(
-			com.liferay.portal.kernel.repository.util.RepositoryUserUtil.
-				getUserId(),
-			fileEntryId, sourceFileName, mimeType, title, description,
-			changeLog, majorVersion, is, size, serviceContext);
+			RepositoryUserUtil.getUserId(), fileEntryId, sourceFileName,
+			mimeType, title, description, changeLog, majorVersion, is, size,
+			serviceContext);
 	}
 
 	@Override

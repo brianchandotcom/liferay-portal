@@ -20,6 +20,7 @@ import com.liferay.portal.search.solr.filter.ExistsFilterTranslator;
 import org.apache.lucene.search.BooleanClause;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.MatchAllDocsQuery;
+import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermRangeQuery;
 
 import org.osgi.service.component.annotations.Component;
@@ -31,7 +32,7 @@ import org.osgi.service.component.annotations.Component;
 public class ExistsFilterTranslatorImpl implements ExistsFilterTranslator {
 
 	@Override
-	public org.apache.lucene.search.Query translate(ExistsFilter existsFilter) {
+	public Query translate(ExistsFilter existsFilter) {
 		BooleanQuery booleanQuery = new BooleanQuery();
 
 		MatchAllDocsQuery matchAllDocsQuery = new MatchAllDocsQuery();

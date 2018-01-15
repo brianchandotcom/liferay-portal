@@ -37,6 +37,7 @@ import com.liferay.portal.kernel.util.OSDetector;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.StringPool;
@@ -196,8 +197,7 @@ public class InitUtil {
 		boolean initModuleFramework, boolean registerContext) {
 
 		List<String> configLocations = ListUtil.fromArray(
-			PropsUtil.getArray(
-				com.liferay.portal.kernel.util.PropsKeys.SPRING_CONFIGS));
+			PropsUtil.getArray(PropsKeys.SPRING_CONFIGS));
 
 		initWithSpring(configLocations, initModuleFramework, registerContext);
 	}

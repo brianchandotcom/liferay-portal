@@ -37,6 +37,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.ErrorData;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
+import javax.servlet.jsp.el.ExpressionEvaluator;
+import javax.servlet.jsp.el.VariableResolver;
 import javax.servlet.jsp.tagext.BodyContent;
 
 /**
@@ -105,7 +107,7 @@ public class PageContextWrapper extends PageContext {
 	 */
 	@Deprecated
 	@Override
-	public javax.servlet.jsp.el.ExpressionEvaluator getExpressionEvaluator() {
+	public ExpressionEvaluator getExpressionEvaluator() {
 		return _pageContext.getExpressionEvaluator();
 	}
 
@@ -149,7 +151,7 @@ public class PageContextWrapper extends PageContext {
 	 */
 	@Deprecated
 	@Override
-	public javax.servlet.jsp.el.VariableResolver getVariableResolver() {
+	public VariableResolver getVariableResolver() {
 		return _pageContext.getVariableResolver();
 	}
 

@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.chemistry.opencmis.client.api.OperationContext;
+import org.apache.chemistry.opencmis.client.api.Repository;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.api.SessionFactory;
 import org.apache.chemistry.opencmis.client.runtime.OperationContextImpl;
@@ -50,8 +51,7 @@ public class CMISRepositoryUtil {
 		throws PortalException, RepositoryException {
 
 		if (!typeSettingsProperties.containsKey(typeSettingsKey)) {
-			org.apache.chemistry.opencmis.client.api.Repository cmisRepository =
-				getCMISRepository(parameters);
+			Repository cmisRepository = getCMISRepository(parameters);
 
 			typeSettingsProperties.setProperty(
 				typeSettingsKey, cmisRepository.getId());
@@ -111,15 +111,15 @@ public class CMISRepositoryUtil {
 		return value;
 	}
 
-	protected static org.apache.chemistry.opencmis.client.api.Repository
-		getCMISRepository(Map<String, String> parameters) {
+	protected static Repository getCMISRepository(
+		Map<String, String> parameters) {
 
 		try (ContextClassLoaderSetter contextClassLoaderSetter =
 				new ContextClassLoaderSetter(
 					CMISRepositoryUtil.class.getClassLoader())) {
 
-			List<org.apache.chemistry.opencmis.client.api.Repository>
-				repositories = _sessionFactory.getRepositories(parameters);
+			List<Repository> repositories = _sessionFactory.getRepositories(
+				parameters);
 
 			return repositories.get(0);
 		}

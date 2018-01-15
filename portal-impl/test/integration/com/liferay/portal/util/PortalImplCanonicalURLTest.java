@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -79,8 +80,7 @@ public class PortalImplCanonicalURLTest {
 			_defaultLocale.getVariant());
 
 		TestPropsUtil.set(
-			com.liferay.portal.kernel.util.PropsKeys.
-				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE,
 			GetterUtil.getString(_defaultPrependStyle));
 	}
 
@@ -471,10 +471,7 @@ public class PortalImplCanonicalURLTest {
 			expectedPortalDomain, port, StringPool.BLANK,
 			expectedGroupFriendlyURL, expectedLayoutFriendlyURL, secure);
 
-		TestPropsUtil.set(
-			com.liferay.portal.kernel.util.PropsKeys.
-				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
-			"2");
+		TestPropsUtil.set(PropsKeys.LOCALE_PREPEND_FRIENDLY_URL_STYLE, "2");
 
 		String actualCanonicalURL2 = PortalUtil.getCanonicalURL(
 			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);

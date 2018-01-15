@@ -92,6 +92,12 @@ public class ClassUtil {
 
 		while (st.nextToken() != StreamTokenizer.TT_EOF) {
 			if (st.ttype == StreamTokenizer.TT_WORD) {
+				Matcher matcher = _fullyQualifiedNamePattern.matcher(st.sval);
+
+				if (matcher.find()) {
+					continue;
+				}
+
 				int firstIndex = st.sval.indexOf('.');
 
 				if (firstIndex >= 0) {
@@ -392,5 +398,8 @@ public class ClassUtil {
 	private static final String _CLASS_EXTENSION = ".class";
 
 	private static final Log _log = LogFactoryUtil.getLog(ClassUtil.class);
+
+	private static final Pattern _fullyQualifiedNamePattern = Pattern.compile(
+		"^([a-z]\\w*\\.){2,}([A-Z]\\w*)(\\.|\\Z)");
 
 }

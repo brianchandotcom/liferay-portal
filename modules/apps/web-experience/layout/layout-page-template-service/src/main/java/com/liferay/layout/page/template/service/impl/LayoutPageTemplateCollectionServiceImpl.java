@@ -150,12 +150,21 @@ public class LayoutPageTemplateCollectionServiceImpl
 			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws PortalException {
 
-		int count = _getLayoutPageTemplateCollectionsCount(
+		int count = layoutPageTemplateCollectionPersistence.filterCountByG_T(
 			groupId,
 			LayoutPageTemplateCollectionTypeConstants.TYPE_ASSET_DISPLAY_PAGE);
 
 		if (count <= 0) {
-			_addAssetDisplayPageLayoutPageTemplateCollection(groupId);
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			layoutPageTemplateCollectionLocalService.
+				addLayoutPageTemplateCollection(
+					getUserId(), groupId, "Asset Display Pages",
+					StringPool.BLANK,
+					LayoutPageTemplateCollectionTypeConstants.
+						TYPE_ASSET_DISPLAY_PAGE,
+					serviceContext);
 		}
 
 		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
@@ -199,26 +208,6 @@ public class LayoutPageTemplateCollectionServiceImpl
 		return layoutPageTemplateCollectionLocalService.
 			updateLayoutPageTemplateCollection(
 				layoutPageTemplateCollectionId, name, description);
-	}
-
-	private LayoutPageTemplateCollection
-			_addAssetDisplayPageLayoutPageTemplateCollection(long groupId)
-		throws PortalException {
-
-		ServiceContext serviceContext =
-			ServiceContextThreadLocal.getServiceContext();
-
-		return layoutPageTemplateCollectionLocalService.
-			addLayoutPageTemplateCollection(
-				getUserId(), groupId, "Asset Display Pages", StringPool.BLANK,
-				LayoutPageTemplateCollectionTypeConstants.
-					TYPE_ASSET_DISPLAY_PAGE,
-				serviceContext);
-	}
-
-	private int _getLayoutPageTemplateCollectionsCount(long groupId, int type) {
-		return layoutPageTemplateCollectionPersistence.filterCountByG_T(
-			groupId, type);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

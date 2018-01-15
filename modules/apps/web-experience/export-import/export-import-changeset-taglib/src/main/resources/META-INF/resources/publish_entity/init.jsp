@@ -25,18 +25,18 @@ page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
 String className = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:publish-entity:className"));
 long classNameId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:publish-entity:classNameId"));
 
-ClassName classNameObj = null;
+ClassName classNameModel = null;
 
 if (Validator.isNotNull(classNameId)) {
-	classNameObj = ClassNameLocalServiceUtil.getClassName(classNameId);
+	classNameModel = ClassNameLocalServiceUtil.getClassName(classNameId);
 }
 else if (Validator.isNotNull(className)) {
-	classNameObj = ClassNameLocalServiceUtil.getClassName(className);
+	classNameModel = ClassNameLocalServiceUtil.getClassName(className);
 }
 
-if (classNameObj != null) {
-	className = classNameObj.getClassName();
-	classNameId = classNameObj.getClassNameId();
+if (classNameModel != null) {
+	className = classNameModel.getClassName();
+	classNameId = classNameModel.getClassNameId();
 }
 
 long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:publish-entity:groupId"));

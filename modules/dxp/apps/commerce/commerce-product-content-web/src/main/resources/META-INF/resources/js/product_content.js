@@ -234,9 +234,24 @@ AUI.add(
 
 						var skus = productContent.all('[data-text-cp-instance-sku]');
 						var prices = productContent.all('[data-text-cp-instance-price]');
+						var availabilities = productContent.all('[data-text-cp-instance-availability]');
+						var availabilityRanges = productContent.all('[data-text-cp-instance-availability-ranges]');
+						var stockQuantities = productContent.all('[data-text-cp-instance-stock-quantity]');
 
 						skus.setHTML(cpInstance.sku);
-						prices.setHTML(cpInstance.price)
+						prices.setHTML(cpInstance.price);
+
+						if (cpInstance.availability) {
+							availabilities.setHTML(cpInstance.availability);
+						}
+
+						if (cpInstance.availabilityRange) {
+							availabilityRanges.setHTML(cpInstance.availabilityRange);
+						}
+
+						if (cpInstance.stockQuantity) {
+							stockQuantities.setHTML(cpInstance.stockQuantity);
+						}
 
 						productContent.all('[data-cp-instance-id]').each(
 							function(node) {

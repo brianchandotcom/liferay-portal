@@ -18,16 +18,13 @@ import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 
 import java.util.Dictionary;
-import java.util.concurrent.CountDownLatch;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceReference;
-import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ConfigurationListener;
 import org.osgi.service.component.runtime.ServiceComponentRuntime;
 import org.osgi.service.component.runtime.dto.ComponentDescriptionDTO;
 
@@ -52,52 +49,12 @@ public class ConfigurationTemporarySwapper implements AutoCloseable {
 
 		_oldProperties = _configuration.getProperties();
 
-		_updateProperties(_configuration, properties);
+		ConfigurationTestUtil.saveConfiguration(_configuration, properties);
 	}
 
 	@Override
 	public void close() throws Exception {
-		_updateProperties(_configuration, _oldProperties);
-	}
-
-	private static void _updateProperties(
-			Configuration configuration, Dictionary<String, Object> dictionary)
-		throws Exception {
-
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		String markerPID = ConfigurationTemporarySwapper.class.getName();
-
-		ConfigurationListener configurationListener = configurationEvent -> {
-			if (markerPID.equals(configurationEvent.getPid())) {
-				countDownLatch.countDown();
-			}
-		};
-
-		ServiceRegistration<ConfigurationListener> serviceRegistration =
-			_bundleContext.registerService(
-				ConfigurationListener.class, configurationListener, null);
-
-		try {
-			if (dictionary == null) {
-				configuration.delete();
-			}
-			else {
-				configuration.update(dictionary);
-			}
-
-			Configuration markerConfiguration = OSGiServiceUtil.callService(
-				_bundleContext, ConfigurationAdmin.class,
-				configurationAdmin -> configurationAdmin.getConfiguration(
-					markerPID, StringPool.QUESTION));
-
-			markerConfiguration.delete();
-
-			countDownLatch.await();
-		}
-		finally {
-			serviceRegistration.unregister();
-		}
+		ConfigurationTestUtil.saveConfiguration(_configuration, _oldProperties);
 	}
 
 	private Object _validateService(

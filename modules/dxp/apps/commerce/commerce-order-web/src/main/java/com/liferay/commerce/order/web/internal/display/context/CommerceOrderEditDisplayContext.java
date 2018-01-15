@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.order.web.internal.display.context;
 
+import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceOrderNote;
@@ -58,6 +60,7 @@ import javax.portlet.RenderRequest;
 public class CommerceOrderEditDisplayContext {
 
 	public CommerceOrderEditDisplayContext(
+			CommerceCurrencyService commerceCurrencyService,
 			CommerceOrderService commerceOrderService,
 			CommerceOrderItemService commerceOrderItemService,
 			CommerceOrderNoteService commerceOrderNoteService,
@@ -86,6 +89,10 @@ public class CommerceOrderEditDisplayContext {
 		_commerceOrderRequestHelper = new CommerceOrderRequestHelper(
 			renderRequest);
 
+		_commerceCurrency =
+			commerceCurrencyService.fetchPrimaryCommerceCurrency(
+				_commerceOrderRequestHelper.getScopeGroupId());
+
 		ThemeDisplay themeDisplay =
 			_commerceOrderRequestHelper.getThemeDisplay();
 
@@ -93,6 +100,14 @@ public class CommerceOrderEditDisplayContext {
 			FastDateFormatFactoryUtil.getDateTime(
 				DateFormat.SHORT, DateFormat.SHORT, themeDisplay.getLocale(),
 				themeDisplay.getTimeZone());
+	}
+
+	public String getCommerceCurrencyCode() {
+		if (_commerceCurrency != null) {
+			return _commerceCurrency.getCode();
+		}
+
+		return StringPool.BLANK;
 	}
 
 	public CommerceOrder getCommerceOrder() {
@@ -227,6 +242,7 @@ public class CommerceOrderEditDisplayContext {
 			_commerceOrderRequestHelper.getScopeGroupId());
 	}
 
+	private final CommerceCurrency _commerceCurrency;
 	private final CommerceOrder _commerceOrder;
 	private final Format _commerceOrderDateFormatDateTime;
 	private final CommerceOrderItemService _commerceOrderItemService;

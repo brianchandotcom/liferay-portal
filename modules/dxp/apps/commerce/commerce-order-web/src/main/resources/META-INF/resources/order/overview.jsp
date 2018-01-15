@@ -39,11 +39,11 @@ int status = BeanParamUtil.getInteger(commerceOrder, request, "status");
 					<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
 					<aui:fieldset disabled="">
-						<aui:input name="subtotal" />
+						<aui:input name="subtotal" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" />
 
-						<aui:input name="shippingPrice" />
+						<aui:input name="shippingPrice" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" />
 
-						<aui:input name="total" />
+						<aui:input name="total" suffix="<%= commerceOrderEditDisplayContext.getCommerceCurrencyCode() %>" />
 
 						<aui:button-row>
 							<aui:icon cssClass="edit-form-link" image="edit" label="edit-totals" url="javascript:;" />

@@ -17,6 +17,7 @@ package com.liferay.iframe.web.internal.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.User;
@@ -89,10 +90,12 @@ public class IFrameUtil {
 
 		Layout layout = themeDisplay.getLayout();
 
+		Group layoutGroup = layout.getGroup();
+
 		String roleName = PropsValues.IFRAME_PASSWORD_PASSWORD_TOKEN_ROLE;
 
-		if (layout.isPrivateLayout() && layout.getGroup().isUser() &&
-			(themeDisplay.getRealUserId() == layout.getGroup().getClassPK())) {
+		if (layout.isPrivateLayout() && layoutGroup.isUser() &&
+			(themeDisplay.getRealUserId() == layoutGroup.getClassPK())) {
 
 			return true;
 		}
@@ -136,8 +139,10 @@ public class IFrameUtil {
 
 		Layout layout = themeDisplay.getLayout();
 
-		if (layout.isPrivateLayout() && layout.getGroup().isUser() &&
-			(themeDisplay.getRealUserId() != layout.getGroup().getClassPK())) {
+		Group layoutGroup = layout.getGroup();
+
+		if (layout.isPrivateLayout() && layoutGroup.isUser() &&
+			(themeDisplay.getRealUserId() != layoutGroup.getClassPK())) {
 
 			return false;
 		}

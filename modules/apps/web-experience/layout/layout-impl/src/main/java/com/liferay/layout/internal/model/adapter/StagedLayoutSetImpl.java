@@ -89,7 +89,9 @@ public class StagedLayoutSetImpl implements StagedLayoutSet {
 		}
 
 		try {
-			_userId = _layoutSet.getGroup().getCreatorUserId();
+			Group layoutSetGroup = _layoutSet.getGroup();
+
+			_userId = layoutSetGroup.getCreatorUserId();
 
 			User user = UserLocalServiceUtil.getUser(_userId);
 

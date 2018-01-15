@@ -2937,6 +2937,8 @@ public class StagingImpl implements Staging {
 
 		Layout sourceLayout = _layoutLocalService.getLayout(plid);
 
+		Group scopeGroup = sourceLayout.getScopeGroup();
+
 		Group stagingGroup = null;
 		Group liveGroup = null;
 
@@ -2950,9 +2952,9 @@ public class StagingImpl implements Staging {
 			targetLayout = sourceLayout;
 		}
 		else if (sourceLayout.hasScopeGroup() &&
-				 (sourceLayout.getScopeGroup().getGroupId() == scopeGroupId)) {
+				 (scopeGroup.getGroupId() == scopeGroupId)) {
 
-			stagingGroup = sourceLayout.getScopeGroup();
+			stagingGroup = scopeGroup;
 
 			liveGroup = stagingGroup.getLiveGroup();
 

@@ -205,13 +205,15 @@
 
 		<if>
 			<condition function="IsElementPresent" locator1="RecycleBin#EMPTY_RECYCLE_BIN" />
-
 			<then>
 				<execute function="MouseOver" locator1="Icon#TOOLTIP" />
+
+				<var name="maxAgeField" value="1 month" />
+
 				<if>
 					<isset var="customMaxAge" />
 					<then>
-						<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_INFO" value1="${customMaxAgeMsg}" />
+						<var name="maxAgeField" value="${customMaxAge}" />
 					</then>
 				</if>
 

@@ -24,9 +24,6 @@ import java.util.Map;
 
 import org.apache.avro.Schema;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.runtime.AbstractBoundedReader;
 import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.container.RuntimeContainer;
@@ -80,8 +77,5 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 	protected int dataCount;
 	protected LiferayConnectionResourceBaseProperties properties;
 	protected transient Schema runtimeSchema;
-
-	private static final Logger _log = LoggerFactory.getLogger(
-		LiferayBaseReader.class);
 
 }

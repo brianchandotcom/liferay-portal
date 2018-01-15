@@ -26,9 +26,6 @@ import java.util.Set;
 import org.apache.avro.Schema;
 import org.apache.avro.Schema.Field;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.talend.daikon.avro.AvroUtils;
 import org.talend.daikon.avro.NameUtil;
 
@@ -74,9 +71,6 @@ public class ResourceCollectionSchemaInferrer {
 
 		return schema;
 	}
-
-	private static final Logger _log = LoggerFactory.getLogger(
-		ResourceCollectionSchemaInferrer.class);
 
 	/**
 	 * Default schema for dynamic fields are of type String

@@ -14,10 +14,12 @@
 
 package com.liferay.fragment.entry.processor.editable;
 
+import com.liferay.fragment.entry.processor.editable.parser.EditableElementParser;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -28,6 +30,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.kernel.xml.XPath;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -36,6 +39,8 @@ import java.util.stream.Stream;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Pavel Savinov
@@ -46,6 +51,57 @@ import org.osgi.service.component.annotations.Reference;
 	service = FragmentEntryProcessor.class
 )
 public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
+
+	@Override
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
+		throws PortalException {
+
+		Document document = _htmlParserUtil.parse(html);
+
+		XPath editableXPath = SAXReaderUtil.createXPath("//lfr-editable");
+
+		for (Node editableNode : editableXPath.selectNodes(document)) {
+			Element element = (Element)editableNode;
+
+			EditableElementParser editableElementParser =
+				_editableElementParsers.get(element.attributeValue("type"));
+
+			if (editableElementParser == null) {
+				continue;
+			}
+
+			String id = element.attributeValue("id");
+
+			editableElementParser.replace(element, jsonObject.getString(id));
+		}
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.asXML();
+	}
+
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		unbind = "unregisterEditableElementParser"
+	)
+	public void registerEditableElementParser(
+		EditableElementParser editableElementParser,
+		Map<String, Object> properties) {
+
+		String editableTagName = (String)properties.get("type");
+
+		_editableElementParsers.put(editableTagName, editableElementParser);
+	}
+
+	public void unregisterEditableElementParser(
+		EditableElementParser editableElementParser,
+		Map<String, Object> properties) {
+
+		String editableTagName = (String)properties.get("type");
+
+		_editableElementParsers.remove(editableTagName);
+	}
 
 	@Override
 	public void validateFragmentEntryHTML(String html) throws PortalException {
@@ -106,6 +162,9 @@ public class EditableFragmentEntryProcessor implements FragmentEntryProcessor {
 					"you-must-define-an-unique-id-for-each-editable-element"));
 		}
 	}
+
+	private final Map<String, EditableElementParser> _editableElementParsers =
+		new HashMap<>();
 
 	@Reference
 	private HtmlParserUtil _htmlParserUtil;

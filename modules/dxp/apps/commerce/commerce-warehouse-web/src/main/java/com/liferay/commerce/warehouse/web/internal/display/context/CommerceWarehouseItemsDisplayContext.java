@@ -23,20 +23,20 @@ import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPInstanceService;
 import com.liferay.commerce.service.CommerceWarehouseItemService;
 import com.liferay.commerce.service.CommerceWarehouseService;
-import com.liferay.commerce.util.CommerceUtil;
+import com.liferay.commerce.util.comparator.CommerceWarehouseNameComparator;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -117,9 +117,7 @@ public class CommerceWarehouseItemsDisplayContext {
 			_commerceWarehouseService.getDefaultCommerceWarehouse(
 				serviceContext);
 
-		commerceWarehouses.add(commerceWarehouse);
-
-		return commerceWarehouses;
+		return Collections.singletonList(commerceWarehouse);
 	}
 
 	public CPInstance getCPInstance() throws PortalException {
@@ -162,12 +160,9 @@ public class CommerceWarehouseItemsDisplayContext {
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		OrderByComparator<CommerceWarehouse> orderByComparator =
-			CommerceUtil.getCommerceWarehouseOrderByComparator("name", "asc");
-
 		return _commerceWarehouseService.getCommerceWarehouses(
 			themeDisplay.getScopeGroupId(), true, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, orderByComparator);
+			QueryUtil.ALL_POS, new CommerceWarehouseNameComparator(true));
 	}
 
 	private final CommerceWarehouseItemService _commerceWarehouseItemService;

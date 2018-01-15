@@ -93,7 +93,7 @@ public class CommerceTestUtil {
 			ServiceContextTestUtil.getServiceContext(groupId);
 
 		return CommerceWarehouseLocalServiceUtil.addCommerceWarehouse(
-			name, RandomTestUtil.randomString(), RandomTestUtil.randomBoolean(),
+			name, RandomTestUtil.randomString(), true,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(),
 			RandomTestUtil.randomString(), 0, 0, RandomTestUtil.randomDouble(),

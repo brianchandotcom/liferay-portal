@@ -18,9 +18,6 @@ import com.liferay.talend.resource.LiferayResourceProperties;
 
 import org.apache.avro.Schema;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
 import org.talend.components.common.FixedConnectorsComponentProperties;
@@ -81,9 +78,6 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 	protected transient PropertyPathConnector mainConnector =
 		new PropertyPathConnector(Connector.MAIN_NAME, "resource.main");
-
-	private static final Logger _log = LoggerFactory.getLogger(
-		LiferayConnectionResourceBaseProperties.class);
 
 	private static final long serialVersionUID = 4534371813009904L;
 

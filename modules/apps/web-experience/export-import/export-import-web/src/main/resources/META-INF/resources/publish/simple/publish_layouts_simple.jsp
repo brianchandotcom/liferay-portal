@@ -201,6 +201,6 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
+		<aui:button type="submit" value="<%= LanguageUtil.get(request, publishMessageKey) %>" />
 	</aui:button-row>
 </aui:form>

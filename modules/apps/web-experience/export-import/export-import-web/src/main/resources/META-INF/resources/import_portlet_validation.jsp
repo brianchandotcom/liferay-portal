@@ -41,7 +41,7 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="continueButton" type="submit" value="continue" />
+		<aui:button name="continueButton" type="submit" value="continue" />
 	</aui:button-row>
 
 	<%

@@ -417,10 +417,10 @@ else {
 	<aui:button-row>
 		<c:choose>
 			<c:when test="<%= newPublication %>">
-				<aui:button cssClass="btn-lg" type="submit" value="publish-to-live" />
+				<aui:button type="submit" value="publish-to-live" />
 			</c:when>
 			<c:otherwise>
-				<aui:button cssClass="btn-lg" type="submit" value="copy-from-live" />
+				<aui:button type="submit" value="copy-from-live" />
 			</c:otherwise>
 		</c:choose>
 	</aui:button-row>

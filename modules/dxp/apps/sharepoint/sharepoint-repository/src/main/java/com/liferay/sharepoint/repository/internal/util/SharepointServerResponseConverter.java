@@ -207,7 +207,7 @@ public class SharepointServerResponseConverter {
 					}
 				}
 				else if (key.equals("Rank")) {
-					score = cellsResultJSONObject.getDouble("Rank");
+					score = cellsResultJSONObject.getDouble("Value");
 				}
 				else if (key.equals("Title")) {
 					title = cellsResultJSONObject.getString("Value");

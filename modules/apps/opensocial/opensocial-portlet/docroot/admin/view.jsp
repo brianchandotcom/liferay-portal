@@ -69,14 +69,14 @@
 							<portlet:param name="redirect" value="<%= currentURL %>" />
 						</portlet:renderURL>
 
-						<aui:button cssClass="btn-lg" onClick="<%= publishGadgetURL %>" value="publish-gadget" />
+						<aui:button onClick="<%= publishGadgetURL %>" value="publish-gadget" />
 					</c:if>
 
 					<portlet:actionURL name="refreshGadgets" var="refreshGadgetsURL">
 						<portlet:param name="redirect" value="<%= currentURL %>" />
 					</portlet:actionURL>
 
-					<aui:button cssClass="btn-lg" onClick="<%= refreshGadgetsURL %>" value="refresh-gadgets" />
+					<aui:button onClick="<%= refreshGadgetsURL %>" value="refresh-gadgets" />
 				</aui:button-row>
 
 				<liferay-ui:search-iterator />

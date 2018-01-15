@@ -123,12 +123,12 @@ public class DefaultIndexValidator implements IndexValidator {
 			while (xmlStreamReader.hasNext()) {
 				int eventType = xmlStreamReader.next();
 
-				String localName = xmlStreamReader.getLocalName();
+				if (eventType == XMLStreamConstants.START_ELEMENT) {
+					String localName = xmlStreamReader.getLocalName();
 
-				if ((eventType == XMLStreamConstants.START_ELEMENT) &&
-					localName.equals("repository")) {
-
-					return xmlStreamReader.getAttributeValue(null, "name");
+					if (localName.equals("repository")) {
+						return xmlStreamReader.getAttributeValue(null, "name");
+					}
 				}
 			}
 

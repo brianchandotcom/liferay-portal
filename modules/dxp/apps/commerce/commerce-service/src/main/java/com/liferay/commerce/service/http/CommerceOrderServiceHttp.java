@@ -215,7 +215,7 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		HttpPrincipal httpPrincipal, long groupId, int status, int start,
+		HttpPrincipal httpPrincipal, long groupId, int orderStatus, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -224,7 +224,7 @@ public class CommerceOrderServiceHttp {
 					"getCommerceOrders", _getCommerceOrdersParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					status, start, end, orderByComparator);
+					orderStatus, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -281,7 +281,7 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static int getCommerceOrdersCount(HttpPrincipal httpPrincipal,
-		long groupId, int status)
+		long groupId, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
@@ -289,7 +289,7 @@ public class CommerceOrderServiceHttp {
 					_getCommerceOrdersCountParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					status);
+					orderStatus);
 
 			Object returnObj = null;
 
@@ -357,7 +357,8 @@ public class CommerceOrderServiceHttp {
 		HttpPrincipal httpPrincipal, long commerceOrderId,
 		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
 		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int status) throws com.liferay.portal.kernel.exception.PortalException {
+		int orderStatus)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
 					"updateCommerceOrder", _updateCommerceOrderParameterTypes9);
@@ -365,7 +366,7 @@ public class CommerceOrderServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, commercePaymentMethodId,
 					purchaseOrderNumber, subtotal, shippingPrice, total,
-					paymentStatus, status);
+					paymentStatus, orderStatus);
 
 			Object returnObj = null;
 

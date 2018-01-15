@@ -395,18 +395,18 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setShippingStatus(int shippingStatus);
 
 	/**
-	 * Returns the status of this commerce order.
+	 * Returns the order status of this commerce order.
 	 *
-	 * @return the status of this commerce order
+	 * @return the order status of this commerce order
 	 */
-	public int getStatus();
+	public int getOrderStatus();
 
 	/**
-	 * Sets the status of this commerce order.
+	 * Sets the order status of this commerce order.
 	 *
-	 * @param status the status of this commerce order
+	 * @param orderStatus the order status of this commerce order
 	 */
-	public void setStatus(int status);
+	public void setOrderStatus(int orderStatus);
 
 	@Override
 	public boolean isNew();

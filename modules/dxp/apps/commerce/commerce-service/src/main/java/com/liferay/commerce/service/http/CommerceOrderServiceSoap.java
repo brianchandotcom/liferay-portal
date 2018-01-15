@@ -138,13 +138,13 @@ public class CommerceOrderServiceSoap {
 	}
 
 	public static com.liferay.commerce.model.CommerceOrderSoap[] getCommerceOrders(
-		long groupId, int status, int start, int end,
+		long groupId, int orderStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws RemoteException {
 		try {
 			java.util.List<com.liferay.commerce.model.CommerceOrder> returnValue =
-				CommerceOrderServiceUtil.getCommerceOrders(groupId, status,
-					start, end, orderByComparator);
+				CommerceOrderServiceUtil.getCommerceOrders(groupId,
+					orderStatus, start, end, orderByComparator);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModels(returnValue);
 		}
@@ -155,11 +155,11 @@ public class CommerceOrderServiceSoap {
 		}
 	}
 
-	public static int getCommerceOrdersCount(long groupId, int status)
+	public static int getCommerceOrdersCount(long groupId, int orderStatus)
 		throws RemoteException {
 		try {
 			int returnValue = CommerceOrderServiceUtil.getCommerceOrdersCount(groupId,
-					status);
+					orderStatus);
 
 			return returnValue;
 		}
@@ -196,12 +196,12 @@ public class CommerceOrderServiceSoap {
 	public static com.liferay.commerce.model.CommerceOrderSoap updateCommerceOrder(
 		long commerceOrderId, long commercePaymentMethodId,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, int paymentStatus, int status)
+		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws RemoteException {
 		try {
 			com.liferay.commerce.model.CommerceOrder returnValue = CommerceOrderServiceUtil.updateCommerceOrder(commerceOrderId,
 					commercePaymentMethodId, purchaseOrderNumber, subtotal,
-					shippingPrice, total, paymentStatus, status);
+					shippingPrice, total, paymentStatus, orderStatus);
 
 			return com.liferay.commerce.model.CommerceOrderSoap.toSoapModel(returnValue);
 		}

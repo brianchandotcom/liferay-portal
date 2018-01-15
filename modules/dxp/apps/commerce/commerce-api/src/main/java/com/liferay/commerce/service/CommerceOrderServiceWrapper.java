@@ -72,11 +72,11 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int status, int start, int end,
+		long groupId, int orderStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.getCommerceOrders(groupId, status, start,
-			end, orderByComparator);
+		return _commerceOrderService.getCommerceOrders(groupId, orderStatus,
+			start, end, orderByComparator);
 	}
 
 	@Override
@@ -87,9 +87,9 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId, int status)
+	public int getCommerceOrdersCount(long groupId, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.getCommerceOrdersCount(groupId, status);
+		return _commerceOrderService.getCommerceOrdersCount(groupId, orderStatus);
 	}
 
 	/**
@@ -120,11 +120,11 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		long commerceOrderId, long commercePaymentMethodId,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, int paymentStatus, int status)
+		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderService.updateCommerceOrder(commerceOrderId,
 			commercePaymentMethodId, purchaseOrderNumber, subtotal,
-			shippingPrice, total, paymentStatus, status);
+			shippingPrice, total, paymentStatus, orderStatus);
 	}
 
 	@Override

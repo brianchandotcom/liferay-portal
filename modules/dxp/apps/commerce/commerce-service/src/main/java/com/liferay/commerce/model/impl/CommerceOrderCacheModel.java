@@ -107,8 +107,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(paymentStatus);
 		sb.append(", shippingStatus=");
 		sb.append(shippingStatus);
-		sb.append(", status=");
-		sb.append(status);
+		sb.append(", orderStatus=");
+		sb.append(orderStatus);
 		sb.append("}");
 
 		return sb.toString();
@@ -176,7 +176,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		commerceOrderImpl.setTotal(total);
 		commerceOrderImpl.setPaymentStatus(paymentStatus);
 		commerceOrderImpl.setShippingStatus(shippingStatus);
-		commerceOrderImpl.setStatus(status);
+		commerceOrderImpl.setOrderStatus(orderStatus);
 
 		commerceOrderImpl.resetOriginalValues();
 
@@ -220,7 +220,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		shippingStatus = objectInput.readInt();
 
-		status = objectInput.readInt();
+		orderStatus = objectInput.readInt();
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 
 		objectOutput.writeInt(shippingStatus);
 
-		objectOutput.writeInt(status);
+		objectOutput.writeInt(orderStatus);
 	}
 
 	public String uuid;
@@ -308,5 +308,5 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public double total;
 	public int paymentStatus;
 	public int shippingStatus;
-	public int status;
+	public int orderStatus;
 }

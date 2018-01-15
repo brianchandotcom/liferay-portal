@@ -57,13 +57,13 @@ public class CommerceOrderLocalServiceUtil {
 		long orderUserId, long commercePaymentMethodId,
 		long commerceShippingMethodId, java.lang.String shippingOptionName,
 		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int status,
+		int shippingStatus, int orderStatus,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addCommerceOrder(orderUserId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, subtotal,
-			shippingPrice, total, paymentStatus, shippingStatus, status,
+			shippingPrice, total, paymentStatus, shippingStatus, orderStatus,
 			serviceContext);
 	}
 
@@ -264,10 +264,10 @@ public class CommerceOrderLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int status, int start, int end,
+		long groupId, int orderStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
 		return getService()
-				   .getCommerceOrders(groupId, status, start, end,
+				   .getCommerceOrders(groupId, orderStatus, start, end,
 			orderByComparator);
 	}
 
@@ -315,8 +315,8 @@ public class CommerceOrderLocalServiceUtil {
 		return getService().getCommerceOrdersCount(groupId);
 	}
 
-	public static int getCommerceOrdersCount(long groupId, int status) {
-		return getService().getCommerceOrdersCount(groupId, status);
+	public static int getCommerceOrdersCount(long groupId, int orderStatus) {
+		return getService().getCommerceOrdersCount(groupId, orderStatus);
 	}
 
 	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -371,19 +371,20 @@ public class CommerceOrderLocalServiceUtil {
 	public static com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		long commerceOrderId, long commercePaymentMethodId,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, int paymentStatus, int status)
+		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateCommerceOrder(commerceOrderId,
 			commercePaymentMethodId, purchaseOrderNumber, subtotal,
-			shippingPrice, total, paymentStatus, status);
+			shippingPrice, total, paymentStatus, orderStatus);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
-		long commerceOrderId, int paymentStatus, int status)
+		long commerceOrderId, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .updatePaymentStatus(commerceOrderId, paymentStatus, status);
+				   .updatePaymentStatus(commerceOrderId, paymentStatus,
+			orderStatus);
 	}
 
 	public static com.liferay.commerce.model.CommerceOrder updatePurchaseOrderNumber(

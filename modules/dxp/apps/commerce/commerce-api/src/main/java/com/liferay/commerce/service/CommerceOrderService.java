@@ -76,7 +76,7 @@ public interface CommerceOrderService extends BaseService {
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int status,
+	public List<CommerceOrder> getCommerceOrders(long groupId, int orderStatus,
 		int start, int end, OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException;
 
@@ -85,7 +85,7 @@ public interface CommerceOrderService extends BaseService {
 		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId, int status)
+	public int getCommerceOrdersCount(long groupId, int orderStatus)
 		throws PortalException;
 
 	/**
@@ -106,7 +106,7 @@ public interface CommerceOrderService extends BaseService {
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
 		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
 		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int status) throws PortalException;
+		int orderStatus) throws PortalException;
 
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,
 		java.lang.String purchaseOrderNumber) throws PortalException;

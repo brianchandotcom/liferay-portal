@@ -43,7 +43,7 @@ create index IX_158112E8 on CommerceCountry (groupId, shippingAllowed, active_);
 create index IX_91EA24D5 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_7EFDC97 on CommerceCountry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_81F90697 on CommerceOrder (groupId, status);
+create index IX_C349B7FF on CommerceOrder (groupId, orderStatus);
 create index IX_5AF685CD on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_58101B8F on CommerceOrder (uuid_[$COLUMN_LENGTH:75$], groupId);
 

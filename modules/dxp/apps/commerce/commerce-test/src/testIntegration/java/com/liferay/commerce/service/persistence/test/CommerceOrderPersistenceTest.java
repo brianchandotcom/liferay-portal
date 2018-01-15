@@ -163,7 +163,7 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setShippingStatus(RandomTestUtil.nextInt());
 
-		newCommerceOrder.setStatus(RandomTestUtil.nextInt());
+		newCommerceOrder.setOrderStatus(RandomTestUtil.nextInt());
 
 		_commerceOrders.add(_persistence.update(newCommerceOrder));
 
@@ -211,8 +211,8 @@ public class CommerceOrderPersistenceTest {
 			newCommerceOrder.getPaymentStatus());
 		Assert.assertEquals(existingCommerceOrder.getShippingStatus(),
 			newCommerceOrder.getShippingStatus());
-		Assert.assertEquals(existingCommerceOrder.getStatus(),
-			newCommerceOrder.getStatus());
+		Assert.assertEquals(existingCommerceOrder.getOrderStatus(),
+			newCommerceOrder.getOrderStatus());
 	}
 
 	@Test
@@ -250,11 +250,11 @@ public class CommerceOrderPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_S() throws Exception {
-		_persistence.countByG_S(RandomTestUtil.nextLong(),
+	public void testCountByG_O() throws Exception {
+		_persistence.countByG_O(RandomTestUtil.nextLong(),
 			RandomTestUtil.nextInt());
 
-		_persistence.countByG_S(0L, 0);
+		_persistence.countByG_O(0L, 0);
 	}
 
 	@Test
@@ -288,7 +288,7 @@ public class CommerceOrderPersistenceTest {
 			"commerceShippingMethodId", true, "shippingOptionName", true,
 			"purchaseOrderNumber", true, "subtotal", true, "shippingPrice",
 			true, "total", true, "paymentStatus", true, "shippingStatus", true,
-			"status", true);
+			"orderStatus", true);
 	}
 
 	@Test
@@ -544,7 +544,7 @@ public class CommerceOrderPersistenceTest {
 
 		commerceOrder.setShippingStatus(RandomTestUtil.nextInt());
 
-		commerceOrder.setStatus(RandomTestUtil.nextInt());
+		commerceOrder.setOrderStatus(RandomTestUtil.nextInt());
 
 		_commerceOrders.add(_persistence.update(commerceOrder));
 

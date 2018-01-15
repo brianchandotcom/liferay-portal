@@ -80,7 +80,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
 		double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int status, ServiceContext serviceContext)
+		int shippingStatus, int orderStatus, ServiceContext serviceContext)
 		throws PortalException;
 
 	public CommerceOrder addCommerceOrderFromCart(long commerceCartId,
@@ -237,7 +237,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public List<CommerceOrder> getCommerceOrders(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int status,
+	public List<CommerceOrder> getCommerceOrders(long groupId, int orderStatus,
 		int start, int end, OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
@@ -279,7 +279,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 		long groupId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId, int status);
+	public int getCommerceOrdersCount(long groupId, int orderStatus);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -322,11 +322,11 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder updateCommerceOrder(long commerceOrderId,
 		long commercePaymentMethodId, java.lang.String purchaseOrderNumber,
 		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int status) throws PortalException;
+		int orderStatus) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePaymentStatus(long commerceOrderId,
-		int paymentStatus, int status) throws PortalException;
+		int paymentStatus, int orderStatus) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updatePurchaseOrderNumber(long commerceOrderId,

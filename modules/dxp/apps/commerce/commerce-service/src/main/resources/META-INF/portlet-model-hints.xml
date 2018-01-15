@@ -144,7 +144,7 @@
 		<field name="total" type="double" />
 		<field name="paymentStatus" type="int" />
 		<field name="shippingStatus" type="int" />
-		<field name="status" type="int" />
+		<field name="orderStatus" type="int" />
 	</model>
 	<model name="com.liferay.commerce.model.CommerceOrderItem">
 		<field name="commerceOrderItemId" type="long" />

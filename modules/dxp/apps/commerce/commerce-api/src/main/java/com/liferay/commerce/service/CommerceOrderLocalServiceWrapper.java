@@ -51,13 +51,13 @@ public class CommerceOrderLocalServiceWrapper
 		long orderUserId, long commercePaymentMethodId,
 		long commerceShippingMethodId, java.lang.String shippingOptionName,
 		double subtotal, double shippingPrice, double total, int paymentStatus,
-		int shippingStatus, int status,
+		int shippingStatus, int orderStatus,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.addCommerceOrder(orderUserId,
 			commercePaymentMethodId, commerceShippingMethodId,
 			shippingOptionName, subtotal, shippingPrice, total, paymentStatus,
-			shippingStatus, status, serviceContext);
+			shippingStatus, orderStatus, serviceContext);
 	}
 
 	@Override
@@ -278,10 +278,10 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int status, int start, int end,
+		long groupId, int orderStatus, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
-		return _commerceOrderLocalService.getCommerceOrders(groupId, status,
-			start, end, orderByComparator);
+		return _commerceOrderLocalService.getCommerceOrders(groupId,
+			orderStatus, start, end, orderByComparator);
 	}
 
 	/**
@@ -333,8 +333,9 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId, int status) {
-		return _commerceOrderLocalService.getCommerceOrdersCount(groupId, status);
+	public int getCommerceOrdersCount(long groupId, int orderStatus) {
+		return _commerceOrderLocalService.getCommerceOrdersCount(groupId,
+			orderStatus);
 	}
 
 	@Override
@@ -395,19 +396,19 @@ public class CommerceOrderLocalServiceWrapper
 	public com.liferay.commerce.model.CommerceOrder updateCommerceOrder(
 		long commerceOrderId, long commercePaymentMethodId,
 		java.lang.String purchaseOrderNumber, double subtotal,
-		double shippingPrice, double total, int paymentStatus, int status)
+		double shippingPrice, double total, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updateCommerceOrder(commerceOrderId,
 			commercePaymentMethodId, purchaseOrderNumber, subtotal,
-			shippingPrice, total, paymentStatus, status);
+			shippingPrice, total, paymentStatus, orderStatus);
 	}
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder updatePaymentStatus(
-		long commerceOrderId, int paymentStatus, int status)
+		long commerceOrderId, int paymentStatus, int orderStatus)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.updatePaymentStatus(commerceOrderId,
-			paymentStatus, status);
+			paymentStatus, orderStatus);
 	}
 
 	@Override

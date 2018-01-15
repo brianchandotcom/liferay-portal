@@ -80,7 +80,7 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("total", getTotal());
 		attributes.put("paymentStatus", getPaymentStatus());
 		attributes.put("shippingStatus", getShippingStatus());
-		attributes.put("status", getStatus());
+		attributes.put("orderStatus", getOrderStatus());
 
 		return attributes;
 	}
@@ -210,10 +210,10 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setShippingStatus(shippingStatus);
 		}
 
-		Integer status = (Integer)attributes.get("status");
+		Integer orderStatus = (Integer)attributes.get("orderStatus");
 
-		if (status != null) {
-			setStatus(status);
+		if (orderStatus != null) {
+			setOrderStatus(orderStatus);
 		}
 	}
 
@@ -335,6 +335,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		return _commerceOrder.getModifiedDate();
 	}
 
+	/**
+	* Returns the order status of this commerce order.
+	*
+	* @return the order status of this commerce order
+	*/
+	@Override
+	public int getOrderStatus() {
+		return _commerceOrder.getOrderStatus();
+	}
+
 	@Override
 	public com.liferay.portal.kernel.model.User getOrderUser()
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -440,16 +450,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public int getShippingStatus() {
 		return _commerceOrder.getShippingStatus();
-	}
-
-	/**
-	* Returns the status of this commerce order.
-	*
-	* @return the status of this commerce order
-	*/
-	@Override
-	public int getStatus() {
-		return _commerceOrder.getStatus();
 	}
 
 	/**
@@ -644,6 +644,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
+	* Sets the order status of this commerce order.
+	*
+	* @param orderStatus the order status of this commerce order
+	*/
+	@Override
+	public void setOrderStatus(int orderStatus) {
+		_commerceOrder.setOrderStatus(orderStatus);
+	}
+
+	/**
 	* Sets the order user ID of this commerce order.
 	*
 	* @param orderUserId the order user ID of this commerce order
@@ -736,16 +746,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setShippingStatus(int shippingStatus) {
 		_commerceOrder.setShippingStatus(shippingStatus);
-	}
-
-	/**
-	* Sets the status of this commerce order.
-	*
-	* @param status the status of this commerce order
-	*/
-	@Override
-	public void setStatus(int status) {
-		_commerceOrder.setStatus(status);
 	}
 
 	/**

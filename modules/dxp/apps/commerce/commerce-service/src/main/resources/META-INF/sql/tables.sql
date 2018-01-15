@@ -178,7 +178,7 @@ create table CommerceOrder (
 	total DOUBLE,
 	paymentStatus INTEGER,
 	shippingStatus INTEGER,
-	status INTEGER
+	orderStatus INTEGER
 );
 
 create table CommerceOrderItem (

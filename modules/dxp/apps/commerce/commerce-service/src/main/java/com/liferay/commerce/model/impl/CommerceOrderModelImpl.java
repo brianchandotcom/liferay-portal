@@ -93,7 +93,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "total", Types.DOUBLE },
 			{ "paymentStatus", Types.INTEGER },
 			{ "shippingStatus", Types.INTEGER },
-			{ "status", Types.INTEGER }
+			{ "orderStatus", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -118,10 +118,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("total", Types.DOUBLE);
 		TABLE_COLUMNS_MAP.put("paymentStatus", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("shippingStatus", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("status", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("orderStatus", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,status INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -139,7 +139,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long STATUS_COLUMN_BITMASK = 4L;
+	public static final long ORDERSTATUS_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
 	public static final long CREATEDATE_COLUMN_BITMASK = 16L;
 
@@ -176,7 +176,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setTotal(soapModel.getTotal());
 		model.setPaymentStatus(soapModel.getPaymentStatus());
 		model.setShippingStatus(soapModel.getShippingStatus());
-		model.setStatus(soapModel.getStatus());
+		model.setOrderStatus(soapModel.getOrderStatus());
 
 		return model;
 	}
@@ -261,7 +261,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("total", getTotal());
 		attributes.put("paymentStatus", getPaymentStatus());
 		attributes.put("shippingStatus", getShippingStatus());
-		attributes.put("status", getStatus());
+		attributes.put("orderStatus", getOrderStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -394,10 +394,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			setShippingStatus(shippingStatus);
 		}
 
-		Integer status = (Integer)attributes.get("status");
+		Integer orderStatus = (Integer)attributes.get("orderStatus");
 
-		if (status != null) {
-			setStatus(status);
+		if (orderStatus != null) {
+			setOrderStatus(orderStatus);
 		}
 	}
 
@@ -715,25 +715,25 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@JSON
 	@Override
-	public int getStatus() {
-		return _status;
+	public int getOrderStatus() {
+		return _orderStatus;
 	}
 
 	@Override
-	public void setStatus(int status) {
-		_columnBitmask |= STATUS_COLUMN_BITMASK;
+	public void setOrderStatus(int orderStatus) {
+		_columnBitmask |= ORDERSTATUS_COLUMN_BITMASK;
 
-		if (!_setOriginalStatus) {
-			_setOriginalStatus = true;
+		if (!_setOriginalOrderStatus) {
+			_setOriginalOrderStatus = true;
 
-			_originalStatus = _status;
+			_originalOrderStatus = _orderStatus;
 		}
 
-		_status = status;
+		_orderStatus = orderStatus;
 	}
 
-	public int getOriginalStatus() {
-		return _originalStatus;
+	public int getOriginalOrderStatus() {
+		return _originalOrderStatus;
 	}
 
 	@Override
@@ -793,7 +793,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setTotal(getTotal());
 		commerceOrderImpl.setPaymentStatus(getPaymentStatus());
 		commerceOrderImpl.setShippingStatus(getShippingStatus());
-		commerceOrderImpl.setStatus(getStatus());
+		commerceOrderImpl.setOrderStatus(getOrderStatus());
 
 		commerceOrderImpl.resetOriginalValues();
 
@@ -867,9 +867,9 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderModelImpl._setModifiedDate = false;
 
-		commerceOrderModelImpl._originalStatus = commerceOrderModelImpl._status;
+		commerceOrderModelImpl._originalOrderStatus = commerceOrderModelImpl._orderStatus;
 
-		commerceOrderModelImpl._setOriginalStatus = false;
+		commerceOrderModelImpl._setOriginalOrderStatus = false;
 
 		commerceOrderModelImpl._columnBitmask = 0;
 	}
@@ -957,7 +957,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		commerceOrderCacheModel.shippingStatus = getShippingStatus();
 
-		commerceOrderCacheModel.status = getStatus();
+		commerceOrderCacheModel.orderStatus = getOrderStatus();
 
 		return commerceOrderCacheModel;
 	}
@@ -1006,8 +1006,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getPaymentStatus());
 		sb.append(", shippingStatus=");
 		sb.append(getShippingStatus());
-		sb.append(", status=");
-		sb.append(getStatus());
+		sb.append(", orderStatus=");
+		sb.append(getOrderStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -1102,8 +1102,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getShippingStatus());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>status</column-name><column-value><![CDATA[");
-		sb.append(getStatus());
+			"<column><column-name>orderStatus</column-name><column-value><![CDATA[");
+		sb.append(getOrderStatus());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -1141,9 +1141,9 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private double _total;
 	private int _paymentStatus;
 	private int _shippingStatus;
-	private int _status;
-	private int _originalStatus;
-	private boolean _setOriginalStatus;
+	private int _orderStatus;
+	private int _originalOrderStatus;
+	private boolean _setOriginalOrderStatus;
 	private long _columnBitmask;
 	private CommerceOrder _escapedModel;
 }

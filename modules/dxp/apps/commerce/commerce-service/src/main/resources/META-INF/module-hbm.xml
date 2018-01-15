@@ -162,7 +162,7 @@
 		<property name="total" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
 		<property name="paymentStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="shippingStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property name="status" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="orderStatus" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="com.liferay.commerce.model.impl.CommerceOrderItemImpl" table="CommerceOrderItem">
 		<id name="commerceOrderItemId" type="long">

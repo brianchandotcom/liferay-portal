@@ -87,13 +87,67 @@ public class CommerceOrderListDisplayContext {
 			_commerceOrderRequestHelper.getRequest(), commerceOrder.getTotal());
 	}
 
+	public int getOrderStatus() {
+		return ParamUtil.getInteger(
+			_commerceOrderRequestHelper.getRequest(), "orderStatus",
+			_ORDER_STATUSES[0]);
+	}
+
+	public Map<Integer, Long> getOrderStatusCounts() throws PortalException {
+		Map<Integer, Long> allOrderStatusCounts = new LinkedHashMap<>();
+
+		long groupId = _commerceOrderRequestHelper.getScopeGroupId();
+
+		Map<Integer, Long> orderStatusCounts =
+			_commerceOrderService.getCommerceOrdersCount(groupId);
+
+		for (int status : _ORDER_STATUSES) {
+			Long count = null;
+
+			if (status == CommerceOrderConstants.ORDER_STATUS_ANY) {
+				count = Long.valueOf(
+					_commerceOrderService.getCommerceOrdersCount(
+						groupId, status));
+			}
+			else {
+				count = orderStatusCounts.getOrDefault(status, Long.valueOf(0));
+			}
+
+			allOrderStatusCounts.put(status, count);
+		}
+
+		return allOrderStatusCounts;
+	}
+
+	public String getOrderStatusLabel(int status, long count) {
+		ThemeDisplay themeDisplay =
+			_commerceOrderRequestHelper.getThemeDisplay();
+
+		String label = themeDisplay.translate(
+			CommerceOrderConstants.getOrderStatusLabel(status));
+
+		if (count > 0) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append(label);
+			sb.append(" <span class=\"badge badge-primary\">");
+			sb.append(count);
+			sb.append("</span>");
+
+			label = sb.toString();
+		}
+
+		return label;
+	}
+
 	public PortletURL getPortletURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		portletURL.setParameter("status", String.valueOf(getStatus()));
+		portletURL.setParameter(
+			"orderStatus", String.valueOf(getOrderStatus()));
 
 		return portletURL;
 	}
@@ -109,20 +163,20 @@ public class CommerceOrderListDisplayContext {
 			_commerceOrderRequestHelper.getLiferayPortletRequest(),
 			getPortletURL());
 
-		int status = getStatus();
+		int status = getOrderStatus();
 
-		if (status != CommerceOrderConstants.STATUS_ANY) {
+		if (status != CommerceOrderConstants.ORDER_STATUS_ANY) {
 			HttpServletRequest httpServletRequest =
 				_commerceOrderRequestHelper.getRequest();
 
-			String statusLabel = LanguageUtil.get(
+			String orderStatusLabel = LanguageUtil.get(
 				httpServletRequest,
-				CommerceOrderConstants.getStatusLabel(status));
+				CommerceOrderConstants.getOrderStatusLabel(status));
 
 			_searchContainer.setEmptyResultsMessage(
 				LanguageUtil.format(
 					httpServletRequest, "no-x-orders-were-found",
-					StringUtil.toLowerCase(statusLabel), false));
+					StringUtil.toLowerCase(orderStatusLabel), false));
 		}
 
 		_searchContainer.setRowChecker(
@@ -145,64 +199,12 @@ public class CommerceOrderListDisplayContext {
 		return _searchContainer;
 	}
 
-	public int getStatus() {
-		return ParamUtil.getInteger(
-			_commerceOrderRequestHelper.getRequest(), "status", _STATUSES[0]);
-	}
-
-	public Map<Integer, Long> getStatusCounts() throws PortalException {
-		Map<Integer, Long> allStatusCounts = new LinkedHashMap<>();
-
-		long groupId = _commerceOrderRequestHelper.getScopeGroupId();
-
-		Map<Integer, Long> statusCounts =
-			_commerceOrderService.getCommerceOrdersCount(groupId);
-
-		for (int status : _STATUSES) {
-			Long count = null;
-
-			if (status == CommerceOrderConstants.STATUS_ANY) {
-				count = Long.valueOf(
-					_commerceOrderService.getCommerceOrdersCount(
-						groupId, status));
-			}
-			else {
-				count = statusCounts.getOrDefault(status, Long.valueOf(0));
-			}
-
-			allStatusCounts.put(status, count);
-		}
-
-		return allStatusCounts;
-	}
-
-	public String getStatusLabel(int status, long count) {
-		ThemeDisplay themeDisplay =
-			_commerceOrderRequestHelper.getThemeDisplay();
-
-		String label = themeDisplay.translate(
-			CommerceOrderConstants.getStatusLabel(status));
-
-		if (count > 0) {
-			StringBundler sb = new StringBundler(4);
-
-			sb.append(label);
-			sb.append(" <span class=\"badge badge-primary\">");
-			sb.append(count);
-			sb.append("</span>");
-
-			label = sb.toString();
-		}
-
-		return label;
-	}
-
-	private static final int[] _STATUSES = {
-		CommerceOrderConstants.STATUS_PENDING,
-		CommerceOrderConstants.STATUS_ANY,
-		CommerceOrderConstants.STATUS_CANCELLED,
-		CommerceOrderConstants.STATUS_PROCESSING,
-		CommerceOrderConstants.STATUS_COMPLETED
+	private static final int[] _ORDER_STATUSES = {
+		CommerceOrderConstants.ORDER_STATUS_PENDING,
+		CommerceOrderConstants.ORDER_STATUS_ANY,
+		CommerceOrderConstants.ORDER_STATUS_CANCELLED,
+		CommerceOrderConstants.ORDER_STATUS_PROCESSING,
+		CommerceOrderConstants.ORDER_STATUS_COMPLETED
 	};
 
 	private final Format _commerceOrderDateFormatDate;

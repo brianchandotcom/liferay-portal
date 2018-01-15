@@ -362,7 +362,7 @@
 		<column name="total" type="double" />
 		<column name="paymentStatus" type="int" />
 		<column name="shippingStatus" type="int" />
-		<column name="status" type="int" />
+		<column name="orderStatus" type="int" />
 
 		<!-- Order -->
 
@@ -375,9 +375,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
-		<finder name="G_S" return-type="Collection">
+		<finder name="G_O" return-type="Collection">
 			<finder-column name="groupId" />
-			<finder-column name="status" />
+			<finder-column name="orderStatus" />
 		</finder>
 
 		<!-- References -->

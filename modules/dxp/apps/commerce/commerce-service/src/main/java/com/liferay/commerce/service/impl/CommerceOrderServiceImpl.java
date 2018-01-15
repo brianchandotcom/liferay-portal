@@ -99,7 +99,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-			long groupId, int status, int start, int end,
+			long groupId, int orderStatus, int start, int end,
 			OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException {
 
@@ -108,7 +108,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		return commerceOrderLocalService.getCommerceOrders(
-			groupId, status, start, end, orderByComparator);
+			groupId, orderStatus, start, end, orderByComparator);
 	}
 
 	@Override
@@ -123,7 +123,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId, int status)
+	public int getCommerceOrdersCount(long groupId, int orderStatus)
 		throws PortalException {
 
 		CommercePermission.check(
@@ -131,7 +131,7 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 			CommerceActionKeys.MANAGE_COMMERCE_ORDERS);
 
 		return commerceOrderLocalService.getCommerceOrdersCount(
-			groupId, status);
+			groupId, orderStatus);
 	}
 
 	@Override
@@ -154,14 +154,14 @@ public class CommerceOrderServiceImpl extends CommerceOrderServiceBaseImpl {
 	public CommerceOrder updateCommerceOrder(
 			long commerceOrderId, long commercePaymentMethodId,
 			String purchaseOrderNumber, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int status)
+			double total, int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		checkCommerceOrder(commerceOrderId);
 
 		return commerceOrderLocalService.updateCommerceOrder(
 			commerceOrderId, commercePaymentMethodId, purchaseOrderNumber,
-			subtotal, shippingPrice, total, paymentStatus, status);
+			subtotal, shippingPrice, total, paymentStatus, orderStatus);
 	}
 
 	@Override

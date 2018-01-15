@@ -57,7 +57,7 @@ public class CommerceOrderLocalServiceImpl
 			long orderUserId, long commercePaymentMethodId,
 			long commerceShippingMethodId, String shippingOptionName,
 			double subtotal, double shippingPrice, double total,
-			int paymentStatus, int shippingStatus, int status,
+			int paymentStatus, int shippingStatus, int orderStatus,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -83,7 +83,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setTotal(total);
 		commerceOrder.setPaymentStatus(paymentStatus);
 		commerceOrder.setShippingStatus(shippingStatus);
-		commerceOrder.setStatus(status);
+		commerceOrder.setOrderStatus(orderStatus);
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderPersistence.update(commerceOrder);
@@ -116,7 +116,7 @@ public class CommerceOrderLocalServiceImpl
 				commerceCart.getShippingOptionName(), subtotal, shippingPrice,
 				total, CommerceOrderConstants.PAYMENT_STATUS_PENDING,
 				CommerceOrderConstants.SHIPPING_STATUS_NOT_SHIPPED,
-				CommerceOrderConstants.STATUS_PENDING, serviceContext);
+				CommerceOrderConstants.ORDER_STATUS_PENDING, serviceContext);
 
 		// Commerce addresses
 
@@ -224,16 +224,16 @@ public class CommerceOrderLocalServiceImpl
 
 	@Override
 	public List<CommerceOrder> getCommerceOrders(
-		long groupId, int status, int start, int end,
+		long groupId, int orderStatus, int start, int end,
 		OrderByComparator<CommerceOrder> orderByComparator) {
 
-		if (status == CommerceOrderConstants.STATUS_ANY) {
+		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
 			return commerceOrderPersistence.findByGroupId(
 				groupId, start, end, orderByComparator);
 		}
 		else {
-			return commerceOrderPersistence.findByG_S(
-				groupId, status, start, end, orderByComparator);
+			return commerceOrderPersistence.findByG_O(
+				groupId, orderStatus, start, end, orderByComparator);
 		}
 	}
 
@@ -243,12 +243,12 @@ public class CommerceOrderLocalServiceImpl
 	}
 
 	@Override
-	public int getCommerceOrdersCount(long groupId, int status) {
-		if (status == CommerceOrderConstants.STATUS_ANY) {
+	public int getCommerceOrdersCount(long groupId, int orderStatus) {
+		if (orderStatus == CommerceOrderConstants.ORDER_STATUS_ANY) {
 			return commerceOrderPersistence.countByGroupId(groupId);
 		}
 		else {
-			return commerceOrderPersistence.countByG_S(groupId, status);
+			return commerceOrderPersistence.countByG_O(groupId, orderStatus);
 		}
 	}
 
@@ -273,7 +273,7 @@ public class CommerceOrderLocalServiceImpl
 	public CommerceOrder updateCommerceOrder(
 			long commerceOrderId, long commercePaymentMethodId,
 			String purchaseOrderNumber, double subtotal, double shippingPrice,
-			double total, int paymentStatus, int status)
+			double total, int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
@@ -285,7 +285,7 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setShippingPrice(shippingPrice);
 		commerceOrder.setTotal(total);
 		commerceOrder.setPaymentStatus(paymentStatus);
-		commerceOrder.setStatus(status);
+		commerceOrder.setOrderStatus(orderStatus);
 
 		commerceOrderPersistence.update(commerceOrder);
 
@@ -295,14 +295,14 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder updatePaymentStatus(
-			long commerceOrderId, int paymentStatus, int status)
+			long commerceOrderId, int paymentStatus, int orderStatus)
 		throws PortalException {
 
 		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
 			commerceOrderId);
 
 		commerceOrder.setPaymentStatus(paymentStatus);
-		commerceOrder.setStatus(status);
+		commerceOrder.setOrderStatus(orderStatus);
 
 		commerceOrderPersistence.update(commerceOrder);
 

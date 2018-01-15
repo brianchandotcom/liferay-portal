@@ -53,32 +53,38 @@ public class CommerceOrderFinderTest {
 	public void setUp() throws Exception {
 		_group = GroupTestUtil.addGroup();
 
-		_addCommerceOrders(10, CommerceOrderConstants.STATUS_CANCELLED);
-		_addCommerceOrders(15, CommerceOrderConstants.STATUS_COMPLETED);
-		_addCommerceOrders(20, CommerceOrderConstants.STATUS_PROCESSING);
+		_addCommerceOrders(10, CommerceOrderConstants.ORDER_STATUS_CANCELLED);
+		_addCommerceOrders(15, CommerceOrderConstants.ORDER_STATUS_COMPLETED);
+		_addCommerceOrders(20, CommerceOrderConstants.ORDER_STATUS_PROCESSING);
 	}
 
 	@Test
 	public void testCountByG_S() {
-		Map<Integer, Long> statusCounts =
+		Map<Integer, Long> orderStatusCounts =
 			CommerceOrderLocalServiceUtil.getCommerceOrdersCount(
 				_group.getGroupId());
 
-		Assert.assertEquals(statusCounts.toString(), 3, statusCounts.size());
 		Assert.assertEquals(
-			(Long)statusCounts.get(CommerceOrderConstants.STATUS_CANCELLED),
+			orderStatusCounts.toString(), 3, orderStatusCounts.size());
+		Assert.assertEquals(
+			(Long)orderStatusCounts.get(
+				CommerceOrderConstants.ORDER_STATUS_CANCELLED),
 			Long.valueOf(10));
 		Assert.assertEquals(
-			(Long)statusCounts.get(CommerceOrderConstants.STATUS_COMPLETED),
+			(Long)orderStatusCounts.get(
+				CommerceOrderConstants.ORDER_STATUS_COMPLETED),
 			Long.valueOf(15));
 		Assert.assertEquals(
-			(Long)statusCounts.get(CommerceOrderConstants.STATUS_PROCESSING),
+			(Long)orderStatusCounts.get(
+				CommerceOrderConstants.ORDER_STATUS_PROCESSING),
 			Long.valueOf(20));
 	}
 
-	private void _addCommerceOrders(int count, int status) throws Exception {
+	private void _addCommerceOrders(int count, int orderStatus)
+		throws Exception {
+
 		for (int i = 0; i < count; i++) {
-			CommerceTestUtil.addCommerceOrder(_group.getGroupId(), status);
+			CommerceTestUtil.addCommerceOrder(_group.getGroupId(), orderStatus);
 		}
 	}
 

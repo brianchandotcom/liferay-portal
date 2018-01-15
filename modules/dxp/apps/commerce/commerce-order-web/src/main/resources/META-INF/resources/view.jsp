@@ -26,24 +26,24 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 	<aui:nav cssClass="navbar-nav">
 
 		<%
-		int status = commerceOrderListDisplayContext.getStatus();
-		Map<Integer, Long> statusCounts = commerceOrderListDisplayContext.getStatusCounts();
+		int orderStatus = commerceOrderListDisplayContext.getOrderStatus();
+		Map<Integer, Long> orderStatusCounts = commerceOrderListDisplayContext.getOrderStatusCounts();
 
-		for (Map.Entry<Integer, Long> entry : statusCounts.entrySet()) {
-			int curStatus = entry.getKey();
+		for (Map.Entry<Integer, Long> entry : orderStatusCounts.entrySet()) {
+			int curOrderStatus = entry.getKey();
 			long curCount = entry.getValue();
 
-			PortletURL statusURL = renderResponse.createRenderURL();
+			PortletURL orderStatusURL = renderResponse.createRenderURL();
 
-			statusURL.setParameter("status", String.valueOf(curStatus));
+			orderStatusURL.setParameter("orderStatus", String.valueOf(curOrderStatus));
 		%>
 
 			<aui:nav-item
-				href="<%= statusURL.toString() %>"
-				label="<%= commerceOrderListDisplayContext.getStatusLabel(curStatus, curCount) %>"
+				href="<%= orderStatusURL.toString() %>"
+				label="<%= commerceOrderListDisplayContext.getOrderStatusLabel(curOrderStatus, curCount) %>"
 				localizeLabel="<%= false %>"
-				selected="<%= curStatus == status %>"
-				title="<%= CommerceOrderConstants.getStatusLabel(curStatus) %>"
+				selected="<%= curOrderStatus == orderStatus %>"
+				title="<%= CommerceOrderConstants.getOrderStatusLabel(curOrderStatus) %>"
 			/>
 
 		<%
@@ -122,8 +122,8 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 
 			<liferay-ui:search-container-column-text
 				cssClass="table-cell-content"
-				name="status"
-				value="<%= LanguageUtil.get(request, CommerceOrderConstants.getStatusLabel(commerceOrder.getStatus())) %>"
+				name="order-status"
+				value="<%= LanguageUtil.get(request, CommerceOrderConstants.getOrderStatusLabel(commerceOrder.getOrderStatus())) %>"
 			>
 
 			</liferay-ui:search-container-column-text>

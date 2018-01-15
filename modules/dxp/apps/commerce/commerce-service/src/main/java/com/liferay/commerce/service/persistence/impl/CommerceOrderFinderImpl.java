@@ -32,8 +32,8 @@ import java.util.Map;
 public class CommerceOrderFinderImpl
 	extends CommerceOrderFinderBaseImpl implements CommerceOrderFinder {
 
-	public static final String COUNT_BY_G_s =
-		CommerceOrderFinder.class.getName() + ".countByG_S";
+	public static final String COUNT_BY_G_O =
+		CommerceOrderFinder.class.getName() + ".countByG_O";
 
 	public Map<Integer, Long> countByG_S(long groupId) {
 		Session session = null;
@@ -41,28 +41,28 @@ public class CommerceOrderFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_s);
+			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_O);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
-			q.addScalar("status", Type.INTEGER);
+			q.addScalar("orderStatus", Type.INTEGER);
 			q.addScalar(COUNT_COLUMN_NAME, Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
 			qPos.add(groupId);
 
-			Map<Integer, Long> statusCounts = new HashMap<>();
+			Map<Integer, Long> orderStatusCounts = new HashMap<>();
 
 			Iterator<Object[]> iterator = q.iterate();
 
 			while (iterator.hasNext()) {
 				Object[] array = iterator.next();
 
-				statusCounts.put((Integer)array[0], (Long)array[1]);
+				orderStatusCounts.put((Integer)array[0], (Long)array[1]);
 			}
 
-			return statusCounts;
+			return orderStatusCounts;
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

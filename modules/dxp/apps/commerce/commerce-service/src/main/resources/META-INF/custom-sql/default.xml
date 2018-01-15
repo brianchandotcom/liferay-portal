@@ -31,16 +31,16 @@
 				CommerceCountry.priority
 		]]>
 	</sql>
-	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.countByG_S">
+	<sql id="com.liferay.commerce.service.persistence.CommerceOrderFinder.countByG_O">
 		<![CDATA[
 			SELECT
-				CommerceOrder.status, COUNT(*) AS COUNT_VALUE
+				CommerceOrder.orderStatus, COUNT(*) AS COUNT_VALUE
 			FROM
 				CommerceOrder
 			WHERE
 				CommerceOrder.groupId = ?
 			GROUP BY
-				CommerceOrder.status
+				CommerceOrder.orderStatus
 		]]>
 	</sql>
 	<sql id="com.liferay.commerce.service.persistence.CommerceOrderItemFinder.findByC_C">

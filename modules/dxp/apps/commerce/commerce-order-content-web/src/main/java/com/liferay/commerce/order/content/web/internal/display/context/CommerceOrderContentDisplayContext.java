@@ -73,15 +73,16 @@ public class CommerceOrderContentDisplayContext
 		_searchContainer.setEmptyResultsMessage("no-orders-were-found");
 
 		int total = commerceOrderLocalService.getCommerceOrdersCount(
-			themeDisplay.getScopeGroupId(), CommerceOrderConstants.STATUS_ANY);
+			themeDisplay.getScopeGroupId(),
+			CommerceOrderConstants.ORDER_STATUS_ANY);
 
 		_searchContainer.setTotal(total);
 
 		List<CommerceOrder> results =
 			commerceOrderLocalService.getCommerceOrders(
 				themeDisplay.getScopeGroupId(),
-				CommerceOrderConstants.STATUS_ANY, _searchContainer.getStart(),
-				_searchContainer.getEnd(), null);
+				CommerceOrderConstants.ORDER_STATUS_ANY,
+				_searchContainer.getStart(), _searchContainer.getEnd(), null);
 
 		_searchContainer.setResults(results);
 

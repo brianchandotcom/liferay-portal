@@ -53,10 +53,10 @@ public class CommerceTestUtil {
 		throws Exception {
 
 		return addCommerceOrder(
-			groupId, CommerceOrderConstants.STATUS_COMPLETED);
+			groupId, CommerceOrderConstants.ORDER_STATUS_COMPLETED);
 	}
 
-	public static CommerceOrder addCommerceOrder(long groupId, int status)
+	public static CommerceOrder addCommerceOrder(long groupId, int orderStatus)
 		throws Exception {
 
 		ServiceContext serviceContext =
@@ -65,7 +65,7 @@ public class CommerceTestUtil {
 		return CommerceOrderLocalServiceUtil.addCommerceOrder(
 			serviceContext.getUserId(), 0, 0, null,
 			RandomTestUtil.randomDouble(), RandomTestUtil.randomDouble(),
-			RandomTestUtil.randomDouble(), 0, 0, status, serviceContext);
+			RandomTestUtil.randomDouble(), 0, 0, orderStatus, serviceContext);
 	}
 
 	public static CommerceOrderItem addCommerceOrderItem(

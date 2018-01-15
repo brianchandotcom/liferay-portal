@@ -48,7 +48,7 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 
 	static {
 		headerNames.add("order-date");
-		headerNames.add("status");
+		headerNames.add("order-status");
 		headerNames.add("customer-name");
 		headerNames.add("order-id");
 		headerNames.add("order-value");

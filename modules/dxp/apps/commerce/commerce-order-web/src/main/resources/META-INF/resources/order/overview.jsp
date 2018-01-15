@@ -22,7 +22,7 @@ CommerceOrderEditDisplayContext commerceOrderEditDisplayContext = (CommerceOrder
 CommerceOrder commerceOrder = commerceOrderEditDisplayContext.getCommerceOrder();
 long commerceOrderId = commerceOrderEditDisplayContext.getCommerceOrderId();
 
-int status = BeanParamUtil.getInteger(commerceOrder, request, "status");
+int orderStatus = BeanParamUtil.getInteger(commerceOrder, request, "orderStatus");
 %>
 
 <liferay-portlet:actionURL name="editCommerceOrder" var="editCommerceOrderURL" />
@@ -59,24 +59,24 @@ int status = BeanParamUtil.getInteger(commerceOrder, request, "status");
 			</aui:col>
 
 			<aui:col width="<%= 50 %>">
-				<aui:form action="<%= editCommerceOrderURL %>" method="post" name="statusFm">
-					<aui:input name="<%= Constants.CMD %>" type="hidden" value="status" />
+				<aui:form action="<%= editCommerceOrderURL %>" method="post" name="orderStatusFm">
+					<aui:input name="<%= Constants.CMD %>" type="hidden" value="orderStatus" />
 					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
 					<aui:input name="commerceOrderId" type="hidden" value="<%= commerceOrderId %>" />
 
 					<aui:model-context bean="<%= commerceOrder %>" model="<%= CommerceOrder.class %>" />
 
 					<aui:fieldset disabled="">
-						<aui:select name="status">
+						<aui:select label="order-status" name="orderStatus">
 
 							<%
-							for (int curStatus : CommerceOrderConstants.STATUSES) {
+							for (int curOrderStatus : CommerceOrderConstants.ORDER_STATUSES) {
 							%>
 
 								<aui:option
-									label="<%= CommerceOrderConstants.getStatusLabel(curStatus) %>"
-									selected="<%= curStatus == status %>"
-									value="<%= curStatus %>"
+									label="<%= CommerceOrderConstants.getOrderStatusLabel(curOrderStatus) %>"
+									selected="<%= curOrderStatus == orderStatus %>"
+									value="<%= curOrderStatus %>"
 								/>
 
 							<%
@@ -88,7 +88,7 @@ int status = BeanParamUtil.getInteger(commerceOrder, request, "status");
 						<aui:input label="created" name="createDate" readonly="<%= true %>" type="textbox" value="<%= commerceOrderEditDisplayContext.getCommerceOrderDateTime() %>" />
 
 						<aui:button-row>
-							<aui:icon cssClass="edit-form-link" image="edit" label="edit-status" url="javascript:;" />
+							<aui:icon cssClass="edit-form-link" image="edit" label="edit-order-status" url="javascript:;" />
 
 							<div class="edit-form-buttons hide">
 								<aui:button type="submit" />

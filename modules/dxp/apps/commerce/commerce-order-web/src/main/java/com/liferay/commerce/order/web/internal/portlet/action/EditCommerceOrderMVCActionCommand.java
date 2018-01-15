@@ -80,14 +80,14 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("billingAddress")) {
 			updateBillingAddress(actionRequest);
 		}
+		else if (cmd.equals("orderStatus")) {
+			updateOrderStatus(actionRequest);
+		}
 		else if (cmd.equals("payment")) {
 			updatePayment(actionRequest);
 		}
 		else if (cmd.equals("shippingAddress")) {
 			updateShippingAddress(actionRequest);
-		}
-		else if (cmd.equals("status")) {
-			updateStatus(actionRequest);
 		}
 		else if (cmd.equals("totals")) {
 			updateTotals(actionRequest);
@@ -122,6 +122,24 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext);
 	}
 
+	protected void updateOrderStatus(ActionRequest actionRequest)
+		throws Exception {
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		int orderStatus = ParamUtil.getInteger(actionRequest, "orderStatus");
+
+		_commerceOrderService.updateCommerceOrder(
+			commerceOrderId, commerceOrder.getCommercePaymentMethodId(),
+			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
+			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
+			commerceOrder.getPaymentStatus(), orderStatus);
+	}
+
 	protected void updatePayment(ActionRequest actionRequest) throws Exception {
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
@@ -140,7 +158,7 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommerceOrderId(), commercePaymentMethodId,
 			purchaseOrderNumber, commerceOrder.getSubtotal(),
 			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
-			paymentStatus, commerceOrder.getStatus());
+			paymentStatus, commerceOrder.getOrderStatus());
 	}
 
 	protected void updateShippingAddress(ActionRequest actionRequest)
@@ -171,22 +189,6 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			serviceContext);
 	}
 
-	protected void updateStatus(ActionRequest actionRequest) throws Exception {
-		long commerceOrderId = ParamUtil.getLong(
-			actionRequest, "commerceOrderId");
-
-		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
-			commerceOrderId);
-
-		int status = ParamUtil.getInteger(actionRequest, "status");
-
-		_commerceOrderService.updateCommerceOrder(
-			commerceOrderId, commerceOrder.getCommercePaymentMethodId(),
-			commerceOrder.getPurchaseOrderNumber(), commerceOrder.getSubtotal(),
-			commerceOrder.getShippingPrice(), commerceOrder.getTotal(),
-			commerceOrder.getPaymentStatus(), status);
-	}
-
 	protected void updateTotals(ActionRequest actionRequest) throws Exception {
 		long commerceOrderId = ParamUtil.getLong(
 			actionRequest, "commerceOrderId");
@@ -203,7 +205,8 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 			commerceOrder.getCommerceOrderId(),
 			commerceOrder.getCommercePaymentMethodId(),
 			commerceOrder.getPurchaseOrderNumber(), subtotal, shippingPrice,
-			total, commerceOrder.getPaymentStatus(), commerceOrder.getStatus());
+			total, commerceOrder.getPaymentStatus(),
+			commerceOrder.getOrderStatus());
 	}
 
 	@Reference

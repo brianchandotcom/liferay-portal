@@ -21,6 +21,24 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
  */
 public class CommerceOrderConstants {
 
+	public static final int ORDER_STATUS_ANY = WorkflowConstants.STATUS_ANY;
+
+	public static final int ORDER_STATUS_CANCELLED =
+		WorkflowConstants.STATUS_IN_TRASH;
+
+	public static final int ORDER_STATUS_COMPLETED =
+		WorkflowConstants.STATUS_APPROVED;
+
+	public static final int ORDER_STATUS_PENDING =
+		WorkflowConstants.STATUS_PENDING;
+
+	public static final int ORDER_STATUS_PROCESSING = 2;
+
+	public static final int[] ORDER_STATUSES = {
+		ORDER_STATUS_CANCELLED, ORDER_STATUS_COMPLETED, ORDER_STATUS_PENDING,
+		ORDER_STATUS_PROCESSING
+	};
+
 	public static final int PAYMENT_STATUS_AUTHORIZED =
 		WorkflowConstants.STATUS_DRAFT;
 
@@ -37,20 +55,23 @@ public class CommerceOrderConstants {
 	public static final int SHIPPING_STATUS_NOT_SHIPPED =
 		WorkflowConstants.STATUS_ANY;
 
-	public static final int STATUS_ANY = WorkflowConstants.STATUS_ANY;
-
-	public static final int STATUS_CANCELLED =
-		WorkflowConstants.STATUS_IN_TRASH;
-
-	public static final int STATUS_COMPLETED =
-		WorkflowConstants.STATUS_APPROVED;
-
-	public static final int STATUS_PENDING = WorkflowConstants.STATUS_PENDING;
-
-	public static final int STATUS_PROCESSING = 2;
-
-	public static final int[] STATUSES =
-		{STATUS_CANCELLED, STATUS_COMPLETED, STATUS_PENDING, STATUS_PROCESSING};
+	public static String getOrderStatusLabel(int status) {
+		if (status == ORDER_STATUS_CANCELLED) {
+			return "cancelled";
+		}
+		else if (status == ORDER_STATUS_COMPLETED) {
+			return "completed";
+		}
+		else if (status == ORDER_STATUS_PENDING) {
+			return WorkflowConstants.LABEL_PENDING;
+		}
+		else if (status == ORDER_STATUS_PROCESSING) {
+			return "processing";
+		}
+		else {
+			return WorkflowConstants.LABEL_ANY;
+		}
+	}
 
 	public static String getPaymentStatusLabel(int paymentStatus) {
 		if (paymentStatus == PAYMENT_STATUS_AUTHORIZED) {
@@ -64,24 +85,6 @@ public class CommerceOrderConstants {
 		}
 		else {
 			return null;
-		}
-	}
-
-	public static String getStatusLabel(int status) {
-		if (status == STATUS_CANCELLED) {
-			return "cancelled";
-		}
-		else if (status == STATUS_COMPLETED) {
-			return "completed";
-		}
-		else if (status == STATUS_PENDING) {
-			return WorkflowConstants.LABEL_PENDING;
-		}
-		else if (status == STATUS_PROCESSING) {
-			return "processing";
-		}
-		else {
-			return WorkflowConstants.LABEL_ANY;
 		}
 	}
 

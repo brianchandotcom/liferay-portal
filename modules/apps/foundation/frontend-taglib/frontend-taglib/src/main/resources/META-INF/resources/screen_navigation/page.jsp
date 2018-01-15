@@ -28,50 +28,56 @@ List<ScreenNavigationEntry> screenNavigationEntries = (List<ScreenNavigationEntr
 %>
 
 <c:if test="<%= screenNavigationCategories.size() > 1 %>">
-	<aui:nav-bar markupView="lexicon">
-		<aui:nav cssClass="navbar-nav">
+	<div class="page-header">
+		<div class="container">
+			<nav>
+				<ul class="nav nav-underline">
+						<%
+						for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
+							PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-			<%
-			for (ScreenNavigationCategory screenNavigationCategory : screenNavigationCategories) {
-				PortletURL screenNavigationCategoryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+							screenNavigationCategoryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey());
+							screenNavigationCategoryURL.setParameter("screenNavigationEntryKey", StringPool.BLANK);
+						%>
 
-				screenNavigationCategoryURL.setParameter("screenNavigationCategoryKey", screenNavigationCategory.getCategoryKey());
-				screenNavigationCategoryURL.setParameter("screenNavigationEntryKey", StringPool.BLANK);
-			%>
+							<li class="nav-item">
+								<a class="nav-link <%= Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()) ? "active" : StringPool.BLANK %>" href="<%= screenNavigationCategoryURL.toString() %>"><%= screenNavigationCategory.getLabel(themeDisplay.getLocale()) %></a>
+							</li>
 
-				<aui:nav-item href="<%= screenNavigationCategoryURL.toString() %>" label="<%= screenNavigationCategory.getLabel(themeDisplay.getLocale()) %>" selected="<%= Objects.equals(selectedScreenNavigationCategory.getCategoryKey(), screenNavigationCategory.getCategoryKey()) %>" />
-
-			<%
-			}
-			%>
-
-		</aui:nav>
-	</aui:nav-bar>
+						<%
+						}
+						%>
+				</ul>
+			</nav>
+		</div>
+	</div>
 </c:if>
 
 <div class="container">
 	<div class="row">
 		<c:if test="<%= screenNavigationEntries.size() > 1 %>">
 			<div class="<%= navCssClass %>">
-				<ul class="main-content-nav nav nav-nested">
+				<nav class="menubar menubar-transparent menubar-vertical-expand-md">
+					<ul class="nav nav-nested">
 
-					<%
-					for (ScreenNavigationEntry screenNavigationEntry : screenNavigationEntries) {
-						PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+						<%
+						for (ScreenNavigationEntry screenNavigationEntry : screenNavigationEntries) {
+							PortletURL screenNavigationEntryURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
 
-						screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
-						screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
-					%>
+							screenNavigationEntryURL.setParameter("screenNavigationCategoryKey", screenNavigationEntry.getCategoryKey());
+							screenNavigationEntryURL.setParameter("screenNavigationEntryKey", screenNavigationEntry.getEntryKey());
+						%>
 
-						<li class="<%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>">
-							<a href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
-						</li>
+							<li class="nav-item">
+								<a class="nav-link <%= Objects.equals(selectedScreenNavigationEntry.getEntryKey(), screenNavigationEntry.getEntryKey()) ? "active" : StringPool.BLANK %>" href="<%= screenNavigationEntryURL %>"><%= screenNavigationEntry.getLabel(themeDisplay.getLocale()) %></a>
+							</li>
 
-					<%
-					}
-					%>
+						<%
+						}
+						%>
 
-				</ul>
+					</ul>
+				</nav>
 			</div>
 		</c:if>
 

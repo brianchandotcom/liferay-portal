@@ -1,6 +1,8 @@
 @if $compat-navs {
 	.nav {
-		flex-direction: column;
+		@include media-breakpoint-down($scaling-breakpoint-down) {
+			flex-direction: column;
+		}
 
 		> li {
 			position: relative;

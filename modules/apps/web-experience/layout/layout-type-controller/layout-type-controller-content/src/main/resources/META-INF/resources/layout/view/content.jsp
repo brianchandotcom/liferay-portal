@@ -17,30 +17,16 @@
 <%@ include file="/layout/view/init.jsp" %>
 
 <%
-String randomNamespace = PortalUtil.generateRandomKey(request, "layout_type_controller_content_page") + StringPool.UNDERLINE;
-
 for (FragmentEntryInstanceLink fragmentEntryInstanceLink : fragmentEntryInstanceLinks) {
-	String fragmentEntryInstanceLinkNamespace = randomNamespace + fragmentEntryInstanceLink.getPosition();
 %>
 
-	<liferay-util:html-top outputKey="<%= fragmentEntryInstanceLinkNamespace %>">
-		<style type="text/css">
-			<%= fragmentEntryInstanceLink.getCss() %>
-		</style>
-	</liferay-util:html-top>
+	<%= FragmentRenderUtil.renderFragment(
+		fragmentEntryInstanceLink.getPosition(),
+		fragmentEntryInstanceLink.getFragmentEntryId(),
+		fragmentEntryInstanceLink.getCss(),
+		fragmentEntryInstanceLink.getHtml(),
+		fragmentEntryInstanceLink.getJs()) %>
 
-	<div id="<%= fragmentEntryInstanceLinkNamespace %>">
-		<%= fragmentEntryInstanceLink.getHtml() %>
-	</div>
-
-	<aui:script>
-		(function() {
-		var fragment = document.getElementById("<%= fragmentEntryInstanceLinkNamespace %>");
-
-		<%= fragmentEntryInstanceLink.getJs() %>
-		}());
-	</aui:script>
-
-<%
+	<%
 }
-%>
+	%>

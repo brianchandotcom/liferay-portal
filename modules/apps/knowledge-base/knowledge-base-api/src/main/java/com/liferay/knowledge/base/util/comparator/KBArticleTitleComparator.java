@@ -40,8 +40,10 @@ public class KBArticleTitleComparator extends OrderByComparator<KBArticle> {
 
 	@Override
 	public int compare(KBArticle kbArticle1, KBArticle kbArticle2) {
-		int value = StringUtil.toLowerCase(kbArticle1.getTitle()).compareTo(
-			StringUtil.toLowerCase(kbArticle2.getTitle()));
+		String lowerCaseTitle1 = StringUtil.toLowerCase(kbArticle1.getTitle());
+		String lowerCaseTitle2 = StringUtil.toLowerCase(kbArticle2.getTitle());
+
+		int value = lowerCaseTitle1.compareTo(lowerCaseTitle2);
 
 		if (_ascending) {
 			return value;

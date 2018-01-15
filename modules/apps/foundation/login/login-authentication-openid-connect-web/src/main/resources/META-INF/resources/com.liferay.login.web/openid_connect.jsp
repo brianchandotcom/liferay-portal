@@ -47,7 +47,7 @@
 
 	<aui:fieldset>
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value="sign-in" />
+			<aui:button type="submit" value="sign-in" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

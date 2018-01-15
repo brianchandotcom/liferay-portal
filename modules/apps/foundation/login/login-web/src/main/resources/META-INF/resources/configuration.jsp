@@ -97,6 +97,6 @@ String emailFromAddress = ParamUtil.getString(request, "preferences--emailFromAd
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>

@@ -49,13 +49,13 @@ TermsOfUseContentProvider termsOfUseContentProvider = TermsOfUseContentProviderR
 
 	<c:if test="<%= !user.isAgreedToTermsOfUse() %>">
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value="i-agree" />
+			<aui:button type="submit" value="i-agree" />
 
 			<%
 			String taglibOnClick = "alert('" + UnicodeLanguageUtil.get(request, "you-must-agree-with-the-terms-of-use-to-continue") + "');";
 			%>
 
-			<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />
+			<aui:button onClick="<%= taglibOnClick %>" type="cancel" value="i-disagree" />
 		</aui:button-row>
 	</c:if>
 </aui:form>

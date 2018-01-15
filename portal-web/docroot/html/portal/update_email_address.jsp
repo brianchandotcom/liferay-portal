@@ -69,6 +69,6 @@ String emailAddress2 = ParamUtil.getString(request, "emailAddress2");
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>

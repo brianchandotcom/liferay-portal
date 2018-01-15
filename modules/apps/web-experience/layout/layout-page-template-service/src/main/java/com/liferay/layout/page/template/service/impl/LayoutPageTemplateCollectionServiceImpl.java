@@ -15,6 +15,7 @@
 package com.liferay.layout.page.template.service.impl;
 
 import com.liferay.layout.page.template.constants.LayoutPageTemplateActionKeys;
+import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.constants.LayoutPageTemplateConstants;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.layout.page.template.service.base.LayoutPageTemplateCollectionServiceBaseImpl;
@@ -27,7 +28,9 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -147,6 +150,14 @@ public class LayoutPageTemplateCollectionServiceImpl
 			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws PortalException {
 
+		int count = _getLayoutPageTemplateCollectionsCount(
+			groupId,
+			LayoutPageTemplateCollectionTypeConstants.TYPE_ASSET_DISPLAY_PAGE);
+
+		if (count <= 0) {
+			_addAssetDisplayPageLayoutPageTemplateCollection(groupId);
+		}
+
 		return layoutPageTemplateCollectionPersistence.filterFindByGroupId(
 			groupId, start, end, orderByComparator);
 	}
@@ -188,6 +199,26 @@ public class LayoutPageTemplateCollectionServiceImpl
 		return layoutPageTemplateCollectionLocalService.
 			updateLayoutPageTemplateCollection(
 				layoutPageTemplateCollectionId, name, description);
+	}
+
+	private LayoutPageTemplateCollection
+			_addAssetDisplayPageLayoutPageTemplateCollection(long groupId)
+		throws PortalException {
+
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
+
+		return layoutPageTemplateCollectionLocalService.
+			addLayoutPageTemplateCollection(
+				getUserId(), groupId, "Asset Display Pages", StringPool.BLANK,
+				LayoutPageTemplateCollectionTypeConstants.
+					TYPE_ASSET_DISPLAY_PAGE,
+				serviceContext);
+	}
+
+	private int _getLayoutPageTemplateCollectionsCount(long groupId, int type) {
+		return layoutPageTemplateCollectionPersistence.filterCountByG_T(
+			groupId, type);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

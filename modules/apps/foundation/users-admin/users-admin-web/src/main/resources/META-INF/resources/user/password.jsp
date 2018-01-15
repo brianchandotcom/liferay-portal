@@ -17,9 +17,10 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = (User)request.getAttribute("user.selUser");
+UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
 
-PasswordPolicy passwordPolicy = (PasswordPolicy)request.getAttribute("user.passwordPolicy");
+PasswordPolicy passwordPolicy = userDisplayContext.getPasswordPolicy();
+User selUser = userDisplayContext.getSelectedUser();
 
 boolean passwordReset = false;
 boolean passwordResetDisabled = false;
@@ -90,7 +91,7 @@ else {
 	<!-- End LPS-38289 and LPS-55993 and LPS-61876 -->
 
 	<c:if test="<%= portletName.equals(myAccountPortletId) %>">
-		<aui:input autocomplete="off" label="current-password" name="password0" size="30" type="password" />
+		<aui:input autocomplete="off" label="current-password" name="password0" required="<%= true %>" size="30" type="password" />
 	</c:if>
 
 	<aui:input autocomplete="off" label="new-password" name="password1" size="30" type="password" />

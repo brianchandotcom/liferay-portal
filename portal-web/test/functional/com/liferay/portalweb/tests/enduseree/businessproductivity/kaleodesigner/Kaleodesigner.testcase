@@ -1652,6 +1652,46 @@
 		</execute>
 	</command>
 
+	<command name="ViewSourceXMLNotErasedWhenInvalid" priority="4">
+		<description message="This is a use case for LPS-48590." />
+
+		<property name="test.name.skip.portal.instance" value="Kaleodesigner#ViewSourceXMLNotErasedWhenInvalid" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Configuration" />
+			<var name="panel" value="Control Panel" />
+			<var name="portlet" value="Kaleo Designer" />
+		</execute>
+
+		<execute macro="KaleoDesigner#addNewDefinitionViaKDCP">
+			<var name="workflowDefinitionTitle" value="New Workflow Definition Title" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editSourceXML">
+			<var name="kdSourceXML" value=" " />
+			<var name="line" value="20" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewViewTab" />
+
+		<execute macro="KaleoDesigner#viewNodeNotPresent">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#editSourceXML">
+			<var name="kdSourceXML"><![CDATA[</transitions></state>]]></var>
+			<var name="line" value="20" />
+		</execute>
+
+		<execute macro="KaleoDesigner#viewViewTab" />
+
+		<execute macro="KaleoDesigner#viewNodePresent">
+			<var name="nodeNodeLabel" value="EndNode" />
+		</execute>
+
+		<execute macro="KaleoDesigner#publishWorkflowDefinitionViaKDCP" />
+	</command>
+
 	<command name="ViewWorkflowDefinitionButtonsViaKaleoFormsAdmin" priority="2">
 		<description message="This is a use case for LPS-47352 and LPS-48912." />
 

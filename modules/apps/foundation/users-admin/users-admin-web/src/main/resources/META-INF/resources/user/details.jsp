@@ -228,7 +228,7 @@ if (selContact != null) {
 				String taglibOnClick = renderResponse.getNamespace() + "saveUser('unlock');";
 				%>
 
-				<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="unlock" />
+				<aui:button onClick="<%= taglibOnClick %>" value="unlock" />
 			</aui:button-row>
 		</c:if>
 	</aui:fieldset>

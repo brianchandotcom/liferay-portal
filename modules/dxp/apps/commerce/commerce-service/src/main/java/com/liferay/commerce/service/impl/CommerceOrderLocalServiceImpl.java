@@ -37,8 +37,13 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowHandlerRegistryUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
+import java.io.Serializable;
+
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -60,6 +65,8 @@ public class CommerceOrderLocalServiceImpl
 			int paymentStatus, int shippingStatus, int orderStatus,
 			ServiceContext serviceContext)
 		throws PortalException {
+
+		// Commerce order
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
@@ -87,6 +94,10 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setExpandoBridgeAttributes(serviceContext);
 
 		commerceOrderPersistence.update(commerceOrder);
+
+		// Workflow
+
+		startWorkflowInstance(user.getUserId(), commerceOrder, serviceContext);
 
 		return commerceOrder;
 	}
@@ -208,6 +219,12 @@ public class CommerceOrderLocalServiceImpl
 		// Expando
 
 		expandoRowLocalService.deleteRows(commerceOrder.getCommerceOrderId());
+
+		// Workflow
+
+		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
+			commerceOrder.getCompanyId(), commerceOrder.getGroupId(),
+			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId());
 
 		return commerceOrder;
 	}
@@ -341,6 +358,43 @@ public class CommerceOrderLocalServiceImpl
 			zip, commerceRegionId, commerceCountryId, phoneNumber,
 			CommerceOrder::getShippingAddressId,
 			CommerceOrder::setShippingAddressId, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CommerceOrder updateStatus(
+			long userId, long commerceOrderId, int status,
+			ServiceContext serviceContext,
+			Map<String, Serializable> workflowContext)
+		throws PortalException {
+
+		User user = userLocalService.getUser(userId);
+		Date now = new Date();
+
+		CommerceOrder commerceOrder = commerceOrderPersistence.findByPrimaryKey(
+			commerceOrderId);
+
+		commerceOrder.setStatus(status);
+		commerceOrder.setStatusByUserId(user.getUserId());
+		commerceOrder.setStatusByUserName(user.getFullName());
+		commerceOrder.setStatusDate(serviceContext.getModifiedDate(now));
+
+		commerceOrderPersistence.update(commerceOrder);
+
+		return commerceOrder;
+	}
+
+	protected CommerceOrder startWorkflowInstance(
+			long userId, CommerceOrder commerceOrder,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		Map<String, Serializable> workflowContext = new HashMap<>();
+
+		return WorkflowHandlerRegistryUtil.startWorkflowInstance(
+			commerceOrder.getCompanyId(), commerceOrder.getGroupId(), userId,
+			CommerceOrder.class.getName(), commerceOrder.getCommerceOrderId(),
+			commerceOrder, serviceContext, workflowContext);
 	}
 
 	protected CommerceOrder updateAddress(

@@ -1,0 +1,28 @@
+apply plugin: "com.liferay.jsdoc"
+apply plugin: "java"
+
+task runGradleTest
+
+node {
+	nodeVersion = "8.9.0"
+}
+
+runGradleTest {
+	dependsOn jsdoc
+
+	doLast {
+		File dir = file("build/docs/jsdoc/samples/1.0.0")
+
+		String[] fileNames = [
+			"index.html",
+			"Point.html",
+			"point.es.js.html"
+		]
+
+		for (String fileName in fileNames) {
+			File generatedFile = new File(dir, fileName)
+
+			assert generatedFile.exists()
+		}
+	}
+}

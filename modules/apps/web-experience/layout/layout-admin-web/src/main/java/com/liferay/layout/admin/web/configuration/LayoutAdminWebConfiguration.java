@@ -31,7 +31,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface LayoutAdminWebConfiguration {
 
 	@Meta.AD(
-		deflt = LayoutAdminDisplayStyleKeys.FLATTENED,
+		deflt = LayoutAdminDisplayStyleKeys.MILLER,
 		name = "layout-display-style", optionLabels = {"Flattened", "Miller"},
 		optionValues = {
 			LayoutAdminDisplayStyleKeys.FLATTENED,

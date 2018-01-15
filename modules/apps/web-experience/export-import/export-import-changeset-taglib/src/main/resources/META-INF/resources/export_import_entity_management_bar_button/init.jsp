@@ -22,7 +22,7 @@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %>
 <%@ page import="java.util.Objects" %>
 
 <%
-String cmd = GetterUtil.getString(request.getAttribute("liferay-staging:export-import-entity-management-bar-button:cmd"));
-String searchContainerId = GetterUtil.getString(request.getAttribute("liferay-staging:export-import-entity-management-bar-button:searchContainerId"));
-String searchContainerMappingId = GetterUtil.getString(request.getAttribute("liferay-staging:export-import-entity-management-bar-button:searchContainerMappingId"));
+String cmd = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-import-entity-management-bar-button:cmd"));
+String searchContainerId = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-import-entity-management-bar-button:searchContainerId"));
+String searchContainerMappingId = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-import-entity-management-bar-button:searchContainerMappingId"));
 %>

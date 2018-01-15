@@ -118,33 +118,6 @@
 		</attribute>
 	</tag>
 	<tag>
-		<description>Renders a menu item for the Export/Publish Entity screen's UI.</description>
-		<name>export-import-entity-management-bar-button</name>
-		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntityManagementBarButtonTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>cmd</name>
-			<required>true</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<name>searchContainerMappingId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
-		<description>Adds a search container mapping to the DOM required by the Export/Import Entity Management Bar Button tag library.</description>
-		<name>export-import-entity-search-container-mapping</name>
-		<tag-class>com.liferay.staging.taglib.servlet.taglib.ExportImportEntitySearchContainerMappingTag</tag-class>
-		<body-content>JSP</body-content>
-		<attribute>
-			<name>searchContainerMappingId</name>
-			<required>false</required>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-	</tag>
-	<tag>
 		<description>Renders a menu item for the Import Entity screen's UI.</description>
 		<name>import-entity</name>
 		<tag-class>com.liferay.staging.taglib.servlet.taglib.ImportEntityTag</tag-class>

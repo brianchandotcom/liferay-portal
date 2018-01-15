@@ -14,21 +14,21 @@
 
 package com.liferay.dynamic.data.lists.service.permission;
 
-import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
-import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.model.DDLRecordSetConstants;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Marcellus Tavares
+ * @deprecated As of 1.2.0, with no direct replacement
  */
+@Component(immediate = true)
+@Deprecated
 public class DDLRecordSetPermission {
 
 	public static void check(
@@ -36,11 +36,8 @@ public class DDLRecordSetPermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, recordSet, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DDLRecordSet.class.getName(),
-				recordSet.getRecordSetId(), actionId);
-		}
+		_ddlRecordSetModelResourcePermission.check(
+			permissionChecker, recordSet, actionId);
 	}
 
 	public static void check(
@@ -48,11 +45,8 @@ public class DDLRecordSetPermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, recordSetId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, DDLRecordSet.class.getName(), recordSetId,
-				actionId);
-		}
+		_ddlRecordSetModelResourcePermission.check(
+			permissionChecker, recordSetId, actionId);
 	}
 
 	/**
@@ -67,40 +61,17 @@ public class DDLRecordSetPermission {
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
 			groupId, recordSetKey);
 
-		check(permissionChecker, recordSet, actionId);
+		_ddlRecordSetModelResourcePermission.check(
+			permissionChecker, recordSet, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, DDLRecordSet recordSet,
-		String actionId) {
+			PermissionChecker permissionChecker, DDLRecordSet recordSet,
+			String actionId)
+		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			DDLRecord.class.getName(), PortletProvider.Action.EDIT);
-
-		if (!actionId.equals(DDLActionKeys.ADD_RECORD) &&
-			(recordSet.getScope() ==
-				DDLRecordSetConstants.SCOPE_DYNAMIC_DATA_LISTS)) {
-
-			Boolean hasPermission = StagingPermissionUtil.hasPermission(
-				permissionChecker, recordSet.getGroupId(),
-				DDLRecordSet.class.getName(), recordSet.getRecordSetId(),
-				portletId, actionId);
-
-			if (hasPermission != null) {
-				return hasPermission.booleanValue();
-			}
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				recordSet.getCompanyId(), DDLRecordSet.class.getName(),
-				recordSet.getRecordSetId(), recordSet.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			recordSet.getGroupId(), DDLRecordSet.class.getName(),
-			recordSet.getRecordSetId(), actionId);
+		return _ddlRecordSetModelResourcePermission.contains(
+			permissionChecker, recordSet, actionId);
 	}
 
 	public static boolean contains(
@@ -108,10 +79,8 @@ public class DDLRecordSetPermission {
 			String actionId)
 		throws PortalException {
 
-		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
-			recordSetId);
-
-		return contains(permissionChecker, recordSet, actionId);
+		return _ddlRecordSetModelResourcePermission.contains(
+			permissionChecker, recordSetId, actionId);
 	}
 
 	/**
@@ -126,7 +95,21 @@ public class DDLRecordSetPermission {
 		DDLRecordSet recordSet = DDLRecordSetLocalServiceUtil.getRecordSet(
 			groupId, recordSetKey);
 
-		return contains(permissionChecker, recordSet, actionId);
+		return _ddlRecordSetModelResourcePermission.contains(
+			permissionChecker, recordSet, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<DDLRecordSet> modelResourcePermission) {
+
+		_ddlRecordSetModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<DDLRecordSet>
+		_ddlRecordSetModelResourcePermission;
 
 }

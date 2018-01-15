@@ -602,8 +602,6 @@ public class CPInstanceLocalServiceImpl extends CPInstanceLocalServiceBaseImpl {
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		// Commerce product instance
-
 		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 

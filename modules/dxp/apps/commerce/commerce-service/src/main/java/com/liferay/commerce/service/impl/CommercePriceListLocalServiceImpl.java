@@ -331,8 +331,6 @@ public class CommercePriceListLocalServiceImpl
 			Map<String, Serializable> workflowContext)
 		throws PortalException {
 
-		// Commerce price list
-
 		User user = userLocalService.getUser(userId);
 		Date now = new Date();
 

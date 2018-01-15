@@ -73,7 +73,9 @@ public class TargetPlatformIndexerUtil {
 			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
 				FrameworkFactory.class);
 
-			FrameworkFactory frameworkFactory = serviceLoader.iterator().next();
+			Iterator<FrameworkFactory> iterator = serviceLoader.iterator();
+
+			FrameworkFactory frameworkFactory = iterator.next();
 
 			framework = frameworkFactory.newFramework(properties);
 

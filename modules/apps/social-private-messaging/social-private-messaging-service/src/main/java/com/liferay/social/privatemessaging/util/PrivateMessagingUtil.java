@@ -212,7 +212,9 @@ public class PrivateMessagingUtil {
 			MBMessageLocalServiceUtil.getThreadMessages(
 				mbThreadId, WorkflowConstants.STATUS_ANY, 0, 1);
 
-		return mbMessages.get(0).getSubject();
+		MBMessage mbMessage = mbMessages.get(0);
+
+		return mbMessage.getSubject();
 	}
 
 	public static List<User> getThreadUsers(long userId, long mbThreadId)

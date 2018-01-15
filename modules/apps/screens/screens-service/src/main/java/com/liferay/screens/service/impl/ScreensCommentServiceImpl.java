@@ -34,6 +34,8 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.screens.service.base.ScreensCommentServiceBaseImpl;
 
+import java.util.Date;
+
 /**
  * @author Alejandro Hernández Malillos
  */
@@ -206,13 +208,19 @@ public class ScreensCommentServiceImpl extends ScreensCommentServiceBaseImpl {
 
 		jsonObject.put("body", comment.getBody());
 		jsonObject.put("commentId", Long.valueOf(comment.getCommentId()));
-		jsonObject.put(
-			"createDate", Long.valueOf(comment.getCreateDate().getTime()));
+
+		Date createDate = comment.getCreateDate();
+
+		jsonObject.put("createDate", Long.valueOf(createDate.getTime()));
+
 		jsonObject.put(
 			"deletePermission",
 			discussionPermission.hasDeletePermission(comment.getCommentId()));
-		jsonObject.put(
-			"modifiedDate", Long.valueOf(comment.getModifiedDate().getTime()));
+
+		Date modifiedDate = comment.getModifiedDate();
+
+		jsonObject.put("modifiedDate", Long.valueOf(modifiedDate.getTime()));
+
 		jsonObject.put(
 			"updatePermission",
 			discussionPermission.hasUpdatePermission(comment.getCommentId()));

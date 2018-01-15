@@ -22,8 +22,9 @@ import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
+import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -186,13 +187,17 @@ public class DDLRecordAssetRenderer extends BaseJSPAssetRenderer<DDLRecord> {
 	}
 
 	@Override
-	public boolean hasEditPermission(PermissionChecker permissionChecker) {
+	public boolean hasEditPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return DDLRecordSetPermission.contains(
 			permissionChecker, _recordSet, ActionKeys.UPDATE);
 	}
 
 	@Override
-	public boolean hasViewPermission(PermissionChecker permissionChecker) {
+	public boolean hasViewPermission(PermissionChecker permissionChecker)
+		throws PortalException {
+
 		return DDLRecordSetPermission.contains(
 			permissionChecker, _recordSet, ActionKeys.VIEW);
 	}

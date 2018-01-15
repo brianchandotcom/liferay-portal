@@ -6,6 +6,7 @@ import State, {Config} from 'metal-state';
  * diverse actions. For example, a button for centering the map
  * view will act as a feature.
  * @abstract
+ * @review
  */
 class GeoJSONBase extends State {
 	/**
@@ -14,6 +15,7 @@ class GeoJSONBase extends State {
 	 * If the generated Array of native features is not empty, it fires
 	 * a 'featuresAdded' event.
 	 * @param {Object} nativeFeaturesData Data to be processed.
+	 * @review
 	 */
 	addData(nativeFeaturesData) {
 		const nativeFeatures = this._getNativeFeatures(nativeFeaturesData);
@@ -34,6 +36,7 @@ class GeoJSONBase extends State {
 	 * event with the wrapped feature as event data.
 	 * @param {Object} nativeFeature Feature to be wrapped and sent
 	 * @protected
+	 * @review
 	 */
 	_handleFeatureClicked(nativeFeature) {
 		this.emit(
@@ -48,10 +51,11 @@ class GeoJSONBase extends State {
 	 * Parses a nativeFeaturesData object and return an array of the
 	 * parsed features. If no feature has been parsed it may return an
 	 * empty array.
-	 * @protected
 	 * @abstract
 	 * @param {Object} nativeFeaturesData
+	 * @protected
 	 * @return {Object[]} List of native features to be added
+	 * @review
 	 */
 	_getNativeFeatures(nativeFeaturesData) {
 		throw new Error('Must be implemented');
@@ -59,10 +63,11 @@ class GeoJSONBase extends State {
 
 	/**
 	 * Wraps a native feature.
-	 * @protected
 	 * @abstract
 	 * @param {Object} nativeFeature
+	 * @protected
 	 * @return {Object} Wrapped native feature
+	 * @review
 	 */
 	_wrapNativeFeature(nativeFeature) {
 		throw new Error('Must be implemented');
@@ -71,12 +76,14 @@ class GeoJSONBase extends State {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 GeoJSONBase.STATE = {
 	/**
 	 * Map to be used
+	 * @review
 	 * @type {Object}
 	 */
 	map: Config.object(),

@@ -2,11 +2,13 @@ import State from 'metal-state';
 
 /**
  * GoogleMapsGeocoder
+ * @review
  */
 class GoogleMapsGeocoder extends State {
 	/**
 	 * Creates a new geocoder using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -20,6 +22,7 @@ class GoogleMapsGeocoder extends State {
 	 * @param {Object} response Server response
 	 * @param {Object} status Server response status
 	 * @protected
+	 * @review
 	 */
 	_handleGeocoderResponse(callback, response, status) {
 		const result = {
@@ -47,6 +50,7 @@ class GoogleMapsGeocoder extends State {
 	 * Transforms a given address into valid latitude and longitude
 	 * @param {string} query Address to be transformed into latitude and longitude
 	 * @param {function} callback Callback that will be executed on success
+	 * @review
 	 */
 	forward(query, callback) {
 		const payload = {
@@ -63,6 +67,7 @@ class GoogleMapsGeocoder extends State {
 	 * Transforms a given location object (lat, lng) into a valid address
 	 * @param {string} location Location information to be sent to the server
 	 * @param {function} callback Callback that will be executed on success
+	 * @review
 	 */
 	reverse(location, callback) {
 		const payload = {

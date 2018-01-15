@@ -8,10 +8,12 @@ import controlsTemplates from './RotateControls.soy';
 
 /**
  * Rotate Component
+ * @review
  */
 class RotateComponent extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	attached() {
 		this.cache_ = {};
@@ -20,6 +22,7 @@ class RotateComponent extends Component {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	detached() {
 		this.cache_ = {};
@@ -27,9 +30,9 @@ class RotateComponent extends Component {
 
 	/**
 	 * Rotates the image to the current selected rotation angle.
-	 *
 	 * @param  {ImageData} imageData ImageData representation of the image.
 	 * @return {CancellablePromise} A promise that will resolve when the processing is complete.
+	 * @review
 	 */
 	preview(imageData) {
 		return this.process(imageData);
@@ -37,9 +40,9 @@ class RotateComponent extends Component {
 
 	/**
 	 * Rotates the image to the current selected rotation angle.
-	 *
 	 * @param  {ImageData} imageData ImageData representation of the image.
 	 * @return {CancellablePromise} A promise that will resolve when the processing is complete.
+	 * @review
 	 */
 	process(imageData) {
 		let promise = this.cache_[this.rotationAngle_];
@@ -55,11 +58,11 @@ class RotateComponent extends Component {
 
 	/**
 	 * Rotates the passed ImageData to the current rotation angle.
-	 *
-	 * @protected
 	 * @param  {ImageData} imageData The ImageData to rotate
 	 * @param  {number} rotationAngle Normalized rotation angle in degrees in the range [0-360)
+	 * @protected
 	 * @return {CancellablePromise} A promise to be fullfilled when the image has been rotated.
+	 * @review
 	 */
 	rotate_(imageData, rotationAngle) {
 		let cancellablePromise = new CancellablePromise((resolve, reject) => {
@@ -92,6 +95,7 @@ class RotateComponent extends Component {
 
 	/**
 	 * Rotates the image 90º counter-clockwise.
+	 * @review
 	 */
 	rotateLeft() {
 		this.rotationAngle_ = (this.rotationAngle_ - 90) % 360;
@@ -100,6 +104,7 @@ class RotateComponent extends Component {
 
 	/**
 	 * Rotates the image 90º clockwise.
+	 * @review
 	 */
 	rotateRight() {
 		this.rotationAngle_ = (this.rotationAngle_ + 90) % 360;
@@ -109,12 +114,14 @@ class RotateComponent extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 RotateComponent.STATE = {
 	/**
 	 * Path of this module
+	 * @review
 	 * @type {Function}
 	 */
 	modulePath: {
@@ -124,6 +131,7 @@ RotateComponent.STATE = {
 	/**
 	 * Injected method to notify the editor this component
 	 * wants to generate a preview version of the image.
+	 * @review
 	 * @type {Function}
 	 */
 	requestImageEditorPreview: {
@@ -131,7 +139,6 @@ RotateComponent.STATE = {
 	}
 };
 
-// Register component
 Soy.register(RotateComponent, componentTemplates);
 
 export default RotateComponent;

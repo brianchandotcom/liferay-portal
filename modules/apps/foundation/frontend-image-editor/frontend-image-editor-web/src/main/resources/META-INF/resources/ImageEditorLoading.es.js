@@ -5,10 +5,10 @@ import templates from './ImageEditorLoading.soy';
 
 /**
  * ImageEditor Loading Component
+ * @review
  */
 class ImageEditorLoading extends Component {}
 
-// Register component
 Soy.register(ImageEditorLoading, templates);
 
 export default ImageEditorLoading;

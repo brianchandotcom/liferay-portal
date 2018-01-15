@@ -9,6 +9,7 @@ class OpenStreetMapGeocoder extends State {
 	 * @param {Object} response Server response
 	 * @param {function} callback Callback that will be executed on success
 	 * @protected
+	 * @review
 	 */
 	_handleForwardJSONP(response, callback) {
 		callback(response);
@@ -19,6 +20,7 @@ class OpenStreetMapGeocoder extends State {
 	 * @param {Object} response Server response
 	 * @param {function} callback Callback that will be executed on success
 	 * @protected
+	 * @review
 	 */
 	_handleReverseJSONP({error, display_name, lat, lon}, callback) {
 		const result = {
@@ -43,6 +45,7 @@ class OpenStreetMapGeocoder extends State {
 	 * Transforms a given address into valid latitude and longitude
 	 * @param {string} query Address to be transformed into latitude and longitude
 	 * @param {function} callback Callback that will be executed on success
+	 * @review
 	 */
 	forward(query, callback) {
 		AUI().use(
@@ -69,6 +72,7 @@ class OpenStreetMapGeocoder extends State {
 	 * Transforms a given location object (lat, lng) into a valid address
 	 * @param {string} location Location information to be sent to the server
 	 * @param {function} callback Callback that will be executed on success
+	 * @review
 	 */
 	reverse(location, callback) {
 		AUI().use(
@@ -94,16 +98,18 @@ class OpenStreetMapGeocoder extends State {
 
 /**
  * Url template used for OpenStreetMapGeocoder.forward() method
- * @type {string}
+ * @review
  * @see OpenStreetMapGeocoder.forward()
+ * @type {string}
  */
 OpenStreetMapGeocoder.TPL_FORWARD_GEOCODING_URL =
 	'//nominatim.openstreetmap.org/search?format=json&json_callback={callback}&q={query}';
 
 /**
  * Url template used for OpenStreetMapGeocoder.reverse() method
- * @type {string}
+ * @review
  * @see OpenStreetMapGeocoder.reverse()
+ * @type {string}
  */
 OpenStreetMapGeocoder.TPL_REVERSE_GEOCODING_URL =
 	'//nominatim.openstreetmap.org/reverse?format=json&json_callback={callback}&lat={lat}&lon={lng}';

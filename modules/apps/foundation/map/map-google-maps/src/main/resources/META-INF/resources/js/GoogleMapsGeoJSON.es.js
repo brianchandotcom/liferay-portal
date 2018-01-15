@@ -2,11 +2,13 @@ import GeoJSONBase from 'map-common/js/GeoJSONBase.es';
 
 /**
  * GoogleMapsGeoJSON
+ * @review
  */
 class GoogleMapsGeoJSON extends GeoJSONBase {
 	/**
 	 * Creates a new geojson parser using Google Map's API
 	 * @param  {Array} args List of arguments to be passed to State
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -23,6 +25,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 
 	/**
 	 * Removes the listeners that have been added to the map object.
+	 * @review
 	 */
 	destructor() {
 		this._eventHandlers.forEach(
@@ -37,6 +40,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * It listens for click events and executes
 	 * GoogleMapsGeoJSON._handleFeatureClicked.
 	 * @protected
+	 * @review
 	 */
 	_bindUI() {
 		this._eventHandlers = [
@@ -54,6 +58,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 	 * @param {Object} feature Google Maps native feature to be parsed.
 	 * @protected
 	 * @return {Object} Obtained style
+	 * @review
 	 */
 	_getFeatureStyle(feature) {
 		return {
@@ -63,6 +68,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	_getNativeFeatures(geoJSONData) {
 		return this.map.data.addGeoJson(geoJSONData);
@@ -70,6 +76,7 @@ class GoogleMapsGeoJSON extends GeoJSONBase {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	_wrapNativeFeature(nativeFeature) {
 		const feature = nativeFeature.getGeometry

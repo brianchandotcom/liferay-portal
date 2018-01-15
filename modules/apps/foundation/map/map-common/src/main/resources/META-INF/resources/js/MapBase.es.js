@@ -8,6 +8,7 @@ import {isSubsetOf} from './validators.es';
 /**
  * HTML template string used for generating the home button that is
  * used for centering the map at the user location or the original position.
+ * @review
  * @type {string}
  */
 const TPL_HOME_BUTTON = `
@@ -19,6 +20,7 @@ const TPL_HOME_BUTTON = `
 /**
  * HTML template string used for generating the search box that is used
  * for looking for map locations.
+ * @review
  * @type {string}
  */
 const TPL_SEARCH_BOX = `
@@ -30,6 +32,7 @@ const TPL_SEARCH_BOX = `
 /**
  * Object that will hold callbacks waiting for being executed
  * when maps are created.
+ * @review
  * @see MapBase.register()
  * @see MapBase.get()
  */
@@ -43,11 +46,13 @@ const pendingCallbacks = {};
  * will create instances of all the other objects, including
  * the native maps implemented by inheriting classes.
  * @abstract
+ * @review
  */
 class MapBase extends State {
 	/**
 	 * MapBase constructor
 	 * @param  {Array} args List of arguments to be sent to State constructor
+	 * @review
 	 */
 	constructor(...args) {
 		super(...args);
@@ -86,6 +91,7 @@ class MapBase extends State {
 
 	/**
 	 * Destroys the existing _geoJSONLayer and _customControls[SEARCH]
+	 * @review
 	 * @see MapBase._initializeMap()
 	 * @see MapBase._createCustomControls()
 	 */
@@ -104,6 +110,9 @@ class MapBase extends State {
 	}
 
 	/**
+	 * @protected
+	 * @review
+	 *
 	 * Add event listeners to:
 	 * @see this._geoJSONLayer
 	 * @see this._geolocationMarker
@@ -115,8 +124,6 @@ class MapBase extends State {
 	 * @see this._handleGeoLocationMarkerDragended
 	 * @see this._handleHomeButtonClicked
 	 * @see this._handleSearchButtonClicked
-	 *
-	 * @protected
 	 */
 	_bindUIMB() {
 		if (this._geoJSONLayer) {
@@ -157,6 +164,7 @@ class MapBase extends State {
 	 * It only adds the home button and the search box if the corresponding
 	 * flags are activated inside MapBase.controls.
 	 * @protected
+	 * @review
 	 */
 	_createCustomControls() {
 		const controls = this.controls || [];
@@ -191,6 +199,7 @@ class MapBase extends State {
 	 * @param {Object} controlsConfig
 	 * @protected
 	 * @return {Object} Created map
+	 * @review
 	 */
 	_createMap(location, controlsConfig) {
 		throw new Error('This method must be implemented');
@@ -205,6 +214,7 @@ class MapBase extends State {
 	 *  boolean value indicating if there is a configuration for the control. If
 	 *  true, where will be a [control]Options attribute with the configuration
 	 *  content.
+	 * @review
 	 */
 	_getControlsConfig() {
 		const config = {};
@@ -244,6 +254,7 @@ class MapBase extends State {
 	 * a new instance with the existing map and returns it.
 	 * @protected
 	 * @return {MapBase.DialogImpl|null}
+	 * @review
 	 */
 	_getDialog() {
 		if (!this._dialog && this.constructor.DialogImpl) {
@@ -263,6 +274,7 @@ class MapBase extends State {
 	 * a new instance and returns it.
 	 * @protected
 	 * @return {MapBase.GeocoderImpl|null}
+	 * @review
 	 */
 	_getGeocoder() {
 		if (!this._geocoder && this.constructor.GeocoderImpl) {
@@ -278,6 +290,7 @@ class MapBase extends State {
 	 * @param {{ features: Array<Object> }} param0 Array of features that
 	 *  will be processed.
 	 * @protected
+	 * @review
 	 * @see MapBase.getBounds()
 	 * @see MapBase.position
 	 */
@@ -303,6 +316,7 @@ class MapBase extends State {
 	 * simple propagates the event with the given feature.
 	 * @param {{ feature: Object }} param0 Feature to be propagated.
 	 * @protected
+	 * @review
 	 */
 	_handleGeoJSONLayerFeatureClicked({feature}) {
 		this.emit('featureClick', {feature});
@@ -313,6 +327,7 @@ class MapBase extends State {
 	 * a new position. It updates the instance position.
 	 * @param {{ location: Object }} param0 New marker location.
 	 * @protected
+	 * @review
 	 * @see MapBase._getGeoCoder()
 	 * @see MapBase.position
 	 */
@@ -330,6 +345,7 @@ class MapBase extends State {
 	 * clicked. It resets the instance position to _originalPosition and stops
 	 * the event propagation.
 	 * @param {Event} event Click event.
+	 * @review
 	 * @see MapBase.position
 	 * @see MapBase._originalPosition
 	 */
@@ -343,6 +359,7 @@ class MapBase extends State {
 	 * Event handler executed when the user position changes. It centers the map
 	 * and, if existing, updates the _geolocationMarker position.
 	 * @param {{ newVal: { location: Object } }} param0 New location information.
+	 * @review
 	 * @see MapBase.setCenter()
 	 * @see MapBase._geolocationMarker
 	 */
@@ -358,6 +375,7 @@ class MapBase extends State {
 	 * Event handler executed when the search button GeoJSONLayer feature has
 	 * been clicked. It updates the instance position.
 	 * @param {{ position: Object }} param0 New position.
+	 * @review
 	 * @see MapBase.position
 	 */
 	_handleSearchButtonClicked({position}) {
@@ -368,6 +386,7 @@ class MapBase extends State {
 	 * If this.data has a truthy value and this._geoJSONLayer has been
 	 * set, it tries to parse geoJSON information with _geoJSONLayer.addData()
 	 * @protected
+	 * @review
 	 * @see this._geoJSONLayer
 	 * @see this.data
 	 */
@@ -383,6 +402,7 @@ class MapBase extends State {
 	 * the geocoder.
 	 * @param {Object} location Location object user for map initialization.
 	 * @protected
+	 * @review
 	 * @see this._initializeMap()
 	 * @see this._getGeocoder()
 	 */
@@ -406,6 +426,7 @@ class MapBase extends State {
 	 * a marker for it.
 	 * @param {Object} position Initial position added to the map.
 	 * @protected
+	 * @review
 	 * @see MapBase._getControlsConfig()
 	 * @see MapBase._createMap()
 	 * @see MapBase.GeoJSONImpl
@@ -447,6 +468,7 @@ class MapBase extends State {
 	 * Adds a new control to the interface at the given position.
 	 * @param {Object} control Native control object
 	 * @param {MapBase.POSITION} position Position defined in MapBase class
+	 * @review
 	 */
 	addControl(/* control, position */) {
 		throw new Error('This method must be implemented');
@@ -456,6 +478,7 @@ class MapBase extends State {
 	 * Returns the map bounds.
 	 * @abstract
 	 * @return {Object} Map bounds
+	 * @review
 	 */
 	getBounds() {
 		throw new Error('This method must be implemented');
@@ -465,6 +488,7 @@ class MapBase extends State {
 	 * Centers the map on the given location.
 	 * @abstract
 	 * @param {Object} location
+	 * @review
 	 */
 	setCenter(/* location */) {
 		throw new Error('This method must be implemented');
@@ -476,6 +500,7 @@ class MapBase extends State {
 	 * and returns it.
 	 * @param {Object} location Location object used for the marker position
 	 * @return {MapBase.MarkerImpl}
+	 * @review
 	 */
 	addMarker(location) {
 		let marker;
@@ -495,6 +520,7 @@ class MapBase extends State {
 	/**
 	 * Returns the stored map
 	 * @return {Object}
+	 * @review
 	 * @see MapBase._initializeMap()
 	 */
 	getNativeMap() {
@@ -505,12 +531,12 @@ class MapBase extends State {
 	 * Adds a listener for the given event using the given context. This
 	 * methods uses MetalJS' functionality, but overrides the context binding
 	 * in order to avoid breaking changes with the old implementation.
-	 *
 	 * @param {string} eventName Event name that will be listened.
 	 * @param {function} callback Callback executed when the event fires.
 	 * @param {Object} [context] Optional context that will be used for binding
 	 *  the callback when specified.
 	 * @return {*} Result of the State.on method.
+	 * @review
 	 * @see State.on
 	 */
 	on(eventName, callback, context) {
@@ -527,6 +553,7 @@ class MapBase extends State {
 	 * Opens a dialog if this_getDialog() returns a valid object.
 	 * @param {*} dialogConfig Dialog configuration that will be sent to the
 	 *  dialog.open() method.
+	 * @review
 	 * @see MapBase._getDialog()
 	 */
 	openDialog(dialogConfig) {
@@ -541,6 +568,7 @@ class MapBase extends State {
 	 * Setter called everytime the position attribute is changed.
 	 * @param {Object} position New position
 	 * @return {Object} The given position object
+	 * @review
 	 */
 	setPosition(position) {
 		this.emit(
@@ -563,6 +591,7 @@ class MapBase extends State {
  * is executed immediatly.
  * @param {string} id Id of the map that needs to be created
  * @param {function} callback Callback being executed
+ * @review
  */
 MapBase.get = function(id, callback) {
 	const map = Liferay.component(id);
@@ -584,6 +613,7 @@ MapBase.get = function(id, callback) {
  * callbacks associated with the id. Then it clears the list of callbacks.
  * @param {string} id Id of the map that has been created
  * @param {Object} map Map that has been created
+ * @review
  */
 MapBase.register = function(id, map) {
 	Liferay.component(id, map);
@@ -601,34 +631,40 @@ MapBase.register = function(id, map) {
 
 /**
  * Class that will be used for creating dialog objects.
+ * @review
  */
 MapBase.DialogImpl = null;
 
 /**
  * Class that will be used for parsing geoposition information.
+ * @review
  */
 MapBase.GeocoderImpl = null;
 
 /**
  * Class that will be used for creating GeoJSON instances.
  * This class must be replaced by another one extending GeoJSONBase.
+ * @review
  */
 MapBase.GeoJSONImpl = GeoJSONBase;
 
 /**
  * Class that will be used for creating map markers.
  * This class must be replaced by another one extending MarkerBase.
+ * @review
  */
 MapBase.MarkerImpl = MarkerBase;
 
 /**
  * Class that will be used for creating an instance of searchbox.
  * This class must be replaced by another one extending MarkerBase.
+ * @review
  */
 MapBase.SearchImpl = null;
 
 /**
  * List of controls that maybe shown inside the rendered map.
+ * @review
  */
 MapBase.CONTROLS = {
 	ATTRIBUTION: 'attribution',
@@ -646,11 +682,13 @@ MapBase.CONTROLS = {
 
 /**
  * Control mapping that should be overriden by child classes.
+ * @review
  */
 MapBase.CONTROLS_MAP = {};
 
 /**
  * Available map positions.
+ * @review
  */
 MapBase.POSITION = {
 	BOTTOM: 11,
@@ -674,18 +712,21 @@ MapBase.POSITION = {
 
 /**
  * Position mapping that should be overriden by child classes.
+ * @review
  */
 MapBase.POSITION_MAP = {};
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 MapBase.STATE = {
 	/**
 	 * DOM node selector identifying the element that will be used
 	 * for rendering the map
+	 * @review
 	 * @type {string}
 	 */
 	boundingBox: Config.string().value(''),
@@ -693,6 +734,7 @@ MapBase.STATE = {
 	/**
 	 * List of controls that will be shown on the map.
 	 * The full control list is kept inside MapBase.CONTROLS.
+	 * @review
 	 * @type {Array<string>}
 	 */
 	controls: Config.validator(isSubsetOf(Object.values(MapBase.CONTROLS))).value(
@@ -701,12 +743,14 @@ MapBase.STATE = {
 
 	/**
 	 * Data that will be parsed as GeoJSONData
+	 * @review
 	 * @type {Object}
 	 */
 	data: Config.object(),
 
 	/**
 	 * If true, the geolocation API will be used (if implemented)
+	 * @review
 	 * @type {boolean}
 	 */
 	geolocation: Config.bool().value(false),
@@ -714,6 +758,7 @@ MapBase.STATE = {
 	/**
 	 * Position being shown on the map. This value will be updated
 	 * if the position is changed internally.
+	 * @review
 	 * @type {{ lat: number, lng: number }}
 	 */
 	position: Config.shapeOf({
@@ -729,6 +774,7 @@ MapBase.STATE = {
 
 	/**
 	 * Zoom being used on the map.
+	 * @review
 	 * @type {number}
 	 */
 	zoom: Config.number().value(11),

@@ -6293,6 +6293,24 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
+	public boolean isCustomPortletMode(PortletMode portletMode) {
+		if (LiferayPortletMode.ABOUT.equals(portletMode) ||
+			LiferayPortletMode.CONFIG.equals(portletMode) ||
+			LiferayPortletMode.EDIT.equals(portletMode) ||
+			LiferayPortletMode.EDIT_DEFAULTS.equals(portletMode) ||
+			LiferayPortletMode.EDIT_GUEST.equals(portletMode) ||
+			LiferayPortletMode.HELP.equals(portletMode) ||
+			LiferayPortletMode.PREVIEW.equals(portletMode) ||
+			LiferayPortletMode.PRINT.equals(portletMode) ||
+			LiferayPortletMode.VIEW.equals(portletMode)) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	public boolean isForwardedSecure(HttpServletRequest request) {
 		if (PropsValues.WEB_SERVER_FORWARDED_PROTOCOL_ENABLED) {
 			String forwardedProtocol = request.getHeader(
@@ -7208,7 +7226,7 @@ public class PortalImpl implements Portal {
 				LayoutTypePortletImpl layoutTypePortletImpl =
 					(LayoutTypePortletImpl)layoutType;
 
-				if (_isCustomPortletMode(portletMode) &&
+				if (isCustomPortletMode(portletMode) &&
 					!layoutTypePortletImpl.hasModeCustomPortletId(
 						portletId, portletMode.toString())) {
 
@@ -8730,23 +8748,6 @@ public class PortalImpl implements Portal {
 		}
 
 		return group;
-	}
-
-	private boolean _isCustomPortletMode(PortletMode portletMode) {
-		if (LiferayPortletMode.ABOUT.equals(portletMode) ||
-			LiferayPortletMode.CONFIG.equals(portletMode) ||
-			LiferayPortletMode.EDIT.equals(portletMode) ||
-			LiferayPortletMode.EDIT_DEFAULTS.equals(portletMode) ||
-			LiferayPortletMode.EDIT_GUEST.equals(portletMode) ||
-			LiferayPortletMode.HELP.equals(portletMode) ||
-			LiferayPortletMode.PREVIEW.equals(portletMode) ||
-			LiferayPortletMode.PRINT.equals(portletMode) ||
-			LiferayPortletMode.VIEW.equals(portletMode)) {
-
-			return false;
-		}
-
-		return true;
 	}
 
 	private boolean _isSameHostName(

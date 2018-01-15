@@ -1283,6 +1283,8 @@ public interface Portal {
 	public boolean isControlPanelPortlet(
 		String portletId, ThemeDisplay themeDisplay);
 
+	public boolean isCustomPortletMode(PortletMode portletMode);
+
 	public boolean isForwardedSecure(HttpServletRequest request);
 
 	public boolean isGroupAdmin(User user, long groupId) throws Exception;

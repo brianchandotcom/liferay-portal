@@ -15,7 +15,6 @@
 package com.liferay.screens.service.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
@@ -48,8 +47,9 @@ public class ScreensDDLRecordServiceImpl
 
 		DDLRecord ddlRecord = ddlRecordLocalService.getRecord(ddlRecordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), ddlRecord, ActionKeys.VIEW);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), ddlRecord.getRecordSetId(),
+			ActionKeys.VIEW);
 
 		DDMFormValues ddmFormValues = ddlRecord.getDDMFormValues();
 

@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.lists.service.impl;
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordServiceBaseImpl;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordPermission;
 import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.Fields;
@@ -143,8 +142,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	public void deleteRecord(long recordId) throws PortalException {
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.DELETE);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.DELETE);
 
 		ddlRecordLocalService.deleteRecord(record);
 	}
@@ -169,8 +168,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.UPDATE);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
 
 		return ddlRecordLocalService.deleteRecordLocale(
 			recordId, locale, serviceContext);
@@ -187,8 +186,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 	public DDLRecord getRecord(long recordId) throws PortalException {
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.VIEW);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.VIEW);
 
 		return record;
 	}
@@ -224,8 +223,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.UPDATE);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
 
 		ddlRecordLocalService.revertRecord(
 			getGuestOrUserId(), recordId, version, serviceContext);
@@ -267,8 +266,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.UPDATE);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
 
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, majorVersion, displayIndex, ddmFormValues,
@@ -303,8 +302,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.UPDATE);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
 
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, majorVersion, displayIndex, fields,
@@ -338,8 +337,8 @@ public class DDLRecordServiceImpl extends DDLRecordServiceBaseImpl {
 
 		DDLRecord record = ddlRecordLocalService.getDDLRecord(recordId);
 
-		DDLRecordPermission.check(
-			getPermissionChecker(), record.getRecordId(), ActionKeys.UPDATE);
+		DDLRecordSetPermission.check(
+			getPermissionChecker(), record.getRecordSetId(), ActionKeys.UPDATE);
 
 		return ddlRecordLocalService.updateRecord(
 			getUserId(), recordId, displayIndex, fieldsMap, mergeFields,

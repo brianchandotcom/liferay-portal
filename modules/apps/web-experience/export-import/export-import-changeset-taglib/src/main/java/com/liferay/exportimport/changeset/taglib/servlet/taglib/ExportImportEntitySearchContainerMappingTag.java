@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.staging.taglib.servlet.taglib;
+package com.liferay.exportimport.changeset.taglib.servlet.taglib;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.exportimport.changeset.taglib.internal.servlet.ServletContextUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.taglib.ui.SearchContainerTag;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,27 +29,28 @@ import javax.servlet.jsp.PageContext;
  * @author Akos Thurzo
  */
 @ProviderType
-public class ExportImportEntityManagementBarButtonTag extends IncludeTag {
+public class ExportImportEntitySearchContainerMappingTag<R> extends IncludeTag {
+
+	public static final String DEFAULT_SEARCH_CONTAINER_MAPPING_ID =
+		"exportImportEntitySearchContainerMapping";
 
 	@Override
 	public int doStartTag() throws JspException {
-		_searchContainerId = GetterUtil.getString(
-			request.getAttribute(
-				"liferay-frontend:management-bar:searchContainerId"));
+		SearchContainerTag<R> searchContainerTag =
+			(SearchContainerTag<R>)findAncestorWithClass(
+				this, SearchContainerTag.class);
+
+		if (searchContainerTag == null) {
+			throw new JspException("Requires liferay-ui:search-container");
+		}
+
+		_searchContainer = searchContainerTag.getSearchContainer();
 
 		return super.doStartTag();
 	}
 
-	public String getCmd() {
-		return _cmd;
-	}
-
 	public String getSearchContainerMappingId() {
 		return _searchContainerMappingId;
-	}
-
-	public void setCmd(String cmd) {
-		_cmd = cmd;
 	}
 
 	@Override
@@ -65,11 +66,8 @@ public class ExportImportEntityManagementBarButtonTag extends IncludeTag {
 
 	@Override
 	protected void cleanUp() {
-		_cmd = StringPool.BLANK;
-		_searchContainerId = StringPool.BLANK;
-		_searchContainerMappingId =
-			ExportImportEntitySearchContainerMappingTag.
-				DEFAULT_SEARCH_CONTAINER_MAPPING_ID;
+		_searchContainer = null;
+		_searchContainerMappingId = DEFAULT_SEARCH_CONTAINER_MAPPING_ID;
 	}
 
 	@Override
@@ -80,25 +78,21 @@ public class ExportImportEntityManagementBarButtonTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-staging:export-import-entity-management-bar-button:cmd",
-			_cmd);
+			"liferay-export-import-changeset:" +
+				"export-import-entity-search-container-mapping:searchContainer",
+			_searchContainer);
 		request.setAttribute(
-			"liferay-staging:export-import-entity-management-bar-button:" +
-				"searchContainerId",
-			_searchContainerId);
-		request.setAttribute(
-			"liferay-staging:export-import-entity-management-bar-button:" +
-				"searchContainerMappingId",
+			"liferay-export-import-changeset:" +
+				"export-import-entity-search-container-mapping:" +
+					"searchContainerMappingId",
 			_searchContainerMappingId);
 	}
 
 	private static final String _PAGE =
-		"/export_import_entity_management_bar_button/page.jsp";
+		"/export_import_entity_search_container_mapping/page.jsp";
 
-	private String _cmd = StringPool.BLANK;
-	private String _searchContainerId = StringPool.BLANK;
+	private SearchContainer<R> _searchContainer;
 	private String _searchContainerMappingId =
-		ExportImportEntitySearchContainerMappingTag.
-			DEFAULT_SEARCH_CONTAINER_MAPPING_ID;
+		DEFAULT_SEARCH_CONTAINER_MAPPING_ID;
 
 }

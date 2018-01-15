@@ -22,8 +22,8 @@ page import="com.liferay.portal.kernel.portlet.PortletURLFactoryUtil" %><%@
 page import="com.liferay.portal.kernel.service.ClassNameLocalServiceUtil" %>
 
 <%
-String className = GetterUtil.getString(request.getAttribute("liferay-staging:export-entity:className"));
-long classNameId = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:classNameId"));
+String className = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-entity:className"));
+long classNameId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:export-entity:classNameId"));
 
 ClassName classNameModel = null;
 
@@ -39,6 +39,6 @@ if (classNameModel != null) {
 	classNameId = classNameModel.getClassNameId();
 }
 
-long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-staging:export-entity:groupId"));
-String uuid = GetterUtil.getString(request.getAttribute("liferay-staging:export-entity:uuid"));
+long exportEntityGroupId = GetterUtil.getLong(request.getAttribute("liferay-export-import-changeset:export-entity:groupId"));
+String uuid = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-entity:uuid"));
 %>

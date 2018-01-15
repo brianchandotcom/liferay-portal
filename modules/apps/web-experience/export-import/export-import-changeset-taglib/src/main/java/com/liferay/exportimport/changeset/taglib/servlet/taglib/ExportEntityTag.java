@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.staging.taglib.servlet.taglib;
+package com.liferay.exportimport.changeset.taglib.servlet.taglib;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.changeset.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,11 +68,15 @@ public class ExportEntityTag extends IncludeTag {
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
 		request.setAttribute(
-			"liferay-staging:export-entity:className", _className);
+			"liferay-export-import-changeset:export-entity:className",
+			_className);
 		request.setAttribute(
-			"liferay-staging:export-entity:classNameId", _classNameId);
-		request.setAttribute("liferay-staging:export-entity:groupId", _groupId);
-		request.setAttribute("liferay-staging:export-entity:uuid", _uuid);
+			"liferay-export-import-changeset:export-entity:classNameId",
+			_classNameId);
+		request.setAttribute(
+			"liferay-export-import-changeset:export-entity:groupId", _groupId);
+		request.setAttribute(
+			"liferay-export-import-changeset:export-entity:uuid", _uuid);
 	}
 
 	private static final String _PAGE = "/export_entity/page.jsp";

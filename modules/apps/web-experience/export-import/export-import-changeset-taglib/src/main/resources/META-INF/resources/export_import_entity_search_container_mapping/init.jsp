@@ -22,6 +22,6 @@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
 page import="com.liferay.taglib.search.ResultRow" %>
 
 <%
-SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-staging:export-import-entity-search-container-mapping:searchContainer");
-String searchContainerMappingId = GetterUtil.getString(request.getAttribute("liferay-staging:export-import-entity-search-container-mapping:searchContainerMappingId"));
+SearchContainer searchContainer = (SearchContainer)request.getAttribute("liferay-export-import-changeset:export-import-entity-search-container-mapping:searchContainer");
+String searchContainerMappingId = GetterUtil.getString(request.getAttribute("liferay-export-import-changeset:export-import-entity-search-container-mapping:searchContainerMappingId"));
 %>

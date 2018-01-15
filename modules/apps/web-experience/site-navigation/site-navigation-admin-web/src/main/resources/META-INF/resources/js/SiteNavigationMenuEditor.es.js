@@ -6,21 +6,25 @@ import position from 'metal-position';
 /**
  *	Site navigation menu editor component.
  */
+
 class SiteNavigationMenuEditor extends State {
+
 	/**
 	 * @inheritDoc
 	 */
+
 	constructor(config, ...args) {
 		super(config, ...args);
 
 		this.setState(config);
 
-		this._dragDrop = new DragDrop({
-			dragPlaceholder: Drag.Placeholder.CLONE,
-			handles: '.sticker',
-			sources: this.menuItemSelector,
-			targets: `${this.menuContainerSelector} ${this.menuItemSelector}`,
-		});
+		this._dragDrop = new DragDrop(
+			{
+				dragPlaceholder: Drag.Placeholder.CLONE,
+				handles: '.sticker',
+				sources: this.menuItemSelector,
+				targets: `${this.menuContainerSelector} ${this.menuItemSelector}`
+			});
 
 		this._dragDrop.on(
 			DragDrop.Events.DRAG,
@@ -39,6 +43,7 @@ class SiteNavigationMenuEditor extends State {
 	/**
 	 * @inheritDoc
 	 */
+
 	dispose(...args) {
 		this._dragDrop.dispose();
 
@@ -52,6 +57,7 @@ class SiteNavigationMenuEditor extends State {
 	 * @param {!Event} event Drag event
 	 * @private
 	 */
+
 	_handleDragItem(data, event) {
 		const placeholder = data.placeholder;
 		const source = data.source;
@@ -72,17 +78,14 @@ class SiteNavigationMenuEditor extends State {
 			return;
 		}
 
-		const nested =
-			placeholderRegion.right - targetRegion.right >
-			placeholderRegion.width / 3;
+		const nested = placeholderRegion.right - targetRegion.right > placeholderRegion.width / 3;
 
 		removeClasses(source.parentNode, 'ml-5');
 
 		let newParentId = target.dataset.parentSiteNavigationMenuItemId;
 
 		if (placeholderRegion.top < targetRegion.top) {
-			target.parentNode.parentNode.insertBefore(
-				source.parentNode, target.parentNode);
+			target.parentNode.parentNode.insertBefore(source.parentNode, target.parentNode);
 		}
 		else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
 			target.parentNode.insertBefore(
@@ -103,8 +106,7 @@ class SiteNavigationMenuEditor extends State {
 
 		source.dataset.parentId = newParentId;
 
-		const parent = document.querySelector(
-			`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
+		const parent = document.querySelector(`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
 
 		const children = Array.from(parent.querySelectorAll('.container-item'))
 			.filter(
@@ -127,6 +129,7 @@ class SiteNavigationMenuEditor extends State {
 	 * @param {!Event} event Drag event
 	 * @private
 	 */
+
 	_handleDragStart(data, event) {
 		const item = event.target.getActiveDrag();
 
@@ -140,6 +143,7 @@ class SiteNavigationMenuEditor extends State {
 	 * @param {!Event} event Drop event
 	 * @private
 	 */
+
 	_handleDropItem(data, event) {
 		event.preventDefault();
 
@@ -162,7 +166,7 @@ class SiteNavigationMenuEditor extends State {
 			fetch(this.editSiteNavigationMenuItemParentURL, {
 				body: formData,
 				credentials: 'include',
-				method: 'POST',
+				method: 'POST'
 			}).then(() => {
 				if (Liferay.SPA) {
 					Liferay.SPA.app.navigate(window.location.href);
@@ -183,6 +187,7 @@ class SiteNavigationMenuEditor extends State {
 	 * @param {!Event} event Click event data
 	 * @private
 	 */
+
 	_handleItemClick(event) {
 		removeClasses(document.querySelectorAll('.selected'), 'selected');
 
@@ -195,7 +200,9 @@ class SiteNavigationMenuEditor extends State {
  * @type {!Object}
  * @static
  */
+
 SiteNavigationMenuEditor.STATE = {
+
 	/**
 	 * URL for edit site navigation menu item parent action.
 	 *
@@ -204,6 +211,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @memberOf SiteNavigationMenuEditor
 	 * @type {!string}
 	 */
+
 	editSiteNavigationMenuItemParentURL: Config.string().required(),
 
 	/**
@@ -214,6 +222,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @memberOf SiteNavigationMenuEditor
 	 * @type {!string}
 	 */
+
 	menuContainerSelector: Config.string().required(),
 
 	/**
@@ -224,6 +233,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @memberOf SiteNavigationMenuEditor
 	 * @type {!string}
 	 */
+
 	menuItemSelector: Config.string().required(),
 
 	/**
@@ -234,6 +244,7 @@ SiteNavigationMenuEditor.STATE = {
 	 * @memberOf SiteNavigationMenuEditor
 	 * @type {!string}
 	 */
+
 	namespace: Config.string().required(),
 
 	/**
@@ -244,7 +255,8 @@ SiteNavigationMenuEditor.STATE = {
 	 * @memberOf SiteNavigationMenuEditor
 	 * @type {State}
 	 */
-	_dragDrop: Config.internal().value(null),
+
+	_dragDrop: Config.internal().value(null)
 };
 
 export {SiteNavigationMenuEditor};

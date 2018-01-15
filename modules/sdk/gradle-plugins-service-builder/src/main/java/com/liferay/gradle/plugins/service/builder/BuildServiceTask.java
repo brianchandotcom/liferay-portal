@@ -76,6 +76,11 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Input
+	public int getDatabaseNameMaxLength() {
+		return _databaseNameMaxLength;
+	}
+
+	@Input
 	public File getHbmFile() {
 		return GradleUtil.toFile(getProject(), _hbmFile);
 	}
@@ -183,11 +188,6 @@ public class BuildServiceTask extends JavaExec {
 	}
 
 	@Input
-	public boolean isDatabaseNameMaxLengthCheckEnabled() {
-		return _databaseNameMaxLengthCheckEnabled;
-	}
-
-	@Input
 	public boolean isOsgiModule() {
 		return _osgiModule;
 	}
@@ -256,10 +256,8 @@ public class BuildServiceTask extends JavaExec {
 		_buildNumberIncrement = buildNumberIncrement;
 	}
 
-	public void setDatabaseNameMaxLengthCheckEnabled(
-		boolean databaseNameMaxLengthCheckEnabled) {
-
-		_databaseNameMaxLengthCheckEnabled = databaseNameMaxLengthCheckEnabled;
+	public void setDatabaseNameMaxLength(int databaseNameMaxLength) {
+		_databaseNameMaxLength = databaseNameMaxLength;
 	}
 
 	public void setHbmFile(Object hbmFile) {
@@ -388,8 +386,7 @@ public class BuildServiceTask extends JavaExec {
 		args.add("service.build.number.increment=" + isBuildNumberIncrement());
 		args.add("service.build.number=" + getBuildNumber());
 		args.add(
-			"service.database.name.max.length.check.enabled=" +
-				isDatabaseNameMaxLengthCheckEnabled());
+			"service.database.name.max.length=" + getDatabaseNameMaxLength());
 		args.add("service.hbm.file=" + _relativize(getHbmFile()));
 		args.add("service.impl.dir=" + _relativize(getImplDir()));
 		args.add("service.input.file=" + _relativize(getInputFile()));
@@ -476,7 +473,7 @@ public class BuildServiceTask extends JavaExec {
 		"com.liferay.util.bean.PortletBeanLocatorUtil";
 	private long _buildNumber = 1;
 	private boolean _buildNumberIncrement = true;
-	private boolean _databaseNameMaxLengthCheckEnabled = true;
+	private int _databaseNameMaxLength = 30;
 	private Object _hbmFile;
 	private Object _implDir;
 	private Object _inputFile;

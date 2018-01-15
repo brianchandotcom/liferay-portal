@@ -103,11 +103,8 @@ public class BuildServiceMojo extends AbstractMojo {
 	/**
 	 * @parameter
 	 */
-	public void setDatabaseNameMaxLengthCheckEnabled(
-		boolean databaseNameMaxLengthCheckEnabled) {
-
-		_serviceBuilderArgs.setDatabaseNameMaxLengthCheckEnabled(
-			databaseNameMaxLengthCheckEnabled);
+	public void setDatabaseNameMaxLength(int databaseNameMaxLength) {
+		_serviceBuilderArgs.setDatabaseNameMaxLength(databaseNameMaxLength);
 	}
 
 	/**

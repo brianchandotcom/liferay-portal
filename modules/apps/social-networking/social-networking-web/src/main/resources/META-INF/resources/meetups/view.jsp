@@ -51,7 +51,7 @@ else if (tabs1.equals("my-meetups")) {
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" href="<%= addMeetupsEntryURL.toString() %>" primary="<%= true %>" value="add-meetup" />
+		<aui:button href="<%= addMeetupsEntryURL.toString() %>" primary="<%= true %>" value="add-meetup" />
 	</aui:button-row>
 
 	<br />

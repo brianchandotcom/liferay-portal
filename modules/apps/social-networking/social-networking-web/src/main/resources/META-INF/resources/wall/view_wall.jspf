@@ -46,7 +46,7 @@
 			</aui:input>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="post" />
+				<aui:button type="submit" value="post" />
 			</aui:button-row>
 		</aui:form>
 

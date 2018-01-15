@@ -180,9 +180,11 @@ public class SharepointServerResponseConverter {
 			JSONArray cellsResultsJSONArray = cellsJSONObject.getJSONArray(
 				"results");
 
-			String path = null;
+			String extension = null;
+			String parentLink = null;
 			double score = 0;
 			String snippet = null;
+			String title = null;
 
 			for (int j = 0; j < cellsResultsJSONArray.length(); j++) {
 				JSONObject cellsResultJSONObject =
@@ -194,22 +196,38 @@ public class SharepointServerResponseConverter {
 					snippet = GetterUtil.getString(
 						cellsResultJSONObject.getString("Value"));
 				}
-				else if (key.equals("Path")) {
-					path = cellsResultJSONObject.getString("Value");
+				else if (key.equals("ParentLink")) {
+					parentLink = cellsResultJSONObject.getString("Value");
+
+					if (parentLink.endsWith(_SHAREPOINT_ALL_ITEMS_LIST_PATH)) {
+						parentLink = parentLink.substring(
+							0,
+							parentLink.length() -
+								_SHAREPOINT_ALL_ITEMS_LIST_PATH.length());
+					}
 				}
 				else if (key.equals("Rank")) {
 					score = cellsResultJSONObject.getDouble("Rank");
 				}
+				else if (key.equals("Title")) {
+					title = cellsResultJSONObject.getString("Value");
+				}
+				else if (key.equals("SecondaryFileExtension")) {
+					extension = cellsResultJSONObject.getString("Value");
+				}
 			}
 
-			if (Validator.isNull(path) || !path.startsWith(_rootDocumentPath)) {
+			if (Validator.isNull(parentLink) ||
+				!parentLink.startsWith(_rootDocumentPath)) {
+
 				continue;
 			}
 
 			ExtRepositoryObject extRepositoryObject =
 				_extRepository.getExtRepositoryObject(
 					ExtRepositoryObjectType.FILE,
-					path.substring(_siteAbsoluteURL.length()));
+					parentLink.substring(_siteAbsoluteURL.length()),
+					_getFileName(title, extension));
 
 			searchResults.add(
 				new ExtRepositorySearchResult(
@@ -316,6 +334,14 @@ public class SharepointServerResponseConverter {
 		return low | (high << 32);
 	}
 
+	private String _getFileName(String title, String extension) {
+		if (Validator.isNull(extension)) {
+			return title;
+		}
+
+		return title + StringPool.PERIOD + extension;
+	}
+
 	private String _join(String delimiter, String... strings) {
 		if (strings.length == 0) {
 			return StringPool.BLANK;
@@ -348,6 +374,9 @@ public class SharepointServerResponseConverter {
 			throw new RuntimeException(pe);
 		}
 	}
+
+	private static final String _SHAREPOINT_ALL_ITEMS_LIST_PATH =
+		"/Forms/AllItems.aspx";
 
 	private final ExtRepository _extRepository;
 	private final String _rootDocumentPath;

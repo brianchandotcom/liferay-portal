@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.talend.components</groupId>
+		<artifactId>components-parent</artifactId>
+		<version>0.19.2</version>
+	</parent>
+	<groupId>com.liferay</groupId>
+	<artifactId>com.liferay.talend.definition</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+	<name>Components - Liferay Definition</name>
+	<packaging>bundle</packaging>
+	<repositories>
+		<repository>
+			<id>talend_nexus</id>
+			<name>snapshots</name>
+			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceSnapshot/</url>
+		</repository>
+		<repository>
+			<id>releases</id>
+			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
+		</repository>
+	</repositories>
+	<dependencies>
+
+		<!-- APIs for all Components -->
+
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- Annotation processing -->
+
+		<dependency>
+			<groupId>biz.aQute.bnd</groupId>
+			<artifactId>annotation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.auto.service</groupId>
+			<artifactId>auto-service</artifactId>
+		</dependency>
+
+		<!-- Shared component properties such as Use/Password or Schema -->
+
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-common</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-common</artifactId>
+			<version>${project.parent.version}</version>
+			<classifier>bundle</classifier>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Jar containing Test utils methods -->
+
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api</artifactId>
+			<version>${project.parent.version}</version>
+			<classifier>tests</classifier>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- spring jar for integration tests -->
+
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api-service-rest</artifactId>
+			<version>${project.parent.version}</version>
+			<classifier>lib</classifier>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-api-service-rest</artifactId>
+			<version>${project.parent.version}</version>
+			<type>test-jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- dependencies for OSGI integration tests -->
+
+		<dependency>
+			<groupId>org.talend.components</groupId>
+			<artifactId>components-osgitest</artifactId>
+			<version>${project.parent.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.ops4j.pax.url</groupId>
+			<artifactId>pax-url-aether</artifactId>
+			<version>2.4.7</version>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+
+				<!-- This plugin is used to generate .link files used for the OSGI test
+					execution with PaxExam -->
+
+				<groupId>com.github.veithen.alta</groupId>
+				<artifactId>alta-maven-plugin</artifactId>
+				<version>0.4.2-Talend</version>
+				<executions>
+					<execution>
+						<phase>pre-integration-test</phase>
+						<goals>
+							<goal>generate-test-resources</goal>
+						</goals>
+						<configuration>
+							<name>%groupId%-%artifactId%%dashClassifier%.link</name>
+							<value>%url%</value>
+							<separator>${line.separator}</separator>
+							<outputDirectory>${project.build.testOutputDirectory}</outputDirectory>
+							<dependencySet>
+								<scope>test</scope>
+							</dependencySet>
+							<artifacts>
+								<artifact>
+									<groupId>${project.groupId}</groupId>
+									<artifactId>${project.artifactId}</artifactId>
+									<classifier></classifier>
+									<version>${project.version}</version>
+								</artifact>
+							</artifacts>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<executions>
+					<execution>
+						<id>osgi-bundle</id>
+						<phase>package</phase>
+						<goals>
+							<goal>bundle</goal>
+						</goals>
+						<configuration>
+							<instructions>
+								<Bundle-SymbolicName>com.liferay.talend</Bundle-SymbolicName>
+								<Service-Component>*</Service-Component>
+								<Embed-Dependency>*;scope=compile|runtime;inline=false;artifactId=!components*|auto-service|pax-url-aether</Embed-Dependency>
+								<Include-Resource>{maven-resources},META-INF/services/=target/classes/META-INF/services/,META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt=target/classes/META-INF/maven/${project.groupId}/${project.artifactId}/dependencies.txt</Include-Resource>
+								<Bundle-ActivationPolicy>lazy</Bundle-ActivationPolicy>
+							</instructions>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- The following plugins are there to make sure they are launched after
+				the bundle are packaged when used in the package phase.-->
+
+			<!-- They may be used with the -PgenerateP2 maven profile to build a p2
+				update site for distribution to the Studio -->
+
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho.extras</groupId>
+				<artifactId>tycho-p2-extras-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+</project>

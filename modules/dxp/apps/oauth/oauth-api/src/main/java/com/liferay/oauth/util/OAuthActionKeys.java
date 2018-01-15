@@ -14,11 +14,12 @@
 
 package com.liferay.oauth.util;
 
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+
 /**
  * @author Ivica Cardic
  */
-public class OAuthActionKeys
-	extends com.liferay.portal.kernel.security.permission.ActionKeys {
+public class OAuthActionKeys extends ActionKeys {
 
 	public static final String ADD_APPLICATION = "ADD_APPLICATION";
 

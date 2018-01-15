@@ -55,6 +55,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
 
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
@@ -176,7 +177,7 @@ public class LCSUtil {
 	}
 
 	public static synchronized String getPortalPropertiesBlacklist() {
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences jxPortletPreferences =
 			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
 
 		return jxPortletPreferences.getValue(
@@ -220,7 +221,7 @@ public class LCSUtil {
 	public static synchronized boolean isLCSPortletAuthorized(
 		PortletRequest portletRequest) {
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences jxPortletPreferences =
 			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences(
 				portletRequest);
 
@@ -339,7 +340,7 @@ public class LCSUtil {
 	public static void setUpJSONWebServiceClientCredentials()
 		throws PortalException {
 
-		javax.portlet.PortletPreferences jxPortletPreferences =
+		PortletPreferences jxPortletPreferences =
 			LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
 
 		String lcsAccessToken = jxPortletPreferences.getValue(

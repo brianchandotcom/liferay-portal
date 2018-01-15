@@ -35,6 +35,8 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
 
+import net.oauth.OAuth;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -69,7 +71,7 @@ public class AuthorizePortlet extends MVCPortlet {
 		throws Exception {
 
 		String oAuthCallbackURL = ParamUtil.getString(
-			actionRequest, net.oauth.OAuth.OAUTH_CALLBACK);
+			actionRequest, OAuth.OAUTH_CALLBACK);
 
 		if (_OAUTH_CALLBACK_OOB.equals(oAuthCallbackURL)) {
 			oAuthCallbackURL = null;
@@ -133,8 +135,8 @@ public class AuthorizePortlet extends MVCPortlet {
 		else {
 			if (requestToken != null) {
 				oAuthCallbackURL = OAuthUtil.addParameters(
-					oAuthCallbackURL, net.oauth.OAuth.OAUTH_TOKEN, requestToken,
-					net.oauth.OAuth.OAUTH_VERIFIER, oAuthVerifier);
+					oAuthCallbackURL, OAuth.OAUTH_TOKEN, requestToken,
+					OAuth.OAUTH_VERIFIER, oAuthVerifier);
 			}
 
 			actionResponse.sendRedirect(oAuthCallbackURL);

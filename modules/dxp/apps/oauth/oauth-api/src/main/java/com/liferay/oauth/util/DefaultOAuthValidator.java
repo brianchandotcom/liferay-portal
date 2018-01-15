@@ -16,6 +16,8 @@ package com.liferay.oauth.util;
 
 import com.liferay.portal.kernel.oauth.OAuthException;
 
+import net.oauth.SimpleOAuthValidator;
+
 /**
  * @author Ivica Cardic
  */
@@ -38,6 +40,6 @@ public class DefaultOAuthValidator implements OAuthValidator {
 	}
 
 	private final net.oauth.OAuthValidator _oAuthValidator =
-		new net.oauth.SimpleOAuthValidator();
+		new SimpleOAuthValidator();
 
 }

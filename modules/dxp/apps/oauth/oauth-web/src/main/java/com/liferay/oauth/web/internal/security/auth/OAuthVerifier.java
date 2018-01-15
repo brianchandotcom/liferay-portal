@@ -45,6 +45,9 @@ import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 
+import net.oauth.OAuth;
+import net.oauth.OAuthProblemException;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -156,9 +159,8 @@ public class OAuthVerifier implements AuthVerifier {
 		if (Validator.isNull(oAuthMessage) ||
 			Validator.isNull(oAuthMessage.getToken())) {
 
-			net.oauth.OAuthException oAuthException =
-				new net.oauth.OAuthProblemException(
-					net.oauth.OAuth.Problems.PARAMETER_ABSENT);
+			net.oauth.OAuthException oAuthException = new OAuthProblemException(
+				OAuth.Problems.PARAMETER_ABSENT);
 
 			throw new OAuthException(oAuthException);
 		}
@@ -167,9 +169,8 @@ public class OAuthVerifier implements AuthVerifier {
 			oAuthMessage.getToken());
 
 		if (oAuthUser == null) {
-			net.oauth.OAuthException oAuthException =
-				new net.oauth.OAuthProblemException(
-					net.oauth.OAuth.Problems.TOKEN_REJECTED);
+			net.oauth.OAuthException oAuthException = new OAuthProblemException(
+				OAuth.Problems.TOKEN_REJECTED);
 
 			throw new OAuthException(oAuthException);
 		}
@@ -178,8 +179,7 @@ public class OAuthVerifier implements AuthVerifier {
 	}
 
 	protected boolean isUsingOAuth(HttpServletRequest request) {
-		String oAuthToken = ParamUtil.getString(
-			request, net.oauth.OAuth.OAUTH_TOKEN);
+		String oAuthToken = ParamUtil.getString(request, OAuth.OAUTH_TOKEN);
 
 		if (Validator.isNotNull(oAuthToken)) {
 			return true;

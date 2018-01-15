@@ -41,6 +41,8 @@ import javax.portlet.WindowState;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.oauth.OAuth;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -71,17 +73,14 @@ public class OAuthAuthorizeAction extends BaseStrutsAction {
 
 		portletURL.setParameter("saveLastPath", "0");
 
-		String oauthCallback = request.getParameter(
-			net.oauth.OAuth.OAUTH_CALLBACK);
+		String oauthCallback = request.getParameter(OAuth.OAUTH_CALLBACK);
 
 		if (Validator.isNotNull(oauthCallback)) {
-			portletURL.setParameter(
-				net.oauth.OAuth.OAUTH_CALLBACK, oauthCallback);
+			portletURL.setParameter(OAuth.OAUTH_CALLBACK, oauthCallback);
 		}
 
 		portletURL.setParameter(
-			net.oauth.OAuth.OAUTH_TOKEN,
-			request.getParameter(net.oauth.OAuth.OAUTH_TOKEN));
+			OAuth.OAUTH_TOKEN, request.getParameter(OAuth.OAUTH_TOKEN));
 		portletURL.setPortletMode(PortletMode.VIEW);
 		portletURL.setWindowState(getWindowState(request));
 

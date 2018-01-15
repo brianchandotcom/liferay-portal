@@ -37,6 +37,8 @@ import com.liferay.portal.kernel.util.Validator;
 import java.util.ResourceBundle;
 import java.util.concurrent.Future;
 
+import javax.portlet.PortletPreferences;
+
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -208,7 +210,7 @@ public class LCSConnectorRunnable implements Runnable {
 
 	private void _checkDefaultPortletPreferences() {
 		try {
-			javax.portlet.PortletPreferences jxPortletPreferences =
+			PortletPreferences jxPortletPreferences =
 				LCSPortletPreferencesUtil.fetchReadOnlyJxPortletPreferences();
 
 			if (Validator.isNull(

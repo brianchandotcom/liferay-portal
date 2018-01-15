@@ -67,7 +67,7 @@ portletURL.setParameter("tabs1", "order");
 		<div class="separator"><!-- --></div>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrders();" %>' value="delete" />
+			<aui:button disabled="<%= true %>" name="delete" onClick='<%= renderResponse.getNamespace() + "deleteOrders();" %>' value="delete" />
 		</aui:button-row>
 	</c:if>
 

@@ -59,6 +59,6 @@ catch (Exception e) {
 	</portlet:renderURL>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" href="<%= continueShoppingURL.toString() %>" value="continue-shopping" />
+		<aui:button href="<%= continueShoppingURL.toString() %>" value="continue-shopping" />
 	</aui:button-row>
 </div>

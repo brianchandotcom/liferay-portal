@@ -56,6 +56,16 @@ public class LayoutPageTemplateCollectionLocalServiceUtil {
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 		long userId, long groupId, java.lang.String name,
+		java.lang.String description, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addLayoutPageTemplateCollection(userId, groupId, name,
+			description, type, serviceContext);
+	}
+
+	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection addLayoutPageTemplateCollection(
+		long userId, long groupId, java.lang.String name,
 		java.lang.String description,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {

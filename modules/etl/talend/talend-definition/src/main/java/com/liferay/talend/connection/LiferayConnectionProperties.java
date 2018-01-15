@@ -103,7 +103,7 @@ public class LiferayConnectionProperties
 
 		_log.error(
 			"Connection has a reference to `{}` but the referenced Object is " +
-				"null!",
+				"null",
 			getReferencedComponentId());
 
 		return null;
@@ -150,7 +150,8 @@ public class LiferayConnectionProperties
 	public void setupLayout() {
 		super.setupLayout();
 
-		//Wizard
+		// Wizard form
+
 		Form wizardForm = Form.create(this, FORM_WIZARD);
 
 		wizardForm.addRow(name);
@@ -166,7 +167,8 @@ public class LiferayConnectionProperties
 
 		wizardForm.addRow(testConn);
 
-		//Main form
+		// Main form
+
 		Form mainForm = Form.create(this, Form.MAIN);
 
 		mainForm.addRow(endpoint);

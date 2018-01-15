@@ -16,7 +16,9 @@ package com.liferay.commerce.service.impl;
 
 import com.liferay.commerce.internal.search.CommerceOrderItemIndexer;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.model.CommerceOrderItem;
+import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
@@ -195,6 +197,12 @@ public class CommerceOrderItemLocalServiceImpl
 		}
 
 		return commerceWarehouseItem.getQuantity();
+	}
+
+	@Override
+	public int getCPInstanceQuantity(long cpInstanceId) {
+		return commerceOrderItemFinder.getCPInstanceQuantity(
+			cpInstanceId, CommerceOrderConstants.STATUS_COMPLETED);
 	}
 
 	@Override

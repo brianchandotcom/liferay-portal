@@ -20,6 +20,7 @@ import com.liferay.commerce.model.CommerceOrderItem;
 import com.liferay.commerce.model.CommerceShipment;
 import com.liferay.commerce.model.CommerceShipmentItem;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.service.base.CommerceShipmentItemLocalServiceBaseImpl;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivity;
 import com.liferay.commerce.stock.activity.CommerceLowStockActivityRegistry;
@@ -242,10 +243,12 @@ public class CommerceShipmentItemLocalServiceImpl
 			return;
 		}
 
+		CPDefinition cpDefinition = commerceOrderItem.getCPDefinition();
+
 		CPDefinitionInventory cpDefinitionInventory =
 			cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
-					commerceOrderItem.getCPDefinitionId());
+					cpDefinition.getCPDefinitionId());
 
 		CommerceLowStockActivity commerceLowStockActivity =
 			_commerceLowStockActivityRegistry.getCommerceLowStockActivity(

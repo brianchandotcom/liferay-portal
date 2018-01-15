@@ -223,6 +223,20 @@ public interface LayoutPageTemplateCollectionModel extends BaseModel<LayoutPageT
 	 */
 	public void setDescription(String description);
 
+	/**
+	 * Returns the type of this layout page template collection.
+	 *
+	 * @return the type of this layout page template collection
+	 */
+	public int getType();
+
+	/**
+	 * Sets the type of this layout page template collection.
+	 *
+	 * @param type the type of this layout page template collection
+	 */
+	public void setType(int type);
+
 	@Override
 	public boolean isNew();
 

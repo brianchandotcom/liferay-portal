@@ -898,7 +898,9 @@ public class LayoutImportController implements ImportController {
 		String[] expectedLARTypes =
 			{"layout-prototype", "layout-set", "layout-set-prototype"};
 
-		if (Stream.of(expectedLARTypes).noneMatch(lt -> lt.equals(larType))) {
+		Stream<String> stream = Stream.of(expectedLARTypes);
+
+		if (stream.noneMatch(lt -> lt.equals(larType))) {
 			throw new LARTypeException(larType, expectedLARTypes);
 		}
 

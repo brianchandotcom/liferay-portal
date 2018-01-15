@@ -138,7 +138,9 @@ public class AssetCategoryPropertyLocalServiceImpl
 			assetCategoryPropertyPersistence.findByPrimaryKey(
 				categoryPropertyId);
 
-		if (!categoryProperty.getKey().equals(key) &&
+		String categoryPropertyKey = categoryProperty.getKey();
+
+		if (!categoryPropertyKey.equals(key) &&
 			hasCategoryProperty(categoryProperty.getCategoryId(), key)) {
 
 			throw new DuplicateCategoryPropertyException(

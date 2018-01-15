@@ -57,6 +57,7 @@ import javax.portlet.RenderRequest;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Eudaldo Alonso
@@ -157,8 +158,9 @@ public class PortletConfigurationCSSPortletDisplayContext {
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			_renderRequest);
 
-		ServletContext servletContext =
-			request.getSession().getServletContext();
+		HttpSession session = request.getSession();
+
+		ServletContext servletContext = session.getServletContext();
 
 		Portlet portlet = PortletLocalServiceUtil.getPortletById(
 			_portletResource);

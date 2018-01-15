@@ -16,6 +16,22 @@
 		border-bottom: 2px solid #65B6F0;
 	}
 
+	.product-menu.sidebar {
+		.sidebar-header {
+			padding-bottom: 1rem;
+			padding-top: 1rem;
+		}
+	}
+
+	.product-menu.sidebar .sidebar-body, .lfr-has-simulation-panel .lfr-simulation-device {
+		top: 4.0625rem;
+	}
+
+
+	.product-menu .add-application-panel .panel-body {
+		padding-bottom: 0.01rem;
+	}
+
 	.lfr-page-layouts.row .list-unstyled {
 		display: flex;
 		flex-wrap: wrap;
@@ -41,15 +57,33 @@
 
 	.input-group.search-bar {
 		.search-field {
-			display: inline-flex;
+			display: flex;
 
-			&:first-of-type {
-				width: 100%;
+			&:first-child {
+				flex-grow: 1;
 			}
 
 			.btn {
-				margin: 0;
+				margin-top: 0;
 			}
+
+			.form-group {
+				margin-bottom: 0;
+			}
+
+			.search-bar-input {
+				@include border-right-radius(0);
+			}
+
+			~ .search-field {
+				margin-left: -$input-border-right-width;
+			}
+		}
+
+		.search-select {
+			@include border-radius(0);
+
+			width: 100%;
 		}
 	}
 

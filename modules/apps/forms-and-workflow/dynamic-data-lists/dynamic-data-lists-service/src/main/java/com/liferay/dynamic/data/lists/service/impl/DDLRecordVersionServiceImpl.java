@@ -15,11 +15,13 @@
 package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.model.DDLRecordVersion;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordVersionServiceBaseImpl;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -49,7 +51,7 @@ public class DDLRecordVersionServiceImpl
 		DDLRecordVersion recordVersion =
 			ddlRecordVersionLocalService.getRecordVersion(recordVersionId);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordVersion.getRecordSetId(),
 			ActionKeys.VIEW);
 
@@ -72,7 +74,7 @@ public class DDLRecordVersionServiceImpl
 		DDLRecordVersion recordVersion = ddlRecordVersionPersistence.findByR_V(
 			recordId, version);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordVersion.getRecordSetId(),
 			ActionKeys.VIEW);
 
@@ -92,7 +94,7 @@ public class DDLRecordVersionServiceImpl
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), record.getRecordSetId(), ActionKeys.VIEW);
 
 		return ddlRecordVersionPersistence.findByRecordId(recordId);
@@ -127,7 +129,7 @@ public class DDLRecordVersionServiceImpl
 
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), record.getRecordSetId(), ActionKeys.VIEW);
 
 		return ddlRecordVersionPersistence.findByRecordId(
@@ -145,10 +147,16 @@ public class DDLRecordVersionServiceImpl
 	public int getRecordVersionsCount(long recordId) throws PortalException {
 		DDLRecord record = ddlRecordPersistence.findByPrimaryKey(recordId);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), record.getRecordSetId(), ActionKeys.VIEW);
 
 		return ddlRecordVersionPersistence.countByRecordId(recordId);
 	}
+
+	private static volatile ModelResourcePermission<DDLRecordSet>
+		_ddlRecordSetModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDLRecordVersionServiceImpl.class,
+				"_ddlRecordSetModelResourcePermission", DDLRecordSet.class);
 
 }

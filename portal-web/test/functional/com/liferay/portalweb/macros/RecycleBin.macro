@@ -209,7 +209,7 @@
 			<then>
 				<execute function="MouseOver" locator1="Icon#TOOLTIP" />
 				<if>
-					<isset var="customMaxAgeMsg" />
+					<isset var="customMaxAge" />
 					<then>
 						<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_INFO" value1="${customMaxAgeMsg}" />
 					</then>

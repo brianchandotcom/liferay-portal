@@ -391,7 +391,7 @@
 		<execute macro="RecycleBin#viewCP">
 			<var name="assetName" value="Blogs Entry Title" />
 			<var name="assetType" value="Blogs Entry" />
-			<var name="customMaxAgeMsg" value="Entries that have been in the Recycle Bin for more than 1 minute are automatically deleted." />
+			<var name="customMaxAge" value="1 minute" />
 			<var name="deleteUser" value="Test Test" />
 		</execute>
 

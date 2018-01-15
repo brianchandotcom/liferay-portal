@@ -116,7 +116,7 @@
 	<sql id="com.liferay.commerce.service.persistence.CommerceWarehouseFinder.findByCPInstanceId">
 		<![CDATA[
 			SELECT
-				{CommerceWarehouse.*}
+				DISTINCT {CommerceWarehouse.*}
 			FROM
 				CommerceWarehouse
 			INNER JOIN

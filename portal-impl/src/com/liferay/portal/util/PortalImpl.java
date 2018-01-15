@@ -1384,12 +1384,42 @@ public class PortalImpl implements Portal {
 			layout.isTypeControlPanel());
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			StringBundler sb = new StringBundler(4);
+			String groupFriendlyURLDomain = HttpUtil.getDomain(
+				groupFriendlyURL);
 
-			sb.append(groupFriendlyURL);
-			sb.append(
-				_buildI18NPath(
-					siteDefaultLocale.getLanguage(), siteDefaultLocale));
+			int pos = groupFriendlyURL.indexOf(groupFriendlyURLDomain);
+
+			if (pos > 0) {
+				pos = groupFriendlyURL.indexOf(
+					CharPool.SLASH, pos + groupFriendlyURLDomain.length());
+
+				if (Validator.isNotNull(_pathContext)) {
+					pos = groupFriendlyURL.indexOf(
+						CharPool.SLASH, pos + _pathContext.length());
+				}
+			}
+
+			StringBundler sb = new StringBundler(5);
+
+			if ((pos <= 0) || (pos >= groupFriendlyURL.length())) {
+				sb.append(groupFriendlyURL);
+				sb.append(buildI18NPath(siteDefaultLocale));
+
+				if (!canonicalLayoutFriendlyURL.startsWith(StringPool.SLASH)) {
+					sb.append(StringPool.SLASH);
+				}
+			}
+			else {
+				String groupFriendlyURLPrefix = groupFriendlyURL.substring(
+					0, pos);
+
+				String groupFriendlyURLSuffix = groupFriendlyURL.substring(pos);
+
+				sb.append(groupFriendlyURLPrefix);
+				sb.append(buildI18NPath(siteDefaultLocale));
+				sb.append(groupFriendlyURLSuffix);
+			}
+
 			sb.append(canonicalLayoutFriendlyURL);
 			sb.append(parametersURL);
 
@@ -8291,17 +8321,11 @@ public class PortalImpl implements Portal {
 		String canonicalURLSuffix = canonicalURL.substring(pos);
 
 		if (PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE == 2) {
-			String defaultLocalePath = _buildI18NPath(
-				siteDefaultLocale.getLanguage(), siteDefaultLocale);
+			String i18nPath = buildI18NPath(siteDefaultLocale);
 
-			int canonicalURLSuffixPos = defaultLocalePath.length() + pos;
-
-			if (canonicalURLSuffixPos >= canonicalURL.length()) {
-				canonicalURLSuffix = StringPool.BLANK;
-			}
-			else {
-				canonicalURLSuffix = canonicalURL.substring(
-					canonicalURLSuffixPos + 1);
+			if (canonicalURLSuffix.startsWith(i18nPath)) {
+				canonicalURLSuffix = canonicalURLSuffix.substring(
+					i18nPath.length());
 			}
 		}
 

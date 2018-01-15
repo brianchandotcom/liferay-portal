@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -64,6 +65,7 @@ public class PortalImplCanonicalURLTest {
 	@BeforeClass
 	public static void setUpClass() throws Exception {
 		_defaultLocale = LocaleUtil.getDefault();
+		_defaultPrependStyle = PropsValues.LOCALE_PREPEND_FRIENDLY_URL_STYLE;
 
 		LocaleUtil.setDefault(
 			LocaleUtil.US.getLanguage(), LocaleUtil.US.getCountry(),
@@ -75,6 +77,11 @@ public class PortalImplCanonicalURLTest {
 		LocaleUtil.setDefault(
 			_defaultLocale.getLanguage(), _defaultLocale.getCountry(),
 			_defaultLocale.getVariant());
+
+		TestPropsUtil.set(
+			com.liferay.portal.kernel.util.PropsKeys.
+				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			GetterUtil.getString(_defaultPrependStyle));
 	}
 
 	@Before
@@ -446,9 +453,6 @@ public class PortalImplCanonicalURLTest {
 		themeDisplay.setServerPort(serverPort);
 		themeDisplay.setSiteGroupId(group.getGroupId());
 
-		String actualCanonicalURL = PortalUtil.getCanonicalURL(
-			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
-
 		String expectedGroupFriendlyURL = StringPool.BLANK;
 
 		if (!group.isGuest()) {
@@ -467,10 +471,19 @@ public class PortalImplCanonicalURLTest {
 			expectedPortalDomain, port, StringPool.BLANK,
 			expectedGroupFriendlyURL, expectedLayoutFriendlyURL, secure);
 
-		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL);
+		TestPropsUtil.set(
+			com.liferay.portal.kernel.util.PropsKeys.
+				LOCALE_PREPEND_FRIENDLY_URL_STYLE,
+			"2");
+
+		String actualCanonicalURL2 = PortalUtil.getCanonicalURL(
+			completeURL, themeDisplay, layout, forceLayoutFriendlyURL);
+
+		Assert.assertEquals(expectedCanonicalURL, actualCanonicalURL2);
 	}
 
 	private static Locale _defaultLocale;
+	private static int _defaultPrependStyle;
 
 	private Group _defaultGroup;
 	private Layout _defaultGrouplayout1;

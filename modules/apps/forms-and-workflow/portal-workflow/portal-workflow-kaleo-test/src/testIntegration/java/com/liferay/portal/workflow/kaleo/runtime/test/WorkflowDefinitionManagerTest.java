@@ -16,7 +16,11 @@ package com.liferay.portal.workflow.kaleo.runtime.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
@@ -92,6 +96,51 @@ public class WorkflowDefinitionManagerTest {
 		_bundleContext.ungetService(_serviceReference);
 
 		_bundleContext = null;
+	}
+
+	@Test(expected = WorkflowException.class)
+	public void testDeleteDraftWorkflowDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition = draftWorkflowDefinition();
+
+		_workflowDefinitionManager.undeployWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
+			workflowDefinition.getName(), workflowDefinition.getVersion());
+
+		_workflowDefinitionManager.getWorkflowDefinition(
+			TestPropsValues.getCompanyId(), workflowDefinition.getName(),
+			workflowDefinition.getVersion());
+	}
+
+	@Test
+	public void testDeployWorkflowDraftDefinition() throws Exception {
+		WorkflowDefinition draftWorkflowDefinition = draftWorkflowDefinition();
+
+		Assert.assertNotNull(draftWorkflowDefinition);
+		Assert.assertFalse(draftWorkflowDefinition.isActive());
+
+		WorkflowDefinition deployedWorkflowDefinition =
+			_workflowDefinitionManager.deployWorkflowDefinition(
+				TestPropsValues.getCompanyId(),
+				draftWorkflowDefinition.getUserId(),
+				draftWorkflowDefinition.getTitle(),
+				draftWorkflowDefinition.getName(),
+				draftWorkflowDefinition.getContent().getBytes());
+
+		Assert.assertNotNull(deployedWorkflowDefinition);
+		Assert.assertEquals(
+			draftWorkflowDefinition.getName(),
+			deployedWorkflowDefinition.getName());
+	}
+
+	@Test
+	public void testDraftWorkflowDefinitionWithoutTitleandContent()
+		throws Exception {
+
+		WorkflowDefinition workflowDefinition = draftWorkflowDefinition(
+			StringPool.BLANK, StringPool.BLANK.getBytes());
+
+		Assert.assertNotNull(workflowDefinition);
+		Assert.assertFalse(workflowDefinition.isActive());
 	}
 
 	@Test
@@ -425,6 +474,23 @@ public class WorkflowDefinitionManagerTest {
 		byte[] bytes = FileUtil.getBytes(inputStream);
 
 		_workflowDefinitionManager.validateWorkflowDefinition(bytes);
+	}
+
+	protected WorkflowDefinition draftWorkflowDefinition() throws Exception {
+		InputStream inputStream = getResource("single-approver-definition.xml");
+
+		byte[] content = FileUtil.getBytes(inputStream);
+
+		return draftWorkflowDefinition(StringUtil.randomId(), content);
+	}
+
+	protected WorkflowDefinition draftWorkflowDefinition(
+			String title, byte[] bytes)
+		throws Exception {
+
+		return _workflowDefinitionManager.draftWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), title,
+			StringUtil.randomId(), bytes);
 	}
 
 	protected InputStream getResource(String name) {

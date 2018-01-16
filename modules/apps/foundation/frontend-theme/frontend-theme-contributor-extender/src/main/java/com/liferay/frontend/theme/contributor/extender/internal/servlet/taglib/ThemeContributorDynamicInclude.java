@@ -15,13 +15,13 @@
 package com.liferay.frontend.theme.contributor.extender.internal.servlet.taglib;
 
 import com.liferay.frontend.theme.contributor.extender.BundleWebResources;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.servlet.PortalWebResourceConstants;
 import com.liferay.portal.kernel.servlet.PortalWebResourcesUtil;
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
@@ -60,14 +60,17 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		long themeLastModified = PortalWebResourcesUtil.getLastModified(
 			PortalWebResourceConstants.RESOURCE_TYPE_THEME_CONTRIBUTOR);
 
+		String portalCDNURL = themeDisplay.getCDNBaseURL();
+
 		if (_cssResourceURLs.length > 0) {
 			if (themeDisplay.isThemeCssFastLoad()) {
 				_renderComboCSS(
-					themeLastModified, request, response.getWriter());
+					themeLastModified, request, portalCDNURL,
+					response.getWriter());
 			}
 			else {
 				_renderSimpleCSS(
-					themeLastModified, request, themeDisplay.getPortalURL(),
+					themeLastModified, request, portalCDNURL,
 					response.getWriter(), _cssResourceURLs);
 			}
 		}
@@ -77,12 +80,13 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 		}
 
 		if (themeDisplay.isThemeJsFastLoad()) {
-			_renderComboJS(themeLastModified, request, response.getWriter());
+			_renderComboJS(
+				themeLastModified, request, portalCDNURL, response.getWriter());
 		}
 		else {
 			_renderSimpleJS(
-				themeLastModified, request, themeDisplay.getPortalURL(),
-				response.getWriter(), _jsResourceURLs);
+				themeLastModified, request, portalCDNURL, response.getWriter(),
+				_jsResourceURLs);
 		}
 	}
 
@@ -198,29 +202,31 @@ public class ThemeContributorDynamicInclude implements DynamicInclude {
 	}
 
 	private void _renderComboCSS(
-		long themeLastModified, HttpServletRequest request,
+		long themeLastModified, HttpServletRequest request, String portalURL,
 		PrintWriter printWriter) {
 
 		printWriter.write("<link data-senna-track=\"permanent\" href=\"");
 
 		printWriter.write(
-			_portal.getStaticResourceURL(
-				request, _comboContextPath, "minifierType=css",
-				themeLastModified));
+			portalURL +
+				_portal.getStaticResourceURL(
+					request, _comboContextPath, "minifierType=css",
+					themeLastModified));
 
 		printWriter.write(_mergedCSSResourceURLs);
 	}
 
 	private void _renderComboJS(
-		long themeLastModified, HttpServletRequest request,
+		long themeLastModified, HttpServletRequest request, String portalURL,
 		PrintWriter printWriter) {
 
 		printWriter.write("<script data-senna-track=\"permanent\" src=\"");
 
 		printWriter.write(
-			_portal.getStaticResourceURL(
-				request, _comboContextPath, "minifierType=js",
-				themeLastModified));
+			portalURL +
+				_portal.getStaticResourceURL(
+					request, _comboContextPath, "minifierType=js",
+					themeLastModified));
 
 		printWriter.write(_mergedJSResourceURLs);
 	}

@@ -229,6 +229,9 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 
 		StringBundler sb = new StringBundler();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		long jsLastModified = -1;
 
 		if (_portalWebResources != null) {
@@ -241,7 +244,7 @@ public class TopHeadDynamicInclude implements DynamicInclude {
 		for (String url : urls) {
 			if (sb.length() == 0) {
 				sb.append("<script data-senna-track=\"permanent\" src=\"");
-				sb.append(comboURL);
+				sb.append(themeDisplay.getCDNBaseURL() + comboURL);
 			}
 
 			sb.append(StringPool.AMPERSAND);

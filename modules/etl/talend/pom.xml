@@ -4,7 +4,7 @@
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<name>Components - Liferay Aggregator</name>
+	<name>Liferay Talend</name>
 	<packaging>pom</packaging>
 	<properties>
 

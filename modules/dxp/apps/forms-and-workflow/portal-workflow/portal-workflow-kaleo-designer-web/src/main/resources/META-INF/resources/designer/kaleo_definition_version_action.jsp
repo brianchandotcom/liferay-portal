@@ -25,6 +25,20 @@ KaleoDefinition kaleoDefinition = kaleoDesignerDisplayContext.getKaleoDefinition
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.VIEW) %>">
+		<portlet:renderURL var="viewURL">
+			<portlet:param name="mvcPath" value="/designer/view_kaleo_definition_version.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+			<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+		</portlet:renderURL>
+
+		<liferay-ui:icon
+			message="view"
+			url="<%= viewURL %>"
+		/>
+	</c:if>
+
 	<c:if test="<%= KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />

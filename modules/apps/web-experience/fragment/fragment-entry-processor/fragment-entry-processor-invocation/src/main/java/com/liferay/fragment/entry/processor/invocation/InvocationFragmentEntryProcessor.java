@@ -94,7 +94,8 @@ public class InvocationFragmentEntryProcessor
 					jsonObject));
 			sb.append("</div>");
 
-			Document portletDocument = _htmlParserUtil.parse(sb.toString());
+			Document portletDocument = _htmlParserUtil.parse(
+				StringUtil.replace(sb.toString(), '&', "&amp;"));
 
 			element.add(portletDocument.getRootElement());
 		}

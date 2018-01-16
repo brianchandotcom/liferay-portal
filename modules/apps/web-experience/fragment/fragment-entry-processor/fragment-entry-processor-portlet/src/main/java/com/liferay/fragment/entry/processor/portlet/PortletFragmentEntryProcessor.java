@@ -20,6 +20,7 @@ import com.liferay.fragment.processor.PortletRegistry;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -49,7 +50,37 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
 		throws PortalException {
 
-		return html;
+		Document document = Jsoup.parseBodyFragment(html);
+
+		for (Element element : document.select("*")) {
+			String tagName = element.tagName();
+
+			if (!StringUtil.startsWith(tagName, "lfr-app-")) {
+				continue;
+			}
+
+			String alias = StringUtil.replace(
+				tagName, "lfr-app-", StringPool.BLANK);
+
+			Portlet portlet = _portletRegistry.getPortlet(alias);
+
+			if (portlet == null) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
+						"there-is-no-portlet-available-for-alias-x", alias));
+			}
+
+			Element runtimeHTMLTag = new Element("@liferay_portlet.runtime");
+
+			runtimeHTMLTag.attr("portletName", portlet);
+
+			element.replaceWith(runtimeHTMLTag);
+		}
+
+		Element bodyElement = document.body();
+
+		return bodyElement.html();
 	}
 
 	@Override
@@ -69,12 +100,9 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 			Portlet portlet = _portletRegistry.getPortlet(alias);
 
 			if (portlet == null) {
-				ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-					"content.Language", getClass());
-
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						resourceBundle,
+						_resourceBundle,
 						"there-is-no-portlet-available-for-alias-x", alias));
 			}
 		}
@@ -82,5 +110,8 @@ public class PortletFragmentEntryProcessor implements FragmentEntryProcessor {
 
 	@Reference
 	private PortletRegistry _portletRegistry;
+
+	private final ResourceBundle _resourceBundle = ResourceBundleUtil.getBundle(
+		"content.Language", getClass());
 
 }

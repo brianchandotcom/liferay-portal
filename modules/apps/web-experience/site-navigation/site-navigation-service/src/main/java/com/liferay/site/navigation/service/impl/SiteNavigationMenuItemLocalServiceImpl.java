@@ -156,9 +156,11 @@ public class SiteNavigationMenuItemLocalServiceImpl
 			siteNavigationMenuItem.getSiteNavigationMenuId(),
 			parentSiteNavigationMenuItemId);
 
+		int newOrder = 0;
+
 		for (SiteNavigationMenuItem child : childs) {
-			if (child.getOrder() < order) {
-				continue;
+			if (newOrder == order) {
+				newOrder++;
 			}
 
 			if (child.getSiteNavigationMenuItemId() ==
@@ -167,7 +169,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				continue;
 			}
 
-			child.setOrder(child.getOrder() + 1);
+			child.setOrder(newOrder++);
 
 			siteNavigationMenuItemPersistence.update(child);
 		}

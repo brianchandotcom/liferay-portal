@@ -86,6 +86,6 @@ backURL.setParameter("templateId", String.valueOf(template.getTemplateId()));
 	</c:choose>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" href="<%= backURL.toString() %>" type="cancel" />
+		<aui:button href="<%= backURL.toString() %>" type="cancel" />
 	</aui:button-row>
 </div>

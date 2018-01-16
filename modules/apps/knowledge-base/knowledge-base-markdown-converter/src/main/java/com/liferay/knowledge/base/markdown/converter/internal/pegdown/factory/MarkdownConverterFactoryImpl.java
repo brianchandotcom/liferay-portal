@@ -18,9 +18,12 @@ import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.LiferayPegDownConverter;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Sergio González
  */
+@Component(enabled = true, immediate = true)
 public class MarkdownConverterFactoryImpl implements MarkdownConverterFactory {
 
 	@Override

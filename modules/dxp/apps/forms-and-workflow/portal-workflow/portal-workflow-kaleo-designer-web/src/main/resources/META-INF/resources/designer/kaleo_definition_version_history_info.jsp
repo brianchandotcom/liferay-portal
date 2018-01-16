@@ -19,12 +19,12 @@
 <%
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
+KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getObject();
 
-String userName = kaleoDesignerDisplayContext.getWorkflowDefinitionVersionDisplayUserName(workflowDefinition);
+String userName = kaleoDesignerDisplayContext.getUserNameOrBlank(kaleoDefinitionVersion);
 %>
 
 <div class="flex-col flex-col-expand">
-	<div class="version"><%= dateFormatTime.format(workflowDefinition.getModifiedDate()) %></div>
+	<div class="version"><%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %></div>
 	<div class="sidebar-caption"><%= userName %></div>
 </div>

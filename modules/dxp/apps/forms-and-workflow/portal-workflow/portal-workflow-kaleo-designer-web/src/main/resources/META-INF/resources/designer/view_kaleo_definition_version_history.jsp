@@ -21,15 +21,14 @@ KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.
 %>
 
 <liferay-ui:search-container
-	id="workflowDefinitions"
+	id="kaleoDefinitionVersions"
 >
 	<liferay-ui:search-container-results
-		results="<%= kaleoDesignerDisplayContext.getWorkflowDefinitions(kaleoDefinitionVersion) %>"
+		results="<%= kaleoDesignerDisplayContext.getKaleoDefinitionVersions(kaleoDefinitionVersion) %>"
 	/>
 
 	<liferay-ui:search-container-row
-		className="com.liferay.portal.kernel.workflow.WorkflowDefinition"
-		modelVar="workflowDefinition"
+		className="com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion"
 	>
 		<liferay-ui:search-container-column-jsp
 			cssClass="lfr-version-column"

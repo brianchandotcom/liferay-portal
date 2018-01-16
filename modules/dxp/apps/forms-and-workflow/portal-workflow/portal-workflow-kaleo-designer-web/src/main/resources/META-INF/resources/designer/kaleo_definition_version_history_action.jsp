@@ -19,32 +19,30 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
+KaleoDefinitionVersion currentKaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
-WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
-
-KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)request.getAttribute(KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
-
-boolean showActions = workflowDefinition.getVersion() != (int)Double.parseDouble(kaleoDefinitionVersion.getVersion());
+KaleoDefinitionVersion kaleoDefinitionVersion = (KaleoDefinitionVersion)row.getObject();
 %>
 
 <portlet:renderURL var="viewURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 	<portlet:param name="mvcPath" value="/designer/view_kaleo_definition_version.jsp" />
 	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-	<portlet:param name="draftVersion" value="<%= Double.valueOf(workflowDefinition.getVersion()).toString() %>" />
+	<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+	<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 </portlet:renderURL>
 
 <liferay-portlet:actionURL name="revertKaleoDefinitionVersion" var="revertURL">
 	<portlet:param name="redirect" value="<%= redirect %>" />
-	<portlet:param name="name" value="<%= workflowDefinition.getName() %>" />
-	<portlet:param name="version" value="<%= String.valueOf(workflowDefinition.getVersion()) %>" />
+	<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+	<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
 </liferay-portlet:actionURL>
 
-<c:if test="<%= showActions %>">
-	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + String.valueOf(workflowDefinition.getVersion()) %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
+<c:if test="<%= !kaleoDefinitionVersion.getVersion().equals(currentKaleoDefinitionVersion.getVersion()) %>">
+	<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" id='<%= "iconMenu_" + kaleoDefinitionVersion.getVersion() %>' markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 		<liferay-ui:icon
-			id='<%= "previewBeforeRevert" + String.valueOf(workflowDefinition.getVersion()) %>'
+			id='<%= "previewBeforeRevert" + kaleoDefinitionVersion.getVersion() %>'
 			message="preview"
 			url="javascript:;"
 		/>
@@ -57,9 +55,9 @@ boolean showActions = workflowDefinition.getVersion() != (int)Double.parseDouble
 </c:if>
 
 <aui:script use="liferay-kaleo-designer-utils">
-	var title = '<liferay-ui:message key="preview" translateArguments="<%= false %>"/>';
+	var title = '<liferay-ui:message key="preview"/>';
 
-	var previewBeforeRevert = A.rbind('previewBeforeRevert', Liferay.KaleoDesignerUtils, '<%= viewURL %>', '<%= revertURL %>' , title);
+	var previewBeforeRevert = A.rbind('previewBeforeRevert', Liferay.KaleoDesignerUtils, '<%= viewURL %>', '<%= revertURL %>', title);
 
-	Liferay.delegateClick('<portlet:namespace />previewBeforeRevert<%= String.valueOf(workflowDefinition.getVersion()) %>', previewBeforeRevert);
+	Liferay.delegateClick('<portlet:namespace />previewBeforeRevert<%= kaleoDefinitionVersion.getVersion() %>', previewBeforeRevert);
 </aui:script>

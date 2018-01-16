@@ -28,7 +28,7 @@ String content = kaleoDefinitionVersion.getContent();
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(kaleoDefinitionVersion.getName());
+renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 %>
 
 <aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
@@ -38,10 +38,14 @@ renderResponse.setTitle(kaleoDefinitionVersion.getName());
 		<div class="info-bar-item">
 			<c:choose>
 				<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
-					<span class="label label-info"><%= LanguageUtil.get(request, "published") %></span>
+					<span class="label label-info">
+						<liferay-ui:message key="published" />
+					</span>
 				</c:when>
 				<c:otherwise>
-					<span class="label label-secondary"><%= LanguageUtil.get(request, "not-published") %></span>
+					<span class="label label-secondary">
+						<liferay-ui:message key="not-published" />
+					</span>
 				</c:otherwise>
 			</c:choose>
 		</div>
@@ -84,8 +88,6 @@ renderResponse.setTitle(kaleoDefinitionVersion.getName());
 <aui:script use="aui-ace-editor,liferay-xml-formatter">
 	var STR_VALUE = 'value';
 
-	var XMLFormatter = new Liferay.XMLFormatter();
-
 	var contentEditor = new A.AceEditor(
 		{
 			boundingBox: '#<portlet:namespace />contentEditor',
@@ -96,9 +98,13 @@ renderResponse.setTitle(kaleoDefinitionVersion.getName());
 		}
 	).render();
 
+	var xmlFormatter = new Liferay.XMLFormatter();
+
 	var editorContentElement = A.one('#<portlet:namespace />content');
 
 	if (editorContentElement) {
-		contentEditor.set(STR_VALUE, XMLFormatter.format(editorContentElement.val()));
+		var content = xmlFormatter.format(editorContentElement.val());
+
+		contentEditor.set(STR_VALUE, content);
 	}
 </aui:script>

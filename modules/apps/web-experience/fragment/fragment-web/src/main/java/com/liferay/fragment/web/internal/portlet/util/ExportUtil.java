@@ -16,7 +16,7 @@ package com.liferay.fragment.web.internal.portlet.util;
 
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 
@@ -26,22 +26,37 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
-	public static File exportFragmentCollections(
+	public File exportFragmentCollections(
 			List<FragmentCollection> fragmentCollections)
 		throws PortletException {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
+		String path = "/fragment_collections";
+
 		try {
+			Element fragmentCollectionsElement = new Element(
+				"fragment-collections", false);
+
 			for (FragmentCollection fragmentCollection : fragmentCollections) {
-				fragmentCollection.populateZipWriter(
-					zipWriter, StringPool.BLANK);
+				fragmentCollection.populateZipWriter(zipWriter, path);
+
+				fragmentCollectionsElement.addElement(
+					"fragment-collection",
+					fragmentCollection.getFragmentCollectionId());
 			}
+
+			zipWriter.addEntry(
+				path + "/definition.xml",
+				fragmentCollectionsElement.toXMLString());
 
 			zipWriter.finish();
 
@@ -52,16 +67,26 @@ public class ExportUtil {
 		}
 	}
 
-	public static File exportFragmentEntries(
-			List<FragmentEntry> fragmentEntries)
+	public File exportFragmentEntries(List<FragmentEntry> fragmentEntries)
 		throws PortletException {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();
 
+		String path = "/fragment_entries";
+
 		try {
+			Element fragmentEntriesElement = new Element(
+				"fragment-entries", false);
+
 			for (FragmentEntry fragmentEntry : fragmentEntries) {
-				fragmentEntry.populateZipWriter(zipWriter, StringPool.BLANK);
+				fragmentEntry.populateZipWriter(zipWriter, path);
+
+				fragmentEntriesElement.addElement(
+					"fragment-entry", fragmentEntry.getFragmentEntryId());
 			}
+
+			zipWriter.addEntry(
+				path + "/definition.xml", fragmentEntriesElement.toXMLString());
 
 			zipWriter.finish();
 

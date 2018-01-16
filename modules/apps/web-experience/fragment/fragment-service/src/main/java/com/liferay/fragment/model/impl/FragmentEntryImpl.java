@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.Optional;
@@ -87,10 +88,19 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 		path = path + StringPool.SLASH + getFragmentEntryId();
 
+		Element fragmentEntryElement = new Element("fragment-entry", false);
+
+		fragmentEntryElement.addElement("name", getName());
+		fragmentEntryElement.addElement("css-path", path + "/css.css");
+		fragmentEntryElement.addElement("js-path", path + "/js.js");
+		fragmentEntryElement.addElement("html-path", path + "/html.html");
+
+		zipWriter.addEntry(
+			path + "/definition.xml", fragmentEntryElement.toXMLString());
+
 		zipWriter.addEntry(path + "/css.css", getCss());
 		zipWriter.addEntry(path + "/js.js", getJs());
 		zipWriter.addEntry(path + "/html.html", getHtml());
-		zipWriter.addEntry(path + "/name.txt", getName());
 	}
 
 }

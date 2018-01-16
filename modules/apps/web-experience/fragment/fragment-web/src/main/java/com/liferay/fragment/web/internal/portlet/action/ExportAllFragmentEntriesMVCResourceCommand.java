@@ -70,7 +70,7 @@ public class ExportAllFragmentEntriesMVCResourceCommand
 					themeDisplay.getScopeGroupId(), fragmentCollectionId,
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			File file = ExportUtil.exportFragmentEntries(fragmentEntries);
+			File file = _exportUtil.exportFragmentEntries(fragmentEntries);
 
 			PortletResponseUtil.sendFile(
 				resourceRequest, resourceResponse,
@@ -83,6 +83,9 @@ public class ExportAllFragmentEntriesMVCResourceCommand
 
 		return true;
 	}
+
+	@Reference
+	private ExportUtil _exportUtil;
 
 	@Reference
 	private FragmentEntryService _fragmentEntryService;

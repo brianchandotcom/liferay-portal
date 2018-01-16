@@ -92,13 +92,15 @@ public class PortletAutoDeployListener extends BaseAutoDeployListener {
 			return true;
 		}
 
+		String fileName = file.getName();
+
 		if (!pluginAutoDeployListenerHelper.isExtPlugin() &&
 			!pluginAutoDeployListenerHelper.isHookPlugin() &&
 			!pluginAutoDeployListenerHelper.isMatchingFile(
 				"WEB-INF/liferay-layout-templates.xml") &&
 			!pluginAutoDeployListenerHelper.isThemePlugin() &&
 			!pluginAutoDeployListenerHelper.isWebPlugin() &&
-			file.getName().endsWith(".war")) {
+			fileName.endsWith(".war")) {
 
 			_waiDeployer = true;
 

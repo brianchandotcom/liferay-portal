@@ -918,8 +918,10 @@ public class ServicePreAction extends Action {
 
 		if (layout != null) {
 			if (layout.isTypePortlet()) {
-				boolean freeformLayout =
-					layoutTypePortlet.getLayoutTemplateId().equals("freeform");
+				String layoutTemplateId =
+					layoutTypePortlet.getLayoutTemplateId();
+
+				boolean freeformLayout = layoutTemplateId.equals("freeform");
 
 				themeDisplay.setFreeformLayout(freeformLayout);
 

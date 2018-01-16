@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -56,7 +57,9 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 		Element root = _removeExisting(qname);
 
-		root.addElement(qname).addText(text);
+		Element element = root.addElement(qname);
+
+		element.addText(text);
 	}
 
 	@Override
@@ -143,7 +146,9 @@ public class WebDAVPropsImpl extends WebDAVPropsBaseImpl {
 
 		Element root = doc.getRootElement();
 
-		Iterator<Element> itr = root.elements(qname).iterator();
+		List<Element> elementsList = root.elements(qname);
+
+		Iterator<Element> itr = elementsList.iterator();
 
 		while (itr.hasNext()) {
 			Element el = itr.next();

@@ -47,6 +47,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.DataBuffer;
 import java.awt.image.IndexColorModel;
+import java.awt.image.Raster;
 import java.awt.image.RenderedImage;
 import java.awt.image.SampleModel;
 import java.awt.image.WritableRaster;
@@ -363,7 +364,9 @@ public class ImageToolImpl implements ImageTool {
 			os.write(toMultiByte(bufferedImage.getWidth()));
 			os.write(toMultiByte(bufferedImage.getHeight()));
 
-			DataBuffer dataBuffer = bufferedImage.getData().getDataBuffer();
+			Raster data = bufferedImage.getData();
+
+			DataBuffer dataBuffer = data.getDataBuffer();
 
 			int size = dataBuffer.getSize();
 

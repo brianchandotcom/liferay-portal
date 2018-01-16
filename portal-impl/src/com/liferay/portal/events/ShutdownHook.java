@@ -56,9 +56,11 @@ public class ShutdownHook implements Runnable {
 			sb.append(thread.getName());
 			sb.append("\"");
 
-			if (thread.getThreadGroup() != null) {
+			ThreadGroup threadGroup = thread.getThreadGroup();
+
+			if (threadGroup != null) {
 				sb.append(" (");
-				sb.append(thread.getThreadGroup().getName());
+				sb.append(threadGroup.getName());
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 

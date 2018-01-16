@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.atom.AtomCollectionAdapter;
 
 import java.util.Collection;
 
+import org.apache.abdera.i18n.iri.IRI;
 import org.apache.abdera.protocol.server.CollectionAdapter;
 import org.apache.abdera.protocol.server.CollectionInfo;
 import org.apache.abdera.protocol.server.RequestContext;
@@ -55,7 +56,9 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 			path = path.substring(0, index);
 		}
 
-		String baseUri = request.getBaseUri().toString();
+		IRI baseUri = request.getBaseUri();
+
+		String baseUriString = baseUri.toString();
 
 		for (WorkspaceInfo workspaceInfo : workspaces) {
 			Collection<CollectionInfo> collections =
@@ -68,8 +71,8 @@ public class AtomProvider extends AbstractWorkspaceProvider {
 					continue;
 				}
 
-				if (href.startsWith(baseUri)) {
-					href = href.substring(baseUri.length() - 1);
+				if (href.startsWith(baseUriString)) {
+					href = href.substring(baseUriString.length() - 1);
 				}
 
 				index = href.indexOf('?');

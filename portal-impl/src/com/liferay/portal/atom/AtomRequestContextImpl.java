@@ -17,6 +17,7 @@ package com.liferay.portal.atom;
 import com.liferay.portal.kernel.atom.AtomRequestContext;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import org.apache.abdera.i18n.iri.IRI;
 import org.apache.abdera.protocol.server.RequestContext;
 
 /**
@@ -86,7 +87,9 @@ public class AtomRequestContextImpl implements AtomRequestContext {
 
 	@Override
 	public String getResolvedUri() {
-		return _requestContext.getResolvedUri().toString();
+		IRI resolvedURI = _requestContext.getResolvedUri();
+
+		return resolvedURI.toString();
 	}
 
 	@Override

@@ -228,6 +228,11 @@
 	<td>//div/ul[contains (@class,'breadcrumb-horizontal')]//li/a[contains (.,'${key_breadcrumb}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>NESTED_MENU</td>
+	<td>//div/ul[contains (@class,'nav-nested')]//li/a[contains (.,'${key_nestedMenu}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

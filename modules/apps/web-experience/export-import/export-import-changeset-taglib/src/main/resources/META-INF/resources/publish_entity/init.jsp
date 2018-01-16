@@ -45,7 +45,7 @@ String uuid = GetterUtil.getString(request.getAttribute("liferay-export-import-c
 boolean showMenuItem = false;
 
 try {
-	if ((scopeGroup.isStagingGroup() || scopeGroup.isStagedRemotely()) && scopeGroup.isStagedPortlet(portletDisplay.getId())) {
+	if ((group.isStagingGroup() || group.isStagedRemotely()) && group.isStagedPortlet(portletDisplay.getId())) {
 		showMenuItem = true;
 	}
 }

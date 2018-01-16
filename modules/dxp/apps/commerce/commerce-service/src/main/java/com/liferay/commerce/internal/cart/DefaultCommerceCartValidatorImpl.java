@@ -57,7 +57,7 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 			return new CommerceCartValidatorResult(false);
 		}
 
-		CPInstance cpInstance = commerceCartItem.getCPInstance();
+		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
 
 		if (cpInstance == null) {
 			return new CommerceCartValidatorResult(false);

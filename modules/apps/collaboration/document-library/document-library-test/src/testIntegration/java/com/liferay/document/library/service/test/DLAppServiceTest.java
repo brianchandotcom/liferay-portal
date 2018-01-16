@@ -327,6 +327,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 			},
 			level = "ERROR", loggerClass = JDBCExceptionReporter.class
 		)
+		@Ignore
 		@Test
 		public void shouldSucceedWithConcurrentAccess() throws Exception {
 			_users = new User[ServiceTestUtil.THREAD_COUNT];
@@ -370,6 +371,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 				_users.length, successCount);
 		}
 
+		@Ignore
 		@Test
 		public void shouldSucceedWithNullBytes() throws Exception {
 			String fileName = RandomTestUtil.randomString();

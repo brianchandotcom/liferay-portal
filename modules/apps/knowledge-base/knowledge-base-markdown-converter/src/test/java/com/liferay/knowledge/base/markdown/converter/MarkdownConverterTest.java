@@ -14,7 +14,8 @@
 
 package com.liferay.knowledge.base.markdown.converter;
 
-import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactoryUtil;
+import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
+import com.liferay.knowledge.base.markdown.converter.internal.pegdown.factory.MarkdownConverterFactoryImpl;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,8 +32,12 @@ public class MarkdownConverterTest {
 				"[](id=the-liferay-uilogo-selector-tag-requires-parameter-" +
 					"changes)";
 
-		String html =
-			MarkdownConverterFactoryUtil.create().convert(markdownString);
+		MarkdownConverterFactory markdownConverterFactory =
+			new MarkdownConverterFactoryImpl();
+
+		MarkdownConverter markdownConverter = markdownConverterFactory.create();
+
+		String html = markdownConverter.convert(markdownString);
 
 		int index = html.indexOf(
 			"id=\"the-liferay-uilogo-selector-tag-requires-parameter-" +

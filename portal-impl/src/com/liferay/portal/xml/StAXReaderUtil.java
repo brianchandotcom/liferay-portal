@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.XMLEvent;
 
 /**
@@ -40,7 +41,9 @@ public class StAXReaderUtil {
 		if (xmlEvent.isCharacters()) {
 			xmlEvent = xmlEventReader.nextEvent();
 
-			return xmlEvent.asCharacters().getData();
+			Characters characters = xmlEvent.asCharacters();
+
+			return characters.getData();
 		}
 		else {
 			return StringPool.BLANK;

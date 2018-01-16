@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.upgrade.util.ValueMapper;
 
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Alexander Chow
@@ -48,7 +49,9 @@ public class DatabaseValueMapper implements ValueMapper {
 
 	@Override
 	public Iterator<Object> iterator() throws Exception {
-		return Collections.emptyList().iterator();
+		List<Object> list = Collections.emptyList();
+
+		return list.iterator();
 	}
 
 	@Override

@@ -97,9 +97,13 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 		else if (resource.isLocked()) {
 			Lock lock = resource.getLock();
 
-			if ((lock == null) ||
-				!lock.getUuid().equals(webDAVRequest.getLockUuid())) {
+			if (lock == null) {
+				throw new LockException();
+			}
 
+			String uuid = lock.getUuid();
+
+			if (!uuid.equals(webDAVRequest.getLockUuid())) {
 				throw new LockException();
 			}
 		}
@@ -151,8 +155,11 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 
 				Element propElement = propElements.get(0);
 
-				if (!propElement.getName().equals("prop") ||
-					!propElement.getNamespaceURI().equals(
+				String propElementName = propElement.getName();
+				String propElementNamespaceURI = propElement.getNamespaceURI();
+
+				if (!propElementName.equals("prop") ||
+					!propElementNamespaceURI.equals(
 						WebDAVUtil.DAV_URI.getURI())) {
 
 					throw new InvalidRequestException(
@@ -170,7 +177,10 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 					Namespace namespace = WebDAVUtil.createNamespace(
 						prefix, uri);
 
-					if (instructionElement.getName().equals("set")) {
+					String instructionElementName =
+						instructionElement.getName();
+
+					if (instructionElementName.equals("set")) {
 						if (Validator.isNull(text)) {
 							webDavProps.addProp(name, prefix, uri);
 						}
@@ -182,7 +192,7 @@ public class ProppatchMethodImpl extends BasePropMethodImpl {
 							SAXReaderUtil.createQName(
 								customPropElement.getName(), namespace));
 					}
-					else if (instructionElement.getName().equals("remove")) {
+					else if (instructionElementName.equals("remove")) {
 						webDavProps.removeProp(name, prefix, uri);
 					}
 					else {

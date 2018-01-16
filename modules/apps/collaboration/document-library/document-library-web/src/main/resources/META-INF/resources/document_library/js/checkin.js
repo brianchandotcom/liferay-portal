@@ -11,14 +11,14 @@ AUI.add(
 							height: 400,
 							'toolbars.footer': [
 								{
-									cssClass: 'btn-lg btn-primary btn-default',
+									cssClass: 'btn-primary',
 									label: saveButton.label,
 									on: {
 										click: saveButton.callback
 									}
 								},
 								{
-									cssClass: 'btn-lg btn-link',
+									cssClass: 'btn-link',
 									label: cancelLabel,
 									on: {
 										click: function() {

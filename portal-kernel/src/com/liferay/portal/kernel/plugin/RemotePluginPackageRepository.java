@@ -130,7 +130,9 @@ public class RemotePluginPackageRepository {
 			while (itr.hasNext()) {
 				PluginPackage pluginPackage = itr.next();
 
-				if (pluginPackage.getModuleId().equals(moduleId)) {
+				String pluginPackageModuleId = pluginPackage.getModuleId();
+
+				if (pluginPackageModuleId.equals(moduleId)) {
 					itr.remove();
 
 					break;

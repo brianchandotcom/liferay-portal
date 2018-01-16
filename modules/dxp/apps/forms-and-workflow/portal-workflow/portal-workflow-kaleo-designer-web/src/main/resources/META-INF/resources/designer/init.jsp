@@ -31,7 +31,6 @@ page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.workflow.RequiredWorkflowDefinitionException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowDefinition" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowEngineManagerUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowException" %><%@
@@ -86,11 +85,11 @@ else {
 
 <aui:script use="liferay-kaleo-designer-dialogs">
 	window.<portlet:namespace/>confirmDeleteDefinition = function(deleteURL) {
-		var title = "<%= LanguageUtil.get(request, "delete-workflow-question") %>";
-		var message = "<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>";
+		var message = '<%= LanguageUtil.get(request, "a-deleted-workflow-cannot-be-recovered") %>';
+		var title = '<%= LanguageUtil.get(request, "delete-workflow-question") %>';
 
 		Liferay.KaleoDesignerDialogs.openConfirmDeleteDialog(title, message, deleteURL);
 
 		return false;
-	}
+	};
 </aui:script>

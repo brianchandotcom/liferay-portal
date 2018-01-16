@@ -57,7 +57,7 @@
 		portletDisplay.setShowBackIcon(true);
 		portletDisplay.setURLBack(redirect);
 
-		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : name);
+		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale));
 		%>
 
 		<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -68,7 +68,7 @@
 					<div class="info-bar-item">
 						<c:choose>
 							<c:when test="<%= (kaleoDefinition != null) && kaleoDefinition.isActive() %>">
-								<span class="label label-info label-lg ">
+								<span class="label label-info label-lg">
 									<liferay-ui:message key="published" />
 								</span>
 							</c:when>
@@ -107,13 +107,13 @@
 
 		<div class="closed container-fluid-1280 sidenav-container sidenav-right" id="<portlet:namespace />infoPanelId">
 			<c:if test="<%= kaleoDefinitionVersion != null %>">
-				<div class="sidenav-menu-slider">
-					<div class="sidebar sidebar-default sidenav-menu">
+				<div class="lfr-portal-workflow-sidenav">
+					<div class="sidebar sidebar-light">
 						<div class="sidebar-header">
 							<aui:icon cssClass="icon-monospaced sidenav-close text-default visible-xs-inline-block" image="times" markupView="lexicon" url="javascript:;" />
 
 							<h4>
-								<%= kaleoDefinitionVersion.getName() %>
+								<%= kaleoDefinitionVersion.getTitle(locale) %>
 							</h4>
 						</div>
 
@@ -123,7 +123,7 @@
 									<div class="sidebar-list">
 
 										<%
-										String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
+										String creatorUserName = kaleoDesignerDisplayContext.getCreatorUserName(kaleoDefinitionVersion);
 										%>
 
 										<div class="card-row-padded created-date">
@@ -134,9 +134,20 @@
 											</div>
 
 											<span class="info-content lfr-card-modified-by-text">
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDesignerDisplayContext.getCreatedDate(kaleoDefinitionVersion)), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+												<c:choose>
+													<c:when test="<%= creatorUserName == null %>">
+														<%= dateFormatTime.format(kaleoDesignerDisplayContext.getCreatedDate(kaleoDefinitionVersion)) %>
+													</c:when>
+													<c:otherwise>
+														<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDesignerDisplayContext.getCreatedDate(kaleoDefinitionVersion)), creatorUserName} %>" key="x-by-x" translateArguments="<%= false %>" />
+													</c:otherwise>
+												</c:choose>
 											</span>
 										</div>
+
+										<%
+										String userName = kaleoDesignerDisplayContext.getUserName(kaleoDefinitionVersion);
+										%>
 
 										<div class="card-row-padded last-modified">
 											<div>
@@ -146,7 +157,14 @@
 											</div>
 
 											<span class="info-content lfr-card-modified-by-text">
-												<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+												<c:choose>
+													<c:when test="<%= userName == null %>">
+														<%= dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()) %>
+													</c:when>
+													<c:otherwise>
+														<liferay-ui:message arguments="<%= new String[] {dateFormatTime.format(kaleoDefinitionVersion.getModifiedDate()), userName} %>" key="x-by-x" translateArguments="<%= false %>" />
+													</c:otherwise>
+												</c:choose>
 											</span>
 										</div>
 
@@ -300,8 +318,6 @@
 									window,
 									'<portlet:namespace />afterTabViewChange',
 									function(event) {
-										var A = AUI();
-
 										var tabContentNode = event.newVal.get('boundingBox');
 
 										var kaleoDesigner = <portlet:namespace />kaleoDesigner;
@@ -348,9 +364,7 @@
 								Liferay.provide(
 									window,
 									'<portlet:namespace />getLatestKaleoDefinitionVersion',
-									function(event, button) {
-										var A = AUI();
-
+									function(event) {
 										var button = event.target;
 
 										if (!button.get('disabled')) {
@@ -444,7 +458,7 @@
 														function(item, index) {
 															var locale = locales[index];
 
-															title.updateInputLanguage(responseData.title[locale] || "", locale);
+															title.updateInputLanguage(responseData.title[locale] || '', locale);
 														}
 													);
 
@@ -471,8 +485,6 @@
 										window,
 										'<portlet:namespace />publishKaleoDefinitionVersion',
 										function() {
-											var A = AUI();
-
 											<portlet:namespace />updateContent();
 
 											<portlet:namespace />updateAction('<portlet:actionURL name="publishKaleoDefinitionVersion" />');
@@ -487,8 +499,6 @@
 									window,
 									'<portlet:namespace />redoKaleoDefinitionVersion',
 									function(event) {
-										var A = AUI();
-
 										var button = event.target;
 
 										if (!button.get('disabled')) {
@@ -503,8 +513,6 @@
 										window,
 										'<portlet:namespace />addKaleoDefinitionVersion',
 										function() {
-											var A = AUI();
-
 											<portlet:namespace />updateContent();
 
 											<portlet:namespace />updateAction('<portlet:actionURL name="addKaleoDefinitionVersion" />');
@@ -519,8 +527,6 @@
 									window,
 									'<portlet:namespace />undoKaleoDefinitionVersion',
 									function(event) {
-										var A = AUI();
-
 										var button = event.target;
 
 										if (!button.get('disabled')) {
@@ -603,13 +609,11 @@
 								%>
 
 								<c:if test="<%= (kaleoDefinitionVersion != null) && Validator.isNotNull(saveCallback) %>">
-									Liferay.Util.getOpener()['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= HtmlUtil.escapeJS(name) %>', version, <%= draftVersion %>);
+									Liferay.Util.getOpener()['<%= HtmlUtil.escapeJS(saveCallback) %>']('<%= HtmlUtil.escapeJS(name) %>', <%= version %>, <%= draftVersion %>);
 								</c:if>
 							</aui:script>
 
 							<aui:script use="liferay-kaleo-designer-utils,liferay-portlet-kaleo-designer">
-								var emptyFn = A.Lang.emptyFn;
-
 								var MAP_ROLE_TYPES = {
 									regular: 1,
 									site: 2,
@@ -681,7 +685,6 @@
 											var reader = new FileReader();
 
 											reader.onloadend = function(evt) {
-
 												if (evt.target.readyState == FileReader.DONE) {
 													<portlet:namespace />kaleoDesigner.setEditorContent(evt.target.result);
 												}
@@ -878,7 +881,6 @@
 					<aui:button-row>
 						<c:if test="<%= kaleoDesignerDisplayContext.isPublishKaleoDefinitionVersionButtonVisible(permissionChecker) %>">
 							<aui:button
-								cssClass="btn-lg"
 								onClick='<%= renderResponse.getNamespace() + "publishKaleoDefinitionVersion();" %>'
 								primary="<%= true %>"
 								value="<%= kaleoDesignerDisplayContext.getPublishKaleoDefinitionVersionButtonLabel(kaleoDefinitionVersion) %>"
@@ -887,7 +889,6 @@
 
 						<c:if test="<%= kaleoDesignerDisplayContext.isSaveKaleoDefinitionVersionButtonVisible(permissionChecker, kaleoDefinitionVersion) %>">
 							<aui:button
-								cssClass="btn-lg"
 								onClick='<%= renderResponse.getNamespace() + "addKaleoDefinitionVersion();" %>'
 								value="save"
 							/>

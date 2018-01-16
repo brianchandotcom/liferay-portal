@@ -36,7 +36,7 @@ page import="com.liferay.commerce.model.CommerceShippingMethod" %><%@
 page import="com.liferay.commerce.model.CommerceWarehouse" %><%@
 page import="com.liferay.commerce.product.model.CPDefinition" %><%@
 page import="com.liferay.commerce.product.model.CPInstance" %><%@
-page import="com.liferay.commerce.service.permission.CommerceShipmentPermission" %><%@
+page import="com.liferay.commerce.service.permission.CommercePermission" %><%@
 page import="com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentDisplayContext" %><%@
 page import="com.liferay.commerce.shipment.web.internal.display.context.CommerceShipmentItemDisplayContext" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
@@ -70,5 +70,5 @@ String shipmentsURL = shipmentsURLObj.toString();
 
 String languageId = LanguageUtil.getLanguageId(locale);
 
-boolean hasManageCommerceShipmentsPermission = CommerceShipmentPermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
+boolean hasManageCommerceShipmentsPermission = CommercePermission.contains(permissionChecker, scopeGroupId, CommerceActionKeys.MANAGE_COMMERCE_SHIPMENTS);
 %>

@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Knowledge Base Markdown Converter
 Bundle-SymbolicName: com.liferay.knowledge.base.markdown.converter
 Bundle-Version: 1.0.11
-Export-Package:\
-	com.liferay.knowledge.base.markdown.converter,\
-	com.liferay.knowledge.base.markdown.converter.factory
 Import-Package:\
 	!org.objectweb.*,\
 	\

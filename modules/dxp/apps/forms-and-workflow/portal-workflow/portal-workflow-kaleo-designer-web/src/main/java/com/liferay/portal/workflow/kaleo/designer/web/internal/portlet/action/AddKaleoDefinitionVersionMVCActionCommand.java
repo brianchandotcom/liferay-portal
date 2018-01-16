@@ -15,6 +15,8 @@
 package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -31,6 +33,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
@@ -51,6 +54,7 @@ import java.util.ResourceBundle;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -80,6 +84,8 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			addSuccessMessage(actionRequest, actionResponse);
 
 			setCloseRedirect(actionRequest);
+
+			sendRedirect(actionRequest, actionResponse);
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
@@ -133,12 +139,16 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			throw new WorkflowDefinitionFileException();
 		}
 
+		String name = ParamUtil.getString(actionRequest, "name");
+
 		Definition definition = workflowModelParser.parse(content);
+
+		String definitionName = getDefinitionName(definition, name);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.
 				fetchLatestKaleoDefinitionVersion(
-					themeDisplay.getCompanyId(), definition.getName(), null);
+					themeDisplay.getCompanyId(), definitionName, null);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			KaleoDefinitionVersion.class.getName(), actionRequest);
@@ -148,7 +158,7 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		if (kaleoDefinitionVersion == null) {
 			kaleoDefinitionVersion =
 				kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-					definition.getName(), getTitle(titleMap),
+					definitionName, getTitle(titleMap),
 					definition.getDescription(), definition.getContent(), "0.1",
 					serviceContext);
 		}
@@ -158,7 +168,7 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 
 			kaleoDefinitionVersion =
 				kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-					definition.getName(), getTitle(titleMap),
+					definitionName, getTitle(titleMap),
 					definition.getDescription(), definition.getContent(),
 					version, serviceContext);
 		}
@@ -166,6 +176,20 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		actionRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 			kaleoDefinitionVersion);
+
+		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+	}
+
+	protected String getDefinitionName(Definition definition, String name) {
+		if (Validator.isNotNull(name)) {
+			return name;
+		}
+
+		if (Validator.isNotNull(definition.getName())) {
+			return definition.getName();
+		}
+
+		return portalUUID.generate();
 	}
 
 	protected String getNextVersion(String version) {
@@ -220,6 +244,33 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			closeRedirect);
 	}
 
+	protected void setRedirectAttribute(
+			ActionRequest actionRequest,
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		LiferayPortletURL portletURL = PortletURLFactoryUtil.create(
+			actionRequest, themeDisplay.getPpid(), PortletRequest.RENDER_PHASE);
+
+		portletURL.setParameter(
+			"mvcPath", "/designer/edit_kaleo_definition_version.jsp");
+
+		String redirect = ParamUtil.getString(actionRequest, "redirect");
+
+		portletURL.setParameter("redirect", redirect, false);
+
+		portletURL.setParameter(
+			"name", kaleoDefinitionVersion.getName(), false);
+		portletURL.setParameter(
+			"draftVersion", kaleoDefinitionVersion.getVersion(), false);
+		portletURL.setWindowState(actionRequest.getWindowState());
+
+		actionRequest.setAttribute(WebKeys.REDIRECT, portletURL.toString());
+	}
+
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)",
 		unbind = "-"
@@ -239,6 +290,9 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 
 	@Reference
 	protected Portal portal;
+
+	@Reference
+	protected PortalUUID portalUUID;
 
 	protected ResourceBundleLoader resourceBundleLoader;
 

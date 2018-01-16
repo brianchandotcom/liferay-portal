@@ -19,7 +19,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.util.ResourceBundle;
 
@@ -53,9 +56,20 @@ public class UnpublishKaleoDefinitionVersionMVCActionCommand
 		String name = ParamUtil.getString(actionRequest, "name");
 		int version = ParamUtil.getInteger(actionRequest, "version");
 
-		workflowDefinitionManager.updateActive(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-			version, false);
+		WorkflowDefinition workflowDefinition =
+			workflowDefinitionManager.updateActive(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
+				version, false);
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
+				themeDisplay.getCompanyId(), workflowDefinition.getName());
+
+		actionRequest.setAttribute(
+			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+			kaleoDefinitionVersion);
+
+		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
 	}
 
 	@Override

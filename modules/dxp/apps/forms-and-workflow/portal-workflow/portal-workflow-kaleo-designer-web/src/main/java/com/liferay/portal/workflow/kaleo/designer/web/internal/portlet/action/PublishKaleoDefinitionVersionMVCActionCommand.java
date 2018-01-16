@@ -76,10 +76,12 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 
 		validateWorkflowDefinition(content.getBytes());
 
+		String name = ParamUtil.getString(actionRequest, "name");
+
 		WorkflowDefinition workflowDefinition =
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-				getTitle(titleMap), content.getBytes());
+				getTitle(titleMap), name, content.getBytes());
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
@@ -88,6 +90,8 @@ public class PublishKaleoDefinitionVersionMVCActionCommand
 		actionRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 			kaleoDefinitionVersion);
+
+		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
 	}
 
 	@Override

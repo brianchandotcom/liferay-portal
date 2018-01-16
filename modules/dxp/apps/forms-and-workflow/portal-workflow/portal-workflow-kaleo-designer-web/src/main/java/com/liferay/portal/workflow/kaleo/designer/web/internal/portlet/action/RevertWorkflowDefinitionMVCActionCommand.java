@@ -22,8 +22,10 @@ import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.workflow.constants.WorkflowWebKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPortletKeys;
+import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerWebKeys;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
 import java.text.DateFormat;
@@ -114,9 +116,20 @@ public class RevertWorkflowDefinitionMVCActionCommand
 
 		String content = kaleoDefinitionVersion.getContent();
 
-		workflowDefinitionManager.deployWorkflowDefinition(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(),
-			kaleoDefinitionVersion.getTitle(), content.getBytes());
+		WorkflowDefinition workflowDefinition =
+			workflowDefinitionManager.deployWorkflowDefinition(
+				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
+				kaleoDefinitionVersion.getTitle(), name, content.getBytes());
+
+		kaleoDefinitionVersion =
+			kaleoDefinitionVersionLocalService.getLatestKaleoDefinitionVersion(
+				themeDisplay.getCompanyId(), workflowDefinition.getName());
+
+		actionRequest.setAttribute(
+			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
+			kaleoDefinitionVersion);
+
+		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
 
 		sendRedirect(actionRequest, actionResponse);
 	}

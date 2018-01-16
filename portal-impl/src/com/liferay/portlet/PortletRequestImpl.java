@@ -1012,8 +1012,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 			return;
 		}
 
-		boolean resourcePhase = lifecycle.equals(PortletRequest.RESOURCE_PHASE);
-
 		Enumeration<String> enumeration = preferences.getNames();
 
 		if (!enumeration.hasMoreElements()) {
@@ -1037,7 +1035,9 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 				String[] requestValues = dynamicRequest.getParameterValues(
 					name);
 
-				if ((requestValues != null) && resourcePhase) {
+				if ((requestValues != null) &&
+					lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+
 					dynamicRequest.setParameterValues(
 						name, ArrayUtil.append(requestValues, values));
 				}

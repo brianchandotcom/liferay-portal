@@ -16,6 +16,9 @@ package com.liferay.portal.search.solr.internal;
 
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.util.Digester;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.search.solr.connection.SolrClientManager;
@@ -52,7 +55,12 @@ import com.liferay.portal.search.solr.internal.query.TermQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.query.TermRangeQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.query.WildcardQueryTranslatorImpl;
 import com.liferay.portal.search.solr.internal.stats.DefaultStatsTranslator;
+import com.liferay.portal.search.solr.internal.suggest.NGramHolderBuilderImpl;
+import com.liferay.portal.search.solr.internal.suggest.NGramQueryBuilderImpl;
 import com.liferay.portal.search.test.util.indexing.IndexingFixture;
+import com.liferay.portal.util.LocalizationImpl;
+
+import java.nio.ByteBuffer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -144,6 +152,20 @@ public class SolrIndexingFixture implements IndexingFixture {
 		};
 	}
 
+	protected Digester createDigester() {
+		Digester digester = Mockito.mock(Digester.class);
+
+		Mockito.doAnswer(
+			invocation -> RandomTestUtil.randomBytes()
+		).when(
+			digester
+		).digestRaw(
+			Mockito.anyString(), (ByteBuffer)Mockito.any()
+		);
+
+		return digester;
+	}
+
 	protected IndexSearcher createIndexSearcher(
 		final SolrClientManager solrClientManager) {
 
@@ -154,6 +176,7 @@ public class SolrIndexingFixture implements IndexingFixture {
 				setFacetProcessor(new DefaultFacetProcessor());
 				setFilterTranslator(createSolrFilterTranslator());
 				setGroupByTranslator(new DefaultGroupByTranslator());
+				setQuerySuggester(createSolrQuerySuggester(solrClientManager));
 				setQueryTranslator(createSolrQueryTranslator());
 				setSolrClientManager(solrClientManager);
 				setStatsTranslator(new DefaultStatsTranslator());
@@ -166,18 +189,24 @@ public class SolrIndexingFixture implements IndexingFixture {
 	protected IndexWriter createIndexWriter(
 		final SolrClientManager solrClientManager) {
 
-		final SolrUpdateDocumentCommand updateDocumentCommand =
-			new SolrUpdateDocumentCommandImpl() {
-				{
-					setSolrClientManager(solrClientManager);
-					setSolrDocumentFactory(new DefaultSolrDocumentFactory());
-				}
-			};
+		final SolrUpdateDocumentCommand solrUpdateDocumentCommand =
+			createSolrUpdateDocumentCommand(solrClientManager);
 
 		return new SolrIndexWriter() {
 			{
 				setSolrClientManager(solrClientManager);
-				setSolrUpdateDocumentCommand(updateDocumentCommand);
+				setSolrUpdateDocumentCommand(solrUpdateDocumentCommand);
+				setSpellCheckIndexWriter(
+					createSolrSpellCheckIndexWriter(
+						solrClientManager, solrUpdateDocumentCommand));
+			}
+		};
+	}
+
+	protected NGramQueryBuilderImpl createNGramQueryBuilder() {
+		return new NGramQueryBuilderImpl() {
+			{
+				setNGramHolderBuilder(new NGramHolderBuilderImpl());
 			}
 		};
 	}
@@ -206,8 +235,48 @@ public class SolrIndexingFixture implements IndexingFixture {
 		return properties;
 	}
 
+	protected SolrQuerySuggester createSolrQuerySuggester(
+		SolrClientManager solrClientManager) {
+
+		return new SolrQuerySuggester() {
+			{
+				localization = _localization;
+
+				setNGramQueryBuilder(createNGramQueryBuilder());
+				setSolrClientManager(solrClientManager);
+			}
+		};
+	}
+
+	protected SolrSpellCheckIndexWriter createSolrSpellCheckIndexWriter(
+		final SolrClientManager solrClientManager,
+		final SolrUpdateDocumentCommand solrUpdateDocumentCommand) {
+
+		return new SolrSpellCheckIndexWriter() {
+			{
+				digester = createDigester();
+				nGramHolderBuilder = new NGramHolderBuilderImpl();
+
+				setSolrClientManager(solrClientManager);
+				setSolrUpdateDocumentCommand(solrUpdateDocumentCommand);
+			}
+		};
+	}
+
+	protected SolrUpdateDocumentCommandImpl createSolrUpdateDocumentCommand(
+		final SolrClientManager solrClientManager) {
+
+		return new SolrUpdateDocumentCommandImpl() {
+			{
+				setSolrClientManager(solrClientManager);
+				setSolrDocumentFactory(new DefaultSolrDocumentFactory());
+			}
+		};
+	}
+
 	private IndexSearcher _indexSearcher;
 	private IndexWriter _indexWriter;
+	private final Localization _localization = new LocalizationImpl();
 	private final Map<String, Object> _properties;
 
 }

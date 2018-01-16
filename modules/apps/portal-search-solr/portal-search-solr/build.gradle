@@ -32,6 +32,8 @@ dependencies {
 	provided project(":apps:foundation:portal-search:portal-search-api")
 
 	testCompile group: "com.liferay", name: "com.liferay.petra.memory", version: "1.0.0"
+	testCompile group: "commons-collections", name: "commons-collections", version: "3.2.2"
+	testCompile project(":apps:foundation:portal-search:portal-search")
 	testCompile project(":apps:foundation:portal-search:portal-search-test-util")
 }
 

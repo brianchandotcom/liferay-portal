@@ -25,21 +25,9 @@ renderResponse.setTitle(fragmentDisplayContext.getFragmentCollectionTitle());
 
 <liferay-ui:error exception="<%= RequiredFragmentEntryException.class %>" message="the-fragment-entry-cannot-be-deleted-because-it-is-required-by-one-or-more-page-templates" />
 
-<%
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(currentURL);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "fragments"));
-
-navigationItems.add(entriesNavigationItem);
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationItems %>"
+	items="<%= fragmentDisplayContext.getFragmentEntryNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

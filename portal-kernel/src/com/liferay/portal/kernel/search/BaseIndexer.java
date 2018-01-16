@@ -1748,7 +1748,11 @@ public abstract class BaseIndexer<T> implements Indexer<T> {
 		for (Address address : addresses) {
 			cities.add(StringUtil.toLowerCase(address.getCity()));
 			countries.addAll(getLocalizedCountryNames(address.getCountry()));
-			regions.add(StringUtil.toLowerCase(address.getRegion().getName()));
+
+			Region region = address.getRegion();
+
+			regions.add(StringUtil.toLowerCase(region.getName()));
+
 			streets.add(StringUtil.toLowerCase(address.getStreet1()));
 			streets.add(StringUtil.toLowerCase(address.getStreet2()));
 			streets.add(StringUtil.toLowerCase(address.getStreet3()));

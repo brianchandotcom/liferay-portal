@@ -119,7 +119,9 @@ public class BasePersistenceImpl<T extends BaseModel<T>>
 			return 0;
 		}
 		else {
-			return (results.get(0)).longValue();
+			Long firstResult = results.get(0);
+
+			return firstResult.longValue();
 		}
 	}
 

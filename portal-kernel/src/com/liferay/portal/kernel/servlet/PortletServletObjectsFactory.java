@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.servlet;
 
 import javax.portlet.PortletConfig;
+import javax.portlet.PortletContext;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -31,7 +32,9 @@ public class PortletServletObjectsFactory implements ServletObjectsFactory {
 	public ServletConfig getServletConfig(
 		PortletConfig portletConfig, PortletRequest portletRequest) {
 
-		Object servletConfig = portletConfig.getPortletContext().getAttribute(
+		PortletContext portletContext = portletConfig.getPortletContext();
+
+		Object servletConfig = portletContext.getAttribute(
 			_PORTLET_CONTAINER_SERVLET_CONFIG);
 
 		if (servletConfig == null) {

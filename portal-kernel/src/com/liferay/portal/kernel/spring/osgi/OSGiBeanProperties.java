@@ -317,7 +317,9 @@ public @interface OSGiBeanProperties {
 				return GetterUtil.getBoolean(value);
 			}
 			else if (this == Type.BYTE) {
-				return Byte.valueOf(value).byteValue();
+				Byte byteValue = Byte.valueOf(value);
+
+				return byteValue.byteValue();
 			}
 			else if (this == Type.CHARACTER) {
 				return value.charAt(0);

@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.UserConstants;
 import com.liferay.portal.kernel.service.ListTypeServiceUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -170,8 +171,9 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		if (prefixId != 0) {
 			try {
-				String prefix = ListTypeServiceUtil.getListType(
-					prefixId).getName();
+				ListType listType = ListTypeServiceUtil.getListType(suffixId);
+
+				String prefix = listType.getName();
 
 				prefix = LanguageUtil.get(locale, prefix);
 
@@ -189,8 +191,9 @@ public class DefaultFullNameGenerator implements FullNameGenerator {
 
 		if (suffixId != 0) {
 			try {
-				String suffix = ListTypeServiceUtil.getListType(
-					suffixId).getName();
+				ListType listType = ListTypeServiceUtil.getListType(suffixId);
+
+				String suffix = listType.getName();
 
 				suffix = LanguageUtil.get(locale, suffix);
 

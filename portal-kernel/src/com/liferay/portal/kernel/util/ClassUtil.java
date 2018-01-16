@@ -250,12 +250,16 @@ public class ClassUtil {
 			return false;
 		}
 
-		if (a.getName().equals(s)) {
+		String name = a.getName();
+
+		if (name.equals(s)) {
 			return true;
 		}
 
 		for (Class<?> x = a; x != null; x = x.getSuperclass()) {
-			if (x.getName().equals(s)) {
+			name = x.getName();
+
+			if (name.equals(s)) {
 				return true;
 			}
 
@@ -290,7 +294,9 @@ public class ClassUtil {
 
 			String annotationParameters = StringPool.BLANK;
 
-			if (s.trim().endsWith(")")) {
+			String trimmedString = s.trim();
+
+			if (trimmedString.endsWith(")")) {
 				annotationParameters = annotationParametersMatcher.group(3);
 			}
 			else {

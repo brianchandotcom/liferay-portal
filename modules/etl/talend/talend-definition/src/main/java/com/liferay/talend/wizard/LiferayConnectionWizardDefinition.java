@@ -71,9 +71,8 @@ public class LiferayConnectionWizardDefinition
 	}
 
 	/**
-	 * @deprecated @see org.talend.components.api.wizard.
-	 * ComponentWizardDefinition#getPngImagePath(
-	 * WizardImageType)
+	 * @deprecated
+	 * @see org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(WizardImageType)
 	 */
 	@Deprecated
 	@Override

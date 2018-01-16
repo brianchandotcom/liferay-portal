@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.UserBag;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.UserGroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.LayoutPermission;
@@ -43,6 +45,7 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserGroupPermissionUtil;
 import com.liferay.portal.kernel.service.permission.UserPermissionUtil;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.util.LayoutTypeControllerTracker;
 import com.liferay.portal.util.PropsValues;
@@ -244,11 +247,15 @@ public class LayoutPermissionImpl
 			// action
 
 			long parentLayoutId = layout.getParentLayoutId();
+			long layoutGroupId = layout.getGroupId();
+
+			if (layout instanceof VirtualLayout) {
+				layoutGroupId = ((VirtualLayout)layout).getSourceGroupId();
+			}
 
 			while (parentLayoutId != LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
 				Layout parentLayout = LayoutLocalServiceUtil.getLayout(
-					layout.getGroupId(), layout.isPrivateLayout(),
-					parentLayoutId);
+					layoutGroupId, layout.isPrivateLayout(), parentLayoutId);
 
 				if (contains(permissionChecker, parentLayout, actionId)) {
 					return true;
@@ -548,6 +555,27 @@ public class LayoutPermissionImpl
 
 			if (hasPermission != null) {
 				return hasPermission.booleanValue();
+			}
+		}
+		else if (!checkViewableGroup && group.isUserGroup() &&
+				 actionId.equals(ActionKeys.VIEW)) {
+
+			try {
+				UserBag userBag = permissionChecker.getUserBag();
+
+				if (userBag != null) {
+					return ArrayUtil.contains(
+						userBag.getUserUserGroupsIds(), group.getClassPK());
+				}
+
+				return UserGroupLocalServiceUtil.hasUserUserGroup(
+					permissionChecker.getUserId(), group.getClassPK());
+			}
+			catch (PortalException pe) {
+				throw pe;
+			}
+			catch (Exception e) {
+				throw new PortalException(e);
 			}
 		}
 

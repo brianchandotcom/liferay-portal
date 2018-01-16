@@ -78,7 +78,9 @@ import com.liferay.sites.kernel.util.SitesUtil;
 import java.io.File;
 import java.io.InputStream;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -87,6 +89,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -1239,9 +1242,40 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	public Map<Long, List<Layout>> getLayoutChildLayouts(
 		LayoutSet layoutSet, List<Layout> parentLayouts) {
 
-		List<Layout> childLayouts = _getChildLayouts(
-			layoutSet,
-			ListUtil.toLongArray(parentLayouts, Layout::getLayoutId));
+		Map<LayoutSet, List<Layout>> parentLayoutMap = new HashMap<>();
+
+		for (Layout parentLayout : parentLayouts) {
+			if (parentLayout instanceof VirtualLayout) {
+				VirtualLayout virtualLayout = (VirtualLayout)parentLayout;
+
+				Layout sourceLayout = virtualLayout.getSourceLayout();
+
+				LayoutSet sourceLayoutSet = sourceLayout.getLayoutSet();
+
+				List<Layout> layoutList = parentLayoutMap.computeIfAbsent(
+					sourceLayoutSet, key -> new ArrayList<>());
+
+				layoutList.add(sourceLayout);
+			}
+			else {
+				List<Layout> layoutList = parentLayoutMap.computeIfAbsent(
+					layoutSet, key -> new ArrayList<>());
+
+				layoutList.add(parentLayout);
+			}
+		}
+
+		List<Layout> childLayouts = new ArrayList<>();
+
+		for (Map.Entry<LayoutSet, List<Layout>> entry :
+				parentLayoutMap.entrySet()) {
+
+			List<Layout> newChildLayouts = _getChildLayouts(
+				entry.getKey(),
+				ListUtil.toLongArray(entry.getValue(), Layout::getLayoutId));
+
+			childLayouts.addAll(newChildLayouts);
+		}
 
 		Map<Long, List<Layout>> layoutChildLayouts = new HashMap<>();
 
@@ -1449,9 +1483,47 @@ public class LayoutLocalServiceImpl extends LayoutLocalServiceBaseImpl {
 	 */
 	@Override
 	public List<Layout> getLayouts(
-		long groupId, boolean privateLayout, String type) {
+			long groupId, boolean privateLayout, String type)
+		throws PortalException {
 
-		return layoutPersistence.findByG_P_T(groupId, privateLayout, type);
+		Group group = groupPersistence.findByPrimaryKey(groupId);
+
+		List<Layout> layouts = layoutPersistence.findByG_P_T(
+			groupId, privateLayout, type);
+
+		if (!group.isUser()) {
+			return layouts;
+		}
+
+		layouts = new ArrayList<>(layouts);
+
+		Set<Long> checkedPlids = new HashSet<>();
+		Queue<Long> checkParentLayoutIds = new ArrayDeque<>();
+
+		checkParentLayoutIds.add(LayoutConstants.DEFAULT_PARENT_LAYOUT_ID);
+
+		LayoutSet layoutSet = layoutSetPersistence.findByG_P(
+			groupId, privateLayout);
+
+		while (!checkParentLayoutIds.isEmpty()) {
+			long parentLayoutId = checkParentLayoutIds.poll();
+
+			List<Layout> userGroupLayouts = _addUserGroupLayouts(
+				group, layoutSet, Collections.emptyList(), parentLayoutId);
+
+			for (Layout userGroupLayout : userGroupLayouts) {
+				long userGroupPlid = userGroupLayout.getPlid();
+				long userGroupLayoutId = userGroupLayout.getLayoutId();
+
+				if (checkedPlids.add(userGroupPlid)) {
+					layouts.add(userGroupLayout);
+
+					checkParentLayoutIds.add(userGroupLayoutId);
+				}
+			}
+		}
+
+		return layouts;
 	}
 
 	/**

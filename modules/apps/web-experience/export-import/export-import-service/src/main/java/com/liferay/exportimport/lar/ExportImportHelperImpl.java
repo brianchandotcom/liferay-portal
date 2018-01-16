@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.exception.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -1081,6 +1082,129 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		throws Exception {
 
 		return content;
+	}
+
+	@Override
+	public void setPortletScope(
+		PortletDataContext portletDataContext, Element portletElement) {
+
+		// Portlet data scope
+
+		String scopeLayoutUuid = GetterUtil.getString(
+			portletElement.attributeValue("scope-layout-uuid"));
+		String scopeLayoutType = GetterUtil.getString(
+			portletElement.attributeValue("scope-layout-type"));
+
+		portletDataContext.setScopeLayoutUuid(scopeLayoutUuid);
+		portletDataContext.setScopeType(scopeLayoutType);
+
+		// Layout scope
+
+		try {
+			Group scopeGroup = null;
+
+			if (scopeLayoutType.equals("company")) {
+				scopeGroup = _groupLocalService.getCompanyGroup(
+					portletDataContext.getCompanyId());
+			}
+			else if (Validator.isNotNull(scopeLayoutUuid)) {
+				Layout scopeLayout =
+					_layoutLocalService.getLayoutByUuidAndGroupId(
+						scopeLayoutUuid, portletDataContext.getGroupId(),
+						portletDataContext.isPrivateLayout());
+
+				scopeGroup = _groupLocalService.checkScopeGroup(
+					scopeLayout, portletDataContext.getUserId(null));
+
+				Group group = scopeLayout.getGroup();
+
+				if (group.isStaged() && !group.isStagedRemotely()) {
+					try {
+						boolean privateLayout = GetterUtil.getBoolean(
+							portletElement.attributeValue("private-layout"));
+
+						Layout oldLayout =
+							_layoutLocalService.getLayoutByUuidAndGroupId(
+								scopeLayoutUuid,
+								portletDataContext.getSourceGroupId(),
+								privateLayout);
+
+						Group oldScopeGroup = oldLayout.getScopeGroup();
+
+						if (group.isStagingGroup()) {
+							scopeGroup.setLiveGroupId(
+								oldScopeGroup.getGroupId());
+
+							_groupLocalService.updateGroup(scopeGroup);
+						}
+						else {
+							oldScopeGroup.setLiveGroupId(
+								scopeGroup.getGroupId());
+
+							_groupLocalService.updateGroup(oldScopeGroup);
+						}
+					}
+					catch (NoSuchLayoutException nsle) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(nsle);
+						}
+					}
+				}
+
+				if (!ExportImportThreadLocal.isStagingInProcess() &&
+					group.isStagingGroup() &&
+					!group.isStagedPortlet(portletDataContext.getPortletId())) {
+
+					scopeGroup = group.getLiveGroup();
+
+					Layout scopeLiveLayout =
+						_layoutLocalService.fetchLayoutByUuidAndGroupId(
+							scopeLayoutUuid, group.getLiveGroupId(),
+							portletDataContext.isPrivateLayout());
+
+					if (scopeLiveLayout != null) {
+						scopeGroup = _groupLocalService.checkScopeGroup(
+							scopeLiveLayout,
+							portletDataContext.getUserId(null));
+					}
+				}
+			}
+			else {
+				Group group = _groupLocalService.getGroup(
+					portletDataContext.getGroupId());
+
+				if (!ExportImportThreadLocal.isStagingInProcess() &&
+					group.isStagingGroup() &&
+					!group.isStagedPortlet(portletDataContext.getPortletId())) {
+
+					scopeGroup = group.getLiveGroup();
+				}
+			}
+
+			if (scopeGroup != null) {
+				portletDataContext.setScopeGroupId(scopeGroup.getGroupId());
+
+				Map<Long, Long> groupIds =
+					(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+						Group.class);
+
+				long oldScopeGroupId = GetterUtil.getLong(
+					portletElement.attributeValue("scope-group-id"));
+
+				groupIds.put(oldScopeGroupId, scopeGroup.getGroupId());
+			}
+		}
+		catch (PortalException pe) {
+
+			// LPS-52675
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(pe, pe);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
 	}
 
 	/**

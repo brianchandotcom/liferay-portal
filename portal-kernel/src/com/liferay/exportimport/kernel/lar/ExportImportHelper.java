@@ -464,6 +464,9 @@ public interface ExportImportHelper {
 			boolean importReferencedContent)
 		throws Exception;
 
+	public void setPortletScope(
+		PortletDataContext portletDataContext, Element portletElement);
+
 	/**
 	 * @deprecated As of 7.0.0, see {@link
 	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(

@@ -583,6 +583,12 @@ public class ExportImportHelperUtil {
 			portletDataContext, content, importReferencedContent);
 	}
 
+	public static void setPortletScope(
+		PortletDataContext portletDataContext, Element portletElement) {
+
+		_exportImportHelper.setPortletScope(portletDataContext, portletElement);
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, see {@link
 	 *             DefaultConfigurationPortletDataHandler#updateExportPortletPreferencesClassPKs(

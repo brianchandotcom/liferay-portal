@@ -223,6 +223,11 @@
 	<td>//div[contains (@class,'modal-dialog')]//*//button[contains (@class,'secondary') and contains (.,'Delete')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>BREADCRUMBS</td>
+	<td>//div/ul[contains (@class,'breadcrumb-horizontal')]//li/a[contains (.,'${key_breadcrumb}')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

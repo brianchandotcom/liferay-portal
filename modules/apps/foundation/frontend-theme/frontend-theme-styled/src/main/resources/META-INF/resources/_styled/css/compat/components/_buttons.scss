@@ -69,6 +69,18 @@
 		}
 	}
 
+	.btn-cancel.btn-link.btn-default {
+		@include border-radius(0.25rem);
+
+		@include button-variant(theme-color(secondary), theme-color(secondary));
+
+		@include clay-button-variant(map-get($btn-palette, secondary));
+
+		@include hover {
+			text-decoration: none;
+		}
+	}
+
 	.btn-bottom-right {
 		bottom: 30px;
 		position: fixed;

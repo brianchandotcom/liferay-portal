@@ -103,7 +103,7 @@ public class JavadocBuilder {
 
 			int pos = comment.indexOf("</a>");
 
-			comment = comment.substring(pos + 4).trim();
+			comment = StringUtil.trim(comment.substring(pos + 4));
 		}
 
 		commentElement.addCDATA(comment);
@@ -199,7 +199,11 @@ public class JavadocBuilder {
 		DocletTag[] paramDocletTags) {
 
 		String name = javaParameter.getName();
-		String type = javaParameter.getType().getValue();
+
+		Type parameterType = javaParameter.getType();
+
+		String type = parameterType.getValue();
+
 		String value = null;
 
 		for (DocletTag paramDocletTag : paramDocletTags) {
@@ -246,17 +250,24 @@ public class JavadocBuilder {
 
 		Type returnType = javaMethod.getReturnType();
 
-		if ((returnType == null) || returnType.getValue().equals("void")) {
+		if (returnType == null) {
 			return;
 		}
 
-		_addDocletElements(methodElement, javaMethod, "return");
+		String returnTypeValue = returnType.getValue();
+
+		if (!returnTypeValue.equals("void")) {
+			_addDocletElements(methodElement, javaMethod, "return");
+		}
 	}
 
 	private void _addThrowsElement(
 		Element methodElement, Type exception, DocletTag[] throwsDocletTags) {
 
-		String name = exception.getJavaClass().getName();
+		JavaClass exceptionClass = exception.getJavaClass();
+
+		String name = exceptionClass.getName();
+
 		String value = null;
 
 		for (DocletTag throwsDocletTag : throwsDocletTags) {
@@ -550,7 +561,11 @@ public class JavadocBuilder {
 		for (JavaParameter javaParameter : javaParameters) {
 			sb.append(javaParameter.getName());
 			sb.append("|");
-			sb.append(javaParameter.getType().getValue());
+
+			Type type = javaParameter.getType();
+
+			sb.append(type.getValue());
+
 			sb.append(",");
 		}
 
@@ -720,7 +735,7 @@ public class JavadocBuilder {
 			}
 		}
 
-		String newContent = sb.toString().trim();
+		String newContent = StringUtil.trim(sb.toString());
 
 		if ((oldContent == null) || !oldContent.equals(newContent)) {
 			_fileUtil.write(file, newContent);
@@ -845,7 +860,7 @@ public class JavadocBuilder {
 			sb.append("\n");
 		}
 
-		String newContent = sb.toString().trim();
+		String newContent = StringUtil.trim(sb.toString());
 
 		if ((oldContent == null) || !oldContent.equals(newContent)) {
 			_fileUtil.write(file, newContent);

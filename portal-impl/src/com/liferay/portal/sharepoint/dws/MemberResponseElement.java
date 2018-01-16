@@ -40,14 +40,31 @@ public class MemberResponseElement implements ResponseElement {
 			user = "Member";
 		}
 
-		Element el = rootEl.addElement(user);
+		Element userEl = rootEl.addElement(user);
 
-		el.addElement("ID").setText(_id);
-		el.addElement("Name").setText(_name);
-		el.addElement("LoginName").setText(_loginName);
-		el.addElement("Email").setText(_email);
-		el.addElement("IsDomainGroup").setText(String.valueOf(_domainGroup));
-		el.addElement("IsSiteAdmin").setText(String.valueOf(_siteAdmin));
+		Element idEl = userEl.addElement("ID");
+
+		idEl.setText(_id);
+
+		Element nameEl = userEl.addElement("Name");
+
+		nameEl.setText(_name);
+
+		Element loginNameEl = userEl.addElement("LoginName");
+
+		loginNameEl.setText(_loginName);
+
+		Element emailEl = userEl.addElement("Email");
+
+		emailEl.setText(_email);
+
+		Element isDomainGroupEl = userEl.addElement("IsDomainGroup");
+
+		isDomainGroupEl.setText(String.valueOf(_domainGroup));
+
+		Element isSiteAdminEl = userEl.addElement("IsSiteAdmin");
+
+		isSiteAdminEl.setText(String.valueOf(_siteAdmin));
 	}
 
 	private final boolean _domainGroup;

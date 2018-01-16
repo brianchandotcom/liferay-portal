@@ -419,7 +419,9 @@ public class PortalRequestProcessor extends TilesRequestProcessor {
 		// Only test for existing mappings for last paths that were set when the
 		// user accessed a layout directly instead of through its friendly URL
 
-		if (lastPath.getContextPath().equals(themeDisplay.getPathMain())) {
+		String contextPath = lastPath.getContextPath();
+
+		if (contextPath.equals(themeDisplay.getPathMain())) {
 			ActionMapping actionMapping =
 				(ActionMapping)moduleConfig.findActionConfig(
 					lastPath.getPath());

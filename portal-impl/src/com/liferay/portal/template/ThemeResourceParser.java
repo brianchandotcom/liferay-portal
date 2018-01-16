@@ -26,6 +26,7 @@ import com.liferay.portal.theme.ThemeLoaderFactory;
 import java.io.File;
 import java.io.IOException;
 
+import java.net.URI;
 import java.net.URL;
 
 /**
@@ -95,7 +96,11 @@ public class ThemeResourceParser extends URLResourceParser {
 
 		File fileStorage = themeLoader.getFileStorage();
 
-		return new File(fileStorage, templateId).toURI().toURL();
+		File file = new File(fileStorage, templateId);
+
+		URI uri = file.toURI();
+
+		return uri.toURL();
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -63,6 +63,7 @@ import org.apache.struts.config.ActionConfig;
 import org.apache.struts.config.ForwardConfig;
 import org.apache.struts.config.ModuleConfig;
 import org.apache.struts.tiles.TilesRequestProcessor;
+import org.apache.struts.upload.MultipartRequestHandler;
 import org.apache.struts.util.MessageResources;
 
 /**
@@ -471,7 +472,9 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			// Don't render a null path. This is useful if you're sending a file
 			// in an exclusive window state.
 
-			if (forward.getPath().equals(ActionConstants.COMMON_NULL)) {
+			String forwardPath = forward.getPath();
+
+			if (forwardPath.equals(ActionConstants.COMMON_NULL)) {
 				return;
 			}
 		}
@@ -615,8 +618,11 @@ public class PortletRequestProcessor extends TilesRequestProcessor {
 			return true;
 		}
 
-		if (actionForm.getMultipartRequestHandler() != null) {
-			actionForm.getMultipartRequestHandler().rollback();
+		MultipartRequestHandler multipartRequestHandler =
+			actionForm.getMultipartRequestHandler();
+
+		if (multipartRequestHandler != null) {
+			multipartRequestHandler.rollback();
 		}
 
 		String input = actionMapping.getInput();

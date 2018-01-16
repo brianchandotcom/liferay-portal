@@ -870,6 +870,15 @@ message.
 		<ant dir="util-taglib" inheritAll="false" target="publish-portal-release" />
 	</target>
 
+	<target name="restore-latest-artifact-version">
+		<ant dir="portal-impl" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="portal-kernel" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="util-bridges" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="util-java" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="util-slf4j" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="util-taglib" inheritAll="false" target="restore-latest-artifact-version" />
+	</target>
+
 	<target depends="setup-jrebel-properties" name="setup-jrebel">
 		<copy file="tools/jrebel/rebel.xml_GLOBAL" tofile="${app.server.lib.global.dir}/rebel.xml">
 			<filterchain>

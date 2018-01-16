@@ -18,37 +18,28 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
+import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.framework.ServiceRegistration;
-import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
-import org.osgi.service.cm.ManagedService;
 
 /**
  * @author Drew Brokke
@@ -61,21 +52,13 @@ public class SettingsLocatorHelperTest {
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() {
-		Bundle bundle = FrameworkUtil.getBundle(
-			SettingsLocatorHelperTest.class);
-
-		_bundleContext = bundle.getBundleContext();
-	}
-
 	@After
 	public void tearDown() throws Exception {
-		for (Configuration configuration : _configurations) {
-			configuration.delete();
+		for (String configurationPid : _configurationPids) {
+			ConfigurationTestUtil.deleteConfiguration(configurationPid);
 		}
 
-		_configurations.clear();
+		_configurationPids.clear();
 	}
 
 	@Test
@@ -263,57 +246,23 @@ public class SettingsLocatorHelperTest {
 	private String _saveConfiguration(String configurationPid)
 		throws Exception {
 
-		Configuration configuration = _configurationAdmin.getConfiguration(
-			configurationPid, StringPool.QUESTION);
-
-		_configurations.add(configuration);
-
 		String value = RandomTestUtil.randomString();
 
-		Dictionary<String, String> properties = new HashMapDictionary<>();
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
 		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
 
-		configuration.update(properties);
+		ConfigurationTestUtil.saveConfiguration(configurationPid, properties);
 
-		CountDownLatch countDownLatch = new CountDownLatch(1);
-
-		ManagedService managedService = props -> {
-			if (props == null) {
-				return;
-			}
-
-			String testValue = (String)props.get(
-				SettingsLocatorTestConstants.TEST_KEY);
-
-			if (testValue.equals(value)) {
-				countDownLatch.countDown();
-			}
-
-		};
-
-		Dictionary<String, Object> managedServiceProperties =
-			new HashMapDictionary<>();
-
-		managedServiceProperties.put(Constants.SERVICE_PID, configurationPid);
-
-		ServiceRegistration managedServiceServiceRegistration =
-			_bundleContext.registerService(
-				ManagedService.class, managedService, managedServiceProperties);
-
-		countDownLatch.await();
-
-		managedServiceServiceRegistration.unregister();
+		_configurationPids.add(configurationPid);
 
 		return value;
 	}
 
-	private BundleContext _bundleContext;
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
 
-	private final List<Configuration> _configurations = new ArrayList<>();
+	private final Set<String> _configurationPids = new HashSet<>();
 
 	@Inject
 	private SettingsLocatorHelper _settingsLocatorHelper;

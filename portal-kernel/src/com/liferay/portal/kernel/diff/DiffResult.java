@@ -63,8 +63,10 @@ public class DiffResult {
 
 		DiffResult diffResult = (DiffResult)obj;
 
+		List<String> changedLines = diffResult.getChangedLines();
+
 		if ((diffResult.getLineNumber() == _lineNumber) &&
-			diffResult.getChangedLines().equals(_changedLines)) {
+			changedLines.equals(_changedLines)) {
 
 			return true;
 		}

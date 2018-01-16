@@ -9,6 +9,12 @@
 		<execute function="Type" locator1="CommerceEntry#DESCRIPTION_FIELD" value1="${optionDescription}" />
 
 		<execute function="Select" locator1="CommerceEntry#FIELD_TYPE_SELECT" value1="${optionFieldType}" />
+
+		<execute function="Check" locator1="CommerceEntry#FACETABLE_CHECKBOX" />
+
+		<execute function="Check" locator1="CommerceEntry#REQUIRED_CHECKBOX" />
+
+		<execute function="Check" locator1="CommerceEntry#SKU_CONTRIBUTOR_CHECKBOX" />
 	</command>
 
 	<command name="addOptionValue">

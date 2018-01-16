@@ -63,7 +63,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -321,18 +321,16 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			return;
 		}
 
-		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		nameMap.put(locale, commercePaymentEngine.getName(locale));
-		descriptionMap.put(
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			locale, commercePaymentEngine.getName(locale));
+		Map<Locale, String> descriptionMap = Collections.singletonMap(
 			locale, commercePaymentEngine.getDescription(locale));
 
 		File imageFile = _getFile(_DEPENDENCY_PATH + "money_order.png");
 
 		_commercePaymentMethodLocalService.addCommercePaymentMethod(
 			nameMap, descriptionMap, imageFile, engineKey,
-			new HashMap<String, String>(), 1, true, serviceContext);
+			Collections.<String, String>emptyMap(), 1, true, serviceContext);
 	}
 
 	protected void setShippingMethod(
@@ -349,11 +347,9 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			return;
 		}
 
-		Map<Locale, String> nameMap = new HashMap<>();
-		Map<Locale, String> descriptionMap = new HashMap<>();
-
-		nameMap.put(locale, commerceShippingEngine.getName(locale));
-		descriptionMap.put(
+		Map<Locale, String> nameMap = Collections.singletonMap(
+			locale, commerceShippingEngine.getName(locale));
+		Map<Locale, String> descriptionMap = Collections.singletonMap(
 			locale, commerceShippingEngine.getDescription(locale));
 
 		File imageFile = _getFile(_DEPENDENCY_PATH + "fixed_price.png");
@@ -363,15 +359,13 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 				nameMap, descriptionMap, imageFile, engineKey, 1, true,
 				serviceContext);
 
-		Map<Locale, String> shippingFixedOptionNameMap = new HashMap<>();
-		Map<Locale, String> shippingFixedOptionDescriptionMap = new HashMap<>();
-
-		shippingFixedOptionNameMap.put(locale, "Free Shipping");
+		Map<Locale, String> shippingFixedOptionNameMap =
+			Collections.singletonMap(locale, "Free Shipping");
 
 		_commerceShippingFixedOptionLocalService.addCommerceShippingFixedOption(
 			commerceShippingMethod.getCommerceShippingMethodId(),
-			shippingFixedOptionNameMap, shippingFixedOptionDescriptionMap, 0, 1,
-			serviceContext);
+			shippingFixedOptionNameMap, Collections.<Locale, String>emptyMap(),
+			0, 1, serviceContext);
 	}
 
 	protected void setSiteNavigationMenuPortletSettings(

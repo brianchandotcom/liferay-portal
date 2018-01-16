@@ -149,8 +149,8 @@ public class ServiceBuilder {
 			return false;
 		}
 
-		for (int i = 0; i < javaAnnotations.size(); i++) {
-			JavaClass javaClass = javaAnnotations.get(i).getType();
+		for (JavaAnnotation javaAnnotation : javaAnnotations) {
+			JavaClass javaClass = javaAnnotation.getType();
 
 			if (annotationName.equals(javaClass.getName())) {
 				return true;
@@ -1265,12 +1265,14 @@ public class ServiceBuilder {
 	public String getNoSuchEntityException(Entity entity) {
 		String noSuchEntityException = entity.getName();
 
-		if (Validator.isNull(entity.getPortletShortName()) ||
-			(noSuchEntityException.startsWith(entity.getPortletShortName()) &&
-			 !noSuchEntityException.equals(entity.getPortletShortName()))) {
+		String portletShortName = entity.getPortletShortName();
+
+		if (Validator.isNull(portletShortName) ||
+			(noSuchEntityException.startsWith(portletShortName) &&
+			 !noSuchEntityException.equals(portletShortName))) {
 
 			noSuchEntityException = noSuchEntityException.substring(
-				entity.getPortletShortName().length());
+				portletShortName.length());
 		}
 
 		noSuchEntityException = "NoSuch" + noSuchEntityException;
@@ -1370,7 +1372,9 @@ public class ServiceBuilder {
 		for (JavaMethod method : methods) {
 			List<JavaParameter> parameters = method.getParameters();
 
-			if (method.getName().equals(methodName) &&
+			String curMethodName = method.getName();
+
+			if (curMethodName.equals(methodName) &&
 				(parameters.size() == args.size())) {
 
 				for (int i = 0; i < parameters.size(); i++) {
@@ -1595,7 +1599,9 @@ public class ServiceBuilder {
 			if (parameters.size() == 1) {
 				JavaParameter parameter = parameters.get(0);
 
-				if (parameter.getName().equals("primaryKey")) {
+				String parameterName = parameter.getName();
+
+				if (parameterName.equals("primaryKey")) {
 					return true;
 				}
 			}
@@ -1961,7 +1967,7 @@ public class ServiceBuilder {
 		List<Element> elements = xPath.selectNodes(rootElement);
 
 		for (Element element : elements) {
-			resourceActionModels.add(element.getText().trim());
+			resourceActionModels.add(StringUtil.trim(element.getText()));
 		}
 	}
 
@@ -3855,7 +3861,7 @@ public class ServiceBuilder {
 				sb.append('\n');
 			}
 
-			return sb.toString().trim();
+			return StringUtil.trim(sb.toString());
 		}
 	}
 
@@ -4501,7 +4507,9 @@ public class ServiceBuilder {
 		List<JavaParameter> javaParameters = javaMethod.getParameters();
 
 		for (JavaParameter javaParameter : javaParameters) {
-			sb.append(javaParameter.getType().getGenericValue());
+			JavaType type = javaParameter.getType();
+
+			sb.append(type.getGenericValue());
 
 			sb.append(StringPool.COMMA);
 		}
@@ -5218,7 +5226,7 @@ public class ServiceBuilder {
 			boolean asc = true;
 
 			if ((orderElement.attribute("by") != null) &&
-				orderElement.attributeValue("by").equals("desc")) {
+				Objects.equals(orderElement.attributeValue("by"), "desc")) {
 
 				asc = false;
 			}

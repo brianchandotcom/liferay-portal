@@ -353,7 +353,9 @@ public class CSSBuilder implements AutoCloseable {
 	private String _parseSass(String fileName) throws SassCompilerException {
 		File sassFile = new File(_cssBuilderArgs.getBaseDir(), fileName);
 
-		String filePath = sassFile.toPath().toString();
+		Path path = sassFile.toPath();
+
+		String filePath = path.toString();
 
 		String cssBasePath = filePath;
 

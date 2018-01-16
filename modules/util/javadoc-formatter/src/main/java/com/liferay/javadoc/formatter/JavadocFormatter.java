@@ -1887,15 +1887,15 @@ public class JavadocFormatter {
 	private boolean _hasAnnotation(
 		JavaAnnotatedElement javaAnnotatedElement, String annotationName) {
 
-		List<JavaAnnotation> annotations =
+		List<com.caucho.bytecode.JavaAnnotation> annotations =
 			javaAnnotatedElement.getAnnotations();
 
 		if (annotations == null) {
 			return false;
 		}
 
-		for (int i = 0; i < annotations.size(); i++) {
-			JavaClass javaClass = annotations.get(i).getType();
+		for (JavaAnnotation javaAnnotation : annotations) {
+			JavaClass javaClass = javaAnnotation.getType();
 
 			if (annotationName.equals(javaClass.getName())) {
 				return true;

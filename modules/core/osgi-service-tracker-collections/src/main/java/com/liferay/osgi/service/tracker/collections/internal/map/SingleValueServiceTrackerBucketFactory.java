@@ -94,7 +94,10 @@ public class SingleValueServiceTrackerBucketFactory<SR, TS>
 
 			_serviceReferences.add(serviceReferenceServiceTuple);
 
-			_service = _serviceReferences.peek().getService();
+			ServiceReferenceServiceTuple<SR, TS>
+				headServiceReferenceServiceTuple = _serviceReferences.peek();
+
+			_service = headServiceReferenceServiceTuple.getService();
 		}
 
 		private TS _service;

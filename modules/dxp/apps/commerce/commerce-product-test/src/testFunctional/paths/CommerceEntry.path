@@ -233,6 +233,11 @@
 	<td>//div/ul[contains (@class,'nav-nested')]//li/a[contains (.,'${key_nestedMenu}')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>PRICE_FIELD</td>
+	<td>//div/input[contains(@id,'price')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

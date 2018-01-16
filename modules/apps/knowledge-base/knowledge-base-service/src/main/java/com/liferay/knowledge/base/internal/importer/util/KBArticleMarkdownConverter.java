@@ -17,8 +17,9 @@ package com.liferay.knowledge.base.internal.importer.util;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.knowledge.base.exception.KBArticleImportException;
 import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
-import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactoryUtil;
+import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
 import com.liferay.knowledge.base.model.KBArticle;
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -39,6 +40,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
 /**
  * @author Sergio González
  */
@@ -48,8 +52,12 @@ public class KBArticleMarkdownConverter {
 			String markdown, String fileEntryName, Map<String, String> metadata)
 		throws KBArticleImportException {
 
-		MarkdownConverter markdownConverter =
-			MarkdownConverterFactoryUtil.create();
+		Bundle bundle = FrameworkUtil.getBundle(
+			KBArticleMarkdownConverter.class);
+
+		MarkdownConverter markdownConverter = OSGiServiceUtil.callService(
+			bundle.getBundleContext(), MarkdownConverterFactory.class,
+			markdownConverterFactory -> markdownConverterFactory.create());
 
 		String html = null;
 

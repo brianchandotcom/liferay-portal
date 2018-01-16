@@ -9,7 +9,7 @@
 
 	<command name="gotoPreferences">
 		<execute macro="Navigator#gotoNavUnderline">
-			<var name="navItem" value="Preferences" />
+			<var name="navUnderline" value="Preferences" />
 		</execute>
 	</command>
 

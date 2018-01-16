@@ -23,6 +23,10 @@
 		<execute function="Type" locator1="CommerceEntry#PRIORITY_FIELD" value1="${valuePriority}" />
 	</command>
 
+	<command name="addPricingEntry">
+		<execute function="Type" locator1="CommerceEntry#PRICE_FIELD" value1="${price}" />
+	</command>
+
 	<command name="addProductsEntry">
 		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${productTitle}" />
 

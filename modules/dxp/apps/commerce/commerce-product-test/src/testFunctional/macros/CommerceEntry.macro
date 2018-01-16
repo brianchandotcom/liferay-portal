@@ -135,13 +135,13 @@
 
 		<if>
 			<condition function="IsElementPresent" locator1="CommerceEntry#OPTION_VALUE">
-				<var name="key_optionType" value="checkbox" />
+				<var name="key_optionType" value="checkbox_multiple" />
 				<var name="key_optionValue" value="${optionValue}" />
 			</condition>
 
 			<then>
 				<execute function="Click" locator1="CommerceEntry#OPTION_VALUE">
-					<var name="key_optionType" value="checkbox" />
+					<var name="key_optionType" value="checkbox_multiple" />
 					<var name="key_optionValue" value="${optionValue}" />
 				</execute>
 			</then>

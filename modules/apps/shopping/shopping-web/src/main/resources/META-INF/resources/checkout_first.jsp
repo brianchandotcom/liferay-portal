@@ -243,13 +243,13 @@ List addresses = AddressServiceUtil.getAddresses(Contact.class.getName(), contac
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="continue" />
+		<aui:button type="submit" value="continue" />
 
 		<portlet:renderURL var="cartURL">
 			<portlet:param name="mvcRenderCommandName" value="/shopping/cart" />
 		</portlet:renderURL>
 
-		<aui:button cssClass="btn-lg" href="<%= cartURL.toString() %>" value="back-to-cart" />
+		<aui:button href="<%= cartURL.toString() %>" value="back-to-cart" />
 	</aui:button-row>
 </aui:form>
 

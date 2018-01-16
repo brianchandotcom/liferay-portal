@@ -136,7 +136,7 @@ portletDisplay.setURLBack(redirect);
 				%>
 
 				<div class="button-holder">
-					<aui:button cssClass="add-choice btn-lg" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
+					<aui:button cssClass="add-choice" onClick='<%= renderResponse.getNamespace() + "addPollChoice();" %>' value="add-choice" />
 				</div>
 			</aui:field-wrapper>
 		</aui:fieldset>
@@ -151,9 +151,9 @@ portletDisplay.setURLBack(redirect);
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

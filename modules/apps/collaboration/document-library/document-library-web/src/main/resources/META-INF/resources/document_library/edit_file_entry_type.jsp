@@ -148,9 +148,9 @@ renderResponse.setTitle((fileEntryType == null) ? LanguageUtil.get(request, "new
 	</aui:form>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure();" %>' type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </div>
 

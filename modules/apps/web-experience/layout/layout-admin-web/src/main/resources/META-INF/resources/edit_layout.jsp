@@ -95,7 +95,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 		<liferay-ui:message arguments="<%= new Object[] {HtmlUtil.escape(selLayout.getName(locale)), HtmlUtil.escape(layoutSetBranchName)} %>" key="the-page-x-is-not-enabled-in-x,-but-is-available-in-other-pages-variations" translateArguments="<%= false %>" />
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
+			<aui:button id="enableLayoutButton" name="enableLayout" value='<%= LanguageUtil.format(request, "enable-in-x", HtmlUtil.escape(layoutSetBranchName), false) %>' />
 
 			<portlet:actionURL name="/layout/enable_layout" var="enableLayoutURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
@@ -112,7 +112,7 @@ renderResponse.setTitle(selLayout.getName(locale));
 				);
 			</aui:script>
 
-			<aui:button cssClass="btn-lg remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
+			<aui:button cssClass="remove-layout" id="deleteLayoutButton" name="deleteLayout" value="delete-in-all-pages-variations" />
 
 			<portlet:actionURL name="/layout/delete_layout" var="deleteLayoutURL">
 				<portlet:param name="mvcPath" value="/view.jsp" />
@@ -236,10 +236,10 @@ renderResponse.setTitle(selLayout.getName(locale));
 
 			<c:if test="<%= (selLayout.getGroupId() == layoutsAdminDisplayContext.getGroupId()) && SitesUtil.isLayoutUpdateable(selLayout) && LayoutPermissionUtil.contains(permissionChecker, selLayout, ActionKeys.UPDATE) %>">
 				<aui:button-row>
-					<aui:button cssClass="btn-lg" type="submit" />
+					<aui:button type="submit" />
 
 					<c:if test="<%= Validator.isNotNull(backURL) %>">
-						<aui:button cssClass="btn-lg" href="<%= backURL %>" name="cancelButton" type="cancel" />
+						<aui:button href="<%= backURL %>" name="cancelButton" type="cancel" />
 					</c:if>
 				</aui:button-row>
 			</c:if>

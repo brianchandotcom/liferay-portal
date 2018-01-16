@@ -463,13 +463,13 @@ if (portletTitleBasedNavigation) {
 				</div>
 			</c:if>
 
-			<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+			<aui:button disabled="<%= pending %>" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
 			<c:if test="<%= themeDisplay.isSignedIn() %>">
-				<aui:button cssClass="btn-lg" name="saveButton" value="<%= saveButtonLabel %>" />
+				<aui:button name="saveButton" value="<%= saveButtonLabel %>" />
 			</c:if>
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

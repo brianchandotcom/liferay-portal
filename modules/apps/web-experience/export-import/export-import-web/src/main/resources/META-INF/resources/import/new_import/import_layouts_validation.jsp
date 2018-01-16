@@ -33,7 +33,7 @@ boolean privateLayout = ParamUtil.getBoolean(request, "privateLayout");
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass='<%= "btn-lg" + ((fileEntry == null) ? " hide" : StringPool.BLANK) %>' name="continueButton" type="submit" value="continue" />
+		<aui:button cssClass='<%= ((fileEntry == null) ? " hide" : StringPool.BLANK) %>' name="continueButton" type="submit" value="continue" />
 	</aui:button-row>
 
 	<%

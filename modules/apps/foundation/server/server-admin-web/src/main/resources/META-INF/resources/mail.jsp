@@ -59,5 +59,5 @@
 </aui:fieldset-group>
 
 <aui:button-row>
-	<aui:button cssClass="btn-lg save-server-button" data-cmd="updateMail" value="save" />
+	<aui:button cssClass="save-server-button" data-cmd="updateMail" value="save" />
 </aui:button-row>

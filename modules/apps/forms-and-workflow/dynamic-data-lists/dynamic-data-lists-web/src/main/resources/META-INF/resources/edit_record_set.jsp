@@ -155,9 +155,9 @@ if (ddlDisplayContext.isAdminPortlet()) {
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" type="submit" value="save" />
+		<aui:button name="saveButton" type="submit" value="save" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+		<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

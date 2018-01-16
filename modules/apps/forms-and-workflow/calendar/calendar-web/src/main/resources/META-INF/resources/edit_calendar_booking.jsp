@@ -470,9 +470,9 @@ while (manageableCalendarsIterator.hasNext()) {
 		}
 		%>
 
-		<aui:button cssClass="btn-lg" name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
+		<aui:button name="publishButton" type="submit" value="<%= publishButtonLabel %>" />
 
-		<aui:button cssClass="btn-lg" name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
+		<aui:button name="saveButton" primary="<%= false %>" type="submit" value="save-as-draft" />
 
 		<c:if test="<%= calendarBooking != null %>">
 			<liferay-security:permissionsURL
@@ -484,7 +484,7 @@ while (manageableCalendarsIterator.hasNext()) {
 				var="permissionsCalendarBookingURL"
 			/>
 
-			<aui:button cssClass="btn-lg" href="<%= permissionsCalendarBookingURL %>" value="permissions" />
+			<aui:button href="<%= permissionsCalendarBookingURL %>" value="permissions" />
 		</c:if>
 	</aui:button-row>
 </aui:form>

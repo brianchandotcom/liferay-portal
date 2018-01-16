@@ -81,7 +81,7 @@ Map<String, OAuthService> oAuthServices = (Map<String, OAuthService>)renderReque
 			</div>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" />
+				<aui:button type="submit" />
 			</aui:button-row>
 		</c:when>
 		<c:when test='<%= tabs2.equals("manage-oauth") %>'>

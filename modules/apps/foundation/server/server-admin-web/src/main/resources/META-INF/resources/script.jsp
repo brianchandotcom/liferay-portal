@@ -59,5 +59,5 @@ String scriptOutput = (String)SessionMessages.get(renderRequest, "scriptOutput")
 </c:if>
 
 <aui:button-row>
-	<aui:button cssClass="btn-lg save-server-button" data-cmd="runScript" value="execute" />
+	<aui:button cssClass="save-server-button" data-cmd="runScript" value="execute" />
 </aui:button-row>

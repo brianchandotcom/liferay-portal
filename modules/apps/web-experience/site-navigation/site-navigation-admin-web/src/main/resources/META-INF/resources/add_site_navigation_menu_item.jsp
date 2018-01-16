@@ -49,8 +49,8 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="add" />
+		<aui:button type="submit" value="add" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

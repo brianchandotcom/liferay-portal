@@ -316,7 +316,7 @@ if (portletTitleBasedNavigation) {
 		String taglibReplyToMessageURL = "javascript:" + liferayPortletResponse.getNamespace() + "addReplyToMessage('" + rootMessage.getMessageId() + "', false);";
 		%>
 
-		<aui:button cssClass="btn-lg" onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply-to-main-thread" />
+		<aui:button onclick="<%= taglibReplyToMessageURL %>" primary="<%= true %>" value="reply-to-main-thread" />
 	</c:if>
 
 	<c:if test="<%= moreMessagesPagination %>">

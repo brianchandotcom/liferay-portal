@@ -21,7 +21,7 @@
 <aui:button-row>
 	<c:choose>
 		<c:when test="<%= ShutdownUtil.isInProcess() %>">
-			<aui:button cssClass="btn-lg save-server-button" data-cmd="shutdown" value="cancel-shutdown" />
+			<aui:button cssClass="save-server-button" data-cmd="shutdown" value="cancel-shutdown" />
 		</c:when>
 		<c:otherwise>
 			<aui:fieldset-group markupView="lexicon">
@@ -36,7 +36,7 @@
 				</aui:fieldset>
 			</aui:fieldset-group>
 
-			<aui:button cssClass="btn-lg save-server-button" data-cmd="shutdown" value="shutdown" />
+			<aui:button cssClass="save-server-button" data-cmd="shutdown" value="shutdown" />
 		</c:otherwise>
 	</c:choose>
 </aui:button-row>

@@ -96,7 +96,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(previousStatus) %>" />
 				</liferay-portlet:actionURL>
 
-				<aui:button cssClass="btn-lg" href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(previousStatusURL) %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>" />
+				<aui:button href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(previousStatusURL) %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(previousStatus) %>" />
 			</c:if>
 
 			<c:if test="<%= nextStatus != KBCommentConstants.STATUS_NONE %>">
@@ -105,7 +105,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 					<portlet:param name="kbCommentStatus" value="<%= String.valueOf(nextStatus) %>" />
 				</liferay-portlet:actionURL>
 
-				<aui:button cssClass="btn-lg" href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL) %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" />
+				<aui:button href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(nextStatusURL) %>" name="previousStatusButton" type="submit" value="<%= KBUtil.getStatusTransitionLabel(nextStatus) %>" />
 			</c:if>
 		</c:if>
 
@@ -115,7 +115,7 @@ int nextStatus = KBUtil.getNextStatus(kbComment.getStatus());
 				<portlet:param name="kbCommentId" value="<%= String.valueOf(kbComment.getKbCommentId()) %>" />
 			</liferay-portlet:actionURL>
 
-			<aui:button cssClass="btn-lg" href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(deleteURL) %>" name="previousStatusButton" value="<%= Constants.DELETE %>" />
+			<aui:button href="<%= kbSuggestionListDisplayContext.getViewSuggestionURL(deleteURL) %>" name="previousStatusButton" value="<%= Constants.DELETE %>" />
 		</c:if>
 	</aui:button-row>
 </c:if>

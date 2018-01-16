@@ -55,7 +55,7 @@ if (referer.equals(themeDisplay.getPathMain() + "/portal/update_reminder_query")
 	</aui:fieldset>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>
 

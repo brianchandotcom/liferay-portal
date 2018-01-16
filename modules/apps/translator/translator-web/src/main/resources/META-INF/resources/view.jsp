@@ -95,7 +95,7 @@ if (translation == null) {
 			</aui:fieldset>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="translate" />
+				<aui:button type="submit" value="translate" />
 			</aui:button-row>
 		</aui:form>
 	</c:otherwise>

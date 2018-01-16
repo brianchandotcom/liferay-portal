@@ -435,9 +435,9 @@ portletURL.setParameter("portletResource", portletResource);
 			</div>
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="export" />
+				<aui:button type="submit" value="export" />
 
-				<aui:button cssClass="btn-lg" href="<%= currentURL %>" type="cancel" />
+				<aui:button href="<%= currentURL %>" type="cancel" />
 			</aui:button-row>
 
 			<aui:script use="aui-base">

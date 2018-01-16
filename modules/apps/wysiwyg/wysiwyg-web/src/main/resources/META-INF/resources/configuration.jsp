@@ -30,9 +30,9 @@
 	<aui:input name="preferences--message--" type="hidden" />
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 
-		<aui:button cssClass="btn-lg" type="cancel" />
+		<aui:button type="cancel" />
 	</aui:button-row>
 </aui:form>
 

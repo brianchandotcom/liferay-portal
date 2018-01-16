@@ -64,10 +64,10 @@ renderResponse.setTitle(selGroup.getLayoutRootNodeName(privateLayout, locale));
 
 	<c:if test="<%= GroupPermissionUtil.contains(permissionChecker, selGroup, ActionKeys.MANAGE_LAYOUTS) && SitesUtil.isLayoutSetPrototypeUpdateable(selLayoutSet) %>">
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value="save" />
+			<aui:button type="submit" value="save" />
 
 			<c:if test="<%= Validator.isNotNull(backURL) %>">
-				<aui:button cssClass="btn-lg" href="<%= backURL %>" type="cancel" />
+				<aui:button href="<%= backURL %>" type="cancel" />
 			</c:if>
 		</aui:button-row>
 	</c:if>

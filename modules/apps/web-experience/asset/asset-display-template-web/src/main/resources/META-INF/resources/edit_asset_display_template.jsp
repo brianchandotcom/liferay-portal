@@ -79,9 +79,9 @@ long classNameId = BeanParamUtil.getLong(assetDisplayTemplate, request, "classNa
 	%>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" type="submit" />
+		<aui:button onClick="<%= taglibOnClick %>" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

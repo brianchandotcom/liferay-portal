@@ -230,8 +230,8 @@ String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 </div>
 
 <aui:button-row>
-	<aui:button cssClass="btn-lg" id="fm_submit" type="submit" />
-	<aui:button cssClass="btn-lg" type="cancel" />
+	<aui:button id="fm_submit" type="submit" />
+	<aui:button type="cancel" />
 </aui:button-row>
 
 <aui:script use="aui-base">

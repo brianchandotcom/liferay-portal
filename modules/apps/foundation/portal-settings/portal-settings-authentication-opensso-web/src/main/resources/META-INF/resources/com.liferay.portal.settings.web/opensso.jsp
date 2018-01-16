@@ -50,7 +50,7 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 	<%@ include file="/com.liferay.portal.settings.web/opensso_user_name.jspf" %>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "testOpenSSOSettings();" %>' value="test-opensso-configuration" />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "testOpenSSOSettings();" %>' value="test-opensso-configuration" />
 
 		<portlet:actionURL name="/portal_settings/opensso_delete" var="resetValuesURL">
 			<portlet:param name="tabs1" value="opensso" />
@@ -60,7 +60,7 @@ String lastNameAttr = openSSOConfiguration.lastNameAttr();
 		String taglibOnClick = "if (confirm('" + UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-reset-the-configured-values") + "')) {submitForm(document.hrefFm, '" + resetValuesURL.toString() + "');}";
 		%>
 
-		<aui:button cssClass="btn-lg" onClick="<%= taglibOnClick %>" value="reset-values" />
+		<aui:button onClick="<%= taglibOnClick %>" value="reset-values" />
 	</aui:button-row>
 </aui:fieldset>
 

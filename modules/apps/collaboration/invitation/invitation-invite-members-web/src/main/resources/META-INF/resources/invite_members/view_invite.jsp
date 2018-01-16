@@ -122,7 +122,7 @@ Group group = GroupLocalServiceUtil.getGroup(scopeGroupId);
 		</div>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value="send-invitations" />
+			<aui:button type="submit" value="send-invitations" />
 		</aui:button-row>
 	</aui:form>
 </div>

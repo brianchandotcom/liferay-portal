@@ -118,10 +118,10 @@ request.setAttribute("edit_layout_set_prototype.jsp-redirect", currentURL);
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 
 		<c:if test="<%= layoutSetPrototype.isNew() %>">
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</c:if>
 	</aui:button-row>
 </aui:form>

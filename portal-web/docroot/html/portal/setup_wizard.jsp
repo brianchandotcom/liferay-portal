@@ -213,7 +213,7 @@
 						</div>
 
 						<aui:button-row>
-							<aui:button cssClass="btn-lg" name="finishButton" type="submit" value="finish-configuration" />
+							<aui:button name="finishButton" type="submit" value="finish-configuration" />
 						</aui:button-row>
 					</aui:form>
 

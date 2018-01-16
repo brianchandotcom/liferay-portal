@@ -76,10 +76,10 @@ renderResponse.setTitle(title);
 
 	<aui:button-row cssClass="fragment-submit-buttons">
 		<c:if test="<%= WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus() %>">
-			<aui:button cssClass="btn btn-lg" primary="<%= false %>" type="submit" value="save-as-draft" />
+			<aui:button primary="<%= false %>" type="submit" value="save-as-draft" />
 		</c:if>
 
-		<aui:button cssClass="btn btn-lg" name="publishButton" type="submit" value="publish" />
+		<aui:button name="publishButton" type="submit" value="publish" />
 	</aui:button-row>
 </aui:form>
 

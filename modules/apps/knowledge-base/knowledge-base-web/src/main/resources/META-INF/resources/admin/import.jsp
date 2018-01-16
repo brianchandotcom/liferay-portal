@@ -69,9 +69,9 @@ renderResponse.setTitle(LanguageUtil.get(resourceBundle, "import"));
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" name="submit" type="submit" />
+			<aui:button name="submit" type="submit" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 </div>

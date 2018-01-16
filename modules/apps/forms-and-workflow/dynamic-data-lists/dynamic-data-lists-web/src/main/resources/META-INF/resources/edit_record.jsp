@@ -259,15 +259,15 @@ else {
 				%>
 
 				<c:if test="<%= ddlDisplayContext.isShowSaveRecordButton() %>">
-					<aui:button cssClass="btn-lg" name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
+					<aui:button name="saveButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(true);" %>' primary="<%= false %>" type="submit" value="<%= saveButtonLabel %>" />
 				</c:if>
 
 				<c:if test="<%= ddlDisplayContext.isShowPublishRecordButton() %>">
-					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
+					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "setWorkflowAction(false);" %>' type="submit" value="<%= publishButtonLabel %>" />
 				</c:if>
 
 				<c:if test="<%= ddlDisplayContext.isShowCancelButton() %>">
-					<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+					<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 				</c:if>
 			</aui:button-row>
 		</aui:form>

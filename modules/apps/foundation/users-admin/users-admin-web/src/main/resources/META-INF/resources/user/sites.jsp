@@ -99,7 +99,7 @@ currentURLObj.setParameter("historyKey", renderResponse.getNamespace() + "sites"
 		cssClass="modify-link"
 		id="selectSiteLink"
 		label="<%= true %>"
-		linkCssClass="btn btn-default btn-lg"
+		linkCssClass="btn btn-primary"
 		message="select"
 		url="javascript:;"
 	/>

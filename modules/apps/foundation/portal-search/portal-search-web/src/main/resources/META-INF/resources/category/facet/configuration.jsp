@@ -56,6 +56,6 @@ CategoryFacetPortletPreferences categoryFacetPortletPreferences = new CategoryFa
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>

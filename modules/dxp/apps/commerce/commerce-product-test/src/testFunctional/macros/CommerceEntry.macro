@@ -59,6 +59,12 @@
 		<execute function="Type" locator1="CommerceEntry#TITLE_FIELD" value1="${newEntryTitle}" />
 	</command>
 
+	<command name="gotoBreadcrumb">
+		<execute function="AssertClick" locator1="CommerceEntry#BREADCRUMBS" value1="${breadcrumb}">
+			<var name="key_breadcrumb" value="${breadcrumb}" />
+		</execute>
+	</command>
+
 	<command name="gotoMenuTab">
 		<execute function="AssertClick" locator1="CommerceEntry#MENU_TAB" value1="${menuTab}">
 			<var name="key_menuTab" value="${menuTab}" />

@@ -65,7 +65,9 @@ public class MemoryValueMapper implements ValueMapper {
 
 	@Override
 	public Iterator<Object> iterator() throws Exception {
-		return _map.keySet().iterator();
+		Set<Object> keySet = _map.keySet();
+
+		return keySet.iterator();
 	}
 
 	@Override

@@ -77,6 +77,7 @@ import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
+import org.apache.http.StatusLine;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.Credentials;
 import org.apache.http.auth.NTCredentials;
@@ -1887,8 +1888,9 @@ public class HttpImpl implements Http {
 
 			httpEntity = closeableHttpResponse.getEntity();
 
-			response.setResponseCode(
-				closeableHttpResponse.getStatusLine().getStatusCode());
+			StatusLine statusLine = closeableHttpResponse.getStatusLine();
+
+			response.setResponseCode(statusLine.getStatusCode());
 
 			Header locationHeader = closeableHttpResponse.getFirstHeader(
 				"location");

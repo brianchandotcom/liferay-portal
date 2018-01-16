@@ -72,7 +72,9 @@ public class DeploymentHandler {
 				ModuleType.WAR, _deploymentManager.getTargets());
 
 		for (TargetModuleID targetModuleID : targetModuleIDs) {
-			if (!targetModuleID.getModuleID().equals(warContext)) {
+			String moduleId = targetModuleID.getModuleID();
+
+			if (!moduleId.equals(warContext)) {
 				continue;
 			}
 

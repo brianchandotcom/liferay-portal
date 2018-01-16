@@ -45,7 +45,9 @@ public class PortalUUIDImpl implements PortalUUID {
 
 	@Override
 	public String generate(byte[] bytes) {
-		return UUID.nameUUIDFromBytes(bytes).toString();
+		UUID uuid = UUID.nameUUIDFromBytes(bytes);
+
+		return uuid.toString();
 	}
 
 	@Override

@@ -468,7 +468,9 @@ public class LicenseUtil {
 
 		jsonObject.put("key", _encryptedSymmetricKey);
 
-		return jsonObject.toString().getBytes(StringPool.UTF8);
+		String jsonObjectString = jsonObject.toString();
+
+		return jsonObjectString.getBytes(StringPool.UTF8);
 	}
 
 	private static Set<String> _getIPAddresses() {

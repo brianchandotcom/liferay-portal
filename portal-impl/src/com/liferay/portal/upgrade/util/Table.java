@@ -304,7 +304,7 @@ public class Table {
 
 			int y = createSQL.indexOf(" ", x);
 
-			return createSQL.substring(x, y).trim();
+			return StringUtil.trim(createSQL.substring(x, y));
 		}
 		else {
 			return _tableName;
@@ -598,8 +598,9 @@ public class Table {
 			else {
 				DateFormat df = DateUtil.getISOFormat();
 
-				ps.setTimestamp(
-					paramIndex, new Timestamp(df.parse(value).getTime()));
+				Date date = df.parse(value);
+
+				ps.setTimestamp(paramIndex, new Timestamp(date.getTime()));
 			}
 		}
 		else if (t == Types.TINYINT) {

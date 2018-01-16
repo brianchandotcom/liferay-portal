@@ -134,7 +134,9 @@ public class MethodKey implements Externalizable {
 
 		// Using the same hash algorithm as java.lang.reflect.Method
 
-		return _declaringClass.getName().hashCode() ^ _methodName.hashCode();
+		String declaringClassName = _declaringClass.getName();
+
+		return declaringClassName.hashCode() ^ _methodName.hashCode();
 	}
 
 	@Override

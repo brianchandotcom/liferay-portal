@@ -385,7 +385,9 @@ public class Validator {
 			return false;
 		}
 
-		for (char c : name.trim().toCharArray()) {
+		String trimmedName = name.trim();
+
+		for (char c : trimmedName.toCharArray()) {
 			if (!isChar(c) && !isDigit(c) && !Character.isWhitespace(c)) {
 				return false;
 			}
@@ -960,7 +962,9 @@ public class Validator {
 			return false;
 		}
 
-		for (char c : name.trim().toCharArray()) {
+		String trimmedName = name.trim();
+
+		for (char c : trimmedName.toCharArray()) {
 			if (!isChar(c) && !Character.isWhitespace(c)) {
 				return false;
 			}

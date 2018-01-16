@@ -106,7 +106,10 @@ public class MethodTargetClassKey {
 
 		StringBundler sb = new StringBundler(parameterTypes.length * 2 + 6);
 
-		sb.append(_method.getDeclaringClass().getName());
+		Class<?> declaringClass = _method.getDeclaringClass();
+
+		sb.append(declaringClass.getName());
+
 		sb.append(StringPool.PERIOD);
 		sb.append(_method.getName());
 		sb.append(StringPool.OPEN_PARENTHESIS);

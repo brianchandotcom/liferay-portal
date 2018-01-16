@@ -62,7 +62,9 @@ public class Randomizer extends Random {
 		Iterator<Integer> itr = set.iterator();
 
 		for (int i = 0; i < array.length; i++) {
-			array[i] = itr.next().intValue();
+			Integer integer = itr.next();
+
+			array[i] = integer.intValue();
 		}
 
 		return array;

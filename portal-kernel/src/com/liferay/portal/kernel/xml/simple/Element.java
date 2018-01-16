@@ -214,7 +214,8 @@ public class Element {
 	}
 
 	private void _openElement(Element element) {
-		_sb.append(_OPEN_PRE).append(element._name);
+		_sb.append(_OPEN_PRE);
+		_sb.append(element._name);
 
 		_elementStack.addLast(element);
 	}

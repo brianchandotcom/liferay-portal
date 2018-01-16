@@ -17,7 +17,7 @@ package com.liferay.portal.configuration.settings.internal.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
-import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorHelperTestConstants;
+import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -84,29 +84,27 @@ public class SettingsLocatorHelperTest {
 
 		Settings companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
-				companyId,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				companyId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				null);
 
 		Assert.assertNull(companySettings);
 
 		Settings systemSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID);
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 
 		companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
-				companyId,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				companyId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				systemSettings);
 
 		Assert.assertSame(systemSettings, companySettings);
 
 		Assert.assertEquals(
-			SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE,
+			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			companySettings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
 		String companyValue = saveScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.COMPANY,
@@ -114,8 +112,7 @@ public class SettingsLocatorHelperTest {
 
 		companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
-				companyId,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				companyId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				systemSettings);
 
 		Assert.assertNotSame(systemSettings, companySettings);
@@ -123,8 +120,8 @@ public class SettingsLocatorHelperTest {
 		Assert.assertEquals(
 			companyValue,
 			companySettings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 	}
 
 	@Test
@@ -133,37 +130,34 @@ public class SettingsLocatorHelperTest {
 
 		Settings groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
-				groupId,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				groupId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				null);
 
 		Assert.assertNull(groupSettings);
 
 		Settings systemSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID);
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 
 		groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
-				groupId,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				groupId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				systemSettings);
 
 		Assert.assertSame(systemSettings, groupSettings);
 
 		Assert.assertEquals(
-			SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE,
+			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			groupSettings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
 		String groupValue = saveScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.GROUP, String.valueOf(groupId));
 
 		groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
-				groupId,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				groupId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				systemSettings);
 
 		Assert.assertNotSame(systemSettings, groupSettings);
@@ -171,8 +165,8 @@ public class SettingsLocatorHelperTest {
 		Assert.assertEquals(
 			groupValue,
 			groupSettings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 	}
 
 	@Test
@@ -187,28 +181,27 @@ public class SettingsLocatorHelperTest {
 		Settings portletInstanceSettings =
 			_settingsLocatorHelper.getPortletInstanceConfigurationBeanSettings(
 				portletInstanceKey,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
-				null);
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, null);
 
 		Assert.assertNull(portletInstanceSettings);
 
 		Settings systemSettings =
 			_settingsLocatorHelper.getConfigurationBeanSettings(
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID);
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 
 		portletInstanceSettings =
 			_settingsLocatorHelper.getPortletInstanceConfigurationBeanSettings(
 				portletInstanceKey,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				systemSettings);
 
 		Assert.assertSame(systemSettings, portletInstanceSettings);
 
 		Assert.assertEquals(
-			SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE,
+			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			portletInstanceSettings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
 		String companyValue = saveScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
@@ -217,7 +210,7 @@ public class SettingsLocatorHelperTest {
 		portletInstanceSettings =
 			_settingsLocatorHelper.getPortletInstanceConfigurationBeanSettings(
 				portletInstanceKey,
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				systemSettings);
 
 		Assert.assertNotSame(systemSettings, portletInstanceSettings);
@@ -225,36 +218,36 @@ public class SettingsLocatorHelperTest {
 		Assert.assertEquals(
 			companyValue,
 			portletInstanceSettings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 	}
 
 	@Test
 	public void testGetSystemScopedConfigurationSettings() throws Exception {
 		Settings settings = _settingsLocatorHelper.getConfigurationBeanSettings(
-			SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID);
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 
 		Assert.assertEquals(
-			SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE,
+			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			settings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
 		String systemValue = saveConfiguration();
 
 		settings = _settingsLocatorHelper.getConfigurationBeanSettings(
-			SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID);
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 
 		Assert.assertEquals(
 			systemValue,
 			settings.getValue(
-				SettingsLocatorHelperTestConstants.TEST_KEY,
-				SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE));
+				SettingsLocatorTestConstants.TEST_KEY,
+				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 	}
 
 	protected String saveConfiguration() throws Exception {
 		return _saveConfiguration(
-			SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID);
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 	}
 
 	protected String saveScopedConfiguration(
@@ -263,8 +256,8 @@ public class SettingsLocatorHelperTest {
 
 		return _saveConfiguration(
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID,
-				scope, scopePrimKey));
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
+				scopePrimKey));
 	}
 
 	private String _saveConfiguration(String configurationPid)
@@ -279,7 +272,7 @@ public class SettingsLocatorHelperTest {
 
 		Dictionary<String, String> properties = new HashMapDictionary<>();
 
-		properties.put(SettingsLocatorHelperTestConstants.TEST_KEY, value);
+		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
 
 		configuration.update(properties);
 
@@ -291,7 +284,7 @@ public class SettingsLocatorHelperTest {
 			}
 
 			String testValue = (String)props.get(
-				SettingsLocatorHelperTestConstants.TEST_KEY);
+				SettingsLocatorTestConstants.TEST_KEY);
 
 			if (testValue.equals(value)) {
 				countDownLatch.countDown();

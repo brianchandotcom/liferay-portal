@@ -130,9 +130,9 @@
 			<aui:input name="userNotificationDeliveryIds" type="hidden" value="<%= StringUtil.merge(userNotificationDeliveryIds) %>" />
 
 			<aui:button-row>
-				<aui:button cssClass="btn-lg" type="submit" value="save" />
+				<aui:button type="submit" value="save" />
 
-				<aui:button cssClass="btn-lg" type="cancel" />
+				<aui:button type="cancel" />
 			</aui:button-row>
 		</aui:form>
 	</div>

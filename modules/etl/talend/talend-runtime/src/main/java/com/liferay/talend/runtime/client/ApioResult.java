@@ -27,9 +27,14 @@ public final class ApioResult {
 	 * @param statusCode status code
 	 * @param body response body; in case of null "" will be set
 	 */
-	public ApioResult(final int statusCode, final String body) {
+	public ApioResult(int statusCode, String body) {
 		_statusCode = statusCode;
-		_body = body == null ? "" : body;
+
+		if (body == null) {
+			body = "";
+		}
+
+		_body = body;
 	}
 
 	/**
@@ -50,14 +55,7 @@ public final class ApioResult {
 		return _statusCode;
 	}
 
-	/**
-	 * HTTP response body
-	 */
 	private final String _body;
-
-	/**
-	 * HTTP status code
-	 */
 	private final int _statusCode;
 
 }

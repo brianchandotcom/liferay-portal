@@ -25,21 +25,23 @@ import org.talend.daikon.definition.DefinitionImageType;
 /**
  * @author Zoltán Takács
  */
+@SuppressWarnings("deprecation")
 public class LiferayConnectionWizardDefinition
 	extends AbstractComponentWizardDefintion {
 
-	public static final String COMPONENT_WIZARD_NAME = "liferay"; //$NON-NLS-1$
+	public static final String COMPONENT_WIZARD_NAME = "liferay";
 
 	@Override
 	public ComponentWizard createWizard(
-		ComponentProperties properties, String location) {
+		ComponentProperties componentProperties, String location) {
 
-		LiferayConnectionWizard wizard = (LiferayConnectionWizard)createWizard(
-			location);
+		LiferayConnectionWizard liferayConnectionWizard =
+			(LiferayConnectionWizard)createWizard(location);
 
-		wizard.setupProperties((LiferayConnectionProperties)properties);
+		liferayConnectionWizard.setupProperties(
+			(LiferayConnectionProperties)componentProperties);
 
-		return wizard;
+		return liferayConnectionWizard;
 	}
 
 	@Override
@@ -53,16 +55,18 @@ public class LiferayConnectionWizardDefinition
 	}
 
 	@Override
-	public String getImagePath(DefinitionImageType type) {
-		switch (type) {
-			case TREE_ICON_16X16:
-				return "liferay-16x16.png"; //$NON-NLS-1$
-			case WIZARD_BANNER_75X66:
-				return "liferay-66x66.png"; //$NON-NLS-1$
-			default:
+	public String getImagePath(DefinitionImageType definitionImageType) {
+		if (definitionImageType == DefinitionImageType.TREE_ICON_16X16) {
+			return "liferay-16x16.png";
 		}
+		else if (definitionImageType ==
+					DefinitionImageType.WIZARD_BANNER_75X66) {
 
-		return null;
+			return "liferay-66x66.png";
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override
@@ -71,21 +75,19 @@ public class LiferayConnectionWizardDefinition
 	}
 
 	/**
-	 * @deprecated
 	 * @see org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(WizardImageType)
 	 */
-	@Deprecated
 	@Override
-	public String getPngImagePath(WizardImageType imageType) {
-		switch (imageType) {
-			case TREE_ICON_16X16:
-				return getImagePath(DefinitionImageType.TREE_ICON_16X16);
-			case WIZARD_BANNER_75X66:
-				return getImagePath(DefinitionImageType.WIZARD_BANNER_75X66);
-			default:
+	public String getPngImagePath(WizardImageType wizardImageType) {
+		if (wizardImageType == WizardImageType.TREE_ICON_16X16) {
+			return getImagePath(DefinitionImageType.TREE_ICON_16X16);
 		}
-
-		return null;
+		else if (wizardImageType == WizardImageType.WIZARD_BANNER_75X66) {
+			return getImagePath(DefinitionImageType.WIZARD_BANNER_75X66);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

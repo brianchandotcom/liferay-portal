@@ -20,27 +20,24 @@
 renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
+<portlet:renderURL var="mainURL" />
 
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="collections" selected="<%= true %>" />
-	</aui:nav>
+<%
+List<NavigationItem> navigationItems = new ArrayList<>();
 
-	<c:if test="<%= fragmentDisplayContext.isShowFragmentCollectionsSearch() %>">
-		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
-		</portlet:renderURL>
+NavigationItem entriesNavigationItem = new NavigationItem();
 
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+entriesNavigationItem.setActive(true);
+entriesNavigationItem.setHref(mainURL);
+entriesNavigationItem.setLabel(LanguageUtil.get(request, "collections"));
+
+navigationItems.add(entriesNavigationItem);
+%>
+
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= fragmentDisplayContext.isDisabledFragmentCollectionsManagementBar() %>"
@@ -67,6 +64,20 @@ renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 			orderColumns="<%= fragmentDisplayContext.getOrderColumns() %>"
 			portletURL="<%= currentURLObj %>"
 		/>
+
+		<c:if test="<%= fragmentDisplayContext.isShowFragmentCollectionsSearch() %>">
+			<portlet:renderURL var="portletURL">
+				<portlet:param name="mvcRenderCommandName" value="/fragment/view" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="displayStyle" value="<%= fragmentDisplayContext.getDisplayStyle() %>" />
+			</portlet:renderURL>
+
+			<li>
+				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

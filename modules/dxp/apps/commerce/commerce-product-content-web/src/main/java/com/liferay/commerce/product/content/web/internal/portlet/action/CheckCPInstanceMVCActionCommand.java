@@ -216,7 +216,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 			httpServletRequest, "stock-quantity-x", stockQuantity);
 	}
 
-	protected void writeJSON(ActionResponse actionResponse, Object jsonObj)
+	protected void writeJSON(ActionResponse actionResponse, Object object)
 		throws IOException {
 
 		HttpServletResponse httpServletResponse =
@@ -224,7 +224,7 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 
 		httpServletResponse.setContentType(ContentTypes.APPLICATION_JSON);
 
-		ServletResponseUtil.write(httpServletResponse, jsonObj.toString());
+		ServletResponseUtil.write(httpServletResponse, object.toString());
 
 		httpServletResponse.flushBuffer();
 	}

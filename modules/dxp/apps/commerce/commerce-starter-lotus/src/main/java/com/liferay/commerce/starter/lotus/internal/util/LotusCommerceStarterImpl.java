@@ -328,9 +328,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		descriptionMap.put(
 			locale, commercePaymentEngine.getDescription(locale));
 
-		String imageFilePath = _DEPENDENCY_PATH + "money_order.png";
-
-		File imageFile = _getFile(imageFilePath);
+		File imageFile = _getFile(_DEPENDENCY_PATH + "money_order.png");
 
 		_commercePaymentMethodLocalService.addCommercePaymentMethod(
 			nameMap, descriptionMap, imageFile, engineKey,
@@ -358,9 +356,7 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		descriptionMap.put(
 			locale, commerceShippingEngine.getDescription(locale));
 
-		String imageFilePath = _DEPENDENCY_PATH + "fixed_price.png";
-
-		File imageFile = _getFile(imageFilePath);
+		File imageFile = _getFile(_DEPENDENCY_PATH + "fixed_price.png");
 
 		CommerceShippingMethod commerceShippingMethod =
 			_commerceShippingMethodLocalService.addCommerceShippingMethod(
@@ -452,14 +448,14 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		}
 	}
 
-	private File _getFile(String filePath) throws IOException {
+	private File _getFile(String location) throws IOException {
 		Class<?> clazz = getClass();
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		InputStream is = classLoader.getResourceAsStream(filePath);
+		InputStream inputStream = classLoader.getResourceAsStream(location);
 
-		return FileUtil.createTempFile(is);
+		return FileUtil.createTempFile(inputStream);
 	}
 
 	private static final String _CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =

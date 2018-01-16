@@ -33,8 +33,6 @@
 
 	<propertycopy from="java.jdk.${java.jdk.architecture}.version" name="java.jdk.version" />
 
-	<propertycopy from="liferay.portal.${liferay.portal.branch}.bundle" name="liferay.portal.bundle" />
-
 	<propertycopy from="operating.system.${operating.system.type}.version" name="operating.system.version" />
 
 	<property location="${project.dir}/tools/putty/plink.exe" name="plink.executable" />

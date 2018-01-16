@@ -15,6 +15,7 @@
 package com.liferay.portal.kernel.jsonwebservice;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.lang.reflect.Method;
 
@@ -36,7 +37,7 @@ public class JSONWebServiceMappingResolver {
 		String httpMethod = null;
 
 		if (jsonWebServiceAnnotation != null) {
-			httpMethod = jsonWebServiceAnnotation.method().trim();
+			httpMethod = StringUtil.trim(jsonWebServiceAnnotation.method());
 		}
 
 		if ((httpMethod != null) && (httpMethod.length() != 0)) {
@@ -53,7 +54,7 @@ public class JSONWebServiceMappingResolver {
 		String path = null;
 
 		if (jsonWebServiceAnnotation != null) {
-			path = jsonWebServiceAnnotation.value().trim();
+			path = StringUtil.trim(jsonWebServiceAnnotation.value());
 		}
 
 		if ((path == null) || (path.length() == 0)) {
@@ -71,7 +72,7 @@ public class JSONWebServiceMappingResolver {
 		jsonWebServiceAnnotation = clazz.getAnnotation(JSONWebService.class);
 
 		if (jsonWebServiceAnnotation != null) {
-			pathFromClass = jsonWebServiceAnnotation.value().trim();
+			pathFromClass = StringUtil.trim(jsonWebServiceAnnotation.value());
 		}
 
 		if ((pathFromClass == null) || (pathFromClass.length() == 0)) {

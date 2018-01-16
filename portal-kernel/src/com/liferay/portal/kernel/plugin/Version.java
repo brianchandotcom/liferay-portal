@@ -116,11 +116,11 @@ public class Version implements Comparable<Version>, Serializable {
 
 		// Unknown is always considered a lower version
 
-		if (version.toString().equals(UNKNOWN)) {
+		if (UNKNOWN.equals(version.toString())) {
 			return 1;
 		}
 
-		if (toString().equals(UNKNOWN)) {
+		if (UNKNOWN.equals(toString())) {
 			return -1;
 		}
 

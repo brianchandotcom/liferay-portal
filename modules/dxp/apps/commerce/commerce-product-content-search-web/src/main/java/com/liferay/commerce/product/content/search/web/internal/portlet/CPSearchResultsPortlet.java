@@ -17,25 +17,35 @@ package com.liferay.commerce.product.content.search.web.internal.portlet;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.asset.kernel.service.AssetCategoryLocalService;
 import com.liferay.commerce.product.constants.CPPortletKeys;
+import com.liferay.commerce.product.constants.CPWebKeys;
 import com.liferay.commerce.product.content.search.web.internal.configuration.CPSearchResultsPortletInstanceConfiguration;
+import com.liferay.commerce.product.content.search.web.internal.constants.CPSearchResultsConfigurationConstants;
 import com.liferay.commerce.product.content.search.web.internal.display.context.CPSearchResultsDisplayContext;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.commerce.product.model.CPDefinitionLinkConstants;
+import com.liferay.commerce.product.service.CPDefinitionLinkService;
 import com.liferay.commerce.product.util.CPDefinitionHelper;
 import com.liferay.document.library.kernel.service.DLAppService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.BooleanClauseFactoryUtil;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
 import com.liferay.portal.kernel.search.generic.BooleanClauseImpl;
+import com.liferay.portal.kernel.search.generic.StringQuery;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -46,6 +56,7 @@ import com.liferay.portal.search.web.portlet.shared.search.PortletSharedSearchSe
 
 import java.io.IOException;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.portlet.Portlet;
@@ -117,7 +128,12 @@ public class CPSearchResultsPortlet
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
 
-		if (_cpSearchResultsPortletInstanceConfiguration.useAssetCategories()) {
+		String configurationMethod =
+			_cpSearchResultsPortletInstanceConfiguration.configurationMethod();
+
+		if (configurationMethod.equals(
+				CPSearchResultsConfigurationConstants.USE_CATEGORIES)) {
+
 			String[] assetCategoryIds =
 				_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds();
 
@@ -140,6 +156,45 @@ public class CPSearchResultsPortlet
 							Field.ASSET_CATEGORY_IDS,
 							String.valueOf(assetCategory.getCategoryId())),
 						BooleanClauseOccur.MUST));
+			}
+
+			CPDefinition cpDefinition =
+				(CPDefinition)renderRequest.getAttribute(
+					CPWebKeys.CP_DEFINITION);
+
+			if (cpDefinition != null) {
+				Query stringQuery = null;
+
+				if (configurationMethod.equals(
+						CPSearchResultsConfigurationConstants.
+SHOW_RELATED_PRODUCTS)) {
+
+					stringQuery = getCPDefinitionLinksQuery(
+						cpDefinition, CPDefinitionLinkConstants.TYPE_RELATED);
+				}
+
+				if (configurationMethod.equals(
+						CPSearchResultsConfigurationConstants.
+SHOW_UP_SELL_PRODUCTS)) {
+
+					stringQuery = getCPDefinitionLinksQuery(
+						cpDefinition, CPDefinitionLinkConstants.TYPE_UP_SELL);
+				}
+
+				if (configurationMethod.equals(
+						CPSearchResultsConfigurationConstants.
+SHOW_CROSS_SELL_PRODUCTS)) {
+
+					stringQuery = getCPDefinitionLinksQuery(
+						cpDefinition,
+						CPDefinitionLinkConstants.TYPE_CROSS_SELL);
+				}
+
+				if (stringQuery != null) {
+					portletSharedSearchSettings.addCondition(
+						BooleanClauseFactoryUtil.create(
+							stringQuery, BooleanClauseOccur.MUST.getName()));
+				}
 			}
 		}
 
@@ -196,6 +251,39 @@ public class CPSearchResultsPortlet
 				BooleanClauseOccur.MUST));
 	}
 
+	protected Query getCPDefinitionLinksQuery(
+		CPDefinition cpDefinition, int type) {
+
+		StringBundler sb = new StringBundler();
+
+		try {
+			List<CPDefinitionLink> cpDefinitionLinks =
+				_cpDefinitionLinkService.getCPDefinitionLinks(
+					cpDefinition.getCPDefinitionId(), type);
+
+			for (int i = 0; i < cpDefinitionLinks.size(); i++) {
+				CPDefinitionLink cpDefinitionLink = cpDefinitionLinks.get(i);
+
+				if (i > 0) {
+					sb.append(" (+");
+				}
+
+				sb.append(Field.ENTRY_CLASS_PK);
+				sb.append(StringPool.COLON);
+				sb.append(cpDefinitionLink.getCPDefinitionId2());
+
+				if (i > 0) {
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+				}
+			}
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return new StringQuery(sb.toString());
+	}
+
 	protected long getScopeGroupId(
 		PortletSharedSearchSettings portletSharedSearchSettings) {
 
@@ -235,6 +323,9 @@ public class CPSearchResultsPortlet
 
 	@Reference
 	private CPDefinitionHelper _cpDefinitionHelper;
+
+	@Reference
+	private CPDefinitionLinkService _cpDefinitionLinkService;
 
 	private CPSearchResultsPortletInstanceConfiguration
 		_cpSearchResultsPortletInstanceConfiguration;

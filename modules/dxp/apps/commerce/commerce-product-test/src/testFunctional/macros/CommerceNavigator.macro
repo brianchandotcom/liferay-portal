@@ -7,7 +7,10 @@
 
 	<command name="gotoEntry">
 		<if>
-			<condition function="IsElementPresent" locator1="CommerceNavigation#ENTRY_TITLE" />
+			<condition function="IsElementPresent" locator1="CommerceNavigation#ENTRY_TITLE">
+				<var name="key_entryTitle" value="${entryTitle}" />
+			</condition>
+
 			<then>
 				<execute function="AssertClick" locator1="CommerceNavigation#ENTRY_TITLE" value1="${entryTitle}">
 					<var name="key_entryTitle" value="${entryTitle}" />

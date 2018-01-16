@@ -38,6 +38,7 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 			"fragment-collection", false);
 
 		fragmentCollectionElement.addElement("name", getName());
+		fragmentCollectionElement.addElement("description", getDescription());
 
 		zipWriter.addEntry(
 			path + "/definition.xml", fragmentCollectionElement.toXMLString());

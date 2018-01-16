@@ -31,6 +31,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import org.talend.components.api.component.PropertyPathConnector;
+import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.properties.PresentationItem;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
@@ -69,11 +70,13 @@ public class TLiferayInputProperties
 
 		boolean hideDevWidgets = true;
 
-		if (form.getName().equals(Form.MAIN) ||
-			form.getName().equals(LiferayConnectionProperties.FORM_WIZARD)) {
+		String formName = form.getName();
 
-			form.getWidget(guessSchema.getName()).setHidden(hideDevWidgets);
-			form.getWidget(queryString.getName()).setHidden(hideDevWidgets);
+		if (formName.equals(Form.MAIN) ||
+			formName.equals(LiferayConnectionProperties.FORM_WIZARD)) {
+
+			_setHidden(form, guessSchema, hideDevWidgets);
+			_setHidden(form, queryString, hideDevWidgets);
 		}
 	}
 
@@ -87,8 +90,8 @@ public class TLiferayInputProperties
 
 		Widget guessButton = Widget.widget(guessSchema);
 
-		guessButton.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 		guessButton.setLongRunning(true);
+		guessButton.setWidgetType(Widget.BUTTON_WIDGET_TYPE);
 
 		mainForm.addRow(guessButton);
 	}
@@ -104,49 +107,42 @@ public class TLiferayInputProperties
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCEORSINK_CLASS)) {
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
-			LiferaySourceOrSinkRuntime ss =
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
-			ValidationResult result = ss.initialize(
-				null, _getEffectiveConnectionProperties());
+			ValidationResult validationResult =
+				liferaySourceOrSinkRuntime.initialize(
+					null, _getEffectiveConnectionProperties());
 
-			if (result.getStatus() == Result.ERROR) {
-				return result;
+			if (validationResult.getStatus() == Result.ERROR) {
+				return validationResult;
 			}
 
-			result = ss.validate(null);
+			validationResult = liferaySourceOrSinkRuntime.validate(null);
 
-			if (result.getStatus() == ValidationResult.Result.OK) {
+			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
-					Schema runtimeSchema = ss.guessSchema(
-						resource.resourceURL.getValue());
+					Schema runtimeSchema =
+						liferaySourceOrSinkRuntime.guessSchema(
+							resource.resourceURL.getValue());
 
 					resource.main.schema.setValue(runtimeSchema);
 				}
 				catch (IOException ioe) {
-					/* result = new ValidationResult(
-						Result.ERROR,
-						translations.getMessage(
-							"error.validation.connection.endpoint",
-							ioe.getMessage()));*/
 					ExceptionUtils.exceptionToValidationResult(ioe);
 				}
 			}
-			else {
-				return result;
-			}
 
-			return result;
+			return validationResult;
 		}
 	}
 
-	public Property<String> queryString =
-		PropertyFactory.newProperty("queryString"); //$NON-NLS-1$
-
 	public transient PresentationItem guessSchema = new PresentationItem(
 		"guessSchema", "Guess schema");
+	public Property<String> queryString = PropertyFactory.newProperty(
+		"queryString");
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
@@ -160,31 +156,48 @@ public class TLiferayInputProperties
 	}
 
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
-		LiferayConnectionProperties connProps = getConnectionProperties();
+		LiferayConnectionProperties liferayConnectionProperties =
+			getConnectionProperties();
 
-		if (connProps == null) {
+		if (liferayConnectionProperties == null) {
 			_log.error("LiferayConnectionProperties is null");
 		}
 
-		LiferayConnectionProperties referenceProps =
-			connProps.getReferencedConnectionProperties();
+		LiferayConnectionProperties referencedLiferayConnectionProperties =
+			liferayConnectionProperties.getReferencedConnectionProperties();
 
-		if (referenceProps != null) {
+		if (referencedLiferayConnectionProperties != null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Using a reference connection properties.");
-				_log.debug("UserID: " + referenceProps.userId.getValue());
-				_log.debug("Endpoint: " + referenceProps.endpoint.getValue());
+				_log.debug(
+					"UserID: " +
+						referencedLiferayConnectionProperties.userId.
+							getValue());
+				_log.debug(
+					"Endpoint: " +
+						referencedLiferayConnectionProperties.endpoint.
+							getValue());
 			}
 
-			return referenceProps;
+			return referencedLiferayConnectionProperties;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("UserID: " + connProps.userId.getValue());
-			_log.debug("Endpoint: " + connProps.endpoint.getValue());
+			_log.debug(
+				"UserID: " + liferayConnectionProperties.userId.getValue());
+			_log.debug(
+				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
 		}
 
-		return connProps;
+		return liferayConnectionProperties;
+	}
+
+	private void _setHidden(
+		Form form, SimpleNamedThing simpleNamedThing, boolean hidden) {
+
+		Widget widget = form.getWidget(simpleNamedThing.getName());
+
+		widget.setHidden(hidden);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

@@ -72,8 +72,7 @@ public abstract class LiferayConnectionResourceBaseProperties
 	}
 
 	public LiferayConnectionProperties connection =
-		new LiferayConnectionProperties("connection"); //$NON-NLS-1$
-
+		new LiferayConnectionProperties("connection");
 	public LiferayResourceProperties resource;
 
 	protected transient PropertyPathConnector mainConnector =

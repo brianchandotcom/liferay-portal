@@ -57,18 +57,18 @@ import org.talend.daikon.properties.ValidationResultMutable;
  */
 public class LiferaySourceOrSink
 	extends TranslatableImpl
-	implements SourceOrSink, LiferaySourceOrSinkRuntime {
+	implements LiferaySourceOrSinkRuntime, SourceOrSink {
 
 	public LiferayConnectionProperties getConnectionProperties() {
-		LiferayConnectionProperties connectionProperties =
+		LiferayConnectionProperties liferayConnectionProperties =
 			properties.getConnectionProperties();
 
-		if (connectionProperties.getReferencedComponentId() != null) {
-			connectionProperties =
-				connectionProperties.getReferencedConnectionProperties();
+		if (liferayConnectionProperties.getReferencedComponentId() != null) {
+			liferayConnectionProperties =
+				liferayConnectionProperties.getReferencedConnectionProperties();
 		}
 
-		return connectionProperties;
+		return liferayConnectionProperties;
 	}
 
 	/**
@@ -76,46 +76,49 @@ public class LiferaySourceOrSink
 	 * connection properties
 	 */
 	public LiferayConnectionProperties getEffectiveConnection(
-		RuntimeContainer container) {
+		RuntimeContainer runtimeContainer) {
 
-		LiferayConnectionProperties connProps =
+		LiferayConnectionProperties liferayConnectionProperties =
 			properties.getConnectionProperties();
 
-		String refComponentId = connProps.getReferencedComponentId();
+		String referencedComponentId =
+			liferayConnectionProperties.getReferencedComponentId();
 
 		// Using another component's connection
 
-		if (refComponentId != null) {
+		if (referencedComponentId != null) {
 
 			// In a runtime container
 
-			if (container != null) {
-				LiferayConnectionProperties shared =
-					(LiferayConnectionProperties)container.getComponentData(
-						refComponentId, KEY_CONNECTION_PROPERTIES);
+			if (runtimeContainer != null) {
+				LiferayConnectionProperties sharedLiferayConnectionProperties =
+					(LiferayConnectionProperties)
+						runtimeContainer.getComponentData(
+							referencedComponentId, KEY_CONNECTION_PROPERTIES);
 
-				if (shared != null) {
-					return shared;
+				if (sharedLiferayConnectionProperties != null) {
+					return sharedLiferayConnectionProperties;
 				}
 			}
 
 			// Design time
 
-			connProps = connProps.getReferencedConnectionProperties();
+			liferayConnectionProperties =
+				liferayConnectionProperties.getReferencedConnectionProperties();
 		}
 
-		if (container != null) {
-			container.setComponentData(
-				container.getCurrentComponentId(), KEY_CONNECTION_PROPERTIES,
-				connProps);
+		if (runtimeContainer != null) {
+			runtimeContainer.setComponentData(
+				runtimeContainer.getCurrentComponentId(),
+				KEY_CONNECTION_PROPERTIES, liferayConnectionProperties);
 		}
 
-		return connProps;
+		return liferayConnectionProperties;
 	}
 
 	@Override
 	public Schema getEndpointSchema(
-			RuntimeContainer container, String resourceURL)
+			RuntimeContainer runtimeContainer, String resourceURL)
 		throws IOException {
 
 		return guessSchema(resourceURL);
@@ -124,7 +127,7 @@ public class LiferaySourceOrSink
 	public JsonNode getResourceCollection(String resourceURL)
 		throws IOException {
 
-		final ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper objectMapper = new ObjectMapper();
 
 		RestClient restClient = null;
 		ApioResult apioResult = null;
@@ -149,7 +152,7 @@ public class LiferaySourceOrSink
 		}
 
 		try {
-			jsonNode = mapper.readTree(apioResult.getBody());
+			jsonNode = objectMapper.readTree(apioResult.getBody());
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
@@ -162,23 +165,28 @@ public class LiferaySourceOrSink
 		return jsonNode;
 	}
 
-	public RestClient getRestClient(RuntimeContainer container)
+	public RestClient getRestClient(RuntimeContainer runtimeContainer)
 		throws ApioException {
 
-		LiferayConnectionProperties conn = getEffectiveConnection(container);
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(runtimeContainer);
 
 		if (client == null) {
-			client = new RestClient(conn);
+			client = new RestClient(liferayConnectionProperties);
 		}
 		else {
-			if (!client.getEndpoint().equals(conn.endpoint.getValue())) {
+			String endpoint = client.getEndpoint();
+
+			if (!endpoint.equals(
+					liferayConnectionProperties.endpoint.getValue())) {
+
 				if (_log.isDebugEnabled()) {
 					_log.debug(
 						"Endpoint has been changed, initialize a new " +
 							"RestClient");
 				}
 
-				client = new RestClient(conn);
+				client = new RestClient(liferayConnectionProperties);
 
 				return client;
 			}
@@ -188,40 +196,42 @@ public class LiferaySourceOrSink
 	}
 
 	public RestClient getRestClient(
-			RuntimeContainer container, String resourceURL)
+			RuntimeContainer runtimeContainer, String resourceURL)
 		throws ApioException {
 
-		LiferayConnectionProperties conn = getEffectiveConnection(container);
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(runtimeContainer);
 
-		conn.endpoint.setValue(resourceURL);
+		liferayConnectionProperties.endpoint.setValue(resourceURL);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
 		}
 
-		return new RestClient(conn);
+		return new RestClient(liferayConnectionProperties);
 	}
 
 	@Override
-	public List<NamedThing> getSchemaNames(RuntimeContainer container)
+	public List<NamedThing> getSchemaNames(RuntimeContainer runtimeContainer)
 		throws IOException {
 
-		List<NamedThing> returnList = new ArrayList<>();
+		List<NamedThing> schemaNames = new ArrayList<>();
 
-		Map<String, String> map = _getResourceCollections(container);
+		Map<String, String> resourceCollections = _getResourceCollections(
+			runtimeContainer);
 
-		for (Map.Entry<String, String> entry : map.entrySet()) {
+		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"resource name: {}, href: {} ", entry.getKey(),
 					entry.getValue());
 			}
 
-			returnList.add(
+			schemaNames.add(
 				new SimpleNamedThing(entry.getKey(), entry.getValue()));
 		}
 
-		return returnList;
+		return schemaNames;
 	}
 
 	@Override
@@ -231,26 +241,30 @@ public class LiferaySourceOrSink
 
 	@Override
 	public ValidationResult initialize(
-		RuntimeContainer container, ComponentProperties properties) {
+		RuntimeContainer runtimeContainer,
+		ComponentProperties componentProperties) {
 
-		ValidationResultMutable vr = new ValidationResultMutable();
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
 
-		this.properties = (LiferayProvideConnectionProperties)properties;
-		vr.setStatus(ValidationResult.Result.OK);
+		properties = (LiferayProvideConnectionProperties)componentProperties;
+
+		validationResultMutable.setStatus(ValidationResult.Result.OK);
 
 		try {
-			getRestClient(container);
+			getRestClient(runtimeContainer);
 		}
 		catch (ApioException ae) {
-			vr.setStatus(ValidationResult.Result.ERROR);
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 		}
 
-		return vr;
+		return validationResultMutable;
 	}
 
 	@Override
-	public ValidationResult validate(RuntimeContainer container) {
-		LiferayConnectionProperties conn = getEffectiveConnection(container);
+	public ValidationResult validate(RuntimeContainer runtimeContainer) {
+		LiferayConnectionProperties conn = getEffectiveConnection(
+			runtimeContainer);
 
 		String endpoint = conn.endpoint.getValue();
 		String userId = conn.userId.getValue();
@@ -262,24 +276,26 @@ public class LiferaySourceOrSink
 			_log.debug("Validate UserID: {}", conn.userId.getValue());
 		}
 
-		ValidationResultMutable vr = new ValidationResultMutable();
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
 
 		if ((endpoint == null) || endpoint.isEmpty()) {
-			vr.setMessage(
-				translations.getMessage(
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
 					"error.validation.connection.endpoint"));
 
-			vr.setStatus(ValidationResult.Result.ERROR);
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-			return vr;
+			return validationResultMutable;
 		}
 
 		if (!anonymousLogin) {
-			vr.setStatus(
-				_validateCredentials(userId, password, vr).getStatus());
+			_validateCredentials(userId, password, validationResultMutable);
 
-			if (vr.getStatus() == ValidationResult.Result.ERROR) {
-				return vr;
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.ERROR) {
+
+				return validationResultMutable;
 			}
 		}
 
@@ -288,58 +304,64 @@ public class LiferaySourceOrSink
 
 	@Override
 	public ValidationResult validateConnection(
-		LiferayProvideConnectionProperties properties) {
+		LiferayProvideConnectionProperties liferayProvideConnectionProperties) {
 
-		ValidationResultMutable vr =
-			new ValidationResultMutable().setStatus(Result.OK);
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setStatus(Result.OK);
 
 		try {
-			LiferaySourceOrSink sos = new LiferaySourceOrSink();
+			LiferaySourceOrSink liferaySourceOrSink = new LiferaySourceOrSink();
 
-			sos.initialize(null, (LiferayConnectionProperties)properties);
-			RestClient restClient = sos.getRestClient(null);
+			liferaySourceOrSink.initialize(
+				null,
+				(LiferayConnectionProperties)
+					liferayProvideConnectionProperties);
+
+			RestClient restClient = liferaySourceOrSink.getRestClient(null);
 
 			restClient.executeGetRequest();
 
-			vr.setMessage(
-				translations.getMessage("success.validation.connection"));
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage("success.validation.connection"));
 		}
 		catch (ApioException ae) {
-			vr.setStatus(Result.ERROR);
-			vr.setMessage(
-				translations.getMessage(
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
 					"error.validation.connection.testconnection",
 					ae.getLocalizedMessage(), ae.getCode()));
+			validationResultMutable.setStatus(Result.ERROR);
 		}
 		catch (ProcessingException pe) {
-			vr.setStatus(Result.ERROR);
-			vr.setMessage(
-				translations.getMessage(
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
 					"error.validation.connection.testconnection.jersey",
 					pe.getLocalizedMessage()));
+			validationResultMutable.setStatus(Result.ERROR);
 		}
 
-		return vr;
+		return validationResultMutable;
 	}
 
 	protected Map<String, String> getApioLdJsonResourceCollectionsDescriptor(
-		JsonNode node) {
+		JsonNode jsonNode) {
 
 		Map<String, String> resourcesMap = new HashMap<>();
 
-		JsonNode resources = node.findPath("resources");
+		JsonNode resourcesJsonNode = jsonNode.findPath("resources");
 
-		Iterator<String> fieldNames = resources.fieldNames();
+		Iterator<String> fieldNames = resourcesJsonNode.fieldNames();
 
 		while (fieldNames.hasNext()) {
 			String fieldName = fieldNames.next();
 
-			JsonNode fieldValue = resources.get(fieldName);
+			JsonNode fieldValue = resourcesJsonNode.get(fieldName);
 
 			if (fieldValue.has("href")) {
-				String href = fieldValue.get("href").asText();
+				JsonNode hrefJsonNode = fieldValue.get("href");
 
-				resourcesMap.put(href, fieldName);
+				resourcesMap.put(hrefJsonNode.asText(), fieldName);
 			}
 		}
 
@@ -348,7 +370,7 @@ public class LiferaySourceOrSink
 
 	protected static final String KEY_CONNECTION_PROPERTIES = "Connection";
 
-	protected static final I18nMessages translations =
+	protected static final I18nMessages i18nMessages =
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
 			LiferaySourceOrSink.class);
 
@@ -358,7 +380,7 @@ public class LiferaySourceOrSink
 	private Map<String, String> _getResourceCollections(
 		RuntimeContainer container) {
 
-		final ObjectMapper mapper = new ObjectMapper();
+		ObjectMapper objectMapper = new ObjectMapper();
 
 		RestClient restClient = null;
 		ApioResult apioResult = null;
@@ -379,7 +401,7 @@ public class LiferaySourceOrSink
 		JsonNode jsonNode = null;
 
 		try {
-			jsonNode = mapper.readTree(apioResult.getBody());
+			jsonNode = objectMapper.readTree(apioResult.getBody());
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
@@ -400,31 +422,30 @@ public class LiferaySourceOrSink
 		return ResourceCollectionSchemaInferrer.inferSchema(jsonNode);
 	}
 
-	private ValidationResultMutable _validateCredentials(
-		String userId, String password, ValidationResultMutable vr) {
+	private void _validateCredentials(
+		String userId, String password,
+		ValidationResultMutable validationResultMutable) {
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Validating credentials...");
 		}
 
 		if ((userId == null) || userId.isEmpty()) {
-			vr.setMessage(
-				translations.getMessage("error.validation.connection.userId"));
-			vr.setStatus(ValidationResult.Result.ERROR);
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage("error.validation.connection.userId"));
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-			return vr;
+			return;
 		}
 
 		if ((password == null) || password.isEmpty()) {
-			vr.setMessage(
-				translations.getMessage(
+			validationResultMutable.setMessage(
+				i18nMessages.getMessage(
 					"error.validation.connection.password"));
-			vr.setStatus(ValidationResult.Result.ERROR);
+			validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-			return vr;
+			return;
 		}
-
-		return vr;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

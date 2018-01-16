@@ -34,9 +34,7 @@ import org.talend.components.api.Constants;
  */
 @AutoService(ComponentInstaller.class)
 @Component(
-	name =
-		Constants.COMPONENT_INSTALLER_PREFIX +
-			LiferayInputFamilyDefinition.NAME,
+	name = Constants.COMPONENT_INSTALLER_PREFIX + LiferayInputFamilyDefinition.NAME,
 	provide = ComponentInstaller.class
 )
 public class LiferayInputFamilyDefinition
@@ -46,17 +44,14 @@ public class LiferayInputFamilyDefinition
 
 	public LiferayInputFamilyDefinition() {
 		super(
-			NAME, //Components
-			new TLiferayConnectionDefinition(), new TLiferayInputDefinition(),
-
-			// Wizard
-
+			NAME, new TLiferayConnectionDefinition(),
+			new TLiferayInputDefinition(),
 			new LiferayConnectionWizardDefinition());
 	}
 
 	@Override
-	public void install(ComponentFrameworkContext ctx) {
-		ctx.registerComponentFamilyDefinition(this);
+	public void install(ComponentFrameworkContext componentFrameworkContext) {
+		componentFrameworkContext.registerComponentFamilyDefinition(this);
 	}
 
 }

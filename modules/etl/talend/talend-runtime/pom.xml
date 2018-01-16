@@ -9,7 +9,7 @@
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.runtime</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<name>Components - Liferay Runtime</name>
+	<name>Liferay Talend Runtime</name>
 	<packaging>jar</packaging>
 	<repositories>
 		<repository>

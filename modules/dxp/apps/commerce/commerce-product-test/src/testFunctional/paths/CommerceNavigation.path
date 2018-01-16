@@ -25,7 +25,7 @@
 </tr>
 <tr>
 	<td>ENTRY_TITLE</td>
-	<td>//div[@class='products-container']//a[contains(.,'${key_entryTitle}')]</td>
+	<td>//div[@class='searchcontainer-content']//a[contains(.,'${key_entryTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

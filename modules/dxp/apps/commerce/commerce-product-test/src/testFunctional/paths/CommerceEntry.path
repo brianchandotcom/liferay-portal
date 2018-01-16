@@ -238,6 +238,11 @@
 	<td>//div/input[contains(@id,'price')]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>COST_FIELD</td>
+	<td>//div/input[contains(@id,'cost')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

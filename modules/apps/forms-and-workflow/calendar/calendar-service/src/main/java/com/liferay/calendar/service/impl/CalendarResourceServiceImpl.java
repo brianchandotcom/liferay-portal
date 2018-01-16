@@ -15,12 +15,15 @@
 package com.liferay.calendar.service.impl;
 
 import com.liferay.calendar.constants.CalendarActionKeys;
+import com.liferay.calendar.constants.CalendarConstants;
 import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.base.CalendarResourceServiceBaseImpl;
-import com.liferay.calendar.service.permission.CalendarPortletPermission;
-import com.liferay.calendar.service.permission.CalendarResourcePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -44,7 +47,7 @@ public class CalendarResourceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarPortletPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, CalendarActionKeys.ADD_RESOURCE);
 
 		return calendarResourceLocalService.addCalendarResource(
@@ -56,7 +59,7 @@ public class CalendarResourceServiceImpl
 	public CalendarResource deleteCalendarResource(long calendarResourceId)
 		throws PortalException {
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResourceId, ActionKeys.DELETE);
 
 		return calendarResourceLocalService.deleteCalendarResource(
@@ -75,7 +78,7 @@ public class CalendarResourceServiceImpl
 			return null;
 		}
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResource, ActionKeys.VIEW);
 
 		return calendarResource;
@@ -85,7 +88,7 @@ public class CalendarResourceServiceImpl
 	public CalendarResource getCalendarResource(long calendarResourceId)
 		throws PortalException {
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResourceId, ActionKeys.VIEW);
 
 		return calendarResourcePersistence.findByPrimaryKey(calendarResourceId);
@@ -140,12 +143,24 @@ public class CalendarResourceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		CalendarResourcePermission.check(
+		_calendarResourceModelResourcePermission.check(
 			getPermissionChecker(), calendarResourceId, ActionKeys.UPDATE);
 
 		return calendarResourceLocalService.updateCalendarResource(
 			calendarResourceId, nameMap, descriptionMap, active,
 			serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<CalendarResource>
+		_calendarResourceModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				CalendarResourceServiceImpl.class,
+				"_calendarResourceModelResourcePermission",
+				CalendarResource.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				CalendarResourceServiceImpl.class, "_portletResourcePermission",
+				CalendarConstants.RESOURCE_NAME);
 
 }

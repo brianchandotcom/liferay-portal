@@ -15,8 +15,11 @@
 package com.liferay.mobile.device.rules.web.internal.search;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
-import com.liferay.mobile.device.rules.service.permission.MDRRuleGroupPermission;
+import com.liferay.mobile.device.rules.web.internal.security.permission.resource.MDRRuleGroupPermission;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
@@ -39,13 +42,23 @@ public class RuleGroupChecker extends EmptyOnClickRowChecker {
 		PermissionChecker permissionChecker =
 			PermissionThreadLocal.getPermissionChecker();
 
-		if (!MDRRuleGroupPermission.contains(
-				permissionChecker, ruleGroup, ActionKeys.DELETE)) {
+		try {
+			if (!MDRRuleGroupPermission.contains(
+					permissionChecker, ruleGroup, ActionKeys.DELETE)) {
 
-			return true;
+				return true;
+			}
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		return super.isDisabled(obj);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		RuleGroupChecker.class);
 
 }

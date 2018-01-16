@@ -14,25 +14,25 @@
 
 package com.liferay.mobile.device.rules.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 1.2.0, with no direct replacement
  */
 @Component(
 	property = {"model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroup"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class MDRRuleGroupPermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -40,11 +40,8 @@ public class MDRRuleGroupPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, ruleGroupId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MDRRuleGroup.class.getName(), ruleGroupId,
-				actionId);
-		}
+		_mdrRuleGroupModelResourcePermission.check(
+			permissionChecker, ruleGroupId, actionId);
 	}
 
 	public static void check(
@@ -52,11 +49,8 @@ public class MDRRuleGroupPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, ruleGroup, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MDRRuleGroup.class.getName(),
-				ruleGroup.getRuleGroupId(), actionId);
-		}
+		_mdrRuleGroupModelResourcePermission.check(
+			permissionChecker, ruleGroup, actionId);
 	}
 
 	public static boolean contains(
@@ -64,28 +58,17 @@ public class MDRRuleGroupPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		MDRRuleGroup ruleGroup = _mdrRuleGroupLocalService.getMDRRuleGroup(
-			ruleGroupId);
-
-		return contains(permissionChecker, ruleGroup, actionId);
+		return _mdrRuleGroupModelResourcePermission.contains(
+			permissionChecker, ruleGroupId, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, MDRRuleGroup ruleGroup,
-		String actionId) {
+			PermissionChecker permissionChecker, MDRRuleGroup ruleGroup,
+			String actionId)
+		throws PortalException {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, ruleGroup.getGroupId(),
-			MDRRuleGroup.class.getName(), ruleGroup.getRuleGroupId(),
-			MDRPortletKeys.MOBILE_DEVICE_RULES, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		return permissionChecker.hasPermission(
-			ruleGroup.getGroupId(), MDRRuleGroup.class.getName(),
-			ruleGroup.getRuleGroupId(), actionId);
+		return _mdrRuleGroupModelResourcePermission.contains(
+			permissionChecker, ruleGroup, actionId);
 	}
 
 	@Override
@@ -94,16 +77,25 @@ public class MDRRuleGroupPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_mdrRuleGroupModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference(unbind = "-")
 	protected void setMDRRuleGroupLocalService(
 		MDRRuleGroupLocalService mdrRuleGroupLocalService) {
-
-		_mdrRuleGroupLocalService = mdrRuleGroupLocalService;
 	}
 
-	private static MDRRuleGroupLocalService _mdrRuleGroupLocalService;
+	@Reference(
+		target = "(model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroup)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<MDRRuleGroup> modelResourcePermission) {
+
+		_mdrRuleGroupModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<MDRRuleGroup>
+		_mdrRuleGroupModelResourcePermission;
 
 }

@@ -14,18 +14,21 @@
 
 package com.liferay.calendar.service.permission;
 
-import com.liferay.calendar.constants.CalendarPortletKeys;
 import com.liferay.calendar.model.CalendarResource;
-import com.liferay.calendar.service.CalendarResourceLocalServiceUtil;
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
  * @author Michael C. Han
+ * @deprecated As of 3.0.0, with no direct replacement
  */
+@Component(immediate = true)
+@Deprecated
 public class CalendarResourcePermission {
 
 	public static void check(
@@ -33,11 +36,8 @@ public class CalendarResourcePermission {
 			CalendarResource calendarResource, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, calendarResource, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CalendarResource.class.getName(),
-				calendarResource.getCalendarResourceId(), actionId);
-		}
+		_calendarResourceModelResourcePermission.check(
+			permissionChecker, calendarResource, actionId);
 	}
 
 	public static void check(
@@ -45,39 +45,17 @@ public class CalendarResourcePermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, calendarResourceId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, CalendarResource.class.getName(),
-				calendarResourceId, actionId);
-		}
+		_calendarResourceModelResourcePermission.check(
+			permissionChecker, calendarResourceId, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, CalendarResource calendarResource,
-		String actionId) {
+			PermissionChecker permissionChecker,
+			CalendarResource calendarResource, String actionId)
+		throws PortalException {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, calendarResource.getGroupId(),
-			CalendarResource.class.getName(),
-			calendarResource.getCalendarResourceId(),
-			CalendarPortletKeys.CALENDAR, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				calendarResource.getCompanyId(),
-				CalendarResource.class.getName(),
-				calendarResource.getCalendarResourceId(),
-				calendarResource.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			calendarResource.getGroupId(), CalendarResource.class.getName(),
-			calendarResource.getCalendarResourceId(), actionId);
+		return _calendarResourceModelResourcePermission.contains(
+			permissionChecker, calendarResource, actionId);
 	}
 
 	public static boolean contains(
@@ -85,11 +63,21 @@ public class CalendarResourcePermission {
 			String actionId)
 		throws PortalException {
 
-		CalendarResource calendarResource =
-			CalendarResourceLocalServiceUtil.getCalendarResource(
-				calendarResourceId);
-
-		return contains(permissionChecker, calendarResource, actionId);
+		return _calendarResourceModelResourcePermission.contains(
+			permissionChecker, calendarResourceId, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.CalendarResource)",
+		unbind = "-"
+	)
+	protected void setModelPermissionChecker(
+		ModelResourcePermission<CalendarResource> modelResourcePermission) {
+
+		_calendarResourceModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<CalendarResource>
+		_calendarResourceModelResourcePermission;
 
 }

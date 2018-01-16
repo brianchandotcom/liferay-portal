@@ -39,7 +39,7 @@ import com.liferay.wiki.engine.impl.WikiEngineRenderer;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.WikiPageConstants;
 import com.liferay.wiki.service.WikiPageLocalServiceUtil;
-import com.liferay.wiki.web.internal.security.permission.WikiPagePermission;
+import com.liferay.wiki.web.internal.security.permission.resource.WikiPagePermission;
 
 import java.util.Date;
 import java.util.Locale;

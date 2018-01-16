@@ -50,10 +50,10 @@ public class BookmarksEntryAssetRenderer
 
 	public BookmarksEntryAssetRenderer(
 		BookmarksEntry entry,
-		ModelResourcePermission<BookmarksEntry> entryModelResourcePermission) {
+		ModelResourcePermission<BookmarksEntry> modelResourcePermission) {
 
 		_entry = entry;
-		_bookmarksEntryModelResourcePermission = entryModelResourcePermission;
+		_bookmarksEntryModelResourcePermission = modelResourcePermission;
 	}
 
 	@Override

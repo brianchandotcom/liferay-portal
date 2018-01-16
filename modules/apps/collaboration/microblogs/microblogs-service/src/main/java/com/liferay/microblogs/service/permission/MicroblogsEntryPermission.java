@@ -15,16 +15,19 @@
 package com.liferay.microblogs.service.permission;
 
 import com.liferay.microblogs.model.MicroblogsEntry;
-import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.social.kernel.service.SocialRelationLocalServiceUtil;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jonathan Lee
+ * @deprecated As of 2.1.0, with no direct replacement
  */
+@Component(immediate = true)
+@Deprecated
 public class MicroblogsEntryPermission {
 
 	public static void check(
@@ -32,9 +35,8 @@ public class MicroblogsEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, microblogsEntryId, actionId)) {
-			throw new PrincipalException();
-		}
+		_microblogsEntryModelResourcePermission.check(
+			permissionChecker, microblogsEntryId, actionId);
 	}
 
 	public static void check(
@@ -42,9 +44,8 @@ public class MicroblogsEntryPermission {
 			MicroblogsEntry microblogsEntry, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, microblogsEntry, actionId)) {
-			throw new PrincipalException();
-		}
+		_microblogsEntryModelResourcePermission.check(
+			permissionChecker, microblogsEntry, actionId);
 	}
 
 	public static boolean contains(
@@ -52,53 +53,30 @@ public class MicroblogsEntryPermission {
 			String actionId)
 		throws PortalException {
 
-		MicroblogsEntry microblogsEntry =
-			MicroblogsEntryLocalServiceUtil.getMicroblogsEntry(
-				microblogsEntryId);
-
-		return contains(permissionChecker, microblogsEntry, actionId);
+		return _microblogsEntryModelResourcePermission.contains(
+			permissionChecker, microblogsEntryId, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, MicroblogsEntry microblogsEntry,
-		String actionId) {
+			PermissionChecker permissionChecker,
+			MicroblogsEntry microblogsEntry, String actionId)
+		throws PortalException {
 
-		if (actionId.equals(ActionKeys.DELETE) ||
-			actionId.equals(ActionKeys.UPDATE)) {
-
-			if (permissionChecker.hasOwnerPermission(
-					microblogsEntry.getCompanyId(),
-					MicroblogsEntry.class.getName(),
-					microblogsEntry.getMicroblogsEntryId(),
-					microblogsEntry.getUserId(), actionId)) {
-
-				return true;
-			}
-
-			return false;
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				microblogsEntry.getCompanyId(), MicroblogsEntry.class.getName(),
-				microblogsEntry.getMicroblogsEntryId(),
-				microblogsEntry.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		if (microblogsEntry.getSocialRelationType() == 0) {
-			return true;
-		}
-
-		if ((microblogsEntry.getUserId() != permissionChecker.getUserId()) &&
-			SocialRelationLocalServiceUtil.hasRelation(
-				permissionChecker.getUserId(), microblogsEntry.getUserId(),
-				microblogsEntry.getSocialRelationType())) {
-
-			return true;
-		}
-
-		return false;
+		return _microblogsEntryModelResourcePermission.contains(
+			permissionChecker, microblogsEntry, actionId);
 	}
+
+	@Reference(
+		target = "(model.class.name=com.liferay.microblogs.model.MicroblogsEntry)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<MicroblogsEntry> modelResourcePermission) {
+
+		_microblogsEntryModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<MicroblogsEntry>
+		_microblogsEntryModelResourcePermission;
 
 }

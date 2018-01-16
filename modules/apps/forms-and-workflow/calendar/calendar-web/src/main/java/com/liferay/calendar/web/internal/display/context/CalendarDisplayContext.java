@@ -24,8 +24,8 @@ import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.service.CalendarService;
-import com.liferay.calendar.service.permission.CalendarPermission;
 import com.liferay.calendar.util.RecurrenceUtil;
+import com.liferay.calendar.web.internal.security.permission.resource.CalendarPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -75,7 +75,8 @@ public class CalendarDisplayContext {
 	}
 
 	public Calendar getDefaultCalendar(
-		List<Calendar> groupCalendars, List<Calendar> userCalendars) {
+			List<Calendar> groupCalendars, List<Calendar> userCalendars)
+		throws PortalException {
 
 		Calendar defaultCalendar = null;
 

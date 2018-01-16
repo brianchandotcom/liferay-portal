@@ -14,13 +14,16 @@
 
 package com.liferay.mobile.device.rules.service.impl;
 
+import com.liferay.mobile.device.rules.constants.MDRConstants;
 import com.liferay.mobile.device.rules.model.MDRRuleGroup;
 import com.liferay.mobile.device.rules.service.base.MDRRuleGroupServiceBaseImpl;
-import com.liferay.mobile.device.rules.service.permission.MDRPermission;
-import com.liferay.mobile.device.rules.service.permission.MDRRuleGroupPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -38,7 +41,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException {
 
-		MDRPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_RULE_GROUP);
 
 		return mdrRuleGroupLocalService.addRuleGroup(
@@ -54,10 +57,10 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 
 		MDRRuleGroup ruleGroup = getRuleGroup(ruleGroupId);
 
-		MDRRuleGroupPermission.check(
+		_mdrRuleGroupModelResourcePermission.check(
 			permissionChecker, ruleGroup, ActionKeys.VIEW);
 
-		MDRPermission.check(
+		_portletResourcePermission.check(
 			permissionChecker, groupId, ActionKeys.ADD_RULE_GROUP);
 
 		return mdrRuleGroupLocalService.copyRuleGroup(
@@ -69,7 +72,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
 
-		MDRRuleGroupPermission.check(
+		_mdrRuleGroupModelResourcePermission.check(
 			getPermissionChecker(), ruleGroup, ActionKeys.DELETE);
 
 		mdrRuleGroupLocalService.deleteRuleGroup(ruleGroup);
@@ -83,7 +86,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 			ruleGroupId);
 
 		if (ruleGroup != null) {
-			MDRRuleGroupPermission.check(
+			_mdrRuleGroupModelResourcePermission.check(
 				getPermissionChecker(), ruleGroup, ActionKeys.VIEW);
 		}
 
@@ -95,7 +98,7 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
 
-		MDRRuleGroupPermission.check(
+		_mdrRuleGroupModelResourcePermission.check(
 			getPermissionChecker(), ruleGroup, ActionKeys.VIEW);
 
 		return ruleGroup;
@@ -123,11 +126,22 @@ public class MDRRuleGroupServiceImpl extends MDRRuleGroupServiceBaseImpl {
 		MDRRuleGroup ruleGroup = mdrRuleGroupPersistence.findByPrimaryKey(
 			ruleGroupId);
 
-		MDRRuleGroupPermission.check(
+		_mdrRuleGroupModelResourcePermission.check(
 			getPermissionChecker(), ruleGroup, ActionKeys.UPDATE);
 
 		return mdrRuleGroupLocalService.updateRuleGroup(
 			ruleGroupId, nameMap, descriptionMap, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<MDRRuleGroup>
+		_mdrRuleGroupModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				MDRRuleGroupServiceImpl.class,
+				"_mdrRuleGroupModelResourcePermission", MDRRuleGroup.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				MDRRuleGroupServiceImpl.class, "_portletResourcePermission",
+				MDRConstants.RESOURCE_NAME);
 
 }

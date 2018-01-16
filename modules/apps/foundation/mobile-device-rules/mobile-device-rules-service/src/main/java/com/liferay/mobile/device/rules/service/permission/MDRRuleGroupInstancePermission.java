@@ -14,25 +14,25 @@
 
 package com.liferay.mobile.device.rules.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.mobile.device.rules.constants.MDRPortletKeys;
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Michael C. Han
+ * @deprecated As of 1.2.0, with no direct replacement
  */
 @Component(
 	property = {"model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class MDRRuleGroupInstancePermission
 	implements BaseModelPermissionChecker {
 
@@ -41,11 +41,8 @@ public class MDRRuleGroupInstancePermission
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, ruleGroupInstanceId, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MDRRuleGroupInstance.class.getName(),
-				ruleGroupInstanceId, actionId);
-		}
+		_mdrRuleGroupInstanceModelResourcePermission.check(
+			permissionChecker, ruleGroupInstanceId, actionId);
 	}
 
 	public static void check(
@@ -53,11 +50,8 @@ public class MDRRuleGroupInstancePermission
 			MDRRuleGroupInstance ruleGroupInstance, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, ruleGroupInstance, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, MDRRuleGroupInstance.class.getName(),
-				ruleGroupInstance.getRuleGroupInstanceId(), actionId);
-		}
+		_mdrRuleGroupInstanceModelResourcePermission.check(
+			permissionChecker, ruleGroupInstance, actionId);
 	}
 
 	public static boolean contains(
@@ -65,31 +59,17 @@ public class MDRRuleGroupInstancePermission
 			String actionId)
 		throws PortalException {
 
-		MDRRuleGroupInstance ruleGroupInstance =
-			_mdrRuleGroupInstanceLocalService.getMDRRuleGroupInstance(
-				ruleGroupInstanceId);
-
-		return contains(permissionChecker, ruleGroupInstance, actionId);
+		return _mdrRuleGroupInstanceModelResourcePermission.contains(
+			permissionChecker, ruleGroupInstanceId, actionId);
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker,
-		MDRRuleGroupInstance ruleGroupInstance, String actionId) {
+			PermissionChecker permissionChecker,
+			MDRRuleGroupInstance ruleGroupInstance, String actionId)
+		throws PortalException {
 
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, ruleGroupInstance.getGroupId(),
-			MDRRuleGroupInstance.class.getName(),
-			ruleGroupInstance.getRuleGroupInstanceId(),
-			MDRPortletKeys.MOBILE_DEVICE_RULES, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		return permissionChecker.hasPermission(
-			ruleGroupInstance.getGroupId(),
-			MDRRuleGroupInstance.class.getName(),
-			ruleGroupInstance.getRuleGroupInstanceId(), actionId);
+		return _mdrRuleGroupInstanceModelResourcePermission.contains(
+			permissionChecker, ruleGroupInstance, actionId);
 	}
 
 	@Override
@@ -98,17 +78,25 @@ public class MDRRuleGroupInstancePermission
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_mdrRuleGroupInstanceModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
 
-	@Reference(unbind = "-")
 	protected void setMDRRuleGroupInstanceLocalService(
 		MDRRuleGroupInstanceLocalService mdrRuleGroupInstanceLocalService) {
-
-		_mdrRuleGroupInstanceLocalService = mdrRuleGroupInstanceLocalService;
 	}
 
-	private static MDRRuleGroupInstanceLocalService
-		_mdrRuleGroupInstanceLocalService;
+	@Reference(
+		target = "(model.class.name=com.liferay.mobile.device.rules.model.MDRRuleGroupInstance)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<MDRRuleGroupInstance> modelResourcePermission) {
+
+		_mdrRuleGroupInstanceModelResourcePermission = modelResourcePermission;
+	}
+
+	private static ModelResourcePermission<MDRRuleGroupInstance>
+		_mdrRuleGroupInstanceModelResourcePermission;
 
 }

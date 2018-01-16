@@ -18,10 +18,10 @@ import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
-import com.liferay.microblogs.service.permission.MicroblogsEntryPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -113,12 +113,8 @@ public class MicroblogsActivityInterpreter
 			String actionId, ServiceContext serviceContext)
 		throws Exception {
 
-		MicroblogsEntry microblogsEntry =
-			_microblogsEntryLocalService.getMicroblogsEntry(
-				activity.getClassPK());
-
-		return MicroblogsEntryPermission.contains(
-			permissionChecker, microblogsEntry, ActionKeys.VIEW);
+		return _microblogsEntryModelResourcePermission.contains(
+			permissionChecker, activity.getClassPK(), ActionKeys.VIEW);
 	}
 
 	@Reference(unbind = "-")
@@ -144,6 +140,13 @@ public class MicroblogsActivityInterpreter
 		{MicroblogsEntry.class.getName()};
 
 	private MicroblogsEntryLocalService _microblogsEntryLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.microblogs.model.MicroblogsEntry)"
+	)
+	private ModelResourcePermission<MicroblogsEntry>
+		_microblogsEntryModelResourcePermission;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

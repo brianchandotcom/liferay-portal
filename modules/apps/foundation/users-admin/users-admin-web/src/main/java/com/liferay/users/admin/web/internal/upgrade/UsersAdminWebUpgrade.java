@@ -14,9 +14,13 @@
 
 package com.liferay.users.admin.web.internal.upgrade;
 
+import com.liferay.portal.kernel.model.Release;
+import com.liferay.portal.kernel.service.ReleaseLocalService;
+import com.liferay.portal.kernel.upgrade.BaseUpgradePortletId;
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.web.internal.upgrade.v1_0_0.UpgradeFileUploadsConfiguration;
 
 import org.osgi.service.cm.ConfigurationAdmin;
@@ -27,18 +31,42 @@ import org.osgi.service.component.annotations.Reference;
  * @author Drew Brokke
  */
 @Component(immediate = true, service = UpgradeStepRegistrator.class)
-public class UsersAdminServiceUpgrade implements UpgradeStepRegistrator {
+public class UsersAdminWebUpgrade implements UpgradeStepRegistrator {
 
 	@Override
 	public void register(Registry registry) {
+		Release release = _releaseLocalService.fetchRelease(
+			"com.liferay.users.admin.service");
+
+		if (release != null) {
+			release.setServletContextName("com.liferay.users.admin.web");
+
+			_releaseLocalService.updateRelease(release);
+		}
+
 		registry.register(
-			"com.liferay.users.admin.service", "0.0.0", "0.0.1",
+			"com.liferay.users.admin.web", "0.0.0", "0.0.1",
 			new DummyUpgradeStep());
 
 		registry.register(
-			"com.liferay.users.admin.service", "0.0.1", "1.0.0",
+			"com.liferay.users.admin.web", "0.0.1", "1.0.0",
 			new UpgradeFileUploadsConfiguration(
 				_configurationAdmin, _prefsProps));
+
+		registry.register(
+			"com.liferay.users.admin.web", "1.0.0", "1.0.1",
+			new BaseUpgradePortletId() {
+
+				@Override
+				protected String[][] getRenamePortletIdsArray() {
+					return new String[][] {
+						new String[] {
+							"2", UsersAdminPortletKeys.MY_ACCOUNT
+						}
+					};
+				}
+
+			});
 	}
 
 	@Reference
@@ -46,5 +74,8 @@ public class UsersAdminServiceUpgrade implements UpgradeStepRegistrator {
 
 	@Reference
 	private PrefsProps _prefsProps;
+
+	@Reference
+	private ReleaseLocalService _releaseLocalService;
 
 }

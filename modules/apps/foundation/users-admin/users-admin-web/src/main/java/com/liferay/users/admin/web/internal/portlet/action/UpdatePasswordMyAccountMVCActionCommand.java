@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.my.account.web.internal.portlet.action;
+package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.UserPasswordException;
 import com.liferay.portal.kernel.model.Company;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,12 +45,13 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT,
+		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/users_admin/update_password"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdatePasswordMVCActionCommand extends BaseMVCActionCommand {
+public class UpdatePasswordMyAccountMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	protected void authenticateUser(
 			ActionRequest actionRequest, ActionResponse actionResponse)

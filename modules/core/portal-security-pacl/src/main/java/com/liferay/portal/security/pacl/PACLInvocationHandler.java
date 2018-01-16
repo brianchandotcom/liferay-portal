@@ -88,7 +88,9 @@ public class PACLInvocationHandler
 					_invocationHandler, proxy, method, arguments));
 		}
 		catch (PrivilegedActionException pae) {
-			throw pae.getException().getCause();
+			Exception e = pae.getException();
+
+			throw e.getCause();
 		}
 	}
 

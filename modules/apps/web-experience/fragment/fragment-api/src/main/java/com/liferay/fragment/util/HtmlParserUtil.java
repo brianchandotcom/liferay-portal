@@ -16,14 +16,14 @@ package com.liferay.fragment.util;
 
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
-import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -40,7 +40,9 @@ public class HtmlParserUtil {
 		Document document = null;
 
 		try {
-			if (Objects.equals(HtmlUtil.stripHtml(html), html)) {
+			Matcher matcher = _pattern.matcher(html.trim());
+
+			if (!matcher.matches()) {
 				html = "<span>" + html + "</span>";
 			}
 
@@ -55,5 +57,9 @@ public class HtmlParserUtil {
 
 		return document;
 	}
+
+	private static final Pattern _pattern = Pattern.compile(
+		"^<(\\S+?)(.*?)>(.*?)</\\1>",
+		Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
 
 }

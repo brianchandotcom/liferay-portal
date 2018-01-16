@@ -20,23 +20,9 @@
 renderResponse.setTitle(LanguageUtil.get(request, "fragments"));
 %>
 
-<portlet:renderURL var="mainURL" />
-
-<%
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(mainURL);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "collections"));
-
-navigationItems.add(entriesNavigationItem);
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationItems %>"
+	items="<%= fragmentDisplayContext.getFragmentCollectionNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

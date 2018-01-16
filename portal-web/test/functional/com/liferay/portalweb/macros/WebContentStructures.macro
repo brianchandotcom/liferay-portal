@@ -199,7 +199,7 @@
 	</command>
 
 	<command name="saveCP">
-		<execute macro="PortletEntry#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<if>
 			<isset var="addRoleViewPermissions" />

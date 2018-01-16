@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.my.account.web.internal.portlet;
+package com.liferay.users.admin.web.internal.portlet;
 
-import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.Portlet;
 
@@ -43,7 +43,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=My Account",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT,
+		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=administrator",
 		"javax.portlet.supports.mime-type=text/html"
@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 public class MyAccountPortlet extends MVCPortlet {
 
 	@Reference(
-		target = "(&(release.bundle.symbolic.name=com.liferay.my.account.web)(release.schema.version=1.0.0))",
+		target = "(&(release.bundle.symbolic.name=com.liferay.users.admin.web)(release.schema.version=1.0.1))",
 		unbind = "-"
 	)
 	protected void setRelease(Release release) {

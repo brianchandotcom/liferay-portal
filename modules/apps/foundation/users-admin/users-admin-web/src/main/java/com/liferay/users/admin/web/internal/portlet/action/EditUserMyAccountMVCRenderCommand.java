@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.my.account.web.internal.portlet.action;
+package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.servlet.DynamicServletRequest;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portlet.RenderRequestImpl;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.WindowState;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,25 +36,17 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT,
-		"mvc.command.name=/", "mvc.command.name=/my_account/view"
+		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
+		"mvc.command.name=/users_admin/edit_user"
 	},
 	service = MVCRenderCommand.class
 )
-public class ViewMVCRenderCommand implements MVCRenderCommand {
+public class EditUserMyAccountMVCRenderCommand implements MVCRenderCommand {
 
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortletException {
-
-		WindowState windowState = renderRequest.getWindowState();
-
-		if ((renderRequest.getRemoteUser() == null) ||
-			!windowState.equals(WindowState.MAXIMIZED)) {
-
-			return "/null.jsp";
-		}
 
 		try {
 			User user = _portal.getUser(renderRequest);
@@ -69,11 +61,20 @@ public class ViewMVCRenderCommand implements MVCRenderCommand {
 			dynamicRequest.setParameter(
 				"p_u_i_d", String.valueOf(user.getUserId()));
 
-			return "/edit_user.jsp";
+			_portal.getSelectedUser(renderRequest);
 		}
-		catch (PortalException pe) {
-			throw new PortletException(pe);
+		catch (Exception e) {
+			if (e instanceof PrincipalException) {
+				SessionErrors.add(renderRequest, e.getClass());
+
+				return "/error.jsp";
+			}
+			else {
+				throw new PortletException(e);
+			}
 		}
+
+		return "/edit_user.jsp";
 	}
 
 	@Reference

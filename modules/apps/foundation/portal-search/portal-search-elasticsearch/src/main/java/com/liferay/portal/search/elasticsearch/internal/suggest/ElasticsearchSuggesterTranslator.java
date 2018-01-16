@@ -52,34 +52,34 @@ public class ElasticsearchSuggesterTranslator
 
 	@Override
 	public SuggestBuilder visit(AggregateSuggester aggregateSuggester) {
-		return _aggregateSuggesteTranslator.translate(aggregateSuggester, this);
+		return aggregateSuggesteTranslator.translate(aggregateSuggester, this);
 	}
 
 	@Override
 	public SuggestBuilder visit(CompletionSuggester completionSuggester) {
-		return _completionSuggesterTranslator.translate(completionSuggester);
+		return completionSuggesterTranslator.translate(completionSuggester);
 	}
 
 	@Override
 	public SuggestBuilder visit(PhraseSuggester phraseSuggester) {
-		return _phraseSuggesterTranslator.translate(phraseSuggester);
+		return phraseSuggesterTranslator.translate(phraseSuggester);
 	}
 
 	@Override
 	public SuggestBuilder visit(TermSuggester termSuggester) {
-		return _termSuggesterTranslator.translate(termSuggester);
+		return termSuggesterTranslator.translate(termSuggester);
 	}
 
 	@Reference
-	private AggregateSuggesterTranslator _aggregateSuggesteTranslator;
+	protected AggregateSuggesterTranslator aggregateSuggesteTranslator;
 
 	@Reference
-	private CompletionSuggesterTranslator _completionSuggesterTranslator;
+	protected CompletionSuggesterTranslator completionSuggesterTranslator;
 
 	@Reference
-	private PhraseSuggesterTranslator _phraseSuggesterTranslator;
+	protected PhraseSuggesterTranslator phraseSuggesterTranslator;
 
 	@Reference
-	private TermSuggesterTranslator _termSuggesterTranslator;
+	protected TermSuggesterTranslator termSuggesterTranslator;
 
 }

@@ -1166,7 +1166,9 @@ public class DLFolderLocalServiceImpl extends DLFolderLocalServiceBaseImpl {
 				throw new NoSuchLockException("{folderId=" + folderId + "}");
 			}
 
-			if (lock.getUuid().equals(lockUuid)) {
+			String uuid = lock.getUuid();
+
+			if (uuid.equals(lockUuid)) {
 				verified = true;
 			}
 		}

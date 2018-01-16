@@ -55,7 +55,9 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 	@Override
 	public List<MBCategory> getCategories() {
-		return _categoryTree.getRootNode().getChildValues();
+		TreeNode<MBCategory> rootNode = _categoryTree.getRootNode();
+
+		return rootNode.getChildValues();
 	}
 
 	@Override
@@ -68,7 +70,9 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 
 	@Override
 	public MBCategory getRootCategory() {
-		return _categoryTree.getRootNode().getValue();
+		TreeNode<MBCategory> rootNode = _categoryTree.getRootNode();
+
+		return rootNode.getValue();
 	}
 
 	@Override
@@ -76,7 +80,10 @@ public class MBCategoryDisplayImpl implements MBCategoryDisplay {
 		TreeNode<MBCategory> node = _categoryNodesMap.get(
 			category.getCategoryId());
 
-		return _categoryTree.getChildNodes(node).size();
+		List<TreeNode<MBCategory>> childNodes = _categoryTree.getChildNodes(
+			node);
+
+		return childNodes.size();
 	}
 
 	@Override

@@ -192,7 +192,9 @@ public class ExpandoBridgeIndexerImpl implements ExpandoBridgeIndexer {
 			}
 		}
 		else if (type == ExpandoColumnConstants.NUMBER) {
-			document.addKeyword(fieldName, expandoValue.getNumber().toString());
+			Number number = expandoValue.getNumber();
+
+			document.addKeyword(fieldName, number.toString());
 		}
 		else if (type == ExpandoColumnConstants.NUMBER_ARRAY) {
 			if (!defaultValue) {

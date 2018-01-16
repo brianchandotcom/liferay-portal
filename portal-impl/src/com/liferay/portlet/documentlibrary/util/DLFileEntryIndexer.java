@@ -399,7 +399,9 @@ public class DLFileEntryIndexer
 			}
 
 			if (indexContent) {
-				is = dlFileEntry.getFileVersion().getContentStream(false);
+				DLFileVersion fileVersion = dlFileEntry.getFileVersion();
+
+				is = fileVersion.getContentStream(false);
 			}
 		}
 		catch (Exception e) {

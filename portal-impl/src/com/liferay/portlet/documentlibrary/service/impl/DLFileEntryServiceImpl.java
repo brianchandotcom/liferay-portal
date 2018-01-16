@@ -423,7 +423,9 @@ public class DLFileEntryServiceImpl extends DLFileEntryServiceBaseImpl {
 			int filesCount = dlFileEntryFinder.filterCountByG_F(
 				groupId, folderIds.subList(start, end), queryDefinition);
 
-			folderIds.subList(start, end).clear();
+			List<Long> sublist = folderIds.subList(start, end);
+
+			sublist.clear();
 
 			filesCount += getFoldersFileEntriesCount(
 				groupId, folderIds, status);

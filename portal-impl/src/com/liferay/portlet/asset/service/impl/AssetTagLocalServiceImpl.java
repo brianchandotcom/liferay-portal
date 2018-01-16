@@ -697,7 +697,9 @@ public class AssetTagLocalServiceImpl extends AssetTagLocalServiceBaseImpl {
 				"A tag with the name " + name + " already exists");
 		}
 
-		if (!tag.getName().equals(name)) {
+		String tagName = tag.getName();
+
+		if (!tagName.equals(name)) {
 			AssetTag existingAssetTag = fetchTag(tag.getGroupId(), name);
 
 			if ((existingAssetTag != null) &&

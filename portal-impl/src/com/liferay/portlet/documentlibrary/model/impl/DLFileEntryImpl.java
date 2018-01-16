@@ -56,6 +56,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Brian Wing Shun Chan
@@ -257,8 +258,9 @@ public class DLFileEntryImpl extends DLFileEntryBaseImpl {
 	public String getLuceneProperties() {
 		UnicodeProperties extraSettingsProps = getExtraSettingsProperties();
 
-		StringBundler sb = new StringBundler(
-			extraSettingsProps.entrySet().size() + 4);
+		Set<Map.Entry<String, String>> entrySet = extraSettingsProps.entrySet();
+
+		StringBundler sb = new StringBundler(entrySet.size() + 4);
 
 		sb.append(FileUtil.stripExtension(getTitle()));
 		sb.append(StringPool.SPACE);

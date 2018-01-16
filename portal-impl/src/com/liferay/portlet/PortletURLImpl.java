@@ -85,6 +85,7 @@ import javax.portlet.WindowState;
 import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -996,8 +997,9 @@ public class PortletURLImpl
 		String result = sb.toString();
 
 		if (!CookieKeys.hasSessionId(_request)) {
-			result = PortalUtil.getURLWithSessionId(
-				result, _request.getSession().getId());
+			HttpSession session = _request.getSession();
+
+			result = PortalUtil.getURLWithSessionId(result, session.getId());
 		}
 
 		if (!_escapeXml) {

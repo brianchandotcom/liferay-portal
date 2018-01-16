@@ -36,6 +36,7 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.JspException;
+import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.PageContext;
 
 /**
@@ -131,7 +132,9 @@ public class InputPermissionsParamsTagUtil {
 			sb.append("inputPermissionsViewRole=");
 			sb.append(URLCodec.encodeURL(inputPermissionsViewRole));
 
-			pageContext.getOut().print(sb.toString());
+			JspWriter jspWriter = pageContext.getOut();
+
+			jspWriter.print(sb.toString());
 		}
 		catch (Exception e) {
 			throw new JspException(e);

@@ -26,6 +26,7 @@ import com.thoughtworks.qdox.JavaDocBuilder;
 import com.thoughtworks.qdox.model.DocletTag;
 import com.thoughtworks.qdox.model.JavaClass;
 import com.thoughtworks.qdox.model.JavaMethod;
+import com.thoughtworks.qdox.model.JavaPackage;
 import com.thoughtworks.qdox.model.JavaParameter;
 import com.thoughtworks.qdox.model.Type;
 import com.thoughtworks.qdox.model.TypeVariable;
@@ -90,7 +91,11 @@ public class InstanceWrapperBuilder {
 		// Package
 
 		sb.append("package ");
-		sb.append(javaClass.getPackage().getName());
+
+		JavaPackage javaPackage = javaClass.getPackage();
+
+		sb.append(javaPackage.getName());
+
 		sb.append(";");
 
 		// Class declaration
@@ -236,8 +241,8 @@ public class InstanceWrapperBuilder {
 		File file = new File(
 			StringBundler.concat(
 				parentDir, "/",
-				StringUtil.replace(javaClass.getPackage().getName(), '.', '/'),
-				"/", javaClass.getName(), "_IW.java"));
+				StringUtil.replace(javaPackage.getName(), '.', '/'), "/",
+				javaClass.getName(), "_IW.java"));
 
 		ToolsUtil.writeFile(file, sb.toString(), null);
 	}

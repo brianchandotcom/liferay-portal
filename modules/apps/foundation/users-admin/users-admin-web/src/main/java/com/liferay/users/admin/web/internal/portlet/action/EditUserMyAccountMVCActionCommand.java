@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.my.account.web.internal.portlet.action;
+package com.liferay.users.admin.web.internal.portlet.action;
 
-import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
@@ -31,12 +30,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT,
+		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT,
 		"mvc.command.name=/users_admin/edit_user"
 	},
 	service = MVCActionCommand.class
 )
-public class EditUserMVCActionCommand extends BaseMVCActionCommand {
+public class EditUserMyAccountMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(

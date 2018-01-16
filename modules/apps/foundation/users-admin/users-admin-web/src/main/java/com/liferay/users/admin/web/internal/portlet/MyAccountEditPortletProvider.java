@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.my.account.web.internal.portlet;
+package com.liferay.users.admin.web.internal.portlet;
 
 import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
-import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.EditPortletProvider;
 import com.liferay.portal.kernel.portlet.ManagePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -42,7 +42,7 @@ public class MyAccountEditPortletProvider
 
 	@Override
 	public String getPortletName() {
-		return MyAccountPortletKeys.MY_ACCOUNT;
+		return UsersAdminPortletKeys.MY_ACCOUNT;
 	}
 
 }

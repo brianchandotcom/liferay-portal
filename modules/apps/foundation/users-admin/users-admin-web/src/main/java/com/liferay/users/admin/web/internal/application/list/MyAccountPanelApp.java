@@ -12,13 +12,13 @@
  * details.
  */
 
-package com.liferay.my.account.web.internal.application.list;
+package com.liferay.users.admin.web.internal.application.list;
 
 import com.liferay.application.list.BasePanelApp;
 import com.liferay.application.list.PanelApp;
 import com.liferay.application.list.constants.PanelCategoryKeys;
-import com.liferay.my.account.web.internal.constants.MyAccountPortletKeys;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,12 +38,12 @@ public class MyAccountPanelApp extends BasePanelApp {
 
 	@Override
 	public String getPortletId() {
-		return MyAccountPortletKeys.MY_ACCOUNT;
+		return UsersAdminPortletKeys.MY_ACCOUNT;
 	}
 
 	@Override
 	@Reference(
-		target = "(javax.portlet.name=" + MyAccountPortletKeys.MY_ACCOUNT + ")",
+		target = "(javax.portlet.name=" + UsersAdminPortletKeys.MY_ACCOUNT + ")",
 		unbind = "-"
 	)
 	public void setPortlet(Portlet portlet) {

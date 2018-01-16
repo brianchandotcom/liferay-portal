@@ -17,7 +17,7 @@ AUI.add(
 
 		FormBuilderLayoutBuilderSupport.prototype = {
 			TPL_MOVE_MESSAGE: '<div class="' + CSS_FORM_BUILDER_MOVING_MESSAGE + '">' +
-				'<button class="btn btn-lg btn-default ' + CSS_FORM_BUILDER_MOVING_MESSAGE_DISMISS_BUTTOM + '" type="button">{dismiss-operation}</button>' +
+				'<button class="btn btn-default ' + CSS_FORM_BUILDER_MOVING_MESSAGE_DISMISS_BUTTOM + '" type="button">{dismiss-operation}</button>' +
 			'</div>',
 
 			initializer: function() {

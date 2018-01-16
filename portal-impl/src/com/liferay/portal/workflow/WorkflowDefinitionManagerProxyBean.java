@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
+import com.liferay.portal.kernel.workflow.WorkflowException;
 
 import java.util.List;
 
@@ -139,6 +140,28 @@ public class WorkflowDefinitionManagerProxyBean
 	public List<WorkflowDefinition> getWorkflowDefinitions(
 		long companyId, String name, int start, int end,
 		OrderByComparator<WorkflowDefinition> orderByComparator) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	/**
+	 * Saves a workflow definition without validate and deploy it.
+	 *
+	 * @param  companyId the company ID of this workflow definition
+	 * @param  userId the user ID of this workflow definition
+	 * @param  title the title ID of this workflow definition
+	 * @param  name the name of this workflow definition
+	 * @param  bytes The data to be created as a workflow definition content.
+	 * @return the workflow definition
+	 * @throws WorkflowException if there was an issue when save the workflow
+	 *         definition
+	 * @review
+	 */
+	@Override
+	public WorkflowDefinition saveWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
 
 		throw new UnsupportedOperationException();
 	}

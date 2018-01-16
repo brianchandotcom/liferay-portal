@@ -152,13 +152,13 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		// Child site navigation menu item
 
-		List<SiteNavigationMenuItem> childs = getSiteNavigationMenuItems(
+		List<SiteNavigationMenuItem> children = getSiteNavigationMenuItems(
 			siteNavigationMenuItem.getSiteNavigationMenuId(),
 			parentSiteNavigationMenuItemId);
 
 		int newOrder = 0;
 
-		for (SiteNavigationMenuItem child : childs) {
+		for (SiteNavigationMenuItem child : children) {
 			if (newOrder == order) {
 				newOrder++;
 			}
@@ -177,11 +177,12 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		if (parentSiteNavigationMenuItemId !=
 				oldParentSiteNavigationMenuItemId) {
 
-			List<SiteNavigationMenuItem> oldChilds = getSiteNavigationMenuItems(
-				siteNavigationMenuItem.getSiteNavigationMenuId(),
-				oldParentSiteNavigationMenuItemId);
+			List<SiteNavigationMenuItem> oldChildren =
+				getSiteNavigationMenuItems(
+					siteNavigationMenuItem.getSiteNavigationMenuId(),
+					oldParentSiteNavigationMenuItemId);
 
-			for (SiteNavigationMenuItem oldChild : oldChilds) {
+			for (SiteNavigationMenuItem oldChild : oldChildren) {
 				if (oldChild.getOrder() <= order) {
 					continue;
 				}

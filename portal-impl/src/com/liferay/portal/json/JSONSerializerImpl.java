@@ -55,7 +55,9 @@ public class JSONSerializerImpl implements JSONSerializer {
 
 	@Override
 	public String serializeDeep(Object target) {
-		return _jsonSerializer.deep(true).serialize(target);
+		JsonSerializer jsonSerializer = _jsonSerializer.deep(true);
+
+		return jsonSerializer.serialize(target);
 	}
 
 	@Override

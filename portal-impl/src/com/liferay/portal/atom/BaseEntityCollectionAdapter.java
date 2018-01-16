@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Company;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.abdera.Abdera;
 import org.apache.abdera.factory.Factory;
 import org.apache.abdera.i18n.iri.IRI;
 import org.apache.abdera.model.Entry;
@@ -136,7 +137,9 @@ public abstract class BaseEntityCollectionAdapter<T>
 
 	@Override
 	protected Feed createFeedBase(RequestContext requestContext) {
-		Factory factory = requestContext.getAbdera().getFactory();
+		Abdera abdera = requestContext.getAbdera();
+
+		Factory factory = abdera.getFactory();
 
 		Feed feed = factory.newFeed();
 

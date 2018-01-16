@@ -133,7 +133,7 @@ public class PostgreSQLDB extends BaseDB {
 				String indexName = rs.getString("indexname");
 				String tableName = rs.getString("tablename");
 				String indexSQL = StringUtil.toLowerCase(
-					rs.getString("indexdef").trim());
+					StringUtil.trim(rs.getString("indexdef")));
 
 				boolean unique = true;
 

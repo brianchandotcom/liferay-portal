@@ -243,14 +243,17 @@ public class RuntimePageImpl implements RuntimePage {
 			while (y != -1) {
 				sb.append(content.substring(x, y));
 
-				int close1 = content.indexOf(runtimeLogic.getClose1Tag(), y);
-				int close2 = content.indexOf(runtimeLogic.getClose2Tag(), y);
+				String close1Tag = runtimeLogic.getClose1Tag();
+				String close2Tag = runtimeLogic.getClose2Tag();
+
+				int close1 = content.indexOf(close1Tag, y);
+				int close2 = content.indexOf(close2Tag, y);
 
 				if ((close2 == -1) || ((close1 != -1) && (close1 < close2))) {
-					x = close1 + runtimeLogic.getClose1Tag().length();
+					x = close1 + close1Tag.length();
 				}
 				else {
-					x = close2 + runtimeLogic.getClose2Tag().length();
+					x = close2 + close2Tag.length();
 				}
 
 				String runtimePortletTag = content.substring(y, x);

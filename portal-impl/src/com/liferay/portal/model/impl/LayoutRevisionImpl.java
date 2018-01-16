@@ -40,6 +40,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author Brian Wing Shun Chan
@@ -128,8 +129,9 @@ public class LayoutRevisionImpl extends LayoutRevisionBaseImpl {
 		if (!CookieKeys.hasSessionId(request) &&
 			(url.startsWith(portalURL) || url.startsWith(StringPool.SLASH))) {
 
-			url = PortalUtil.getURLWithSessionId(
-				url, request.getSession().getId());
+			HttpSession session = request.getSession();
+
+			url = PortalUtil.getURLWithSessionId(url, session.getId());
 		}
 
 		return url;

@@ -490,7 +490,9 @@ public class JSONServiceAction extends JSONAction {
 		Method[] methods = clazz.getMethods();
 
 		for (Method curMethod : methods) {
-			if (curMethod.getName().equals(methodName)) {
+			String curMethodName = curMethod.getName();
+
+			if (curMethodName.equals(methodName)) {
 				Type[] curParameterTypes = curMethod.getGenericParameterTypes();
 
 				if (curParameterTypes.length == parameters.length) {

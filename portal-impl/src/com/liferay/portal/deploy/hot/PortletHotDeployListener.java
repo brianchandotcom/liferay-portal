@@ -395,7 +395,10 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 			CustomUserAttributes customUserAttributesInstance =
 				(CustomUserAttributes)clazz.newInstance();
 
-			portletContextBag.getCustomUserAttributes().put(
+			Map<String, CustomUserAttributes> customUserAttributesMap =
+				portletContextBag.getCustomUserAttributes();
+
+			customUserAttributesMap.put(
 				attrCustomClass, customUserAttributesInstance);
 		}
 
@@ -412,7 +415,10 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 					},
 					portletFilter.getFilterClass());
 
-			portletContextBag.getPortletFilters().put(
+			Map<String, javax.portlet.filter.PortletFilter> portletFiltersMap =
+				portletContextBag.getPortletFilters();
+
+			portletFiltersMap.put(
 				portletFilter.getFilterName(), portletFilterInstance);
 		}
 
@@ -430,7 +436,10 @@ public class PortletHotDeployListener extends BaseHotDeployListener {
 					classLoader, PortletURLGenerationListener.class,
 					portletURLListener.getListenerClass());
 
-			portletContextBag.getPortletURLListeners().put(
+			Map<String, PortletURLGenerationListener> portletURLListenersMap =
+				portletContextBag.getPortletURLListeners();
+
+			portletURLListenersMap.put(
 				portletURLListener.getListenerClass(),
 				portletURLListenerInstance);
 

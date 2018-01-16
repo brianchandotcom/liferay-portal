@@ -17,6 +17,8 @@ package com.liferay.fragment.model.impl;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
 import java.util.List;
@@ -30,18 +32,34 @@ public class FragmentCollectionImpl extends FragmentCollectionBaseImpl {
 	public void populateZipWriter(ZipWriter zipWriter, String path)
 		throws Exception {
 
-		path = path + getFragmentCollectionId();
+		path = path + StringPool.SLASH + getFragmentCollectionId();
 
-		zipWriter.addEntry(path + "/name.txt", getName());
+		Element fragmentCollectionElement = new Element(
+			"fragment-collection", false);
+
+		fragmentCollectionElement.addElement("name", getName());
+
+		zipWriter.addEntry(
+			path + "/definition.xml", fragmentCollectionElement.toXMLString());
 
 		List<FragmentEntry> fragmentEntries =
 			FragmentEntryLocalServiceUtil.getFragmentEntries(
 				getFragmentCollectionId(), QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
+		Element fragmentEntriesElement = new Element("fragment-entries", false);
+
 		for (FragmentEntry fragmentEntry : fragmentEntries) {
-			fragmentEntry.populateZipWriter(zipWriter, path);
+			fragmentEntry.populateZipWriter(
+				zipWriter, path + "/fragment_entries");
+
+			fragmentEntriesElement.addElement(
+				"fragment-entry", fragmentEntry.getFragmentEntryId());
 		}
+
+		zipWriter.addEntry(
+			path + "/fragment_entries/definition.xml",
+			fragmentEntriesElement.toXMLString());
 	}
 
 }

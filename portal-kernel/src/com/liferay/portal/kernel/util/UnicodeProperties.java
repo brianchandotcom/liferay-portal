@@ -119,13 +119,13 @@ public class UnicodeProperties extends HashMap<String, String> {
 			_log.error("Invalid property on line " + line);
 		}
 		else {
-			String value = line.substring(pos + 1).trim();
+			String value = StringUtil.trim(line.substring(pos + 1));
 
 			if (_safe) {
 				value = _decode(value);
 			}
 
-			setProperty(line.substring(0, pos).trim(), value);
+			setProperty(StringUtil.trim(line.substring(0, pos)), value);
 		}
 	}
 

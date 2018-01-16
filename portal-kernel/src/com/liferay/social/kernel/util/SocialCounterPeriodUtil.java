@@ -206,7 +206,9 @@ public class SocialCounterPeriodUtil {
 			calendar.set(Calendar.SECOND, 0);
 			calendar.set(Calendar.MILLISECOND, 0);
 
-			return getActivityDay(calendar.getTime().getTime());
+			Date calendarTime = calendar.getTime();
+
+			return getActivityDay(calendarTime.getTime());
 		}
 
 		return getStartPeriod() + offset * getPeriodLength();

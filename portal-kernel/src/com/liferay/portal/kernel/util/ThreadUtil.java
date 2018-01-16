@@ -124,7 +124,11 @@ public class ThreadUtil {
 			if (thread.getThreadGroup() != null) {
 				sb.append(StringPool.SPACE);
 				sb.append(StringPool.OPEN_PARENTHESIS);
-				sb.append(thread.getThreadGroup().getName());
+
+				ThreadGroup threadGroup = thread.getThreadGroup();
+
+				sb.append(threadGroup.getName());
+
 				sb.append(StringPool.CLOSE_PARENTHESIS);
 			}
 

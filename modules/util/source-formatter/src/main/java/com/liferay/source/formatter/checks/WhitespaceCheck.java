@@ -258,7 +258,9 @@ public class WhitespaceCheck extends BaseFileCheck {
 	}
 
 	protected String trimLine(String fileName, String line) {
-		if (line.trim().length() == 0) {
+		String trimmedLine = StringUtil.trim(line);
+
+		if (trimmedLine.length() == 0) {
 			return StringPool.BLANK;
 		}
 

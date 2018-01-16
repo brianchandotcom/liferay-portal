@@ -57,9 +57,9 @@ public class Entity implements Comparable<Entity> {
 	public static EntityColumn getColumn(
 		String name, List<EntityColumn> columnList) {
 
-		for (EntityColumn col : columnList) {
-			if (name.equals(col.getName())) {
-				return col;
+		for (EntityColumn entityColumn : columnList) {
+			if (name.equals(entityColumn.getName())) {
+				return entityColumn;
 			}
 		}
 
@@ -78,9 +78,9 @@ public class Entity implements Comparable<Entity> {
 		int index = columnList.indexOf(new EntityColumn(name));
 
 		if (index != -1) {
-			EntityColumn col = columnList.get(index);
+			EntityColumn entityColumn = columnList.get(index);
 
-			if ((type == null) || type.equals(col.getType())) {
+			if ((type == null) || type.equals(entityColumn.getType())) {
 				return true;
 			}
 		}
@@ -163,8 +163,8 @@ public class Entity implements Comparable<Entity> {
 		}
 
 		if ((_blobList != null) && !_blobList.isEmpty()) {
-			for (EntityColumn col : _blobList) {
-				if (!col.isLazy()) {
+			for (EntityColumn entityColumn : _blobList) {
+				if (!entityColumn.isLazy()) {
 					cacheEnabled = false;
 
 					break;
@@ -177,8 +177,10 @@ public class Entity implements Comparable<Entity> {
 		boolean containerModel = false;
 
 		if ((_columnList != null) && !_columnList.isEmpty()) {
-			for (EntityColumn col : _columnList) {
-				if (col.isContainerModel() || col.isParentContainerModel()) {
+			for (EntityColumn entityColumn : _columnList) {
+				if (entityColumn.isContainerModel() ||
+					entityColumn.isParentContainerModel()) {
+
 					containerModel = true;
 
 					break;
@@ -234,11 +236,11 @@ public class Entity implements Comparable<Entity> {
 		Iterator<EntityColumn> itr = badNamedColumnsList.iterator();
 
 		while (itr.hasNext()) {
-			EntityColumn col = itr.next();
+			EntityColumn entityColumn = itr.next();
 
-			String name = col.getName();
+			String name = entityColumn.getName();
 
-			if (name.equals(col.getDBName())) {
+			if (name.equals(entityColumn.getDBName())) {
 				itr.remove();
 			}
 		}
@@ -273,11 +275,13 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public EntityColumn getColumnByMappingTable(String mappingTable) {
-		for (EntityColumn col : _columnList) {
-			if ((col.getMappingTable() != null) &&
-				col.getMappingTable().equals(mappingTable)) {
+		for (EntityColumn entityColumn : _columnList) {
+			String entityColumnMappingTable = entityColumn.getMappingTable();
 
-				return col;
+			if ((entityColumnMappingTable != null) &&
+				entityColumnMappingTable.equals(mappingTable)) {
+
+				return entityColumn;
 			}
 		}
 
@@ -293,9 +297,9 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public EntityColumn getFilterPKColumn() {
-		for (EntityColumn col : _columnList) {
-			if (col.isFilterPrimary()) {
-				return col;
+		for (EntityColumn entityColumn : _columnList) {
+			if (entityColumn.isFilterPrimary()) {
+				return entityColumn;
 			}
 		}
 
@@ -359,9 +363,9 @@ public class Entity implements Comparable<Entity> {
 			return _name + "PK";
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		return col.getType();
+		return entityColumn.getType();
 	}
 
 	public String getPKDBName() {
@@ -369,9 +373,9 @@ public class Entity implements Comparable<Entity> {
 			return getVarName() + "PK";
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		return col.getDBName();
+		return entityColumn.getDBName();
 	}
 
 	public List<EntityColumn> getPKList() {
@@ -383,9 +387,9 @@ public class Entity implements Comparable<Entity> {
 			return getVarName() + "PK";
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		return col.getName();
+		return entityColumn.getName();
 	}
 
 	public String getPKVarNames() {
@@ -393,9 +397,9 @@ public class Entity implements Comparable<Entity> {
 			return getVarName() + "PKs";
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		return col.getNames();
+		return entityColumn.getNames();
 	}
 
 	public String getPortletName() {
@@ -482,9 +486,9 @@ public class Entity implements Comparable<Entity> {
 	public boolean hasActionableDynamicQuery() {
 		if (hasColumns() && hasLocalService()) {
 			if (hasCompoundPK()) {
-				EntityColumn col = _pkList.get(0);
+				EntityColumn entityColumn = _pkList.get(0);
 
-				return col.isPrimitiveType();
+				return entityColumn.isPrimitiveType();
 			}
 			else {
 				return hasPrimitivePK();
@@ -563,8 +567,8 @@ public class Entity implements Comparable<Entity> {
 			return false;
 		}
 
-		for (EntityColumn col : _blobList) {
-			if (col.isLazy()) {
+		for (EntityColumn entityColumn : _blobList) {
+			if (entityColumn.isLazy()) {
 				return true;
 			}
 		}
@@ -585,9 +589,9 @@ public class Entity implements Comparable<Entity> {
 			return false;
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		if (col.isPrimitiveType(includeWrappers)) {
+		if (entityColumn.isPrimitiveType(includeWrappers)) {
 			return true;
 		}
 		else {
@@ -697,14 +701,16 @@ public class Entity implements Comparable<Entity> {
 			return false;
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		if ((_columnList.indexOf(
-				new EntityColumn("parent" + col.getMethodName())) != -1) &&
-			(_columnList.indexOf(
-				new EntityColumn("left" + col.getMethodName())) != -1) &&
-			(_columnList.indexOf(
-				new EntityColumn("right" + col.getMethodName())) != -1)) {
+		String methodName = entityColumn.getMethodName();
+
+		if ((_columnList.indexOf(new EntityColumn("parent" + methodName)) !=
+				-1) &&
+			(_columnList.indexOf(new EntityColumn("left" + methodName)) !=
+				-1) &&
+			(_columnList.indexOf(new EntityColumn("right" + methodName)) !=
+				-1)) {
 
 			return true;
 		}
@@ -718,8 +724,8 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean isLocalizedModel() {
-		for (EntityColumn col : _columnList) {
-			if (col.isLocalized()) {
+		for (EntityColumn entityColumn : _columnList) {
+			if (entityColumn.isLocalized()) {
 				return true;
 			}
 		}
@@ -751,8 +757,10 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	public boolean isPermissionCheckEnabled(EntityFinder finder) {
+		String finderName = finder.getName();
+
 		if (_name.equals("Group") || _name.equals("User") ||
-			finder.getName().equals("UUID_G") || !finder.isCollection() ||
+			finderName.equals("UUID_G") || !finder.isCollection() ||
 			!hasPrimitivePK() || !_resourceActionModel) {
 
 			return false;
@@ -762,9 +770,9 @@ public class Entity implements Comparable<Entity> {
 			return false;
 		}
 
-		EntityColumn col = _getPKColumn();
+		EntityColumn entityColumn = _getPKColumn();
 
-		return StringUtil.equalsIgnoreCase("long", col.getType());
+		return StringUtil.equalsIgnoreCase("long", entityColumn.getType());
 	}
 
 	public boolean isPermissionedModel() {

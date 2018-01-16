@@ -214,9 +214,10 @@ public class WSRPConsumerManager {
 			for (PropertyDescription propertyDescription :
 					propertyDescriptions) {
 
+				QName qName = propertyDescription.getName();
+
 				_propertyDescriptions.put(
-					propertyDescription.getName().toString(),
-					propertyDescription);
+					qName.toString(), propertyDescription);
 			}
 		}
 

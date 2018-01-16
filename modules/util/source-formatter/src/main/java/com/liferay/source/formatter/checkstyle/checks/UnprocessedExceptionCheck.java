@@ -239,7 +239,9 @@ public class UnprocessedExceptionCheck extends BaseCheck {
 
 		Collection<JavaSource> sources = javaProjectBuilder.getSources();
 
-		JavaSource javaSource = sources.iterator().next();
+		Iterator<JavaSource> iterator = sources.iterator();
+
+		JavaSource javaSource = iterator.next();
 
 		for (String importClassName : javaSource.getImports()) {
 			if (importClassName.endsWith("Exception")) {

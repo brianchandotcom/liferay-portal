@@ -150,7 +150,7 @@ public class LayoutPageTemplateCollectionServiceImpl
 			OrderByComparator<LayoutPageTemplateCollection> orderByComparator)
 		throws PortalException {
 
-		int count = layoutPageTemplateCollectionPersistence.countByG_T(
+		int count = layoutPageTemplateCollectionPersistence.filterCountByG_T(
 			groupId,
 			LayoutPageTemplateCollectionTypeConstants.TYPE_ASSET_DISPLAY_PAGE);
 

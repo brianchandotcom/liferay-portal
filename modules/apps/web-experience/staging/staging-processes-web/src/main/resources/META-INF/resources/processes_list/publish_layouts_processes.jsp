@@ -180,11 +180,25 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 						</span>
 					</liferay-ui:search-container-column-text>
 
-					<liferay-ui:search-container-column-jsp
+					<liferay-ui:search-container-column-text
 						cssClass="background-task-status-column"
 						name="status"
-						path="/processes_list/publish_process_message.jsp"
-					/>
+					>
+						<liferay-staging:process-in-progress
+							backgroundTask="<%= backgroundTask %>"
+						/>
+
+						<liferay-staging:process-status
+							backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
+							backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
+						/>
+
+						<liferay-staging:process-message-task-details
+							backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
+							backgroundTaskStatusMessage="<%= backgroundTask.getStatusMessage() %>"
+							linkClass="background-task-status-row"
+						/>
+					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-date
 						name="create-date"

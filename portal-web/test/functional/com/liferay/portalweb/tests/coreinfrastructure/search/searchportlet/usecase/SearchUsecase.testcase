@@ -283,9 +283,9 @@
 
 		<execute macro="SearchBarPortlet#viewSearchResults">
 			<var name="entryDate" value="${currentDate}" />
+			<var name="searchAssetSummary" value="This is a blog about Potatoes" />
 			<var name="searchAssetTitle" value="Potato Blog" />
 			<var name="searchAssetType" value="Blogs Entry" />
-			<var name="searchAssetSummary" value="This is a blog about Potatoes" />
 			<var name="searchTerm" value="Potato" />
 		</execute>
 

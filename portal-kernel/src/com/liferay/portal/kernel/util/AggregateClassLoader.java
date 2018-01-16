@@ -83,22 +83,24 @@ public class AggregateClassLoader extends ClassLoader {
 			return;
 		}
 
-		if ((classLoader instanceof AggregateClassLoader) &&
-			classLoader.getParent().equals(getParent())) {
+		if (classLoader instanceof AggregateClassLoader) {
+			ClassLoader classLoaderParent = classLoader.getParent();
 
-			AggregateClassLoader aggregateClassLoader =
-				(AggregateClassLoader)classLoader;
+			if (classLoaderParent.equals(getParent())) {
+				AggregateClassLoader aggregateClassLoader =
+					(AggregateClassLoader)classLoader;
 
-			for (ClassLoader curClassLoader :
-					aggregateClassLoader.getClassLoaders()) {
+				for (ClassLoader curClassLoader :
+						aggregateClassLoader.getClassLoaders()) {
 
-				addClassLoader(curClassLoader);
+					addClassLoader(curClassLoader);
+				}
+
+				return;
 			}
 		}
-		else {
-			_classLoaderReferences.add(
-				new EqualityWeakReference<>(classLoader));
-		}
+
+		_classLoaderReferences.add(new EqualityWeakReference<>(classLoader));
 	}
 
 	public void addClassLoader(ClassLoader... classLoaders) {

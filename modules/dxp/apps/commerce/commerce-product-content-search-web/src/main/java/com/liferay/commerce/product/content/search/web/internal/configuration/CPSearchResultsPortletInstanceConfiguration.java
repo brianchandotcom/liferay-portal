@@ -33,11 +33,11 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CPSearchResultsPortletInstanceConfiguration {
 
-	@Meta.AD(deflt = "false", required = false)
-	public boolean useAssetCategories();
-
 	@Meta.AD(required = false)
 	public String[] assetCategoryIds();
+
+	@Meta.AD(deflt = "", required = false)
+	public String configurationMethod();
 
 	@Meta.AD(deflt = "", required = false)
 	public String displayStyle();

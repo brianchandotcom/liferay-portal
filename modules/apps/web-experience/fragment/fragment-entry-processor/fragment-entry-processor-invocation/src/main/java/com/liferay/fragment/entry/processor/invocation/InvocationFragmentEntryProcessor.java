@@ -20,7 +20,10 @@ import com.liferay.fragment.invocation.provider.PortletInvocationProviderTracker
 import com.liferay.fragment.processor.FragmentEntryProcessor;
 import com.liferay.fragment.util.HtmlParserUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -46,22 +49,12 @@ public class InvocationFragmentEntryProcessor
 	implements FragmentEntryProcessor {
 
 	@Override
-	public void validateFragmentEntryHTML(String html) throws PortalException {
-		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
-			"content.Language", getClass());
-
-		StringBundler sb = new StringBundler(4);
-
-		sb.append(StringPool.DOUBLE_SLASH);
-		sb.append("*[starts-with(local-name(), '");
-		sb.append(PortletInvocationProvider.INVOCATION_TAG_PREFIX);
-		sb.append("')]");
-
-		XPath invocableXpath = SAXReaderUtil.createXPath(sb.toString());
+	public String processFragmentEntryHTML(String html, JSONObject jsonObject)
+		throws PortalException {
 
 		Document document = _htmlParserUtil.parse(html);
 
-		List<Node> invocableNodes = invocableXpath.selectNodes(document);
+		List<Node> invocableNodes = _getInvocableNodes(document);
 
 		for (Node node : invocableNodes) {
 			Element element = (Element)node;
@@ -78,7 +71,60 @@ public class InvocationFragmentEntryProcessor
 			if (portletInvocationProvider == null) {
 				throw new FragmentEntryContentException(
 					LanguageUtil.format(
-						resourceBundle,
+						_resourceBundle,
+						"no-portlet-invocation-provider-available-for-alias-x",
+						alias));
+			}
+
+			ServiceContext serviceContext =
+				ServiceContextThreadLocal.getServiceContext();
+
+			if (serviceContext == null) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.get(
+						_resourceBundle, "no-service-context-available"));
+			}
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append("<div>");
+			sb.append(
+				portletInvocationProvider.render(
+					serviceContext.getRequest(), serviceContext.getResponse(),
+					jsonObject));
+			sb.append("</div>");
+
+			Document portletDocument = _htmlParserUtil.parse(sb.toString());
+
+			element.add(portletDocument.getRootElement());
+		}
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.asXML();
+	}
+
+	@Override
+	public void validateFragmentEntryHTML(String html) throws PortalException {
+		List<Node> invocableNodes = _getInvocableNodes(
+			_htmlParserUtil.parse(html));
+
+		for (Node node : invocableNodes) {
+			Element element = (Element)node;
+
+			String alias = StringUtil.replace(
+				element.getName(),
+				PortletInvocationProvider.INVOCATION_TAG_PREFIX,
+				StringPool.BLANK);
+
+			PortletInvocationProvider portletInvocationProvider =
+				_portletInvocationProviderTracker.getPortletInvocationProvider(
+					alias);
+
+			if (portletInvocationProvider == null) {
+				throw new FragmentEntryContentException(
+					LanguageUtil.format(
+						_resourceBundle,
 						"no-portlet-invocation-provider-available-for-alias-x",
 						alias));
 			}
@@ -90,7 +136,7 @@ public class InvocationFragmentEntryProcessor
 				if (Validator.isNull(element.attributeValue(attribute))) {
 					throw new FragmentEntryContentException(
 						LanguageUtil.format(
-							resourceBundle,
+							_resourceBundle,
 							"missing-required-attribute-x-for-tag-x",
 							new String[] {attribute, element.getName()}));
 				}
@@ -98,10 +144,28 @@ public class InvocationFragmentEntryProcessor
 		}
 	}
 
+	private List<Node> _getInvocableNodes(Document document)
+		throws FragmentEntryContentException {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(StringPool.DOUBLE_SLASH);
+		sb.append("*[starts-with(local-name(), '");
+		sb.append(PortletInvocationProvider.INVOCATION_TAG_PREFIX);
+		sb.append("')]");
+
+		XPath invocableXpath = SAXReaderUtil.createXPath(sb.toString());
+
+		return invocableXpath.selectNodes(document);
+	}
+
 	@Reference
 	private HtmlParserUtil _htmlParserUtil;
 
 	@Reference
 	private PortletInvocationProviderTracker _portletInvocationProviderTracker;
+
+	private final ResourceBundle _resourceBundle = ResourceBundleUtil.getBundle(
+		"content.Language", getClass());
 
 }

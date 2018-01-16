@@ -99,6 +99,6 @@ String[] displayActivityCounterNameIndexes = new String[displayActivityCounterNa
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" />
+		<aui:button type="submit" />
 	</aui:button-row>
 </aui:form>

@@ -77,7 +77,7 @@ public class SessionKeysCheck extends BaseFileCheck {
 
 			x = x + s.length();
 
-			String substring = match.substring(x).trim();
+			String substring = StringUtil.trim(match.substring(x));
 
 			String quote = StringPool.BLANK;
 

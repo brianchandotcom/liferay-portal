@@ -2998,7 +2998,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 				userLocalService.updateUser(user);
 			}
 
-			long timeModified = user.getPasswordModifiedDate().getTime();
+			Date passwordModifiedDate = user.getPasswordModifiedDate();
+
+			long timeModified = passwordModifiedDate.getTime();
 
 			long passwordExpiresOn =
 				(passwordPolicy.getMaxAge() * 1000) + timeModified;
@@ -4925,7 +4927,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 			user = userPersistence.update(user);
 		}
 		catch (ModelListenerException mle) {
-			String msg = GetterUtil.getString(mle.getCause().getMessage());
+			Throwable throwable = mle.getCause();
+
+			String msg = GetterUtil.getString(throwable.getMessage());
 
 			if (LDAPSettingsUtil.isPasswordPolicyEnabled(user.getCompanyId())) {
 				String[] errorPasswordHistoryKeywords =
@@ -5954,7 +5958,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		int failedLoginAttempts = user.getFailedLoginAttempts();
 
 		if (failedLoginAttempts > 0) {
-			long failedLoginTime = user.getLastFailedLoginDate().getTime();
+			Date lastFailedLoginDate = user.getLastFailedLoginDate();
+
+			long failedLoginTime = lastFailedLoginDate.getTime();
 
 			long elapsedTime = now.getTime() - failedLoginTime;
 
@@ -5973,7 +5979,9 @@ public class UserLocalServiceImpl extends UserLocalServiceBaseImpl {
 		// Reset lockout
 
 		if (user.isLockout()) {
-			long lockoutTime = user.getLockoutDate().getTime();
+			Date lockoutDate = user.getLockoutDate();
+
+			long lockoutTime = lockoutDate.getTime();
 
 			long elapsedTime = now.getTime() - lockoutTime;
 

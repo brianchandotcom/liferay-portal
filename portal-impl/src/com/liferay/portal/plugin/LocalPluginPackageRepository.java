@@ -67,8 +67,11 @@ public class LocalPluginPackageRepository {
 		PluginPackage latestPluginPackage = null;
 
 		for (PluginPackage pluginPackage : _pluginPackages.values()) {
-			if (pluginPackage.getGroupId().equals(groupId) &&
-				pluginPackage.getArtifactId().equals(artifactId) &&
+			String pluginPackageGroupId = pluginPackage.getGroupId();
+			String pluginPackageArtifactId = pluginPackage.getArtifactId();
+
+			if (pluginPackageGroupId.equals(groupId) &&
+				pluginPackageArtifactId.equals(artifactId) &&
 				((latestPluginPackage == null) ||
 				 pluginPackage.isLaterVersionThan(latestPluginPackage))) {
 
@@ -93,8 +96,11 @@ public class LocalPluginPackageRepository {
 		List<PluginPackage> pluginPackages = new ArrayList<>();
 
 		for (PluginPackage pluginPackage : _pluginPackages.values()) {
-			if (pluginPackage.getGroupId().equals(groupId) &&
-				pluginPackage.getArtifactId().equals(artifactId)) {
+			String pluginPackageGroupId = pluginPackage.getGroupId();
+			String pluginPackageArtifactId = pluginPackage.getArtifactId();
+
+			if (pluginPackageGroupId.equals(groupId) &&
+				pluginPackageArtifactId.equals(artifactId)) {
 
 				pluginPackages.add(pluginPackage);
 			}

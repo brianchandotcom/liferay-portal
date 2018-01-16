@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.LayoutReference;
+import com.liferay.portal.kernel.model.LayoutSoap;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Plugin;
 import com.liferay.portal.kernel.model.User;
@@ -876,9 +877,10 @@ public class LayoutServiceImpl extends LayoutServiceBaseImpl {
 
 		for (LayoutReference layoutReference : layoutReferences) {
 			try {
+				LayoutSoap layoutSoap = layoutReference.getLayoutSoap();
+
 				if (LayoutPermissionUtil.contains(
-						getPermissionChecker(),
-						layoutReference.getLayoutSoap().getPlid(),
+						getPermissionChecker(), layoutSoap.getPlid(),
 						ActionKeys.VIEW)) {
 
 					filteredLayoutReferences.add(layoutReference);

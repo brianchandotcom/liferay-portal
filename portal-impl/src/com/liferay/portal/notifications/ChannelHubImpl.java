@@ -140,7 +140,9 @@ public class ChannelHubImpl implements ChannelHub {
 		Iterator<Map.Entry<Long, Channel>> itr = channels.iterator();
 
 		while (itr.hasNext()) {
-			Channel channel = itr.next().getValue();
+			Map.Entry<Long, Channel> entry = itr.next();
+
+			Channel channel = entry.getValue();
 
 			channel.close();
 

@@ -212,7 +212,9 @@ public class RoleFinderImpl extends RoleFinderBaseImpl implements RoleFinder {
 				qPos.add(userId);
 			}
 
-			return q.list().size();
+			List<Role> roles = q.list();
+
+			return roles.size();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);

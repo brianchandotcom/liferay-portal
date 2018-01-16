@@ -173,9 +173,9 @@ public class LiferayWorkflowCapability
 
 		String syncEvent = DLSyncConstants.EVENT_UPDATE;
 
-		if (dlFileVersion.getVersion().equals(
-				DLFileEntryConstants.VERSION_DEFAULT)) {
+		String version = dlFileVersion.getVersion();
 
+		if (version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
 			syncEvent = DLSyncConstants.EVENT_ADD;
 		}
 

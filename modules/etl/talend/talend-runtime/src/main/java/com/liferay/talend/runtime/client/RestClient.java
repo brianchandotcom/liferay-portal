@@ -51,17 +51,20 @@ public class RestClient {
 	 */
 	public static final String JSON_LD = "application/ld+json";
 
-	public RestClient(LiferayConnectionProperties connection) {
-		_endpoint = connection.endpoint.getValue();
-		_userId = connection.userId.getValue();
-		_password = connection.password.getValue();
+	public RestClient(LiferayConnectionProperties liferayConnectionProperties) {
+		this(
+			liferayConnectionProperties.endpoint.getValue(),
+			liferayConnectionProperties.password.getValue(),
+			liferayConnectionProperties.userId.getValue());
 	}
 
 	public RestClient(
-		LiferayConnectionProperties connection, String resourceURL) {
+		LiferayConnectionProperties liferayConnectionProperties,
+		String endpoint) {
 
-		this(connection);
-		_endpoint = resourceURL;
+		this(
+			endpoint, liferayConnectionProperties.password.getValue(),
+			liferayConnectionProperties.userId.getValue());
 	}
 
 	public ApioResult executeGetRequest() throws ApioException {
@@ -69,10 +72,9 @@ public class RestClient {
 
 		WebTarget webTarget = client.target(_endpoint);
 
-		Invocation.Builder invocationBuilder = webTarget.request(
-			APPLICATION_JSON_LD);
+		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
 
-		Response response = _follow3Redirects(client, invocationBuilder.get());
+		Response response = _follow3Redirects(client, builder.get());
 
 		return _handleApioResponse(QueryMethod.GET, response);
 	}
@@ -86,12 +88,12 @@ public class RestClient {
 	}
 
 	public ClientConfig setCredentials(String userId, String password) {
-		HttpAuthenticationFeature authFeature = HttpAuthenticationFeature.basic(
-			userId, password);
+		HttpAuthenticationFeature httpAuthenticationFeature =
+			HttpAuthenticationFeature.basic(userId, password);
 
 		ClientConfig clientConfig = new ClientConfig();
 
-		clientConfig.register(authFeature);
+		clientConfig.register(httpAuthenticationFeature);
 
 		return clientConfig;
 	}
@@ -106,6 +108,12 @@ public class RestClient {
 		GET, POST, DELETE
 	}
 
+	private RestClient(String endpoint, String password, String userId) {
+		_endpoint = endpoint;
+		_password = password;
+		_userId = userId;
+	}
+
 	private Response _follow3Redirects(
 		Client client, Response currentResponse) {
 
@@ -115,12 +123,12 @@ public class RestClient {
 			return currentResponse;
 		}
 
-		AtomicInteger counter = new AtomicInteger();
+		AtomicInteger atomicInteger = new AtomicInteger();
 		Response response = currentResponse;
 
 		while ((statusType.getFamily() ==
 					Response.Status.Family.REDIRECTION) &&
-			   (counter.incrementAndGet() <= 3)) {
+			   (atomicInteger.incrementAndGet() <= 3)) {
 
 			String location = response.getHeaderString(HttpHeaders.LOCATION);
 
@@ -130,17 +138,16 @@ public class RestClient {
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(
-					"Redirect location {}#: {}", counter.get(), location);
+					"Redirect location {}#: {}", atomicInteger.get(), location);
 			}
 
 			response.close();
 
 			WebTarget webTarget = client.target(location);
 
-			Invocation.Builder invocationBuilder = webTarget.request(
-				APPLICATION_JSON_LD);
+			Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
 
-			response = invocationBuilder.get();
+			response = builder.get();
 		}
 
 		return response;
@@ -163,14 +170,14 @@ public class RestClient {
 
 			throw new ApioException(
 				statusCode,
-				"Request failed! Please check your request setting!");
+				"Request failed, please check your request setting");
 		}
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		RestClient.class);
 
-	private volatile String _endpoint;
+	private final String _endpoint;
 	private final String _password;
 	private final String _userId;
 

@@ -32,35 +32,18 @@ import org.talend.daikon.sandbox.SandboxedInstance;
 public abstract class LiferayBaseComponentDefinition
 	extends AbstractComponentDefinition {
 
-	public static final String MAVEN_DEFINITION_ARTIFACT_ID =
-		"com.liferay.talend.definition";
-
-	public static final String MAVEN_GROUP_ID = "com.liferay";
-
-	public static final String MAVEN_RUNTIME_ARTIFACT_ID =
-		"com.liferay.talend.runtime";
-
-	public static final String MAVEN_RUNTIME_URI =
-		"mvn:" + MAVEN_GROUP_ID + "/" + MAVEN_RUNTIME_ARTIFACT_ID;
-
-	public static final String RUNTIME_OLD_CLASS_NAME =
-		"com.liferay.talend.runtime.reader.LiferayInputSource";
-
-	public static final String RUNTIME_SINK_CLASS =
-		"com.liferay.talend.runtime.LiferaySink";
-
-	public static final String RUNTIME_SOURCE_CLASS =
+	public static final String RUNTIME_SOURCE_CLASS_NAME =
 		"com.liferay.talend.runtime.LiferaySource";
 
-	public static final String RUNTIME_SOURCEORSINK_CLASS =
+	public static final String RUNTIME_SOURCE_OR_SINK_CLASS_NAME =
 		"com.liferay.talend.runtime.LiferaySourceOrSink";
 
-	public static RuntimeInfo getCommonRuntimeInfo(String clazz) {
+	public static RuntimeInfo getCommonRuntimeInfo(String className) {
 		return new JarRuntimeInfo(
-			MAVEN_RUNTIME_URI,
+			_MAVEN_RUNTIME_URI,
 			DependenciesReader.computeDependenciesFilePath(
-				MAVEN_GROUP_ID, MAVEN_RUNTIME_ARTIFACT_ID),
-			clazz);
+				_MAVEN_GROUP_ID, _MAVEN_RUNTIME_ARTIFACT_ID),
+			className);
 	}
 
 	public static SandboxedInstance getSandboxedInstance(
@@ -86,28 +69,27 @@ public abstract class LiferayBaseComponentDefinition
 	 * <p>The method is intended for debug/test purposes only and should not be
 	 * used in production.
 	 *
-	 * @param provider provider to be set, can't be {@code null}
+	 * @param sandboxedInstanceProvider provider to be set, can't be {@code null}
 	 */
 	public static void setSandboxedInstanceProvider(
-		SandboxedInstanceProvider provider) {
+		SandboxedInstanceProvider sandboxedInstanceProvider) {
 
-		_sandboxedInstanceProvider = provider;
+		_sandboxedInstanceProvider = sandboxedInstanceProvider;
 	}
 
 	public LiferayBaseComponentDefinition(
-		String componentName, ExecutionEngine engine1,
-		ExecutionEngine... engineOthers) {
+		String componentName, ExecutionEngine executionEngine,
+		ExecutionEngine... otherExecutionEngines) {
 
-		super(componentName, engine1, engineOthers);
+		super(componentName, executionEngine, otherExecutionEngines);
 	}
 
 	@Override
 	public String[] getFamilies() {
-		return new String[] {"Business/Liferay"}; //$NON-NLS-1$
+		return new String[] {"Business/Liferay"};
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Class<? extends ComponentProperties>[]
 		getNestedCompatibleComponentPropertiesClass() {
 
@@ -133,12 +115,8 @@ public abstract class LiferayBaseComponentDefinition
 	 * As for Number of records property see Reader implementation in runtime
 	 * part
 	 */
-	@SuppressWarnings("rawtypes")
 	@Override
-	/* Most of the components are on the input side, so put this here, the
-	 * output definition will override this
-	 */
-	public Property[] getReturnProperties() {
+	public Property<?>[] getReturnProperties() {
 		return new Property[] {
 			RETURN_ERROR_MESSAGE_PROP, RETURN_TOTAL_RECORD_COUNT_PROP
 		};
@@ -174,6 +152,14 @@ public abstract class LiferayBaseComponentDefinition
 		}
 
 	}
+
+	private static final String _MAVEN_GROUP_ID = "com.liferay";
+
+	private static final String _MAVEN_RUNTIME_ARTIFACT_ID =
+		"com.liferay.talend.runtime";
+
+	private static final String _MAVEN_RUNTIME_URI =
+		"mvn:" + _MAVEN_GROUP_ID + "/" + _MAVEN_RUNTIME_ARTIFACT_ID;
 
 	private static SandboxedInstanceProvider _sandboxedInstanceProvider =
 		SandboxedInstanceProvider.INSTANCE;

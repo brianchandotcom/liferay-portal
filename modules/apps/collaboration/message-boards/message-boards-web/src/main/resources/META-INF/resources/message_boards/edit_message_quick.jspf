@@ -186,13 +186,13 @@ Boolean showPermanentLink = (Boolean)request.getAttribute("edit-message.jsp-show
 						}
 						%>
 
-						<aui:button cssClass="btn-lg" name='<%= "replyMessageButton" + replyToMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
+						<aui:button name='<%= "replyMessageButton" + replyToMessageId %>' type="submit" value="<%= publishButtonLabel %>" />
 
 						<%
 						String taglibCancelReply = "javascript:" + liferayPortletResponse.getNamespace() + "hideReplyMessage('" + replyToMessageId + "');";
 						%>
 
-						<aui:button cssClass="btn-lg" onClick="<%= taglibCancelReply %>" type="cancel" />
+						<aui:button onClick="<%= taglibCancelReply %>" type="cancel" />
 					</aui:button-row>
 				</aui:form>
 			</div>

@@ -29,10 +29,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author Noah Sherrill
  */
 public class AnnouncementsEntryUADEntity extends BaseUADEntity {
+
+	public static List<String> getUserIdFieldNames() {
+		return Arrays.asList("userId");
+	}
 
 	public AnnouncementsEntryUADEntity(
 		long userId, String uadEntityId,

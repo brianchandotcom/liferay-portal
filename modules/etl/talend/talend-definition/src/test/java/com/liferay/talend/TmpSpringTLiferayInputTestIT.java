@@ -26,5 +26,5 @@ import org.talend.components.service.spring.SpringTestApp;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringTestApp.class)
-public class SpringtLiferayInputTestIT extends LiferayInputTestBase {
+public class TmpSpringTLiferayInputTestIT extends LiferayInputTestBase {
 }

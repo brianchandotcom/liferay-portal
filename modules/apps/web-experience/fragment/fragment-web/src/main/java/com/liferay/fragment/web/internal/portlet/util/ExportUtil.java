@@ -26,12 +26,15 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = ExportUtil.class)
 public class ExportUtil {
 
-	public static File exportFragmentCollections(
+	public File exportFragmentCollections(
 			List<FragmentCollection> fragmentCollections)
 		throws PortletException {
 
@@ -64,8 +67,7 @@ public class ExportUtil {
 		}
 	}
 
-	public static File exportFragmentEntries(
-			List<FragmentEntry> fragmentEntries)
+	public File exportFragmentEntries(List<FragmentEntry> fragmentEntries)
 		throws PortletException {
 
 		ZipWriter zipWriter = ZipWriterFactoryUtil.getZipWriter();

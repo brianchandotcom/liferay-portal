@@ -138,4 +138,6 @@ else {
 			url="<%= deleteURL %>"
 		/>
 	</c:if>
+
+	<liferay-export-import-changeset:publish-entity className="<%= BookmarksEntry.class.getName() %>" groupId="<%= entry.getGroupId() %>" uuid="<%= entry.getUuid() %>" />
 </liferay-ui:icon-menu>

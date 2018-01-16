@@ -18,6 +18,7 @@ dependencies {
 	provided project(":apps:collaboration:bookmarks:bookmarks-service")
 	provided project(":apps:collaboration:subscription:subscription-api")
 	provided project(":apps:web-experience:asset:asset-taglib")
+	provided project(":apps:web-experience:export-import:export-import-changeset-taglib")
 	provided project(":apps:web-experience:trash:trash-api")
 	provided project(":apps:web-experience:trash:trash-taglib")
 }

@@ -17,6 +17,7 @@ package com.liferay.portal.kernel.settings;
 /**
  * @author Ivan Zaera
  * @author Jorge Ferrer
+ * @author Drew Brokke
  */
 public class CompanyServiceSettingsLocator implements SettingsLocator {
 

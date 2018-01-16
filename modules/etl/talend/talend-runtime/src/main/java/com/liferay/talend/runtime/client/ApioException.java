@@ -14,8 +14,6 @@
 
 package com.liferay.talend.runtime.client;
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * @author Zoltán Takács
  */
@@ -23,53 +21,26 @@ public class ApioException extends Exception {
 
 	public ApioException(int code, String message) {
 		super(message);
-		_code = Integer.valueOf(code).toString();
+
+		_code = code;
 	}
 
 	public ApioException(int code, String message, Throwable cause) {
 		super(message, cause);
-		_code = Integer.valueOf(code).toString();
-	}
 
-	public ApioException(String message) {
-		super(message);
-	}
-
-	public ApioException(String code, String message) {
-		super(message);
 		_code = code;
 	}
 
-	public ApioException(String code, String message, Throwable cause) {
-		super(message, cause);
-		_code = code;
-	}
-
-	public ApioException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
-	public ApioException(Throwable cause) {
-		super(cause);
-	}
-
-	public String getCode() {
+	public int getCode() {
 		return _code;
-	}
-
-	public void setCode(String code) {
-		_code = code;
 	}
 
 	@Override
 	public String toString() {
-		final StringBuffer sb = new StringBuffer("ApioException{");
+		StringBuilder sb = new StringBuilder("ApioException{");
 
-		if (!StringUtils.isEmpty(_code)) {
-			sb.append(", code='");
-			sb.append(_code).append('\'');
-		}
-
+		sb.append("code=");
+		sb.append(_code);
 		sb.append(", message='");
 		sb.append(getMessage());
 		sb.append('\'');
@@ -85,8 +56,6 @@ public class ApioException extends Exception {
 		return sb.toString();
 	}
 
-	private static final long serialVersionUID = 1L;
-
-	private String _code = "";
+	private final int _code;
 
 }

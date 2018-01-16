@@ -22,15 +22,14 @@ import org.talend.daikon.properties.ValidationResultMutable;
  */
 public abstract class ExceptionUtils {
 
-	public static ValidationResult exceptionToValidationResult(Exception ex) {
-		ValidationResultMutable vr = new ValidationResultMutable();
+	public static ValidationResult exceptionToValidationResult(Exception e) {
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
 
-		// FIXME
+		validationResultMutable.setMessage(e.getMessage());
+		validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
-		vr.setMessage(ex.getMessage());
-		vr.setStatus(ValidationResult.Result.ERROR);
-
-		return vr;
+		return validationResultMutable;
 	}
 
 }

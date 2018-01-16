@@ -25,6 +25,7 @@ import java.util.Map;
 import org.apache.avro.Schema;
 
 import org.talend.components.api.component.runtime.AbstractBoundedReader;
+import org.talend.components.api.component.runtime.BoundedSource;
 import org.talend.components.api.component.runtime.Result;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.daikon.avro.AvroUtils;
@@ -48,34 +49,42 @@ public abstract class LiferayBaseReader<T> extends AbstractBoundedReader<T> {
 	}
 
 	protected LiferayBaseReader(
-		RuntimeContainer container, LiferaySource source) {
+		RuntimeContainer runtimeContainer, LiferaySource liferaySource) {
 
-		super(source);
-		this.container = container;
+		super(liferaySource);
+
+		this.runtimeContainer = runtimeContainer;
 	}
 
 	protected Schema getSchema() throws IOException {
-		if (runtimeSchema == null) {
-			runtimeSchema = properties.getSchema();
+		if (schema == null) {
+			schema = liferayConnectionResourceBaseProperties.getSchema();
 
-			if (AvroUtils.isIncludeAllFields(runtimeSchema)) {
+			if (AvroUtils.isIncludeAllFields(schema)) {
 				String resourceURL = null;
 
-				if (properties instanceof TLiferayInputProperties) {
-					resourceURL = properties.resource.resourceURL.getValue();
+				if (liferayConnectionResourceBaseProperties instanceof
+						TLiferayInputProperties) {
+
+					resourceURL =
+						liferayConnectionResourceBaseProperties.resource.
+							resourceURL.getValue();
 				}
 
-				runtimeSchema = getCurrentSource().getEndpointSchema(
-					container, resourceURL);
+				BoundedSource boundedSource = getCurrentSource();
+
+				schema = boundedSource.getEndpointSchema(
+					runtimeContainer, resourceURL);
 			}
 		}
 
-		return runtimeSchema;
+		return schema;
 	}
 
-	protected RuntimeContainer container;
 	protected int dataCount;
-	protected LiferayConnectionResourceBaseProperties properties;
-	protected transient Schema runtimeSchema;
+	protected LiferayConnectionResourceBaseProperties
+		liferayConnectionResourceBaseProperties;
+	protected RuntimeContainer runtimeContainer;
+	protected transient Schema schema;
 
 }

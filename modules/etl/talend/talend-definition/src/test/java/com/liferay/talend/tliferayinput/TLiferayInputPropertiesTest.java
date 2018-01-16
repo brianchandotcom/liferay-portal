@@ -35,27 +35,19 @@ public class TLiferayInputPropertiesTest {
 	@Ignore
 	@Test
 	public void testRefreshLayout() {
-		TLiferayInputProperties properties = new TLiferayInputProperties(
-			"root");
+		TLiferayInputProperties tLiferayInputProperties =
+			new TLiferayInputProperties("root");
 
-		properties.init();
+		tLiferayInputProperties.init();
 
-		properties.refreshLayout(properties.getForm(Form.MAIN));
+		tLiferayInputProperties.refreshLayout(
+			tLiferayInputProperties.getForm(Form.MAIN));
 
-		Form mainForm = properties.getForm(Form.MAIN);
+		Form form = tLiferayInputProperties.getForm(Form.MAIN);
 
-		boolean schemaHidden = mainForm.getWidget("schema").isHidden();
-
-		Assert.assertFalse(schemaHidden);
-
-		boolean endpointHidden = mainForm.getWidget("endpoint").isHidden();
-
-		Assert.assertFalse(endpointHidden);
-
-		boolean guessSchemaHidden = mainForm.getWidget(
-			"guessSchema").isHidden();
-
-		Assert.assertFalse(guessSchemaHidden);
+		Assert.assertFalse(_isHidden(form, "schema"));
+		Assert.assertFalse(_isHidden(form, "endpoint"));
+		Assert.assertFalse(_isHidden(form, "guessSchema"));
 	}
 
 	/**
@@ -64,20 +56,20 @@ public class TLiferayInputPropertiesTest {
 	@Ignore
 	@Test
 	public void testSetupLayout() {
-		TLiferayInputProperties properties = new TLiferayInputProperties(
-			"root");
+		TLiferayInputProperties tLiferayInputProperties =
+			new TLiferayInputProperties("root");
 
-		properties.setupLayout();
+		tLiferayInputProperties.setupLayout();
 
-		Form main = properties.getForm(Form.MAIN);
+		Form form = tLiferayInputProperties.getForm(Form.MAIN);
 
-		assertThat(main, notNullValue());
+		assertThat(form, notNullValue());
 
-		Widget schemaWidget = main.getWidget("schema");
+		Widget schemaWidget = form.getWidget("schema");
 
 		assertThat(schemaWidget, notNullValue());
 
-		Widget guessSchemaWidget = main.getWidget("guessSchema");
+		Widget guessSchemaWidget = form.getWidget("guessSchema");
 
 		assertThat(guessSchemaWidget, notNullValue());
 	}
@@ -87,10 +79,20 @@ public class TLiferayInputPropertiesTest {
 	 */
 	@Test
 	public void testSetupProperties() {
-		TLiferayInputProperties properties = new TLiferayInputProperties(
-			"root");
+		TLiferayInputProperties tLiferayInputProperties =
+			new TLiferayInputProperties("root");
 
-		properties.setupProperties();
+		tLiferayInputProperties.setupProperties();
+	}
+
+	private boolean _isHidden(Form form, String name) {
+		Widget widget = form.getWidget(name);
+
+		if (widget.isHidden()) {
+			return true;
+		}
+
+		return false;
 	}
 
 }

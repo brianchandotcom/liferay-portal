@@ -32,27 +32,27 @@ public class ApioJsonLDUtils {
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and looks for the members array node.
 	 *
-	 * @param resource
+	 * @param resourceJsonNode
 	 * @return <code>JsonNode</code> The ArrayNode which contains the
 	 * resource entries of a given (partial)collection (Members) or MissingNode
 	 * if it's not present
 	 */
-	public static JsonNode getCollectionMemberNode(JsonNode resource) {
+	public static JsonNode getCollectionMemberNode(JsonNode resourceJsonNode) {
 		return _findCollectionNode(
-			resource, ApioJsonLDConstants.COLLECTION_MEMBERS);
+			resourceJsonNode, ApioJsonLDConstants.COLLECTION_MEMBERS);
 	}
 
 	/**
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and looks for the view node.
 	 *
-	 * @param resource
+	 * @param resourceJsonNode
 	 * @return <code>JsonNode</code> The JsonNode for the view section or
 	 * MissingNode if it's not present
 	 */
-	public static JsonNode getCollectionViewNode(JsonNode resource) {
+	public static JsonNode getCollectionViewNode(JsonNode resourceJsonNode) {
 		return _findCollectionNode(
-			resource, ApioJsonLDConstants.COLLECTION_VIEW);
+			resourceJsonNode, ApioJsonLDConstants.COLLECTION_VIEW);
 	}
 
 	/**
@@ -63,20 +63,23 @@ public class ApioJsonLDUtils {
 	 * JsonNode
 	 */
 	public static String getResourceActualPage(JsonNode resourceViewJsonNode) {
-		JsonNode node = resourceViewJsonNode.findValue(ApioJsonLDConstants.ID);
+		JsonNode jsonNode = resourceViewJsonNode.findValue(
+			ApioJsonLDConstants.ID);
 
-		return _safeReturnValue(node);
+		return _safeReturnValue(jsonNode);
 	}
 
 	/**
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and returns the name of the resource fields
 	 *
-	 * @param resource
+	 * @param resourceJsonNode
 	 * @return <code>List<String></code> Name of the resource fields
 	 */
-	public static List<String> getResourceFieldNames(JsonNode resource) {
-		JsonNode members = getCollectionMemberNode(resource);
+	public static List<String> getResourceFieldNames(
+		JsonNode resourceJsonNode) {
+
+		JsonNode members = getCollectionMemberNode(resourceJsonNode);
 
 		List<String> fieldNames = new ArrayList<>();
 
@@ -84,12 +87,12 @@ public class ApioJsonLDUtils {
 			_log.error("Not able to fetch the resource fields");
 		}
 
-		JsonNode firstItem = members.get(0);
+		JsonNode firstItemJsonNode = members.get(0);
 
-		Iterator<String> fieldIter = firstItem.fieldNames();
+		Iterator<String> iterator = firstItemJsonNode.fieldNames();
 
-		while (fieldIter.hasNext()) {
-			fieldNames.add(fieldIter.next());
+		while (iterator.hasNext()) {
+			fieldNames.add(iterator.next());
 		}
 
 		return fieldNames;
@@ -103,10 +106,10 @@ public class ApioJsonLDUtils {
 	 * JsonNode
 	 */
 	public static String getResourceFirstPage(JsonNode resourceViewJsonNode) {
-		JsonNode node = resourceViewJsonNode.findValue(
+		JsonNode jsonNode = resourceViewJsonNode.findValue(
 			ApioJsonLDConstants.VIEW_FIRST);
 
-		return _safeReturnValue(node);
+		return _safeReturnValue(jsonNode);
 	}
 
 	/**
@@ -117,10 +120,10 @@ public class ApioJsonLDUtils {
 	 * JsonNode
 	 */
 	public static String getResourceLastPage(JsonNode resourceViewJsonNode) {
-		JsonNode node = resourceViewJsonNode.findValue(
+		JsonNode jsonNode = resourceViewJsonNode.findValue(
 			ApioJsonLDConstants.VIEW_LAST);
 
-		return _safeReturnValue(node);
+		return _safeReturnValue(jsonNode);
 	}
 
 	/**
@@ -131,25 +134,25 @@ public class ApioJsonLDUtils {
 	 * in the JsonNode
 	 */
 	public static String getResourceNextPage(JsonNode resourceViewJsonNode) {
-		JsonNode node = resourceViewJsonNode.findValue(
+		JsonNode jsonNode = resourceViewJsonNode.findValue(
 			ApioJsonLDConstants.VIEW_NEXT);
 
-		return _safeReturnValue(node);
+		return _safeReturnValue(jsonNode);
 	}
 
 	private static JsonNode _findCollectionNode(
-		JsonNode resource, String nodeName) {
+		JsonNode resourceJsonNode, String nodeName) {
 
-		JsonNode jsonNode = resource.findPath(nodeName);
+		JsonNode jsonNode = resourceJsonNode.findPath(nodeName);
 
 		if (jsonNode.isMissingNode()) {
-			_log.error("Cannot find the \"{}\" node!", nodeName);
+			_log.error("Unable to find the \"{}\" node", nodeName);
 
 			return jsonNode;
 		}
 
 		if (jsonNode.isArray() && (jsonNode.size() == 0)) {
-			_log.error("The \"{}\" ArrayNode is empty!", jsonNode);
+			_log.error("The \"{}\" array node is empty", jsonNode);
 		}
 
 		return jsonNode;

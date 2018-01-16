@@ -46,37 +46,41 @@ public class TLiferayInputDefinitionTest {
 
 	@Test
 	public void testGetFamilies() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
 
-		String[] actual = definition.getFamilies();
+		String[] actualFamilies = tLiferayInputDefinition.getFamilies();
 
-		assertThat(Arrays.asList(actual), contains("Business/Liferay"));
+		assertThat(Arrays.asList(actualFamilies), contains("Business/Liferay"));
 	}
 
 	@Test
 	public void testGetPropertyClass() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
 
-		Class<?> propertyClass = definition.getPropertyClass();
+		Class<?> propertyClass = tLiferayInputDefinition.getPropertyClass();
 
 		String canonicalName = propertyClass.getCanonicalName();
 
 		assertThat(
 			canonicalName,
 			equalTo(
-				"com.liferay.talend.tliferayinput." +
-					"TLiferayInputProperties"));
+				"com.liferay.talend.tliferayinput.TLiferayInputProperties"));
 	}
 
 	@Test
 	public void testGetReturnProperties() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
 
-		Property[] returnProperties = definition.getReturnProperties();
+		Property<?>[] returnProperties =
+			tLiferayInputDefinition.getReturnProperties();
 
-		List<Property> propertyList = Arrays.asList(returnProperties);
+		List<Property<?>> propertyList = Arrays.asList(returnProperties);
 
 		assertThat(propertyList, hasSize(2));
+
 		Assert.assertTrue(
 			propertyList.contains(RETURN_TOTAL_RECORD_COUNT_PROP));
 		Assert.assertTrue(propertyList.contains(RETURN_ERROR_MESSAGE_PROP));
@@ -84,9 +88,10 @@ public class TLiferayInputDefinitionTest {
 
 	@Test
 	public void testGetRuntimeInfo() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
 
-		RuntimeInfo runtimeInfo = definition.getRuntimeInfo(
+		RuntimeInfo runtimeInfo = tLiferayInputDefinition.getRuntimeInfo(
 			ExecutionEngine.DI, null, ConnectorTopology.OUTGOING);
 
 		String runtimeClassName = runtimeInfo.getRuntimeClassName();
@@ -98,12 +103,15 @@ public class TLiferayInputDefinitionTest {
 
 	@Test
 	public void testGetRuntimeInfoWrongEngine() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
-		thrown.expect(TalendRuntimeException.class);
-		thrown.expectMessage(
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
+
+		expectedException.expect(TalendRuntimeException.class);
+		expectedException.expectMessage(
 			"WRONG_EXECUTION_ENGINE:{component=tLiferayInput, " +
 				"requested=DI_SPARK_STREAMING, available=[DI]}");
-		definition.getRuntimeInfo(
+
+		tLiferayInputDefinition.getRuntimeInfo(
 			ExecutionEngine.DI_SPARK_STREAMING, null,
 			ConnectorTopology.OUTGOING);
 	}
@@ -111,19 +119,24 @@ public class TLiferayInputDefinitionTest {
 	@Ignore
 	@Test
 	public void testGetRuntimeInfoWrongTopology() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
-		thrown.expect(TalendRuntimeException.class);
-		thrown.expectMessage("WRONG_CONNECTOR:{component=tLiferayInput}");
-		definition.getRuntimeInfo(
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
+
+		expectedException.expect(TalendRuntimeException.class);
+		expectedException.expectMessage(
+			"WRONG_CONNECTOR:{component=tLiferayInput}");
+
+		tLiferayInputDefinition.getRuntimeInfo(
 			ExecutionEngine.DI, null, ConnectorTopology.INCOMING);
 	}
 
 	@Test
 	public void testGetSupportedConnectorTopologies() {
-		TLiferayInputDefinition definition = new TLiferayInputDefinition();
+		TLiferayInputDefinition tLiferayInputDefinition =
+			new TLiferayInputDefinition();
 
 		Set<ConnectorTopology> connectorTopologies =
-			definition.getSupportedConnectorTopologies();
+			tLiferayInputDefinition.getSupportedConnectorTopologies();
 
 		assertThat(connectorTopologies, contains(ConnectorTopology.OUTGOING));
 		assertThat(
@@ -135,6 +148,6 @@ public class TLiferayInputDefinitionTest {
 	}
 
 	@Rule
-	public final ExpectedException thrown = ExpectedException.none();
+	public final ExpectedException expectedException = ExpectedException.none();
 
 }

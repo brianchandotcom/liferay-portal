@@ -58,65 +58,80 @@ public class LiferayResourceProperties
 			_log.debug("Resource URL: " + resourceURL.getValue());
 		}
 
-		ValidationResultMutable vr =
-			new ValidationResultMutable().setStatus(Result.OK);
+		ValidationResultMutable validationResultMutable =
+			new ValidationResultMutable();
+
+		validationResultMutable.setStatus(Result.OK);
 
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCEORSINK_CLASS)) {
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
-			LiferaySourceOrSinkRuntime ss =
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
-			ss.initialize(null, _getEffectiveConnectionProperties());
+			liferaySourceOrSinkRuntime.initialize(
+				null, _getEffectiveConnectionProperties());
 
-			ValidationResult v = ss.validate(null);
+			ValidationResult validatioknResult =
+				liferaySourceOrSinkRuntime.validate(null);
 
-			vr.setStatus(v.getStatus());
-			vr.setMessage(v.getMessage());
+			validationResultMutable.setStatus(validatioknResult.getStatus());
+			validationResultMutable.setMessage(validatioknResult.getMessage());
 
-			if (vr.getStatus() == ValidationResult.Result.OK) {
+			if (validationResultMutable.getStatus() ==
+					ValidationResult.Result.OK) {
+
 				try {
-					Schema schema = ss.getEndpointSchema(
-						null, resourceURL.getStringValue());
+					Schema schema =
+						liferaySourceOrSinkRuntime.getEndpointSchema(
+							null, resourceURL.getStringValue());
 
 					main.schema.setValue(schema);
 				}
 				catch (IOException ioe) {
-					v = ExceptionUtils.exceptionToValidationResult(ioe);
+					validatioknResult =
+						ExceptionUtils.exceptionToValidationResult(ioe);
 
-					vr.setStatus(v.getStatus());
-					vr.setMessage(v.getMessage());
+					validationResultMutable.setStatus(
+						validatioknResult.getStatus());
+					validationResultMutable.setMessage(
+						validatioknResult.getMessage());
 				}
 			}
 		}
 
-		if (vr.getStatus() == ValidationResult.Result.ERROR) {
+		if (validationResultMutable.getStatus() ==
+				ValidationResult.Result.ERROR) {
+
 			resourceURL.setPossibleValues(Collections.emptyList());
 		}
 
-		return vr;
+		return validationResultMutable;
 	}
 
 	public ValidationResult beforeResourceURL() throws Exception {
 		try (SandboxedInstance sandboxedInstance =
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
-						RUNTIME_SOURCEORSINK_CLASS)) {
+						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
 
 			resourceURL.setPossibleValues(Collections.emptyList());
 
-			LiferaySourceOrSinkRuntime ss =
+			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
 
-			ss.initialize(null, _getEffectiveConnectionProperties());
+			liferaySourceOrSinkRuntime.initialize(
+				null, _getEffectiveConnectionProperties());
 
-			ValidationResult vr = ss.validate(null);
+			ValidationResult validationResult =
+				liferaySourceOrSinkRuntime.validate(null);
 
-			if (vr.getStatus() == ValidationResult.Result.OK) {
+			if (validationResult.getStatus() == ValidationResult.Result.OK) {
 				try {
-					List<NamedThing> moduleNames = ss.getSchemaNames(null);
+					List<NamedThing> moduleNames =
+						liferaySourceOrSinkRuntime.getSchemaNames(null);
 
 					resourceURL.setPossibleNamedThingValues(moduleNames);
 				}
@@ -125,7 +140,7 @@ public class LiferayResourceProperties
 				}
 			}
 			else {
-				return vr;
+				return validationResult;
 			}
 
 			return ValidationResult.OK;
@@ -191,37 +206,45 @@ public class LiferayResourceProperties
 
 	};
 
-	public StringProperty resourceURL =
-		PropertyFactory.newString("resourceURL"); //$NON-NLS-1$
-
+	public StringProperty resourceURL = PropertyFactory.newString(
+		"resourceURL");
 	public ISchemaListener schemaListener;
 
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
-		LiferayConnectionProperties connProps = getConnectionProperties();
+		LiferayConnectionProperties liferayConnectionProperties =
+			getConnectionProperties();
 
-		if (connProps == null) {
+		if (liferayConnectionProperties == null) {
 			_log.error("LiferayConnectionProperties is null");
 		}
 
-		LiferayConnectionProperties referenceProps =
-			connProps.getReferencedConnectionProperties();
+		LiferayConnectionProperties referencedLiferayConnectionProperties =
+			liferayConnectionProperties.getReferencedConnectionProperties();
 
-		if (referenceProps != null) {
+		if (referencedLiferayConnectionProperties != null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Using a reference connection properties.");
-				_log.debug("UserID: " + referenceProps.userId.getValue());
-				_log.debug("Endpoint: " + referenceProps.endpoint.getValue());
+				_log.debug(
+					"UserID: " +
+						referencedLiferayConnectionProperties.userId.
+							getValue());
+				_log.debug(
+					"Endpoint: " +
+						referencedLiferayConnectionProperties.endpoint.
+							getValue());
 			}
 
-			return referenceProps;
+			return referencedLiferayConnectionProperties;
 		}
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("UserID: " + connProps.userId.getValue());
-			_log.debug("Endpoint: " + connProps.endpoint.getValue());
+			_log.debug(
+				"UserID: " + liferayConnectionProperties.userId.getValue());
+			_log.debug(
+				"Endpoint: " + liferayConnectionProperties.endpoint.getValue());
 		}
 
-		return connProps;
+		return liferayConnectionProperties;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

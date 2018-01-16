@@ -42,22 +42,23 @@ import org.talend.components.api.exception.ComponentException;
 public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	public LiferayInputReader(
-		RuntimeContainer container, LiferaySource source,
-		TLiferayInputProperties props) {
+		RuntimeContainer runtimeContainer, LiferaySource liferaySource,
+		TLiferayInputProperties tLiferayInputProperties) {
 
-		super(container, source);
-		properties = props;
+		super(runtimeContainer, liferaySource);
+
+		liferayConnectionResourceBaseProperties = tLiferayInputProperties;
 	}
 
 	@Override
 	public boolean advance() throws IOException {
 		if (!_started) {
-			throw new IllegalStateException("Reader wasn't started");
+			throw new IllegalStateException("Reader was not started");
 		}
 
 		_inputRecordsIndex++;
 
-		// Fast return conditions.
+		// Fast return conditions
 
 		if (_inputRecordsIndex < _inputRecords.size()) {
 			dataCount++;
@@ -66,10 +67,11 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			return true;
 		}
 		else {
-			JsonNode view = ApioJsonLDUtils.getCollectionViewNode(_resource);
+			JsonNode jsonNode = ApioJsonLDUtils.getCollectionViewNode(
+				_resourceJsonNode);
 
-			String actual = ApioJsonLDUtils.getResourceActualPage(view);
-			String last = ApioJsonLDUtils.getResourceLastPage(view);
+			String actual = ApioJsonLDUtils.getResourceActualPage(jsonNode);
+			String last = ApioJsonLDUtils.getResourceLastPage(jsonNode);
 
 			if (actual.equals(last)) {
 				_hasMore = false;
@@ -80,15 +82,17 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			_hasMore = true;
 		}
 
-		LiferaySource source = (LiferaySource)getCurrentSource();
+		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
-		JsonNode view = ApioJsonLDUtils.getCollectionViewNode(_resource);
+		JsonNode jsonNode = ApioJsonLDUtils.getCollectionViewNode(
+			_resourceJsonNode);
 
-		String next = ApioJsonLDUtils.getResourceNextPage(view);
+		String next = ApioJsonLDUtils.getResourceNextPage(jsonNode);
 
-		_resource = source.getResourceCollection(next);
+		_resourceJsonNode = liferaySource.getResourceCollection(next);
 
-		_inputRecords = ApioJsonLDUtils.getCollectionMemberNode(_resource);
+		_inputRecords = ApioJsonLDUtils.getCollectionMemberNode(
+			_resourceJsonNode);
 
 		_inputRecordsIndex = 0;
 
@@ -107,26 +111,28 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	@Override
 	public IndexedRecord getCurrent() throws NoSuchElementException {
 		if (!_started) {
-			throw new NoSuchElementException("Reader wasn't started");
+			throw new NoSuchElementException("Reader was not started");
 		}
 
 		if (!_hasMore) {
 			throw new NoSuchElementException(
-				"Resource doesn't have more elements");
+				"Resource does not have more elements");
 		}
 
 		try {
-			return getConverter().convertToAvro(getCurrentObject());
+			ResourceEntityConverter resourceEntityConverter = getConverter();
+
+			return resourceEntityConverter.convertToAvro(getCurrentObject());
 		}
 		catch (IOException ioe) {
 			throw new ComponentException(ioe);
 		}
 	}
 
-	public List getCurrentObject() throws NoSuchElementException {
-		JsonNode resourceNode = _inputRecords.get(_inputRecordsIndex);
+	public List<String> getCurrentObject() throws NoSuchElementException {
+		JsonNode resourceJsonNode = _inputRecords.get(_inputRecordsIndex);
 
-		if (resourceNode == null) {
+		if (resourceJsonNode == null) {
 			_log.error("Index: {}", _inputRecordsIndex);
 
 			throw new NoSuchElementException("Index: " + _inputRecordsIndex);
@@ -134,12 +140,12 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		List<String> resourceValues = new ArrayList<>();
 
-		Iterator<JsonNode> elements = resourceNode.elements();
+		Iterator<JsonNode> iterator = resourceJsonNode.elements();
 
-		while (elements.hasNext()) {
-			JsonNode node = elements.next();
+		while (iterator.hasNext()) {
+			JsonNode jsonNode = iterator.next();
 
-			resourceValues.add(node.toString());
+			resourceValues.add(jsonNode.toString());
 		}
 
 		if (_log.isDebugEnabled()) {
@@ -151,12 +157,16 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 	@Override
 	public boolean start() throws IOException {
-		LiferaySource source = (LiferaySource)getCurrentSource();
-		String resourceURL = properties.resource.resourceURL.getValue();
+		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
-		_resource = source.getResourceCollection(resourceURL);
+		String resourceURL =
+			liferayConnectionResourceBaseProperties.resource.resourceURL.
+				getValue();
 
-		_inputRecords = ApioJsonLDUtils.getCollectionMemberNode(_resource);
+		_resourceJsonNode = liferaySource.getResourceCollection(resourceURL);
+
+		_inputRecords = ApioJsonLDUtils.getCollectionMemberNode(
+			_resourceJsonNode);
 
 		boolean start = false;
 
@@ -177,28 +187,22 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	/**
-	 * Returns implementation of {@link AvroConverter}, creates it if it doesn't
-	 * exist.
+	 * Returns implementation of {@link AvroConverter}, creates it if it does
+	 * not exist.
 	 *
 	 * @return converter
 	 * @throws IOException
 	 */
 	protected ResourceEntityConverter getConverter() throws IOException {
-		if (_converter == null) {
-			_converter = new ResourceEntityConverter(getSchema());
+		if (_resourceEntityConverter == null) {
+			_resourceEntityConverter = new ResourceEntityConverter(getSchema());
 		}
 
-		return _converter;
+		return _resourceEntityConverter;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
-
-	/**
-	 * Converts row retrieved from data source to Avro format
-	 * {@link IndexedRecord}
-	 */
-	private ResourceEntityConverter _converter;
 
 	/**
 	 * Represents state of this Reader: whether it has more records
@@ -211,7 +215,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private transient JsonNode _inputRecords;
 
 	private transient int _inputRecordsIndex;
-	private transient JsonNode _resource;
+
+	/**
+	 * Converts row retrieved from data source to Avro format
+	 * {@link IndexedRecord}
+	 */
+	private ResourceEntityConverter _resourceEntityConverter;
+
+	private transient JsonNode _resourceJsonNode;
 
 	/**
 	 * Represents state of this Reader: whether it was started or not

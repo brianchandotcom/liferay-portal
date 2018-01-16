@@ -37,13 +37,15 @@ public class OSGiTLiferayInputTestIT extends LiferayInputTestBase {
 
 	@Configuration
 	public Option[] config() {
-		Option compositeOpt = composite(ComponentsPaxExamOptions.getOptions());
+		Option compositeOption = composite(
+			ComponentsPaxExamOptions.getOptions());
 		Option bundleOption1 = linkBundle(
 			"org.talend.components-components-common-bundle");
 		Option bundleOption2 = linkBundle(
 			"com.liferay-com.liferay.talend.definition");
 
-		return options(composite(compositeOpt), bundleOption1, bundleOption2);
+		return options(
+			composite(compositeOption), bundleOption1, bundleOption2);
 	}
 
 }

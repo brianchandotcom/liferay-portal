@@ -34,45 +34,46 @@ public class LiferaySource
 	extends LiferaySourceOrSink implements BoundedSource {
 
 	@Override
-	public BoundedReader createReader(RuntimeContainer adaptor) {
+	public BoundedReader<?> createReader(RuntimeContainer runtimeContainer) {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
-				"Creating reader for source, currently not implemented!");
+				"Creating reader for source, currently not implemented");
 		}
 
 		if (properties instanceof TLiferayInputProperties) {
-			TLiferayInputProperties lrInProperties =
+			TLiferayInputProperties tLiferayInputProperties =
 				(TLiferayInputProperties)properties;
 
-			return new LiferayInputReader(adaptor, this, lrInProperties);
+			return new LiferayInputReader(
+				runtimeContainer, this, tLiferayInputProperties);
 		}
 
-		_log.error("Not expected property instance");
+		_log.error("Unexpected property instance");
 
 		return new LiferayInputReader(
-			adaptor, this, (TLiferayInputProperties)properties);
+			runtimeContainer, this, (TLiferayInputProperties)properties);
 	}
 
 	@Override
-	public long getEstimatedSizeBytes(RuntimeContainer adaptor) {
+	public long getEstimatedSizeBytes(RuntimeContainer runtimeContainer) {
 		return 0;
 	}
 
 	@Override
-	public boolean producesSortedKeys(RuntimeContainer adaptor) {
+	public boolean producesSortedKeys(RuntimeContainer runtimeContainer) {
 		return false;
 	}
 
 	@Override
 	public List<? extends BoundedSource> splitIntoBundles(
-			long desiredBundleSizeBytes, RuntimeContainer adaptor)
+			long desiredBundleSizeBytes, RuntimeContainer runtimeContainer)
 		throws Exception {
 
-		List<BoundedSource> list = new ArrayList<>();
+		List<BoundedSource> boundedSources = new ArrayList<>();
 
-		list.add(this);
+		boundedSources.add(this);
 
-		return list;
+		return boundedSources;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

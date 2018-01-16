@@ -139,9 +139,9 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			throw new WorkflowDefinitionFileException();
 		}
 
-		String name = ParamUtil.getString(actionRequest, "name");
-
 		Definition definition = workflowModelParser.parse(content);
+
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		String definitionName = getDefinitionName(definition, name);
 

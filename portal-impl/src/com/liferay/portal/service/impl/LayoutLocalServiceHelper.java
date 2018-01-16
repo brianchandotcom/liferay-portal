@@ -242,7 +242,9 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 				firstLayout = true;
 			}
 			else {
-				long firstLayoutId = layouts.get(0).getLayoutId();
+				Layout layout = layouts.get(0);
+
+				long firstLayoutId = layout.getLayoutId();
 
 				if (firstLayoutId == layoutId) {
 					firstLayout = true;
@@ -546,7 +548,9 @@ public class LayoutLocalServiceHelper implements IdentifiableOSGiService {
 			// You can only reach this point if there are more than two layouts
 			// at the root level because of the descendant check
 
-			long firstLayoutId = layouts.get(0).getLayoutId();
+			Layout firstLayout = layouts.get(0);
+
+			long firstLayoutId = firstLayout.getLayoutId();
 
 			if (firstLayoutId == layoutId) {
 				Layout secondLayout = layouts.get(1);

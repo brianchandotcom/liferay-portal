@@ -53,27 +53,6 @@ public class WorkflowDefinitionManagerUtil {
 			companyId, userId, title, name, bytes);
 	}
 
-	/**
-	 * Creates a draft version of a workflow definition
-	 * @param companyId
-	 * @param userId
-	 * @param title
-	 * @param name
-	 * @param bytes
-	 * @return {@link WorkflowDefinition}
-	 * @throws WorkflowException
-	 *
-	 * @review
-	 */
-	public static WorkflowDefinition draftWorkflowDefinition(
-			long companyId, long userId, String title, String name,
-			byte[] bytes)
-		throws WorkflowException {
-
-		return getWorkflowDefinitionManager().draftWorkflowDefinition(
-			companyId, userId, title, name, bytes);
-	}
-
 	public static int getActiveWorkflowDefinitionCount(long companyId)
 		throws WorkflowException {
 
@@ -183,6 +162,28 @@ public class WorkflowDefinitionManagerUtil {
 
 		return getWorkflowDefinitionManager().getWorkflowDefinitions(
 			companyId, name, start, end, orderByComparator);
+	}
+
+	/**
+	 * Saves a workflow definition without validate and deploy it.
+	 *
+	 * @param  companyId the company ID of this workflow definition
+	 * @param  userId the user ID of this workflow definition
+	 * @param  title the title ID of this workflow definition
+	 * @param  name the name of this workflow definition
+	 * @param  bytes The data to be created as a workflow definition content.
+	 * @return the workflow definition
+	 * @throws WorkflowException if there was an issue when save the workflow
+	 *         definition
+	 * @review
+	 */
+	public static WorkflowDefinition saveWorkflowDefinition(
+			long companyId, long userId, String title, String name,
+			byte[] bytes)
+		throws WorkflowException {
+
+		return getWorkflowDefinitionManager().saveWorkflowDefinition(
+			companyId, userId, title, name, bytes);
 	}
 
 	public static void undeployWorkflowDefinition(

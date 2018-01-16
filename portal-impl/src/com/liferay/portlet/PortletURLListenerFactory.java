@@ -75,9 +75,11 @@ public class PortletURLListenerFactory {
 			PortletContextBag portletContextBag = PortletContextBagPool.get(
 				portletApp.getServletContextName());
 
-			portletURLGenerationListener =
-				portletContextBag.getPortletURLListeners().get(
-					portletURLListener.getListenerClass());
+			Map<String, PortletURLGenerationListener> portletURLListenersMap =
+				portletContextBag.getPortletURLListeners();
+
+			portletURLGenerationListener = portletURLListenersMap.get(
+				portletURLListener.getListenerClass());
 
 			portletURLGenerationListener = _init(
 				portletURLListener, portletURLGenerationListener);

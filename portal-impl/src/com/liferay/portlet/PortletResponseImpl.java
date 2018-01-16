@@ -583,7 +583,9 @@ public abstract class PortletResponseImpl implements LiferayPortletResponse {
 
 		String portletURLClass = portlet.getPortletURLClass();
 
-		if (portlet.getPortletId().equals(portletName) &&
+		String portletId = portlet.getPortletId();
+
+		if (portletId.equals(portletName) &&
 			Validator.isNotNull(portletURLClass)) {
 
 			if (portletURLClass.equals(

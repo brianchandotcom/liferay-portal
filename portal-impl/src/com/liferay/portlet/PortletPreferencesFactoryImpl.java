@@ -75,6 +75,7 @@ import javax.portlet.filter.PortletRequestWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -110,7 +111,9 @@ public class PortletPreferencesFactoryImpl
 				if (xmlEvent.isStartElement()) {
 					StartElement startElement = xmlEvent.asStartElement();
 
-					String elementName = startElement.getName().getLocalPart();
+					QName startElementName = startElement.getName();
+
+					String elementName = startElementName.getLocalPart();
 
 					if (elementName.equals("preference")) {
 						Preference preference = readPreference(xmlEventReader);
@@ -694,7 +697,9 @@ public class PortletPreferencesFactoryImpl
 			if (xmlEvent.isStartElement()) {
 				StartElement startElement = xmlEvent.asStartElement();
 
-				String elementName = startElement.getName().getLocalPart();
+				QName startElementName = startElement.getName();
+
+				String elementName = startElementName.getLocalPart();
 
 				if (elementName.equals("name")) {
 					name = StAXReaderUtil.read(xmlEventReader);
@@ -713,7 +718,9 @@ public class PortletPreferencesFactoryImpl
 			else if (xmlEvent.isEndElement()) {
 				EndElement endElement = xmlEvent.asEndElement();
 
-				String elementName = endElement.getName().getLocalPart();
+				QName endElementName = endElement.getName();
+
+				String elementName = endElementName.getLocalPart();
 
 				if (elementName.equals("preference")) {
 					break;

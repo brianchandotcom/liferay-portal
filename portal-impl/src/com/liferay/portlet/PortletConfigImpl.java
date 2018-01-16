@@ -126,12 +126,16 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 			throw new IllegalArgumentException();
 		}
 
-		return _portlet.getInitParams().get(name);
+		Map<String, String> initParams = _portlet.getInitParams();
+
+		return initParams.get(name);
 	}
 
 	@Override
 	public Enumeration<String> getInitParameterNames() {
-		return Collections.enumeration(_portlet.getInitParams().keySet());
+		Map<String, String> initParams = _portlet.getInitParams();
+
+		return Collections.enumeration(initParams.keySet());
 	}
 
 	@Override

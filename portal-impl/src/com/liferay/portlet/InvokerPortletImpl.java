@@ -704,9 +704,12 @@ public class InvokerPortletImpl
 		_expCache = portletModel.getExpCache();
 
 		if (_log.isDebugEnabled()) {
+			com.liferay.portal.kernel.model.Portlet portletContextPortet =
+				_liferayPortletContext.getPortlet();
+
 			_log.debug(
 				"Create instance cache wrapper for " +
-					_liferayPortletContext.getPortlet().getPortletId());
+					portletContextPortet.getPortletId());
 		}
 	}
 

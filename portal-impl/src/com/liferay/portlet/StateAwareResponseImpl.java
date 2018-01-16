@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
+import com.liferay.portal.kernel.model.PortletApp;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletQNameUtil;
@@ -53,7 +54,9 @@ public abstract class StateAwareResponseImpl
 		Portlet portlet = getPortlet();
 
 		if (portlet != null) {
-			return portlet.getPortletApp().getDefaultNamespace();
+			PortletApp portletApp = portlet.getPortletApp();
+
+			return portletApp.getDefaultNamespace();
 		}
 		else {
 			return XMLConstants.NULL_NS_URI;

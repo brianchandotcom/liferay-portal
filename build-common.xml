@@ -428,6 +428,49 @@ information.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="download-latest-artifact">
+		<attribute name="destfile" />
+
+		<sequential>
+			<fail message="Please run this target from a release branch instead.">
+				<condition>
+					<not>
+						<or>
+							<available file="${project.dir}/modules/.releng" type="dir" />
+							<istrue value="@{snapshot}" />
+						</or>
+					</not>
+				</condition>
+			</fail>
+
+			<check-latest-artifact-staleness />
+
+			<fail message="${ant.project.name} is stale and needs to be republished.">
+				<condition>
+					<istrue value="${latest.artifact.stale}" />
+				</condition>
+			</fail>
+
+			<if>
+				<istrue value="${liferay.releng.ee}" />
+				<then>
+					<propertyregex
+						input="${latest.artifact.url}"
+						override="true"
+						property="latest.artifact.url"
+						replace="/liferay-private-releases/com/liferay/portal/de/"
+						select="\Q/liferay-public-releases/com/liferay/portal/\E"
+					/>
+				</then>
+			</if>
+
+			<mirrors-get
+				dest="${basedir}/@{destfile}"
+				src="${latest.artifact.url}"
+			/>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="execute">
 		<attribute default="." name="dir" />
 		<attribute default="true" name="failonerror" />

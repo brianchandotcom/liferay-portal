@@ -52,11 +52,21 @@
 	</target>
 
 	<target name="init-compile">
-		<condition property="compile.uptodate">
-			<uptodate targetfile="classes/.touch">
-				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
-			</uptodate>
-		</condition>
+		<if>
+			<istrue value="${build.marketplace.apps.enabled}" />
+			<then>
+				<condition property="compile.uptodate">
+					<uptodate targetfile="classes/.touch">
+						<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />
+					</uptodate>
+				</condition>
+			</then>
+			<else>
+				<download-latest-artifact destfile="${jar.file}.jar" />
+
+				<property name="compile.uptodate" value="true" />
+			</else>
+		</if>
 	</target>
 
 	<target depends="jar" name="init-deploy">

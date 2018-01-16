@@ -19,7 +19,6 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsFlagUADEntity;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.BaseUADEntityAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
@@ -92,8 +91,5 @@ public class AnnouncementsFlagUADEntityAnonymizer
 		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -20,7 +20,6 @@ import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.entity.BookmarksEntryUADEntity;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.BaseUADEntityAnonymizer;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
@@ -99,8 +98,5 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 		target = "(model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

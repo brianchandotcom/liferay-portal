@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.ServiceLoader;
@@ -73,7 +74,9 @@ public class TargetPlatformIndexerUtil {
 			ServiceLoader<FrameworkFactory> serviceLoader = ServiceLoader.load(
 				FrameworkFactory.class);
 
-			FrameworkFactory frameworkFactory = serviceLoader.iterator().next();
+			Iterator<FrameworkFactory> iterator = serviceLoader.iterator();
+
+			FrameworkFactory frameworkFactory = iterator.next();
 
 			framework = frameworkFactory.newFramework(properties);
 

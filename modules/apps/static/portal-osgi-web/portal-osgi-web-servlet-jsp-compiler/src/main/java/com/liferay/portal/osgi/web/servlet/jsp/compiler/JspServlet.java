@@ -735,16 +735,18 @@ public class JspServlet extends HttpServlet {
 		public Object invoke(Object proxy, Method method, Object[] args)
 			throws Throwable {
 
-			if (method.getName().equals("getClassLoader")) {
+			String methodName = method.getName();
+
+			if (methodName.equals("getClassLoader")) {
 				return _jspBundleClassloader;
 			}
-			else if (method.getName().equals("getResource")) {
+			else if (methodName.equals("getResource")) {
 				return _getResource((String)args[0]);
 			}
-			else if (method.getName().equals("getResourceAsStream")) {
+			else if (methodName.equals("getResourceAsStream")) {
 				return _getResourceAsStream((String)args[0]);
 			}
-			else if (method.getName().equals("getResourcePaths")) {
+			else if (methodName.equals("getResourcePaths")) {
 				return _getResourcePaths((String)args[0]);
 			}
 
@@ -800,7 +802,9 @@ public class JspServlet extends HttpServlet {
 					return url;
 				}
 
-				url = _servletContext.getClassLoader().getResource(path);
+				ClassLoader classLoader = _servletContext.getClassLoader();
+
+				url = classLoader.getResource(path);
 
 				if (url != null) {
 					return url;

@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.jboss.aerogear.windows.mpns.MPNS;
+import org.jboss.aerogear.windows.mpns.MpnsNotificationBuilder;
 import org.jboss.aerogear.windows.mpns.MpnsService;
 import org.jboss.aerogear.windows.mpns.MpnsServiceBuilder;
 import org.jboss.aerogear.windows.mpns.notifications.TileNotification;
@@ -98,7 +99,10 @@ public class MicrosoftPushNotificationsSender
 	protected TileNotification buildTileNotification(
 		String from, String body, String attributes) {
 
-		TileNotification.Builder builder = MPNS.newNotification().tile();
+		MpnsNotificationBuilder mpnsNotificationBuilder =
+			MPNS.newNotification();
+
+		TileNotification.Builder builder = mpnsNotificationBuilder.tile();
 
 		builder.backContent(body);
 		builder.backTitle(from);
@@ -112,7 +116,10 @@ public class MicrosoftPushNotificationsSender
 	protected ToastNotification buildToastNotification(
 		String from, String body, String attributes) {
 
-		ToastNotification.Builder builder = MPNS.newNotification().toast();
+		MpnsNotificationBuilder mpnsNotificationBuilder =
+			MPNS.newNotification();
+
+		ToastNotification.Builder builder = mpnsNotificationBuilder.toast();
 
 		builder.parameter(attributes);
 		builder.subtitle(body);

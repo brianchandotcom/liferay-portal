@@ -56,7 +56,7 @@ public class ScreensDDLRecordServiceImpl
 		Set<Locale> availableLocales = ddmFormValues.getAvailableLocales();
 
 		if ((locale == null) || !availableLocales.contains(locale)) {
-			locale = ddlRecord.getDDMFormValues().getDefaultLocale();
+			locale = ddmFormValues.getDefaultLocale();
 		}
 
 		return getDDLRecordJSONObject(ddlRecord, locale);

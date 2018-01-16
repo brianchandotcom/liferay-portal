@@ -37,9 +37,9 @@
 	</c:if>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
+		<aui:button disabled="<%= pending %>" type="submit" value='<%= hasWorkflowDefinitionLink ? "submit-for-publication" : "rename" %>' />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

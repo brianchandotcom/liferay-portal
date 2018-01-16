@@ -105,14 +105,14 @@ childPages.remove(wikiPage);
 		<aui:button-row>
 			<c:choose>
 				<c:when test="<%= hasWorkflowDefinitionLink %>">
-					<aui:button cssClass="btn-lg" disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
+					<aui:button disabled="<%= pending %>" name="publishButton" onClick='<%= renderResponse.getNamespace() + "publishPage();" %>' value="submit-for-publication" />
 				</c:when>
 				<c:otherwise>
-					<aui:button cssClass="btn-lg" disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
+					<aui:button disabled="<%= !newParentAvailable %>" type="submit" value="change-parent" />
 				</c:otherwise>
 			</c:choose>
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:fieldset>
 </aui:form>

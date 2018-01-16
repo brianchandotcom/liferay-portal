@@ -78,9 +78,9 @@ renderResponse.setTitle(LanguageUtil.get(request, "import-pages"));
 		</aui:fieldset-group>
 
 		<aui:button-row>
-			<aui:button cssClass="btn-lg" type="submit" value="import" />
+			<aui:button type="submit" value="import" />
 
-			<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+			<aui:button href="<%= redirect %>" type="cancel" />
 		</aui:button-row>
 	</aui:form>
 

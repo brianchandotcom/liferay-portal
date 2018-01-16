@@ -44,6 +44,7 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setDescription(model.getDescription());
+		soapModel.setType(model.getType());
 
 		return soapModel;
 	}
@@ -172,6 +173,14 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 		_description = description;
 	}
 
+	public int getType() {
+		return _type;
+	}
+
+	public void setType(int type) {
+		_type = type;
+	}
+
 	private long _layoutPageTemplateCollectionId;
 	private long _groupId;
 	private long _companyId;
@@ -181,4 +190,5 @@ public class LayoutPageTemplateCollectionSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _description;
+	private int _type;
 }

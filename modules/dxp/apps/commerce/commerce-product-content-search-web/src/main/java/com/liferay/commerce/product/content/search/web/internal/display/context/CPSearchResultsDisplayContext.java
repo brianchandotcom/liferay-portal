@@ -85,6 +85,11 @@ public class CPSearchResultsDisplayContext {
 			StringPool.COMMA);
 	}
 
+	public String getConfigurationMethod() {
+		return
+			_cpSearchResultsPortletInstanceConfiguration.configurationMethod();
+	}
+
 	public String getDisplayStyle() {
 		return _cpSearchResultsPortletInstanceConfiguration.displayStyle();
 	}
@@ -176,11 +181,6 @@ public class CPSearchResultsDisplayContext {
 		}
 
 		return title;
-	}
-
-	public boolean useCategories() {
-		return
-			_cpSearchResultsPortletInstanceConfiguration.useAssetCategories();
 	}
 
 	private final CPDefinitionHelper _cpDefinitionHelper;

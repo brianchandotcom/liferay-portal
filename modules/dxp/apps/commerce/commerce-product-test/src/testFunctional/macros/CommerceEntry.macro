@@ -71,6 +71,12 @@
 		</execute>
 	</command>
 
+	<command name="gotoNestedMenu">
+		<execute function="AssertClick" locator1="CommerceEntry#NESTED_MENU" value1="${nestedMenu}">
+			<var name="key_nestedMenu" value="${nestedMenu}" />
+		</execute>
+	</command>
+
 	<command name="publishEntry">
 		<execute macro="Button#clickPublish" />
 

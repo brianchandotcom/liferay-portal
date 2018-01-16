@@ -32,8 +32,7 @@ import org.talend.daikon.runtime.RuntimeInfo;
 public class TLiferayConnectionDefinition
 	extends LiferayBaseComponentDefinition {
 
-	public static final String COMPONENT_NAME =
-		"tLiferayConnection"; //$NON-NLS-1$
+	public static final String COMPONENT_NAME = "tLiferayConnection";
 
 	public TLiferayConnectionDefinition() {
 		super(COMPONENT_NAME, ExecutionEngine.DI);
@@ -45,20 +44,21 @@ public class TLiferayConnectionDefinition
 	}
 
 	@Override
-	public Property[] getReturnProperties() {
+	public Property<?>[] getReturnProperties() {
 		return new Property[] {RETURN_ERROR_MESSAGE_PROP};
 	}
 
 	@Override
 	public RuntimeInfo getRuntimeInfo(
-		ExecutionEngine engine, ComponentProperties properties,
+		ExecutionEngine executionEngine,
+		ComponentProperties componentProperties,
 		ConnectorTopology connectorTopology) {
 
-		assertEngineCompatibility(engine);
+		assertEngineCompatibility(executionEngine);
 		assertConnectorTopologyCompatibility(connectorTopology);
 
 		if (connectorTopology == ConnectorTopology.NONE) {
-			return getCommonRuntimeInfo(RUNTIME_SOURCEORSINK_CLASS);
+			return getCommonRuntimeInfo(RUNTIME_SOURCE_OR_SINK_CLASS_NAME);
 		}
 		else {
 			return null;

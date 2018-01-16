@@ -31,6 +31,6 @@ public interface LiferaySourceOrSinkRuntime extends SourceOrSink {
 	public Schema guessSchema(String resourceURL) throws IOException;
 
 	public ValidationResult validateConnection(
-		LiferayProvideConnectionProperties properties);
+		LiferayProvideConnectionProperties liferayProvideConnectionProperties);
 
 }

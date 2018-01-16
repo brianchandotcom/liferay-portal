@@ -26,28 +26,36 @@ import org.talend.components.api.wizard.ComponentWizardDefinition;
 public class LiferayConnectionWizard extends ComponentWizard {
 
 	public LiferayConnectionWizard(
-		ComponentWizardDefinition definition, String repositoryLocation) {
+		ComponentWizardDefinition componentWizardDefinition,
+		String repositoryLocation) {
 
-		super(definition, repositoryLocation);
+		super(componentWizardDefinition, repositoryLocation);
 
-		connProperties = new LiferayConnectionProperties("connection");
+		liferayConnectionProperties = new LiferayConnectionProperties(
+			"connection");
 
-		connProperties.init();
-		connProperties.setRepositoryLocation(repositoryLocation);
+		liferayConnectionProperties.init();
+		liferayConnectionProperties.setRepositoryLocation(repositoryLocation);
 
 		addForm(
-			connProperties.getForm(LiferayConnectionProperties.FORM_WIZARD));
+			liferayConnectionProperties.getForm(
+				LiferayConnectionProperties.FORM_WIZARD));
 	}
 
 	public void setupProperties(LiferayConnectionProperties properties) {
-		connProperties.setupProperties();
-		connProperties.copyValuesFrom(properties);
+		liferayConnectionProperties.setupProperties();
+
+		liferayConnectionProperties.copyValuesFrom(properties);
 	}
 
 	public boolean supportsProperties(ComponentProperties properties) {
-		return properties instanceof LiferayConnectionProperties;
+		if (properties instanceof LiferayConnectionProperties) {
+			return true;
+		}
+
+		return false;
 	}
 
-	protected LiferayConnectionProperties connProperties;
+	protected LiferayConnectionProperties liferayConnectionProperties;
 
 }

@@ -59,22 +59,22 @@ public class ResourceEntityConverter
 	@Override
 	@SuppressWarnings("unchecked")
 	public IndexedRecord convertToAvro(List row) {
-		IndexedRecord record = new GenericData.Record(getSchema());
+		IndexedRecord indexedRecord = new GenericData.Record(getSchema());
 
 		for (int i = 0; i < row.size(); i++) {
 			Object value = _converters[i].convertToAvro(row.get(i));
 
-			record.put(i, value);
+			indexedRecord.put(i, value);
 		}
 
-		return record;
+		return indexedRecord;
 	}
 
 	/**
 	 * @throws UnsupportedOperationException as this method is not supported yet
 	 */
 	@Override
-	public List<Object> convertToDatum(IndexedRecord value) {
+	public List<Object> convertToDatum(IndexedRecord indexedRecord) {
 		throw new UnsupportedOperationException();
 	}
 
@@ -84,16 +84,14 @@ public class ResourceEntityConverter
 	 * @param schema design schema
 	 */
 	private void _initConverters(Schema schema) {
-		_converters = new AvroConverter[schema.getFields().size()];
-
 		List<Field> fields = schema.getFields();
 
-		for (int i = 0; i < schema.getFields().size(); i++) {
+		_converters = new AvroConverter[fields.size()];
+
+		for (int i = 0; i < fields.size(); i++) {
 			Field field = fields.get(i);
 
-			Schema fieldSchema = field.schema();
-
-			fieldSchema = AvroUtils.unwrapIfNullable(fieldSchema);
+			Schema fieldSchema = AvroUtils.unwrapIfNullable(field.schema());
 
 			if (LogicalTypeUtils.isLogicalTimestampMillis(fieldSchema)) {
 				String datePattern = field.getProp(
@@ -109,14 +107,8 @@ public class ResourceEntityConverter
 		}
 	}
 
-	/**
-	 * Contains available {@link StringConverter}.
-	 */
 	private static final Map<Type, AvroConverter> _converterRegistry;
 
-	/**
-	 * Fill in converter registry
-	 */
 	static {
 		_converterRegistry = new HashMap<>();
 

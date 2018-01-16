@@ -30,14 +30,13 @@ import org.talend.daikon.runtime.RuntimeInfo;
  */
 public class TLiferayInputDefinition extends LiferayBaseComponentDefinition {
 
-	public static final String COMPONENT_NAME = "tLiferayInput"; //$NON-NLS-1$
+	public static final String COMPONENT_NAME = "tLiferayInput";
 
 	public TLiferayInputDefinition() {
 		super(COMPONENT_NAME, ExecutionEngine.DI);
 	}
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Class<? extends ComponentProperties>[]
 		getNestedCompatibleComponentPropertiesClass() {
 
@@ -54,13 +53,14 @@ public class TLiferayInputDefinition extends LiferayBaseComponentDefinition {
 
 	@Override
 	public RuntimeInfo getRuntimeInfo(
-		ExecutionEngine engine, ComponentProperties properties,
+		ExecutionEngine executionEngine,
+		ComponentProperties componentProperties,
 		ConnectorTopology connectorTopology) {
 
-		assertEngineCompatibility(engine);
+		assertEngineCompatibility(executionEngine);
 		assertConnectorTopologyCompatibility(connectorTopology);
 
-		return getCommonRuntimeInfo(RUNTIME_SOURCE_CLASS);
+		return getCommonRuntimeInfo(RUNTIME_SOURCE_CLASS_NAME);
 	}
 
 	@Override

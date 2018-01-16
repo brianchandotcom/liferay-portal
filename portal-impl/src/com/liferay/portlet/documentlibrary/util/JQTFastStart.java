@@ -169,7 +169,9 @@ public class JQTFastStart {
 			throw new IOException("Output file alread exists " + outputFile);
 		}
 
-		if (inputFile.getAbsolutePath().equals(outputFile.getAbsolutePath())) {
+		String inputFileAbsolutePath = inputFile.getAbsolutePath();
+
+		if (inputFileAbsolutePath.equals(outputFile.getAbsolutePath())) {
 			throw new IOException(
 				"Input file and output file cannot be the same " + inputFile);
 		}

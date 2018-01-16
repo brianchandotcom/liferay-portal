@@ -17,6 +17,7 @@ package com.liferay.portlet.rolesadmin.search;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Role;
 import com.liferay.portal.kernel.model.UserGroup;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
@@ -39,8 +40,10 @@ public class UserGroupRoleChecker extends EmptyOnClickRowChecker {
 		UserGroup userGroup = (UserGroup)obj;
 
 		try {
+			Group userGroupGroup = userGroup.getGroup();
+
 			return GroupLocalServiceUtil.hasRoleGroup(
-				_role.getRoleId(), userGroup.getGroup().getGroupId());
+				_role.getRoleId(), userGroupGroup.getGroupId());
 		}
 		catch (Exception e) {
 			_log.error(e, e);

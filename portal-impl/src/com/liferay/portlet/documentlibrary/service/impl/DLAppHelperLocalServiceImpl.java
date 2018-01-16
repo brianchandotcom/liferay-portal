@@ -155,37 +155,38 @@ public class DLAppHelperLocalServiceImpl
 			DLFileEntryConstants.getClassName(),
 			fileVersion.getFileVersionId());
 
-		if ((fileVersionAssetEntry == null) && !fileVersion.isApproved() &&
-			!fileVersion.getVersion().equals(
-				DLFileEntryConstants.VERSION_DEFAULT)) {
-
-			assetCategoryIds = assetCategoryLocalService.getCategoryIds(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-			assetTagNames = assetTagLocalService.getTagNames(
-				DLFileEntryConstants.getClassName(),
-				fileEntry.getFileEntryId());
-
-			fileVersionAssetEntry = assetEntryLocalService.updateEntry(
-				userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
-				fileEntry.getModifiedDate(),
-				DLFileEntryConstants.getClassName(),
-				fileVersion.getFileVersionId(), fileEntry.getUuid(),
-				fileEntryTypeId, assetCategoryIds, assetTagNames, true, false,
-				null, null, null, null, fileEntry.getMimeType(),
-				fileEntry.getTitle(), fileEntry.getDescription(), null, null,
-				null, 0, 0, null);
-
-			List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
-				fileEntryAssetEntry.getEntryId(), false);
-
-			long[] assetLinkIds = ListUtil.toLongArray(
-				assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
-
-			assetLinkLocalService.updateLinks(
-				userId, fileVersionAssetEntry.getEntryId(), assetLinkIds,
-				AssetLinkConstants.TYPE_RELATED);
+		if ((fileVersionAssetEntry != null) || fileVersion.isApproved()) {
+			return;
 		}
+
+		String version = fileVersion.getVersion();
+
+		if (version.equals(DLFileEntryConstants.VERSION_DEFAULT)) {
+			return;
+		}
+
+		assetCategoryIds = assetCategoryLocalService.getCategoryIds(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+		assetTagNames = assetTagLocalService.getTagNames(
+			DLFileEntryConstants.getClassName(), fileEntry.getFileEntryId());
+
+		fileVersionAssetEntry = assetEntryLocalService.updateEntry(
+			userId, fileEntry.getGroupId(), fileEntry.getCreateDate(),
+			fileEntry.getModifiedDate(), DLFileEntryConstants.getClassName(),
+			fileVersion.getFileVersionId(), fileEntry.getUuid(),
+			fileEntryTypeId, assetCategoryIds, assetTagNames, true, false, null,
+			null, null, null, fileEntry.getMimeType(), fileEntry.getTitle(),
+			fileEntry.getDescription(), null, null, null, 0, 0, null);
+
+		List<AssetLink> assetLinks = assetLinkLocalService.getDirectLinks(
+			fileEntryAssetEntry.getEntryId(), false);
+
+		long[] assetLinkIds = ListUtil.toLongArray(
+			assetLinks, AssetLink.ENTRY_ID2_ACCESSOR);
+
+		assetLinkLocalService.updateLinks(
+			userId, fileVersionAssetEntry.getEntryId(), assetLinkIds,
+			AssetLinkConstants.TYPE_RELATED);
 	}
 
 	@Override
@@ -978,11 +979,12 @@ public class DLAppHelperLocalServiceImpl
 
 		boolean updateAsset = true;
 
-		if (fileEntry instanceof LiferayFileEntry &&
-			fileEntry.getVersion().equals(
-				destinationFileVersion.getVersion())) {
+		if (fileEntry instanceof LiferayFileEntry) {
+			String version = fileEntry.getVersion();
 
-			updateAsset = false;
+			if (version.equals(destinationFileVersion.getVersion())) {
+				updateAsset = false;
+			}
 		}
 
 		if (updateAsset) {

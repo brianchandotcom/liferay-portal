@@ -42,19 +42,51 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 						/>
 					</div>
 
-					<div id="<portlet:namespace />categoriesContainer">
-						<div class="lfr-use-categories-header">
-							<aui:input checked="<%= cpSearchResultsDisplayContext.useCategories() %>" id="useAssetCategories" label="use-categories" name="preferences--useAssetCategories--" type="checkbox" />
-						</div>
+					<%
+					String configurationMethod = cpSearchResultsDisplayContext.getConfigurationMethod();
+					%>
 
-						<div class="lfr-use-categories-content toggler-content-collapsed">
-							<aui:input id="preferencesAssetCategoryIds" name="preferences--assetCategoryIds--" type="hidden" />
+					<aui:select id="configurationMethod" name="preferences--configurationMethod--" showEmptyOption="<%= true %>">
+						<aui:option
+							label="<%= CPSearchResultsConfigurationConstants.USE_CATEGORIES %>"
+							selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.USE_CATEGORIES) %>"
+							value="<%= CPSearchResultsConfigurationConstants.USE_CATEGORIES %>"
+						/>
 
-							<liferay-ui:asset-categories-selector
-								curCategoryIds="<%= cpSearchResultsDisplayContext.getCategoryIds() %>"
-								hiddenInput="assetCategoriesSelectorCategoryIds"
-							/>
-						</div>
+						<aui:option
+							label="<%= CPSearchResultsConfigurationConstants.SHOW_RELATED_PRODUCTS %>"
+							selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.SHOW_RELATED_PRODUCTS) %>"
+							value="<%= CPSearchResultsConfigurationConstants.SHOW_RELATED_PRODUCTS %>"
+						/>
+
+						<aui:option
+							label="<%= CPSearchResultsConfigurationConstants.SHOW_UP_SELL_PRODUCTS %>"
+							selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.SHOW_UP_SELL_PRODUCTS) %>"
+							value="<%= CPSearchResultsConfigurationConstants.SHOW_UP_SELL_PRODUCTS %>"
+						/>
+
+						<aui:option
+							label="<%= CPSearchResultsConfigurationConstants.SHOW_CROSS_SELL_PRODUCTS %>"
+							selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.SHOW_CROSS_SELL_PRODUCTS) %>"
+							value="<%= CPSearchResultsConfigurationConstants.SHOW_CROSS_SELL_PRODUCTS %>"
+						/>
+					</aui:select>
+
+					<%
+					String categoriesContainerCssClass = StringPool.BLANK;
+
+					if (!configurationMethod.equals(CPSearchResultsConfigurationConstants.USE_CATEGORIES)) {
+						categoriesContainerCssClass += "hide";
+					}
+					%>
+
+					<div class="<%= categoriesContainerCssClass %>" id="<portlet:namespace />categoriesContainer">
+						<aui:input id="preferencesAssetCategoryIds" name="preferences--assetCategoryIds--" type="hidden" />
+
+						<liferay-ui:asset-categories-selector
+							curCategoryIds="<%= cpSearchResultsDisplayContext.getCategoryIds() %>"
+							hiddenInput="assetCategoriesSelectorCategoryIds"
+						/>
 					</div>
 				</aui:fieldset>
 			</aui:fieldset-group>
@@ -72,7 +104,7 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 	submitButton.on(
 		'click',
 		function() {
-			if (A.one('#<portlet:namespace />useAssetCategories').attr('checked')) {
+			if (!A.one('#<portlet:namespace />categoriesContainer').hasClass('hide')) {
 				var preferencesAssetCategoryIds = A.one('#<portlet:namespace />preferencesAssetCategoryIds');
 				var assetCategoriesSelectorCategoryIds = A.one('#<portlet:namespace />assetCategoriesSelectorCategoryIds');
 
@@ -85,29 +117,16 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 			}
 		}
 	);
-</aui:script>
 
-<aui:script use="aui-toggler">
-	new A.Toggler(
-		{
-			animated: true,
-			content: '#<portlet:namespace />categoriesContainer .lfr-use-categories-content',
-			expanded: <%= cpSearchResultsDisplayContext.useCategories() %>,
-			header: '#<portlet:namespace />categoriesContainer .lfr-use-categories-header',
-			on: {
-				animatingChange: function(event) {
-					var instance = this;
-
-					var expanded = !instance.get('expanded');
-
-					A.one('#<portlet:namespace />useAssetCategories').attr('checked', expanded);
-
-					if (expanded) {
-						A.one('#<portlet:namespace />preferencesAssetCategoryIds').attr('disabled', false);
-					}
-					else {
-						A.one('#<portlet:namespace />preferencesAssetCategoryIds').attr('disabled', true);
-					}
+	A.one('#<portlet:namespace />configurationMethod').on(
+		'change',
+		function() {
+			if (A.one('#<portlet:namespace />configurationMethod').val() == '<%= CPSearchResultsConfigurationConstants.USE_CATEGORIES %>') {
+				A.one('#<portlet:namespace />categoriesContainer').removeClass('hide');
+			}
+			else {
+				if (!A.one('#<portlet:namespace />categoriesContainer').hasClass('hide')) {
+					A.one('#<portlet:namespace />categoriesContainer').addClass('hide');
 				}
 			}
 		}

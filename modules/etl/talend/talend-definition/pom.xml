@@ -9,7 +9,7 @@
 	<groupId>com.liferay</groupId>
 	<artifactId>com.liferay.talend.definition</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
-	<name>Components - Liferay Definition</name>
+	<name>Liferay Talend Definition</name>
 	<packaging>bundle</packaging>
 	<repositories>
 		<repository>

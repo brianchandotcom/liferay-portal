@@ -19,4 +19,12 @@
 		word-break: normal \9; // IE 8, 9
 		word-wrap: normal;
 	}
+
+	.flex-col {
+		@extend %autofit-col;
+	}
+
+	.flex-col-expand {
+		@extend %autofit-col-expand;
+	}
 }

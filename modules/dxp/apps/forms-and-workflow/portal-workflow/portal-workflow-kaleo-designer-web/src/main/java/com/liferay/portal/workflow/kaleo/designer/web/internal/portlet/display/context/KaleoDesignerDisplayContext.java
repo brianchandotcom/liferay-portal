@@ -30,8 +30,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionManagerUtil;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.constants.KaleoDesignerActionKeys;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.permission.KaleoDesignerPermission;
 import com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.context.util.KaleoDesignerRequestHelper;
@@ -42,10 +40,7 @@ import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionTitleComparator;
-import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionVersionComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -74,6 +69,29 @@ public class KaleoDesignerDisplayContext {
 			renderRequest);
 	}
 
+	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		KaleoDefinitionVersion firstKaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.getFirstKaleoDefinitionVersion(
+				kaleoDefinitionVersion.getCompanyId(),
+				kaleoDefinitionVersion.getName());
+
+		return firstKaleoDefinitionVersion.getCreateDate();
+	}
+
+	public String getCreatorUserName(
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		KaleoDefinitionVersion firstKaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.getFirstKaleoDefinitionVersion(
+				kaleoDefinitionVersion.getCompanyId(),
+				kaleoDefinitionVersion.getName());
+
+		return getUserName(firstKaleoDefinitionVersion);
+	}
+
 	public KaleoDefinition getKaleoDefinition(
 		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
@@ -91,28 +109,13 @@ public class KaleoDesignerDisplayContext {
 		return null;
 	}
 
-	public Date getCreatedDate(KaleoDefinitionVersion kaleoDefinitionVersion)
-		throws PortalException {
-
-		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-			_kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
-				kaleoDefinitionVersion.getCompanyId(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS,
-				new KaleoDefinitionVersionVersionComparator(true));
-
-		KaleoDefinitionVersion firstKaleoDefinitionVersion =
-			kaleoDefinitionVersions.get(0);
-
-		return firstKaleoDefinitionVersion.getCreateDate();
-	}
-
 	public int getKaleoDefinitionVersionCount(
-			KaleoDefinitionVersion kaleoDefinitionVersion)
-		throws PortalException {
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		return WorkflowDefinitionManagerUtil.getWorkflowDefinitionCount(
-			kaleoDefinitionVersion.getCompanyId(),
-			kaleoDefinitionVersion.getName());
+		return _kaleoDefinitionVersionLocalService.
+			getKaleoDefinitionVersionsCount(
+				kaleoDefinitionVersion.getCompanyId(),
+				kaleoDefinitionVersion.getName());
 	}
 
 	public OrderByComparator<KaleoDefinitionVersion>
@@ -138,6 +141,17 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		return orderByComparator;
+	}
+
+	public List<KaleoDefinitionVersion> getKaleoDefinitionVersions(
+			KaleoDefinitionVersion kaleoDefinitionVersion)
+		throws PortalException {
+
+		return _kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
+			kaleoDefinitionVersion.getCompanyId(),
+			kaleoDefinitionVersion.getName(), QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS,
+			new KaleoDefinitionVersionModifiedDateComparator(false));
 	}
 
 	public Date getModifiedDate(KaleoDefinitionVersion kaleoDefinitionVersion) {
@@ -224,42 +238,16 @@ public class KaleoDesignerDisplayContext {
 		return user.getFullName();
 	}
 
-	public List<WorkflowDefinition> getWorkflowDefinitions(
-			KaleoDefinitionVersion kaleoDefinitionVersion)
-		throws PortalException {
+	public String getUserNameOrBlank(
+		KaleoDefinitionVersion kaleoDefinitionVersion) {
 
-		int count =
-			WorkflowDefinitionManagerUtil.getActiveWorkflowDefinitionCount(
-				_kaleoDesignerRequestHelper.getCompanyId(),
-				kaleoDefinitionVersion.getName());
+		String userName = getUserName(kaleoDefinitionVersion);
 
-		if (count <= 0) {
-			return new ArrayList<>();
+		if (userName == null) {
+			userName = StringPool.BLANK;
 		}
 
-		List<WorkflowDefinition> workflowDefinitions =
-			WorkflowDefinitionManagerUtil.getWorkflowDefinitions(
-				_kaleoDesignerRequestHelper.getCompanyId(),
-				kaleoDefinitionVersion.getName(), QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null);
-
-		Collections.reverse(workflowDefinitions);
-
-		return workflowDefinitions;
-	}
-
-	public String getWorkflowDefinitionVersionDisplayUserName(
-		WorkflowDefinition workflowDefinition) {
-
-		User user = _userLocalService.fetchUser(workflowDefinition.getUserId());
-
-		if ((user == null) || user.isDefaultUser() ||
-			Validator.isNull(user.getFullName())) {
-
-			return StringPool.BLANK;
-		}
-
-		return user.getFullName();
+		return userName;
 	}
 
 	public boolean isPublishKaleoDefinitionVersionButtonVisible(

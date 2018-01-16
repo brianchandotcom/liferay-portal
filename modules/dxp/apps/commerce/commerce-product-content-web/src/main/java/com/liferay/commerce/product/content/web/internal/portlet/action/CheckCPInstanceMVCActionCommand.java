@@ -137,7 +137,8 @@ public class CheckCPInstanceMVCActionCommand extends BaseMVCActionCommand {
 				}
 
 				if (!available &&
-					cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
+					cpDefinitionInventoryEngine.isBackOrderAllowed(
+						cpInstance)) {
 
 					jsonObject.put(
 						"availabilityRange",

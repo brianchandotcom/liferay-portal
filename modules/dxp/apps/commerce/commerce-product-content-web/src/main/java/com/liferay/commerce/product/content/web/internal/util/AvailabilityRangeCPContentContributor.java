@@ -72,7 +72,7 @@ public class AvailabilityRangeCPContentContributor
 		}
 
 		if (!available &&
-			cpDefinitionInventoryEngine.allowBackOrder(cpInstance)) {
+			cpDefinitionInventoryEngine.isBackOrderAllowed(cpInstance)) {
 
 			jsonObject.put(
 				CPContentContributorConstants.AVAILABILITY_RANGE_NAME,

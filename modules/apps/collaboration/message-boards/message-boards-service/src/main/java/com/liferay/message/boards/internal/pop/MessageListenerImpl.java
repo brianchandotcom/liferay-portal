@@ -14,6 +14,8 @@
 
 package com.liferay.message.boards.internal.pop;
 
+import com.liferay.message.boards.internal.util.MBMailMessage;
+import com.liferay.message.boards.internal.util.MBMailUtil;
 import com.liferay.message.boards.kernel.model.MBCategory;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
@@ -44,7 +46,6 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.PermissionCheckerUtil;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.portlet.messageboards.util.MBMailMessage;
 import com.liferay.portlet.messageboards.util.MBUtil;
 
 import java.io.IOException;
@@ -196,7 +197,7 @@ public class MessageListenerImpl implements MessageListener {
 
 			MBMailMessage mbMailMessage = new MBMailMessage();
 
-			MBUtil.collectPartContent(message, mbMailMessage);
+			MBMailUtil.collectPartContent(message, mbMailMessage);
 
 			inputStreamOVPs = mbMailMessage.getInputStreamOVPs();
 

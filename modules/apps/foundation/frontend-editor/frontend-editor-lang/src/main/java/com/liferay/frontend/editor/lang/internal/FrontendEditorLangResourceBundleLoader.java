@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.frontend.editor.lang;
+package com.liferay.frontend.editor.lang.internal;
 
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.util.LocaleUtil;

@@ -39,7 +39,7 @@ public class KeywordsSuggestionHolder {
 		Pattern keywordsDelimiterRegexpPattern = Pattern.compile(
 			keywordsDelimiterRegexp);
 
-		if (Validator.isNull(suggestedKeywords)) {
+		if (Validator.isBlank(suggestedKeywords)) {
 			_suggestedKeywords = Collections.emptyList();
 		}
 		else {

@@ -29,7 +29,6 @@ import java.io.InputStream;
 
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -148,38 +147,48 @@ public abstract class BaseGenericSpellCheckIndexWriter
 			DictionaryReader dictionaryReader = new DictionaryReader(
 				inputStream, StringPool.UTF8);
 
-			Iterator<DictionaryEntry> iterator =
-				dictionaryReader.getDictionaryEntriesIterator();
+			try {
+				dictionaryReader.accept(
+					dictionaryEntry -> {
+						try {
+							Document document = createDocument(
+								searchContext.getCompanyId(), groupId,
+								languageId, dictionaryEntry.getWord(),
+								dictionaryEntry.getWeight(), keywordFieldName,
+								typeFieldValue, maxNGramLength);
 
-			int counter = 0;
+							documents.add(document);
 
-			while (iterator.hasNext()) {
-				counter++;
+							if (documents.size() == _batchSize) {
+								addDocuments(
+									typeFieldValue, searchContext, documents);
 
-				DictionaryEntry dictionaryEntry = iterator.next();
-
-				Document document = createDocument(
-					searchContext.getCompanyId(), groupId, languageId,
-					dictionaryEntry.getWord(), dictionaryEntry.getWeight(),
-					keywordFieldName, typeFieldValue, maxNGramLength);
-
-				documents.add(document);
-
-				if ((counter == _batchSize) || !iterator.hasNext()) {
-					addDocuments(typeFieldValue, searchContext, documents);
-
-					documents.clear();
-
-					counter = 0;
-				}
+								documents.clear();
+							}
+						}
+						catch (SearchException se) {
+							throw new RuntimeException(se);
+						}
+					});
 			}
+			catch (RuntimeException re) {
+				Throwable t = re.getCause();
+
+				if (t instanceof SearchException) {
+					throw (SearchException)t;
+				}
+
+				throw re;
+			}
+
+			addDocuments(typeFieldValue, searchContext, documents);
 		}
 		catch (Exception e) {
 			if (_log.isWarnEnabled()) {
 				_log.warn("Unable to index dictionaries", e);
 			}
 
-			throw new SearchException(e.getMessage(), e);
+			throw e;
 		}
 	}
 

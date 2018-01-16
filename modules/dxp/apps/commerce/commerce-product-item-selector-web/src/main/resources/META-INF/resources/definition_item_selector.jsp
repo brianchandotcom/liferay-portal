@@ -95,12 +95,6 @@ PortletURL portletURL = cpDefinitionItemSelectorViewDisplayContext.getPortletURL
 				property="userName"
 			/>
 
-			<liferay-ui:search-container-column-text
-				cssClass="table-cell-content"
-				name="SKU"
-				property="baseSKU"
-			/>
-
 			<liferay-ui:search-container-column-status
 				cssClass="table-cell-content"
 				name="status"

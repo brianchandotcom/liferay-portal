@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
@@ -27,28 +26,22 @@ import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.Configuration;
-
 /**
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class CompanyServiceSettingsLocatorTest {
+public class CompanyServiceSettingsLocatorTest
+	extends BaseSettingsLocatorTestCase {
 
 	@Before
 	public void setUp() throws Exception {
@@ -58,15 +51,6 @@ public class CompanyServiceSettingsLocatorTest {
 		_settingsLocator = new CompanyServiceSettingsLocator(
 			_companyId, _portletId,
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		for (String configurationPid : _configurationPids) {
-			ConfigurationTestUtil.deleteConfiguration(configurationPid);
-		}
-
-		_configurationPids.clear();
 	}
 
 	@Test
@@ -80,16 +64,7 @@ public class CompanyServiceSettingsLocatorTest {
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				Scope.COMPANY, String.valueOf(_companyId));
 
-		String companyConfigurationValue = RandomTestUtil.randomString();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(
-			SettingsLocatorTestConstants.TEST_KEY, companyConfigurationValue);
-
-		ConfigurationTestUtil.saveConfiguration(scopedPid, properties);
-
-		_configurationPids.add(scopedPid);
+		String companyConfigurationValue = saveConfiguration(scopedPid);
 
 		Assert.assertEquals(companyConfigurationValue, getValueFromSettings());
 
@@ -118,29 +93,11 @@ public class CompanyServiceSettingsLocatorTest {
 		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
 	}
 
-	private String _saveConfiguration(String configurationPid)
-		throws Exception {
-
-		String value = RandomTestUtil.randomString();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
-
-		ConfigurationTestUtil.saveConfiguration(configurationPid, properties);
-
-		_configurationPids.add(configurationPid);
-
-		return value;
-	}
-
 	private static final String _portletPreferenceFormat =
 		"<portlet-preferences><preference><name>%s</name><value>%s</value>" +
 			"</preference></portlet-preferences>";
 
 	private long _companyId;
-	private final Set<String> _configurationPids = new HashSet<>();
-	private final List<Configuration> _configurations = new ArrayList<>();
 	private String _portletId;
 
 	@DeleteAfterTestRun

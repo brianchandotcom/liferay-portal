@@ -18,21 +18,14 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
-import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.Dictionary;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -45,21 +38,12 @@ import org.osgi.service.cm.ConfigurationAdmin;
  * @author Drew Brokke
  */
 @RunWith(Arquillian.class)
-public class SettingsLocatorHelperTest {
+public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
-
-	@After
-	public void tearDown() throws Exception {
-		for (String configurationPid : _configurationPids) {
-			ConfigurationTestUtil.deleteConfiguration(configurationPid);
-		}
-
-		_configurationPids.clear();
-	}
 
 	@Test
 	public void testGetCompanyScopedConfigurationSettings() throws Exception {
@@ -229,7 +213,7 @@ public class SettingsLocatorHelperTest {
 	}
 
 	protected String saveConfiguration() throws Exception {
-		return _saveConfiguration(
+		return saveConfiguration(
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 	}
 
@@ -237,32 +221,14 @@ public class SettingsLocatorHelperTest {
 			ExtendedObjectClassDefinition.Scope scope, String scopePrimKey)
 		throws Exception {
 
-		return _saveConfiguration(
+		return saveConfiguration(
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
 				scopePrimKey));
 	}
 
-	private String _saveConfiguration(String configurationPid)
-		throws Exception {
-
-		String value = RandomTestUtil.randomString();
-
-		Dictionary<String, Object> properties = new HashMapDictionary<>();
-
-		properties.put(SettingsLocatorTestConstants.TEST_KEY, value);
-
-		ConfigurationTestUtil.saveConfiguration(configurationPid, properties);
-
-		_configurationPids.add(configurationPid);
-
-		return value;
-	}
-
 	@Inject
 	private ConfigurationAdmin _configurationAdmin;
-
-	private final Set<String> _configurationPids = new HashSet<>();
 
 	@Inject
 	private SettingsLocatorHelper _settingsLocatorHelper;

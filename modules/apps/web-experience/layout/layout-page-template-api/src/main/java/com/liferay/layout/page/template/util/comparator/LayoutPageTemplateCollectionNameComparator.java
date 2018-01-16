@@ -18,6 +18,8 @@ import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.Objects;
+
 /**
  * @author Jürgen Kappler
  */
@@ -25,14 +27,12 @@ public class LayoutPageTemplateCollectionNameComparator
 	extends OrderByComparator<LayoutPageTemplateCollection> {
 
 	public static final String ORDER_BY_ASC =
-		"LayoutPageTemplateCollection.type DESC, " +
-			"LayoutPageTemplateCollection.name ASC";
+		"LayoutPageTemplateCollection.name ASC";
 
 	public static final String ORDER_BY_DESC =
-		"LayoutPageTemplateCollection.type DESC, " +
-			"LayoutPageTemplateCollection.name DESC";
+		"LayoutPageTemplateCollection.name DESC";
 
-	public static final String[] ORDER_BY_FIELDS = {"name"};
+	public static final String[] ORDER_BY_FIELDS = {"type", "name"};
 
 	public LayoutPageTemplateCollectionNameComparator() {
 		this(false);
@@ -79,6 +79,15 @@ public class LayoutPageTemplateCollectionNameComparator
 
 	@Override
 	public boolean isAscending() {
+		return _ascending;
+	}
+
+	@Override
+	public boolean isAscending(String field) {
+		if (Objects.equals(field, "type")) {
+			return false;
+		}
+
 		return _ascending;
 	}
 

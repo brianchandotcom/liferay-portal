@@ -14,7 +14,6 @@
 
 package com.liferay.layout.page.template.service.impl;
 
-import com.liferay.layout.page.template.constants.LayoutPageTemplateCollectionTypeConstants;
 import com.liferay.layout.page.template.exception.DuplicateLayoutPageTemplateCollectionException;
 import com.liferay.layout.page.template.exception.LayoutPageTemplateCollectionNameException;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -40,7 +39,7 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 	@Override
 	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
 			long userId, long groupId, String name, String description,
-			int type, ServiceContext serviceContext)
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		// Layout page template collection
@@ -65,7 +64,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			serviceContext.getModifiedDate(new Date()));
 		layoutPageTemplateCollection.setName(name);
 		layoutPageTemplateCollection.setDescription(description);
-		layoutPageTemplateCollection.setType(type);
 
 		layoutPageTemplateCollectionPersistence.update(
 			layoutPageTemplateCollection);
@@ -76,18 +74,6 @@ public class LayoutPageTemplateCollectionLocalServiceImpl
 			layoutPageTemplateCollection, serviceContext);
 
 		return layoutPageTemplateCollection;
-	}
-
-	@Override
-	public LayoutPageTemplateCollection addLayoutPageTemplateCollection(
-			long userId, long groupId, String name, String description,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		return addLayoutPageTemplateCollection(
-			userId, groupId, name, description,
-			LayoutPageTemplateCollectionTypeConstants.TYPE_BASIC,
-			serviceContext);
 	}
 
 	@Override

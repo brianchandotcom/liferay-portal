@@ -1123,10 +1123,6 @@ public class TopLevelBuild extends BaseBuild {
 		Dom4JUtil.addToElement(rootElement, getMoreDetailsElement());
 
 		if (!result.equals("SUCCESS")) {
-			if (isCompareToUpstream()) {
-				UpstreamFailureUtil.loadUpstreamJobFailuresJSONObject(this);
-			}
-
 			Map<Build, Element> downstreamBuildFailureMessages =
 				getDownstreamBuildMessages("ABORTED", "FAILURE", "UNSTABLE");
 
@@ -1210,7 +1206,7 @@ public class TopLevelBuild extends BaseBuild {
 						Dom4JUtil.getNewElement(
 							"strong", null, "Failures in common with ",
 							acceptanceUpstreamJobLinkElement, " at ",
-							UpstreamFailureUtil.getUpstreamJobFailuresSHA(),
+							UpstreamFailureUtil.getUpstreamJobFailuresSHA(this),
 							":")));
 
 				int remainingFailureCount =

@@ -14,10 +14,12 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.File;
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,11 +30,16 @@ import org.json.JSONObject;
  */
 public class UpstreamFailureUtil {
 
-	public static List<String> getUpstreamJobFailures(String type) {
+	public static List<String> getUpstreamJobFailures(
+		String type, TopLevelBuild topLevelBuild) {
+
 		List<String> upstreamFailures = new ArrayList<>();
 
+		JSONObject upstreamJobFailuresJSONObject =
+			getUpstreamJobFailuresJSONObject(topLevelBuild);
+
 		JSONArray failedBatchesJSONArray =
-			upstreamFailuresJobJSONObject.getJSONArray("failedBatches");
+			upstreamJobFailuresJSONObject.getJSONArray("failedBatches");
 
 		for (int i = 0; i < failedBatchesJSONArray.length(); i++) {
 			JSONObject failedBatchJSONObject =
@@ -65,9 +72,24 @@ public class UpstreamFailureUtil {
 		return upstreamFailures;
 	}
 
-	public static String getUpstreamJobFailuresSHA() {
+	public static JSONObject getUpstreamJobFailuresJSONObject(
+		TopLevelBuild topLevelBuild) {
+
+		if (_upstreamFailuresJobJSONObject == null) {
+			loadUpstreamJobFailuresJSONObject(topLevelBuild);
+		}
+
+		return _upstreamFailuresJobJSONObject;
+	}
+
+	public static String getUpstreamJobFailuresSHA(
+		TopLevelBuild topLevelBuild) {
+
 		try {
-			return upstreamFailuresJobJSONObject.getString("SHA");
+			JSONObject upstreamJobFailuresJSONObject =
+				getUpstreamJobFailuresJSONObject(topLevelBuild);
+
+			return upstreamJobFailuresJSONObject.getString("SHA");
 		}
 		catch (JSONException jsone) {
 			System.out.println(
@@ -100,8 +122,10 @@ public class UpstreamFailureUtil {
 					jobVariant = jobVariant.substring(0, index);
 				}
 
+				TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
 				for (String upstreamJobFailure :
-						getUpstreamJobFailures("build")) {
+						getUpstreamJobFailures("build", topLevelBuild)) {
 
 					if (upstreamJobFailure.contains(jobVariant) &&
 						upstreamJobFailure.contains(result)) {
@@ -124,9 +148,13 @@ public class UpstreamFailureUtil {
 	}
 
 	public static boolean isTestFailingInUpstreamJob(TestResult testResult) {
+		Build build = testResult.getBuild();
+
+		TopLevelBuild topLevelBuild = build.getTopLevelBuild();
+
 		try {
-			for (String failure : getUpstreamJobFailures("test")) {
-				Build build = testResult.getBuild();
+			for (String failure :
+					getUpstreamJobFailures("test", topLevelBuild)) {
 
 				String jobVariant = build.getJobVariant();
 
@@ -155,38 +183,73 @@ public class UpstreamFailureUtil {
 		}
 	}
 
-	public static void loadUpstreamJobFailuresJSONObject(Build build) {
-		String jobName = build.getJobName();
+	public static void loadUpstreamJobFailuresJSONObject(
+		TopLevelBuild topLevelBuild) {
 
-		loadUpstreamJobFailuresJSONObject(jobName);
-	}
+		if (!topLevelBuild.isCompareToUpstream()) {
+			_upstreamFailuresJobJSONObject = new JSONObject(
+				"{\"SHA\":\"\",\"failedBatches\":[]}");
 
-	public static void loadUpstreamJobFailuresJSONObject(String jobName) {
+			return;
+		}
+
+		String jobName = topLevelBuild.getJobName();
+
 		try {
 			if (jobName.contains("pullrequest")) {
+				Properties buildProperties =
+					JenkinsResultsParserUtil.getBuildProperties();
+
+				String jenkinsDir = buildProperties.getProperty(
+					"jenkins.dir[master]");
+
+				File upstreamJobFailuresJSONFile = new File(
+					jenkinsDir, "upstream-failures.json");
+
+				if (upstreamJobFailuresJSONFile.exists()) {
+					String fileContent = JenkinsResultsParserUtil.read(
+						upstreamJobFailuresJSONFile);
+
+					_upstreamFailuresJobJSONObject = new JSONObject(
+						fileContent);
+
+					System.out.println(
+						"Using upstream failures at: " +
+							getUpstreamJobFailuresSHA(topLevelBuild));
+
+					return;
+				}
+
 				String upstreamJobName = jobName.replace(
 					"pullrequest", "upstream");
 
 				String url = JenkinsResultsParserUtil.getLocalURL(
-					UPSTREAM_FAILURES_JOB_BASE_URL + upstreamJobName +
-						"/builds/latest/test.results.json");
+					JenkinsResultsParserUtil.combine(
+						_UPSTREAM_FAILURES_JOB_BASE_URL, upstreamJobName,
+						"/builds/latest/test.results.json"));
 
-				upstreamFailuresJobJSONObject =
+				_upstreamFailuresJobJSONObject =
 					JenkinsResultsParserUtil.toJSONObject(url);
+
+				System.out.println(
+					"Using upstream failures at: " +
+						getUpstreamJobFailuresSHA(topLevelBuild));
 			}
 		}
 		catch (IOException ioe) {
 			System.out.println(
-				"Unable to set upstream acceptance failure data.");
+				"Unable to load upstream acceptance failure data from url.");
 
 			ioe.printStackTrace();
+
+			_upstreamFailuresJobJSONObject = new JSONObject(
+				"{\"SHA\":\"\",\"failedBatches\":[]}");
 		}
 	}
 
-	protected static final String UPSTREAM_FAILURES_JOB_BASE_URL =
+	private static final String _UPSTREAM_FAILURES_JOB_BASE_URL =
 		"https://test-1-0.liferay.com/userContent/testResults/";
 
-	protected static JSONObject upstreamFailuresJobJSONObject = new JSONObject(
-		"{\"SHA\":\"\",\"failedBatches\":[]}");
+	private static JSONObject _upstreamFailuresJobJSONObject;
 
 }

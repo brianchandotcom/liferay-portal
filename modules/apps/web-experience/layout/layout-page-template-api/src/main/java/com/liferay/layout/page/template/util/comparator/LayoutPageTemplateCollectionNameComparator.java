@@ -25,10 +25,12 @@ public class LayoutPageTemplateCollectionNameComparator
 	extends OrderByComparator<LayoutPageTemplateCollection> {
 
 	public static final String ORDER_BY_ASC =
-		"LayoutPageTemplateCollection.name ASC";
+		"LayoutPageTemplateCollection.type DESC, " +
+			"LayoutPageTemplateCollection.name ASC";
 
 	public static final String ORDER_BY_DESC =
-		"LayoutPageTemplateCollection.name DESC";
+		"LayoutPageTemplateCollection.type DESC, " +
+			"LayoutPageTemplateCollection.name DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 

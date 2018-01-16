@@ -15,6 +15,7 @@
 		<field name="description" type="String">
 			<hint-collection name="TEXTAREA" />
 		</field>
+		<field name="type" type="int" />
 	</model>
 	<model name="com.liferay.layout.page.template.model.LayoutPageTemplateEntry">
 		<field name="layoutPageTemplateEntryId" type="long" />

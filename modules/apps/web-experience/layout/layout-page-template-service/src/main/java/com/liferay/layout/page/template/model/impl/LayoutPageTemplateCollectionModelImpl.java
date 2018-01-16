@@ -77,7 +77,8 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "description", Types.VARCHAR }
+			{ "description", Types.VARCHAR },
+			{ "type_", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -91,9 +92,10 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("description", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateCollection (layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table LayoutPageTemplateCollection (layoutPageTemplateCollectionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,description STRING null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table LayoutPageTemplateCollection";
 	public static final String ORDER_BY_JPQL = " ORDER BY layoutPageTemplateCollection.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY LayoutPageTemplateCollection.name ASC";
@@ -111,6 +113,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long NAME_COLUMN_BITMASK = 2L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -135,6 +138,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setDescription(soapModel.getDescription());
+		model.setType(soapModel.getType());
 
 		return model;
 	}
@@ -210,6 +214,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("type", getType());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -272,6 +277,12 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -434,6 +445,29 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		_description = description;
 	}
 
+	@JSON
+	@Override
+	public int getType() {
+		return _type;
+	}
+
+	@Override
+	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
+
+		if (!_setOriginalType) {
+			_setOriginalType = true;
+
+			_originalType = _type;
+		}
+
+		_type = type;
+	}
+
+	public int getOriginalType() {
+		return _originalType;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -474,6 +508,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		layoutPageTemplateCollectionImpl.setModifiedDate(getModifiedDate());
 		layoutPageTemplateCollectionImpl.setName(getName());
 		layoutPageTemplateCollectionImpl.setDescription(getDescription());
+		layoutPageTemplateCollectionImpl.setType(getType());
 
 		layoutPageTemplateCollectionImpl.resetOriginalValues();
 
@@ -544,6 +579,10 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 		layoutPageTemplateCollectionModelImpl._originalName = layoutPageTemplateCollectionModelImpl._name;
 
+		layoutPageTemplateCollectionModelImpl._originalType = layoutPageTemplateCollectionModelImpl._type;
+
+		layoutPageTemplateCollectionModelImpl._setOriginalType = false;
+
 		layoutPageTemplateCollectionModelImpl._columnBitmask = 0;
 	}
 
@@ -602,12 +641,14 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			layoutPageTemplateCollectionCacheModel.description = null;
 		}
 
+		layoutPageTemplateCollectionCacheModel.type = getType();
+
 		return layoutPageTemplateCollectionCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{layoutPageTemplateCollectionId=");
 		sb.append(getLayoutPageTemplateCollectionId());
@@ -627,6 +668,8 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 		sb.append(getName());
 		sb.append(", description=");
 		sb.append(getDescription());
+		sb.append(", type=");
+		sb.append(getType());
 		sb.append("}");
 
 		return sb.toString();
@@ -634,7 +677,7 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -677,6 +720,10 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 			"<column><column-name>description</column-name><column-value><![CDATA[");
 		sb.append(getDescription());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -700,6 +747,9 @@ public class LayoutPageTemplateCollectionModelImpl extends BaseModelImpl<LayoutP
 	private String _name;
 	private String _originalName;
 	private String _description;
+	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private long _columnBitmask;
 	private LayoutPageTemplateCollection _escapedModel;
 }

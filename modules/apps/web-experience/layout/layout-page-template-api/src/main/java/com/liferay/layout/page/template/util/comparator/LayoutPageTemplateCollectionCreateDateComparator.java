@@ -25,10 +25,12 @@ public class LayoutPageTemplateCollectionCreateDateComparator
 	extends OrderByComparator<LayoutPageTemplateCollection> {
 
 	public static final String ORDER_BY_ASC =
-		"LayoutPageTemplateCollection.createDate ASC";
+		"LayoutPageTemplateCollection.type DESC, " +
+			"LayoutPageTemplateCollection.createDate ASC";
 
 	public static final String ORDER_BY_DESC =
-		"LayoutPageTemplateCollection.createDate DESC";
+		"LayoutPageTemplateCollection.type DESC, " +
+			"LayoutPageTemplateCollection.createDate DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"createDate"};
 

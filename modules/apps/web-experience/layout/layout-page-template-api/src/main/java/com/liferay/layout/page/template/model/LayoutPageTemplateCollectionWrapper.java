@@ -70,6 +70,7 @@ public class LayoutPageTemplateCollectionWrapper
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("description", getDescription());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -129,6 +130,12 @@ public class LayoutPageTemplateCollectionWrapper
 
 		if (description != null) {
 			setDescription(description);
+		}
+
+		Integer type = (Integer)attributes.get("type");
+
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -231,6 +238,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public Serializable getPrimaryKeyObj() {
 		return _layoutPageTemplateCollection.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the type of this layout page template collection.
+	*
+	* @return the type of this layout page template collection
+	*/
+	@Override
+	public int getType() {
+		return _layoutPageTemplateCollection.getType();
 	}
 
 	/**
@@ -398,6 +415,16 @@ public class LayoutPageTemplateCollectionWrapper
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_layoutPageTemplateCollection.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the type of this layout page template collection.
+	*
+	* @param type the type of this layout page template collection
+	*/
+	@Override
+	public void setType(int type) {
+		_layoutPageTemplateCollection.setType(type);
 	}
 
 	/**

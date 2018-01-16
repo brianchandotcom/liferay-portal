@@ -7,7 +7,8 @@ create table LayoutPageTemplateCollection (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	description STRING null
+	description STRING null,
+	type_ INTEGER
 );
 
 create table LayoutPageTemplateEntry (

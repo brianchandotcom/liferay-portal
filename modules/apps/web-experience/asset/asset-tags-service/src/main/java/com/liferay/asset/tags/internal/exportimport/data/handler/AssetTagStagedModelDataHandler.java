@@ -134,7 +134,8 @@ public class AssetTagStagedModelDataHandler
 			assetTag.getUuid(), portletDataContext.getScopeGroupId());
 
 		if (portletDataContext.getBooleanParameter(
-				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name")) {
+				AssetTagsPortletDataHandler.NAMESPACE, "merge-tags-by-name",
+				false)) {
 
 			Optional<AssetTag> assetTagOptional = Optional.ofNullable(
 				_assetTagLocalService.fetchTag(

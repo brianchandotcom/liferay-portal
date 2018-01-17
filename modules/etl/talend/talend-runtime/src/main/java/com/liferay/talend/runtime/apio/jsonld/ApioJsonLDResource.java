@@ -83,6 +83,38 @@ public class ApioJsonLDResource {
 	}
 
 	/**
+	 * Determines the resource collection type based on the members node in the
+	 * Apio architect response
+	 *
+	 * @return String the name of the resource's vocabulary.
+	 * E.g. Person, BlogPosting. <code>null</code> if the resource type cannot
+	 * be determined
+	 */
+	public String getResourceCollectionVocabularyName() {
+		JsonNode members = getMembersNode();
+
+		if (!members.isArray() || (members.size() == 0)) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Not able to fetch the resource fields");
+			}
+
+			return null;
+		}
+
+		JsonNode resource = members.get(0);
+
+		JsonNode typeNode = resource.path(ApioJsonLDConstants.TYPE);
+
+		if (typeNode.isArray()) {
+			JsonNode type = typeNode.get(0);
+
+			return type.asText();
+		}
+
+		return null;
+	}
+
+	/**
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and returns the name of the resource element fields based on the first
 	 * entry

@@ -44,12 +44,16 @@ public class ResourceCollectionSchemaInferrer {
 	 *
 	 * @return Runtime AVRO schema
 	 */
-	public static Schema inferSchema(ApioJsonLDResource resource) {
+	public static Schema inferSchemaByResourceFields(
+		ApioJsonLDResource resource) {
+
 		List<String> fields = resource.getResourceElementFieldNames();
 
 		int size = fields.size();
 
 		List<Field> schemaFields = new ArrayList<>(size);
+
+		// Already used names for the fields
 
 		Set<String> filedNames = new HashSet<>();
 
@@ -59,7 +63,8 @@ public class ResourceCollectionSchemaInferrer {
 			filedNames.add(fieldName);
 
 			Field designField = new Field(
-				fieldName, _StringSchema, null, (Object)null);
+				fieldName, AvroUtils.wrapAsNullable(AvroUtils._string()), null,
+				(Object)null);
 
 			schemaFields.add(i, designField);
 		}
@@ -69,10 +74,5 @@ public class ResourceCollectionSchemaInferrer {
 
 		return schema;
 	}
-
-	/**
-	 * Default schema for dynamic fields are of type String
-	 */
-	private static final Schema _StringSchema = AvroUtils._string();
 
 }

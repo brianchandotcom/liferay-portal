@@ -28,12 +28,10 @@ import org.osgi.service.component.annotations.Component;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=category.hidden",
-		"com.liferay.portlet.icon=/icons/user_associated_data.png",
 		"com.liferay.portlet.preferences-owned-by-group=true",
 		"com.liferay.portlet.private-request-attributes=false",
 		"com.liferay.portlet.private-session-attributes=false",
 		"com.liferay.portlet.render-weight=50",
-		"com.liferay.portlet.struts-path=user_associated_data",
 		"com.liferay.portlet.use-default-template=true",
 		"javax.portlet.display-name=User Associated Data",
 		"javax.portlet.expiration-cache=0",

@@ -25,32 +25,10 @@ renderResponse.setTitle(assetCategoriesDisplayContext.getCategoryTitle());
 AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVocabulary(), assetCategoriesDisplayContext.getCategory(), request, renderResponse);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL">
-		<portlet:param name="mvcPath" value="/view_categories.jsp" />
-		<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
-	</portlet:renderURL>
-
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="categories" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>">
-		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcPath" value="/view_categories.jsp" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="categoryId" value="<%= String.valueOf(assetCategoriesDisplayContext.getCategoryId()) %>" />
-			<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
-			<portlet:param name="displayStyle" value="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= assetCategoriesDisplayContext.getAssetCategoriesNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= assetCategoriesDisplayContext.isDisabledCategoriesManagementBar() %>"
@@ -82,6 +60,22 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 				orderColumns="<%= assetCategoriesDisplayContext.getOrderColumns() %>"
 				portletURL="<%= PortletURLUtil.clone(assetCategoriesDisplayContext.getIteratorURL(), liferayPortletResponse) %>"
 			/>
+
+			<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesSearch() %>">
+				<portlet:renderURL var="portletURL">
+					<portlet:param name="mvcPath" value="/view_categories.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="categoryId" value="<%= String.valueOf(assetCategoriesDisplayContext.getCategoryId()) %>" />
+					<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
+					<portlet:param name="displayStyle" value="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" />
+				</portlet:renderURL>
+
+				<li>
+					<aui:form action="<%= portletURL %>" name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">

@@ -23,9 +23,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutAdded" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-created-succesfully") %>' />
 <liferay-ui:success key='<%= portletDisplay.getPortletName() + "layoutUpdated" %>' message='<%= LanguageUtil.get(resourceBundle, "the-page-was-updated-succesfully") %>' />
 
-<aui:nav-bar markupView="lexicon">
-	<liferay-util:include page="/navigation_tabs.jsp" servletContext="<%= application %>" />
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-ui:error exception="<%= LayoutTypeException.class %>">
 

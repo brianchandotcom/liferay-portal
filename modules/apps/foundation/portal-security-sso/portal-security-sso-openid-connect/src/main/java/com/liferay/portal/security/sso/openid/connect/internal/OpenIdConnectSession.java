@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect;
+package com.liferay.portal.security.sso.openid.connect.internal;
 
 import com.nimbusds.oauth2.sdk.id.State;
 import com.nimbusds.oauth2.sdk.token.AccessToken;

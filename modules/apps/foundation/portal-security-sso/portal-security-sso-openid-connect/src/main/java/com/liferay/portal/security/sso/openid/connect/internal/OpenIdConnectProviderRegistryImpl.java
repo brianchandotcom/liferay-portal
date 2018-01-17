@@ -20,7 +20,7 @@ import com.liferay.portal.security.sso.openid.connect.OpenIdConnectMetadataFacto
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProvider;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectProviderRegistry;
 import com.liferay.portal.security.sso.openid.connect.OpenIdConnectServiceException;
-import com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration;
+import com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration;
 
 import java.net.URL;
 
@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = Constants.SERVICE_PID + "=com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration",
+	property = Constants.SERVICE_PID + "=com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration",
 	service = {ManagedServiceFactory.class, OpenIdConnectProviderRegistry.class}
 )
 public class OpenIdConnectProviderRegistryImpl

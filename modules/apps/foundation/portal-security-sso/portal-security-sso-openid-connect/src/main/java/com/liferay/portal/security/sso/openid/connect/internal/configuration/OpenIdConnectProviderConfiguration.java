@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.openid.connect.configuration;
+package com.liferay.portal.security.sso.openid.connect.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -27,7 +27,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.sso.openid.connect.configuration.OpenIdConnectProviderConfiguration",
+	id = "com.liferay.portal.security.sso.openid.connect.internal.configuration.OpenIdConnectProviderConfiguration",
 	localization = "content/Language",
 	name = "open-id-connect-provider-configuration-name"
 )

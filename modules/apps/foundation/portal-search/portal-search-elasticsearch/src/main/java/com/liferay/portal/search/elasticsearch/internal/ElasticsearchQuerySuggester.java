@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
 import com.liferay.portal.kernel.search.suggest.PhraseSuggester;
 import com.liferay.portal.kernel.search.suggest.QuerySuggester;
@@ -28,12 +29,13 @@ import com.liferay.portal.kernel.search.suggest.SuggesterResults;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
 import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
-import com.liferay.portal.search.suggest.BaseQuerySuggester;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,6 +46,9 @@ import org.elasticsearch.action.suggest.SuggestResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.common.text.Text;
 import org.elasticsearch.search.suggest.Suggest;
+import org.elasticsearch.search.suggest.Suggest.Suggestion;
+import org.elasticsearch.search.suggest.Suggest.Suggestion.Entry;
+import org.elasticsearch.search.suggest.Suggest.Suggestion.Entry.Option;
 import org.elasticsearch.search.suggest.SuggestBuilder;
 import org.elasticsearch.search.suggest.term.TermSuggestion;
 
@@ -57,10 +62,142 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true, property = {"search.engine.impl=Elasticsearch"},
 	service = QuerySuggester.class
 )
-public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
+public class ElasticsearchQuerySuggester implements QuerySuggester {
+
+	@Override
+	public String spellCheckKeywords(SearchContext searchContext)
+		throws SearchException {
+
+		Suggester suggester = createSpellCheckSuggester(searchContext, 1);
+
+		Suggest suggest = doSuggest(suggester, searchContext);
+
+		List<String> words = new ArrayList<>();
+
+		for (Suggest.Suggestion
+				<? extends Suggest.Suggestion.Entry
+					<? extends Suggest.Suggestion.Entry.Option>> suggestion :
+						suggest) {
+
+			for (Suggest.Suggestion.Entry
+					<? extends Suggest.Suggestion.Entry.Option>
+						suggestionEntry : suggestion) {
+
+				Text text = getWord(suggestionEntry);
+
+				words.add(text.string());
+			}
+		}
+
+		return StringUtil.merge(words, StringPool.SPACE);
+	}
 
 	@Override
 	public Map<String, List<String>> spellCheckKeywords(
+		SearchContext searchContext, int max) {
+
+		Suggester suggester = createSpellCheckSuggester(searchContext, max);
+
+		Suggest suggest = doSuggest(suggester, searchContext);
+
+		Map<String, List<String>> suggestionsMap = new LinkedHashMap<>();
+
+		for (Suggest.Suggestion
+				<? extends Suggest.Suggestion.Entry
+					<? extends Suggest.Suggestion.Entry.Option>> suggestion :
+						suggest) {
+
+			for (Suggest.Suggestion.Entry
+					<? extends Suggest.Suggestion.Entry.Option>
+						suggestionEntry : suggestion) {
+
+				List<String> suggestionsList = new ArrayList<>();
+
+				for (Suggest.Suggestion.Entry.Option suggestionEntryOption :
+						suggestionEntry.getOptions()) {
+
+					Text optionText = suggestionEntryOption.getText();
+
+					suggestionsList.add(optionText.string());
+				}
+
+				Text text = suggestionEntry.getText();
+
+				suggestionsMap.put(text.string(), suggestionsList);
+			}
+		}
+
+		return suggestionsMap;
+	}
+
+	@Override
+	public SuggesterResults suggest(
+		SearchContext searchContext, Suggester suggester) {
+
+		Suggest suggest = doSuggest(suggester, searchContext);
+
+		SuggesterResults suggesterResults = new SuggesterResults();
+
+		for (Suggest.Suggestion
+				<? extends Suggest.Suggestion.Entry
+					<? extends Suggest.Suggestion.Entry.Option>> suggestion :
+						suggest) {
+
+			suggesterResults.addSuggesterResult(translate(suggestion));
+		}
+
+		return suggesterResults;
+	}
+
+	@Override
+	public String[] suggestKeywordQueries(
+		SearchContext searchContext, int max) {
+
+		Suggester suggester = createQuerySuggester(searchContext, max);
+
+		Suggest suggest = doSuggest(suggester, searchContext);
+
+		Suggestion<? extends Entry<? extends Option>> suggestion =
+			suggest.getSuggestion(suggester.getName());
+
+		if (suggestion == null) {
+			return StringPool.EMPTY_ARRAY;
+		}
+
+		List<String> keywordQueries = new ArrayList<>();
+
+		for (Suggest.Suggestion.Entry<? extends Suggest.Suggestion.Entry.Option>
+				suggestionEntry : suggestion) {
+
+			for (Suggest.Suggestion.Entry.Option suggestionEntryOption :
+					suggestionEntry.getOptions()) {
+
+				Text optionText = suggestionEntryOption.getText();
+
+				keywordQueries.add(optionText.string());
+			}
+		}
+
+		return keywordQueries.toArray(new String[keywordQueries.size()]);
+	}
+
+	protected PhraseSuggester createQuerySuggester(
+		SearchContext searchContext, int max) {
+
+		Localization localization = getLocalization();
+
+		String field = localization.getLocalizedName(
+			Field.KEYWORD_SEARCH, searchContext.getLanguageId());
+
+		PhraseSuggester phraseSuggester = new PhraseSuggester(
+			"keywordQueryRequest", field, searchContext.getKeywords());
+
+		phraseSuggester.setSize(max);
+
+		return phraseSuggester;
+	}
+
+	protected Suggester createSpellCheckSuggester(
 		SearchContext searchContext, int max) {
 
 		Localization localization = getLocalization();
@@ -73,41 +210,11 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		termSuggester.setSize(max);
 
-		SuggesterResults suggesterResults = suggest(
-			searchContext, termSuggester);
-
-		Map<String, List<String>> suggestionsMap = new HashMap<>();
-
-		for (SuggesterResult suggesterResult :
-				suggesterResults.getSuggesterResults()) {
-
-			for (SuggesterResult.Entry suggesterResultEntry :
-					suggesterResult.getEntries()) {
-
-				String text = suggesterResultEntry.getText();
-
-				List<String> suggestionsList = suggestionsMap.get(text);
-
-				if (suggestionsList == null) {
-					suggestionsList = new ArrayList<>();
-
-					suggestionsMap.put(text, suggestionsList);
-				}
-
-				for (SuggesterResult.Entry.Option suggesterResultEntryOption :
-						suggesterResultEntry.getOptions()) {
-
-					suggestionsList.add(suggesterResultEntryOption.getText());
-				}
-			}
-		}
-
-		return suggestionsMap;
+		return termSuggester;
 	}
 
-	@Override
-	public SuggesterResults suggest(
-		SearchContext searchContext, Suggester suggester) {
+	protected Suggest doSuggest(
+		Suggester suggester, SearchContext searchContext) {
 
 		StopWatch stopWatch = new StopWatch();
 
@@ -115,11 +222,11 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		Client client = elasticsearchConnectionManager.getClient();
 
-		SuggestBuilder suggestBuilder = suggesterTranslator.translate(
-			suggester, searchContext);
-
 		SuggestRequestBuilder suggestRequestBuilder = client.prepareSuggest(
 			indexNameBuilder.getIndexName(searchContext.getCompanyId()));
+
+		SuggestBuilder suggestBuilder = suggesterTranslator.translate(
+			suggester, searchContext);
 
 		for (SuggestBuilder.SuggestionBuilder<?> suggestionBuilder :
 				suggestBuilder.getSuggestion()) {
@@ -138,18 +245,6 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 		Suggest suggest = suggestResponse.getSuggest();
 
-		SuggesterResults suggesterResults = new SuggesterResults();
-
-		for (Suggest.Suggestion
-				<? extends Suggest.Suggestion.Entry
-					<? extends Suggest.Suggestion.Entry.Option>> suggestion :
-						suggest) {
-
-			SuggesterResult suggesterResult = translate(suggestion);
-
-			suggesterResults.addSuggesterResult(suggesterResult);
-		}
-
 		if (_log.isInfoEnabled()) {
 			stopWatch.stop();
 
@@ -157,53 +252,32 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 				"Spell checked keywords in " + stopWatch.getTime() + "ms");
 		}
 
-		return suggesterResults;
+		return suggest;
 	}
 
-	@Override
-	public String[] suggestKeywordQueries(
-		SearchContext searchContext, int max) {
+	protected Localization getLocalization() {
 
-		Localization localization = getLocalization();
+		// See LPS-72507 and LPS-76500
 
-		String field = localization.getLocalizedName(
-			Field.KEYWORD_SEARCH, searchContext.getLanguageId());
-
-		PhraseSuggester phraseSuggester = new PhraseSuggester(
-			"keywordQueryRequest", field, searchContext.getKeywords());
-
-		phraseSuggester.setSize(max);
-
-		SuggesterResults suggesterResults = suggest(
-			searchContext, phraseSuggester);
-
-		SuggesterResult suggesterResult = suggesterResults.getSuggesterResult(
-			phraseSuggester.getName());
-
-		if (suggesterResult == null) {
-			return StringPool.EMPTY_ARRAY;
+		if (localization != null) {
+			return localization;
 		}
 
-		List<SuggesterResult.Entry> suggesterResultEntries =
-			suggesterResult.getEntries();
+		return LocalizationUtil.getLocalization();
+	}
 
-		List<String> keywordQueries = new ArrayList<>(
-			suggesterResultEntries.size());
+	protected Text getWord(Entry<? extends Option> suggestionEntry) {
+		List<? extends Suggest.Suggestion.Entry.Option> suggestionEntryOptions =
+			suggestionEntry.getOptions();
 
-		for (SuggesterResult.Entry suggesterResultEntry :
-				suggesterResultEntries) {
-
-			for (SuggesterResult.Entry.Option suggesterResultEntryOption :
-					suggesterResultEntry.getOptions()) {
-
-				String optionText = String.valueOf(
-					suggesterResultEntryOption.getText());
-
-				keywordQueries.add(optionText);
-			}
+		if (suggestionEntryOptions.isEmpty()) {
+			return suggestionEntry.getText();
 		}
 
-		return keywordQueries.toArray(new String[keywordQueries.size()]);
+		Suggest.Suggestion.Entry.Option suggestionEntryOption =
+			suggestionEntryOptions.get(0);
+
+		return suggestionEntryOption.getText();
 	}
 
 	protected SuggesterResult translate(
@@ -281,6 +355,8 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 
 	@Reference(unbind = "-")
 	protected IndexNameBuilder indexNameBuilder;
+
+	protected Localization localization;
 
 	@Reference(target = "(search.engine.impl=Elasticsearch)")
 	protected SuggesterTranslator<SuggestBuilder> suggesterTranslator;

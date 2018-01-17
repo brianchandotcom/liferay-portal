@@ -36,29 +36,29 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		throws Exception;
 
 	@Override
-	public String getEntityNonAnonymizableFields(UADEntity uadEntity)
+	public String getEntityNonAnonymizableFieldNames(UADEntity uadEntity)
 		throws PortalException {
 
-		List<String> entityTypeNonAnonymizableFieldsList =
-			getEntityTypeNonAnonymizableFieldsList();
+		List<String> entityTypeNonAnonymizableFieldNamesList =
+			getEntityTypeNonAnonymizableFieldNamesList();
 
-		if (entityTypeNonAnonymizableFieldsList == null) {
+		if (entityTypeNonAnonymizableFieldNamesList == null) {
 			return "";
 		}
 
-		Map<String, Object> nonAnonymizableFieldsMap =
-			uadEntity.getEntityNonAnonymizableFields(
-				entityTypeNonAnonymizableFieldsList);
+		Map<String, Object> nonAnonymizableFieldNamesMap =
+			uadEntity.getEntityNonAnonymizableFieldNames(
+				entityTypeNonAnonymizableFieldNamesList);
 
-		if (nonAnonymizableFieldsMap == null) {
+		if (nonAnonymizableFieldNamesMap == null) {
 			return StringPool.BLANK;
 		}
 
 		StringBundler sb = new StringBundler(
-			(nonAnonymizableFieldsMap.size() * 4) - 1);
+			(nonAnonymizableFieldNamesMap.size() * 4) - 1);
 
 		for (Map.Entry<String, Object> entry :
-				nonAnonymizableFieldsMap.entrySet()) {
+				nonAnonymizableFieldNamesMap.entrySet()) {
 
 			sb.append(entry.getKey());
 			sb.append(StringPool.COLON);
@@ -73,18 +73,18 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 	}
 
 	@Override
-	public String getEntityTypeNonAnonymizableFields() {
-		List<String> entityTypeNonAnonymizableFieldsList =
-			getEntityTypeNonAnonymizableFieldsList();
+	public String getEntityTypeNonAnonymizableFieldNames() {
+		List<String> entityTypeNonAnonymizableFieldNamesList =
+			getEntityTypeNonAnonymizableFieldNamesList();
 
-		if (entityTypeNonAnonymizableFieldsList == null) {
+		if (entityTypeNonAnonymizableFieldNamesList == null) {
 			return "";
 		}
 
 		StringBundler sb = new StringBundler(
-			(entityTypeNonAnonymizableFieldsList.size() * 2) - 1);
+			(entityTypeNonAnonymizableFieldNamesList.size() * 2) - 1);
 
-		for (String field : entityTypeNonAnonymizableFieldsList) {
+		for (String field : entityTypeNonAnonymizableFieldNamesList) {
 			sb.append(field);
 			sb.append(StringPool.COMMA);
 		}

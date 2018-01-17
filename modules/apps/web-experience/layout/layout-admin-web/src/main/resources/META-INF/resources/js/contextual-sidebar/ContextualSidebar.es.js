@@ -6,10 +6,12 @@ import templates from './ContextualSidebar.soy';
 
 /**
  * ContextualSidebar
+ * @review
  */
 class ContextualSidebar extends Component {
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	created() {
 		document.body.classList.add('has-contextual-sidebar');
@@ -24,6 +26,7 @@ class ContextualSidebar extends Component {
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	disposed() {
 		document.body.classList.remove('has-contextual-sidebar');
@@ -34,12 +37,14 @@ class ContextualSidebar extends Component {
 	/**
 	 * Disallow setting element display to none
 	 * @inheritDoc
+	 * @review
 	 */
 	syncVisible() {
 	}
 
 	/**
 	 * @inheritDoc
+	 * @review
 	 */
 	rendered() {
 		if (this.visible) {
@@ -56,6 +61,7 @@ class ContextualSidebar extends Component {
 	 * Components using ContextualSidebar should change it's visible
 	 * property at this point.
 	 * @private
+	 * @review
 	 */
 	_handleOpenProductMenu() {
 		this.emit('hide');
@@ -64,8 +70,9 @@ class ContextualSidebar extends Component {
 
 /**
  * State definition.
- * @type {!Object}
+ * @review
  * @static
+ * @type {!Object}
  */
 ContextualSidebar.STATE = {
 	/**
@@ -73,6 +80,7 @@ ContextualSidebar.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf ContextualSidebar
+	 * @review
 	 * @type {!string}
 	 */
 	body: Config.func().required(),
@@ -82,6 +90,7 @@ ContextualSidebar.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf ContextualSidebar
+	 * @review
 	 * @type {!string}
 	 */
 	header: Config.func().required(),
@@ -91,6 +100,7 @@ ContextualSidebar.STATE = {
 	 * @default ''
 	 * @instance
 	 * @memberOf ContextualSidebar
+	 * @review
 	 * @type {string}
 	 */
 	id: Config.string().value(''),
@@ -100,6 +110,7 @@ ContextualSidebar.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf ContextualSidebar
+	 * @review
 	 * @type {!boolean}
 	 */
 	visible: Config.bool().required(),
@@ -109,6 +120,7 @@ ContextualSidebar.STATE = {
 	 * @default undefined
 	 * @instance
 	 * @memberOf ContextualSidebar
+	 * @review
 	 * @type {object}
 	 */
 	_productMenu: Config.internal(),

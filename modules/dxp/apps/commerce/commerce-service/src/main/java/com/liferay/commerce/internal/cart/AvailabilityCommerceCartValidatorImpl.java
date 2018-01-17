@@ -20,6 +20,7 @@ import com.liferay.commerce.inventory.CPDefinitionInventoryEngine;
 import com.liferay.commerce.inventory.CPDefinitionInventoryEngineRegistry;
 import com.liferay.commerce.model.CPDefinitionInventory;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.model.CPInstance;
 import com.liferay.commerce.service.CPDefinitionInventoryLocalService;
 import com.liferay.commerce.service.CommerceCartItemLocalService;
@@ -56,7 +57,8 @@ public class AvailabilityCommerceCartValidatorImpl
 
 		if (commerceCartItem == null) {
 			return new CommerceCartValidatorResult(
-				false, "product-is-no-longer-available");
+				commerceCartItem.getCommerceCartItemId(), false,
+				"product-is-no-longer-available");
 		}
 
 		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
@@ -67,7 +69,11 @@ public class AvailabilityCommerceCartValidatorImpl
 				"please-select-a-valid-product");
 		}
 
-		if (!cpInstance.isApproved() || !cpInstance.getPublished()) {
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		if (!cpDefinition.isApproved() || !cpInstance.isApproved() ||
+			!cpInstance.getPublished()) {
+
 			return new CommerceCartValidatorResult(
 				commerceCartItem.getCommerceCartItemId(), false,
 				"product-is-no-longer-available");
@@ -76,7 +82,7 @@ public class AvailabilityCommerceCartValidatorImpl
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
-					cpInstance.getCPDefinitionId());
+					cpDefinition.getCPDefinitionId());
 
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(
@@ -111,7 +117,11 @@ public class AvailabilityCommerceCartValidatorImpl
 				false, "please-select-a-valid-product");
 		}
 
-		if (!cpInstance.isApproved() || !cpInstance.getPublished()) {
+		CPDefinition cpDefinition = cpInstance.getCPDefinition();
+
+		if (!cpDefinition.isApproved() || !cpInstance.isApproved() ||
+			!cpInstance.getPublished()) {
+
 			return new CommerceCartValidatorResult(
 				false, "product-is-no-longer-available");
 		}
@@ -119,7 +129,7 @@ public class AvailabilityCommerceCartValidatorImpl
 		CPDefinitionInventory cpDefinitionInventory =
 			_cpDefinitionInventoryLocalService.
 				fetchCPDefinitionInventoryByCPDefinitionId(
-					cpInstance.getCPDefinitionId());
+					cpDefinition.getCPDefinitionId());
 
 		CPDefinitionInventoryEngine cpDefinitionInventoryEngine =
 			_cpDefinitionInventoryEngineRegistry.getCPDefinitionInventoryEngine(

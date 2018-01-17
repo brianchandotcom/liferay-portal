@@ -677,9 +677,7 @@
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
-				<execute macro="Button#clickSaveAsDraft" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#saveAsDraft" />
 
 				<execute function="AssertTextEquals" locator1="AssetWorkflow#WORKFLOW_STATUS" value1="Draft" />
 			</then>
@@ -865,9 +863,7 @@
 		<if>
 			<equals arg1="${saveAsDraft}" arg2="true" />
 			<then>
-				<execute macro="Button#clickSaveAsDraft" />
-
-				<execute macro="Alert#viewSuccessMessage" />
+				<execute macro="PortletEntry#saveAsDraft" />
 
 				<execute function="AssertTextEquals#assertPartialText" locator1="Message#WEB_CONTENT_STATUS" value1="Draft" />
 			</then>

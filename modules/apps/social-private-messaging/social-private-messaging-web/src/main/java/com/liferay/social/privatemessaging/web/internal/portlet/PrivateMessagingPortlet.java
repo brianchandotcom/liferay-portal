@@ -53,7 +53,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.social.privatemessaging.configuration.PrivateMessagingConfiguration;
 import com.liferay.social.privatemessaging.constants.PrivateMessagingPortletKeys;
 import com.liferay.social.privatemessaging.service.UserThreadLocalService;
-import com.liferay.social.privatemessaging.util.PrivateMessagingUtil;
+import com.liferay.social.privatemessaging.web.internal.util.PrivateMessagingUtil;
 
 import java.io.IOException;
 import java.io.InputStream;

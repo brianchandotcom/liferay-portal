@@ -20,8 +20,6 @@ import com.liferay.dynamic.data.lists.constants.DDLWebKeys;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
-import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.lists.util.DDL;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetCreateDateComparator;
 import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetModifiedDateComparator;
@@ -29,6 +27,8 @@ import com.liferay.dynamic.data.lists.util.comparator.DDLRecordSetNameComparator
 import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfiguration;
 import com.liferay.dynamic.data.lists.web.internal.display.context.util.DDLRequestHelper;
 import com.liferay.dynamic.data.lists.web.internal.search.RecordSetSearch;
+import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLPermission;
+import com.liferay.dynamic.data.lists.web.internal.security.permission.resource.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
@@ -71,12 +71,13 @@ import javax.servlet.http.HttpServletRequest;
 public class DDLDisplayContext {
 
 	public DDLDisplayContext(
-		HttpServletRequest request, DDL ddl,
-		DDLRecordSetLocalService ddlRecordSetLocalService,
-		DDLWebConfiguration ddlWebConfiguration,
-		DDMDisplayRegistry ddmDisplayRegistry,
-		DDMTemplateLocalService ddmTemplateLocalService,
-		StorageEngine storageEngine) {
+			HttpServletRequest request, DDL ddl,
+			DDLRecordSetLocalService ddlRecordSetLocalService,
+			DDLWebConfiguration ddlWebConfiguration,
+			DDMDisplayRegistry ddmDisplayRegistry,
+			DDMTemplateLocalService ddmTemplateLocalService,
+			StorageEngine storageEngine)
+		throws PortalException {
 
 		_ddl = ddl;
 		_ddlRecordSetLocalService = ddlRecordSetLocalService;
@@ -344,7 +345,7 @@ public class DDLDisplayContext {
 		return isShowAddDDMTemplateIcon();
 	}
 
-	public boolean isShowAddRecordButton() {
+	public boolean isShowAddRecordButton() throws PortalException {
 		if (isFormView() || isSpreadsheet()) {
 			return false;
 		}
@@ -356,13 +357,13 @@ public class DDLDisplayContext {
 		return false;
 	}
 
-	public boolean isShowAddRecordSetIcon() {
+	public boolean isShowAddRecordSetIcon() throws PortalException {
 		if (_hasAddRecordSetPermission != null) {
 			return _hasAddRecordSetPermission;
 		}
 
 		_hasAddRecordSetPermission = DDLPermission.contains(
-			getPermissionChecker(), getScopeGroupId(), getPortletId(),
+			getPermissionChecker(), getScopeGroupId(),
 			DDLActionKeys.ADD_RECORD_SET);
 
 		return _hasAddRecordSetPermission;
@@ -427,7 +428,7 @@ public class DDLDisplayContext {
 		return _hasEditFormDDMTemplatePermission;
 	}
 
-	public boolean isShowEditRecordSetIcon() {
+	public boolean isShowEditRecordSetIcon() throws PortalException {
 		DDLRecordSet recordSet = getRecordSet();
 
 		if (recordSet == null) {
@@ -472,7 +473,7 @@ public class DDLDisplayContext {
 		return _hasShowIconsActionPermission;
 	}
 
-	public boolean isShowPublishRecordButton() {
+	public boolean isShowPublishRecordButton() throws PortalException {
 		if (isEditable() && hasAddRecordPermission()) {
 			return true;
 		}
@@ -480,7 +481,7 @@ public class DDLDisplayContext {
 		return false;
 	}
 
-	public boolean isShowSaveRecordButton() {
+	public boolean isShowSaveRecordButton() throws PortalException {
 		if (isFormView()) {
 			return false;
 		}
@@ -563,7 +564,7 @@ public class DDLDisplayContext {
 		return _ddlRequestHelper.getThemeDisplay();
 	}
 
-	protected boolean hasAddRecordPermission() {
+	protected boolean hasAddRecordPermission() throws PortalException {
 		if (_hasAddRecordPermission != null) {
 			return _hasAddRecordPermission;
 		}
@@ -578,7 +579,7 @@ public class DDLDisplayContext {
 		return _hasAddRecordPermission;
 	}
 
-	protected boolean hasViewPermission() {
+	protected boolean hasViewPermission() throws PortalException {
 		if (_hasViewPermission != null) {
 			return _hasViewPermission;
 		}

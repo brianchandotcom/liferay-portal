@@ -12,11 +12,9 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.service.permission;
+package com.liferay.dynamic.data.lists.web.internal.security.permission.resource;
 
-import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
@@ -25,56 +23,27 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Marcellus Tavares
- * @deprecated As of 1.2.0, with no direct replacement
+ * @author Preston Crary
  */
 @Component(immediate = true)
-@Deprecated
-public class DDLRecordPermission {
-
-	public static void check(
-			PermissionChecker permissionChecker, DDLRecord record,
-			String actionId)
-		throws PortalException {
-
-		_ddlRecordSetModelResourcePermission.check(
-			permissionChecker, record.getRecordSetId(), actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long recordId, String actionId)
-		throws PortalException {
-
-		DDLRecord record = _ddlRecordLocalService.getDDLRecord(recordId);
-
-		_ddlRecordSetModelResourcePermission.check(
-			permissionChecker, record.getRecordSetId(), actionId);
-	}
+public class DDLRecordSetPermission {
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, DDLRecord record,
+			PermissionChecker permissionChecker, DDLRecordSet recordSet,
 			String actionId)
 		throws PortalException {
 
 		return _ddlRecordSetModelResourcePermission.contains(
-			permissionChecker, record.getRecordSetId(), actionId);
+			permissionChecker, recordSet, actionId);
 	}
 
 	public static boolean contains(
-			PermissionChecker permissionChecker, long recordId, String actionId)
+			PermissionChecker permissionChecker, long recordSetId,
+			String actionId)
 		throws PortalException {
 
-		DDLRecord record = _ddlRecordLocalService.getDDLRecord(recordId);
-
 		return _ddlRecordSetModelResourcePermission.contains(
-			permissionChecker, record.getRecordSetId(), actionId);
-	}
-
-	@Reference(unbind = "-")
-	protected void setDDLRecordLocalService(
-		DDLRecordLocalService ddlRecordLocalService) {
-
-		_ddlRecordLocalService = ddlRecordLocalService;
+			permissionChecker, recordSetId, actionId);
 	}
 
 	@Reference(
@@ -87,7 +56,6 @@ public class DDLRecordPermission {
 		_ddlRecordSetModelResourcePermission = modelResourcePermission;
 	}
 
-	private static DDLRecordLocalService _ddlRecordLocalService;
 	private static ModelResourcePermission<DDLRecordSet>
 		_ddlRecordSetModelResourcePermission;
 

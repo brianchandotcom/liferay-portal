@@ -15,13 +15,16 @@
 package com.liferay.dynamic.data.lists.service.impl;
 
 import com.liferay.dynamic.data.lists.constants.DDLActionKeys;
+import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.lists.model.DDLRecordSet;
 import com.liferay.dynamic.data.lists.service.base.DDLRecordSetServiceBaseImpl;
-import com.liferay.dynamic.data.lists.service.permission.DDLPermission;
-import com.liferay.dynamic.data.lists.service.permission.DDLRecordSetPermission;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -68,7 +71,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			int minDisplayRows, int scope, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDLPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, DDLActionKeys.ADD_RECORD_SET);
 
 		return ddlRecordSetLocalService.addRecordSet(
@@ -87,7 +90,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByPrimaryKey(
 			recordSetId);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSet, ActionKeys.DELETE);
 
 		ddlRecordSetLocalService.deleteRecordSet(recordSet);
@@ -112,7 +115,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			return null;
 		}
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSet, ActionKeys.VIEW);
 
 		return recordSet;
@@ -129,7 +132,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 	 */
 	@Override
 	public DDLRecordSet getRecordSet(long recordSetId) throws PortalException {
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.VIEW);
 
 		return ddlRecordSetLocalService.getRecordSet(recordSetId);
@@ -313,7 +316,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			long recordSetId, int minDisplayRows, ServiceContext serviceContext)
 		throws PortalException {
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.UPDATE);
 
 		return ddlRecordSetLocalService.updateMinDisplayRows(
@@ -335,7 +338,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			long recordSetId, DDMFormValues settingsDDMFormValues)
 		throws PortalException {
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.UPDATE);
 
 		return ddlRecordSetLocalService.updateRecordSet(
@@ -365,7 +368,7 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSetId, ActionKeys.UPDATE);
 
 		return ddlRecordSetLocalService.updateRecordSet(
@@ -400,12 +403,23 @@ public class DDLRecordSetServiceImpl extends DDLRecordSetServiceBaseImpl {
 		DDLRecordSet recordSet = ddlRecordSetPersistence.findByG_R(
 			groupId, recordSetKey);
 
-		DDLRecordSetPermission.check(
+		_ddlRecordSetModelResourcePermission.check(
 			getPermissionChecker(), recordSet, ActionKeys.UPDATE);
 
 		return ddlRecordSetLocalService.updateRecordSet(
 			groupId, ddmStructureId, recordSetKey, nameMap, descriptionMap,
 			minDisplayRows, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<DDLRecordSet>
+		_ddlRecordSetModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				DDLRecordSetServiceImpl.class,
+				"_ddlRecordSetModelResourcePermission", DDLRecordSet.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				DDLRecordSetServiceImpl.class, "_portletResourcePermission",
+				DDLConstants.RESOURCE_NAME);
 
 }

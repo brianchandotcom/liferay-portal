@@ -278,9 +278,27 @@ version 1.0.180.
 
 ## 1.0.65 - 2018-01-08
 
+### Added
+- [LPS-76626]: Add property `databaseNameMaxLengthCheckEnabled` to all tasks
+that extend `BuildServiceTask`.
+
 ### Changed
 - [LPS-76626]: Update the [Liferay Portal Tools Service Builder] dependency to
 version 1.0.181.
+
+## 2.0.0 - 2018-01-17
+
+### Added
+- [LPS-76626]: Add property `databaseNameMaxLength` to all tasks that extend
+`BuildServiceTask`.
+
+### Changed
+- [LPS-76626]: Update the [Liferay Portal Tools Service Builder] dependency to
+version 1.0.182.
+
+### Removed
+- [LPS-76626]: The `BuildServiceTask`'s `databaseNameMaxLengthCheckEnabled`
+property is no longer available.
 
 [Liferay Portal Tools Service Builder]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-service-builder
 [LPS-53392]: https://issues.liferay.com/browse/LPS-53392

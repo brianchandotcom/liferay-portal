@@ -232,7 +232,7 @@ public class JSTranspilerPlugin implements Plugin<Project> {
 				@Override
 				public String call() throws Exception {
 					return npmInstallTask.getWorkingDir() +
-						"/node_modules/lexicon*/src/**/*.soy";
+						"/node_modules/clay*/src/**/*.soy";
 				}
 
 			},

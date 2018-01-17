@@ -74,11 +74,11 @@ public class LiferayResourceProperties
 			liferaySourceOrSinkRuntime.initialize(
 				null, _getEffectiveConnectionProperties());
 
-			ValidationResult validatioknResult =
+			ValidationResult validationResult =
 				liferaySourceOrSinkRuntime.validate(null);
 
-			validationResultMutable.setStatus(validatioknResult.getStatus());
-			validationResultMutable.setMessage(validatioknResult.getMessage());
+			validationResultMutable.setStatus(validationResult.getStatus());
+			validationResultMutable.setMessage(validationResult.getMessage());
 
 			if (validationResultMutable.getStatus() ==
 					ValidationResult.Result.OK) {
@@ -91,13 +91,13 @@ public class LiferayResourceProperties
 					main.schema.setValue(schema);
 				}
 				catch (IOException ioe) {
-					validatioknResult =
+					validationResult =
 						ExceptionUtils.exceptionToValidationResult(ioe);
 
 					validationResultMutable.setStatus(
-						validatioknResult.getStatus());
+						validationResult.getStatus());
 					validationResultMutable.setMessage(
-						validatioknResult.getMessage());
+						validationResult.getMessage());
 				}
 			}
 		}

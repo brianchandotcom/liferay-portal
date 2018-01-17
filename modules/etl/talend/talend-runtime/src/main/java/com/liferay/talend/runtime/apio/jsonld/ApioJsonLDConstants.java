@@ -12,12 +12,14 @@
  * details.
  */
 
-package com.liferay.talend.runtime.client;
+package com.liferay.talend.runtime.apio.jsonld;
 
 /**
  * @author Zoltán Takács
  */
 public abstract class ApioJsonLDConstants {
+
+	public static final String COLLECTION = "Collection";
 
 	public static final String COLLECTION_MEMBERS = "members";
 

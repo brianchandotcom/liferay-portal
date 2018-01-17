@@ -22,6 +22,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.runtime.BoundedReader;
 import org.talend.components.api.component.runtime.BoundedSource;
 import org.talend.components.api.container.RuntimeContainer;
@@ -35,8 +36,7 @@ public class LiferaySource
 	@Override
 	public BoundedReader<?> createReader(RuntimeContainer runtimeContainer) {
 		if (_log.isDebugEnabled()) {
-			_log.debug(
-				"Creating reader for fetching data from the datastore");
+			_log.debug("Creating reader for fetching data from the datastore");
 		}
 
 		if (properties instanceof TLiferayInputProperties) {

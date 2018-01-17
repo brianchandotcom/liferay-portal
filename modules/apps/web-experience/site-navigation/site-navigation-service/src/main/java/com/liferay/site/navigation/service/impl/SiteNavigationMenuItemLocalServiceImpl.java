@@ -152,13 +152,15 @@ public class SiteNavigationMenuItemLocalServiceImpl
 
 		// Child site navigation menu item
 
-		List<SiteNavigationMenuItem> childs = getSiteNavigationMenuItems(
+		List<SiteNavigationMenuItem> children = getSiteNavigationMenuItems(
 			siteNavigationMenuItem.getSiteNavigationMenuId(),
 			parentSiteNavigationMenuItemId);
 
-		for (SiteNavigationMenuItem child : childs) {
-			if (child.getOrder() < order) {
-				continue;
+		int newOrder = 0;
+
+		for (SiteNavigationMenuItem child : children) {
+			if (newOrder == order) {
+				newOrder++;
 			}
 
 			if (child.getSiteNavigationMenuItemId() ==
@@ -167,7 +169,7 @@ public class SiteNavigationMenuItemLocalServiceImpl
 				continue;
 			}
 
-			child.setOrder(child.getOrder() + 1);
+			child.setOrder(newOrder++);
 
 			siteNavigationMenuItemPersistence.update(child);
 		}
@@ -175,11 +177,12 @@ public class SiteNavigationMenuItemLocalServiceImpl
 		if (parentSiteNavigationMenuItemId !=
 				oldParentSiteNavigationMenuItemId) {
 
-			List<SiteNavigationMenuItem> oldChilds = getSiteNavigationMenuItems(
-				siteNavigationMenuItem.getSiteNavigationMenuId(),
-				oldParentSiteNavigationMenuItemId);
+			List<SiteNavigationMenuItem> oldChildren =
+				getSiteNavigationMenuItems(
+					siteNavigationMenuItem.getSiteNavigationMenuId(),
+					oldParentSiteNavigationMenuItemId);
 
-			for (SiteNavigationMenuItem oldChild : oldChilds) {
+			for (SiteNavigationMenuItem oldChild : oldChildren) {
 				if (oldChild.getOrder() <= order) {
 					continue;
 				}

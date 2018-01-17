@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Asset Display API
+Bundle-SymbolicName: com.liferay.asset.display.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.asset.display.contributor
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Asset

@@ -1,0 +1,19 @@
+<definition>
+	<command name="addProductImages">
+		<for list="${optionValuesList}" param="optionValues">
+			<execute function="Click" locator1="Button#PLUS" />
+
+			<execute macro="CommerceEntry#uploadCatalogEntrySingleImage">
+				<var name="uploadFileName" value="Commerce_${optionValues}.jpg" />
+			</execute>
+
+			<execute macro="CommerceEntry#selectAssociatedOptionsValue">
+				<var name="optionValue" value="${optionValues}" />
+			</execute>
+
+			<execute macro="CommerceEntry#publishEntry" />
+
+			<execute macro="Alert#waitForSuccessMessageHide" />
+		</for>
+	</command>
+</definition>

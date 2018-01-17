@@ -54,6 +54,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>ENTRY_CONTENT_ROW_NUMBER_WORKFLOW_STATUS</td>
+	<td>xpath=(//*[@data-qa-id='row'])[${key_rowNumber}]//span[contains(@class,'workflow-status')]/span</td>
+	<td></td>
+</tr>
+<tr>
 	<td></td>
 	<td></td>
 	<td></td>
@@ -87,6 +92,11 @@
 <tr>
 	<td>ENTRY_CONTENT_ENTRY_ELLIPSIS</td>
 	<td>//*[@data-qa-id='row'][//*[normalize-space()='${key_rowEntry}']]//a[span/*[name()='svg'][contains(@class,'icon-ellipsis')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>ENTRY_CONTENT_ENTRY_WORKFLOW_STATUS</td>
+	<td>//*[@data-qa-id='row'][//*[normalize-space()='${key_rowEntry}']]//span[contains(@class,'workflow-status')]/span</td>
 	<td></td>
 </tr>
 <!--ENTRY_CONTENT_LIST-->

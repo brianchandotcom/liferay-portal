@@ -15,13 +15,13 @@
 package com.liferay.portal.configuration.test.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.osgi.util.service.OSGiServiceUtil;
-import com.liferay.petra.function.UnsafeConsumer;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-
-import java.io.IOException;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
 
@@ -30,12 +30,11 @@ import org.apache.felix.cm.PersistenceManager;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -45,44 +44,46 @@ import org.osgi.service.cm.ConfigurationAdmin;
 @RunWith(Arquillian.class)
 public class ConfigurationTemporarySwapperTest {
 
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
 	@Before
 	public void setUp() throws Exception {
-		_deleteConfiguration(_CONFIGURATION_PID);
+		_configurationPid = "TestPID_" + RandomTestUtil.randomString();
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_deleteConfiguration(_pid);
+		if (_persistenceManager.exists(_configurationPid)) {
+			Configuration configuration = _getConfiguration();
+
+			configuration.delete();
+		}
 	}
 
 	@Test
 	public void testWillCleanUpConfiguration() throws Exception {
-		_pid = _CONFIGURATION_PID;
+		Assert.assertFalse(
+			String.valueOf(_persistenceManager.load(_configurationPid)),
+			_persistenceManager.exists(_configurationPid));
 
-		_callPersistenceManager(
-			persistenceManager -> {
-				Assert.assertFalse(
-					String.valueOf(persistenceManager.load(_pid)),
-					persistenceManager.exists(_pid));
+		try (ConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+						_configurationPid, new HashMapDictionary<>())) {
 
-				try (ConfigurationTemporarySwapper
-						configurationTemporarySwapper =
-							new ConfigurationTemporarySwapper(
-								_pid, new HashMapDictionary<>())) {
+			Assert.assertTrue(_persistenceManager.exists(_configurationPid));
+		}
 
-					Assert.assertTrue(persistenceManager.exists(_pid));
-				}
-
-				Assert.assertFalse(
-					String.valueOf(persistenceManager.load(_pid)),
-					persistenceManager.exists(_pid));
-			});
+		Assert.assertFalse(
+			String.valueOf(_persistenceManager.load(_configurationPid)),
+			_persistenceManager.exists(_configurationPid));
 	}
 
 	@Test
 	public void testWillPreservePreviouslySavedProperties() throws Exception {
-		_pid = _CONFIGURATION_PID;
-
 		String testKey = "permissionTermsLimit";
 		Integer valueToPreserve = 250;
 		int temporaryValue = 300;
@@ -91,25 +92,21 @@ public class ConfigurationTemporarySwapperTest {
 
 		temporaryValues.put(testKey, valueToPreserve);
 
-		Configuration testConfiguration = _getConfiguration(
-			_pid, StringPool.QUESTION);
+		Configuration testConfiguration = _getConfiguration();
 
 		testConfiguration.update(temporaryValues);
 
-		_callPersistenceManager(
-			persistenceManager -> {
-				temporaryValues.put(testKey, temporaryValue);
+		temporaryValues.put(testKey, temporaryValue);
 
-				try (ConfigurationTemporarySwapper
-						configurationTemporarySwapper =
-							new ConfigurationTemporarySwapper(
-								_pid, temporaryValues)) {
-				}
+		try (ConfigurationTemporarySwapper
+				configurationTemporarySwapper =
+					new ConfigurationTemporarySwapper(
+						_configurationPid, temporaryValues)) {
+		}
 
-				Assert.assertTrue(persistenceManager.exists(_pid));
-			});
+		Assert.assertTrue(_persistenceManager.exists(_configurationPid));
 
-		testConfiguration = _getConfiguration(_pid, StringPool.QUESTION);
+		testConfiguration = _getConfiguration();
 
 		Assert.assertEquals(4, testConfiguration.getChangeCount());
 
@@ -122,8 +119,6 @@ public class ConfigurationTemporarySwapperTest {
 
 	@Test
 	public void testWillUpdateConfigurationValues() throws Exception {
-		_pid = _CONFIGURATION_PID;
-
 		String testKey = "permissionTermsLimit";
 		Integer testValue = 300;
 
@@ -132,10 +127,10 @@ public class ConfigurationTemporarySwapperTest {
 		temporaryValues.put(testKey, testValue);
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
-				new ConfigurationTemporarySwapper(_pid, temporaryValues)) {
+				new ConfigurationTemporarySwapper(
+					_configurationPid, temporaryValues)) {
 
-			Configuration testConfiguration = _getConfiguration(
-				_pid, StringPool.QUESTION);
+			Configuration testConfiguration = _getConfiguration();
 
 			Assert.assertEquals(2, testConfiguration.getChangeCount());
 
@@ -147,65 +142,17 @@ public class ConfigurationTemporarySwapperTest {
 		}
 	}
 
-	private static <E extends Throwable> void _callPersistenceManager(
-			UnsafeConsumer<PersistenceManager, E> unsafeConsumer)
-		throws E {
-
-		OSGiServiceUtil.callService(
-			_bundleContext, PersistenceManager.class,
-			persistenceManager -> {
-				unsafeConsumer.accept(persistenceManager);
-
-				return null;
-			});
+	private Configuration _getConfiguration() throws Exception {
+		return _configurationAdmin.getConfiguration(
+			_configurationPid, StringPool.QUESTION);
 	}
 
-	private static void _deleteConfiguration(String pid) throws IOException {
-		_callPersistenceManager(
-			persistenceManager -> {
-				if (persistenceManager.exists(pid)) {
-					Configuration configuration = _getConfiguration(pid);
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
-					configuration.delete();
-				}
-			});
-	}
+	@Inject
+	private static PersistenceManager _persistenceManager;
 
-	private static Configuration _getConfiguration(String pid)
-		throws IOException {
-
-		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(pid));
-	}
-
-	private static Configuration _getConfiguration(String pid, String location)
-		throws IOException {
-
-		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				pid, location));
-	}
-
-	private static final String _CONFIGURATION_PID =
-		"com.liferay.portal.search.configuration." +
-			"SearchPermissionCheckerConfiguration";
-
-	private static final BundleContext _bundleContext;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfigurationTemporarySwapperTest.class);
-
-		if (bundle == null) {
-			_bundleContext = null;
-		}
-		else {
-			_bundleContext = bundle.getBundleContext();
-		}
-	}
-
-	private String _pid;
+	private String _configurationPid;
 
 }

@@ -17,7 +17,7 @@ package com.liferay.portal.configuration.settings.internal.constants;
 /**
  * @author Drew Brokke
  */
-public class SettingsLocatorHelperTestConstants {
+public class SettingsLocatorTestConstants {
 
 	public static final String TEST_CONFIGURATION_PID =
 		"com.liferay.portal.configuration.settings.internal.samples." +

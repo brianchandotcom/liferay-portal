@@ -17,17 +17,17 @@ package com.liferay.portal.configuration.settings.internal.samples;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorHelperTestConstants;
+import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 
 /**
  * @author Drew Brokke
  */
 @ExtendedObjectClassDefinition(category = "other")
-@Meta.OCD(id = SettingsLocatorHelperTestConstants.TEST_CONFIGURATION_PID)
+@Meta.OCD(id = SettingsLocatorTestConstants.TEST_CONFIGURATION_PID)
 public interface TestConfiguration {
 
 	@Meta.AD(
-		deflt = SettingsLocatorHelperTestConstants.TEST_DEFAULT_VALUE,
+		deflt = SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 		name = "settings-locator-test-key", required = false
 	)
 	public String settingsLocatorTestKey();

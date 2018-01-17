@@ -43,7 +43,9 @@ public class ApioJsonLDUtils {
 	 * e.g "@vocab": "http://schema.org" otherwise empty String
 	 */
 	public static String getVocabulary(JsonNode contextJsonNode) {
-		return contextJsonNode.path(ApioJsonLDConstants.VOCAB).asText();
+		JsonNode jsonNode = contextJsonNode.path(ApioJsonLDConstants.VOCAB);
+
+		return jsonNode.asText();
 	}
 
 	private static JsonNode _findJsonNode(JsonNode resource, String nodeName) {
@@ -51,11 +53,11 @@ public class ApioJsonLDUtils {
 
 		if (_log.isDebugEnabled()) {
 			if (jsonNode.isMissingNode()) {
-				_log.debug("Cannot find the \"{}\" node!", nodeName);
+				_log.debug("Unable to find the \"{}\" node", nodeName);
 			}
 
 			if (jsonNode.isArray() && (jsonNode.size() == 0)) {
-				_log.debug("The \"{}\" ArrayNode is empty!", jsonNode);
+				_log.debug("The \"{}\" array node is empty", jsonNode);
 			}
 		}
 

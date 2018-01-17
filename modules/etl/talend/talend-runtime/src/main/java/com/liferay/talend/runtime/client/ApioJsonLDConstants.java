@@ -29,11 +29,15 @@ public abstract class ApioJsonLDConstants {
 
 	public static final String CONTEXT = "@context";
 
+	public static final String HREF = "href";
+
 	public static final String ID = "@id";
 
 	public static final String PAGE = "page";
 
 	public static final String PER_PAGE = "per_page";
+
+	public static final String RESOURCES = "resources";
 
 	public static final String TYPE = "@type";
 

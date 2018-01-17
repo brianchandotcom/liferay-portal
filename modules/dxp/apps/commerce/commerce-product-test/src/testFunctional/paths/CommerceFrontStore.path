@@ -10,7 +10,7 @@
 <tbody>
 <tr>
 	<td>FS_PRODUCT_PRICE</td>
-	<td>//div/h2[contains (.,'Product Detail')]//..//div/div[contains (@class,'price') and contains (.,'${key_FSProductPrice')]</td>
+	<td>//div/h2[contains (.,'Product Detail')]//..//div/div[contains (@class,'price') and contains (.,'${key_FSProductPrice}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -34,7 +34,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FS_PRODUCT_IMAGE</td>
+	<td>FS_PRODUCT_IMAGE_THUMBNAIL</td>
+	<td>//div/h2[contains (.,'Product Detail')]//..//div[contains (@class,'thumb')]/img[contains (@src,'${key_FSProductImageThumb}')]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FS_PRODUCT_FULL_IMAGE</td>
 	<td>//div/h2[contains (.,'Product Detail')]//..//div[contains (@class,'full-image')]/img[contains (@src,'${key_FSProductImage}')]</td>
 	<td></td>
 </tr>

@@ -10,6 +10,10 @@
 	.layout-column {
 		height: calc(100vh - 384px);
 		overflow-y: scroll;
+
+		.active-item {
+			background-color: #F0F5FF;
+		}
 	}
 }
 

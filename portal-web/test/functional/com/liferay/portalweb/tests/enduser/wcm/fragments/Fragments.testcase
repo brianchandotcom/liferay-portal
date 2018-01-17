@@ -237,4 +237,76 @@ element.style.border='2px dashed red';
 			<var name="rowEntry" value="Rename Fragment" />
 		</execute>
 	</command>
+
+	<command name="ViewEmptyFragmentCannotBePublished" priority="4">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Fragment Name (Draft)" />
+		</execute>
+
+		<execute macro="Button#clickPublish" />
+
+		<execute macro="Alert#viewErrorMessage">
+			<var name="errorMessage" value="HTML content must not be empty." />
+		</execute>
+	</command>
+
+	<command name="ViewOnlyDraftFragmentsCanBeSaved" priority="4">
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="Fragment#addFragment">
+			<var name="fragmentName" value="Fragment Name" />
+		</execute>
+
+		<execute macro="SiteAdmin#viewPortletTitle">
+			<var name="portletTitle" value="Fragment Name (Draft)" />
+		</execute>
+
+		<execute macro="PortletEntry#saveAsDraft" />
+
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Fragments" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
+		</execute>
+
+		<execute macro="PortletEntry#viewWorkflowStatus">
+			<var name="rowEntry" value="Fragment Name" />
+			<var name="workflowStatus" value="Draft" />
+		</execute>
+
+		<execute macro="LexiconEntry#gotoEntryMenuItem">
+			<var name="menuItem" value="Edit" />
+			<var name="rowEntry" value="Fragment Name" />
+		</execute>
+
+		<var name="htmlSnippet"><![CDATA[
+<html>${line.separator}
+<div>${line.separator}
+<span class="test">This is a test.</span>${line.separator}
+</div>${line.separator}
+</html>]]></var>
+
+		<execute macro="Fragment#typeFragmentEditor">
+			<var name="editor" value="html" />
+			<var name="templateScript" value="${htmlSnippet}" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute function="AssertElementNotPresent" locator1="Button#SAVE_AS_DRAFT" />
+	</command>
 </definition>

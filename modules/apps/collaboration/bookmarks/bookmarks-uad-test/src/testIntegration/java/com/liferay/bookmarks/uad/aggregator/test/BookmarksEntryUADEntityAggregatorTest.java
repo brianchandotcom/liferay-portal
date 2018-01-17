@@ -12,17 +12,20 @@
  * details.
  */
 
-package com.liferay.announcements.uad.aggregator.test;
+package com.liferay.bookmarks.uad.aggregator.test;
 
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+import com.liferay.bookmarks.uad.test.BaseBookmarksEntryUADEntityTestCase;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -41,8 +44,8 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsEntryUADEntityAggregatorTest
-	extends BaseAnnouncementsEntryUADEntityTestCase {
+public class BookmarksEntryUADEntityAggregatorTest
+	extends BaseBookmarksEntryUADEntityTestCase {
 
 	@ClassRule
 	@Rule
@@ -59,15 +62,15 @@ public class AnnouncementsEntryUADEntityAggregatorTest
 
 	@Test
 	public void testCount() throws Exception {
-		addAnnouncementsEntry(_user.getUserId());
+		addBookmarksEntry(_user.getUserId());
 
 		Assert.assertEquals(1, _uadEntityAggregator.count(_user.getUserId()));
 	}
 
 	@Test
 	public void testGetUADEntities() throws Exception {
-		addAnnouncementsEntry(TestPropsValues.getUserId());
-		addAnnouncementsEntry(_user.getUserId());
+		addBookmarksEntry(TestPropsValues.getUserId());
+		addBookmarksEntry(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
@@ -80,7 +83,26 @@ public class AnnouncementsEntryUADEntityAggregatorTest
 	}
 
 	@Test
-	public void testGetUADEntitiesNoAnnouncementsEntries() throws Exception {
+	public void testGetUADEntitiesByStatusByUserId() throws Exception {
+		long defaultUserId = _userLocalService.getDefaultUserId(
+			TestPropsValues.getCompanyId());
+
+		bookmarksEntryLocalService.updateStatus(
+			_user.getUserId(), addBookmarksEntry(defaultUserId),
+			WorkflowConstants.STATUS_APPROVED);
+
+		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
+			_user.getUserId());
+
+		Assert.assertEquals(uadEntities.toString(), 1, uadEntities.size());
+
+		UADEntity uadEntity = uadEntities.get(0);
+
+		Assert.assertEquals(_user.getUserId(), uadEntity.getUserId());
+	}
+
+	@Test
+	public void testGetUADEntitiesNoBookmarksEntries() throws Exception {
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
 
@@ -89,24 +111,26 @@ public class AnnouncementsEntryUADEntityAggregatorTest
 
 	@Test
 	public void testGetUADEntity() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			_user.getUserId());
+		BookmarksEntry bookmarksEntry = addBookmarksEntry(_user.getUserId());
 
-		long entryId = announcementsEntry.getEntryId();
+		long entryId = bookmarksEntry.getEntryId();
 
 		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(entryId));
+			String.valueOf(entryId) + StringPool.POUND +
+				String.valueOf(_user.getUserId()));
 
-		Assert.assertEquals(
-			String.valueOf(entryId), uadEntity.getUADEntityId());
+		Assert.assertEquals(_user.getUserId(), uadEntity.getUserId());
 	}
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 
 	@DeleteAfterTestRun
 	private User _user;
+
+	@Inject
+	private UserLocalService _userLocalService;
 
 }

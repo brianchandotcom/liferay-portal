@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.announcements.uad.exporter.test;
+package com.liferay.bookmarks.uad.exporter.test;
 
-import com.liferay.announcements.constants.AnnouncementsPortletKeys;
-import com.liferay.announcements.kernel.model.AnnouncementsEntry;
-import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.bookmarks.constants.BookmarksPortletKeys;
+import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
+import com.liferay.bookmarks.uad.test.BaseBookmarksEntryUADEntityTestCase;
 import com.liferay.document.library.kernel.exception.NoSuchFileEntryException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalService;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.Group;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -46,10 +46,11 @@ import com.liferay.user.associated.data.exporter.UADEntityExporter;
 import java.io.InputStream;
 import java.io.StringWriter;
 
+import java.util.List;
+
 import org.apache.commons.io.IOUtils;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -59,15 +60,14 @@ import org.junit.runner.RunWith;
  * @author Noah Sherrill
  */
 @RunWith(Arquillian.class)
-public class AnnouncementsEntryUADEntityExporterTest
-	extends BaseAnnouncementsEntryUADEntityTestCase {
+public class BookmarksEntryUADEntityExporterTest
+	extends BaseBookmarksEntryUADEntityTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
 	@Override
 	public void setUp() throws Exception {
 		super.setUp();
@@ -77,18 +77,19 @@ public class AnnouncementsEntryUADEntityExporterTest
 
 	@Test
 	public void testExport() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
+		BookmarksEntry bookmarksEntry = addBookmarksEntry(_user.getUserId());
+
+		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
 
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(announcementsEntry.getEntryId()));
+		UADEntity uadEntity = uadEntities.get(0);
 
 		_uadEntityExporter.export(uadEntity);
 
 		FileEntry fileEntry = _getFileEntry(
-			announcementsEntry.getCompanyId(), uadEntity.getUADEntityId());
+			bookmarksEntry.getCompanyId(), uadEntity.getUADEntityId());
 
-		_verifyFileEntry(fileEntry, announcementsEntry);
+		_verifyFileEntry(fileEntry, bookmarksEntry);
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
@@ -96,29 +97,29 @@ public class AnnouncementsEntryUADEntityExporterTest
 
 	@Test(expected = NoSuchFileEntryException.class)
 	public void testExportAll() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
+		BookmarksEntry bookmarksEntry = addBookmarksEntry(
 			TestPropsValues.getUserId());
-		AnnouncementsEntry announcementsEntryExported = addAnnouncementsEntry(
+		BookmarksEntry bookmarksEntryExported = addBookmarksEntry(
 			_user.getUserId());
 
 		_uadEntityExporter.exportAll(_user.getUserId());
 
 		FileEntry fileEntry = _getFileEntry(
-			announcementsEntryExported.getCompanyId(),
-			String.valueOf(announcementsEntryExported.getEntryId()));
+			bookmarksEntry.getCompanyId(),
+			String.valueOf(bookmarksEntryExported.getEntryId()));
 
-		_verifyFileEntry(fileEntry, announcementsEntryExported);
+		_verifyFileEntry(fileEntry, bookmarksEntryExported);
 
 		PortletFileRepositoryUtil.deletePortletFileEntry(
 			fileEntry.getFileEntryId());
 
 		_getFileEntry(
-			announcementsEntry.getCompanyId(),
-			String.valueOf(announcementsEntry.getEntryId()));
+			bookmarksEntry.getCompanyId(),
+			String.valueOf(bookmarksEntry.getEntryId()));
 	}
 
 	@Test
-	public void testExportAllNoAnnouncementsEntries() throws Exception {
+	public void testExportAllNoBookmarksEntries() throws Exception {
 		_uadEntityExporter.exportAll(_user.getUserId());
 	}
 
@@ -129,7 +130,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 			companyId, GroupConstants.GUEST);
 
 		Repository repository = PortletFileRepositoryUtil.getPortletRepository(
-			guestGroup.getGroupId(), AnnouncementsPortletKeys.ANNOUNCEMENTS);
+			guestGroup.getGroupId(), BookmarksPortletKeys.BOOKMARKS);
 
 		Folder folder = PortletFileRepositoryUtil.getPortletFolder(
 			repository.getRepositoryId(),
@@ -141,7 +142,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 	}
 
 	private void _verifyFileEntry(
-			FileEntry fileEntry, AnnouncementsEntry announcementsEntry)
+			FileEntry fileEntry, BookmarksEntry bookmarksEntry)
 		throws Exception {
 
 		InputStream is = _dlFileEntryLocalService.getFileAsStream(
@@ -154,7 +155,7 @@ public class AnnouncementsEntryUADEntityExporterTest
 			stringWriter.toString());
 
 		Assert.assertEquals(
-			announcementsEntry.getEntryId(), jsonObject.getInt("entryId"));
+			bookmarksEntry.getEntryId(), jsonObject.getInt("entryId"));
 	}
 
 	@Inject
@@ -164,12 +165,12 @@ public class AnnouncementsEntryUADEntityExporterTest
 	private GroupLocalService _groupLocalService;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
+		filter = "model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY
 	)
 	private UADEntityExporter _uadEntityExporter;
 

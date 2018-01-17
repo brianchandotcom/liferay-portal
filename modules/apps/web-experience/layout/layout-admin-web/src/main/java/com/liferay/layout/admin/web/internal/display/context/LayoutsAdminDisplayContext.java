@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.display.context;
 
 import com.liferay.exportimport.kernel.staging.LayoutStagingUtil;
 import com.liferay.exportimport.kernel.staging.StagingUtil;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.layout.admin.web.configuration.LayoutAdminWebConfiguration;
 import com.liferay.layout.admin.web.constants.LayoutAdminDisplayStyleKeys;
@@ -61,6 +62,7 @@ import com.liferay.portal.util.LayoutListUtil;
 import com.liferay.portlet.layoutsadmin.display.context.GroupDisplayContextHelper;
 import com.liferay.taglib.security.PermissionsURLTag;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
@@ -356,6 +358,43 @@ public class LayoutsAdminDisplayContext {
 			_liferayPortletRequest, "navigation", defaultNavigation);
 
 		return _navigation;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem pagesNavigationItem = new NavigationItem();
+
+		pagesNavigationItem.setActive(Objects.equals(getTabs1(), "pages"));
+
+		PortletURL pagesURL = getPortletURL();
+
+		pagesURL.setParameter("tabs1", "pages");
+
+		pagesNavigationItem.setHref(pagesURL.toString());
+
+		pagesNavigationItem.setLabel(
+			LanguageUtil.get(_themeDisplay.getLocale(), "pages"));
+
+		navigationItems.add(pagesNavigationItem);
+
+		NavigationItem pageTemplatesNavigationItem = new NavigationItem();
+
+		pageTemplatesNavigationItem.setActive(
+			Objects.equals(getTabs1(), "page-templates"));
+
+		PortletURL pageTemplatesURL = getPortletURL();
+
+		pageTemplatesURL.setParameter("tabs1", "page-templates");
+
+		pageTemplatesNavigationItem.setHref(pageTemplatesURL.toString());
+
+		pageTemplatesNavigationItem.setLabel(
+			LanguageUtil.get(_themeDisplay.getLocale(), "page-templates"));
+
+		navigationItems.add(pageTemplatesNavigationItem);
+
+		return navigationItems;
 	}
 
 	public String[] getNavigationKeys() {
@@ -799,7 +838,8 @@ public class LayoutsAdminDisplayContext {
 		}
 
 		OrphanPortletsDisplayContext orphanPortletsDisplayContext =
-			new OrphanPortletsDisplayContext(_liferayPortletRequest);
+			new OrphanPortletsDisplayContext(
+				_liferayPortletRequest, _liferayPortletResponse);
 
 		if (ListUtil.isEmpty(
 				orphanPortletsDisplayContext.getOrphanPortlets(layout))) {

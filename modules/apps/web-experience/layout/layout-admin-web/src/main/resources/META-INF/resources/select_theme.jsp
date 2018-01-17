@@ -36,13 +36,25 @@ portletURL.setParameter("eventName", eventName);
 List<Theme> themes = ThemeLocalServiceUtil.getPageThemes(company.getCompanyId(), layoutsAdminDisplayContext.getLiveGroupId(), user.getUserId());
 
 themes = ListUtil.sort(themes, new ThemeNameComparator(orderByType.equals("asc")));
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem mySitesNavigationItem = new NavigationItem();
+
+mySitesNavigationItem.setActive(true);
+
+PortletURL mainURL = renderResponse.createRenderURL();
+
+mySitesNavigationItem.setHref(mainURL.toString());
+
+mySitesNavigationItem.setLabel(LanguageUtil.get(request, "available-themes"));
+
+navigationItems.add(mySitesNavigationItem);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="available-themes" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

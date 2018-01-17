@@ -2737,6 +2737,8 @@ when applied.
 ## 5.2.46 - 2018-01-17
 
 ### Changed
+- [LPS-76644]: Update the [Liferay Gradle Plugins JSDoc] dependency to version
+1.0.2.
 - [LPS-77250]: Update the [Liferay Gradle Plugins] dependency to version 3.5.91.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs

@@ -3358,6 +3358,10 @@ version 1.0.182.
 ## 3.5.91 - 2018-01-17
 
 ### Changed
+- [LPS-76644]: Update the [Liferay Gradle Plugins Gulp] dependency to version
+2.0.23.
+- [LPS-76644]: Update the [Liferay Gradle Plugins JS Module Config Generator]
+dependency to version 2.1.24.
 - [LPS-77250]: Update the [Liferay Gradle Plugins JS Transpiler] dependency to
 version 2.4.3.
 
@@ -3643,6 +3647,7 @@ version 2.4.3.
 [LPS-76475]: https://issues.liferay.com/browse/LPS-76475
 [LPS-76601]: https://issues.liferay.com/browse/LPS-76601
 [LPS-76626]: https://issues.liferay.com/browse/LPS-76626
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
 [LPS-76747]: https://issues.liferay.com/browse/LPS-76747
 [LPS-76840]: https://issues.liferay.com/browse/LPS-76840
 [LPS-76854]: https://issues.liferay.com/browse/LPS-76854

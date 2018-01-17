@@ -213,6 +213,8 @@ required.
 ## 2.4.3 - 2018-01-17
 
 ### Changed
+- [LPS-76644]: Update the [Liferay Gradle Plugins Node] dependency to version
+4.0.2.
 - [LPS-77250]: Update the default value of the `soyDependencies` for
 `TranspileJSTask` instances from `"${npmInstall.workingDir}/node_modules/lexicon*/src/**/*.soy"`
 to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
@@ -247,4 +249,5 @@ to `"${npmInstall.workingDir}/node_modules/clay*/src/**/*.soy"`.
 [LPS-75175]: https://issues.liferay.com/browse/LPS-75175
 [LPS-75829]: https://issues.liferay.com/browse/LPS-75829
 [LPS-75965]: https://issues.liferay.com/browse/LPS-75965
+[LPS-76644]: https://issues.liferay.com/browse/LPS-76644
 [LPS-77250]: https://issues.liferay.com/browse/LPS-77250

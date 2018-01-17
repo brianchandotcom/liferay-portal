@@ -189,6 +189,10 @@ are no longer available.
 `npmInstallRetries` property of an `ExecuteNodeTask` instance have been
 exhausted.
 
+## 4.0.2 - 2018-01-17
+
+*No changes.*
+
 [LPS-66906]: https://issues.liferay.com/browse/LPS-66906
 [LPS-67023]: https://issues.liferay.com/browse/LPS-67023
 [LPS-67573]: https://issues.liferay.com/browse/LPS-67573

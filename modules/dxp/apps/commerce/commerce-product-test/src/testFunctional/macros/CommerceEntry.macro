@@ -32,7 +32,6 @@
 
 		<execute macro="CommerceEntry#selectAssociatedOptionsValue">
 			<var name="optionValue" value="${optionValue}" />
-			<var name="selectValue" value="${selectValue}" />
 		</execute>
 	</command>
 
@@ -107,7 +106,7 @@
 				<execute function="Click" locator1="CommerceEntry#OPTION_SELECT" />
 
 				<execute function="Click" locator1="CommerceEntry#OPTIONS_SELECT_LIST">
-					<var name="key_selectValue" value="${selectValue}" />
+					<var name="key_selectValue" value="${optionValue}" />
 				</execute>
 			</then>
 		</if>
@@ -142,12 +141,6 @@
 	</command>
 
 	<command name="uploadCatalogEntrySingleImage">
-		<execute macro="CommerceEntry#gotoMenuTab">
-			<var name="menuTab" value="Images" />
-		</execute>
-
-		<execute function="Click" locator1="Button#PLUS" />
-
 		<execute function="AssertClick" locator1="CommerceEntry#PRODUCT_IMAGE_SELECT_FILE" value1="Select File" />
 
 		<execute macro="CommerceItemSelector#uploadSingleFile">

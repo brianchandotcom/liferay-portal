@@ -70,7 +70,7 @@ public abstract class BaseSpellCheckIndexWriter
 		long[] groupIds = searchContext.getGroupIds();
 
 		if ((groupIds != null) && (groupIds.length > 0)) {
-			groupId = groupIds[1];
+			groupId = groupIds[0];
 		}
 
 		String keywordFieldName = Field.KEYWORD_SEARCH;

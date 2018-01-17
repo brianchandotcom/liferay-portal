@@ -70,7 +70,6 @@
 		</execute>
 
 		<var name="htmlSnippet"><![CDATA[
-<!DOCTYPE html>${line.separator}
 <html>${line.separator}
 <div>${line.separator}
 <span class="test">This is a test.</span>${line.separator}

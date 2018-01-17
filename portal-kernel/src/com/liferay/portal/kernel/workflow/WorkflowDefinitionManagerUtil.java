@@ -166,7 +166,7 @@ public class WorkflowDefinitionManagerUtil {
 
 	/**
 	 * Saves a workflow definition without activating it or validating its data.
-	 * To save the definition, validate its data, and activate it, use {@link 
+	 * To save the definition, validate its data, and activate it, use {@link
 	 * #deployWorkflowDefinition(long, long, String, String, byte[])} instead.
 	 *
 	 * @param  companyId the company ID of this workflow definition

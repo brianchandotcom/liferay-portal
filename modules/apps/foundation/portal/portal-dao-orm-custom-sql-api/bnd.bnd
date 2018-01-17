@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal DAO ORM Custom SQL API
+Bundle-SymbolicName: com.liferay.portal.dao.orm.custom.sql.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.portal.dao.orm.custom.sql
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

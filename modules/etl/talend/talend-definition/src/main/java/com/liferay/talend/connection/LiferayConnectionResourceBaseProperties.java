@@ -60,6 +60,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 
 		mainForm.addRow(connection.getForm(Form.REFERENCE));
 		mainForm.addRow(resource.getForm(Form.REFERENCE));
+
+		Form advancedForm = new Form(this, Form.ADVANCED);
+
+		advancedForm.addRow(connection.getForm(Form.ADVANCED));
 	}
 
 	@Override

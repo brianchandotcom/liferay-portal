@@ -1,5 +1,5 @@
 <definition>
-	<command name="_addPage">
+	<command name="_clickAddPage">
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
 		<execute macro="Alert#viewSuccessMessage" />

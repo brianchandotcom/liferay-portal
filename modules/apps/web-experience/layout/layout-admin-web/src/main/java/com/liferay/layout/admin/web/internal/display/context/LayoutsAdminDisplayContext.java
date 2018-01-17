@@ -246,31 +246,11 @@ public class LayoutsAdminDisplayContext {
 	}
 
 	public JSONArray getLayoutColumnsJSONArray() throws Exception {
-		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
+		JSONArray layoutColumnsJSONArray = _getLayoutColumnsJSONArray();
 
-		layoutColumnsJSONArray.put(_getLayoutsJSONArray(0));
-
-		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
-			return layoutColumnsJSONArray;
+		while (layoutColumnsJSONArray.length() < 3) {
+			layoutColumnsJSONArray.put(JSONFactoryUtil.createJSONArray());
 		}
-
-		Layout selLayout = getSelLayout();
-
-		if (selLayout == null) {
-			return layoutColumnsJSONArray;
-		}
-
-		List<Layout> layouts = selLayout.getAncestors();
-
-		Collections.reverse(layouts);
-
-		for (Layout layout : layouts) {
-			layoutColumnsJSONArray.put(
-				_getLayoutsJSONArray(layout.getLayoutId()));
-		}
-
-		layoutColumnsJSONArray.put(
-			_getLayoutsJSONArray(selLayout.getLayoutId()));
 
 		return layoutColumnsJSONArray;
 	}
@@ -898,6 +878,36 @@ public class LayoutsAdminDisplayContext {
 		breadcrumbEntryJSONObject.put("url", portletURL.toString());
 
 		return breadcrumbEntryJSONObject;
+	}
+
+	private JSONArray _getLayoutColumnsJSONArray() throws Exception {
+		JSONArray layoutColumnsJSONArray = JSONFactoryUtil.createJSONArray();
+
+		layoutColumnsJSONArray.put(_getLayoutsJSONArray(0));
+
+		if (getSelPlid() == LayoutConstants.DEFAULT_PLID) {
+			return layoutColumnsJSONArray;
+		}
+
+		Layout selLayout = getSelLayout();
+
+		if (selLayout == null) {
+			return layoutColumnsJSONArray;
+		}
+
+		List<Layout> layouts = selLayout.getAncestors();
+
+		Collections.reverse(layouts);
+
+		for (Layout layout : layouts) {
+			layoutColumnsJSONArray.put(
+				_getLayoutsJSONArray(layout.getLayoutId()));
+		}
+
+		layoutColumnsJSONArray.put(
+			_getLayoutsJSONArray(selLayout.getLayoutId()));
+
+		return layoutColumnsJSONArray;
 	}
 
 	private JSONArray _getLayoutsJSONArray(long parentLayoutId)

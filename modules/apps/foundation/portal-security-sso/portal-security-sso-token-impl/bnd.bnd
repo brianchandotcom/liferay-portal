@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Security SSO Token
-Bundle-SymbolicName: com.liferay.portal.security.sso.token
+Bundle-Name: Liferay Portal Security SSO Token Impl
+Bundle-SymbolicName: com.liferay.portal.security.sso.token.impl
 Bundle-Version: 4.0.2
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Security Frameworks

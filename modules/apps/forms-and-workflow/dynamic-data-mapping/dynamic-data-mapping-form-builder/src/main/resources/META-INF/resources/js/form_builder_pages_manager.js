@@ -131,11 +131,11 @@ AUI.add(
 						CSS_PAGE_HEADER_DESCRIPTION_HIDE_BORDER + ' form-control"></textarea>' +
 					'</div>',
 
-					TPL_POPOVER_CONTENT: '<ul class="' + CSS_FORM_BUILDER_PAGE_POPOVER_CONTENT + '">' +
-					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION + '">{addPageLastPosition}</li>' +
-					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE + '">{deleteCurrentPage}</li>' +
-					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE + '">{addSuccessPage}</li>' +
-					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE + '">{switchMode}</li>' +
+					TPL_POPOVER_CONTENT: '<ul class="' + CSS_FORM_BUILDER_PAGE_POPOVER_CONTENT + ' dropdown-menu show">' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_PAGE_LAST_POSITION + ' dropdown-item"><a>{addPageLastPosition}</a></li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE + ' dropdown-item">{deleteCurrentPage}</li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_ADD_SUCCESS_PAGE + ' dropdown-item"><a>{addSuccessPage}</a></li>' +
+					'<li class="' + CSS_FORM_BUILDER_PAGE_MANAGER_SWITCH_MODE + ' dropdown-item"><a>{switchMode}</a></li>' +
 					'</ul>',
 
 					TPL_SUCCESS_PAGE: '<div class="' + CSS_FORM_BUILDER_SUCCESS_PAGE + '">' +
@@ -433,7 +433,7 @@ AUI.add(
 										addPageLastPosition: strings.addPageLastPosition,
 										addPageNextPosition: strings.addPageNextPosition,
 										addSuccessPage: strings.addSuccessPage,
-										deleteCurrentPage: this._getDeleteButtonString(),
+										deleteCurrentPage: this._getDeleteButtonHTMLString(),
 										switchMode: strings.switchMode
 									}
 								),
@@ -546,7 +546,7 @@ AUI.add(
 						return items;
 					},
 
-					_getDeleteButtonString: function() {
+					_getDeleteButtonHTMLString: function() {
 						var instance = this;
 
 						var deleteButtonString;
@@ -560,7 +560,7 @@ AUI.add(
 							deleteButtonString = instance.get('strings').resetPage;
 						}
 
-						return deleteButtonString;
+						return '<a>' + deleteButtonString + '</a>';
 					},
 
 					_getDescriptions: function() {
@@ -1127,7 +1127,7 @@ AUI.add(
 
 						var deletePageButton = instance._getPopover().get('boundingBox').one('.' + CSS_FORM_BUILDER_PAGE_MANAGER_DELETE_PAGE);
 
-						deletePageButton.text(instance._getDeleteButtonString());
+						deletePageButton.html(instance._getDeleteButtonHTMLString());
 					},
 
 					_syncSuccessPage: function() {

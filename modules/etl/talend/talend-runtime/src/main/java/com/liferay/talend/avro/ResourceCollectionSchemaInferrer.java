@@ -14,9 +14,7 @@
 
 package com.liferay.talend.avro;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
-import com.liferay.talend.runtime.client.ApioJsonLDUtils;
+import com.liferay.talend.runtime.apio.jsonld.ApioJsonLDResource;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -42,12 +40,12 @@ public class ResourceCollectionSchemaInferrer {
 	 * 3. Field names are coming from the resource collection
 	 * 4. Field types are String
 	 *
-	 * @param jsonNode - Resource collection JSON node
+	 * @param ApioJsonLDResource - Resource collection
 	 *
 	 * @return Runtime AVRO schema
 	 */
-	public static Schema inferSchema(JsonNode jsonNode) {
-		List<String> fields = ApioJsonLDUtils.getResourceFieldNames(jsonNode);
+	public static Schema inferSchema(ApioJsonLDResource resource) {
+		List<String> fields = resource.getResourceElementFieldNames();
 
 		int size = fields.size();
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.talend.runtime.client;
+package com.liferay.talend.runtime.apio;
 
 /**
  * @author Zoltán Takács

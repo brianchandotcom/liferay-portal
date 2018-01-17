@@ -14,16 +14,17 @@
 
 package com.liferay.talend.runtime;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayProvideConnectionProperties;
-import com.liferay.talend.runtime.client.ApioException;
-import com.liferay.talend.runtime.client.ApioJsonLDConstants;
-import com.liferay.talend.runtime.client.ApioResult;
+import com.liferay.talend.runtime.apio.ApioException;
+import com.liferay.talend.runtime.apio.ApioResult;
+import com.liferay.talend.runtime.apio.jsonld.ApioJsonLDConstants;
+import com.liferay.talend.runtime.apio.jsonld.ApioJsonLDResource;
 import com.liferay.talend.runtime.client.RestClient;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -40,6 +41,7 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
@@ -421,7 +423,9 @@ public class LiferaySourceOrSink
 
 		JsonNode jsonNode = getResourceCollection(resourceURL);
 
-		return ResourceCollectionSchemaInferrer.inferSchema(jsonNode);
+		ApioJsonLDResource resource = new ApioJsonLDResource(jsonNode);
+
+		return ResourceCollectionSchemaInferrer.inferSchema(resource);
 	}
 
 	private void _validateCredentials(

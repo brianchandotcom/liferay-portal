@@ -56,23 +56,23 @@ public class RestClient {
 	public RestClient(LiferayConnectionProperties liferayConnectionProperties) {
 		this(
 			liferayConnectionProperties.endpoint.getValue(),
-			liferayConnectionProperties.password.getValue(),
-			liferayConnectionProperties.userId.getValue());
+			liferayConnectionProperties);
 	}
 
 	public RestClient(
-		LiferayConnectionProperties liferayConnectionProperties,
-		String endpoint) {
+		String endpoint,
+		LiferayConnectionProperties liferayConnectionProperties) {
 
 		this(
 			endpoint, liferayConnectionProperties.password.getValue(),
-			liferayConnectionProperties.userId.getValue());
+			liferayConnectionProperties.userId.getValue(),
+			liferayConnectionProperties);
 	}
 
 	public ApioResult executeGetRequest() throws ApioException {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(_endpoint);
+		WebTarget webTarget = client.target(getEndpoint());
 
 		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
 
@@ -102,7 +102,7 @@ public class RestClient {
 
 	@Override
 	public String toString() {
-		return String.format("REST API Client [%s].", _endpoint);
+		return String.format("REST API Client [%s].", getEndpoint());
 	}
 
 	protected static enum QueryMethod {
@@ -111,10 +111,14 @@ public class RestClient {
 
 	}
 
-	private RestClient(String endpoint, String password, String userId) {
+	private RestClient(
+		String endpoint, String password, String userId,
+		LiferayConnectionProperties liferayConnectionProperties) {
+
 		_endpoint = endpoint;
 		_password = password;
 		_userId = userId;
+		_liferayConnectionProperties = liferayConnectionProperties;
 	}
 
 	private Response _follow3Redirects(
@@ -181,6 +185,7 @@ public class RestClient {
 		RestClient.class);
 
 	private final String _endpoint;
+	private final LiferayConnectionProperties _liferayConnectionProperties;
 	private final String _password;
 	private final String _userId;
 

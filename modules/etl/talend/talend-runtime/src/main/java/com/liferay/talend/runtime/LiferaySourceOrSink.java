@@ -208,7 +208,7 @@ public class LiferaySourceOrSink
 			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
 		}
 
-		return new RestClient(liferayConnectionProperties, resourceURL);
+		return new RestClient(resourceURL, liferayConnectionProperties);
 	}
 
 	@Override

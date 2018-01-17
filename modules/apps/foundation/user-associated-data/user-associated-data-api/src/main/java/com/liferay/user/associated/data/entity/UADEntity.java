@@ -25,7 +25,7 @@ import java.util.Map;
  */
 public interface UADEntity {
 
-	public default Map<String, Object> getEntityNonAnonymizableFieldNames(
+	public default Map<String, Object> getEntityNonAnonymizableFieldValues(
 			List<String> fieldNames)
 		throws PortalException {
 

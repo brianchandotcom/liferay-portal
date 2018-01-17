@@ -17,7 +17,6 @@ package com.liferay.portal.search.elasticsearch.internal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.suggest.AggregateSuggester;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.search.suggest.SuggesterResult;
 import com.liferay.portal.kernel.search.suggest.SuggesterResults;
 import com.liferay.portal.kernel.search.suggest.SuggesterTranslator;
 import com.liferay.portal.kernel.search.suggest.TermSuggester;
+import com.liferay.portal.kernel.util.Localization;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
 import com.liferay.portal.search.suggest.BaseQuerySuggester;
@@ -63,8 +63,10 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 	public Map<String, List<String>> spellCheckKeywords(
 		SearchContext searchContext, int max) {
 
-		String field = DocumentImpl.getLocalizedName(
-			searchContext.getLocale(), Field.SPELL_CHECK_WORD);
+		Localization localization = getLocalization();
+
+		String field = localization.getLocalizedName(
+			Field.SPELL_CHECK_WORD, searchContext.getLanguageId());
 
 		TermSuggester termSuggester = new TermSuggester(
 			"spellCheckRequest", field, searchContext.getKeywords());
@@ -162,8 +164,10 @@ public class ElasticsearchQuerySuggester extends BaseQuerySuggester {
 	public String[] suggestKeywordQueries(
 		SearchContext searchContext, int max) {
 
-		String field = DocumentImpl.getLocalizedName(
-			searchContext.getLocale(), Field.KEYWORD_SEARCH);
+		Localization localization = getLocalization();
+
+		String field = localization.getLocalizedName(
+			Field.KEYWORD_SEARCH, searchContext.getLanguageId());
 
 		PhraseSuggester phraseSuggester = new PhraseSuggester(
 			"keywordQueryRequest", field, searchContext.getKeywords());

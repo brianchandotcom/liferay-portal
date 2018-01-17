@@ -32,8 +32,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * @author Drew Brokke
  */
@@ -226,9 +224,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
 				scopePrimKey));
 	}
-
-	@Inject
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private SettingsLocatorHelper _settingsLocatorHelper;

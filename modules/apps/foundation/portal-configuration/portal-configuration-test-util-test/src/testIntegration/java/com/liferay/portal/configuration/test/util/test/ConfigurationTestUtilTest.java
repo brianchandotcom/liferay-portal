@@ -15,11 +15,13 @@
 package com.liferay.portal.configuration.test.util.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.Dictionary;
@@ -29,12 +31,12 @@ import org.apache.felix.cm.PersistenceManager;
 
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -43,6 +45,16 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @RunWith(Arquillian.class)
 public class ConfigurationTestUtilTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Before
+	public void setUp() throws Exception {
+		_configurationPid = "TestPID_" + RandomTestUtil.randomString();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -59,7 +71,7 @@ public class ConfigurationTestUtilTest {
 
 		Assert.assertTrue(_testConfigurationExists());
 
-		ConfigurationTestUtil.deleteConfiguration(_pid);
+		ConfigurationTestUtil.deleteConfiguration(_configurationPid);
 
 		Assert.assertFalse(_testConfigurationExists());
 
@@ -80,7 +92,7 @@ public class ConfigurationTestUtilTest {
 
 		properties.put(_TEST_KEY, value1);
 
-		ConfigurationTestUtil.saveConfiguration(_pid, properties);
+		ConfigurationTestUtil.saveConfiguration(_configurationPid, properties);
 
 		Configuration configuration = _assertConfigurationValue(value1);
 
@@ -108,37 +120,24 @@ public class ConfigurationTestUtilTest {
 	}
 
 	private Configuration _getConfiguration() throws Exception {
-		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				_pid, StringPool.QUESTION));
+		return _configurationAdmin.getConfiguration(
+			_configurationPid, StringPool.QUESTION);
 	}
 
 	private boolean _testConfigurationExists() {
-		return OSGiServiceUtil.callService(
-			_bundleContext, PersistenceManager.class,
-			persistenceManager -> persistenceManager.exists(_pid));
+		return _persistenceManager.exists(_configurationPid);
 	}
 
 	private static final String _TEST_KEY =
 		"ConfigurationTestUtilTest_TEST_KEY";
 
-	private static final BundleContext _bundleContext;
-	private static final String _pid =
-		"TestPID_" + RandomTestUtil.randomString();
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfigurationTemporarySwapperTest.class);
+	@Inject
+	private static PersistenceManager _persistenceManager;
 
-		if (bundle == null) {
-			_bundleContext = null;
-		}
-		else {
-			_bundleContext = bundle.getBundleContext();
-		}
-	}
-
+	private String _configurationPid;
 	private final List<Configuration> _configurations = new ArrayList<>();
 
 }

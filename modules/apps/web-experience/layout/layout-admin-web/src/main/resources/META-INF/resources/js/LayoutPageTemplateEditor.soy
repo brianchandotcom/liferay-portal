@@ -14,7 +14,10 @@
 	{@param? _handleFragmentRemoveButtonClick: any}
 	{@param? _handleHideContextualSidebar: any}
 	{@param? _handleToggleContextualSidebarButtonClick: any}
+	{@param? _handleSidebarTabClick: any}
 	{@param? _lastSaveDate: string}
+	{@param? _sidebarTabs: list<[id:string, name:string, visible:bool]>}
+	{@param? _sidebarSelectedTab: string}
 	{@param? fragments: list<?>}
 	{@param? id: string}
 
@@ -45,9 +48,9 @@
 			</div>
 		</div>
 
-		<div class="container-fluid-1280 contextual-sidebar-content">
-			<div class="row mr-0">
-				<div class="col-lg-12 fragment-panel-target">
+		<div class="container-fluid-1280">
+			<div class="row">
+				<div class="col-lg-9 col-md-8 fragment-panel-target">
 					{if $fragments and (length($fragments) > 0)}
 						{foreach $fragment in $fragments}
 							<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
@@ -69,14 +72,16 @@
 
 				{call ContextualSidebar.render}
 					{param body kind="html"}
-						{foreach $fragmentCollection in $fragmentCollections}
-							{call LayoutPageTemplateFragmentCollection.render}
-								{param fragmentCollection: $fragmentCollection /}
-								{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
-								{param portletNamespace: $portletNamespace /}
-								{param spritemap: $spritemap /}
-							{/call}
-						{/foreach}
+						{if $_sidebarSelectedTab == 'fragments'}
+							{foreach $fragmentCollection in $fragmentCollections}
+								{call LayoutPageTemplateFragmentCollection.render}
+									{param fragmentCollection: $fragmentCollection /}
+									{param events: ['collectionEntryClick': $_handleFragmentCollectionEntryClick] /}
+									{param portletNamespace: $portletNamespace /}
+									{param spritemap: $spritemap /}
+								{/call}
+							{/foreach}
+						{/if}
 					{/param}
 
 					{param classes: 'bg-light' /}
@@ -87,7 +92,24 @@
 
 					{param header kind="html"}
 						<div class="sidebar-section">
-							<h4 class="sidebar-title">{msg desc=""}fragments{/msg}</h4>
+							{if $_sidebarTabs}
+								<nav class="navbar navbar-expand-md navbar-underline">
+									<div class="container-fluid">
+										<ul class="navbar-nav">
+											{foreach $sidebarTab in $_sidebarTabs}
+												{if $sidebarTab.visible}
+													{call .sidebarTab}
+														{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+														{param id: $sidebarTab.id /}
+														{param handleTabClick: $_handleSidebarTabClick /}
+														{param name: $sidebarTab.name /}
+													{/call}
+												{/if}
+											{/foreach}
+										</ul>
+									</div>
+								</nav>
+							{/if}
 						</div>
 					{/param}
 
@@ -109,4 +131,34 @@
 			{msg desc=""}this-layout-page-template-is-empty{/msg}
 		</div>
 	</div>
+{/template}
+
+/**
+ * Sidebar tab
+ */
+{template .sidebarTab}
+	{@param id: string}
+	{@param handleTabClick: any}
+	{@param active: bool}
+	{@param name: string}
+
+	<li class="nav-item">
+		{let $navLinkClasses kind="text"}
+			nav-link
+			{if $active}
+				{sp}active
+			{/if}
+		{/let}
+
+		<a
+			class="{$navLinkClasses}"
+			data-onclick="{$handleTabClick}"
+			data-tab-name="{$id}"
+			href="javascript:;"
+		>
+			<span class="text-truncate">
+				{$name}
+			</span>
+		</a>
+	</li>
 {/template}

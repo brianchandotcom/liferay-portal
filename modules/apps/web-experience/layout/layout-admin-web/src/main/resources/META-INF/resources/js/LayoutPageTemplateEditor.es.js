@@ -75,6 +75,15 @@ class LayoutPageTemplateEditor extends Component {
 	}
 
 	/**
+	 * Updates _sidebarSelectedTab according to the clicked element
+	 * @param {Event} event
+	 * @private
+	 */
+	_handleSidebarTabClick(event) {
+		this._sidebarSelectedTab = event.delegateTarget.dataset.tabName;
+	}
+
+	/**
 	 * Callback executed when the sidebar visible state should be toggled
 	 * @private
 	 */
@@ -114,6 +123,18 @@ class LayoutPageTemplateEditor extends Component {
 		});
 	}
 }
+
+/**
+ * Tabs that can appear inside the sidebar
+ * @see LayoutPageTemplateEditor._sidebarTabs
+ */
+const SIDEBAR_TABS = [
+	{
+		id: 'fragments',
+		name: Liferay.Language.get('fragments'),
+		visible: true
+	}
+];
 
 /**
  * State definition.
@@ -245,6 +266,39 @@ LayoutPageTemplateEditor.STATE = {
 	_lastSaveDate: Config.string()
 		.internal()
 		.value(''),
+
+	/**
+	 * Tabs being shown in sidebar
+	 * @default SIDEBAR_TABS
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @private
+	 * @type {Array<{
+	 * 	 id:string,
+	 * 	 name:string,
+	 * 	 visible:boolean
+	 * }>}
+	 */
+	_sidebarTabs: Config
+		.arrayOf(Config.shapeOf({
+			id: Config.string(),
+			name: Config.string(),
+			visible: Config.bool()
+		}))
+		.internal()
+		.value(SIDEBAR_TABS),
+
+	/**
+	 * Tab selected inside sidebar
+	 * @default SIDEBAR_TABS[0].id
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @private
+	 * @type {string}
+	 */
+	_sidebarSelectedTab: Config.oneOf(SIDEBAR_TABS.map(tab => tab.id))
+		.internal()
+		.value(SIDEBAR_TABS[0].id)
 };
 
 Soy.register(LayoutPageTemplateEditor, templates);

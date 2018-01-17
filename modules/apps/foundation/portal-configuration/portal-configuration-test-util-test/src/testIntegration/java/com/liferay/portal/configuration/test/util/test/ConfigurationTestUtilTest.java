@@ -14,62 +14,40 @@
 
 package com.liferay.portal.configuration.test.util.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
 
-import org.apache.felix.cm.PersistenceManager;
-
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
-public class ConfigurationTestUtilTest {
-
-	@After
-	public void tearDown() throws Exception {
-		if (_testConfigurationExists()) {
-			Configuration configuration = _getConfiguration();
-
-			configuration.delete();
-		}
-	}
+public class ConfigurationTestUtilTest
+	extends BaseConfigurationTestUtilTestCase {
 
 	@Test
 	public void testDeleteConfiguration() throws Exception {
-		_getConfiguration();
+		getConfiguration();
 
-		Assert.assertTrue(_testConfigurationExists());
+		Assert.assertTrue(testConfigurationExists());
 
-		ConfigurationTestUtil.deleteConfiguration(_pid);
+		ConfigurationTestUtil.deleteConfiguration(configurationPid);
 
-		Assert.assertFalse(_testConfigurationExists());
+		Assert.assertFalse(testConfigurationExists());
 
-		Configuration configuration = _getConfiguration();
+		Configuration configuration = getConfiguration();
 
-		Assert.assertTrue(_testConfigurationExists());
+		Assert.assertTrue(testConfigurationExists());
 
 		ConfigurationTestUtil.deleteConfiguration(configuration);
 
-		Assert.assertFalse(_testConfigurationExists());
+		Assert.assertFalse(testConfigurationExists());
 	}
 
 	@Test
@@ -80,7 +58,7 @@ public class ConfigurationTestUtilTest {
 
 		properties.put(_TEST_KEY, value1);
 
-		ConfigurationTestUtil.saveConfiguration(_pid, properties);
+		ConfigurationTestUtil.saveConfiguration(configurationPid, properties);
 
 		Configuration configuration = _assertConfigurationValue(value1);
 
@@ -96,9 +74,9 @@ public class ConfigurationTestUtilTest {
 	private Configuration _assertConfigurationValue(String value)
 		throws Exception {
 
-		Assert.assertTrue(_testConfigurationExists());
+		Assert.assertTrue(testConfigurationExists());
 
-		Configuration configuration = _getConfiguration();
+		Configuration configuration = getConfiguration();
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
@@ -107,38 +85,7 @@ public class ConfigurationTestUtilTest {
 		return configuration;
 	}
 
-	private Configuration _getConfiguration() throws Exception {
-		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				_pid, StringPool.QUESTION));
-	}
-
-	private boolean _testConfigurationExists() {
-		return OSGiServiceUtil.callService(
-			_bundleContext, PersistenceManager.class,
-			persistenceManager -> persistenceManager.exists(_pid));
-	}
-
 	private static final String _TEST_KEY =
 		"ConfigurationTestUtilTest_TEST_KEY";
-
-	private static final BundleContext _bundleContext;
-	private static final String _pid =
-		"TestPID_" + RandomTestUtil.randomString();
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfigurationTemporarySwapperTest.class);
-
-		if (bundle == null) {
-			_bundleContext = null;
-		}
-		else {
-			_bundleContext = bundle.getBundleContext();
-		}
-	}
-
-	private final List<Configuration> _configurations = new ArrayList<>();
 
 }

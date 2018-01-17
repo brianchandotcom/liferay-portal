@@ -20,24 +20,10 @@
 String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
-
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="menus" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-
-		<%
-		PortletURL portletURL = liferayPortletResponse.createRenderURL();
-		%>
-
-		<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= siteNavigationAdminDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar searchContainerId="siteNavigationMenus">
 	<liferay-frontend:management-bar-buttons>
@@ -59,6 +45,17 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			orderColumns="<%= siteNavigationAdminDisplayContext.getOrderColumns() %>"
 			portletURL="<%= siteNavigationAdminDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+
+			<%
+			PortletURL portletURL = liferayPortletResponse.createRenderURL();
+			%>
+
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

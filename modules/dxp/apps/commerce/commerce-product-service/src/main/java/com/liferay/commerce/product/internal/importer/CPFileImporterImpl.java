@@ -62,7 +62,7 @@ import com.liferay.portal.model.impl.ThemeSettingImpl;
 import java.io.InputStream;
 
 import java.util.Calendar;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Locale;
@@ -220,9 +220,11 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 		Locale locale = themeDisplay.getSiteDefaultLocale();
 
-		Map<Locale, String> titleMap = Collections.singletonMap(locale, title);
-		Map<Locale, String> descriptionMap = Collections.singletonMap(
-			locale, description);
+		Map<Locale, String> titleMap = new HashMap<>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+
+		titleMap.put(locale, title);
+		descriptionMap.put(locale, description);
 
 		content = getNormalizedContent(
 			content, classLoader, dependenciesFilePath, serviceContext,

@@ -46,7 +46,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class LCSConnectorRunnable implements Runnable {
 
-	public LCSConnectorRunnable() {
+	public LCSConnectorRunnable(boolean delayRun) {
+		_delayRun = delayRun;
+
 		if (_log.isTraceEnabled()) {
 			_log.trace("Initialized " + this);
 		}
@@ -54,6 +56,8 @@ public class LCSConnectorRunnable implements Runnable {
 
 	@Override
 	public void run() {
+		_delayRun();
+
 		LCSUtil.processLCSPortletState(
 			LCSPortletState.valueOf(
 				LCSPortletPreferencesUtil.getValue(
@@ -238,9 +242,29 @@ public class LCSConnectorRunnable implements Runnable {
 		}
 	}
 
+	private void _delayRun() {
+		if (!_delayRun) {
+			return;
+		}
+
+		try {
+			if (_log.isTraceEnabled()) {
+				_log.trace("Thread run delayed for 60s");
+			}
+
+			Thread.sleep(60000);
+		}
+		catch (InterruptedException ie) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Interrupted while waiting for delay");
+			}
+		}
+	}
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSConnectorRunnable.class);
 
+	private final boolean _delayRun;
 	private LCSAlertAdvisor _lcsAlertAdvisor;
 	private LCSClusterEntryTokenAdvisor _lcsClusterEntryTokenAdvisor;
 	private LCSConnectionManager _lcsConnectionManager;

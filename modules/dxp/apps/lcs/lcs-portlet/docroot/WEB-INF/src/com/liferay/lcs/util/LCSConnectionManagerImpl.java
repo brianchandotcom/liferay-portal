@@ -104,7 +104,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		LCSUtil.processLCSPortletState(LCSPortletState.PLUGIN_ABSENT);
 
-		Future<?> future = stop(false, true);
+		Future<?> future = stop(false, false, true);
 
 		try {
 			if (future != null) {
@@ -265,7 +265,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 
 		_scheduleUptimeMonitoringTask();
 
-		_executeLCSConnectorRunnable();
+		_executeLCSConnectorRunnable(false);
 	}
 
 	@Override
@@ -420,7 +420,10 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 	}
 
 	@Override
-	public Future<?> stop(boolean signedOff, boolean serverManuallyShutdown) {
+	public Future<?> stop(
+		boolean delayReconnect, boolean signedOff,
+		boolean serverManuallyShutdown) {
+
 		if (!isReady()) {
 			return null;
 		}
@@ -432,7 +435,7 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		LCSUtil.processLCSPortletState(LCSPortletState.NO_CONNECTION);
 
 		if (signedOff) {
-			_executeLCSConnectorRunnable();
+			_executeLCSConnectorRunnable(delayReconnect);
 
 			return null;
 		}
@@ -488,8 +491,9 @@ public class LCSConnectionManagerImpl implements LCSConnectionManager {
 		}
 	}
 
-	private void _executeLCSConnectorRunnable() {
-		LCSConnectorRunnable lcsConnectorRunnable = new LCSConnectorRunnable();
+	private void _executeLCSConnectorRunnable(boolean delayRun) {
+		LCSConnectorRunnable lcsConnectorRunnable = new LCSConnectorRunnable(
+			delayRun);
 
 		lcsConnectorRunnable.setLCSAlertAdvisor(_lcsAlertAdvisor);
 		lcsConnectorRunnable.setLCSClusterEntryTokenAdvisor(

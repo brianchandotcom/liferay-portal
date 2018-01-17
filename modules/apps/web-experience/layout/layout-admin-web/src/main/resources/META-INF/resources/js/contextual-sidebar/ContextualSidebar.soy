@@ -7,6 +7,9 @@
 	{@param body: html}
 	{@param header: html}
 	{@param visible: bool}
+	{@param? bodyClasses: string}
+	{@param? classes: string}
+	{@param? headerClasses: string}
 	{@param? id: string}
 
 	{let $contextualSidebarClasses kind="text"}
@@ -19,11 +22,11 @@
 		{/if}
 	{/let}
 
-	<div class="{$contextualSidebarClasses}" id="{$id ?: ''}">
-		<div class="sidebar-header">
+	<div class="{$contextualSidebarClasses} {$classes ?: ''}" id="{$id ?: ''}">
+		<div class="sidebar-header {$headerClasses ?: ''}">
 			{$header}
 		</div>
-		<div class="sidebar-body">
+		<div class="sidebar-body {$bodyClasses ?: ''}">
 			{$body}
 		</div>
 	</div>

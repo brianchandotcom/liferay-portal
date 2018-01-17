@@ -190,6 +190,12 @@ public class LiferayConnectionProperties
 		referenceForm.addRow(referencedComponentWidget);
 
 		referenceForm.addRow(mainForm);
+
+		// Advanced form
+
+		Form advancedForm = new Form(this, Form.ADVANCED);
+
+		advancedForm.addRow(itemsPerPage);
 	}
 
 	@Override
@@ -233,6 +239,8 @@ public class LiferayConnectionProperties
 	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
 		"anonymousLogin");
 	public Property<String> endpoint = PropertyFactory.newString("endpoint");
+	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
+		"itemsPerPage", _DEFAULT_ITEMS_PER_PAGE);
 	public Property<String> name = PropertyFactory.newString(
 		"name").setRequired();
 	public Property<String> password =
@@ -261,6 +269,8 @@ public class LiferayConnectionProperties
 
 	private static final String _DEFAULT_HOST =
 		"\"https://apiosample.wedeploy.io\"";
+
+	private static final int _DEFAULT_ITEMS_PER_PAGE = 30;
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);

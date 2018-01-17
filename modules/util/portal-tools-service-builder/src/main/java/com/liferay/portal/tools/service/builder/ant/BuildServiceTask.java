@@ -76,11 +76,8 @@ public class BuildServiceTask extends Task {
 		_serviceBuilderArgs.setBuildNumberIncrement(buildNumberIncrement);
 	}
 
-	public void setDatabaseNameMaxLengthCheckEnabled(
-		boolean databaseNameMaxLengthCheckEnabled) {
-
-		_serviceBuilderArgs.setDatabaseNameMaxLengthCheckEnabled(
-			databaseNameMaxLengthCheckEnabled);
+	public void setDatabaseNameMaxLength(int databaseNameMaxLength) {
+		_serviceBuilderArgs.setDatabaseNameMaxLength(databaseNameMaxLength);
 	}
 
 	public void setHbmFileName(String hbmFileName) {

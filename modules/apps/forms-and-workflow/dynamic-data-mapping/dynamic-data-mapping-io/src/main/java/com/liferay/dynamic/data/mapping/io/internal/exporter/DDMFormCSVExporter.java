@@ -78,6 +78,8 @@ public class DDMFormCSVExporter extends BaseDDMFormExporter {
 		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
 			formInstanceId);
 
+		filterTransientFields(ddmFormFields);
+
 		Locale locale = getLocale();
 
 		for (DDMFormField ddmFormField : ddmFormFields.values()) {

@@ -25,25 +25,10 @@ portletDisplay.setURLBack(layoutPageTemplateDisplayContext.getLayoutPageTemplate
 renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionTitle());
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<liferay-util:include page="/navigation_tabs.jsp" servletContext="<%= application %>" />
-
-	<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>">
-		<portlet:renderURL var="portletURL">
-			<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
-			<portlet:param name="tabs1" value="page-templates" />
-			<portlet:param name="redirect" value="<%= currentURL %>" />
-			<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
-			<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
-		</portlet:renderURL>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= layoutsAdminDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= layoutPageTemplateDisplayContext.isDisabledLayoutPageTemplateEntriesManagementBar() %>"
@@ -70,6 +55,22 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 			orderColumns="<%= layoutPageTemplateDisplayContext.getOrderColumns() %>"
 			portletURL="<%= currentURLObj %>"
 		/>
+
+		<c:if test="<%= layoutPageTemplateDisplayContext.isShowLayoutPageTemplateEntriesSearch() %>">
+			<portlet:renderURL var="portletURL">
+				<portlet:param name="mvcPath" value="/view_layout_page_template_entries.jsp" />
+				<portlet:param name="tabs1" value="page-templates" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="layoutPageTemplateCollectionId" value="<%= String.valueOf(layoutPageTemplateDisplayContext.getLayoutPageTemplateCollectionId()) %>" />
+				<portlet:param name="displayStyle" value="<%= layoutPageTemplateDisplayContext.getDisplayStyle() %>" />
+			</portlet:renderURL>
+
+			<li>
+				<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

@@ -23,27 +23,40 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(String.valueOf(layoutsAdminDisplayContext.getPortletURL()));
 
 renderResponse.setTitle(LanguageUtil.get(request, "select-template"));
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem navigationItem = new NavigationItem();
+
+navigationItem.setActive(layoutPageTemplateCollectionId == 0);
+
+navigationItem.setHref(layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL());
+
+navigationItem.setLabel(LanguageUtil.get(request, "special-pages"));
+
+navigationItems.add(navigationItem);
+
+List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId());
+
+for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
+	String selectLayoutPageTemplateEntryURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+
+	navigationItem = new NavigationItem();
+
+	navigationItem.setActive(layoutPageTemplateCollectionId == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
+
+	navigationItem.setHref(selectLayoutPageTemplateEntryURL);
+
+	navigationItem.setLabel(layoutPageTemplateCollection.getName());
+
+	navigationItems.add(navigationItem);
+}
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL() %>" label='<%= LanguageUtil.get(request, "special-pages") %>' selected="<%= layoutPageTemplateCollectionId == 0 %>" />
-
-		<%
-		List<LayoutPageTemplateCollection> layoutPageTemplateCollections = LayoutPageTemplateCollectionServiceUtil.getLayoutPageTemplateCollections(themeDisplay.getScopeGroupId());
-
-		for (LayoutPageTemplateCollection layoutPageTemplateCollection : layoutPageTemplateCollections) {
-			String selectLayoutPageTemplateEntryURL = layoutsAdminDisplayContext.getSelectLayoutPageTemplateEntryURL(layoutPageTemplateCollection.getLayoutPageTemplateCollectionId());
-		%>
-
-			<aui:nav-item href="<%= selectLayoutPageTemplateEntryURL %>" label="<%= layoutPageTemplateCollection.getName() %>" selected="<%= layoutPageTemplateCollectionId == layoutPageTemplateCollection.getLayoutPageTemplateCollectionId() %>" />
-
-		<%
-		}
-		%>
-
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <aui:form cssClass="container-fluid-1280" name="fm">
 	<c:choose>

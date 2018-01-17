@@ -204,13 +204,11 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
-		liferayConnectionProperties.endpoint.setValue(resourceURL);
-
 		if (_log.isDebugEnabled()) {
 			_log.debug("New REST Client with \"{}\" endpoint", resourceURL);
 		}
 
-		return new RestClient(liferayConnectionProperties);
+		return new RestClient(liferayConnectionProperties, resourceURL);
 	}
 
 	@Override

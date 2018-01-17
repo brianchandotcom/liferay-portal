@@ -33,11 +33,14 @@ public class State {
 		State state = (State)obj;
 
 		if ((getId() != null) && (state.getId() != null)) {
-			return StringUtil.toLowerCase(getId()).compareTo(
-				StringUtil.toLowerCase(state.getId()));
+			String lowerCaseId = StringUtil.toLowerCase(getId());
+
+			return lowerCaseId.compareTo(StringUtil.toLowerCase(state.getId()));
 		}
 		else if ((getName() != null) && (state.getName() != null)) {
-			return StringUtil.toLowerCase(getName()).compareTo(
+			String lowerCaseName = StringUtil.toLowerCase(getName());
+
+			return lowerCaseName.compareTo(
 				StringUtil.toLowerCase(state.getName()));
 		}
 		else {

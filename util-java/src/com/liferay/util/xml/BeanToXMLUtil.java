@@ -49,11 +49,13 @@ public class BeanToXMLUtil {
 		Method[] methods = clazz.getMethods();
 
 		for (Method method : methods) {
-			if (method.getName().startsWith("get") &&
-				!method.getName().equals("getClass")) {
+			String methodName = method.getName();
+
+			if (methodName.startsWith("get") &&
+				!methodName.equals("getClass")) {
 
 				String memberName = StringUtil.replace(
-					method.getName(), "get", StringPool.BLANK);
+					methodName, "get", StringPool.BLANK);
 
 				memberName = TextFormatter.format(memberName, TextFormatter.I);
 				memberName = TextFormatter.format(memberName, TextFormatter.K);

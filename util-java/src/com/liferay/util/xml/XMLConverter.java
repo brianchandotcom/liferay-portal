@@ -47,8 +47,9 @@ public class XMLConverter {
 	public static org.w3c.dom.Element toW3CElement(org.dom4j.Element dom4jEl)
 		throws DocumentException {
 
-		org.dom4j.Document dom4jDoc =
-			DocumentFactory.getInstance().createDocument();
+		DocumentFactory documentFactory = DocumentFactory.getInstance();
+
+		org.dom4j.Document dom4jDoc = documentFactory.createDocument();
 
 		dom4jDoc.setRootElement(dom4jEl.createCopy());
 

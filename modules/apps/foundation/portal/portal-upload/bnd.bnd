@@ -1,6 +1,5 @@
 Bundle-Name: Liferay Portal Upload
 Bundle-SymbolicName: com.liferay.portal.upload
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.portal.upload.configuration
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title:

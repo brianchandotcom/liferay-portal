@@ -61,7 +61,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-instance-lifecycle" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-spring-extender" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-upgrade" />
-			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal/portal-upload" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-cache/portal-cache" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-cache/portal-cache-ehcache" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/portal-cache/portal-cache-ehcache-provider" />

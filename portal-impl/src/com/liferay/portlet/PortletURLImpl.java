@@ -1107,7 +1107,7 @@ public class PortletURLImpl
 				continue;
 			}
 
-			if (_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+			if (!_lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
 				String publicRenderParameterName = getPublicRenderParameterName(
 					name);
 

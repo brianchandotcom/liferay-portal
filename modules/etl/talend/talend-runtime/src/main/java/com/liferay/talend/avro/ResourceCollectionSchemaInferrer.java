@@ -45,20 +45,20 @@ public class ResourceCollectionSchemaInferrer {
 	 * @return Runtime AVRO schema
 	 */
 	public static Schema inferSchemaByResourceFields(
-		ApioJsonLDResource resource) {
+		ApioJsonLDResource apioJsonLDResource) {
 
-		List<String> fields = resource.getResourceElementFieldNames();
+		List<String> fieldNames =
+			apioJsonLDResource.getResourceElementFieldNames();
 
-		int size = fields.size();
+		int size = fieldNames.size();
 
 		List<Field> schemaFields = new ArrayList<>(size);
-
-		// Already used names for the fields
 
 		Set<String> filedNames = new HashSet<>();
 
 		for (int i = 0; i < size; i++) {
-			String fieldName = NameUtil.correct(fields.get(i), i, filedNames);
+			String fieldName = NameUtil.correct(
+				fieldNames.get(i), i, filedNames);
 
 			filedNames.add(fieldName);
 

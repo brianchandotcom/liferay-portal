@@ -39,13 +39,14 @@ public class ApioJsonLDResource {
 	public ApioJsonLDResource(JsonNode resourceCollectionJsonNode)
 		throws IOException {
 
-		_resourceCollection = resourceCollectionJsonNode;
+		_resourceCollectionJsonNode = resourceCollectionJsonNode;
 
 		_validateResourceCollection();
 	}
 
 	public JsonNode getContextNode(JsonNode jsonNode) {
-		return _findJsonNode(_resourceCollection, ApioJsonLDConstants.CONTEXT);
+		return _findJsonNode(
+			_resourceCollectionJsonNode, ApioJsonLDConstants.CONTEXT);
 	}
 
 	/**
@@ -59,15 +60,18 @@ public class ApioJsonLDResource {
 	public JsonNode getMembersNode() {
 		if (_membersJsonNode == null) {
 			_membersJsonNode = _findJsonNode(
-				_resourceCollection, ApioJsonLDConstants.COLLECTION_MEMBERS);
+				_resourceCollectionJsonNode,
+				ApioJsonLDConstants.COLLECTION_MEMBERS);
 		}
 
 		return _membersJsonNode;
 	}
 
 	public int getNumberOfItems() {
-		return _resourceCollection.path(
-			ApioJsonLDConstants.COLLECTION_NUMBER_OF_ITEMS).asInt();
+		JsonNode jsonNode = _resourceCollectionJsonNode.path(
+			ApioJsonLDConstants.COLLECTION_NUMBER_OF_ITEMS);
+
+		return jsonNode.asInt();
 	}
 
 	/**
@@ -77,7 +81,9 @@ public class ApioJsonLDResource {
 	 * JsonNode
 	 */
 	public String getResourceActualPage() {
-		JsonNode jsonNode = getViewNode().path(ApioJsonLDConstants.ID);
+		JsonNode viewJsonNode = getViewNode();
+
+		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.ID);
 
 		return jsonNode.asText();
 	}
@@ -91,9 +97,9 @@ public class ApioJsonLDResource {
 	 * be determined
 	 */
 	public String getResourceCollectionVocabularyName() {
-		JsonNode members = getMembersNode();
+		JsonNode membersJsonNode = getMembersNode();
 
-		if (!members.isArray() || (members.size() == 0)) {
+		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Not able to fetch the resource fields");
 			}
@@ -101,14 +107,14 @@ public class ApioJsonLDResource {
 			return null;
 		}
 
-		JsonNode resource = members.get(0);
+		JsonNode resourceJsonNode = membersJsonNode.get(0);
 
-		JsonNode typeNode = resource.path(ApioJsonLDConstants.TYPE);
+		JsonNode typeJsonNode = resourceJsonNode.path(ApioJsonLDConstants.TYPE);
 
-		if (typeNode.isArray()) {
-			JsonNode type = typeNode.get(0);
+		if (typeJsonNode.isArray()) {
+			JsonNode jsonNode = typeJsonNode.get(0);
 
-			return type.asText();
+			return jsonNode.asText();
 		}
 
 		return null;
@@ -123,19 +129,19 @@ public class ApioJsonLDResource {
 	 * collection otherwise
 	 */
 	public List<String> getResourceElementFieldNames() {
-		JsonNode members = getMembersNode();
+		JsonNode membersJsonNode = getMembersNode();
 
 		List<String> fieldNames = new ArrayList<>();
 
-		if (!members.isArray() || (members.size() == 0)) {
+		if (!membersJsonNode.isArray() || (membersJsonNode.size() == 0)) {
 			if (_log.isDebugEnabled()) {
 				_log.debug("Not able to fetch the resource fields");
 			}
 
-			return Collections.<String>emptyList();
+			return Collections.emptyList();
 		}
 
-		JsonNode firstItemJsonNode = members.get(0);
+		JsonNode firstItemJsonNode = membersJsonNode.get(0);
 
 		Iterator<String> iterator = firstItemJsonNode.fieldNames();
 
@@ -165,7 +171,9 @@ public class ApioJsonLDResource {
 	 * JsonNode
 	 */
 	public String getResourceLastPage() {
-		JsonNode jsonNode = getViewNode().path(ApioJsonLDConstants.VIEW_LAST);
+		JsonNode viewJsonNode = getViewNode();
+
+		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.VIEW_LAST);
 
 		return jsonNode.asText();
 	}
@@ -177,7 +185,9 @@ public class ApioJsonLDResource {
 	 * in the JsonNode
 	 */
 	public String getResourceNextPage() {
-		JsonNode jsonNode = getViewNode().path(ApioJsonLDConstants.VIEW_NEXT);
+		JsonNode viewJsonNode = getViewNode();
+
+		JsonNode jsonNode = viewJsonNode.path(ApioJsonLDConstants.VIEW_NEXT);
 
 		return jsonNode.asText();
 	}
@@ -189,19 +199,24 @@ public class ApioJsonLDResource {
 	 * in the JsonNode
 	 */
 	public String getResourcePreviousPage() {
-		JsonNode jsonNode = getViewNode().path(
+		JsonNode viewJsonNode = getViewNode();
+
+		JsonNode jsonNode = viewJsonNode.path(
 			ApioJsonLDConstants.VIEW_PREVIOUS);
 
 		return jsonNode.asText();
 	}
 
 	public int getTotalItems() {
-		return _resourceCollection.path(
-			ApioJsonLDConstants.COLLECTION_TOTAL_ITEMS).asInt();
+		JsonNode jsonNode = _resourceCollectionJsonNode.path(
+			ApioJsonLDConstants.COLLECTION_TOTAL_ITEMS);
+
+		return jsonNode.asInt();
 	}
 
 	public JsonNode getTypeNode() {
-		return _findJsonNode(_resourceCollection, ApioJsonLDConstants.TYPE);
+		return _findJsonNode(
+			_resourceCollectionJsonNode, ApioJsonLDConstants.TYPE);
 	}
 
 	/**
@@ -213,7 +228,7 @@ public class ApioJsonLDResource {
 	 */
 	public JsonNode getViewNode() {
 		return _findJsonNode(
-			_resourceCollection, ApioJsonLDConstants.COLLECTION_VIEW);
+			_resourceCollectionJsonNode, ApioJsonLDConstants.COLLECTION_VIEW);
 	}
 
 	/**
@@ -225,7 +240,9 @@ public class ApioJsonLDResource {
 	 * e.g "@vocab": "http://schema.org" otherwise empty String
 	 */
 	public String getVocabulary(JsonNode contextJsonNode) {
-		return contextJsonNode.path(ApioJsonLDConstants.VOCAB).asText();
+		JsonNode jsonNode = contextJsonNode.path(ApioJsonLDConstants.VOCAB);
+
+		return jsonNode.asText();
 	}
 
 	private JsonNode _findJsonNode(JsonNode resource, String nodeName) {
@@ -233,11 +250,11 @@ public class ApioJsonLDResource {
 
 		if (_log.isDebugEnabled()) {
 			if (jsonNode.isMissingNode()) {
-				_log.debug("Cannot find the \"{}\" node!", nodeName);
+				_log.debug("Unable to find the \"{}\" node", nodeName);
 			}
 
 			if (jsonNode.isArray() && (jsonNode.size() == 0)) {
-				_log.debug("The \"{}\" ArrayNode is empty!", jsonNode);
+				_log.debug("The \"{}\" array node is empty", jsonNode);
 			}
 		}
 
@@ -245,29 +262,29 @@ public class ApioJsonLDResource {
 	}
 
 	private void _validateResourceCollection() throws IOException {
-		JsonNode typeNode = getTypeNode();
+		JsonNode typeJsonNode = getTypeNode();
 
 		boolean collection = false;
 
-		if (typeNode.isArray()) {
-			Iterator<JsonNode> elements = typeNode.elements();
+		if (typeJsonNode.isArray()) {
+			Iterator<JsonNode> iterator = typeJsonNode.elements();
 
-			while (elements.hasNext() && (collection == false)) {
-				JsonNode node = elements.next();
+			while (iterator.hasNext() && (collection == false)) {
+				JsonNode jsonNode = iterator.next();
 
-				if (ApioJsonLDConstants.COLLECTION.equals(node.asText())) {
+				if (ApioJsonLDConstants.COLLECTION.equals(jsonNode.asText())) {
 					collection = true;
 				}
 			}
 		}
 		else {
 			throw new IOException(
-				"The given resource doesn't contain ArrayNode for it's type");
+				"The given resource does not contain ArrayNode for its type");
 		}
 
 		if (!collection) {
 			throw new IOException(
-				"The given resource's type is not collection");
+				"The given resource's type is not a collection");
 		}
 	}
 
@@ -275,12 +292,12 @@ public class ApioJsonLDResource {
 		ApioJsonLDResource.class);
 
 	/**
-	 * Store the 'member' JsonNode as it's the most resource intensive task to
+	 * Store the 'member' JsonNode as its the most resource intensive task to
 	 * collect and determine, so do it only once.
 	 * @see #getMembersNode()
 	 */
 	private JsonNode _membersJsonNode;
 
-	private final JsonNode _resourceCollection;
+	private final JsonNode _resourceCollectionJsonNode;
 
 }

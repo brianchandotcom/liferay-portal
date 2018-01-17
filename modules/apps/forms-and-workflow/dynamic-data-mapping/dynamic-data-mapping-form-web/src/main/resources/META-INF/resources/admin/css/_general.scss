@@ -113,7 +113,12 @@
 
 .form-builder-page-manager-popover-header {
 	.popover-content {
-		padding: 7px 21px;
+		left: -16px;
+		padding: 0;
+		position: absolute;
+		top: 30px;
+		transform: translate3d(-208px, 32px, 0);
+		will-change: transform;
 	}
 
 	li {
@@ -123,7 +128,7 @@
 		font-weight: normal;
 		line-height: 16px;
 		list-style-type: none;
-		padding: 11px 0;
+		padding: 5px 0;
 	}
 
 	ul {

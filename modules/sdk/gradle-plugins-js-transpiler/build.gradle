@@ -22,5 +22,16 @@ gradleTest {
 }
 
 pluginBundle {
+	plugins {
+		jSTranspilerBasePlugin {
+			description = "The JS Transpiler Base Gradle plugin lets you use Gradle dependencies (such as external module or project dependencies) in Node.js scripts."
+			displayName = "Liferay Gradle Plugins JS Transpiler Base"
+		}
+
+		jSTranspilerPlugin {
+			displayName = "Liferay Gradle Plugins JS Transpiler"
+		}
+	}
+
 	tags = ["closure", "ecmascript", "es6", "javascript", "js", "metal", "metaljs", "node", "nodejs", "soy"]
 }

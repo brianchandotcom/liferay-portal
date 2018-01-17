@@ -14,12 +14,14 @@
 
 package com.liferay.site.navigation.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
@@ -44,6 +46,7 @@ import com.liferay.site.navigation.service.SiteNavigationMenuServiceUtil;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -150,6 +153,24 @@ public class SiteNavigationAdminDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords");
 
 		return _keywords;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem entriesNavigationItem = new NavigationItem();
+
+		entriesNavigationItem.setActive(true);
+
+		PortletURL mainURL = _liferayPortletResponse.createRenderURL();
+
+		entriesNavigationItem.setHref(mainURL.toString());
+
+		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "menus"));
+
+		navigationItems.add(entriesNavigationItem);
+
+		return navigationItems;
 	}
 
 	public String getOrderByCol() throws Exception {

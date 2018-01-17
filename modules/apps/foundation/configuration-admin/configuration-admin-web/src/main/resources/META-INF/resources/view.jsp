@@ -36,33 +36,32 @@ if (keywords != null) {
 
 	renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 }
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+if (configurationCategories != null) {
+	for (String curConfigurationCategory : configurationCategories) {
+		NavigationItem navigationItem = new NavigationItem();
+
+		navigationItem.setActive(curConfigurationCategory.equals(configurationCategory));
+
+		PortletURL configurationCategoryURL = renderResponse.createRenderURL();
+
+		configurationCategoryURL.setParameter("configurationCategory", curConfigurationCategory);
+
+		navigationItem.setHref(configurationCategoryURL.toString());
+
+		navigationItem.setLabel(LanguageUtil.get(request, curConfigurationCategory));
+
+		navigationItems.add(navigationItem);
+	}
+}
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= configurationCategories != null %>">
-		<aui:nav cssClass="navbar-nav">
-
-			<%
-			for (String curConfigurationCategory : configurationCategories) {
-			%>
-
-				<portlet:renderURL var="configurationCategoryURL">
-					<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
-				</portlet:renderURL>
-
-				<aui:nav-item
-					href="<%= configurationCategoryURL %>"
-					label="<%= curConfigurationCategory %>"
-					selected="<%= curConfigurationCategory.equals(configurationCategory) %>"
-				/>
-
-			<%
-			}
-			%>
-
-		</aui:nav>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

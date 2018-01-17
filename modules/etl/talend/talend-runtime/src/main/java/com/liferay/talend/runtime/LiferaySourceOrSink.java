@@ -14,15 +14,16 @@
 
 package com.liferay.talend.runtime;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.liferay.talend.avro.ResourceCollectionSchemaInferrer;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.connection.LiferayProvideConnectionProperties;
 import com.liferay.talend.runtime.client.ApioException;
+import com.liferay.talend.runtime.client.ApioJsonLDConstants;
 import com.liferay.talend.runtime.client.ApioResult;
 import com.liferay.talend.runtime.client.RestClient;
+
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 
@@ -39,7 +40,6 @@ import org.apache.avro.Schema;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.talend.components.api.component.runtime.SourceOrSink;
 import org.talend.components.api.container.RuntimeContainer;
 import org.talend.components.api.properties.ComponentProperties;
@@ -217,7 +217,7 @@ public class LiferaySourceOrSink
 
 		List<NamedThing> schemaNames = new ArrayList<>();
 
-		Map<String, String> resourceCollections = _getResourceCollections(
+		Map<String, String> resourceCollections = _getExposedResourcesMap(
 			runtimeContainer);
 
 		for (Map.Entry<String, String> entry : resourceCollections.entrySet()) {
@@ -349,7 +349,8 @@ public class LiferaySourceOrSink
 
 		Map<String, String> resourcesMap = new HashMap<>();
 
-		JsonNode resourcesJsonNode = jsonNode.findPath("resources");
+		JsonNode resourcesJsonNode = jsonNode.findPath(
+			ApioJsonLDConstants.RESOURCES);
 
 		Iterator<String> fieldNames = resourcesJsonNode.fieldNames();
 
@@ -358,8 +359,9 @@ public class LiferaySourceOrSink
 
 			JsonNode fieldValue = resourcesJsonNode.get(fieldName);
 
-			if (fieldValue.has("href")) {
-				JsonNode hrefJsonNode = fieldValue.get("href");
+			if (fieldValue.has(ApioJsonLDConstants.HREF)) {
+				JsonNode hrefJsonNode = fieldValue.get(
+					ApioJsonLDConstants.HREF);
 
 				resourcesMap.put(hrefJsonNode.asText(), fieldName);
 			}
@@ -377,7 +379,7 @@ public class LiferaySourceOrSink
 	protected RestClient client;
 	protected volatile LiferayProvideConnectionProperties properties;
 
-	private Map<String, String> _getResourceCollections(
+	private Map<String, String> _getExposedResourcesMap(
 		RuntimeContainer container) {
 
 		ObjectMapper objectMapper = new ObjectMapper();

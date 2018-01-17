@@ -177,8 +177,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			SearchContext searchContext, String className)
 		throws SearchException {
 
-		SearchResponseScroller searchResponseScroller = null;
-
 		try {
 			Client client = elasticsearchConnectionManager.getClient();
 
@@ -193,13 +191,19 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 			boolQueryBuilder.filter(termQueryBuilder);
 			boolQueryBuilder.must(matchAllQueryBuilder);
 
-			searchResponseScroller = new SearchResponseScroller(
-				client, searchContext, indexNameBuilder, boolQueryBuilder,
-				TimeValue.timeValueSeconds(30), DocumentTypes.LIFERAY);
+			SearchResponseScroller searchResponseScroller =
+				new SearchResponseScroller(
+					client, searchContext, indexNameBuilder, boolQueryBuilder,
+					TimeValue.timeValueSeconds(30), DocumentTypes.LIFERAY);
 
-			searchResponseScroller.prepare();
+			try {
+				searchResponseScroller.prepare();
 
-			searchResponseScroller.scroll(_searchHitsProcessor);
+				searchResponseScroller.scroll(_searchHitsProcessor);
+			}
+			finally {
+				searchResponseScroller.close();
+			}
 		}
 		catch (IndexNotFoundException infe) {
 			if (_log.isInfoEnabled()) {
@@ -214,11 +218,6 @@ public class ElasticsearchIndexWriter extends BaseIndexWriter {
 		catch (Exception e) {
 			throw new SearchException(
 				"Unable to delete data for entity " + className, e);
-		}
-		finally {
-			if (searchResponseScroller != null) {
-				searchResponseScroller.close();
-			}
 		}
 	}
 

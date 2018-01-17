@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Portal Spring Extender
 Bundle-SymbolicName: com.liferay.portal.spring.extender
-Bundle-Version: 2.1.6
-Export-Package:\
-	com.liferay.portal.spring.extender.loader,\
-	com.liferay.portal.spring.extender.service
+Bundle-Version: 3.0.0
 Import-Package:\
 	com.liferay.portal.bean,\
 	com.liferay.portal.cache.thread.local,\
@@ -75,4 +72,7 @@ Liferay-Releng-Module-Group-Title: Runtime
 Provide-Capability:\
 	liferay.extender;\
 		liferay.extender="spring.extender";\
-		version:Version="${Bundle-Version}"
+		version:Version="${springExtenderApiVersion}",\
+	liferay.extender;\
+		liferay.extender="spring.extender";\
+		version:Version="2.0.0"

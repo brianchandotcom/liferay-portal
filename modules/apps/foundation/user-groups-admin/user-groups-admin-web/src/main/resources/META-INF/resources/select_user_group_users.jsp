@@ -51,13 +51,21 @@ if (filterManageableOrganizations) {
 }
 
 RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem entriesNavigationItem = new NavigationItem();
+
+entriesNavigationItem.setActive(true);
+entriesNavigationItem.setHref(StringPool.BLANK);
+entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
+
+navigationItems.add(entriesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

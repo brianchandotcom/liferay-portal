@@ -62,20 +62,24 @@ if (keywords != null) {
 
 		</aui:nav>
 	</c:if>
-
-	<aui:nav-bar-search>
-		<portlet:renderURL var="redirectURL" />
-
-		<portlet:renderURL var="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/search" />
-			<portlet:param name="redirect" value="<%= redirectURL %>" />
-		</portlet:renderURL>
-
-		<aui:form action="<%= searchURL %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
+
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<li>
+			<portlet:renderURL var="redirectURL" />
+
+			<portlet:renderURL var="searchURL">
+				<portlet:param name="mvcRenderCommandName" value="/search" />
+				<portlet:param name="redirect" value="<%= redirectURL %>" />
+			</portlet:renderURL>
+
+			<aui:form action="<%= searchURL %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+			</aui:form>
+		</li>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

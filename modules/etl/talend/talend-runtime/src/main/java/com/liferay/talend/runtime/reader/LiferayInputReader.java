@@ -123,6 +123,12 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 		}
 	}
 
+	public JsonNode getCurrentJsonNode() throws NoSuchElementException {
+		JsonNode resourceJsonNode = _inputRecords.get(_inputRecordsIndex);
+
+		return resourceJsonNode;
+	}
+
 	public List<String> getCurrentObject() throws NoSuchElementException {
 		JsonNode resourceJsonNode = _inputRecords.get(_inputRecordsIndex);
 

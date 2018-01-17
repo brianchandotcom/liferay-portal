@@ -349,14 +349,22 @@ ${oversize.files.jsp}</fail>
 	<target depends="build-dtd" name="war">
 		<manifest-macro />
 
-		<war
-			destfile="${war.file}.war"
-			webxml="docroot/WEB-INF/web.xml"
-		>
-			<fileset dir="docroot" />
-			<metainf dir="${project.dir}/oss-licenses">
-				<exclude name="**/development/**" />
-			</metainf>
-		</war>
+		<if>
+			<istrue value="${build.marketplace.apps.enabled}" />
+			<then>
+				<war
+					destfile="${war.file}.war"
+					webxml="docroot/WEB-INF/web.xml"
+				>
+					<fileset dir="docroot" />
+					<metainf dir="${project.dir}/oss-licenses">
+						<exclude name="**/development/**" />
+					</metainf>
+				</war>
+			</then>
+			<else>
+				<download-latest-artifact destfile="${war.file}.war" />
+			</else>
+		</if>
 	</target>
 </project>

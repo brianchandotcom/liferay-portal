@@ -14,74 +14,40 @@
 
 package com.liferay.portal.configuration.test.util.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
-import java.util.ArrayList;
 import java.util.Dictionary;
-import java.util.List;
 
-import org.apache.felix.cm.PersistenceManager;
-
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
-public class ConfigurationTestUtilTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() throws Exception {
-		_configurationPid = "TestPID_" + RandomTestUtil.randomString();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_testConfigurationExists()) {
-			Configuration configuration = _getConfiguration();
-
-			configuration.delete();
-		}
-	}
+public class ConfigurationTestUtilTest
+	extends BaseConfigurationTestUtilTestCase {
 
 	@Test
 	public void testDeleteConfiguration() throws Exception {
-		_getConfiguration();
+		getConfiguration();
 
-		Assert.assertTrue(_testConfigurationExists());
+		Assert.assertTrue(testConfigurationExists());
 
-		ConfigurationTestUtil.deleteConfiguration(_configurationPid);
+		ConfigurationTestUtil.deleteConfiguration(configurationPid);
 
-		Assert.assertFalse(_testConfigurationExists());
+		Assert.assertFalse(testConfigurationExists());
 
-		Configuration configuration = _getConfiguration();
+		Configuration configuration = getConfiguration();
 
-		Assert.assertTrue(_testConfigurationExists());
+		Assert.assertTrue(testConfigurationExists());
 
 		ConfigurationTestUtil.deleteConfiguration(configuration);
 
-		Assert.assertFalse(_testConfigurationExists());
+		Assert.assertFalse(testConfigurationExists());
 	}
 
 	@Test
@@ -92,7 +58,7 @@ public class ConfigurationTestUtilTest {
 
 		properties.put(_TEST_KEY, value1);
 
-		ConfigurationTestUtil.saveConfiguration(_configurationPid, properties);
+		ConfigurationTestUtil.saveConfiguration(configurationPid, properties);
 
 		Configuration configuration = _assertConfigurationValue(value1);
 
@@ -108,9 +74,9 @@ public class ConfigurationTestUtilTest {
 	private Configuration _assertConfigurationValue(String value)
 		throws Exception {
 
-		Assert.assertTrue(_testConfigurationExists());
+		Assert.assertTrue(testConfigurationExists());
 
-		Configuration configuration = _getConfiguration();
+		Configuration configuration = getConfiguration();
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
@@ -119,25 +85,7 @@ public class ConfigurationTestUtilTest {
 		return configuration;
 	}
 
-	private Configuration _getConfiguration() throws Exception {
-		return _configurationAdmin.getConfiguration(
-			_configurationPid, StringPool.QUESTION);
-	}
-
-	private boolean _testConfigurationExists() {
-		return _persistenceManager.exists(_configurationPid);
-	}
-
 	private static final String _TEST_KEY =
 		"ConfigurationTestUtilTest_TEST_KEY";
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static PersistenceManager _persistenceManager;
-
-	private String _configurationPid;
-	private final List<Configuration> _configurations = new ArrayList<>();
 
 }

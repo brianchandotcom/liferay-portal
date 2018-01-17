@@ -14,72 +14,39 @@
 
 package com.liferay.portal.configuration.test.util.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.test.util.ConfigurationTemporarySwapper;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
 
-import org.apache.felix.cm.PersistenceManager;
-
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import org.osgi.service.cm.Configuration;
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
-public class ConfigurationTemporarySwapperTest {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
-	@Before
-	public void setUp() throws Exception {
-		_configurationPid = "TestPID_" + RandomTestUtil.randomString();
-	}
-
-	@After
-	public void tearDown() throws Exception {
-		if (_persistenceManager.exists(_configurationPid)) {
-			Configuration configuration = _getConfiguration();
-
-			configuration.delete();
-		}
-	}
+public class ConfigurationTemporarySwapperTest
+	extends BaseConfigurationTestUtilTestCase {
 
 	@Test
 	public void testWillCleanUpConfiguration() throws Exception {
 		Assert.assertFalse(
-			String.valueOf(_persistenceManager.load(_configurationPid)),
-			_persistenceManager.exists(_configurationPid));
+			String.valueOf(persistenceManager.load(configurationPid)),
+			testConfigurationExists());
 
 		try (ConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
-						_configurationPid, new HashMapDictionary<>())) {
+						configurationPid, new HashMapDictionary<>())) {
 
-			Assert.assertTrue(_persistenceManager.exists(_configurationPid));
+			Assert.assertTrue(testConfigurationExists());
 		}
 
 		Assert.assertFalse(
-			String.valueOf(_persistenceManager.load(_configurationPid)),
-			_persistenceManager.exists(_configurationPid));
+			String.valueOf(persistenceManager.load(configurationPid)),
+			testConfigurationExists());
 	}
 
 	@Test
@@ -92,7 +59,7 @@ public class ConfigurationTemporarySwapperTest {
 
 		temporaryValues.put(testKey, valueToPreserve);
 
-		Configuration testConfiguration = _getConfiguration();
+		Configuration testConfiguration = getConfiguration();
 
 		testConfiguration.update(temporaryValues);
 
@@ -101,12 +68,12 @@ public class ConfigurationTemporarySwapperTest {
 		try (ConfigurationTemporarySwapper
 				configurationTemporarySwapper =
 					new ConfigurationTemporarySwapper(
-						_configurationPid, temporaryValues)) {
+						configurationPid, temporaryValues)) {
 		}
 
-		Assert.assertTrue(_persistenceManager.exists(_configurationPid));
+		Assert.assertTrue(testConfigurationExists());
 
-		testConfiguration = _getConfiguration();
+		testConfiguration = getConfiguration();
 
 		Assert.assertEquals(4, testConfiguration.getChangeCount());
 
@@ -128,9 +95,9 @@ public class ConfigurationTemporarySwapperTest {
 
 		try (ConfigurationTemporarySwapper configurationTemporarySwapper =
 				new ConfigurationTemporarySwapper(
-					_configurationPid, temporaryValues)) {
+					configurationPid, temporaryValues)) {
 
-			Configuration testConfiguration = _getConfiguration();
+			Configuration testConfiguration = getConfiguration();
 
 			Assert.assertEquals(2, testConfiguration.getChangeCount());
 
@@ -141,18 +108,5 @@ public class ConfigurationTemporarySwapperTest {
 			Assert.assertSame(testValue, testProperties.get(testKey));
 		}
 	}
-
-	private Configuration _getConfiguration() throws Exception {
-		return _configurationAdmin.getConfiguration(
-			_configurationPid, StringPool.QUESTION);
-	}
-
-	@Inject
-	private static ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private static PersistenceManager _persistenceManager;
-
-	private String _configurationPid;
 
 }

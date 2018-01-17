@@ -24,45 +24,12 @@ String target = ParamUtil.getString(request, "target");
 
 User selUser = PortalUtil.getSelectedUser(request);
 
-String type = siteBrowserDisplayContext.getType();
-String[] types = siteBrowserDisplayContext.getTypes();
-
 GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<c:choose>
-			<c:when test="<%= types.length == 1 %>">
-				<aui:nav-item label="sites" selected="<%= true %>" />
-			</c:when>
-			<c:when test="<%= types.length > 1 %>">
-
-				<%
-				for (String curType : types) {
-					PortletURL portletURL = siteBrowserDisplayContext.getPortletURL();
-
-					portletURL.setParameter("type", curType);
-				%>
-
-					<aui:nav-item href="<%= portletURL.toString() %>" label="<%= curType %>" selected="<%= curType.equals(type) %>" />
-
-				<%
-				}
-				%>
-
-			</c:when>
-		</c:choose>
-	</aui:nav>
-
-	<c:if test='<%= !type.equals("parent-sites") %>'>
-		<aui:nav-bar-search>
-			<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= siteBrowserDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
@@ -78,6 +45,14 @@ GroupSearch groupSearch = siteBrowserDisplayContext.getGroupSearch();
 				orderColumns='<%= new String[] {"name", "type"} %>'
 				portletURL="<%= siteBrowserDisplayContext.getPortletURL() %>"
 			/>
+
+			<c:if test='<%= !Objects.equals(siteBrowserDisplayContext.getType(), "parent-sites") %>'>
+				<li>
+					<aui:form action="<%= siteBrowserDisplayContext.getPortletURL() %>" name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">

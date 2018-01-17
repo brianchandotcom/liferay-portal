@@ -116,9 +116,13 @@ AUI.add(
 					'</div>',
 
 					TPL_PAGE_CONTROL_TRIGGER:
-						'<a class="' + CSS_FORM_BUILDER_CONTROLS_TRIGGER + '" data-position="{position}" href="javascript:;">' +
+						'<div class="' + CSS_FORM_BUILDER_CONTROLS_TRIGGER + '">' +
+						'<div class="dropdown dropdown-action">' +
+						'<a class="dropdown-toggle" data-position="{position}" href="javascript:;">' +
 							Liferay.Util.getLexiconIconTpl('ellipsis-v') +
-						'</a>',
+						'</a>' +
+						'</div>' +
+						'</div>',
 
 					TPL_PAGE_HEADER: '<div class="' + CSS_PAGE_HEADER + ' form-inline">' +
 						'<textarea rows="1" placeholder="{untitledPage}" class="' + CSS_PAGE_HEADER_TITLE + ' ' +

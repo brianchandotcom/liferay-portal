@@ -68,7 +68,9 @@ public class UnsyncCharArrayWriter extends Writer {
 			string = StringPool.NULL;
 		}
 		else {
-			string = charSequence.subSequence(start, end).toString();
+			charSequence = charSequence.subSequence(start, end);
+
+			string = charSequence.toString();
 		}
 
 		write(string, 0, string.length());

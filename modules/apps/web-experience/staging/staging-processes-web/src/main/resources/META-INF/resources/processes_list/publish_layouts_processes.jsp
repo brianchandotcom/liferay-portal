@@ -101,19 +101,6 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			keyProperty="backgroundTaskId"
 			modelVar="backgroundTask"
 		>
-
-			<%
-			BackgroundTaskDisplay backgroundTaskDisplay = BackgroundTaskDisplayFactoryUtil.getBackgroundTaskDisplay(backgroundTask);
-
-			String backgroundTaskName = backgroundTaskDisplay.getDisplayName(request);
-
-			boolean processPrivateLayout = MapUtil.getBoolean(backgroundTask.getTaskContextMap(), "privateLayout");
-
-			String publicPagesDescription = (processPrivateLayout) ? LanguageUtil.get(request, "private-pages") : LanguageUtil.get(request, "public-pages");
-
-			backgroundTaskName = String.format("%s (%s)", backgroundTaskName, publicPagesDescription);
-			%>
-
 			<c:choose>
 				<c:when test='<%= displayStyle.equals("descriptive") %>'>
 					<liferay-ui:search-container-column-text>
@@ -126,22 +113,10 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					<liferay-ui:search-container-column-text
 						colspan="<%= 2 %>"
 					>
-
-						<%
-						User backgroundTaskUser = UserLocalServiceUtil.getUser(backgroundTask.getUserId());
-
-						Date createDate = backgroundTask.getCreateDate();
-
-						String modifiedDateDescription = LanguageUtil.getTimeDescription(request, System.currentTimeMillis() - createDate.getTime(), true);
-						%>
-
-						<h6 class="text-default">
-							<liferay-ui:message arguments="<%= new String[] {HtmlUtil.escape(backgroundTaskUser.getFullName()), modifiedDateDescription} %>" key="x-modified-x-ago" />
-						</h6>
-
-						<h5 id="<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>">
-							<%= HtmlUtil.escape(backgroundTaskName) %>
-						</h5>
+						<liferay-staging:process-title
+							backgroundTask="<%= backgroundTask %>"
+							listView="<%= false %>"
+						/>
 
 						<liferay-staging:process-in-progress
 							backgroundTask="<%= backgroundTask %>"
@@ -175,9 +150,10 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 					<liferay-ui:search-container-column-text
 						name="title"
 					>
-						<span id="<%= liferayPortletResponse.getNamespace() + "backgroundTaskName" + String.valueOf(backgroundTask.getBackgroundTaskId()) %>">
-							<liferay-ui:message key="<%= HtmlUtil.escape(backgroundTaskName) %>" />
-						</span>
+						<liferay-staging:process-title
+							backgroundTask="<%= backgroundTask %>"
+							listView="<%= true %>"
+						/>
 					</liferay-ui:search-container-column-text>
 
 					<liferay-ui:search-container-column-text

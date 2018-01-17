@@ -249,7 +249,7 @@ public class LCSConnectorRunnable implements Runnable {
 
 		try {
 			if (_log.isTraceEnabled()) {
-				_log.trace("Thread run delayed for 60s");
+				_log.trace("Thread run delayed for 60 seconds");
 			}
 
 			Thread.sleep(60000);

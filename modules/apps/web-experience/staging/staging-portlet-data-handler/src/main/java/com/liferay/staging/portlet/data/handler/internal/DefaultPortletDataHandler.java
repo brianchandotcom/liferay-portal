@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.staging.portlet.data.handler;
+package com.liferay.staging.portlet.data.handler.internal;
 
 import aQute.bnd.annotation.ProviderType;
 

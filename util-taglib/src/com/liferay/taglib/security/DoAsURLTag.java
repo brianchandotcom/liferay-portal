@@ -16,6 +16,7 @@ package com.liferay.taglib.security;
 
 import com.liferay.petra.encryptor.Encryptor;
 import com.liferay.portal.kernel.model.Company;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
@@ -50,7 +51,9 @@ public class DoAsURLTag extends TagSupport {
 		doAsURL = themeDisplay.getPathContext() + doAsURL;
 
 		if (doAsUserId <= 0) {
-			doAsUserId = company.getDefaultUser().getUserId();
+			User defaultUser = company.getDefaultUser();
+
+			doAsUserId = defaultUser.getUserId();
 		}
 
 		String encDoAsUserId = Encryptor.encrypt(

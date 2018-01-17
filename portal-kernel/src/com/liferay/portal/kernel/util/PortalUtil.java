@@ -2102,6 +2102,10 @@ public class PortalUtil {
 		return getPortal().isControlPanelPortlet(portletId, themeDisplay);
 	}
 
+	public static boolean isCustomPortletMode(PortletMode portletMode) {
+		return getPortal().isCustomPortletMode(portletMode);
+	}
+
 	public static boolean isForwardedSecure(HttpServletRequest request) {
 		return getPortal().isForwardedSecure(request);
 	}

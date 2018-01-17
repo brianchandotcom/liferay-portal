@@ -24,6 +24,7 @@ import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
@@ -87,13 +88,16 @@ public class WorkflowDefinitionsDataProvider implements DDMDataProvider {
 				_workflowDefinitionManager.getActiveWorkflowDefinitions(
 					companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 
+			String languageId = LocaleUtil.toLanguageId(locale);
+
 			for (WorkflowDefinition workflowDefinition : workflowDefinitions) {
 				String version = LanguageUtil.format(
 					locale, "version-x", workflowDefinition.getVersion(),
 					false);
 
 				String label = StringBundler.concat(
-					workflowDefinition.getName(), " (", version, ")");
+					workflowDefinition.getTitle(languageId), " (", version,
+					")");
 
 				String value =
 					workflowDefinition.getName() + StringPool.AT +

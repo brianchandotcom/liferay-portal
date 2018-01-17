@@ -72,9 +72,8 @@ public class DDMFormFieldTemplateContextFactory {
 			_ddmFormFieldValues, StringPool.BLANK);
 	}
 
-	protected DDMFormFieldRenderingContext
-		createDDDMFormFieldRenderingContext(
-			Map<String, Object> ddmFormFieldTemplateContext) {
+	protected DDMFormFieldRenderingContext createDDDMFormFieldRenderingContext(
+		Map<String, Object> ddmFormFieldTemplateContext) {
 
 		DDMFormFieldRenderingContext ddmFormFieldRenderingContext =
 			new DDMFormFieldRenderingContext();

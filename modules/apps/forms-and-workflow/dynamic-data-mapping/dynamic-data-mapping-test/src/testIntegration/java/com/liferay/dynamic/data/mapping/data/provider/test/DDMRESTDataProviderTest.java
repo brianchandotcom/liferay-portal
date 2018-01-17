@@ -20,6 +20,7 @@ import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderContext;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderRequest;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponse;
 import com.liferay.dynamic.data.mapping.data.provider.DDMDataProviderResponseOutput;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.test.util.DDMFormValuesTestUtil;
@@ -66,8 +67,7 @@ public class DDMRESTDataProviderTest {
 	public void testGetCountries() throws Exception {
 		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
 
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			DDMFormFactory.create(ddmDataProviderSettings);
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
 
 		DDMFormValues ddmFormValues = DDMFormValuesTestUtil.createDDMFormValues(
 			ddmForm);
@@ -138,8 +138,7 @@ public class DDMRESTDataProviderTest {
 	public void testGetCountryByName() throws Exception {
 		Class<?> ddmDataProviderSettings = _ddmDataProvider.getSettings();
 
-		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm =
-			DDMFormFactory.create(ddmDataProviderSettings);
+		DDMForm ddmForm = DDMFormFactory.create(ddmDataProviderSettings);
 
 		String url =
 			"http://localhost:8080/api/jsonws/country/get-country-by-name";

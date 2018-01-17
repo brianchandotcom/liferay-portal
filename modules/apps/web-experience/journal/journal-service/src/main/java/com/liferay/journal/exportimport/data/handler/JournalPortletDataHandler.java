@@ -22,6 +22,7 @@ import com.liferay.exportimport.kernel.lar.BasePortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandler;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerChoice;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
@@ -109,6 +110,11 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 	public static final String SCHEMA_VERSION = "1.1.0";
 
 	@Override
+	public String getNamespace() {
+		return NAMESPACE;
+	}
+
+	@Override
 	public String getSchemaVersion() {
 		return SCHEMA_VERSION;
 	}
@@ -150,12 +156,21 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(JournalArticle.class, DDMStructure.class),
 			new StagedModelType(JournalFeed.class),
 			new StagedModelType(JournalFolder.class));
+
+		String[] referencedContentBehaviorOptions =
+			{"include-always", "include-if-modified"};
+
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "web-content", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						NAMESPACE, "referenced-content"),
+						NAMESPACE, "referenced-content", true, false,
+						new PortletDataHandlerControl[] {
+							new PortletDataHandlerChoice(
+								NAMESPACE, "referenced-content-behavior", 0,
+								referencedContentBehaviorOptions)
+						}),
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "version-history",
 						_isVersionHistoryByDefaultEnabled())

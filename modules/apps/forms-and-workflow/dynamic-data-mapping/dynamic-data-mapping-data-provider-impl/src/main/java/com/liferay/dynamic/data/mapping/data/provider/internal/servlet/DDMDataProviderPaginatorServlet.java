@@ -34,6 +34,7 @@ import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,9 @@ public class DDMDataProviderPaginatorServlet extends HttpServlet {
 		JSONObject inputParametersJSONObject = getInputParametersJSONObject(
 			request);
 
-		inputParametersJSONObject.keys().forEachRemaining(
+		Iterator<String> iterator = inputParametersJSONObject.keys();
+
+		iterator.forEachRemaining(
 			inputParameterName -> {
 				ddmDataProviderRequest.queryString(
 					inputParameterName,

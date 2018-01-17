@@ -257,7 +257,6 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		}
 
 		long previousScopeGroupId = portletDataContext.getScopeGroupId();
-		String previousScopeType = portletDataContext.getScopeType();
 
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
@@ -354,7 +353,6 @@ public class JournalContentExportImportPortletPreferencesProcessor
 		}
 
 		portletDataContext.setScopeGroupId(previousScopeGroupId);
-		portletDataContext.setScopeType(previousScopeType);
 
 		return portletPreferences;
 	}

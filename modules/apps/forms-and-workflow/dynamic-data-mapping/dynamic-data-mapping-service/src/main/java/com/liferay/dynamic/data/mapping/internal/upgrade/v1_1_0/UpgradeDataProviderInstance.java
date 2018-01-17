@@ -40,8 +40,8 @@ public class UpgradeDataProviderInstance extends UpgradeProcess {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select DDMDataProviderInstance.definition, ");
-		sb.append("DDMDataProviderInstance.dataProviderInstanceId ");
-		sb.append("from DDMDataProviderInstance");
+		sb.append("DDMDataProviderInstance.dataProviderInstanceId from ");
+		sb.append("DDMDataProviderInstance");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =

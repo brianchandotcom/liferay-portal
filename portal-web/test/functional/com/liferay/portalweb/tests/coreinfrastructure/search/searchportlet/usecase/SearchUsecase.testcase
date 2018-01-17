@@ -82,7 +82,7 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
-		<execute macro="NewSearchPortlet#checkFacetOption">
+		<execute macro="SearchFacetPortlet#checkFacetOption">
 			<var name="facetOption" value="Blogs Entry" />
 		</execute>
 
@@ -1271,51 +1271,35 @@
 			<var name="pageName" value="${searchPage}" />
 		</execute>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${searchPage}" />
-		</execute>
+		<for list="Type Facet,Search Results,Search Bar" param="portletName">
+			<execute macro="Navigator#gotoPage">
+				<var name="pageName" value="Search Page" />
+			</execute>
 
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search Results" />
-		</execute>
+			<execute macro="Portlet#addPG">
+				<var name="portletName" value="${portletName}" />
+			</execute>
+		</for>
 
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${searchPage}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Search Bar" />
-		</execute>
-
-		<execute macro="Navigator#gotoPage">
-			<var name="pageName" value="${searchPage}" />
-		</execute>
-
-		<execute macro="Portlet#addPG">
-			<var name="portletName" value="Type Facet" />
-		</execute>
-
-		<execute macro="NewSearchPortlet#search">
+		<execute macro="SearchBarPortlet#searchPG">
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 
-		<execute macro="NewSearchPortlet#checkFacetOption">
+		<execute macro="SearchFacetPortlet#checkFacetOption">
 			<var name="facetOption" value="${searchAssetType}" />
 		</execute>
 
-		<execute macro="NewSearchPortlet#assertFacetURL">
+		<execute macro="SearchFacetPortlet#assertSingleFacetURL">
 			<var name="searchAssetType" value="${searchAssetType}" />
 			<var name="searchPage" value="${searchPage}" />
 			<var name="searchTerm" value="${searchTerm}" />
 		</execute>
 
-		<!--		<execute macro="Search#gotoUserSearchResultPG">
+		<execute macro="SearchResultPortlet#viewSearchResults">
 			<var name="searchAssetTitle" value="${searchTerm}" />
-		</execute>
-
-		<execute macro="NewSearchPortlet#viewResultDetails">
+			<var name="searchAssetType" value="${searchAssetType}" />
 			<var name="searchTerm" value="${searchTerm}" />
-		</execute>-->
+		</execute>
 	</command>
 
 	<command name="SearchXSSAsset" priority="4">
@@ -1442,13 +1426,21 @@
 			<var name="searchTerm" value="Potato" />
 		</execute>
 
+		<execute macro="SearchFacetPortlet#checkFacetOption">
+			<var name="facetOption" value="Blogs Entry" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#assertSingleFacetURL">
+			<var name="searchAssetType" value="Blogs Entry" />
+			<var name="searchPage" value="Search Page" />
+			<var name="searchTerm" value="Potato" />
+		</execute>
+
+		<execute macro="SearchFacetPortlet#checkFacetOption">
+			<var name="facetOption" value="Document" />
+		</execute>
+
 		<var method="TestPropsUtil#get('portal.url')" name="portalURL" />
-
-		<execute function="Click" locator1="TypeFacet#BLOGS_ENTRY" />
-
-		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Potato&amp;type=com.liferay.blogs.model.BlogsEntry" />
-
-		<execute function="Click" locator1="TypeFacet#DOCUMENT" />
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?q=Potato&amp;type=com.liferay.blogs.model.BlogsEntry&amp;type=com.liferay.document.library.kernel.model.DLFileEntry" />
 	</command>
@@ -1508,7 +1500,9 @@
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title" />
 
-		<execute function="Click" locator1="TypeFacet#BLOGS_ENTRY" />
+		<execute macro="SearchFacetPortlet#checkFacetOption">
+			<var name="facetOption" value="Blogs Entry" />
+		</execute>
 
 		<execute function="AssertLocation" value1="${portalURL}/web/guest/search-page?keywordparameter=Blogs%20Entry%20Title&amp;type=com.liferay.blogs.model.BlogsEntry" />
 	</command>

@@ -156,9 +156,9 @@ JournalMoveEntriesDisplayContext journalMovesEntriesDisplayContext = new Journal
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" type="submit" value="move" />
+		<aui:button type="submit" value="move" />
 
-		<aui:button cssClass="btn-lg" href="<%= journalMovesEntriesDisplayContext.getRedirect() %>" type="cancel" />
+		<aui:button href="<%= journalMovesEntriesDisplayContext.getRedirect() %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

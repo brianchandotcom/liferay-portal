@@ -123,7 +123,11 @@ public class ImageImportDDMFormFieldValueTransformer
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DLFileEntry.class);
 
-		long classPK = fileEntryPKs.get(oldClassPK);
+		Long classPK = fileEntryPKs.get(oldClassPK);
+
+		if (classPK == null) {
+			return null;
+		}
 
 		return _dlAppService.getFileEntry(classPK);
 	}

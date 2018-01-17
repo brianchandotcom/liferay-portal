@@ -209,10 +209,12 @@ public class DDMFormBuilderContextFactoryHelper {
 
 			ddmFormFieldValue.setName(propertyName);
 
+			DDMForm ddmForm = ddmFormField.getDDMForm();
+
 			Value value = doCreateDDMFormFieldValue(
 				ddmFormFieldTypeSetting,
 				ddmFormFieldProperties.get(propertyName),
-				ddmFormField.getDDMForm().getAvailableLocales());
+				ddmForm.getAvailableLocales());
 
 			ddmFormFieldValue.setValue(value);
 

@@ -59,11 +59,13 @@ public class FunctionCallExpression extends Expression {
 		sb.append(_functionName);
 		sb.append("(");
 
-		Stream<String> expressionStream = _parameterExpressions.stream().map(
+		Stream<Expression> expressionStream = _parameterExpressions.stream();
+
+		Stream<String> expressionStringStream = expressionStream.map(
 			expression -> expression.toString());
 
 		sb.append(
-			expressionStream.collect(
+			expressionStringStream.collect(
 				Collectors.joining(StringPool.COMMA_AND_SPACE)));
 
 		sb.append(")");

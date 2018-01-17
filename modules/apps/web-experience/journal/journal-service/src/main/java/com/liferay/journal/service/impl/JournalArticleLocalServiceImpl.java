@@ -8588,7 +8588,9 @@ public class JournalArticleLocalServiceImpl
 		JournalArticle firstArticle = journalArticlePersistence.findByG_A_First(
 			groupId, articleId, new ArticleVersionComparator(false));
 
-		if (firstArticle.getUrlTitle().equals(urlTitle)) {
+		String firstArticleUrlTitle = firstArticle.getUrlTitle();
+
+		if (firstArticleUrlTitle.equals(urlTitle)) {
 			return;
 		}
 
@@ -8596,7 +8598,9 @@ public class JournalArticleLocalServiceImpl
 			groupId, articleId);
 
 		for (JournalArticle article : articles) {
-			if (!article.getUrlTitle().equals(urlTitle)) {
+			String curArticleUrlTitle = article.getUrlTitle();
+
+			if (!curArticleUrlTitle.equals(urlTitle)) {
 				article.setUrlTitle(urlTitle);
 
 				journalArticlePersistence.update(article);

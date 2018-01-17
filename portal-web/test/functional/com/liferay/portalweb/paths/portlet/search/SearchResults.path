@@ -163,6 +163,17 @@
 	<td>//tr[contains(.,'${key_webContentSearchResultsName}')]/td[4]</td>
 	<td></td>
 </tr>
+<tr>
+	<td></td>
+	<td></td>
+	<td></td>
+</tr>
+<!--RESULTS_PORTLET-->
+<tr>
+	<td>RESULTS_PORTLET_SEARCH_QUERY</td>
+	<td>//p[contains(@class,'search-total-label')]</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

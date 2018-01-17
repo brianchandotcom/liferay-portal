@@ -1108,7 +1108,9 @@ public class JournalUtil {
 		while (itr.hasNext()) {
 			JournalArticle journalArticle = itr.next();
 
-			if (journalArticle.getArticleId().equals(articleId) &&
+			String journalArticleId = journalArticle.getArticleId();
+
+			if (journalArticleId.equals(articleId) &&
 				((journalArticle.getVersion() == version) || (version == 0))) {
 
 				itr.remove();

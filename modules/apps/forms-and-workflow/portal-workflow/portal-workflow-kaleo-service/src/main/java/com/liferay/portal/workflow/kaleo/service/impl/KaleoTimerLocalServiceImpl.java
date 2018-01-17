@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Action;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
+import com.liferay.portal.workflow.kaleo.definition.DurationScale;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.model.KaleoTimer;
@@ -64,15 +65,20 @@ public class KaleoTimerLocalServiceImpl extends KaleoTimerLocalServiceBaseImpl {
 		DelayDuration delayDuration = timer.getDelayDuration();
 
 		kaleoTimer.setDuration(delayDuration.getDuration());
-		kaleoTimer.setScale(delayDuration.getDurationScale().getValue());
+
+		DurationScale durationScale = delayDuration.getDurationScale();
+
+		kaleoTimer.setScale(durationScale.getValue());
 
 		DelayDuration recurrenceDelayDuration = timer.getRecurrence();
 
 		if (recurrenceDelayDuration != null) {
 			kaleoTimer.setRecurrenceDuration(
 				recurrenceDelayDuration.getDuration());
-			kaleoTimer.setRecurrenceScale(
-				recurrenceDelayDuration.getDurationScale().getValue());
+
+			durationScale = recurrenceDelayDuration.getDurationScale();
+
+			kaleoTimer.setRecurrenceScale(durationScale.getValue());
 		}
 
 		kaleoTimerPersistence.update(kaleoTimer);

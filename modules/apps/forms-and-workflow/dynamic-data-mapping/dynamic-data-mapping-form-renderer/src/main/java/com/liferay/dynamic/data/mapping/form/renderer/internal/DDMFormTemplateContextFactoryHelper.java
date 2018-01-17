@@ -120,7 +120,9 @@ public class DDMFormTemplateContextFactoryHelper {
 
 		Map<String, String> map = new HashMap<>();
 
-		Stream.of(innerExpressions).forEach(
+		Stream<String> innerExpressionsStream = Stream.of(innerExpressions);
+
+		innerExpressionsStream.forEach(
 			innerExpression -> {
 				String[] parts = StringUtil.split(
 					innerExpression, CharPool.EQUAL);
@@ -178,8 +180,10 @@ public class DDMFormTemplateContextFactoryHelper {
 			Map<String, String> outputParameters = extractAutoFillParameters(
 				matcher.group(3));
 
+			Set<Entry<String, String>> entrySet = outputParameters.entrySet();
+
 			Stream<Entry<String, String>> outputParametersStream =
-				outputParameters.entrySet().stream();
+				entrySet.stream();
 
 			outputParametersStream = outputParametersStream.filter(
 				entry -> isSelectField(ddmFormFields.get(entry.getKey())));

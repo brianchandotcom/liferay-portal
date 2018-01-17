@@ -126,20 +126,24 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			KaleoNode kaleoNode = kaleoNodesMap.get(node.getName());
 
 			for (Transition transition : node.getOutgoingTransitionsList()) {
+				Node sourceNode = transition.getSourceNode();
+
 				KaleoNode sourceKaleoNode = kaleoNodesMap.get(
-					transition.getSourceNode().getName());
+					sourceNode.getName());
 
 				if (sourceKaleoNode == null) {
 					throw new KaleoDefinitionValidationException.
-						MustSetSourceNode(transition.getSourceNode().getName());
+						MustSetSourceNode(sourceNode.getName());
 				}
 
+				Node targetNode = transition.getTargetNode();
+
 				KaleoNode targetKaleoNode = kaleoNodesMap.get(
-					transition.getTargetNode().getName());
+					targetNode.getName());
 
 				if (targetKaleoNode == null) {
 					throw new KaleoDefinitionValidationException.
-						MustSetTargetNode(transition.getTargetNode().getName());
+						MustSetTargetNode(targetNode.getName());
 				}
 
 				_kaleoTransitionLocalService.addKaleoTransition(

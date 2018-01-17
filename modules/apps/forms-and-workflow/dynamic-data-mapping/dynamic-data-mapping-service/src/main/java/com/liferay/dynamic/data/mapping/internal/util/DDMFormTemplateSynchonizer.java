@@ -77,9 +77,7 @@ public class DDMFormTemplateSynchonizer {
 		List<DDMFormField> structureDDMFormFields,
 		List<DDMFormField> templateDDMFormFields) {
 
-		for (int i = 0; i < structureDDMFormFields.size(); i++) {
-			DDMFormField structureDDMFormField = structureDDMFormFields.get(i);
-
+		for (DDMFormField structureDDMFormField : structureDDMFormFields) {
 			DDMFormField templateDDMFormField = getDDMFormField(
 				templateDDMFormFields, structureDDMFormField.getName());
 

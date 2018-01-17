@@ -416,7 +416,8 @@ public class DDMFormEmailNotificationSender {
 		return LanguageUtil.get(resourceBundle, "someone");
 	}
 
-	protected String getViewFormEntriesURL(DDMFormInstance ddmFormInstance)
+	protected String getViewFormEntriesURL(
+			DDMFormInstance ddmFormInstance, ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Map<String, String[]> params = new HashMap<>();
@@ -431,14 +432,15 @@ public class DDMFormEmailNotificationSender {
 			portletNamespace.concat("formInstanceId"),
 			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});
 
-		return _portal.getControlPanelFullURL(
-			ddmFormInstance.getGroupId(),
-			DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, params);
+		return _portal.getSiteAdminURL(
+			themeDisplay, DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			params);
 	}
 
 	protected String getViewFormURL(
 			DDMFormInstance ddmFormInstance,
-			DDMFormInstanceRecord ddmFormInstanceRecord)
+			DDMFormInstanceRecord ddmFormInstanceRecord,
+			ThemeDisplay themeDisplay)
 		throws PortalException {
 
 		Map<String, String[]> params = new HashMap<>();
@@ -458,9 +460,9 @@ public class DDMFormEmailNotificationSender {
 			portletNamespace.concat("formInstanceId"),
 			new String[] {String.valueOf(ddmFormInstance.getFormInstanceId())});
 
-		return _portal.getControlPanelFullURL(
-			ddmFormInstance.getGroupId(),
-			DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN, params);
+		return _portal.getSiteAdminURL(
+			themeDisplay, DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN,
+			params);
 	}
 
 	protected void populateParameters(
@@ -477,11 +479,16 @@ public class DDMFormEmailNotificationSender {
 		template.put(
 			"siteName", getSiteName(ddmFormInstance.getGroupId(), locale));
 		template.put("userName", getUserName(ddmFormInstanceRecord, locale));
+
+		ThemeDisplay themeDisplay = getThemeDisplay(portletRequest);
+
 		template.put(
-			"viewFormEntriesURL", getViewFormEntriesURL(ddmFormInstance));
+			"viewFormEntriesURL",
+			getViewFormEntriesURL(ddmFormInstance, themeDisplay));
 		template.put(
 			"viewFormURL",
-			getViewFormURL(ddmFormInstance, ddmFormInstanceRecord));
+			getViewFormURL(
+				ddmFormInstance, ddmFormInstanceRecord, themeDisplay));
 	}
 
 	protected String render(Template template) throws TemplateException {

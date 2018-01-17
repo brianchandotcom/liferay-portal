@@ -192,6 +192,7 @@ if (!searchRestriction) {
 			descriptionInputLocalized: Liferay.component('<portlet:namespace />descriptionMapAsXML'),
 			editStructure: '#<portlet:namespace />editDDMStructure',
 			editTemplate: '#<portlet:namespace />editDDMTemplate',
+			friendlyURLInputLocalized: '<portlet:namespace />friendlyURL',
 			namespace: '<portlet:namespace />',
 			selectStructure: '#<portlet:namespace />selectStructure',
 			selectTemplate: '#<portlet:namespace />selectTemplate',

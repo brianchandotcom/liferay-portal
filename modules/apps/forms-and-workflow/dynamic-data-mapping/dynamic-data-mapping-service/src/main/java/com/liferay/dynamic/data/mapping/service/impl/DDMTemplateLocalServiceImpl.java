@@ -1627,12 +1627,23 @@ public class DDMTemplateLocalServiceImpl
 	}
 
 	protected void validate(
+			long groupId, Map<Locale, String> nameMap, String script)
+		throws PortalException {
+
+		validateName(groupId, nameMap);
+
+		if (Validator.isNull(script)) {
+			throw new TemplateScriptException("Script is null");
+		}
+	}
+
+	protected void validate(
 			long groupId, Map<Locale, String> nameMap, String script,
 			boolean smallImage, String smallImageURL, File smallImageFile,
 			byte[] smallImageBytes)
 		throws PortalException {
 
-		validate(nameMap, script);
+		validate(groupId, nameMap, script);
 
 		if (!smallImage || Validator.isNotNull(smallImageURL) ||
 			(smallImageFile == null) || (smallImageBytes == null)) {
@@ -1678,20 +1689,14 @@ public class DDMTemplateLocalServiceImpl
 		}
 	}
 
-	protected void validate(Map<Locale, String> nameMap, String script)
+	protected void validateName(long groupId, Map<Locale, String> nameMap)
 		throws PortalException {
 
-		validateName(nameMap);
+		String name = nameMap.get(PortalUtil.getSiteDefaultLocale(groupId));
 
-		if (Validator.isNull(script)) {
-			throw new TemplateScriptException("Script is null");
+		if (Validator.isNull(name)) {
+			name = nameMap.get(LocaleUtil.getSiteDefault());
 		}
-	}
-
-	protected void validateName(Map<Locale, String> nameMap)
-		throws PortalException {
-
-		String name = nameMap.get(LocaleUtil.getSiteDefault());
 
 		if (Validator.isNull(name)) {
 			throw new TemplateNameException("Name is null");

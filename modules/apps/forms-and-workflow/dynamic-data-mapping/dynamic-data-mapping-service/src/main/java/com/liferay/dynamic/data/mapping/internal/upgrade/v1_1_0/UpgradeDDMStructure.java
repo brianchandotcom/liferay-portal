@@ -165,8 +165,8 @@ public class UpgradeDDMStructure extends UpgradeProcess {
 		StringBundler sb = new StringBundler(3);
 
 		sb.append("select DDMStructureVersion.definition, ");
-		sb.append("DDMStructureVersion.structureVersionId ");
-		sb.append("from DDMStructureVersion");
+		sb.append("DDMStructureVersion.structureVersionId from ");
+		sb.append("DDMStructureVersion");
 
 		try (PreparedStatement ps1 = connection.prepareStatement(sb.toString());
 			PreparedStatement ps2 =

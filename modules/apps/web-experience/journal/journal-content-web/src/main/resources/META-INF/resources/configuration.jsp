@@ -46,9 +46,9 @@ String redirect = ParamUtil.getString(request, "redirect");
 	</div>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" name="saveButton" type="submit" />
+		<aui:button name="saveButton" type="submit" />
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

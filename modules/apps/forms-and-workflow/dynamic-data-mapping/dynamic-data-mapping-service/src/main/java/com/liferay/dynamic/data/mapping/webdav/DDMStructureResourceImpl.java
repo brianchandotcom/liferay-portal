@@ -47,8 +47,10 @@ public class DDMStructureResourceImpl extends BaseResourceImpl {
 	@Override
 	public InputStream getContentAsStream() throws WebDAVException {
 		try {
+			String definition = _structure.getDefinition();
+
 			return new UnsyncByteArrayInputStream(
-				_structure.getDefinition().getBytes(StringPool.UTF8));
+				definition.getBytes(StringPool.UTF8));
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);

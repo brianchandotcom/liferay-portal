@@ -1,0 +1,24 @@
+<definition>
+	<command name="viewSearchResults">
+		<var name="key_searchAssetTitle" value="${searchAssetTitle}" />
+		<var name="key_searchAssetType" value="${searchAssetType}" />
+
+		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#RESULTS_PORTLET_SEARCH_QUERY" value1="${searchTerm}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_TITLE_SPECIFIC" value1="${searchAssetTitle}" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC" value1="${searchAssetType}" />
+
+		<if>
+			<isset var="entryDate" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_TYPE_SPECIFIC" value1="${entryDate}" />
+			</then>
+		</if>
+
+		<if>
+			<isset var="searchAssetSummary" />
+			<then>
+				<execute function="AssertTextEquals#assertPartialText" locator1="SearchResults#ASSET_ENTRY_TABLE_SUMMARY_SPECIFIC" value1="${searchAssetSummary}" />
+			</then>
+		</if>
+	</command>
+</definition>

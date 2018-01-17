@@ -24,6 +24,7 @@ import com.liferay.portal.workflow.kaleo.definition.parser.NodeValidator;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 /**
  * @author Michael C. Han
@@ -50,7 +51,9 @@ public abstract class BaseNodeValidator<T extends Node>
 
 		Set<Notification> notifications = node.getNotifications();
 
-		if (notifications.stream().anyMatch(
+		Stream<Notification> notificationsStream = notifications.stream();
+
+		if (notificationsStream.anyMatch(
 				notification -> Validator.isNull(notification.getTemplate()))) {
 
 			throw new KaleoDefinitionValidationException.

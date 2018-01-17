@@ -408,17 +408,16 @@ public class WorkflowHelper {
 		for (WorkflowTaskAssignee workflowTaskAssignee :
 				workflowTaskAssignees) {
 
-			if (workflowTaskAssignee.getAssigneeClassName().equals(
-					User.class.getName())) {
+			String assigneeClassName =
+				workflowTaskAssignee.getAssigneeClassName();
 
+			if (assigneeClassName.equals(User.class.getName())) {
 				User user = _userLocalService.fetchUser(
 					workflowTaskAssignee.getAssigneeClassPK());
 
 				return new WorkflowAssigneeModel(user);
 			}
-			else if (workflowTaskAssignee.getAssigneeClassName().equals(
-						Role.class.getName())) {
-
+			else if (assigneeClassName.equals(Role.class.getName())) {
 				Role role = _roleLocalService.fetchRole(
 					workflowTaskAssignee.getAssigneeClassPK());
 

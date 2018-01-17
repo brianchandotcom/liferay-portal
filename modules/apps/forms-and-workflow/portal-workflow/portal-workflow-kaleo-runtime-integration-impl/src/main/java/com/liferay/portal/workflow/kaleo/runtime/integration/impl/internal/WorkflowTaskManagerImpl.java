@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.WorkflowTask;
 import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 import com.liferay.portal.workflow.kaleo.KaleoWorkflowModelConverter;
+import com.liferay.portal.workflow.kaleo.model.KaleoInstance;
 import com.liferay.portal.workflow.kaleo.model.KaleoInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.KaleoNode;
 import com.liferay.portal.workflow.kaleo.model.KaleoTask;
@@ -159,8 +160,11 @@ public class WorkflowTaskManagerImpl implements WorkflowTaskManager {
 				kaleoTaskInstanceToken.getKaleoInstanceToken();
 
 			if (workflowContext == null) {
+				KaleoInstance kaleoInstance =
+					kaleoInstanceToken.getKaleoInstance();
+
 				workflowContext = WorkflowContextUtil.convert(
-					kaleoInstanceToken.getKaleoInstance().getWorkflowContext());
+					kaleoInstance.getWorkflowContext());
 			}
 
 			workflowContext.put(

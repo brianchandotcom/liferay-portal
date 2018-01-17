@@ -46,8 +46,10 @@ public class DDMTemplateResourceImpl extends BaseResourceImpl {
 	@Override
 	public InputStream getContentAsStream() throws WebDAVException {
 		try {
+			String script = _template.getScript();
+
 			return new UnsyncByteArrayInputStream(
-				_template.getScript().getBytes(StringPool.UTF8));
+				script.getBytes(StringPool.UTF8));
 		}
 		catch (Exception e) {
 			throw new WebDAVException(e);

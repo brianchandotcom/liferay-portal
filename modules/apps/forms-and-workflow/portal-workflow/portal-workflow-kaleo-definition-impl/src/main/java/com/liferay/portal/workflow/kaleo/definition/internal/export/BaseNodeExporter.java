@@ -21,6 +21,8 @@ import com.liferay.portal.workflow.kaleo.definition.AddressRecipient;
 import com.liferay.portal.workflow.kaleo.definition.Assignment;
 import com.liferay.portal.workflow.kaleo.definition.AssignmentType;
 import com.liferay.portal.workflow.kaleo.definition.DelayDuration;
+import com.liferay.portal.workflow.kaleo.definition.DurationScale;
+import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
 import com.liferay.portal.workflow.kaleo.definition.Node;
 import com.liferay.portal.workflow.kaleo.definition.Notification;
 import com.liferay.portal.workflow.kaleo.definition.NotificationReceptionType;
@@ -33,6 +35,7 @@ import com.liferay.portal.workflow.kaleo.definition.RoleRecipient;
 import com.liferay.portal.workflow.kaleo.definition.ScriptAssignment;
 import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.definition.ScriptRecipient;
+import com.liferay.portal.workflow.kaleo.definition.TemplateLanguage;
 import com.liferay.portal.workflow.kaleo.definition.Timer;
 import com.liferay.portal.workflow.kaleo.definition.Transition;
 import com.liferay.portal.workflow.kaleo.definition.UserAssignment;
@@ -93,8 +96,10 @@ public abstract class BaseNodeExporter implements NodeExporter {
 		addTextElement(
 			delayElement, "duration",
 			String.valueOf(delayDuration.getDuration()));
-		addTextElement(
-			delayElement, "scale", delayDuration.getDurationScale().getValue());
+
+		DurationScale durationScale = delayDuration.getDurationScale();
+
+		addTextElement(delayElement, "scale", durationScale.getValue());
 	}
 
 	protected void addTextElement(
@@ -118,9 +123,10 @@ public abstract class BaseNodeExporter implements NodeExporter {
 				actionElement, "description", action.getDescription());
 		}
 
+		ScriptLanguage scriptLanguage = action.getScriptLanguage();
+
 		populateScriptingElement(
-			actionElement, action.getScript(),
-			action.getScriptLanguage().getValue(),
+			actionElement, action.getScript(), scriptLanguage.getValue(),
 			action.getScriptRequiredContexts());
 
 		if (action.getPriority() > 0) {
@@ -129,9 +135,10 @@ public abstract class BaseNodeExporter implements NodeExporter {
 				String.valueOf(action.getPriority()));
 		}
 
+		ExecutionType executionType = action.getExecutionType();
+
 		addTextElement(
-			actionElement, "execution-type",
-			action.getExecutionType().getValue());
+			actionElement, "execution-type", executionType.getValue());
 	}
 
 	protected void exportActionsElement(
@@ -209,9 +216,12 @@ public abstract class BaseNodeExporter implements NodeExporter {
 				ScriptAssignment scriptAssignment =
 					(ScriptAssignment)assignment;
 
+				ScriptLanguage scriptLanguage =
+					scriptAssignment.getScriptLanguage();
+
 				populateScriptingElement(
 					scriptedAssignmentElement, scriptAssignment.getScript(),
-					scriptAssignment.getScriptLanguage().getValue(),
+					scriptLanguage.getValue(),
 					scriptAssignment.getScriptRequiredContexts());
 			}
 			else if (assignmentType.equals(AssignmentType.USER)) {
@@ -240,9 +250,12 @@ public abstract class BaseNodeExporter implements NodeExporter {
 
 		addCDataElement(
 			notificationElement, "template", notification.getTemplate());
+
+		TemplateLanguage templateLanguage = notification.getTemplateLanguage();
+
 		addTextElement(
 			notificationElement, "template-language",
-			notification.getTemplateLanguage().getValue());
+			templateLanguage.getValue());
 
 		Set<NotificationType> notificationTypes =
 			notification.getNotificationTypes();
@@ -267,9 +280,10 @@ public abstract class BaseNodeExporter implements NodeExporter {
 				notificationElement, recipients, notificationReceptionType);
 		}
 
+		ExecutionType executionType = notification.getExecutionType();
+
 		addTextElement(
-			notificationElement, "execution-type",
-			notification.getExecutionType().getValue());
+			notificationElement, "execution-type", executionType.getValue());
 	}
 
 	protected void exportRecipientsElement(
@@ -416,9 +430,10 @@ public abstract class BaseNodeExporter implements NodeExporter {
 			Element transition = transitionsElement.addElement("transition");
 
 			addTextElement(transition, "name", outgoingTransition.getName());
-			addTextElement(
-				transition, "target",
-				outgoingTransition.getTargetNode().getName());
+
+			Node targetNode = outgoingTransition.getTargetNode();
+
+			addTextElement(transition, "target", targetNode.getName());
 
 			if (outgoingTransition.isDefault()) {
 				addTextElement(

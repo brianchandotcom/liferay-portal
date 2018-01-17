@@ -202,8 +202,7 @@ public class DDMFormInstanceRecordLocalServiceImpl
 		for (DDMFormInstanceRecord ddmFormInstanceRecord :
 				ddmFormInstanceRecords) {
 
-			ddmFormInstanceRecordLocalService.deleteDDMFormInstanceRecord(
-				ddmFormInstanceRecord);
+			deleteFormInstanceRecord(ddmFormInstanceRecord);
 		}
 	}
 
@@ -469,7 +468,10 @@ public class DDMFormInstanceRecordLocalServiceImpl
 						WorkflowConstants.STATUS_APPROVED);
 
 				if (!approvedRecordVersions.isEmpty()) {
-					newVersion = approvedRecordVersions.get(0).getVersion();
+					DDMFormInstanceRecordVersion firstApprovedVersion =
+						approvedRecordVersions.get(0);
+
+					newVersion = firstApprovedVersion.getVersion();
 				}
 
 				formInstanceRecord.setVersion(newVersion);
@@ -522,10 +524,6 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	protected void deleteWorkflowInstanceLink(
 			long companyId, long groupId, long ddmFormInstanceRecordVersionId)
 		throws PortalException {
-
-		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
-			companyId, groupId, DDMFormInstanceRecord.class.getName(),
-			ddmFormInstanceRecordVersionId);
 
 		workflowInstanceLinkLocalService.deleteWorkflowInstanceLinks(
 			companyId, groupId, DDMFormInstanceRecord.class.getName(),

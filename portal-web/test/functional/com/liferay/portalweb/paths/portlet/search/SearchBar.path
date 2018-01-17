@@ -13,22 +13,6 @@
 	<td>//input[contains(@class,'search-bar-input')]</td>
 	<td></td>
 </tr>
-<tr>
-	<td></td>
-	<td></td>
-	<td></td>
-</tr>
-<!--CONFIGURATION-->
-<tr>
-	<td>KEYWORDS_PARAMETER_NAME</td>
-	<td>//input[contains(@name,'keywordsParameterName')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>SCOPE_PARAMETER_NAME</td>
-	<td>//input[contains(@name,'scopeParameterName')]</td>
-	<td></td>
-</tr>
 </tbody>
 </table>
 </body>

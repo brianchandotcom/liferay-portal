@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoCondition;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoConditionLocalServiceBaseImpl;
 
@@ -52,8 +53,11 @@ public class KaleoConditionLocalServiceImpl
 		kaleoCondition.setKaleoDefinitionVersionId(kaleoDefinitionVersionId);
 		kaleoCondition.setKaleoNodeId(kaleoNodeId);
 		kaleoCondition.setScript(condition.getScript());
-		kaleoCondition.setScriptLanguage(
-			condition.getScriptLanguage().getValue());
+
+		ScriptLanguage scriptLanguage = condition.getScriptLanguage();
+
+		kaleoCondition.setScriptLanguage(scriptLanguage.getValue());
+
 		kaleoCondition.setScriptRequiredContexts(
 			condition.getScriptRequiredContexts());
 

@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.workflow.kaleo.definition.Action;
+import com.liferay.portal.workflow.kaleo.definition.ExecutionType;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.model.KaleoAction;
 import com.liferay.portal.workflow.kaleo.service.base.KaleoActionLocalServiceBaseImpl;
 
@@ -55,9 +57,17 @@ public class KaleoActionLocalServiceImpl
 		kaleoAction.setKaleoNodeName(kaleoNodeName);
 		kaleoAction.setName(action.getName());
 		kaleoAction.setDescription(action.getDescription());
-		kaleoAction.setExecutionType(action.getExecutionType().getValue());
+
+		ExecutionType executionType = action.getExecutionType();
+
+		kaleoAction.setExecutionType(executionType.getValue());
+
 		kaleoAction.setScript(action.getScript());
-		kaleoAction.setScriptLanguage(action.getScriptLanguage().getValue());
+
+		ScriptLanguage scriptLanguage = action.getScriptLanguage();
+
+		kaleoAction.setScriptLanguage(scriptLanguage.getValue());
+
 		kaleoAction.setScriptRequiredContexts(
 			action.getScriptRequiredContexts());
 		kaleoAction.setPriority(action.getPriority());

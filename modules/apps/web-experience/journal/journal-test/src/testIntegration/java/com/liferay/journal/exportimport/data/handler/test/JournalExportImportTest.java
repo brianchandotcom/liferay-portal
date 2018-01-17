@@ -14,18 +14,36 @@
 
 package com.liferay.journal.exportimport.data.handler.test;
 
+import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_EXPORT_SUCCEEDED;
+
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.document.library.kernel.model.DLFileVersion;
+import com.liferay.document.library.kernel.model.DLFolder;
+import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMStructureTestUtil;
 import com.liferay.dynamic.data.mapping.test.util.DDMTemplateTestUtil;
+import com.liferay.exportimport.kernel.configuration.ExportImportConfigurationParameterMapFactory;
+import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.PortletDataContextFactoryUtil;
+import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
 import com.liferay.exportimport.kernel.lar.UserIdStrategy;
-import com.liferay.exportimport.test.util.lar.BasePortletExportImportTestCase;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEvent;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleEventListenerRegistryUtil;
+import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleListener;
+import com.liferay.exportimport.kernel.service.StagingLocalServiceUtil;
+import com.liferay.exportimport.kernel.staging.StagingUtil;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.exportimport.data.handler.JournalPortletDataHandler;
 import com.liferay.journal.model.JournalArticle;
@@ -34,14 +52,19 @@ import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.test.util.JournalTestUtil;
-import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.StagedModel;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.service.CompanyLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.Sync;
+import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -50,13 +73,34 @@ import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.URLCodec;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
+import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
+import com.liferay.portal.kernel.zip.ZipWriter;
+import com.liferay.portal.lar.test.BasePortletExportImportTestCase;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+import com.liferay.portal.util.PropsValues;
+import com.liferay.portal.util.test.LayoutTestUtil;
+import com.liferay.portlet.documentlibrary.util.test.DLTestUtil;
+
+import java.io.File;
+import java.io.Serializable;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -69,12 +113,15 @@ import org.junit.runner.RunWith;
  * @author Juan Fernández
  */
 @RunWith(Arquillian.class)
+@Sync(cleanTransaction = true)
 public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
+		new AggregateTestRule(
+			new LiferayIntegrationTestRule(),
+			SynchronousDestinationTestRule.INSTANCE);
 
 	@Override
 	public String getNamespace() {
@@ -84,6 +131,22 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 	@Override
 	public String getPortletId() {
 		return JournalPortletKeys.JOURNAL;
+	}
+
+	public void setPortalProperty(String propertyName, Object value)
+		throws Exception {
+
+		Field field = ReflectionUtil.getDeclaredField(
+			PropsValues.class, propertyName);
+
+		field.setAccessible(true);
+
+		Field modifiersField = Field.class.getDeclaredField("modifiers");
+
+		modifiersField.setAccessible(true);
+		modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+
+		field.set(null, value);
 	}
 
 	@Before
@@ -139,6 +202,154 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		exportImportJournalArticle(false);
 	}
 
+	@Test
+	public void testReferenceSkipping() throws Exception {
+		setPortalProperty("STAGING_DELETE_TEMP_LAR_ON_SUCCESS", false);
+
+		LarFileSetterExportImportLifecycleListener
+			larFileSetterExportImportLifecycleListener =
+				new LarFileSetterExportImportLifecycleListener();
+
+		ExportImportLifecycleEventListenerRegistryUtil.register(
+			larFileSetterExportImportLifecycleListener);
+
+		Layout targetLayout = LayoutTestUtil.addLayout(group);
+
+		StagingLocalServiceUtil.enableLocalStaging(
+			TestPropsValues.getUserId(), group, false, false,
+			new ServiceContext());
+
+		Group stagingGroup = group.getStagingGroup();
+
+		JournalArticle journalArticle = (JournalArticle)addStagedModel(
+			stagingGroup.getGroupId());
+
+		DLFolder dlFolder = DLTestUtil.addDLFolder(stagingGroup.getGroupId());
+
+		DLFileEntry dlFileEntry = DLTestUtil.addDLFileEntry(
+			dlFolder.getFolderId());
+
+		DLFileVersion fileVersion = dlFileEntry.getFileVersion();
+
+		DLFileEntryLocalServiceUtil.updateStatus(
+			dlFileEntry.getUserId(), fileVersion.getFileVersionId(),
+			WorkflowConstants.STATUS_APPROVED,
+			ServiceContextTestUtil.getServiceContext(), new HashMap<>());
+
+		String content = journalArticle.getContent();
+
+		String dlFileEntryUrl = String.join(StringPool.SLASH, new String[] {
+			StringPool.BLANK, "documents",
+			String.valueOf(dlFileEntry.getGroupId()),
+			String.valueOf(dlFileEntry.getFolderId()),
+			URLCodec.encodeURL(dlFileEntry.getTitle(), true)
+		});
+
+		String newContent =
+			"<![CDATA[<img data-fileentryid=\"" + dlFileEntry.getFileEntryId() +
+				"\" src=\"" + dlFileEntryUrl + "\" />]]>";
+
+		journalArticle = JournalArticleLocalServiceUtil.updateContent(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(),
+			content.replaceAll("<\\!\\[CDATA\\[.+?\\]\\]>", newContent));
+
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap(
+				PortletDataHandlerKeys.DATA_STRATEGY_MIRROR_OVERWRITE, true,
+				false, false, false, false, false, true, true, true, true, true,
+				true, ExportImportDateUtil.RANGE_FROM_LAST_PUBLISH_DATE, true,
+				true, UserIdStrategy.CURRENT_USER_ID);
+
+		Layout sourceLayout = LayoutLocalServiceUtil.getLayoutByUuidAndGroupId(
+			targetLayout.getUuid(), stagingGroup.getGroupId(), false);
+
+		StagingUtil.publishPortlet(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			group.getGroupId(), sourceLayout.getPlid(), targetLayout.getPlid(),
+			getPortletId(), parameterMap);
+
+		checkJournalArticleInLar(journalArticle);
+
+		checkFileEntriesInLar(stagingGroup, false);
+
+		// Update modifiedDate
+
+		JournalArticleLocalServiceUtil.updateContent(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), journalArticle.getContent());
+
+		Map<String, String[]> modifiedParameterMap = new HashMap<>(
+			parameterMap);
+
+		modifiedParameterMap.put(
+			PortletDataHandlerControl.getNamespacedControlName(
+				JournalPortletDataHandler.NAMESPACE,
+				"referenced-content-behavior"),
+			new String[] {"include-if-modified"});
+
+		StagingUtil.publishPortlet(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			group.getGroupId(), sourceLayout.getPlid(), targetLayout.getPlid(),
+			getPortletId(), modifiedParameterMap);
+
+		checkJournalArticleInLar(journalArticle);
+
+		checkFileEntriesInLar(stagingGroup, true);
+
+		// Update modifiedDate
+
+		JournalArticleLocalServiceUtil.updateContent(
+			journalArticle.getGroupId(), journalArticle.getArticleId(),
+			journalArticle.getVersion(), journalArticle.getContent());
+
+		StagingUtil.publishPortlet(
+			TestPropsValues.getUserId(), stagingGroup.getGroupId(),
+			group.getGroupId(), sourceLayout.getPlid(), targetLayout.getPlid(),
+			getPortletId(), parameterMap);
+
+		checkJournalArticleInLar(journalArticle);
+
+		checkFileEntriesInLar(stagingGroup, false);
+
+		ExportImportLifecycleEventListenerRegistryUtil.unregister(
+			larFileSetterExportImportLifecycleListener);
+
+		setPortalProperty("STAGING_DELETE_TEMP_LAR_ON_SUCCESS", true);
+	}
+
+	public class LarFileSetterExportImportLifecycleListener
+		implements ExportImportLifecycleListener {
+
+		@Override
+		public boolean isParallel() {
+			return false;
+		}
+
+		@Override
+		public void onExportImportLifecycleEvent(
+				ExportImportLifecycleEvent exportImportLifecycleEvent)
+			throws Exception {
+
+			if (exportImportLifecycleEvent.getCode() !=
+					EVENT_PORTLET_EXPORT_SUCCEEDED) {
+
+				return;
+			}
+
+			List<Serializable> attributes =
+				exportImportLifecycleEvent.getAttributes();
+
+			PortletDataContext portletDataContext =
+				(PortletDataContext)attributes.get(0);
+
+			ZipWriter zipWriter = portletDataContext.getZipWriter();
+
+			larFilePath = zipWriter.getPath();
+		}
+
+	}
+
 	@Override
 	protected StagedModel addStagedModel(long groupId) throws Exception {
 		return JournalTestUtil.addArticle(
@@ -173,6 +384,71 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 
 		return JournalTestUtil.updateArticle(
 			article, RandomTestUtil.randomString());
+	}
+
+	protected void checkFileEntriesInLar(Group group, boolean missing)
+		throws Exception {
+
+		PortletDataContext portletDataContext = getPortletDataContext();
+
+		List<DLFileEntry> dlFileEntries =
+			DLFileEntryLocalServiceUtil.getGroupFileEntries(
+				group.getGroupId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (DLFileEntry dlFileEntry : dlFileEntries) {
+			FileEntry fileEntry =
+				(FileEntry)portletDataContext.getZipEntryAsObject(
+					ExportImportPathUtil.getModelPath(dlFileEntry));
+
+			if (missing) {
+
+				// Dependency is not exported, but added as a missing reference
+
+				Assert.assertNull(fileEntry);
+
+				Document document = SAXReaderUtil.read(
+					portletDataContext.getZipEntryAsInputStream(
+						"manifest.xml"));
+
+				Element rootElement = document.getRootElement();
+
+				List<Element> missingReferencesElements = rootElement.elements(
+					"missing-references");
+
+				Element missingReferencesElement =
+					missingReferencesElements.get(0);
+
+				List<Element> missingReferenceElements =
+					missingReferencesElement.elements("missing-reference");
+
+				Stream<Element> elementStream =
+					missingReferenceElements.stream();
+
+				Assert.assertEquals(
+					1,
+					elementStream.filter(
+						element -> Objects.equals(
+							element.attributeValue("class-name"),
+							ExportImportClassedModelUtil.getClassName(
+								dlFileEntry)) &&
+							(Long.valueOf(element.attributeValue("class-pk")) ==
+								dlFileEntry.getPrimaryKey())
+					).count());
+			}
+			else {
+				Assert.assertNotNull(fileEntry);
+			}
+		}
+	}
+
+	protected void checkJournalArticleInLar(JournalArticle journalArticle)
+		throws Exception {
+
+		PortletDataContext portletDataContext = getPortletDataContext();
+
+		Assert.assertNotNull(
+			portletDataContext.getZipEntryAsObject(
+				ExportImportPathUtil.getModelPath(journalArticle)));
 	}
 
 	@Override
@@ -378,6 +654,24 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 		return parameterMap;
 	}
 
+	protected PortletDataContext getPortletDataContext() throws Exception {
+		Map<String, String[]> parameterMap =
+			ExportImportConfigurationParameterMapFactory.buildParameterMap();
+
+		String userIdStrategyString = MapUtil.getString(
+			parameterMap, PortletDataHandlerKeys.USER_ID_STRATEGY);
+
+		UserIdStrategy userIdStrategy =
+			ExportImportHelperUtil.getUserIdStrategy(
+				TestPropsValues.getUserId(), userIdStrategyString);
+
+		larFile = new File(larFilePath);
+
+		return PortletDataContextFactoryUtil.createImportPortletDataContext(
+			group.getCompanyId(), importedGroup.getGroupId(), parameterMap,
+			userIdStrategy, ZipReaderFactoryUtil.getZipReader(larFile));
+	}
+
 	@Override
 	protected StagedModel getStagedModel(String uuid, long groupId) {
 		return
@@ -463,5 +757,7 @@ public class JournalExportImportTest extends BasePortletExportImportTestCase {
 			validateImportedStagedModel(article, importedArticle);
 		}
 	}
+
+	protected String larFilePath;
 
 }

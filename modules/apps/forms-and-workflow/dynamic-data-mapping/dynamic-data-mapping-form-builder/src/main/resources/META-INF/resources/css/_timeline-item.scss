@@ -1,31 +1,32 @@
-.timeline .timeline-item {
-	color: #869CAD;
-	position: relative;
-
-	.action-panel {
-		display: table;
-		width: 100%;
-	}
-
-	&:first-child {
-		.timeline-icon {
-			background-color: #869CAD;
-		}
-	}
-
-	.form-control {
+.liferay-ddm-form-rule-builder-timeline {
+	.timeline-item {
 		color: #869CAD;
-	}
+		position: relative;
 
-	.form-group {
-		margin: 0 10px;
-	}
+		&:not(:nth-of-type(1)) .timeline-icon {
+			background-color: #6B6C7E;
+		}
 
-	.rule-choose-box {
-		display: table-cell;
-	}
+		.action-panel {
+			display: table;
+			width: 100%;
+		}
 
-	& .timeline-icon {
-		border: 2px solid #869CAD;
+		.form-control {
+			color: #869CAD;
+		}
+
+		.form-group {
+			margin: 0 10px;
+		}
+
+		.rule-choose-box {
+			display: table-cell;
+		}
+
+		& .timeline-icon {
+			border: 2px solid #6B6C7E;
+			margin-right: 2px;
+		}
 	}
 }

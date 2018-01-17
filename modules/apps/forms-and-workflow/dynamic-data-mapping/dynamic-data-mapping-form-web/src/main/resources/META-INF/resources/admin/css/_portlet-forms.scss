@@ -56,7 +56,7 @@
 	.lfr-ddm-form-page-description,
 	.lfr-ddm-form-page-title {
 		color: #728694;
-		font-weight: 400;
+		font-weight: normal;
 		resize: none;
 		word-break: normal;
 	}
@@ -87,7 +87,7 @@
 		border-width: 0;
 		box-shadow: none;
 		margin: 0;
-		padding: 23px 0 31px 0;
+		padding: 23px 0 31px;
 	}
 
 	.liferay-ddm-form-field-paragraph {
@@ -98,7 +98,7 @@
 	}
 
 	.liferay-ddm-form-field-tip {
-		margin: 0 0 0 0;
+		margin: 0;
 		min-height: 16px;
 	}
 

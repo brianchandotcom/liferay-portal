@@ -219,7 +219,9 @@ public class JournalFolderServiceImpl extends JournalFolderServiceBaseImpl {
 			int articlesCount = journalArticleFinder.filterCountByG_F(
 				groupId, folderIds.subList(start, end), queryDefinition);
 
-			folderIds.subList(start, end).clear();
+			List<Long> sublist = folderIds.subList(start, end);
+
+			sublist.clear();
 
 			articlesCount += getFoldersAndArticlesCount(
 				groupId, folderIds, status);

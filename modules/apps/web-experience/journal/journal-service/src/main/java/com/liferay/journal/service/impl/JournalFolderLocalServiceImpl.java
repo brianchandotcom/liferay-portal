@@ -428,7 +428,9 @@ public class JournalFolderLocalServiceImpl
 			int articlesCount = journalArticleFinder.countByG_F(
 				groupId, folderIds.subList(start, end), queryDefinition);
 
-			folderIds.subList(start, end).clear();
+			List<Long> sublist = folderIds.subList(start, end);
+
+			sublist.clear();
 
 			articlesCount += getFoldersAndArticlesCount(
 				groupId, folderIds, status);

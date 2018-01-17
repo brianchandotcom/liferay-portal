@@ -60,8 +60,8 @@ public class DDMFormInstanceRecordVersionServiceImpl
 	}
 
 	@Override
-	public List<DDMFormInstanceRecordVersion>
-			getFormInstanceRecordVersions(long ddmFormInstanceRecordId)
+	public List<DDMFormInstanceRecordVersion> getFormInstanceRecordVersions(
+			long ddmFormInstanceRecordId)
 		throws PortalException {
 
 		DDMFormInstanceRecordPermission.check(

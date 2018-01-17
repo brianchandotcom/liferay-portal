@@ -49,7 +49,9 @@ public class CalculateDDMFormRuleActionSerializer
 		String expression = removeBrackets(
 			_calculateDDMFormRuleAction.getExpression());
 
-		Stream<String> ddmFormFieldStream = ddmFormFieldMap.keySet().stream();
+		Set<String> keySet = ddmFormFieldMap.keySet();
+
+		Stream<String> ddmFormFieldStream = keySet.stream();
 
 		ddmFormFieldStream = ddmFormFieldStream.filter(
 			ddmFormField -> expression.contains(ddmFormField));

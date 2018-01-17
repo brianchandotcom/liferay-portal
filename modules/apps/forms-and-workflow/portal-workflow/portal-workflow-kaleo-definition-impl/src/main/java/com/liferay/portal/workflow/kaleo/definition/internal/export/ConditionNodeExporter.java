@@ -17,6 +17,7 @@ package com.liferay.portal.workflow.kaleo.definition.internal.export;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.workflow.kaleo.definition.Condition;
 import com.liferay.portal.workflow.kaleo.definition.Node;
+import com.liferay.portal.workflow.kaleo.definition.ScriptLanguage;
 import com.liferay.portal.workflow.kaleo.definition.export.NodeExporter;
 
 import org.osgi.service.component.annotations.Component;
@@ -44,9 +45,10 @@ public class ConditionNodeExporter
 
 		Condition condition = (Condition)node;
 
+		ScriptLanguage scriptLanguage = condition.getScriptLanguage();
+
 		populateScriptingElement(
-			nodeElement, condition.getScript(),
-			condition.getScriptLanguage().getValue(),
+			nodeElement, condition.getScript(), scriptLanguage.getValue(),
 			condition.getScriptRequiredContexts());
 	}
 

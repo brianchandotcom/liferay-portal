@@ -37,7 +37,7 @@
 		padding: 10px;
 		position: absolute;
 		right: 0;
-		top: 0;
+		top: 4px;
 
 		&:hover {
 			color: #65B6F0;
@@ -116,7 +116,7 @@
 		}
 
 		.calculate-container-fields {
-			padding: 8px 25px 25px 25px;
+			padding: 8px 25px 25px;
 
 			textarea {
 				background-color: #F5F5F5;
@@ -282,15 +282,12 @@
 		position: relative;
 
 		.dropdown {
-			display: block;
-			margin-right: 20px;
-			margin-top: 8px;
 			position: absolute;
-			right: 0;
-			top: 0;
+			right: 4px;
+			top: 8px;
 		}
 
-		button {
+		.btn {
 			padding: 4px 12px;
 		}
 	}
@@ -302,7 +299,7 @@
 			}
 
 			&:first-child:before {
-				top: 35px;
+				top: 31px;
 			}
 
 			&:last-child > .operator {
@@ -348,11 +345,11 @@
 	position: relative;
 
 	&:before {
-		background-color: #869CAD;
+		background-color: #272834;
 		bottom: 0;
 		content: '';
 		display: block;
-		left: 20px;
+		left: 25px;
 		position: absolute;
 		top: -10px;
 		width: 2px;
@@ -364,6 +361,10 @@
 		margin-left: 3px;
 		padding: 0;
 	}
+}
+
+.add-condition.timeline-increment-icon {
+	padding-left: 7px;
 }
 
 .form-builder-rule-builder-rule-description {

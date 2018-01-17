@@ -316,7 +316,7 @@ AUI.add(
 						deleteIcon: Liferay.Util.getLexiconIconTpl('trash', 'icon-monospaced'),
 						if: instance.get('if'),
 						index: index,
-						logicOperator: instance.get('logicOperator')
+						logicalOperator: instance.get('logicOperator')
 					},
 					container
 				);

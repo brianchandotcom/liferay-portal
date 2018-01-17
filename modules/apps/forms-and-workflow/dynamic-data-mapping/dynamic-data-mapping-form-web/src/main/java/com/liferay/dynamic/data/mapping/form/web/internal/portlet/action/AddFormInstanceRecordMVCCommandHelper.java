@@ -121,8 +121,11 @@ public class AddFormInstanceRecordMVCCommandHelper {
 		DDMFormEvaluationResult ddmFormEvaluationResult,
 		DDMFormLayout ddmFormLayout) {
 
+		Set<Integer> disabledPagesIndexes =
+			ddmFormEvaluationResult.getDisabledPagesIndexes();
+
 		Stream<Integer> disablePagesIndexesStream =
-			ddmFormEvaluationResult.getDisabledPagesIndexes().stream();
+			disabledPagesIndexes.stream();
 
 		Stream<String> fieldsStream = disablePagesIndexesStream.map(
 			index -> getFieldNamesFromPage(index, ddmFormLayout)

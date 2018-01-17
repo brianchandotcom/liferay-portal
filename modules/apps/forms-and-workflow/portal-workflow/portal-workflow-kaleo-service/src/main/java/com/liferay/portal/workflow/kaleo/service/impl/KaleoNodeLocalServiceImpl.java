@@ -59,12 +59,13 @@ public class KaleoNodeLocalServiceImpl extends KaleoNodeLocalServiceBaseImpl {
 		kaleoNode.setName(node.getName());
 		kaleoNode.setMetadata(node.getMetadata());
 		kaleoNode.setDescription(node.getDescription());
-		kaleoNode.setType(node.getNodeType().name());
+
+		NodeType nodeType = node.getNodeType();
+
+		kaleoNode.setType(nodeType.name());
 
 		boolean initial = false;
 		boolean terminal = false;
-
-		NodeType nodeType = node.getNodeType();
 
 		if (nodeType.equals(NodeType.STATE)) {
 			State state = (State)node;

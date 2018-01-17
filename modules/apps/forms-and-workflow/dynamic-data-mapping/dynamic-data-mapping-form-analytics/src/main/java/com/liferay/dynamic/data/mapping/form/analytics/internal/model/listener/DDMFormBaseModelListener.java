@@ -43,7 +43,9 @@ public abstract class DDMFormBaseModelListener<T extends BaseModel<T>>
 		Event event = eventBuilder.build();
 
 		Builder builder = AnalyticsEventsMessage.builder(
-			_ANALYTICS_KEY, userId).event(event);
+			_ANALYTICS_KEY, userId);
+
+		builder = builder.event(event);
 
 		_analyticsClient.sendAnalytics(builder.build());
 	}

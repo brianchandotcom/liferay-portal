@@ -299,8 +299,10 @@ public class WorkflowDefinitionLinkDisplayContext {
 			return false;
 		}
 
-		if (workflowDefinitionLink.getWorkflowDefinitionName().equals(
-				workflowDefinition.getName()) &&
+		String workflowDefinitionName =
+			workflowDefinitionLink.getWorkflowDefinitionName();
+
+		if (workflowDefinitionName.equals(workflowDefinition.getName()) &&
 			(workflowDefinitionLink.getWorkflowDefinitionVersion() ==
 				workflowDefinition.getVersion())) {
 

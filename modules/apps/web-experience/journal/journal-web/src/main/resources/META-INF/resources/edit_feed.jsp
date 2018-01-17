@@ -306,10 +306,10 @@ renderResponse.setTitle((feed == null) ? LanguageUtil.get(request, "new-feed") :
 		%>
 
 		<c:if test="<%= hasSavePermission %>">
-			<aui:button cssClass="btn-lg" type="submit" />
+			<aui:button type="submit" />
 		</c:if>
 
-		<aui:button cssClass="btn-lg" href="<%= redirect %>" type="cancel" />
+		<aui:button href="<%= redirect %>" type="cancel" />
 	</aui:button-row>
 </aui:form>
 

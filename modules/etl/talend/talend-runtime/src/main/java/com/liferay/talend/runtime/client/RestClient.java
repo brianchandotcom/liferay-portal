@@ -15,6 +15,8 @@
 package com.liferay.talend.runtime.client;
 
 import com.liferay.talend.connection.LiferayConnectionProperties;
+import com.liferay.talend.runtime.apio.ApioException;
+import com.liferay.talend.runtime.apio.ApioResult;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -106,6 +108,7 @@ public class RestClient {
 	protected static enum QueryMethod {
 
 		GET, POST, DELETE
+
 	}
 
 	private RestClient(String endpoint, String password, String userId) {

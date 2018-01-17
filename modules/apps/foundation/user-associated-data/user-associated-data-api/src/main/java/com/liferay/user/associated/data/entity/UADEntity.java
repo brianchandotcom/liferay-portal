@@ -14,10 +14,23 @@
 
 package com.liferay.user.associated.data.entity;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author William Newbury
  */
 public interface UADEntity {
+
+	public default Map<String, Object> getEntityNonAnonymizableFields(
+			List<String> fields)
+		throws PortalException {
+
+		return new HashMap<>();
+	}
 
 	public String getUADEntityId();
 

@@ -60,15 +60,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		// Fast return conditions
 
-		if (_inputRecordsIndex < _inputRecords.size()) {
+		if (_inputRecordsIndex < _inputRecordsJsonNode.size()) {
 			dataCount++;
 			_hasMore = true;
 
 			return true;
 		}
 		else {
-			String actual = _resource.getResourceActualPage();
-			String last = _resource.getResourceLastPage();
+			String actual = _apioJsonLDResource.getResourceActualPage();
+			String last = _apioJsonLDResource.getResourceLastPage();
 
 			if (actual.equals(last)) {
 				_hasMore = false;
@@ -81,16 +81,16 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 
 		LiferaySource liferaySource = (LiferaySource)getCurrentSource();
 
-		String next = _resource.getResourceNextPage();
+		String next = _apioJsonLDResource.getResourceNextPage();
 
-		_resource = new ApioJsonLDResource(
+		_apioJsonLDResource = new ApioJsonLDResource(
 			liferaySource.getResourceCollection(next));
 
-		_inputRecords = _resource.getMembersNode();
+		_inputRecordsJsonNode = _apioJsonLDResource.getMembersNode();
 
 		_inputRecordsIndex = 0;
 
-		_hasMore = _inputRecords.size() > 0;
+		_hasMore = _inputRecordsJsonNode.size() > 0;
 
 		if (_hasMore) {
 
@@ -124,13 +124,15 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	}
 
 	public JsonNode getCurrentJsonNode() throws NoSuchElementException {
-		JsonNode resourceJsonNode = _inputRecords.get(_inputRecordsIndex);
+		JsonNode resourceJsonNode = _inputRecordsJsonNode.get(
+			_inputRecordsIndex);
 
 		return resourceJsonNode;
 	}
 
 	public List<String> getCurrentObject() throws NoSuchElementException {
-		JsonNode resourceJsonNode = _inputRecords.get(_inputRecordsIndex);
+		JsonNode resourceJsonNode = _inputRecordsJsonNode.get(
+			_inputRecordsIndex);
 
 		if (resourceJsonNode == null) {
 			_log.error("Index: {}", _inputRecordsIndex);
@@ -163,14 +165,14 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 			liferayConnectionResourceBaseProperties.resource.resourceURL.
 				getValue();
 
-		_resource = new ApioJsonLDResource(
+		_apioJsonLDResource = new ApioJsonLDResource(
 			liferaySource.getResourceCollection(resourceURL));
 
-		_inputRecords = _resource.getMembersNode();
+		_inputRecordsJsonNode = _apioJsonLDResource.getMembersNode();
 
 		boolean start = false;
 
-		if (_inputRecords.size() > 0) {
+		if (_inputRecordsJsonNode.size() > 0) {
 			start = true;
 		}
 
@@ -204,18 +206,19 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayInputReader.class);
 
+	private transient ApioJsonLDResource _apioJsonLDResource;
+
 	/**
 	 * Represents state of this Reader: whether it has more records
 	 */
 	private boolean _hasMore;
 
+	private transient int _inputRecordsIndex;
+
 	/**
 	 * Resource collection members field
 	 */
-	private transient JsonNode _inputRecords;
-
-	private transient int _inputRecordsIndex;
-	private transient ApioJsonLDResource _resource;
+	private transient JsonNode _inputRecordsJsonNode;
 
 	/**
 	 * Converts row retrieved from data source to Avro format

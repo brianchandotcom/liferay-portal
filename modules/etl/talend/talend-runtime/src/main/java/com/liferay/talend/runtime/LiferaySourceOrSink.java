@@ -263,17 +263,22 @@ public class LiferaySourceOrSink
 
 	@Override
 	public ValidationResult validate(RuntimeContainer runtimeContainer) {
-		LiferayConnectionProperties conn = getEffectiveConnection(
-			runtimeContainer);
+		LiferayConnectionProperties liferayConnectionProperties =
+			getEffectiveConnection(runtimeContainer);
 
-		String endpoint = conn.endpoint.getValue();
-		String userId = conn.userId.getValue();
-		String password = conn.password.getValue();
-		boolean anonymousLogin = conn.anonymousLogin.getValue();
+		String endpoint = liferayConnectionProperties.endpoint.getValue();
+		String userId = liferayConnectionProperties.userId.getValue();
+		String password = liferayConnectionProperties.password.getValue();
+		boolean anonymousLogin =
+			liferayConnectionProperties.anonymousLogin.getValue();
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Validate Endpoint: {}", conn.endpoint.getValue());
-			_log.debug("Validate UserID: {}", conn.userId.getValue());
+			_log.debug(
+				"Validate Endpoint: {}",
+				liferayConnectionProperties.endpoint.getValue());
+			_log.debug(
+				"Validate UserID: {}",
+				liferayConnectionProperties.userId.getValue());
 		}
 
 		ValidationResultMutable validationResultMutable =
@@ -299,7 +304,7 @@ public class LiferaySourceOrSink
 			}
 		}
 
-		return validateConnection(conn);
+		return validateConnection(liferayConnectionProperties);
 	}
 
 	@Override
@@ -421,10 +426,11 @@ public class LiferaySourceOrSink
 
 		JsonNode jsonNode = getResourceCollection(resourceURL);
 
-		ApioJsonLDResource resource = new ApioJsonLDResource(jsonNode);
+		ApioJsonLDResource apioJsonLDResource = new ApioJsonLDResource(
+			jsonNode);
 
 		return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
-			resource);
+			apioJsonLDResource);
 	}
 
 	private void _validateCredentials(

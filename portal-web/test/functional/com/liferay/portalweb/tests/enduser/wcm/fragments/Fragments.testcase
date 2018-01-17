@@ -46,8 +46,8 @@
 	<command name="AddCollectionFragmentWithSnippets" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -60,8 +60,8 @@
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -110,8 +110,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -133,8 +133,8 @@ element.style.border='2px dashed red';
 	<command name="DeleteFragment" priority="5">
 		<property name="portal.acceptance" value="pending" />
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -147,8 +147,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#delete">
@@ -161,8 +161,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#viewNoEntry">
@@ -195,8 +195,8 @@ element.style.border='2px dashed red';
 	</command>
 
 	<command name="RenameFragment" priority="4">
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="Fragment#addFragment">
@@ -209,8 +209,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#gotoEntryMenuItem">
@@ -230,8 +230,8 @@ element.style.border='2px dashed red';
 			<var name="portlet" value="Fragments" />
 		</execute>
 
-		<execute macro="Collection#gotoCollection">
-			<var name="collectionName" value="Collection Name" />
+		<execute macro="LexiconEntry#gotoEntry">
+			<var name="rowEntry" value="Collection Name" />
 		</execute>
 
 		<execute macro="LexiconEntry#viewEntryName">

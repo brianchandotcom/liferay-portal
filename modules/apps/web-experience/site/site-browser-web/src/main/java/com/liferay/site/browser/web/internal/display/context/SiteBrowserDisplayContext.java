@@ -14,8 +14,10 @@
 
 package com.liferay.site.browser.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -278,6 +280,43 @@ public class SiteBrowserDisplayContext {
 		groupSearch.setResults(results);
 
 		return groupSearch;
+	}
+
+	public List<NavigationItem> getNavigationItems() throws PortalException {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem entriesNavigationItem = new NavigationItem();
+
+		String[] types = getTypes();
+
+		if (types.length == 1) {
+			entriesNavigationItem.setActive(true);
+
+			PortletURL mainURL = _liferayPortletResponse.createRenderURL();
+
+			entriesNavigationItem.setHref(mainURL.toString());
+
+			entriesNavigationItem.setLabel(LanguageUtil.get(_request, "sites"));
+
+			navigationItems.add(entriesNavigationItem);
+		}
+		else if (types.length > 1) {
+			for (String curType : types) {
+				entriesNavigationItem.setActive(curType.equals(getType()));
+
+				PortletURL portletURL = getPortletURL();
+
+				portletURL.setParameter("type", curType);
+
+				entriesNavigationItem.setHref(portletURL.toString());
+
+				entriesNavigationItem.setLabel(curType);
+
+				navigationItems.add(entriesNavigationItem);
+			}
+		}
+
+		return navigationItems;
 	}
 
 	public PortletURL getPortletURL() throws PortalException {

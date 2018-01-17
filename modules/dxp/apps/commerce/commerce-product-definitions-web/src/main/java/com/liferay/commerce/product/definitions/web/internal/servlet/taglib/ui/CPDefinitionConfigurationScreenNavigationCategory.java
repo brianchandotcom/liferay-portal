@@ -16,6 +16,7 @@ package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
@@ -38,7 +39,9 @@ public class CPDefinitionConfigurationScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION;
+		return LanguageUtil.get(
+			locale,
+			CPDefinitionScreenNavigationConstants.CATEGORY_KEY_CONFIGURATION);
 	}
 
 	@Override

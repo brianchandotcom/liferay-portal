@@ -16,6 +16,7 @@ package com.liferay.commerce.shipping.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.shipping.web.servlet.taglib.ui.CommerceShippingScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.portal.kernel.language.LanguageUtil;
 
 import java.util.Locale;
 
@@ -39,8 +40,10 @@ public class CommerceShippingMethodDetailsScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return CommerceShippingScreenNavigationConstants.
-			CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS;
+		return LanguageUtil.get(
+			locale,
+			CommerceShippingScreenNavigationConstants.
+				CATEGORY_KEY_COMMERCE_SHIPPING_METHOD_DETAILS);
 	}
 
 	@Override

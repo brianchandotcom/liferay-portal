@@ -16,8 +16,11 @@ package com.liferay.commerce.product.definitions.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.product.definitions.web.servlet.taglib.ui.CPDefinitionScreenNavigationConstants;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ResourceBundleUtil;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -39,8 +42,13 @@ public class CPDefinitionProductRelationsScreenNavigationCategory
 
 	@Override
 	public String getLabel(Locale locale) {
-		return CPDefinitionScreenNavigationConstants.
-			CATEGORY_KEY_PRODUCT_RELATIONS;
+		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle(
+			"content.Language", locale, getClass());
+
+		return LanguageUtil.get(
+			resourceBundle,
+			CPDefinitionScreenNavigationConstants.
+				CATEGORY_KEY_PRODUCT_RELATIONS);
 	}
 
 	@Override

@@ -16,17 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= assetBrowserDisplayContext.getPortletURL() %>" label="entries" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= assetBrowserDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= assetBrowserDisplayContext.isDisabledManagementBar() %>"
@@ -44,6 +36,12 @@
 				orderColumns="<%= assetBrowserDisplayContext.getOrderColumns() %>"
 				portletURL="<%= assetBrowserDisplayContext.getPortletURL() %>"
 			/>
+
+			<li>
+				<aui:form action="<%= assetBrowserDisplayContext.getPortletURL() %>" cssClass="container-fluid-1280" method="post" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">

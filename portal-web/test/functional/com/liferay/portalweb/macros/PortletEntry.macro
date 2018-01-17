@@ -84,4 +84,10 @@
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
+
+	<command name="viewWorkflowStatus">
+		<execute function="AssertTextEquals" locator1="ContentRow#ENTRY_CONTENT_ENTRY_WORKFLOW_STATUS" value1="${workflowStatus}">
+			<var name="key_rowEntry" value="${rowEntry}" />
+		</execute>
+	</command>
 </definition>

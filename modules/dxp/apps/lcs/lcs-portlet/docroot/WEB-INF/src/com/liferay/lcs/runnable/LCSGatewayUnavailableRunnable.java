@@ -49,79 +49,47 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 
 	@Override
 	public void run() {
+		if (_statusCode == HttpServletResponse.SC_FORBIDDEN) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Access to gateway is forbidden");
+			}
+		}
+
 		if (_log.isInfoEnabled()) {
 			_log.info("Recovering connection to LCS gateway");
 		}
 
-		if (_statusCode == HttpServletResponse.SC_FORBIDDEN) {
-			for (int i = 0; i < _multipliers.length; i++) {
-				if (_lcsConnectionManager.isShutdownRequested()) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Shutdown requested, terminating thread");
-					}
+		boolean singedIn = false;
 
-					return;
+		while (!singedIn) {
+			_checkLCSGatewayAvailability();
+
+			if (_lcsConnectionManager.isShutdownRequested()) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Shutdown requested, terminating thread");
 				}
 
-				if (_signInToLCSGateway()) {
-					if (_log.isInfoEnabled()) {
-						_log.info(
-							"Recovered connection to LCS gateway, " +
-								"terminating thread");
-					}
-
-					return;
-				}
-
-				try {
-					TimeUnit.MILLISECONDS.sleep(
-						(long)(_multipliers[i] *
-							_LCS_GATEWAY_UNAVAILABLE_WAIT_TIME));
-				}
-				catch (InterruptedException ie) {
-					if (_log.isDebugEnabled()) {
-						_log.error("Unable to sleep", ie);
-					}
-				}
+				return;
 			}
 
-			if (_log.isWarnEnabled()) {
-				_log.warn("Access to gateway is forbidden, terminating thread");
+			singedIn = _signInToLCSGateway();
+
+			if (!singedIn) {
+				if (_log.isDebugEnabled()) {
+					int seconds =
+						(int)(_multipliers[0] *
+							_LCS_GATEWAY_UNAVAILABLE_WAIT_TIME / 1000);
+
+					_log.debug(
+						"Unable to complete handshake, retry in " + seconds +
+							" seconds");
+				}
 			}
 		}
-		else {
-			boolean singedIn = false;
 
-			while (!singedIn) {
-				_checkLCSGatewayAvailability();
-
-				if (_lcsConnectionManager.isShutdownRequested()) {
-					if (_log.isDebugEnabled()) {
-						_log.debug("Shutdown requested, terminating thread");
-					}
-
-					return;
-				}
-
-				singedIn = _signInToLCSGateway();
-
-				if (!singedIn) {
-					if (_log.isDebugEnabled()) {
-						int seconds =
-							(int)(_multipliers[0] *
-								_LCS_GATEWAY_UNAVAILABLE_WAIT_TIME / 1000);
-
-						_log.debug(
-							"Unable to complete handshake, retry in " +
-								seconds + " seconds");
-					}
-				}
-			}
-
-			if (_log.isInfoEnabled()) {
-				_log.info(
-					"Recovered connection to LCS gateway, terminating thread");
-			}
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"Recovered connection to LCS gateway, terminating thread");
 		}
 	}
 

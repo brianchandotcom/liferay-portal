@@ -150,6 +150,8 @@ public class ChannelHubManagerImpl implements ChannelHubManager {
 		ClusterRequest clusterRequest = ClusterRequest.createMulticastRequest(
 			methodHandler, true);
 
+		clusterRequest.setFireAndForget(true);
+
 		try {
 			ClusterExecutorUtil.execute(clusterRequest);
 		}

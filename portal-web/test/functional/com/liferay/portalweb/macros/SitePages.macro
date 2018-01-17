@@ -1,4 +1,23 @@
 <definition>
+	<command name="_addPage">
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageName}" />
+		</execute>
+
+		<execute macro="SitePages#_configurePage">
+			<var name="columnName" value="${columnName}" />
+			<var name="componentName" value="${componentName}" />
+			<var name="pageLinkName" value="${pageLinkName}" />
+			<var name="pageTemplateName" value="${pageTemplateName}" />
+			<var name="pageTypeDescription" value="${pageTypeDescription}" />
+			<var name="pageTypeURL" value="${pageTypeURL}" />
+			<var name="portlet" value="${portlet}" />
+			<var name="sitePageType" value="${sitePageType}" />
+		</execute>
+
+		<execute macro="SitePages#_clickAddPage" />
+	</command>
+
 	<command name="_clickAddPage">
 		<execute function="AssertClick" locator1="Button#ADD_PAGE" value1="Add Page" />
 
@@ -241,6 +260,34 @@
 		<execute macro="PortletEntry#deleteViaMenuItem">
 			<var name="rowEntry" value="${pageName}" />
 		</execute>
+	</command>
+
+	<command name="expandPageTree">
+		<if>
+			<not>
+				<isset var="depth" />
+			</not>
+			<then>
+				<var name="depth" value="1" />
+			</then>
+		</if>
+
+		<var name="count" value="0" />
+
+		<while>
+			<not>
+				<equals arg1="${count}" arg2="${depth}" />
+			</not>
+			<then>
+				<var method="MathUtil#sum('${count}', '1')" name="index" />
+
+				<execute function="Click" locator1="_SitePages#LIST_GROUP_ITEM_ANGLE_ICON">
+					<var name="key_depth" value="${index}" />
+				</execute>
+
+				<var method="MathUtil#sum('${count}', '1')" name="count" />
+			</then>
+		</while>
 	</command>
 
 	<command name="togglePrivacy">

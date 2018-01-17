@@ -771,9 +771,7 @@
 			<elseif>
 				<equals arg1="${saveAsDraft}" arg2="true" />
 				<then>
-					<execute macro="Button#clickSaveAsDraft" />
-
-					<execute macro="Alert#viewSuccessMessage" />
+					<execute macro="PortletEntry#saveAsDraft" />
 				</then>
 			</elseif>
 			<else>

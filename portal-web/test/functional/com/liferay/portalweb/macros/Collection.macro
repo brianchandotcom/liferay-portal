@@ -26,10 +26,4 @@
 			</then>
 		</if>
 	</command>
-
-	<command name="gotoCollection">
-		<execute macro="LexiconEntry#gotoEntry">
-			<var name="rowEntry" value="${collectionName}" />
-		</execute>
-	</command>
 </definition>

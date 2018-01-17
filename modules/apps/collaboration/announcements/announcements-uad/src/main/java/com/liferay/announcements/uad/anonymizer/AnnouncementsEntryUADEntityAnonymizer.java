@@ -27,6 +27,7 @@ import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.service.component.annotations.Component;
@@ -66,6 +67,17 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	}
 
 	@Override
+	public List<String> getEntityNonAnonymizableFieldNames() {
+		if (_ambiguousFields.isEmpty()) {
+			_ambiguousFields.add("title");
+			_ambiguousFields.add("content");
+			_ambiguousFields.add("url");
+		}
+
+		return _ambiguousFields;
+	}
+
+	@Override
 	protected List<UADEntity> getUADEntities(long userId) {
 		return _uadEntityAggregator.getUADEntities(userId);
 	}
@@ -86,6 +98,8 @@ public class AnnouncementsEntryUADEntityAnonymizer
 			throw new UADEntityException();
 		}
 	}
+
+	private final List<String> _ambiguousFields = new ArrayList<>();
 
 	@Reference
 	private AnnouncementsEntryLocalService _announcementsEntryLocalService;

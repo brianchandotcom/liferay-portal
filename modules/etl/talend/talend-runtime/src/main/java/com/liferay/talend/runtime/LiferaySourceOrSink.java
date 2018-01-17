@@ -425,7 +425,8 @@ public class LiferaySourceOrSink
 
 		ApioJsonLDResource resource = new ApioJsonLDResource(jsonNode);
 
-		return ResourceCollectionSchemaInferrer.inferSchema(resource);
+		return ResourceCollectionSchemaInferrer.inferSchemaByResourceFields(
+			resource);
 	}
 
 	private void _validateCredentials(

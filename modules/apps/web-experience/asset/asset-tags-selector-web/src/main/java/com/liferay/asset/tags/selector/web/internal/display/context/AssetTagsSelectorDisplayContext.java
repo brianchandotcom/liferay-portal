@@ -17,8 +17,10 @@ package com.liferay.asset.tags.selector.web.internal.display.context;
 import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagServiceUtil;
 import com.liferay.asset.tags.selector.web.internal.search.EntriesChecker;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.asset.util.comparator.AssetTagNameComparator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -97,6 +100,24 @@ public class AssetTagsSelectorDisplayContext {
 		_keywords = ParamUtil.getString(_request, "keywords", null);
 
 		return _keywords;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem entriesNavigationItem = new NavigationItem();
+
+		entriesNavigationItem.setActive(true);
+
+		PortletURL mainURL = _renderResponse.createRenderURL();
+
+		entriesNavigationItem.setHref(mainURL.toString());
+
+		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "tags"));
+
+		navigationItems.add(entriesNavigationItem);
+
+		return navigationItems;
 	}
 
 	public String getOrderByCol() {

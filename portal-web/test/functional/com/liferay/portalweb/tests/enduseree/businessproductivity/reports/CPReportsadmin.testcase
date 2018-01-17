@@ -34,7 +34,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -74,7 +74,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -109,7 +109,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
@@ -132,7 +132,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -175,7 +175,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -215,7 +215,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#viewReportEntry">
@@ -238,7 +238,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -291,7 +291,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -333,7 +333,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -375,7 +375,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -418,7 +418,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -460,7 +460,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -502,7 +502,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -544,7 +544,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -592,7 +592,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoSources" />
@@ -637,7 +637,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -722,7 +722,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />
@@ -778,7 +778,7 @@
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />
 			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Report Admin" />
+			<var name="portlet" value="Reports Admin" />
 		</execute>
 
 		<execute macro="ReportsAdmin#gotoDefinitions" />

@@ -48,7 +48,7 @@ public class DeregisterCommand implements Command {
 			}
 		}
 
-		_lcsConnectionManager.stop(true, false);
+		_lcsConnectionManager.stop(true, true, false);
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Signed off server from LCS");

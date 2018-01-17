@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "web-experience")
 @Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
+	id = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration",
 	localization = "content/Language", name = "rss-web-cache-configuration-name"
 )
 public interface RSSWebCacheConfiguration {

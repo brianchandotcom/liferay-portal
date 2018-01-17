@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.rss.web.configuration.RSSPortletInstanceConfiguration",
+	id = "com.liferay.rss.web.internal.configuration.RSSPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "rss-portlet-instance-configuration-name"
 )

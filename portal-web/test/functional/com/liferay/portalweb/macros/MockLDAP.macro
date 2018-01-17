@@ -4,11 +4,13 @@
 			<var name="navTab" value="${tabName}" />
 		</execute>
 
-		<execute function="UploadCommonFile" locator1="//label[contains(text(),'${key_tab}')]/following-sibling::input[(@type='file')]" value1="${fileName}">
+		<execute function="UploadCommonFile" locator1="MockLDAP#BROWSE_BUTTON" value1="${fileName}">
 			<var name="key_tab" value="${tabName}" />
 		</execute>
 
-		<execute function="AssertClick" locator1="Button#TAB_SUBMIT_BTN" value1="Add ${tabName}" />
+		<execute function="AssertClick" locator1="Button#TAB_SUBMIT_BTN" value1="Add ${tabName}">
+			<var name="key_tab" value="${tabName}" />
+		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

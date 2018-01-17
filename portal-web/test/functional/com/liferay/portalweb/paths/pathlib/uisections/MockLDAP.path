@@ -1,0 +1,19 @@
+<html>
+<head>
+<title>MockLDAP</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">MockLDAP</td></tr>
+</thead>
+<tbody>
+<tr>
+	<td>BROWSE_BUTTON</td>
+	<td>//label[contains(text(),'${key_tab}')]/following-sibling::input[(@type='file')]</td>
+	<td></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>

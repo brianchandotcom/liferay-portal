@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal DAO ORM Custom SQL Impl
+Bundle-SymbolicName: com.liferay.portal.dao.orm.custom.sql.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title:

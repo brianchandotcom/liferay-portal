@@ -541,6 +541,10 @@
 
 		<execute function="ClickNoError" locator1="Staging#COPY_FROM_LIVE" />
 
+		<execute function="Pause" locator1="2000" />
+
+		<execute function="AssertClickNoError#assertPartialTextClickAt" locator1="Button#SUBMIT" value1="Copy from Live" />
+
 		<execute function="Confirm" value1="Are you sure you want to copy from live and update the existing staging portlet information?" />
 
 		<execute function="AssertTextEquals" locator1="Staging#STAGING_STATUS_PORTLET" value1="Successful" />

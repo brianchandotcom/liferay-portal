@@ -244,6 +244,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 		}
 	}
 
+	public void assertAttributeValue(
+			String locator, String attribute, String expectedValue)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator);
+
+		String actualValue = webElement.getAttribute(attribute);
+
+		if (!expectedValue.equals(actualValue)) {
+			throw new Exception(
+				"Actual value of attribute \"" + attribute + "\", \"" +
+					actualValue + "\" does not match expected value \"" +
+						expectedValue + "\"");
+		}
+	}
+
 	@Override
 	public void assertChecked(String locator) throws Exception {
 		assertElementPresent(locator);
@@ -455,6 +471,22 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 	@Override
 	public void assertNotAlert(String pattern) {
 		TestCase.assertTrue(Objects.equals(pattern, getAlert()));
+	}
+
+	@Override
+	public void assertNotAttributeValue(
+			String locator, String attribute, String forbiddenValue)
+		throws Exception {
+
+		WebElement webElement = getWebElement(locator);
+
+		String actualValue = webElement.getAttribute(attribute);
+
+		if (forbiddenValue.equals(actualValue)) {
+			throw new Exception(
+				"Actual value of attribute \"" + attribute +
+					"\" matches forbidden value \"" + forbiddenValue + "\"");
+		}
 	}
 
 	@Override
@@ -2011,9 +2043,9 @@ public abstract class BaseWebDriverImpl implements LiferaySelenium, WebDriver {
 
 	@Override
 	public void refresh() {
-		WebDriver.Navigation navigation = navigate();
+		String url = getCurrentUrl();
 
-		navigation.refresh();
+		open(url);
 
 		if (isAlertPresent()) {
 			getConfirmation();

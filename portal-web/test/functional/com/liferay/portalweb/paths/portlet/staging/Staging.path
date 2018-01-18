@@ -62,7 +62,7 @@
 </tr>
 <tr>
 	<td>COPY_FROM_LIVE</td>
-	<td>//button[contains(.,'Copy from Live')]</td>
+	<td>//a/span[contains(.,'Copy from Live')]</td>
 	<td></td>
 </tr>
 <!--PG-->

@@ -46,13 +46,22 @@ String description = LanguageUtil.get(request, "javax.portlet.description.com_li
 portletDisplay.setDescription(description);
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "password-policies"), null);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem entriesNavigationItem = new NavigationItem();
+
+entriesNavigationItem.setActive(true);
+entriesNavigationItem.setHref(StringPool.BLANK);
+entriesNavigationItem.setLabel(LanguageUtil.get(request, "password-policies"));
+
+navigationItems.add(entriesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="password-policies" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

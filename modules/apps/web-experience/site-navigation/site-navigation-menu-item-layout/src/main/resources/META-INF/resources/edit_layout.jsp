@@ -18,6 +18,7 @@
 
 <%
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
+
 String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 %>
 

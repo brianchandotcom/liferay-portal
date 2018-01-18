@@ -125,16 +125,15 @@ public class LayoutSiteNavigationMenuItemType
 			SiteNavigationMenuItem siteNavigationMenuItem)
 		throws IOException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		request.setAttribute(
 			SiteNavigationMenuItemTypeLayoutWebKeys.ITEM_SELECTOR,
 			_itemSelector);
 
-		Layout layout = getLayout(siteNavigationMenuItem);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		request.setAttribute(WebKeys.SEL_LAYOUT, layout);
+		request.setAttribute(
+			WebKeys.SEL_LAYOUT, getLayout(siteNavigationMenuItem));
 		request.setAttribute(
 			WebKeys.TITLE,
 			getTitle(siteNavigationMenuItem, themeDisplay.getLocale()));

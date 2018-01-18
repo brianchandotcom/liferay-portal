@@ -15,9 +15,8 @@
 package com.liferay.talend.runtime.apio;
 
 /**
- * @author Zoltán Takács
- *
- * Apio Architect response. It stores HTTP status code and body string
+ * @author Zoltán Takács  Apio Architect response. It stores HTTP status code
+ *         and body string
  */
 public final class ApioResult {
 
@@ -25,7 +24,7 @@ public final class ApioResult {
 	 * Constructor sets status code and response body
 	 *
 	 * @param statusCode status code
-	 * @param body response body; in case of null "" will be set
+	 * @param body response body; in case of <code>null</code> "" will be set
 	 */
 	public ApioResult(int statusCode, String body) {
 		_statusCode = statusCode;

@@ -69,7 +69,8 @@ public abstract class LiferayBaseComponentDefinition
 	 * <p>The method is intended for debug/test purposes only and should not be
 	 * used in production.
 	 *
-	 * @param sandboxedInstanceProvider provider to be set, can't be {@code null}
+	 * @param sandboxedInstanceProvider provider to be set, can't be {@code
+	 *        null}
 	 */
 	public static void setSandboxedInstanceProvider(
 		SandboxedInstanceProvider sandboxedInstanceProvider) {
@@ -99,21 +100,37 @@ public abstract class LiferayBaseComponentDefinition
 
 	/**
 	 * Defines a list of Return Properties (a.k.a After Properties).
+	 *
+	 * <p>
 	 * These properties collect different metrics and information during
-	 * component execution.
-	 * Values of these properties are returned after component finished his
-	 * work.
-	 * Runtime Platform may use this method to retrieve a this list and show in
-	 * UI
-	 * Here, it is defined 2 properties: <br>
-	 * 1) Error message
-	 * 2) Number of records processed
+	 * component execution. Values of these properties are returned after
+	 * component finished his work. Runtime Platform may use this method to
+	 * retrieve this list and show in UI.
+	 * </p>
+	 *
+	 * <p>
+	 * Here, it is defined two properties:
+	 * </p>
+	 *
+	 * <ol>
+	 * <li>
+	 * Error message.
+	 * </li>
+	 * <li>
+	 * Number of records processed.
+	 * </li>
+	 * </ol>
+	 *
+	 * <p>
 	 * For Error message property no efforts are required from component
-	 * developer to set its value.
-	 * Runtime Platform will set its value by itself in case of Exception in
-	 * runtime.
+	 * developer to set its value. Runtime Platform will set its value by itself
+	 * in case of Exception in runtime.
+	 * </p>
+	 *
+	 * <p>
 	 * As for Number of records property see Reader implementation in runtime
-	 * part
+	 * part.
+	 * </p>
 	 */
 	@Override
 	public Property<?>[] getReturnProperties() {

@@ -27,10 +27,10 @@ import org.talend.components.api.ComponentInstaller;
 import org.talend.components.api.Constants;
 
 /**
- * @author Zoltán Takács
- *
  * Install all of the definitions provided for the tLiferayInput family of
  * components.
+ *
+ * @author Zoltán Takács
  */
 @AutoService(ComponentInstaller.class)
 @Component(

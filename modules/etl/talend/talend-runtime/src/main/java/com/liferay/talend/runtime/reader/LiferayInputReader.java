@@ -221,8 +221,8 @@ public class LiferayInputReader extends LiferayBaseReader<IndexedRecord> {
 	private transient JsonNode _inputRecordsJsonNode;
 
 	/**
-	 * Converts row retrieved from data source to Avro format
-	 * {@link IndexedRecord}
+	 * Converts row retrieved from data source to Avro format {@link
+	 * IndexedRecord}
 	 */
 	private ResourceEntityConverter _resourceEntityConverter;
 

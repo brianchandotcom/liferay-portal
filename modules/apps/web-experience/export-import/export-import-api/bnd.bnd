@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.exportimport.content.processor,\
 	com.liferay.exportimport.controller,\
 	com.liferay.exportimport.data.handler.base,\
+	com.liferay.exportimport.lar,\
 	com.liferay.exportimport.portlet.data.handler.helper,\
 	com.liferay.exportimport.portlet.data.handler.provider,\
 	com.liferay.exportimport.portlet.preferences.processor,\

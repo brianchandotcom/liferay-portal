@@ -49,13 +49,14 @@ public class GradleBodyCheck extends BaseGradleFileCheck {
 		String oldBlocks = StringPool.BLANK;
 
 		for (String line : StringUtil.splitLines(bodyBlock)) {
-			if (line.matches("^(allprojects|project|subprojects).*\\{")) {
+			if (line.matches(
+					"^(allprojects|project|subprojects|" +
+						"else\\s|for\\s|if\\s|while\\s).*\\{")) {
+
 				return content;
 			}
 
-			if (Validator.isNull(newBlock) &&
-				line.matches("^(?!(else\\s|if\\s|while\\s))\\w+\\s*\\{")) {
-
+			if (Validator.isNull(newBlock) && line.matches("^\\w+\\s*\\{")) {
 				newBlock = line;
 				oldBlocks = oldBlocks + "\n" + line;
 

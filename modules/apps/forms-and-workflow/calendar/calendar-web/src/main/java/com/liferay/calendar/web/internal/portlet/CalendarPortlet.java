@@ -60,7 +60,7 @@ import com.liferay.calendar.web.internal.display.context.CalendarDisplayContext;
 import com.liferay.calendar.web.internal.upgrade.CalendarWebUpgrade;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.CharPool;
-import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;

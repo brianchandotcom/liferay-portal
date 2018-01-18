@@ -17,13 +17,14 @@ package com.liferay.knowledge.base.service.persistence.impl;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.impl.KBArticleImpl;
 import com.liferay.knowledge.base.service.persistence.KBArticleFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.math.BigInteger;
 
@@ -46,7 +47,7 @@ public class KBArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				KBArticleFinderImpl.class, _COUNT_BY_URL_TITLE);
 
 			sql = replaceWorkflowStatus(sql, status);
@@ -86,7 +87,7 @@ public class KBArticleFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				KBArticleFinderImpl.class, _FIND_BY_URL_TITLE);
 
 			sql = replaceWorkflowStatus(sql, status);
@@ -127,5 +128,8 @@ public class KBArticleFinderImpl
 
 	private static final String _FIND_BY_URL_TITLE =
 		KBArticleFinder.class.getName() + ".findByUrlTitle";
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

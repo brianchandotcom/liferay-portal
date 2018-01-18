@@ -19,13 +19,14 @@ import com.liferay.microblogs.model.MicroblogsEntryConstants;
 import com.liferay.microblogs.model.impl.MicroblogsEntryImpl;
 import com.liferay.microblogs.service.MicroblogsEntryLocalServiceUtil;
 import com.liferay.microblogs.service.persistence.MicroblogsEntryFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.social.kernel.model.SocialRelationConstants;
 
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_USER_ID);
+			String sql = _customSQL.get(getClass(), COUNT_BY_USER_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -151,7 +152,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_U);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_U);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -194,7 +195,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_U_MU);
+			String sql = _customSQL.get(getClass(), COUNT_BY_U_MU);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -239,7 +240,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_U_ATN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_U_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -285,7 +286,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_CCNI_ATN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_CCNI_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -325,7 +326,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_U_ATN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_U_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -369,7 +370,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_CCNI_ATN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_CCNI_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -410,7 +411,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_U_T_MU);
+			String sql = _customSQL.get(getClass(), COUNT_BY_U_T_MU);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -458,9 +459,9 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_CCNI_CCPK_ATN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_CCNI_CCPK_ATN);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -502,10 +503,9 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
-				getClass(), COUNT_BY_C_CCNI_CCPK_ATN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_CCNI_CCPK_ATN);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -550,7 +550,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_USER_ID);
+			String sql = _customSQL.get(getClass(), FIND_BY_USER_ID);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -595,7 +595,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_U);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_U);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -641,7 +641,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_U_MU);
+			String sql = _customSQL.get(getClass(), FIND_BY_U_MU);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -679,7 +679,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_U_ATN);
+			String sql = _customSQL.get(getClass(), FIND_BY_U_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -718,7 +718,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_CCNI_ATN);
+			String sql = _customSQL.get(getClass(), FIND_BY_CCNI_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -749,7 +749,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_U_ATN);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_U_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -785,7 +785,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_CCNI_ATN);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_CCNI_ATN);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -817,7 +817,7 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_U_T_MU);
+			String sql = _customSQL.get(getClass(), FIND_BY_U_T_MU);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -856,9 +856,9 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_CCNI_CCPK_ATN);
+			String sql = _customSQL.get(getClass(), FIND_BY_CCNI_CCPK_ATN);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -891,9 +891,9 @@ public class MicroblogsEntryFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_CCNI_CCPK_ATN);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_CCNI_CCPK_ATN);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -916,5 +916,8 @@ public class MicroblogsEntryFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

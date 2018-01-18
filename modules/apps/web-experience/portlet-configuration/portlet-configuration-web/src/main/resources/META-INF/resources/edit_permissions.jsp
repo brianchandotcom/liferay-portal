@@ -29,11 +29,9 @@ Resource resource = portletConfigurationPermissionsDisplayContext.getResource();
 
 <div class="edit-permissions portlet-configuration-edit-permissions">
 	<div class="portlet-configuration-body-content">
-		<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="permissions" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			items="<%= portletConfigurationPermissionsDisplayContext.getNavigationItems() %>"
+		/>
 
 		<liferay-frontend:management-bar>
 			<liferay-frontend:management-bar-filters>

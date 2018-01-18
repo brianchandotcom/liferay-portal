@@ -74,7 +74,10 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 userSearch.setResults(users);
 %>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled='<%= (usersCount <= 0) && Objects.equals(navigation, "all") %>'

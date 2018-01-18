@@ -58,7 +58,10 @@ List<Organization> organizations = OrganizationLocalServiceUtil.search(company.g
 organizationSearch.setResults(organizations);
 %>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= organizationsCount <= 0 %>"

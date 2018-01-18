@@ -50,21 +50,21 @@ userSearch.setTotal(usersCount);
 List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), searchTerms.getStatus(), userParams, userSearch.getStart(), userSearch.getEnd(), userSearch.getOrderByComparator());
 
 userSearch.setResults(users);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem navigationItem = new NavigationItem();
+
+navigationItem.setActive(true);
+navigationItem.setHref(currentURL);
+navigationItem.setLabel(LanguageUtil.get(request, "users"));
+
+navigationItems.add(navigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= viewUsersURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= usersCount <= 0 %>"
@@ -96,6 +96,14 @@ userSearch.setResults(users);
 			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
 			portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
 		/>
+
+		<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
+			<li>
+				<aui:form action="<%= viewUsersURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

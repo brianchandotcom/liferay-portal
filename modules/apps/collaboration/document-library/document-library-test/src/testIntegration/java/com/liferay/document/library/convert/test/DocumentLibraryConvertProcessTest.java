@@ -60,7 +60,7 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.message.boards.test.util.MBTestUtil;
 
 import java.io.InputStream;
 

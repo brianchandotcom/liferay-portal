@@ -30,7 +30,7 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.message.boards.test.util.MBTestUtil;
 
 import org.junit.Assert;
 import org.junit.Before;

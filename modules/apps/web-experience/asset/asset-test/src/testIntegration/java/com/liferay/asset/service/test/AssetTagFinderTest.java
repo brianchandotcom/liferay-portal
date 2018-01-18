@@ -37,7 +37,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
+import com.liferay.message.boards.test.util.MBTestUtil;
 
 import java.util.HashMap;
 import java.util.List;

@@ -293,7 +293,7 @@ public class LocalGitSyncUtil {
 		for (String localBranchName :
 				gitWorkingDirectory.getLocalBranchNames()) {
 
-			if (localBranchName.matches(_cacheBranchRegex) &&
+			if (localBranchName.matches(_CACHE_BRANCH_REGEX) &&
 				!localBranchName.equals(excludeBranchName)) {
 
 				gitWorkingDirectory.deleteBranch(localBranchName, null);
@@ -415,7 +415,7 @@ public class LocalGitSyncUtil {
 
 			String remoteBranchName = entry.getKey();
 
-			if (remoteBranchName.matches(_cacheBranchRegex)) {
+			if (remoteBranchName.matches(_CACHE_BRANCH_REGEX)) {
 				if (hasTimestampBranch(remoteBranchName, remoteBranches)) {
 					remoteCacheBranches.add(entry.getValue());
 				}
@@ -935,7 +935,8 @@ public class LocalGitSyncUtil {
 	private static final long _BRANCH_EXPIRE_AGE_MILLIS =
 		1000 * 60 * 60 * 24 * 2;
 
-	private static final String _cacheBranchRegex = ".*cache-.+-.+-.+-[^-]+";
+	private static final String _CACHE_BRANCH_REGEX = ".*cache-.+-.+-.+-[^-]+";
+
 	private static final Pattern _cacheTimestampBranchPattern = Pattern.compile(
 		"(?<name>cache-[^-]+-[^-]+-[^-]+-[^-]+)-(?<timestamp>\\d+)");
 	private static final ThreadPoolExecutor _threadPoolExecutor =

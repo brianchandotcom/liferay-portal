@@ -75,7 +75,7 @@ public class CompanyServiceSettingsLocatorTest
 				_companyId, _companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
 				_portletId, null,
 				String.format(
-					_portletPreferenceFormat,
+					_PORTLET_PREFERENCE_FORMAT,
 					SettingsLocatorTestConstants.TEST_KEY,
 					companyPortletPreferencesValue)));
 
@@ -93,7 +93,7 @@ public class CompanyServiceSettingsLocatorTest
 		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
 	}
 
-	private static final String _portletPreferenceFormat =
+	private static final String _PORTLET_PREFERENCE_FORMAT =
 		"<portlet-preferences><preference><name>%s</name><value>%s</value>" +
 			"</preference></portlet-preferences>";
 

@@ -225,14 +225,14 @@ public class TransactionConfig {
 			return this;
 		}
 
-		private static final Class<?>[] _emptyClassArray = new Class<?>[0];
+		private static final Class<?>[] _EMPTY_CLASS_ARRAY = new Class<?>[0];
 
 		private Isolation _isolation = Isolation.DEFAULT;
-		private Class<?>[] _noRollbackForClasses = _emptyClassArray;
+		private Class<?>[] _noRollbackForClasses = _EMPTY_CLASS_ARRAY;
 		private String[] _noRollbackForClassNames = StringPool.EMPTY_ARRAY;
 		private Propagation _propagation = Propagation.REQUIRED;
 		private boolean _readOnly;
-		private Class<?>[] _rollbackForClasses = _emptyClassArray;
+		private Class<?>[] _rollbackForClasses = _EMPTY_CLASS_ARRAY;
 		private String[] _rollbackForClassNames = StringPool.EMPTY_ARRAY;
 		private int _timeout = TransactionDefinition.TIMEOUT_DEFAULT;
 

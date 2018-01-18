@@ -43,7 +43,7 @@ public class SoyJavaScriptRenderer {
 		String modulesString = _jsonSerializer.serialize(modules);
 
 		return StringUtil.replace(
-			_javaScriptTPL, new String[] {"$CONTEXT", "$ID", "$MODULES"},
+			_JAVA_SCRIPT_TPL, new String[] {"$CONTEXT", "$ID", "$MODULES"},
 			new String[] {contextString, id, modulesString});
 	}
 
@@ -67,13 +67,13 @@ public class SoyJavaScriptRenderer {
 		return js;
 	}
 
+	private static final String _JAVA_SCRIPT_TPL;
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		SoyJavaScriptRenderer.class);
 
-	private static final String _javaScriptTPL;
-
 	static {
-		_javaScriptTPL = _getJavaScriptTPL();
+		_JAVA_SCRIPT_TPL = _getJavaScriptTPL();
 	}
 
 	private final JSONSerializer _jsonSerializer;

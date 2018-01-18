@@ -94,8 +94,8 @@ public class FinderCacheImplTest {
 	@Test
 	public void testTestKeysCollide() {
 		Assert.assertEquals(
-			_cacheKeyGenerator.getCacheKey(_key1),
-			_cacheKeyGenerator.getCacheKey(_key2));
+			_cacheKeyGenerator.getCacheKey(_KEY1),
+			_cacheKeyGenerator.getCacheKey(_KEY2));
 	}
 
 	@Test
@@ -133,19 +133,19 @@ public class FinderCacheImplTest {
 		values.add("a");
 		values.add("b");
 
-		finderCache.putResult(_finderPath, _key1, values, true);
+		finderCache.putResult(_finderPath, _KEY1, values, true);
 
 		Object result = finderCache.getResult(
-			_finderPath, _key1, new TestBasePersistence(new HashSet<>(values)));
+			_finderPath, _KEY1, new TestBasePersistence(new HashSet<>(values)));
 
 		Assert.assertEquals(values, result);
 
 		values.add("c");
 
-		finderCache.putResult(_finderPath, _key1, values, true);
+		finderCache.putResult(_finderPath, _KEY1, values, true);
 
 		result = finderCache.getResult(
-			_finderPath, _key1, new TestBasePersistence(null));
+			_finderPath, _KEY1, new TestBasePersistence(null));
 
 		Assert.assertNull(result);
 	}
@@ -172,9 +172,9 @@ public class FinderCacheImplTest {
 		FinderCache finderCache = _activateFinderCache(multiVMPool);
 
 		finderCache.putResult(
-			_finderPath, _key1, Collections.emptyList(), true);
+			_finderPath, _KEY1, Collections.emptyList(), true);
 
-		Object result = finderCache.getResult(_finderPath, _key2, null);
+		Object result = finderCache.getResult(_finderPath, _KEY2, null);
 
 		Assert.assertNull(result);
 	}
@@ -183,19 +183,21 @@ public class FinderCacheImplTest {
 		FinderCache finderCache = _activateFinderCache(multiVMPool);
 
 		finderCache.putResult(
-			_finderPath, _key1, Collections.emptyList(), true);
+			_finderPath, _KEY1, Collections.emptyList(), true);
 
-		Object result = finderCache.getResult(_finderPath, _key1, null);
+		Object result = finderCache.getResult(_finderPath, _KEY1, null);
 
 		Assert.assertSame(Collections.emptyList(), result);
 	}
+
+	private static final String[] _KEY1 = {"home"};
+
+	private static final String[] _KEY2 = {"j1me"};
 
 	private static final CacheKeyGenerator _cacheKeyGenerator =
 		new HashCodeHexStringCacheKeyGenerator();
 	private static final ClassLoader _classLoader =
 		FinderCacheImplTest.class.getClassLoader();
-	private static final String[] _key1 = {"home"};
-	private static final String[] _key2 = {"j1me"};
 	private static MultiVMPool _notSerializedMultiVMPool;
 	private static Props _props;
 	private static MultiVMPool _serializedMultiVMPool;

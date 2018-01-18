@@ -128,7 +128,7 @@ public class FacetDiscounterTest {
 		FacetCollector facetCollector = facet.getFacetCollector();
 
 		AssertUtils.assertEquals(
-			_fieldName, frequencies,
+			_FIELD_NAME, frequencies,
 			_toMap(facetCollector.getTermCollectors()));
 	}
 
@@ -136,11 +136,11 @@ public class FacetDiscounterTest {
 		Document document = Mockito.mock(Document.class);
 
 		Mockito.doReturn(
-			new Field(_fieldName, term)
+			new Field(_FIELD_NAME, term)
 		).when(
 			document
 		).getField(
-			_fieldName
+			_FIELD_NAME
 		);
 
 		return document;
@@ -150,11 +150,11 @@ public class FacetDiscounterTest {
 		Document document = Mockito.mock(Document.class);
 
 		Mockito.doReturn(
-			new Field(_fieldName, terms)
+			new Field(_FIELD_NAME, terms)
 		).when(
 			document
 		).getField(
-			_fieldName
+			_FIELD_NAME
 		);
 
 		return document;
@@ -164,7 +164,7 @@ public class FacetDiscounterTest {
 		TermCollector... termCollectors) {
 
 		return new SimpleFacetCollector(
-			_fieldName, Arrays.asList(termCollectors));
+			_FIELD_NAME, Arrays.asList(termCollectors));
 	}
 
 	private void _discount(
@@ -189,11 +189,11 @@ public class FacetDiscounterTest {
 	}
 
 	private void _populate(Facet facet, TermCollector... termCollectors) {
-		facet.setFieldName(_fieldName);
+		facet.setFieldName(_FIELD_NAME);
 
 		facet.setFacetCollector(_createFacetCollector(termCollectors));
 	}
 
-	private static final String _fieldName = RandomTestUtil.randomString();
+	private static final String _FIELD_NAME = RandomTestUtil.randomString();
 
 }

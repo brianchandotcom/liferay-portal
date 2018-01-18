@@ -58,12 +58,12 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 	public void setUp() throws Exception {
 		_portletPreferences = PrefsPropsUtil.getPreferences();
 
-		_prefsPropsNames.add(_prefsPropsName);
+		_prefsPropsNames.add(_PREFS_PROPS_NAME);
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		_deleteConfiguration(_configurationPid);
+		_deleteConfiguration(_CONFIGURATION_PID);
 
 		for (String prefsPropsName : _prefsPropsNames) {
 			_portletPreferences.reset(prefsPropsName);
@@ -106,7 +106,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 	@Test
 	public void testUpgradeWillNotAddNullValues() throws Exception {
 		_portletPreferences.setValue(
-			_prefsPropsName, RandomTestUtil.randomString());
+			_PREFS_PROPS_NAME, RandomTestUtil.randomString());
 
 		_portletPreferences.store();
 
@@ -115,7 +115,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		PrefsPropsToConfigurationUpgradeItem[]
 			prefsPropsToConfigurationUpgradeItems = {
 				new PrefsPropsToConfigurationUpgradeItem(
-					_prefsPropsName, _configurationMethodName),
+					_PREFS_PROPS_NAME, _CONFIGURATION_METHOD_NAME),
 				new PrefsPropsToConfigurationUpgradeItem(
 					nullValuePrefsPropsName, PrefsPropsValueType.BOOLEAN, null),
 				new PrefsPropsToConfigurationUpgradeItem(
@@ -141,8 +141,8 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 		Dictionary<String, Object> properties = configuration.getProperties();
 
-		Assert.assertNotNull(properties.get(_configurationMethodName));
-		Assert.assertNull(properties.get(_prefsPropsName));
+		Assert.assertNotNull(properties.get(_CONFIGURATION_METHOD_NAME));
+		Assert.assertNull(properties.get(_PREFS_PROPS_NAME));
 		Assert.assertNull(properties.get(nullValuePrefsPropsName));
 	}
 
@@ -152,7 +152,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 		String prefsPropsValue = RandomTestUtil.randomString();
 
-		_portletPreferences.setValue(_prefsPropsName, prefsPropsValue);
+		_portletPreferences.setValue(_PREFS_PROPS_NAME, prefsPropsValue);
 
 		_portletPreferences.store();
 
@@ -172,7 +172,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		PrefsPropsToConfigurationUpgradeItem[]
 			prefsPropsToConfigurationUpgradeItems = {
 				new PrefsPropsToConfigurationUpgradeItem(
-					_prefsPropsName, _configurationMethodName)
+					_PREFS_PROPS_NAME, _CONFIGURATION_METHOD_NAME)
 			};
 
 		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
@@ -184,7 +184,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		properties = configuration.getProperties();
 
 		Assert.assertEquals(
-			prefsPropsValue, properties.get(_configurationMethodName));
+			prefsPropsValue, properties.get(_CONFIGURATION_METHOD_NAME));
 		Assert.assertEquals(
 			preexistingConfigurationValue,
 			properties.get(preexistingConfigurationMethodName));
@@ -205,7 +205,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 		_callPersistenceManager(
 			persistenceManager -> Assert.assertFalse(
-				persistenceManager.exists(_configurationPid)));
+				persistenceManager.exists(_CONFIGURATION_PID)));
 	}
 
 	private static <E extends Throwable> void _callPersistenceManager(
@@ -213,7 +213,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		throws E {
 
 		OSGiServiceUtil.callService(
-			_bundleContext, PersistenceManager.class,
+			_BUNDLE_CONTEXT, PersistenceManager.class,
 			persistenceManager -> {
 				unsafeConsumer.accept(persistenceManager);
 
@@ -239,7 +239,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		throws IOException {
 
 		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
+			_BUNDLE_CONTEXT, ConfigurationAdmin.class,
 			configurationAdmin -> configurationAdmin.getConfiguration(
 				configurationPid));
 	}
@@ -249,7 +249,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		throws IOException {
 
 		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
+			_BUNDLE_CONTEXT, ConfigurationAdmin.class,
 			configurationAdmin -> configurationAdmin.getConfiguration(
 				configurationPid, location));
 	}
@@ -259,11 +259,11 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 		if (prefsPropsValueType != PrefsPropsValueType.STRING_ARRAY) {
 			_portletPreferences.setValue(
-				_prefsPropsName, String.valueOf(value));
+				_PREFS_PROPS_NAME, String.valueOf(value));
 		}
 		else {
 			_portletPreferences.setValue(
-				_prefsPropsName,
+				_PREFS_PROPS_NAME,
 				ArrayUtil.toString((String[])value, StringPool.BLANK));
 		}
 
@@ -272,8 +272,8 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		PrefsPropsToConfigurationUpgradeItem[]
 			prefsPropsToConfigurationUpgradeItems = {
 				new PrefsPropsToConfigurationUpgradeItem(
-					_prefsPropsName, prefsPropsValueType,
-					_configurationMethodName)
+					_PREFS_PROPS_NAME, prefsPropsValueType,
+					_CONFIGURATION_METHOD_NAME)
 			};
 
 		PrefsPropsToConfigurationUpgradeUtil.upgradePrefsPropsToConfiguration(
@@ -285,7 +285,7 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 		Assert.assertEquals(
 			defaultValue,
 			PrefsPropsUtil.getString(
-				_portletPreferences, _prefsPropsName, defaultValue));
+				_portletPreferences, _PREFS_PROPS_NAME, defaultValue));
 
 		Configuration configuration = _getConfiguration();
 
@@ -293,35 +293,39 @@ public class PrefsPropsToConfigurationUpgradeUtilTest {
 
 		if (prefsPropsValueType != PrefsPropsValueType.STRING_ARRAY) {
 			Assert.assertEquals(
-				value, properties.get(_configurationMethodName));
+				value, properties.get(_CONFIGURATION_METHOD_NAME));
 		}
 		else {
 			Assert.assertArrayEquals(
 				(String[])value,
-				(String[])properties.get(_configurationMethodName));
+				(String[])properties.get(_CONFIGURATION_METHOD_NAME));
 		}
 	}
 
 	private Configuration _getConfiguration() throws IOException {
-		return _getConfiguration(_configurationPid, StringPool.QUESTION);
+		return _getConfiguration(_CONFIGURATION_PID, StringPool.QUESTION);
 	}
 
-	private static final BundleContext _bundleContext;
-	private static final String _configurationMethodName =
+	private static final BundleContext _BUNDLE_CONTEXT;
+
+	private static final String _CONFIGURATION_METHOD_NAME =
 		RandomTestUtil.randomString();
-	private static final String _configurationPid =
+
+	private static final String _CONFIGURATION_PID =
 		RandomTestUtil.randomString();
-	private static final String _prefsPropsName = RandomTestUtil.randomString();
+
+	private static final String _PREFS_PROPS_NAME =
+		RandomTestUtil.randomString();
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(
 			PrefsPropsToConfigurationUpgradeUtilTest.class);
 
 		if (bundle == null) {
-			_bundleContext = null;
+			_BUNDLE_CONTEXT = null;
 		}
 		else {
-			_bundleContext = bundle.getBundleContext();
+			_BUNDLE_CONTEXT = bundle.getBundleContext();
 		}
 	}
 

@@ -263,7 +263,7 @@ public class ListUtil {
 	}
 
 	public static boolean isUnmodifiableList(List<?> list) {
-		return _unmodifiableListClass.isInstance(list);
+		return _UNMODIFIABLE_LIST_CLASS.isInstance(list);
 	}
 
 	public static <E> List<E> remove(List<E> list, List<? extends E> remove) {
@@ -617,13 +617,13 @@ public class ListUtil {
 
 	private static final long[] _EMPTY_LONG_ARRAY = {};
 
-	private static final Class<? extends List<?>> _unmodifiableListClass;
+	private static final Class<? extends List<?>> _UNMODIFIABLE_LIST_CLASS;
 
 	static {
 		List<Object> unmodifiableList = Collections.<Object>unmodifiableList(
 			new LinkedList<Object>());
 
-		_unmodifiableListClass =
+		_UNMODIFIABLE_LIST_CLASS =
 			(Class<? extends List<?>>)unmodifiableList.getClass();
 	}
 

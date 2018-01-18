@@ -60,19 +60,19 @@ public class DocumentHTMLProcessor {
 					token += ">";
 
 					replacement = token.replaceAll(
-						_documentsRegex,
+						_DOCUMENTS_REGEX,
 						"$1&auth_token=" + imageRequestToken + "$3");
 
 					replacement = replacement.replaceAll(
-						_imageRegex,
+						_IMAGE_REGEX,
 						"$1&auth_token=" + imageRequestToken + "$3");
 
 					replacement = replacement.replaceAll(
-						_portletFileEntryRegex,
+						_PORTLET_FILE_ENTRY_REGEX,
 						"$1?auth_token=" + imageRequestToken + "$3");
 
 					replacement = replacement.replaceAll(
-						_wikiPageAttachmentRegex,
+						_WIKI_PAGE_ATTACHMENT_REGEX,
 						"$1$3&auth_token=" + imageRequestToken + "$6");
 
 					FileUtil.write(tempFile, replacement, true, true);
@@ -91,19 +91,22 @@ public class DocumentHTMLProcessor {
 		return processedInputStream;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		DocumentHTMLProcessor.class);
-
-	private static final String _documentsRegex =
+	private static final String _DOCUMENTS_REGEX =
 		"(<img [^s]*src=\"\\/(documents\\/\\d+)\\/[^&]+)(\"[^&]+)";
-	private static final String _imageRegex =
+
+	private static final String _IMAGE_REGEX =
 		"(<img [^s]*src=\"\\/(image)\\/[^&]+)(\"[^&]+)";
-	private static final String _portletFileEntryRegex =
+
+	private static final String _PORTLET_FILE_ENTRY_REGEX =
 		"(<img [^s]*src=\"\\/(documents\\/portlet_file_entry)\\/[^&]+)(" +
 			"\"[^&]+)";
-	private static final String _wikiPageAttachmentRegex =
+
+	private static final String _WIKI_PAGE_ATTACHMENT_REGEX =
 		"(<img ([^=]*(?<!src)=\\\"[^\\\"]+\\\")*[^=]*)((?<= src)=\\\"[^\\/]*(" +
 			"\\/(?!c/wiki/get_page_attachment)[^\\/]*)*(\\/(?=" +
 				"c/wiki/get_page_attachment))[^&]+)([^>]+>)";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DocumentHTMLProcessor.class);
 
 }

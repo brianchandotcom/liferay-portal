@@ -49,7 +49,7 @@ public class AnnouncementsFlagUADEntityDisplay extends BaseUADEntityDisplay {
 
 	@Override
 	public String getEntityTypeDescription() {
-		return "Announcements flag";
+		return "A flag indicating the status of an announcements entry";
 	}
 
 	@Override

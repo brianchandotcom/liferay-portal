@@ -20,7 +20,7 @@ import org.talend.daikon.properties.ValidationResultMutable;
 /**
  * @author Zoltán Takács
  */
-public abstract class ExceptionUtils {
+public class ExceptionUtils {
 
 	public static ValidationResult exceptionToValidationResult(Exception e) {
 		ValidationResultMutable validationResultMutable =
@@ -30,6 +30,9 @@ public abstract class ExceptionUtils {
 		validationResultMutable.setStatus(ValidationResult.Result.ERROR);
 
 		return validationResultMutable;
+	}
+
+	private ExceptionUtils() {
 	}
 
 }

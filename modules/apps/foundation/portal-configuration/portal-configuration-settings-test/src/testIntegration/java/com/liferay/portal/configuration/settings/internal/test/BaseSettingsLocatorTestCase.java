@@ -16,6 +16,8 @@ package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.settings.Settings;
+import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
@@ -39,6 +41,16 @@ public abstract class BaseSettingsLocatorTestCase {
 		_configurationPids.clear();
 	}
 
+	protected String getValueFromSettings() throws Exception {
+		if (settingsLocator == null) {
+			return null;
+		}
+
+		Settings settings = settingsLocator.getSettings();
+
+		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
+	}
+
 	protected String saveConfiguration(String configurationPid)
 		throws Exception {
 
@@ -54,6 +66,8 @@ public abstract class BaseSettingsLocatorTestCase {
 
 		return value;
 	}
+
+	protected SettingsLocator settingsLocator;
 
 	private final Set<String> _configurationPids = new HashSet<>();
 

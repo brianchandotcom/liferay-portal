@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
@@ -23,17 +24,11 @@
 		</repository>
 	</repositories>
 	<dependencies>
-
-		<!-- APIs for all Components -->
-
 		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-
-		<!-- Annotation processing -->
-
 		<dependency>
 			<groupId>biz.aQute.bnd</groupId>
 			<artifactId>annotation</artifactId>
@@ -42,9 +37,6 @@
 			<groupId>com.google.auto.service</groupId>
 			<artifactId>auto-service</artifactId>
 		</dependency>
-
-		<!-- Shared component properties such as Use/Password or Schema -->
-
 		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-common</artifactId>
@@ -57,9 +49,6 @@
 			<classifier>bundle</classifier>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- Jar containing Test utils methods -->
-
 		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api</artifactId>
@@ -67,9 +56,6 @@
 			<classifier>tests</classifier>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- spring jar for integration tests -->
-
 		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api-service-rest</artifactId>
@@ -90,9 +76,6 @@
 			<type>test-jar</type>
 			<scope>test</scope>
 		</dependency>
-
-		<!-- dependencies for OSGI integration tests -->
-
 		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-osgitest</artifactId>
@@ -108,10 +91,6 @@
 	<build>
 		<plugins>
 			<plugin>
-
-				<!-- This plugin is used to generate .link files used for the OSGI test
-					execution with PaxExam -->
-
 				<groupId>com.github.veithen.alta</groupId>
 				<artifactId>alta-maven-plugin</artifactId>
 				<version>0.4.2-Talend</version>
@@ -133,7 +112,6 @@
 								<artifact>
 									<groupId>${project.groupId}</groupId>
 									<artifactId>${project.artifactId}</artifactId>
-									<classifier></classifier>
 									<version>${project.version}</version>
 								</artifact>
 							</artifacts>
@@ -175,13 +153,6 @@
 					</execution>
 				</executions>
 			</plugin>
-
-			<!-- The following plugins are there to make sure they are launched after
-				the bundle are packaged when used in the package phase.-->
-
-			<!-- They may be used with the -PgenerateP2 maven profile to build a p2
-				update site for distribution to the Studio -->
-
 			<plugin>
 				<artifactId>maven-resources-plugin</artifactId>
 			</plugin>

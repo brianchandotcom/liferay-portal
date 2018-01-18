@@ -21,7 +21,10 @@ import java.util.List;
 
 /**
  * @author Sergio González
+ * @deprecated As of 7.0.0, replaced by {@link
+ *             com.liferay.message.boards.web.internal.util.MBMessageIterator}
  */
+@Deprecated
 public class MBMessageIteratorImpl implements MBMessageIterator {
 
 	public MBMessageIteratorImpl(List<MBMessage> messages, int from, int to) {

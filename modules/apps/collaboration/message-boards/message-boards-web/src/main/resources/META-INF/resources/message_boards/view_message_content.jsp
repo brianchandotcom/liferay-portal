@@ -263,7 +263,7 @@ if (portletTitleBasedNavigation) {
 
 		int[] range = treeWalker.getChildrenRange(treeWalker.getRoot());
 
-		MBMessageIterator mbMessageIterator = new MBMessageIteratorImpl(messages, range[0], range[1]);
+		MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
 
 		while (mbMessageIterator.hasNext()) {
 			boolean messageFound = GetterUtil.getBoolean(request.getAttribute("view_thread_tree.jsp-messageFound"));

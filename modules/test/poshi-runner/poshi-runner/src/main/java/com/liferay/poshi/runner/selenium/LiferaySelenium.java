@@ -30,6 +30,10 @@ public interface LiferaySelenium {
 
 	public void assertAlertNotPresent() throws Exception;
 
+	public void assertAttributeValue(
+			String locator, String attribute, String expectedValue)
+		throws Exception;
+
 	public void assertChecked(String pattern) throws Exception;
 
 	public void assertConfirmation(String pattern) throws Exception;
@@ -71,6 +75,10 @@ public interface LiferaySelenium {
 	public void assertNoLiferayExceptions() throws Exception;
 
 	public void assertNotAlert(String pattern);
+
+	public void assertNotAttributeValue(
+			String locator, String attribute, String forbiddenValue)
+		throws Exception;
 
 	public void assertNotChecked(String locator) throws Exception;
 

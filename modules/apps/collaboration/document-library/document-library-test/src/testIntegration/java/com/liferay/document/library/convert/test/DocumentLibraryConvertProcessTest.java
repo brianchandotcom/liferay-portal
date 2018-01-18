@@ -32,6 +32,7 @@ import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.model.MBMessageConstants;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
+import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.convert.ConvertProcess;
 import com.liferay.portal.convert.documentlibrary.DocumentLibraryConvertProcess;
@@ -60,7 +61,6 @@ import com.liferay.portal.test.rule.PermissionCheckerTestRule;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.store.StoreFactory;
 import com.liferay.portlet.documentlibrary.util.ImageProcessorImpl;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.io.InputStream;
 

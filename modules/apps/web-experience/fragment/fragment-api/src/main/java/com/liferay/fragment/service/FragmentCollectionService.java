@@ -63,8 +63,8 @@ public interface FragmentCollectionService extends BaseService {
 	public FragmentCollection deleteFragmentCollection(
 		long fragmentCollectionId) throws PortalException;
 
-	public List<FragmentCollection> deleteFragmentCollections(
-		long[] fragmentCollectionIds) throws PortalException;
+	public void deleteFragmentCollections(long[] fragmentCollectionIds)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public FragmentCollection fetchFragmentCollection(long fragmentCollectionId)

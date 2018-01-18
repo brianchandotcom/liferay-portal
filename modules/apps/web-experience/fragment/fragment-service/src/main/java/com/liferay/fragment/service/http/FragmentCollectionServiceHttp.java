@@ -123,8 +123,8 @@ public class FragmentCollectionServiceHttp {
 		}
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentCollection> deleteFragmentCollections(
-		HttpPrincipal httpPrincipal, long[] fragmentCollectionIds)
+	public static void deleteFragmentCollections(HttpPrincipal httpPrincipal,
+		long[] fragmentCollectionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(FragmentCollectionServiceUtil.class,
@@ -134,10 +134,8 @@ public class FragmentCollectionServiceHttp {
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					fragmentCollectionIds);
 
-			Object returnObj = null;
-
 			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
@@ -146,8 +144,6 @@ public class FragmentCollectionServiceHttp {
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
-
-			return (java.util.List<com.liferay.fragment.model.FragmentCollection>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);

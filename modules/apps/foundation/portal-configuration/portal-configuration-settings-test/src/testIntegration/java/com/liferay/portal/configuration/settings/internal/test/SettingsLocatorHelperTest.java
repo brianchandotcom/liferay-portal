@@ -168,7 +168,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(
+		String portletInstanceValue = saveScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 			portletInstanceKey);
 
@@ -181,7 +181,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 		Assert.assertNotSame(systemSettings, portletInstanceSettings);
 
 		Assert.assertEquals(
-			companyValue,
+			portletInstanceValue,
 			portletInstanceSettings.getValue(
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));

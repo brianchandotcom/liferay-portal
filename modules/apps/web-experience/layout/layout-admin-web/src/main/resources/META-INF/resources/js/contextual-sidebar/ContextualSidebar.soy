@@ -1,0 +1,34 @@
+{namespace ContextualSidebar}
+
+/**
+ * ContextualSidebar
+ */
+{template .render}
+	{@param body: html}
+	{@param header: html}
+	{@param visible: bool}
+	{@param? bodyClasses: string}
+	{@param? classes: string}
+	{@param? headerClasses: string}
+	{@param? id: string}
+
+	{let $contextualSidebarClasses kind="text"}
+		contextual-sidebar
+		{sp}sidebar
+		{sp}sidebar-light
+
+		{if $visible}
+			{sp}contextual-sidebar-visible
+		{/if}
+	{/let}
+
+	<div class="{$contextualSidebarClasses} {$classes ?: ''}" id="{$id ?: ''}">
+		<div class="sidebar-header {$headerClasses ?: ''}">
+			{$header}
+		</div>
+
+		<div class="sidebar-body {$bodyClasses ?: ''}">
+			{$body}
+		</div>
+	</div>
+{/template}

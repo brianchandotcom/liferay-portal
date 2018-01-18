@@ -16,8 +16,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 import javax.portlet.PortletURL;
 
 /**

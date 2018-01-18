@@ -51,9 +51,10 @@ public class DropdownGroupItem implements Serializable {
 		_separator = separator;
 	}
 
+	private static final String _type = "group";
+
 	private List<Object> _items;
 	private String _label;
 	private boolean _separator;
-	private String _type = "group";
 
 }

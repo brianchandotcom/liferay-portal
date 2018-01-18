@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.social.privatemessaging.util;
+package com.liferay.social.privatemessaging.web.internal.util;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;

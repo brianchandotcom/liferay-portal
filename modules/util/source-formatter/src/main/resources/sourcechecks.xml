@@ -84,7 +84,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/portal-security-wedeploy-auth/portal-security-wedeploy-auth-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/push-notifications/push-notifications-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/shopping/shopping-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/social-private-messaging/social-private-messaging-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/static/" />
 			<property name="allowedExportPackageDirName" value="modules/apps/sync/sync-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/web-experience/asset/asset-categories-admin-web" />

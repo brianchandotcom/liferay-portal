@@ -64,11 +64,8 @@ public class AnnouncementsEntryUADEntity extends BaseUADEntity {
 					nonAnonymizableFieldName,
 					method.invoke(_announcementsEntry));
 			}
-			catch (IllegalAccessException iae) {
-				throw new UADEntityException(iae);
-			}
-			catch (InvocationTargetException ite) {
-				throw new UADEntityException(ite);
+			catch (IllegalAccessException | InvocationTargetException e) {
+				throw new UADEntityException(e);
 			}
 			catch (NoSuchMethodException nsme) {
 				throw new UADEntityFieldNameException(nsme);

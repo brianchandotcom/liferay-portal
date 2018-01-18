@@ -59,10 +59,11 @@ public class DropdownRadioGroupItem implements Serializable {
 		_separator = separator;
 	}
 
+	private static final String _type = "radiogroup";
+
 	private String _inputName;
 	private List<DropdownRadioItem> _items;
 	private String _label;
 	private boolean _separator;
-	private String _type = "radiogroup";
 
 }

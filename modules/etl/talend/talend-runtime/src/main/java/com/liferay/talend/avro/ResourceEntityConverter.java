@@ -40,7 +40,7 @@ import org.talend.daikon.avro.converter.string.StringTimestampConverter;
  */
 @SuppressWarnings("rawtypes")
 public class ResourceEntityConverter
-	extends AbstractAvroConverter<List, IndexedRecord> {
+	extends BaseConverter<List, IndexedRecord> {
 
 	/**
 	 * Constructor sets outgoing record schema and {@link List} class as datum

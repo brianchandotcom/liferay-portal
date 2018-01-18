@@ -109,4 +109,5 @@ public class ManagementToolbarTag extends BaseClayTag {
 	public void setViewTypes(Object viewTypes) {
 		putValue("viewTypes", viewTypes);
 	}
+
 }

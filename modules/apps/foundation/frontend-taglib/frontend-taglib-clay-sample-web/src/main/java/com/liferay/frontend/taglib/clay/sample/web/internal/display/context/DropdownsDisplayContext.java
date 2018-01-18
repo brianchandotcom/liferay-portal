@@ -154,7 +154,8 @@ public class DropdownsDisplayContext {
 		group1DropdownGroupItem.setSeparator(true);
 
 		for (int i = 0; i < 2; i++) {
-			DropdownCheckboxItem dropdownCheckboxItem = new DropdownCheckboxItem();
+			DropdownCheckboxItem dropdownCheckboxItem =
+				new DropdownCheckboxItem();
 
 			dropdownCheckboxItem.setInputName("checkbox" + i);
 			dropdownCheckboxItem.setInputValue("checkboxValue" + i);
@@ -165,9 +166,11 @@ public class DropdownsDisplayContext {
 
 		_inputDropdownItems.add(group1DropdownGroupItem);
 
-		DropdownRadioGroupItem group2DropdownRadioGroupItem = new DropdownRadioGroupItem();
+		DropdownRadioGroupItem group2DropdownRadioGroupItem =
+			new DropdownRadioGroupItem();
 
-		List<DropdownRadioItem> group2DropdownRadioGroupItems = new ArrayList<>();
+		List<DropdownRadioItem> group2DropdownRadioGroupItems =
+			new ArrayList<>();
 
 		group2DropdownRadioGroupItem.setItems(group2DropdownRadioGroupItems);
 

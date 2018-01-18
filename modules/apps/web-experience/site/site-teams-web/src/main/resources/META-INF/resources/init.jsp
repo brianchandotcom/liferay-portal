@@ -69,6 +69,7 @@ page import="com.liferay.portlet.usergroupsadmin.search.UserGroupSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.site.teams.web.internal.constants.SiteTeamsPortletKeys" %><%@
+page import="com.liferay.site.teams.web.internal.display.context.EditSiteTeamAssignmentsDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.display.context.SiteTeamsDisplayContext" %><%@
 page import="com.liferay.site.teams.web.internal.search.TeamDisplayTerms" %><%@
 page import="com.liferay.site.teams.web.internal.search.TeamSearch" %><%@
@@ -77,7 +78,8 @@ page import="com.liferay.users.admin.kernel.util.UsersAdminUtil" %>
 <%@ page import="java.util.HashMap" %><%@
 page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %><%@
-page import="java.util.Map" %>
+page import="java.util.Map" %><%@
+page import="java.util.Objects" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@
 page import="javax.portlet.WindowState" %>

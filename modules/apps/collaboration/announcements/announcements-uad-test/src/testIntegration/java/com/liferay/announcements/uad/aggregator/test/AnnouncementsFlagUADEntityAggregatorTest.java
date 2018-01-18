@@ -16,25 +16,19 @@ package com.liferay.announcements.uad.aggregator.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsFlagUADEntityTestCase;
+import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -42,67 +36,30 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsFlagUADEntityAggregatorTest
-	extends BaseAnnouncementsFlagUADEntityTestCase {
+	extends BaseUADEntityAggregatorTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_user = UserTestUtil.addUser();
+	protected void addDataObject(long userId) throws Exception {
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
+
+		_announcementsFlags.add(announcementsFlag);
 	}
 
-	@Test
-	public void testCount() throws Exception {
-		addAnnouncementsFlag(_user.getUserId());
-
-		Assert.assertEquals(1, _uadEntityAggregator.count(_user.getUserId()));
+	protected String getUADRegistryKey() {
+		return AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG;
 	}
-
-	@Test
-	public void testGetUADEntities() throws Exception {
-		addAnnouncementsFlag(TestPropsValues.getUserId());
-		addAnnouncementsFlag(_user.getUserId());
-
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
-
-		Assert.assertEquals(uadEntities.toString(), 1, uadEntities.size());
-
-		UADEntity uadEntity = uadEntities.get(0);
-
-		Assert.assertEquals(_user.getUserId(), uadEntity.getUserId());
-	}
-
-	@Test
-	public void testGetUADEntitiesNoAnnouncementsFlags() throws Exception {
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
-
-		Assert.assertEquals(uadEntities.toString(), 0, uadEntities.size());
-	}
-
-	@Test
-	public void testGetUADEntity() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			_user.getUserId());
-
-		long flagId = announcementsFlag.getFlagId();
-
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(flagId));
-
-		Assert.assertEquals(String.valueOf(flagId), uadEntity.getUADEntityId());
-	}
-
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
-	)
-	private UADEntityAggregator _uadEntityAggregator;
 
 	@DeleteAfterTestRun
-	private User _user;
+	private final List<AnnouncementsFlag> _announcementsFlags =
+		new ArrayList<>();
+
+	@Inject
+	private AnnouncementsFlagUADEntityTestHelper
+		_announcementsFlagUADEntityTestHelper;
 
 }

@@ -35,9 +35,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.definition.parser.WorkflowModelParser;
@@ -124,26 +122,28 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		String content = ParamUtil.getString(actionRequest, "content");
+
+		Definition definition = new Definition(
+			StringPool.BLANK, StringPool.BLANK, content, 0);
+
+		try {
+			definition = workflowModelParser.parse(content);
+		}
+		catch (Exception e) {
+		}
+
+		String name = ParamUtil.getString(actionRequest, "name");
+
+		String definitionName = getDefinitionName(definition, name);
+
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
 		String title = titleMap.get(LocaleUtil.getDefault());
 
-		if (titleMap.isEmpty() || Validator.isNull(title)) {
-			throw new WorkflowDefinitionTitleException();
-		}
-
-		String content = ParamUtil.getString(actionRequest, "content");
-
-		if (Validator.isNull(content)) {
-			throw new WorkflowDefinitionFileException();
-		}
-
-		Definition definition = workflowModelParser.parse(content);
-
-		String name = ParamUtil.getString(actionRequest, "name");
-
-		String definitionName = getDefinitionName(definition, name);
+		String definitionDescription = getDefinitionDescription(
+			actionRequest, definition, title);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.
@@ -158,9 +158,8 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		if (kaleoDefinitionVersion == null) {
 			kaleoDefinitionVersion =
 				kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-					definitionName, getTitle(titleMap),
-					definition.getDescription(), definition.getContent(), "0.1",
-					serviceContext);
+					definitionName, getTitle(titleMap), definitionDescription,
+					definition.getContent(), "0.1", serviceContext);
 		}
 		else {
 			String version = getNextVersion(
@@ -168,9 +167,8 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 
 			kaleoDefinitionVersion =
 				kaleoDefinitionVersionLocalService.addKaleoDefinitionVersion(
-					definitionName, getTitle(titleMap),
-					definition.getDescription(), definition.getContent(),
-					version, serviceContext);
+					definitionName, getTitle(titleMap), definitionDescription,
+					definition.getContent(), version, serviceContext);
 		}
 
 		actionRequest.setAttribute(
@@ -178,6 +176,24 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			kaleoDefinitionVersion);
 
 		setRedirectAttribute(actionRequest, kaleoDefinitionVersion);
+	}
+
+	protected String getDefinitionDescription(
+		ActionRequest actionRequest, Definition definition,
+		String defaultDescription) {
+
+		if (Validator.isNotNull(definition.getDescription())) {
+			return definition.getDescription();
+		}
+
+		if (Validator.isNotNull(defaultDescription)) {
+			return defaultDescription;
+		}
+
+		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
+			portal.getLocale(actionRequest));
+
+		return LanguageUtil.get(resourceBundle, "untitled-workflow");
 	}
 
 	protected String getDefinitionName(Definition definition, String name) {

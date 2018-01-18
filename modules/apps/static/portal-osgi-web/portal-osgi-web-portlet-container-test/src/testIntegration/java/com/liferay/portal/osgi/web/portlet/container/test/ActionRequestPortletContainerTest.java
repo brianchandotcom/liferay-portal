@@ -16,6 +16,7 @@ package com.liferay.portal.osgi.web.portlet.container.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthToken;
 import com.liferay.portal.kernel.security.auth.AuthTokenWhitelist;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
@@ -30,7 +31,6 @@ import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
-import com.liferay.portlet.PortletURLImpl;
 import com.liferay.portlet.SecurityPortletContainerWrapper;
 
 import java.io.IOException;
@@ -87,7 +87,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -116,7 +116,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -143,7 +143,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -168,7 +168,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -189,7 +189,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -239,7 +239,7 @@ public class ActionRequestPortletContainerTest
 
 		// Make an action request using the portal authentication token
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -273,7 +273,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -299,7 +299,7 @@ public class ActionRequestPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 
@@ -331,7 +331,7 @@ public class ActionRequestPortletContainerTest
 
 		// Make an action request using the portal authentication token
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.ACTION_PHASE);
 

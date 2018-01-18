@@ -355,7 +355,7 @@ public class PortletServletRequest extends HttpServletRequestWrapper {
 	}
 
 	/**
-	 * @deprecated As of 7.0.0
+	 * @deprecated As of 7.0.0, due to deprecation in Servlet API 2.1
 	 */
 	@Deprecated
 	@Override

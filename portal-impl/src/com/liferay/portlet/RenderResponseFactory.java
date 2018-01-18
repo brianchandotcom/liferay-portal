@@ -31,30 +31,4 @@ public class RenderResponseFactory {
 		return renderResponseImpl;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(RenderRequestImpl,
-	 *             HttpServletResponse)}
-	 */
-	@Deprecated
-	public static RenderResponseImpl create(
-			RenderRequestImpl renderRequestImpl, HttpServletResponse response,
-			String portletName, long companyId)
-		throws Exception {
-
-		return create(renderRequestImpl, response);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(RenderRequestImpl,
-	 *             HttpServletResponse)}
-	 */
-	@Deprecated
-	public static RenderResponseImpl create(
-			RenderRequestImpl renderRequestImpl, HttpServletResponse response,
-			String portletName, long companyId, long plid)
-		throws Exception {
-
-		return create(renderRequestImpl, response);
-	}
-
 }

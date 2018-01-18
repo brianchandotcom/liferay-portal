@@ -31,31 +31,4 @@ public class ResourceResponseFactory {
 		return resourceResponseImpl;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(ResourceRequestImpl,
-	 *             HttpServletResponse)}
-	 */
-	@Deprecated
-	public static ResourceResponseImpl create(
-			ResourceRequestImpl resourceRequestImpl,
-			HttpServletResponse response, String portletName, long companyId)
-		throws Exception {
-
-		return create(resourceRequestImpl, response);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(ResourceRequestImpl,
-	 *             HttpServletResponse)}
-	 */
-	@Deprecated
-	public static ResourceResponseImpl create(
-			ResourceRequestImpl resourceRequestImpl,
-			HttpServletResponse response, String portletName, long companyId,
-			long plid)
-		throws Exception {
-
-		return create(resourceRequestImpl, response);
-	}
-
 }

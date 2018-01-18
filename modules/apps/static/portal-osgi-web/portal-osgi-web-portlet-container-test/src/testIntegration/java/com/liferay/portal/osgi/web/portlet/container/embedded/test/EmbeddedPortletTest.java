@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.template.TemplateHandler;
@@ -40,7 +41,6 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.test.LayoutTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
-import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
 
@@ -387,7 +387,7 @@ public class EmbeddedPortletTest {
 			HttpServletRequest httpServletRequest =
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-			PortletURL portletURL = new PortletURLImpl(
+			PortletURL portletURL = PortletURLFactoryUtil.create(
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.RENDER_PHASE);
 
@@ -467,7 +467,7 @@ public class EmbeddedPortletTest {
 			HttpServletRequest httpServletRequest =
 				PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-			PortletURL portletURL = new PortletURLImpl(
+			PortletURL portletURL = PortletURLFactoryUtil.create(
 				httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 				PortletRequest.RESOURCE_PHASE);
 

@@ -18,12 +18,12 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.events.LifecycleEvent;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
-import com.liferay.portlet.PortletURLImpl;
 
 import java.io.IOException;
 
@@ -115,7 +115,7 @@ public class SharedSessionPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
@@ -186,7 +186,7 @@ public class SharedSessionPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
@@ -253,7 +253,7 @@ public class SharedSessionPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
@@ -322,7 +322,7 @@ public class SharedSessionPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 
@@ -390,7 +390,7 @@ public class SharedSessionPortletContainerTest
 		HttpServletRequest httpServletRequest =
 			PortletContainerTestUtil.getHttpServletRequest(group, layout);
 
-		PortletURL portletURL = new PortletURLImpl(
+		PortletURL portletURL = PortletURLFactoryUtil.create(
 			httpServletRequest, TEST_PORTLET_ID, layout.getPlid(),
 			PortletRequest.RENDER_PHASE);
 

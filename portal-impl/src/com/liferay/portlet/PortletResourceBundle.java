@@ -69,31 +69,11 @@ public class PortletResourceBundle extends ResourceBundle {
 		return portletInfos;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             PortletResourceBundle(ResourceBundle, Map)}
-	 */
-	@Deprecated
-	public PortletResourceBundle(PortletInfo portletInfo) {
-		this(null, getPortletInfos(portletInfo));
-	}
-
 	public PortletResourceBundle(
 		ResourceBundle parentResourceBundle, Map<String, String> portletInfos) {
 
 		parent = parentResourceBundle;
 		_portletInfos = portletInfos;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             PortletResourceBundle(ResourceBundle, Map)}
-	 */
-	@Deprecated
-	public PortletResourceBundle(
-		ResourceBundle parentResourceBundle, PortletInfo portletInfo) {
-
-		this(parentResourceBundle, getPortletInfos(portletInfo));
 	}
 
 	@Override

@@ -102,30 +102,6 @@ public class PortletURLImpl
 		this(request, portlet, null, layout, lifecycle);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortletURLImpl(HttpServletRequest, Portlet, Layout, String)}
-	 */
-	@Deprecated
-	public PortletURLImpl(
-		HttpServletRequest request, String portletId, Layout layout,
-		String lifecycle) {
-
-		this(request, portletId, null, layout, lifecycle);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortletURLImpl(HttpServletRequest, String, Layout, String)}
-	 */
-	@Deprecated
-	public PortletURLImpl(
-		HttpServletRequest request, String portletId, long plid,
-		String lifecycle) {
-
-		this(request, portletId, null, plid, lifecycle);
-	}
-
 	public PortletURLImpl(
 		PortletRequest portletRequest, Portlet portlet, Layout layout,
 		String lifecycle) {
@@ -133,34 +109,6 @@ public class PortletURLImpl
 		this(
 			PortalUtil.getHttpServletRequest(portletRequest), portlet,
 			portletRequest, layout, lifecycle);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortletURLImpl(PortletRequest, Portlet, Layout, String)}
-	 */
-	@Deprecated
-	public PortletURLImpl(
-		PortletRequest portletRequest, String portletId, Layout layout,
-		String lifecycle) {
-
-		this(
-			PortalUtil.getHttpServletRequest(portletRequest), portletId,
-			portletRequest, layout, lifecycle);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortletURLImpl(PortletRequest, String, Layout, String)}
-	 */
-	@Deprecated
-	public PortletURLImpl(
-		PortletRequest portletRequest, String portletId, long plid,
-		String lifecycle) {
-
-		this(
-			PortalUtil.getHttpServletRequest(portletRequest), portletId,
-			portletRequest, plid, lifecycle);
 	}
 
 	@Override
@@ -302,20 +250,6 @@ public class PortletURLImpl
 	@Override
 	public Set<String> getRemovedParameterNames() {
 		return _removedParameterNames;
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #visitReservedParameters(BiConsumer)}
-	 */
-	@Deprecated
-	@Override
-	public Map<String, String> getReservedParameterMap() {
-		LinkedHashMap<String, String> linkedHashMap = new LinkedHashMap<>();
-
-		visitReservedParameters(linkedHashMap::put);
-
-		return Collections.unmodifiableMap(linkedHashMap);
 	}
 
 	@Override
@@ -759,21 +693,6 @@ public class PortletURLImpl
 		writer.write(toString);
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #PortletURLImpl(HttpServletRequest, String, PortletRequest,
-	 *             Layout, String)}
-	 */
-	@Deprecated
-	protected PortletURLImpl(
-		HttpServletRequest request, String portletId,
-		PortletRequest portletRequest, long plid, String lifecycle) {
-
-		this(request, portletId, portletRequest, null, lifecycle);
-
-		_plid = plid;
-	}
-
 	protected void addPortalAuthToken(StringBundler sb, Key key) {
 		AuthTokenUtil.addCSRFToken(_request, this);
 	}
@@ -1177,31 +1096,6 @@ public class PortletURLImpl
 		else {
 			return false;
 		}
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected void mergeRenderParameters() {
-		_params = _mergeWithRenderParameters(_params);
-	}
-
-	/**
-	 * @deprecated As of 7.0.0, with no direct replacement
-	 */
-	@Deprecated
-	protected String prependNamespace(String name) {
-		String namespace = getNamespace();
-
-		if (!name.startsWith(PortletQName.PUBLIC_RENDER_PARAMETER_NAMESPACE) &&
-			!name.startsWith(namespace) &&
-			!PortalUtil.isReservedParameter(name)) {
-
-			return namespace.concat(name);
-		}
-
-		return name;
 	}
 
 	protected String processValue(Key key, int value) {

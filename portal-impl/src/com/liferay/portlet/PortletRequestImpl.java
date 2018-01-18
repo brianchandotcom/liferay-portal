@@ -942,21 +942,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 		_plid = plid;
 	}
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link
-	 *             #_mergePublicRenderParameters(DynamicServletRequest, Map,
-	 *             PortletPreferences, String)}
-	 */
-	@Deprecated
-	protected void mergePublicRenderParameters(
-		DynamicServletRequest dynamicRequest, PortletPreferences preferences,
-		long plid) {
-
-		_mergePublicRenderParameters(
-			dynamicRequest, Collections.emptyMap(), preferences,
-			getLifecycle());
-	}
-
 	protected String removePortletNamespace(
 		String portletNamespace, String name) {
 

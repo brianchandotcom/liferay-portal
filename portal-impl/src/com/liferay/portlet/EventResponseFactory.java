@@ -27,19 +27,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class EventResponseFactory {
 
-	/**
-	 * @deprecated As of 7.0.0, replaced by {@link #create(EventRequestImpl,
-	 *             HttpServletResponse, User, Layout)}
-	 */
-	@Deprecated
-	public static EventResponseImpl create(
-			EventRequestImpl eventRequestImpl, HttpServletResponse response,
-			String portletName, User user, Layout layout)
-		throws Exception {
-
-		return create(eventRequestImpl, response, user, layout);
-	}
-
 	public static EventResponseImpl create(
 			EventRequestImpl eventRequestImpl, HttpServletResponse response,
 			User user, Layout layout)

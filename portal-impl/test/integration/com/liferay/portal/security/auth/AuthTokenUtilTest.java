@@ -15,13 +15,13 @@
 package com.liferay.portal.security.auth;
 
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
+import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.security.auth.AuthTokenUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.SyntheticBundleRule;
-import com.liferay.portlet.PortletURLImpl;
 
 import javax.portlet.PortletRequest;
 
@@ -48,7 +48,7 @@ public class AuthTokenUtilTest {
 	public void testAddCSRFToken() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, PortletKeys.PORTAL, 0, PortletRequest.ACTION_PHASE);
 
 		AuthTokenUtil.addCSRFToken(request, liferayPortletURL);
@@ -61,7 +61,7 @@ public class AuthTokenUtilTest {
 	public void testAddPortletInvocationToken() {
 		MockHttpServletRequest request = new MockHttpServletRequest();
 
-		LiferayPortletURL liferayPortletURL = new PortletURLImpl(
+		LiferayPortletURL liferayPortletURL = PortletURLFactoryUtil.create(
 			request, PortletKeys.PORTAL, 0, PortletRequest.ACTION_PHASE);
 
 		AuthTokenUtil.addPortletInvocationToken(request, liferayPortletURL);

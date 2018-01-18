@@ -186,55 +186,53 @@ public class UpstreamFailureUtil {
 	public static void loadUpstreamJobFailuresJSONObject(
 		TopLevelBuild topLevelBuild) {
 
-		if (!topLevelBuild.isCompareToUpstream()) {
+		String jobName = topLevelBuild.getJobName();
+
+		if (!jobName.contains("pullrequest") ||
+			!topLevelBuild.isCompareToUpstream()) {
+
 			_upstreamFailuresJobJSONObject = new JSONObject(
 				"{\"SHA\":\"\",\"failedBatches\":[]}");
 
 			return;
 		}
 
-		String jobName = topLevelBuild.getJobName();
-
 		try {
-			if (jobName.contains("pullrequest")) {
-				Properties buildProperties =
-					JenkinsResultsParserUtil.getBuildProperties();
+			Properties buildProperties =
+				JenkinsResultsParserUtil.getBuildProperties();
 
-				String jenkinsDirName = buildProperties.getProperty(
-					"jenkins.dir[master]");
+			String jenkinsDirName = buildProperties.getProperty(
+				"jenkins.dir[master]");
 
-				File upstreamJobFailuresJSONFile = new File(
-					jenkinsDirName, "upstream-failures.json");
+			File upstreamJobFailuresJSONFile = new File(
+				jenkinsDirName, "upstream-failures.json");
 
-				if (upstreamJobFailuresJSONFile.exists()) {
-					String fileContent = JenkinsResultsParserUtil.read(
-						upstreamJobFailuresJSONFile);
+			if (upstreamJobFailuresJSONFile.exists()) {
+				String fileContent = JenkinsResultsParserUtil.read(
+					upstreamJobFailuresJSONFile);
 
-					_upstreamFailuresJobJSONObject = new JSONObject(
-						fileContent);
-
-					System.out.println(
-						"Using upstream failures at: " +
-							getUpstreamJobFailuresSHA(topLevelBuild));
-
-					return;
-				}
-
-				String upstreamJobName = jobName.replace(
-					"pullrequest", "upstream");
-
-				String url = JenkinsResultsParserUtil.getLocalURL(
-					JenkinsResultsParserUtil.combine(
-						_UPSTREAM_FAILURES_JOB_BASE_URL, upstreamJobName,
-						"/builds/latest/test.results.json"));
-
-				_upstreamFailuresJobJSONObject =
-					JenkinsResultsParserUtil.toJSONObject(url);
+				_upstreamFailuresJobJSONObject = new JSONObject(fileContent);
 
 				System.out.println(
 					"Using upstream failures at: " +
 						getUpstreamJobFailuresSHA(topLevelBuild));
+
+				return;
 			}
+
+			String upstreamJobName = jobName.replace("pullrequest", "upstream");
+
+			String url = JenkinsResultsParserUtil.getLocalURL(
+				JenkinsResultsParserUtil.combine(
+					_UPSTREAM_FAILURES_JOB_BASE_URL, upstreamJobName,
+					"/builds/latest/test.results.json"));
+
+			_upstreamFailuresJobJSONObject =
+				JenkinsResultsParserUtil.toJSONObject(url);
+
+			System.out.println(
+				"Using upstream failures at: " +
+					getUpstreamJobFailuresSHA(topLevelBuild));
 		}
 		catch (IOException ioe) {
 			System.out.println(

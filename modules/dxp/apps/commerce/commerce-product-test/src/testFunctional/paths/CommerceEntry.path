@@ -35,7 +35,7 @@
 </tr>
 <tr>
 	<td>MENU_TAB</td>
-	<td>//div[@class='navbar navbar-default ']//div/div/ul/li/a[@title='${key_menuTab}']</td>
+	<td>xpath=(//div | //li)[contains(@class,'page-header') or contains(@class,'show')]//ul[contains(@class,'nav-underline')]//*[normalize-space(text())='${key_menuTab}']</td>
 	<td></td>
 </tr>
 <tr>

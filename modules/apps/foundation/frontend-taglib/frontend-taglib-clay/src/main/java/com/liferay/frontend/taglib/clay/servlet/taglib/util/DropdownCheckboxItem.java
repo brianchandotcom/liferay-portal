@@ -16,8 +16,6 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.util;
 
 import java.io.Serializable;
 
-import java.util.List;
-
 /**
  * @author Carlos Lancha
  */
@@ -83,6 +81,8 @@ public class DropdownCheckboxItem implements Serializable {
 		_separator = separator;
 	}
 
+	private static final String _type = "checkbox";
+
 	private boolean _active;
 	private boolean _checked;
 	private boolean _disabled;
@@ -90,6 +90,5 @@ public class DropdownCheckboxItem implements Serializable {
 	private String _inputValue;
 	private String _label;
 	private boolean _separator;
-	private String _type = "checkbox";
 
 }

@@ -17,7 +17,7 @@
 
 		<if>
 			<not>
-				<equals arg1="${collectionDescription}" arg2="{collectionDescription}" />
+				<contains string="${collectionDescription}" substring="{collectionDescription}" />
 			</not>
 			<then>
 				<execute macro="PortletEntry#inputDescription">

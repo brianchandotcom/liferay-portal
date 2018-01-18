@@ -33,7 +33,6 @@ import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.exportimport.constants.ExportImportConstants;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
-import com.liferay.exportimport.kernel.controller.ImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
@@ -146,7 +145,70 @@ import org.osgi.service.component.annotations.Reference;
 	service = {ExportImportController.class, PortletImportController.class}
 )
 @ProviderType
-public class PortletImportController implements ImportController {
+public class PortletImportControllerImpl implements PortletImportController {
+
+	@Override
+	public void deletePortletData(PortletDataContext portletDataContext)
+		throws Exception {
+
+		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
+		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
+
+		javax.portlet.PortletPreferences portletPreferences =
+			_portletPreferencesLocalService.fetchPreferences(
+				portletDataContext.getCompanyId(), ownerId, ownerType,
+				portletDataContext.getPlid(),
+				portletDataContext.getPortletId());
+
+		if (portletPreferences == null) {
+			portletPreferences = new PortletPreferencesImpl();
+		}
+
+		String xml = deletePortletData(portletDataContext, portletPreferences);
+
+		if (xml != null) {
+			_portletPreferencesLocalService.updatePreferences(
+				ownerId, ownerType, portletDataContext.getPlid(),
+				portletDataContext.getPortletId(), xml);
+		}
+	}
+
+	@Override
+	public void importAssetLinks(PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/links.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Element importDataRootElement =
+			portletDataContext.getImportDataRootElement();
+
+		try {
+			Document document = SAXReaderUtil.read(xml);
+
+			Element rootElement = document.getRootElement();
+
+			portletDataContext.setImportDataRootElement(rootElement);
+
+			Element linksElement = portletDataContext.getImportDataGroupElement(
+				StagedAssetLink.class);
+
+			List<Element> linkElements = linksElement.elements();
+
+			for (Element linkElement : linkElements) {
+				StagedModelDataHandlerUtil.importStagedModel(
+					portletDataContext, linkElement);
+			}
+		}
+		finally {
+			portletDataContext.setImportDataRootElement(importDataRootElement);
+		}
+	}
 
 	@Override
 	public void importDataDeletions(
@@ -262,6 +324,7 @@ public class PortletImportController implements ImportController {
 		}
 	}
 
+	@Override
 	public void importPortletData(
 			PortletDataContext portletDataContext, Element portletDataElement)
 		throws Exception {
@@ -366,6 +429,7 @@ public class PortletImportController implements ImportController {
 			portletDataContext, portletPreferencesImpl, portletDataElement);
 	}
 
+	@Override
 	public void importPortletPreferences(
 			PortletDataContext portletDataContext, long companyId, long groupId,
 			Layout layout, Element parentElement, boolean preserveScopeLayoutId,
@@ -586,6 +650,7 @@ public class PortletImportController implements ImportController {
 		}
 	}
 
+	@Override
 	public void importServicePortletPreferences(
 			PortletDataContext portletDataContext, Element serviceElement)
 		throws PortalException {
@@ -619,6 +684,120 @@ public class PortletImportController implements ImportController {
 			portletPreferences);
 	}
 
+	@Override
+	public void readExpandoTables(PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/expando-tables.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> expandoTableElements = rootElement.elements(
+			"expando-table");
+
+		for (Element expandoTableElement : expandoTableElements) {
+			String className = expandoTableElement.attributeValue("class-name");
+
+			ExpandoTable expandoTable = null;
+
+			try {
+				expandoTable = _expandoTableLocalService.getDefaultTable(
+					portletDataContext.getCompanyId(), className);
+			}
+			catch (NoSuchTableException nste) {
+
+				// LPS-52675
+
+				if (_log.isDebugEnabled()) {
+					_log.debug(nste, nste);
+				}
+
+				expandoTable = _expandoTableLocalService.addDefaultTable(
+					portletDataContext.getCompanyId(), className);
+			}
+
+			List<Element> expandoColumnElements = expandoTableElement.elements(
+				"expando-column");
+
+			for (Element expandoColumnElement : expandoColumnElements) {
+				long columnId = GetterUtil.getLong(
+					expandoColumnElement.attributeValue("column-id"));
+				String name = expandoColumnElement.attributeValue("name");
+				int type = GetterUtil.getInteger(
+					expandoColumnElement.attributeValue("type"));
+				String defaultData = expandoColumnElement.elementText(
+					"default-data");
+				String typeSettings = expandoColumnElement.elementText(
+					"type-settings");
+
+				Serializable defaultDataObject =
+					ExpandoConverterUtil.getAttributeFromString(
+						type, defaultData);
+
+				ExpandoColumn expandoColumn =
+					_expandoColumnLocalService.getColumn(
+						expandoTable.getTableId(), name);
+
+				if (expandoColumn != null) {
+					_expandoColumnLocalService.updateColumn(
+						expandoColumn.getColumnId(), name, type,
+						defaultDataObject);
+				}
+				else {
+					expandoColumn = _expandoColumnLocalService.addColumn(
+						expandoTable.getTableId(), name, type,
+						defaultDataObject);
+				}
+
+				_expandoColumnLocalService.updateTypeSettings(
+					expandoColumn.getColumnId(), typeSettings);
+
+				portletDataContext.importPermissions(
+					ExpandoColumn.class, columnId, expandoColumn.getColumnId());
+			}
+		}
+	}
+
+	@Override
+	public void readLocks(PortletDataContext portletDataContext)
+		throws Exception {
+
+		String xml = portletDataContext.getZipEntryAsString(
+			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
+				"/locks.xml");
+
+		if (xml == null) {
+			return;
+		}
+
+		Document document = SAXReaderUtil.read(xml);
+
+		Element rootElement = document.getRootElement();
+
+		List<Element> assetElements = rootElement.elements("asset");
+
+		for (Element assetElement : assetElements) {
+			String path = assetElement.attributeValue("path");
+			String className = assetElement.attributeValue("class-name");
+			String key = assetElement.attributeValue("key");
+
+			Lock lock = (Lock)portletDataContext.getZipEntryAsObject(path);
+
+			if (lock != null) {
+				portletDataContext.addLocks(className, key, lock);
+			}
+		}
+	}
+
+	@Override
 	public void resetPortletScope(
 		PortletDataContext portletDataContext, long groupId) {
 
@@ -673,31 +852,6 @@ public class PortletImportController implements ImportController {
 			if (zipReader != null) {
 				zipReader.close();
 			}
-		}
-	}
-
-	protected void deletePortletData(PortletDataContext portletDataContext)
-		throws Exception {
-
-		long ownerId = PortletKeys.PREFS_OWNER_ID_DEFAULT;
-		int ownerType = PortletKeys.PREFS_OWNER_TYPE_LAYOUT;
-
-		javax.portlet.PortletPreferences portletPreferences =
-			_portletPreferencesLocalService.fetchPreferences(
-				portletDataContext.getCompanyId(), ownerId, ownerType,
-				portletDataContext.getPlid(),
-				portletDataContext.getPortletId());
-
-		if (portletPreferences == null) {
-			portletPreferences = new PortletPreferencesImpl();
-		}
-
-		String xml = deletePortletData(portletDataContext, portletPreferences);
-
-		if (xml != null) {
-			_portletPreferencesLocalService.updatePreferences(
-				ownerId, ownerType, portletDataContext.getPlid(),
-				portletDataContext.getPortletId(), xml);
 		}
 	}
 
@@ -1090,42 +1244,6 @@ public class PortletImportController implements ImportController {
 		return PROCESS_FLAG_PORTLET_IMPORT_IN_PROCESS;
 	}
 
-	protected void importAssetLinks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/links.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Element importDataRootElement =
-			portletDataContext.getImportDataRootElement();
-
-		try {
-			Document document = SAXReaderUtil.read(xml);
-
-			Element rootElement = document.getRootElement();
-
-			portletDataContext.setImportDataRootElement(rootElement);
-
-			Element linksElement = portletDataContext.getImportDataGroupElement(
-				StagedAssetLink.class);
-
-			List<Element> linkElements = linksElement.elements();
-
-			for (Element linkElement : linkElements) {
-				StagedModelDataHandlerUtil.importStagedModel(
-					portletDataContext, linkElement);
-			}
-		}
-		finally {
-			portletDataContext.setImportDataRootElement(importDataRootElement);
-		}
-	}
-
 	protected void populateDeletionStagedModelTypes(
 			PortletDataContext portletDataContext)
 		throws Exception {
@@ -1143,117 +1261,6 @@ public class PortletImportController implements ImportController {
 			portletDataHandler.getDeletionSystemEventStagedModelTypes());
 		portletDataContext.addDeletionSystemEventStagedModelTypes(
 			new StagedModelType(StagedAssetLink.class));
-	}
-
-	protected void readExpandoTables(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/expando-tables.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> expandoTableElements = rootElement.elements(
-			"expando-table");
-
-		for (Element expandoTableElement : expandoTableElements) {
-			String className = expandoTableElement.attributeValue("class-name");
-
-			ExpandoTable expandoTable = null;
-
-			try {
-				expandoTable = _expandoTableLocalService.getDefaultTable(
-					portletDataContext.getCompanyId(), className);
-			}
-			catch (NoSuchTableException nste) {
-
-				// LPS-52675
-
-				if (_log.isDebugEnabled()) {
-					_log.debug(nste, nste);
-				}
-
-				expandoTable = _expandoTableLocalService.addDefaultTable(
-					portletDataContext.getCompanyId(), className);
-			}
-
-			List<Element> expandoColumnElements = expandoTableElement.elements(
-				"expando-column");
-
-			for (Element expandoColumnElement : expandoColumnElements) {
-				long columnId = GetterUtil.getLong(
-					expandoColumnElement.attributeValue("column-id"));
-				String name = expandoColumnElement.attributeValue("name");
-				int type = GetterUtil.getInteger(
-					expandoColumnElement.attributeValue("type"));
-				String defaultData = expandoColumnElement.elementText(
-					"default-data");
-				String typeSettings = expandoColumnElement.elementText(
-					"type-settings");
-
-				Serializable defaultDataObject =
-					ExpandoConverterUtil.getAttributeFromString(
-						type, defaultData);
-
-				ExpandoColumn expandoColumn =
-					_expandoColumnLocalService.getColumn(
-						expandoTable.getTableId(), name);
-
-				if (expandoColumn != null) {
-					_expandoColumnLocalService.updateColumn(
-						expandoColumn.getColumnId(), name, type,
-						defaultDataObject);
-				}
-				else {
-					expandoColumn = _expandoColumnLocalService.addColumn(
-						expandoTable.getTableId(), name, type,
-						defaultDataObject);
-				}
-
-				_expandoColumnLocalService.updateTypeSettings(
-					expandoColumn.getColumnId(), typeSettings);
-
-				portletDataContext.importPermissions(
-					ExpandoColumn.class, columnId, expandoColumn.getColumnId());
-			}
-		}
-	}
-
-	protected void readLocks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		String xml = portletDataContext.getZipEntryAsString(
-			ExportImportPathUtil.getSourceRootPath(portletDataContext) +
-				"/locks.xml");
-
-		if (xml == null) {
-			return;
-		}
-
-		Document document = SAXReaderUtil.read(xml);
-
-		Element rootElement = document.getRootElement();
-
-		List<Element> assetElements = rootElement.elements("asset");
-
-		for (Element assetElement : assetElements) {
-			String path = assetElement.attributeValue("path");
-			String className = assetElement.attributeValue("class-name");
-			String key = assetElement.attributeValue("key");
-
-			Lock lock = (Lock)portletDataContext.getZipEntryAsObject(path);
-
-			if (lock != null) {
-				portletDataContext.addLocks(className, key, lock);
-			}
-		}
 	}
 
 	@Reference(unbind = "-")
@@ -1551,7 +1558,7 @@ public class PortletImportController implements ImportController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletImportController.class);
+		PortletImportControllerImpl.class);
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private AssetLinkLocalService _assetLinkLocalService;

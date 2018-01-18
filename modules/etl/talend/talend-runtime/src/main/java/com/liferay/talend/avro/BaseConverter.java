@@ -21,7 +21,7 @@ import org.talend.daikon.avro.converter.AvroConverter;
 /**
  * @author Zoltán Takács
  */
-public abstract class AbstractAvroConverter<DatumT, AvroT>
+public abstract class BaseConverter<DatumT, AvroT>
 	implements AvroConverter<DatumT, AvroT> {
 
 	/**
@@ -30,7 +30,7 @@ public abstract class AbstractAvroConverter<DatumT, AvroT>
 	 * @param clazz type of DI data
 	 * @param schema schema of a Avro data
 	 */
-	public AbstractAvroConverter(Class<DatumT> clazz, Schema schema) {
+	public BaseConverter(Class<DatumT> clazz, Schema schema) {
 		_clazz = clazz;
 		_schema = schema;
 	}

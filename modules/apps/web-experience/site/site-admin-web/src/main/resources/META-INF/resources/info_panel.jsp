@@ -38,6 +38,16 @@ if (ListUtil.isEmpty(groups)) {
 }
 
 request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem navigationItem = new NavigationItem();
+
+navigationItem.setActive(true);
+navigationItem.setHref(currentURL);
+navigationItem.setLabel(LanguageUtil.get(request, "details"));
+
+navigationItems.add(navigationItem);
 %>
 
 <c:choose>
@@ -53,11 +63,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					<h4><liferay-ui:message key="sites" /></h4>
 				</div>
 
-				<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-					<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-						<aui:nav-item label="details" selected="<%= true %>" />
-					</aui:nav>
-				</aui:nav-bar>
+				<clay:navigation-bar
+					items="<%= navigationItems %>"
+				/>
 
 				<div class="sidebar-body">
 					<h5><liferay-ui:message key="num-of-items" /></h5>
@@ -83,13 +91,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 					<h4><%= HtmlUtil.escape(group.getDescriptiveName()) %></h4>
 				</div>
 
-				<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-					<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-						<portlet:renderURL var="mainURL" />
-
-						<aui:nav-item href="<%= mainURL.toString() %>" label="details" selected="<%= true %>" />
-					</aui:nav>
-				</aui:nav-bar>
+				<clay:navigation-bar
+					items="<%= navigationItems %>"
+				/>
 
 				<div class="sidebar-body">
 					<p>
@@ -188,11 +192,9 @@ request.removeAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 			<h4><liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" /></h4>
 		</div>
 
-		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-			<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			items="<%= navigationItems %>"
+		/>
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message arguments="<%= groups.size() %>" key="x-items-are-selected" /></h5>

@@ -24,12 +24,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>FS_PRODUCT_OPTIONS</td>
+	<td>FS_PRODUCT_OPTION</td>
 	<td>//div[@class='options']//*//div[contains (@class,'placeholder') and contains (.,'Choose an Option')]</td>
 	<td></td>
 </tr>
 <tr>
-	<td>FS_OPTIONS_SELECT</td>
+	<td>FS_PRODUCT_OPTIONS_SELECT</td>
 	<td>//div[@class='drop-chosen']//ul/li/span[contains (@title,'${key_optionValue}') and contains (.,'${key_optionValue}')]</td>
 	<td></td>
 </tr>

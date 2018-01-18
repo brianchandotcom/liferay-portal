@@ -52,8 +52,6 @@
 	</command>
 
 	<command name="viewAutoSaveMessage">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Saving layout page template..." />
-
 		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Layout page template saved at" />
 	</command>
 

@@ -1,3 +1,7 @@
+ext {
+	springExtenderApiVersion = "3.0.0"
+}
+
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
@@ -6,6 +10,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.felix.util", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender.api", version: springExtenderApiVersion
 	provided group: "com.liferay", name: "com.liferay.portal.upgrade", version: "2.1.0"
 	provided group: "com.liferay", name: "org.hibernate.core", version: "3.6.10.LIFERAY-PATCHED-3"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

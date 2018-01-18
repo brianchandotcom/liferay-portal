@@ -18,6 +18,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.entity.BookmarksEntryUADEntity;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
@@ -26,6 +27,7 @@ import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exception.UADEntityException;
 import com.liferay.user.associated.data.util.UADAnonymizerHelper;
+import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
 import java.util.List;
 
@@ -46,24 +48,52 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	public void autoAnonymize(UADEntity uadEntity) throws PortalException {
 		BookmarksEntry bookmarksEntry = _getBookmarksEntry(uadEntity);
 
-		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+		_autoAnonymize(bookmarksEntry, uadEntity.getUserId());
+	}
 
-		if (bookmarksEntry.getStatusByUserId() == uadEntity.getUserId()) {
-			bookmarksEntry.setStatusByUserId(anonymousUser.getUserId());
-			bookmarksEntry.setStatusByUserName(anonymousUser.getScreenName());
-		}
+	@Override
+	public void autoAnonymizeAll(long userId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(userId);
 
-		if (bookmarksEntry.getUserId() == uadEntity.getUserId()) {
-			bookmarksEntry.setUserId(anonymousUser.getUserId());
-			bookmarksEntry.setUserName(anonymousUser.getFullName());
-		}
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
 
-		_bookmarksEntryLocalService.updateBookmarksEntry(bookmarksEntry);
+				@Override
+				public void performAction(BookmarksEntry bookmarksEntry)
+					throws PortalException {
+
+					_autoAnonymize(bookmarksEntry, userId);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
 	public void delete(UADEntity uadEntity) throws PortalException {
 		_bookmarksEntryLocalService.deleteEntry(_getBookmarksEntry(uadEntity));
+	}
+
+	@Override
+	public void deleteAll(long userId) throws PortalException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			_getActionableDynamicQuery(userId);
+
+		actionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
+
+				@Override
+				public void performAction(BookmarksEntry bookmarksEntry)
+					throws PortalException {
+
+					_bookmarksEntryLocalService.deleteEntry(bookmarksEntry);
+				}
+
+			});
+
+		actionableDynamicQuery.performActions();
 	}
 
 	@Override
@@ -74,6 +104,30 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	@Override
 	protected List<UADEntity> getUADEntities(long userId) {
 		return _uadEntityAggregator.getUADEntities(userId);
+	}
+
+	private void _autoAnonymize(BookmarksEntry bookmarksEntry, long userId)
+		throws PortalException {
+
+		User anonymousUser = _uadAnonymizerHelper.getAnonymousUser();
+
+		if (bookmarksEntry.getStatusByUserId() == userId) {
+			bookmarksEntry.setStatusByUserId(anonymousUser.getUserId());
+			bookmarksEntry.setStatusByUserName(anonymousUser.getScreenName());
+		}
+
+		if (bookmarksEntry.getUserId() == userId) {
+			bookmarksEntry.setUserId(anonymousUser.getUserId());
+			bookmarksEntry.setUserName(anonymousUser.getFullName());
+		}
+
+		_bookmarksEntryLocalService.updateBookmarksEntry(bookmarksEntry);
+	}
+
+	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
+		return _uadDynamicQueryHelper.getActionableDynamicQuery(
+			_bookmarksEntryLocalService::getActionableDynamicQuery,
+			BookmarksEntryUADEntity.getUserIdFieldNames(), userId);
 	}
 
 	private BookmarksEntry _getBookmarksEntry(UADEntity uadEntity)
@@ -98,6 +152,9 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 
 	@Reference
 	private UADAnonymizerHelper _uadAnonymizerHelper;
+
+	@Reference
+	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 	@Reference(
 		target = "(model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY + ")"

@@ -18,14 +18,13 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.entity.BookmarksEntryUADEntity;
-import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.util.UADDynamicQueryHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,19 +44,8 @@ public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Override
 	public List<UADEntity> getUADEntities(long userId) {
-		DynamicQuery dynamicQuery = _bookmarksEntryLocalService.dynamicQuery();
-
-		Criterion statusByUserIdCriterion = RestrictionsFactoryUtil.eq(
-			"statusByUserId", userId);
-		Criterion userIdCriterion = RestrictionsFactoryUtil.eq(
-			"userId", userId);
-
-		dynamicQuery.add(
-			RestrictionsFactoryUtil.or(
-				statusByUserIdCriterion, userIdCriterion));
-
 		List<BookmarksEntry> bookmarksEntries =
-			_bookmarksEntryLocalService.dynamicQuery(dynamicQuery);
+			_bookmarksEntryLocalService.dynamicQuery(_getDynamicQuery(userId));
 
 		List<UADEntity> uadEntities = new ArrayList<>(bookmarksEntries.size());
 
@@ -81,6 +69,12 @@ public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 			_getUserId(uadEntityId), uadEntityId, bookmarksEntry);
 	}
 
+	private DynamicQuery _getDynamicQuery(long userId) {
+		return _uadDynamicQueryHelper.getDynamicQuery(
+			_bookmarksEntryLocalService::dynamicQuery,
+			BookmarksEntryUADEntity.getUserIdFieldNames(), userId);
+	}
+
 	private long _getEntryId(String uadEntityId) {
 		String[] uadEntityIdParts = uadEntityId.split(StringPool.POUND);
 
@@ -100,5 +94,8 @@ public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Reference
 	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+
+	@Reference
+	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 }

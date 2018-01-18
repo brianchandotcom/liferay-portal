@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.Sync;
 import com.liferay.portal.kernel.test.rule.SynchronousDestinationTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.util.DateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -36,9 +35,6 @@ import com.liferay.portal.search.test.util.FieldValuesAssert;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-
-import java.text.DateFormat;
-import java.text.ParseException;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -110,12 +106,8 @@ public class CalendarBookingIndexerIndexedFieldsTest
 			Field.CLASS_NAME_ID,
 			String.valueOf(portal.getClassNameId(Calendar.class)));
 
-		map.put(Field.EXPIRATION_DATE, "99950812133000");
-		map.put(
-			Field.EXPIRATION_DATE.concat("_sortable"), "9223372036854775807");
-		map.put(Field.PRIORITY, "0.0");
-		map.put(Field.PUBLISH_DATE, "19700101000000");
-		map.put(Field.PUBLISH_DATE.concat("_sortable"), "0");
+		indexedFieldsFixture.populatePriority("0.0", map);
+
 		map.put(Field.RELATED_ENTRY, "true");
 		map.put(Field.STAGING_GROUP, "false");
 		map.put(Field.STATUS, "0");
@@ -136,25 +128,21 @@ public class CalendarBookingIndexerIndexedFieldsTest
 
 		populateCalendarBooking(calendarBooking, map);
 
-		DateFormat dateFormat = DateFormatFactoryUtil.getSimpleDateFormat(
-			"yyyyMMddHHmm");
+		indexedFieldsFixture.populateRoleIdFields(
+			calendarBooking.getCompanyId(), Calendar.class.getName(),
+			calendarBooking.getCalendarId(), calendarBooking.getGroupId(),
+			CalendarActionKeys.VIEW_BOOKING_DETAILS, map);
 
-		populateCalendarDate(
-			Field.CREATE_DATE, calendar.getCreateDate(), dateFormat, map);
-		populateCalendarDate(
-			Field.MODIFIED_DATE, calendar.getModifiedDate(), dateFormat, map);
-
-		calendarFieldsFixture.populateGroupRoleId(map);
-		calendarFieldsFixture.populateRoleId("Owner", map);
-		calendarFieldsFixture.populateUID(calendarBooking, map);
+		indexedFieldsFixture.populateUID(
+			calendarBooking.getModelClassName(),
+			calendarBooking.getCalendarBookingId(), map);
 
 		String keywords = "nev";
 
 		Document document = calendarSearchFixture.searchOnlyOne(
 			keywords, LocaleUtil.HUNGARY);
 
-		adjustDatePrecision(Field.CREATE_DATE, document, dateFormat);
-		adjustDatePrecision(Field.MODIFIED_DATE, document, dateFormat);
+		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(map, document, keywords);
 	}
@@ -173,18 +161,6 @@ public class CalendarBookingIndexerIndexedFieldsTest
 
 		return calendarFixture.addCalendarBooking(
 			titleLocalizedValuesMap, calendar, serviceContext);
-	}
-
-	protected void adjustDatePrecision(
-			String field, Document document, DateFormat dateFormat)
-		throws Exception {
-
-		Date date1 = document.getDate(field);
-
-		Date date2 = dateFormat.parse(dateFormat.format(date1));
-
-		document.addDate(field, date2);
-		document.addKeyword(field.concat("_sortable"), date2.getTime());
 	}
 
 	protected void populateCalendar(
@@ -216,20 +192,8 @@ public class CalendarBookingIndexerIndexedFieldsTest
 		map.put(
 			"startTime_sortable",
 			String.valueOf(calendarBooking.getStartTime()));
-	}
 
-	protected void populateCalendarDate(
-			String fieldName, Date date, DateFormat dateFormat,
-			Map<String, String> map)
-		throws ParseException {
-
-		String dateString = dateFormat.format(date);
-
-		map.put(fieldName, dateString + "00");
-
-		Date date2 = dateFormat.parse(dateString);
-
-		map.put(fieldName.concat("_sortable"), String.valueOf(date2.getTime()));
+		populateDates(calendarBooking, map);
 	}
 
 	protected void populateCalendarResource(
@@ -241,6 +205,18 @@ public class CalendarBookingIndexerIndexedFieldsTest
 		map.put(
 			Field.SCOPE_GROUP_ID,
 			String.valueOf(calendarResource.getGroupId()));
+	}
+
+	protected void populateDates(
+		CalendarBooking calendarBooking, Map<String, String> map) {
+
+		indexedFieldsFixture.populateDate(
+			Field.CREATE_DATE, calendarBooking.getCreateDate(), map);
+		indexedFieldsFixture.populateDate(
+			Field.MODIFIED_DATE, calendarBooking.getModifiedDate(), map);
+		indexedFieldsFixture.populateDate(Field.PUBLISH_DATE, new Date(0), map);
+
+		indexedFieldsFixture.populateExpirationDateWithForever(map);
 	}
 
 	protected void populateTitle(String title, Map<String, String> map) {

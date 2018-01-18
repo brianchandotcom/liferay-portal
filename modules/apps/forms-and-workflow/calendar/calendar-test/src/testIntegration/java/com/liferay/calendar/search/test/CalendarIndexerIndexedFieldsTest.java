@@ -107,6 +107,8 @@ public class CalendarIndexerIndexedFieldsTest
 		Document document = calendarSearchFixture.searchOnlyOne(
 			keywords, LocaleUtil.HUNGARY);
 
+		indexedFieldsFixture.postProcessDocument(document);
+
 		FieldValuesAssert.assertFieldValues(map, document, keywords);
 	}
 
@@ -136,6 +138,8 @@ public class CalendarIndexerIndexedFieldsTest
 
 		Document document = calendarSearchFixture.searchOnlyOne(
 			keywords, LocaleUtil.BRAZIL);
+
+		indexedFieldsFixture.postProcessDocument(document);
 
 		FieldValuesAssert.assertFieldValues(map, document, keywords);
 	}
@@ -196,9 +200,12 @@ public class CalendarIndexerIndexedFieldsTest
 
 		populateCalendarResource(calendar.getCalendarResource(), calendar, map);
 
-		calendarFieldsFixture.populateGroupRoleId(map);
-		calendarFieldsFixture.populateRoleId("Guest", map);
-		calendarFieldsFixture.populateUID(calendar, map);
+		indexedFieldsFixture.populateRoleIdFields(
+			calendar.getCompanyId(), calendar.getModelClassName(),
+			calendar.getCalendarId(), calendar.getGroupId(), null, map);
+
+		indexedFieldsFixture.populateUID(
+			calendar.getModelClassName(), calendar.getCalendarId(), map);
 	}
 
 }

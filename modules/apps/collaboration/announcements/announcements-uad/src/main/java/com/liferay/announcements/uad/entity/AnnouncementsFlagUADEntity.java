@@ -16,7 +16,11 @@ package com.liferay.announcements.uad.entity;
 
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.BaseUADEntity;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Noah Sherrill
@@ -34,6 +38,14 @@ public class AnnouncementsFlagUADEntity extends BaseUADEntity {
 
 	public AnnouncementsFlag getAnnouncementsFlag() {
 		return _announcementsFlag;
+	}
+
+	@Override
+	public Map<String, Object> getEntityNonAnonymizableFieldValues(
+			List<String> nonAnonymizableFieldNames)
+		throws PortalException {
+
+		return null;
 	}
 
 	private final AnnouncementsFlag _announcementsFlag;

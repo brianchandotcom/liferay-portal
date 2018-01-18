@@ -36,7 +36,7 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 		throws Exception;
 
 	@Override
-	public String getEntityNonAnonymizableFieldNames(UADEntity uadEntity)
+	public String getEntityNonAnonymizableFieldValues(UADEntity uadEntity)
 		throws PortalException {
 
 		List<String> entityTypeNonAnonymizableFieldNamesList =
@@ -46,19 +46,19 @@ public abstract class BaseUADEntityDisplay implements UADEntityDisplay {
 			return "";
 		}
 
-		Map<String, Object> nonAnonymizableFieldNamesMap =
-			uadEntity.getEntityNonAnonymizableFieldNames(
+		Map<String, Object> nonAnonymizableFieldValuesMap =
+			uadEntity.getEntityNonAnonymizableFieldValues(
 				entityTypeNonAnonymizableFieldNamesList);
 
-		if (nonAnonymizableFieldNamesMap == null) {
+		if (nonAnonymizableFieldValuesMap == null) {
 			return StringPool.BLANK;
 		}
 
 		StringBundler sb = new StringBundler(
-			(nonAnonymizableFieldNamesMap.size() * 4) - 1);
+			(nonAnonymizableFieldValuesMap.size() * 4) - 1);
 
 		for (Map.Entry<String, Object> entry :
-				nonAnonymizableFieldNamesMap.entrySet()) {
+				nonAnonymizableFieldValuesMap.entrySet()) {
 
 			sb.append(entry.getKey());
 			sb.append(StringPool.COLON);

@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.UADEntity;
 
+import java.util.List;
+
 /**
  * @author William Newbury
  */
@@ -32,5 +34,7 @@ public interface UADEntityAnonymizer {
 	public void delete(UADEntity uadEntity) throws PortalException;
 
 	public void deleteAll(long userId) throws PortalException;
+
+	public List<String> getEntityNonAnonymizableFieldNames();
 
 }

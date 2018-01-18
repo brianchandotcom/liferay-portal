@@ -31,7 +31,7 @@ Map<String, Object> context = new HashMap<>();
 
 context.put("followURLOnTitleClick", layoutItemSelectorViewDisplayContext.isFollowURLOnTitleClick());
 context.put("itemSelectorSaveEvent", HtmlUtil.escapeJS(layoutItemSelectorViewDisplayContext.getItemSelectedEventName()));
-context.put("multiSelection", false);
+context.put("multiSelection", layoutItemSelectorViewDisplayContext.isMultiSelection());
 context.put("namespace", liferayPortletResponse.getNamespace());
 context.put("nodes", layoutItemSelectorViewDisplayContext.getLayoutsJSONArray());
 context.put("pathThemeImages", themeDisplay.getPathThemeImages());

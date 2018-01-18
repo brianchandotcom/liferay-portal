@@ -69,30 +69,42 @@ class SelectLayout extends Component {
 	 * @protected
 	 */
 	selectedNodeChange_(event) {
-		let node = event.newVal[0];
+		if (this.multiSelection) {
+			Liferay.Util.getOpener().Liferay.fire(
+				this.itemSelectorSaveEvent,
+				{
+					data: event.newVal
+				}
+			);
+		}
+		else {
+			const node = event.newVal[0];
 
-		if (node) {
-			if (this.followURLOnTitleClick) {
-				Liferay.Util.getOpener().document.location.href = node.url;
-			}
-			else {
-				let data = {
-					groupId: node.groupId,
-					id: node.id,
-					layoutId: node.layoutId,
-					name: node.value,
-					privateLayout: node.privateLayout,
-					value: node.url
-				};
+			if (node) {
+				if (this.followURLOnTitleClick) {
+					Liferay.Util.getOpener().document.location.href = node.url;
+				}
+				else {
+					let data = {
+						groupId: node.groupId,
+						id: node.id,
+						layoutId: node.layoutId,
+						name: node.value,
+						privateLayout: node.privateLayout,
+						value: node.url
+					};
 
-				Liferay.Util.getOpener().Liferay.fire(
-					this.itemSelectorSaveEvent,
-					{
-						data: data
-					}
-				);
+					Liferay.Util.getOpener().Liferay.fire(
+						this.itemSelectorSaveEvent,
+						{
+							data: data
+						}
+					);
+				}
 			}
 		}
+
+
 	}
 
 	/**

@@ -1146,7 +1146,7 @@
 
 				var singleSubmit = event.singleSubmit;
 
-				var inputs = form.all('input[type=button], input[type=image], input[type=reset], input[type=submit]');
+				var inputs = form.all('button[type=submit], input[type=button], input[type=image], input[type=reset], input[type=submit]');
 
 				Util.disableFormButtons(inputs, form);
 

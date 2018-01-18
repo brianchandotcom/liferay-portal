@@ -28,7 +28,7 @@ import com.liferay.asset.kernel.service.AssetEntryLocalService;
 import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.exportimport.constants.ExportImportConstants;
-import com.liferay.exportimport.kernel.controller.ExportController;
+import com.liferay.exportimport.controller.PortletExportController;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.exception.LayoutImportException;
 import com.liferay.exportimport.kernel.lar.ExportImportDateUtil;
@@ -131,7 +131,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = {ExportImportController.class, PortletExportController.class}
 )
 @ProviderType
-public class PortletExportController implements ExportController {
+public class PortletExportControllerImpl implements PortletExportController {
 
 	@Override
 	public File export(ExportImportConfiguration exportImportConfiguration)
@@ -180,6 +180,139 @@ public class PortletExportController implements ExportController {
 		}
 	}
 
+	@Override
+	public void exportAssetLinks(PortletDataContext portletDataContext)
+		throws Exception {
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("links");
+
+		Element exportDataRootElement =
+			portletDataContext.getExportDataRootElement();
+
+		try {
+			portletDataContext.setExportDataRootElement(rootElement);
+
+			ActionableDynamicQuery linkActionableDynamicQuery =
+				_assetLinkLocalService.getExportActionbleDynamicQuery(
+					portletDataContext);
+
+			linkActionableDynamicQuery.performActions();
+
+			for (long linkId : portletDataContext.getAssetLinkIds()) {
+				AssetLink assetLink = _assetLinkLocalService.getAssetLink(
+					linkId);
+
+				StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
+					assetLink, AssetLink.class, StagedAssetLink.class);
+
+				portletDataContext.addClassedModel(
+					portletDataContext.getExportDataElement(stagedAssetLink),
+					ExportImportPathUtil.getModelPath(stagedAssetLink),
+					stagedAssetLink);
+			}
+		}
+		finally {
+			portletDataContext.setExportDataRootElement(exportDataRootElement);
+		}
+
+		portletDataContext.addZipEntry(
+			ExportImportPathUtil.getRootPath(portletDataContext) + "/links.xml",
+			document.formattedString());
+	}
+
+	@Override
+	public void exportExpandoTables(PortletDataContext portletDataContext)
+		throws Exception {
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("expando-tables");
+
+		Map<String, List<ExpandoColumn>> expandoColumnsMap =
+			portletDataContext.getExpandoColumns();
+
+		for (Map.Entry<String, List<ExpandoColumn>> entry :
+				expandoColumnsMap.entrySet()) {
+
+			String className = entry.getKey();
+
+			Element expandoTableElement = rootElement.addElement(
+				"expando-table");
+
+			expandoTableElement.addAttribute("class-name", className);
+
+			List<ExpandoColumn> expandoColumns = entry.getValue();
+
+			for (ExpandoColumn expandoColumn : expandoColumns) {
+				Element expandoColumnElement = expandoTableElement.addElement(
+					"expando-column");
+
+				expandoColumnElement.addAttribute(
+					"column-id", String.valueOf(expandoColumn.getColumnId()));
+				expandoColumnElement.addAttribute(
+					"name", expandoColumn.getName());
+				expandoColumnElement.addAttribute(
+					"type", String.valueOf(expandoColumn.getType()));
+
+				DocUtil.add(
+					expandoColumnElement, "default-data",
+					expandoColumn.getDefaultData());
+
+				Element typeSettingsElement = expandoColumnElement.addElement(
+					"type-settings");
+
+				UnicodeProperties typeSettingsProperties =
+					expandoColumn.getTypeSettingsProperties();
+
+				typeSettingsElement.addCDATA(typeSettingsProperties.toString());
+			}
+		}
+
+		portletDataContext.addZipEntry(
+			ExportImportPathUtil.getRootPath(portletDataContext) +
+				"/expando-tables.xml",
+			document.formattedString());
+	}
+
+	@Override
+	public void exportLocks(PortletDataContext portletDataContext)
+		throws Exception {
+
+		Document document = SAXReaderUtil.createDocument();
+
+		Element rootElement = document.addElement("locks");
+
+		Map<String, Lock> locksMap = portletDataContext.getLocks();
+
+		for (Map.Entry<String, Lock> entry : locksMap.entrySet()) {
+			Lock lock = entry.getValue();
+
+			String entryKey = entry.getKey();
+
+			int pos = entryKey.indexOf(CharPool.POUND);
+
+			String className = entryKey.substring(0, pos);
+			String key = entryKey.substring(pos + 1);
+
+			String path = getLockPath(portletDataContext, className, key, lock);
+
+			Element assetElement = rootElement.addElement("asset");
+
+			assetElement.addAttribute("path", path);
+			assetElement.addAttribute("class-name", className);
+			assetElement.addAttribute("key", key);
+
+			portletDataContext.addZipEntry(path, lock);
+		}
+
+		portletDataContext.addZipEntry(
+			ExportImportPathUtil.getRootPath(portletDataContext) + "/locks.xml",
+			document.formattedString());
+	}
+
+	@Override
 	public void exportPortlet(
 			PortletDataContext portletDataContext, long plid,
 			Element parentElement, boolean exportPermissions,
@@ -614,6 +747,7 @@ public class PortletExportController implements ExportController {
 		}
 	}
 
+	@Override
 	public void exportService(
 			PortletDataContext portletDataContext, Element rootElement,
 			boolean exportServiceSetup)
@@ -836,135 +970,6 @@ public class PortletExportController implements ExportController {
 		ZipWriter zipWriter = portletDataContext.getZipWriter();
 
 		return zipWriter.getFile();
-	}
-
-	protected void exportAssetLinks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("links");
-
-		Element exportDataRootElement =
-			portletDataContext.getExportDataRootElement();
-
-		try {
-			portletDataContext.setExportDataRootElement(rootElement);
-
-			ActionableDynamicQuery linkActionableDynamicQuery =
-				_assetLinkLocalService.getExportActionbleDynamicQuery(
-					portletDataContext);
-
-			linkActionableDynamicQuery.performActions();
-
-			for (long linkId : portletDataContext.getAssetLinkIds()) {
-				AssetLink assetLink = _assetLinkLocalService.getAssetLink(
-					linkId);
-
-				StagedAssetLink stagedAssetLink = ModelAdapterUtil.adapt(
-					assetLink, AssetLink.class, StagedAssetLink.class);
-
-				portletDataContext.addClassedModel(
-					portletDataContext.getExportDataElement(stagedAssetLink),
-					ExportImportPathUtil.getModelPath(stagedAssetLink),
-					stagedAssetLink);
-			}
-		}
-		finally {
-			portletDataContext.setExportDataRootElement(exportDataRootElement);
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) + "/links.xml",
-			document.formattedString());
-	}
-
-	protected void exportExpandoTables(PortletDataContext portletDataContext)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("expando-tables");
-
-		Map<String, List<ExpandoColumn>> expandoColumnsMap =
-			portletDataContext.getExpandoColumns();
-
-		for (Map.Entry<String, List<ExpandoColumn>> entry :
-				expandoColumnsMap.entrySet()) {
-
-			String className = entry.getKey();
-
-			Element expandoTableElement = rootElement.addElement(
-				"expando-table");
-
-			expandoTableElement.addAttribute("class-name", className);
-
-			List<ExpandoColumn> expandoColumns = entry.getValue();
-
-			for (ExpandoColumn expandoColumn : expandoColumns) {
-				Element expandoColumnElement = expandoTableElement.addElement(
-					"expando-column");
-
-				expandoColumnElement.addAttribute(
-					"column-id", String.valueOf(expandoColumn.getColumnId()));
-				expandoColumnElement.addAttribute(
-					"name", expandoColumn.getName());
-				expandoColumnElement.addAttribute(
-					"type", String.valueOf(expandoColumn.getType()));
-
-				DocUtil.add(
-					expandoColumnElement, "default-data",
-					expandoColumn.getDefaultData());
-
-				Element typeSettingsElement = expandoColumnElement.addElement(
-					"type-settings");
-
-				UnicodeProperties typeSettingsProperties =
-					expandoColumn.getTypeSettingsProperties();
-
-				typeSettingsElement.addCDATA(typeSettingsProperties.toString());
-			}
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) +
-				"/expando-tables.xml",
-			document.formattedString());
-	}
-
-	protected void exportLocks(PortletDataContext portletDataContext)
-		throws Exception {
-
-		Document document = SAXReaderUtil.createDocument();
-
-		Element rootElement = document.addElement("locks");
-
-		Map<String, Lock> locksMap = portletDataContext.getLocks();
-
-		for (Map.Entry<String, Lock> entry : locksMap.entrySet()) {
-			Lock lock = entry.getValue();
-
-			String entryKey = entry.getKey();
-
-			int pos = entryKey.indexOf(CharPool.POUND);
-
-			String className = entryKey.substring(0, pos);
-			String key = entryKey.substring(pos + 1);
-
-			String path = getLockPath(portletDataContext, className, key, lock);
-
-			Element assetElement = rootElement.addElement("asset");
-
-			assetElement.addAttribute("path", path);
-			assetElement.addAttribute("class-name", className);
-			assetElement.addAttribute("key", key);
-
-			portletDataContext.addZipEntry(path, lock);
-		}
-
-		portletDataContext.addZipEntry(
-			ExportImportPathUtil.getRootPath(portletDataContext) + "/locks.xml",
-			document.formattedString());
 	}
 
 	/**
@@ -1378,7 +1383,7 @@ public class PortletExportController implements ExportController {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		PortletExportController.class);
+		PortletExportControllerImpl.class);
 
 	private AssetEntryLocalService _assetEntryLocalService;
 	private AssetLinkLocalService _assetLinkLocalService;

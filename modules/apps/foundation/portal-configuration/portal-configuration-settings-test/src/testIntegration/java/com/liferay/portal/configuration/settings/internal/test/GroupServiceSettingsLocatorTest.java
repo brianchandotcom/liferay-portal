@@ -85,7 +85,7 @@ public class GroupServiceSettingsLocatorTest
 				_companyId, _companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
 				_portletId, null,
 				String.format(
-					_portletPreferenceFormat,
+					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
 					SettingsLocatorTestConstants.TEST_KEY,
 					companyPortletPreferencesValue)));
 
@@ -108,7 +108,7 @@ public class GroupServiceSettingsLocatorTest
 				_companyId, _groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
 				_portletId, null,
 				String.format(
-					_portletPreferenceFormat,
+					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
 					SettingsLocatorTestConstants.TEST_KEY,
 					groupPortletPreferencesValue)));
 
@@ -125,10 +125,6 @@ public class GroupServiceSettingsLocatorTest
 
 		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
 	}
-
-	private static final String _portletPreferenceFormat =
-		"<portlet-preferences><preference><name>%s</name><value>%s</value>" +
-			"</preference></portlet-preferences>";
 
 	private long _companyId;
 	private long _groupId;

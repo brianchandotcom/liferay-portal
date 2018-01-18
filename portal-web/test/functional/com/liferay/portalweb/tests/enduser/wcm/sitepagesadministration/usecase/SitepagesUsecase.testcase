@@ -138,8 +138,8 @@
 		<execute macro="SitePages#configurePage">
 			<var name="pageLinkName" value="Site Page1 Name" />
 			<var name="pageName" value="Site Page2 Name" />
-			<var name="sitePageType" value="Link to a Page of This Site" />
 			<var name="privacy" value="Public" />
+			<var name="sitePageType" value="Link to a Page of This Site" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

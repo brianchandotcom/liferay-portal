@@ -98,13 +98,10 @@ public class LayoutPageTemplateCollectionServiceSoap {
 		}
 	}
 
-	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap[] deleteLayoutPageTemplateCollections(
+	public static void deleteLayoutPageTemplateCollections(
 		long[] layoutPageTemplateCollectionIds) throws RemoteException {
 		try {
-			java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> returnValue =
-				LayoutPageTemplateCollectionServiceUtil.deleteLayoutPageTemplateCollections(layoutPageTemplateCollectionIds);
-
-			return com.liferay.layout.page.template.model.LayoutPageTemplateCollectionSoap.toSoapModels(returnValue);
+			LayoutPageTemplateCollectionServiceUtil.deleteLayoutPageTemplateCollections(layoutPageTemplateCollectionIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

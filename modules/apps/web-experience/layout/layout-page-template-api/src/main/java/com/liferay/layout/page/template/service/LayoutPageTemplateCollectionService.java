@@ -63,7 +63,7 @@ public interface LayoutPageTemplateCollectionService extends BaseService {
 	public LayoutPageTemplateCollection deleteLayoutPageTemplateCollection(
 		long layoutPageTemplateCollectionId) throws PortalException;
 
-	public List<LayoutPageTemplateCollection> deleteLayoutPageTemplateCollections(
+	public void deleteLayoutPageTemplateCollections(
 		long[] layoutPageTemplateCollectionIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

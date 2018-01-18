@@ -28,6 +28,43 @@
 	<td>//iframe[@class='fragment-preview__frame']</td>
 	<td></td>
 </tr>
+<!--FRAGMENT_SIDEBAR-->
+<tr>
+	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][normalize-space()='${key_collectionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][@aria-expanded='false'][normalize-space()='${key_collectionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][@aria-expanded='true'][normalize-space()='${key_collectionName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
+	<td>//a[contains(@href,'FragmentCollection')][@aria-expanded='true']//div[normalize-space()='${key_fragmentName}']//button</td>
+	<td></td>
+</tr>
+<!--PAGE_TEMPLATE-->
+<tr>
+	<td>PAGE_TEMPLATE_AUTOSAVE_MESSAGE</td>
+	<td>//div[contains(@class,'management-bar')]//span[@class='navbar-text']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_HEADER</td>
+	<td>//div[@class='container'][normalize-space()='${key_fragmentName}']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON</td>
+	<td>//div[@class='container'][normalize-space()='${key_fragmentName}']//button</td>
+	<td></td>
+</tr>
 </tbody>
 </table>
 </body>

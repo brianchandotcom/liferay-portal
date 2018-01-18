@@ -65,14 +65,19 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 										<div class="card-row">
 											<div class="flex-col flex-col-expand">
 												<div class="card-title text-center text-truncate">
-													<liferay-portlet:renderURL var="addURL">
+													<liferay-portlet:renderURL var="addSiteNavigationMenuItemRedirectURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+														<portlet:param name="mvcPath" value="/add_site_navigation_menu_item_redirect.jsp" />
+														<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
+													</liferay-portlet:renderURL>
+
+													<liferay-portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 														<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
-														<portlet:param name="redirect" value="<%= currentURL %>" />
+														<portlet:param name="redirect" value="<%= addSiteNavigationMenuItemRedirectURL %>" />
 														<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
 														<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
 													</liferay-portlet:renderURL>
 
-													<aui:a href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
+													<aui:a cssClass="add-menu-item-link" href="<%= addURL %>" label="<%= siteNavigationMenuItemType.getLabel(locale) %>" title="<%= siteNavigationMenuItemType.getLabel(locale) %>" />
 												</div>
 											</div>
 										</div>
@@ -88,6 +93,35 @@ renderResponse.setTitle(siteNavigationMenu.getName());
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>
+
+		<aui:script require="metal-dom/src/all/dom as dom">
+			var addMenuItemClickHandler = dom.delegate(
+				document.body,
+				'click',
+				'.add-menu-item-link',
+				function(event) {
+					Liferay.Util.openInDialog(event, {
+						dialog: {
+							destroyOnHide: true
+						},
+						dialogIframe: {
+							bodyCssClass: 'dialog-with-footer'
+						},
+						id: '<portlet:namespace/>addMenuItem',
+						title: event.delegateTarget.title,
+						uri: event.delegateTarget.href
+					});
+				}
+			);
+
+			function handleDestroyPortlet() {
+				addMenuItemClickHandler.removeListener();
+
+				Liferay.detach('destroyPortlet', handleDestroyPortlet);
+			}
+
+			Liferay.on('destroyPortlet', handleDestroyPortlet);
+		</aui:script>
 	</c:when>
 	<c:otherwise>
 		<liferay-frontend:management-bar>

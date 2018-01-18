@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.service.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;

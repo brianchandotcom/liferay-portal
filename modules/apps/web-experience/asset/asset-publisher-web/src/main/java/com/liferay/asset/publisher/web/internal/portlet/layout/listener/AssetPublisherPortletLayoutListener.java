@@ -17,6 +17,7 @@ package com.liferay.asset.publisher.web.internal.portlet.layout.listener;
 import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutTypePortletConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.portlet.PortletLayoutListener;
 import com.liferay.portal.kernel.portlet.PortletLayoutListenerException;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.subscription.service.SubscriptionLocalService;
 

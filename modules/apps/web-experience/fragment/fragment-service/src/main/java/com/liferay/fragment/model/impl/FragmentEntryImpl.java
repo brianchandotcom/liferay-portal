@@ -17,6 +17,7 @@ package com.liferay.fragment.model.impl;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 

@@ -14,10 +14,10 @@
 
 package com.liferay.portlet.configuration.css.web.internal.servlet.taglib.ui;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.configuration.css.web.internal.constants.PortletConfigurationCSSConstants;
 
 import java.util.Locale;

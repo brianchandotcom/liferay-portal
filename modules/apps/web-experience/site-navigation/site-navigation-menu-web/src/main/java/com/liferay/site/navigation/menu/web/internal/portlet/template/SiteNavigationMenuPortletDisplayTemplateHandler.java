@@ -14,6 +14,7 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet.template;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.template.TemplateVariableGroup;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 import com.liferay.site.navigation.menu.web.configuration.SiteNavigationMenuWebTemplateConfiguration;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;

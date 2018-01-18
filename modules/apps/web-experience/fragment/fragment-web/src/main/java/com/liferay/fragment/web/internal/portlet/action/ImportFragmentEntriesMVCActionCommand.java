@@ -17,12 +17,12 @@ package com.liferay.fragment.web.internal.portlet.action;
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.web.internal.handler.ImportActionExceptionRequestHandler;
 import com.liferay.fragment.web.internal.portlet.util.ImportUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 

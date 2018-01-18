@@ -19,6 +19,7 @@ import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
 import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
 import com.liferay.layout.type.controller.link.to.page.internal.constants.LinkToPageLayoutTypeControllerWebKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
@@ -31,7 +32,6 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;

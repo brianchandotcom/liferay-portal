@@ -14,9 +14,9 @@
 
 package com.liferay.site.navigation.type;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 

@@ -23,6 +23,7 @@ import com.liferay.asset.kernel.service.AssetLinkLocalService;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.staged.model.repository.base.BaseStagedModelRepository;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.model.adapter.ModelAdapterUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
 import java.util.HashMap;

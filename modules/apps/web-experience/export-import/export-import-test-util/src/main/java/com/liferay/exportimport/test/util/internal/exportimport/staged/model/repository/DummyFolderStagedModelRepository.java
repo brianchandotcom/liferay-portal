@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.exportimport.staged.model.repository.StagedModelRepository;
 import com.liferay.exportimport.test.util.model.DummyFolder;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.hibernate.DynamicQueryImpl;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Conjunction;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.SystemEventLocalService;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.lang.reflect.Method;

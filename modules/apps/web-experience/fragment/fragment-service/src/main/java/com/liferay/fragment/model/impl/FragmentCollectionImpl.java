@@ -16,8 +16,8 @@ package com.liferay.fragment.model.impl;
 
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 

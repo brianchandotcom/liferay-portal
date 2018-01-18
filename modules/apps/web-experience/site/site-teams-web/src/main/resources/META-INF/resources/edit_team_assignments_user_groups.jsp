@@ -44,9 +44,10 @@ userGroupSearchContainer.setResults(userGroups);
 RowChecker rowChecker = new EmptyOnClickRowChecker(renderResponse);
 %>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf((userGroupsCount > 0) || searchTerms.isSearch()) %>" />
-</liferay-util:include>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= editSiteTeamAssignmentsDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= userGroupsCount <= 0 %>"

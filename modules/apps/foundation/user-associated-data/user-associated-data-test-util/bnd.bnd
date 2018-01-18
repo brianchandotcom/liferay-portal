@@ -1,0 +1,4 @@
+Bundle-Name: Liferay User Associated Data Test Utilities
+Bundle-SymbolicName: com.liferay.user.associated.data.test.util
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.user.associated.data.test.util

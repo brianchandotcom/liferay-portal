@@ -427,19 +427,19 @@
 String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.ADMIN_ANALYTICS_KEY);
 %>
 
-<script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
-	(function(u, c, a, m, o, l) {
-		o = 'script';
-		l = document;
-		a = l.createElement(o);
-		m = l.getElementsByTagName(o)[0];
-		a.async = 1;
-		a.src = u;
-		a.onload = c;
-		m.parentNode.insertBefore(a, m);
-	})('https://analytics.liferay.com/analytics-all-min.js');
+<c:if test="<%= Validator.isNotNull(analyticsKey) %>">
+	<script data-senna-track="permanent" id="liferayAnalyticsScript" type="text/javascript">
+		(function(u, c, a, m, o, l) {
+			o = 'script';
+			l = document;
+			a = l.createElement(o);
+			m = l.getElementsByTagName(o)[0];
+			a.async = 1;
+			a.src = u;
+			a.onload = c;
+			m.parentNode.insertBefore(a, m);
+		})('https://analytics.liferay.com/analytics-all-min.js');
 
-	<c:if test="<%= Validator.isNotNull(analyticsKey) %>">
 		Analytics.create({analyticsKey: '<%= HtmlUtil.escapeJS(analyticsKey) %>'});
 		Analytics.send('view', 'Layout');
 
@@ -451,8 +451,8 @@ String analyticsKey = PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys
 				}
 			);
 		</c:if>
-	</c:if>
-</script>
+	</script>
+</c:if>
 
 <%
 UnicodeProperties groupTypeSettings = group.getTypeSettingsProperties();

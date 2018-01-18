@@ -14,7 +14,9 @@
 
 package com.liferay.site.admin.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Company;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -49,7 +51,9 @@ import com.liferay.site.admin.web.internal.constants.SiteAdminPortletKeys;
 import com.liferay.site.constants.SiteWebKeys;
 import com.liferay.site.util.GroupSearchProvider;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.portlet.PortletURL;
 
@@ -130,6 +134,24 @@ public class SiteAdminDisplayContext {
 		}
 
 		return _keywords;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem entriesNavigationItem = new NavigationItem();
+
+		entriesNavigationItem.setActive(true);
+
+		PortletURL mainURL = _liferayPortletResponse.createRenderURL();
+
+		entriesNavigationItem.setHref(mainURL.toString());
+
+		entriesNavigationItem.setLabel(LanguageUtil.get(_request, "sites"));
+
+		navigationItems.add(entriesNavigationItem);
+
+		return navigationItems;
 	}
 
 	public int getOrganizationsCount() throws PortalException {

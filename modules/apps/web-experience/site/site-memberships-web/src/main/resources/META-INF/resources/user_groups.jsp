@@ -73,7 +73,10 @@ List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompany
 userGroupSearch.setResults(userGroups);
 %>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled='<%= (userGroupsCount <= 0) && Objects.equals(navigation, "all") %>'

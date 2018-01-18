@@ -45,21 +45,21 @@ organizationSearch.setTotal(organizationsCount);
 List<Organization> organizations = OrganizationLocalServiceUtil.search(company.getCompanyId(), parentOrganizationId, searchTerms.getKeywords(), searchTerms.getType(), searchTerms.getRegionIdObj(), searchTerms.getCountryIdObj(), organizationParams, organizationSearch.getStart(), organizationSearch.getEnd(), organizationSearch.getOrderByComparator());
 
 organizationSearch.setResults(organizations);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem navigationItem = new NavigationItem();
+
+navigationItem.setActive(true);
+navigationItem.setHref(currentURL);
+navigationItem.setLabel(LanguageUtil.get(request, "organizations"));
+
+navigationItems.add(navigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="organizations" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= (organizationsCount > 0) || searchTerms.isSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= viewOrganizationsURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= organizationsCount <= 0 %>"
@@ -91,6 +91,14 @@ organizationSearch.setResults(organizations);
 			orderColumns='<%= new String[] {"name", "type"} %>'
 			portletURL="<%= PortletURLUtil.clone(viewOrganizationsURL, renderResponse) %>"
 		/>
+
+		<c:if test="<%= (organizationsCount > 0) || searchTerms.isSearch() %>">
+			<li>
+				<aui:form action="<%= viewOrganizationsURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

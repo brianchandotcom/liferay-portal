@@ -21,8 +21,6 @@ import com.liferay.portal.configuration.settings.internal.constants.SettingsLoca
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
-import com.liferay.portal.kernel.settings.Settings;
-import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -48,7 +46,7 @@ public class CompanyServiceSettingsLocatorTest
 		_companyId = TestPropsValues.getCompanyId();
 		_portletId = RandomTestUtil.randomString();
 
-		_settingsLocator = new CompanyServiceSettingsLocator(
+		settingsLocator = new CompanyServiceSettingsLocator(
 			_companyId, _portletId,
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 	}
@@ -83,23 +81,11 @@ public class CompanyServiceSettingsLocatorTest
 			companyPortletPreferencesValue, getValueFromSettings());
 	}
 
-	protected String getValueFromSettings() throws Exception {
-		if (_settingsLocator == null) {
-			return null;
-		}
-
-		Settings settings = _settingsLocator.getSettings();
-
-		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
-	}
-
 	private long _companyId;
 	private String _portletId;
 
 	@DeleteAfterTestRun
 	private final List<PortletPreferences> _portletPreferencesList =
 		new ArrayList<>();
-
-	private SettingsLocator _settingsLocator;
 
 }

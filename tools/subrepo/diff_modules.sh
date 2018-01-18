@@ -59,17 +59,10 @@ then
 	error "This script can only be run from within the liferay-portal repository."
 fi
 
-if [[ "$(uname)" == "Darwin" ]]
-then
-	MD5=md5
-else
-	MD5=md5sum
-fi
-
 REPO_PATH="../../"
 
-# git -C "${REPO_PATH}" fetch -fq upstream "7.0.x:refs/remotes/upstream/7.0.x"
-# git -C "${REPO_PATH}" fetch -fq upstream "master:refs/remotes/upstream/master"
+git -C "${REPO_PATH}" fetch -fq upstream "7.0.x:refs/remotes/upstream/7.0.x"
+git -C "${REPO_PATH}" fetch -fq upstream "master:refs/remotes/upstream/master"
 
 get_module_reference 7.0.x
 
@@ -85,6 +78,6 @@ SEVEN_0_X_MODULE_LIST="$(echo "${SEVEN_0_X_MODULE_REFERENCE}" | sed 's/^[a-f0-9]
 
 MODULE_MISSING_DIFF="$(diff -u <(echo "${MASTER_MODULE_LIST}") <(echo "${SEVEN_0_X_MODULE_LIST}"))"
 
-echo "Modules in master that are missing in 7.0.x: $(echo "${MODULE_MISSING_DIFF}" | grep '^+[^+]' | sed 's/^+//' | wc -l)"
-echo "Modules in 7.0.x that are missing in master: $(echo "${MODULE_MISSING_DIFF}" | grep '^-[^-]' | sed 's/^-//' | wc -l)"
+echo "Modules in master that are missing in 7.0.x: $(echo "${MODULE_MISSING_DIFF}" | grep '^-[^-]' | sed 's/^-//' | wc -l)"
+echo "Modules in 7.0.x that are missing in master: $(echo "${MODULE_MISSING_DIFF}" | grep '^+[^+]' | sed 's/^+//' | wc -l)"
 echo "Modules that are difference between master and 7.0.x: $(diff -u <(echo "${MASTER_MODULE_REFERENCE}") <(echo "${SEVEN_0_X_MODULE_REFERENCE}") | grep -e '^+[^+]' -e '^-[^-]' | sed 's/^[+-]//' | sed 's/^[a-f0-9]* *//' | sort -u | wc -l)"

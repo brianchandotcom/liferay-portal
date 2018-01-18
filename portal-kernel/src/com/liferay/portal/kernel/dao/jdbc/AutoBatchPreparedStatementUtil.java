@@ -54,12 +54,12 @@ public class AutoBatchPreparedStatementUtil {
 
 		if (databaseMetaData.supportsBatchUpdates()) {
 			return (PreparedStatement)ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(), _interfaces,
+				ClassLoader.getSystemClassLoader(), _INTERFACES,
 				new BatchInvocationHandler(preparedStatement));
 		}
 
 		return (PreparedStatement)ProxyUtil.newProxyInstance(
-			ClassLoader.getSystemClassLoader(), _interfaces,
+			ClassLoader.getSystemClassLoader(), _INTERFACES,
 			new NoBatchInvocationHandler(preparedStatement));
 	}
 
@@ -71,23 +71,24 @@ public class AutoBatchPreparedStatementUtil {
 
 		if (databaseMetaData.supportsBatchUpdates()) {
 			return (PreparedStatement)ProxyUtil.newProxyInstance(
-				ClassLoader.getSystemClassLoader(), _interfaces,
+				ClassLoader.getSystemClassLoader(), _INTERFACES,
 				new ConcurrentBatchInvocationHandler(connection, sql));
 		}
 
 		return (PreparedStatement)ProxyUtil.newProxyInstance(
-			ClassLoader.getSystemClassLoader(), _interfaces,
+			ClassLoader.getSystemClassLoader(), _INTERFACES,
 			new ConcurrentNoBatchInvocationHandler(connection, sql));
 	}
 
 	private static final int _HIBERNATE_JDBC_BATCH_SIZE = GetterUtil.getInteger(
 		PropsUtil.get(PropsKeys.HIBERNATE_JDBC_BATCH_SIZE));
 
+	private static final Class<?>[] _INTERFACES =
+		new Class<?>[] {PreparedStatement.class};
+
 	private static final Method _addBatchMethod;
 	private static final Method _closeMethod;
 	private static final Method _executeBatch;
-	private static final Class<?>[] _interfaces =
-		new Class<?>[] {PreparedStatement.class};
 	private static volatile PortalExecutorManager _portalExecutorManager =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			PortalExecutorManager.class, AutoBatchPreparedStatementUtil.class,

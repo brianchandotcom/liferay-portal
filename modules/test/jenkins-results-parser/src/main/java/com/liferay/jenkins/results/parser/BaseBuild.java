@@ -1826,7 +1826,7 @@ public abstract class BaseBuild implements Build {
 	}
 
 	protected String getJenkinsReportTimeZoneName() {
-		return _jenkinsReportTimeZoneName;
+		return _JENKINS_REPORT_TIME_ZONE_NAME;
 	}
 
 	protected Set<String> getJobParameterNames() {
@@ -2487,7 +2487,7 @@ public abstract class BaseBuild implements Build {
 	private static final String[] _HIGH_PRIORITY_CONTENT_FLAGS =
 		{"compileJSP", "SourceFormatter.format", "Unable to compile JSPs"};
 
-	private static final String _jenkinsReportTimeZoneName;
+	private static final String _JENKINS_REPORT_TIME_ZONE_NAME;
 
 	static {
 		Properties properties = null;
@@ -2499,7 +2499,7 @@ public abstract class BaseBuild implements Build {
 			throw new RuntimeException("Unable to get build properties", ioe);
 		}
 
-		_jenkinsReportTimeZoneName = properties.getProperty(
+		_JENKINS_REPORT_TIME_ZONE_NAME = properties.getProperty(
 			"jenkins.report.time.zone");
 	};
 

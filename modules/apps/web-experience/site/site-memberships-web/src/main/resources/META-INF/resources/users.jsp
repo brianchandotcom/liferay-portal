@@ -74,9 +74,7 @@ List<User> users = UserLocalServiceUtil.search(company.getCompanyId(), searchTer
 userSearch.setResults(users);
 %>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf((usersCount > 0) || searchTerms.isSearch()) %>" />
-</liferay-util:include>
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	disabled='<%= (usersCount <= 0) && Objects.equals(navigation, "all") %>'
@@ -132,6 +130,14 @@ userSearch.setResults(users);
 			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
 			portletURL="<%= PortletURLUtil.clone(viewUsersURL, renderResponse) %>"
 		/>
+
+		<c:if test="<%= (usersCount > 0) || searchTerms.isSearch() %>">
+			<li>
+				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

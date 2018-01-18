@@ -243,6 +243,9 @@
 		<module name="com.liferay.source.formatter.checkstyle.checks.VariableName">
 			<message key="variable.rename" value="Rename variable ''{0}'' to ''{1}''" />
 		</module>
+		<module name="com.liferay.source.formatter.checkstyle.checks.WhitespaceAfterParameterAnnotation">
+			<message key="whitespace.missing" value="Whitespace is expected after ''{0}''" />
+		</module>
 		<module name="com.liferay.source.formatter.checkstyle.checks.WhitespaceAroundGenerics">
 			<message key="whitespace.missing" value="Whitespace is expected after ''{0}''" />
 			<message key="whitespace.redundant" value="Incorrect whitespace before ''{0}''" />

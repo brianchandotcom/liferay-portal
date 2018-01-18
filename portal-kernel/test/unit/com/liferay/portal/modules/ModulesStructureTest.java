@@ -1042,6 +1042,7 @@ public class ModulesStructureTest {
 		Assert.assertFalse(
 			"Plugins DSL forbidden in " + path +
 				", please use \"apply plugin:\" instead",
+			!content.contains("pluginBundle {") &&
 			content.contains("plugins {"));
 
 		List<GradleDependency> gradleDependencies =

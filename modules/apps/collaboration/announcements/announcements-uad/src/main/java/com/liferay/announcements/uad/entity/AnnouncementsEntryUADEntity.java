@@ -79,13 +79,7 @@ public class AnnouncementsEntryUADEntity extends BaseUADEntity {
 	}
 
 	private String _getMethodName(String fieldName) {
-		String firstFieldNameLetter = fieldName.substring(0, 1);
-
-		String capWordsFieldName =
-			StringUtil.toUpperCase(firstFieldNameLetter) +
-				fieldName.substring(1);
-
-		return "get" + capWordsFieldName;
+		return "get" + StringUtil.upperCaseFirstLetter(fieldName);
 	}
 
 	private final AnnouncementsEntry _announcementsEntry;

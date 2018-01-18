@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -70,41 +69,21 @@ public class LayoutPageTemplateCollectionServiceImpl
 	}
 
 	@Override
-	public List<LayoutPageTemplateCollection>
-			deleteLayoutPageTemplateCollections(
-				long[] layoutPageTemplateCollectionIds)
+	public void deleteLayoutPageTemplateCollections(
+			long[] layoutPageTemplateCollectionIds)
 		throws PortalException {
-
-		List<LayoutPageTemplateCollection>
-			undeletableLayoutPageTemplateCollections = new ArrayList<>();
 
 		for (long layoutPageTemplateCollectionId :
 				layoutPageTemplateCollectionIds) {
 
-			try {
-				_layoutPageTemplateCollectionModelResourcePermission.check(
-					getPermissionChecker(), layoutPageTemplateCollectionId,
-					ActionKeys.DELETE);
+			_layoutPageTemplateCollectionModelResourcePermission.check(
+				getPermissionChecker(), layoutPageTemplateCollectionId,
+				ActionKeys.DELETE);
 
-				layoutPageTemplateCollectionLocalService.
-					deleteLayoutPageTemplateCollection(
-						layoutPageTemplateCollectionId);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-
-				LayoutPageTemplateCollection layoutPageTemplateCollection =
-					layoutPageTemplateCollectionPersistence.fetchByPrimaryKey(
-						layoutPageTemplateCollectionId);
-
-				undeletableLayoutPageTemplateCollections.add(
-					layoutPageTemplateCollection);
-			}
+			layoutPageTemplateCollectionLocalService.
+				deleteLayoutPageTemplateCollection(
+					layoutPageTemplateCollectionId);
 		}
-
-		return undeletableLayoutPageTemplateCollections;
 	}
 
 	@Override

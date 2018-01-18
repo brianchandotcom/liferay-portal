@@ -12,17 +12,16 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.exportimport.internal.lar;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.lar.ThemeImporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.LayoutSet;
-import com.liferay.portal.kernel.service.LayoutSetLocalServiceUtil;
+import com.liferay.portal.kernel.service.LayoutSetLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Attribute;
@@ -30,16 +29,16 @@ import com.liferay.portal.kernel.xml.Element;
 
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 /**
  * @author Mate Thurzo
  */
-@ProviderType
-public class ThemeImporter {
+@Component(immediate = true)
+public class ThemeImporterImpl implements ThemeImporter {
 
-	public static ThemeImporter getInstance() {
-		return _instance;
-	}
-
+	@Override
 	public void importTheme(
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
@@ -85,16 +84,15 @@ public class ThemeImporter {
 
 		String css = GetterUtil.getString(headerElement.elementText("css"));
 
-		LayoutSetLocalServiceUtil.updateLookAndFeel(
+		_layoutSetLocalService.updateLookAndFeel(
 			importGroupId, layoutSet.isPrivateLayout(), themeId, colorSchemeId,
 			css);
 	}
 
-	private ThemeImporter() {
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		ThemeImporterImpl.class);
 
-	private static final Log _log = LogFactoryUtil.getLog(ThemeImporter.class);
-
-	private static final ThemeImporter _instance = new ThemeImporter();
+	@Reference
+	private LayoutSetLocalService _layoutSetLocalService;
 
 }

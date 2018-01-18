@@ -12,12 +12,11 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
-
-import aQute.bnd.annotation.ProviderType;
+package com.liferay.exportimport.internal.lar;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerKeys;
+import com.liferay.exportimport.lar.ThemeExporter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.LayoutSet;
@@ -28,16 +27,15 @@ import com.liferay.portal.kernel.model.adapter.StagedTheme;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Mate Thurzo
  */
-@ProviderType
-public class ThemeExporter {
+@Component(immediate = true)
+public class ThemeExporterImpl implements ThemeExporter {
 
-	public static ThemeExporter getInstance() {
-		return _instance;
-	}
-
+	@Override
 	public void exportTheme(
 			PortletDataContext portletDataContext, LayoutSet layoutSet)
 		throws Exception {
@@ -76,11 +74,12 @@ public class ThemeExporter {
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 		}
 
-		exportThemeSettings(
+		_exportThemeSettings(
 			portletDataContext, stagedTheme.getThemeId(),
 			layoutSet.getColorSchemeId(), layoutSet.getCss());
 	}
 
+	@Override
 	public void exportTheme(
 			PortletDataContext portletDataContext,
 			LayoutSetBranch layoutSetBranch)
@@ -110,12 +109,12 @@ public class ThemeExporter {
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 		}
 
-		exportThemeSettings(
+		_exportThemeSettings(
 			portletDataContext, stagedTheme.getThemeId(),
 			layoutSetBranch.getColorSchemeId(), layoutSetBranch.getCss());
 	}
 
-	protected void exportThemeSettings(
+	private void _exportThemeSettings(
 			PortletDataContext portletDataContext, String themeId,
 			String colorSchemeId, String css)
 		throws Exception {
@@ -133,11 +132,7 @@ public class ThemeExporter {
 		cssElement.addCDATA(css);
 	}
 
-	private ThemeExporter() {
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(ThemeExporter.class);
-
-	private static final ThemeExporter _instance = new ThemeExporter();
+	private static final Log _log = LogFactoryUtil.getLog(
+		ThemeExporterImpl.class);
 
 }

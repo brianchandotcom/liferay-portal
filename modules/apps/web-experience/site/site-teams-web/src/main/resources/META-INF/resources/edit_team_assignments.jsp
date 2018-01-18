@@ -17,7 +17,7 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String tabs1 = ParamUtil.getString(request, "tabs1", "users");
+EditSiteTeamAssignmentsDisplayContext editSiteTeamAssignmentsDisplayContext = new EditSiteTeamAssignmentsDisplayContext(renderRequest, renderResponse, request);
 
 String redirect = ParamUtil.getString(request, "redirect");
 
@@ -27,38 +27,24 @@ if (Validator.isNull(redirect)) {
 	redirect = portletURL.toString();
 }
 
-long teamId = ParamUtil.getLong(request, "teamId");
-
-Team team = TeamLocalServiceUtil.fetchTeam(teamId);
-
-PortletURL portletURL = renderResponse.createRenderURL();
-
-portletURL.setParameter("mvcPath", "/edit_team_assignments.jsp");
-portletURL.setParameter("tabs1", tabs1);
-portletURL.setParameter("teamId", String.valueOf(team.getTeamId()));
-
-request.setAttribute("edit_team_assignments.jsp-tabs1", tabs1);
-
-request.setAttribute("edit_team_assignments.jsp-team", team);
-
-request.setAttribute("edit_team_assignments.jsp-portletURL", portletURL);
-
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(team.getName());
+renderResponse.setTitle(editSiteTeamAssignmentsDisplayContext.getTeamName());
 %>
 
 <c:choose>
-	<c:when test='<%= tabs1.equals("users") %>'>
+	<c:when test='<%= Objects.equals(editSiteTeamAssignmentsDisplayContext.getTabs1(), "users") %>'>
 		<liferay-util:include page="/edit_team_assignments_users.jsp" servletContext="<%= application %>" />
 	</c:when>
-	<c:when test='<%= tabs1.equals("user-groups") %>'>
+	<c:when test='<%= Objects.equals(editSiteTeamAssignmentsDisplayContext.getTabs1(), "user-groups") %>'>
 		<liferay-util:include page="/edit_team_assignments_user_groups.jsp" servletContext="<%= application %>" />
 	</c:when>
 </c:choose>
 
 <%
+Team team = editSiteTeamAssignmentsDisplayContext.getTeam();
+
 Group group = GroupLocalServiceUtil.getGroup(team.getGroupId());
 
 if (group != null) {
@@ -79,6 +65,6 @@ else {
 }
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "manage-teams"), redirect);
-PortalUtil.addPortletBreadcrumbEntry(request, team.getName(), null);
+PortalUtil.addPortletBreadcrumbEntry(request, editSiteTeamAssignmentsDisplayContext.getTeamName(), null);
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "assign-members"), currentURL);
 %>

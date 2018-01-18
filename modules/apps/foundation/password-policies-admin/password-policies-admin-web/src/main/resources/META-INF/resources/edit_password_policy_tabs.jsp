@@ -35,33 +35,47 @@ boolean hasAssignMembersPermission = false;
 if (passwordPolicy != null) {
 	hasAssignMembersPermission = PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS);
 }
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem detailsNavigationItem = new NavigationItem();
+
+detailsNavigationItem.setActive(tabs1.equals("details"));
+
+PortletURL detailsURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+detailsURL.setParameter("mvcPath", "/edit_password_policy.jsp");
+detailsURL.setParameter("tabs1", "details");
+
+detailsNavigationItem.setHref(detailsURL.toString());
+detailsNavigationItem.setLabel(LanguageUtil.get(request, "details"));
+
+navigationItems.add(detailsNavigationItem);
+
+NavigationItem assigneesNavigationItem = new NavigationItem();
+
+assigneesNavigationItem.setActive(tabs1.equals("assignees"));
+
+boolean isShowNav = false;
+
+if ((passwordPolicy != null) && hasAssignMembersPermission) {
+	isShowNav = true;
+}
+
+assigneesNavigationItem.setDisabled(!isShowNav);
+
+PortletURL assigneesURL = assigneesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+assigneesURL.setParameter("mvcPath", "/edit_password_policy_assignments.jsp");
+assigneesURL.setParameter("tabs1", "assignees");
+
+assigneesNavigationItem.setHref(isShowNav ? assigneesURL.toString() : StringPool.BLANK);
+assigneesNavigationItem.setLabel(LanguageUtil.get(request, "assignees"));
+
+navigationItems.add(assigneesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		PortletURL detailsURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		detailsURL.setParameter("mvcPath", "/edit_password_policy.jsp");
-		detailsURL.setParameter("tabs1", "details");
-		%>
-
-		<aui:nav-item href="<%= detailsURL.toString() %>" label="details" selected='<%= tabs1.equals("details") %>' />
-
-		<%
-		PortletURL assigneesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		assigneesURL.setParameter("mvcPath", "/edit_password_policy_assignments.jsp");
-		assigneesURL.setParameter("tabs1", "assignees");
-
-		boolean isShowNav = false;
-
-		if ((passwordPolicy != null) && hasAssignMembersPermission) {
-			isShowNav = true;
-		}
-		%>
-
-		<aui:nav-item cssClass='<%= isShowNav ? StringPool.BLANK : "disabled" %>' href="<%= isShowNav ? assigneesURL.toString() : null %>" label="assignees" selected='<%= tabs1.equals("assignees") %>' />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>

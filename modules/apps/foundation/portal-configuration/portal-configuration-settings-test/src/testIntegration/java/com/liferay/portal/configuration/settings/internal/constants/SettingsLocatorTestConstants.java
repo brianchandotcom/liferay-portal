@@ -19,6 +19,10 @@ package com.liferay.portal.configuration.settings.internal.constants;
  */
 public class SettingsLocatorTestConstants {
 
+	public static final String PORTLET_PREFERENCES_FORMAT =
+		"<portlet-preferences><preference><name>%s</name><value>%s</value>" +
+			"</preference></portlet-preferences>";
+
 	public static final String TEST_CONFIGURATION_PID =
 		"com.liferay.portal.configuration.settings.internal.samples." +
 			"TestConfiguration";

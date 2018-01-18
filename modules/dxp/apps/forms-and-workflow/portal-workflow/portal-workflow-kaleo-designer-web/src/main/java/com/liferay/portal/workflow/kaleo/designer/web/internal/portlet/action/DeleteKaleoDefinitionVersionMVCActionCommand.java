@@ -24,6 +24,7 @@ import com.liferay.portal.workflow.kaleo.designer.web.constants.KaleoDesignerPor
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
 
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
@@ -71,15 +72,12 @@ public class DeleteKaleoDefinitionVersionMVCActionCommand
 				kaleoDefinition.getVersion());
 		}
 		else {
-			String draftVersion = ParamUtil.getString(
-				actionRequest, "draftVersion");
+			List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersions(
+					themeDisplay.getCompanyId(), name);
 
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				kaleoDefinitionVersionLocalService.getKaleoDefinitionVersion(
-					themeDisplay.getCompanyId(), name, draftVersion);
-
-			kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersion(
-				kaleoDefinitionVersion);
+			kaleoDefinitionVersionLocalService.deleteKaleoDefinitionVersions(
+				kaleoDefinitionVersions);
 		}
 	}
 

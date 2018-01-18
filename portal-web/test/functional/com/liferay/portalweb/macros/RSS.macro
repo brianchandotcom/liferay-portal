@@ -10,7 +10,9 @@
 	</command>
 
 	<command name="viewFeed">
-		<execute macro="RSS#gotoFeed" />
+		<execute macro="RSS#gotoFeed">
+			<var name="rssURL" value="${rssURL}" />
+		</execute>
 
 		<execute macro="RSS#viewFeedTitle">
 			<var name="siteName" value="${siteName}" />

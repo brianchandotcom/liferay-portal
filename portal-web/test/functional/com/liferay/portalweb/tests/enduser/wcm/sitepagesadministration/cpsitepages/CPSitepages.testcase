@@ -805,9 +805,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#_gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Site Page" />
+			<var name="pageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#editName">
@@ -825,9 +825,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#_gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Welcome" />
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="Page#viewSelectedLayoutColumn">

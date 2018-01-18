@@ -34,13 +34,25 @@ public class ResourceCollectionSchemaInferrer {
 
 	/**
 	 * Creates Runtime schema from incoming data.
-	 * Schema is created in following way:
-	 * 1. Gets the resource fields <code>List<String></code>
-	 * 2. The same number of fields are created for Runtime schema
-	 * 3. Field names are coming from the resource collection
-	 * 4. Field types are String
 	 *
-	 * @param ApioJsonLDResource - Resource collection
+	 * <p>
+	 * Schema is created in following way:
+	 * <p>
+	 *
+	 * <ol>
+	 * <li>
+	 * Gets the resource fields <code>List<String></code>
+	 * </li>
+	 * <li>
+	 * The same number of fields are created for Runtime schema.
+	 * </li>
+	 * <li>
+	 * Field names are coming from the resource collection.
+	 * </li>
+	 * <li>
+	 * Field types are String.
+	 * </li>
+	 * </ol>
 	 *
 	 * @return Runtime AVRO schema
 	 */

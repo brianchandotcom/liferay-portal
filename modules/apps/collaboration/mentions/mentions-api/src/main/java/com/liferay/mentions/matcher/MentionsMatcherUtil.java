@@ -25,10 +25,10 @@ import com.liferay.portal.kernel.util.StringUtil;
 public class MentionsMatcherUtil {
 
 	public static String getScreenNameRegularExpression() {
-		return _screenNameRegularExpression;
+		return _SCREEN_NAME_REGULAR_EXPRESSION;
 	}
 
-	private static final String _screenNameRegularExpression;
+	private static final String _SCREEN_NAME_REGULAR_EXPRESSION;
 
 	static {
 		String specialCharacters = PropsUtil.get(
@@ -42,7 +42,7 @@ public class MentionsMatcherUtil {
 			},
 			new String[] {"\\&", "\\^", "\\]", "\\-", "\\["});
 
-		_screenNameRegularExpression = String.format(
+		_SCREEN_NAME_REGULAR_EXPRESSION = String.format(
 			"(?:\\w|[%s])(?:\\w|\\d|[%s])*", quotedSpecialCharacters,
 			quotedSpecialCharacters);
 	}

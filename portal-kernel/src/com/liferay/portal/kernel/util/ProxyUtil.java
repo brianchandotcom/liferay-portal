@@ -81,7 +81,7 @@ public class ProxyUtil {
 			Constructor<?> constructor = null;
 
 			try {
-				constructor = clazz.getConstructor(_argumentsClazz);
+				constructor = clazz.getConstructor(_ARGUMENTS_CLASS);
 
 				constructor.setAccessible(true);
 			}
@@ -118,7 +118,9 @@ public class ProxyUtil {
 		}
 	}
 
-	private static final Class<?>[] _argumentsClazz = {InvocationHandler.class};
+	private static final Class<?>[] _ARGUMENTS_CLASS =
+		{InvocationHandler.class};
+
 	private static final ConcurrentMap
 		<ClassLoader, ConcurrentMap<LookupKey, Class<?>>> _classReferences =
 			new ConcurrentReferenceKeyHashMap<>(

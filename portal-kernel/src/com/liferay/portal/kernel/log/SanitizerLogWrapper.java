@@ -56,8 +56,8 @@ public class SanitizerLogWrapper extends LogWrapper {
 			SystemProperties.get(
 				PropsKeys.LOG_SANITIZER_REPLACEMENT_CHARACTER));
 
-		for (int i = 0; i < _whitelistCharacters.length; i++) {
-			_whitelistCharacters[i] = 1;
+		for (int i = 0; i < _WHITELIST_CHARACTERS.length; i++) {
+			_WHITELIST_CHARACTERS[i] = 1;
 		}
 
 		int[] whitelistCharacters = GetterUtil.getIntegerValues(
@@ -67,9 +67,9 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 		for (int whitelistCharacter : whitelistCharacters) {
 			if ((whitelistCharacter >= 0) &&
-				(whitelistCharacter < _whitelistCharacters.length)) {
+				(whitelistCharacter < _WHITELIST_CHARACTERS.length)) {
 
-				_whitelistCharacters[whitelistCharacter] = 0;
+				_WHITELIST_CHARACTERS[whitelistCharacter] = 0;
 			}
 			else {
 				System.err.println(
@@ -210,8 +210,8 @@ public class SanitizerLogWrapper extends LogWrapper {
 				continue;
 			}
 
-			if ((c >= 0) && (c < _whitelistCharacters.length) &&
-				(_whitelistCharacters[c] != 0)) {
+			if ((c >= 0) && (c < _WHITELIST_CHARACTERS.length) &&
+				(_WHITELIST_CHARACTERS[c] != 0)) {
 
 				chars[i] = _logSanitizerReplacementCharacter;
 				sanitized = true;
@@ -303,9 +303,10 @@ public class SanitizerLogWrapper extends LogWrapper {
 
 	private static final String _SANITIZED = " [Sanitized]";
 
+	private static final int[] _WHITELIST_CHARACTERS = new int[128];
+
 	private static boolean _logSanitizerEscapeHTMLEnabled;
 	private static char _logSanitizerReplacementCharacter = CharPool.UNDERLINE;
-	private static final int[] _whitelistCharacters = new int[128];
 
 	private boolean _allowCRLF;
 

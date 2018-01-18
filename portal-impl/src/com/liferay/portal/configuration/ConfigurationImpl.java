@@ -239,7 +239,7 @@ public class ConfigurationImpl
 			return (String[])value;
 		}
 
-		return _emptyArray;
+		return _EMPTY_ARRAY;
 	}
 
 	@Override
@@ -269,7 +269,7 @@ public class ConfigurationImpl
 			return (String[])value;
 		}
 
-		return _emptyArray;
+		return _EMPTY_ARRAY;
 	}
 
 	@Override
@@ -471,12 +471,13 @@ public class ConfigurationImpl
 		return value;
 	}
 
+	private static final String[] _EMPTY_ARRAY = new String[0];
+
 	private static final boolean _PRINT_DUPLICATE_CALLS_TO_GET = false;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		ConfigurationImpl.class);
 
-	private static final String[] _emptyArray = new String[0];
 	private static final Object _nullValue = new Object();
 
 	private final ComponentConfiguration _componentConfiguration;

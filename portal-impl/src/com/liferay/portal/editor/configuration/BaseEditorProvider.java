@@ -139,7 +139,7 @@ public abstract class BaseEditorProvider<T> {
 				index |= 0b001;
 			}
 
-			return _priorities[index];
+			return _PRIORITIES[index];
 		}
 
 		private boolean _matches(String name, Set<String> names) {
@@ -163,7 +163,7 @@ public abstract class BaseEditorProvider<T> {
 		 * editorConfig (middle bit) and editorName (lowest bit). 1 means have
 		 * it, 0 means don't have it.
 		 */
-		private static final int[] _priorities =
+		private static final int[] _PRIORITIES =
 			{0b111, 0b110, 0b100, 0b010, 0b101, 0b011, 0b001, 0b000};
 
 		private final Set<String> _editorConfigKeys;

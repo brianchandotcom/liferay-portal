@@ -71,17 +71,19 @@ public class PathHolder implements Serializable {
 			return _toString;
 		}
 
-		if (_separatorChar == File.separatorChar) {
+		if (_SEPARATOR_CHAR == File.separatorChar) {
 			_toString = _pathString;
 		}
 		else {
-			_toString = _pathString.replace(_separatorChar, File.separatorChar);
+			_toString = _pathString.replace(
+				_SEPARATOR_CHAR, File.separatorChar);
 		}
 
 		return _toString;
 	}
 
-	private static final char _separatorChar = File.separatorChar;
+	private static final char _SEPARATOR_CHAR = File.separatorChar;
+
 	private static final long serialVersionUID = 1L;
 
 	private final String _pathString;

@@ -79,7 +79,7 @@ public class SPAUtil {
 	}
 
 	public String getExcludedPaths() {
-		return _spaExcludedPaths;
+		return _SPA_EXCLUDED_PATHS;
 	}
 
 	public ResourceBundle getLanguageResourceBundle(Locale locale) {
@@ -88,7 +88,7 @@ public class SPAUtil {
 	}
 
 	public String getLoginRedirect(HttpServletRequest request) {
-		return ParamUtil.getString(request, _redirectParamName);
+		return ParamUtil.getString(request, _REDIRECT_PARAM_NAME);
 	}
 
 	public String getNavigationExceptionSelectors() {
@@ -238,6 +238,10 @@ public class SPAUtil {
 		return cacheExpirationTime;
 	}
 
+	private static final String _REDIRECT_PARAM_NAME;
+
+	private static final String _SPA_EXCLUDED_PATHS;
+
 	private static final String _SPA_NAVIGATION_EXCEPTION_SELECTOR_KEY =
 		"javascript.single.page.application.navigation.exception.selector";
 
@@ -248,8 +252,6 @@ public class SPAUtil {
 	private static final List<String> _navigationExceptionSelectors =
 		new CopyOnWriteArrayList<>();
 	private static volatile String _navigationExceptionSelectorsString;
-	private static final String _redirectParamName;
-	private static final String _spaExcludedPaths;
 
 	static {
 		Class<?> clazz = ServletResponseConstants.class;
@@ -269,7 +271,7 @@ public class SPAUtil {
 		String portletNamespace = PortalUtil.getPortletNamespace(
 			PropsUtil.get(PropsKeys.AUTH_LOGIN_PORTLET_NAME));
 
-		_redirectParamName = portletNamespace.concat("redirect");
+		_REDIRECT_PARAM_NAME = portletNamespace.concat("redirect");
 
 		jsonArray = JSONFactoryUtil.createJSONArray();
 
@@ -280,7 +282,7 @@ public class SPAUtil {
 			jsonArray.put(PortalUtil.getPathContext() + excludedPath);
 		}
 
-		_spaExcludedPaths = jsonArray.toString();
+		_SPA_EXCLUDED_PATHS = jsonArray.toString();
 	}
 
 	private long _cacheExpirationTime;

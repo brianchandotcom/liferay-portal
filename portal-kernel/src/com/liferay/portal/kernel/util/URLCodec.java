@@ -137,7 +137,7 @@ public class URLCodec {
 		for (int i = 0; i < rawURLString.length(); i++) {
 			char c = rawURLString.charAt(i);
 
-			if ((c < 128) && _validChars[c]) {
+			if ((c < 128) && _VALID_CHARS[c]) {
 				continue;
 			}
 
@@ -267,7 +267,7 @@ public class URLCodec {
 		for (int i = start; i < rawString.length(); i++) {
 			char rawChar = rawString.charAt(i);
 
-			if (((rawChar >= 128) || !_validChars[rawChar]) &&
+			if (((rawChar >= 128) || !_VALID_CHARS[rawChar]) &&
 				(escapeSpaces || (rawChar != CharPool.SPACE))) {
 
 				count++;
@@ -291,9 +291,9 @@ public class URLCodec {
 
 	private static final char[][] _ENCODING_REPLACEMENTS = new char[128][];
 
-	private static final Log _log = LogFactoryUtil.getLog(URLCodec.class);
+	private static final boolean[] _VALID_CHARS = new boolean[128];
 
-	private static final boolean[] _validChars = new boolean[128];
+	private static final Log _log = LogFactoryUtil.getLog(URLCodec.class);
 
 	static {
 		_ENCODING_REPLACEMENTS[CharPool.AMPERSAND] = "%26".toCharArray();
@@ -306,21 +306,21 @@ public class URLCodec {
 		_ENCODING_REPLACEMENTS[CharPool.SPACE] = "%20".toCharArray();
 
 		for (int i = 'a'; i <= 'z'; i++) {
-			_validChars[i] = true;
+			_VALID_CHARS[i] = true;
 		}
 
 		for (int i = 'A'; i <= 'Z'; i++) {
-			_validChars[i] = true;
+			_VALID_CHARS[i] = true;
 		}
 
 		for (int i = '0'; i <= '9'; i++) {
-			_validChars[i] = true;
+			_VALID_CHARS[i] = true;
 		}
 
-		_validChars['-'] = true;
-		_validChars['_'] = true;
-		_validChars['.'] = true;
-		_validChars['*'] = true;
+		_VALID_CHARS['-'] = true;
+		_VALID_CHARS['_'] = true;
+		_VALID_CHARS['.'] = true;
+		_VALID_CHARS['*'] = true;
 	}
 
 }

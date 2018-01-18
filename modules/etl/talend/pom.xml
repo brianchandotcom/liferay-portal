@@ -16,4 +16,15 @@
 		<module>talend-definition</module>
 		<module>talend-runtime</module>
 	</modules>
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.liferay</groupId>
+					<artifactId>com.liferay.javadoc.formatter</artifactId>
+					<version>1.0.26</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>

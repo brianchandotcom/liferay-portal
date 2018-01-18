@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.security.permission.resource.PortletResourcePer
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,36 +64,17 @@ public class FragmentCollectionServiceImpl
 	}
 
 	@Override
-	public List<FragmentCollection> deleteFragmentCollections(
-			long[] fragmentCollectionIds)
+	public void deleteFragmentCollections(long[] fragmentCollectionIds)
 		throws PortalException {
 
-		List<FragmentCollection> undeletableFragmentCollections =
-			new ArrayList<>();
-
 		for (long fragmentCollectionId : fragmentCollectionIds) {
-			try {
-				_fragmentCollectionModelResourcePermission.check(
-					getPermissionChecker(), fragmentCollectionId,
-					ActionKeys.DELETE);
+			_fragmentCollectionModelResourcePermission.check(
+				getPermissionChecker(), fragmentCollectionId,
+				ActionKeys.DELETE);
 
-				fragmentCollectionLocalService.deleteFragmentCollection(
-					fragmentCollectionId);
-			}
-			catch (PortalException pe) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(pe, pe);
-				}
-
-				FragmentCollection fragmentCollection =
-					fragmentCollectionPersistence.fetchByPrimaryKey(
-						fragmentCollectionId);
-
-				undeletableFragmentCollections.add(fragmentCollection);
-			}
+			fragmentCollectionLocalService.deleteFragmentCollection(
+				fragmentCollectionId);
 		}
-
-		return undeletableFragmentCollections;
 	}
 
 	@Override

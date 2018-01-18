@@ -17,7 +17,13 @@ package com.liferay.talend.runtime.client;
 import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.runtime.apio.ApioException;
 import com.liferay.talend.runtime.apio.ApioResult;
+import com.liferay.talend.runtime.apio.jsonld.ApioJsonLDConstants;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.ws.rs.client.Client;
@@ -28,6 +34,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.StatusType;
+import javax.ws.rs.core.UriBuilder;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -72,7 +79,14 @@ public class RestClient {
 	public ApioResult executeGetRequest() throws ApioException {
 		Client client = getClient();
 
-		WebTarget webTarget = client.target(getEndpoint());
+		URI decoratedURI = _updateWithQueryParameters(
+			getEndpointURI(), _getQueryParameterMap());
+
+		WebTarget webTarget = client.target(decoratedURI);
+
+		if (_log.isDebugEnabled()) {
+			_log.debug("Target: {}", decoratedURI.toASCIIString());
+		}
 
 		Invocation.Builder builder = webTarget.request(APPLICATION_JSON_LD);
 
@@ -87,6 +101,17 @@ public class RestClient {
 
 	public String getEndpoint() {
 		return _endpoint;
+	}
+
+	public URI getEndpointURI() {
+		try {
+			return new URI(_endpoint);
+		}
+		catch (URISyntaxException urise) {
+			_log.error("{} could not be parsed as a URI reference", _endpoint);
+		}
+
+		return null;
 	}
 
 	public ClientConfig setCredentials(String userId, String password) {
@@ -160,6 +185,16 @@ public class RestClient {
 		return response;
 	}
 
+	private Map<String, String> _getQueryParameterMap() {
+		Map<String, String> parameters = new HashMap<>();
+
+		parameters.put(
+			ApioJsonLDConstants.PER_PAGE,
+			_liferayConnectionProperties.itemsPerPage.getStringValue());
+
+		return parameters;
+	}
+
 	private ApioResult _handleApioResponse(
 			QueryMethod queryMethod, Response response)
 		throws ApioException {
@@ -179,6 +214,21 @@ public class RestClient {
 				statusCode,
 				"Request failed, please check your request setting");
 		}
+	}
+
+	private URI _updateWithQueryParameters(
+		URI uri, Map<String, String> queryParameters) {
+
+		URI decoratedURI = uri;
+
+		for (Map.Entry<String, String> parameter : queryParameters.entrySet()) {
+			UriBuilder uriBuilder = UriBuilder.fromUri(decoratedURI);
+
+			decoratedURI = uriBuilder.replaceQueryParam(
+				parameter.getKey(), parameter.getValue()).build();
+		}
+
+		return decoratedURI;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

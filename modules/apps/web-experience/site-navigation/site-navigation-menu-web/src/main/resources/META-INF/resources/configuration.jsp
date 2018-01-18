@@ -107,10 +107,31 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 								<aui:row>
 									<aui:col width="<%= 80 %>">
 										<div class="mb-3 <%= rootMenuItemType.equals("select") ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />rootMenuItemIdPanel">
-											<aui:input label="" name="rootLayoutName" type="resource" value="<%= siteNavigationMenuDisplayContext.getRootLayoutName() %>" />
 											<aui:input id="rootMenuItemId" ignoreRequestValue="<%= true %>" name="preferences--rootMenuItemId--" type="hidden" value="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>" />
 
-											<aui:button name="chooseRootPage" value="choose" />
+											<%
+											SiteNavigationMenuItem siteNavigationMenuItem = SiteNavigationMenuItemLocalServiceUtil.fetchSiteNavigationMenuItem(siteNavigationMenuDisplayContext.getRootMenuItemId());
+											%>
+
+											<c:if test="<%= siteNavigationMenuItem != null %>">
+
+												<%
+												SiteNavigationMenuItemTypeRegistry siteNavigationMenuItemTypeRegistry = (SiteNavigationMenuItemTypeRegistry)request.getAttribute(SiteNavigationMenuWebKeys.SITE_NAVIGATION_MENU_ITEM_TYPE_REGISTRY);
+
+												SiteNavigationMenuItemType siteNavigationMenuItemType = siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(siteNavigationMenuItem.getType());
+												%>
+
+												<liferay-frontend:horizontal-card
+													cssClass="mb-3"
+													text="<%= siteNavigationMenuItemType.getTitle(siteNavigationMenuItem, locale) %>"
+												>
+													<liferay-frontend:horizontal-card-col>
+														<liferay-frontend:horizontal-card-icon icon="<%= siteNavigationMenuItemType.getIcon() %>" />
+													</liferay-frontend:horizontal-card-col>
+												</liferay-frontend:horizontal-card>
+											</c:if>
+
+											<aui:button class='<%= (siteNavigationMenuDisplayContext.getSiteNavigationMenuId() > 0) ? StringPool.BLANK : "disabled" %>' name="chooseRootMenuItem" value="menu-item" />
 										</div>
 									</aui:col>
 								</aui:row>
@@ -197,30 +218,35 @@ String rootMenuItemType = siteNavigationMenuDisplayContext.getRootMenuItemType()
 </aui:script>
 
 <aui:script use="liferay-item-selector-dialog">
-	$('#<portlet:namespace />chooseRootPage').on(
+
+	var chooseRootMenuItem = $('#<portlet:namespace />chooseRootMenuItem');
+
+	chooseRootMenuItem.on(
 		'click',
 		function(event) {
 			event.preventDefault();
 
+			if (chooseRootMenuItem.hasClass('disabled')) {
+				return;
+			}
+
 			var itemSelectorDialog = new A.LiferayItemSelectorDialog(
 				{
-					eventName: '<%= siteNavigationMenuDisplayContext.getEventName() %>',
+					eventName: '<%= siteNavigationMenuDisplayContext.getRootMenuItemEventName() %>',
 					on: {
 						selectedItemChange: function(event) {
 							var selectedItem = event.newVal;
 
-							var rootLayoutName = A.one('#<portlet:namespace />rootLayoutName');
-							var rootMenuItemId = A.one('#<portlet:namespace />rootMenuItemId');
-
 							if (selectedItem) {
-								rootLayoutName.val(selectedItem.name);
-								rootMenuItemId.val(selectedItem.id);
+								var rootMenuItemId = form.fm('rootMenuItemId');
+
+								rootMenuItemId.val(selectedItem['site-navigation-menu-item-id']);
 							}
 						}
 					},
 					'strings.add': '<liferay-ui:message key="done" />',
-					title: '<liferay-ui:message key="select-layout" />',
-					url: '<%= siteNavigationMenuDisplayContext.getItemSelectorURL() %>'
+					title: '<liferay-ui:message key="select-site-navigation-menu-item" />',
+					url: '<%= siteNavigationMenuDisplayContext.getRootMenuItemSelectorURL() %>'
 				}
 			);
 

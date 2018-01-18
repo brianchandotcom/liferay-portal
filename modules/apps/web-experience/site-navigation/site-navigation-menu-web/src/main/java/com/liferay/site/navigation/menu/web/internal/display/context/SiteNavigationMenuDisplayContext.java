@@ -17,19 +17,14 @@ package com.liferay.site.navigation.menu.web.internal.display.context;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
-import com.liferay.layout.item.selector.criterion.LayoutItemSelectorCriterion;
-import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.portlet.PortletProvider;
+import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.RequestBackedPortletURLFactoryUtil;
-import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
@@ -40,9 +35,7 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.PortletURL;
 
@@ -131,15 +124,6 @@ public class SiteNavigationMenuDisplayContext {
 		return _displayStyleGroupId;
 	}
 
-	public String getEventName() {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return portletDisplay.getNamespace() + "selectLayout";
-	}
-
 	public String getExpandedLevels() {
 		if (_expandedLevels != null) {
 			return _expandedLevels;
@@ -160,91 +144,13 @@ public class SiteNavigationMenuDisplayContext {
 		return _expandedLevels;
 	}
 
-	public String getItemSelectorURL() {
+	public String getRootMenuItemEventName() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		ItemSelector itemSelector = (ItemSelector)_request.getAttribute(
-			SiteNavigationMenuWebKeys.ITEM_SELECTOR);
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-		LayoutItemSelectorCriterion layoutItemSelectorCriterion =
-			new LayoutItemSelectorCriterion();
-
-		Layout layout = themeDisplay.getLayout();
-
-		layoutItemSelectorCriterion.setCheckDisplayPage(false);
-		layoutItemSelectorCriterion.setEnableCurrentPage(true);
-		layoutItemSelectorCriterion.setShowPrivatePages(
-			layout.isPrivateLayout());
-		layoutItemSelectorCriterion.setShowPublicPages(layout.isPublicLayout());
-
-		List<ItemSelectorReturnType> desiredItemSelectorReturnTypes =
-			new ArrayList<>();
-
-		desiredItemSelectorReturnTypes.add(new UUIDItemSelectorReturnType());
-
-		layoutItemSelectorCriterion.setDesiredItemSelectorReturnTypes(
-			desiredItemSelectorReturnTypes);
-
-		PortletURL itemSelectorURL = itemSelector.getItemSelectorURL(
-			RequestBackedPortletURLFactoryUtil.create(_request), getEventName(),
-			layoutItemSelectorCriterion);
-
-		itemSelectorURL.setParameter("layoutUuid", getRootMenuItemId());
-
-		return itemSelectorURL.toString();
-	}
-
-	public String getLayoutBreadcrumb(Layout layout) throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Locale locale = themeDisplay.getLocale();
-
-		List<Layout> ancestors = layout.getAncestors();
-
-		StringBundler sb = new StringBundler(4 * ancestors.size() + 5);
-
-		if (layout.isPrivateLayout()) {
-			sb.append(LanguageUtil.get(_request, "private-pages"));
-		}
-		else {
-			sb.append(LanguageUtil.get(_request, "public-pages"));
-		}
-
-		sb.append(StringPool.SPACE);
-		sb.append(StringPool.GREATER_THAN);
-		sb.append(StringPool.SPACE);
-
-		Collections.reverse(ancestors);
-
-		for (Layout ancestor : ancestors) {
-			sb.append(HtmlUtil.escape(ancestor.getName(locale)));
-			sb.append(StringPool.SPACE);
-			sb.append(StringPool.GREATER_THAN);
-			sb.append(StringPool.SPACE);
-		}
-
-		sb.append(HtmlUtil.escape(layout.getName(locale)));
-
-		return sb.toString();
-	}
-
-	public String getRootLayoutName() throws Exception {
-		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		Layout layout = themeDisplay.getLayout();
-
-		Layout rootLayout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
-			getRootMenuItemId(), themeDisplay.getScopeGroupId(),
-			layout.isPrivateLayout());
-
-		if (rootLayout == null) {
-			return StringPool.BLANK;
-		}
-
-		return getLayoutBreadcrumb(rootLayout);
+		return portletDisplay.getNamespace() + "selectRootMenuItem";
 	}
 
 	public String getRootMenuItemId() {
@@ -285,6 +191,18 @@ public class SiteNavigationMenuDisplayContext {
 			_request, "rootMenuItemLevel", defaultRootMenuItemLevel);
 
 		return _rootMenuItemLevel;
+	}
+
+	public String getRootMenuItemSelectorURL() throws PortalException {
+		PortletURL portletURL = PortletProviderUtil.getPortletURL(
+			_request, SiteNavigationMenu.class.getName(),
+			PortletProvider.Action.VIEW);
+
+		portletURL.setParameter(
+			"siteNavigationMenuId", String.valueOf(getSiteNavigationMenuId()));
+		portletURL.setParameter("eventName", getRootMenuItemEventName());
+
+		return portletURL.toString();
 	}
 
 	public String getRootMenuItemType() {

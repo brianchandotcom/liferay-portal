@@ -32,9 +32,14 @@ page import="com.liferay.portal.kernel.theme.NavItem" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
+page import="com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuWebKeys" %><%@
 page import="com.liferay.site.navigation.menu.web.internal.display.context.SiteNavigationMenuDisplayContext" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
-page import="com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil" %>
+page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %><%@
+page import="com.liferay.site.navigation.service.SiteNavigationMenuItemLocalServiceUtil" %><%@
+page import="com.liferay.site.navigation.service.SiteNavigationMenuLocalServiceUtil" %><%@
+page import="com.liferay.site.navigation.type.SiteNavigationMenuItemType" %><%@
+page import="com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry" %>
 
 <liferay-frontend:defineObjects />
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.controller;
+package com.liferay.exportimport.internal.controller;
 
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_FAILED;
 import static com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleConstants.EVENT_PORTLET_IMPORT_STARTED;
@@ -32,6 +32,7 @@ import com.liferay.expando.kernel.service.ExpandoColumnLocalService;
 import com.liferay.expando.kernel.service.ExpandoTableLocalService;
 import com.liferay.expando.kernel.util.ExpandoConverterUtil;
 import com.liferay.exportimport.constants.ExportImportConstants;
+import com.liferay.exportimport.controller.PortletImportController;
 import com.liferay.exportimport.kernel.controller.ExportImportController;
 import com.liferay.exportimport.kernel.exception.LARFileException;
 import com.liferay.exportimport.kernel.exception.LARTypeException;

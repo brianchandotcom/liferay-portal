@@ -75,7 +75,8 @@ public class LiferayConnectionWizardDefinition
 	}
 
 	/**
-	 * @see org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(WizardImageType)
+	 * @see org.talend.components.api.wizard.ComponentWizardDefinition#getPngImagePath(
+	 *      WizardImageType)
 	 */
 	@Override
 	public String getPngImagePath(WizardImageType wizardImageType) {

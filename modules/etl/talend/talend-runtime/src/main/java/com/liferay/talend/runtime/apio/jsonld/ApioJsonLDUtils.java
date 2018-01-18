@@ -27,7 +27,7 @@ public class ApioJsonLDUtils {
 	/**
 	 * Finds the context node in the given JsonNode if there is any.
 	 *
-	 * @param jsonNode Input JsonNode
+	 * @param  jsonNode Input JsonNode
 	 * @return JsonNode for the context node, otherwise MissingNode
 	 */
 	public static JsonNode getContextNode(JsonNode jsonNode) {
@@ -38,9 +38,9 @@ public class ApioJsonLDUtils {
 	 * Parses the given JsonNode which is a <code>@context</code> node and find
 	 * the value of the <code>@vocab</code> node.
 	 *
-	 * @param contextJsonNode
-	 * @return <code>String</code> the Vocab's value
-	 * e.g "@vocab": "http://schema.org" otherwise empty String
+	 * @param  contextJsonNode
+	 * @return <code>String</code> the Vocab's value e.g "@vocab":
+	 *         "http://schema.org" otherwise empty String
 	 */
 	public static String getVocabulary(JsonNode contextJsonNode) {
 		JsonNode jsonNode = contextJsonNode.path(ApioJsonLDConstants.VOCAB);

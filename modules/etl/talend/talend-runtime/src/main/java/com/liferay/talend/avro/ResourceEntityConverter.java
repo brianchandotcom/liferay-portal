@@ -35,10 +35,8 @@ import org.talend.daikon.avro.converter.string.StringStringConverter;
 import org.talend.daikon.avro.converter.string.StringTimestampConverter;
 
 /**
- * @author Zoltán Takács
- *
- * Converts data row as List<Object> to {@link IndexedRecord} using schema to
- * guess value type
+ * @author Zoltán Takács  Converts data row as List<Object> to {@link
+ *         IndexedRecord} using schema to guess value type
  */
 @SuppressWarnings("rawtypes")
 public class ResourceEntityConverter
@@ -48,7 +46,6 @@ public class ResourceEntityConverter
 	 * Constructor sets outgoing record schema and {@link List} class as datum
 	 * class
 	 *
-	 * @param clazz
 	 * @param schema
 	 */
 	public ResourceEntityConverter(Schema schema) {
@@ -70,9 +67,6 @@ public class ResourceEntityConverter
 		return indexedRecord;
 	}
 
-	/**
-	 * @throws UnsupportedOperationException as this method is not supported yet
-	 */
 	@Override
 	public List<Object> convertToDatum(IndexedRecord indexedRecord) {
 		throw new UnsupportedOperationException();

@@ -28,9 +28,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represent the Json-LD+Hydra response of the Apio Architect for a given
- * resource
- * Note: It must NOT be the entry point or a single resource, it's for easier
- * traversing the ResourceCollections.
+ * resource Note: It must NOT be the entry point or a single resource, it's for
+ * easier traversing the ResourceCollections.
  *
  * @author Zoltán Takács
  */
@@ -53,9 +52,9 @@ public class ApioJsonLDResource {
 	 * Parses the given jsonNode (Resource Collection) e.g people, blog-postings
 	 * and looks for the members array node.
 	 *
-	 * @return <code>JsonNode</code> The ArrayNode which contains the
-	 * resource entries of a given (partial)collection (Members) or MissingNode
-	 * if it's not present
+	 * @return <code>JsonNode</code> The ArrayNode which contains the resource
+	 *         entries of a given (partial)collection (Members) or MissingNode
+	 *         if it's not present
 	 */
 	public JsonNode getMembersNode() {
 		if (_membersJsonNode == null) {
@@ -78,7 +77,7 @@ public class ApioJsonLDResource {
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return actual collection page or empty string if not present in the
-	 * JsonNode
+	 *         JsonNode
 	 */
 	public String getResourceActualPage() {
 		JsonNode viewJsonNode = getViewNode();
@@ -92,9 +91,9 @@ public class ApioJsonLDResource {
 	 * Determines the resource collection type based on the members node in the
 	 * Apio architect response
 	 *
-	 * @return String the name of the resource's vocabulary.
-	 * E.g. Person, BlogPosting. <code>null</code> if the resource type cannot
-	 * be determined
+	 * @return String the name of the resource's vocabulary. E.g. Person,
+	 *         BlogPosting. <code>null</code> if the resource type cannot be
+	 *         determined
 	 */
 	public String getResourceCollectionVocabularyName() {
 		JsonNode membersJsonNode = getMembersNode();
@@ -126,7 +125,7 @@ public class ApioJsonLDResource {
 	 * entry
 	 *
 	 * @return <code>List<String></code> Name of the resource fields, empty
-	 * collection otherwise
+	 *         collection otherwise
 	 */
 	public List<String> getResourceElementFieldNames() {
 		JsonNode membersJsonNode = getMembersNode();
@@ -156,7 +155,7 @@ public class ApioJsonLDResource {
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return first collection page or empty string if not present in the
-	 * JsonNode
+	 *         JsonNode
 	 */
 	public String getResourceFirstPage() {
 		JsonNode jsonNode = getViewNode().path(ApioJsonLDConstants.VIEW_FIRST);
@@ -168,7 +167,7 @@ public class ApioJsonLDResource {
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return last collection page or empty string if not present in the
-	 * JsonNode
+	 *         JsonNode
 	 */
 	public String getResourceLastPage() {
 		JsonNode viewJsonNode = getViewNode();
@@ -182,7 +181,7 @@ public class ApioJsonLDResource {
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return relative upcoming collection page or empty string if not present
-	 * in the JsonNode
+	 *         in the JsonNode
 	 */
 	public String getResourceNextPage() {
 		JsonNode viewJsonNode = getViewNode();
@@ -196,7 +195,7 @@ public class ApioJsonLDResource {
 	 * Parses the view JsonNode of the resource
 	 *
 	 * @return relative previous collection page or empty string if not present
-	 * in the JsonNode
+	 *         in the JsonNode
 	 */
 	public String getResourcePreviousPage() {
 		JsonNode viewJsonNode = getViewNode();
@@ -224,7 +223,7 @@ public class ApioJsonLDResource {
 	 * and looks for the view node.
 	 *
 	 * @return <code>JsonNode</code> The JsonNode for the view section or
-	 * MissingNode if it's not present
+	 *         MissingNode if it's not present
 	 */
 	public JsonNode getViewNode() {
 		return _findJsonNode(
@@ -235,9 +234,9 @@ public class ApioJsonLDResource {
 	 * Parses the given JsonNode which is a <code>@context</code> node and find
 	 * the value of the <code>@vocab</code> node.
 	 *
-	 * @param contextJsonNode
-	 * @return <code>String</code> the Vocab's value
-	 * e.g "@vocab": "http://schema.org" otherwise empty String
+	 * @param  contextJsonNode
+	 * @return <code>String</code> the Vocab's value e.g "@vocab":
+	 *         "http://schema.org" otherwise empty String
 	 */
 	public String getVocabulary(JsonNode contextJsonNode) {
 		JsonNode jsonNode = contextJsonNode.path(ApioJsonLDConstants.VOCAB);
@@ -294,6 +293,7 @@ public class ApioJsonLDResource {
 	/**
 	 * Store the 'member' JsonNode as its the most resource intensive task to
 	 * collect and determine, so do it only once.
+	 *
 	 * @see #getMembersNode()
 	 */
 	private JsonNode _membersJsonNode;

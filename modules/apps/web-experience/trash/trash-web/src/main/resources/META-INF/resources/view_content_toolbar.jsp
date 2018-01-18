@@ -16,6 +16,10 @@
 
 <%@ include file="/init.jsp" %>
 
+<%
+String redirect = ParamUtil.getString(request, "redirect");
+%>
+
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-sidenav-toggler-button
@@ -39,5 +43,18 @@
 			navigationKeys='<%= new String[] {"all"} %>'
 			portletURL="<%= trashDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<liferay-portlet:renderURL varImpl="searchURL" />
+
+			<aui:form action="<%= searchURL.toString() %>" method="get" name="searchFm">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+				<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
+				<aui:input name="deleteTrashEntryIds" type="hidden" />
+				<aui:input name="restoreTrashEntryIds" type="hidden" />
+
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>

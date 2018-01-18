@@ -23,7 +23,27 @@ String displayStyle = GetterUtil.getString((String)request.getAttribute("view.js
 SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-groupSearchContainer");
 
 PortletURL portletURL = siteAdminDisplayContext.getPortletURL();
+
+PortletURL searchURL = siteAdminDisplayContext.getSearchURL();
+
+pageContext.setAttribute("searchURL", searchURL);
 %>
+
+<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
+	<portlet:renderURL var="mainURL" />
+
+	<aui:nav cssClass="navbar-nav">
+		<aui:nav-item href="<%= mainURL.toString() %>" label="sites" selected="<%= true %>" />
+	</aui:nav>
+
+	<aui:nav-bar-search>
+		<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+			<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+			<liferay-ui:input-search markupView="lexicon" />
+		</aui:form>
+	</aui:nav-bar-search>
+</aui:nav-bar>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

@@ -68,11 +68,9 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					</p>
 				</div>
 
-				<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-					<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-						<aui:nav-item label="details" selected="<%= true %>" />
-					</aui:nav>
-				</aui:nav-bar>
+				<clay:navigation-bar
+					items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+				/>
 
 				<div class="sidebar-body">
 					<h5><liferay-ui:message key="removed-date" /></h5>
@@ -93,11 +91,9 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 					<h4><liferay-ui:message arguments="<%= trashEntries.size() %>" key="x-items-are-selected" /></h4>
 				</div>
 
-				<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-					<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-						<aui:nav-item label="details" selected="<%= true %>" />
-					</aui:nav>
-				</aui:nav-bar>
+				<clay:navigation-bar
+					items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+				/>
 
 				<div class="sidebar-body">
 					<h5><liferay-ui:message key="num-of-items" /></h5>
@@ -114,11 +110,9 @@ List<TrashEntry> trashEntries = (List<TrashEntry>)request.getAttribute(TrashWebK
 			<h4><liferay-ui:message key="home" /></h4>
 		</div>
 
-		<aui:nav-bar cssClass="navbar-no-collapse" markupView="lexicon">
-			<aui:nav collapsible="<%= false %>" cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
+		<clay:navigation-bar
+			items="<%= trashDisplayContext.getInfoPanelNavigationItems() %>"
+		/>
 
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="num-of-items" /></h5>

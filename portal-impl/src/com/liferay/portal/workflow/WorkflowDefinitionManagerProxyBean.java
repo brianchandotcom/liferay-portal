@@ -149,7 +149,7 @@ public class WorkflowDefinitionManagerProxyBean
 	 * To save the definition, validate its data, and activate it, use {@link
 	 * #deployWorkflowDefinition(long, long, String, String, byte[])} instead.
 	 *
-	 * @param  companyId the company ID of this workflow definition
+	 * @param  companyId the company ID of the workflow definition
 	 * @param  userId the ID of the user saving the workflow definition
 	 * @param  title the workflow definition's title
 	 * @param  name the workflow definition's name

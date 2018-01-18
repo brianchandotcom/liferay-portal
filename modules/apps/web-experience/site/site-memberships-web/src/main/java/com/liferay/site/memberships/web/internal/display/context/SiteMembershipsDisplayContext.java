@@ -14,8 +14,10 @@
 
 package com.liferay.site.memberships.web.internal.display.context;
 
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroup;
@@ -27,6 +29,10 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import javax.portlet.PortletURL;
 
@@ -78,6 +84,23 @@ public class SiteMembershipsDisplayContext {
 		return group.getGroupId();
 	}
 
+	public List<NavigationItem> getInfoPanelNavigationItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem navigationItem = new NavigationItem();
+
+		navigationItem.setActive(true);
+		navigationItem.setHref(themeDisplay.getURLCurrent());
+		navigationItem.setLabel(LanguageUtil.get(_request, "details"));
+
+		navigationItems.add(navigationItem);
+
+		return navigationItems;
+	}
+
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
 
@@ -112,6 +135,23 @@ public class SiteMembershipsDisplayContext {
 		_selUser = PortalUtil.getSelectedUser(_request, false);
 
 		return _selUser;
+	}
+
+	public List<NavigationItem> getSiteRolesNavigationItems() {
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem navigationItem = new NavigationItem();
+
+		navigationItem.setActive(true);
+		navigationItem.setHref(themeDisplay.getURLCurrent());
+		navigationItem.setLabel(LanguageUtil.get(_request, "site-roles"));
+
+		navigationItems.add(navigationItem);
+
+		return navigationItems;
 	}
 
 	public String getTabs1() {
@@ -152,6 +192,60 @@ public class SiteMembershipsDisplayContext {
 		}
 
 		return 0;
+	}
+
+	public List<NavigationItem> getViewNavigationItems()
+		throws PortalException {
+
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		NavigationItem userNavigationItem = new NavigationItem();
+
+		userNavigationItem.setActive(Objects.equals(getTabs1(), "users"));
+
+		PortletURL usersURL = getPortletURL();
+
+		usersURL.setParameter("tabs1", "users");
+
+		userNavigationItem.setHref(usersURL.toString());
+
+		userNavigationItem.setLabel(LanguageUtil.get(_request, "users"));
+
+		navigationItems.add(userNavigationItem);
+
+		NavigationItem organizationsNavigationItem = new NavigationItem();
+
+		organizationsNavigationItem.setActive(
+			Objects.equals(getTabs1(), "organizations"));
+
+		PortletURL organizationsURL = getPortletURL();
+
+		organizationsURL.setParameter("tabs1", "organizations");
+
+		organizationsNavigationItem.setHref(organizationsURL.toString());
+
+		organizationsNavigationItem.setLabel(
+			LanguageUtil.get(_request, "organizations"));
+
+		navigationItems.add(organizationsNavigationItem);
+
+		NavigationItem userGroupsNavigationItem = new NavigationItem();
+
+		userGroupsNavigationItem.setActive(
+			Objects.equals(getTabs1(), "user-groups"));
+
+		PortletURL userGroupsURL = getPortletURL();
+
+		userGroupsURL.setParameter("tabs1", "user-groups");
+
+		userGroupsNavigationItem.setHref(userGroupsURL.toString());
+
+		userGroupsNavigationItem.setLabel(
+			LanguageUtil.get(_request, "user-groups"));
+
+		navigationItems.add(userGroupsNavigationItem);
+
+		return navigationItems;
 	}
 
 	private Integer _cur;

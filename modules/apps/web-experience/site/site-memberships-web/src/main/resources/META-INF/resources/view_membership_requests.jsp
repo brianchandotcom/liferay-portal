@@ -73,38 +73,57 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(backURL.toString());
 
 renderResponse.setTitle(LanguageUtil.get(request, "membership-requests"));
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem pendingNavigationItem = new NavigationItem();
+
+pendingNavigationItem.setActive(tabs1.equals("pending"));
+
+PortletURL pendingURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+pendingURL.setParameter("tabs1", "pending");
+
+pendingNavigationItem.setHref(pendingURL.toString());
+
+pendingNavigationItem.setLabel(LanguageUtil.get(request, "pending"));
+
+navigationItems.add(pendingNavigationItem);
+
+NavigationItem approvedNavigationItem = new NavigationItem();
+
+approvedNavigationItem.setActive(tabs1.equals("approved"));
+
+PortletURL approvedURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+approvedURL.setParameter("tabs1", "approved");
+
+approvedNavigationItem.setHref(approvedURL.toString());
+
+approvedNavigationItem.setLabel(LanguageUtil.get(request, "approved"));
+
+navigationItems.add(approvedNavigationItem);
+
+NavigationItem deniedNavigationItem = new NavigationItem();
+
+deniedNavigationItem.setActive(tabs1.equals("denied"));
+
+PortletURL deniedURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+deniedURL.setParameter("tabs1", "denied");
+
+deniedNavigationItem.setHref(deniedURL.toString());
+
+deniedNavigationItem.setLabel(LanguageUtil.get(request, "denied"));
+
+navigationItems.add(deniedNavigationItem);
 %>
 
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
+
 <liferay-ui:success key="membershipReplySent" message="your-reply-will-be-sent-to-the-user-by-email" />
-
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		PortletURL pendingURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		pendingURL.setParameter("tabs1", "pending");
-		%>
-
-		<aui:nav-item href="<%= pendingURL.toString() %>" label="pending" selected='<%= tabs1.equals("pending") %>' />
-
-		<%
-		PortletURL approvedURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		approvedURL.setParameter("tabs1", "approved");
-		%>
-
-		<aui:nav-item href="<%= approvedURL.toString() %>" label="approved" selected='<%= tabs1.equals("approved") %>' />
-
-		<%
-		PortletURL deniedURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		deniedURL.setParameter("tabs1", "denied");
-		%>
-
-		<aui:nav-item href="<%= deniedURL.toString() %>" label="denied" selected='<%= tabs1.equals("denied") %>' />
-	</aui:nav>
-</aui:nav-bar>
 
 <liferay-frontend:management-bar
 	disabled="<%= membershipRequestCount <= 0 %>"

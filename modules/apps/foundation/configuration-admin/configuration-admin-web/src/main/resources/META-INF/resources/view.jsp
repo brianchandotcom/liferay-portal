@@ -36,46 +36,49 @@ if (keywords != null) {
 
 	renderResponse.setTitle(LanguageUtil.get(request, "search-results"));
 }
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+if (configurationCategories != null) {
+	for (String curConfigurationCategory : configurationCategories) {
+		NavigationItem navigationItem = new NavigationItem();
+
+		navigationItem.setActive(curConfigurationCategory.equals(configurationCategory));
+
+		PortletURL configurationCategoryURL = renderResponse.createRenderURL();
+
+		configurationCategoryURL.setParameter("configurationCategory", curConfigurationCategory);
+
+		navigationItem.setHref(configurationCategoryURL.toString());
+
+		navigationItem.setLabel(LanguageUtil.get(request, curConfigurationCategory));
+
+		navigationItems.add(navigationItem);
+	}
+}
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= configurationCategories != null %>">
-		<aui:nav cssClass="navbar-nav">
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
-			<%
-			for (String curConfigurationCategory : configurationCategories) {
-			%>
+<liferay-frontend:management-bar>
+	<liferay-frontend:management-bar-filters>
+		<li>
+			<portlet:renderURL var="redirectURL" />
 
-				<portlet:renderURL var="configurationCategoryURL">
-					<portlet:param name="configurationCategory" value="<%= curConfigurationCategory %>" />
-				</portlet:renderURL>
+			<portlet:renderURL var="searchURL">
+				<portlet:param name="mvcRenderCommandName" value="/search" />
+				<portlet:param name="redirect" value="<%= redirectURL %>" />
+			</portlet:renderURL>
 
-				<aui:nav-item
-					href="<%= configurationCategoryURL %>"
-					label="<%= curConfigurationCategory %>"
-					selected="<%= curConfigurationCategory.equals(configurationCategory) %>"
-				/>
-
-			<%
-			}
-			%>
-
-		</aui:nav>
-	</c:if>
-
-	<aui:nav-bar-search>
-		<portlet:renderURL var="redirectURL" />
-
-		<portlet:renderURL var="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/search" />
-			<portlet:param name="redirect" value="<%= redirectURL %>" />
-		</portlet:renderURL>
-
-		<aui:form action="<%= searchURL %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+			<aui:form action="<%= searchURL %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= true %>" markupView="lexicon" />
+			</aui:form>
+		</li>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280">
 	<liferay-ui:search-container

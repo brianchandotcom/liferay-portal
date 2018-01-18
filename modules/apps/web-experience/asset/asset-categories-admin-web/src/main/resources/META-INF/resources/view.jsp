@@ -20,23 +20,10 @@
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabularies"), null);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
-
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="vocabularies" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesSearch() %>">
-		<liferay-portlet:renderURL varImpl="portletURL" />
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= assetCategoriesDisplayContext.getAssetVocabulariesNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= assetCategoriesDisplayContext.isDisabledVocabulariesManagementBar() %>"
@@ -56,6 +43,16 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "vocabul
 				orderColumns='<%= new String[] {"create-date"} %>'
 				portletURL="<%= PortletURLUtil.clone(renderResponse.createRenderURL(), liferayPortletResponse) %>"
 			/>
+
+			<c:if test="<%= assetCategoriesDisplayContext.isShowVocabulariesSearch() %>">
+				<liferay-portlet:renderURL varImpl="portletURL" />
+
+				<li>
+					<aui:form action="<%= portletURL %>" name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-portlet:actionURL name="changeDisplayStyle" varImpl="changeDisplayStyleURL">

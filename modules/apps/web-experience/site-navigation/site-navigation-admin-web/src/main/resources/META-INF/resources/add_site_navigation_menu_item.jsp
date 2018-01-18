@@ -49,8 +49,12 @@ renderResponse.setTitle(LanguageUtil.format(request, "add-x", siteNavigationMenu
 	</aui:fieldset-group>
 
 	<aui:button-row>
-		<aui:button type="submit" value="add" />
+		<aui:button id="addMenuItemButton" type="submit" value="add" />
 
-		<aui:button href="<%= redirect %>" type="cancel" />
+		<%
+		String taglibOnClick = "Liferay.fire('closeWindow', {id: '" + HtmlUtil.escapeJS(portletDisplay.getId()) + "_addMenuItem'});";
+		%>
+
+		<aui:button onClick="<%= taglibOnClick %>" type="cancel" />
 	</aui:button-row>
 </aui:form>

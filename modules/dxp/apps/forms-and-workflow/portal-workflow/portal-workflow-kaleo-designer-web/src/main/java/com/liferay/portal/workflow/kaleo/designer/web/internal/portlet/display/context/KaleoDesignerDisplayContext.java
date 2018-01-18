@@ -17,15 +17,19 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.portlet.display.
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
+import com.liferay.portal.kernel.util.ResourceBundleLoaderUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,6 +47,7 @@ import com.liferay.portal.workflow.kaleo.util.comparator.KaleoDefinitionVersionT
 
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.portlet.RenderRequest;
 
@@ -223,6 +228,35 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		return kaleoDefinitionVersions;
+	}
+
+	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
+		ThemeDisplay themeDisplay =
+			_kaleoDesignerRequestHelper.getThemeDisplay();
+
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.portal.workflow.kaleo.designer.web");
+
+		ResourceBundle resourceBundle =
+			portalResourceBundleLoader.loadResourceBundle(
+				_kaleoDesignerRequestHelper.getLocale());
+
+		if (kaleoDefinitionVersion != null) {
+			if (Validator.isNull(kaleoDefinitionVersion.getTitle())) {
+				return HtmlUtil.escape(
+					LanguageUtil.get(resourceBundle, "untitled-workflow"));
+			}
+			else {
+				return HtmlUtil.escape(
+					kaleoDefinitionVersion.getTitle(
+						themeDisplay.getLanguageId()));
+			}
+		}
+
+		return HtmlUtil.escape(
+			LanguageUtil.get(resourceBundle, "new-workflow"));
 	}
 
 	public String getUserName(KaleoDefinitionVersion kaleoDefinitionVersion) {

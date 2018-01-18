@@ -118,7 +118,7 @@ KaleoDefinitionVersionSearch kaleoDefinitionVersionSearch = new KaleoDefinitionV
 			<liferay-ui:search-container-column-text
 				href="<%= rowURL %>"
 				name="title"
-				value="<%= HtmlUtil.escape(kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId())) %>"
+				value="<%= kaleoDesignerDisplayContext.getTitle(kaleoDefinitionVersion) %>"
 			/>
 
 			<liferay-ui:search-container-column-text

@@ -12,6 +12,10 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.source.formatter", version: "1.0.537"
 }
 
+pluginBundle {
+	tags = ["java", "style"]
+}
+
 updateReadme {
 	match(/group: "com\.liferay", name: "com\.liferay\.gradle\.plugins\.source\.formatter", version: "(\d.+)"/, "README.markdown")
 
@@ -26,8 +30,4 @@ updateReadme {
 
 uploadArchives {
 	dependsOn updateReadme
-}
-
-pluginBundle {
-	tags = ["java", "style"]
 }

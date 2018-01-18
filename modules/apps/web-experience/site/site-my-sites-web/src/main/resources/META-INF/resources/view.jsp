@@ -64,40 +64,45 @@ groupSearch.setResults(groups);
 long[] groupIds = ListUtil.toLongArray(groups, Group.GROUP_ID_ACCESSOR);
 
 Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.getCompanyId(), WorkflowConstants.STATUS_APPROVED, groupIds);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem mySitesNavigationItem = new NavigationItem();
+
+mySitesNavigationItem.setActive(tabs1.equals("my-sites"));
+
+PortletURL mySitesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+mySitesURL.setParameter("tabs1", "my-sites");
+
+mySitesNavigationItem.setHref(mySitesURL.toString());
+
+mySitesNavigationItem.setLabel(LanguageUtil.get(request, "my-sites"));
+
+navigationItems.add(mySitesNavigationItem);
+
+NavigationItem availableSitesNavigationItem = new NavigationItem();
+
+availableSitesNavigationItem.setActive(tabs1.equals("available-sites"));
+
+PortletURL availableSitesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+availableSitesURL.setParameter("tabs1", "available-sites");
+
+availableSitesNavigationItem.setHref(availableSitesURL.toString());
+
+availableSitesNavigationItem.setLabel(LanguageUtil.get(request, "available-sites"));
+
+navigationItems.add(availableSitesNavigationItem);
 %>
 
 <liferay-ui:success key="membershipRequestSent" message="your-request-was-sent-you-will-receive-a-reply-by-email" />
 
 <liferay-ui:error key="membershipAlreadyRequested" message="membership-was-already-requested" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		PortletURL mySitesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		mySitesURL.setParameter("tabs1", "my-sites");
-		%>
-
-		<aui:nav-item href="<%= mySitesURL.toString() %>" id="mySites" label="my-sites" selected='<%= tabs1.equals("my-sites") %>' />
-
-		<%
-		PortletURL availableSitesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		availableSitesURL.setParameter("tabs1", "available-sites");
-		%>
-
-		<aui:nav-item href="<%= availableSitesURL.toString() %>" id="availableSites" label="available-sites" selected='<%= tabs1.equals("available-sites") %>' />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" name="searchFm">
-			<liferay-portlet:renderURLParams varImpl="portletURL" />
-
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
@@ -120,6 +125,14 @@ Map<Long, Integer> groupUsersCounts = UserLocalServiceUtil.searchCounts(company.
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL %>" name="searchFm">
+				<liferay-portlet:renderURLParams varImpl="portletURL" />
+
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

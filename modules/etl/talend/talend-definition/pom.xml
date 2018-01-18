@@ -146,6 +146,13 @@
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
 			</plugin>
 			<plugin>
+				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.xml.formatter</artifactId>
+				<configuration>
+					<fileName>pom.xml</fileName>
+				</configuration>
+			</plugin>
+			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
 				<extensions>true</extensions>

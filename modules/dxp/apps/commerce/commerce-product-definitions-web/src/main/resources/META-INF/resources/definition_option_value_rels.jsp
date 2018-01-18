@@ -40,8 +40,6 @@ productOptionRelsURL.setParameter("cpDefinitionId", String.valueOf(cpDefinition.
 productOptionRelsURL.setParameter("screenNavigationCategoryKey", cpDefinitionOptionValueRelDisplayContext.getScreenNavigationCategoryKey());
 %>
 
-<%@ include file="/definition_option_rel_navbar.jspf" %>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
 	searchContainerId="cpDefinitionOptionValueRels"

@@ -48,6 +48,12 @@ CPDefinitionsDisplayContext cpDefinitionsDisplayContext = (CPDefinitionsDisplayC
 			orderColumns='<%= new String[] {"modified-date", "display-date", "title"} %>'
 			portletURL="<%= cpDefinitionsDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(cpDefinitionsDisplayContext.getPortletURL()) %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

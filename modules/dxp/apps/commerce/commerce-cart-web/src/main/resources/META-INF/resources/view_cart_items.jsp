@@ -69,28 +69,10 @@ renderResponse.setTitle(LanguageUtil.get(request, "cart"));
 
 <%@ include file="/breadcrumb.jspf" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL varImpl="viewCommerceCartItemsURL">
-			<portlet:param name="mvcRenderCommandName" value="viewCommerceCartItems" />
-			<portlet:param name="commerceCartId" value="<%= String.valueOf(commerceCart.getCommerceCartId()) %>" />
-			<portlet:param name="cartToolbarItem" value="<%= cartToolbarItem %>" />
-			<portlet:param name="toolbarItem" value="view-all-cart-items" />
-		</liferay-portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewCommerceCartItemsURL.toString() %>"
-			label="cart-items"
-			selected='<%= toolbarItem.equals("view-all-cart-items") %>'
-		/>
-	</aui:nav>
-
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= commerceCartItemDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -123,6 +105,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "cart"));
 			orderColumns='<%= new String[] {"modified-date"} %>'
 			portletURL="<%= commerceCartItemDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

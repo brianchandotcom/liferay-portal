@@ -59,6 +59,8 @@ editPriceListURL.setParameter("screenNavigationCategoryKey", String.valueOf(Comm
 renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
 
+<%@ include file="/price_list_navbar.jspf" %>
+
 <%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/price_entry_navbar.jspf" %>
 

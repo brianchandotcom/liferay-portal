@@ -14,40 +14,39 @@
  */
 --%>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL varImpl="viewCommercePriceEntryDetailsURL">
-			<portlet:param name="mvcRenderCommandName" value="editCommercePriceEntry" />
-			<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
-			<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
-			<portlet:param name="toolbarItem" value="view-price-entry-details" />
-		</liferay-portlet:renderURL>
+<liferay-portlet:renderURL varImpl="viewCommercePriceEntryDetailsURL">
+	<portlet:param name="mvcRenderCommandName" value="editCommercePriceEntry" />
+	<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
+	<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
+	<portlet:param name="toolbarItem" value="view-price-entry-details" />
+</liferay-portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewCommercePriceEntryDetailsURL.toString() %>"
-			label='<%= LanguageUtil.get(request, "details") %>'
-			selected='<%= toolbarItem.equals("view-price-entry-details") %>'
-		/>
+<liferay-portlet:renderURL varImpl="viewCommerceTierPriceEntriesURL">
+	<portlet:param name="mvcRenderCommandName" value="viewCommerceTierPriceEntries" />
+	<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
+	<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
+	<portlet:param name="toolbarItem" value="view-tier-price-entries" />
+</liferay-portlet:renderURL>
 
-		<liferay-portlet:renderURL varImpl="viewCommerceTierPriceEntriesURL">
-			<portlet:param name="mvcRenderCommandName" value="viewCommerceTierPriceEntries" />
-			<portlet:param name="commercePriceEntryId" value="<%= String.valueOf(commercePriceEntryId) %>" />
-			<portlet:param name="commercePriceListId" value="<%= String.valueOf(commercePriceListId) %>" />
-			<portlet:param name="toolbarItem" value="view-tier-price-entries" />
-		</liferay-portlet:renderURL>
+<%
+List<NavigationItem> navigationItems = new ArrayList<>();
 
-		<aui:nav-item
-			href="<%= viewCommerceTierPriceEntriesURL.toString() %>"
-			label='<%= LanguageUtil.get(request, "tier-price-entries") %>'
-			selected='<%= toolbarItem.equals("view-tier-price-entries") %>'
-		/>
-	</aui:nav>
+NavigationItem priceEntryNavigationItem = new NavigationItem();
+NavigationItem tierPriceEntriesNavigationItem = new NavigationItem();
 
-	<c:if test='<%= toolbarItem.equals("view-tier-price-entries") %>'>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<aui:nav-bar-search>
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:nav-bar-search>
-		</aui:form>
-	</c:if>
-</aui:nav-bar>
+priceEntryNavigationItem.setActive(toolbarItem.equals("view-price-entry-details"));
+priceEntryNavigationItem.setHref(viewCommercePriceEntryDetailsURL.toString());
+priceEntryNavigationItem.setLabel(LanguageUtil.get(request, "details"));
+
+tierPriceEntriesNavigationItem.setActive(toolbarItem.equals("view-tier-price-entries"));
+tierPriceEntriesNavigationItem.setHref(viewCommerceTierPriceEntriesURL.toString());
+tierPriceEntriesNavigationItem.setLabel(LanguageUtil.get(request, "tier-price-entries"));
+
+navigationItems.add(priceEntryNavigationItem);
+navigationItems.add(tierPriceEntriesNavigationItem);
+%>
+
+<clay:navigation-bar
+	inverted="<%= false %>"
+	items="<%= navigationItems %>"
+/>

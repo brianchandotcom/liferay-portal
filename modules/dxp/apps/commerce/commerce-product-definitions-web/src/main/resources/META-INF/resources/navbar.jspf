@@ -14,48 +14,55 @@
  */
 --%>
 
-<aui:nav-bar cssClass="collapse-basic-search navbar-inverse" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_DEFINITIONS %>" varImpl="viewProductDefinitionsURL">
-			<portlet:param name="toolbarItem" value="view-all-product-definitions" />
-		</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_DEFINITIONS %>" varImpl="viewProductDefinitionsURL">
+	<portlet:param name="toolbarItem" value="view-all-product-definitions" />
+</liferay-portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewProductDefinitionsURL.toString() %>"
-			label="products"
-			selected='<%= toolbarItem.equals("view-all-product-definitions") %>'
-		/>
+<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTIONS %>" varImpl="viewProductOptionsURL">
+	<portlet:param name="toolbarItem" value="view-all-product-options" />
+</liferay-portlet:renderURL>
 
-		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTIONS %>" varImpl="viewProductOptionsURL">
-			<portlet:param name="toolbarItem" value="view-all-product-options" />
-		</liferay-portlet:renderURL>
+<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
+	<portlet:param name="toolbarItem" value="view-all-product-option-categories" />
+	<portlet:param name="mvcPath" value="/view_option_categories.jsp" />
+</liferay-portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewProductOptionsURL.toString() %>"
-			label="options"
-			selected='<%= toolbarItem.equals("view-all-product-options") %>'
-		/>
+<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductSpecificationOptionsURL">
+	<portlet:param name="toolbarItem" value="view-all-product-specification-options" />
+	<portlet:param name="mvcPath" value="/view_specification_options.jsp" />
+</liferay-portlet:renderURL>
 
-		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_OPTION_CATEGORIES %>" varImpl="viewProductOptionCategoriesURL">
-			<portlet:param name="toolbarItem" value="view-all-product-option-categories" />
-			<portlet:param name="mvcPath" value="/view_option_categories.jsp" />
-		</liferay-portlet:renderURL>
+<%
+List<NavigationItem> navigationItems = new ArrayList<>();
 
-		<aui:nav-item
-			href="<%= viewProductOptionCategoriesURL.toString() %>"
-			label="option-categories"
-			selected='<%= toolbarItem.equals("view-all-product-option-categories") %>'
-		/>
+NavigationItem cpDefinitionsNavigationItem = new NavigationItem();
+NavigationItem cpOptionsNavigationItem = new NavigationItem();
+NavigationItem cpOptionCategoriesNavigationItem = new NavigationItem();
+NavigationItem cpSpecificationOptionsNavigationItem = new NavigationItem();
 
-		<liferay-portlet:renderURL portletName="<%= CPPortletKeys.CP_SPECIFICATION_OPTIONS %>" varImpl="viewProductSpecificationOptionsURL">
-			<portlet:param name="toolbarItem" value="view-all-product-specification-options" />
-			<portlet:param name="mvcPath" value="/view_specification_options.jsp" />
-		</liferay-portlet:renderURL>
+cpDefinitionsNavigationItem.setActive(toolbarItem.equals("view-all-product-definitions"));
+cpDefinitionsNavigationItem.setHref(viewProductDefinitionsURL.toString());
+cpDefinitionsNavigationItem.setLabel(LanguageUtil.get(request, "products"));
 
-		<aui:nav-item
-			href="<%= viewProductSpecificationOptionsURL.toString() %>"
-			label="specifications"
-			selected='<%= toolbarItem.equals("view-all-product-specification-options") %>'
-		/>
-	</aui:nav>
-</aui:nav-bar>
+cpOptionsNavigationItem.setActive(toolbarItem.equals("view-all-product-options"));
+cpOptionsNavigationItem.setHref(viewProductOptionsURL.toString());
+cpOptionsNavigationItem.setLabel(LanguageUtil.get(request, "options"));
+
+cpOptionCategoriesNavigationItem.setActive(toolbarItem.equals("view-all-product-option-categories"));
+cpOptionCategoriesNavigationItem.setHref(viewProductOptionCategoriesURL.toString());
+cpOptionCategoriesNavigationItem.setLabel(LanguageUtil.get(request, "option-categories"));
+
+cpSpecificationOptionsNavigationItem.setActive(toolbarItem.equals("view-all-product-specification-options"));
+cpSpecificationOptionsNavigationItem.setHref(viewProductSpecificationOptionsURL.toString());
+cpSpecificationOptionsNavigationItem.setLabel(LanguageUtil.get(request, "specifications"));
+
+navigationItems.add(cpDefinitionsNavigationItem);
+navigationItems.add(cpOptionsNavigationItem);
+navigationItems.add(cpOptionCategoriesNavigationItem);
+navigationItems.add(cpSpecificationOptionsNavigationItem);
+%>
+
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>

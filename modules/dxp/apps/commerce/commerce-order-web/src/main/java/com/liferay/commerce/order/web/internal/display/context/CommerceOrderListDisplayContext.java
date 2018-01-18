@@ -21,6 +21,7 @@ import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
@@ -123,6 +124,35 @@ public class CommerceOrderListDisplayContext {
 
 		return _commercePriceFormatter.format(
 			_commerceOrderRequestHelper.getRequest(), commerceOrder.getTotal());
+	}
+
+	public List<NavigationItem> getNavigationItems() throws PortalException {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceOrderRequestHelper.getLiferayPortletResponse();
+
+		int status = getStatus();
+		Map<Integer, Long> statusCounts = getStatusCounts();
+
+		for (Map.Entry<Integer, Long> entry : statusCounts.entrySet()) {
+			int curStatus = entry.getKey();
+			long curCount = entry.getValue();
+
+			PortletURL statusURL = liferayPortletResponse.createRenderURL();
+
+			statusURL.setParameter("status", String.valueOf(curStatus));
+
+			NavigationItem statusNavigationItem = new NavigationItem();
+
+			statusNavigationItem.setActive(curStatus == status);
+			statusNavigationItem.setHref(statusURL.toString());
+			statusNavigationItem.setLabel(getStatusLabel(curStatus, curCount));
+
+			navigationItems.add(statusNavigationItem);
+		}
+
+		return navigationItems;
 	}
 
 	public int getOrderStatus() {

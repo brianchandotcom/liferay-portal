@@ -46,12 +46,6 @@ if (cpInstances == null) {
 			<h4><%= HtmlUtil.escape(cpInstance.getSku()) %></h4>
 		</div>
 
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="id" /></h5>
 
@@ -69,16 +63,6 @@ if (cpInstances == null) {
 	<c:otherwise>
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= cpInstances.size() %>" key="x-items-are-selected" /></h4>
-		</div>
-
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
-		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= cpInstances.size() %>" key="x-items-are-selected" /></h5>
 		</div>
 	</c:otherwise>
 </c:choose>

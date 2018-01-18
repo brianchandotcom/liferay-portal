@@ -35,7 +35,10 @@ portletURL.setParameter("searchContainerId", "commerceCarts");
 request.setAttribute("view.jsp-portletURL", portletURL);
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= commerceCartDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-util:include page="/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="commerceCarts" />

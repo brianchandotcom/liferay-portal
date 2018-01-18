@@ -53,6 +53,12 @@ for (ManagementBarFilterItem managementBarFilterItem : managementBarFilterItems)
 			orderColumns='<%= new String[] {"city", "name"} %>'
 			portletURL="<%= commerceWarehousesDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(commerceWarehousesDisplayContext.getPortletURL()) %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

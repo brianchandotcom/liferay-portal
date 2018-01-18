@@ -37,12 +37,6 @@ if (commerceCarts == null) {
 			<h4><%= HtmlUtil.escape(commerceCart.getName()) %></h4>
 		</div>
 
-		<aui:nav-bar markupView="lexicon">
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
 		<div class="sidebar-body">
 			<h5><liferay-ui:message key="id" /></h5>
 
@@ -52,12 +46,6 @@ if (commerceCarts == null) {
 		</div>
 	</c:when>
 	<c:otherwise>
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= commerceCarts.size() %>" key="x-items-are-selected" /></h4>
 		</div>

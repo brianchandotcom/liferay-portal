@@ -58,6 +58,8 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 %>
 
+<%@ include file="/price_list_navbar.jspf" %>
+
 <%@ include file="/breadcrumb.jspf" %>
 <%@ include file="/price_entry_navbar.jspf" %>
 
@@ -92,6 +94,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "price-lists"));
 			orderColumns='<%= new String[] {"create-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

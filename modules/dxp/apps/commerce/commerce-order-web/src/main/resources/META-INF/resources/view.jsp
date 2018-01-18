@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/META-INF/resources/init.jsp" %>
+<%@ include file="/init.jsp" %>
 
 <%
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -22,51 +22,10 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListDisplayContext.getSearchContainer();
 %>
 
-<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />
-
-<aui:nav-bar cssClass="collapse-basic-search container-fluid" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		int orderStatus = commerceOrderListDisplayContext.getOrderStatus();
-		Map<Integer, Long> orderStatusCounts = commerceOrderListDisplayContext.getOrderStatusCounts();
-
-		for (Map.Entry<Integer, Long> entry : orderStatusCounts.entrySet()) {
-			int curOrderStatus = entry.getKey();
-			long curCount = entry.getValue();
-
-			PortletURL orderStatusURL = renderResponse.createRenderURL();
-
-			orderStatusURL.setParameter("orderStatus", String.valueOf(curOrderStatus));
-		%>
-
-			<aui:nav-item
-				href="<%= orderStatusURL.toString() %>"
-				label="<%= commerceOrderListDisplayContext.getOrderStatusLabel(curOrderStatus, curCount) %>"
-				localizeLabel="<%= false %>"
-				selected="<%= curOrderStatus == orderStatus %>"
-				title="<%= CommerceOrderConstants.getOrderStatusLabel(curOrderStatus) %>"
-			/>
-
-		<%
-		}
-		%>
-
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL" />
-
-		<aui:form action="<%= searchURL %>" method="get" name="fm">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:search-form
-				page="/order_search.jsp"
-				servletContext="<%= application %>"
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= commerceOrderListDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -79,6 +38,19 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 			orderColumns="<%= commerceOrderSearchContainer.getOrderableHeaders() %>"
 			portletURL="<%= commerceOrderListDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<liferay-portlet:renderURL varImpl="searchURL" />
+
+			<aui:form action="<%= searchURL %>" method="get" name="fm">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+				<liferay-ui:search-form
+					page="/order_search.jsp"
+					servletContext="<%= application %>"
+				/>
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

@@ -55,6 +55,12 @@ int type = ParamUtil.getInteger(request, "type", CommerceCartConstants.TYPE_CART
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= commerceCartDisplayContext.getPortletURL() %>"
 		/>
+
+		<li>
+			<aui:form action="<%= String.valueOf(commerceCartDisplayContext.getPortletURL()) %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
@@ -30,7 +31,6 @@ page import="com.liferay.commerce.product.exception.CPMeasurementUnitKeyExceptio
 page import="com.liferay.commerce.product.measurement.unit.web.internal.display.context.CPMeasurementUnitsDisplayContext" %><%@
 page import="com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasurementUnitAdminModule" %><%@
 page import="com.liferay.commerce.product.model.CPMeasurementUnit" %><%@
-page import="com.liferay.commerce.product.model.CPMeasurementUnitConstants" %><%@
 page import="com.liferay.commerce.product.service.permission.CPMeasurementUnitPermission" %><%@
 page import="com.liferay.portal.kernel.bean.BeanParamUtil" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@

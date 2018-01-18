@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String toolbarItem = ParamUtil.getString(request, "toolbarItem", "view-all-dimension-product-measurement-units");
-
 CPMeasurementUnitsDisplayContext cpMeasurementUnitsDisplayContext = (CPMeasurementUnitsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 
 SearchContainer<CPMeasurementUnit> cpMeasurementUnitSearchContainer = cpMeasurementUnitsDisplayContext.getSearchContainer();
@@ -28,7 +26,10 @@ int type = cpMeasurementUnitsDisplayContext.getType();
 boolean hasManageCPMeasurementUnitsPermission = CPMeasurementUnitPermission.contains(permissionChecker, scopeGroupId, CPActionKeys.MANAGE_COMMERCE_PRODUCT_MEASUREMENT_UNITS);
 %>
 
-<%@ include file="/navbar.jspf" %>
+<clay:navigation-bar
+	inverted="<%= false %>"
+	items="<%= cpMeasurementUnitsDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

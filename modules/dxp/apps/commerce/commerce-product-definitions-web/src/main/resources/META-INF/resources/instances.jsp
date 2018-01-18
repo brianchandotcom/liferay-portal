@@ -34,14 +34,6 @@ PortletURL portletURL = cpInstanceDisplayContext.getPortletURL();
 String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
 	searchContainerId="cpInstances"
@@ -79,6 +71,12 @@ String displayStyle = cpInstanceDisplayContext.getDisplayStyle();
 			orderColumns='<%= new String[] {"sku", "create-date", "display-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

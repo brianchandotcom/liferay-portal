@@ -19,16 +19,19 @@ import com.liferay.commerce.product.measurement.unit.web.internal.util.CPMeasure
 import com.liferay.commerce.product.model.CPMeasurementUnit;
 import com.liferay.commerce.product.model.CPMeasurementUnitConstants;
 import com.liferay.commerce.product.service.CPMeasurementUnitService;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -63,6 +66,42 @@ public class CPMeasurementUnitsDisplayContext {
 		}
 
 		return _cpMeasurementUnit;
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String viewDimensionProductMeasurementUnitsURL = getNavigationItemURL(
+			"view-all-dimension-product-measurement-units",
+			CPMeasurementUnitConstants.TYPE_DIMENSION);
+		String viewWeightProductMeasurementUnitsURL = getNavigationItemURL(
+			"view-all-weight-product-measurement-units",
+			CPMeasurementUnitConstants.TYPE_WEIGHT);
+
+		String toolbarItem = ParamUtil.getString(
+			_renderRequest, "toolbarItem",
+			"view-all-dimension-product-measurement-units");
+
+		NavigationItem dimensionCPMeasurementUnitsNavigationItem =
+			getNavigationItem(
+				toolbarItem.equals(
+					"view-all-dimension-product-measurement-units"),
+				viewDimensionProductMeasurementUnitsURL,
+				LanguageUtil.get(themeDisplay.getLocale(), "dimension"));
+
+		NavigationItem weightCPMeasurementUnitsNavigationItem =
+			getNavigationItem(
+				toolbarItem.equals("view-all-weight-product-measurement-units"),
+				viewWeightProductMeasurementUnitsURL,
+				LanguageUtil.get(themeDisplay.getLocale(), "weight"));
+
+		navigationItems.add(dimensionCPMeasurementUnitsNavigationItem);
+		navigationItems.add(weightCPMeasurementUnitsNavigationItem);
+
+		return navigationItems;
 	}
 
 	public String getOrderByCol() {
@@ -153,6 +192,30 @@ public class CPMeasurementUnitsDisplayContext {
 	public int getType() {
 		return ParamUtil.getInteger(
 			_renderRequest, "type", CPMeasurementUnitConstants.TYPE_DIMENSION);
+	}
+
+	protected NavigationItem getNavigationItem(
+		boolean active, String href, String label) {
+
+		NavigationItem navigationItem = new NavigationItem();
+
+		navigationItem.setActive(active);
+		navigationItem.setHref(href);
+		navigationItem.setLabel(label);
+
+		return navigationItem;
+	}
+
+	protected String getNavigationItemURL(String toolbarItem, int type) {
+		PortletURL portletURL = _renderResponse.createRenderURL();
+
+		portletURL.setParameter("mvcPath", "/view.jsp");
+		portletURL.setParameter(
+			"commerceAdminModuleKey", CPMeasurementUnitAdminModule.KEY);
+		portletURL.setParameter("toolbarItem", toolbarItem);
+		portletURL.setParameter("type", String.valueOf(type));
+
+		return portletURL.toString();
 	}
 
 	protected RowChecker getRowChecker() {

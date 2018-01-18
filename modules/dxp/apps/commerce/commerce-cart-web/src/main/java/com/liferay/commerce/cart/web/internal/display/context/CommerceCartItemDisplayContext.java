@@ -21,6 +21,7 @@ import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelect
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
 import com.liferay.item.selector.criteria.UUIDItemSelectorReturnType;
@@ -117,6 +118,34 @@ public class CommerceCartItemDisplayContext
 			"checkedCPInstanceIds", checkedCPInstanceIds);
 
 		return itemSelectorURL.toString();
+	}
+
+	public List<NavigationItem> getNavigationItems() throws PortalException {
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter(
+			"mvcRenderCommandName", "viewCommerceCartItems");
+		portletURL.setParameter(
+			"commerceCartId", String.valueOf(getCommerceCartId()));
+
+		String cartToolbarItem = ParamUtil.getString(
+			httpServletRequest, "cartToolbarItem", "view-all-carts");
+
+		portletURL.setParameter("cartToolbarItem", cartToolbarItem);
+
+		String toolbarItem = ParamUtil.getString(
+			httpServletRequest, "toolbarItem", "view-all-cart-items");
+
+		portletURL.setParameter("toolbarItem", toolbarItem);
+
+		NavigationItem cartItemsNavigationItem = new NavigationItem();
+
+		cartItemsNavigationItem.setActive(
+			toolbarItem.equals("view-all-cart-items"));
+		cartItemsNavigationItem.setHref(portletURL.toString());
+		cartItemsNavigationItem.setLabel("cart-items");
+
+		return Collections.singletonList(cartItemsNavigationItem);
 	}
 
 	@Override

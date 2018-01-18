@@ -24,19 +24,6 @@ SearchContainer<CommerceOrderItem> commerceOrderItemsSearchContainer = commerceO
 PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPortletURL();
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search container-fluid" markupView="lexicon">
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL %>" method="get" name="fm">
-			<liferay-portlet:renderURLParams portletURL="<%= portletURL %>" />
-
-			<liferay-ui:search-form
-				page="/order/item_search.jsp"
-				servletContext="<%= application %>"
-			/>
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
-
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
 	searchContainerId="commerceOrderItems"
@@ -48,6 +35,17 @@ PortletURL portletURL = commerceOrderEditDisplayContext.getCommerceOrderItemsPor
 			orderColumns="<%= commerceOrderItemsSearchContainer.getOrderableHeaders() %>"
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL %>" method="get" name="fm">
+				<liferay-portlet:renderURLParams portletURL="<%= portletURL %>" />
+
+				<liferay-ui:search-form
+					page="/order/item_search.jsp"
+					servletContext="<%= application %>"
+				/>
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

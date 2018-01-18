@@ -21,13 +21,16 @@ import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -64,6 +67,43 @@ public class CommerceCartDisplayContext
 		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
 
 		return _commercePriceFormatter.format(httpServletRequest, subtotal);
+	}
+
+	public List<NavigationItem> getNavigationItems() {
+		List<NavigationItem> navigationItems = new ArrayList<>();
+
+		PortletURL viewCartsURL = liferayPortletResponse.createRenderURL();
+		PortletURL viewWishListsURL = liferayPortletResponse.createRenderURL();
+
+		viewCartsURL.setParameter("toolbarItem", "view-all-carts");
+		viewCartsURL.setParameter(
+			"type", String.valueOf(CommerceCartConstants.TYPE_CART));
+
+		viewWishListsURL.setParameter("toolbarItem", "view-all-wish-lists");
+		viewWishListsURL.setParameter(
+			"type", String.valueOf(CommerceCartConstants.TYPE_WISH_LIST));
+
+		String toolbarItem = ParamUtil.getString(
+			httpServletRequest, "toolbarItem", "view-all-carts");
+
+		NavigationItem cartsNavigationItem = new NavigationItem();
+		NavigationItem wishListsNavigationItem = new NavigationItem();
+
+		cartsNavigationItem.setActive(toolbarItem.equals("view-all-carts"));
+		cartsNavigationItem.setHref(viewCartsURL.toString());
+		cartsNavigationItem.setLabel(
+			LanguageUtil.get(httpServletRequest, "carts"));
+
+		wishListsNavigationItem.setActive(
+			toolbarItem.equals("view-all-wish-lists"));
+		wishListsNavigationItem.setHref(viewWishListsURL.toString());
+		wishListsNavigationItem.setLabel(
+			LanguageUtil.get(httpServletRequest, "wish-lists"));
+
+		navigationItems.add(cartsNavigationItem);
+		navigationItems.add(wishListsNavigationItem);
+
+		return navigationItems;
 	}
 
 	@Override

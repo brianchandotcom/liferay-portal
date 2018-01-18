@@ -170,15 +170,5 @@ if (cpDefinitions == null) {
 		<div class="sidebar-header">
 			<h4><liferay-ui:message arguments="<%= cpDefinitions.size() %>" key="x-items-are-selected" /></h4>
 		</div>
-
-		<aui:nav-bar>
-			<aui:nav cssClass="navbar-nav">
-				<aui:nav-item label="details" selected="<%= true %>" />
-			</aui:nav>
-		</aui:nav-bar>
-
-		<div class="sidebar-body">
-			<h5><liferay-ui:message arguments="<%= cpDefinitions.size() %>" key="x-items-are-selected" /></h5>
-		</div>
 	</c:otherwise>
 </c:choose>

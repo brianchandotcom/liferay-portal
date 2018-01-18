@@ -31,13 +31,9 @@ if (WorkflowConstants.STATUS_DRAFT == fragmentEntry.getStatus()) {
 renderResponse.setTitle(title);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<portlet:renderURL var="mainURL" />
-
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item href="<%= mainURL.toString() %>" label="code" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= fragmentDisplayContext.getEditFragmentEntryNavigationItems() %>"
+/>
 
 <portlet:actionURL name="/fragment/edit_fragment_entry" var="editFragmentEntryURL">
 	<portlet:param name="mvcRenderCommandName" value="/fragment/edit_fragment_entry" />

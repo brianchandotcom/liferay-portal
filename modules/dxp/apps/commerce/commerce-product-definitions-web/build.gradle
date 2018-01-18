@@ -12,6 +12,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.dynamic.data.mapping.form.field.type", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.expando.taglib", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.3.0-20171127.044812-5"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.clay", version: "1.0.0-20180109.010916-4"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.3.0"
 	provided group: "com.liferay", name: "com.liferay.item.selector.criteria.api", version: "2.0.0"

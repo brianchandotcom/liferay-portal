@@ -51,19 +51,21 @@ if (filterManageableOrganizations) {
 }
 
 RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem entriesNavigationItem = new NavigationItem();
+
+entriesNavigationItem.setActive(true);
+entriesNavigationItem.setHref(StringPool.BLANK);
+entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
+
+navigationItems.add(entriesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -89,6 +91,12 @@ RowChecker rowChecker = new SetUserUserGroupChecker(renderResponse, userGroup);
 			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons />

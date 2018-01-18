@@ -102,28 +102,24 @@ public class DeleteDefinitionPortletConfigurationIcon
 
 	@Override
 	public boolean isShow(PortletRequest portletRequest) {
-		KaleoDefinition kaleoDefinition = getKaleoDefinition(portletRequest);
-
-		if ((kaleoDefinition == null) || kaleoDefinition.isActive()) {
-			return false;
-		}
-
-		return true;
-	}
-
-	protected KaleoDefinition getKaleoDefinition(
-		PortletRequest portletRequest) {
-
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			(KaleoDefinitionVersion)portletRequest.getAttribute(
 				KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION);
 
 		if (kaleoDefinitionVersion == null) {
-			return null;
+			return false;
 		}
 
 		try {
-			return kaleoDefinitionVersion.getKaleoDefinition();
+			KaleoDefinition kaleoDefinition =
+				kaleoDefinitionVersion.getKaleoDefinition();
+
+			if (kaleoDefinition.isActive()) {
+				return false;
+			}
+			else {
+				return true;
+			}
 		}
 		catch (PortalException pe) {
 			if (_log.isDebugEnabled()) {
@@ -131,7 +127,11 @@ public class DeleteDefinitionPortletConfigurationIcon
 			}
 		}
 
-		return null;
+		if (kaleoDefinitionVersion.isDraft()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

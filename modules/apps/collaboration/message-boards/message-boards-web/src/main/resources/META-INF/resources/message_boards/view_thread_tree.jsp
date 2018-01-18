@@ -65,7 +65,7 @@ MBMessageDisplay messageDisplay = (MBMessageDisplay)request.getAttribute(WebKeys
 
 	depth++;
 
-	MBMessageIterator mbMessageIterator = new MBMessageIteratorImpl(messages, range[0], range[1]);
+	MBMessageIterator mbMessageIterator = new MBMessageIterator(messages, range[0], range[1]);
 
 	while (mbMessageIterator.hasNext()) {
 		MBMessage curMessage = mbMessageIterator.next();

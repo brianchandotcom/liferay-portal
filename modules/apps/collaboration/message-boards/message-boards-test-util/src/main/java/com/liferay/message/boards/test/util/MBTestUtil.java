@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.util.test;
+package com.liferay.message.boards.test.util;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
@@ -34,15 +34,12 @@ import java.util.Map;
 /**
  * @author Eudaldo Alonso
  * @author Daniel Kocsis
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.test.util.MBTestUtil}
  */
-@Deprecated
 public class MBTestUtil {
 
 	public static MBMessage addMessageWithWorkflow(
-			long userId, long groupId, long categoryId, String subject,
-			String body, boolean approved, ServiceContext serviceContext)
+			long groupId, long categoryId, String subject, String body,
+			boolean approved, ServiceContext serviceContext)
 		throws Exception {
 
 		boolean workflowEnabled = WorkflowThreadLocal.isEnabled();

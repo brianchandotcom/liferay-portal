@@ -64,17 +64,4 @@ if (passwordPolicy != null) {
 
 		<aui:nav-item cssClass='<%= isShowNav ? StringPool.BLANK : "disabled" %>' href="<%= isShowNav ? assigneesURL.toString() : null %>" label="assignees" selected='<%= tabs1.equals("assignees") %>' />
 	</aui:nav>
-
-	<c:if test='<%= hasAssignMembersPermission && tabs1.equals("assignees") %>'>
-
-		<%
-		PortletURL searchURL = (PortletURL)request.getAttribute("edit_password_policy_assignments.jsp-portletURL");
-		%>
-
-		<aui:nav-bar-search>
-			<aui:form action="<%= searchURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
 </aui:nav-bar>

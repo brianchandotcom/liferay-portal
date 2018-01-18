@@ -52,19 +52,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="password-policies" selected="<%= true %>" />
 	</aui:nav>
-
-	<c:if test="<%= !passwordPolicyEnabled %>">
-
-		<%
-		PortletURL searchURL = renderResponse.createRenderURL();
-		%>
-
-		<aui:nav-bar-search searchContainer="<%= searchContainer %>">
-			<aui:form action="<%= searchURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -83,6 +70,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<c:if test="<%= !passwordPolicyEnabled %>">
+
+			<%
+			PortletURL searchURL = renderResponse.createRenderURL();
+			%>
+
+			<li>
+				<aui:form action="<%= searchURL %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

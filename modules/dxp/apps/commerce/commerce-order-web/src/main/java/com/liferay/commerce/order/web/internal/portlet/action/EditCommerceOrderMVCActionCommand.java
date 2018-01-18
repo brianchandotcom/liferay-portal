@@ -16,14 +16,21 @@ package com.liferay.commerce.order.web.internal.portlet.action;
 
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceOrder;
+import com.liferay.commerce.order.web.internal.permission.CommerceOrderWorkflowPermissionChecker;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
+import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowInstanceManager;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -92,6 +99,52 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("totals")) {
 			updateTotals(actionRequest);
 		}
+		else if (cmd.equals("transition")) {
+			executeTransition(actionRequest);
+		}
+	}
+
+	protected void executeTransition(ActionRequest actionRequest)
+		throws Exception {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		long commerceOrderId = ParamUtil.getLong(
+			actionRequest, "commerceOrderId");
+
+		long workflowTaskId = ParamUtil.getLong(
+			actionRequest, "workflowTaskId");
+		String transitionName = ParamUtil.getString(
+			actionRequest, "transitionName");
+		String comment = ParamUtil.getString(actionRequest, "comment");
+
+		CommerceOrder commerceOrder = _commerceOrderService.getCommerceOrder(
+			commerceOrderId);
+
+		long companyId = commerceOrder.getCompanyId();
+
+		WorkflowTask workflowTask = _workflowTaskManager.getWorkflowTask(
+			companyId, workflowTaskId);
+
+		if (!_commerceOrderWorkflowPermissionChecker.hasPermission(
+				commerceOrder, workflowTask,
+				themeDisplay.getPermissionChecker())) {
+
+			throw new PrincipalException();
+		}
+
+		long userId = themeDisplay.getUserId();
+
+		if (!workflowTask.isAssignedToSingleUser()) {
+			workflowTask = _workflowTaskManager.assignWorkflowTaskToUser(
+				companyId, userId, workflowTask.getWorkflowTaskId(), userId,
+				null, null, null);
+		}
+
+		_workflowTaskManager.completeWorkflowTask(
+			companyId, userId, workflowTask.getWorkflowTaskId(), transitionName,
+			comment, null);
 	}
 
 	protected void updateBillingAddress(ActionRequest actionRequest)
@@ -211,5 +264,15 @@ public class EditCommerceOrderMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceOrderService _commerceOrderService;
+
+	@Reference
+	private CommerceOrderWorkflowPermissionChecker
+		_commerceOrderWorkflowPermissionChecker;
+
+	@Reference
+	private WorkflowInstanceManager _workflowInstanceManager;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

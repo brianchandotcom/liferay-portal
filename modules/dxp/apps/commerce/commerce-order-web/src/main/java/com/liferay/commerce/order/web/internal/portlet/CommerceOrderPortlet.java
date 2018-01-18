@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.io.IOException;
 
@@ -73,7 +74,7 @@ public class CommerceOrderPortlet extends MVCPortlet {
 			CommerceOrderListDisplayContext commerceOrderListDisplayContext =
 				new CommerceOrderListDisplayContext(
 					_commerceOrderService, _commercePriceFormatter,
-					renderRequest);
+					renderRequest, _workflowTaskManager);
 
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -88,5 +89,8 @@ public class CommerceOrderPortlet extends MVCPortlet {
 
 	@Reference
 	private CommercePriceFormatter _commercePriceFormatter;
+
+	@Reference
+	private WorkflowTaskManager _workflowTaskManager;
 
 }

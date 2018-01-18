@@ -22,6 +22,8 @@ CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrder
 SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListDisplayContext.getSearchContainer();
 %>
 
+<liferay-ui:error exception="<%= WorkflowException.class %>" message="an-unexpected-error-occurred" />
+
 <aui:nav-bar cssClass="collapse-basic-search container-fluid" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 
@@ -154,6 +156,11 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 			/>
 
 			<liferay-ui:search-container-column-jsp
+				cssClass="table-cell-content"
+				path="/order_transition.jsp"
+			/>
+
+			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"
 				path="/order_action.jsp"
 			/>
@@ -161,6 +168,13 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
+</div>
+
+<div class="hide" id="<portlet:namespace />transitionComments">
+	<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+	<aui:input name="<%= Constants.CMD %>" type="hidden" value="transition" />
+
+	<aui:input cols="55" name="comment" placeholder="comment" rows="1" type="textarea" />
 </div>
 
 <aui:script>
@@ -175,4 +189,79 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 			submitForm(form, '<portlet:actionURL name="editCommerceOrder" />');
 		}
 	}
+</aui:script>
+
+<aui:script use="liferay-util-window">
+	var searchContainer = A.one('#<portlet:namespace />commerceOrdersSearchContainer');
+	var transitionComments = A.one('#<portlet:namespace />transitionComments');
+
+	searchContainer.delegate(
+		'click',
+		function(event) {
+			var link = event.currentTarget;
+
+			var form = A.Node.create('<form />');
+
+			var url = '<portlet:actionURL name="editCommerceOrder" />';
+
+			url += '&<portlet:namespace />commerceOrderId=' + link.getData('commerceOrderId');
+			url += '&<portlet:namespace />workflowTaskId=' + link.getData('workflowTaskId');
+			url += '&<portlet:namespace />transitionName=' + link.getData('transitionName');
+
+			form.setAttribute('action', url);
+			form.setAttribute('method', 'POST');
+
+			form.append(transitionComments);
+
+			transitionComments.show();
+
+			var dialog = Liferay.Util.Window.getWindow(
+				{
+					dialog: {
+						bodyContent: form,
+						destroyOnHide: true,
+						height: 400,
+						resizable: false,
+						toolbars: {
+							footer: [
+								{
+									cssClass: 'btn-primary mr-2',
+									label: '<%= UnicodeLanguageUtil.get(request, "done") %>',
+									on: {
+										click: function() {
+											submitForm(form);
+										}
+									}
+								},
+								{
+									cssClass: 'btn-cancel',
+									label: '<%= UnicodeLanguageUtil.get(request, "cancel") %>',
+									on: {
+										click: function() {
+											dialog.hide();
+										}
+									}
+								}
+							],
+							header: [
+								{
+									cssClass: 'close',
+									discardDefaultButtonCssClasses: true,
+									labelHTML: '<span aria-hidden="true">&times;</span>',
+									on: {
+										click: function(event) {
+											dialog.hide();
+										}
+									}
+								}
+							]
+						},
+						width: 720
+					},
+					title: link.text()
+				}
+			);
+		},
+		'.transition-link'
+	);
 </aui:script>

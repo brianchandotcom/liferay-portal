@@ -20,6 +20,7 @@ import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrde
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -27,13 +28,18 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowTask;
+import com.liferay.portal.kernel.workflow.WorkflowTaskManager;
 
 import java.text.DateFormat;
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,10 +57,11 @@ public class CommerceOrderListDisplayContext {
 	public CommerceOrderListDisplayContext(
 		CommerceOrderService commerceOrderService,
 		CommercePriceFormatter commercePriceFormatter,
-		RenderRequest renderRequest) {
+		RenderRequest renderRequest, WorkflowTaskManager workflowTaskManager) {
 
 		_commerceOrderService = commerceOrderService;
 		_commercePriceFormatter = commercePriceFormatter;
+		_workflowTaskManager = workflowTaskManager;
 
 		_commerceOrderRequestHelper = new CommerceOrderRequestHelper(
 			renderRequest);
@@ -78,6 +85,27 @@ public class CommerceOrderListDisplayContext {
 	public String getCommerceOrderTime(CommerceOrder commerceOrder) {
 		return _commerceOrderDateFormatTime.format(
 			commerceOrder.getCreateDate());
+	}
+
+	public String getCommerceOrderTransitionMessage(String transitionName) {
+		if (Validator.isNull(transitionName)) {
+			transitionName = "proceed";
+		}
+
+		return LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(), transitionName);
+	}
+
+	public List<ObjectValuePair<Long, String>> getCommerceOrderTransitionOVPs(
+			CommerceOrder commerceOrder)
+		throws PortalException {
+
+		List<ObjectValuePair<Long, String>> transitionOVPs = new ArrayList<>();
+
+		populateTransitionOVPs(transitionOVPs, commerceOrder, true);
+		populateTransitionOVPs(transitionOVPs, commerceOrder, false);
+
+		return transitionOVPs;
 	}
 
 	public String getCommerceOrderValue(CommerceOrder commerceOrder)
@@ -199,6 +227,34 @@ public class CommerceOrderListDisplayContext {
 		return _searchContainer;
 	}
 
+	protected void populateTransitionOVPs(
+			List<ObjectValuePair<Long, String>> transitionOVPs,
+			CommerceOrder commerceOrder, boolean searchByUserRoles)
+		throws PortalException {
+
+		long companyId = commerceOrder.getCompanyId();
+		long userId = _commerceOrderRequestHelper.getUserId();
+
+		List<WorkflowTask> workflowTasks = _workflowTaskManager.search(
+			companyId, userId, null, CommerceOrder.class.getName(),
+			new Long[] {commerceOrder.getCommerceOrderId()}, null, null, false,
+			searchByUserRoles, true, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+
+		for (WorkflowTask workflowTask : workflowTasks) {
+			long workflowTaskId = workflowTask.getWorkflowTaskId();
+
+			List<String> transitionNames =
+				_workflowTaskManager.getNextTransitionNames(
+					companyId, userId, workflowTaskId);
+
+			for (String transitionName : transitionNames) {
+				transitionOVPs.add(
+					new ObjectValuePair<>(workflowTaskId, transitionName));
+			}
+		}
+	}
+
 	private static final int[] _ORDER_STATUSES = {
 		CommerceOrderConstants.ORDER_STATUS_PENDING,
 		CommerceOrderConstants.ORDER_STATUS_ANY,
@@ -213,5 +269,6 @@ public class CommerceOrderListDisplayContext {
 	private final CommerceOrderService _commerceOrderService;
 	private final CommercePriceFormatter _commercePriceFormatter;
 	private SearchContainer<CommerceOrder> _searchContainer;
+	private final WorkflowTaskManager _workflowTaskManager;
 
 }

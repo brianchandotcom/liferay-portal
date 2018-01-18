@@ -173,7 +173,7 @@
 			<var name="pageName" value="Site Page" />
 		</execute>
 
-		<execute macro="SitePages#_gotoPageMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
 			<var name="pageName" value="Site Page" />
 		</execute>

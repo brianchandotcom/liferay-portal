@@ -113,7 +113,7 @@
 		</if>
 	</command>
 
-	<command name="_gotoPageMenuItem">
+	<command name="gotoPageMenuItem">
 		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">
 			<var name="key_pageName" value="${pageName}" />
 		</execute>
@@ -224,7 +224,7 @@
 			<var name="privacy" value="${privacy}" />
 		</execute>
 
-		<execute macro="SitePages#_gotoPageMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
 			<var name="pageName" value="${pageName}" />
 		</execute>

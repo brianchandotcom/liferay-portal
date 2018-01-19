@@ -57,16 +57,8 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
-
-				@Override
-				public void performAction(BookmarksEntry bookmarksEntry)
-					throws PortalException {
-
-					_autoAnonymize(bookmarksEntry, userId);
-				}
-
-			});
+			(BookmarksEntry bookmarksEntry) -> _autoAnonymize(
+				bookmarksEntry, userId));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -82,16 +74,8 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.PerformActionMethod<BookmarksEntry>() {
-
-				@Override
-				public void performAction(BookmarksEntry bookmarksEntry)
-					throws PortalException {
-
-					_bookmarksEntryLocalService.deleteEntry(bookmarksEntry);
-				}
-
-			});
+			(BookmarksEntry bookmarksEntry) ->
+				_bookmarksEntryLocalService.deleteEntry(bookmarksEntry));
 
 		actionableDynamicQuery.performActions();
 	}

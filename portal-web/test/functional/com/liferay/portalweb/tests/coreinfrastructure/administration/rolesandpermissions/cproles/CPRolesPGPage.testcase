@@ -31,7 +31,7 @@
 
 		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="Welcome" />
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />

@@ -991,7 +991,7 @@
 
 		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="pagename" value="${page}" />
+			<var name="pageName" value="${page}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#ERROR_3" value1="Some page settings are unavailable because Inherit Changes is enabled. To change these settings, disable Inherit Changes under the General section." />

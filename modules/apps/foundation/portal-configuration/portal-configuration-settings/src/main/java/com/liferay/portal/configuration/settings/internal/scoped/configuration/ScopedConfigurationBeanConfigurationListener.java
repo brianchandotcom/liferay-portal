@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaratio
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicReference;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.service.cm.ConfigurationEvent;
@@ -62,7 +61,7 @@ public class ScopedConfigurationBeanConfigurationListener
 
 		Scope scope = ConfigurationScopedPidUtil.getScope(pid);
 
-		if (scope.equals(Scope.SYSTEM)) {
+		if (Scope.SYSTEM == scope) {
 			return;
 		}
 
@@ -76,39 +75,21 @@ public class ScopedConfigurationBeanConfigurationListener
 				return;
 			}
 
-			AtomicReference<ScopedConfigurationBeanManagedService>
-				managedServiceAtomicReference = new AtomicReference<>();
-
 			ScopedConfigurationBeanManagedService
 				configurationBeanManagedService =
 					new ScopedConfigurationBeanManagedService(
-						_bundleContext, scopeKey.getObjectClass(),
+						scopeKey,
 						configurationBean -> {
 							if (configurationBean == null) {
-								if (_scopedConfigurationBeans.containsKey(
-										scopeKey)) {
-
-									_scopedConfigurationBeans.remove(scopeKey);
-								}
-
-								ScopedConfigurationBeanManagedService
-									managedService =
-										managedServiceAtomicReference.get();
-
-								if (managedService != null) {
-									managedService.unregister();
-								}
+								_scopedConfigurationBeans.remove(scopeKey);
 							}
 							else {
 								_scopedConfigurationBeans.put(
 									scopeKey, configurationBean);
 							}
-						},
-						scopeKey);
+						});
 
-			managedServiceAtomicReference.set(configurationBeanManagedService);
-
-			configurationBeanManagedService.register();
+			configurationBeanManagedService.register(_bundleContext, pid);
 		}
 		catch (IllegalArgumentException | NullPointerException e) {
 			if (_log.isInfoEnabled()) {
@@ -119,10 +100,6 @@ public class ScopedConfigurationBeanConfigurationListener
 
 	public Object get(ScopeKey scopeKey) {
 		return _scopedConfigurationBeans.get(scopeKey);
-	}
-
-	public boolean has(ScopeKey scopeKey) {
-		return _scopedConfigurationBeans.containsKey(scopeKey);
 	}
 
 	@Activate
@@ -154,9 +131,7 @@ public class ScopedConfigurationBeanConfigurationListener
 		String configurationPid = ConfigurationPidUtil.getConfigurationPid(
 			configurationBeanDeclaration.getConfigurationBeanClass());
 
-		if (_configurationBeanClasses.containsKey(configurationPid)) {
-			_configurationBeanClasses.remove(configurationPid);
-		}
+		_configurationBeanClasses.remove(configurationPid);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

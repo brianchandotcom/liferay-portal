@@ -44,6 +44,11 @@ import org.osgi.service.component.annotations.Reference;
 public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Override
+	public String getBundleId() {
+		return BookmarksUADConstants.BUNDLE_ID;
+	}
+
+	@Override
 	public List<UADEntity> getUADEntities(long userId) {
 		DynamicQuery dynamicQuery = _bookmarksEntryLocalService.dynamicQuery();
 

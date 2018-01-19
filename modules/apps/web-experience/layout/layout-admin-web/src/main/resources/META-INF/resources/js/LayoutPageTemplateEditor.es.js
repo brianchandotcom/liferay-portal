@@ -3,6 +3,7 @@ import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
+import './contextual_sidebar/ContextualSidebar.es';
 import './LayoutPageTemplateFragment.es';
 import './LayoutPageTemplateFragmentCollection.es';
 import templates from './LayoutPageTemplateEditor.soy';
@@ -63,6 +64,22 @@ class LayoutPageTemplateEditor extends Component {
 			...this.fragments.slice(0, index),
 			...this.fragments.slice(index + 1),
 		];
+	}
+
+	/**
+	 * Callback executed when the sidebar should be hidden
+	 * @private
+	 */
+	_handleHideContextualSidebar() {
+		this._contextualSidebarVisible = false;
+	}
+
+	/**
+	 * Callback executed when the sidebar visible state should be toggled
+	 * @private
+	 */
+	_handleToggleContextualSidebarButtonClick() {
+		this._contextualSidebarVisible = !this._contextualSidebarVisible;
 	}
 
 	/**
@@ -194,6 +211,16 @@ LayoutPageTemplateEditor.STATE = {
 	 * @type {!string}
 	 */
 	updatePageTemplateURL: Config.string().required(),
+
+	/**
+	 * Allow opening/closing contextual sidebar
+	 * @default true
+	 * @instance
+	 * @memberOf LayoutPageTemplateEditor
+	 * @private
+	 * @type {boolean}
+	 */
+	_contextualSidebarVisible: Config.bool().internal().value(true),
 
 	/**
 	 * When true, it indicates that are changes pending to save.

@@ -8,9 +8,12 @@
 	{@param fragmentEntryURL: string}
 	{@param portletNamespace: string}
 	{@param spritemap: string}
+	{@param? _contextualSidebarVisible: bool}
 	{@param? _dirty: bool}
 	{@param? _handleFragmentCollectionEntryClick: any}
 	{@param? _handleFragmentRemoveButtonClick: any}
+	{@param? _handleHideContextualSidebar: any}
+	{@param? _handleToggleContextualSidebarButtonClick: any}
 	{@param? _lastSaveDate: string}
 	{@param? fragments: list<?>}
 	{@param? id: string}
@@ -29,12 +32,22 @@
 						</span>
 					</li>
 				</ul>
+
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<button class="btn btn-secondary nav-btn" data-onclick="{$_handleToggleContextualSidebarButtonClick}">
+							<svg class="lexicon-icon icon-monospaced">
+								<use xlink:href="{$spritemap}#cards"></use>
+							</svg>
+						</button>
+					</li>
+				</ul>
 			</div>
 		</div>
 
-		<div class="container-fluid-1280">
+		<div class="container-fluid-1280 contextual-sidebar-content">
 			<div class="row mr-0">
-				<div class="col-lg-9 col-md-8 fragment-panel-target">
+				<div class="col-lg-12 fragment-panel-target">
 					{if $fragments and (length($fragments) > 0)}
 						{foreach $fragment in $fragments}
 							<div class="fragment-panel-item-instance" data-position="{index($fragment)}">
@@ -54,14 +67,8 @@
 					{/if}
 				</div>
 
-				<div class="col-lg-3 col-md-4 sidebar sidebar-light sidebar-light-bg fragment-panel-sidebar">
-					<div class="px-0 sidebar-header">
-						<div class="sidebar-section">
-							<h4 class="sidebar-title">{msg desc=""}fragments{/msg}</h4>
-						</div>
-					</div>
-
-					<div class="px-0 sidebar-body">
+				{call ContextualSidebar.render}
+					{param body kind="html"}
 						{foreach $fragmentCollection in $fragmentCollections}
 							{call LayoutPageTemplateFragmentCollection.render}
 								{param fragmentCollection: $fragmentCollection /}
@@ -70,8 +77,22 @@
 								{param spritemap: $spritemap /}
 							{/call}
 						{/foreach}
-					</div>
-				</div>
+					{/param}
+
+					{param classes: 'bg-light' /}
+
+					{param events: [
+						'hide': $_handleHideContextualSidebar
+					]/}
+
+					{param header kind="html"}
+						<div class="sidebar-section">
+							<h4 class="sidebar-title">{msg desc=""}fragments{/msg}</h4>
+						</div>
+					{/param}
+
+					{param visible: $_contextualSidebarVisible ?: true /}
+				{/call}
 			</div>
 		</div>
 	</div>

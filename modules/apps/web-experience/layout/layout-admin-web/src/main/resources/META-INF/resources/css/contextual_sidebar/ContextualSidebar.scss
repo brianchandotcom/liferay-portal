@@ -1,0 +1,45 @@
+$contextual-sidebar-width: 320px;
+$control-menu-height: 49px;
+$management-bar-height: 49px;
+
+.contextual-sidebar {
+	height: calc(100vh - #{$management-bar-height});
+	pointer-events: none;
+	position: fixed;
+	right: 0;
+	top: $management-bar-height;
+	transform: translateX(100%);
+	transition: transform ease 0.5s;
+	width: $contextual-sidebar-width;
+
+	&.contextual-sidebar-visible {
+		pointer-events: auto;
+		transform: translateX(0);
+	}
+
+	body.has-control-menu & {
+		height: calc(100vh - #{$control-menu-height + $management-bar-height});
+		top: $control-menu-height + $management-bar-height;
+	}
+}
+
+@media (min-width: 768px) {
+	$control-menu-height: 65px;
+	$management-bar-height: 63px;
+
+	.contextual-sidebar {
+		height: calc(100vh - #{$management-bar-height});
+		top: $management-bar-height;
+
+		body.has-control-menu & {
+			height: calc(100vh - #{$control-menu-height + $management-bar-height});
+			top: $control-menu-height + $management-bar-height;
+		}
+	}
+}
+
+@media (min-width: 768px) and (max-width: 1919px) {
+	body.contextual-sidebar-visible .contextual-sidebar-content {
+		padding-right: $contextual-sidebar-width;
+	}
+}

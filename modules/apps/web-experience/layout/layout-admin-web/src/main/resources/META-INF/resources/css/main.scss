@@ -1,5 +1,6 @@
 @import "mixins";
-@import './LayoutPageTemplateFragment.scss';
+@import "./contextual_sidebar/ContextualSidebar";
+@import "./LayoutPageTemplateFragment.scss";
 
 .layout-columns {
 	overflow-x: auto;

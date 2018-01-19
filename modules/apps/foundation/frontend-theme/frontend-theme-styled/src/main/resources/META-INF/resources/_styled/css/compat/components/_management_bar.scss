@@ -10,6 +10,13 @@
 		min-height: $management-bar-height;
 		position: relative;
 
+		.btn-action {
+			color: #FFF;
+			height: 2.1rem;
+			line-height: 2.1rem;
+			width: 2.1rem;
+		}
+
 		.checkbox,
 		.radio {
 			margin-bottom: 0;

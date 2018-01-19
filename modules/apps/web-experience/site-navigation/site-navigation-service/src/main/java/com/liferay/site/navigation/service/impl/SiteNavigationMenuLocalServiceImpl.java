@@ -15,25 +15,61 @@
 package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
+import com.liferay.site.navigation.exception.PrimarySiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.base.SiteNavigationMenuLocalServiceBaseImpl;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 /**
  * @author Pavel Savinov
  */
 public class SiteNavigationMenuLocalServiceImpl
 	extends SiteNavigationMenuLocalServiceBaseImpl {
+
+	@Override
+	public SiteNavigationMenu addDefaultSiteNavigationMenu(
+			long userId, long groupId, ServiceContext serviceContext)
+		throws PortalException {
+
+		// Site navigation menu
+
+		SiteNavigationMenu siteNavigationMenu = addSiteNavigationMenu(
+			userId, groupId, "Default", SiteNavigationConstants.TYPE_PRIMARY,
+			serviceContext);
+
+		// Site navigation menu items
+
+		List<Layout> publicLayouts = layoutLocalService.getLayouts(
+			groupId, false, 0);
+
+		Stream<Layout> stream = publicLayouts.stream().parallel();
+
+		stream.forEach(
+			layout -> _addSiteNavigationMenuItem(
+				userId, groupId, siteNavigationMenu.getSiteNavigationMenuId(),
+				0, layout, serviceContext));
+
+		return null;
+	}
 
 	@Override
 	public SiteNavigationMenu addSiteNavigationMenu(
@@ -237,5 +273,87 @@ public class SiteNavigationMenuLocalServiceImpl
 			throw new SiteNavigationMenuNameException();
 		}
 	}
+
+	protected void validatePrimarySiteNavigationMenu(
+			SiteNavigationMenu siteNavigationMenu)
+		throws PrimarySiteNavigationMenuException {
+
+		SiteNavigationMenu primarySiteNavigationMenu =
+			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+
+		if (primarySiteNavigationMenu == null) {
+			return;
+		}
+
+		if (primarySiteNavigationMenu.getSiteNavigationMenuId() !=
+				siteNavigationMenu.getSiteNavigationMenuId()) {
+
+			throw new PrimarySiteNavigationMenuException();
+		}
+	}
+
+	private SiteNavigationMenuItem _addSiteNavigationMenuItem(
+		long userId, long groupId, long siteNavigationMenuId,
+		long parentSiteNavigationMenuId, Layout layout,
+		ServiceContext serviceContext) {
+
+		Optional<SiteNavigationMenuItemType> optional = Optional.ofNullable(
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				layout.getType()));
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType = optional.orElse(
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				"layout"));
+
+		if (siteNavigationMenuItemType == null) {
+			return null;
+		}
+
+		try {
+			String typeSettings = layout.getTypeSettings();
+
+			if (siteNavigationMenuItemType.getType().equals("layout")) {
+				UnicodeProperties unicodeProperties = new UnicodeProperties();
+
+				unicodeProperties.setProperty(
+					"groupId", String.valueOf(layout.getGroupId()));
+				unicodeProperties.setProperty("layoutUuid", layout.getUuid());
+				unicodeProperties.setProperty(
+					"privateLayout", String.valueOf(layout.isPrivateLayout()));
+
+				typeSettings = unicodeProperties.toString();
+			}
+
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+					userId, groupId, siteNavigationMenuId,
+					parentSiteNavigationMenuId,
+					siteNavigationMenuItemType.getType(), typeSettings,
+					serviceContext);
+
+			List<Layout> children = layoutLocalService.getLayouts(
+				groupId, false, layout.getLayoutId());
+
+			Stream<Layout> stream = children.stream().parallel();
+
+			stream.forEach(
+				childLayout -> _addSiteNavigationMenuItem(
+					userId, groupId, siteNavigationMenuId,
+					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+					childLayout, serviceContext));
+		}
+		catch (PortalException pe) {
+			_log.error(pe, pe);
+		}
+
+		return null;
+	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		SiteNavigationMenuLocalServiceImpl.class);
+
+	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

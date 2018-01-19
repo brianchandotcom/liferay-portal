@@ -91,15 +91,6 @@ public class ShibbolethCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
-	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Reference(unbind = "-")
-	protected void setPrefsProps(PrefsProps prefsProps) {
-		_prefsProps = prefsProps;
-	}
-
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;

@@ -371,7 +371,7 @@
 	</tag>
 	<tag>
 		<description></description>
-		<name>filecard</name>
+		<name>file-card</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.FileCardTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -482,10 +482,10 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-</tag>
+	</tag>
 	<tag>
 		<description></description>
-		<name>horizontalcard</name>
+		<name>horizontal-card</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.HorizontalCardTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -566,7 +566,7 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-</tag>
+	</tag>
 	<tag>
 		<description></description>
 		<name>icon</name>
@@ -599,7 +599,7 @@
 	</tag>
 	<tag>
 		<description></description>
-		<name>imagecard</name>
+		<name>image-card</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.ImageCardTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -722,7 +722,7 @@
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-</tag>
+	</tag>
 	<tag>
 		<description></description>
 		<name>label</name>
@@ -1127,7 +1127,7 @@
 	</tag>
 	<tag>
 		<description></description>
-		<name>usercard</name>
+		<name>user-card</name>
 		<tag-class>com.liferay.frontend.taglib.clay.servlet.taglib.soy.UserCardTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
@@ -1238,5 +1238,5 @@
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-</tag>
+	</tag>
 </taglib>

@@ -60,20 +60,10 @@ if (tabs2.equals("organizations")) {
 	searchContainer = new OrganizationSearch(renderRequest, searchURL);
 	searchContainerId = "organizations";
 }
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, tabs2));
-
-navigationItems.add(entriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%= passwordPolicyDisplayContext.getSelectMembersNavigationItems() %>"
 />
 
 <liferay-frontend:management-bar

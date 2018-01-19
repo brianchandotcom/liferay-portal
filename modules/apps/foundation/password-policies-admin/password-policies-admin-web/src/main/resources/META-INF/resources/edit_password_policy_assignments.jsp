@@ -97,15 +97,7 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 		/>
 
-		<%
-		boolean hasAssignMembersPermission = false;
-
-		if (passwordPolicy != null) {
-			hasAssignMembersPermission = PasswordPolicyPermissionUtil.contains(permissionChecker, passwordPolicy.getPasswordPolicyId(), ActionKeys.ASSIGN_MEMBERS);
-		}
-		%>
-
-		<c:if test='<%= hasAssignMembersPermission && tabs1.equals("assignees") %>'>
+		<c:if test='<%= passwordPolicyDisplayContext.hasAssignMembersPermission() && tabs1.equals("assignees") %>'>
 			<li>
 				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
 					<liferay-ui:input-search markupView="lexicon" />

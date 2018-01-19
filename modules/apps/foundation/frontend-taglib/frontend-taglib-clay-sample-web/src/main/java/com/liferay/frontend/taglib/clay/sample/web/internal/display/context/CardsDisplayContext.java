@@ -14,11 +14,12 @@
 
 package com.liferay.frontend.taglib.clay.sample.web.internal.display.context;
 
+import com.liferay.portal.kernel.security.RandomUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * @author Julien Castelain
@@ -49,12 +50,6 @@ public class CardsDisplayContext {
 	}
 
 	public List<Object> getLabels() {
-
-		Random rand = new Random();
-		int numItems = 1 + rand.nextInt(3);
-
-		List<Object> labels = new ArrayList<>();
-
 		Map<String, Object> label1 = new HashMap<>();
 
 		label1.put("label", "Approved");
@@ -66,6 +61,10 @@ public class CardsDisplayContext {
 
 		label3.put("label", "Canceled");
 		label3.put("style", "danger");
+
+		List<Object> labels = new ArrayList<>();
+
+		int numItems = 1 + RandomUtil.nextInt(3);
 
 		if ((numItems == 0) || (numItems < 2)) {
 			labels.add(label1);

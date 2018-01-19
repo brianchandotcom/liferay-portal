@@ -31,4 +31,6 @@ public class AnnouncementsUADConstants {
 	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG =
 		{"userId"};
 
+	public static final String BUNDLE_ID = "Announcements";
+
 }

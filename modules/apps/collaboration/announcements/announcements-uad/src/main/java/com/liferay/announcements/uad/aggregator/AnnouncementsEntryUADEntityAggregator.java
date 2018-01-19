@@ -42,6 +42,11 @@ public class AnnouncementsEntryUADEntityAggregator
 	extends BaseUADEntityAggregator {
 
 	@Override
+	public String getBundleId() {
+		return AnnouncementsUADConstants.BUNDLE_ID;
+	}
+
+	@Override
 	public List<UADEntity> getUADEntities(long userId) {
 		List<AnnouncementsEntry> announcementsEntries =
 			_announcementsEntryLocalService.getUserEntries(

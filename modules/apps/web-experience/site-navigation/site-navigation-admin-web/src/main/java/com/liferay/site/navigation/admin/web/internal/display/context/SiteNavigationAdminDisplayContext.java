@@ -384,6 +384,18 @@ public class SiteNavigationAdminDisplayContext {
 		return _siteNavigationMenuItemTypeRegistry;
 	}
 
+	public String getSiteNavigationMenuName() throws PortalException {
+		if (_siteNavigationMenuName != null) {
+			return _siteNavigationMenuName;
+		}
+
+		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu();
+
+		_siteNavigationMenuName = siteNavigationMenu.getName();
+
+		return _siteNavigationMenuName;
+	}
+
 	public boolean isNotPrimarySiteNavigationMenu() {
 		SiteNavigationMenu primarySiteNavigationMenu =
 			getPrimarySiteNavigationMenu();
@@ -439,5 +451,6 @@ public class SiteNavigationAdminDisplayContext {
 	private Long _siteNavigationMenuId;
 	private final SiteNavigationMenuItemTypeRegistry
 		_siteNavigationMenuItemTypeRegistry;
+	private String _siteNavigationMenuName;
 
 }

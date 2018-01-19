@@ -74,8 +74,8 @@
 				<%
 				Map<String, Object> data = new HashMap<String, Object>();
 
-				data.put("recordsetid", formInstance.getFormInstanceId());
-				data.put("recordsetname", formInstance.getName(locale));
+				data.put("forminstanceid", formInstance.getFormInstanceId());
+				data.put("forminstancename", formInstance.getName(locale));
 				%>
 
 				<liferay-ui:search-container-column-text

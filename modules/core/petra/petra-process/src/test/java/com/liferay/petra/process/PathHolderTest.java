@@ -100,7 +100,7 @@ public class PathHolderTest {
 			"testFolder" + foreignSeparatorChar + "testFile");
 
 		char originalSeparatorChar = ReflectionTestUtil.getAndSetFieldValue(
-			pathHolder, "_separatorChar", foreignSeparatorChar);
+			pathHolder, "_SEPARATOR_CHAR", foreignSeparatorChar);
 
 		try {
 			Assert.assertEquals(
@@ -109,7 +109,7 @@ public class PathHolderTest {
 		}
 		finally {
 			ReflectionTestUtil.setFieldValue(
-				pathHolder, "_separatorChar", originalSeparatorChar);
+				pathHolder, "_SEPARATOR_CHAR", originalSeparatorChar);
 		}
 	}
 

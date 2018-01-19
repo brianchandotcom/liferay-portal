@@ -5,41 +5,25 @@
 	<model-resource>
 		<model-name>com.liferay.dynamic.data.mapping</model-name>
 		<portlet-ref>
-			<portlet-name>com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet</portlet-name>
+			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet</portlet-name>
 		</portlet-ref>
 		<root>true</root>
 		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
-			</supports>
-			<site-member-defaults>
-				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
-			</site-member-defaults>
-			<guest-defaults />
-			<guest-unsupported>
-				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
-			</guest-unsupported>
-		</permissions>
-	</model-resource>
-	<model-resource>
-		<model-name>com.liferay.dynamic.data.mapping</model-name>
-		<portlet-ref>
-			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet</portlet-name>
-		</portlet-ref>
-		<root>true</root>
-		<weight>2</weight>
-		<permissions>
-			<supports>
 				<action-key>ADD_FORM_INSTANCE</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
 			</supports>
 			<site-member-defaults>
+				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
 				<action-key>ADD_FORM_INSTANCE</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
 			</site-member-defaults>
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_DATA_PROVIDER_INSTANCE</action-key>
 				<action-key>ADD_FORM_INSTANCE</action-key>
 				<action-key>ADD_STRUCTURE</action-key>
 			</guest-unsupported>
@@ -50,7 +34,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_mapping_data_provider_web_portlet_DDMDataProviderPortlet</portlet-name>
 		</portlet-ref>
-		<weight>3</weight>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -70,9 +54,10 @@
 	<model-resource>
 		<model-name>com.liferay.dynamic.data.mapping.model.DDMFormInstance</model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet</portlet-name>
 		</portlet-ref>
-		<weight>4</weight>
+		<weight>3</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_FORM_INSTANCE_RECORD</action-key>
@@ -100,9 +85,10 @@
 			<model-name>com.liferay.dynamic.data.mapping.model.DDMStructure</model-name>
 		</composite-model-name>
 		<portlet-ref>
+			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormAdminPortlet</portlet-name>
 			<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet</portlet-name>
 		</portlet-ref>
-		<weight>5</weight>
+		<weight>4</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -126,7 +112,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet</portlet-name>
 		</portlet-ref>
-		<weight>6</weight>
+		<weight>5</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
@@ -150,7 +136,7 @@
 		<portlet-ref>
 			<portlet-name>com_liferay_dynamic_data_mapping_web_portlet_DDMPortlet</portlet-name>
 		</portlet-ref>
-		<weight>7</weight>
+		<weight>6</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>

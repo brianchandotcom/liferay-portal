@@ -71,19 +71,22 @@ homeURL.setParameter("mvcPath", "/view.jsp");
 
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "user-groups"), homeURL.toString());
 PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem entriesNavigationItem = new NavigationItem();
+
+entriesNavigationItem.setActive(true);
+entriesNavigationItem.setHref(StringPool.BLANK);
+entriesNavigationItem.setLabel(LanguageUtil.get(request, "users"));
+
+navigationItems.add(entriesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="users" selected="<%= true %>" />
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"
@@ -109,6 +112,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, userGroup.getName(), null);
 			orderColumns='<%= new String[] {"first-name", "screen-name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

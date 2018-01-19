@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<portlet-resource>
-		<portlet-name>com_liferay_dynamic_data_lists_form_web_portlet_DDLFormPortlet</portlet-name>
+		<portlet-name>com_liferay_dynamic_data_mapping_form_web_portlet_DDMFormPortlet</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>

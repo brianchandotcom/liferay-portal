@@ -28,10 +28,10 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,8 +69,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		DDMFormValues ddmFormValues = new DDMFormValues(ddmForm);
 
-		setDDMFormValuesAvailableLocales(httpServletRequest, ddmFormValues);
-		setDDMFormValuesDefaultLocale(httpServletRequest, ddmFormValues);
+		setDDMFormValuesAvailableLocales(ddmForm, ddmFormValues);
+		setDDMFormValuesDefaultLocale(ddmForm, ddmFormValues);
 		setDDMFormFieldValues(httpServletRequest, ddmFormValues);
 
 		return ddmFormValues;
@@ -163,7 +163,8 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	}
 
 	protected DDMFormFieldValue createDDMFormFieldValue(
-		HttpServletRequest httpServletRequest, String ddmFormFieldParameterName,
+		HttpServletRequest httpServletRequest, DDMForm ddmForm,
+		String ddmFormFieldParameterName,
 		Map<String, DDMFormField> ddmFormFieldsMap) {
 
 		DDMFormFieldValue ddmFormFieldValue = new DDMFormFieldValue();
@@ -188,13 +189,15 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 			setDDMFormFieldValueLocalizedValue(
 				httpServletRequest, ddmFormField.getType(),
 				ddmFormFieldParameterName, ddmFormField.getPredefinedValue(),
-				ddmFormFieldValue);
+				ddmFormFieldValue, ddmForm.getAvailableLocales(),
+				ddmForm.getDefaultLocale());
 		}
 		else {
 			setDDMFormFieldValueUnlocalizedValue(
 				httpServletRequest, ddmFormField.getType(),
 				ddmFormFieldParameterName, ddmFormField.getPredefinedValue(),
-				ddmFormFieldValue);
+				ddmFormFieldValue, ddmForm.getAvailableLocales(),
+				ddmForm.getDefaultLocale());
 		}
 
 		return ddmFormFieldValue;
@@ -213,7 +216,7 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 
 		for (String ddmFormFieldParameterName : ddmFormFieldParameterNames) {
 			DDMFormFieldValue ddmFormFieldValue = createDDMFormFieldValue(
-				httpServletRequest, ddmFormFieldParameterName,
+				httpServletRequest, ddmForm, ddmFormFieldParameterName,
 				ddmFormFieldsMap);
 
 			ddmFormFieldValuesMap.put(
@@ -292,15 +295,6 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		}
 
 		return filteredDDMFormFieldParameterNames;
-	}
-
-	protected Set<Locale> getAvailableLocales(
-		HttpServletRequest httpServletRequest) {
-
-		String[] availableLanguageIds = ParamUtil.getParameterValues(
-			httpServletRequest, "availableLanguageIds");
-
-		return getAvailableLocales(availableLanguageIds);
 	}
 
 	protected Set<Locale> getAvailableLocales(String[] availableLanguageIds) {
@@ -466,17 +460,6 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 		return ddmFormFieldValues;
 	}
 
-	protected Locale getDefaultLocale(HttpServletRequest httpServletRequest) {
-		String defaultLanguageId = ParamUtil.getString(
-			httpServletRequest, "defaultLanguageId");
-
-		if (Validator.isNull(defaultLanguageId)) {
-			return LocaleThreadLocal.getSiteDefaultLocale();
-		}
-
-		return LocaleUtil.fromLanguageId(defaultLanguageId);
-	}
-
 	protected String getEntryKeyPrefix(
 		String parentEntryKey, String fieldNameFilter) {
 
@@ -600,13 +583,10 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	protected void setDDMFormFieldValueLocalizedValue(
 		HttpServletRequest httpServletRequest, String fieldType,
 		String ddmFormFieldParameterName, LocalizedValue predefinedValue,
-		DDMFormFieldValue ddmFormFieldValue) {
-
-		Locale defaultLocale = getDefaultLocale(httpServletRequest);
+		DDMFormFieldValue ddmFormFieldValue, Set<Locale> availableLocales,
+		Locale defaultLocale) {
 
 		Value value = new LocalizedValue(defaultLocale);
-
-		Set<Locale> availableLocales = getAvailableLocales(httpServletRequest);
 
 		for (Locale availableLocale : availableLocales) {
 			String ddmFormFieldParameterValue = getDDMFormFieldParameterValue(
@@ -631,13 +611,22 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	protected void setDDMFormFieldValueUnlocalizedValue(
 		HttpServletRequest httpServletRequest, String fieldType,
 		String ddmFormFieldParameterName, LocalizedValue predefinedValue,
-		DDMFormFieldValue ddmFormFieldValue) {
+		DDMFormFieldValue ddmFormFieldValue, Set<Locale> availableLocales,
+		Locale defaultLocale) {
 
-		Locale defaultLocale = getDefaultLocale(httpServletRequest);
+		Locale httpServletRequestLocale = LocaleUtil.fromLanguageId(
+			LanguageUtil.getLanguageId(httpServletRequest));
+
+		Locale ddmFormFieldParameterValueLocale = defaultLocale;
+
+		if (availableLocales.contains(httpServletRequestLocale)) {
+			ddmFormFieldParameterValueLocale = httpServletRequestLocale;
+		}
 
 		String ddmFormFieldParameterValue = getDDMFormFieldParameterValue(
 			httpServletRequest, fieldType, ddmFormFieldParameterName,
-			predefinedValue.getString(defaultLocale), defaultLocale);
+			predefinedValue.getString(defaultLocale),
+			ddmFormFieldParameterValueLocale);
 
 		Value value = new UnlocalizedValue(ddmFormFieldParameterValue);
 
@@ -645,17 +634,17 @@ public class DDMFormValuesFactoryImpl implements DDMFormValuesFactory {
 	}
 
 	protected void setDDMFormValuesAvailableLocales(
-		HttpServletRequest httpServletRequest, DDMFormValues ddmFormValues) {
+		DDMForm ddmForm, DDMFormValues ddmFormValues) {
 
-		Set<Locale> availableLocales = getAvailableLocales(httpServletRequest);
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
 
 		ddmFormValues.setAvailableLocales(availableLocales);
 	}
 
 	protected void setDDMFormValuesDefaultLocale(
-		HttpServletRequest httpServletRequest, DDMFormValues ddmFormValues) {
+		DDMForm ddmForm, DDMFormValues ddmFormValues) {
 
-		Locale defaultLocale = getDefaultLocale(httpServletRequest);
+		Locale defaultLocale = ddmForm.getDefaultLocale();
 
 		ddmFormValues.setDefaultLocale(defaultLocale);
 	}

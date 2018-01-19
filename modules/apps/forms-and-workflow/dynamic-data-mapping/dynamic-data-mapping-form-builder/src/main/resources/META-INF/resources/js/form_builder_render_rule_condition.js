@@ -341,6 +341,12 @@ AUI.add(
 					if (fieldName.match('-condition-first-operand')) {
 						var type = instance._getDataType(field.getValue(), field.get('options'));
 
+						instance._hideSecondOperandField(index);
+
+						instance._hideSecondOperandTypeField(index);
+
+						instance._clearOperatorField(index);
+
 						instance._updateOperatorList(type, index);
 					}
 					else if (fieldName.match('-condition-operator')) {
@@ -684,12 +690,6 @@ AUI.add(
 
 			_updateOperatorList: function(dataType, conditionIndex) {
 				var instance = this;
-
-				instance._hideSecondOperandField(conditionIndex);
-
-				instance._hideSecondOperandTypeField(conditionIndex);
-
-				instance._clearOperatorField(conditionIndex);
 
 				var operator = instance._getOperator(conditionIndex);
 

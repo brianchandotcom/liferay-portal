@@ -59,7 +59,7 @@ public class DDMFormAssetRenderer
 
 		_formInstanceRecord = formInstanceRecord;
 		_formInstanceRecordVersion = formInstanceRecordVersion;
-		_ddlRecordLocalService = ddmFormInstanceRecordLocalService;
+		_ddmFormInstanceRecordLocalService = ddmFormInstanceRecordLocalService;
 		_ddmFormRenderer = ddmFormRenderer;
 		_ddmFormValuesFactory = ddmFormValuesFactory;
 		_ddmFormValuesMerger = ddmFormValuesMerger;
@@ -88,6 +88,11 @@ public class DDMFormAssetRenderer
 		getAssetRendererFactory() {
 
 		return new DDMFormAssetRendererFactory();
+	}
+
+	@Override
+	public String[] getAvailableLanguageIds() {
+		return _formInstance.getAvailableLanguageIds();
 	}
 
 	@Override
@@ -178,8 +183,9 @@ public class DDMFormAssetRenderer
 		DDMFormViewFormInstanceRecordDisplayContext
 			ddmFormViewFormInstanceRecordDisplayContext =
 				new DDMFormViewFormInstanceRecordDisplayContext(
-					request, response, _ddlRecordLocalService, _ddmFormRenderer,
-					_ddmFormValuesFactory, _ddmFormValuesMerger);
+					request, response, _ddmFormInstanceRecordLocalService,
+					_ddmFormRenderer, _ddmFormValuesFactory,
+					_ddmFormValuesMerger);
 
 		request.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -191,7 +197,8 @@ public class DDMFormAssetRenderer
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMFormAssetRenderer.class);
 
-	private final DDMFormInstanceRecordLocalService _ddlRecordLocalService;
+	private final DDMFormInstanceRecordLocalService
+		_ddmFormInstanceRecordLocalService;
 	private final DDMFormRenderer _ddmFormRenderer;
 	private final DDMFormValuesFactory _ddmFormValuesFactory;
 	private final DDMFormValuesMerger _ddmFormValuesMerger;

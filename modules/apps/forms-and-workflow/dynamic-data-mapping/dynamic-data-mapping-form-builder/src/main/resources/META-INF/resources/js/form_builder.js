@@ -97,7 +97,7 @@ AUI.add(
 						value: {}
 					},
 
-					recordSetId: {
+					formInstanceId: {
 						value: 0
 					},
 
@@ -459,7 +459,7 @@ AUI.add(
 
 						var translating = instance.get('defaultLanguageId') !== instance.get('editingLanguageId');
 
-						return instance.get('recordSetId') > 0 || translating;
+						return instance.get('formInstanceId') > 0 || translating;
 					},
 
 					openConfirmCancelFieldChangesDiolog: function(confirmFn) {

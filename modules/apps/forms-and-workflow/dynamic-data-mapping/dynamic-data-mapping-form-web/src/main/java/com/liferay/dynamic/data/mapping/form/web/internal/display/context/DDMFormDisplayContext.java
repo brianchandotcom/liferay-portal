@@ -45,6 +45,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.PrefsParamUtil;
@@ -56,11 +57,15 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceURL;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Marcellus Tavares
@@ -299,14 +304,16 @@ public class DDMFormDisplayContext {
 		ddmFormRenderingContext.setContainerId(_containerId);
 		ddmFormRenderingContext.setDDMFormValues(
 			_ddmFormValuesFactory.create(_renderRequest, ddmForm));
-		ddmFormRenderingContext.setHttpServletRequest(
-			PortalUtil.getHttpServletRequest(_renderRequest));
+
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			_renderRequest);
+
+		ddmFormRenderingContext.setHttpServletRequest(request);
+
 		ddmFormRenderingContext.setHttpServletResponse(
 			PortalUtil.getHttpServletResponse(_renderResponse));
 
-		ThemeDisplay themeDisplay = getThemeDisplay();
-
-		ddmFormRenderingContext.setLocale(themeDisplay.getLocale());
+		ddmFormRenderingContext.setLocale(getLocale(request, ddmForm));
 
 		ddmFormRenderingContext.setPortletNamespace(
 			_renderResponse.getNamespace());
@@ -396,6 +403,19 @@ public class DDMFormDisplayContext {
 			ddmFormLayout.getDDMFormLayoutPages();
 
 		return ddmFormLayoutPages.get(ddmFormLayoutPages.size() - 1);
+	}
+
+	protected Locale getLocale(HttpServletRequest request, DDMForm ddmForm) {
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+		String languageId = LanguageUtil.getLanguageId(request);
+
+		Locale locale = LocaleUtil.fromLanguageId(languageId);
+
+		if (availableLocales.contains(locale)) {
+			return locale;
+		}
+
+		return ddmForm.getDefaultLocale();
 	}
 
 	protected String getPortletId() {

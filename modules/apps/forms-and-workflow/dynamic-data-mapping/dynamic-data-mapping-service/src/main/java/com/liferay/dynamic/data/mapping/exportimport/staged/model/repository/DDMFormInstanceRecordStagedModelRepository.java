@@ -261,7 +261,7 @@ public class DDMFormInstanceRecordStagedModelRepository
 				clazz.getClassLoader());
 
 		formInstanceRecordVersionDynamicQuery.setProjection(
-			ProjectionFactoryUtil.property("formInstanceRecordVersionId"));
+			ProjectionFactoryUtil.property("formInstanceRecordId"));
 
 		Property statusProperty = PropertyFactoryUtil.forName("status");
 
@@ -273,8 +273,8 @@ public class DDMFormInstanceRecordStagedModelRepository
 				"formInstanceRecordVersion.version", "version"));
 		formInstanceRecordVersionDynamicQuery.add(
 			RestrictionsFactoryUtil.eqProperty(
-				"formInstanceRecordVersion.formInstanceRecordVersionId",
-				"formInstanceRecordVersionId"));
+				"formInstanceRecordVersion.formInstanceRecordId",
+				"formInstanceRecordId"));
 
 		return formInstanceRecordVersionDynamicQuery;
 	}

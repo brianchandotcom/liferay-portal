@@ -165,17 +165,18 @@ public class WorkflowDefinitionManagerUtil {
 	}
 
 	/**
-	 * Saves a workflow definition without validate and deploy it.
+	 * Saves a workflow definition without activating it or validating its data.
+	 * To save the definition, validate its data, and activate it, use {@link
+	 * #deployWorkflowDefinition(long, long, String, String, byte[])} instead.
 	 *
-	 * @param  companyId the company ID of this workflow definition
-	 * @param  userId the user ID of this workflow definition
-	 * @param  title the title ID of this workflow definition
-	 * @param  name the name of this workflow definition
-	 * @param  bytes The data to be created as a workflow definition content.
+	 * @param  companyId the company ID of the workflow definition
+	 * @param  userId the ID of the user saving the workflow definition
+	 * @param  title the workflow definition's title
+	 * @param  name the workflow definition's name
+	 * @param  bytes the data saved as the workflow definition's content
 	 * @return the workflow definition
-	 * @throws WorkflowException if there was an issue when save the workflow
+	 * @throws WorkflowException if there was an issue saving the workflow
 	 *         definition
-	 * @review
 	 */
 	public static WorkflowDefinition saveWorkflowDefinition(
 			long companyId, long userId, String title, String name,

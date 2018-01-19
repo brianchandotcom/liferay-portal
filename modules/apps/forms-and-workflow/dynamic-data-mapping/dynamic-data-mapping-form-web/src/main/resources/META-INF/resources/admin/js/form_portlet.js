@@ -37,7 +37,7 @@ AUI.add(
 					},
 
 					formInstanceId: {
-						getter: '_getRecordSetId',
+						getter: '_getFormInstanceId',
 						value: 0
 					},
 
@@ -524,12 +524,12 @@ AUI.add(
 					_defineIds: function(response) {
 						var instance = this;
 
-						var recordSetIdNode = instance.byId('formInstanceId');
+						var formInstanceIdNode = instance.byId('formInstanceId');
 
 						var ddmStructureIdNode = instance.byId('ddmStructureId');
 
-						if (recordSetIdNode && recordSetIdNode.val() === '0') {
-							recordSetIdNode.val(response.formInstanceId);
+						if (formInstanceIdNode && formInstanceIdNode.val() === '0') {
+							formInstanceIdNode.val(response.formInstanceId);
 						}
 
 						if (ddmStructureIdNode.val() === '0') {
@@ -596,7 +596,7 @@ AUI.add(
 						return window[instance.ns('nameEditor')];
 					},
 
-					_getRecordSetId: function() {
+					_getFormInstanceId: function() {
 						var instance = this;
 
 						return instance.byId('formInstanceId').val();

@@ -18,7 +18,11 @@
 
 <%
 Layout selLayout = (Layout)request.getAttribute(WebKeys.SEL_LAYOUT);
+
+String title = GetterUtil.getString(request.getAttribute(WebKeys.TITLE));
 %>
+
+<aui:input label="title" name="TypeSettingsProperties--title--" type="text" value="<%= title %>" />
 
 <aui:input id="groupId" name="TypeSettingsProperties--groupId--" type="hidden" value="<%= (selLayout != null) ? selLayout.getGroupId() : StringPool.BLANK %>">
 	<aui:validator name="required" />

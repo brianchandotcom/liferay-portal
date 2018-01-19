@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -27,6 +28,7 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.admin.kernel.util.PortalMyAccountApplicationType" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.RowChecker" %><%@
 page import="com.liferay.portal.kernel.dao.search.SearchContainer" %><%@
@@ -78,7 +80,8 @@ page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.groups.admin.constants.UserGroupsAdminPortletKeys" %>
 
-<%@ page import="java.util.LinkedHashMap" %><%@
+<%@ page import="java.util.ArrayList" %><%@
+page import="java.util.LinkedHashMap" %><%@
 page import="java.util.List" %>
 
 <%@ page import="javax.portlet.PortletURL" %><%@

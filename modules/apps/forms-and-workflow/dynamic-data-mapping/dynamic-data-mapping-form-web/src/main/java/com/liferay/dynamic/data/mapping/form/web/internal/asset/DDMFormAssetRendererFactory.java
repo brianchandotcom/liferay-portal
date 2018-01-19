@@ -63,14 +63,15 @@ public class DDMFormAssetRendererFactory
 		throws PortalException {
 
 		DDMFormInstanceRecord formInstanceRecord =
-			_ddlRecordLocalService.fetchDDMFormInstanceRecord(classPK);
+			_ddmFormInstanceRecordLocalService.fetchDDMFormInstanceRecord(
+				classPK);
 
 		DDMFormInstanceRecordVersion formInstanceRecordVersion = null;
 
 		if (formInstanceRecord == null) {
 			formInstanceRecordVersion =
-				_ddlRecordVersionLocalService.getFormInstanceRecordVersion(
-					classPK);
+				_ddmFormInstanceRecordVersionLocalService.
+					getFormInstanceRecordVersion(classPK);
 
 			formInstanceRecord =
 				formInstanceRecordVersion.getFormInstanceRecord();
@@ -132,8 +133,8 @@ public class DDMFormAssetRendererFactory
 
 		DDMFormAssetRenderer ddmFormAssetRenderer = new DDMFormAssetRenderer(
 			formInstanceRecord, formInstanceRecordVersion,
-			_ddlRecordLocalService, _ddmFormRenderer, _ddmFormValuesFactory,
-			_ddmFormValuesMerger);
+			_ddmFormInstanceRecordLocalService, _ddmFormRenderer,
+			_ddmFormValuesFactory, _ddmFormValuesMerger);
 
 		ddmFormAssetRenderer.setAssetRendererType(type);
 		ddmFormAssetRenderer.setServletContext(_servletContext);
@@ -142,11 +143,12 @@ public class DDMFormAssetRendererFactory
 	}
 
 	@Reference
-	private DDMFormInstanceRecordLocalService _ddlRecordLocalService;
+	private DDMFormInstanceRecordLocalService
+		_ddmFormInstanceRecordLocalService;
 
 	@Reference
 	private DDMFormInstanceRecordVersionLocalService
-		_ddlRecordVersionLocalService;
+		_ddmFormInstanceRecordVersionLocalService;
 
 	@Reference
 	private DDMFormRenderer _ddmFormRenderer;

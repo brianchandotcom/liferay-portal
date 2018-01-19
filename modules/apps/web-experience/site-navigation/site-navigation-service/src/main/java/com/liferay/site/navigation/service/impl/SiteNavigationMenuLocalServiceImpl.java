@@ -204,7 +204,7 @@ public class SiteNavigationMenuLocalServiceImpl
 	@Override
 	public SiteNavigationMenu updateSiteNavigationMenu(
 			long userId, long siteNavigationMenuId, int type,
-			ServiceContext serviceContext)
+			boolean addNewPages, ServiceContext serviceContext)
 		throws PortalException {
 
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
@@ -232,6 +232,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		siteNavigationMenu.setUserId(userId);
 		siteNavigationMenu.setUserName(user.getFullName());
 		siteNavigationMenu.setType(type);
+		siteNavigationMenu.setAddNewPages(addNewPages);
 
 		return siteNavigationMenuPersistence.update(siteNavigationMenu);
 	}

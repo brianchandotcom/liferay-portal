@@ -69,6 +69,10 @@ public class ChainingCheck extends BaseCheck {
 				}
 			}
 
+			if (_isInsideAnonymousClassVariableDefinition(methodCallAST)) {
+				continue;
+			}
+
 			List<String> chainedMethodNames = _getChainedMethodNames(
 				methodCallAST);
 
@@ -224,6 +228,34 @@ public class ChainingCheck extends BaseCheck {
 					return true;
 				}
 			}
+		}
+
+		return false;
+	}
+
+	private boolean _isInsideAnonymousClassVariableDefinition(
+		DetailAST detailAST) {
+
+		DetailAST parentAST = detailAST.getParent();
+
+		while (parentAST != null) {
+			if ((parentAST.getType() == TokenTypes.CTOR_DEF) ||
+				(parentAST.getType() == TokenTypes.METHOD_DEF)) {
+
+				return false;
+			}
+
+			if (parentAST.getType() == TokenTypes.VARIABLE_DEF) {
+				parentAST = parentAST.getParent();
+
+				if (parentAST.getType() == TokenTypes.OBJBLOCK) {
+					return true;
+				}
+
+				return false;
+			}
+
+			parentAST = parentAST.getParent();
 		}
 
 		return false;

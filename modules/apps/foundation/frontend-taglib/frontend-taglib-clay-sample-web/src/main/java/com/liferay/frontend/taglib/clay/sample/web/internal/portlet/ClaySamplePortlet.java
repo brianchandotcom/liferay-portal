@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.clay.sample.web.internal.portlet;
 
 import com.liferay.frontend.taglib.clay.sample.web.constants.ClaySamplePortletKeys;
+import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.CardsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext;
 import com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -59,6 +60,11 @@ public class ClaySamplePortlet extends MVCPortlet {
 	public void doDispatch(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+
+		CardsDisplayContext cardsDisplayContext = new CardsDisplayContext();
+
+		renderRequest.setAttribute(
+			ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT, cardsDisplayContext);
 
 		DropdownsDisplayContext dropdownsDisplayContext =
 			new DropdownsDisplayContext();

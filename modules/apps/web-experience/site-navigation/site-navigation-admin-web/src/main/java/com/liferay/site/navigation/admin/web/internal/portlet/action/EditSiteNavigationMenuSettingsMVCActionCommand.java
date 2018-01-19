@@ -51,12 +51,14 @@ public class EditSiteNavigationMenuSettingsMVCActionCommand
 			actionRequest, "siteNavigationMenuId");
 
 		int type = ParamUtil.getInteger(actionRequest, "type");
+		boolean addNewPages = ParamUtil.getBoolean(
+			actionRequest, "addNewPages");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
-			siteNavigationMenuId, type, serviceContext);
+			siteNavigationMenuId, type, addNewPages, serviceContext);
 	}
 
 	@Reference

@@ -158,7 +158,7 @@ public class LiferaySourceOrSink
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Cannot read JSON object", ioe);
+				_log.debug("Unable to read JSON object", ioe);
 			}
 
 			throw ioe;
@@ -412,7 +412,7 @@ public class LiferaySourceOrSink
 		}
 		catch (IOException ioe) {
 			if (_log.isDebugEnabled()) {
-				_log.debug("Cannot read JSON object", ioe);
+				_log.debug("Unable to read JSON object", ioe);
 			}
 
 			return Collections.emptyMap();

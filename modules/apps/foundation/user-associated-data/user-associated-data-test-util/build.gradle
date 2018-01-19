@@ -3,3 +3,7 @@ dependencies {
 	provided group: "com.liferay.portal", name: "com.liferay.portal.test", version: "default"
 	provided project(":apps:foundation:user-associated-data:user-associated-data-api")
 }
+
+liferay {
+	deployDir = file("${liferayHome}/osgi/test")
+}

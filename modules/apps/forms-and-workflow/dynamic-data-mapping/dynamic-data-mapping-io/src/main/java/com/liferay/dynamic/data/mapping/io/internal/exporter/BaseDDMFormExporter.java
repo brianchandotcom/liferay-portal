@@ -108,18 +108,6 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws Exception;
 
-	protected void removeTransientFields(
-		Map<String, DDMFormField> ddmFormFields) {
-
-		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
-			DDMFormField ddmFormField = entry.getValue();
-
-			if (ddmFormField.isTransient()) {
-				ddmFormFields.remove(entry.getKey());
-			}
-		}
-	}
-
 	protected String formatDate(
 		Date date, DateTimeFormatter dateTimeFormatter) {
 
@@ -223,6 +211,18 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 		}
 
 		return ddmStructureVersions;
+	}
+
+	protected void removeTransientFields(
+		Map<String, DDMFormField> ddmFormFields) {
+
+		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {
+			DDMFormField ddmFormField = entry.getValue();
+
+			if (ddmFormField.isTransient()) {
+				ddmFormFields.remove(entry.getKey());
+			}
+		}
 	}
 
 	protected static class DDMFormFieldRenderedValue {

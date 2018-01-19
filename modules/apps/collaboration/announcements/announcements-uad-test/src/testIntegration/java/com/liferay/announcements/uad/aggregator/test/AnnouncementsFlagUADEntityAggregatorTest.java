@@ -43,13 +43,17 @@ public class AnnouncementsFlagUADEntityAggregatorTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	protected void addDataObject(long userId) throws Exception {
+	@Override
+	protected Object addDataObject(long userId) throws Exception {
 		AnnouncementsFlag announcementsFlag =
 			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
 
 		_announcementsFlags.add(announcementsFlag);
+
+		return announcementsFlag;
 	}
 
+	@Override
 	protected String getUADRegistryKey() {
 		return AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG;
 	}

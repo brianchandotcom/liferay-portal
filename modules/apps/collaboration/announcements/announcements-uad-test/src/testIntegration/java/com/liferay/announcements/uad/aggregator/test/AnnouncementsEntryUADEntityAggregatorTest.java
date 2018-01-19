@@ -43,14 +43,18 @@ public class AnnouncementsEntryUADEntityAggregatorTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	protected void addDataObject(long userId) throws Exception {
+	@Override
+	protected Object addDataObject(long userId) throws Exception {
 		AnnouncementsEntry announcementsEntry =
 			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
 				userId);
 
 		_announcementsEntries.add(announcementsEntry);
+
+		return announcementsEntry;
 	}
 
+	@Override
 	protected String getUADRegistryKey() {
 		return AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY;
 	}

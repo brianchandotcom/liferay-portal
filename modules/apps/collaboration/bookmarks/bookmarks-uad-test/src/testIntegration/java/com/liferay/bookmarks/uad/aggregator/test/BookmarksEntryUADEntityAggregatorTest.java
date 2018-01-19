@@ -45,26 +45,31 @@ public class BookmarksEntryUADEntityAggregatorTest
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	public void addDataObjectWithStatusByUserId(
+	@Override
+	public Object addDataObjectWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
+			_bookmarksEntryUADEntityTestHelper.addDataObjectWithStatusByUserId(
+				userId, statusByUserId);
 
 		_bookmarksEntries.add(bookmarksEntry);
 
-		_bookmarksEntryUADEntityTestHelper.setStatusByUserId(
-			bookmarksEntry, statusByUserId);
+		return bookmarksEntry;
 	}
 
-	protected void addDataObject(long userId) throws Exception {
+	@Override
+	protected Object addDataObject(long userId) throws Exception {
 		BookmarksEntry bookmarksEntry =
 			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
 
 		_bookmarksEntries.add(bookmarksEntry);
+
+		return bookmarksEntry;
 	}
 
+	@Override
 	protected String getUADRegistryKey() {
 		return BookmarksUADConstants.BOOKMARKS_ENTRY;
 	}

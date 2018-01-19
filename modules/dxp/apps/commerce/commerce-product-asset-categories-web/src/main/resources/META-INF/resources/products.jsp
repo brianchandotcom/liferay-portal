@@ -81,7 +81,7 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 
 				<liferay-ui:search-container-column-text
 					cssClass="table-cell-content"
-					name="product-name"
+					name="title"
 					value="<%= HtmlUtil.escape(cpDefinition.getTitle(languageId)) %>"
 				/>
 
@@ -95,12 +95,6 @@ cpDefinitionSearchContainer.setResults(cpDefinitions);
 					cssClass="table-cell-content"
 					name="author"
 					property="userName"
-				/>
-
-				<liferay-ui:search-container-column-text
-					cssClass="table-cell-content"
-					name="SKU"
-					property="baseSKU"
 				/>
 
 				<liferay-ui:search-container-column-status

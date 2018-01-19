@@ -126,6 +126,7 @@ public class DDMFormViewFormInstanceRecordDisplayContext {
 		}
 
 		formRenderingContext.setLocale(locale);
+
 		formRenderingContext.setPortletNamespace(
 			PortalUtil.getPortletNamespace(
 				DDMFormPortletKeys.DYNAMIC_DATA_MAPPING_FORM_ADMIN));

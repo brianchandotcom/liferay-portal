@@ -19,6 +19,8 @@ package com.liferay.frontend.taglib.clay.sample.web.constants;
  */
 public class ClaySamplePortletKeys {
 
+	public static final String CARDS_DISPLAY_CONTEXT = "CARDS_DISPLAY_CONTEXT";
+
 	public static final String CLAY_SAMPLE =
 		"com_liferay_clay_sample_web_portlet_ClaySamplePortlet";
 

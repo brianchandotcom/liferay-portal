@@ -29,10 +29,6 @@ public class SelectTag extends BaseClayTag {
 		putValue("disabled", disabled);
 	}
 
-	public void setId(String id) {
-		putValue("id", id);
-	}
-
 	public void setLabel(String label) {
 		putValue("label", label);
 	}

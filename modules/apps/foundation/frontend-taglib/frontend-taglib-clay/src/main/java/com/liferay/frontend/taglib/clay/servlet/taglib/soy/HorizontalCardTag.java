@@ -17,24 +17,24 @@ package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
 
 /**
- * @author Carlos Lancha
+ * @author Julien Castelain
  */
-public class LinkTag extends BaseClayTag {
+public class HorizontalCardTag extends BaseClayTag {
 
-	public LinkTag() {
-		super("link", "ClayLink");
+	public HorizontalCardTag() {
+		super("card", "ClayHorizontalCard", true);
 	}
 
-	public void setAriaLabel(String ariaLabel) {
-		putValue("ariaLabel", ariaLabel);
+	public void setActionItems(Object actionItems) {
+		putValue("actionItems", actionItems);
 	}
 
-	public void setButtonStyle(String buttonStyle) {
-		putValue("buttonStyle", buttonStyle);
+	public void setDisabled(Boolean disabled) {
+		putValue("disabled", disabled);
 	}
 
-	public void setDownload(String download) {
-		putValue("download", download);
+	public void setGroupName(String groupName) {
+		putValue("groupName", groupName);
 	}
 
 	public void setHref(String href) {
@@ -45,20 +45,24 @@ public class LinkTag extends BaseClayTag {
 		putValue("icon", icon);
 	}
 
-	public void setIconAlignment(String iconAlignment) {
-		putValue("iconAlignment", iconAlignment);
+	public void setInputName(String inputName) {
+		putValue("inputName", inputName);
 	}
 
-	public void setLabel(String label) {
-		putValue("label", label);
+	public void setInputValue(String inputValue) {
+		putValue("inputValue", inputValue);
 	}
 
-	public void setStyle(String style) {
-		putValue("style", style);
+	public void setSelectable(Boolean selectable) {
+		putValue("selectable", selectable);
 	}
 
-	public void setTarget(String target) {
-		putValue("target", target);
+	public void setSelected(Boolean selected) {
+		putValue("selected", selected);
+	}
+
+	public void setTitle(String title) {
+		putValue("title", title);
 	}
 
 }

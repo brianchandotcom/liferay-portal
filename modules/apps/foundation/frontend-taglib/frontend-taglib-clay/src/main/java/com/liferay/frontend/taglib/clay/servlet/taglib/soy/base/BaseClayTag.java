@@ -18,7 +18,12 @@ import com.liferay.frontend.js.loader.modules.extender.npm.NPMResolver;
 import com.liferay.frontend.taglib.clay.internal.js.loader.modules.extender.npm.NPMResolverProvider;
 import com.liferay.frontend.taglib.soy.servlet.taglib.TemplateRendererTag;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.util.WebKeys;
+
+import java.util.Map;
 
 /**
  * @author Chema Balsas
@@ -39,6 +44,17 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 
 	@Override
 	public int doStartTag() {
+		Map<String, Object> context = getContext();
+
+		if (Validator.isNull(context.get("spritemap"))) {
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			putValue(
+				"spritemap",
+				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
+		}
+
 		setHydrate(_hydrate);
 		setTemplateNamespace(_componentBaseName + ".render");
 
@@ -56,6 +72,18 @@ public abstract class BaseClayTag extends TemplateRendererTag {
 		return npmResolver.resolveModuleName(
 			StringBundler.concat(
 				"clay-", _moduleBaseName, "/lib/", _componentBaseName));
+	}
+
+	public void setElementClasses(String elementClasses) {
+		putValue("elementClasses", elementClasses);
+	}
+
+	public void setId(String id) {
+		putValue("id", id);
+	}
+
+	public void setSpritemap(String spritemap) {
+		putValue("spritemap", spritemap);
 	}
 
 	private final String _componentBaseName;

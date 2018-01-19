@@ -900,29 +900,30 @@
 	</command>
 
 	<command name="searchMemberCP">
+		<var name="searchTerm" value="${userEmailAddressSearchValue}" />
+
 		<if>
 			<isset var="userScreenNameSearchValue" />
 			<then>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenNameSearchValue}" />
+				<var name="searchTerm" value="${userScreenNameSearchValue}" />
 			</then>
 			<elseif>
 				<isset var="userFirstNameSearchValue" />
 				<then>
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${userFirstNameSearchValue}" />
+					<var name="searchTerm" value="${userFirstNameSearchValue}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="userLastNameSearchValue" />
 				<then>
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${userLastNameSearchValue}" />
+					<var name="searchTerm" value="${userLastNameSearchValue}" />
 				</then>
 			</elseif>
-			<else>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${userEmailAddressSearchValue}" />
-			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 
 		<execute macro="Site#viewMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />

@@ -25,4 +25,6 @@ public class AnnouncementsUADConstants {
 	public static final String ANNOUNCEMENTS_FLAG =
 		"com.liferay.announcements.kernel.model.AnnouncementsFlag";
 
+	public static final String BUNDLE_ID = "Announcements";
+
 }

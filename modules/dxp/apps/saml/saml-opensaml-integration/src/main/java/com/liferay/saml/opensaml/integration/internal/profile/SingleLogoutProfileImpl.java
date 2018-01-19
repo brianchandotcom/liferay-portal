@@ -56,6 +56,7 @@ import java.io.Writer;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -616,6 +617,8 @@ public class SingleLogoutProfileImpl
 		SamlSloContext samlSloContext = getSamlSloContext(
 			request, samlMessageContext);
 
+		Set<String> samlSpEntityIds = samlSloContext.getSamlSpEntityIds();
+
 		String binding = samlMessageContext.getCommunicationProfileId();
 
 		if (binding.equals(SAMLConstants.SAML2_SOAP11_BINDING_URI)) {
@@ -630,7 +633,7 @@ public class SingleLogoutProfileImpl
 					null, samlMessageContext, _samlIdpSpConnectionLocalService,
 					_samlIdpSpSessionLocalService, _userLocalService));
 		}
-		else if (!samlSloContext.getSamlSpEntityIds().isEmpty()) {
+		else if (!samlSpEntityIds.isEmpty()) {
 			initiateIdpSingleLogout(request, response);
 		}
 		else {

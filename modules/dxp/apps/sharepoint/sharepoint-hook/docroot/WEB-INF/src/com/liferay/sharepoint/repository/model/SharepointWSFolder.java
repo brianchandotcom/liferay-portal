@@ -35,7 +35,9 @@ public class SharepointWSFolder
 
 	@Override
 	public boolean isRoot() {
-		return sharepointObject.getPath().equals(StringPool.SLASH);
+		String path = sharepointObject.getPath();
+
+		return path.equals(StringPool.SLASH);
 	}
 
 }

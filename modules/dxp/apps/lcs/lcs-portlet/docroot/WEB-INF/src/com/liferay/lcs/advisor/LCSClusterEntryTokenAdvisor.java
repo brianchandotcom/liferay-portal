@@ -52,6 +52,7 @@ import java.io.IOException;
 
 import java.security.Key;
 import java.security.KeyStore;
+import java.security.cert.Certificate;
 
 import java.util.Map;
 import java.util.Set;
@@ -244,7 +245,9 @@ public class LCSClusterEntryTokenAdvisor {
 
 		String keyName = PortletPropsValues.DIGITAL_SIGNATURE_KEY_NAME;
 
-		Key key = keyStore.getCertificate(keyName).getPublicKey();
+		Certificate certificate = keyStore.getCertificate(keyName);
+
+		Key key = certificate.getPublicKey();
 
 		byte[] symmetricKeyEncrypted = ArrayUtil.subset(bytes, 0, 256);
 
@@ -269,7 +272,7 @@ public class LCSClusterEntryTokenAdvisor {
 				_log.debug("Decrypt with key " + keyName);
 			}
 
-			key = keyStore.getCertificate(keyName).getPublicKey();
+			key = certificate.getPublicKey();
 
 			symmetricKeyBytes = Encryptor.decryptUnencodedAsBytes(
 				key, symmetricKeyEncrypted);

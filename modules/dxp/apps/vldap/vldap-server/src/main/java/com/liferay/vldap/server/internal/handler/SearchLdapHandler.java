@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.apache.commons.lang.time.StopWatch;
 import org.apache.directory.api.ldap.model.entry.Entry;
+import org.apache.directory.api.ldap.model.entry.Value;
 import org.apache.directory.api.ldap.model.exception.LdapException;
 import org.apache.directory.api.ldap.model.filter.AndNode;
 import org.apache.directory.api.ldap.model.filter.BranchNode;
@@ -250,9 +251,9 @@ public class SearchLdapHandler extends BaseLdapHandler {
 			EqualityNode<?> equalityNode = (EqualityNode<?>)leafNode;
 
 			String attributeId = equalityNode.getAttribute();
-			String value = equalityNode.getValue().getString();
+			Value<?> value = equalityNode.getValue();
 
-			if (directory.hasAttribute(attributeId, value)) {
+			if (directory.hasAttribute(attributeId, value.getString())) {
 				return true;
 			}
 			else {

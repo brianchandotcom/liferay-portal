@@ -38,9 +38,14 @@ public class SAMLContextImpl
 	}
 
 	public <T> T resolve(SAMLCommand<T, ? super R> samlCommand) {
-		return ((SAMLCommandImpl
-			<InboundMessageType, OutboundMessageType, T, R>)samlCommand).
-				getSamlMessageContextFunction().apply(_samlMessageContext);
+		Function
+			<SAMLMessageContext
+				<InboundMessageType, OutboundMessageType, NameID>, T> function =
+					((SAMLCommandImpl
+						<InboundMessageType, OutboundMessageType, T, R>)
+							samlCommand).getSamlMessageContextFunction();
+
+		return function.apply(_samlMessageContext);
 	}
 
 	private final SAMLMessageContext

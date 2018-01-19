@@ -72,7 +72,7 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 		if (methodName.equals("isEscapedModel")) {
 			return _escaping;
 		}
-		else if (method.getName().equals("toEscapedModel")) {
+		else if (methodName.equals("toEscapedModel")) {
 			if (_escaping) {
 				return proxy;
 			}
@@ -89,7 +89,7 @@ public class AuditEventAutoEscapeBeanHandler extends AutoEscapeBeanHandler {
 
 			return _escapedModel;
 		}
-		else if (method.getName().equals("toUnescapedModel")) {
+		else if (methodName.equals("toUnescapedModel")) {
 			if (!_escaping) {
 				return proxy;
 			}

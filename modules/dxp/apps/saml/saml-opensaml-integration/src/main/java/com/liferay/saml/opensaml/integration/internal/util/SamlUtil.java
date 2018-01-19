@@ -349,8 +349,11 @@ public class SamlUtil {
 				continue;
 			}
 
+			Integer curAssertionConsumerServiceIndex =
+				assertionConsumerService.getIndex();
+
 			if ((assertionConsumerServiceIndex != null) &&
-				(assertionConsumerService.getIndex().intValue() ==
+				(curAssertionConsumerServiceIndex.intValue() ==
 					assertionConsumerServiceIndex.intValue())) {
 
 				return assertionConsumerService;

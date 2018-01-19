@@ -15,6 +15,7 @@
 package com.liferay.lcs.util;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Provides constants and conversion methods for labels, status, and types
@@ -229,7 +230,10 @@ public class LCSConstants {
 	 * @since  LCS 0.1
 	 */
 	public static boolean isServerMetricsSupported(String server) {
-		if (Arrays.asList(SERVER_METRICS_SUPPORTED_SERVERS).contains(server)) {
+		List<String> serverMetricsSupportedServers = Arrays.asList(
+			SERVER_METRICS_SUPPORTED_SERVERS);
+
+		if (serverMetricsSupportedServers.contains(server)) {
 			return true;
 		}
 

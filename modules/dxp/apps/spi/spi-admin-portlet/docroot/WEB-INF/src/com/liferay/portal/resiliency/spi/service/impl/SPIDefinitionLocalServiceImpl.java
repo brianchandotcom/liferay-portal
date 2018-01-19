@@ -462,7 +462,10 @@ public class SPIDefinitionLocalServiceImpl
 		SPIDefinition spiDefinition = spiDefinitionPersistence.findByPrimaryKey(
 			spiDefinitionId);
 
-		if (!spiDefinition.getConnectorAddress().equals(connectorAddress) &&
+		String spiDefinitionConnectorAddress =
+			spiDefinition.getConnectorAddress();
+
+		if (!spiDefinitionConnectorAddress.equals(connectorAddress) &&
 			(spiDefinition.getConnectorPort() != connectorPort)) {
 
 			validateConnector(connectorAddress, connectorPort);

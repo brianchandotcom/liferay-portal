@@ -36,6 +36,68 @@ import javax.portlet.PortletPreferences;
 public class UpgradePortletDisplayTemplatePreferences
 	extends BaseUpgradePortletPreferences {
 
+	protected long getCompanyGroupId(long companyId) throws Exception {
+		Long companyGroupId = _companyGroupIds.get(companyId);
+
+		if (companyGroupId != null) {
+			return companyGroupId;
+		}
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId from Group_ where classNameId = ? and " +
+					"classPK = ?")) {
+
+			ps.setLong(1, _COMPANY_CLASS_NAME_ID);
+			ps.setLong(2, companyId);
+
+			try (ResultSet rs = ps.executeQuery()) {
+				if (rs.next()) {
+					companyGroupId = rs.getLong("groupId");
+				}
+				else {
+					companyGroupId = 0L;
+				}
+
+				_companyGroupIds.put(companyId, companyGroupId);
+
+				return companyGroupId;
+			}
+		}
+	}
+
+	protected ObjectValuePair<Long, String> getTemplateGroupAndKey(
+			long displayStyleGroupId, String displayStyle)
+		throws Exception {
+
+		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
+
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select groupId, templateKey from DDMTemplate where (groupId " +
+					"= ? or groupId = ?) and uuid_ = ?")) {
+
+			ps.setLong(1, displayStyleGroupId);
+			ps.setLong(2, _companyGroupId);
+			ps.setString(3, uuid);
+
+			ObjectValuePair<Long, String> objectValuePair = null;
+
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					long groupId = rs.getLong("groupId");
+
+					objectValuePair = new ObjectValuePair<>(
+						groupId, rs.getString("templateKey"));
+
+					if (groupId == displayStyleGroupId) {
+						return objectValuePair;
+					}
+				}
+			}
+
+			return objectValuePair;
+		}
+	}
+
 	/**
 	 * @deprecated As of 7.0.0, replaced by {@link #getTemplateGroupAndKey(
 	 *             long, String)}
@@ -111,68 +173,6 @@ public class UpgradePortletDisplayTemplatePreferences
 
 	protected static final String UPDATE_PORTLET_PREFERENCES_WHERE_CLAUSE =
 		"(preferences like '%" + DISPLAY_STYLE_PREFIX_6_2 + "%')";
-
-	protected long getCompanyGroupId(long companyId) throws Exception {
-		Long companyGroupId = _companyGroupIds.get(companyId);
-
-		if (companyGroupId != null) {
-			return companyGroupId;
-		}
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId from Group_ where classNameId = ? and " +
-					"classPK = ?")) {
-
-			ps.setLong(1, _COMPANY_CLASS_NAME_ID);
-			ps.setLong(2, companyId);
-
-			try (ResultSet rs = ps.executeQuery()) {
-				if (rs.next()) {
-					companyGroupId = rs.getLong("groupId");
-				}
-				else {
-					companyGroupId = 0L;
-				}
-
-				_companyGroupIds.put(companyId, companyGroupId);
-
-				return companyGroupId;
-			}
-		}
-	}
-
-	protected ObjectValuePair<Long, String> getTemplateGroupAndKey(
-			long displayStyleGroupId, String displayStyle)
-		throws Exception {
-
-		String uuid = displayStyle.substring(DISPLAY_STYLE_PREFIX_6_2.length());
-
-		try (PreparedStatement ps = connection.prepareStatement(
-				"select groupId, templateKey from DDMTemplate where (groupId " +
-					"= ? or groupId = ?) and uuid_ = ?")) {
-
-			ps.setLong(1, displayStyleGroupId);
-			ps.setLong(2, _companyGroupId);
-			ps.setString(3, uuid);
-
-			ObjectValuePair<Long, String> objectValuePair = null;
-
-			try (ResultSet rs = ps.executeQuery()) {
-				while (rs.next()) {
-					long groupId = rs.getLong("groupId");
-
-					objectValuePair = new ObjectValuePair<>(
-						groupId, rs.getString("templateKey"));
-
-					if (groupId == displayStyleGroupId) {
-						return objectValuePair;
-					}
-				}
-			}
-
-			return objectValuePair;
-		}
-	}
 
 	private static final Long _COMPANY_CLASS_NAME_ID =
 		PortalUtil.getClassNameId("com.liferay.portal.kernel.model.Company");

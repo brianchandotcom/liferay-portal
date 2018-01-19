@@ -25,6 +25,7 @@ import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.model.ExpandoColumn;
 import com.liferay.expando.kernel.service.ExpandoColumnLocalServiceUtil;
 import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
+import com.liferay.exportimport.internal.xstream.converter.TimestampConverter;
 import com.liferay.exportimport.kernel.lar.ExportImportClassedModelUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
@@ -2720,6 +2721,24 @@ public class PortletDataContextImpl implements PortletDataContext {
 		_xStream.omitField(HashMap.class, "cache_bitmask");
 
 		_xStreamConfigurators = xStreamConfigurators;
+
+		try {
+			Class<?> timestampClass = classLoader.loadClass(
+				"com.sybase.jdbc4.tds.SybTimestamp");
+
+			_xStream.alias("sql-timestamp", timestampClass);
+		}
+		catch (ClassNotFoundException cnfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to load class com.sybase.jdbc4.tds.SybTimestamp. " +
+						"Check if Sybase's driver is deployed");
+			}
+		}
+
+		_xStream.registerConverter(
+			new ConverterAdapter(new TimestampConverter()),
+			XStream.PRIORITY_VERY_HIGH);
 
 		if (xStreamConfigurators.isEmpty()) {
 			return;

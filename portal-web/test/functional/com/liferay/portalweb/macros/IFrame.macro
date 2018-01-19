@@ -44,11 +44,11 @@
 	</command>
 
 	<command name="selectPermissionsFrame">
-		<var name="key_iframeTitle" value="Permissions" />
-
-		<execute function="AssertElementPresent" locator1="IFrame#IFRAME_TITLE" value1="Permissions" />
-
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Permissions" />
+		</execute>
 	</command>
 
 	<command name="selectTopFrame">

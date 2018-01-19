@@ -887,30 +887,9 @@
 	</command>
 
 	<command name="viewTableDefinitionPublishedViaKDCP">
-		<if>
-			<isset var="workflowDefinitionName" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_NAME" value1="${workflowDefinitionName}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
-			</else>
-		</if>
+		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
-
-		<if>
-			<isset var="workflowDefinitionVersionNumber" />
-			<then>
-				<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_VERSION" value1="${workflowDefinitionVersionNumber}" />
-			</then>
-			<else>
-				<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_VERSION" value1="1" />
-			</else>
-		</if>
-
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_DRAFT_VERSION" value1="1" />
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_PUBLISHED" value1="Yes" />
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE_PUBLISHED" value1="${workflowDefinitionTitle}" />
 		<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 	</command>
 

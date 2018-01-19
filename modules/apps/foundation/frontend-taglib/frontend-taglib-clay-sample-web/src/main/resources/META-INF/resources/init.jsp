@@ -20,6 +20,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %><%@
 taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.frontend.taglib.clay.sample.web.constants.ClaySamplePortletKeys" %><%@
+page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.CardsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.DropdownsDisplayContext" %><%@
 page import="com.liferay.frontend.taglib.clay.sample.web.internal.display.context.NavigationBarsDisplayContext" %>
 
@@ -33,6 +34,7 @@ page import="java.util.Map" %>
 <%@ include file="/init-ext.jsp" %>
 
 <%
+CardsDisplayContext cardsDisplayContext = (CardsDisplayContext)request.getAttribute(ClaySamplePortletKeys.CARDS_DISPLAY_CONTEXT);
 DropdownsDisplayContext dropdownsDisplayContext = (DropdownsDisplayContext)request.getAttribute(ClaySamplePortletKeys.DROPDOWNS_DISPLAY_CONTEXT);
 NavigationBarsDisplayContext navigationBarsDisplayContext = (NavigationBarsDisplayContext)request.getAttribute(ClaySamplePortletKeys.NAVIGATION_BARS_DISPLAY_CONTEXT);
 %>

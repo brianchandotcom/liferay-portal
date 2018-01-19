@@ -25,10 +25,6 @@ public class BadgeTag extends BaseClayTag {
 		super("badge", "ClayBadge");
 	}
 
-	public void setId(String id) {
-		putValue("id", id);
-	}
-
 	public void setLabel(String label) {
 		putValue("label", label);
 	}

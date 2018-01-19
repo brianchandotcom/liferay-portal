@@ -15,7 +15,7 @@
 </tr>
 <tr>
 	<td>ACTIVE_NAV_ITEM_LINK</td>
-	<td>//div[contains(@class,'navbar')]//li[contains(@class,'active')]//a[normalize-space()='${key_navItem}']</td>
+	<td>//div[contains(@class,'navbar')]//li[contains(@class,'active')]//a[normalize-space()='${key_navItem}'] | //div[contains(@class,'navbar')]//a[normalize-space()='${key_navItem}'][@aria-label='Current Page']</td>
 	<td></td>
 </tr>
 <tr>

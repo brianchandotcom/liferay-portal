@@ -114,6 +114,10 @@
 	</command>
 
 	<command name="addChildPage">
+		<execute function="MouseOver" locator1="SitePages#LIST_GROUP_ITEM">
+			<var name="key_itemName" value="${parentPageName}" />
+		</execute>
+
 		<execute function="Click" locator1="SitePages#LIST_GROUP_ITEM_PLUS_ICON">
 			<var name="key_pageName" value="${parentPageName}" />
 		</execute>

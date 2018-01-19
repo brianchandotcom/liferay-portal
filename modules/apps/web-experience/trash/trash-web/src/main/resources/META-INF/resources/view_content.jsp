@@ -48,7 +48,10 @@ renderResponse.setTitle(trashRenderer.getTitle(locale));
 
 <c:choose>
 	<c:when test="<%= trashHandler.isContainerModel() %>">
-		<liferay-util:include page="/navigation.jsp" servletContext="<%= application %>" />
+		<clay:navigation-bar
+			inverted="<%= true %>"
+			items="<%= trashDisplayContext.getNavigationItems() %>"
+		/>
 
 		<liferay-util:include page="/view_content_toolbar.jsp" servletContext="<%= application %>" />
 

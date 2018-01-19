@@ -16,19 +16,9 @@
 
 <%@ include file="/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="tags" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= assetTagsSelectorDisplayContext.getPortletURL() %>" name="searchFm">
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= assetTagsSelectorDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= assetTagsSelectorDisplayContext.isDisabledTagsManagementBar() %>"
@@ -47,6 +37,14 @@
 			orderColumns='<%= new String[] {"name"} %>'
 			portletURL="<%= assetTagsSelectorDisplayContext.getPortletURL() %>"
 		/>
+
+		<c:if test="<%= assetTagsSelectorDisplayContext.isShowTagsSearch() %>">
+			<li>
+				<aui:form action="<%= assetTagsSelectorDisplayContext.getPortletURL() %>" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

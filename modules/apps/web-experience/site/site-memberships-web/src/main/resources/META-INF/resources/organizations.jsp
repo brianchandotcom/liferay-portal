@@ -58,9 +58,10 @@ List<Organization> organizations = OrganizationLocalServiceUtil.search(company.g
 organizationSearch.setResults(organizations);
 %>
 
-<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
-	<liferay-util:param name="searchEnabled" value="<%= String.valueOf((organizationsCount > 0) || searchTerms.isSearch()) %>" />
-</liferay-util:include>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= siteMembershipsDisplayContext.getViewNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= organizationsCount <= 0 %>"
@@ -96,6 +97,14 @@ organizationSearch.setResults(organizations);
 			orderColumns='<%= new String[] {"name", "type"} %>'
 			portletURL="<%= PortletURLUtil.clone(viewOrganizationsURL, renderResponse) %>"
 		/>
+
+		<c:if test="<%= (organizationsCount > 0) || searchTerms.isSearch() %>">
+			<li>
+				<aui:form action="<%= siteMembershipsDisplayContext.getPortletURL() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

@@ -12,9 +12,9 @@
 	<command name="gotoManageForms">
 		<execute macro="KaleoFormsNavigator#gotoManageFieldSets" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${kfFieldSetName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${kfFieldSetName}" />
+		</execute>
 
 		<var name="key_kfFieldSetName" value="${kfFieldSetName}" />
 

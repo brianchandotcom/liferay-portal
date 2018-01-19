@@ -192,29 +192,24 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
+		<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
+
+		<execute function="SelectFrame" value1="relative=top" />
+
+		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
+
+		<var name="searchTerm" value="${webContentTitle}" />
+
 		<if>
 			<isset var="webContentSearchValue" />
 			<then>
-				<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentSearchValue}" />
+				<var name="searchTerm" value="${webContentSearchValue}" />
 			</then>
-			<else>
-				<execute function="AssertClick" locator1="WCDConfiguration#SELECT_WEB_CONTENT_BUTTON" value1="Select" />
-
-				<execute function="SelectFrame" value1="relative=top" />
-
-				<execute function="SelectFrame" locator1="IFrame#DIALOG" />
-
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
-			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 
@@ -252,9 +247,9 @@
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${webContentTitle}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${webContentTitle}" />
+		</execute>
 
 		<var name="key_webContentTitle" value="${webContentTitle}" />
 

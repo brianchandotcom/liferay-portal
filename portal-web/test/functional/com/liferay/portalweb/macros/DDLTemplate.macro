@@ -26,9 +26,9 @@
 
 		<execute function="Click" locator1="NavBar#BASIC_SEARCH_FIELD" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -111,9 +111,9 @@
 	<command name="addFormTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -163,9 +163,9 @@
 	<command name="copyCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -203,9 +203,9 @@
 	<command name="deleteTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -213,9 +213,9 @@
 			<var name="key_menuItem" value="Manage Templates" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlTemplateName}" />
+		</execute>
 
 		<execute function="Check#checkAll" locator1="Checkbox#SELECT_ALL" />
 
@@ -235,9 +235,9 @@
 
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -245,9 +245,9 @@
 			<var name="key_menuItem" value="Manage Templates" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlTemplateName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlTemplateName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#DDM_TEMPLATE_INFO" value1="There are no results." />
 	</command>
@@ -255,9 +255,9 @@
 	<command name="editDisplayTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -291,9 +291,9 @@
 	<command name="editFormTemplateCP">
 		<execute macro="DDLNavigator#gotoManageDataDefinitions" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${ddlDataDefinitionName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlDataDefinitionName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 
@@ -301,9 +301,9 @@
 			<var name="key_menuItem" value="Manage Templates" />
 		</execute>
 
-		<execute function="Type" locator1="DDMSelectTemplate#TOOLBAR_SEARCH_FIELD" value1="${ddlFormTemplateName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${ddlFormTemplateName}" />
+		</execute>
 
 		<execute function="Click" locator1="DDMSelectTemplate#TEMPLATE_TABLE_ELLIPSIS_1" />
 

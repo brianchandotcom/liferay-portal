@@ -19,7 +19,7 @@
 <%
 String backURL = ParamUtil.getString(request, "backURL");
 
-OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(renderRequest);
+OrphanPortletsDisplayContext orphanPortletsDisplayContext = new OrphanPortletsDisplayContext(liferayPortletRequest, liferayPortletResponse);
 
 Layout selLayout = orphanPortletsDisplayContext.getSelLayout();
 
@@ -34,11 +34,9 @@ portletDisplay.setURLBack(backURL);
 renderResponse.setTitle(LanguageUtil.get(request, "orphan-portlets"));
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="orphan-portlets" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= orphanPortletsDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

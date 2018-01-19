@@ -5,9 +5,9 @@
 	<command name="activateInactive">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${siteName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 
@@ -153,9 +153,9 @@
 
 				<execute function="SelectFrame" locator1="SitesSelectSite#SELECT_SITE_IFRAME" />
 
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
-
-				<execute function="KeyPress" locator1="NavBar#BASIC_SEARCH_FIELD" value1="\RETURN" />
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${parentSiteName}" />
+				</execute>
 
 				<var name="key_site" value="${parentSiteName}" />
 
@@ -494,9 +494,9 @@
 	<command name="deactivateCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${siteName}" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
@@ -524,9 +524,9 @@
 	<command name="deleteCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Name" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Name" />
+		</execute>
 
 		<execute function="AssertTextEquals#assertPartialText" locator1="Sites#SITE_TABLE_NAME" value1="${siteName}" />
 
@@ -820,9 +820,9 @@
 	<command name="removeMemberCP">
 		<var name="key_cardText" value="${userScreenName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
 
 		<if>
 			<isset var="userMiddleName" />
@@ -856,9 +856,9 @@
 			<var name="navItem" value="User Groups" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute macro="Portlet#changeDisplayStyle">
 			<var name="displayStyle" value="list" />
@@ -894,35 +894,36 @@
 	</command>
 
 	<command name="searchInputCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${siteName}" />
+		</execute>
 	</command>
 
 	<command name="searchMemberCP">
+		<var name="searchTerm" value="${userEmailAddressSearchValue}" />
+
 		<if>
 			<isset var="userScreenNameSearchValue" />
 			<then>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenNameSearchValue}" />
+				<var name="searchTerm" value="${userScreenNameSearchValue}" />
 			</then>
 			<elseif>
 				<isset var="userFirstNameSearchValue" />
 				<then>
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${userFirstNameSearchValue}" />
+					<var name="searchTerm" value="${userFirstNameSearchValue}" />
 				</then>
 			</elseif>
 			<elseif>
 				<isset var="userLastNameSearchValue" />
 				<then>
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${userLastNameSearchValue}" />
+					<var name="searchTerm" value="${userLastNameSearchValue}" />
 				</then>
 			</elseif>
-			<else>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${userEmailAddressSearchValue}" />
-			</else>
 		</if>
 
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 
 		<execute macro="Site#viewMemberCP">
 			<var name="userFirstName" value="${userFirstName}" />
@@ -932,9 +933,9 @@
 	</command>
 
 	<command name="searchMembershipCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchValue}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchValue}" />
+		</execute>
 
 		<if>
 			<equals arg1="${emptyResults}" arg2="true" />
@@ -992,9 +993,9 @@
 
 		<execute function="SelectFrame" locator1="SitesSelectSite#SELECT_SITE_IFRAME" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${parentSiteName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${parentSiteName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${chooseButtonAvailable}" arg2="false" />
@@ -1016,9 +1017,9 @@
 			<var name="portlet" value="Sites" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Name" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Name" />
+		</execute>
 
 		<if>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
@@ -1284,9 +1285,9 @@
 	<command name="viewSiteAdminPermissionsCP">
 		<var name="key_siteName" value="${siteName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${siteName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${siteName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Sites#SITE_TABLE_ACTIONS" />
 

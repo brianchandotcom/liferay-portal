@@ -897,9 +897,9 @@
 	</command>
 
 	<command name="attemptImpersonateCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
 
 		<var name="key_rowEntry" value="${userScreenName}" />
 
@@ -923,18 +923,18 @@
 		<if>
 			<equals arg1="${userBasicSearch}" arg2="Basic" />
 			<then>
-				<execute function="Type" locator1="TextInput#SEARCH" value1="${userScreenName}" />
-
-				<execute function="Click" locator1="Button#SUBMIT" />
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${userScreenName}" />
+				</execute>
 
 				<var name="key_userScreenName" value="${userScreenName}" />
 
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_NAME" value1="${userName}" />
 				<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
 
-				<execute function="Type" locator1="TextInput#SEARCH" value1="user1*" />
-
-				<execute function="Click" locator1="Button#SUBMIT" />
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="user1*" />
+				</execute>
 
 				<execute function="AssertTextPresent" locator1="Message#EMPTY_INFO" value1="No users were found." />
 			</then>
@@ -943,9 +943,9 @@
 				<then>
 					<var name="fullName"><![CDATA["${userFirstName} ${userLastName}"]]></var>
 
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${fullName}" />
-
-					<execute function="Click" locator1="Button#SUBMIT" />
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${fullName}" />
+					</execute>
 
 					<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -954,9 +954,9 @@
 
 					<var name="fullName"><![CDATA["${userFirstName} 1 ${userLastName}"]]></var>
 
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${fullName}" />
-
-					<execute function="Click" locator1="Button#SUBMIT" />
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${fullName}" />
+					</execute>
 
 					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 				</then>
@@ -966,9 +966,9 @@
 				<then>
 					<var name="quotes"><![CDATA["${userScreenName}"]]></var>
 
-					<execute function="Type" locator1="TextInput#SEARCH" value1="${quotes}" />
-
-					<execute function="Click" locator1="Button#SUBMIT" />
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${quotes}" />
+					</execute>
 
 					<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -1055,9 +1055,9 @@
 	</command>
 
 	<command name="deactivateCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userFirstName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userFirstName}" />
+		</execute>
 
 		<if>
 			<equals arg1="${deactivateType}" arg2="Actions" />
@@ -1469,9 +1469,9 @@
 
 		<execute function="SelectFrame" locator1="UsersAndOrganizationsSelectOrganization#SELECT_ORGANIZATION_IFRAME" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${orgName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${orgName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsSelectOrganization#ORGANIZATION_TABLE_NAME" value1="${orgName}" />
 
@@ -1588,9 +1588,9 @@
 	<command name="impersonateCP">
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
 
 		<var name="key_rowEntry" value="${userScreenName}" />
 
@@ -2039,9 +2039,9 @@
 	<command name="searchCP">
 		<execute function="Pause" locator1="5000" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 	</command>
@@ -2262,9 +2262,9 @@
 			<then>
 				<execute function="Pause" locator1="1000" />
 
-				<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userEmailAddress}" />
-
-				<execute function="Click" locator1="Button#SUBMIT" />
+				<execute macro="Search#searchCP">
+					<var name="searchTerm" value="${userEmailAddress}" />
+				</execute>
 
 				<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 			</then>
@@ -2273,9 +2273,9 @@
 				<then>
 					<execute function="Pause" locator1="1000" />
 
-					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userEmailAddress}" />
-
-					<execute function="Click" locator1="Button#SUBMIT" />
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${userEmailAddress}" />
+					</execute>
 
 					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 				</then>
@@ -2285,9 +2285,9 @@
 				<then>
 					<execute function="Pause" locator1="1000" />
 
-					<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-
-					<execute function="Click" locator1="Button#SUBMIT" />
+					<execute macro="Search#searchCP">
+						<var name="searchTerm" value="${userScreenName}" />
+					</execute>
 
 					<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="No users were found." />
 				</then>

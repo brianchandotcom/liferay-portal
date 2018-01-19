@@ -391,9 +391,9 @@
 			<var name="navItem" value="Available" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userScreenName}" />
-
-		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userScreenName}" />
+		</execute>
 
 		<var name="key_userScreenName" value="${userScreenName}" />
 
@@ -510,9 +510,9 @@
 	<command name="gotoActionsCmd">
 		<execute function="Pause" locator1="1000" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${orgName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${orgName}" />
+		</execute>
 
 		<execute function="AssertVisible" locator1="UsersAndOrganizations#ORGANIZATION_TABLE_NAME_GENERIC" />
 
@@ -524,9 +524,9 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchToken}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchToken}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -614,9 +614,9 @@
 			<var name="searchToken" value="${orgName}" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${userFullName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userFullName}" />
+		</execute>
 
 		<execute function="AssertVisible" locator1="UsersAndOrganizations#USERS_AND_SUBORGANIZATIONS_TABLE_NAME_GENERIC" />
 
@@ -636,9 +636,9 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 
@@ -829,9 +829,9 @@
 	</command>
 
 	<command name="viewRemoveMemberCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${orgName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${orgName}" />
+		</execute>
 
 		<var name="key_orgName" value="${orgName}" />
 

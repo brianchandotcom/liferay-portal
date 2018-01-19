@@ -86,9 +86,9 @@
 	<command name="assignAllMembersCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
@@ -112,9 +112,9 @@
 	</command>
 
 	<command name="assignMemberCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -156,9 +156,9 @@
 	</command>
 
 	<command name="deleteCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -182,9 +182,9 @@
 	</command>
 
 	<command name="deleteUserCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -237,9 +237,9 @@
 	<command name="gotoActionsCmd">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -251,9 +251,9 @@
 	<command name="gotoAddPageCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 
@@ -273,9 +273,9 @@
 	</command>
 
 	<command name="removeMemberCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -301,23 +301,23 @@
 	<command name="searchCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="UG1 UserGroup1 Name1" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="UG1 UserGroup1 Name1" />
+		</execute>
 
 		<execute function="AssertTextNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
 	<command name="searchMembersInUserGroupCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">
@@ -343,9 +343,9 @@
 	</command>
 
 	<command name="viewAssignMemberCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -365,9 +365,9 @@
 	</command>
 
 	<command name="viewCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="Pause" locator1="5000" />
 
@@ -421,9 +421,9 @@
 	<command name="viewRemoveMemberCP">
 		<var name="key_userGroupName" value="${userGroupName}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${userGroupName}" />
-
-		<execute function="Click" locator1="Button#SUBMIT" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${userGroupName}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 

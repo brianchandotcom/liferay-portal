@@ -266,9 +266,9 @@
 			<var name="kfFieldSetName" value="${kfFieldSetName}" />
 		</execute>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${kfFormName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${kfFormName}" />
+		</execute>
 
 		<var name="key_rowEntry" value="${kfFormName}" />
 
@@ -693,8 +693,9 @@
 	</command>
 
 	<command name="searchProcessRecords">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${kfProcessSearchData}" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${kfProcessSearchData}" />
+		</execute>
 	</command>
 
 	<command name="submitNewProcess">

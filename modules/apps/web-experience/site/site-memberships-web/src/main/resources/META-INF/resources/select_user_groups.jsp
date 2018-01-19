@@ -43,21 +43,21 @@ userGroupSearch.setTotal(userGroupsCount);
 List<UserGroup> userGroups = UserGroupLocalServiceUtil.search(company.getCompanyId(), searchTerms.getKeywords(), userGroupParams, userGroupSearch.getStart(), userGroupSearch.getEnd(), userGroupSearch.getOrderByComparator());
 
 userGroupSearch.setResults(userGroups);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem navigationItem = new NavigationItem();
+
+navigationItem.setActive(true);
+navigationItem.setHref(currentURL);
+navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+
+navigationItems.add(navigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="user-groups" selected="<%= true %>" />
-	</aui:nav>
-
-	<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
-		<aui:nav-bar-search>
-			<aui:form action="<%= viewUserGroupsURL.toString() %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	disabled="<%= userGroupsCount <= 0 %>"
@@ -89,6 +89,14 @@ userGroupSearch.setResults(userGroups);
 			orderColumns='<%= new String[] {"name", "description"} %>'
 			portletURL="<%= PortletURLUtil.clone(viewUserGroupsURL, renderResponse) %>"
 		/>
+
+		<c:if test="<%= (userGroupsCount > 0) || searchTerms.isSearch() %>">
+			<li>
+				<aui:form action="<%= viewUserGroupsURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

@@ -14,7 +14,6 @@
 
 package com.liferay.users.admin.web.portlet.action;
 
-import com.liferay.admin.kernel.util.PortalMyAccountApplicationType;
 import com.liferay.announcements.kernel.model.AnnouncementsDelivery;
 import com.liferay.announcements.kernel.service.AnnouncementsDeliveryLocalService;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
@@ -42,7 +41,6 @@ import com.liferay.portal.kernel.model.Contact;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
-import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.model.ListType;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Phone;
@@ -50,21 +48,16 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.UserGroupRole;
 import com.liferay.portal.kernel.model.Website;
 import com.liferay.portal.kernel.portlet.DynamicActionRequest;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.membershippolicy.MembershipPolicyException;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ListTypeLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserService;
-import com.liferay.portal.kernel.service.permission.GroupPermissionUtil;
-import com.liferay.portal.kernel.service.permission.PortalPermissionUtil;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -82,7 +75,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
-import com.liferay.sites.kernel.util.SitesUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
@@ -181,20 +173,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 				null, roleIds, userGroupRoles, userGroupIds, null, null, null,
 				null, null, serviceContext);
 		}
-
-		long publicLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "publicLayoutSetPrototypeId");
-		long privateLayoutSetPrototypeId = ParamUtil.getLong(
-			actionRequest, "privateLayoutSetPrototypeId");
-		boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "publicLayoutSetPrototypeLinkEnabled");
-		boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-			actionRequest, "privateLayoutSetPrototypeLinkEnabled");
-
-		SitesUtil.updateLayoutSetPrototypesLinks(
-			user.getGroup(), publicLayoutSetPrototypeId,
-			privateLayoutSetPrototypeId, publicLayoutSetPrototypeLinkEnabled,
-			privateLayoutSetPrototypeLinkEnabled);
 
 		return user;
 	}
@@ -589,48 +567,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			InvokerPortletImpl.clearResponses(portletSession);
 
 			updateLanguageId = true;
-		}
-
-		String portletId = serviceContext.getPortletId();
-		String myAccountPortletId = PortletProviderUtil.getPortletId(
-			PortalMyAccountApplicationType.MyAccount.CLASS_NAME,
-			PortletProvider.Action.VIEW);
-
-		Group group = user.getGroup();
-
-		if (!portletId.equals(myAccountPortletId) &&
-			GroupPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(), group.getGroupId(),
-				ActionKeys.UPDATE) &&
-			PortalPermissionUtil.contains(
-				themeDisplay.getPermissionChecker(),
-				ActionKeys.UNLINK_LAYOUT_SET_PROTOTYPE)) {
-
-			long publicLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "publicLayoutSetPrototypeId");
-			long privateLayoutSetPrototypeId = ParamUtil.getLong(
-				actionRequest, "privateLayoutSetPrototypeId");
-			boolean publicLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "publicLayoutSetPrototypeLinkEnabled");
-			boolean privateLayoutSetPrototypeLinkEnabled = ParamUtil.getBoolean(
-				actionRequest, "privateLayoutSetPrototypeLinkEnabled");
-
-			LayoutSet publicLayoutSet = group.getPublicLayoutSet();
-			LayoutSet privateLayoutSet = group.getPrivateLayoutSet();
-
-			if ((publicLayoutSetPrototypeId > 0) ||
-				(privateLayoutSetPrototypeId > 0) ||
-				(publicLayoutSetPrototypeLinkEnabled !=
-					publicLayoutSet.isLayoutSetPrototypeLinkEnabled()) ||
-				(privateLayoutSetPrototypeLinkEnabled !=
-					privateLayoutSet.isLayoutSetPrototypeLinkEnabled())) {
-
-				SitesUtil.updateLayoutSetPrototypesLinks(
-					group, publicLayoutSetPrototypeId,
-					privateLayoutSetPrototypeId,
-					publicLayoutSetPrototypeLinkEnabled,
-					privateLayoutSetPrototypeLinkEnabled);
-			}
 		}
 
 		Company company = portal.getCompany(actionRequest);

@@ -29,7 +29,6 @@ import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.base.BlogsEntryLocalServiceBaseImpl;
 import com.liferay.blogs.settings.BlogsGroupServiceSettings;
 import com.liferay.blogs.social.BlogsActivityKeys;
-import com.liferay.blogs.util.BlogsUtil;
 import com.liferay.blogs.util.comparator.EntryDisplayDateComparator;
 import com.liferay.blogs.util.comparator.EntryIdComparator;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
@@ -73,6 +72,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
+import com.liferay.portal.kernel.util.FriendlyURLNormalizerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.GroupSubscriptionCheckSubscriptionSender;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -2437,7 +2437,30 @@ public class BlogsEntryLocalServiceImpl extends BlogsEntryLocalServiceBaseImpl {
 	private String _getUniqueUrlTitle(BlogsEntry entry, String newTitle)
 		throws PortalException {
 
-		String urlTitle = BlogsUtil.getUrlTitle(entry.getEntryId(), newTitle);
+		long entryId = entry.getEntryId();
+
+		String urlTitle = null;
+
+		if (newTitle == null) {
+			urlTitle = String.valueOf(entryId);
+		}
+		else {
+			urlTitle = StringUtil.toLowerCase(newTitle.trim());
+
+			if (Validator.isNull(urlTitle) || Validator.isNumber(urlTitle) ||
+				urlTitle.equals("rss")) {
+
+				urlTitle = String.valueOf(entryId);
+			}
+			else {
+				urlTitle =
+					FriendlyURLNormalizerUtil.normalizeWithPeriodsAndSlashes(
+						urlTitle);
+			}
+
+			urlTitle = ModelHintsUtil.trimString(
+				BlogsEntry.class.getName(), "urlTitle", urlTitle);
+		}
 
 		long classNameId = classNameLocalService.getClassNameId(
 			BlogsEntry.class);

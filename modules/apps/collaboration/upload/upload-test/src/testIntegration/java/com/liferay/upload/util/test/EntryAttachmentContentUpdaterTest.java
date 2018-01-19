@@ -46,6 +46,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -298,7 +299,7 @@ public class EntryAttachmentContentUpdaterTest {
 				expectedAttribute.getValue(), actualAttribute.getValue());
 		}
 
-		if (actualElement.getName().equals("img")) {
+		if (Objects.equals(actualElement.getName(), "img")) {
 			Assert.assertNull(
 				"The editor attribute must not be included in the final image",
 				actualElement.attribute(

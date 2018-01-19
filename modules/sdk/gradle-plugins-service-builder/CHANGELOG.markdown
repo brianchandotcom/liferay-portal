@@ -279,7 +279,7 @@ version 1.0.180.
 ## 1.0.65 - 2018-01-08
 
 ### Added
-- [LPS-76626]: Add property `databaseNameMaxLengthCheckEnabled` to all tasks
+- [LPS-76626]: Add the property `databaseNameMaxLengthCheckEnabled` to all tasks
 that extend `BuildServiceTask`.
 
 ### Changed
@@ -289,7 +289,7 @@ version 1.0.181.
 ## 2.0.0 - 2018-01-17
 
 ### Added
-- [LPS-76626]: Add property `databaseNameMaxLength` to all tasks that extend
+- [LPS-76626]: Add the property `databaseNameMaxLength` to all tasks that extend
 `BuildServiceTask`.
 
 ### Changed

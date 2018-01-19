@@ -1369,7 +1369,7 @@ fix for all tasks of type `FindBugs` related to source sets.
 ## 3.6.0 - 2017-04-14
 
 ### Added
-- [LPS-71901]: Add task `updateFileSnapshotVersions` to update the project
+- [LPS-71901]: Add the task `updateFileSnapshotVersions` to update the project
 version in external files to the latest snapshot.
 
 ### Changed
@@ -2652,7 +2652,7 @@ sub-repositories.
 ### Added
 - [LRDOCS-4111]: Apply and preconfigure [Liferay Gradle Plugins JSDoc] for OSGi
 projects.
-- [LRDOCS-4111]: Publish the Javascript API documentation JAR of an OSGi project
+- [LRDOCS-4111]: Publish the JavaScript API documentation JAR of an OSGi project
 with the `install` and `uploadArchives` tasks.
 
 ### Changed

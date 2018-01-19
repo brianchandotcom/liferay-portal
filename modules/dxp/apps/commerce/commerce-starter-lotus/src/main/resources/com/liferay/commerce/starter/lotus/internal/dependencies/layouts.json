@@ -129,6 +129,68 @@
 		"hidden": false,
 		"layoutTemplateId": "1_column",
 		"layoutType": "node",
+		"name": "My Account",
+		"subLayouts": [
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Addresses",
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": "0",
+						"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+						"portletPreferences": {
+							"articleId": "MY-ACCOUNT",
+							"assetEntryId": "",
+							"ddmTemplateKey": "BASIC-WEB-CONTENT",
+							"groupId": ""
+						}					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": "1",
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_addresses_navigation_menu"
+					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": "2",
+						"portletName": "com_liferay_commerce_address_content_web_internal_portlet_CommerceAddressContentPortlet"
+					}
+				]
+			},
+			{
+				"hidden": false,
+				"layoutTemplateId": "1_column",
+				"name": "Orders",
+				"portlets": [
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": "0",
+						"portletName": "com_liferay_journal_content_web_portlet_JournalContentPortlet",
+						"portletPreferences": {
+							"articleId": "MY-ACCOUNT",
+							"assetEntryId": "",
+							"ddmTemplateKey": "BASIC-WEB-CONTENT",
+							"groupId": ""
+						}					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": "1",
+						"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet_INSTANCE_orders_navigation_menu"
+					},
+					{
+						"layoutColumnId": "column-1",
+						"layoutColumnPos": "2",
+						"portletName": "com_liferay_commerce_order_content_web_internal_portlet_CommerceOrderContentPortlet"
+					}
+				]
+			}
+		]
+	},
+	{
+		"hidden": false,
+		"layoutTemplateId": "1_column",
+		"layoutType": "node",
 		"name": "Company",
 		"subLayouts": [
 			{

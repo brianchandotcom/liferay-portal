@@ -67,6 +67,8 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("primary", getPrimary());
+		attributes.put("secondary", getSecondary());
+		attributes.put("social", getSocial());
 
 		return attributes;
 	}
@@ -125,6 +127,18 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 
 		if (primary != null) {
 			setPrimary(primary);
+		}
+
+		Boolean secondary = (Boolean)attributes.get("secondary");
+
+		if (secondary != null) {
+			setSecondary(secondary);
+		}
+
+		Boolean social = (Boolean)attributes.get("social");
+
+		if (social != null) {
+			setSocial(social);
 		}
 	}
 
@@ -219,6 +233,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
+	* Returns the secondary of this site navigation menu.
+	*
+	* @return the secondary of this site navigation menu
+	*/
+	@Override
+	public boolean getSecondary() {
+		return _siteNavigationMenu.getSecondary();
+	}
+
+	/**
 	* Returns the site navigation menu ID of this site navigation menu.
 	*
 	* @return the site navigation menu ID of this site navigation menu
@@ -226,6 +250,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public long getSiteNavigationMenuId() {
 		return _siteNavigationMenu.getSiteNavigationMenuId();
+	}
+
+	/**
+	* Returns the social of this site navigation menu.
+	*
+	* @return the social of this site navigation menu
+	*/
+	@Override
+	public boolean getSocial() {
+		return _siteNavigationMenu.getSocial();
 	}
 
 	/**
@@ -286,6 +320,26 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public boolean isPrimary() {
 		return _siteNavigationMenu.isPrimary();
+	}
+
+	/**
+	* Returns <code>true</code> if this site navigation menu is secondary.
+	*
+	* @return <code>true</code> if this site navigation menu is secondary; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSecondary() {
+		return _siteNavigationMenu.isSecondary();
+	}
+
+	/**
+	* Returns <code>true</code> if this site navigation menu is social.
+	*
+	* @return <code>true</code> if this site navigation menu is social; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isSocial() {
+		return _siteNavigationMenu.isSocial();
 	}
 
 	@Override
@@ -395,6 +449,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
+	* Sets whether this site navigation menu is secondary.
+	*
+	* @param secondary the secondary of this site navigation menu
+	*/
+	@Override
+	public void setSecondary(boolean secondary) {
+		_siteNavigationMenu.setSecondary(secondary);
+	}
+
+	/**
 	* Sets the site navigation menu ID of this site navigation menu.
 	*
 	* @param siteNavigationMenuId the site navigation menu ID of this site navigation menu
@@ -402,6 +466,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public void setSiteNavigationMenuId(long siteNavigationMenuId) {
 		_siteNavigationMenu.setSiteNavigationMenuId(siteNavigationMenuId);
+	}
+
+	/**
+	* Sets whether this site navigation menu is social.
+	*
+	* @param social the social of this site navigation menu
+	*/
+	@Override
+	public void setSocial(boolean social) {
+		_siteNavigationMenu.setSocial(social);
 	}
 
 	/**

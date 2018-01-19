@@ -249,8 +249,9 @@ public interface SiteNavigationMenuLocalService extends BaseLocalService,
 		java.lang.String keywords);
 
 	public SiteNavigationMenu updateSiteNavigationMenu(long userId,
-		long siteNavigationMenuId, boolean primary,
-		ServiceContext serviceContext) throws PortalException;
+		long siteNavigationMenuId, boolean primary, boolean secondary,
+		boolean social, ServiceContext serviceContext)
+		throws PortalException;
 
 	public SiteNavigationMenu updateSiteNavigationMenu(long userId,
 		long siteNavigationMenuId, java.lang.String name,

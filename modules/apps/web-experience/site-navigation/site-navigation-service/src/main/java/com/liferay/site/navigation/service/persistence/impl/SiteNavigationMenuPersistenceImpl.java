@@ -2192,6 +2192,480 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 
 	private static final String _FINDER_COLUMN_G_P_GROUPID_2 = "siteNavigationMenu.groupId = ? AND ";
 	private static final String _FINDER_COLUMN_G_P_PRIMARY_2 = "siteNavigationMenu.primary = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_SECONDARY = new FinderPath(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED,
+			SiteNavigationMenuModelImpl.FINDER_CACHE_ENABLED,
+			SiteNavigationMenuImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_Secondary",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			SiteNavigationMenuModelImpl.GROUPID_COLUMN_BITMASK |
+			SiteNavigationMenuModelImpl.SECONDARY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_SECONDARY = new FinderPath(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED,
+			SiteNavigationMenuModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_Secondary",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and secondary = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param secondary the secondary
+	 * @return the matching site navigation menu
+	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
+	 */
+	@Override
+	public SiteNavigationMenu findByG_Secondary(long groupId, boolean secondary)
+		throws NoSuchMenuException {
+		SiteNavigationMenu siteNavigationMenu = fetchByG_Secondary(groupId,
+				secondary);
+
+		if (siteNavigationMenu == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", secondary=");
+			msg.append(secondary);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchMenuException(msg.toString());
+		}
+
+		return siteNavigationMenu;
+	}
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and secondary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param secondary the secondary
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	@Override
+	public SiteNavigationMenu fetchByG_Secondary(long groupId, boolean secondary) {
+		return fetchByG_Secondary(groupId, secondary, true);
+	}
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and secondary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param secondary the secondary
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	@Override
+	public SiteNavigationMenu fetchByG_Secondary(long groupId,
+		boolean secondary, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, secondary };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_SECONDARY,
+					finderArgs, this);
+		}
+
+		if (result instanceof SiteNavigationMenu) {
+			SiteNavigationMenu siteNavigationMenu = (SiteNavigationMenu)result;
+
+			if ((groupId != siteNavigationMenu.getGroupId()) ||
+					(secondary != siteNavigationMenu.getSecondary())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SITENAVIGATIONMENU_WHERE);
+
+			query.append(_FINDER_COLUMN_G_SECONDARY_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_SECONDARY_SECONDARY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(secondary);
+
+				List<SiteNavigationMenu> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_SECONDARY,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"SiteNavigationMenuPersistenceImpl.fetchByG_Secondary(long, boolean, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					SiteNavigationMenu siteNavigationMenu = list.get(0);
+
+					result = siteNavigationMenu;
+
+					cacheResult(siteNavigationMenu);
+
+					if ((siteNavigationMenu.getGroupId() != groupId) ||
+							(siteNavigationMenu.getSecondary() != secondary)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_SECONDARY,
+							finderArgs, siteNavigationMenu);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_SECONDARY,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SiteNavigationMenu)result;
+		}
+	}
+
+	/**
+	 * Removes the site navigation menu where groupId = &#63; and secondary = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param secondary the secondary
+	 * @return the site navigation menu that was removed
+	 */
+	@Override
+	public SiteNavigationMenu removeByG_Secondary(long groupId,
+		boolean secondary) throws NoSuchMenuException {
+		SiteNavigationMenu siteNavigationMenu = findByG_Secondary(groupId,
+				secondary);
+
+		return remove(siteNavigationMenu);
+	}
+
+	/**
+	 * Returns the number of site navigation menus where groupId = &#63; and secondary = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param secondary the secondary
+	 * @return the number of matching site navigation menus
+	 */
+	@Override
+	public int countByG_Secondary(long groupId, boolean secondary) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_SECONDARY;
+
+		Object[] finderArgs = new Object[] { groupId, secondary };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SITENAVIGATIONMENU_WHERE);
+
+			query.append(_FINDER_COLUMN_G_SECONDARY_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_SECONDARY_SECONDARY_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(secondary);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_SECONDARY_GROUPID_2 = "siteNavigationMenu.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_SECONDARY_SECONDARY_2 = "siteNavigationMenu.secondary = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_G_SOCIAL = new FinderPath(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED,
+			SiteNavigationMenuModelImpl.FINDER_CACHE_ENABLED,
+			SiteNavigationMenuImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByG_Social",
+			new String[] { Long.class.getName(), Boolean.class.getName() },
+			SiteNavigationMenuModelImpl.GROUPID_COLUMN_BITMASK |
+			SiteNavigationMenuModelImpl.SOCIAL_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_G_SOCIAL = new FinderPath(SiteNavigationMenuModelImpl.ENTITY_CACHE_ENABLED,
+			SiteNavigationMenuModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByG_Social",
+			new String[] { Long.class.getName(), Boolean.class.getName() });
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and social = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	 *
+	 * @param groupId the group ID
+	 * @param social the social
+	 * @return the matching site navigation menu
+	 * @throws NoSuchMenuException if a matching site navigation menu could not be found
+	 */
+	@Override
+	public SiteNavigationMenu findByG_Social(long groupId, boolean social)
+		throws NoSuchMenuException {
+		SiteNavigationMenu siteNavigationMenu = fetchByG_Social(groupId, social);
+
+		if (siteNavigationMenu == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("groupId=");
+			msg.append(groupId);
+
+			msg.append(", social=");
+			msg.append(social);
+
+			msg.append("}");
+
+			if (_log.isDebugEnabled()) {
+				_log.debug(msg.toString());
+			}
+
+			throw new NoSuchMenuException(msg.toString());
+		}
+
+		return siteNavigationMenu;
+	}
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and social = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param social the social
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	@Override
+	public SiteNavigationMenu fetchByG_Social(long groupId, boolean social) {
+		return fetchByG_Social(groupId, social, true);
+	}
+
+	/**
+	 * Returns the site navigation menu where groupId = &#63; and social = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param groupId the group ID
+	 * @param social the social
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	 */
+	@Override
+	public SiteNavigationMenu fetchByG_Social(long groupId, boolean social,
+		boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { groupId, social };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_G_SOCIAL,
+					finderArgs, this);
+		}
+
+		if (result instanceof SiteNavigationMenu) {
+			SiteNavigationMenu siteNavigationMenu = (SiteNavigationMenu)result;
+
+			if ((groupId != siteNavigationMenu.getGroupId()) ||
+					(social != siteNavigationMenu.getSocial())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_SITENAVIGATIONMENU_WHERE);
+
+			query.append(_FINDER_COLUMN_G_SOCIAL_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_SOCIAL_SOCIAL_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(social);
+
+				List<SiteNavigationMenu> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_G_SOCIAL,
+						finderArgs, list);
+				}
+				else {
+					if (list.size() > 1) {
+						Collections.sort(list, Collections.reverseOrder());
+
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"SiteNavigationMenuPersistenceImpl.fetchByG_Social(long, boolean, boolean) with parameters (" +
+								StringUtil.merge(finderArgs) +
+								") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
+						}
+					}
+
+					SiteNavigationMenu siteNavigationMenu = list.get(0);
+
+					result = siteNavigationMenu;
+
+					cacheResult(siteNavigationMenu);
+
+					if ((siteNavigationMenu.getGroupId() != groupId) ||
+							(siteNavigationMenu.getSocial() != social)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_G_SOCIAL,
+							finderArgs, siteNavigationMenu);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_G_SOCIAL,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (SiteNavigationMenu)result;
+		}
+	}
+
+	/**
+	 * Removes the site navigation menu where groupId = &#63; and social = &#63; from the database.
+	 *
+	 * @param groupId the group ID
+	 * @param social the social
+	 * @return the site navigation menu that was removed
+	 */
+	@Override
+	public SiteNavigationMenu removeByG_Social(long groupId, boolean social)
+		throws NoSuchMenuException {
+		SiteNavigationMenu siteNavigationMenu = findByG_Social(groupId, social);
+
+		return remove(siteNavigationMenu);
+	}
+
+	/**
+	 * Returns the number of site navigation menus where groupId = &#63; and social = &#63;.
+	 *
+	 * @param groupId the group ID
+	 * @param social the social
+	 * @return the number of matching site navigation menus
+	 */
+	@Override
+	public int countByG_Social(long groupId, boolean social) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_G_SOCIAL;
+
+		Object[] finderArgs = new Object[] { groupId, social };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_SITENAVIGATIONMENU_WHERE);
+
+			query.append(_FINDER_COLUMN_G_SOCIAL_GROUPID_2);
+
+			query.append(_FINDER_COLUMN_G_SOCIAL_SOCIAL_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(groupId);
+
+				qPos.add(social);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_G_SOCIAL_GROUPID_2 = "siteNavigationMenu.groupId = ? AND ";
+	private static final String _FINDER_COLUMN_G_SOCIAL_SOCIAL_2 = "siteNavigationMenu.social = ?";
 
 	public SiteNavigationMenuPersistenceImpl() {
 		setModelClass(SiteNavigationMenu.class);
@@ -2229,6 +2703,17 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_P,
 			new Object[] {
 				siteNavigationMenu.getGroupId(), siteNavigationMenu.getPrimary()
+			}, siteNavigationMenu);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_SECONDARY,
+			new Object[] {
+				siteNavigationMenu.getGroupId(),
+				siteNavigationMenu.getSecondary()
+			}, siteNavigationMenu);
+
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_SOCIAL,
+			new Object[] {
+				siteNavigationMenu.getGroupId(), siteNavigationMenu.getSocial()
 			}, siteNavigationMenu);
 
 		siteNavigationMenu.resetOriginalValues();
@@ -2314,6 +2799,26 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 			false);
 		finderCache.putResult(FINDER_PATH_FETCH_BY_G_P, args,
 			siteNavigationMenuModelImpl, false);
+
+		args = new Object[] {
+				siteNavigationMenuModelImpl.getGroupId(),
+				siteNavigationMenuModelImpl.getSecondary()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_SECONDARY, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_SECONDARY, args,
+			siteNavigationMenuModelImpl, false);
+
+		args = new Object[] {
+				siteNavigationMenuModelImpl.getGroupId(),
+				siteNavigationMenuModelImpl.getSocial()
+			};
+
+		finderCache.putResult(FINDER_PATH_COUNT_BY_G_SOCIAL, args,
+			Long.valueOf(1), false);
+		finderCache.putResult(FINDER_PATH_FETCH_BY_G_SOCIAL, args,
+			siteNavigationMenuModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
@@ -2338,6 +2843,48 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_P, args);
 			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_P, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					siteNavigationMenuModelImpl.getGroupId(),
+					siteNavigationMenuModelImpl.getSecondary()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_SECONDARY, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_SECONDARY, args);
+		}
+
+		if ((siteNavigationMenuModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_SECONDARY.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					siteNavigationMenuModelImpl.getOriginalGroupId(),
+					siteNavigationMenuModelImpl.getOriginalSecondary()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_SECONDARY, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_SECONDARY, args);
+		}
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
+					siteNavigationMenuModelImpl.getGroupId(),
+					siteNavigationMenuModelImpl.getSocial()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_SOCIAL, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_SOCIAL, args);
+		}
+
+		if ((siteNavigationMenuModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_G_SOCIAL.getColumnBitmask()) != 0) {
+			Object[] args = new Object[] {
+					siteNavigationMenuModelImpl.getOriginalGroupId(),
+					siteNavigationMenuModelImpl.getOriginalSocial()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_G_SOCIAL, args);
+			finderCache.removeResult(FINDER_PATH_FETCH_BY_G_SOCIAL, args);
 		}
 	}
 
@@ -2569,6 +3116,8 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		siteNavigationMenuImpl.setModifiedDate(siteNavigationMenu.getModifiedDate());
 		siteNavigationMenuImpl.setName(siteNavigationMenu.getName());
 		siteNavigationMenuImpl.setPrimary(siteNavigationMenu.isPrimary());
+		siteNavigationMenuImpl.setSecondary(siteNavigationMenu.isSecondary());
+		siteNavigationMenuImpl.setSocial(siteNavigationMenu.isSocial());
 
 		return siteNavigationMenuImpl;
 	}

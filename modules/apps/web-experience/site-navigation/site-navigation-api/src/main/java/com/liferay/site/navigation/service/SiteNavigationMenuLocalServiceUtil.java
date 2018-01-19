@@ -287,11 +287,12 @@ public class SiteNavigationMenuLocalServiceUtil {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
 		long userId, long siteNavigationMenuId, boolean primary,
+		boolean secondary, boolean social,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenu(userId, siteNavigationMenuId,
-			primary, serviceContext);
+			primary, secondary, social, serviceContext);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(

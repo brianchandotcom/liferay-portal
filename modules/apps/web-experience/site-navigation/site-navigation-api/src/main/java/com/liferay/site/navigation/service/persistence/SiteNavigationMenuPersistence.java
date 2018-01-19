@@ -502,6 +502,106 @@ public interface SiteNavigationMenuPersistence extends BasePersistence<SiteNavig
 	public int countByG_P(long groupId, boolean primary);
 
 	/**
+	* Returns the site navigation menu where groupId = &#63; and secondary = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param secondary the secondary
+	* @return the matching site navigation menu
+	* @throws NoSuchMenuException if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu findByG_Secondary(long groupId, boolean secondary)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and secondary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param secondary the secondary
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_Secondary(long groupId, boolean secondary);
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and secondary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param secondary the secondary
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_Secondary(long groupId,
+		boolean secondary, boolean retrieveFromCache);
+
+	/**
+	* Removes the site navigation menu where groupId = &#63; and secondary = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param secondary the secondary
+	* @return the site navigation menu that was removed
+	*/
+	public SiteNavigationMenu removeByG_Secondary(long groupId,
+		boolean secondary) throws NoSuchMenuException;
+
+	/**
+	* Returns the number of site navigation menus where groupId = &#63; and secondary = &#63;.
+	*
+	* @param groupId the group ID
+	* @param secondary the secondary
+	* @return the number of matching site navigation menus
+	*/
+	public int countByG_Secondary(long groupId, boolean secondary);
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and social = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	*
+	* @param groupId the group ID
+	* @param social the social
+	* @return the matching site navigation menu
+	* @throws NoSuchMenuException if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu findByG_Social(long groupId, boolean social)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and social = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param groupId the group ID
+	* @param social the social
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_Social(long groupId, boolean social);
+
+	/**
+	* Returns the site navigation menu where groupId = &#63; and social = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param groupId the group ID
+	* @param social the social
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
+	*/
+	public SiteNavigationMenu fetchByG_Social(long groupId, boolean social,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the site navigation menu where groupId = &#63; and social = &#63; from the database.
+	*
+	* @param groupId the group ID
+	* @param social the social
+	* @return the site navigation menu that was removed
+	*/
+	public SiteNavigationMenu removeByG_Social(long groupId, boolean social)
+		throws NoSuchMenuException;
+
+	/**
+	* Returns the number of site navigation menus where groupId = &#63; and social = &#63;.
+	*
+	* @param groupId the group ID
+	* @param social the social
+	* @return the number of matching site navigation menus
+	*/
+	public int countByG_Social(long groupId, boolean social);
+
+	/**
 	* Caches the site navigation menu in the entity cache if it is enabled.
 	*
 	* @param siteNavigationMenu the site navigation menu

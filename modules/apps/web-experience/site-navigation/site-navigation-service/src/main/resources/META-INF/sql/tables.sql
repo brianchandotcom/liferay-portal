@@ -7,7 +7,9 @@ create table SiteNavigationMenu (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
-	primary_ BOOLEAN
+	primary_ BOOLEAN,
+	secondary BOOLEAN,
+	social BOOLEAN
 );
 
 create table SiteNavigationMenuItem (

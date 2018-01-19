@@ -139,6 +139,10 @@ public class SiteNavigationMenuPersistenceTest {
 
 		newSiteNavigationMenu.setPrimary(RandomTestUtil.randomBoolean());
 
+		newSiteNavigationMenu.setSecondary(RandomTestUtil.randomBoolean());
+
+		newSiteNavigationMenu.setSocial(RandomTestUtil.randomBoolean());
+
 		_siteNavigationMenus.add(_persistence.update(newSiteNavigationMenu));
 
 		SiteNavigationMenu existingSiteNavigationMenu = _persistence.findByPrimaryKey(newSiteNavigationMenu.getPrimaryKey());
@@ -163,6 +167,10 @@ public class SiteNavigationMenuPersistenceTest {
 			newSiteNavigationMenu.getName());
 		Assert.assertEquals(existingSiteNavigationMenu.getPrimary(),
 			newSiteNavigationMenu.getPrimary());
+		Assert.assertEquals(existingSiteNavigationMenu.getSecondary(),
+			newSiteNavigationMenu.getSecondary());
+		Assert.assertEquals(existingSiteNavigationMenu.getSocial(),
+			newSiteNavigationMenu.getSocial());
 	}
 
 	@Test
@@ -187,6 +195,22 @@ public class SiteNavigationMenuPersistenceTest {
 			RandomTestUtil.randomBoolean());
 
 		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_Secondary() throws Exception {
+		_persistence.countByG_Secondary(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_Secondary(0L, RandomTestUtil.randomBoolean());
+	}
+
+	@Test
+	public void testCountByG_Social() throws Exception {
+		_persistence.countByG_Social(RandomTestUtil.nextLong(),
+			RandomTestUtil.randomBoolean());
+
+		_persistence.countByG_Social(0L, RandomTestUtil.randomBoolean());
 	}
 
 	@Test
@@ -221,7 +245,8 @@ public class SiteNavigationMenuPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SiteNavigationMenu",
 			"siteNavigationMenuId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "primary", true);
+			"modifiedDate", true, "name", true, "primary", true, "secondary",
+			true, "social", true);
 	}
 
 	@Test
@@ -435,6 +460,24 @@ public class SiteNavigationMenuPersistenceTest {
 				existingSiteNavigationMenu.getPrimary()),
 			ReflectionTestUtil.<Boolean>invoke(existingSiteNavigationMenu,
 				"getOriginalPrimary", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingSiteNavigationMenu.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Boolean.valueOf(
+				existingSiteNavigationMenu.getSecondary()),
+			ReflectionTestUtil.<Boolean>invoke(existingSiteNavigationMenu,
+				"getOriginalSecondary", new Class<?>[0]));
+
+		Assert.assertEquals(Long.valueOf(
+				existingSiteNavigationMenu.getGroupId()),
+			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
+				"getOriginalGroupId", new Class<?>[0]));
+		Assert.assertEquals(Boolean.valueOf(
+				existingSiteNavigationMenu.getSocial()),
+			ReflectionTestUtil.<Boolean>invoke(existingSiteNavigationMenu,
+				"getOriginalSocial", new Class<?>[0]));
 	}
 
 	protected SiteNavigationMenu addSiteNavigationMenu()
@@ -458,6 +501,10 @@ public class SiteNavigationMenuPersistenceTest {
 		siteNavigationMenu.setName(RandomTestUtil.randomString());
 
 		siteNavigationMenu.setPrimary(RandomTestUtil.randomBoolean());
+
+		siteNavigationMenu.setSecondary(RandomTestUtil.randomBoolean());
+
+		siteNavigationMenu.setSocial(RandomTestUtil.randomBoolean());
 
 		_siteNavigationMenus.add(_persistence.update(siteNavigationMenu));
 

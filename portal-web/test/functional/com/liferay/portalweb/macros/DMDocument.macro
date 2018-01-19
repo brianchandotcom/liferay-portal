@@ -1882,6 +1882,7 @@
 		<execute macro="DMDocument#viewPG">
 			<var name="categoryName" value="${categoryName}" />
 			<var name="dmDocumentDescription" value="${dmDocumentDescription}" />
+			<var name="dmDocumentFileType" value="${dmDocumentFileType}" />
 			<var name="dmDocumentTitle" value="${dmDocumentTitle}" />
 			<var name="tagName" value="${tagName}" />
 			<var name="tagNameList" value="${tagNameList}" />
@@ -2424,6 +2425,13 @@
 			<isset var="dmDocumentDescription" />
 			<then>
 				<execute function="AssertTextEquals" locator1="DocumentsAndMediaDocument#DOCUMENT_INFO_DESCRIPTION" value1="${dmDocumentDescription}" />
+			</then>
+		</if>
+
+		<if>
+			<equals arg1="${dmDocumentFileType}" arg2="Image" />
+			<then>
+				<execute function="AssertElementPresent" locator1="DocumentsAndMediaDocument#DOCUMENT_DETAILS_IMAGE_PREVIEW" />
 			</then>
 		</if>
 

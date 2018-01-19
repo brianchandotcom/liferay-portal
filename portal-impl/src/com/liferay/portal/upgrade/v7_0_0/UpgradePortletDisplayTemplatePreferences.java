@@ -36,11 +36,16 @@ import javax.portlet.PortletPreferences;
 public class UpgradePortletDisplayTemplatePreferences
 	extends BaseUpgradePortletPreferences {
 
+	/**
+	 * @deprecated As of 7.0.0, replaced by {@link #getTemplateGroupAndKey(
+	 *             long, String)}
+	 */
+	@Deprecated
 	protected String getTemplateKey(
 			long displayStyleGroupId, String displayStyle)
 		throws Exception {
 
-		ObjectValuePair<Long, String> objectValuePair = _getTemplateGroupAndKey(
+		ObjectValuePair<Long, String> objectValuePair = getTemplateGroupAndKey(
 			displayStyleGroupId, displayStyle);
 
 		if (objectValuePair == null) {
@@ -71,7 +76,7 @@ public class UpgradePortletDisplayTemplatePreferences
 		long displayStyleGroupId = GetterUtil.getLong(
 			portletPreferences.getValue("displayStyleGroupId", null));
 
-		ObjectValuePair<Long, String> objectValuePair = _getTemplateGroupAndKey(
+		ObjectValuePair<Long, String> objectValuePair = getTemplateGroupAndKey(
 			displayStyleGroupId, displayStyle);
 
 		if (objectValuePair != null) {
@@ -95,7 +100,7 @@ public class UpgradePortletDisplayTemplatePreferences
 			PortletPreferencesFactoryUtil.fromXML(
 				companyId, ownerId, ownerType, plid, portletId, xml);
 
-		_companyGroupId = _getCompanyGroupId(companyId);
+		_companyGroupId = getCompanyGroupId(companyId);
 
 		upgradeDisplayStyle(portletPreferences);
 
@@ -107,7 +112,7 @@ public class UpgradePortletDisplayTemplatePreferences
 	protected static final String UPDATE_PORTLET_PREFERENCES_WHERE_CLAUSE =
 		"(preferences like '%" + DISPLAY_STYLE_PREFIX_6_2 + "%')";
 
-	private long _getCompanyGroupId(long companyId) throws Exception {
+	protected long getCompanyGroupId(long companyId) throws Exception {
 		Long companyGroupId = _companyGroupIds.get(companyId);
 
 		if (companyGroupId != null) {
@@ -136,7 +141,7 @@ public class UpgradePortletDisplayTemplatePreferences
 		}
 	}
 
-	private ObjectValuePair<Long, String> _getTemplateGroupAndKey(
+	protected ObjectValuePair<Long, String> getTemplateGroupAndKey(
 			long displayStyleGroupId, String displayStyle)
 		throws Exception {
 

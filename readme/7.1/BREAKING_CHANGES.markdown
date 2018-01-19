@@ -161,7 +161,7 @@ portlet URLs without passing the request as a necessary parameter.
 #### What changed?
 
 The Users File Uploads portlet properties have been moved from Server
-Administration to an OSGI configuration named
+Administration to an OSGi configuration named
 `UserFileUploadsConfiguration.java` in the `users-admin-api` module.
 
 #### Who is affected?

@@ -40,6 +40,7 @@ import com.liferay.calendar.social.CalendarActivityKeys;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.message.boards.kernel.service.MBMessageLocalService;
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -2393,6 +2394,9 @@ public class CalendarBookingLocalServiceImpl
 			throw new CalendarBookingRecurrenceException();
 		}
 	}
+
+	@ServiceReference(type = MBMessageLocalService.class)
+	protected MBMessageLocalService mbMessageLocalService;
 
 	@ServiceReference(type = RecurrenceSplitter.class)
 	protected RecurrenceSplitter recurrenceSplitter;

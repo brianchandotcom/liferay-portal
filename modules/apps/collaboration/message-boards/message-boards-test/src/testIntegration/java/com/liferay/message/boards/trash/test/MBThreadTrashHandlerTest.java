@@ -26,6 +26,7 @@ import com.liferay.message.boards.kernel.service.MBCategoryServiceUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadLocalServiceUtil;
 import com.liferay.message.boards.kernel.service.MBThreadServiceUtil;
+import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.ClassedModel;
@@ -39,7 +40,6 @@ import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.service.test.ServiceTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 import com.liferay.trash.exception.RestoreEntryException;
 import com.liferay.trash.exception.TrashEntryException;
 import com.liferay.trash.test.util.BaseTrashHandlerTestCase;
@@ -262,9 +262,8 @@ public class MBThreadTrashHandlerTest
 		MBCategory category = (MBCategory)parentBaseModel;
 
 		MBMessage message = MBTestUtil.addMessageWithWorkflow(
-			serviceContext.getUserId(), category.getGroupId(),
-			category.getCategoryId(), getSearchKeywords(), getSearchKeywords(),
-			true, serviceContext);
+			category.getGroupId(), category.getCategoryId(),
+			getSearchKeywords(), getSearchKeywords(), true, serviceContext);
 
 		return message.getThread();
 	}

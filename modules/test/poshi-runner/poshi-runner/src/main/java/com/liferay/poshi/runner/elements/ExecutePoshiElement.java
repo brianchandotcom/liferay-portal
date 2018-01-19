@@ -262,7 +262,9 @@ public class ExecutePoshiElement extends BasePoshiElement {
 
 		sb.append(formattedContent.toString());
 
-		if (!content.trim().equals("")) {
+		String trimmedContent = content.trim();
+
+		if (!trimmedContent.equals("")) {
 			sb.append("\n");
 
 			sb.append(pad);

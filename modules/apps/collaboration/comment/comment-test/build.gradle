@@ -10,4 +10,5 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:blogs:blogs-test-util")
 	testIntegrationCompile project(":apps:collaboration:comment:comment-page-comments-web")
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-api")
+	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-test-util")
 }

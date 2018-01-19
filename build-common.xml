@@ -288,6 +288,36 @@ information.
 		</sequential>
 	</macrodef>
 
+	<macrodef name="check-latest-artifact-staleness">
+		<sequential>
+			<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${ant.project.name}.properties" />
+
+			<local name="artifact.git.log" />
+
+			<exec executable="git" failonerror="true" outputproperty="artifact.git.log">
+				<arg value="log" />
+				<arg value="--format=%s" />
+				<arg value="${latest.artifact.git.id}..HEAD" />
+				<arg value="." />
+			</exec>
+
+			<local name="artifact.git.log.changes" />
+
+			<loadresource property="artifact.git.log.changes" quiet="true" unless:blank="${artifact.git.log}">
+				<propertyresource name="artifact.git.log" />
+				<filterchain>
+					<linecontains negate="true">
+						<contains value="artifact:ignore" />
+					</linecontains>
+				</filterchain>
+			</loadresource>
+
+			<condition property="latest.artifact.stale">
+				<isset property="artifact.git.log.changes" />
+			</condition>
+		</sequential>
+	</macrodef>
+
 	<macrodef name="compile-test">
 		<attribute name="test.type" />
 
@@ -395,6 +425,50 @@ information.
 					</copy>
 				</else>
 			</if>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="download-latest-artifact">
+		<attribute name="destfile" />
+		<attribute name="snapshot" default="false" />
+
+		<sequential>
+			<fail message="Please run this target from a release branch instead.">
+				<condition>
+					<not>
+						<or>
+							<available file="${project.dir}/modules/.releng" type="dir" />
+							<istrue value="@{snapshot}" />
+						</or>
+					</not>
+				</condition>
+			</fail>
+
+			<check-latest-artifact-staleness />
+
+			<fail message="${ant.project.name} is stale and needs to be republished.">
+				<condition>
+					<istrue value="${latest.artifact.stale}" />
+				</condition>
+			</fail>
+
+			<if>
+				<istrue value="${liferay.releng.ee}" />
+				<then>
+					<propertyregex
+						input="${latest.artifact.url}"
+						override="true"
+						property="latest.artifact.url"
+						replace="/liferay-private-releases/com/liferay/portal/de/"
+						select="\Q/liferay-public-releases/com/liferay/portal/\E"
+					/>
+				</then>
+			</if>
+
+			<mirrors-get
+				dest="${basedir}/@{destfile}"
+				src="${latest.artifact.url}"
+			/>
 		</sequential>
 	</macrodef>
 
@@ -964,40 +1038,12 @@ information.
 					<available file="${project.dir}/modules/.releng/${artifact.name}.properties" />
 				</and>
 				<then>
-					<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${artifact.name}.properties">
-						<filterchain>
-							<linecontains>
-								<contains value="artifact.git.id" />
-							</linecontains>
-						</filterchain>
-					</loadproperties>
-
-					<exec executable="git" failonerror="true" outputproperty="artifact.git.log">
-						<arg value="log" />
-						<arg value="--format=%s" />
-						<arg value="${latest.artifact.git.id}..HEAD" />
-						<arg value="." />
-					</exec>
-
-					<loadresource property="artifact.git.log.changes" quiet="true" unless:blank="${artifact.git.log}">
-						<propertyresource name="artifact.git.log" />
-						<filterchain>
-							<linecontains negate="true">
-								<contains value="artifact:ignore" />
-							</linecontains>
-						</filterchain>
-					</loadresource>
-
-					<condition property="artifact.publish.skip">
-						<not>
-							<isset property="artifact.git.log.changes" />
-						</not>
-					</condition>
+					<check-latest-artifact-staleness />
 				</then>
 			</if>
 
 			<if>
-				<istrue value="${artifact.publish.skip}" />
+				<isfalse value="${latest.artifact.stale}" />
 				<then>
 					<echo>${artifact.name} is not stale and does not need to be published.</echo>
 				</then>

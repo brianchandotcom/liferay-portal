@@ -23,7 +23,7 @@
 		<delete failonerror="false" file="${jar.file}-sources.jar" />
 	</target>
 
-	<target depends="init-compile" name="compile" unless="compile.uptodate">
+	<target depends="download-latest-artifact,init-compile" name="compile" unless="${compile.uptodate}">
 		<property name="javac.destdir" value="classes" />
 		<property name="javac.srcdir" value="src" />
 		<property name="javac.classpathref" value="project.classpath" />
@@ -51,7 +51,13 @@
 		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
 	</target>
 
-	<target name="init-compile">
+	<target name="download-latest-artifact" unless="${build.marketplace.apps.enabled}">
+		<download-latest-artifact destfile="${jar.file}.jar" />
+
+		<property name="compile.uptodate" value="true" />
+	</target>
+
+	<target if="${build.marketplace.apps.enabled}" name="init-compile">
 		<condition property="compile.uptodate">
 			<uptodate targetfile="classes/.touch">
 				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />

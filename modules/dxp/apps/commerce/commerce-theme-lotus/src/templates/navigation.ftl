@@ -86,12 +86,16 @@
 			</li>
 		</#if>
 
-		<li>
+		<li class="nav-item">
 			<#if is_signed_in>
-				<@liferay.user_personal_bar />
+				<a class="nav-link" role="button" href="${accountUrl}">
+					<svg class="commerce-icon lexicon-icon">
+						<use xlink:href="${images_folder}/theme-icons.svg#icon-user" />
+					</svg>
+				</a>
 			<#else>
-				<a class="collapsed" role="button" data-toggle="collapse" href="#collapseLogin" aria-expanded="false" aria-controls="collapseLogin">
-					<svg class="lexicon-icon">
+				<a class="collapsed nav-link" role="button" data-toggle="collapse" href="#collapseLogin" aria-expanded="false" aria-controls="collapseLogin">
+					<svg class="commerce-icon lexicon-icon">
 						<use xlink:href="${images_folder}/theme-icons.svg#icon-user" />
 					</svg>
 				</a>

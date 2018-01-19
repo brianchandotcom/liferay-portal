@@ -1,4 +1,5 @@
 <#assign
+	accountUrl = "${site_default_url}/my-account"
 	cartItemsCount = commerceCartHelper.getCurrentCommerceCartItemsCount(request, themeDisplay.getResponse(), 0)
 	cartUrl = commerceCartHelper.getCommerceCartPortletURL(request, 0)
 	demo_mode = getterUtil.getBoolean(themeDisplay.getThemeSetting("demo-mode"))

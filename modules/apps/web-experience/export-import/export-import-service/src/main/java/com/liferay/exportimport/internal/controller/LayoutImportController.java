@@ -46,7 +46,6 @@ import com.liferay.exportimport.kernel.lar.UserIdStrategy;
 import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
-import com.liferay.exportimport.lar.LayoutCache;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.portal.kernel.exception.LayoutPrototypeException;
@@ -375,7 +374,7 @@ public class LayoutImportController implements ImportController {
 
 		stopWatch.start();
 
-		LayoutCache layoutCache = new LayoutCache();
+		_permissionImporter.clearCache();
 
 		long companyId = portletDataContext.getCompanyId();
 
@@ -552,8 +551,8 @@ public class LayoutImportController implements ImportController {
 					portletDataContext.getZipEntryAsString(portletPath));
 
 				_permissionImporter.checkRoles(
-					layoutCache, companyId, portletDataContext.getGroupId(),
-					userId, portletDocument.getRootElement());
+					companyId, portletDataContext.getGroupId(), userId,
+					portletDocument.getRootElement());
 			}
 
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
@@ -1137,8 +1136,8 @@ public class LayoutImportController implements ImportController {
 	@Reference
 	private LayoutSetPrototypeLocalService _layoutSetPrototypeLocalService;
 
-	private final PermissionImporter _permissionImporter =
-		PermissionImporter.getInstance();
+	@Reference
+	private PermissionImporter _permissionImporter;
 
 	@Reference
 	private PortletDataContextFactory _portletDataContextFactory;

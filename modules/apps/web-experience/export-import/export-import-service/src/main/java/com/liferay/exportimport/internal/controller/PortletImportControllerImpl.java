@@ -57,7 +57,6 @@ import com.liferay.exportimport.kernel.lifecycle.ExportImportLifecycleManager;
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
 import com.liferay.exportimport.lar.DeletionSystemEventImporter;
-import com.liferay.exportimport.lar.LayoutCache;
 import com.liferay.exportimport.lar.PermissionImporter;
 import com.liferay.exportimport.portlet.data.handler.provider.PortletDataHandlerProvider;
 import com.liferay.exportimport.portlet.preferences.processor.Capability;
@@ -1014,11 +1013,11 @@ public class PortletImportControllerImpl implements PortletImportController {
 				de);
 		}
 
-		LayoutCache layoutCache = new LayoutCache();
+		_permissionImporter.clearCache();
 
 		if (importPermissions) {
 			_permissionImporter.checkRoles(
-				layoutCache, portletDataContext.getCompanyId(),
+				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), userId, portletElement);
 
 			_permissionImporter.readPortletDataPermissions(portletDataContext);
@@ -1088,7 +1087,7 @@ public class PortletImportControllerImpl implements PortletImportController {
 			}
 
 			_permissionImporter.importPortletPermissions(
-				layoutCache, portletDataContext.getCompanyId(),
+				portletDataContext.getCompanyId(),
 				portletDataContext.getGroupId(), userId, layout, portletElement,
 				portletDataContext.getPortletId());
 
@@ -1574,8 +1573,9 @@ public class PortletImportControllerImpl implements PortletImportController {
 	private ExportImportLifecycleManager _exportImportLifecycleManager;
 	private GroupLocalService _groupLocalService;
 	private LayoutLocalService _layoutLocalService;
-	private final PermissionImporter _permissionImporter =
-		PermissionImporter.getInstance();
+
+	@Reference
+	private PermissionImporter _permissionImporter;
 
 	@Reference
 	private Portal _portal;

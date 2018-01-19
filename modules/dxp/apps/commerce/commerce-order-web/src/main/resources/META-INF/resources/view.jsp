@@ -14,7 +14,7 @@
  */
 --%>
 
-<%@ include file="/init.jsp" %>
+<%@ include file="/META-INF/resources/init.jsp" %>
 
 <%
 CommerceOrderListDisplayContext commerceOrderListDisplayContext = (CommerceOrderListDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
@@ -154,6 +154,42 @@ SearchContainer<CommerceOrder> commerceOrderSearchContainer = commerceOrderListD
 				name="order-value"
 				value="<%= commerceOrderListDisplayContext.getCommerceOrderValue(commerceOrder) %>"
 			/>
+
+			<liferay-ui:search-container-column-text
+				align="center"
+				cssClass="table-cell-content"
+				name="notes"
+			>
+
+				<%
+				rowURL.setParameter("screenNavigationCategoryKey", CommerceOrderScreenNavigationConstants.CATEGORY_KEY_COMMERCE_ORDER_NOTES);
+
+				int commerceOrderNotesCount = commerceOrderListDisplayContext.getCommerceOrderNotesCount(commerceOrder);
+
+				String taglibIconCssClass = "icon-file-text";
+
+				if (commerceOrderNotesCount <= 0) {
+					taglibIconCssClass += " no-notes";
+				}
+
+				String taglibMessage = null;
+
+				if (commerceOrderNotesCount == 1) {
+					taglibMessage = LanguageUtil.get(request, "1-note");
+				}
+				else {
+					taglibMessage = LanguageUtil.format(request, "x-notes", commerceOrderNotesCount, false);
+				}
+				%>
+
+				<liferay-ui:icon
+					cssClass="notes-icon"
+					iconCssClass="<%= taglibIconCssClass %>"
+					message="<%= taglibMessage %>"
+					method="get"
+					url="<%= rowURL.toString() %>"
+				/>
+			</liferay-ui:search-container-column-text>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="table-cell-content"

@@ -52,6 +52,7 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 		headerNames.add("customer-name");
 		headerNames.add("order-id");
 		headerNames.add("order-value");
+		headerNames.add("notes");
 
 		orderableHeaders.put("createDate", "order-date");
 		orderableHeaders.put("commerceOrderId", "order-id");

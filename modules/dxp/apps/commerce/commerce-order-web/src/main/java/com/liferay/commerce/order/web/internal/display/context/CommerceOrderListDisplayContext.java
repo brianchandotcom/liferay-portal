@@ -18,6 +18,7 @@ import com.liferay.commerce.model.CommerceOrder;
 import com.liferay.commerce.model.CommerceOrderConstants;
 import com.liferay.commerce.order.web.internal.display.context.util.CommerceOrderRequestHelper;
 import com.liferay.commerce.order.web.internal.search.CommerceOrderSearch;
+import com.liferay.commerce.service.CommerceOrderNoteService;
 import com.liferay.commerce.service.CommerceOrderService;
 import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -55,10 +56,12 @@ import javax.servlet.http.HttpServletRequest;
 public class CommerceOrderListDisplayContext {
 
 	public CommerceOrderListDisplayContext(
+		CommerceOrderNoteService commerceOrderNoteService,
 		CommerceOrderService commerceOrderService,
 		CommercePriceFormatter commercePriceFormatter,
 		RenderRequest renderRequest, WorkflowTaskManager workflowTaskManager) {
 
+		_commerceOrderNoteService = commerceOrderNoteService;
 		_commerceOrderService = commerceOrderService;
 		_commercePriceFormatter = commercePriceFormatter;
 		_workflowTaskManager = workflowTaskManager;
@@ -80,6 +83,13 @@ public class CommerceOrderListDisplayContext {
 	public String getCommerceOrderDate(CommerceOrder commerceOrder) {
 		return _commerceOrderDateFormatDate.format(
 			commerceOrder.getCreateDate());
+	}
+
+	public int getCommerceOrderNotesCount(CommerceOrder commerceOrder)
+		throws PortalException {
+
+		return _commerceOrderNoteService.getCommerceOrderNotesCount(
+			commerceOrder.getCommerceOrderId());
 	}
 
 	public String getCommerceOrderTime(CommerceOrder commerceOrder) {
@@ -265,6 +275,7 @@ public class CommerceOrderListDisplayContext {
 
 	private final Format _commerceOrderDateFormatDate;
 	private final Format _commerceOrderDateFormatTime;
+	private final CommerceOrderNoteService _commerceOrderNoteService;
 	private final CommerceOrderRequestHelper _commerceOrderRequestHelper;
 	private final CommerceOrderService _commerceOrderService;
 	private final CommercePriceFormatter _commercePriceFormatter;

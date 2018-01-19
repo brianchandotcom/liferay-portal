@@ -3,7 +3,7 @@ import debounce from 'metal-debounce';
 import {Config} from 'metal-state';
 import Soy from 'metal-soy';
 
-import './contextual-sidebar/ContextualSidebar.es';
+import './contextual_sidebar/ContextualSidebar.es';
 import './LayoutPageTemplateFragment.es';
 import './LayoutPageTemplateFragmentCollection.es';
 import templates from './LayoutPageTemplateEditor.soy';

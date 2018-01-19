@@ -20,6 +20,7 @@ import com.liferay.exportimport.internal.util.ExportImportPermissionUtil;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.staging.MergeLayoutPrototypesThreadLocal;
+import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.portal.kernel.exception.NoSuchTeamException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,8 +68,7 @@ public class PermissionImporter {
 	}
 
 	public void checkRoles(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Element portletElement)
+			long companyId, long groupId, long userId, Element portletElement)
 		throws Exception {
 
 		Element permissionsElement = portletElement.element("permissions");
@@ -80,13 +80,17 @@ public class PermissionImporter {
 		List<Element> roleElements = permissionsElement.elements("role");
 
 		for (Element roleElement : roleElements) {
-			checkRole(layoutCache, companyId, groupId, userId, roleElement);
+			checkRole(companyId, groupId, userId, roleElement);
 		}
 	}
 
+	public void clearCache() {
+		_layoutCacheThreadLocal.remove();
+	}
+
 	public void importPortletPermissions(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, Element portletElement, String portletId)
+			long companyId, long groupId, long userId, Layout layout,
+			Element portletElement, String portletId)
 		throws Exception {
 
 		Element permissionsElement = portletElement.element("permissions");
@@ -98,7 +102,7 @@ public class PermissionImporter {
 				layout.getPlid(), portletId);
 
 			importPermissions(
-				layoutCache, companyId, groupId, userId, layout, resourceName,
+				companyId, groupId, userId, layout, resourceName,
 				resourcePrimKey, permissionsElement);
 		}
 	}
@@ -149,8 +153,7 @@ public class PermissionImporter {
 	}
 
 	protected Role checkRole(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Element roleElement)
+			long companyId, long groupId, long userId, Element roleElement)
 		throws Exception {
 
 		String name = roleElement.attributeValue("name");
@@ -187,6 +190,8 @@ public class PermissionImporter {
 		}
 
 		String uuid = roleElement.attributeValue("uuid");
+
+		LayoutCache layoutCache = _layoutCacheThreadLocal.get();
 
 		role = layoutCache.getUuidRole(companyId, uuid);
 
@@ -235,8 +240,8 @@ public class PermissionImporter {
 	}
 
 	protected void importPermissions(
-			LayoutCache layoutCache, long companyId, long groupId, long userId,
-			Layout layout, String resourceName, String resourcePrimKey,
+			long companyId, long groupId, long userId, Layout layout,
+			String resourceName, String resourcePrimKey,
 			Element permissionsElement)
 		throws Exception {
 
@@ -249,8 +254,7 @@ public class PermissionImporter {
 		List<Element> roleElements = permissionsElement.elements("role");
 
 		for (Element roleElement : roleElements) {
-			Role role = checkRole(
-				layoutCache, companyId, groupId, userId, roleElement);
+			Role role = checkRole(companyId, groupId, userId, roleElement);
 
 			if (role == null) {
 				continue;
@@ -285,6 +289,9 @@ public class PermissionImporter {
 	}
 
 	private PermissionImporter() {
+		_layoutCacheThreadLocal = new CentralizedThreadLocal<>(
+			PermissionImporter.class.getName() + "._layoutCacheThreadLocal",
+			LayoutCache::new);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
@@ -292,5 +299,7 @@ public class PermissionImporter {
 
 	private static final PermissionImporter _instance =
 		new PermissionImporter();
+
+	private final CentralizedThreadLocal<LayoutCache> _layoutCacheThreadLocal;
 
 }

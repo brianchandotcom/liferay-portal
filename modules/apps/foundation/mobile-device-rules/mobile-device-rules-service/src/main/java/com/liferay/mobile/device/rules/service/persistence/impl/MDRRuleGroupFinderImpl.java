@@ -19,7 +19,7 @@ import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

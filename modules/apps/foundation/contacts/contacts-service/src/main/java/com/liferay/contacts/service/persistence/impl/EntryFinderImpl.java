@@ -19,7 +19,7 @@ import com.liferay.contacts.model.impl.EntryImpl;
 import com.liferay.contacts.service.persistence.EntryFinder;
 import com.liferay.contacts.service.persistence.EntryUtil;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

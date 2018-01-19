@@ -17,7 +17,7 @@ package com.liferay.document.library.file.rank.service.persistence.impl;
 import com.liferay.document.library.file.rank.model.DLFileRank;
 import com.liferay.document.library.file.rank.model.impl.DLFileRankImpl;
 import com.liferay.document.library.file.rank.service.persistence.DLFileRankFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;

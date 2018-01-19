@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.lists.service.persistence.impl;
 import com.liferay.dynamic.data.lists.model.DDLRecord;
 import com.liferay.dynamic.data.lists.model.impl.DDLRecordImpl;
 import com.liferay.dynamic.data.lists.service.persistence.DDLRecordFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

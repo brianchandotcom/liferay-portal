@@ -17,7 +17,7 @@ package com.liferay.bookmarks.service.persistence.impl;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.model.impl.BookmarksEntryImpl;
 import com.liferay.bookmarks.service.persistence.BookmarksEntryFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;

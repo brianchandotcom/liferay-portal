@@ -17,7 +17,7 @@ package com.liferay.asset.category.property.service.persistence.impl;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;
 import com.liferay.asset.category.property.model.impl.AssetCategoryPropertyImpl;
 import com.liferay.asset.category.property.service.persistence.AssetCategoryPropertyFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;

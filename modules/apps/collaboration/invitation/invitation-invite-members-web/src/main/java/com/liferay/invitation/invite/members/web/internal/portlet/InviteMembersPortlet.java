@@ -16,7 +16,7 @@ package com.liferay.invitation.invite.members.web.internal.portlet;
 
 import com.liferay.invitation.invite.members.constants.InviteMembersPortletKeys;
 import com.liferay.invitation.invite.members.service.MemberRequestLocalService;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
+import com.liferay.portal.dao.orm.custom.sql.api.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.CustomSQLParam;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;

@@ -1,4 +1,7 @@
 dependencies {
+	compile group: "com.amazonaws", name: "aws-java-sdk-core", version: "1.11.220"
+	compile group: "com.amazonaws", name: "aws-java-sdk-ec2", version: "1.11.220"
+	compile group: "com.amazonaws", name: "aws-java-sdk-rds", version: "1.11.220"
 	compile group: "commons-codec", name: "commons-codec", version: "1.9"
 	compile group: "commons-lang", name: "commons-lang", version: "2.6"
 	compile group: "dom4j", name: "dom4j", version: "1.6.1"

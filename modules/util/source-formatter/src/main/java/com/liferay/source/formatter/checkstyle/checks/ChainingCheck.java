@@ -167,6 +167,60 @@ public class ChainingCheck extends BaseCheck {
 		}
 	}
 
+	private DetailAST _getOuterMethodCallAST(DetailAST detailAST) {
+		while (true) {
+			if ((detailAST.getType() != TokenTypes.DOT) &&
+				(detailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+				return null;
+			}
+
+			DetailAST parentAST = detailAST.getParent();
+
+			if ((detailAST.getType() == TokenTypes.METHOD_CALL) &&
+				(parentAST.getType() != TokenTypes.DOT)) {
+
+				break;
+			}
+
+			detailAST = parentAST;
+		}
+
+		while (true) {
+			DetailAST parentAST = detailAST.getParent();
+
+			if (parentAST == null) {
+				return null;
+			}
+
+			if (parentAST.getType() == TokenTypes.METHOD_CALL) {
+				detailAST = parentAST;
+
+				break;
+			}
+
+			detailAST = parentAST;
+		}
+
+		while (true) {
+			DetailAST childAST = detailAST.getFirstChild();
+
+			if ((detailAST.getType() != TokenTypes.DOT) &&
+				(detailAST.getType() != TokenTypes.METHOD_CALL)) {
+
+				return null;
+			}
+
+			if ((detailAST.getType() == TokenTypes.DOT) &&
+				(childAST.getType() != TokenTypes.METHOD_CALL)) {
+
+				return detailAST.getParent();
+			}
+
+			detailAST = childAST;
+		}
+	}
+
 	private boolean _isAllowedChainingMethodCall(
 		DetailAST detailAST, DetailAST methodCallAST,
 		List<String> chainedMethodNames) {
@@ -228,6 +282,14 @@ public class ChainingCheck extends BaseCheck {
 					return true;
 				}
 			}
+		}
+
+		DetailAST outerMethodCallAST = _getOuterMethodCallAST(methodCallAST);
+
+		if (outerMethodCallAST != null) {
+			return _isAllowedChainingMethodCall(
+				detailAST, outerMethodCallAST,
+				_getChainedMethodNames(outerMethodCallAST));
 		}
 
 		return false;

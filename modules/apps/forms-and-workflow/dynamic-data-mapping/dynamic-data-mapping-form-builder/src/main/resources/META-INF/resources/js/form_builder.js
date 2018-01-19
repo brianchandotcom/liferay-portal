@@ -89,16 +89,16 @@ AUI.add(
 						valueFn: '_valueFieldTypesPanel'
 					},
 
+					formInstanceId: {
+						value: 0
+					},
+
 					layouts: {
 						valueFn: '_valueLayouts'
 					},
 
 					pageManager: {
 						value: {}
-					},
-
-					formInstanceId: {
-						value: 0
 					},
 
 					showPagination: {

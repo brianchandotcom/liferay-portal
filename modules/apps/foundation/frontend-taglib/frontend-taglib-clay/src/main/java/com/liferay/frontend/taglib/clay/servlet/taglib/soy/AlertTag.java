@@ -15,11 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
 
 /**
  * @author Carlos Lancha
@@ -32,22 +27,6 @@ public class AlertTag extends BaseClayTag {
 
 	public AlertTag(String template) {
 		super("alert", template, true);
-	}
-
-	@Override
-	public int doStartTag() {
-		Map<String, Object> context = getContext();
-
-		if (Validator.isNull(context.get("spritemap"))) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
-		}
-
-		return super.doStartTag();
 	}
 
 	public void setAutoclose(Boolean autoClose) {
@@ -64,10 +43,6 @@ public class AlertTag extends BaseClayTag {
 
 	public void setMessage(String message) {
 		putValue("message", message);
-	}
-
-	public void setSpritemap(String spritemap) {
-		putValue("spritemap", spritemap);
 	}
 
 	public void setStyle(String style) {

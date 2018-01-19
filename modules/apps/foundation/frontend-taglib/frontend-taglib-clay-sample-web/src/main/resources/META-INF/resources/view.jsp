@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <liferay-ui:tabs
-	names="Alerts,Badges,Buttons,Dropdowns,Form Elements,Icons,Labels,Links,Navigation Bars,Progress Bars,Stickers"
+	names="Alerts,Badges,Buttons,Cards,Dropdowns,Form Elements,Icons,Labels,Links,Navigation Bars,Progress Bars,Stickers"
 	refresh="<%= false %>"
 	type="tabs nav-tabs-default"
 >
 
 	<%
-	String[] sections = {"alerts", "badges", "buttons", "dropdowns", "formelements", "icons", "labels", "links", "navigationbars", "progressbars", "stickers"};
+	String[] sections = {"alerts", "badges", "buttons", "cards", "dropdowns", "formelements", "icons", "labels", "links", "navigationbars", "progressbars", "stickers"};
 
 	for (int i = 0; i < sections.length; i++) {
 		String partial ="/partials/" + sections[i] + ".jsp";

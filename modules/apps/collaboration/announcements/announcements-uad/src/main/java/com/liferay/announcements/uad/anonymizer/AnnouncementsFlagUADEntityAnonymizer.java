@@ -57,17 +57,8 @@ public class AnnouncementsFlagUADEntityAnonymizer
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<AnnouncementsFlag>() {
-
-				@Override
-				public void performAction(AnnouncementsFlag announcementsFlag)
-					throws PortalException {
-
-					_autoAnonymize(announcementsFlag);
-				}
-
-			});
+			(AnnouncementsFlag announcementsFlag) -> _autoAnonymize(
+				announcementsFlag));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -85,18 +76,8 @@ public class AnnouncementsFlagUADEntityAnonymizer
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<AnnouncementsFlag>() {
-
-				@Override
-				public void performAction(AnnouncementsFlag announcementsFlag)
-					throws PortalException {
-
-					_announcementsFlagLocalService.deleteFlag(
-						announcementsFlag);
-				}
-
-			});
+			(AnnouncementsFlag announcementsFlag) ->
+				_announcementsFlagLocalService.deleteFlag(announcementsFlag));
 
 		actionableDynamicQuery.performActions();
 	}

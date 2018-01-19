@@ -57,17 +57,8 @@ public class AnnouncementsEntryUADEntityAnonymizer
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<AnnouncementsEntry>() {
-
-				@Override
-				public void performAction(AnnouncementsEntry announcementsEntry)
-					throws PortalException {
-
-					_autoAnonymize(announcementsEntry);
-				}
-
-			});
+			(AnnouncementsEntry announcementsEntry) -> _autoAnonymize(
+				announcementsEntry));
 
 		actionableDynamicQuery.performActions();
 	}
@@ -86,18 +77,9 @@ public class AnnouncementsEntryUADEntityAnonymizer
 			_getActionableDynamicQuery(userId);
 
 		actionableDynamicQuery.setPerformActionMethod(
-			new ActionableDynamicQuery.
-				PerformActionMethod<AnnouncementsEntry>() {
-
-				@Override
-				public void performAction(AnnouncementsEntry announcementsEntry)
-					throws PortalException {
-
-					_announcementsEntryLocalService.deleteEntry(
-						announcementsEntry);
-				}
-
-			});
+			(AnnouncementsEntry announcementsEntry) ->
+				_announcementsEntryLocalService.deleteEntry(
+					announcementsEntry));
 
 		actionableDynamicQuery.performActions();
 	}

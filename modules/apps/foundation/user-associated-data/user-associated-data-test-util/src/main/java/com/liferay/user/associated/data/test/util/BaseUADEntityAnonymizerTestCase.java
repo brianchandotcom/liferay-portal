@@ -14,6 +14,7 @@
 
 package com.liferay.user.associated.data.test.util;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -21,14 +22,18 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.registry.UADRegistryUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Noah Sherrill
@@ -39,11 +44,30 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		_uadEntityAggregator = UADRegistryUtil.getUADEntityAggregator(
-			getUADRegistryKey());
+		Bundle bundle = FrameworkUtil.getBundle(
+			BaseUADEntityAnonymizerTestCase.class);
 
-		_uadEntityAnonymizer = UADRegistryUtil.getUADEntityAnonymizer(
-			getUADRegistryKey());
+		_uadEntityAggregatorServiceTracker = ServiceTrackerFactory.open(
+			bundle.getBundleContext(),
+			"(&(objectClass=" + UADEntityAggregator.class.getName() +
+				")(model.class.name=" + getUADRegistryKey() + "))");
+
+		_uadEntityAggregator =
+			_uadEntityAggregatorServiceTracker.waitForService(5000);
+
+		_uadEntityAnonymizerServiceTracker = ServiceTrackerFactory.open(
+			bundle.getBundleContext(),
+			"(&(objectClass=" + UADEntityAnonymizer.class.getName() +
+				")(model.class.name=" + getUADRegistryKey() + "))");
+
+		_uadEntityAnonymizer =
+			_uadEntityAnonymizerServiceTracker.waitForService(5000);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_uadEntityAggregatorServiceTracker.close();
+		_uadEntityAnonymizerServiceTracker.close();
 	}
 
 	@Test
@@ -175,7 +199,11 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	protected abstract boolean isDataObjectDeleted(long dataObjectId);
 
 	private UADEntityAggregator _uadEntityAggregator;
+	private ServiceTracker<UADEntityAggregator, UADEntityAggregator>
+		_uadEntityAggregatorServiceTracker;
 	private UADEntityAnonymizer _uadEntityAnonymizer;
+	private ServiceTracker<UADEntityAnonymizer, UADEntityAnonymizer>
+		_uadEntityAnonymizerServiceTracker;
 
 	@DeleteAfterTestRun
 	private User _user;

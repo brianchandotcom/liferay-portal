@@ -14,20 +14,25 @@
 
 package com.liferay.user.associated.data.test.util;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
-import com.liferay.user.associated.data.registry.UADRegistryUtil;
 
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Noah Sherrill
@@ -38,8 +43,21 @@ public abstract class BaseUADEntityAggregatorTestCase {
 	public void setUp() throws Exception {
 		_user = UserTestUtil.addUser();
 
-		_uadEntityAggregator = UADRegistryUtil.getUADEntityAggregator(
-			getUADRegistryKey());
+		Bundle bundle = FrameworkUtil.getBundle(
+			BaseUADEntityAggregatorTestCase.class);
+
+		_uadEntityAggregatorServiceTracker = ServiceTrackerFactory.open(
+			bundle.getBundleContext(),
+			"(&(objectClass=" + UADEntityAggregator.class.getName() +
+				")(model.class.name=" + getUADRegistryKey() + "))");
+
+		_uadEntityAggregator =
+			_uadEntityAggregatorServiceTracker.waitForService(5000);
+	}
+
+	@After
+	public void tearDown() throws Exception {
+		_uadEntityAggregatorServiceTracker.close();
 	}
 
 	@Test
@@ -114,6 +132,8 @@ public abstract class BaseUADEntityAggregatorTestCase {
 	protected abstract String getUADRegistryKey();
 
 	private UADEntityAggregator _uadEntityAggregator;
+	private ServiceTracker<UADEntityAggregator, UADEntityAggregator>
+		_uadEntityAggregatorServiceTracker;
 
 	@DeleteAfterTestRun
 	private User _user;

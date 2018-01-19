@@ -38,14 +38,8 @@ public class UADDynamicQueryHelper {
 			actionableDynamicQuerySupplier.get();
 
 		actionableDynamicQuery.setAddCriteriaMethod(
-			new ActionableDynamicQuery.AddCriteriaMethod() {
-
-				@Override
-				public void addCriteria(DynamicQuery dynamicQuery) {
-					dynamicQuery.add(_getCriterion(userIdFieldNames, userId));
-				}
-
-			});
+			dynamicQuery -> dynamicQuery.add(
+				_getCriterion(userIdFieldNames, userId)));
 
 		return actionableDynamicQuery;
 	}

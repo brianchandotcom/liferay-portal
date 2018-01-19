@@ -108,7 +108,7 @@ public abstract class BaseDDMFormExporter implements DDMFormExporter {
 			OrderByComparator<DDMFormInstanceRecord> orderByComparator)
 		throws Exception;
 
-	protected void filterTransientFields(
+	protected void removeTransientFields(
 		Map<String, DDMFormField> ddmFormFields) {
 
 		for (Map.Entry<String, DDMFormField> entry : ddmFormFields.entrySet()) {

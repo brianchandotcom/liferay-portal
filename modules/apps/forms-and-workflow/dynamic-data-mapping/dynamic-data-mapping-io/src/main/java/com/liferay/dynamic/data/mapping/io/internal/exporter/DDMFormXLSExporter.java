@@ -188,7 +188,7 @@ public class DDMFormXLSExporter extends BaseDDMFormExporter {
 		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
 			formInstanceId);
 
-		filterTransientFields(ddmFormFields);
+		removeTransientFields(ddmFormFields);
 
 		DateTimeFormatter dateTimeFormatter = getDateTimeFormatter();
 

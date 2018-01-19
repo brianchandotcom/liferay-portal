@@ -51,12 +51,14 @@ public class EditPrimarySiteNavigationMenuMVCActionCommand
 			actionRequest, "siteNavigationMenuId");
 
 		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
+		boolean secondary = ParamUtil.getBoolean(actionRequest, "secondary");
+		boolean social = ParamUtil.getBoolean(actionRequest, "social");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
-			siteNavigationMenuId, primary, serviceContext);
+			siteNavigationMenuId, primary, secondary, social, serviceContext);
 	}
 
 	@Reference

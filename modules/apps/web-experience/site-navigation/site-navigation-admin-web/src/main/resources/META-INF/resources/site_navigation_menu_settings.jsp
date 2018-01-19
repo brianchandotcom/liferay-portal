@@ -22,25 +22,81 @@ String redirect = ParamUtil.getString(request, "redirect");
 SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
 %>
 
-<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
-	<div class="alert alert-warning">
-		<liferay-ui:message key="the-primary-menu-for-this-site-is-already-defined" />
-	</div>
-</c:if>
-
 <portlet:actionURL name="/navigation_menu/edit_primary_site_navigation_menu" var="editPrimarySiteNavigationMenuURL" />
 
 <aui:form action="<%= editPrimarySiteNavigationMenuURL %>">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>" />
 
-	<aui:fieldset label="function">
-		<aui:input checked="<%= siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>" label="primary" name="primary" type="radio" value="<%= true %>" />
+	<aui:fieldset helpMessage="function-help" label="function">
 
-		<aui:input checked="<%= !siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>" label="secondary" name="primary" type="radio" value="<%= false %>" />
+		<%
+		String taglibOnClickPrimary = renderResponse.getNamespace() + "toggleCheckboxes('primary', 'secondary', 'social');";
+		String taglibOnClickSecondary = renderResponse.getNamespace() + "toggleCheckboxes('secondary', 'primary', 'social');";
+		String taglibOnClickSocial = renderResponse.getNamespace() + "toggleCheckboxes('social', 'primary', 'secondary');";
+		%>
+
+		<aui:input
+			checked="<%= siteNavigationMenu.isPrimary() %>"
+			disabled="<%= siteNavigationMenu.isSecondary() || siteNavigationMenu.isSocial() %>"
+			label="main-menu"
+			name="primary"
+			onClick="<%= taglibOnClickPrimary %>"
+			type="checkbox"
+			wrapperCssClass="mb-1"
+		/>
+
+		<%
+		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
+		%>
+
+		<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
+			<div class="text-muted" id="<portlet:namespace/>currentPrimaryMenu">
+				<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="current-main-menu-x" />
+			</div>
+		</c:if>
+
+		<aui:input
+			checked="<%= siteNavigationMenu.isSecondary() %>"
+			disabled="<%= siteNavigationMenu.isPrimary() || siteNavigationMenu.isSocial() %>"
+			label="subsidiary-menu"
+			name="secondary"
+			onClick="<%= taglibOnClickSecondary %>"
+			type="checkbox"
+			wrapperCssClass="mt-4"
+		/>
+
+		<aui:input
+			checked="<%= siteNavigationMenu.isSocial() %>"
+			disabled="<%= siteNavigationMenu.isPrimary() || siteNavigationMenu.isSecondary() %>"
+			label="social-menu"
+			name="social"
+			onClick="<%= taglibOnClickSocial %>"
+			type="checkbox"
+		/>
 	</aui:fieldset>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-block" type="submit" value="save" />
 	</aui:button-row>
 </aui:form>
+
+<aui:script use="aui-base">
+	<portlet:namespace/>toggleCheckboxes = function(current, switchBox1, switchBox2) {
+		var checked = A.one('#<portlet:namespace/>' + current).get('checked');
+		var switchBox1 = A.one('#<portlet:namespace/>' + switchBox1)
+		var switchBox2 = A.one('#<portlet:namespace/>' + switchBox2)
+
+		Liferay.Util.toggleDisabled(switchBox1, checked);
+		Liferay.Util.toggleDisabled(switchBox2, checked);
+
+		var primaryMenu = A.one('#<portlet:namespace/>currentPrimaryMenu');
+
+		if ((current === 'primary') && checked && primaryMenu) {
+			primaryMenu.addClass('hide');
+		}
+		else if ((current === 'primary') && !checked && primaryMenu) {
+			primaryMenu.removeClass('hide');
+		}
+	};
+</aui:script>

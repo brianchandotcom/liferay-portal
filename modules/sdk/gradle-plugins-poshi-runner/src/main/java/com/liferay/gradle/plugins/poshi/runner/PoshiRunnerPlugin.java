@@ -331,7 +331,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_populateSystemProperties(
 			javaExec.getSystemProperties(), poshiProperties,
-			poshiRunnerExtension);
+			javaExec.getProject(), poshiRunnerExtension);
 	}
 
 	private void _configureTaskRunPoshi(
@@ -341,7 +341,8 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		_configureTaskRunPoshiBinResultsDir(test);
 		_configureTaskRunPoshiReports(test);
 		_populateSystemProperties(
-			test.getSystemProperties(), poshiProperties, poshiRunnerExtension);
+			test.getSystemProperties(), poshiProperties, test.getProject(),
+			poshiRunnerExtension);
 	}
 
 	private void _configureTaskRunPoshiBinResultsDir(Test test) {
@@ -378,7 +379,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_populateSystemProperties(
 			javaExec.getSystemProperties(), poshiProperties,
-			poshiRunnerExtension);
+			javaExec.getProject(), poshiRunnerExtension);
 	}
 
 	private void _configureTaskWritePoshiProperties(
@@ -387,7 +388,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		_populateSystemProperties(
 			javaExec.getSystemProperties(), poshiProperties,
-			poshiRunnerExtension);
+			javaExec.getProject(), poshiRunnerExtension);
 	}
 
 	private File _getExpandedPoshiRunnerDir(Project project) {
@@ -406,7 +407,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 	private void _populateSystemProperties(
 		Map<String, Object> systemProperties, Properties poshiProperties,
-		PoshiRunnerExtension poshiRunnerExtension) {
+		Project project, PoshiRunnerExtension poshiRunnerExtension) {
 
 		if (poshiProperties != null) {
 			Enumeration<String> enumeration =
@@ -427,8 +428,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 
 		if ((baseDir != null) && baseDir.exists()) {
 			systemProperties.put(
-				"test.base.dir.name",
-				poshiRunnerExtension.project.relativePath(baseDir));
+				"test.base.dir.name", project.relativePath(baseDir));
 		}
 
 		List<String> testNames = poshiRunnerExtension.getTestNames();
@@ -439,7 +439,7 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		}
 
 		String testName = GradleUtil.getProperty(
-			poshiRunnerExtension.project, "poshiTestName", (String)null);
+			project, "poshiTestName", (String)null);
 
 		if (Validator.isNotNull(testName)) {
 			systemProperties.put("test.name", testName);

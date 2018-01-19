@@ -38,7 +38,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/blogs/blogs-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/bookmarks/bookmarks-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/message-boards/message-boards-web" />
-			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/microblogs/microblogs-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/events-display/events-display-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/calendar/calendar-service" />

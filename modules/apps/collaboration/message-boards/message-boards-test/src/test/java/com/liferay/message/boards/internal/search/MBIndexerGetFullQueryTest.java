@@ -12,12 +12,24 @@
  * details.
  */
 
-package com.liferay.portal.kernel.search;
+package com.liferay.message.boards.internal.search;
 
 import com.liferay.document.library.kernel.model.DLFileEntry;
+import com.liferay.message.boards.kernel.model.MBMessage;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.BaseSearchEngine;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistry;
+import com.liferay.portal.kernel.search.RelatedEntryIndexer;
+import com.liferay.portal.kernel.search.RelatedEntryIndexerRegistry;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchEngineHelper;
+import com.liferay.portal.kernel.search.SearchEngineHelperUtil;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.Props;
 import com.liferay.portal.kernel.util.PropsUtil;
@@ -59,7 +71,7 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareOnlyThisForTest(SearchEngineHelperUtil.class)
 @RunWith(PowerMockRunner.class)
-public class BaseIndexerGetFullQueryTest extends PowerMockito {
+public class MBIndexerGetFullQueryTest extends PowerMockito {
 
 	@Before
 	public void setUp() throws Exception {
@@ -73,30 +85,38 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 	}
 
 	@Test
-	public void testGetFullQueryWithAttachments() throws Exception {
+	public void testGetFullQueryWithAttachmentsAndDiscussions()
+		throws Exception {
+
 		_searchContext.setIncludeAttachments(true);
+		_searchContext.setIncludeDiscussions(true);
 
 		_indexer.getFullQuery(_searchContext);
 
-		assertEntryClassNames(_CLASS_NAME, DLFileEntry.class.getName());
+		assertEntryClassNames(
+			_CLASS_NAME, DLFileEntry.class.getName(),
+			MBMessage.class.getName());
 
-		Assert.assertNull(_searchContext.getAttribute("discussion"));
+		Assert.assertEquals(
+			Boolean.TRUE, _searchContext.getAttribute("discussion"));
 		Assert.assertArrayEquals(
 			new String[] {_CLASS_NAME},
 			(String[])_searchContext.getAttribute("relatedEntryClassNames"));
 	}
 
 	@Test
-	public void testGetFullQueryWithoutAttachmentsOrDiscussions()
-		throws Exception {
+	public void testGetFullQueryWithDiscussions() throws Exception {
+		_searchContext.setIncludeDiscussions(true);
 
 		_indexer.getFullQuery(_searchContext);
 
-		assertEntryClassNames(_CLASS_NAME);
+		assertEntryClassNames(_CLASS_NAME, MBMessage.class.getName());
 
-		Assert.assertNull(_searchContext.getAttribute("discussion"));
-		Assert.assertNull(
-			_searchContext.getAttribute("relatedEntryClassNames"));
+		Assert.assertEquals(
+			Boolean.TRUE, _searchContext.getAttribute("discussion"));
+		Assert.assertArrayEquals(
+			new String[] {_CLASS_NAME},
+			(String[])_searchContext.getAttribute("relatedEntryClassNames"));
 	}
 
 	protected void assertEntryClassNames(String... expectedEntryClassNames) {
@@ -157,6 +177,18 @@ public class BaseIndexerGetFullQueryTest extends PowerMockito {
 		registry.registerService(
 			RelatedEntryIndexer.class, dlFileEntryIndexer,
 			dlFileEntryProperties);
+
+		MBMessageIndexer mbMessageIndexer = new MBMessageIndexer();
+
+		registry.registerService(Indexer.class, mbMessageIndexer);
+
+		Map<String, Object> mbMessageProperties = new HashMap<>();
+
+		mbMessageProperties.put(
+			"related.entry.indexer.class.name", MBMessage.class.getName());
+
+		registry.registerService(
+			RelatedEntryIndexer.class, mbMessageIndexer, mbMessageProperties);
 	}
 
 	protected void setUpSearchEngineHelperUtil() {

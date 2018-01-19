@@ -19,6 +19,7 @@ import com.liferay.asset.kernel.model.AssetTag;
 import com.liferay.asset.kernel.service.AssetTagLocalServiceUtil;
 import com.liferay.message.boards.kernel.model.MBCategoryConstants;
 import com.liferay.message.boards.kernel.model.MBMessage;
+import com.liferay.message.boards.test.util.MBTestUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.GroupConstants;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
-import com.liferay.portlet.messageboards.util.test.MBTestUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -191,8 +191,7 @@ public class AssetTagFinderTest {
 		serviceContext.setAssetTagNames(new String[] {assetTagName});
 
 		MBTestUtil.addMessageWithWorkflow(
-			TestPropsValues.getUserId(), groupId,
-			MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+			groupId, MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 			RandomTestUtil.randomString(), RandomTestUtil.randomString(), true,
 			serviceContext);
 	}

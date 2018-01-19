@@ -12,28 +12,24 @@
  * details.
  */
 
-package com.liferay.portlet.messageboards.model.impl;
+package com.liferay.message.boards.web.internal.util;
 
 import com.liferay.message.boards.kernel.model.MBMessage;
-import com.liferay.message.boards.kernel.model.MBMessageIterator;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Sergio González
- * @deprecated As of 7.0.0, replaced by {@link
- *             com.liferay.message.boards.web.internal.util.MBMessageIterator}
  */
-@Deprecated
-public class MBMessageIteratorImpl implements MBMessageIterator {
+public class MBMessageIterator implements Iterator<MBMessage> {
 
-	public MBMessageIteratorImpl(List<MBMessage> messages, int from, int to) {
+	public MBMessageIterator(List<MBMessage> messages, int from, int to) {
 		_messages = messages;
 		_from = from;
 		_to = to;
 	}
 
-	@Override
 	public int getIndexPage() {
 		return _from;
 	}

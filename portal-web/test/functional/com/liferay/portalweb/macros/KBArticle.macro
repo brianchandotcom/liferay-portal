@@ -1083,9 +1083,9 @@
 	</command>
 
 	<command name="searchPGViaKBSearch">
-		<execute function="Type" locator1="KnowledgeBaseSearch#SEARCH_FIELD" value1="${searchTerm}" />
-
-		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 	</command>
 
 	<command name="selectAllCP">

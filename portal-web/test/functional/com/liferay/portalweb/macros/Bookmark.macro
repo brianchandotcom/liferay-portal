@@ -476,9 +476,9 @@
 	</command>
 
 	<command name="searchNullCP">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${nullBookmarkName}" />
-
-		<execute function="Click" locator1="NavBar#SEARCH_BUTTON" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${nullBookmarkName}" />
+		</execute>
 
 		<var name="key_bookmarkName" value="${nullBookmarkName}" />
 

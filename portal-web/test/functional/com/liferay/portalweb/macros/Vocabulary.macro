@@ -242,9 +242,9 @@
 	</command>
 
 	<command name="searchCP">
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${vocabularySearchEntry}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${vocabularySearchEntry}" />
+		</execute>
 	</command>
 
 	<command name="tearDownCP">

@@ -151,9 +151,9 @@
 	<command name="editSubstructureDefaultValuesCP">
 		<var name="key_ddlDataDefinitionName" value="${substructureName}" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${substructureName}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${substructureName}" />
+		</execute>
 
 		<var name="key_rowEntry" value="${substructureName}" />
 
@@ -235,9 +235,9 @@
 
 		<execute macro="WebContentNavigator#gotoManageStructures" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="2" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="2" />
+		</execute>
 
 		<while>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />
@@ -252,9 +252,9 @@
 			</then>
 		</while>
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Structure" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Structure" />
+		</execute>
 
 		<while>
 			<condition function="IsElementNotPresent" locator1="Message#EMPTY_INFO" />

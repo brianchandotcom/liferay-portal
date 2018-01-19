@@ -891,9 +891,9 @@
 	</command>
 
 	<command name="searchPG">
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="${threadKeyword}" />
-
-		<execute function="AssertClick" locator1="NavBar#BASIC_SEARCH_BUTTON" value1="Search" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${threadKeyword}" />
+		</execute>
 
 		<execute function="AssertTextEquals" locator1="MessageBoardsSearch#SEARCH_RESULTS_ENTRY_TITLE" value1="${threadSubject}">
 			<var name="key_threadSubject" value="${threadSubject}" />

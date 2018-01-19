@@ -1157,9 +1157,9 @@
 	<command name="searchPG">
 		<var name="key_wikiPageTitle" value="${wikiPageTitle}" />
 
-		<execute function="Type" locator1="TextInput#SEARCH" value1="${searchTerm}" />
-
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${searchTerm}" />
+		</execute>
 	</command>
 
 	<command name="selectNewNode">

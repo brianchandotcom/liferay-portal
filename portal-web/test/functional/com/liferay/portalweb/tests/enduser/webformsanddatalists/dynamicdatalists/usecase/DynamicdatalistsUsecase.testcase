@@ -1456,8 +1456,10 @@
 
 		<execute macro="DDLDataDefinition#save" />
 
-		<execute function="Type" locator1="NavBar#BASIC_SEARCH_FIELD" value1="Data Definition Title" />
-		<execute function="Click" locator1="Icon#BASIC_SEARCH" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Data Definition Title" />
+		</execute>
+
 		<execute function="Click#waitForMenuToggleJSClick" locator1="DDMSelectStructure#DDM_STRUCTURE_ELLIPSIS_1" />
 		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Manage Templates">
 			<var name="key_menuItem" value="Manage Templates" />

@@ -109,7 +109,7 @@ public class RestClient {
 			return new URI(_endpoint);
 		}
 		catch (URISyntaxException urise) {
-			_log.error("{} could not be parsed as a URI reference", _endpoint);
+			_log.error("Unable to parse {} as a URI reference", _endpoint);
 		}
 
 		return null;

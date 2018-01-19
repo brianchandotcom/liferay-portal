@@ -32,10 +32,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Configuration icon to allow the deletion of a workflow definition.
+ * Defines the icon triggering the deletion of a workflow definition.
  *
  * @author Lino Alves
- * @review
  */
 @Component(
 	immediate = true,
@@ -74,10 +73,11 @@ public class DeleteDefinitionPortletConfigurationIcon
 	}
 
 	/**
-	 * Creates and returns an action URL passing the workflow definition name
-	 * and version as parameters.
-	 *
-	 * @review
+	 * Creates and returns an action URL, setting the workflow definition name
+	 * and version as URL parameters.
+     *
+     * @param portletRequest the portlet request from which to get the workflow definition name and version
+     * @param portletResponse the portlet response
 	 */
 	@Override
 	public String getURL(

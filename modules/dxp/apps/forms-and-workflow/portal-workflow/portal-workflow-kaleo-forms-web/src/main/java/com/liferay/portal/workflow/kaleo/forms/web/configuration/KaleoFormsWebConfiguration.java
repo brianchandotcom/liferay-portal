@@ -36,8 +36,8 @@ public interface KaleoFormsWebConfiguration {
 	public boolean changeableDefaultLanguage();
 
 	@Meta.AD(
-		deflt = "list", optionLabels = {"List"}, optionValues = {"list"},
-		required = false
+		deflt = "list", name = "default-display-view", optionLabels = {"List"},
+		optionValues = {"list"}, required = false
 	)
 	public String defaultDisplayView();
 

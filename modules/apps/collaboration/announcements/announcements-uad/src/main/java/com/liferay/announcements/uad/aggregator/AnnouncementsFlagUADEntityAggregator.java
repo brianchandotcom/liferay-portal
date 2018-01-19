@@ -43,6 +43,11 @@ public class AnnouncementsFlagUADEntityAggregator
 	extends BaseUADEntityAggregator {
 
 	@Override
+	public String getBundleId() {
+		return AnnouncementsUADConstants.BUNDLE_ID;
+	}
+
+	@Override
 	public List<UADEntity> getUADEntities(long userId) {
 		List<AnnouncementsFlag> announcementsFlags =
 			_announcementsFlagLocalService.dynamicQuery(

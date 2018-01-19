@@ -312,9 +312,19 @@ public class SiteNavigationMenuDisplayContext {
 			return _siteNavigationMenu;
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		_siteNavigationMenu =
 			SiteNavigationMenuLocalServiceUtil.fetchSiteNavigationMenu(
 				getSiteNavigationMenuId());
+
+		if (_siteNavigationMenu == null) {
+			_siteNavigationMenu =
+				SiteNavigationMenuLocalServiceUtil.
+					fetchPrimarySiteNavigationMenu(
+						themeDisplay.getScopeGroupId());
+		}
 
 		return _siteNavigationMenu;
 	}

@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Eudaldo Alonso
  */
 @Component(
-	configurationPid = "com.liferay.rss.web.configuration.RSSWebCacheConfiguration",
+	configurationPid = "com.liferay.rss.web.internal.configuration.RSSWebCacheConfiguration",
 	configurationPolicy = ConfigurationPolicy.OPTIONAL, immediate = true,
 	property = {
 		"com.liferay.portlet.add-default-resource=true",

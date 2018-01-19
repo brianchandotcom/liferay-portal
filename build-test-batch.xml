@@ -1457,6 +1457,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 	<macrodef name="run-modules-integration-test">
 		<attribute name="database.type" />
+		<attribute default="" name="refreshdependencies" />
 		<attribute default="" name="subrepository.name" />
 
 		<sequential>
@@ -1478,7 +1479,7 @@ app.server.type=@{app.server.type}]]></echo>
 
 							<get-test-batch-app-server-start-executable-arg-line />
 
-							<gradle-execute dir="modules" task="testIntegration">
+							<gradle-execute dir="modules" refreshdependencies="@{refreshdependencies}" task="testIntegration">
 								<arg value="-Dapp.server.start.executable.arg.line=${test.batch.app.server.start.executable.arg.line}" />
 								<arg value="-Ddatabase.type=@{database.type}" />
 								<arg value="-Dbuild.exclude.ant.plugin=true" />
@@ -3150,7 +3151,7 @@ information. Make sure to commit in all build services results.
 	<target name="subrepository-integration-mysql56-jdk8">
 		<fail message="Please set the property ${subrepository.name}." unless="subrepository.name" />
 
-		<run-modules-integration-test database.type="mysql" subrepository.name="${subrepository.name}" />
+		<run-modules-integration-test database.type="mysql" refreshdependencies="true" subrepository.name="${subrepository.name}" />
 	</target>
 
 	<target name="subrepository-pmd-jdk8">

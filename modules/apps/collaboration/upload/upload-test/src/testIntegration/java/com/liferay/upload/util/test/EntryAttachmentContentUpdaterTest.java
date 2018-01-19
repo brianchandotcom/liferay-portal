@@ -103,7 +103,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String originalContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
-				tempFileEntryImgTag + "<span></a>";
+				tempFileEntryImgTag + "</a>";
 
 		FileEntry newFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(),
@@ -128,7 +128,7 @@ public class EntryAttachmentContentUpdaterTest {
 		String expectedContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
 				"<img alt=\"A big image\" class=\"image-big\" src=\"" +
-					fileEntryURL + "\" /><span></a>";
+					fileEntryURL + "\" /></a>";
 
 		Assert.assertEquals(expectedContent, content);
 	}
@@ -195,7 +195,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String originalContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
-				tempFileEntryImgTag + "<span></a>";
+				tempFileEntryImgTag + "</a>";
 
 		_attachmentContentUpdater.updateContent(
 			originalContent, ContentTypes.TEXT_HTML, tempFileEntry -> null);
@@ -204,7 +204,7 @@ public class EntryAttachmentContentUpdaterTest {
 	@Test
 	public void testUpdateContentWithoutImgTag() throws Exception {
 		String originalContent =
-			"<p>Sample Text</p><a href=\"www.liferay.com\"><span></a>";
+			"<p>Sample Text</p><a href=\"www.liferay.com\"></a>";
 
 		String content = _attachmentContentUpdater.updateContent(
 			originalContent, ContentTypes.TEXT_HTML, tempFileEntry -> null);
@@ -226,7 +226,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String originalContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
-				tempFileEntryImgTag + "<span></a>";
+				tempFileEntryImgTag + "</a>";
 
 		FileEntry newFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(),
@@ -250,7 +250,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String expectedContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\"><img src=\"" +
-				fileEntryURL + "\" /><span></a>";
+				fileEntryURL + "\" /></a>";
 
 		Assert.assertEquals(expectedContent, content);
 	}
@@ -260,7 +260,7 @@ public class EntryAttachmentContentUpdaterTest {
 		StringBundler sb = new StringBundler(2);
 
 		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
-		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");
+		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span></a>");
 
 		String content = _attachmentContentUpdater.updateContent(
 			sb.toString(), ContentTypes.TEXT_HTML, tempFileEntry -> null);

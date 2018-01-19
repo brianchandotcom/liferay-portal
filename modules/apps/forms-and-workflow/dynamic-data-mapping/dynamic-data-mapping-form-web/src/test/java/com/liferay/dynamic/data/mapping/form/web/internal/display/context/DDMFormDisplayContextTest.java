@@ -63,9 +63,9 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	@Before
 	public void setUp() throws PortalException {
 		setUpDDMFormDisplayContext();
-		setUpPortalUtil();
 		setUpLanguageUtil();
 		setUpLocaleUtil();
+		setUpPortalUtil();
 	}
 
 	@Test

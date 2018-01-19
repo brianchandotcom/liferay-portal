@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.site.navigation.exception.PrimarySiteNavigationMenuException;
+import com.liferay.site.navigation.exception.SiteNavigationMenuFunctionException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -164,7 +164,53 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
-		validatePrimarySiteNavigationMenu(siteNavigationMenu);
+		validateSiteNavigationMenuFunction(primary, secondary, social);
+
+		if (primary) {
+			SiteNavigationMenu primarySiteNavigationMenu =
+				siteNavigationMenuPersistence.fetchByG_P(
+					siteNavigationMenu.getGroupId(), true);
+
+			if ((primarySiteNavigationMenu != null) &&
+				(primarySiteNavigationMenu.getSiteNavigationMenuId() !=
+					siteNavigationMenuId)) {
+
+				primarySiteNavigationMenu.setPrimary(false);
+
+				siteNavigationMenuPersistence.update(primarySiteNavigationMenu);
+			}
+		}
+
+		if (secondary) {
+			SiteNavigationMenu secondarySiteNavigationMenu =
+				siteNavigationMenuPersistence.fetchByG_Secondary(
+					siteNavigationMenu.getGroupId(), true);
+
+			if ((secondarySiteNavigationMenu != null) &&
+				(secondarySiteNavigationMenu.getSiteNavigationMenuId() !=
+					siteNavigationMenuId)) {
+
+				secondarySiteNavigationMenu.setSecondary(false);
+
+				siteNavigationMenuPersistence.update(
+					secondarySiteNavigationMenu);
+			}
+		}
+
+		if (social) {
+			SiteNavigationMenu socialSiteNavigationMenu =
+				siteNavigationMenuPersistence.fetchByG_Social(
+					siteNavigationMenu.getGroupId(), true);
+
+			if ((socialSiteNavigationMenu != null) &&
+				(socialSiteNavigationMenu.getSiteNavigationMenuId() !=
+					siteNavigationMenuId)) {
+
+				socialSiteNavigationMenu.setSocial(false);
+
+				siteNavigationMenuPersistence.update(socialSiteNavigationMenu);
+			}
+		}
 
 		User user = userLocalService.getUser(userId);
 
@@ -207,21 +253,18 @@ public class SiteNavigationMenuLocalServiceImpl
 		}
 	}
 
-	protected void validatePrimarySiteNavigationMenu(
-			SiteNavigationMenu siteNavigationMenu)
-		throws PrimarySiteNavigationMenuException {
+	protected void validateSiteNavigationMenuFunction(
+			boolean primary, boolean secondary, boolean social)
+		throws SiteNavigationMenuFunctionException {
 
-		SiteNavigationMenu primarySiteNavigationMenu =
-			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
+		int function = primary ? 1 : 0;
 
-		if (primarySiteNavigationMenu == null) {
-			return;
-		}
+		function += secondary ? 1 : 0;
+		function += social ? 1 : 0;
 
-		if (primarySiteNavigationMenu.getSiteNavigationMenuId() !=
-				siteNavigationMenu.getSiteNavigationMenuId()) {
-
-			throw new PrimarySiteNavigationMenuException();
+		if (function > 1) {
+			throw new SiteNavigationMenuFunctionException(
+				"navigation-menu-should-have-only-one-function");
 		}
 	}
 

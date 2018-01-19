@@ -41,6 +41,14 @@
 			<finder-column name="groupId" />
 			<finder-column name="primary" />
 		</finder>
+		<finder name="G_Secondary" return-type="SiteNavigationMenu">
+			<finder-column name="groupId" />
+			<finder-column name="secondary" />
+		</finder>
+		<finder name="G_Social" return-type="SiteNavigationMenu">
+			<finder-column name="groupId" />
+			<finder-column name="social" />
+		</finder>
 
 		<!-- References -->
 
@@ -94,7 +102,7 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
-		<exception>PrimarySiteNavigationMenu</exception>
+		<exception>SiteNavigationMenuFunction</exception>
 		<exception>SiteNavigationMenuName</exception>
 	</exceptions>
 </service-builder>

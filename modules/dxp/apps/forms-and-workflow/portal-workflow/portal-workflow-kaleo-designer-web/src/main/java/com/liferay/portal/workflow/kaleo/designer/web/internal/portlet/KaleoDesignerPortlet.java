@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.Http;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.comparator.RoleNameComparator;
@@ -374,7 +375,7 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 		KaleoDesignerDisplayContext kaleoDesignerDisplayContext =
 			new KaleoDesignerDisplayContext(
 				renderRequest, _kaleoDefinitionVersionLocalService,
-				_userLocalService);
+				_userLocalService, resourceBundleLoader);
 
 		renderRequest.setAttribute(
 			KaleoDesignerWebKeys.KALEO_DESIGNER_DISPLAY_CONTEXT,
@@ -407,6 +408,18 @@ public class KaleoDesignerPortlet extends MVCPortlet {
 			KaleoDesignerWebKeys.KALEO_DRAFT_DEFINITION,
 			kaleoDefinitionVersion);
 	}
+
+	@Reference(
+		target = "(bundle.symbolic.name=com.liferay.portal.workflow.kaleo.designer.web)",
+		unbind = "-"
+	)
+	protected void setResourceBundleLoader(
+		ResourceBundleLoader resourceBundleLoader) {
+
+		this.resourceBundleLoader = resourceBundleLoader;
+	}
+
+	protected ResourceBundleLoader resourceBundleLoader;
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		KaleoDesignerPortlet.class);

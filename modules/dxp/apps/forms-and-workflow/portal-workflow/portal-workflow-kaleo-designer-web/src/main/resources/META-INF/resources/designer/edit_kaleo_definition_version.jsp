@@ -596,7 +596,7 @@
 
 								<c:if test="<%= ((kaleoDefinitionVersion == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
 									var uploadLink = $('#<portlet:namespace />uploadLink');
-									
+
 									uploadLink.on(
 										'click',
 										function(event) {

@@ -21,6 +21,9 @@ package com.liferay.portal.workflow.kaleo.designer.web.internal.constants;
  */
 public class KaleoDesignerWebKeys {
 
+	public static final String CONTROL_PANEL_WORKFLOW =
+		"com_liferay_portal_workflow_web_portlet_ControlPanelWorkflowPortlet";
+
 	public static final String KALEO_DESIGNER_DISPLAY_CONTEXT =
 		"KALEO_DESIGNER_DISPLAY_CONTEXT";
 

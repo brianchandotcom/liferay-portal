@@ -134,4 +134,17 @@
 
 <liferay-ui:error exception="<%= KaleoDefinitionValidationException.UnbalancedForkAndJoinNodes.class %>" message="each-fork-node-requires-a-join-node-make-sure-all-forks-and-joins-are-properly-paired" />
 
+<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+
+	<%
+	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
+
+	Object[] messageArguments = kaleoDesignerDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks(), request);
+
+	String messageKey = kaleoDesignerDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	%>
+
+	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <liferay-ui:error exception="<%= WorkflowException.class %>" message="an-error-occurred-in-the-workflow-engine" />

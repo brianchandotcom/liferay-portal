@@ -16,6 +16,57 @@
 
 <%@ include file="/designer/init.jsp" %>
 
+<liferay-portlet:renderURL copyCurrentRenderParameters="<%= false %>" varImpl="portletURL">
+	<portlet:param name="mvcPath" value="/designer/view.jsp" />
+</liferay-portlet:renderURL>
+
+<%
+int cur = ParamUtil.getInteger(request, SearchContainer.DEFAULT_CUR_PARAM);
+int delta = ParamUtil.getInteger(request, SearchContainer.DEFAULT_DELTA_PARAM);
+
+String definitionsNavigation = ParamUtil.getString(request, "definitionsNavigation");
+
+int displayedStatus = KaleoDefinitionVersionConstants.STATUS_ALL;
+
+if (StringUtil.equals(definitionsNavigation, "published")) {
+	displayedStatus = KaleoDefinitionVersionConstants.STATUS_PUBLISHED;
+}
+else if (StringUtil.equals(definitionsNavigation, "not-published")) {
+	displayedStatus = KaleoDefinitionVersionConstants.STATUS_NOT_PUBLISHED;
+}
+
+String orderByCol = ParamUtil.getString(request, "orderByCol", "title");
+String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+
+PortletURL navigationPortletURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+if (delta > 0) {
+	navigationPortletURL.setParameter("delta", String.valueOf(delta));
+}
+
+navigationPortletURL.setParameter("orderByCol", orderByCol);
+navigationPortletURL.setParameter("orderByType", orderByType);
+
+PortletURL displayStyleURL = PortletURLUtil.clone(portletURL, liferayPortletResponse);
+
+if (cur > 0) {
+	displayStyleURL.setParameter("cur", String.valueOf(cur));
+}
+%>
+
+<liferay-ui:error exception="<%= RequiredWorkflowDefinitionException.class %>">
+
+	<%
+	RequiredWorkflowDefinitionException requiredWorkflowDefinitionException = (RequiredWorkflowDefinitionException)errorException;
+
+	Object[] messageArguments = kaleoDesignerDisplayContext.getMessageArguments(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks(), request);
+
+	String messageKey = kaleoDesignerDisplayContext.getMessageKey(requiredWorkflowDefinitionException.getWorkflowDefinitionLinks());
+	%>
+
+	<liferay-ui:message arguments="<%= messageArguments %>" key="<%= messageKey %>" translateArguments="<%= false %>" />
+</liferay-ui:error>
+
 <c:choose>
 	<c:when test="<%= WorkflowEngineManagerUtil.isDeployed() %>">
 		<liferay-util:include page="/designer/navigation_bar.jsp" servletContext="<%= application %>" />

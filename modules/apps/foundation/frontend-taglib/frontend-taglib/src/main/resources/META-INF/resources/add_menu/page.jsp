@@ -17,6 +17,7 @@
 <%@ include file="/add_menu/init.jsp" %>
 
 <%
+boolean inline = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:add-menu:inline"));
 int menuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:menuItemsCount"));
 int maxItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:maxItems"));
 List<MenuItemGroup> menuItemGroups = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItemGroups");
@@ -48,7 +49,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 		}
 		%>
 
-		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="btn btn-action btn-bottom-right btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="btn btn-action <%= inline ? StringPool.BLANK : "btn-bottom-right" %> btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 			<aui:icon image="plus" markupView="lexicon" />
 		</a>
 
@@ -68,7 +69,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 		</aui:script>
 	</c:when>
 	<c:otherwise>
-		<div class="add-menu btn-action-secondary btn-bottom-right dropdown">
+		<div class="add-menu btn-action-secondary <%= inline ? StringPool.BLANK : "btn-bottom-right" %> dropdown">
 			<button aria-expanded="false" class="btn btn-primary" data-qa-id="addButton" data-toggle="dropdown" type="button">
 				<aui:icon image="plus" markupView="lexicon" />
 			</button>

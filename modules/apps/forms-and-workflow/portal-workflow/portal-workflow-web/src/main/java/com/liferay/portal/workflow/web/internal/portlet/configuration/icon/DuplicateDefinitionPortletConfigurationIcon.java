@@ -32,10 +32,9 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Configuration icon to duplicate the workflow definition.
+ * Defines the icon triggering duplication of the workflow definition.
  *
  * @author Jeyvison Nascimento
- * @review
  */
 @Component(
 	immediate = true,

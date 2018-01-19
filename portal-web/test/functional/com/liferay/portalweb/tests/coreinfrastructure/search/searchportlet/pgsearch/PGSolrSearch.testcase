@@ -284,7 +284,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchBlogsEntryCategoryQuotes" priority="4">
+	<command ignore="true" name="SearchBlogsEntryCategoryQuotes" priority="4">
 		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -726,7 +726,7 @@
 		</execute>
 	</command>
 
-	<command name="SearchDocumentsAndMediaDocument" priority="5">
+	<command ignore="true" name="SearchDocumentsAndMediaDocument" priority="5">
 		<property name="testray.component.names" value="Training" />
 
 		<execute macro="Navigator#openURL" />

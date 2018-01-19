@@ -38,12 +38,12 @@ public class UpgradePortletIdTest extends PowerMockito {
 	@Test
 	public void testOldTypeSettingsShouldBeUpdate1() {
 		String oldTypeSettings =
-			"column-1=1_WAR_kaleoformsportlet,\ncolumn-2=" + _portletKey;
+			"column-1=1_WAR_kaleoformsportlet,\ncolumn-2=" + _PORTLET_KEY;
 
 		String newTypeSettings = _upgradePortletId.getNewTypeSettings(
 			oldTypeSettings, "1_WAR_kaleoformsportlet");
 
-		String expectedTypeSettings = "column-2=" + _portletKey + "\n";
+		String expectedTypeSettings = "column-2=" + _PORTLET_KEY + "\n";
 
 		Assert.assertEquals(expectedTypeSettings, newTypeSettings);
 	}
@@ -51,17 +51,17 @@ public class UpgradePortletIdTest extends PowerMockito {
 	@Test
 	public void testOldTypeSettingsShouldBeUpdate2() {
 		String oldTypeSettings =
-			"column-1=" + _portletKey + ",\ncolumn-2=1_WAR_kaleoformsportlet";
+			"column-1=" + _PORTLET_KEY + ",\ncolumn-2=1_WAR_kaleoformsportlet";
 
 		String newTypeSettings = _upgradePortletId.getNewTypeSettings(
 			oldTypeSettings, "1_WAR_kaleoformsportlet");
 
-		String expectedTypeSettings = "column-1=" + _portletKey + ",\n";
+		String expectedTypeSettings = "column-1=" + _PORTLET_KEY + ",\n";
 
 		Assert.assertEquals(expectedTypeSettings, newTypeSettings);
 	}
 
-	private static final String _portletKey = RandomTestUtil.randomString();
+	private static final String _PORTLET_KEY = RandomTestUtil.randomString();
 
 	private UpgradePortletId _upgradePortletId;
 

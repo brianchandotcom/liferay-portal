@@ -118,7 +118,7 @@ public class KeepAliveAction extends BaseStrutsAction {
 
 		OutputStream outputStream = response.getOutputStream();
 
-		outputStream.write(Base64.decode(_BASE64_1x1_GIF));
+		outputStream.write(Base64.decode(_BASE64_1X1_GIF));
 	}
 
 	protected List<String> getSPsKeepAliveURLs(HttpServletRequest request)
@@ -170,7 +170,7 @@ public class KeepAliveAction extends BaseStrutsAction {
 		return keepAliveURLs;
 	}
 
-	private static final String _BASE64_1x1_GIF =
+	private static final String _BASE64_1X1_GIF =
 		"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs=";
 
 	@Reference

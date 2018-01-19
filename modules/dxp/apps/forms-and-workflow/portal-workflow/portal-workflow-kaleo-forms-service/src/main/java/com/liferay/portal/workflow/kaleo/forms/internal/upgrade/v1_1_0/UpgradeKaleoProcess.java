@@ -126,10 +126,10 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 
 		DDMStructure newDDMStructure = _ddmStructureLocalService.addStructure(
 			oldDDMStructure.getUserId(), oldDDMStructure.getGroupId(),
-			oldDDMStructure.getParentStructureId(), _kaleoProcessClassNameId,
-			oldDDMStructure.getStructureKey(), oldDDMStructure.getNameMap(),
-			oldDDMStructure.getDescriptionMap(), oldDDMStructure.getDDMForm(),
-			oldDDMStructure.getDDMFormLayout(),
+			oldDDMStructure.getParentStructureId(),
+			_KALEO_PROCESS_CLASS_NAME_ID, oldDDMStructure.getStructureKey(),
+			oldDDMStructure.getNameMap(), oldDDMStructure.getDescriptionMap(),
+			oldDDMStructure.getDDMForm(), oldDDMStructure.getDDMFormLayout(),
 			oldDDMStructure.getStorageType(), oldDDMStructure.getType(),
 			serviceContext);
 
@@ -172,7 +172,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		DDMTemplate newDDMTemplate = _ddmTemplateLocalService.addTemplate(
 			oldDDMTemplate.getUserId(), oldDDMTemplate.getGroupId(),
 			oldDDMTemplate.getClassNameId(), newDDMStructureId,
-			_kaleoProcessClassNameId, oldDDMTemplate.getNameMap(),
+			_KALEO_PROCESS_CLASS_NAME_ID, oldDDMTemplate.getNameMap(),
 			oldDDMTemplate.getDescriptionMap(), oldDDMTemplate.getType(),
 			oldDDMTemplate.getMode(), oldDDMTemplate.getLanguage(),
 			oldDDMTemplate.getScript(), serviceContext);
@@ -248,7 +248,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		sb.append("KaleoProcess.DDLRecordSetId join DDMStructure on ");
 		sb.append("DDMStructure.structureId = DDLRecordSet.DDMStructureId ");
 		sb.append("where DDMStructure.classNameId <> ");
-		sb.append(_kaleoProcessClassNameId);
+		sb.append(_KALEO_PROCESS_CLASS_NAME_ID);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(sb.toString());
@@ -289,7 +289,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		sb.append("KaleoProcessLink.DDMTemplateId FROM KaleoProcessLink join ");
 		sb.append("DDMTemplate on DDMTemplate.templateId = KaleoProcessLink.");
 		sb.append("DDMTemplateId where DDMTemplate.resourceClassNameId <> ");
-		sb.append(_kaleoProcessClassNameId);
+		sb.append(_KALEO_PROCESS_CLASS_NAME_ID);
 
 		try (LoggingTimer loggingTimer = new LoggingTimer();
 			PreparedStatement ps = connection.prepareStatement(sb.toString());
@@ -318,7 +318,7 @@ public class UpgradeKaleoProcess extends UpgradeProcess {
 		}
 	}
 
-	private static final long _kaleoProcessClassNameId =
+	private static final long _KALEO_PROCESS_CLASS_NAME_ID =
 		PortalUtil.getClassNameId(KaleoProcess.class);
 
 	private final DDLRecordSetLocalService _ddlRecordSetLocalService;

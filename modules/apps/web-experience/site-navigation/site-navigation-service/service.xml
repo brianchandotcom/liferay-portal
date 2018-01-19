@@ -25,6 +25,8 @@
 
 		<column name="name" type="String" />
 		<column name="primary" type="boolean" />
+		<column name="secondary" type="boolean" />
+		<column name="social" type="boolean" />
 
 		<!-- Finder methods -->
 

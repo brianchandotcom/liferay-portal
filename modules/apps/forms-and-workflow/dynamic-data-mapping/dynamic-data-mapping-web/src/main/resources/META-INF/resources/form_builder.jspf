@@ -176,7 +176,9 @@ for (Locale availableLocale : LanguageUtil.getAvailableLocales(themeDisplay.getS
 			return false;
 		}
 
-		return !formBuilderTab.ancestor().hasClass('hide');
+		var ancestor = formBuilderTab.ancestor();
+
+		return !ancestor.hasClass('hide');
 	};
 
 	var reloadFormBuilderData = function(content) {

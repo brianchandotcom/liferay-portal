@@ -51,33 +51,53 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
+<%
+List<NavigationItem> navigationItems = new ArrayList<>();
 
-		<%
-		portletURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
-		%>
+NavigationItem regularRolesNavigationItem = new NavigationItem();
 
-		<aui:nav-item href="<%= portletURL.toString() %>" label="regular-roles" selected="<%= type == RoleConstants.TYPE_REGULAR %>" />
+regularRolesNavigationItem.setActive(type == RoleConstants.TYPE_REGULAR);
 
-		<%
-		portletURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
-		%>
+PortletURL regularRolesURL = PortletURLUtil.clone(portletURL, renderResponse);
 
-		<aui:nav-item href="<%= portletURL.toString() %>" label="site-roles" selected="<%= type == RoleConstants.TYPE_SITE %>" />
+regularRolesURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
 
-		<%
-		portletURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-		%>
+regularRolesNavigationItem.setHref(regularRolesURL.toString());
+regularRolesNavigationItem.setLabel(LanguageUtil.get(request, "regular-roles"));
 
-		<aui:nav-item href="<%= portletURL.toString() %>" label="organization-roles" selected="<%= type == RoleConstants.TYPE_ORGANIZATION %>" />
+navigationItems.add(regularRolesNavigationItem);
 
-		<%
-		portletURL.setParameter("type", String.valueOf(type));
-		%>
+NavigationItem siteRolesNavigationItem = new NavigationItem();
 
-	</aui:nav>
-</aui:nav-bar>
+siteRolesNavigationItem.setActive(type == RoleConstants.TYPE_SITE);
+
+PortletURL siteRolesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+siteRolesURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
+
+siteRolesNavigationItem.setHref(siteRolesURL.toString());
+siteRolesNavigationItem.setLabel(LanguageUtil.get(request, "site-roles"));
+
+navigationItems.add(siteRolesNavigationItem);
+
+NavigationItem organizationRolesNavigationItem = new NavigationItem();
+
+organizationRolesNavigationItem.setActive(type == RoleConstants.TYPE_ORGANIZATION);
+
+PortletURL organizationRolesURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+organizationRolesURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
+
+organizationRolesNavigationItem.setHref(organizationRolesURL.toString());
+organizationRolesNavigationItem.setLabel(LanguageUtil.get(request, "organization-roles"));
+
+navigationItems.add(organizationRolesNavigationItem);
+%>
+
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

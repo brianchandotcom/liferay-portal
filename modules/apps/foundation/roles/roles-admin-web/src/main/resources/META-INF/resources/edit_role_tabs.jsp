@@ -85,36 +85,54 @@ if (role != null) {
 		tabs1URLs = ArrayUtil.append(tabs1URLs, assignMembersURL.toString());
 	}
 }
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+if (role != null) {
+	for (int i = 0; i < tabs1URLs.length; i++) {
+		NavigationItem entriesNavigationItem = new NavigationItem();
+
+		entriesNavigationItem.setActive(tabs1Names[i].equals(tabs1));
+		entriesNavigationItem.setHref(tabs1URLs[i]);
+		entriesNavigationItem.setLabel(LanguageUtil.get(request, tabs1Names[i]));
+
+		navigationItems.add(entriesNavigationItem);
+	}
+}
+else {
+	NavigationItem detailsNavigationItem = new NavigationItem();
+
+	detailsNavigationItem.setActive(true);
+	detailsNavigationItem.setHref(currentURL);
+	detailsNavigationItem.setLabel(LanguageUtil.get(request, "details"));
+
+	navigationItems.add(detailsNavigationItem);
+
+	NavigationItem definePermissionsNavigationItem = new NavigationItem();
+
+	definePermissionsNavigationItem.setActive(false);
+	definePermissionsNavigationItem.setDisabled(true);
+	definePermissionsNavigationItem.setHref(StringPool.BLANK);
+	definePermissionsNavigationItem.setLabel(LanguageUtil.get(request, "define-permissions"));
+
+	navigationItems.add(definePermissionsNavigationItem);
+
+	int type = ParamUtil.getInteger(request, "type", RoleConstants.TYPE_REGULAR);
+
+	if (type == RoleConstants.TYPE_REGULAR) {
+		NavigationItem assigneesNavigationItem = new NavigationItem();
+
+		assigneesNavigationItem.setActive(false);
+		assigneesNavigationItem.setDisabled(false);
+		assigneesNavigationItem.setHref(StringPool.BLANK);
+		assigneesNavigationItem.setLabel(LanguageUtil.get(request, "assignees"));
+
+		navigationItems.add(assigneesNavigationItem);
+	}
+}
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<c:choose>
-			<c:when test="<%= role != null %>">
-
-				<%
-				for (int i = 0; i < tabs1URLs.length; i++) {
-				%>
-
-					<aui:nav-item href="<%= tabs1URLs[i] %>" label="<%= tabs1Names[i] %>" selected="<%= tabs1Names[i].equals(tabs1) %>" />
-
-				<%
-				}
-				%>
-
-			</c:when>
-			<c:otherwise>
-				<aui:nav-item href="<%= currentURL %>" label="details" selected="<%= true %>" />
-				<aui:nav-item cssClass="disabled" label="define-permissions" selected="<%= false %>" />
-
-				<%
-				int type = ParamUtil.getInteger(request, "type", RoleConstants.TYPE_REGULAR);
-				%>
-
-				<c:if test="<%= type == RoleConstants.TYPE_REGULAR %>">
-					<aui:nav-item cssClass="disabled" label="assignees" selected="<%= false %>" />
-				</c:if>
-			</c:otherwise>
-		</c:choose>
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>

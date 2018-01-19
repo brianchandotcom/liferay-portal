@@ -62,20 +62,26 @@ request.setAttribute("edit_role_assignments.jsp-role", role);
 request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
 
 request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem entriesNavigationItem = new NavigationItem();
+
+entriesNavigationItem.setActive(true);
+
+PortletURL usersPortletURL = PortletURLUtil.clone(portletURL, renderResponse);
+
+usersPortletURL.setParameter("tabs2", "users");
+
+entriesNavigationItem.setHref(usersPortletURL.toString());
+entriesNavigationItem.setLabel(LanguageUtil.get(request, tabs2));
+
+navigationItems.add(entriesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-
-		<%
-		PortletURL usersPortletURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-		usersPortletURL.setParameter("tabs2", "users");
-		%>
-
-		<aui:nav-item href="<%= portletURL.toString() %>" label="<%= tabs2 %>" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	items="<%= navigationItems %>"
+/>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
 	<portlet:param name="mvcPath" value="/edit_role_assignments.jsp" />

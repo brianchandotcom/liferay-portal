@@ -48,6 +48,15 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_DEFAULT %>" label="default" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
 	</aui:fieldset>
 
+	<aui:fieldset>
+		<aui:input
+			checked="<%= siteNavigationMenu.isAddNewPages() %>"
+			label="add-new-pages-to-this-menu"
+			name="addNewPages"
+			type="checkbox"
+		/>
+	</aui:fieldset>
+
 	<aui:button-row>
 		<aui:button cssClass="btn-block" type="submit" value="save" />
 	</aui:button-row>

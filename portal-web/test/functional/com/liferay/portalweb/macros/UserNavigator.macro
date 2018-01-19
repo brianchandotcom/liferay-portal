@@ -24,6 +24,14 @@
 		</execute>
 	</command>
 
+	<command name="gotoRoles">
+		<execute macro="UserNavigator#gotoGeneral" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Roles" />
+		</execute>
+	</command>
+
 	<command name="gotoUser">
 		<var name="key_userScreenName" value="${userScreenName}" />
 

@@ -85,7 +85,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 	}
 
 	@Test
-	public void testGetUADEntitiesNoBookmarksEntries() throws Exception {
+	public void testGetUADEntitiesWithNoDataObject() throws Exception {
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
 

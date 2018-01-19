@@ -14,9 +14,6 @@
 
 package com.liferay.user.associated.data.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
-import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 
@@ -41,53 +38,16 @@ public class UADEntityTypeComposite {
 		return _uadEntities.size();
 	}
 
-	public String getEditURL(
-			UADEntity uadEntity, LiferayPortletRequest liferayPortletRequest,
-			LiferayPortletResponse liferayPortletResponse)
-		throws Exception {
-
-		return _uadEntityDisplay.getEditURL(
-			uadEntity, liferayPortletRequest, liferayPortletResponse);
-	}
-
-	public String getEntityNonAnonymizableFields(UADEntity uadEntity)
-		throws PortalException {
-
-		String nonAnonymizableFields =
-			_uadEntityDisplay.getEntityNonAnonymizableFieldValues(uadEntity);
-
-		if (nonAnonymizableFields == null) {
-			nonAnonymizableFields = "";
-		}
-
-		return nonAnonymizableFields;
-	}
-
-	public String getEntityTypeDescription() {
-		return _uadEntityDisplay.getEntityTypeDescription();
-	}
-
-	public String getEntityTypeName() {
-		return _uadEntityDisplay.getEntityTypeName();
-	}
-
-	public String getEntityTypeNonAnonymizableFields() {
-		String nonAnonymizableFields =
-			_uadEntityDisplay.getEntityTypeNonAnonymizableFieldNames();
-
-		if (nonAnonymizableFields == null) {
-			nonAnonymizableFields = "";
-		}
-
-		return nonAnonymizableFields;
-	}
-
 	public String getKey() {
 		return _key;
 	}
 
 	public List<UADEntity> getUADEntities() {
 		return _uadEntities;
+	}
+
+	public UADEntityDisplay getUadEntityDisplay() {
+		return _uadEntityDisplay;
 	}
 
 	public long getUserId() {

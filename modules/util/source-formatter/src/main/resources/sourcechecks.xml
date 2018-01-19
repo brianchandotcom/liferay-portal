@@ -42,7 +42,6 @@
 			<property name="allowedExportPackageDirName" value="modules/apps/collaboration/wiki/wiki-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/events-display/events-display-web" />
 			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/calendar/calendar-service" />
-			<property name="allowedExportPackageDirName" value="modules/apps/forms-and-workflow/dynamic-data-lists/dynamic-data-lists-service" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/alloy/alloy-mvc" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-editor/frontend-editor-lang" />
 			<property name="allowedExportPackageDirName" value="modules/apps/foundation/frontend-js/frontend-js-loader-modules-extender" />

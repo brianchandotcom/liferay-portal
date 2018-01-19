@@ -16,25 +16,19 @@ package com.liferay.announcements.uad.aggregator.test;
 
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
+import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityAggregatorTestCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -42,71 +36,31 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsEntryUADEntityAggregatorTest
-	extends BaseAnnouncementsEntryUADEntityTestCase {
+	extends BaseUADEntityAggregatorTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	protected void addDataObject(long userId) throws Exception {
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
+				userId);
 
-		_user = UserTestUtil.addUser();
+		_announcementsEntries.add(announcementsEntry);
 	}
 
-	@Test
-	public void testCount() throws Exception {
-		addAnnouncementsEntry(_user.getUserId());
-
-		Assert.assertEquals(1, _uadEntityAggregator.count(_user.getUserId()));
+	protected String getUADRegistryKey() {
+		return AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY;
 	}
-
-	@Test
-	public void testGetUADEntities() throws Exception {
-		addAnnouncementsEntry(TestPropsValues.getUserId());
-		addAnnouncementsEntry(_user.getUserId());
-
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
-
-		Assert.assertEquals(uadEntities.toString(), 1, uadEntities.size());
-
-		UADEntity uadEntity = uadEntities.get(0);
-
-		Assert.assertEquals(_user.getUserId(), uadEntity.getUserId());
-	}
-
-	@Test
-	public void testGetUADEntitiesNoAnnouncementsEntries() throws Exception {
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
-
-		Assert.assertEquals(uadEntities.toString(), 0, uadEntities.size());
-	}
-
-	@Test
-	public void testGetUADEntity() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			_user.getUserId());
-
-		long entryId = announcementsEntry.getEntryId();
-
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(entryId));
-
-		Assert.assertEquals(
-			String.valueOf(entryId), uadEntity.getUADEntityId());
-	}
-
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
-	)
-	private UADEntityAggregator _uadEntityAggregator;
 
 	@DeleteAfterTestRun
-	private User _user;
+	private final List<AnnouncementsEntry> _announcementsEntries =
+		new ArrayList<>();
+
+	@Inject
+	private AnnouncementsEntryUADEntityTestHelper
+		_announcementsEntryUADEntityTestHelper;
 
 }

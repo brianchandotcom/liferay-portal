@@ -57,11 +57,11 @@ public class LayoutPageTemplateCollectionServiceUtil {
 				   .deleteLayoutPageTemplateCollection(layoutPageTemplateCollectionId);
 	}
 
-	public static java.util.List<com.liferay.layout.page.template.model.LayoutPageTemplateCollection> deleteLayoutPageTemplateCollections(
+	public static void deleteLayoutPageTemplateCollections(
 		long[] layoutPageTemplateCollectionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .deleteLayoutPageTemplateCollections(layoutPageTemplateCollectionIds);
+		getService()
+			.deleteLayoutPageTemplateCollections(layoutPageTemplateCollectionIds);
 	}
 
 	public static com.liferay.layout.page.template.model.LayoutPageTemplateCollection fetchLayoutPageTemplateCollection(

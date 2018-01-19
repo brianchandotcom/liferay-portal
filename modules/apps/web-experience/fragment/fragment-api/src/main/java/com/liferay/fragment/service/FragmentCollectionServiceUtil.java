@@ -56,10 +56,9 @@ public class FragmentCollectionServiceUtil {
 		return getService().deleteFragmentCollection(fragmentCollectionId);
 	}
 
-	public static java.util.List<com.liferay.fragment.model.FragmentCollection> deleteFragmentCollections(
-		long[] fragmentCollectionIds)
+	public static void deleteFragmentCollections(long[] fragmentCollectionIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deleteFragmentCollections(fragmentCollectionIds);
+		getService().deleteFragmentCollections(fragmentCollectionIds);
 	}
 
 	public static com.liferay.fragment.model.FragmentCollection fetchFragmentCollection(

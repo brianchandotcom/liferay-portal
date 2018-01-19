@@ -25,4 +25,6 @@ public class BookmarksUADConstants {
 	public static final String[] BOOKMARKS_ENTRY_USER_ID_FIELD_NAMES =
 		{"userId", "statusByUserId"};
 
+	public static final String BUNDLE_ID = "Bookmarks";
+
 }

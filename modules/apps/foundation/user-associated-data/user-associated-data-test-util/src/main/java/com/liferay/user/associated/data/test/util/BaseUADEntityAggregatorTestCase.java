@@ -109,7 +109,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 		Assert.assertEquals(uadEntityId, uadEntity.getUADEntityId());
 	}
 
-	protected abstract void addDataObject(long userId) throws Exception;
+	protected abstract Object addDataObject(long userId) throws Exception;
 
 	protected abstract String getUADRegistryKey();
 

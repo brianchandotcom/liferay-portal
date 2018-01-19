@@ -19,14 +19,12 @@
 <%
 String redirect = ParamUtil.getString(request, "redirect");
 
-SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
-
-List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationMenu.getSiteNavigationMenuId(), 0);
+List<SiteNavigationMenuItem> siteNavigationMenuItems = SiteNavigationMenuItemLocalServiceUtil.getSiteNavigationMenuItems(siteNavigationAdminDisplayContext.getSiteNavigationMenuId(), 0);
 
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
-renderResponse.setTitle(siteNavigationMenu.getName());
+renderResponse.setTitle(siteNavigationAdminDisplayContext.getSiteNavigationMenuName());
 %>
 
 <c:choose>

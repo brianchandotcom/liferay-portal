@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
-%>
-
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-buttons>
 		<liferay-frontend:management-bar-button href="javascript:;" icon="cog" id="showSiteNavigationMenuSettings" label="settings" />
@@ -190,7 +186,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 
 							sidebarBody.setContent(responseData);
 
-							sidebarTitle.text('<%= siteNavigationMenu.getName() %>');
+							sidebarTitle.text('<%= siteNavigationAdminDisplayContext.getSiteNavigationMenuName() %>');
 
 							sidebar.removeClass('hide');
 						}

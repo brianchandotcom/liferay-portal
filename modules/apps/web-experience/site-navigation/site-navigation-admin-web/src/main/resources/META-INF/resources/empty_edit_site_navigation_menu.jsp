@@ -16,10 +16,6 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
-%>
-
 <div class="container-fluid-1280">
 	<aui:fieldset-group markupView="lexicon">
 		<aui:fieldset>
@@ -62,7 +58,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 											<liferay-portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
 												<portlet:param name="mvcPath" value="/add_site_navigation_menu_item.jsp" />
 												<portlet:param name="redirect" value="<%= addSiteNavigationMenuItemRedirectURL %>" />
-												<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationMenu.getSiteNavigationMenuId()) %>" />
+												<portlet:param name="siteNavigationMenuId" value="<%= String.valueOf(siteNavigationAdminDisplayContext.getSiteNavigationMenuId()) %>" />
 												<portlet:param name="type" value="<%= siteNavigationMenuItemType.getType() %>" />
 											</liferay-portlet:renderURL>
 

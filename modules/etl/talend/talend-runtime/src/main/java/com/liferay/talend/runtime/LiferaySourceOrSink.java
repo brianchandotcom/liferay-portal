@@ -173,11 +173,11 @@ public class LiferaySourceOrSink
 		LiferayConnectionProperties liferayConnectionProperties =
 			getEffectiveConnection(runtimeContainer);
 
-		if (client == null) {
-			client = new RestClient(liferayConnectionProperties);
+		if (restClient == null) {
+			restClient = new RestClient(liferayConnectionProperties);
 		}
 		else {
-			String endpoint = client.getEndpoint();
+			String endpoint = restClient.getEndpoint();
 
 			if (!endpoint.equals(
 					liferayConnectionProperties.endpoint.getValue())) {
@@ -188,13 +188,13 @@ public class LiferaySourceOrSink
 							"RestClient");
 				}
 
-				client = new RestClient(liferayConnectionProperties);
+				restClient = new RestClient(liferayConnectionProperties);
 
-				return client;
+				return restClient;
 			}
 		}
 
-		return client;
+		return restClient;
 	}
 
 	public RestClient getRestClient(
@@ -381,11 +381,11 @@ public class LiferaySourceOrSink
 		GlobalI18N.getI18nMessageProvider().getI18nMessages(
 			LiferaySourceOrSink.class);
 
-	protected RestClient client;
 	protected volatile LiferayProvideConnectionProperties properties;
+	protected RestClient restClient;
 
 	private Map<String, String> _getExposedResourcesMap(
-		RuntimeContainer container) {
+		RuntimeContainer runtimeContainer) {
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
@@ -393,7 +393,7 @@ public class LiferaySourceOrSink
 		ApioResult apioResult = null;
 
 		try {
-			restClient = getRestClient(container);
+			restClient = getRestClient(runtimeContainer);
 
 			apioResult = restClient.executeGetRequest();
 		}

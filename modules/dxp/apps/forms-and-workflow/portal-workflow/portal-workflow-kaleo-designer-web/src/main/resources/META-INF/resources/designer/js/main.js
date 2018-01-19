@@ -132,6 +132,14 @@ AUI.add(
 						return instance.definitionController.serializeDefinition(json);
 					},
 
+					getEditorContent: function() {
+						var instance = this;
+
+						var editor = instance.editor;
+
+						return editor.get('value');
+					},
+
 					setEditorContent: function(content) {
 						var instance = this;
 

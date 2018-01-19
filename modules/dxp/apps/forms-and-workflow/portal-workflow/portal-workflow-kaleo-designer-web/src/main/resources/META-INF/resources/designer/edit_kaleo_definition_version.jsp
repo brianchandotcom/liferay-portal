@@ -504,7 +504,7 @@
 								</c:if>
 							</aui:script>
 
-							<aui:script use="liferay-kaleo-designer-utils,liferay-portlet-kaleo-designer">
+							<aui:script use="liferay-kaleo-designer-utils,liferay-portlet-kaleo-designer,liferay-kaleo-designer-dialogs">
 								var MAP_ROLE_TYPES = {
 									regular: 1,
 									site: 2,
@@ -567,6 +567,8 @@
 
 								var uploadFile = $('#<portlet:namespace />upload');
 
+								var previousContent = '';
+
 								uploadFile.on(
 									'change',
 									function(evt) {
@@ -577,7 +579,13 @@
 
 											reader.onloadend = function(evt) {
 												if (evt.target.readyState == FileReader.DONE) {
+													previousContent = <portlet:namespace />kaleoDesigner.getEditorContent();
+
 													<portlet:namespace />kaleoDesigner.setEditorContent(evt.target.result);
+
+													uploadFile.val('');
+
+													Liferay.KaleoDesignerDialogs.showDefinitionImportSuccessMessage('<portlet:namespace />');
 												}
 											};
 
@@ -588,7 +596,7 @@
 
 								<c:if test="<%= ((kaleoDefinitionVersion == null) && KaleoDesignerPermission.contains(permissionChecker, themeDisplay.getCompanyGroupId(), KaleoDesignerActionKeys.ADD_DRAFT)) || ((kaleoDefinitionVersion != null) && KaleoDefinitionVersionPermission.contains(permissionChecker, kaleoDefinitionVersion, ActionKeys.UPDATE)) %>">
 									var uploadLink = $('#<portlet:namespace />uploadLink');
-
+									
 									uploadLink.on(
 										'click',
 										function(event) {
@@ -597,6 +605,15 @@
 										}
 									);
 								</c:if>
+
+								Liferay.on(
+									'<portlet:namespace />undoDefinition',
+									function(event) {
+										<portlet:namespace />kaleoDesigner.setEditorContent(previousContent);
+
+										Liferay.KaleoDesignerDialogs.showActionUndoneSuccessMessage('<portlet:namespace />');
+									}
+								);
 
 								<portlet:namespace />kaleoDesigner.contentTabView.after(
 									{

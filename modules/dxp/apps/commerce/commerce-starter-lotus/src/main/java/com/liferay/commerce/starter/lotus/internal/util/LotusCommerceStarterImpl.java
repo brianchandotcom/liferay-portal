@@ -375,16 +375,18 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 
 		if (portletName.equals(_SITE_NAVIGATION_MENU_PORTLET_NAME)) {
 			String instanceId = jsonObject.getString("instanceId");
+			String layoutFriendlyURL = jsonObject.getString(
+				"layoutFriendlyURL");
 			String rootLayoutFriendlyURL = jsonObject.getString(
 				"rootLayoutFriendlyURL");
 
 			JSONObject portletPreferencesJSONObject = jsonObject.getJSONObject(
 				"portletPreferences");
 
-			Layout layout = null;
+			Layout rootLayout = null;
 
 			if (Validator.isNotNull(rootLayoutFriendlyURL)) {
-				layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+				rootLayout = _layoutLocalService.fetchLayoutByFriendlyURL(
 					serviceContext.getScopeGroupId(), false,
 					rootLayoutFriendlyURL);
 			}
@@ -409,11 +411,11 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 					value = String.valueOf(serviceContext.getScopeGroupId());
 				}
 				else if (key.equals("rootLayoutUuid")) {
-					if (layout == null) {
+					if (rootLayout == null) {
 						value = StringPool.BLANK;
 					}
 					else {
-						value = layout.getUuid();
+						value = rootLayout.getUuid();
 					}
 				}
 
@@ -421,6 +423,21 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			}
 
 			portletSetup.store();
+
+			long plid = LayoutConstants.DEFAULT_PLID;
+
+			if (Validator.isNotNull(layoutFriendlyURL)) {
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					serviceContext.getScopeGroupId(), false, layoutFriendlyURL);
+
+				if (layout != null) {
+					plid = layout.getPlid();
+				}
+			}
+
+			if (plid > LayoutConstants.DEFAULT_PLID) {
+				_setPlidPortletPreferences(plid, portletId, serviceContext);
+			}
 		}
 	}
 
@@ -450,6 +467,20 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		InputStream inputStream = classLoader.getResourceAsStream(location);
 
 		return FileUtil.createTempFile(inputStream);
+	}
+
+	private void _setPlidPortletPreferences(
+			long plid, String portletId, ServiceContext serviceContext)
+		throws Exception {
+
+		PortletPreferences portletSetup =
+			PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+				serviceContext.getCompanyId(),
+				PortletKeys.PREFS_OWNER_ID_DEFAULT,
+				PortletKeys.PREFS_OWNER_TYPE_LAYOUT, plid, portletId,
+				StringPool.BLANK);
+
+		portletSetup.store();
 	}
 
 	private static final String _CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =

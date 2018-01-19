@@ -30,5 +30,13 @@
 		"ddmTemplateKey": "BASIC-WEB-CONTENT",
 		"description": "",
 		"title": "CARDS ACCEPTED"
+	},
+	{
+		"articleId": "MY-ACCOUNT",
+		"content": "<?xml version=\"1.0\"?><root available-locales=\"en_US\" default-locale=\"en_US\"><dynamic-element name=\"content\" type=\"text_area\" index-type=\"text\" instance-id=\"kjos\"><dynamic-content language-id=\"en_US\"><![CDATA[<p style=\"color:#9A8468; font-size: 26px; text-align: center; padding:50px 0;\"><strong>MY ACCOUNT</strong></p>]]></dynamic-content></dynamic-element></root>",
+		"ddmStructureKey": "BASIC-WEB-CONTENT",
+		"ddmTemplateKey": "BASIC-WEB-CONTENT",
+		"description": "",
+		"title": "MY ACCOUNT"
 	}
 ]

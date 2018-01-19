@@ -15,12 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Carlos Lancha
@@ -29,33 +23,6 @@ public class LinkTag extends BaseClayTag {
 
 	public LinkTag() {
 		super("link", "ClayLink");
-	}
-
-	@Override
-	public int doStartTag() {
-		Map<String, Object> context = getContext();
-
-		if (Validator.isNotNull(context.get("icon"))) {
-			Map<String, String> icon = new HashMap();
-
-			String spritemap = (String)context.get("spritemap");
-
-			if (Validator.isNull(spritemap)) {
-				ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-				spritemap = themeDisplay.getPathThemeImages().concat(
-					"/clay/icons.svg");
-			}
-
-			icon.put("alignment", (String)context.get("iconAlignment"));
-			icon.put("spritemap", spritemap);
-			icon.put("symbol", (String)context.get("icon"));
-
-			putValue("icon", icon);
-		}
-
-		return super.doStartTag();
 	}
 
 	public void setAriaLabel(String ariaLabel) {
@@ -82,16 +49,8 @@ public class LinkTag extends BaseClayTag {
 		putValue("iconAlignment", iconAlignment);
 	}
 
-	public void setId(String id) {
-		putValue("id", id);
-	}
-
 	public void setLabel(String label) {
 		putValue("label", label);
-	}
-
-	public void setSpritemap(String spritemap) {
-		putValue("spritemap", spritemap);
 	}
 
 	public void setStyle(String style) {

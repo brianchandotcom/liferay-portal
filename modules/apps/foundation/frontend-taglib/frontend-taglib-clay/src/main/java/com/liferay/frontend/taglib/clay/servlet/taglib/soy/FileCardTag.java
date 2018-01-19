@@ -15,11 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.Map;
 
 /**
  * @author Julien Castelain
@@ -30,32 +25,12 @@ public class FileCardTag extends BaseClayTag {
 		super("card", "ClayFileCard", true);
 	}
 
-	@Override
-	public int doStartTag() {
-		Map<String, Object> context = getContext();
-
-		if (Validator.isNull(context.get("spritemap"))) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
-		}
-
-		return super.doStartTag();
-	}
-
 	public void setActionItems(Object actionItems) {
 		putValue("actionItems", actionItems);
 	}
 
 	public void setDisabled(Boolean disabled) {
 		putValue("disabled", disabled);
-	}
-
-	public void setElementClasses(String elementClasses) {
-		putValue("elementClasses", elementClasses);
 	}
 
 	public void setFileType(String fileType) {
@@ -76,10 +51,6 @@ public class FileCardTag extends BaseClayTag {
 
 	public void setIcon(String icon) {
 		putValue("icon", icon);
-	}
-
-	public void setId(String id) {
-		putValue("id", id);
 	}
 
 	public void setInputName(String inputName) {
@@ -104,10 +75,6 @@ public class FileCardTag extends BaseClayTag {
 
 	public void setSelected(Boolean selected) {
 		putValue("selected", selected);
-	}
-
-	public void setSpritemap(String spritemap) {
-		putValue("spritemap", spritemap);
 	}
 
 	public void setSubtitle(String subtitle) {

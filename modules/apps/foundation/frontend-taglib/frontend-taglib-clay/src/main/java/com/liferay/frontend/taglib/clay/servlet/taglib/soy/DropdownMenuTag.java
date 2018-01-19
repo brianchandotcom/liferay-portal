@@ -15,9 +15,7 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -34,15 +32,6 @@ public class DropdownMenuTag extends BaseClayTag {
 	@Override
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
-
-		if (Validator.isNull(context.get("spritemap"))) {
-			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
-			putValue(
-				"spritemap",
-				themeDisplay.getPathThemeImages().concat("/clay/icons.svg"));
-		}
 
 		if (Validator.isNotNull(context.get("buttonLabel"))) {
 			Map<String, String> button = new HashMap();
@@ -87,10 +76,6 @@ public class DropdownMenuTag extends BaseClayTag {
 
 	public void setSearchable(Boolean searchable) {
 		putValue("searchable", searchable);
-	}
-
-	public void setSpritemap(String spritemap) {
-		putValue("spritemap", spritemap);
 	}
 
 	public void setStyle(String style) {

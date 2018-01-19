@@ -1,4 +1,15 @@
 <definition>
+	<command name="gotoGeneral">
+		<if>
+			<condition function="IsElementNotPresent" locator1="NavUnderline#ACTIVE_NAV_UNDERLINE_LINK" />
+			<then>
+				<execute macro="Navigator#gotoNavUnderline">
+					<var name="navUnderline" value="General" />
+				</execute>
+			</then>
+		</if>
+	</command>
+
 	<command name="gotoPassword">
 		<execute macro="UserNavigator#gotoPreferences" />
 
@@ -10,6 +21,14 @@
 	<command name="gotoPreferences">
 		<execute macro="Navigator#gotoNavUnderline">
 			<var name="navUnderline" value="Preferences" />
+		</execute>
+	</command>
+
+	<command name="gotoRoles">
+		<execute macro="UserNavigator#gotoGeneral" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Roles" />
 		</execute>
 	</command>
 

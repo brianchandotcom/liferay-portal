@@ -117,12 +117,4 @@ if (role != null) {
 			</c:otherwise>
 		</c:choose>
 	</aui:nav>
-
-	<c:if test='<%= tabs1.equals("assignees") %>'>
-		<aui:nav-bar-search>
-			<aui:form action="<%= portletURL %>" name="searchFm">
-				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-			</aui:form>
-		</aui:nav-bar-search>
-	</c:if>
 </aui:nav-bar>

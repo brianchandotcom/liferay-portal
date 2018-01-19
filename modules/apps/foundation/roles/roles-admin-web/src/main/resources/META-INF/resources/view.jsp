@@ -77,12 +77,6 @@ pageContext.setAttribute("portletURL", portletURL);
 		%>
 
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURLString %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -101,6 +95,12 @@ pageContext.setAttribute("portletURL", portletURL);
 			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURLString %>" name="searchFm">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-buttons>

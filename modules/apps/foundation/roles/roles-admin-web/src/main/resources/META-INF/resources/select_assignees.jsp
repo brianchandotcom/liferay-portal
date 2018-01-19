@@ -75,12 +75,6 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 
 		<aui:nav-item href="<%= portletURL.toString() %>" label="<%= tabs2 %>" selected="<%= true %>" />
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">
@@ -104,6 +98,12 @@ request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
 				orderColumns='<%= new String[] {"name"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			/>
+
+			<li>
+				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-buttons>

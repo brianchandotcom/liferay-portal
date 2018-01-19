@@ -231,32 +231,19 @@ public class KaleoDesignerDisplayContext {
 	}
 
 	public String getTitle(KaleoDefinitionVersion kaleoDefinitionVersion) {
+		if (kaleoDefinitionVersion == null) {
+			return HtmlUtil.escape(getLanguage("new-workflow"));
+		}
+
+		if (Validator.isNull(kaleoDefinitionVersion.getTitle())) {
+			return HtmlUtil.escape(getLanguage("untitled-workflow"));
+		}
+
 		ThemeDisplay themeDisplay =
 			_kaleoDesignerRequestHelper.getThemeDisplay();
 
-		ResourceBundleLoader portalResourceBundleLoader =
-			ResourceBundleLoaderUtil.
-				getResourceBundleLoaderByBundleSymbolicName(
-					"com.liferay.portal.workflow.kaleo.designer.web");
-
-		ResourceBundle resourceBundle =
-			portalResourceBundleLoader.loadResourceBundle(
-				_kaleoDesignerRequestHelper.getLocale());
-
-		if (kaleoDefinitionVersion != null) {
-			if (Validator.isNull(kaleoDefinitionVersion.getTitle())) {
-				return HtmlUtil.escape(
-					LanguageUtil.get(resourceBundle, "untitled-workflow"));
-			}
-			else {
-				return HtmlUtil.escape(
-					kaleoDefinitionVersion.getTitle(
-						themeDisplay.getLanguageId()));
-			}
-		}
-
 		return HtmlUtil.escape(
-			LanguageUtil.get(resourceBundle, "new-workflow"));
+			kaleoDefinitionVersion.getTitle(themeDisplay.getLanguageId()));
 	}
 
 	public String getUserName(KaleoDefinitionVersion kaleoDefinitionVersion) {
@@ -308,6 +295,20 @@ public class KaleoDesignerDisplayContext {
 		}
 
 		return kaleoDefinitionVersion.isDraft();
+	}
+
+	protected String getLanguage(String key) {
+		return LanguageUtil.get(getResourceBundle(), key);
+	}
+
+	protected ResourceBundle getResourceBundle() {
+		ResourceBundleLoader portalResourceBundleLoader =
+			ResourceBundleLoaderUtil.
+				getResourceBundleLoaderByBundleSymbolicName(
+					"com.liferay.portal.workflow.kaleo.designer.web");
+
+		return portalResourceBundleLoader.loadResourceBundle(
+			_kaleoDesignerRequestHelper.getLocale());
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

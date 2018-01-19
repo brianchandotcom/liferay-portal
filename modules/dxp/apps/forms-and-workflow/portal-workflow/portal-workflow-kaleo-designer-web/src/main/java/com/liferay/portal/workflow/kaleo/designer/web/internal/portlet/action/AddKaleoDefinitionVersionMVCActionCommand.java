@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -119,18 +120,16 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		String content = ParamUtil.getString(actionRequest, "content");
 
-		Definition definition = new Definition(
-			StringPool.BLANK, StringPool.BLANK, content, 0);
+		Definition definition = null;
 
 		try {
 			definition = workflowModelParser.parse(content);
 		}
 		catch (Exception e) {
+			definition = new Definition(
+				StringPool.BLANK, StringPool.BLANK, content, 0);
 		}
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -144,6 +143,9 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 
 		String definitionDescription = getDefinitionDescription(
 			actionRequest, definition, title);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		KaleoDefinitionVersion kaleoDefinitionVersion =
 			kaleoDefinitionVersionLocalService.
@@ -182,12 +184,11 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 		ActionRequest actionRequest, Definition definition,
 		String defaultDescription) {
 
-		if (Validator.isNotNull(definition.getDescription())) {
-			return definition.getDescription();
-		}
+		String description = GetterUtil.getString(
+			definition.getDescription(), defaultDescription);
 
-		if (Validator.isNotNull(defaultDescription)) {
-			return defaultDescription;
+		if (Validator.isNotNull(description)) {
+			return description;
 		}
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
@@ -197,15 +198,10 @@ public class AddKaleoDefinitionVersionMVCActionCommand
 	}
 
 	protected String getDefinitionName(Definition definition, String name) {
-		if (Validator.isNotNull(name)) {
-			return name;
-		}
+		String definitionName = GetterUtil.getString(
+			name, definition.getName());
 
-		if (Validator.isNotNull(definition.getName())) {
-			return definition.getName();
-		}
-
-		return portalUUID.generate();
+		return GetterUtil.getString(definitionName, portalUUID.generate());
 	}
 
 	protected String getNextVersion(String version) {

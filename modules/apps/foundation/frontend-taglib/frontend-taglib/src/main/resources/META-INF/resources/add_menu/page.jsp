@@ -17,7 +17,7 @@
 <%@ include file="/add_menu/init.jsp" %>
 
 <%
-boolean inline = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:add-menu:inline"), false);
+boolean inline = GetterUtil.getBoolean(request.getAttribute("liferay-frontend:add-menu:inline"));
 int menuItemsCount = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:menuItemsCount"));
 int maxItems = GetterUtil.getInteger(request.getAttribute("liferay-frontend:add-menu:maxItems"));
 List<MenuItemGroup> menuItemGroups = (List<MenuItemGroup>)request.getAttribute("liferay-frontend:add-menu:menuItemGroups");

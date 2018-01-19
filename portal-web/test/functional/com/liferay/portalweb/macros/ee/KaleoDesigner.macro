@@ -882,11 +882,7 @@
 	<command name="viewTableDefinitionDraftViaKDCP">
 		<var name="key_workflowDefinitionTitle" value="${workflowDefinitionTitle}" />
 
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_NAME" value1="${workflowDefinitionTitle}" />
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_TITLE" value1="${workflowDefinitionTitle}" />
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_VERSION" value1="0" />
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_DRAFT_VERSION" value1="1" />
-		<execute function="AssertTextEquals" locator1="KaleoDesigner#DEFINITION_TABLE_PUBLISHED" value1="No" />
+		<execute function="AssertTextEquals" locator1="WorkflowDefinition#DEFINITION_TABLE_TITLE_UNPUBLISHED" value1="${workflowDefinitionTitle}" />
 		<execute function="AssertElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />
 	</command>
 

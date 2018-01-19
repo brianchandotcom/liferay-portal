@@ -27,5 +27,5 @@
 	rootItemId="<%= siteNavigationMenuDisplayContext.getRootMenuItemId() %>"
 	rootItemLevel="<%= siteNavigationMenuDisplayContext.getRootMenuItemLevel() %>"
 	rootItemType="<%= siteNavigationMenuDisplayContext.getRootMenuItemType() %>"
-	siteNavigationMenuId="<%= 0 %>"
+	siteNavigationMenuId="<%= siteNavigationMenuDisplayContext.getSiteNavigationMenuId() %>"
 />

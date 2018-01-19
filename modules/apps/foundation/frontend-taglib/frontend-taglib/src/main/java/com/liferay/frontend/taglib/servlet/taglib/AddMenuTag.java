@@ -149,6 +149,10 @@ public class AddMenuTag extends IncludeTag {
 		_addMenuItems = addMenuItems;
 	}
 
+	public void setInline(boolean inline) {
+		_inline = inline;
+	}
+
 	public void setMaxItems(int maxItems) {
 		_maxItems = maxItems;
 	}
@@ -167,6 +171,7 @@ public class AddMenuTag extends IncludeTag {
 	@Override
 	protected void cleanUp() {
 		_addMenuItems = new ArrayList<>();
+		_inline = false;
 		_maxItems = AddMenuKeys.MAX_ITEMS;
 		_menuItemGroups = new ArrayList<>();
 		_menuItemsCount = 0;
@@ -196,6 +201,7 @@ public class AddMenuTag extends IncludeTag {
 
 	@Override
 	protected void setAttributes(HttpServletRequest request) {
+		request.setAttribute("liferay-frontend:add-menu:inline", _inline);
 		request.setAttribute("liferay-frontend:add-menu:maxItems", _maxItems);
 		request.setAttribute(
 			"liferay-frontend:add-menu:menuItemGroups", _menuItemGroups);
@@ -209,6 +215,7 @@ public class AddMenuTag extends IncludeTag {
 	}
 
 	private List<AddMenuItem> _addMenuItems = new ArrayList<>();
+	private boolean _inline;
 	private int _maxItems = AddMenuKeys.MAX_ITEMS;
 	private List<MenuItemGroup> _menuItemGroups = new ArrayList<>();
 	private int _menuItemsCount;

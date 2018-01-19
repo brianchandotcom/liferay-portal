@@ -2732,7 +2732,7 @@ public class PortletDataContextImpl implements PortletDataContext {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Unable to load class com.sybase.jdbc4.tds.SybTimestamp " +
-						" because the Sybase driver is not available");
+						"because the Sybase driver is not available");
 			}
 		}
 

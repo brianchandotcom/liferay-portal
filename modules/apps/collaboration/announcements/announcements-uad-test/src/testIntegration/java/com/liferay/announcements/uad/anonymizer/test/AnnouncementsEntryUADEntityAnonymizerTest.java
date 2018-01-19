@@ -14,31 +14,24 @@
 
 package com.liferay.announcements.uad.anonymizer.test;
 
-import com.liferay.announcements.kernel.exception.NoSuchEntryException;
 import com.liferay.announcements.kernel.model.AnnouncementsEntry;
+import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsEntryUADEntityTestCase;
+import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -46,133 +39,73 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsEntryUADEntityAnonymizerTest
-	extends BaseAnnouncementsEntryUADEntityTestCase {
+	extends BaseUADEntityAnonymizerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
 	@Override
-	public void setUp() throws Exception {
-		super.setUp();
+	protected Object addDataObject(long userId) throws Exception {
+		AnnouncementsEntry announcementsEntry =
+			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
+				userId);
 
-		_defaultUser = _userLocalService.getDefaultUser(
-			TestPropsValues.getCompanyId());
+		_announcementsEntries.add(announcementsEntry);
 
-		_user = UserTestUtil.addUser();
+		return announcementsEntry;
 	}
 
-	@Test
-	public void testAutoAnonymize() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			_user.getUserId());
+	@Override
+	protected long getDataObjectId(Object dataObject) {
+		AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)dataObject;
 
-		long entryId = announcementsEntry.getEntryId();
-
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(entryId));
-
-		_uadEntityAnonymizer.autoAnonymize(uadEntity);
-
-		_assertAnnouncementsEntryAutoAnonymized(entryId);
+		return announcementsEntry.getEntryId();
 	}
 
-	@Test
-	public void testAutoAnonymizeAll() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			TestPropsValues.getUserId());
-		AnnouncementsEntry announcementsEntryAutoAnonymize =
-			addAnnouncementsEntry(_user.getUserId());
-
-		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
-
-		_assertAnnouncementsEntryAutoAnonymized(
-			announcementsEntryAutoAnonymize.getEntryId());
-
-		announcementsEntry = announcementsEntryLocalService.getEntry(
-			announcementsEntry.getEntryId());
-
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), announcementsEntry.getUserId());
+	@Override
+	protected String getUADRegistryKey() {
+		return AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY;
 	}
 
-	@Test
-	public void testAutoAnonymizeAllNoAnnouncementsEntries() throws Exception {
-		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
-	}
-
-	@Test(expected = NoSuchEntryException.class)
-	public void testDelete() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			_user.getUserId());
-
-		long entryId = announcementsEntry.getEntryId();
-
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(entryId));
-
-		_uadEntityAnonymizer.delete(uadEntity);
-
-		announcementsEntryLocalService.getEntry(entryId);
-	}
-
-	@Test
-	public void testDeleteAll() throws Exception {
-		AnnouncementsEntry announcementsEntry = addAnnouncementsEntry(
-			TestPropsValues.getUserId());
-		addAnnouncementsEntry(_user.getUserId());
-
-		_uadEntityAnonymizer.deleteAll(_user.getUserId());
-
-		announcementsEntry = announcementsEntryLocalService.getEntry(
-			announcementsEntry.getEntryId());
-
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), announcementsEntry.getUserId());
-
-		List<AnnouncementsEntry> announcementsEntries =
-			announcementsEntryLocalService.getUserEntries(
-				_user.getUserId(), QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-		Assert.assertEquals(
-			announcementsEntries.toString(), 0, announcementsEntries.size());
-	}
-
-	@Test
-	public void testDeleteAllNoAnnouncementsEntries() throws Exception {
-		_uadEntityAnonymizer.deleteAll(_user.getUserId());
-	}
-
-	private void _assertAnnouncementsEntryAutoAnonymized(long entryId)
+	@Override
+	protected boolean isDataObjectAutoAnonymized(long dataObjectId, User user)
 		throws Exception {
 
 		AnnouncementsEntry announcementsEntry =
-			announcementsEntryLocalService.getEntry(entryId);
+			_announcementsEntryLocalService.getEntry(dataObjectId);
 
-		Assert.assertEquals(
-			_defaultUser.getUserId(), announcementsEntry.getUserId());
-		Assert.assertEquals(
-			_defaultUser.getFullName(), announcementsEntry.getUserName());
+		if ((user.getUserId() != announcementsEntry.getUserId()) &&
+			!StringUtil.equals(
+				user.getFullName(), announcementsEntry.getUserName())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
-	private User _defaultUser;
+	@Override
+	protected boolean isDataObjectDeleted(long dataObjectId) {
+		if (_announcementsEntryLocalService.fetchAnnouncementsEntry(
+				dataObjectId) == null) {
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
-	)
-	private UADEntityAggregator _uadEntityAggregator;
+			return true;
+		}
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY
-	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
+		return false;
+	}
 
 	@DeleteAfterTestRun
-	private User _user;
+	private final List<AnnouncementsEntry> _announcementsEntries =
+		new ArrayList<>();
 
 	@Inject
-	private UserLocalService _userLocalService;
+	private AnnouncementsEntryLocalService _announcementsEntryLocalService;
+
+	@Inject
+	private AnnouncementsEntryUADEntityTestHelper
+		_announcementsEntryUADEntityTestHelper;
 
 }

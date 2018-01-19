@@ -12,17 +12,26 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.model.combination;
+
+import com.liferay.frontend.taglib.chart.model.ChartConfig;
+import com.liferay.frontend.taglib.chart.model.TypedMultiValueColumn;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
+public class CombinationChartConfig extends ChartConfig<TypedMultiValueColumn> {
 
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
+	public void addGroup(String...ids) {
+		get("groups", ArrayList.class).add(Arrays.asList(ids));
+	}
 
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
+	public void addGroup(Collection<String>...ids) {
+		get("groups", ArrayList.class).add(ids);
+	}
 
 }

@@ -36,6 +36,7 @@ import org.gradle.api.Plugin;
 import org.gradle.api.Project;
 import org.gradle.api.Task;
 import org.gradle.api.artifacts.Configuration;
+import org.gradle.api.artifacts.DependencySet;
 import org.gradle.api.file.FileCollection;
 import org.gradle.api.file.FileTree;
 import org.gradle.api.plugins.BasePlugin;
@@ -132,20 +133,19 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, POSHI_RUNNER_CONFIGURATION_NAME);
 
-		configuration.setDescription(
-			"Configures Poshi Runner for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
 
 				@Override
-				public void execute(Configuration configuration) {
+				public void execute(DependencySet dependencySet) {
 					_addDependenciesPoshiRunner(project, poshiRunnerExtension);
 				}
 
 			});
+
+		configuration.setDescription(
+			"Configures Poshi Runner for this project.");
+		configuration.setVisible(false);
 
 		return configuration;
 	}
@@ -157,19 +157,18 @@ public class PoshiRunnerPlugin implements Plugin<Project> {
 		Configuration configuration = GradleUtil.addConfiguration(
 			project, SIKULI_CONFIGURATION_NAME);
 
-		configuration.setDescription("Configures Sikuli for this project.");
-		configuration.setVisible(false);
-
-		GradleUtil.executeIfEmpty(
-			configuration,
-			new Action<Configuration>() {
+		configuration.defaultDependencies(
+			new Action<DependencySet>() {
 
 				@Override
-				public void execute(Configuration configuration) {
+				public void execute(DependencySet dependencySet) {
 					_addDependenciesSikuli(project, poshiRunnerExtension);
 				}
 
 			});
+
+		configuration.setDescription("Configures Sikuli for this project.");
+		configuration.setVisible(false);
 
 		return configuration;
 	}

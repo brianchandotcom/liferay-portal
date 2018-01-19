@@ -73,7 +73,7 @@ public class JavaModuleIllegalImportsCheck extends BaseFileCheck {
 			addMessage(
 				fileName,
 				"Do not use com.liferay.util.dao.orm.CustomSQLUtil in " +
-					"modules, see LPS-64238");
+					"modules, see LPS-77361");
 		}
 
 		// LPS-64335

@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Spring Extender
-Bundle-SymbolicName: com.liferay.portal.spring.extender
+Bundle-Name: Liferay Portal Spring Extender Impl
+Bundle-SymbolicName: com.liferay.portal.spring.extender.impl
 Bundle-Version: 3.0.0
 Import-Package:\
 	com.liferay.portal.bean,\

@@ -83,7 +83,7 @@ if (microblogsEntries != null) {
 				<div class="content">
 
 					<%
-					String content = HtmlUtil.replaceNewLine(MicroblogsUtil.getProcessedContent(microblogsEntry, ServiceContextFactory.getInstance(request)));
+					String content = HtmlUtil.replaceNewLine(MicroblogsWebUtil.getProcessedContent(microblogsEntry, ServiceContextFactory.getInstance(request)));
 					%>
 
 					<span>

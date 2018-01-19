@@ -19,7 +19,7 @@ import com.liferay.microblogs.constants.MicroblogsPortletKeys;
 import com.liferay.microblogs.model.MicroblogsEntry;
 import com.liferay.microblogs.service.MicroblogsEntryLocalService;
 import com.liferay.microblogs.service.MicroblogsEntryService;
-import com.liferay.microblogs.util.MicroblogsUtil;
+import com.liferay.microblogs.web.internal.util.MicroblogsWebUtil;
 import com.liferay.portal.kernel.model.Release;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -131,9 +131,9 @@ public class MicroblogsPortlet extends MVCPortlet {
 	protected String[] getAssetTagNames(String content) {
 		List<String> assetTagNames = new ArrayList<>();
 
-		assetTagNames.addAll(MicroblogsUtil.getHashtags(content));
+		assetTagNames.addAll(MicroblogsWebUtil.getHashtags(content));
 
-		assetTagNames.addAll(MicroblogsUtil.getScreenNames(content));
+		assetTagNames.addAll(MicroblogsWebUtil.getScreenNames(content));
 
 		return assetTagNames.toArray(new String[assetTagNames.size()]);
 	}

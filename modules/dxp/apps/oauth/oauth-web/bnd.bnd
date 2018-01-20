@@ -1,6 +1,6 @@
 Bundle-Activator: com.liferay.oauth.web.internal.activator.OAuthWebBundleActivator
 Bundle-Name: Liferay OAuth Web
 Bundle-SymbolicName: com.liferay.oauth.web
-Bundle-Version: 1.0.15
+Bundle-Version: 1.0.16
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: OAuth Provider

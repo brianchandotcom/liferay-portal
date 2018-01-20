@@ -155,8 +155,6 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 
 		portalUtil.setPortal(mock(Portal.class));
 
-		_request = new MockHttpServletRequest();
-
 		when(
 			PortalUtil.getHttpServletRequest(Matchers.any(RenderRequest.class))
 		).thenReturn(
@@ -169,6 +167,7 @@ public class DDMFormDisplayContextTest extends PowerMockito {
 	@Mock
 	private Language _language;
 
+	@Mock
 	private MockHttpServletRequest _request;
 
 }

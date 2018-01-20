@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.menu.item.full.page.application.internal.type;
 
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.service.PortletLocalService;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.constants.SiteNavigationWebKeys;
 import com.liferay.site.navigation.menu.item.full.page.application.internal.constants.SiteNavigationMenuItemTypeFullPageApplicationConstants;

@@ -15,6 +15,7 @@
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
 import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -22,7 +23,6 @@ import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPFormNavigatorEntry;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Objects;

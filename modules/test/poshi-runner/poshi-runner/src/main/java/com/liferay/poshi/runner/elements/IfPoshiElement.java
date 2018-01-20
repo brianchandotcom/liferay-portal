@@ -109,7 +109,7 @@ public class IfPoshiElement extends BasePoshiElement {
 
 		sb.append(getReadableName());
 
-		for (String conditionName : _conditionNames) {
+		for (String conditionName : _CONDITION_NAMES) {
 			if (element(conditionName) != null) {
 				PoshiElement poshiElement = (PoshiElement)element(
 					conditionName);
@@ -186,9 +186,9 @@ public class IfPoshiElement extends BasePoshiElement {
 		return true;
 	}
 
-	private static final String _ELEMENT_NAME = "if";
-
-	private static final String[] _conditionNames =
+	private static final String[] _CONDITION_NAMES =
 		{"and", "condition", "equals", "isset", "not", "or"};
+
+	private static final String _ELEMENT_NAME = "if";
 
 }

@@ -15,6 +15,7 @@
 package com.liferay.site.navigation.taglib.servlet.taglib;
 
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -23,7 +24,6 @@ import com.liferay.portal.kernel.portletdisplaytemplate.PortletDisplayTemplateMa
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.theme.NavItem;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;

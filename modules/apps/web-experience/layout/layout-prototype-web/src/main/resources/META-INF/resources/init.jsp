@@ -28,6 +28,7 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.exportimport.constants.ExportImportPortletKeys" %><%@
 page import="com.liferay.layout.prototype.web.internal.display.context.LayoutPrototypeDisplayContext" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.dao.search.ResultRow" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchLayoutPrototypeException" %><%@
 page import="com.liferay.portal.kernel.exception.RequiredLayoutPrototypeException" %><%@
@@ -42,7 +43,6 @@ page import="com.liferay.portal.kernel.service.permission.LayoutPrototypePermiss
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.model.impl.LayoutPrototypeImpl" %><%@

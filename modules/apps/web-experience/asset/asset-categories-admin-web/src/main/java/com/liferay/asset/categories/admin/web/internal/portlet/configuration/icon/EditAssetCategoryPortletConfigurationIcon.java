@@ -17,6 +17,7 @@ package com.liferay.asset.categories.admin.web.internal.portlet.configuration.ic
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.display.context.AssetCategoriesDisplayContext;
 import com.liferay.asset.kernel.model.AssetCategory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfiguration
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;

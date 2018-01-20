@@ -21,6 +21,7 @@ import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateEntry;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Optional;

@@ -2320,6 +2320,12 @@ public class OrganizationLocalServiceImpl
 			statusId);
 	}
 
+	private static volatile OrganizationTypesSettings
+		_organizationTypesSettings =
+			ServiceProxyFactory.newServiceTrackedInstance(
+				OrganizationTypesSettings.class,
+				OrganizationLocalServiceImpl.class,
+				"_organizationTypesSettings", false);
 	private static volatile UserFileUploadsSettings _userFileUploadsSettings =
 		ServiceProxyFactory.newServiceTrackedInstance(
 			UserFileUploadsSettings.class, OrganizationLocalServiceImpl.class,

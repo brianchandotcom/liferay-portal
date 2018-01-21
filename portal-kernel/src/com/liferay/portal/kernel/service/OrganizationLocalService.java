@@ -320,6 +320,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getChildrenTypes(java.lang.String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		PortletDataContext portletDataContext);
 
@@ -596,6 +599,9 @@ public interface OrganizationLocalService extends BaseLocalService,
 		List<Organization> allOrganizations,
 		List<Organization> availableOrganizations);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.lang.String[] getTypes();
+
 	/**
 	* Returns all the IDs of organizations with which the user is explicitly
 	* associated, optionally including the IDs of organizations that the user
@@ -740,6 +746,15 @@ public interface OrganizationLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasUserOrganizations(long userId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isCountryEnabled(java.lang.String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isCountryRequired(java.lang.String type);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean isRootable(java.lang.String type);
 
 	/**
 	* Rebuilds the organization's tree.

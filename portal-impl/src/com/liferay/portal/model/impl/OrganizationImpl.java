@@ -15,7 +15,6 @@
 package com.liferay.portal.model.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -29,15 +28,11 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortalPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.util.PropsUtil;
-import com.liferay.portal.util.PropsValues;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,17 +44,16 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Brian Wing Shun Chan
  * @author Jorge Ferrer
+ * @author Marco Leo
  */
 public class OrganizationImpl extends OrganizationBaseImpl {
 
 	public static String[] getChildrenTypes(String type) {
-		return PropsUtil.getArray(
-			PropsKeys.ORGANIZATIONS_CHILDREN_TYPES, new Filter(type));
+		return OrganizationLocalServiceUtil.getChildrenTypes(type);
 	}
 
 	public static String[] getParentTypes(String type) {
-		String[] types = PropsUtil.getArray(
-			PropsKeys.ORGANIZATIONS_TYPES, new Filter(type));
+		String[] types = OrganizationLocalServiceUtil.getTypes();
 
 		List<String> parentTypes = new ArrayList<>();
 
@@ -84,8 +78,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 	}
 
 	public static boolean isRootable(String type) {
-		return GetterUtil.getBoolean(
-			PropsUtil.get(PropsKeys.ORGANIZATIONS_ROOTABLE, new Filter(type)));
+		return OrganizationLocalServiceUtil.isRootable(type);
 	}
 
 	@Override
@@ -305,7 +298,7 @@ public class OrganizationImpl extends OrganizationBaseImpl {
 
 	@Override
 	public int getTypeOrder() {
-		String[] types = PropsValues.ORGANIZATIONS_TYPES;
+		String[] types = OrganizationLocalServiceUtil.getTypes();
 
 		for (int i = 0; i < types.length; i++) {
 			String type = types[i];

@@ -181,7 +181,7 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 		</portlet:renderURL>
 
 		<%
-		for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
+		for (String organizationType : organizationsTypes) {
 		%>
 
 			<portlet:renderURL var="addOrganizationURL">

@@ -33,7 +33,7 @@ if (parentOrganizationId <= 0) {
 	}
 }
 
-String type = BeanParamUtil.getString(organization, request, "type", PropsValues.ORGANIZATIONS_TYPES[0]);
+String type = BeanParamUtil.getString(organization, request, "type", organizationsTypes[0]);
 long regionId = BeanParamUtil.getLong(organization, request, "regionId");
 long countryId = BeanParamUtil.getLong(organization, request, "countryId");
 
@@ -80,11 +80,11 @@ User selUser = (User)request.getAttribute("user.selUser");
 		</c:choose>
 
 		<c:choose>
-			<c:when test="<%= (organization == null) && (PropsValues.ORGANIZATIONS_TYPES.length > 1) %>">
+			<c:when test="<%= (organization == null) && (organizationsTypes.length > 1) %>">
 				<aui:select name="type">
 
 					<%
-					for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
+					for (String curType : organizationsTypes) {
 					%>
 
 						<aui:option label="<%= curType %>" selected="<%= type.equals(curType) %>" />
@@ -96,7 +96,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 				</aui:select>
 			</c:when>
 			<c:when test="<%= organization == null %>">
-				<aui:input name="type" type="hidden" value="<%= PropsValues.ORGANIZATIONS_TYPES[0] %>" />
+				<aui:input name="type" type="hidden" value="<%= organizationsTypes[0] %>" />
 			</c:when>
 			<c:otherwise>
 				<aui:input name="typeLabel" type="resource" value="<%= LanguageUtil.get(request, organization.getType()) %>" />
@@ -107,7 +107,7 @@ User selUser = (User)request.getAttribute("user.selUser");
 
 		<liferay-ui:error exception="<%= NoSuchCountryException.class %>" message="please-select-a-country" />
 
-		<div class="<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(type)))) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />countryDiv">
+		<div class="<%= OrganizationLocalServiceUtil.isCountryEnabled(type) ? StringPool.BLANK : "hide" %>" id="<portlet:namespace />countryDiv">
 			<aui:select label="country" name="countryId" />
 
 			<aui:select label="region" name="regionId" />
@@ -307,11 +307,11 @@ if (parentOrganization != null) {
 			function(event) {
 
 				<%
-				for (String curType : PropsValues.ORGANIZATIONS_TYPES) {
+				for (String curType : organizationsTypes) {
 				%>
 
 					if ($(event.currentTarget).val() == '<%= curType %>') {
-						$('#<portlet:namespace />countryDiv').toggleClass('hide', !<%= GetterUtil.getBoolean(PropsUtil.get(PropsKeys.ORGANIZATIONS_COUNTRY_ENABLED, new Filter(String.valueOf(curType)))) %>);
+						$('#<portlet:namespace />countryDiv').toggleClass('hide', !<%= OrganizationLocalServiceUtil.isCountryEnabled(curType) %>);
 					}
 
 				<%

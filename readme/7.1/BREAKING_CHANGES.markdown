@@ -552,3 +552,42 @@ The removal of Velocity support for Liferay Portal 7.1 themes allows for an
 increased focus on existing and new template engines.
 
 ---------------------------------------
+
+### Moved Organizations Types Properties to OSGi Configuration
+- **Date:** 2018-Jan-19
+- **JIRA Ticket:** LPS-77183
+
+#### What changed?
+
+The organizations types properties have been moved from `portal.properties`
+to an OSGi configuration named
+`OrganizationsTypesConfiguration.java` in the `users-admin-api` module.
+
+#### Who is affected?
+
+This affects anyone using the following portal properties:
+
+- `organizations.types`
+- `organizations.rootable`
+- `organizations.children.types`
+- `organizations.country.enabled`
+- `organizations.country.required`
+
+#### How should I update my code?
+
+Instead of overriding the `portal.properties` file, you can manage the
+properties from Portal's configuration administrator. This can be accessed by
+navigating to Liferay Portal's *Control Panel* &rarr; *Configuration* &rarr;
+*System Settings* &rarr; *Foundation* &rarr; *Organizations Types* and editing
+the settings there.
+
+If you would like to include the new configuration in your application, follow
+the instructions for
+[making your applications configurable in Liferay 7.0](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/making-your-applications-configurable).
+
+#### Why was this change made?
+
+This change was made as part of the modularization efforts to ease portal
+configuration changes.
+
+---------------------------------------

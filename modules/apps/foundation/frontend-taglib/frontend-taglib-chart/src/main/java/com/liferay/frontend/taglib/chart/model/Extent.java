@@ -39,19 +39,27 @@ public class Extent implements Iterable {
 	}
 
 	public void setBottom(int bottom) {
-		_values.get(1).set(1, bottom);
+		List<Integer> values = _values.get(1);
+
+		values.set(1, bottom);
 	}
 
 	public void setLeft(int left) {
-		_values.get(0).set(0, left);
+		List<Integer> values = _values.get(0);
+
+		values.set(0, left);
 	}
 
 	public void setRight(int right) {
-		_values.get(1).set(0, right);
+		List<Integer> values = _values.get(1);
+
+		values.set(0, right);
 	}
 
 	public void setTop(int top) {
-		_values.get(0).set(1, top);
+		List<Integer> values = _values.get(0);
+
+		values.set(1, top);
 	}
 
 	private List<List<Integer>> _values = new ArrayList<>();

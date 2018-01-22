@@ -278,7 +278,7 @@ public class LiferayConnectionProperties
 	private static final String _DEFAULT_HOST =
 		"\"https://apiosample.wedeploy.io\"";
 
-	private static final int _DEFAULT_ITEMS_PER_PAGE = 30;
+	private static final int _DEFAULT_ITEMS_PER_PAGE = 100;
 
 	private static final int _DEFAULT_READ_TIMEOUT = 60;
 

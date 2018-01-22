@@ -14,10 +14,10 @@
 
 package com.liferay.portal.action;
 
-import com.liferay.message.boards.kernel.service.MBMessageServiceUtil;
 import com.liferay.portal.json.JSONFactoryImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.service.GroupServiceUtil;
+import com.liferay.portal.kernel.service.RoleServiceUtil;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -45,14 +45,13 @@ public class JSONServiceActionTest extends TestCase {
 		JSONServiceAction jsonServiceAction = new JSONServiceAction();
 
 		String[] parameters = {
-			"groupId", "categoryId", "subject", "body", "format",
-			"inputStreamOVPs", "anonymous", "priority", "allowPingbacks",
-			"serviceContext"
+			"companyId", "keywords", "excludedNames", "types",
+			"excludedTeamRoleId", "teamGroupId", "start", "end"
 		};
 
 		Object[] methodAndParameterTypes =
 			jsonServiceAction.getMethodAndParameterTypes(
-				MBMessageServiceUtil.class, "addMessage", parameters,
+				RoleServiceUtil.class, "getGroupRolesAndTeamRoles", parameters,
 				new String[0]);
 
 		Method method = (Method)methodAndParameterTypes[0];
@@ -61,22 +60,22 @@ public class JSONServiceActionTest extends TestCase {
 		MockHttpServletRequest mockHttpServletRequest =
 			new MockHttpServletRequest();
 
-		mockHttpServletRequest.setParameter("inputStreamOVPs", "[]");
+		mockHttpServletRequest.setParameter("excludedNames", "[]");
 
 		Object value = jsonServiceAction.getArgValue(
-			mockHttpServletRequest, MBMessageServiceUtil.class,
-			method.getName(), parameters[5], parameterTypes[5]);
+			mockHttpServletRequest, RoleServiceUtil.class, method.getName(),
+			parameters[2], parameterTypes[2]);
 
 		assertEquals("[]", value.toString());
 
 		mockHttpServletRequest.setParameter(
-			"inputStreamOVPs",
+			"excludedNames",
 			"{\"class\": " +
 				"\"com.liferay.portal.kernel.dao.orm.EntityCacheUtil\"}");
 
 		value = jsonServiceAction.getArgValue(
-			mockHttpServletRequest, MBMessageServiceUtil.class,
-			method.getName(), parameters[5], parameterTypes[5]);
+			mockHttpServletRequest, RoleServiceUtil.class, method.getName(),
+			parameters[2], parameterTypes[2]);
 
 		assertEquals(
 			"{class=com.liferay.portal.kernel.dao.orm.EntityCacheUtil}",

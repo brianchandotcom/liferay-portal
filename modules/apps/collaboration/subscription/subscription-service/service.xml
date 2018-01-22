@@ -60,6 +60,5 @@
 		<reference entity="ClassName" package-path="com.liferay.portal" />
 		<reference entity="User" package-path="com.liferay.portal" />
 		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="MBThread" package-path="com.liferay.portlet.messageboards" />
 	</entity>
 </service-builder>

@@ -52,8 +52,7 @@ page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.ObjectValuePair" %><%@
 page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.WebKeys" %><%@
-page import="com.liferay.portal.kernel.workflow.WorkflowException" %>
+page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="java.text.Format" %>
 

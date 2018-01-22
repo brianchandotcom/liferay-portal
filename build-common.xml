@@ -430,7 +430,7 @@ information.
 
 	<macrodef name="download-latest-artifact">
 		<attribute name="destfile" />
-		<attribute name="snapshot" default="false" />
+		<attribute default="false" name="snapshot" />
 
 		<sequential>
 			<fail message="Please run this target from a release branch instead.">

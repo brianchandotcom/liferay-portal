@@ -110,7 +110,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						%>
 
 							<li>
-								<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="<%= menuItem.getCssClass() %>" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(menuItem.getLabel()) %></a>
+								<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="<%= menuItem.getCssClass() %>" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escape(menuItem.getLabel()) %>"><%= HtmlUtil.escape(menuItem.getLabel()) %></a>
 							</li>
 
 						<%

@@ -101,10 +101,6 @@ public class DropdownsDisplayContext {
 
 		_groupDropdownItems.add(group2DropdownGroupItem);
 
-		System.out.println("Group 1 items size:");
-		System.out.println(_groupDropdownItems.get(0).getItems().size());
-		System.out.println("End of Group 1 items size:");
-
 		return _groupDropdownItems;
 	}
 

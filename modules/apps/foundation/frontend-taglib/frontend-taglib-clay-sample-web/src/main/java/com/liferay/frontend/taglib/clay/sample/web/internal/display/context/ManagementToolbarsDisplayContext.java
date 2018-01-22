@@ -62,7 +62,7 @@ public class ManagementToolbarsDisplayContext {
 			return _creationMenu;
 		}
 
-		Map<String, Object> _creationMenu = new HashMap<>();
+		_creationMenu = new HashMap<>();
 
 		List<Map<String, Object>> items = new ArrayList<>();
 
@@ -92,6 +92,7 @@ public class ManagementToolbarsDisplayContext {
 		List<Object> filterByDropdownGroupItems = new ArrayList<>();
 
 		filterByDropdownGroupItem.setItems(filterByDropdownGroupItems);
+
 		filterByDropdownGroupItem.setLabel("Filter By");
 
 		for (int i = 0; i < 2; i++) {
@@ -110,6 +111,7 @@ public class ManagementToolbarsDisplayContext {
 		List<Object> orderByDropdownGroupItems = new ArrayList<>();
 
 		orderByDropdownGroupItem.setItems(orderByDropdownGroupItems);
+
 		orderByDropdownGroupItem.setLabel("Order By");
 
 		for (int i = 0; i < 2; i++) {

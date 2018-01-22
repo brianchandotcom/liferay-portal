@@ -36,7 +36,7 @@ public class DropdownGroupItem implements Serializable {
 	}
 
 	public String getType() {
-		return _type;
+		return _TYPE;
 	}
 
 	public void setItems(List<Object> items) {
@@ -51,7 +51,7 @@ public class DropdownGroupItem implements Serializable {
 		_separator = separator;
 	}
 
-	private static final String _type = "group";
+	private static final String _TYPE = "group";
 
 	private List<Object> _items;
 	private String _label;

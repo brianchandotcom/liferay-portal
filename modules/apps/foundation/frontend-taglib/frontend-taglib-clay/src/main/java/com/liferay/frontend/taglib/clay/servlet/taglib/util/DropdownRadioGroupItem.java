@@ -40,7 +40,7 @@ public class DropdownRadioGroupItem implements Serializable {
 	}
 
 	public String getType() {
-		return _type;
+		return _TYPE;
 	}
 
 	public void setInputName(String inputName) {
@@ -59,7 +59,7 @@ public class DropdownRadioGroupItem implements Serializable {
 		_separator = separator;
 	}
 
-	private static final String _type = "radiogroup";
+	private static final String _TYPE = "radiogroup";
 
 	private String _inputName;
 	private List<DropdownRadioItem> _items;

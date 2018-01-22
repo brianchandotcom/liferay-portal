@@ -41,7 +41,7 @@ public class AutoFillDDMFormRuleActionSerializer
 		DDMFormRuleSerializerContext ddmFormRuleSerializerContext) {
 
 		return String.format(
-			_functionCallTernaryExpressionFormat, "call",
+			_FUNCTION_CALL_TERNARY_EXPRESSION_FORMAT, "call",
 			StringUtil.quote(
 				_autoFillDDMFormRuleAction.getDDMDataProviderInstanceUUID()),
 			convertAutoFillInputParameters(
@@ -98,7 +98,7 @@ public class AutoFillDDMFormRuleActionSerializer
 		return StringUtil.quote(sb.toString());
 	}
 
-	private static final String _functionCallTernaryExpressionFormat =
+	private static final String _FUNCTION_CALL_TERNARY_EXPRESSION_FORMAT =
 		"%s(%s, %s, %s)";
 
 	private final AutoFillDDMFormRuleAction _autoFillDDMFormRuleAction;

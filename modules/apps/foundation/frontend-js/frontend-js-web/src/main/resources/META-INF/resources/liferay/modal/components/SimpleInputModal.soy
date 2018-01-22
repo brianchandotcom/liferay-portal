@@ -95,41 +95,43 @@
 							</label>
 						</div>
 					{/if}
-
-					{let $cancelButtonAttributes kind="attributes"}
-						{if $_loadingResponse}disabled{/if}
-						class="btn"
-						data-onclick="{$_handleCancelButtonClick}"
-						type="button"
-					{/let}
-
-					<button {$cancelButtonAttributes}>
-						{msg desc=""}cancel{/msg}
-					</button>
-
-					{let $submitButtonCssClasses kind="text"}
-						btn btn-primary
-
-						{if $_loadingResponse}
-							{sp}loading
-						{/if}
-					{/let}
-
-					{let $submitButtonAttributes kind="attributes"}
-						{if $_loadingResponse}disabled{/if}
-						class="{$submitButtonCssClasses}"
-						type="submit"
-					{/let}
-
-					<button {$submitButtonAttributes}>
-						<span class="loading-icon linear"></span>
-						{msg desc=""}submit{/msg}
-					</button>
 				</form>
 			{/param}
 
 			{param dialogClasses: 'aspect-ratio-item-center-middle' /}
 			{param events: ['visibleChanged': $_handleModalVisibleChanged] /}
+
+			{param footer kind="html"}
+				{let $submitButtonCssClasses kind="text"}
+					btn btn-primary
+
+					{if $_loadingResponse}
+						{sp}loading
+					{/if}
+				{/let}
+
+				{let $submitButtonAttributes kind="attributes"}
+					{if $_loadingResponse}disabled{/if}
+					class="{$submitButtonCssClasses}"
+					type="submit"
+				{/let}
+
+				<button {$submitButtonAttributes}>
+					<span class="loading-icon linear"></span>
+					{msg desc=""}submit{/msg}
+				</button>
+
+				{let $cancelButtonAttributes kind="attributes"}
+					{if $_loadingResponse}disabled{/if}
+					class="btn btn-secondary"
+					data-onclick="{$_handleCancelButtonClick}"
+					type="button"
+				{/let}
+
+				<button {$cancelButtonAttributes}>
+					{msg desc=""}cancel{/msg}
+				</button>
+			{/param}
 
 			{param header kind="html"}
 				{$dialogTitle}

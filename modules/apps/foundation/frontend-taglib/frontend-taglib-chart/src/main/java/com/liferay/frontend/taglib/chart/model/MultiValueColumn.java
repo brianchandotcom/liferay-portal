@@ -27,11 +27,13 @@ public class MultiValueColumn extends Column {
 
 	public MultiValueColumn(String id, Collection<? extends Number> values) {
 		super(id);
+
 		addValues(values);
 	}
 
 	public MultiValueColumn(String id, Number... values) {
 		super(id);
+
 		addValues(values);
 	}
 

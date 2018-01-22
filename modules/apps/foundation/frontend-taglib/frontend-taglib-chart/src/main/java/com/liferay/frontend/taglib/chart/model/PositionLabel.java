@@ -34,12 +34,12 @@ public class PositionLabel extends ChartObject {
 
 	public enum Position {
 
-		INNER_RIGHT("inner-right"), INNER_CENTER("inner-center"),
-		INNER_LEFT("inner-left"), OUTER_RIGHT("outer-right"),
-		OUTER_CENTER("outer-center"), OUTER_LEFT("outer-left"),
-		INNER_TOP("inner-top"), INNER_MIDDLE("inner-middle"),
-		INNER_BOTTOM("inner-bottom"), OUTER_TOP("outer-top"),
-		OUTER_MIDDLE("outer-middle"), OUTER_BOTTOM("outer-bottom");
+		INNER_BOTTOM("inner-bottom"), INNER_CENTER("inner-center"),
+		INNER_LEFT("inner-left"), INNER_MIDDLE("inner-middle"),
+		INNER_RIGHT("inner-right"), INNER_TOP("inner-top"),
+		OUTER_BOTTOM("outer-bottom"), OUTER_CENTER("outer-center"),
+		OUTER_LEFT("outer-left"), OUTER_MIDDLE("outer-middle"),
+		OUTER_RIGHT("outer-right"), OUTER_TOP("outer-top");
 
 		private Position(String value) {
 			_value = value;

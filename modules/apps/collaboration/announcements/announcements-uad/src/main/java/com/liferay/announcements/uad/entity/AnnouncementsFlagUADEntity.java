@@ -19,6 +19,7 @@ import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.BaseUADEntity;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,6 +27,10 @@ import java.util.Map;
  * @author Noah Sherrill
  */
 public class AnnouncementsFlagUADEntity extends BaseUADEntity {
+
+	public static List<String> getUserIdFieldNames() {
+		return Arrays.asList("userId");
+	}
 
 	public AnnouncementsFlagUADEntity(
 		long userId, String uadEntityId, AnnouncementsFlag announcementsFlag) {

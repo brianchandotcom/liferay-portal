@@ -1016,7 +1016,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					name);
 
 				if ((requestValues != null) &&
-					lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+					(lifecycle.equals(PortletRequest.ACTION_PHASE) ||
+					 lifecycle.equals(PortletRequest.RESOURCE_PHASE))) {
 
 					dynamicRequest.setParameterValues(
 						name, ArrayUtil.append(requestValues, values));

@@ -29,7 +29,7 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalService;
 import com.liferay.blogs.service.BlogsEntryService;
-import com.liferay.blogs.util.BlogsEntryImageSelectorHelper;
+import com.liferay.blogs.web.internal.util.BlogsEntryImageSelectorHelper;
 import com.liferay.document.library.kernel.exception.FileSizeException;
 import com.liferay.friendly.url.exception.DuplicateFriendlyURLEntryException;
 import com.liferay.petra.string.StringPool;

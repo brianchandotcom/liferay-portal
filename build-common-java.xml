@@ -51,13 +51,13 @@
 		<copy file="${jar.file}.jar" preservelastmodified="true" todir="${deploy.dir}" />
 	</target>
 
-	<target name="download-latest-artifact" unless="${build.marketplace.apps.enabled}">
+	<target name="download-latest-artifact" unless="${build.portal.artifacts.enabled}">
 		<download-latest-artifact destfile="${jar.file}.jar" />
 
 		<property name="compile.uptodate" value="true" />
 	</target>
 
-	<target if="${build.marketplace.apps.enabled}" name="init-compile">
+	<target if="${build.portal.artifacts.enabled}" name="init-compile">
 		<condition property="compile.uptodate">
 			<uptodate targetfile="classes/.touch">
 				<srcfiles dir="${basedir}" includes="bnd.bnd,build.xml,ivy.xml,src/**/*.*" />

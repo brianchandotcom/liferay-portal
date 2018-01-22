@@ -196,3 +196,17 @@
 div.portlet-forms-admin .form-builder-layout .layout-row-container-row .layout-row .col {
 	min-height: 20px;
 }
+
+.form-builder-field-list-add-container {
+	display: none;
+}
+
+.lfr-ddm-add-field {
+	cursor: pointer;
+	font-size: 24px;
+	padding-bottom: 4px;
+	padding-top: 0;
+	position: absolute;
+	right: 20px;
+	top: 10px;
+}

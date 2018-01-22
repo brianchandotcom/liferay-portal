@@ -25,9 +25,10 @@
 			opacity: 0;
 			position: absolute;
 			right: 0;
-			top: calc(-40px/2);
-			@include transition(all ease 0.3s);
+			top: calc(-32px/2);
 			visibility: hidden;
+
+			@include transition(all ease 0.3s);
 		}
 
 		.btn {
@@ -52,6 +53,14 @@
 			}
 		}
 	}
+
+	.hidden {
+		visibility: hidden;
+	}
+}
+
+div.sortable-layout-drag-indicator {
+	background-color: rgba(17, 17, 17, 0);
 }
 
 .yui3-dd-proxy .form-builder-field-list-container {

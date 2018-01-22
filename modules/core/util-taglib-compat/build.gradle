@@ -2,10 +2,6 @@ apply plugin: "com.liferay.osgi.portal.compat.defaults.plugin"
 
 task deployLib(type: Copy)
 
-transformImportedFiles {
-	enabled = false
-}
-
 dependencies {
 	testCompile group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.0.0"
 }
@@ -25,4 +21,8 @@ deployLib {
 	rename {
 		"com.liferay.util.taglib.compat.jar"
 	}
+}
+
+transformImportedFiles {
+	enabled = false
 }

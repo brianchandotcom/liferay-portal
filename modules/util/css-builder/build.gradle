@@ -24,6 +24,14 @@ buildPluginDescriptor {
 	goalPrefix = "css-builder"
 }
 
+configurations {
+	mavenCompile {
+		extendsFrom compile
+	}
+
+	mavenDistribution
+}
+
 copyPortalCommonCSSJar {
 	from configurations.portalCommonCSS
 	into new File(buildDir, "portal-common-css-jar")
@@ -31,14 +39,6 @@ copyPortalCommonCSSJar {
 	rename {
 		"com.liferay.frontend.css.common.jar"
 	}
-}
-
-configurations {
-	mavenCompile {
-		extendsFrom compile
-	}
-
-	mavenDistribution
 }
 
 dependencies {

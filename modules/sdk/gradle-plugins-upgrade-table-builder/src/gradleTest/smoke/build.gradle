@@ -2,6 +2,10 @@ apply plugin: "com.liferay.portal.tools.upgrade.table.builder"
 
 task runGradleTest
 
+buildUpgradeTable {
+	upgradeTableDir = "upgrade-table-dir"
+}
+
 repositories {
 	maven {
 		url "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
@@ -17,8 +21,4 @@ runGradleTest {
 
 		assert expectedFile.text.normalize() == generatedFile.text.normalize()
 	}
-}
-
-buildUpgradeTable {
-	upgradeTableDir = "upgrade-table-dir"
 }

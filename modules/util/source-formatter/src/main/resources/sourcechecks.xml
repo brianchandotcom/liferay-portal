@@ -136,6 +136,7 @@
 	</source-processor>
 	<source-processor name="GradleSourceProcessor">
 		<check name="GradleBlockOrderCheck" />
+		<check name="GradleBodyCheck" />
 		<check name="GradleDependenciesCheck" />
 		<check name="GradleImportsCheck" />
 		<check name="GradleIndentationCheck" />

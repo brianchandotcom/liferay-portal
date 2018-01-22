@@ -17,10 +17,9 @@ package com.liferay.user.associated.data.web.internal.portlet.action;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.registry.UADRegistry;
-import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,41 +28,38 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Noah Sherrill
+ * @author William Newbury
  */
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/export_uad_entity"
+		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+		"mvc.command.name=/users_admin/auto_anonymize_user_associated_data"
 	},
 	service = MVCActionCommand.class
 )
-public class ExportUADEntityMVCActionCommand extends BaseMVCActionCommand {
+public class AutoAnonymizeUserAssociatedDataMVCActionCommand
+	extends BaseMVCActionCommand {
+
+	protected void autoAnonymizeAll(ActionRequest actionRequest)
+		throws Exception {
+
+		String key = ParamUtil.getString(actionRequest, "key");
+
+		UADEntityAnonymizer uadEntityAnonymizer =
+			_uadRegistry.getUADEntityAnonymizer(key);
+
+		long userId = ParamUtil.getLong(actionRequest, "userId");
+
+		uadEntityAnonymizer.autoAnonymizeAll(userId);
+	}
 
 	@Override
 	protected void doProcessAction(
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_exportUADEntity(actionRequest);
-	}
-
-	private void _exportUADEntity(ActionRequest actionRequest)
-		throws Exception {
-
-		String uadRegistryKey = ParamUtil.getString(
-			actionRequest, "uadRegistryKey");
-
-		UADEntityAggregator uadEntityAggregator =
-			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(
-			uadRegistryKey);
-
-		String uadEntityId = ParamUtil.getString(actionRequest, "uadEntityId");
-
-		uadEntityExporter.export(uadEntityAggregator.getUADEntity(uadEntityId));
+		autoAnonymizeAll(actionRequest);
 	}
 
 	@Reference

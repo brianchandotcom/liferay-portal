@@ -16,6 +16,7 @@ package com.liferay.user.associated.data.exporter;
 
 import com.liferay.document.library.kernel.exception.NoSuchFolderException;
 import com.liferay.document.library.kernel.model.DLFolderConstants;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -41,7 +42,9 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 
 	@Override
 	public void exportAll(long userId) throws PortalException {
-		for (UADEntity uadEntity : getUADEntities(userId)) {
+		for (UADEntity uadEntity :
+				getUADEntities(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS)) {
+
 			export(uadEntity);
 		}
 	}
@@ -90,7 +93,8 @@ public abstract class BaseUADEntityExporter implements UADEntityExporter {
 		return JSONFactoryUtil.looseSerialize(object);
 	}
 
-	protected abstract List<UADEntity> getUADEntities(long userId);
+	protected abstract List<UADEntity> getUADEntities(
+		long userId, int start, int end);
 
 	@Reference
 	protected GroupLocalService groupLocalService;

@@ -92,7 +92,6 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidSiteNavigationMenuItemOrder</exception>
-		<exception>SiteNavigationMenuFunction</exception>
 		<exception>SiteNavigationMenuName</exception>
 	</exceptions>
 </service-builder>

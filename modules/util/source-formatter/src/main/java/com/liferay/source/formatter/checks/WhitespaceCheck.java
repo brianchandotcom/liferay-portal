@@ -128,6 +128,7 @@ public class WhitespaceCheck extends BaseFileCheck {
 			linePart = formatIncorrectSyntax(linePart, "( ", "(", false);
 			linePart = formatIncorrectSyntax(linePart, "){", ") {", false);
 			linePart = formatIncorrectSyntax(linePart, "]{", "] {", false);
+			linePart = formatIncorrectSyntax(linePart, "(\\.\\.\\.( ?))\\w");
 			linePart = formatIncorrectSyntax(linePart, "\\w(( ?)=)");
 			linePart = formatIncorrectSyntax(linePart, "(=( ?))\\w");
 			linePart = formatIncorrectSyntax(linePart, "for \\(.*(( ?):)");

@@ -29,13 +29,13 @@ public abstract class ChartConfig<ColumnType extends Column>
 		get("columns", ArrayList.class).add(column);
 	}
 
-	public void addColumns(ColumnType...columns) {
+	public void addColumns(Collection<? extends ColumnType> columns) {
 		for (ColumnType column : columns) {
 			addColumn(column);
 		}
 	}
 
-	public void addColumns(Collection<? extends ColumnType> columns) {
+	public void addColumns(ColumnType... columns) {
 		for (ColumnType column : columns) {
 			addColumn(column);
 		}

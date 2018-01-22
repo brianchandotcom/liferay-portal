@@ -25,12 +25,12 @@ public class MultiValueColumn extends Column {
 		super(id);
 	}
 
-	public MultiValueColumn(String id, Number...values) {
+	public MultiValueColumn(String id, Collection<? extends Number> values) {
 		super(id);
 		addValues(values);
 	}
 
-	public MultiValueColumn(String id, Collection<? extends Number> values) {
+	public MultiValueColumn(String id, Number... values) {
 		super(id);
 		addValues(values);
 	}
@@ -39,13 +39,13 @@ public class MultiValueColumn extends Column {
 		getData().add(value);
 	}
 
-	public void addValues(Number...values) {
+	public void addValues(Collection<? extends Number> values) {
 		for (Number value : values) {
 			addValue(value);
 		}
 	}
 
-	public void addValues(Collection<? extends Number> values) {
+	public void addValues(Number... values) {
 		for (Number value : values) {
 			addValue(value);
 		}

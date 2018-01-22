@@ -26,12 +26,12 @@ import java.util.Collection;
  */
 public class CombinationChartConfig extends ChartConfig<TypedMultiValueColumn> {
 
-	public void addGroup(String...ids) {
-		get("groups", ArrayList.class).add(Arrays.asList(ids));
+	public void addGroup(Collection<String>... ids) {
+		get("groups", ArrayList.class).add(ids);
 	}
 
-	public void addGroup(Collection<String>...ids) {
-		get("groups", ArrayList.class).add(ids);
+	public void addGroup(String... ids) {
+		get("groups", ArrayList.class).add(Arrays.asList(ids));
 	}
 
 }

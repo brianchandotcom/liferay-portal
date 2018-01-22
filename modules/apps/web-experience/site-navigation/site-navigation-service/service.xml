@@ -24,9 +24,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
-		<column name="primary" type="boolean" />
-		<column name="secondary" type="boolean" />
-		<column name="social" type="boolean" />
+		<column name="type" type="int" />
 
 		<!-- Finder methods -->
 
@@ -37,17 +35,9 @@
 			<finder-column name="groupId" />
 			<finder-column comparator="LIKE" name="name" />
 		</finder>
-		<finder name="G_P" return-type="SiteNavigationMenu">
+		<finder name="G_T" return-type="SiteNavigationMenu">
 			<finder-column name="groupId" />
-			<finder-column name="primary" />
-		</finder>
-		<finder name="G_Secondary" return-type="SiteNavigationMenu">
-			<finder-column name="groupId" />
-			<finder-column name="secondary" />
-		</finder>
-		<finder name="G_Social" return-type="SiteNavigationMenu">
-			<finder-column name="groupId" />
-			<finder-column name="social" />
+			<finder-column name="type" />
 		</finder>
 
 		<!-- References -->

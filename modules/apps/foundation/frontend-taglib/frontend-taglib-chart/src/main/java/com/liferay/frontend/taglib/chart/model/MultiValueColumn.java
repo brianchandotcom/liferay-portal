@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.chart.model;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Iván Zaera Avellón
@@ -38,7 +39,9 @@ public class MultiValueColumn extends Column {
 	}
 
 	public void addValue(Number value) {
-		getData().add(value);
+		List<Number> data = getData();
+
+		data.add(value);
 	}
 
 	public void addValues(Collection<? extends Number> values) {

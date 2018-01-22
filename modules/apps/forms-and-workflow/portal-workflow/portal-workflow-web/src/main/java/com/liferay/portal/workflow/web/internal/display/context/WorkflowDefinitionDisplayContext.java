@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.AggregatePredicateFilter;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -108,6 +109,25 @@ public class WorkflowDefinitionDisplayContext {
 
 	public String getDescription(WorkflowDefinition workflowDefinition) {
 		return HtmlUtil.escape(workflowDefinition.getDescription());
+	}
+
+	public String getDuplicateTitle(WorkflowDefinition workflowDefinition) {
+		if (workflowDefinition == null) {
+			return StringPool.BLANK;
+		}
+
+		ResourceBundle resourceBundle = getResourceBundle();
+
+		String title = workflowDefinition.getTitle();
+
+		String defaultLanguageId = LocalizationUtil.getDefaultLanguageId(title);
+
+		String newTitle = LanguageUtil.format(
+			resourceBundle, "copy-of-x",
+			workflowDefinition.getTitle(defaultLanguageId));
+
+		return LocalizationUtil.updateLocalization(
+			title, "title", newTitle, defaultLanguageId);
 	}
 
 	public Object[] getMessageArguments(
@@ -319,9 +339,7 @@ public class WorkflowDefinitionDisplayContext {
 	protected String getConfigureAssignementLink() throws PortletException {
 		PortletURL portletURL = getWorkflowDefinitionLinkPortletURL();
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				_workflowDefinitionRequestHelper.getLocale());
+		ResourceBundle resourceBundle = getResourceBundle();
 
 		return StringUtil.replace(
 			_HTML, new String[] {"[$RENDER_URL$]", "[$MESSAGE$]"},
@@ -334,6 +352,11 @@ public class WorkflowDefinitionDisplayContext {
 	protected String getLocalizedAssetName(String className) {
 		return ResourceActionsUtil.getModelResource(
 			_workflowDefinitionRequestHelper.getLocale(), className);
+	}
+
+	protected ResourceBundle getResourceBundle() {
+		return _resourceBundleLoader.loadResourceBundle(
+			_workflowDefinitionRequestHelper.getLocale());
 	}
 
 	protected PortletURL getWorkflowDefinitionLinkPortletURL() {

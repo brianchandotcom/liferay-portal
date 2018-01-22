@@ -2,6 +2,88 @@ AUI.add(
 	'liferay-workflow-web',
 	function(A) {
 		var WorkflowWeb = {
+			confirmBeforeDuplicateDialog: function(event, actionUrl, title, randomId, content) {
+				var instance = this;
+
+				var form = A.Node.create('<form />');
+
+				form.setAttribute('action', actionUrl);
+				form.setAttribute('method', 'POST');
+
+				var titleInput = A.one('#' + randomId + 'titleInputLocalized');
+
+				if (titleInput && !instance._titles[randomId]) {
+					instance._titles[randomId] = titleInput;
+				}
+				else if (!titleInput && instance._titles[randomId]) {
+					titleInput = instance._titles[randomId];
+				}
+
+				if (titleInput) {
+					form.append(titleInput);
+					titleInput.show();
+				}
+
+				var contentInput = A.one('#' + randomId + 'contentInput');
+
+				if (contentInput && !instance._contents[randomId]) {
+					instance._contents[randomId] = contentInput;
+				}
+				else if (!contentInput && instance._contents[randomId]) {
+					contentInput = instance._contents[randomId];
+				}
+
+				if (contentInput) {
+					form.append(contentInput);
+				}
+
+				var dialog = Liferay.Util.Window.getWindow(
+					{
+						dialog: {
+							bodyContent: form,
+							height: 325,
+							toolbars: {
+								footer: [
+									{
+										cssClass: 'btn btn-secondary',
+										discardDefaultButtonCssClasses: true,
+										label: Liferay.Language.get('cancel'),
+										on: {
+											click: function() {
+												dialog.hide();
+											}
+										}
+									},
+									{
+										cssClass: 'btn btn-primary',
+										discardDefaultButtonCssClasses: true,
+										label: Liferay.Language.get('duplicate'),
+										on: {
+											click: function() {
+												submitForm(form);
+											}
+										}
+									}
+								],
+								header: [
+									{
+										cssClass: 'close',
+										discardDefaultButtonCssClasses: true,
+										labelHTML: '<svg class="lexicon-icon" focusable="false"><use data-href="' + Liferay.ThemeDisplay.getPathThemeImages() + '/lexicon/icons.svg#times" /><title>' + Liferay.Language.get('close') + '</title></svg>',
+										on: {
+											click: function(event) {
+												dialog.hide();
+											}
+										}
+									}
+								]
+							},
+							width: 500
+						},
+						title: title
+					}
+				);
+			},
 
 			openConfirmDeleteDialog: function(title, message, actionUrl) {
 				var instance = this;
@@ -58,7 +140,7 @@ AUI.add(
 				);
 			},
 
-			previewBeforeRevert: function(event, renderUrl, actionUrl, title) {
+			previewBeforeRevertDialog: function(event, renderUrl, actionUrl, title) {
 				var instance = this;
 
 				var form = A.Node.create('<form />');
@@ -188,7 +270,9 @@ AUI.add(
 				instance._alert = alert;
 			},
 
-			_alert: null
+			_alert: null,
+			_contents: {},
+			_titles: {}
 		};
 
 		Liferay.WorkflowWeb = WorkflowWeb;

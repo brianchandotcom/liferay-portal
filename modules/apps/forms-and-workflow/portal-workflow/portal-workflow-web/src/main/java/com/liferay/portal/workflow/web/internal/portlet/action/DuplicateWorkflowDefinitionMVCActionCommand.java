@@ -16,60 +16,40 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Leonardo Barros
+ * @author Jeyvison Nascimento
  */
 @Component(
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-		"mvc.command.name=restoreWorkflowDefinition"
+		"mvc.command.name=duplicateWorkflowDefinition"
 	},
 	service = MVCActionCommand.class
 )
-public class RestoreWorkflowDefinitionMVCActionCommand
+public class DuplicateWorkflowDefinitionMVCActionCommand
 	extends UpdateWorkflowDefinitionMVCActionCommand {
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String name = ParamUtil.getString(actionRequest, "name");
-		int version = ParamUtil.getInteger(actionRequest, "version");
-
-		workflowDefinitionManager.updateActive(
-			themeDisplay.getCompanyId(), themeDisplay.getUserId(), name,
-			version, isActive());
-
-		addSuccessMessage(actionRequest, actionResponse);
-	}
 
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {
 		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
 
-		return LanguageUtil.get(
-			resourceBundle, "workflow-published-successfully");
-	}
+		String duplicatedDefinitionName = ParamUtil.getString(
+			actionRequest, "duplicatedDefinitionTitle");
 
-	protected boolean isActive() {
-		return true;
+		return LanguageUtil.format(
+			resourceBundle, "duplicated-from-x",
+			StringUtil.quote(duplicatedDefinitionName));
 	}
 
 }

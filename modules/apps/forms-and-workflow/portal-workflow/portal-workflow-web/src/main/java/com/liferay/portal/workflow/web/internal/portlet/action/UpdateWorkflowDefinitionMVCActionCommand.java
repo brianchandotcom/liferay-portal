@@ -92,10 +92,7 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 	protected void addSuccessMessage(
 		ActionRequest actionRequest, ActionResponse actionResponse) {
 
-		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
-			portal.getLocale(actionRequest));
-
-		String successMessage = getSuccessMessage(resourceBundle);
+		String successMessage = getSuccessMessage(actionRequest);
 
 		SessionMessages.add(actionRequest, "requestProcessed", successMessage);
 	}
@@ -139,7 +136,18 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 		sendRedirect(actionRequest, actionResponse);
 	}
 
-	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+	protected ResourceBundle getResourceBundle(ActionRequest actionRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Locale locale = themeDisplay.getLocale();
+
+		return resourceBundleLoader.loadResourceBundle(locale);
+	}
+
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(
 			resourceBundle, "workflow-updated-successfully");
 	}

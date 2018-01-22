@@ -25,18 +25,17 @@ import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.ResourceBundle;
 
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.PortletURL;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * Defines the icon triggering the deactivation of a workflow definition.
+ * Configuration icon to duplicate the workflow definition.
  *
  * @author Jeyvison Nascimento
+ * @review
  */
 @Component(
 	immediate = true,
@@ -46,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = PortletConfigurationIcon.class
 )
-public class UnpublishDefinitionPortletConfigurationIcon
+public class DuplicateDefinitionPortletConfigurationIcon
 	extends BasePortletConfigurationIcon {
 
 	@Override
@@ -54,34 +53,25 @@ public class UnpublishDefinitionPortletConfigurationIcon
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(getLocale(portletRequest));
 
-		return LanguageUtil.get(resourceBundle, "unpublish");
+		return LanguageUtil.get(resourceBundle, "duplicate");
 	}
 
-	/**
-	 * Creates and returns an action URL, setting the workflow definition name
-	 * and version as URL parameters.
-	 *
-	 * @param portletRequest the portlet request from which to get the workflow
-	 *        definition name and version
-	 * @param portletResponse the portlet response
-	 */
+	@Override
+	public String getOnClick(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
+		String portletId = _portal.getPortletId(portletRequest);
+
+		String portletNamespace = _portal.getPortletNamespace(portletId);
+
+		return "Liferay.fire('" + portletNamespace + "duplicateDefinition');";
+	}
+
 	@Override
 	public String getURL(
 		PortletRequest portletRequest, PortletResponse portletResponse) {
 
-		PortletURL portletURL = _portal.getControlPanelPortletURL(
-			portletRequest, WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-			PortletRequest.ACTION_PHASE);
-
-		portletURL.setParameter(
-			ActionRequest.ACTION_NAME, "deactivateWorkflowDefinition");
-		portletURL.setParameter(
-			"mvcPath", portletRequest.getParameter("mvcPath"));
-		portletURL.setParameter("name", portletRequest.getParameter("name"));
-		portletURL.setParameter(
-			"version", portletRequest.getParameter("version"));
-
-		return portletURL.toString();
+		return "javascript:;";
 	}
 
 	@Override

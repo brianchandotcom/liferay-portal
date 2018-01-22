@@ -61,7 +61,9 @@ public class DeleteWorkflowDefinitionMVCActionCommand
 	}
 
 	@Override
-	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(
 			resourceBundle, "workflow-deleted-successfully");
 	}

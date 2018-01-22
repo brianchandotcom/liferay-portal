@@ -17,10 +17,19 @@
 <%@ include file="/definition/init.jsp" %>
 
 <%
+String randomNamespace = StringUtil.randomId() + StringPool.UNDERLINE;
+
 ResultRow row = (ResultRow)request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 
 WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
+
+String duplicateTitle = workflowDefinitionDisplayContext.getDuplicateTitle(workflowDefinition);
 %>
+
+<liferay-portlet:actionURL name="duplicateWorkflowDefinition" var="duplicateWorkflowDefinition">
+	<portlet:param name="mvcPath" value="/definition/edit_workflow_definition.jsp" />
+	<portlet:param name="redirect" value="<%= currentURL %>" />
+</liferay-portlet:actionURL>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
 	<portlet:renderURL var="viewURL">
@@ -59,6 +68,12 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 				message="unpublish"
 				url="<%= deactivateWorkflowDefinitionURL %>"
 			/>
+
+			<liferay-ui:icon
+				id='<%= "duplicate" + workflowDefinition.getName() %>'
+				message="duplicate"
+				url="javascript:;"
+			/>
 		</c:when>
 		<c:otherwise>
 			<liferay-portlet:actionURL name="deleteWorkflowDefinition" var="deleteWorkflowDefinitionURL">
@@ -75,3 +90,29 @@ WorkflowDefinition workflowDefinition = (WorkflowDefinition)row.getObject();
 		</c:otherwise>
 	</c:choose>
 </liferay-ui:icon-menu>
+
+<div class="hide" id="<%= randomNamespace %>titleInputLocalized">
+	<aui:col>
+		<aui:field-wrapper label="title">
+			<liferay-ui:input-localized name="title" xml="<%= duplicateTitle %>" />
+		</aui:field-wrapper>
+	</aui:col>
+
+	<aui:col>
+		<liferay-ui:message key="copy-does-not-include-revisions" />
+	</aui:col>
+</div>
+
+<div class="hide" id="<%= randomNamespace %>contentInput">
+	<aui:input name="name" type="hidden" value="<%= PortalUUIDUtil.generate() %>" />
+	<aui:input name="content" type="hidden" value="<%= workflowDefinition.getContent() %>" />
+	<aui:input name="duplicatedDefinitionTitle" type="hidden" value="<%= workflowDefinition.getTitle(LanguageUtil.getLanguageId(request)) %>" />
+</div>
+
+<aui:script use="liferay-workflow-web">
+	var title = '<liferay-ui:message key="duplicate-workflow" />';
+
+	var confirmBeforeDuplicateDialog = A.rbind('confirmBeforeDuplicateDialog', Liferay.WorkflowWeb, '<%= duplicateWorkflowDefinition %>', title, '<%= randomNamespace %>');
+
+	Liferay.delegateClick('<portlet:namespace />duplicate<%= workflowDefinition.getName() %>', confirmBeforeDuplicateDialog);
+</aui:script>

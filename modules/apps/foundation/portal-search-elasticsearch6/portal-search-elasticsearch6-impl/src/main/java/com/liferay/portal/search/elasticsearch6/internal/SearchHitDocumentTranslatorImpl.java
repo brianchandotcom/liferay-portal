@@ -19,14 +19,13 @@ import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.geolocation.GeoLocationPoint;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Collection;
 import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
-
+import org.elasticsearch.common.document.DocumentField;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHitField;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -41,10 +40,10 @@ public class SearchHitDocumentTranslatorImpl
 	public Document translate(SearchHit searchHit) {
 		Document document = new DocumentImpl();
 
-		Map<String, SearchHitField> searchHitFields = searchHit.getFields();
+		Map<String, DocumentField> documentFields = searchHit.getFields();
 
-		for (String searchHitFieldName : searchHitFields.keySet()) {
-			addField(document, searchHitFieldName, searchHitFields);
+		for (String documentFieldName : documentFields.keySet()) {
+			addField(document, documentFieldName, documentFields);
 		}
 
 		return document;
@@ -52,39 +51,39 @@ public class SearchHitDocumentTranslatorImpl
 
 	protected void addField(
 		Document document, String fieldName,
-		Map<String, SearchHitField> searchHitFields) {
+		Map<String, DocumentField> documentFields) {
 
-		String baseFieldName = removeSuffixes(fieldName, ".lat", ".lon");
+		Field field = getField(fieldName, documentFields);
 
-		if (document.hasField(baseFieldName)) {
-			return;
+		if (field != null) {
+			document.add(field);
 		}
-
-		SearchHitField searchHitField = searchHitFields.get(baseFieldName);
-
-		Field field = translateGeoPoint(
-			searchHitField, searchHitFields.get(baseFieldName + ".lat"),
-			searchHitFields.get(baseFieldName + ".lon"));
-
-		if (field == null) {
-			field = translate(searchHitField);
-		}
-
-		document.add(field);
 	}
 
-	protected String removeSuffixes(String fieldName, String... suffixes) {
-		for (String suffix : suffixes) {
-			fieldName = StringUtils.removeEnd(fieldName, suffix);
+	protected Field getField(
+		String fieldName, Map<String, DocumentField> documentFields) {
+
+		String geopointIndicatorSuffix = ".geopoint";
+
+		if (fieldName.endsWith(geopointIndicatorSuffix)) {
+			return null;
 		}
 
-		return fieldName;
+		DocumentField documentField = documentFields.get(fieldName);
+
+		if (documentFields.containsKey(
+				fieldName.concat(geopointIndicatorSuffix))) {
+
+			return translateGeoPoint(documentField);
+		}
+
+		return translate(documentField);
 	}
 
-	protected Field translate(SearchHitField searchHitField) {
-		String name = searchHitField.getName();
+	protected Field translate(DocumentField documentField) {
+		String name = documentField.getName();
 
-		Collection<Object> values = searchHitField.getValues();
+		Collection<Object> values = documentField.getValues();
 
 		Field field = new Field(
 			name,
@@ -93,20 +92,14 @@ public class SearchHitDocumentTranslatorImpl
 		return field;
 	}
 
-	protected Field translateGeoPoint(
-		SearchHitField searchHitField, SearchHitField latSearchHitField,
-		SearchHitField lonSearchHitField) {
+	protected Field translateGeoPoint(DocumentField documentField) {
+		Field field = new Field(documentField.getName());
 
-		if ((latSearchHitField == null) || (lonSearchHitField == null)) {
-			return null;
-		}
-
-		Field field = new Field(searchHitField.getName());
+		String[] values = StringUtil.split(documentField.getValue());
 
 		field.setGeoLocationPoint(
 			new GeoLocationPoint(
-				(Double)latSearchHitField.getValue(),
-				(Double)lonSearchHitField.getValue()));
+				Double.valueOf(values[0]), Double.valueOf(values[1])));
 
 		return field;
 	}

@@ -271,7 +271,6 @@
 	<command name="editDisplayDateYear">
 		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_DAY)" name="displayDateDay" />
 		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_MONTH)" name="displayDateMonth" />
-
 		<var method="DateUtil#getCurrentYear()" name="displayDateYear" />
 
 		<var method="MathUtil#sum('${displayDateYear}','1')" name="displayDateYear" />

@@ -30,6 +30,11 @@ import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.TempFileEntryUtil;
+import com.liferay.portal.kernel.xml.Attribute;
+import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.kernel.xml.SAXReaderUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.registry.Registry;
 import com.liferay.registry.RegistryUtil;
@@ -39,7 +44,9 @@ import com.liferay.upload.AttachmentContentUpdater;
 import java.io.InputStream;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -103,7 +110,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String originalContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
-				tempFileEntryImgTag + "<span></a>";
+				tempFileEntryImgTag + "</a>";
 
 		FileEntry newFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(),
@@ -128,9 +135,9 @@ public class EntryAttachmentContentUpdaterTest {
 		String expectedContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
 				"<img alt=\"A big image\" class=\"image-big\" src=\"" +
-					fileEntryURL + "\" /><span></a>";
+					fileEntryURL + "\" /></a>";
 
-		Assert.assertEquals(expectedContent, content);
+		_assertEquals(_parseHtml(expectedContent), _parseHtml(content));
 	}
 
 	@Test
@@ -181,7 +188,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String expectedContent = sb.toString();
 
-		Assert.assertEquals(expectedContent, content);
+		_assertEquals(_parseHtml(expectedContent), _parseHtml(content));
 	}
 
 	@Test(expected = NoSuchFileEntryException.class)
@@ -195,7 +202,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String originalContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
-				tempFileEntryImgTag + "<span></a>";
+				tempFileEntryImgTag + "</a>";
 
 		_attachmentContentUpdater.updateContent(
 			originalContent, ContentTypes.TEXT_HTML, tempFileEntry -> null);
@@ -204,7 +211,7 @@ public class EntryAttachmentContentUpdaterTest {
 	@Test
 	public void testUpdateContentWithoutImgTag() throws Exception {
 		String originalContent =
-			"<p>Sample Text</p><a href=\"www.liferay.com\"><span></a>";
+			"<p>Sample Text</p><a href=\"www.liferay.com\"></a>";
 
 		String content = _attachmentContentUpdater.updateContent(
 			originalContent, ContentTypes.TEXT_HTML, tempFileEntry -> null);
@@ -226,7 +233,7 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String originalContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\">" +
-				tempFileEntryImgTag + "<span></a>";
+				tempFileEntryImgTag + "</a>";
 
 		FileEntry newFileEntry = TempFileEntryUtil.addTempFileEntry(
 			_group.getGroupId(), _user.getUserId(),
@@ -250,9 +257,9 @@ public class EntryAttachmentContentUpdaterTest {
 
 		String expectedContent =
 			"<p>Sample Text</p><a href=\"www.liferay.com\"><img src=\"" +
-				fileEntryURL + "\" /><span></a>";
+				fileEntryURL + "\" /></a>";
 
-		Assert.assertEquals(expectedContent, content);
+		_assertEquals(_parseHtml(expectedContent), _parseHtml(content));
 	}
 
 	@Test
@@ -260,14 +267,58 @@ public class EntryAttachmentContentUpdaterTest {
 		StringBundler sb = new StringBundler(2);
 
 		sb.append("<p>Sample Text</p><a href=\"www.liferay.com\">");
-		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span>");
+		sb.append("<span><img src=\"www.liferay.com/pic1.jpg\" /></span></a>");
 
 		String content = _attachmentContentUpdater.updateContent(
 			sb.toString(), ContentTypes.TEXT_HTML, tempFileEntry -> null);
 
 		String expectedContent = sb.toString();
 
-		Assert.assertEquals(expectedContent, content);
+		_assertEquals(_parseHtml(expectedContent), _parseHtml(content));
+	}
+
+	private void _assertEquals(Element expectedElement, Element actualElement) {
+		Assert.assertEquals(
+			String.format("Unexpected tag name for element %s", actualElement),
+			expectedElement.getName(), actualElement.getName());
+
+		for (Attribute expectedAttribute : expectedElement.attributes()) {
+			Attribute actualAttribute = actualElement.attribute(
+				expectedAttribute.getName());
+
+			Assert.assertNotNull(
+				String.format(
+					"Missing attribute %s on element %s",
+					expectedAttribute.getName(), actualElement),
+				actualAttribute);
+
+			Assert.assertEquals(
+				String.format(
+					"Unexpected value for attribute %s on element %s",
+					expectedAttribute.getName(), actualElement),
+				expectedAttribute.getValue(), actualAttribute.getValue());
+		}
+
+		if (Objects.equals(actualElement.getName(), "img")) {
+			Assert.assertNull(
+				"The editor attribute must not be included in the final image",
+				actualElement.attribute(
+					EditorConstants.ATTRIBUTE_DATA_IMAGE_ID));
+		}
+
+		_assertEquals(expectedElement.elements(), actualElement.elements());
+	}
+
+	private void _assertEquals(
+		List<Element> expectedElements, List<Element> actualElements) {
+
+		Assert.assertEquals(
+			"Wrong number of elements", expectedElements.size(),
+			actualElements.size());
+
+		for (int i = 0; i < expectedElements.size(); i++) {
+			_assertEquals(expectedElements.get(i), actualElements.get(i));
+		}
 	}
 
 	private InputStream _getInputStream() {
@@ -301,6 +352,14 @@ public class EntryAttachmentContentUpdaterTest {
 		sb.append("\"/>");
 
 		return sb.toString();
+	}
+
+	private List<Element> _parseHtml(String html) throws DocumentException {
+		Document document = SAXReaderUtil.read("<div>" + html + "</div>");
+
+		Element rootElement = document.getRootElement();
+
+		return rootElement.elements();
 	}
 
 	private static final String _TEMP_FILE_ENTRY_IMAGE_URL =

@@ -40,6 +40,24 @@ public class AddMenuItem extends MenuItem {
 		_type = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
+	public AddMenuItem(
+		Map<String, Object> anchorData, String cssClass, String id,
+		String label, AddMenuKeys.AddMenuType type, String url) {
+
+		super(anchorData, cssClass, id, label, url);
+
+		_type = type;
+	}
+
+	public AddMenuItem(
+		Map<String, Object> anchorData, String cssClass, String id,
+		String label, String url) {
+
+		super(anchorData, cssClass, id, label, url);
+
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
+	}
+
 	public AddMenuItem(String label, String url) {
 		super(label, url);
 
@@ -48,6 +66,12 @@ public class AddMenuItem extends MenuItem {
 
 	public AddMenuItem(String id, String label, String url) {
 		super(id, label, url);
+
+		_type = AddMenuKeys.AddMenuType.DEFAULT;
+	}
+
+	public AddMenuItem(String cssClass, String id, String label, String url) {
+		super(cssClass, id, label, url);
 
 		_type = AddMenuKeys.AddMenuType.DEFAULT;
 	}

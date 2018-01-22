@@ -49,7 +49,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 		}
 		%>
 
-		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="btn btn-action <%= inline ? StringPool.BLANK : "btn-bottom-right" %> btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
+		<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="<%= menuItem.getCssClass() %> btn btn-action <%= inline ? StringPool.BLANK : "btn-bottom-right" %> btn-primary" data-placement="left" data-qa-id="addButton" data-toggle="tooltip" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>" title="<%= HtmlUtil.escapeAttribute(title) %>">
 			<aui:icon image="plus" markupView="lexicon" />
 		</a>
 
@@ -110,7 +110,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 						%>
 
 							<li>
-								<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(menuItem.getLabel()) %></a>
+								<a <%= AUIUtil.buildData(menuItem.getAnchorData()) %> class="<%= menuItem.getCssClass() %>" href="<%= HtmlUtil.escapeAttribute(menuItem.getUrl()) %>" id="<%= namespace + id %>"><%= HtmlUtil.escape(menuItem.getLabel()) %></a>
 							</li>
 
 						<%

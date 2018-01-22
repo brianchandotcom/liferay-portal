@@ -208,8 +208,9 @@ public class PlusStatementCheck extends StringConcatenationCheck {
 			String methodCallClassName = classNameAST.getText();
 			String methodCallMethodName = methodNameAST.getText();
 
-			if (methodCallClassName.equals("Pattern") &&
-				methodCallMethodName.equals("compile")) {
+			if (methodCallMethodName.equals("matches") ||
+				(methodCallClassName.equals("Pattern") &&
+				 methodCallMethodName.equals("compile"))) {
 
 				return true;
 			}

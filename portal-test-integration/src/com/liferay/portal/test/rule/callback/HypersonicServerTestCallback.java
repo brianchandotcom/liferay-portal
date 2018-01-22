@@ -14,9 +14,9 @@
 
 package com.liferay.portal.test.rule.callback;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncPrintWriter;
 import com.liferay.portal.kernel.test.rule.callback.BaseTestCallback;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.util.PropsValues;
 
 import java.io.File;

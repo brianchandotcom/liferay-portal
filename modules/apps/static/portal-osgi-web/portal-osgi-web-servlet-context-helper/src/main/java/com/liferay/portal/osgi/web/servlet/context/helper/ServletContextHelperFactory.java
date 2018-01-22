@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.ServletContextHelperRegistrationServiceFactory;
 
 import java.util.Map;

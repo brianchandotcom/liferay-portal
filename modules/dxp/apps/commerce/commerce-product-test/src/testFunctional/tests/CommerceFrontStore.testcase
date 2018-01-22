@@ -36,8 +36,8 @@
 
 		<echo message="Creating new Option complete with Values..." />
 
-		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
-			<var name="menuTabItem" value="Options" />
+		<execute macro="CommerceNavigator#gotoCommercePortletNavItem">
+			<var name="navItem" value="Options" />
 		</execute>
 
 		<execute function="Pause" locator1="2000" />
@@ -52,8 +52,8 @@
 
 		<echo message="Creating new Product..." />
 
-		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
-			<var name="menuTabItem" value="Products" />
+		<execute macro="CommerceNavigator#gotoCommercePortletNavItem">
+			<var name="navItem" value="Products" />
 		</execute>
 
 		<execute macro="CPCommerceCatalog#newProductsEntry">
@@ -78,8 +78,7 @@
 		</execute>
 
 		<execute macro="CommerceSKUs#addSKU" >
-			<var name="optionValuesList" value="Black,Blue,White" />
-			<var name="price" value="25.0" />
+			<var name="optionValuesList" value="Black:10.0,Blue:20.0,White:30.0" />
 		</execute>
 
 		<echo message="Adding Product Images..." />
@@ -99,8 +98,7 @@
 		</execute>
 
 		<execute macro="FrontStore#viewProductDetail">
-			<var name="FSOptionValuesList" value="Black,Blue,White" />
-			<var name="FSPrice" value="25.0" />
+			<var name="FSOptionValuesList" value="Black:10.0,Blue:20.0,White:30.0" />
 			<var name="FSProductTitle" value="Simple T-Shirt" />
 		</execute>
 	</command>

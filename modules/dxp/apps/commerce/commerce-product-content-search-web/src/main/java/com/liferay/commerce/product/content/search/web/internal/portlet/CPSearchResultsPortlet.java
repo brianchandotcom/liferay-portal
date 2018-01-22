@@ -254,12 +254,15 @@ public class CPSearchResultsPortlet
 	protected Query getCPDefinitionLinksQuery(
 		CPDefinition cpDefinition, int type) {
 
-		StringBundler sb = new StringBundler();
+		String query = StringPool.BLANK;
 
 		try {
 			List<CPDefinitionLink> cpDefinitionLinks =
 				_cpDefinitionLinkService.getCPDefinitionLinks(
 					cpDefinition.getCPDefinitionId(), type);
+
+			StringBundler sb = new StringBundler(
+				cpDefinitionLinks.size() * 5 - 2);
 
 			for (int i = 0; i < cpDefinitionLinks.size(); i++) {
 				CPDefinitionLink cpDefinitionLink = cpDefinitionLinks.get(i);
@@ -276,12 +279,14 @@ public class CPSearchResultsPortlet
 					sb.append(StringPool.CLOSE_PARENTHESIS);
 				}
 			}
+
+			query = sb.toString();
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 		}
 
-		return new StringQuery(sb.toString());
+		return new StringQuery(query);
 	}
 
 	protected long getScopeGroupId(

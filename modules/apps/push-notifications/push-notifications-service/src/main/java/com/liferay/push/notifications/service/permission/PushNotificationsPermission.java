@@ -17,13 +17,15 @@ package com.liferay.push.notifications.service.permission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.push.notifications.constants.PushNotificationsConstants;
 
 /**
  * @author Bruno Farache
  */
 public class PushNotificationsPermission {
 
-	public static final String RESOURCE_NAME = "com.liferay.push.notifications";
+	public static final String RESOURCE_NAME =
+		PushNotificationsConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, String actionId)
@@ -38,7 +40,7 @@ public class PushNotificationsPermission {
 		PermissionChecker permissionChecker, String actionId) {
 
 		return permissionChecker.hasPermission(
-			null, RESOURCE_NAME, 0, actionId);
+			null, PushNotificationsConstants.RESOURCE_NAME, 0, actionId);
 	}
 
 }

@@ -288,8 +288,7 @@ public class BatchBuild extends BaseBuild {
 			}
 
 			testResults.addAll(
-				BaseTestResult.getTestResults(
-					axisBuild, suitesJSONArray, testStatus));
+				getTestResults(axisBuild, suitesJSONArray, testStatus));
 		}
 
 		return testResults;

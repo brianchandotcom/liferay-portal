@@ -431,7 +431,7 @@ public class AxisBuild extends BaseBuild {
 
 		JSONObject testReportJSONObject = getTestReportJSONObject();
 
-		return BaseTestResult.getTestResults(
+		return getTestResults(
 			this, testReportJSONObject.getJSONArray("suites"), testStatus);
 	}
 

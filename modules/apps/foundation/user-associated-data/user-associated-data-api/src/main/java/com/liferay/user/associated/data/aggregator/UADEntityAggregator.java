@@ -29,6 +29,8 @@ public interface UADEntityAggregator {
 
 	public long count(long userId);
 
+	public String getBundleId();
+
 	public List<UADEntity> getUADEntities(long userId);
 
 	public UADEntity getUADEntity(String uadEntityId) throws PortalException;

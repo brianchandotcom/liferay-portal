@@ -22,4 +22,6 @@ public class BookmarksUADConstants {
 	public static final String BOOKMARKS_ENTRY =
 		"com.liferay.bookmarks.model.BookmarksEntry";
 
+	public static final String BUNDLE_ID = "Bookmarks";
+
 }

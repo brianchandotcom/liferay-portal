@@ -195,6 +195,8 @@ public class LiferayConnectionProperties
 
 		Form advancedForm = new Form(this, Form.ADVANCED);
 
+		advancedForm.addRow(connectTimeout);
+		advancedForm.addColumn(readTimeout);
 		advancedForm.addRow(itemsPerPage);
 	}
 
@@ -238,6 +240,8 @@ public class LiferayConnectionProperties
 
 	public Property<Boolean> anonymousLogin = PropertyFactory.newBoolean(
 		"anonymousLogin");
+	public Property<Integer> connectTimeout = PropertyFactory.newInteger(
+		"connectTimeout", _DEFAULT_CONNECT_TIMEOUT);
 	public Property<String> endpoint = PropertyFactory.newString("endpoint");
 	public Property<Integer> itemsPerPage = PropertyFactory.newInteger(
 		"itemsPerPage", _DEFAULT_ITEMS_PER_PAGE);
@@ -247,6 +251,8 @@ public class LiferayConnectionProperties
 		PropertyFactory.newString("password").setFlags(
 			EnumSet.of(
 				Property.Flags.ENCRYPT, Property.Flags.SUPPRESS_LOGGING));
+	public Property<Integer> readTimeout = PropertyFactory.newInteger(
+		"readTimeout", _DEFAULT_READ_TIMEOUT);
 	public ComponentReferenceProperties<LiferayConnectionProperties>
 		referencedComponent = new ComponentReferenceProperties<>(
 			"referencedComponent", TLiferayConnectionDefinition.COMPONENT_NAME);
@@ -267,10 +273,14 @@ public class LiferayConnectionProperties
 		widget.setHidden(hidden);
 	}
 
+	private static final int _DEFAULT_CONNECT_TIMEOUT = 30;
+
 	private static final String _DEFAULT_HOST =
 		"\"https://apiosample.wedeploy.io\"";
 
 	private static final int _DEFAULT_ITEMS_PER_PAGE = 30;
+
+	private static final int _DEFAULT_READ_TIMEOUT = 60;
 
 	private static final Logger _log = LoggerFactory.getLogger(
 		LiferayConnectionProperties.class);

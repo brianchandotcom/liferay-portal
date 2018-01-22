@@ -13,7 +13,6 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.bookmarks.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.api", version: "2.12.0"
-	testIntegrationCompile group: "com.liferay", name: "com.liferay.journal.content.web", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.xstream.configurator.api", version: "2.0.0"
 	testIntegrationCompile group: "com.liferay.portal", name: "com.liferay.portal.impl", version: "2.0.0"

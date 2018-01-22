@@ -34,11 +34,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>INVERSE_MENU_TAB</td>
-	<td>//div[contains (@class,'navbar-inverse')]//..//a[@title='${key_menuTabItem}']</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SEARCH</td>
 	<td>//*[@data-qa-id='searchButton'] | //button[contains(.,'search')]</td>
 	<td></td>

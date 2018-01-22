@@ -362,9 +362,10 @@ public class DDMFormValidatorImpl implements DDMFormValidator {
 			ddmFormAvailableLocales, ddmFormDefaultLocale);
 	}
 
-	private DDMExpressionFactory _ddmExpressionFactory;
-	private final String[] _ddmFormFieldIndexTypes =
+	private static final String[] _ddmFormFieldIndexTypes =
 		{StringPool.BLANK, "keyword", "text"};
+
+	private DDMExpressionFactory _ddmExpressionFactory;
 	private final Pattern _ddmFormFieldNamePattern = Pattern.compile(
 		"([^\\p{Punct}|\\p{Space}$]|_)+");
 	private final Pattern _ddmFormFieldTypePattern = Pattern.compile(

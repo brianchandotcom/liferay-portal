@@ -15,10 +15,10 @@
 package com.liferay.invitation.web.internal.portlet.action;
 
 import com.liferay.invitation.web.internal.constants.InvitationPortletKeys;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

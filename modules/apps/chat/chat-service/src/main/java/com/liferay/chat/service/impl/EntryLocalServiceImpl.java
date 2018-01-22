@@ -17,10 +17,10 @@ package com.liferay.chat.service.impl;
 import com.liferay.chat.internal.jabber.JabberUtil;
 import com.liferay.chat.model.Entry;
 import com.liferay.chat.service.base.EntryLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.db.DBType;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;

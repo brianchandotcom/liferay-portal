@@ -1,9 +1,9 @@
 <definition>
-	<command name="FSselectAssociatedOptionsValue">
+	<command name="selectAssociatedFSOptionsValue">
 		<execute function="Click" locator1="CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT" />
 
 		<execute function="Click" locator1="CommerceFrontStore#FS_PRODUCT_OPTION">
-			<var name="key_optionValue" value="${FSoptionValue}" />
+			<var name="key_optionValue" value="${FSOptionValue}" />
 		</execute>
 	</command>
 
@@ -16,34 +16,38 @@
 			<condition function="IsElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_OPTIONS_SELECT" />
 			<then>
 				<for list="${FSOptionValuesList}" param="FSOptionValues">
-					<execute macro="FrontStore#FSselectAssociatedOptionsValue">
-						<var name="FSoptionValue" value="${FSOptionValues}" />
+					<var method="StringUtil#extractFirst('${FSOptionValues}', ':')" name="FSOptionValue" />
+
+					<var method="StringUtil#extractLast('${FSOptionValues}', ':')" name="FSPrice" />
+
+					<var method="StringUtil#upperCase('${FSOptionValue}')" name="FSOptionValueUppercase" />
+
+					<execute macro="FrontStore#selectAssociatedFSOptionsValue">
+						<var name="FSOptionValue" value="${FSOptionValue}" />
 					</execute>
 
-					<var method="StringUtil#upperCase('${FSOptionValues}')" name="FSoptionValuesUppercase" />
-
-					<echo message="Checking ${FSOptionValues} ${FSProductTitle} SKU is correct..." />
+					<echo message="Checking ${FSOptionValue} ${FSProductTitle} SKU is correct..." />
 
 					<execute function="AssertElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_SKU">
-						<var name="key_FSProductSKU" value="${FSoptionValuesUppercase}SKU" />
+						<var name="key_FSProductSKU" value="${FSOptionValueUppercase}SKU" />
 					</execute>
 
-					<echo message="Checking ${FSOptionValues} ${FSProductTitle} price is correct..." />
+					<echo message="Checking ${FSOptionValue} ${FSProductTitle} price is correct..." />
 
 					<execute function="AssertElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_PRICE">
 						<var name="key_FSProductPrice" value="${FSPrice}" />
 					</execute>
 
-					<echo message="Checking ${FSOptionValues} ${FSProductTitle} image is correct..." />
+					<echo message="Checking ${FSOptionValue} ${FSProductTitle} image is correct..." />
 
-					<execute function="AssertElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_FULL_IMAGE" value1="${FSOptionValues}">
-						<var name="key_FSProductImage" value="${FSOptionValues}" />
+					<execute function="AssertElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_FULL_IMAGE" value1="${FSOptionValue}">
+						<var name="key_FSProductImage" value="${FSOptionValue}" />
 					</execute>
 
-					<echo message="Checking ${FSOptionValues} ${FSProductTitle} thumbnail is correct..." />
+					<echo message="Checking ${FSOptionValue} ${FSProductTitle} thumbnail is correct..." />
 
-					<execute function="AssertElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_IMAGE_THUMBNAIL" value1="${FSOptionValues}">
-						<var name="key_FSProductImageThumb" value="${FSOptionValues}" />
+					<execute function="AssertElementPresent" locator1="CommerceFrontStore#FS_PRODUCT_IMAGE_THUMBNAIL" value1="${FSOptionValue}">
+						<var name="key_FSProductImageThumb" value="${FSOptionValue}" />
 					</execute>
 				</for>
 			</then>

@@ -15,7 +15,11 @@
 
 	<command name="addSKU">
 		<for list="${optionValuesList}" param="optionValues">
-			<var method="StringUtil#upperCase('${optionValues}')" name="optionValuesUppercase" />
+			<var method="StringUtil#extractFirst('${optionValues}', ':')" name="optionValue" />
+
+			<var method="StringUtil#extractLast('${optionValues}', ':')" name="price" />
+
+			<var method="StringUtil#upperCase('${optionValue}')" name="optionValueUppercase" />
 
 			<execute function="Click" locator1="Button#PLUS" />
 
@@ -23,24 +27,22 @@
 				<var name="key_menuItem" value="Add SKU" />
 			</execute>
 
-			<for list="${productSKUList}" param="productSKUs">
-				<execute macro="CommerceEntry#addSKUsEntry">
-					<var name="optionValue" value="${optionValues}" />
-					<var name="productSKU" value="${optionValuesUppercase}SKU" />
-				</execute>
+			<execute macro="CommerceEntry#addSKUsEntry">
+				<var name="optionValue" value="${optionValue}" />
+				<var name="productSKU" value="${optionValueUppercase}SKU" />
+			</execute>
 
-				<execute macro="CommerceEntry#publishEntry" />
+			<execute macro="CommerceEntry#publishEntry" />
 
-				<execute macro="Alert#waitForSuccessMessageHide" />
+			<execute macro="Alert#waitForSuccessMessageHide" />
 
-				<execute macro="CommerceSKUs#addPriceToSKU">
-					<var name="price" value="${price}" />
-				</execute>
+			<execute macro="CommerceSKUs#addPriceToSKU">
+				<var name="price" value="${price}" />
+			</execute>
 
-				<execute macro="CommerceEntry#gotoBreadcrumb">
-					<var name="breadcrumb" value="SKUs" />
-				</execute>
-			</for>
+			<execute macro="CommerceEntry#gotoBreadcrumb">
+				<var name="breadcrumb" value="SKUs" />
+			</execute>
 		</for>
 	</command>
 </definition>

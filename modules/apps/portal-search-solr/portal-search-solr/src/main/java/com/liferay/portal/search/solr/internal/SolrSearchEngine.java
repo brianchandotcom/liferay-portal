@@ -14,12 +14,12 @@
 
 package com.liferay.portal.search.solr.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.search.BaseSearchEngine;
 import com.liferay.portal.kernel.search.IndexSearcher;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchEngine;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
 

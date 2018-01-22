@@ -14,9 +14,9 @@
 
 package com.liferay.portal.scripting.ruby.internal;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.scripting.ScriptingContainer;
 import com.liferay.portal.kernel.scripting.ScriptingException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.jruby.RubyArray;
 import org.jruby.RubyException;

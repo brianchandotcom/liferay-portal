@@ -104,8 +104,8 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 
 		<div class="container-fluid-1280">
 			<aui:button-row cssClass="ddm-form-builder-buttons">
-				<aui:button cssClass="btn-lg" id="save" type="submit" value="save" />
-				<aui:button cssClass="btn-lg" href="<%= redirect %>" name="cancelButton" type="cancel" />
+				<aui:button id="save" type="submit" value="save" />
+				<aui:button href="<%= redirect %>" name="cancelButton" type="cancel" />
 			</aui:button-row>
 		</div>
 

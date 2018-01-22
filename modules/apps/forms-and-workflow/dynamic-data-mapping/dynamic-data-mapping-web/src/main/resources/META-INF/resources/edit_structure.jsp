@@ -317,13 +317,13 @@ if (Validator.isNotNull(requestUpdateStructureURL)) {
 	</aui:form>
 
 	<aui:button-row>
-		<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
+		<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(false);" %>' primary="<%= true %>" value='<%= LanguageUtil.get(request, "save") %>' />
 
 		<c:if test="<%= ddmDisplay.isVersioningEnabled() %>">
-			<aui:button cssClass="btn-lg" onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
+			<aui:button onClick='<%= renderResponse.getNamespace() + "saveStructure(true);" %>' value='<%= LanguageUtil.get(request, "save-draft") %>' />
 		</c:if>
 
-		<aui:button cssClass="btn-lg" href="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" type="cancel" />
+		<aui:button href="<%= ddmDisplay.getViewTemplatesBackURL(liferayPortletRequest, liferayPortletResponse, classPK) %>" type="cancel" />
 	</aui:button-row>
 </div>
 

@@ -72,6 +72,11 @@
 	</div>
 </div>
 
+<portlet:renderURL var="addSiteNavigationMenuItemRedirectURL">
+	<portlet:param name="mvcPath" value="/add_site_navigation_menu_item_redirect.jsp" />
+	<portlet:param name="portletResource" value="<%= portletDisplay.getId() %>" />
+</portlet:renderURL>
+
 <liferay-frontend:add-menu>
 
 	<%
@@ -79,18 +84,52 @@
 		PortletURL addSiteNavigationMenuItemTypeURL = renderResponse.createRenderURL();
 
 		addSiteNavigationMenuItemTypeURL.setParameter("mvcPath", "/add_site_navigation_menu_item.jsp");
-		addSiteNavigationMenuItemTypeURL.setParameter("redirect", currentURL);
+		addSiteNavigationMenuItemTypeURL.setParameter("redirect", addSiteNavigationMenuItemRedirectURL);
 		addSiteNavigationMenuItemTypeURL.setParameter("siteNavigationMenuId", String.valueOf(siteNavigationAdminDisplayContext.getSiteNavigationMenuId()));
 		addSiteNavigationMenuItemTypeURL.setParameter("type", siteNavigationMenuItemType.getType());
+
+		addSiteNavigationMenuItemTypeURL.setWindowState(LiferayWindowState.POP_UP);
 	%>
 
-		<liferay-frontend:add-menu-item title="<%= siteNavigationMenuItemType.getLabel(locale) %>" url="<%= addSiteNavigationMenuItemTypeURL.toString() %>" />
+		<liferay-frontend:add-menu-item cssClass="add-menu-item-link" title="<%= siteNavigationMenuItemType.getLabel(locale) %>" url="<%= addSiteNavigationMenuItemTypeURL.toString() %>" />
 
 	<%
 	}
 	%>
 
 </liferay-frontend:add-menu>
+
+<aui:script require="metal-dom/src/all/dom as dom">
+	var addMenuItemClickHandler = dom.delegate(
+		document.body,
+		'click',
+		'.add-menu-item-link',
+		function(event) {
+			Liferay.Util.openInDialog(
+				event,
+				{
+					dialog: {
+						destroyOnHide: true
+					},
+					dialogIframe: {
+						bodyCssClass: 'dialog-with-footer'
+					},
+					id: '<portlet:namespace/>addMenuItem',
+					title: event.delegateTarget.title,
+					uri: event.delegateTarget.href
+				}
+			);
+		}
+	);
+
+	function handleDestroyPortlet() {
+		addMenuItemClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
+</aui:script>
 
 <aui:script require="site-navigation-menu-web/js/SiteNavigationMenuEditor.es as siteNavigationMenuEditorModule">
 	var siteNavigationMenuEditor = new siteNavigationMenuEditorModule.default(

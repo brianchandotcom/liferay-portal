@@ -16,17 +16,17 @@
 </tr>
 <tr>
 	<td>NAVIGATION_COMMUNICATION</td>
-	<td>//ul[contains(@id,'nav')]//span[contains(.,'Communication')]</td>
+	<td>//ul[contains(@class,'nav')]//span[contains(.,'Communication')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SHARING</td>
-	<td>//ul[contains(@id,'nav')]//span[contains(.,'Sharing')]</td>
+	<td>//ul[contains(@class,'nav')]//span[contains(.,'Sharing')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>NAVIGATION_SCOPE</td>
-	<td>//ul[contains(@id,'nav')]//span[contains(.,'Scope')]</td>
+	<td>//ul[contains(@class,'nav')]//span[contains(.,'Scope')]</td>
 	<td></td>
 </tr>
 <tr>

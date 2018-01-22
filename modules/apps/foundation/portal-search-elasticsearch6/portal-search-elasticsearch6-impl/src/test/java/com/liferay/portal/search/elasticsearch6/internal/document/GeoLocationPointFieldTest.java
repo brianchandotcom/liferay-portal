@@ -14,6 +14,7 @@
 
 package com.liferay.portal.search.elasticsearch6.internal.document;
 
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -50,6 +51,11 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 	@Test
 	public void testDefaultField() throws Exception {
 		assertGeoLocationPointField(Field.GEO_LOCATION);
+	}
+
+	@Test
+	public void testDefaultTemplate() throws Exception {
+		assertGeoLocationPointField(_CUSTOM_FIELD.concat("_geolocation"));
 	}
 
 	protected void assertGeoLocationPointField(final String fieldName)
@@ -132,9 +138,10 @@ public class GeoLocationPointFieldTest extends BaseIndexingTestCase {
 			LiferayDocumentTypeFactory liferayDocumentTypeFactory =
 				getLiferayDocumentTypeFactory();
 
-			String source =
-				"{properties: { " + _CUSTOM_FIELD + " : {lat_lon: true, " +
-					"store: true, type: \"geo_point\"}}}";
+			String source = StringBundler.concat(
+				"{ \"properties\": { \"", _CUSTOM_FIELD, "\" : { \"fields\": ",
+				"{ \"geopoint\" : { \"store\": true, \"type\": \"keyword\" } ",
+				"}, \"store\": true, \"type\": \"geo_point\" } } }");
 
 			liferayDocumentTypeFactory.addTypeMappings(indexName, source);
 		}

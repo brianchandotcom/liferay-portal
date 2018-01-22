@@ -39,13 +39,14 @@ public class DefaultDDMFormRuleActionSerializer
 			_defaultDefaultDDMFormRuleAction.getAction());
 
 		return String.format(
-			_setBooleanPropertyFormat, functionName,
+			_SET_BOOLEAN_PROPERTY_FORMAT, functionName,
 			_defaultDefaultDDMFormRuleAction.getTarget());
 	}
 
+	private static final String _SET_BOOLEAN_PROPERTY_FORMAT = "%s('%s', true)";
+
 	private static final Map<String, String> _actionBooleanFunctionNameMap =
 		new HashMap<>();
-	private static final String _setBooleanPropertyFormat = "%s('%s', true)";
 
 	static {
 		_actionBooleanFunctionNameMap.put("enable", "setEnabled");

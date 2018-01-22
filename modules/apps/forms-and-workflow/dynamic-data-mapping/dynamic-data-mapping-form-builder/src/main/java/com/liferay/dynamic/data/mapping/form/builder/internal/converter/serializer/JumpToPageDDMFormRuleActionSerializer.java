@@ -33,12 +33,12 @@ public class JumpToPageDDMFormRuleActionSerializer
 		DDMFormRuleSerializerContext ddmFormRuleSerializerContext) {
 
 		return String.format(
-			_functionCallBinaryExpressionFormat, "jumpPage",
+			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "jumpPage",
 			_jumpToPageDDMFormRuleAction.getSource(),
 			_jumpToPageDDMFormRuleAction.getTarget());
 	}
 
-	private static final String _functionCallBinaryExpressionFormat =
+	private static final String _FUNCTION_CALL_BINARY_EXPRESSION_FORMAT =
 		"%s(%s, %s)";
 
 	private final JumpToPageDDMFormRuleAction _jumpToPageDDMFormRuleAction;

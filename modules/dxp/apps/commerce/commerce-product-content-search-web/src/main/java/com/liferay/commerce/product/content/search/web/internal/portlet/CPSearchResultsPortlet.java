@@ -123,7 +123,7 @@ public class CPSearchResultsPortlet
 		portletSharedSearchSettings.setKeywords("*");
 
 		portletSharedSearchSettings.addCondition(
-			new BooleanClauseImpl(
+			new BooleanClauseImpl<Query>(
 				new TermQueryImpl(
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
@@ -138,7 +138,7 @@ public class CPSearchResultsPortlet
 				_cpSearchResultsPortletInstanceConfiguration.assetCategoryIds();
 
 			portletSharedSearchSettings.addCondition(
-				new BooleanClauseImpl(
+				new BooleanClauseImpl<Query>(
 					new TermQueryImpl(
 						Field.ASSET_CATEGORY_IDS,
 						StringUtil.merge(assetCategoryIds, StringPool.COMMA)),
@@ -151,7 +151,7 @@ public class CPSearchResultsPortlet
 
 			if (assetCategory != null) {
 				portletSharedSearchSettings.addCondition(
-					new BooleanClauseImpl(
+					new BooleanClauseImpl<Query>(
 						new TermQueryImpl(
 							Field.ASSET_CATEGORY_IDS,
 							String.valueOf(assetCategory.getCategoryId())),
@@ -246,7 +246,7 @@ public class CPSearchResultsPortlet
 		long groupIdOptional = getScopeGroupId(portletSharedSearchSettings);
 
 		portletSharedSearchSettings.addCondition(
-			new BooleanClauseImpl(
+			new BooleanClauseImpl<Query>(
 				new TermQueryImpl(
 					Field.GROUP_ID, String.valueOf(groupIdOptional)),
 				BooleanClauseOccur.MUST));

@@ -30,7 +30,7 @@ import org.json.JSONObject;
  * @author Leslie Wong
  * @author Yi-Chen Tsai
  */
-public class TestResult {
+public class BaseTestResult implements TestResult {
 
 	public static List<TestResult> getTestResults(
 		Build build, JSONArray suitesJSONArray, String testStatus) {
@@ -43,7 +43,7 @@ public class TestResult {
 			JSONArray casesJSONArray = suiteJSONObject.getJSONArray("cases");
 
 			for (int j = 0; j < casesJSONArray.length(); j++) {
-				TestResult testResult = new TestResult(
+				TestResult testResult = new BaseTestResult(
 					build, casesJSONArray.getJSONObject(j));
 
 				if ((testStatus == null) ||
@@ -57,7 +57,7 @@ public class TestResult {
 		return testResults;
 	}
 
-	public TestResult(Build build, JSONObject caseJSONObject) {
+	public BaseTestResult(Build build, JSONObject caseJSONObject) {
 		if (build == null) {
 			throw new IllegalArgumentException("Build may not be null");
 		}
@@ -96,14 +96,17 @@ public class TestResult {
 		}
 	}
 
+	@Override
 	public Build getBuild() {
 		return build;
 	}
 
+	@Override
 	public String getClassName() {
 		return className;
 	}
 
+	@Override
 	public String getConsoleOutputURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
@@ -113,6 +116,7 @@ public class TestResult {
 		return sb.toString();
 	}
 
+	@Override
 	public String getDisplayName() {
 		if (testName.startsWith("test[")) {
 			return testName.substring(5, testName.length() - 1);
@@ -121,14 +125,17 @@ public class TestResult {
 		return simpleClassName + "." + testName;
 	}
 
+	@Override
 	public long getDuration() {
 		return duration;
 	}
 
+	@Override
 	public Element getGitHubElement() {
 		return getGitHubElement(null);
 	}
 
+	@Override
 	public Element getGitHubElement(String testrayLogsURL) {
 		String testReportURL = getTestReportURL();
 
@@ -175,6 +182,7 @@ public class TestResult {
 		return downstreamBuildListItemElement;
 	}
 
+	@Override
 	public String getLiferayLogURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
@@ -188,10 +196,12 @@ public class TestResult {
 		return sb.toString();
 	}
 
+	@Override
 	public String getPackageName() {
 		return packageName;
 	}
 
+	@Override
 	public String getPoshiReportURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
@@ -205,6 +215,7 @@ public class TestResult {
 		return sb.toString();
 	}
 
+	@Override
 	public String getPoshiSummaryURL(String testrayLogsURL) {
 		StringBuilder sb = new StringBuilder();
 
@@ -218,14 +229,17 @@ public class TestResult {
 		return sb.toString();
 	}
 
+	@Override
 	public String getStatus() {
 		return status;
 	}
 
+	@Override
 	public String getTestName() {
 		return testName;
 	}
 
+	@Override
 	public String getTestReportURL() {
 		StringBuilder sb = new StringBuilder();
 
@@ -251,6 +265,7 @@ public class TestResult {
 		return sb.toString();
 	}
 
+	@Override
 	public boolean hasLiferayLog(String testrayLogsURL) {
 		String liferayLog = null;
 

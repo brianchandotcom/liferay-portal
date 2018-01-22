@@ -766,8 +766,9 @@
 	</command>
 
 	<command name="searchTemplate">
-		<execute function="Type" locator1="Search#SEARCH_FIELD" value1="${exportTemplateName}" />
-		<execute function="Click" locator1="Search#SEARCH_BUTTON" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="${exportTemplateName}" />
+		</execute>
 
 		<var name="key_exportTemplateName" value="${exportTemplateName}" />
 

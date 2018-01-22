@@ -115,10 +115,6 @@
 			<var name="exportTemplateName" value="Export Template Name" />
 		</execute>
 
-		<execute macro="LAR#configureExportOptions">
-			<var name="uncheckContentNameList" value="Blogs" />
-		</execute>
-
 		<execute macro="LAR#saveExportTemplateCP">
 			<var name="exportTemplateDescription" value="Export Template Description" />
 			<var name="exportTemplateName" value="Export Template Name" />

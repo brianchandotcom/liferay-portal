@@ -2,5 +2,5 @@
 <!DOCTYPE suppressions PUBLIC "-//Puppy Crawl//DTD Check Suppressions 1.1//EN" "http://www.puppycrawl.com/dtds/suppressions_1_1.dtd">
 
 <suppressions>
-	<suppress checks="StaticVariableName" files="journal-service/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
+	<suppress checks="StaticVariableName" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
 </suppressions>

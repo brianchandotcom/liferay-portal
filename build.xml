@@ -415,12 +415,6 @@ message.
 						</gradle-execute>
 					</else>
 				</if>
-
-				<gradle-execute dir="${project.dir}/modules" task="copyCompiledJSP">
-					<arg value="-Dbuild.exclude.dirs=${build.exclude.dirs}" />
-					<arg value="-Dbuild.include.dirs=${build.include.dirs}" />
-					<arg value="-Dbuild.profile=${build.profile}" />
-				</gradle-execute>
 			</then>
 		</if>
 

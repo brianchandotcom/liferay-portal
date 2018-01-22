@@ -52,7 +52,7 @@
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_TITLE_PUBLISHED</td>
-	<td>//div[contains(@id,'WorkflowPortlet')]//tr[count(preceding-sibling::tr[contains(@class,'splitter')])=1 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[count(preceding-sibling::tr[contains(@class,'splitter')])=1 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

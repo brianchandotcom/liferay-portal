@@ -50,13 +50,13 @@ public class GradleBodyCheck extends BaseGradleFileCheck {
 
 		for (String line : StringUtil.splitLines(bodyBlock)) {
 			if (line.matches(
-					"^(allprojects|project|subprojects|" +
-						"else\\s|for\\s|if\\s|while\\s).*\\{")) {
+					"(allprojects|project|subprojects|(else|for|if|while)\\s)" +
+						".*\\{")) {
 
 				return content;
 			}
 
-			if (Validator.isNull(newBlock) && line.matches("^\\w+\\s*\\{")) {
+			if (Validator.isNull(newBlock) && line.matches("\\w+\\s*\\{")) {
 				newBlock = line;
 				oldBlocks = oldBlocks + "\n" + line;
 

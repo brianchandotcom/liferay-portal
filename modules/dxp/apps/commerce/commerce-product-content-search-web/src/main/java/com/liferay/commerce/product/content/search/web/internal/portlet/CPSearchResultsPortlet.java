@@ -165,10 +165,9 @@ public class CPSearchResultsPortlet
 			if (cpDefinition != null) {
 				Query stringQuery = null;
 
-
 				if (configurationMethod.equals(
 						CPSearchResultsConfigurationConstants.
-								SHOW_RELATED_PRODUCTS)) {
+							SHOW_RELATED_PRODUCTS)) {
 
 					stringQuery = getCPDefinitionLinksQuery(
 						cpDefinition, CPDefinitionLinkConstants.TYPE_RELATED);
@@ -176,7 +175,7 @@ public class CPSearchResultsPortlet
 
 				if (configurationMethod.equals(
 						CPSearchResultsConfigurationConstants.
-								SHOW_UP_SELL_PRODUCTS)) {
+							SHOW_UP_SELL_PRODUCTS)) {
 
 					stringQuery = getCPDefinitionLinksQuery(
 						cpDefinition, CPDefinitionLinkConstants.TYPE_UP_SELL);
@@ -184,7 +183,7 @@ public class CPSearchResultsPortlet
 
 				if (configurationMethod.equals(
 						CPSearchResultsConfigurationConstants.
-								SHOW_CROSS_SELL_PRODUCTS)) {
+							SHOW_CROSS_SELL_PRODUCTS)) {
 
 					stringQuery = getCPDefinitionLinksQuery(
 						cpDefinition,

@@ -70,7 +70,7 @@ public abstract class BaseSpellCheckIndexWriter
 		long[] groupIds = searchContext.getGroupIds();
 
 		if ((groupIds != null) && (groupIds.length > 0)) {
-			groupId = groupIds[1];
+			groupId = groupIds[0];
 		}
 
 		String keywordFieldName = Field.KEYWORD_SEARCH;
@@ -169,6 +169,17 @@ public abstract class BaseSpellCheckIndexWriter
 		_querySuggestionMaxNGramLength = querySuggestionMaxNGramLength;
 	}
 
+	protected Digester getDigester() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (digester != null) {
+			return digester;
+		}
+
+		return DigesterUtil.getDigester();
+	}
+
 	protected URL getResource(String name) {
 		Thread thread = Thread.currentThread();
 
@@ -208,10 +219,7 @@ public abstract class BaseSpellCheckIndexWriter
 		}
 
 		try {
-
-			// See LPS-72507 and LPS-76500
-
-			Digester digester = DigesterUtil.getDigester();
+			Digester digester = getDigester();
 
 			CharsetEncoder charsetEncoder =
 				CharsetEncoderUtil.getCharsetEncoder(StringPool.UTF8);
@@ -322,6 +330,8 @@ public abstract class BaseSpellCheckIndexWriter
 				maxNGramLength);
 		}
 	}
+
+	protected Digester digester;
 
 	@Reference
 	protected GroupLocalService groupLocalService;

@@ -15,12 +15,13 @@
 package com.liferay.portal.search.elasticsearch.internal;
 
 import com.liferay.portal.kernel.search.Document;
-import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.suggest.SpellCheckIndexWriter;
+import com.liferay.portal.kernel.util.Localization;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.search.elasticsearch.connection.ElasticsearchConnectionManager;
 import com.liferay.portal.search.elasticsearch.document.ElasticsearchUpdateDocumentCommand;
 import com.liferay.portal.search.elasticsearch.index.IndexNameBuilder;
@@ -105,8 +106,10 @@ public class ElasticsearchSpellCheckIndexWriter
 		document.addKeyword(Field.COMPANY_ID, companyId);
 		document.addKeyword(Field.GROUP_ID, groupId);
 
-		String localizedName = DocumentImpl.getLocalizedName(
-			languageId, keywordFieldName);
+		Localization localization = getLocalization();
+
+		String localizedName = localization.getLocalizedName(
+			keywordFieldName, languageId);
 
 		document.addKeyword(localizedName, keywords);
 
@@ -147,6 +150,17 @@ public class ElasticsearchSpellCheckIndexWriter
 		}
 	}
 
+	protected Localization getLocalization() {
+
+		// See LPS-72507 and LPS-76500
+
+		if (localization != null) {
+			return localization;
+		}
+
+		return LocalizationUtil.getLocalization();
+	}
+
 	@Reference(
 		cardinality = ReferenceCardinality.OPTIONAL,
 		policy = ReferencePolicy.DYNAMIC,
@@ -171,6 +185,8 @@ public class ElasticsearchSpellCheckIndexWriter
 
 	@Reference(unbind = "-")
 	protected IndexNameBuilder indexNameBuilder;
+
+	protected Localization localization;
 
 	private volatile SearchHitsProcessor _searchHitsProcessor;
 

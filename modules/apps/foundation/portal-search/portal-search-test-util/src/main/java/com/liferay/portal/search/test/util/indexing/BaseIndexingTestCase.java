@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.search.IndexWriter;
 import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
 import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
@@ -71,10 +72,14 @@ public abstract class BaseIndexingTestCase {
 			return;
 		}
 
-		_documentFixture.tearDown();
+		try {
+			_indexWriter.deleteEntityDocuments(
+				createSearchContext(), _entryClassName);
+		}
+		catch (SearchException se) {
+		}
 
-		_indexWriter.deleteEntityDocuments(
-			createSearchContext(), _entryClassName);
+		_documentFixture.tearDown();
 
 		_indexingFixture.tearDown();
 	}
@@ -139,6 +144,10 @@ public abstract class BaseIndexingTestCase {
 
 	protected IndexSearcher getIndexSearcher() {
 		return _indexSearcher;
+	}
+
+	protected IndexWriter getIndexWriter() {
+		return _indexWriter;
 	}
 
 	protected Hits search(SearchContext searchContext) throws Exception {

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.web.trash;
+package com.liferay.exportimport.web.internal.trash;
 
 import aQute.bnd.annotation.ProviderType;
 

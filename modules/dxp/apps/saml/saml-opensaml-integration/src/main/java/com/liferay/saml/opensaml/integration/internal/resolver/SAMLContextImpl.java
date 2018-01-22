@@ -18,6 +18,8 @@ import com.liferay.saml.opensaml.integration.resolver.Resolver;
 import com.liferay.saml.opensaml.integration.resolver.Resolver.SAMLCommand;
 import com.liferay.saml.opensaml.integration.resolver.Resolver.SAMLContext;
 
+import java.util.function.Function;
+
 import org.opensaml.common.SAMLObject;
 import org.opensaml.common.binding.SAMLMessageContext;
 import org.opensaml.saml2.core.NameID;

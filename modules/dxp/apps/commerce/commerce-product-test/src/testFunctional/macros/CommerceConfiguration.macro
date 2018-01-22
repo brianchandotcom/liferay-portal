@@ -4,8 +4,8 @@
 			<var name="portlet" value="Settings" />
 		</execute>
 
-		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
-			<var name="menuTabItem" value="Health Status" />
+		<execute macro="CommerceNavigator#gotoCommercePortletNavItem">
+			<var name="navItem" value="Health Status" />
 		</execute>
 
 		<for list="1,2,3,4" param="buttonRowNumber">
@@ -61,8 +61,8 @@
 			</then>
 		</if>
 
-		<execute macro="CommerceNavigator#gotoCommercePortletMenuItem">
-			<var name="menuTabItem" value="Options" />
+		<execute macro="CommerceNavigator#gotoCommercePortletNavItem">
+			<var name="navItem" value="Options" />
 		</execute>
 
 		<execute function="Pause" locator1="3000" />

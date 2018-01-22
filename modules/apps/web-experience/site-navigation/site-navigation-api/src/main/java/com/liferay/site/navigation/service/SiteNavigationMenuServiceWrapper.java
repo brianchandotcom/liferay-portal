@@ -36,6 +36,15 @@ public class SiteNavigationMenuServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
+		long groupId, java.lang.String name, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _siteNavigationMenuService.addSiteNavigationMenu(groupId, name,
+			type, serviceContext);
+	}
+
+	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu addSiteNavigationMenu(
 		long groupId, java.lang.String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -103,12 +112,11 @@ public class SiteNavigationMenuServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long siteNavigationMenuId, boolean primary, boolean secondary,
-		boolean social,
+		long siteNavigationMenuId, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuService.updateSiteNavigationMenu(siteNavigationMenuId,
-			primary, secondary, social, serviceContext);
+			type, serviceContext);
 	}
 
 	@Override

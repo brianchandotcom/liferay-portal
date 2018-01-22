@@ -604,190 +604,63 @@ public class SiteNavigationMenuUtil {
 	}
 
 	/**
-	* Returns the site navigation menu where groupId = &#63; and primary = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
+	* Returns the site navigation menu where groupId = &#63; and type = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
 	*
 	* @param groupId the group ID
-	* @param primary the primary
+	* @param type the type
 	* @return the matching site navigation menu
 	* @throws NoSuchMenuException if a matching site navigation menu could not be found
 	*/
-	public static SiteNavigationMenu findByG_P(long groupId, boolean primary)
+	public static SiteNavigationMenu findByG_T(long groupId, int type)
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-		return getPersistence().findByG_P(groupId, primary);
+		return getPersistence().findByG_T(groupId, type);
 	}
 
 	/**
-	* Returns the site navigation menu where groupId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the site navigation menu where groupId = &#63; and type = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param groupId the group ID
-	* @param primary the primary
+	* @param type the type
 	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	*/
-	public static SiteNavigationMenu fetchByG_P(long groupId, boolean primary) {
-		return getPersistence().fetchByG_P(groupId, primary);
+	public static SiteNavigationMenu fetchByG_T(long groupId, int type) {
+		return getPersistence().fetchByG_T(groupId, type);
 	}
 
 	/**
-	* Returns the site navigation menu where groupId = &#63; and primary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the site navigation menu where groupId = &#63; and type = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param groupId the group ID
-	* @param primary the primary
+	* @param type the type
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
 	*/
-	public static SiteNavigationMenu fetchByG_P(long groupId, boolean primary,
+	public static SiteNavigationMenu fetchByG_T(long groupId, int type,
 		boolean retrieveFromCache) {
-		return getPersistence().fetchByG_P(groupId, primary, retrieveFromCache);
+		return getPersistence().fetchByG_T(groupId, type, retrieveFromCache);
 	}
 
 	/**
-	* Removes the site navigation menu where groupId = &#63; and primary = &#63; from the database.
+	* Removes the site navigation menu where groupId = &#63; and type = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @param primary the primary
+	* @param type the type
 	* @return the site navigation menu that was removed
 	*/
-	public static SiteNavigationMenu removeByG_P(long groupId, boolean primary)
+	public static SiteNavigationMenu removeByG_T(long groupId, int type)
 		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-		return getPersistence().removeByG_P(groupId, primary);
+		return getPersistence().removeByG_T(groupId, type);
 	}
 
 	/**
-	* Returns the number of site navigation menus where groupId = &#63; and primary = &#63;.
+	* Returns the number of site navigation menus where groupId = &#63; and type = &#63;.
 	*
 	* @param groupId the group ID
-	* @param primary the primary
+	* @param type the type
 	* @return the number of matching site navigation menus
 	*/
-	public static int countByG_P(long groupId, boolean primary) {
-		return getPersistence().countByG_P(groupId, primary);
-	}
-
-	/**
-	* Returns the site navigation menu where groupId = &#63; and secondary = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param secondary the secondary
-	* @return the matching site navigation menu
-	* @throws NoSuchMenuException if a matching site navigation menu could not be found
-	*/
-	public static SiteNavigationMenu findByG_Secondary(long groupId,
-		boolean secondary)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-		return getPersistence().findByG_Secondary(groupId, secondary);
-	}
-
-	/**
-	* Returns the site navigation menu where groupId = &#63; and secondary = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param secondary the secondary
-	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	*/
-	public static SiteNavigationMenu fetchByG_Secondary(long groupId,
-		boolean secondary) {
-		return getPersistence().fetchByG_Secondary(groupId, secondary);
-	}
-
-	/**
-	* Returns the site navigation menu where groupId = &#63; and secondary = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param secondary the secondary
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	*/
-	public static SiteNavigationMenu fetchByG_Secondary(long groupId,
-		boolean secondary, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_Secondary(groupId, secondary, retrieveFromCache);
-	}
-
-	/**
-	* Removes the site navigation menu where groupId = &#63; and secondary = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param secondary the secondary
-	* @return the site navigation menu that was removed
-	*/
-	public static SiteNavigationMenu removeByG_Secondary(long groupId,
-		boolean secondary)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-		return getPersistence().removeByG_Secondary(groupId, secondary);
-	}
-
-	/**
-	* Returns the number of site navigation menus where groupId = &#63; and secondary = &#63;.
-	*
-	* @param groupId the group ID
-	* @param secondary the secondary
-	* @return the number of matching site navigation menus
-	*/
-	public static int countByG_Secondary(long groupId, boolean secondary) {
-		return getPersistence().countByG_Secondary(groupId, secondary);
-	}
-
-	/**
-	* Returns the site navigation menu where groupId = &#63; and social = &#63; or throws a {@link NoSuchMenuException} if it could not be found.
-	*
-	* @param groupId the group ID
-	* @param social the social
-	* @return the matching site navigation menu
-	* @throws NoSuchMenuException if a matching site navigation menu could not be found
-	*/
-	public static SiteNavigationMenu findByG_Social(long groupId, boolean social)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-		return getPersistence().findByG_Social(groupId, social);
-	}
-
-	/**
-	* Returns the site navigation menu where groupId = &#63; and social = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param groupId the group ID
-	* @param social the social
-	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	*/
-	public static SiteNavigationMenu fetchByG_Social(long groupId,
-		boolean social) {
-		return getPersistence().fetchByG_Social(groupId, social);
-	}
-
-	/**
-	* Returns the site navigation menu where groupId = &#63; and social = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param groupId the group ID
-	* @param social the social
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching site navigation menu, or <code>null</code> if a matching site navigation menu could not be found
-	*/
-	public static SiteNavigationMenu fetchByG_Social(long groupId,
-		boolean social, boolean retrieveFromCache) {
-		return getPersistence()
-				   .fetchByG_Social(groupId, social, retrieveFromCache);
-	}
-
-	/**
-	* Removes the site navigation menu where groupId = &#63; and social = &#63; from the database.
-	*
-	* @param groupId the group ID
-	* @param social the social
-	* @return the site navigation menu that was removed
-	*/
-	public static SiteNavigationMenu removeByG_Social(long groupId,
-		boolean social)
-		throws com.liferay.site.navigation.exception.NoSuchMenuException {
-		return getPersistence().removeByG_Social(groupId, social);
-	}
-
-	/**
-	* Returns the number of site navigation menus where groupId = &#63; and social = &#63;.
-	*
-	* @param groupId the group ID
-	* @param social the social
-	* @return the number of matching site navigation menus
-	*/
-	public static int countByG_Social(long groupId, boolean social) {
-		return getPersistence().countByG_Social(groupId, social);
+	public static int countByG_T(long groupId, int type) {
+		return getPersistence().countByG_T(groupId, type);
 	}
 
 	/**

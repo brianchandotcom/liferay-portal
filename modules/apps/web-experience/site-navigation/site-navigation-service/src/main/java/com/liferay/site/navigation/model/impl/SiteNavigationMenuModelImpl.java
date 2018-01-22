@@ -77,9 +77,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "primary_", Types.BOOLEAN },
-			{ "secondary", Types.BOOLEAN },
-			{ "social", Types.BOOLEAN }
+			{ "type_", Types.INTEGER }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -92,12 +90,10 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("primary_", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("secondary", Types.BOOLEAN);
-		TABLE_COLUMNS_MAP.put("social", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenu (siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,primary_ BOOLEAN,secondary BOOLEAN,social BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenu (siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenu";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteNavigationMenu.siteNavigationMenuId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteNavigationMenu.siteNavigationMenuId ASC";
@@ -115,10 +111,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 			true);
 	public static final long GROUPID_COLUMN_BITMASK = 1L;
 	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long PRIMARY_COLUMN_BITMASK = 4L;
-	public static final long SECONDARY_COLUMN_BITMASK = 8L;
-	public static final long SOCIAL_COLUMN_BITMASK = 16L;
-	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 4L;
+	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -141,9 +135,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
-		model.setPrimary(soapModel.getPrimary());
-		model.setSecondary(soapModel.getSecondary());
-		model.setSocial(soapModel.getSocial());
+		model.setType(soapModel.getType());
 
 		return model;
 	}
@@ -217,9 +209,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("primary", getPrimary());
-		attributes.put("secondary", getSecondary());
-		attributes.put("social", getSocial());
+		attributes.put("type", getType());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -277,22 +267,10 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 			setName(name);
 		}
 
-		Boolean primary = (Boolean)attributes.get("primary");
+		Integer type = (Integer)attributes.get("type");
 
-		if (primary != null) {
-			setPrimary(primary);
-		}
-
-		Boolean secondary = (Boolean)attributes.get("secondary");
-
-		if (secondary != null) {
-			setSecondary(secondary);
-		}
-
-		Boolean social = (Boolean)attributes.get("social");
-
-		if (social != null) {
-			setSocial(social);
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -440,89 +418,25 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 	@JSON
 	@Override
-	public boolean getPrimary() {
-		return _primary;
-	}
-
-	@JSON
-	@Override
-	public boolean isPrimary() {
-		return _primary;
+	public int getType() {
+		return _type;
 	}
 
 	@Override
-	public void setPrimary(boolean primary) {
-		_columnBitmask |= PRIMARY_COLUMN_BITMASK;
+	public void setType(int type) {
+		_columnBitmask |= TYPE_COLUMN_BITMASK;
 
-		if (!_setOriginalPrimary) {
-			_setOriginalPrimary = true;
+		if (!_setOriginalType) {
+			_setOriginalType = true;
 
-			_originalPrimary = _primary;
+			_originalType = _type;
 		}
 
-		_primary = primary;
+		_type = type;
 	}
 
-	public boolean getOriginalPrimary() {
-		return _originalPrimary;
-	}
-
-	@JSON
-	@Override
-	public boolean getSecondary() {
-		return _secondary;
-	}
-
-	@JSON
-	@Override
-	public boolean isSecondary() {
-		return _secondary;
-	}
-
-	@Override
-	public void setSecondary(boolean secondary) {
-		_columnBitmask |= SECONDARY_COLUMN_BITMASK;
-
-		if (!_setOriginalSecondary) {
-			_setOriginalSecondary = true;
-
-			_originalSecondary = _secondary;
-		}
-
-		_secondary = secondary;
-	}
-
-	public boolean getOriginalSecondary() {
-		return _originalSecondary;
-	}
-
-	@JSON
-	@Override
-	public boolean getSocial() {
-		return _social;
-	}
-
-	@JSON
-	@Override
-	public boolean isSocial() {
-		return _social;
-	}
-
-	@Override
-	public void setSocial(boolean social) {
-		_columnBitmask |= SOCIAL_COLUMN_BITMASK;
-
-		if (!_setOriginalSocial) {
-			_setOriginalSocial = true;
-
-			_originalSocial = _social;
-		}
-
-		_social = social;
-	}
-
-	public boolean getOriginalSocial() {
-		return _originalSocial;
+	public int getOriginalType() {
+		return _originalType;
 	}
 
 	public long getColumnBitmask() {
@@ -564,9 +478,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		siteNavigationMenuImpl.setCreateDate(getCreateDate());
 		siteNavigationMenuImpl.setModifiedDate(getModifiedDate());
 		siteNavigationMenuImpl.setName(getName());
-		siteNavigationMenuImpl.setPrimary(getPrimary());
-		siteNavigationMenuImpl.setSecondary(getSecondary());
-		siteNavigationMenuImpl.setSocial(getSocial());
+		siteNavigationMenuImpl.setType(getType());
 
 		siteNavigationMenuImpl.resetOriginalValues();
 
@@ -637,17 +549,9 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 		siteNavigationMenuModelImpl._originalName = siteNavigationMenuModelImpl._name;
 
-		siteNavigationMenuModelImpl._originalPrimary = siteNavigationMenuModelImpl._primary;
+		siteNavigationMenuModelImpl._originalType = siteNavigationMenuModelImpl._type;
 
-		siteNavigationMenuModelImpl._setOriginalPrimary = false;
-
-		siteNavigationMenuModelImpl._originalSecondary = siteNavigationMenuModelImpl._secondary;
-
-		siteNavigationMenuModelImpl._setOriginalSecondary = false;
-
-		siteNavigationMenuModelImpl._originalSocial = siteNavigationMenuModelImpl._social;
-
-		siteNavigationMenuModelImpl._setOriginalSocial = false;
+		siteNavigationMenuModelImpl._setOriginalType = false;
 
 		siteNavigationMenuModelImpl._columnBitmask = 0;
 	}
@@ -698,18 +602,14 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 			siteNavigationMenuCacheModel.name = null;
 		}
 
-		siteNavigationMenuCacheModel.primary = getPrimary();
-
-		siteNavigationMenuCacheModel.secondary = getSecondary();
-
-		siteNavigationMenuCacheModel.social = getSocial();
+		siteNavigationMenuCacheModel.type = getType();
 
 		return siteNavigationMenuCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{siteNavigationMenuId=");
 		sb.append(getSiteNavigationMenuId());
@@ -727,12 +627,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		sb.append(getModifiedDate());
 		sb.append(", name=");
 		sb.append(getName());
-		sb.append(", primary=");
-		sb.append(getPrimary());
-		sb.append(", secondary=");
-		sb.append(getSecondary());
-		sb.append(", social=");
-		sb.append(getSocial());
+		sb.append(", type=");
+		sb.append(getType());
 		sb.append("}");
 
 		return sb.toString();
@@ -740,7 +636,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.site.navigation.model.SiteNavigationMenu");
@@ -779,16 +675,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>primary</column-name><column-value><![CDATA[");
-		sb.append(getPrimary());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>secondary</column-name><column-value><![CDATA[");
-		sb.append(getSecondary());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>social</column-name><column-value><![CDATA[");
-		sb.append(getSocial());
+			"<column><column-name>type</column-name><column-value><![CDATA[");
+		sb.append(getType());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -812,15 +700,9 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
-	private boolean _primary;
-	private boolean _originalPrimary;
-	private boolean _setOriginalPrimary;
-	private boolean _secondary;
-	private boolean _originalSecondary;
-	private boolean _setOriginalSecondary;
-	private boolean _social;
-	private boolean _originalSocial;
-	private boolean _setOriginalSocial;
+	private int _type;
+	private int _originalType;
+	private boolean _setOriginalType;
 	private long _columnBitmask;
 	private SiteNavigationMenu _escapedModel;
 }

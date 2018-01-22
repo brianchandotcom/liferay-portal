@@ -66,6 +66,23 @@ import java.rmi.RemoteException;
 @ProviderType
 public class SiteNavigationMenuServiceSoap {
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap addSiteNavigationMenu(
+		long groupId, java.lang.String name, int type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.site.navigation.model.SiteNavigationMenu returnValue = SiteNavigationMenuServiceUtil.addSiteNavigationMenu(groupId,
+					name, type, serviceContext);
+
+			return com.liferay.site.navigation.model.SiteNavigationMenuSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap addSiteNavigationMenu(
 		long groupId, java.lang.String name,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
@@ -191,13 +208,12 @@ public class SiteNavigationMenuServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap updateSiteNavigationMenu(
-		long siteNavigationMenuId, boolean primary, boolean secondary,
-		boolean social,
+		long siteNavigationMenuId, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.site.navigation.model.SiteNavigationMenu returnValue = SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(siteNavigationMenuId,
-					primary, secondary, social, serviceContext);
+					type, serviceContext);
 
 			return com.liferay.site.navigation.model.SiteNavigationMenuSoap.toSoapModel(returnValue);
 		}

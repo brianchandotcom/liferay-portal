@@ -50,7 +50,7 @@ public class DropdownItem implements Serializable {
 	}
 
 	public String getType() {
-		return _type;
+		return _TYPE;
 	}
 
 	public void setActive(boolean active) {
@@ -81,7 +81,7 @@ public class DropdownItem implements Serializable {
 		_separator = separator;
 	}
 
-	private static final String _type = "link";
+	private static final String _TYPE = "link";
 
 	private boolean _active;
 	private boolean _disabled;

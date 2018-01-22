@@ -15,8 +15,8 @@
 package com.liferay.currency.converter.web.internal.util;
 
 import com.liferay.currency.converter.web.internal.model.CurrencyConverter;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.webcache.WebCacheItem;
 import com.liferay.portal.kernel.webcache.WebCachePoolUtil;
 

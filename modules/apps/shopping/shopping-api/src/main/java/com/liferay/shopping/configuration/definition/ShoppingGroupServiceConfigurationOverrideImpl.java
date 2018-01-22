@@ -14,10 +14,10 @@
 
 package com.liferay.shopping.configuration.definition;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.shopping.configuration.ShoppingGroupServiceConfigurationOverride;

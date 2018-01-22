@@ -18,12 +18,12 @@ import com.liferay.mail.reader.mailbox.Mailbox;
 import com.liferay.mail.reader.mailbox.MailboxFactoryUtil;
 import com.liferay.mail.reader.model.Account;
 import com.liferay.mail.reader.service.AccountLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 

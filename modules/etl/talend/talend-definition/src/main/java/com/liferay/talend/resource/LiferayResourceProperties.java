@@ -22,10 +22,10 @@ import com.liferay.talend.runtime.LiferaySourceOrSinkRuntime;
 
 import java.io.IOException;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.avro.Schema;
+import org.apache.commons.lang3.StringUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,12 +33,14 @@ import org.slf4j.LoggerFactory;
 import org.talend.components.api.component.ISchemaListener;
 import org.talend.components.common.SchemaProperties;
 import org.talend.daikon.NamedThing;
+import org.talend.daikon.SimpleNamedThing;
 import org.talend.daikon.properties.PropertiesImpl;
 import org.talend.daikon.properties.ValidationResult;
 import org.talend.daikon.properties.ValidationResult.Result;
 import org.talend.daikon.properties.ValidationResultMutable;
 import org.talend.daikon.properties.presentation.Form;
 import org.talend.daikon.properties.presentation.Widget;
+import org.talend.daikon.properties.property.Property;
 import org.talend.daikon.properties.property.PropertyFactory;
 import org.talend.daikon.properties.property.StringProperty;
 import org.talend.daikon.sandbox.SandboxedInstance;
@@ -105,10 +107,18 @@ public class LiferayResourceProperties
 		if (validationResultMutable.getStatus() ==
 				ValidationResult.Result.ERROR) {
 
-			resourceURL.setPossibleValues(Collections.emptyList());
+			resourceURL.setValue("");
 		}
 
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
+
 		return validationResultMutable;
+	}
+
+	public void afterUseRelatedResource() {
+		refreshLayout(getForm(Form.MAIN));
+		refreshLayout(getForm(Form.REFERENCE));
 	}
 
 	public ValidationResult beforeResourceURL() throws Exception {
@@ -116,8 +126,6 @@ public class LiferayResourceProperties
 				LiferayBaseComponentDefinition.getSandboxedInstance(
 					LiferayBaseComponentDefinition.
 						RUNTIME_SOURCE_OR_SINK_CLASS_NAME)) {
-
-			resourceURL.setPossibleValues(Collections.emptyList());
 
 			LiferaySourceOrSinkRuntime liferaySourceOrSinkRuntime =
 				(LiferaySourceOrSinkRuntime)sandboxedInstance.getInstance();
@@ -152,6 +160,24 @@ public class LiferayResourceProperties
 		return connection;
 	}
 
+	@Override
+	public void refreshLayout(Form form) {
+		super.refreshLayout(form);
+
+		String formName = form.getName();
+
+		if (formName.equals(Form.MAIN) || formName.equals(Form.REFERENCE)) {
+			boolean hideRelatedCheckbox = StringUtils.isEmpty(
+				resourceURL.getStringValue());
+
+			_setHidden(form, useRelatedResource, hideRelatedCheckbox);
+
+			_setHidden(
+				form, relatedResourceCollections,
+				!useRelatedResource.getValue());
+		}
+	}
+
 	public void setSchemaListener(ISchemaListener schemaListener) {
 		this.schemaListener = schemaListener;
 	}
@@ -168,6 +194,14 @@ public class LiferayResourceProperties
 
 		resourceSelectionForm.addRow(resourcesWidget);
 
+		Widget relatedCollectionsWidget = Widget.widget(
+			relatedResourceCollections);
+
+		relatedCollectionsWidget.setWidgetType(Widget.ENUMERATION_WIDGET_TYPE);
+
+		resourceSelectionForm.addRow(useRelatedResource);
+		resourceSelectionForm.addColumn(relatedCollectionsWidget);
+
 		refreshLayout(resourceSelectionForm);
 
 		Form moduleRefForm = Form.create(this, Form.REFERENCE);
@@ -180,6 +214,16 @@ public class LiferayResourceProperties
 
 		moduleRefForm.addRow(resourcesWidgetLong);
 
+		Widget relatedCollectionsWidgetLong = Widget.widget(
+			relatedResourceCollections);
+
+		relatedCollectionsWidgetLong.setWidgetType(
+			Widget.ENUMERATION_WIDGET_TYPE);
+		relatedCollectionsWidgetLong.setLongRunning(true);
+
+		moduleRefForm.addRow(useRelatedResource);
+		moduleRefForm.addColumn(relatedCollectionsWidgetLong);
+
 		moduleRefForm.addRow(main.getForm(Form.REFERENCE));
 
 		refreshLayout(moduleRefForm);
@@ -190,10 +234,10 @@ public class LiferayResourceProperties
 		super.setupProperties();
 
 		resourceURL.setValue("");
+		useRelatedResource.setValue(false);
 	}
 
-	public LiferayConnectionProperties connection =
-		new LiferayConnectionProperties("connection");
+	public LiferayConnectionProperties connection;
 
 	public SchemaProperties main = new SchemaProperties("main") {
 
@@ -206,9 +250,13 @@ public class LiferayResourceProperties
 
 	};
 
+	public Property<List<String>> relatedResourceCollections =
+		PropertyFactory.newStringList("relatedResourceCollections");
 	public StringProperty resourceURL = PropertyFactory.newString(
 		"resourceURL");
 	public ISchemaListener schemaListener;
+	public Property<Boolean> useRelatedResource = PropertyFactory.newBoolean(
+		"useRelatedResource");
 
 	private LiferayConnectionProperties _getEffectiveConnectionProperties() {
 		LiferayConnectionProperties liferayConnectionProperties =
@@ -245,6 +293,14 @@ public class LiferayResourceProperties
 		}
 
 		return liferayConnectionProperties;
+	}
+
+	private void _setHidden(
+		Form form, SimpleNamedThing simpleNamedThing, boolean hidden) {
+
+		Widget widget = form.getWidget(simpleNamedThing.getName());
+
+		widget.setHidden(hidden);
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

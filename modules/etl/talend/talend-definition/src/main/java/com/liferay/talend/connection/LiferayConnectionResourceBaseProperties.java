@@ -50,6 +50,10 @@ public abstract class LiferayConnectionResourceBaseProperties
 		for (Form childForm : connection.getForms()) {
 			connection.refreshLayout(childForm);
 		}
+
+		for (Form childForm : resource.getForms()) {
+			resource.refreshLayout(childForm);
+		}
 	}
 
 	@Override

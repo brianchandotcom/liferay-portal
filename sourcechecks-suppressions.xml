@@ -19,7 +19,11 @@
 	<suppress checks="JavaUnsafeCastingCheck" files="portal-impl/src/com/liferay/portal/util/PortalImpl\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/One\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/json/Two\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="portal-impl/test/unit/com/liferay/portal/kernel/nio/intraband/nonblocking/SelectorIntrabandTest\.java" />
 	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/src/com/liferay/portal/kernel/io/PathHolder\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/nio/intraband/BaseIntrabandTest\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/nio/intraband/blocking/ExecutorIntrabandTest\.java" />
+	<suppress checks="JavaVariableTypeCheck" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/ObjectGraphUtilTest\.java" />
 	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/upgrade/util/BaseUpgradeTableImpl.java" />
 	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/upgrade/util/UpgradeCompanyId.java" />
 	<suppress checks="JavaVerifyUpgradeConnectionCheck" files="portal-impl/src/com/liferay/portal/verify/VerifyProcess.java" />

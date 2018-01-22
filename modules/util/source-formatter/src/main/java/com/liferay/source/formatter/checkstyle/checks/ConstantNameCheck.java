@@ -14,7 +14,10 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
+import com.liferay.source.formatter.parser.JavaTerm;
 import com.liferay.source.formatter.util.DebugUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -28,6 +31,14 @@ import java.util.regex.Pattern;
  */
 public class ConstantNameCheck
 	extends com.puppycrawl.tools.checkstyle.checks.naming.ConstantNameCheck {
+
+	public void setCamelCaseTypeNames(String camelCaseTypeNames) {
+		_camelCaseTypeNames = StringUtil.split(camelCaseTypeNames);
+	}
+
+	public void setImmutableFieldTypes(String immutableFieldTypes) {
+		_immutableFieldTypes = StringUtil.split(immutableFieldTypes);
+	}
 
 	public void setShowDebugInformation(boolean showDebugInformation) {
 		_showDebugInformation = showDebugInformation;
@@ -58,36 +69,38 @@ public class ConstantNameCheck
 			return;
 		}
 
-		String message = null;
 		String regex = null;
+
+		String typeName = DetailASTUtil.getTypeName(detailAST);
+
+		if (ArrayUtil.contains(_camelCaseTypeNames, typeName) ||
+			DetailASTUtil.isCollection(
+				detailAST.findFirstToken(TokenTypes.TYPE))) {
+
+			regex = _CAMEL_CASE_REGEX;
+		}
+		else if (_isImmutableFieldType(typeName)) {
+			regex = _UPPER_CASE_REGEX;
+		}
+		else {
+			regex = _CONSTANT_NAME_REGEX;
+			typeName = null;
+		}
+
+		String accessLevel = null;
 
 		DetailAST modifiersAST = detailAST.findFirstToken(TokenTypes.MODIFIERS);
 
 		if (modifiersAST.branchContains(TokenTypes.LITERAL_PRIVATE)) {
-			if (DetailASTUtil.isCollection(
-					detailAST.findFirstToken(TokenTypes.TYPE))) {
+			accessLevel = JavaTerm.ACCESS_MODIFIER_PRIVATE;
 
-				message = _MSG_PRIVATE_COLLECTION;
-				regex = "^_[a-z0-9][_a-zA-Z0-9]*$";
-			}
-			else {
-				message = _MSG_INVALID_PRIVATE_NAME;
-				regex = "^_[_a-zA-Z0-9]*$";
-			}
+			regex = StringUtil.replaceFirst(regex, '^', "^_");
 		}
-		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED) ||
-				 modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
-
-			if (DetailASTUtil.isCollection(
-					detailAST.findFirstToken(TokenTypes.TYPE))) {
-
-				message = _MSG_PROTECTED_PUBLIC_COLLECTION;
-				regex = "^[a-z0-9][_a-zA-Z0-9]*$";
-			}
-			else {
-				message = _MSG_INVALID_PROTECTED_PUBLIC_NAME;
-				regex = "^[a-zA-Z0-9][_a-zA-Z0-9]*$";
-			}
+		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PROTECTED)) {
+			accessLevel = JavaTerm.ACCESS_MODIFIER_PROTECTED;
+		}
+		else if (modifiersAST.branchContains(TokenTypes.LITERAL_PUBLIC)) {
+			accessLevel = JavaTerm.ACCESS_MODIFIER_PUBLIC;
 		}
 		else {
 			return;
@@ -100,22 +113,46 @@ public class ConstantNameCheck
 		Matcher matcher = pattern.matcher(nameAST.getText());
 
 		if (!matcher.find()) {
-			log(nameAST.getLineNo(), message, nameAST.getText(), regex);
+			if (typeName == null) {
+				log(
+					nameAST.getLineNo(), _MSG_INVALID_CONSTANT_NAME,
+					accessLevel, nameAST.getText(), regex);
+			}
+			else {
+				log(
+					nameAST.getLineNo(), _MSG_INVALID_CONSTANT_TYPE_NAME,
+					accessLevel, nameAST.getText(), typeName, regex);
+			}
 		}
 	}
 
-	private static final String _MSG_INVALID_PRIVATE_NAME =
-		"name.invalidPrivatePattern";
+	private boolean _isImmutableFieldType(String typeName) {
+		for (String immutableFieldType : _immutableFieldTypes) {
+			if (typeName.equals(immutableFieldType) ||
+				typeName.startsWith(immutableFieldType + "[]")) {
 
-	private static final String _MSG_INVALID_PROTECTED_PUBLIC_NAME =
-		"name.invalidProtectedPublicPattern";
+				return true;
+			}
+		}
 
-	private static final String _MSG_PRIVATE_COLLECTION =
-		"name.collectionPrivatePattern";
+		return false;
+	}
 
-	private static final String _MSG_PROTECTED_PUBLIC_COLLECTION =
-		"name.collectionProtectedPublicPattern";
+	private static final String _CAMEL_CASE_REGEX = "^[a-z0-9][a-zA-Z0-9]*$";
 
+	private static final String _CONSTANT_NAME_REGEX =
+		"^[a-zA-Z0-9][_a-zA-Z0-9]*$";
+
+	private static final String _MSG_INVALID_CONSTANT_NAME =
+		"name.invalidConstantPattern";
+
+	private static final String _MSG_INVALID_CONSTANT_TYPE_NAME =
+		"name.invalidConstantTypePattern";
+
+	private static final String _UPPER_CASE_REGEX = "^[A-Z0-9][_A-Z0-9]*$";
+
+	private String[] _camelCaseTypeNames = new String[0];
+	private String[] _immutableFieldTypes = new String[0];
 	private boolean _showDebugInformation;
 
 }

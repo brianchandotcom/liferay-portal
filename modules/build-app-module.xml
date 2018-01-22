@@ -63,7 +63,7 @@
 
 	<target depends="move-artifact,move-artifact-dependencies" name="dist-module-artifact-lpkg" />
 
-	<target name="download-artifact" unless="artifact.exclude">
+	<target depends="get-artifact-properties" name="download-artifact" unless="artifact.exclude">
 		<fail message="Missing artifact.properties file in ${releng.module.dir}.">
 			<condition>
 				<not>

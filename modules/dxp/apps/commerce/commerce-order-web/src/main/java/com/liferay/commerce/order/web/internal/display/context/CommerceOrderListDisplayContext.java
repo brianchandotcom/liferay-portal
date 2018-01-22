@@ -132,8 +132,8 @@ public class CommerceOrderListDisplayContext {
 		LiferayPortletResponse liferayPortletResponse =
 			_commerceOrderRequestHelper.getLiferayPortletResponse();
 
-		int status = getStatus();
-		Map<Integer, Long> statusCounts = getStatusCounts();
+		int status = getOrderStatus();
+		Map<Integer, Long> statusCounts = getOrderStatusCounts();
 
 		for (Map.Entry<Integer, Long> entry : statusCounts.entrySet()) {
 			int curStatus = entry.getKey();
@@ -147,7 +147,8 @@ public class CommerceOrderListDisplayContext {
 
 			statusNavigationItem.setActive(curStatus == status);
 			statusNavigationItem.setHref(statusURL.toString());
-			statusNavigationItem.setLabel(getStatusLabel(curStatus, curCount));
+			statusNavigationItem.setLabel(
+				getOrderStatusLabel(curStatus, curCount));
 
 			navigationItems.add(statusNavigationItem);
 		}

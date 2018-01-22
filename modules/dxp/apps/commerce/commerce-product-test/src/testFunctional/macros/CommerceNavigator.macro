@@ -1,7 +1,7 @@
 <definition>
-	<command name="gotoCommercePortletMenuItem">
-		<execute function="AssertClick" locator1="CommerceNavigation#INVERSE_MENU_TAB" value1="${menuTabItem}">
-			<var name="key_menuTabItem" value="${menuTabItem}" />
+	<command name="gotoCommercePortletNavItem">
+		<execute function="AssertClick" locator1="NavBar#NAV_ITEM_LINK" value1="${navItem}">
+			<var name="key_navItem" value="${navItem}" />
 		</execute>
 	</command>
 

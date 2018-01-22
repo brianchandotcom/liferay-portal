@@ -15,6 +15,8 @@
 package com.liferay.source.formatter.checkstyle.util;
 
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.FullIdent;
@@ -200,9 +202,31 @@ public class DetailASTUtil {
 	public static String getTypeName(DetailAST detailAST) {
 		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
 
-		FullIdent typeIdent = FullIdent.createFullIdentBelow(typeAST);
+		DetailAST childAST = typeAST.getFirstChild();
 
-		return typeIdent.getText();
+		if (childAST == null) {
+			return StringPool.BLANK;
+		}
+
+		int arrayDimension = 0;
+
+		while (childAST.getType() == TokenTypes.ARRAY_DECLARATOR) {
+			arrayDimension++;
+
+			childAST = childAST.getFirstChild();
+		}
+
+		StringBundler sb = new StringBundler(1 + arrayDimension);
+
+		FullIdent typeIdent = FullIdent.createFullIdent(childAST);
+
+		sb.append(typeIdent.getText());
+
+		for (int i = 0; i < arrayDimension; i++) {
+			sb.append("[]");
+		}
+
+		return sb.toString();
 	}
 
 	public static Set<String> getVariableTypeNames(

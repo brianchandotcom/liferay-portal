@@ -250,6 +250,36 @@
 		</execute>
 	</command>
 
+	<command name="editDisplayDate">
+		<var method="DateUtil#getCurrentDate()" name="displayDateDay" />
+		<var method="DateUtil#getCurrentMonth()" name="displayDateMonth" />
+		<var method="DateUtil#getCurrentYear()" name="displayDateYear" />
+
+		<var name="displayDate" value="${displayDateMonth}/${displayDateDay}/${displayDateYear}" />
+
+		<execute function="Type" locator1="TextInput#DISPLAY_DATE" value1="${displayDate}" />
+
+		<var method="DateUtil#getCurrentHour()" name="displayTimeHour" />
+
+		<var name="displayTimeMinute" value="${displayTimeMinute}" />
+
+		<var name="displayTime" value="${displayTimeHour}:${displayTimeMinute}" />
+
+		<execute function="Type" locator1="TextInput#DISPLAY_DATE_TIME" value1="${displayTime}" />
+	</command>
+
+	<command name="editDisplayDateYear">
+		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_DAY)" name="displayDateDay" />
+		<var method="selenium#getElementValue(TextInput#DISPLAY_DATE_MONTH)" name="displayDateMonth" />
+		<var method="DateUtil#getCurrentYear()" name="displayDateYear" />
+
+		<var method="MathUtil#sum('${displayDateYear}','1')" name="displayDateYear" />
+
+		<var name="displayDate" value="${displayDateMonth}/${displayDateDay}/${displayDateYear}" />
+
+		<execute function="Type" locator1="TextInput#DISPLAY_DATE" value1="${displayDate}" />
+	</command>
+
 	<command name="editEntryContent">
 		<execute macro="BlogsEntry#editTitle">
 			<var name="entryTitle" value="${entryTitle}" />

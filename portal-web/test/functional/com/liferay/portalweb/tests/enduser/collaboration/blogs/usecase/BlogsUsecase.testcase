@@ -1378,6 +1378,52 @@
 		</execute>
 	</command>
 
+	<command name="ViewBlogsEntryAsPublishedAferFutureDisplayDateEditing" priority="4">
+		<execute macro="Navigator#gotoPage">
+			<var name="pageName" value="Blogs Page" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoAddEntry" />
+
+		<execute macro="BlogsEntry#addEntryContent">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsEntry#editDisplayDateYear" />
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Not Published (1)" />
+		</execute>
+
+		<execute macro="BlogsNavigator#gotoEditPG">
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+
+		<execute macro="Panel#expandPanel">
+			<var name="panelHeading" value="Configuration" />
+		</execute>
+
+		<execute macro="BlogsEntry#editDisplayDate">
+			<var name="displayTimeMinute" value="00" />
+		</execute>
+
+		<execute macro="PortletEntry#publish" />
+
+		<execute macro="PortletEntry#viewNoNavItemLink" />
+
+		<execute macro="BlogsEntry#viewEntry">
+			<var name="entryContent" value="Blogs Entry Content" />
+			<var name="entryTitle" value="Blogs Entry Title" />
+		</execute>
+	</command>
+
 	<command name="ViewBlogsEntryAsPublishedViaAP" priority="3">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Navigation" />

@@ -272,6 +272,8 @@ public class LCSClusterEntryTokenAdvisor {
 				_log.debug("Decrypt with key " + keyName);
 			}
 
+			certificate = keyStore.getCertificate(keyName);
+
 			key = certificate.getPublicKey();
 
 			symmetricKeyBytes = Encryptor.decryptUnencodedAsBytes(

@@ -2592,22 +2592,25 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 
+		private static final String[] _groupPermissions =
+			{"ADD_DISCUSSION", "VIEW"};
+		private static final String[] _guestPermissions =
+			{"ADD_DISCUSSION", "VIEW"};
+		private static final String[] _ownerPermissions = {
+			"ADD_DISCUSSION", "DELETE", "DELETE_DISCUSSION",
+			"OVERRIDE_CHECKOUT", "PERMISSIONS", "UPDATE", "UPDATE_DISCUSSION",
+			"VIEW"
+		};
+
 		private final long _companyId;
 		private final Timestamp _createDate;
 		private final long _entryId;
 		private final String _entryModelName;
 		private final String _entryVersion;
 		private final long _groupId;
-		private final String[] _groupPermissions = {"ADD_DISCUSSION", "VIEW"};
-		private final String[] _guestPermissions = {"ADD_DISCUSSION", "VIEW"};
 		private final ModelPermissions _modelPermissions;
 		private final Timestamp _now = new Timestamp(
 			System.currentTimeMillis());
-		private final String[] _ownerPermissions = {
-			"ADD_DISCUSSION", "DELETE", "DELETE_DISCUSSION",
-			"OVERRIDE_CHECKOUT", "PERMISSIONS", "UPDATE", "UPDATE_DISCUSSION",
-			"VIEW"
-		};
 		private final long _userId;
 		private final String _userName;
 

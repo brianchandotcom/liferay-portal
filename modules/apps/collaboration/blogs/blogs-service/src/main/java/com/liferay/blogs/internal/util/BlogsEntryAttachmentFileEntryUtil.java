@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.blogs.util;
+package com.liferay.blogs.internal.util;
 
 import com.liferay.blogs.constants.BlogsConstants;
-import com.liferay.blogs.internal.util.BlogsEntryAttachmentFileEntryReferenceAdapter;
 import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.blogs.util.BlogsEntryAttachmentContentUpdater;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;

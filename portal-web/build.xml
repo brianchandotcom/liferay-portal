@@ -350,7 +350,7 @@ ${oversize.files.jsp}</fail>
 		<manifest-macro />
 
 		<if>
-			<istrue value="${build.marketplace.apps.enabled}" />
+			<istrue value="${build.portal.artifacts.enabled}" />
 			<then>
 				<war
 					destfile="${war.file}.war"

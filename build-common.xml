@@ -175,6 +175,13 @@
 		<istrue value="${liferay.releng.ee}" />
 	</condition>
 
+	<condition property="build.portal.artifacts.enabled">
+		<or>
+			<istrue value="${build.marketplace.apps.enabled}" />
+			<istrue value="${liferay.releng.ee}" />
+		</or>
+	</condition>
+
 	<fail message="Please use Java 1.8.">
 		<condition>
 			<not>

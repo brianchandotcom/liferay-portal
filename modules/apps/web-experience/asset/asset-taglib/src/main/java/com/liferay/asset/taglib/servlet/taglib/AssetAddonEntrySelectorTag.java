@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.taglib.util.IncludeTag;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
@@ -97,9 +99,16 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 		request.setAttribute(
 			"liferay-asset:asset-addon-entry-selector:" +
 				"selectedAssetAddonEntries",
-			_selectedAssetAddonEntries);
+			_getFilteredSelectedAssetAddonEntries());
 		request.setAttribute(
 			"liferay-asset:asset-addon-entry-selector:title", _title);
+	}
+
+	private List<AssetAddonEntry> _getFilteredSelectedAssetAddonEntries() {
+		Stream<AssetAddonEntry> stream = _selectedAssetAddonEntries.stream();
+		stream = stream.filter(_assetAddonEntries::contains);
+
+		return stream.collect(Collectors.toList());
 	}
 
 	private static final String _PAGE = "/asset_addon_entry_selector/page.jsp";

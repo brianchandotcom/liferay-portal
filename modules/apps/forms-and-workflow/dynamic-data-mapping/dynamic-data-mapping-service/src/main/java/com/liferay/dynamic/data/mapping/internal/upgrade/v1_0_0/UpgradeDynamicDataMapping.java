@@ -2168,10 +2168,10 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			_entryModelName = entryModelName;
 
 			_modelPermissions = ModelPermissionsFactory.create(
-				_groupPermissions, _guestPermissions);
+				_GROUP_PERMISSIONS, _GUEST_PERMISSIONS);
 
 			_modelPermissions.addRolePermissions(
-				RoleConstants.OWNER, _ownerPermissions);
+				RoleConstants.OWNER, _OWNER_PERMISSIONS);
 		}
 
 		@Override
@@ -2592,11 +2592,13 @@ public class UpgradeDynamicDataMapping extends UpgradeProcess {
 			}
 		}
 
-		private static final String[] _groupPermissions =
+		private static final String[] _GROUP_PERMISSIONS =
 			{"ADD_DISCUSSION", "VIEW"};
-		private static final String[] _guestPermissions =
+
+		private static final String[] _GUEST_PERMISSIONS =
 			{"ADD_DISCUSSION", "VIEW"};
-		private static final String[] _ownerPermissions = {
+
+		private static final String[] _OWNER_PERMISSIONS = {
 			"ADD_DISCUSSION", "DELETE", "DELETE_DISCUSSION",
 			"OVERRIDE_CHECKOUT", "PERMISSIONS", "UPDATE", "UPDATE_DISCUSSION",
 			"VIEW"

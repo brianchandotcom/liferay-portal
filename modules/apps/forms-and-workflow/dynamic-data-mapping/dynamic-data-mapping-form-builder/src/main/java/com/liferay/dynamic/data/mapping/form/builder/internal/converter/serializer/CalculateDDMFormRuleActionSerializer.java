@@ -103,7 +103,7 @@ public class CalculateDDMFormRuleActionSerializer
 		}
 
 		return String.format(
-			_functionCallBinaryExpressionFormat, "calculate",
+			_FUNCTION_CALL_BINARY_EXPRESSION_FORMAT, "calculate",
 			_calculateDDMFormRuleAction.getTarget(), newExpression);
 	}
 
@@ -130,15 +130,17 @@ public class CalculateDDMFormRuleActionSerializer
 		String matchFound = expression.substring(start, end);
 
 		String matchReplacement = String.format(
-			_functionCallUnaryExpressionFormat, "getValue", matchFound);
+			_FUNCTION_CALL_UNARY_EXPRESSION_FORMAT, "getValue", matchFound);
 
 		return StringUtil.replaceFirst(
 			newExpression, matchFound, matchReplacement, start);
 	}
 
-	private static final String _functionCallBinaryExpressionFormat =
+	private static final String _FUNCTION_CALL_BINARY_EXPRESSION_FORMAT =
 		"%s('%s', %s)";
-	private static final String _functionCallUnaryExpressionFormat = "%s('%s')";
+
+	private static final String _FUNCTION_CALL_UNARY_EXPRESSION_FORMAT =
+		"%s('%s')";
 
 	private final CalculateDDMFormRuleAction _calculateDDMFormRuleAction;
 

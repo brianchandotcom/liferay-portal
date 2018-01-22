@@ -23,6 +23,7 @@ import com.liferay.marketplace.store.web.internal.constants.MarketplaceConstants
 import com.liferay.marketplace.store.web.internal.constants.MarketplaceStoreWebKeys;
 import com.liferay.marketplace.store.web.internal.oauth.util.OAuthManager;
 import com.liferay.marketplace.store.web.internal.util.MarketplaceLicenseUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ReleaseInfo;
 import com.liferay.portal.kernel.util.ServerDetector;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 

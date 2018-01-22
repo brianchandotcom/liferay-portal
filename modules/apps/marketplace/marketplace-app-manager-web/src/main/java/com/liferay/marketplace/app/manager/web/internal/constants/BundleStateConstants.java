@@ -14,7 +14,7 @@
 
 package com.liferay.marketplace.app.manager.web.internal.constants;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.framework.Bundle;
 

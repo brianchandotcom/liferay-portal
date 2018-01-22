@@ -15,9 +15,9 @@
 package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.app.manager.web.internal.constants.BundleConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Dictionary;
 import java.util.HashMap;

@@ -15,7 +15,7 @@
 package com.liferay.marketplace.app.manager.web.internal.util;
 
 import com.liferay.marketplace.model.App;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;

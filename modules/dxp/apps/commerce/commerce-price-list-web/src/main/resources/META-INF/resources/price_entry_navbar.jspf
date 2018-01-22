@@ -29,7 +29,7 @@
 </liferay-portlet:renderURL>
 
 <%
-List<NavigationItem> navigationItems = new ArrayList<>();
+List<NavigationItem> priceEntryNavigationItems = new ArrayList<>();
 
 NavigationItem priceEntryNavigationItem = new NavigationItem();
 NavigationItem tierPriceEntriesNavigationItem = new NavigationItem();
@@ -42,11 +42,11 @@ tierPriceEntriesNavigationItem.setActive(toolbarItem.equals("view-tier-price-ent
 tierPriceEntriesNavigationItem.setHref(viewCommerceTierPriceEntriesURL.toString());
 tierPriceEntriesNavigationItem.setLabel(LanguageUtil.get(request, "tier-price-entries"));
 
-navigationItems.add(priceEntryNavigationItem);
-navigationItems.add(tierPriceEntriesNavigationItem);
+priceEntryNavigationItems.add(priceEntryNavigationItem);
+priceEntryNavigationItems.add(tierPriceEntriesNavigationItem);
 %>
 
 <clay:navigation-bar
 	inverted="<%= false %>"
-	items="<%= navigationItems %>"
+	items="<%= priceEntryNavigationItems %>"
 />

@@ -20,14 +20,14 @@
 </liferay-portlet:renderURL>
 
 <%
-NavigationItem navigationItem = new NavigationItem();
+NavigationItem priceListNavigationItem = new NavigationItem();
 
-navigationItem.setActive(true);
-navigationItem.setHref(viewPriceListsURL.toString());
-navigationItem.setLabel(LanguageUtil.get(request, "price-lists"));
+priceListNavigationItem.setActive(true);
+priceListNavigationItem.setHref(viewPriceListsURL.toString());
+priceListNavigationItem.setLabel(LanguageUtil.get(request, "price-lists"));
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= Collections.singletonList(navigationItem) %>"
+	items="<%= Collections.singletonList(priceListNavigationItem) %>"
 />

@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.blogs.linkback;
+package com.liferay.blogs.internal.linkback;
 
+import com.liferay.blogs.linkback.LinkbackConsumer;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,12 +33,14 @@ import org.osgi.service.component.annotations.Reference;
  * @author André de Oliveira
  */
 @Component(service = LinkbackConsumer.class)
-public class LinkbackConsumer {
+public class LinkbackConsumerImpl implements LinkbackConsumer {
 
+	@Override
 	public void addNewTrackback(long commentId, String url, String entryURL) {
 		_trackbacks.add(new Tuple(commentId, url, entryURL));
 	}
 
+	@Override
 	public void verifyNewTrackbacks() {
 		Tuple tuple = null;
 
@@ -54,6 +57,7 @@ public class LinkbackConsumer {
 		}
 	}
 
+	@Override
 	public void verifyTrackback(long commentId, String url, String entryURL) {
 		try {
 			String result = _http.URLtoString(url);
@@ -74,7 +78,7 @@ public class LinkbackConsumer {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		LinkbackConsumer.class);
+		LinkbackConsumerImpl.class);
 
 	@Reference
 	private CommentManager _commentManager;

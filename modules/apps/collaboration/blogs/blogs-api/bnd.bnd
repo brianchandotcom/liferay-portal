@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.blogs.configuration.definition,\
 	com.liferay.blogs.constants,\
 	com.liferay.blogs.exception,\
+	com.liferay.blogs.linkback,\
 	com.liferay.blogs.model,\
 	com.liferay.blogs.service,\
 	com.liferay.blogs.service.persistence,\

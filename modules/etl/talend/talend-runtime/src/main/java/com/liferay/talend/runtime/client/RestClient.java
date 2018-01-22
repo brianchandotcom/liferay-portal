@@ -39,6 +39,7 @@ import javax.ws.rs.core.UriBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 import org.glassfish.jersey.client.ClientConfig;
+import org.glassfish.jersey.client.ClientProperties;
 import org.glassfish.jersey.client.authentication.HttpAuthenticationFeature;
 
 import org.slf4j.Logger;
@@ -96,7 +97,7 @@ public class RestClient {
 	}
 
 	public Client getClient() {
-		return ClientBuilder.newClient(setCredentials(_userId, _password));
+		return ClientBuilder.newClient(_getClientConfig());
 	}
 
 	public String getEndpoint() {
@@ -183,6 +184,20 @@ public class RestClient {
 		}
 
 		return response;
+	}
+
+	private ClientConfig _getClientConfig() {
+		ClientConfig clientConfig = setCredentials(_userId, _password);
+
+		clientConfig = clientConfig.property(
+			ClientProperties.CONNECT_TIMEOUT,
+			_liferayConnectionProperties.connectTimeout.getValue() * 1000);
+
+		clientConfig = clientConfig.property(
+			ClientProperties.READ_TIMEOUT,
+			_liferayConnectionProperties.readTimeout.getValue() * 1000);
+
+		return clientConfig;
 	}
 
 	private Map<String, String> _getQueryParameterMap() {

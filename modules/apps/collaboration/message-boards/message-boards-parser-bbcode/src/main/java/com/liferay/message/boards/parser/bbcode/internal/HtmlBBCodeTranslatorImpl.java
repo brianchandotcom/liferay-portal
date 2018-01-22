@@ -386,11 +386,11 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 
 		int size = GetterUtil.getInteger(bbCodeItem.getAttribute());
 
-		if ((size >= 1) && (size <= _fontSizes.length)) {
-			sb.append(_fontSizes[size - 1]);
+		if ((size >= 1) && (size <= _FONT_SIZES.length)) {
+			sb.append(_FONT_SIZES[size - 1]);
 		}
 		else {
-			sb.append(_fontSizes[1]);
+			sb.append(_FONT_SIZES[1]);
 		}
 
 		sb.append("px;\">");
@@ -745,6 +745,8 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 		{"wub.gif", ":wub:", "wub"}
 	};
 
+	private static final int[] _FONT_SIZES = {10, 12, 14, 16, 18, 24, 32, 48};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		HtmlBBCodeTranslatorImpl.class);
 
@@ -762,7 +764,6 @@ public class HtmlBBCodeTranslatorImpl implements BBCodeTranslator {
 	private final String[] _emoticonFiles = new String[_EMOTICONS.length];
 	private final String[] _emoticonSymbols = new String[_EMOTICONS.length];
 	private final Map<String, Integer> _excludeNewLineTypes;
-	private final int[] _fontSizes = {10, 12, 14, 16, 18, 24, 32, 48};
 	private final Set<String> _imageAttributes;
 	private final Pattern _imagePattern = Pattern.compile(
 		"^(?:https?://|/)[-;/?:@&=+$,_.!~*'()%0-9a-z]{1,2048}$",

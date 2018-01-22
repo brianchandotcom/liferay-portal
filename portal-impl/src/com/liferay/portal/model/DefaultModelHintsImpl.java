@@ -40,7 +40,7 @@ public class DefaultModelHintsImpl extends BaseModelHintsImpl {
 
 	@Override
 	public String[] getModelHintsConfigs() {
-		return _modelHintsConfigs;
+		return _MODEL_HINTS_CONFIGS;
 	}
 
 	@Override
@@ -64,9 +64,10 @@ public class DefaultModelHintsImpl extends BaseModelHintsImpl {
 
 	}
 
+	private static final String[] _MODEL_HINTS_CONFIGS = StringUtil.split(
+		PropsUtil.get(PropsKeys.MODEL_HINTS_CONFIGS));
+
 	private final ModelHintsCallback _modelHintsCallback =
 		new RuntimeModelHintsCallback();
-	private final String[] _modelHintsConfigs = StringUtil.split(
-		PropsUtil.get(PropsKeys.MODEL_HINTS_CONFIGS));
 
 }

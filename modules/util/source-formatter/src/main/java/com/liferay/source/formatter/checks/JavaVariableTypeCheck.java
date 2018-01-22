@@ -101,12 +101,12 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 
 		if (isFinal) {
 			if (!javaVariable.isStatic() &&
-				(_immutableFieldTypes.contains(fieldType) ||
+				(_isImmutableField(fieldType) ||
 				 (fieldType.equals("Log") &&
 				  !isExcludedPath(_STATIC_LOG_EXCLUDES, absolutePath)))) {
 
 				classContent = _formatStaticableFieldType(
-					classContent, javaVariable.getContent());
+					classContent, javaVariable.getContent(), fieldType);
 			}
 		}
 		else if (!_containsNonAccessModifier(javaVariable, "volatile")) {
@@ -212,9 +212,13 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 	}
 
 	private String _formatStaticableFieldType(
-		String classContent, String javaVariableContent) {
+		String classContent, String javaVariableContent, String fieldType) {
 
-		if (!javaVariableContent.contains(StringPool.EQUAL)) {
+		if (!javaVariableContent.contains(StringPool.EQUAL) ||
+			(fieldType.endsWith("[]") &&
+			 (javaVariableContent.contains(" new ") ||
+			  javaVariableContent.contains("\tnew ")))) {
+
 			return classContent;
 		}
 
@@ -325,6 +329,18 @@ public class JavaVariableTypeCheck extends BaseJavaTermCheck {
 		}
 
 		return true;
+	}
+
+	private boolean _isImmutableField(String fieldType) {
+		for (String immutableFieldType : _immutableFieldTypes) {
+			if (fieldType.equals(immutableFieldType) ||
+				fieldType.startsWith(immutableFieldType + "[]")) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private static final String _STATIC_LOG_EXCLUDES = "static.log.excludes";

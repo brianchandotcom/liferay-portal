@@ -42,7 +42,7 @@ public class DropdownRadioItem implements Serializable {
 	}
 
 	public String getType() {
-		return _type;
+		return _TYPE;
 	}
 
 	public void setActive(boolean active) {
@@ -65,7 +65,7 @@ public class DropdownRadioItem implements Serializable {
 		_label = label;
 	}
 
-	private static final String _type = "radio";
+	private static final String _TYPE = "radio";
 
 	private boolean _active;
 	private boolean _checked;

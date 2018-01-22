@@ -50,7 +50,7 @@ public class DropdownCheckboxItem implements Serializable {
 	}
 
 	public String getType() {
-		return _type;
+		return _TYPE;
 	}
 
 	public void setActive(boolean active) {
@@ -81,7 +81,7 @@ public class DropdownCheckboxItem implements Serializable {
 		_separator = separator;
 	}
 
-	private static final String _type = "checkbox";
+	private static final String _TYPE = "checkbox";
 
 	private boolean _active;
 	private boolean _checked;

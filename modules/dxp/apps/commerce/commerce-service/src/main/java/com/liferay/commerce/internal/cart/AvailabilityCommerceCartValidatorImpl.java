@@ -57,8 +57,7 @@ public class AvailabilityCommerceCartValidatorImpl
 
 		if (commerceCartItem == null) {
 			return new CommerceCartValidatorResult(
-				commerceCartItem.getCommerceCartItemId(), false,
-				"product-is-no-longer-available");
+				0, false, "product-is-no-longer-available");
 		}
 
 		CPInstance cpInstance = commerceCartItem.fetchCPInstance();

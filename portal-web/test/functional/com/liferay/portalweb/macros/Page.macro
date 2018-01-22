@@ -631,8 +631,8 @@
 			<var name="privacy" value="${privacy}" />
 		</execute>
 
-		<execute function="AssertElementPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY" value1="${pageName}">
-			<var name="key_rowEntry" value="${pageName}" />
+		<execute function="AssertElementPresent" locator1="SitePages#LIST_GROUP_ITEM">
+			<var name="key_itemName" value="${pageName}" />
 		</execute>
 	</command>
 

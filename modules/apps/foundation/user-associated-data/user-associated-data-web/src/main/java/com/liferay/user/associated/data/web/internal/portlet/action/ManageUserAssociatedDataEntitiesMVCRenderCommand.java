@@ -15,7 +15,9 @@
 package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.registry.UADRegistry;
 import com.liferay.user.associated.data.util.UADEntityTypeComposite;
@@ -42,6 +44,30 @@ import org.osgi.service.component.annotations.Reference;
 public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 	implements MVCRenderCommand {
 
+	public static int[] getStartAndEnd(RenderRequest request) {
+		String start = request.getParameter("start");
+		String end = request.getParameter("end");
+
+		if (Validator.isNull(start) || Validator.isNull(end)) {
+			int cur = ParamUtil.getInteger(request, "cur", 1);
+			int delta = ParamUtil.getInteger(request, "delta", 20);
+
+			return new int[] {(cur - 1) * delta, cur * delta};
+		}
+
+		int startValue = GetterUtil.getInteger(start);
+		int endValue = GetterUtil.getInteger(end);
+
+		if ((startValue < 0) && (endValue > 0)) {
+			return new int[] {0, endValue};
+		}
+		else if ((startValue >= 0) && (endValue == -1)) {
+			return new int[] {startValue, Integer.MAX_VALUE};
+		}
+
+		return new int[] {startValue, endValue};
+	}
+
 	@Override
 	public String render(
 			RenderRequest renderRequest, RenderResponse renderResponse)
@@ -51,8 +77,11 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		String uadRegistryKey = ParamUtil.getString(
 			renderRequest, "uadRegistryKey");
 
+		int[] startAndEnd = getStartAndEnd(renderRequest);
+
 		UADEntityTypeComposite uadEntityTypeComposite =
-			_uadRegistry.getUADEntityTypeComposite(selUserId, uadRegistryKey);
+			_uadRegistry.getUADEntityTypeComposite(
+				selUserId, uadRegistryKey, startAndEnd[0], startAndEnd[1]);
 
 		renderRequest.setAttribute(
 			UserAssociatedDataWebKeys.UAD_ENTITY_TYPE_COMPOSITE,

@@ -64,7 +64,7 @@ public interface UADRegistry {
 	public List<UADEntitySetComposite> getUADEntitySetComposites(long userId);
 
 	public UADEntityTypeComposite getUADEntityTypeComposite(
-		long userId, String key);
+		long userId, String key, int start, int end);
 
 	public List<UADEntityTypeComposite> getUADEntityTypeComposites(
 		long userId, String uadEntitySetName);

@@ -27,6 +27,7 @@ public class SingleValueColumn extends Column {
 
 	public SingleValueColumn(String id, Number value) {
 		super(id);
+
 		setValue(value);
 	}
 

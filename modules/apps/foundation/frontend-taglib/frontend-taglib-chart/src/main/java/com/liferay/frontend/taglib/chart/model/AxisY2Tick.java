@@ -26,13 +26,13 @@ public class AxisY2Tick extends ChartObject {
 		get("values", ArrayList.class).add(value);
 	}
 
-	public final void addValues(Number...values) {
+	public final void addValues(Collection<? extends Number> values) {
 		for (Number value : values) {
 			addValue(value);
 		}
 	}
 
-	public final void addValues(Collection<? extends Number> values) {
+	public final void addValues(Number... values) {
 		for (Number value : values) {
 			addValue(value);
 		}

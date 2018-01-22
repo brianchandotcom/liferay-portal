@@ -24,13 +24,13 @@ import java.util.Collection;
  */
 public class AxisX extends ChartObject {
 
-	public void addCategories(String...categories) {
+	public void addCategories(Collection<String> categories) {
 		for (String category : categories) {
 			addCategory(category);
 		}
 	}
 
-	public void addCategories(Collection<String> categories) {
+	public void addCategories(String... categories) {
 		for (String category : categories) {
 			addCategory(category);
 		}

@@ -240,23 +240,8 @@ public class WorkflowDefinitionDisplayContext {
 		ThemeDisplay themeDisplay =
 			_workflowDefinitionRequestHelper.getThemeDisplay();
 
-		ResourceBundle resourceBundle =
-			_resourceBundleLoader.loadResourceBundle(
-				_workflowDefinitionRequestHelper.getLocale());
-
-		if (workflowDefinition != null) {
-			if (Validator.isNull(workflowDefinition.getTitle())) {
-				return HtmlUtil.escape(
-					LanguageUtil.get(resourceBundle, "untitled-workflow"));
-			}
-			else {
-				return HtmlUtil.escape(
-					workflowDefinition.getTitle(themeDisplay.getLanguageId()));
-			}
-		}
-
 		return HtmlUtil.escape(
-			LanguageUtil.get(resourceBundle, "new-workflow"));
+			workflowDefinition.getTitle(themeDisplay.getLanguageId()));
 	}
 
 	public String getUserName(WorkflowDefinition workflowDefinition) {
@@ -313,28 +298,21 @@ public class WorkflowDefinitionDisplayContext {
 		return workFlowDefinitions;
 	}
 
-	public boolean isShowDraftButton(
-			WorkflowDefinition workflowDefinitionVersion)
-		throws PortalException {
+	public boolean showRestoreButton(
+		WorkflowDefinition currentWorkflowDefinition,
+		WorkflowDefinition workflowDefinition) {
 
-		if (workflowDefinitionVersion == null) {
-			return true;
-		}
+		if ((currentWorkflowDefinition.getVersion() ==
+				workflowDefinition.getVersion()) &&
+			(currentWorkflowDefinition.getModifiedDate() != null) &&
+			(workflowDefinition.getModifiedDate() != null) &&
+			currentWorkflowDefinition.getModifiedDate().equals(
+				workflowDefinition.getModifiedDate())) {
 
-		if (workflowDefinitionVersion.isActive()) {
 			return false;
 		}
 
-		try {
-			WorkflowDefinitionManagerUtil.getLatestWorkflowDefinition(
-				_workflowDefinitionRequestHelper.getCompanyId(),
-				workflowDefinitionVersion.getName());
-		}
-		catch (Exception e) {
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 
 	protected PredicateFilter<WorkflowDefinition> createPredicateFilter(

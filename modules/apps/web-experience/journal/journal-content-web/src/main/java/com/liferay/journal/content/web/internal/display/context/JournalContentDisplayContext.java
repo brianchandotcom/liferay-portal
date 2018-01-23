@@ -33,11 +33,11 @@ import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAsset
 import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
 import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntryTracker;
 import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
+import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
+import com.liferay.journal.content.web.internal.security.permission.resource.JournalPermission;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
-import com.liferay.journal.service.permission.JournalArticlePermission;
-import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
 import com.liferay.petra.string.StringPool;
@@ -888,7 +888,7 @@ public class JournalContentDisplayContext {
 		return _showArticle;
 	}
 
-	public boolean isShowEditArticleIcon() {
+	public boolean isShowEditArticleIcon() throws PortalException {
 		if (_showEditArticleIcon != null) {
 			return _showEditArticleIcon;
 		}

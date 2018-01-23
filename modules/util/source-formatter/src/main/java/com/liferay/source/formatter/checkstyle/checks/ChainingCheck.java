@@ -89,6 +89,15 @@ public class ChainingCheck extends BaseCheck {
 
 				_checkMethodName(
 					chainedMethodNames, "getClass", methodCallAST, detailAST);
+
+				String methodName1 = chainedMethodNames.get(0);
+				String methodName2 = chainedMethodNames.get(1);
+
+				if (methodName1.equals("concat") ||
+					methodName2.equals("concat")) {
+
+					continue;
+				}
 			}
 
 			if (_isAllowedChainingMethodCall(

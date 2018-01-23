@@ -319,7 +319,7 @@ information.
 				</filterchain>
 			</loadresource>
 
-			<condition property="latest.artifact.stale">
+			<condition else="false" property="latest.artifact.stale">
 				<isset property="artifact.git.log.changes" />
 			</condition>
 		</sequential>
@@ -1050,7 +1050,7 @@ information.
 			</if>
 
 			<if>
-				<isfalse value="${latest.artifact.stale}" />
+				<equals arg1="${latest.artifact.stale}" arg2="false" />
 				<then>
 					<echo>${artifact.name} is not stale and does not need to be published.</echo>
 				</then>

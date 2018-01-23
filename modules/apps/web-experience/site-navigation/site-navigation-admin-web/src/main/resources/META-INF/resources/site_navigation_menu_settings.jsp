@@ -29,22 +29,7 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>" />
 
 	<aui:fieldset helpMessage="function-help" label="function">
-
-		<%
-		String taglibOnClickPrimary = renderResponse.getNamespace() + "toggleCheckboxes('primary', 'secondary', 'social');";
-		String taglibOnClickSecondary = renderResponse.getNamespace() + "toggleCheckboxes('secondary', 'primary', 'social');";
-		String taglibOnClickSocial = renderResponse.getNamespace() + "toggleCheckboxes('social', 'primary', 'secondary');";
-		%>
-
-		<aui:input
-			checked="<%= siteNavigationMenu.isPrimary() %>"
-			disabled="<%= siteNavigationMenu.isSecondary() || siteNavigationMenu.isSocial() %>"
-			label="main-menu"
-			name="primary"
-			onClick="<%= taglibOnClickPrimary %>"
-			type="checkbox"
-			wrapperCssClass="mb-1"
-		/>
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="main-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
 
 		<%
 		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
@@ -56,47 +41,12 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 			</div>
 		</c:if>
 
-		<aui:input
-			checked="<%= siteNavigationMenu.isSecondary() %>"
-			disabled="<%= siteNavigationMenu.isPrimary() || siteNavigationMenu.isSocial() %>"
-			label="subsidiary-menu"
-			name="secondary"
-			onClick="<%= taglibOnClickSecondary %>"
-			type="checkbox"
-			wrapperCssClass="mt-4"
-		/>
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>" label="subsidiary-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" wrapperCssClass="mt-4" />
 
-		<aui:input
-			checked="<%= siteNavigationMenu.isSocial() %>"
-			disabled="<%= siteNavigationMenu.isPrimary() || siteNavigationMenu.isSecondary() %>"
-			label="social-menu"
-			name="social"
-			onClick="<%= taglibOnClickSocial %>"
-			type="checkbox"
-		/>
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>" label="social-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
 	</aui:fieldset>
 
 	<aui:button-row>
 		<aui:button cssClass="btn-block" type="submit" value="save" />
 	</aui:button-row>
 </aui:form>
-
-<aui:script use="aui-base">
-	<portlet:namespace/>toggleCheckboxes = function(current, switchBox1, switchBox2) {
-		var checked = A.one('#<portlet:namespace/>' + current).get('checked');
-		var switchBox1 = A.one('#<portlet:namespace/>' + switchBox1)
-		var switchBox2 = A.one('#<portlet:namespace/>' + switchBox2)
-
-		Liferay.Util.toggleDisabled(switchBox1, checked);
-		Liferay.Util.toggleDisabled(switchBox2, checked);
-
-		var primaryMenu = A.one('#<portlet:namespace/>currentPrimaryMenu');
-
-		if ((current === 'primary') && checked && primaryMenu) {
-			primaryMenu.addClass('hide');
-		}
-		else if ((current === 'primary') && !checked && primaryMenu) {
-			primaryMenu.removeClass('hide');
-		}
-	};
-</aui:script>

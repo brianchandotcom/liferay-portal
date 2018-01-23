@@ -50,15 +50,13 @@ public class EditSiteNavigationMenuSettingsMVCActionCommand
 		long siteNavigationMenuId = ParamUtil.getLong(
 			actionRequest, "siteNavigationMenuId");
 
-		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
-		boolean secondary = ParamUtil.getBoolean(actionRequest, "secondary");
-		boolean social = ParamUtil.getBoolean(actionRequest, "social");
+		int type = ParamUtil.getInteger(actionRequest, "type");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			actionRequest);
 
 		_siteNavigationMenuService.updateSiteNavigationMenu(
-			siteNavigationMenuId, primary, secondary, social, serviceContext);
+			siteNavigationMenuId, type, serviceContext);
 	}
 
 	@Reference

@@ -31,13 +31,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface WorldpayCommercePaymentEngineGroupServiceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "installation-id", required = false)
 	public String installationId();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "payment-method-codes", required = false)
 	public String paymentMethodCodes();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "service-key", required = false)
 	public String serviceKey();
 
 }

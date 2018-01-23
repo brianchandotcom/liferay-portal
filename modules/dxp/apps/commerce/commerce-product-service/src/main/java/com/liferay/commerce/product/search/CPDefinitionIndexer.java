@@ -16,9 +16,12 @@ package com.liferay.commerce.product.search;
 
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPDefinition;
+import com.liferay.commerce.product.model.CPDefinitionLink;
+import com.liferay.commerce.product.model.CPDefinitionLinkConstants;
 import com.liferay.commerce.product.model.CPDefinitionOptionRel;
 import com.liferay.commerce.product.model.CPDefinitionOptionValueRel;
 import com.liferay.commerce.product.model.CPOption;
+import com.liferay.commerce.product.service.CPDefinitionLinkLocalService;
 import com.liferay.commerce.product.service.CPDefinitionLocalService;
 import com.liferay.commerce.product.service.CPFriendlyURLEntryLocalService;
 import com.liferay.commerce.product.service.CPInstanceLocalService;
@@ -66,6 +69,8 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	public static final String CLASS_NAME = CPDefinition.class.getName();
 
+	public static final String FIELD_CROSS_SELL_OF = "crossSellOf";
+
 	public static final String FIELD_DEFAULT_IMAGE_FILE_ENTRY_ID =
 		"defaultImageFileEntryId";
 
@@ -75,7 +80,11 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	public static final String FIELD_PRODUCT_TYPE_NAME = "productTypeName";
 
+	public static final String FIELD_RELATED_TO = "relatedTo";
+
 	public static final String FIELD_SKUS = "skus";
+
+	public static final String FIELD_UP_SELL_OF = "upSellOf";
 
 	public CPDefinitionIndexer() {
 		setDefaultSelectedFieldNames(
@@ -275,6 +284,24 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 		document.addText(FIELD_SKUS, skus);
 
+		String[] relatedProductIds = getReverseCPDefinitionIds(
+			cpDefinition.getCPDefinitionId(),
+			CPDefinitionLinkConstants.TYPE_RELATED);
+
+		document.addKeyword(FIELD_RELATED_TO, relatedProductIds);
+
+		String[] upSellProductIds = getReverseCPDefinitionIds(
+			cpDefinition.getCPDefinitionId(),
+			CPDefinitionLinkConstants.TYPE_UP_SELL);
+
+		document.addKeyword(FIELD_UP_SELL_OF, upSellProductIds);
+
+		String[] crossSellProductIds = getReverseCPDefinitionIds(
+			cpDefinition.getCPDefinitionId(),
+			CPDefinitionLinkConstants.TYPE_CROSS_SELL);
+
+		document.addKeyword(FIELD_CROSS_SELL_OF, crossSellProductIds);
+
 		CPAttachmentFileEntry cpAttachmentFileEntry =
 			_cpDefinitionLocalService.getDefaultImage(
 				cpDefinition.getCPDefinitionId());
@@ -329,6 +356,29 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 		reindexCPDefinitions(companyId);
 	}
 
+	protected String[] getReverseCPDefinitionIds(
+		long cpDefinitionId, int type) {
+
+		List<CPDefinitionLink> cpDefinitionLinks =
+			_cpDefinitionLinkLocalService.getReverseCPDefinitionLinks(
+				cpDefinitionId, type);
+
+		String[] reverseCPDefinitionIdsArray =
+			new String[cpDefinitionLinks.size()];
+
+		List<String> reverseCPDefinitionIds = new ArrayList<>();
+
+		for (CPDefinitionLink cpDefinitionLink : cpDefinitionLinks) {
+			reverseCPDefinitionIds.add(
+				String.valueOf(cpDefinitionLink.getCPDefinition1()));
+		}
+
+		reverseCPDefinitionIdsArray = reverseCPDefinitionIds.toArray(
+			reverseCPDefinitionIdsArray);
+
+		return reverseCPDefinitionIdsArray;
+	}
+
 	protected void reindexCPDefinitions(long companyId) throws PortalException {
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
 			_cpDefinitionLocalService.getIndexableActionableDynamicQuery();
@@ -365,6 +415,9 @@ public class CPDefinitionIndexer extends BaseIndexer<CPDefinition> {
 
 	@Reference
 	private ClassNameLocalService _classNameLocalService;
+
+	@Reference
+	private CPDefinitionLinkLocalService _cpDefinitionLinkLocalService;
 
 	@Reference
 	private CPDefinitionLocalService _cpDefinitionLocalService;

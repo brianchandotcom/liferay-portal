@@ -25,6 +25,10 @@ User selUser = PortalUtil.getSelectedUser(request);
 
 request.setAttribute(UsersAdminWebKeys.SELECTED_USER, selUser);
 
+if (selUser != null) {
+	PortalUtil.setPageSubtitle(selUser.getFullName(), request);
+}
+
 long selUserId = (selUser != null) ? selUser.getUserId() : 0;
 
 String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey");

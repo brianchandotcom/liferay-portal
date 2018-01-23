@@ -95,6 +95,43 @@ public class FileEntryStagedModelDataHandlerTest
 	}
 
 	@Test
+	public void testExportImportCheckedOutFileEntryAfterInitialPublication()
+		throws Exception {
+
+		ExportImportThreadLocal.setPortletStagingInProcess(true);
+
+		try {
+			String fileName = "PDF_Test.pdf";
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(
+					liveGroup.getGroupId(), TestPropsValues.getUserId());
+
+			FileEntry fileEntry = DLAppLocalServiceUtil.addFileEntry(
+				TestPropsValues.getUserId(), liveGroup.getGroupId(),
+				DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
+				ContentTypes.APPLICATION_PDF,
+				FileUtil.getBytes(getClass(), "dependencies/" + fileName),
+				serviceContext);
+
+			DLFileEntryLocalServiceUtil.checkOutFileEntry(
+				TestPropsValues.getUserId(), fileEntry.getFileEntryId(),
+				serviceContext);
+
+			exportImportStagedModelFromLiveToStaging(fileEntry);
+
+			FileEntry stagingGroupFileEntry =
+				DLAppLocalServiceUtil.getFileEntryByUuidAndGroupId(
+					fileEntry.getUuid(), stagingGroup.getGroupId());
+
+			exportImportStagedModel(stagingGroupFileEntry);
+		}
+		finally {
+			ExportImportThreadLocal.setPortletStagingInProcess(false);
+		}
+	}
+
+	@Test
 	public void testExportImportFileExtension() throws Exception {
 		String fileName = "PDF_Test.pdf";
 

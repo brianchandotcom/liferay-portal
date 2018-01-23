@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -76,21 +77,57 @@ public class ChainingCheck extends BaseCheck {
 			List<String> chainedMethodNames = _getChainedMethodNames(
 				methodCallAST);
 
-			if (chainedMethodNames.size() == 1) {
+			int chainSize = chainedMethodNames.size();
+
+			if (chainSize == 1) {
 				continue;
 			}
 
-			_checkMethodName(
-				chainedMethodNames, "getClass", methodCallAST, detailAST);
+			if (chainSize == 2) {
+				if (dotAST == null) {
+					continue;
+				}
 
-			if (chainedMethodNames.size() == 2) {
-				continue;
+				_checkMethodName(
+					chainedMethodNames, "getClass", methodCallAST, detailAST);
+
+				String methodName1 = chainedMethodNames.get(0);
+
+				if ((methodName1.equals("getParamValue") ||
+					 methodName1.equals("getValue")) &&
+					DetailASTUtil.hasParentWithTokenType(
+						detailAST, TokenTypes.ENUM_DEF)) {
+
+					continue;
+				}
+
+				String methodName2 = chainedMethodNames.get(1);
+
+				if (methodName1.equals("concat") ||
+					methodName2.equals("concat")) {
+
+					continue;
+				}
+
+				FileContents fileContents = getFileContents();
+
+				String fileName = StringUtil.replace(
+					fileContents.getFileName(), CharPool.BACK_SLASH,
+					CharPool.SLASH);
+
+				if (fileName.contains("/test/") ||
+					fileName.contains("/testIntegration/")) {
+
+					continue;
+				}
 			}
 
 			if (_isAllowedChainingMethodCall(
 					detailAST, methodCallAST, chainedMethodNames)) {
 
-				_checkStyling(methodCallAST);
+				if (chainSize > 2) {
+					_checkStyling(methodCallAST);
+				}
 
 				continue;
 			}
@@ -104,7 +141,7 @@ public class ChainingCheck extends BaseCheck {
 				continue;
 			}
 
-			if ((chainedMethodNames.size() == 3) && (concatsCount == 2)) {
+			if ((chainSize == 3) && (concatsCount == 2)) {
 				continue;
 			}
 

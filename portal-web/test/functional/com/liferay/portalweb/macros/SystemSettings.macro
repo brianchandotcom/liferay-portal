@@ -72,15 +72,9 @@
 		<execute function="Click" locator1="Icon#ANGLE_LEFT_BACK" />
 	</command>
 
-	<command name="gotoCategory">
-		<var name="key_category" value="${category}" />
-
-		<execute function="AssertClick" locator1="SystemSettings#MENUBAR_CATEGORY" value1="${category}" />
-	</command>
-
 	<command name="resetConfiguration">
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="${category}" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="${navItem}" />
 		</execute>
 
 		<var name="key_rowEntry" value="${configurationName}" />

@@ -20,7 +20,7 @@
 </tr>
 <tr>
 	<td>SAVE_FORM_BUTTON_LOCALIZED</td>
-	<td>//div[@class='button-holder']//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
+	<td>//div[contains(@class,'button-holder')]//button[contains(.,'${key_saveButton}') and not (contains(@class,'disabled'))]</td>
 	<td></td>
 </tr>
 <tr>
@@ -71,7 +71,7 @@
 </tr>
 <tr>
 	<td>ALT_PAGINATION_SUCCESS_PAGE</td>
-	<td>//div[contains(@class,'form-builder-pagination')]//li[@class='pagination-success-page']</td>
+	<td>//div[contains(@class,'form-builder-pagination')]//li[contains(@class,'pagination-success-page')]</td>
 	<td></td>
 </tr>
 <tr>

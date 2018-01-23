@@ -251,8 +251,8 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="SystemSettings#gotoCategory">
-			<var name="category" value="Collaboration" />
+		<execute macro="Navigator#gotoNavItem">
+			<var name="navItem" value="Collaboration" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">

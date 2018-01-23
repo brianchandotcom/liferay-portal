@@ -48,8 +48,8 @@ public class AddMenuItemTag extends IncludeTag {
 		_title = title;
 	}
 
-	public void setType(AddMenuKeys.AddMenuType type) {
-		_type = type;
+	public void setType(AddMenuKeys.AddMenuType addMenuType) {
+		_addMenuType = addMenuType;
 	}
 
 	public void setUrl(String url) {
@@ -61,7 +61,7 @@ public class AddMenuItemTag extends IncludeTag {
 		_cssClass = null;
 		_id = null;
 		_title = null;
-		_type = AddMenuKeys.AddMenuType.DEFAULT;
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 		_url = null;
 	}
 
@@ -73,17 +73,18 @@ public class AddMenuItemTag extends IncludeTag {
 
 		if (addMenuItems != null) {
 			AddMenuItem addMenuItem = new AddMenuItem(
-				_anchorData, _cssClass, _id, _title, _type, _url);
+				_anchorData, _cssClass, _id, _title, _addMenuType, _url);
 
 			addMenuItems.add(addMenuItem);
 		}
 	}
 
+	private AddMenuKeys.AddMenuType _addMenuType =
+		AddMenuKeys.AddMenuType.DEFAULT;
 	private Map<String, Object> _anchorData;
 	private String _cssClass;
 	private String _id;
 	private String _title;
-	private AddMenuKeys.AddMenuType _type = AddMenuKeys.AddMenuType.DEFAULT;
 	private String _url;
 
 }

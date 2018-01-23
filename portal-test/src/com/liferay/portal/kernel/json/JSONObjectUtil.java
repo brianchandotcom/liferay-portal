@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.json;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;

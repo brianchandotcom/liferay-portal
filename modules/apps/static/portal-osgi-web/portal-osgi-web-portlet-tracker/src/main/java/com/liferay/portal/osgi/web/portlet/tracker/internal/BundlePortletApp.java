@@ -14,6 +14,7 @@
 
 package com.liferay.portal.osgi.web.portlet.tracker.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.model.EventDefinition;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.PortletApp;
@@ -21,7 +22,6 @@ import com.liferay.portal.kernel.model.PortletFilter;
 import com.liferay.portal.kernel.model.PortletURLListener;
 import com.liferay.portal.kernel.model.PublicRenderParameter;
 import com.liferay.portal.kernel.model.SpriteImage;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.xml.QName;
 import com.liferay.portal.osgi.web.servlet.context.helper.ServletContextHelperRegistration;
 

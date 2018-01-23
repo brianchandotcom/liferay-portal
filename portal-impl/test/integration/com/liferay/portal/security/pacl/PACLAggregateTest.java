@@ -15,6 +15,7 @@
 package com.liferay.portal.security.pacl;
 
 import com.liferay.petra.log4j.Log4JUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.process.ProcessCallable;
 import com.liferay.portal.kernel.process.ProcessChannel;
 import com.liferay.portal.kernel.process.ProcessConfig;
@@ -29,7 +30,6 @@ import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner;
 import com.liferay.portal.kernel.test.junit.BridgeJUnitTestRunner.BridgeRunListener;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.PropsUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;

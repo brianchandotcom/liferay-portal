@@ -14,6 +14,7 @@
 
 package com.liferay.portal.fabric.status;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.fabric.status.JMXProxyUtil.GetAttributeProcessCallable;
 import com.liferay.portal.fabric.status.JMXProxyUtil.JMXProxyInvocationHandler;
 import com.liferay.portal.fabric.status.JMXProxyUtil.OperationProcessCallable;
@@ -27,7 +28,6 @@ import com.liferay.portal.kernel.process.ProcessException;
 import com.liferay.portal.kernel.test.rule.CodeCoverageAssertor;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.io.Serializable;
 

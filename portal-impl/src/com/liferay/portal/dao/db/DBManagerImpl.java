@@ -14,6 +14,7 @@
 
 package com.liferay.portal.dao.db;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.dao.orm.hibernate.DialectImpl;
 import com.liferay.portal.dao.orm.hibernate.MariaDBDialect;
 import com.liferay.portal.kernel.dao.db.DB;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.util.InfrastructureUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.util.PropsValues;
 

@@ -14,8 +14,8 @@
 
 package com.liferay.portal.spring.aop;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
 import java.io.Closeable;

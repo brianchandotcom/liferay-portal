@@ -14,9 +14,9 @@
 
 package com.liferay.portal.lpkg.deployer.internal;
 
+import com.liferay.petra.reflect.ReflectionUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncByteArrayInputStream;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.URLCodec;
 
 import java.io.IOException;

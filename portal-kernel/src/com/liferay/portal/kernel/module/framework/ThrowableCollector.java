@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.module.framework;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.util.concurrent.atomic.AtomicReference;
 

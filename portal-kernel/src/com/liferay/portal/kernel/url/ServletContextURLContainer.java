@@ -14,7 +14,7 @@
 
 package com.liferay.portal.kernel.url;
 
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.petra.reflect.ReflectionUtil;
 
 import java.net.MalformedURLException;
 import java.net.URL;

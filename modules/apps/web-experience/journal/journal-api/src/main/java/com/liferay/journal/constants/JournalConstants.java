@@ -19,6 +19,8 @@ package com.liferay.journal.constants;
  */
 public class JournalConstants {
 
+	public static final String RESOURCE_NAME = "com.liferay.journal";
+
 	public static final String SERVICE_NAME = "com.liferay.journal";
 
 }

@@ -74,11 +74,13 @@ public class UADRegistryImpl implements UADRegistry {
 
 		List<UADBundleComposite> uadBundleComposites = new ArrayList<>();
 
-		for (Map.Entry entry : uadEntityTypeCompositesMap.entrySet()) {
-			String bundleId = (String)entry.getKey();
+		for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
+				uadEntityTypeCompositesMap.entrySet()) {
+
+			String bundleId = entry.getKey();
 
 			List<UADEntityTypeComposite> uadEntityTypeComposites =
-				(List<UADEntityTypeComposite>)entry.getValue();
+				entry.getValue();
 
 			UADBundleComposite uadBundleComposite = new UADBundleComposite(
 				userId, bundleId, uadEntityTypeComposites);

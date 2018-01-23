@@ -37,6 +37,8 @@ public class UserFormConstants {
 
 	public static final String ENTRY_KEY_INFORMATION = "information";
 
+	public static final String ENTRY_KEY_MEMBERSHIPS = "memberships";
+
 	public static final String ENTRY_KEY_ORGANIZATIONS = "organizations";
 
 	public static final String ENTRY_KEY_PASSWORD = "password";

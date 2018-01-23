@@ -75,7 +75,6 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
-import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -136,8 +135,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
 		String comments = ParamUtil.getString(actionRequest, "comments");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
-		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
-		long[] userGroupIds = UsersAdminUtil.getUserGroupIds(actionRequest);
 		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -148,7 +145,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			screenName, emailAddress, facebookId, null,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, groupIds, null, null, userGroupIds,
+			birthdayYear, jobTitle, null, null, null, null,
 			new ArrayList<Address>(), new ArrayList<EmailAddress>(),
 			new ArrayList<Phone>(), new ArrayList<Website>(),
 			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);
@@ -160,8 +157,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			user.getOpenId(), true, null, languageId, user.getTimeZoneId(),
 			user.getGreeting(), comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			null, null, null, null, null, jobTitle, groupIds, null, null, null,
-			userGroupIds, null, null, null, null, null, serviceContext);
+			null, null, null, null, null, jobTitle, null, null, null, null,
+			null, null, null, null, null, null, serviceContext);
 
 		return user;
 	}
@@ -499,8 +496,6 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			user, actionRequest, "comments");
 		String jobTitle = BeanParamUtil.getString(
 			user, actionRequest, "jobTitle");
-		long[] groupIds = UsersAdminUtil.getGroupIds(actionRequest);
-		long[] userGroupIds = UsersAdminUtil.getUserGroupIds(actionRequest);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
@@ -511,8 +506,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			!deleteLogo, portraitBytes, languageId, user.getTimeZoneId(),
 			user.getGreeting(), comments, firstName, middleName, lastName,
 			prefixId, suffixId, male, birthdayMonth, birthdayDay, birthdayYear,
-			null, null, null, null, null, jobTitle, groupIds, null, null, null,
-			userGroupIds, null, null, null, null, null, serviceContext);
+			null, null, null, null, null, jobTitle, null, null, null, null,
+			null, null, null, null, null, null, serviceContext);
 
 		if (oldScreenName.equals(user.getScreenName())) {
 			oldScreenName = StringPool.BLANK;

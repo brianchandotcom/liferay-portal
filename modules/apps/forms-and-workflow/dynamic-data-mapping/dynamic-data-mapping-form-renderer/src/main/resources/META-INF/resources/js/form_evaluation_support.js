@@ -77,6 +77,10 @@ AUI.add(
 
 							var field = instance.getField(name, instanceId);
 
+							if (!field) {
+								return;
+							}
+
 							if (field !== trigger) {
 								if (instance !== trigger) {
 									delete fieldContext.errorMessage;

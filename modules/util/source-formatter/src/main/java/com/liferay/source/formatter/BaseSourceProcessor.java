@@ -141,11 +141,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	}
 
 	@Override
-	public SourceMismatchException getFirstSourceMismatchException() {
-		return _firstSourceMismatchException;
-	}
-
-	@Override
 	public String[] getIncludes() {
 		return filterIncludes(doGetIncludes());
 	}
@@ -166,6 +161,11 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		}
 
 		return sourceFormatterMessages;
+	}
+
+	@Override
+	public List<SourceMismatchException> getSourceMismatchExceptions() {
+		return _sourceMismatchExceptions;
 	}
 
 	@Override
@@ -408,9 +408,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 					file.delete();
 				}
 			}
-			else if (_firstSourceMismatchException == null) {
-				_firstSourceMismatchException = new SourceMismatchException(
-					fileName, content, newContent);
+			else {
+				_sourceMismatchExceptions.add(
+					new SourceMismatchException(fileName, content, newContent));
 			}
 		}
 
@@ -670,7 +670,6 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 
 	private List<String> _allFileNames;
 	private boolean _browserStarted;
-	private SourceMismatchException _firstSourceMismatchException;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
 	private List<String> _pluginsInsideModulesDirectoryNames;
@@ -683,5 +682,7 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private Map<String, Set<SourceFormatterMessage>>
 		_sourceFormatterMessagesMap = new ConcurrentHashMap<>();
+	private final List<SourceMismatchException> _sourceMismatchExceptions =
+		new ArrayList<>();
 
 }

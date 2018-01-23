@@ -3397,6 +3397,11 @@ to version 2.3.70.
 - [LPS-77186]: Update the [Liferay Source Formatter] dependency to version
 1.0.541.
 
+## 3.5.96 - 2018-01-24
+
+### Changed
+- [LPS-77423]: Set the default Node.js version to 8.9.4.
+
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
 [Liferay Ant BND]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/ant-bnd
@@ -3691,4 +3696,5 @@ to version 2.3.70.
 [LPS-77305]: https://issues.liferay.com/browse/LPS-77305
 [LPS-77400]: https://issues.liferay.com/browse/LPS-77400
 [LPS-77402]: https://issues.liferay.com/browse/LPS-77402
+[LPS-77423]: https://issues.liferay.com/browse/LPS-77423
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

@@ -1,0 +1,63 @@
+<definition>
+	<command name="add">
+		<execute macro="LexiconEntry#gotoAdd" />
+
+		<execute macro="PortletEntry#inputName">
+			<var name="name" value="${pageTemplateName}" />
+		</execute>
+
+		<execute macro="Modal#submit" />
+	</command>
+
+	<command name="expandFragmentCollection">
+		<if>
+			<condition function="IsElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED">
+				<var name="key_collectionName" value="${collectionName}" />
+			</condition>
+
+			<then>
+				<execute function="AssertClick" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED" value1="${collectionName}">
+					<var name="key_collectionName" value="${collectionName}" />
+				</execute>
+			</then>
+		</if>
+
+		<execute function="AssertElementPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL_EXPANDED">
+			<var name="key_collectionName" value="${collectionName}" />
+		</execute>
+	</command>
+
+	<command name="removeFragment">
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="Click" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_DELETE_BUTTON">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+	</command>
+
+	<command name="selectFragment">
+		<execute macro="LayoutPageTemplates#expandFragmentCollection">
+			<var name="collectionName" value="${collectionName}" />
+		</execute>
+
+		<execute function="Click" locator1="Fragment#FRAGMENT_SIDEBAR_FRAGMENT">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+
+		<execute function="AssertElementPresent" locator1="Fragment#PAGE_TEMPLATE_FRAGMENT_HEADER">
+			<var name="key_fragmentName" value="${fragmentName}" />
+		</execute>
+	</command>
+
+	<command name="viewAutoSaveMessage">
+		<execute function="AssertTextEquals#assertPartialText" locator1="Fragment#PAGE_TEMPLATE_AUTOSAVE_MESSAGE" value1="Layout page template saved at" />
+	</command>
+
+	<command name="viewCollectionNotPresent">
+		<execute function="AssertElementNotPresent" locator1="Fragment#FRAGMENT_SIDEBAR_COLLECTION_PANEL">
+			<var name="key_collectionName" value="${collectionName}" />
+		</execute>
+	</command>
+</definition>

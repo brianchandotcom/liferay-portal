@@ -10,9 +10,17 @@
 		<if>
 			<isset var="failure" />
 			<then>
-				<execute macro="Alert#viewRequestFailedToComplete" />
+				<if>
+					<condition function="IsElementPresent" locator1="Message#ERROR_2" />
+					<then>
+						<execute macro="Alert#viewRequestFailedToComplete" />
 
-				<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="${failure}" />
+						<execute function="AssertTextEquals" locator1="Message#ERROR_2" value1="${failure}" />
+					</then>
+					<else>
+						<execute function="AssertTextEquals" locator1="Message#ERROR" value1="${failure}" />
+					</else>
+				</if>
 			</then>
 			<else>
 				<execute macro="Alert#waitForSuccessMessageHide" />

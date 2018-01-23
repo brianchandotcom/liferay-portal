@@ -1258,8 +1258,8 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="navItem" value="Forms and Workflow" />
 			<var name="configurationName" value="Dynamic Data Lists" />
+			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="SystemSettings#editConfiguration">
@@ -1334,8 +1334,8 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="navItem" value="Forms and Workflow" />
 			<var name="configurationName" value="Dynamic Data Mapping Service" />
+			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavItem">
@@ -1417,8 +1417,8 @@
 		<execute macro="SystemSettings#exitEditConfiguration" />
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="navItem" value="Foundation" />
 			<var name="configurationName" value="JavaScript Loader" />
+			<var name="navItem" value="Foundation" />
 		</execute>
 	</command>
 
@@ -1479,8 +1479,8 @@
 		</execute>
 
 		<execute macro="SystemSettings#resetConfiguration">
-			<var name="navItem" value="Forms and Workflow" />
 			<var name="configurationName" value="Forms" />
+			<var name="navItem" value="Forms and Workflow" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

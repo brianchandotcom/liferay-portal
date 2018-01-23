@@ -131,27 +131,6 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	}
 
 	@Test
-	public void testAutoAnonymizeUserOnly() throws Exception {
-		Assume.assumeTrue(this instanceof WhenHasStatusByUserIdField);
-
-		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
-			(WhenHasStatusByUserIdField)this;
-
-		BaseModel baseModel =
-			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
-				TestPropsValues.getUserId(), _user.getUserId());
-
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
-
-		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
-
-		long baseModelPK = getBaseModelPrimaryKey(baseModel);
-
-		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
-	}
-
-	@Test
 	public void testDelete() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId());
 

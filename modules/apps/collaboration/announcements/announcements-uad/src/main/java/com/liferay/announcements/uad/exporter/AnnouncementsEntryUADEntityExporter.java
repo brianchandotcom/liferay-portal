@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY},
+	property = {"model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY},
 	service = UADEntityExporter.class
 )
 public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
@@ -102,7 +102,7 @@ public class AnnouncementsEntryUADEntityExporter extends BaseUADEntityExporter {
 	private static final String _FOLDER_NAME = "UADExport";
 
 	@Reference(
-		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY + ")"
+		target = "(model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

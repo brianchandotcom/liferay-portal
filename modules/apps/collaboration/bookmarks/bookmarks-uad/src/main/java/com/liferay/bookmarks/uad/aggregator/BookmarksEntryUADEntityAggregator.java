@@ -37,7 +37,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY},
+	property = {"model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY},
 	service = UADEntityAggregator.class
 )
 public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
@@ -72,7 +72,7 @@ public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 	private DynamicQuery _getDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getDynamicQuery(
 			_bookmarksEntryLocalService::dynamicQuery,
-			BookmarksUADConstants.BOOKMARKS_ENTRY_USER_ID_FIELD_NAMES, userId);
+			BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY, userId);
 	}
 
 	private long _getEntryId(String uadEntityId) {

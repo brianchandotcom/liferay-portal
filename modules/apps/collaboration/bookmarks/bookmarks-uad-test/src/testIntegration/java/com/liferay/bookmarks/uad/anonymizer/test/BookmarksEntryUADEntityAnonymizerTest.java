@@ -75,7 +75,7 @@ public class BookmarksEntryUADEntityAnonymizerTest
 
 	@Override
 	protected String getUADRegistryKey() {
-		return BookmarksUADConstants.BOOKMARKS_ENTRY;
+		return BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY;
 	}
 
 	@Override

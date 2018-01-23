@@ -56,7 +56,7 @@ public class AnnouncementsFlagUADEntityAggregatorTest
 
 	@Override
 	protected String getUADRegistryKey() {
-		return AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG;
+		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG;
 	}
 
 	@DeleteAfterTestRun

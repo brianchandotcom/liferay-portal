@@ -39,7 +39,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY},
+	property = {"model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY},
 	service = UADEntityAnonymizer.class
 )
 public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
@@ -111,7 +111,7 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getActionableDynamicQuery(
 			_bookmarksEntryLocalService::getActionableDynamicQuery,
-			BookmarksUADConstants.BOOKMARKS_ENTRY_USER_ID_FIELD_NAMES, userId);
+			BookmarksUADConstants.USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY, userId);
 	}
 
 	private BookmarksEntry _getBookmarksEntry(UADEntity uadEntity)
@@ -141,7 +141,7 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 	@Reference(
-		target = "(model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY + ")"
+		target = "(model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

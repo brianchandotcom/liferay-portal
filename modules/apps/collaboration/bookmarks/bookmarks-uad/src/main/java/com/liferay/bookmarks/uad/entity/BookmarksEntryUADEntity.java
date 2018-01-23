@@ -30,7 +30,9 @@ public class BookmarksEntryUADEntity extends BaseUADEntity {
 	public BookmarksEntryUADEntity(
 		long userId, String uadEntityId, BookmarksEntry bookmarksEntry) {
 
-		super(userId, uadEntityId, BookmarksUADConstants.BOOKMARKS_ENTRY);
+		super(
+			userId, uadEntityId,
+			BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY);
 
 		_bookmarksEntry = bookmarksEntry;
 	}

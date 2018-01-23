@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG},
+	property = {"model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG},
 	service = UADEntityAggregator.class
 )
 public class AnnouncementsFlagUADEntityAggregator
@@ -74,7 +74,7 @@ public class AnnouncementsFlagUADEntityAggregator
 	private DynamicQuery _getDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getDynamicQuery(
 			_announcementsFlagLocalService::dynamicQuery,
-			AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG_USER_ID_FIELD_NAMES,
+			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG,
 			userId);
 	}
 

@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY},
+	property = {"model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY},
 	service = UADEntityExporter.class
 )
 public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
@@ -101,7 +101,7 @@ public class BookmarksEntryUADEntityExporter extends BaseUADEntityExporter {
 	private static final String _FOLDER_NAME = "UADExport";
 
 	@Reference(
-		target = "(model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY + ")"
+		target = "(model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

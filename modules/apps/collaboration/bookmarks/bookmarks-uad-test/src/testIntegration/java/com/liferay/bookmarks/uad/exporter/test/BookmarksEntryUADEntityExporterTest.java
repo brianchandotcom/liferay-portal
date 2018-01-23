@@ -165,12 +165,12 @@ public class BookmarksEntryUADEntityExporterTest
 	private GroupLocalService _groupLocalService;
 
 	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY
+		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 
 	@Inject(
-		filter = "model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY
+		filter = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY
 	)
 	private UADEntityExporter _uadEntityExporter;
 

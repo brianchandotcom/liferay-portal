@@ -25,19 +25,19 @@ import java.util.Collection;
 public abstract class ChartConfig<ColumnType extends Column>
 	extends ChartObject {
 
-	public void addColumn(ColumnType column) {
-		get("columns", ArrayList.class).add(column);
+	public void addColumn(ColumnType columnType) {
+		get("columnTypes", ArrayList.class).add(columnType);
 	}
 
-	public void addColumns(Collection<? extends ColumnType> columns) {
-		for (ColumnType column : columns) {
-			addColumn(column);
+	public void addColumns(Collection<? extends ColumnType> columnTypes) {
+		for (ColumnType columnType : columnTypes) {
+			addColumn(columnType);
 		}
 	}
 
-	public void addColumns(ColumnType... columns) {
-		for (ColumnType column : columns) {
-			addColumn(column);
+	public void addColumns(ColumnType... columnTypes) {
+		for (ColumnType columnType : columnTypes) {
+			addColumn(columnType);
 		}
 	}
 

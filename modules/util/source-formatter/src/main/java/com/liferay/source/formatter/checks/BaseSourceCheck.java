@@ -434,6 +434,17 @@ public abstract class BaseSourceCheck implements SourceCheck {
 		return document;
 	}
 
+	protected File getPortalDir() {
+		File portalImplDir = SourceFormatterUtil.getFile(
+			getBaseDirName(), "portal-impl", ToolsUtil.PORTAL_MAX_DIR_LEVEL);
+
+		if (portalImplDir == null) {
+			return null;
+		}
+
+		return portalImplDir.getParentFile();
+	}
+
 	protected String getProjectPathPrefix() {
 		return _projectPathPrefix;
 	}

@@ -19,7 +19,7 @@ package com.liferay.user.associated.data.test.util;
  */
 public interface WhenHasStatusByUserIdField {
 
-	public void addDataObjectWithStatusByUserId(
+	public Object addDataObjectWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception;
 

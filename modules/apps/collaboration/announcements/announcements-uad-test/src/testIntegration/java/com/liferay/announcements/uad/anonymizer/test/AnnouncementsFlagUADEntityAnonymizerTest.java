@@ -14,28 +14,23 @@
 
 package com.liferay.announcements.uad.anonymizer.test;
 
-import com.liferay.announcements.kernel.exception.NoSuchFlagException;
 import com.liferay.announcements.kernel.model.AnnouncementsFlag;
+import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
-import com.liferay.announcements.uad.test.BaseAnnouncementsFlagUADEntityTestCase;
+import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
-import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
-import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
-import com.liferay.user.associated.data.entity.UADEntity;
+import com.liferay.user.associated.data.test.util.BaseUADEntityAnonymizerTestCase;
 
-import org.junit.Assert;
-import org.junit.Before;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.ClassRule;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
 /**
@@ -43,128 +38,69 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class AnnouncementsFlagUADEntityAnonymizerTest
-	extends BaseAnnouncementsFlagUADEntityTestCase {
+	extends BaseUADEntityAnonymizerTestCase {
 
 	@ClassRule
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
 
-	@Before
-	public void setUp() throws Exception {
-		_defaultUser = _userLocalService.getDefaultUser(
-			TestPropsValues.getCompanyId());
+	@Override
+	protected Object addDataObject(long userId) throws Exception {
+		AnnouncementsFlag announcementsFlag =
+			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
 
-		_user = UserTestUtil.addUser();
+		_announcementsFlags.add(announcementsFlag);
+
+		return announcementsFlag;
 	}
 
-	@Test
-	public void testAutoAnonymize() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			_user.getUserId());
+	@Override
+	protected long getDataObjectId(Object dataObject) {
+		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)dataObject;
 
-		long flagId = announcementsFlag.getFlagId();
-
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(flagId));
-
-		_uadEntityAnonymizer.autoAnonymize(uadEntity);
-
-		_assertAnnouncementsFlagAutoAnonymized(flagId);
+		return announcementsFlag.getFlagId();
 	}
 
-	@Test
-	public void testAutoAnonymizeAll() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			TestPropsValues.getUserId());
-		AnnouncementsFlag announcementsFlagAutoAnonymize = addAnnouncementsFlag(
-			_user.getUserId());
-
-		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
-
-		_assertAnnouncementsFlagAutoAnonymized(
-			announcementsFlagAutoAnonymize.getFlagId());
-
-		announcementsFlag = announcementsFlagLocalService.getAnnouncementsFlag(
-			announcementsFlag.getFlagId());
-
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), announcementsFlag.getUserId());
+	@Override
+	protected String getUADRegistryKey() {
+		return AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG;
 	}
 
-	@Test
-	public void testAutoAnonymizeAllNoAnnouncementsFlags() throws Exception {
-		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
-	}
-
-	@Test(expected = NoSuchFlagException.class)
-	public void testDelete() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			_user.getUserId());
-
-		long flagId = announcementsFlag.getFlagId();
-
-		UADEntity uadEntity = _uadEntityAggregator.getUADEntity(
-			String.valueOf(flagId));
-
-		_uadEntityAnonymizer.delete(uadEntity);
-
-		announcementsFlagLocalService.getAnnouncementsFlag(flagId);
-	}
-
-	@Test
-	public void testDeleteAll() throws Exception {
-		AnnouncementsFlag announcementsFlag = addAnnouncementsFlag(
-			TestPropsValues.getUserId());
-		AnnouncementsFlag announcementsFlagDelete = addAnnouncementsFlag(
-			_user.getUserId());
-
-		_uadEntityAnonymizer.deleteAll(_user.getUserId());
-
-		announcementsFlag = announcementsFlagLocalService.getAnnouncementsFlag(
-			announcementsFlag.getFlagId());
-
-		Assert.assertEquals(
-			TestPropsValues.getUserId(), announcementsFlag.getUserId());
-
-		announcementsFlagDelete =
-			announcementsFlagLocalService.fetchAnnouncementsFlag(
-				announcementsFlagDelete.getFlagId());
-
-		Assert.assertNull(announcementsFlagDelete);
-	}
-
-	@Test
-	public void testDeleteAllNoAnnouncementsFlags() throws Exception {
-		_uadEntityAnonymizer.deleteAll(_user.getUserId());
-	}
-
-	private void _assertAnnouncementsFlagAutoAnonymized(long flagId)
+	@Override
+	protected boolean isDataObjectAutoAnonymized(long dataObjectId, User user)
 		throws Exception {
 
 		AnnouncementsFlag announcementsFlag =
-			announcementsFlagLocalService.getAnnouncementsFlag(flagId);
+			_announcementsFlagLocalService.getAnnouncementsFlag(dataObjectId);
 
-		Assert.assertEquals(
-			_defaultUser.getUserId(), announcementsFlag.getUserId());
+		if (user.getUserId() != announcementsFlag.getUserId()) {
+			return true;
+		}
+
+		return false;
 	}
 
-	private User _defaultUser;
+	@Override
+	protected boolean isDataObjectDeleted(long dataObjectId) {
+		if (_announcementsFlagLocalService.fetchAnnouncementsFlag(
+				dataObjectId) == null) {
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
-	)
-	private UADEntityAggregator _uadEntityAggregator;
+			return true;
+		}
 
-	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
-	)
-	private UADEntityAnonymizer _uadEntityAnonymizer;
-
-	@DeleteAfterTestRun
-	private User _user;
+		return false;
+	}
 
 	@Inject
-	private UserLocalService _userLocalService;
+	private AnnouncementsFlagLocalService _announcementsFlagLocalService;
+
+	@DeleteAfterTestRun
+	private final List<AnnouncementsFlag> _announcementsFlags =
+		new ArrayList<>();
+
+	@Inject
+	private AnnouncementsFlagUADEntityTestHelper
+		_announcementsFlagUADEntityTestHelper;
 
 }

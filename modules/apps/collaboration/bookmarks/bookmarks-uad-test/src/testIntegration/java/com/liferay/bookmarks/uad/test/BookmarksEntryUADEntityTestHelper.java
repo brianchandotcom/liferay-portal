@@ -44,12 +44,16 @@ public class BookmarksEntryUADEntityTestHelper {
 			RandomTestUtil.randomString(), serviceContext);
 	}
 
-	public void setStatusByUserId(
-			BookmarksEntry bookmarksEntry, long statusByUserId)
+	public BookmarksEntry addDataObjectWithStatusByUserId(
+			long userId, long statusByUserId)
 		throws Exception {
+
+		BookmarksEntry bookmarksEntry = addBookmarksEntry(userId);
 
 		_bookmarksEntryLocalService.updateStatus(
 			statusByUserId, bookmarksEntry, WorkflowConstants.STATUS_APPROVED);
+
+		return bookmarksEntry;
 	}
 
 	@Reference

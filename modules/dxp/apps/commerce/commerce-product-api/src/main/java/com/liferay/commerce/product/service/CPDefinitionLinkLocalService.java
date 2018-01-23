@@ -297,6 +297,10 @@ public interface CPDefinitionLinkLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionLink> getReverseCPDefinitionLinks(
+		long cpDefinitionId, int type);
+
 	/**
 	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

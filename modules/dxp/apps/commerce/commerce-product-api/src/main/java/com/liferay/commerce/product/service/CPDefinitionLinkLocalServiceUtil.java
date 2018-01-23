@@ -336,6 +336,11 @@ public class CPDefinitionLinkLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionLink> getReverseCPDefinitionLinks(
+		long cpDefinitionId, int type) {
+		return getService().getReverseCPDefinitionLinks(cpDefinitionId, type);
+	}
+
 	/**
 	* Updates the cp definition link in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

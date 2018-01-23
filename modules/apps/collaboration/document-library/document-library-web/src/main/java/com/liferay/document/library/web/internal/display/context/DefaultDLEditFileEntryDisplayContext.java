@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadServletRequestConfigurationHelperUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.util.RepositoryUtil;
 
 import java.util.UUID;
 
@@ -167,6 +168,20 @@ public class DefaultDLEditFileEntryDisplayContext
 	@Override
 	public boolean isFolderSelectionVisible() {
 		return _showSelectFolder;
+	}
+
+	@Override
+	public boolean isPermissionsVisible() {
+		long repositoryId = ParamUtil.getLong(
+			_dlRequestHelper.getRequest(), "repositoryId");
+
+		if ((_fileEntry == null) &&
+			!RepositoryUtil.isExternalRepository(repositoryId)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

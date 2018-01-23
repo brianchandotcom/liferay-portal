@@ -146,6 +146,11 @@ public class BaseDLEditFileEntryDisplayContext
 	}
 
 	@Override
+	public boolean isPermissionsVisible() throws PortalException {
+		return parentDisplayContext.isPermissionsVisible();
+	}
+
+	@Override
 	public boolean isPublishButtonDisabled() throws PortalException {
 		return parentDisplayContext.isPublishButtonDisabled();
 	}

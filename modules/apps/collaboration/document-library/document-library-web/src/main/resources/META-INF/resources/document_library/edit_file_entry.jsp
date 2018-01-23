@@ -484,7 +484,7 @@ if (portletTitleBasedNavigation) {
 					</aui:fieldset>
 				</c:if>
 
-				<c:if test="<%= fileEntry == null %>">
+				<c:if test="<%= (fileEntry == null) && dlEditFileEntryDisplayContext.isPermissionsVisible() %>">
 					<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="permissions">
 						<liferay-ui:input-permissions
 							modelName="<%= DLFileEntryConstants.getClassName() %>"

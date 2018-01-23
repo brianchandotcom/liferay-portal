@@ -25,11 +25,11 @@ public class AddMenuItem extends MenuItem {
 
 	public AddMenuItem(
 		Map<String, Object> anchorData, String id, String label,
-		AddMenuKeys.AddMenuType type, String url) {
+		AddMenuKeys.AddMenuType addMenuType, String url) {
 
 		super(anchorData, id, label, url);
 
-		_type = type;
+		_addMenuType = addMenuType;
 	}
 
 	public AddMenuItem(
@@ -37,29 +37,53 @@ public class AddMenuItem extends MenuItem {
 
 		super(anchorData, id, label, url);
 
-		_type = AddMenuKeys.AddMenuType.DEFAULT;
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
+	}
+
+	public AddMenuItem(
+		Map<String, Object> anchorData, String cssClass, String id,
+		String label, AddMenuKeys.AddMenuType addMenuType, String url) {
+
+		super(anchorData, cssClass, id, label, url);
+
+		_addMenuType = addMenuType;
+	}
+
+	public AddMenuItem(
+		Map<String, Object> anchorData, String cssClass, String id,
+		String label, String url) {
+
+		super(anchorData, cssClass, id, label, url);
+
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
 	public AddMenuItem(String label, String url) {
 		super(label, url);
 
-		_type = AddMenuKeys.AddMenuType.DEFAULT;
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
 	public AddMenuItem(String id, String label, String url) {
 		super(id, label, url);
 
-		_type = AddMenuKeys.AddMenuType.DEFAULT;
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
+	}
+
+	public AddMenuItem(String cssClass, String id, String label, String url) {
+		super(cssClass, id, label, url);
+
+		_addMenuType = AddMenuKeys.AddMenuType.DEFAULT;
 	}
 
 	public AddMenuKeys.AddMenuType getType() {
-		return _type;
+		return _addMenuType;
 	}
 
-	public void setType(AddMenuKeys.AddMenuType type) {
-		_type = type;
+	public void setType(AddMenuKeys.AddMenuType addMenuType) {
+		_addMenuType = addMenuType;
 	}
 
-	private AddMenuKeys.AddMenuType _type;
+	private AddMenuKeys.AddMenuType _addMenuType;
 
 }

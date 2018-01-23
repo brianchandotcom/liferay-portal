@@ -16,7 +16,6 @@ package com.liferay.users.admin.web.internal.servlet.taglib.ui;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
-import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
 import java.io.IOException;
@@ -27,17 +26,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
 /**
  * @author Pei-Jung Lan
+ * @deprecated As of 2.5.0, replaced by {@link
+ * 		   com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.entry.UserInformationScreenNavigationEntry}
  */
-@Component(
-	configurationPid = "com.liferay.users.admin.configuration.UserFileUploadsConfiguration",
-	property = {"form.navigator.entry.order:Integer=80"},
-	service = FormNavigatorEntry.class
-)
+@Deprecated
 public class UserDetailsFormNavigatorEntry extends BaseUserFormNavigatorEntry {
 
 	@Override

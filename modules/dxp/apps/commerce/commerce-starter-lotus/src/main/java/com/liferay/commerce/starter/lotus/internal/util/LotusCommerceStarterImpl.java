@@ -43,6 +43,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.Theme;
+import com.liferay.portal.kernel.model.ThemeSetting;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -127,6 +128,8 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		setPaymentMethod(siteDefaultLocale, serviceContext);
 
 		setShippingMethod(siteDefaultLocale, serviceContext);
+
+		setThemeSettings(serviceContext);
 
 		setThemePortletSettings(serviceContext);
 	}
@@ -254,6 +257,17 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 		return JSONFactoryUtil.createJSONArray(themePortletSettingsJSON);
 	}
 
+	protected JSONObject getThemeSettingsJSONObject() throws Exception {
+		Class<?> clazz = getClass();
+
+		String themeSettingsPath = _DEPENDENCY_PATH + "theme-settings.json";
+
+		String themeSettingsJSON = StringUtil.read(
+			clazz.getClassLoader(), themeSettingsPath, false);
+
+		return JSONFactoryUtil.createJSONObject(themeSettingsJSON);
+	}
+
 	protected void setCPAssetCategoriesNavigationPortletSettings(
 			JSONObject jsonObject, String portletName,
 			ServiceContext serviceContext)
@@ -305,6 +319,61 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			}
 
 			portletSetup.store();
+		}
+	}
+
+	protected void setCPSearchResultPortletSettings(
+			JSONObject jsonObject, String portletName,
+			ServiceContext serviceContext)
+		throws Exception {
+
+		if (portletName.equals(_CP_SEARCH_RESULT_PORTLET_NAME)) {
+			String instanceId = jsonObject.getString("instanceId");
+			String layoutFriendlyURL = jsonObject.getString(
+				"layoutFriendlyURL");
+
+			JSONObject portletPreferencesJSONObject = jsonObject.getJSONObject(
+				"portletPreferences");
+
+			String portletId = PortletIdCodec.encode(portletName, instanceId);
+
+			PortletPreferences portletSetup =
+				PortletPreferencesFactoryUtil.getLayoutPortletSetup(
+					serviceContext.getCompanyId(),
+					serviceContext.getScopeGroupId(),
+					PortletKeys.PREFS_OWNER_TYPE_LAYOUT,
+					LayoutConstants.DEFAULT_PLID, portletId, StringPool.BLANK);
+
+			Iterator<String> iterator = portletPreferencesJSONObject.keys();
+
+			while (iterator.hasNext()) {
+				String key = iterator.next();
+
+				String value = portletPreferencesJSONObject.getString(key);
+
+				if (key.equals("displayStyleGroupId")) {
+					value = String.valueOf(serviceContext.getScopeGroupId());
+				}
+
+				portletSetup.setValue(key, value);
+			}
+
+			portletSetup.store();
+
+			long plid = LayoutConstants.DEFAULT_PLID;
+
+			if (Validator.isNotNull(layoutFriendlyURL)) {
+				Layout layout = _layoutLocalService.fetchLayoutByFriendlyURL(
+					serviceContext.getScopeGroupId(), false, layoutFriendlyURL);
+
+				if (layout != null) {
+					plid = layout.getPlid();
+				}
+			}
+
+			if (plid > LayoutConstants.DEFAULT_PLID) {
+				_setPlidPortletPreferences(plid, portletId, serviceContext);
+			}
 		}
 	}
 
@@ -454,9 +523,46 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 			setCPAssetCategoriesNavigationPortletSettings(
 				jsonObject, portletName, serviceContext);
 
+			setCPSearchResultPortletSettings(
+				jsonObject, portletName, serviceContext);
+
 			setSiteNavigationMenuPortletSettings(
 				jsonObject, portletName, serviceContext);
 		}
+	}
+
+	protected void setThemeSettings(ServiceContext serviceContext)
+		throws Exception {
+
+		JSONObject themeSettingsJSONObject = getThemeSettingsJSONObject();
+
+		Iterator<String> iterator = themeSettingsJSONObject.keys();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			String value = themeSettingsJSONObject.getString(key);
+
+			updateThemeSetting(key, value, serviceContext);
+		}
+	}
+
+	protected void updateThemeSetting(
+		String key, String value, ServiceContext serviceContext) {
+
+		Theme theme = _themeLocalService.fetchTheme(
+			serviceContext.getCompanyId(), _LOTUS_THEME_ID);
+
+		if (theme == null) {
+			return;
+		}
+
+		Map<String, ThemeSetting> configurableSettings =
+			theme.getConfigurableSettings();
+
+		ThemeSetting themeSetting = configurableSettings.get(key);
+
+		themeSetting.setValue(value);
 	}
 
 	private File _getFile(String location) throws IOException {
@@ -486,6 +592,10 @@ public class LotusCommerceStarterImpl implements CommerceStarter {
 	private static final String _CP_ASSET_CATEGORIES_NAVIGATION_PORTLET_NAME =
 		"com_liferay_commerce_product_asset_categories_navigation_web_" +
 			"internal_portlet_CPAssetCategoriesNavigationPortlet";
+
+	private static final String _CP_SEARCH_RESULT_PORTLET_NAME =
+		"com_liferay_commerce_product_content_search_web_internal_portlet_" +
+			"CPSearchResultsPortlet";
 
 	private static final String _DEPENDENCY_PATH =
 		"com/liferay/commerce/starter/lotus/internal/dependencies/";

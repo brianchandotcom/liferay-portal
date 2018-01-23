@@ -244,8 +244,7 @@ public class KaleoDefinitionLocalServiceWrapper
 	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition fetchKaleoDefinition(
 		java.lang.String name,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return _kaleoDefinitionLocalService.fetchKaleoDefinition(name,
 			serviceContext);
 	}
@@ -373,23 +372,13 @@ public class KaleoDefinitionLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition incrementKaleoDefinition(
-		com.liferay.portal.workflow.kaleo.definition.Definition definition,
-		java.lang.String name, java.lang.String title,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _kaleoDefinitionLocalService.incrementKaleoDefinition(definition,
-			name, title, serviceContext);
-	}
-
-	@Override
 	public com.liferay.portal.workflow.kaleo.model.KaleoDefinition updatedKaleoDefinition(
 		long kaleoDefinitionId, java.lang.String title,
-		java.lang.String description, java.lang.String content, int version,
+		java.lang.String description, java.lang.String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _kaleoDefinitionLocalService.updatedKaleoDefinition(kaleoDefinitionId,
-			title, description, content, version, serviceContext);
+			title, description, content, serviceContext);
 	}
 
 	/**

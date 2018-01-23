@@ -230,8 +230,7 @@ public class KaleoDefinitionLocalServiceUtil {
 
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition fetchKaleoDefinition(
 		java.lang.String name,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
 		return getService().fetchKaleoDefinition(name, serviceContext);
 	}
 
@@ -343,24 +342,14 @@ public class KaleoDefinitionLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition incrementKaleoDefinition(
-		com.liferay.portal.workflow.kaleo.definition.Definition definition,
-		java.lang.String name, java.lang.String title,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .incrementKaleoDefinition(definition, name, title,
-			serviceContext);
-	}
-
 	public static com.liferay.portal.workflow.kaleo.model.KaleoDefinition updatedKaleoDefinition(
 		long kaleoDefinitionId, java.lang.String title,
-		java.lang.String description, java.lang.String content, int version,
+		java.lang.String description, java.lang.String content,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updatedKaleoDefinition(kaleoDefinitionId, title,
-			description, content, version, serviceContext);
+			description, content, serviceContext);
 	}
 
 	/**

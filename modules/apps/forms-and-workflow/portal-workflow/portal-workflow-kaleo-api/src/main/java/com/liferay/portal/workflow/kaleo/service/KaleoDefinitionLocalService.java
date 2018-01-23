@@ -32,7 +32,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.workflow.kaleo.definition.Definition;
 import com.liferay.portal.workflow.kaleo.model.KaleoDefinition;
 
 import java.io.Serializable;
@@ -193,7 +192,7 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public KaleoDefinition fetchKaleoDefinition(java.lang.String name,
-		ServiceContext serviceContext) throws PortalException;
+		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -275,13 +274,9 @@ public interface KaleoDefinitionLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public KaleoDefinition incrementKaleoDefinition(Definition definition,
-		java.lang.String name, java.lang.String title,
-		ServiceContext serviceContext) throws PortalException;
-
 	public KaleoDefinition updatedKaleoDefinition(long kaleoDefinitionId,
 		java.lang.String title, java.lang.String description,
-		java.lang.String content, int version, ServiceContext serviceContext)
+		java.lang.String content, ServiceContext serviceContext)
 		throws PortalException;
 
 	/**

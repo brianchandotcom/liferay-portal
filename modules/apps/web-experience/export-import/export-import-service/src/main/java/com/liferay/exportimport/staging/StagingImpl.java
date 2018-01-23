@@ -706,7 +706,8 @@ public class StagingImpl implements Staging {
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET))) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -907,7 +908,8 @@ public class StagingImpl implements Staging {
 					ExportImportConfigurationConstants.
 						TYPE_PUBLISH_LAYOUT_REMOTE) ||
 				(exportImportConfiguration.getType() ==
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET))) {
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL))) {
 
 				errorMessage = LanguageUtil.get(
 					locale,
@@ -1827,7 +1829,8 @@ public class StagingImpl implements Staging {
 			_exportImportConfigurationLocalService.
 				addDraftExportImportConfiguration(
 					userId,
-					ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
+					ExportImportConfigurationConstants.
+						TYPE_PUBLISH_PORTLET_LOCAL,
 					publishPortletSettingsMap);
 
 		return publishPortlet(userId, exportImportConfiguration);

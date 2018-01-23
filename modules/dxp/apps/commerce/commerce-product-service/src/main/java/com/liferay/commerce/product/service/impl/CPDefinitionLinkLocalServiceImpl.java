@@ -97,6 +97,13 @@ public class CPDefinitionLinkLocalServiceImpl
 	}
 
 	@Override
+	public List<CPDefinitionLink> getReverseCPDefinitionLinks(
+		long cpDefinitionId, int type) {
+
+		return cpDefinitionLinkPersistence.findByC2_T(cpDefinitionId, type);
+	}
+
+	@Override
 	public CPDefinitionLink updateCPDefinitionLink(
 			long cpDefinitionLinkId, double priority)
 		throws PortalException {

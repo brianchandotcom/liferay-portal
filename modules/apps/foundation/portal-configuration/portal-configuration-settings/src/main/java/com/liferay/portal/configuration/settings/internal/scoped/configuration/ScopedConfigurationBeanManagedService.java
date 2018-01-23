@@ -15,8 +15,6 @@
 package com.liferay.portal.configuration.settings.internal.scoped.configuration;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
-import com.liferay.portal.configuration.settings.internal.util.ConfigurationPidUtil;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.security.AccessController;
@@ -36,61 +34,55 @@ import org.osgi.service.cm.ManagedService;
 public class ScopedConfigurationBeanManagedService implements ManagedService {
 
 	public ScopedConfigurationBeanManagedService(
-		BundleContext bundleContext, Class<?> configurationBeanClass,
-		Consumer<Object> configurationBeanConsumer, ScopeKey scopeKey) {
+		ScopeKey scopeKey, Consumer<Object> configurationBeanConsumer) {
 
-		_bundleContext = bundleContext;
-		_configurationBeanClass = configurationBeanClass;
-		_configurationBeanConsumer = configurationBeanConsumer;
 		_scopeKey = scopeKey;
+		_configurationBeanConsumer = configurationBeanConsumer;
 	}
 
-	public void register() {
+	public void register(BundleContext bundleContext, String pid) {
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
-		properties.put(
-			Constants.SERVICE_PID,
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				ConfigurationPidUtil.getConfigurationPid(
-					_configurationBeanClass),
-				_scopeKey.getScope(), _scopeKey.getScopePrimKey()));
+		properties.put(Constants.SERVICE_PID, pid);
 
-		_managedServiceServiceRegistration = _bundleContext.registerService(
+		_managedServiceServiceRegistration = bundleContext.registerService(
 			ManagedService.class, this, properties);
-	}
-
-	public void unregister() {
-		_managedServiceServiceRegistration.unregister();
 	}
 
 	@Override
 	public void updated(final Dictionary<String, ?> properties) {
-		if (System.getSecurityManager() != null) {
-			AccessController.doPrivileged(
-				new ScopedConfigurationBeanManagedService.
-					UpdatePrivilegedAction(properties));
+		if (System.getSecurityManager() == null) {
+			_updated(properties);
 		}
 		else {
-			doUpdated(properties);
+			AccessController.doPrivileged(
+				new UpdatePrivilegedAction(properties));
 		}
 	}
 
-	protected void doUpdated(Dictionary<String, ?> properties) {
+	private void _updated(Dictionary<String, ?> properties) {
 		if (properties == null) {
 			_configurationBeanConsumer.accept(null);
+
+			_managedServiceServiceRegistration.unregister();
 		}
 		else {
 			_configurationBeanConsumer.accept(
 				ConfigurableUtil.createConfigurable(
-					_configurationBeanClass, properties));
+					_scopeKey.getObjectClass(), properties));
 		}
 	}
 
-	protected class UpdatePrivilegedAction implements PrivilegedAction<Void> {
+	private final Consumer<Object> _configurationBeanConsumer;
+	private ServiceRegistration<ManagedService>
+		_managedServiceServiceRegistration;
+	private final ScopeKey _scopeKey;
+
+	private class UpdatePrivilegedAction implements PrivilegedAction<Void> {
 
 		@Override
 		public Void run() {
-			doUpdated(_properties);
+			_updated(_properties);
 
 			return null;
 		}
@@ -102,12 +94,5 @@ public class ScopedConfigurationBeanManagedService implements ManagedService {
 		private final Dictionary<String, ?> _properties;
 
 	}
-
-	private final BundleContext _bundleContext;
-	private final Class<?> _configurationBeanClass;
-	private final Consumer<Object> _configurationBeanConsumer;
-	private ServiceRegistration<ManagedService>
-		_managedServiceServiceRegistration;
-	private final ScopeKey _scopeKey;
 
 }

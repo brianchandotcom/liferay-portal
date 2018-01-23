@@ -16,17 +16,20 @@ package com.liferay.portal.configuration.test.util;
 
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.util.HashMapDictionary;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.framework.ServiceRegistration;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.osgi.service.cm.ConfigurationListener;
+import org.osgi.service.cm.ManagedService;
 
 /**
  * @author Drew Brokke
@@ -70,7 +73,7 @@ public class ConfigurationTestUtil {
 			Configuration configuration, Dictionary<String, Object> dictionary)
 		throws Exception {
 
-		CountDownLatch countDownLatch = new CountDownLatch(1);
+		CountDownLatch countDownLatch = new CountDownLatch(3);
 
 		String markerPID = ConfigurationTestUtil.class.getName();
 
@@ -80,9 +83,21 @@ public class ConfigurationTestUtil {
 			}
 		};
 
-		ServiceRegistration<ConfigurationListener> serviceRegistration =
+		ServiceRegistration<ConfigurationListener>
+			configurationListenerServiceRegistration =
+				_bundleContext.registerService(
+					ConfigurationListener.class, configurationListener, null);
+
+		ManagedService managedService = properties ->
+			countDownLatch.countDown();
+
+		Dictionary<String, Object> properties = new HashMapDictionary<>();
+
+		properties.put(Constants.SERVICE_PID, markerPID);
+
+		ServiceRegistration<ManagedService> managedServiceServiceRegistration =
 			_bundleContext.registerService(
-				ConfigurationListener.class, configurationListener, null);
+				ManagedService.class, managedService, properties);
 
 		try {
 			if (dictionary == null) {
@@ -97,20 +112,23 @@ public class ConfigurationTestUtil {
 				configurationAdmin -> configurationAdmin.getConfiguration(
 					markerPID, StringPool.QUESTION));
 
+			markerConfiguration.update();
+
 			markerConfiguration.delete();
 
 			countDownLatch.await();
 		}
 		finally {
-			serviceRegistration.unregister();
+			configurationListenerServiceRegistration.unregister();
+
+			managedServiceServiceRegistration.unregister();
 		}
 	}
 
 	private static final BundleContext _bundleContext;
 
 	static {
-		Bundle bundle = FrameworkUtil.getBundle(
-			ConfigurationTemporarySwapper.class);
+		Bundle bundle = FrameworkUtil.getBundle(ConfigurationTestUtil.class);
 
 		_bundleContext = bundle.getBundleContext();
 	}

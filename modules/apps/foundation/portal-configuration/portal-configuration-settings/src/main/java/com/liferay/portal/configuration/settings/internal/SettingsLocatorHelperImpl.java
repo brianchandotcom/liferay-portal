@@ -330,15 +330,17 @@ public class SettingsLocatorHelperImpl implements SettingsLocatorHelper {
 			_configurationBeanClasses.get(configurationPid), scope,
 			scopePrimKey);
 
-		if (!_scopedConfigurationBeanConfigurationListener.has(scopeKey)) {
+		Object configuration =
+			_scopedConfigurationBeanConfigurationListener.get(scopeKey);
+
+		if (configuration == null) {
 			return parentSettings;
 		}
 
 		return new ConfigurationBeanSettings(
 			_configurationBeanLocationVariableResolvers.get(
 				scopeKey.getObjectClass()),
-			_scopedConfigurationBeanConfigurationListener.get(scopeKey),
-			parentSettings);
+			configuration, parentSettings);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

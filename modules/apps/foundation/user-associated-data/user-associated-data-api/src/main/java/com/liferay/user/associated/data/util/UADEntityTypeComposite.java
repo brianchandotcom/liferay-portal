@@ -46,7 +46,7 @@ public class UADEntityTypeComposite {
 		return _uadEntities;
 	}
 
-	public UADEntityDisplay getUadEntityDisplay() {
+	public UADEntityDisplay getUADEntityDisplay() {
 		return _uadEntityDisplay;
 	}
 

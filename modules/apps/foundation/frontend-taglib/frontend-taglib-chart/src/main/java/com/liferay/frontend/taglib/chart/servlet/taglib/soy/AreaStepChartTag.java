@@ -12,17 +12,17 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.servlet.taglib.soy;
+
+import com.liferay.frontend.taglib.chart.servlet.taglib.soy.base.BaseChartTag;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
+public class AreaStepChartTag extends BaseChartTag {
 
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
-
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
+	public AreaStepChartTag() {
+		super("AreaStepChart");
+	}
 
 }

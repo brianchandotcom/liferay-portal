@@ -12,17 +12,33 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.model;
+
+import com.liferay.portal.kernel.json.JSON;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
+public abstract class Column extends ChartObject {
 
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
+	public Column(String id) {
+		setId(id);
+	}
 
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
+	public void setId(String id) {
+		set("id", id);
+	}
+
+	public void setName(String name) {
+		set("name", name);
+	}
+
+	@JSON(include = false)
+	protected List<Number> getData() {
+		return get("data", ArrayList.class);
+	}
 
 }

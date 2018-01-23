@@ -25,10 +25,10 @@ taglib uri="http://liferay.com/tld/util" prefix="liferay-util" %>
 
 <%@ page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.constants.PanelCategoryKeys" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
 page import="com.liferay.portal.kernel.util.PortalUtil" %><%@
 page import="com.liferay.portal.kernel.util.SessionClicks" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys" %><%@
 page import="com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext" %><%@
 page import="com.liferay.taglib.aui.AUIUtil" %><%@

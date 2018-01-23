@@ -24,8 +24,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.application.list.PanelApp" %><%@
 page import="com.liferay.application.list.PanelCategory" %><%@
 page import="com.liferay.application.list.taglib.display.context.logic.PanelAppContentHelper" %><%@
+page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.GetterUtil" %><%@
-page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.Validator" %><%@
 page import="com.liferay.taglib.servlet.PipingServletResponse" %>
 

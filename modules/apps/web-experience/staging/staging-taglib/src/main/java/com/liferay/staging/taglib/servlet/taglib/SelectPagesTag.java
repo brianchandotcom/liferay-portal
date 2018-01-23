@@ -16,7 +16,7 @@ package com.liferay.staging.taglib.servlet.taglib;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.staging.taglib.internal.servlet.ServletContextUtil;
 import com.liferay.taglib.util.IncludeTag;
 

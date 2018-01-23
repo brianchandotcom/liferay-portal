@@ -122,16 +122,14 @@ public class AxisBuild extends BaseBuild {
 		Element unorderedListElement = Dom4JUtil.getNewElement("ul");
 
 		for (TestResult testResult : getTestResults(null)) {
-			String displayName = testResult.getDisplayName();
-
-			if (displayName.contains("JenkinsLogAsserterTest")) {
+			if (!(testResult instanceof PoshiTestResult)) {
 				continue;
 			}
 
-			String testrayLogsURL = getTestrayLogsURL();
-
 			Element listItemElement = Dom4JUtil.getNewElement(
 				"li", unorderedListElement);
+
+			String displayName = testResult.getDisplayName();
 
 			Dom4JUtil.getNewElement("strong", listItemElement, displayName);
 
@@ -141,15 +139,19 @@ public class AxisBuild extends BaseBuild {
 			Element poshiReportListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
+			PoshiTestResult poshiTestResult = (PoshiTestResult)testResult;
+
+			String testrayLogsURL = getTestrayLogsURL();
+
 			Dom4JUtil.getNewAnchorElement(
-				testResult.getPoshiReportURL(testrayLogsURL),
+				poshiTestResult.getPoshiReportURL(testrayLogsURL),
 				poshiReportListItemElement, "Poshi Report");
 
 			Element poshiSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				testResult.getPoshiSummaryURL(testrayLogsURL),
+				poshiTestResult.getPoshiSummaryURL(testrayLogsURL),
 				poshiSummaryListItemElement, "Poshi Summary");
 		}
 

@@ -25,6 +25,8 @@ CommerceCountry commerceCountry = commerceCountriesDisplayContext.getCommerceCou
 
 PortletURL portletURL = commerceCountriesDisplayContext.getPortletURL();
 
+portletURL.setParameter("mvcRenderCommandName", "editCommerceCountry");
+
 String title = LanguageUtil.get(request, "add-country");
 
 if (commerceCountry != null) {

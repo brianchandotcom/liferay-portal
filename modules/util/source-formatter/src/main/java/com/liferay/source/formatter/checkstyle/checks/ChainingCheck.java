@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -104,6 +105,18 @@ public class ChainingCheck extends BaseCheck {
 
 				if (methodName1.equals("concat") ||
 					methodName2.equals("concat")) {
+
+					continue;
+				}
+
+				FileContents fileContents = getFileContents();
+
+				String fileName = StringUtil.replace(
+					fileContents.getFileName(), CharPool.BACK_SLASH,
+					CharPool.SLASH);
+
+				if (fileName.contains("/test/") ||
+					fileName.contains("/testIntegration/")) {
 
 					continue;
 				}

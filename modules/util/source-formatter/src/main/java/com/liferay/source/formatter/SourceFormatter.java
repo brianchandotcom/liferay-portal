@@ -45,6 +45,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Properties;
 import java.util.Set;
 import java.util.concurrent.BlockingQueue;
@@ -326,24 +327,51 @@ public class SourceFormatter {
 			throw ee1;
 		}
 
-		if (_sourceFormatterArgs.isThrowException()) {
-			if (!_sourceFormatterMessages.isEmpty()) {
-				StringBundler sb = new StringBundler(
-					_sourceFormatterMessages.size() * 2);
+		if (_sourceFormatterArgs.isThrowException() &&
+			(!_sourceFormatterMessages.isEmpty() ||
+			 !_sourceMismatchExceptions.isEmpty())) {
 
+			StringBundler sb = new StringBundler(
+				(_sourceFormatterMessages.size() +
+					_sourceMismatchExceptions.size()) * 4);
+
+			int index = 1;
+
+			if (!_sourceFormatterMessages.isEmpty()) {
 				for (SourceFormatterMessage sourceFormatterMessage :
 						_sourceFormatterMessages) {
 
+					sb.append(index);
+					sb.append(": ");
 					sb.append(sourceFormatterMessage.toString());
 					sb.append("\n");
+
+					index = index + 1;
 				}
-
-				throw new Exception(sb.toString());
 			}
 
-			if (_firstSourceMismatchException != null) {
-				throw _firstSourceMismatchException;
+			if (!_sourceMismatchExceptions.isEmpty()) {
+				for (SourceMismatchException sourceMismatchException :
+						_sourceMismatchExceptions) {
+
+					String message = sourceMismatchException.getMessage();
+
+					if (!Objects.isNull(message)) {
+						sb.append(index);
+						sb.append(": ");
+						sb.append(message);
+						sb.append("\n");
+
+						index = index + 1;
+					}
+				}
 			}
+
+			String message = StringBundler.concat(
+				"Found ", String.valueOf(index - 1), " formatting issues:\n",
+				sb.toString());
+
+			throw new Exception(message);
 		}
 	}
 
@@ -359,8 +387,8 @@ public class SourceFormatter {
 		return _sourceFormatterMessages;
 	}
 
-	public SourceMismatchException getSourceMismatchException() {
-		return _firstSourceMismatchException;
+	public List<SourceMismatchException> getSourceMismatchExceptions() {
+		return _sourceMismatchExceptions;
 	}
 
 	private List<String> _getCheckNames() {
@@ -640,12 +668,9 @@ public class SourceFormatter {
 
 		_sourceFormatterMessages.addAll(
 			sourceProcessor.getSourceFormatterMessages());
+		_sourceMismatchExceptions.addAll(
+			sourceProcessor.getSourceMismatchExceptions());
 		_modifiedFileNames.addAll(sourceProcessor.getModifiedFileNames());
-
-		if (_firstSourceMismatchException == null) {
-			_firstSourceMismatchException =
-				sourceProcessor.getFirstSourceMismatchException();
-		}
 	}
 
 	private static final String _PROPERTIES_FILE_NAME =
@@ -654,7 +679,6 @@ public class SourceFormatter {
 	private static final int _SUBREPOSITORY_MAX_DIR_LEVEL = 3;
 
 	private List<String> _allFileNames;
-	private volatile SourceMismatchException _firstSourceMismatchException;
 	private int _maxStatusMessageLength = -1;
 	private final List<String> _modifiedFileNames =
 		new CopyOnWriteArrayList<>();
@@ -772,6 +796,8 @@ public class SourceFormatter {
 	private SourceFormatterExcludes _sourceFormatterExcludes;
 	private final Set<SourceFormatterMessage> _sourceFormatterMessages =
 		new ConcurrentSkipListSet<>();
+	private volatile List<SourceMismatchException> _sourceMismatchExceptions =
+		new ArrayList<>();
 	private List<SourceProcessor> _sourceProcessors = new ArrayList<>();
 	private boolean _subrepository;
 

@@ -30,13 +30,13 @@ public interface SourceProcessor {
 
 	public void format() throws Exception;
 
-	public SourceMismatchException getFirstSourceMismatchException();
-
 	public String[] getIncludes();
 
 	public List<String> getModifiedFileNames();
 
 	public Set<SourceFormatterMessage> getSourceFormatterMessages();
+
+	public List<SourceMismatchException> getSourceMismatchExceptions();
 
 	public void setAllFileNames(List<String> allFileNames);
 

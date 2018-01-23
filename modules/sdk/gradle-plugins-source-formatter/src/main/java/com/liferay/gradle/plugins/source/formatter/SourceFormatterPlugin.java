@@ -93,6 +93,7 @@ public class SourceFormatterPlugin implements Plugin<Project> {
 			"Checks the source formatting of this project.");
 		formatSourceTask.setGroup(LifecycleBasePlugin.VERIFICATION_GROUP);
 		formatSourceTask.setPrintErrors(true);
+		formatSourceTask.setShowStatusUpdates(false);
 		formatSourceTask.setThrowException(true);
 
 		return formatSourceTask;

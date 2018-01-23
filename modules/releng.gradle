@@ -46,6 +46,7 @@ buildscript {
 apply plugin: "org.ajoberstar.grgit"
 
 task cherryPickArtifacts
+task increaseMajorVersions
 task lockDependencyVersion
 task syncGitRepoReleases
 
@@ -75,6 +76,86 @@ cherryPickArtifacts {
 	}
 
 	group = "releng"
+}
+
+increaseMajorVersions {
+	description = "Increases the major version of all modules and portal artifacts."
+
+	doLast {
+		Closure<Void> increaseMajorVersionClosure = {
+			File dir ->
+
+			File versionFile = null
+			Pattern versionPattern = null
+
+			File bndBndFile = new File(dir, "bnd.bnd")
+			File buildXmlFile = new File(dir, "build.xml")
+
+			if (bndBndFile.exists()) {
+				versionFile = bndBndFile
+				versionPattern = ~/Bundle-Version: (\w+\.\w+\.\w+)/
+			}
+			else if (buildXmlFile.exists()) {
+				versionFile = buildXmlFile
+				versionPattern = ~/<property name="artifact\.version" value="(\w+\.\w+\.\w+)" \/>/
+			}
+			else {
+				throw new GradleException("Unable to increase major version of ${dir}")
+			}
+
+			String content = versionFile.getText("UTF-8")
+
+			content = content.replaceFirst(versionPattern) {
+				String all, String versionString ->
+
+				VersionNumber versionNumber = VersionNumber.parse(versionString)
+
+				VersionNumber newVersionNumber = new VersionNumber(versionNumber.major + 1, 0, 0, null)
+
+				all.replace versionString, newVersionNumber as String
+			}
+
+			versionFile.setText content, "UTF-8"
+		}
+
+		Closure<Void> increaseMajorVersionsClosure = {
+			File dir ->
+
+			dir.traverse(
+				preDir: {
+					if (it.name in [".gradle", ".github", "build", "classes", "node_modules"]) {
+						return FileVisitResult.SKIP_SUBTREE
+					}
+
+					if (_isGitRepoReadOnly(it)) {
+						return FileVisitResult.SKIP_SUBTREE
+					}
+
+					File bndBndFile = new File(it, "bnd.bnd")
+
+					if (!bndBndFile.exists()) {
+						return FileVisitResult.CONTINUE
+					}
+
+					increaseMajorVersionClosure it
+
+					return FileVisitResult.SKIP_SUBTREE
+				},
+				type: FileType.DIRECTORIES
+			)
+		}
+
+		increaseMajorVersionsClosure new File(projectDir, "apps")
+		increaseMajorVersionsClosure new File(projectDir, "core")
+
+		File portalRootDir = projectDir.parentFile
+
+		String[] dirNames = ["portal-impl", "portal-kernel", "portal-test", "portal-test-integration", "portal-web", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"]
+
+		dirNames.each {
+			increaseMajorVersionClosure new File(portalRootDir, it)
+		}
+	}
 }
 
 lockDependencyVersion {

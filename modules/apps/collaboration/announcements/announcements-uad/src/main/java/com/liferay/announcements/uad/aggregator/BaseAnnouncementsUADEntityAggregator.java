@@ -12,19 +12,20 @@
  * details.
  */
 
-package com.liferay.announcements.uad.constants;
+package com.liferay.announcements.uad.aggregator;
+
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
 
 /**
  * @author Drew Brokke
  */
-public class AnnouncementsUADConstants {
+public abstract class BaseAnnouncementsUADEntityAggregator
+	extends BaseUADEntityAggregator {
 
-	public static final String ANNOUNCEMENTS_ENTRY =
-		"com.liferay.announcements.kernel.model.AnnouncementsEntry";
-
-	public static final String ANNOUNCEMENTS_FLAG =
-		"com.liferay.announcements.kernel.model.AnnouncementsFlag";
-
-	public static final String BUNDLE_ID = "Announcements";
+	@Override
+	public String getBundleId() {
+		return AnnouncementsUADConstants.BUNDLE_ID;
+	}
 
 }

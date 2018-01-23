@@ -47,7 +47,6 @@ public interface WorkflowEngine {
 	 * @deprecated As of 1.0.0, replaced by {@link
 	 *             #deployWorkflowDefinition(String, String, InputStream,
 	 *             ServiceContext)}
-	 * @review
 	 */
 	@Deprecated
 	public WorkflowDefinition deployWorkflowDefinition(

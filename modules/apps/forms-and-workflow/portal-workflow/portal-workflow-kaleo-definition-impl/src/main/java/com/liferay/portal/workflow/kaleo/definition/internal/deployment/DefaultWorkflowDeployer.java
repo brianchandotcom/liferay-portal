@@ -54,7 +54,6 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 	/**
 	 * @deprecated As of 1.0.0, replaced by {@link #deploy(String, String,
 	 *             Definition, ServiceContext)}
-	 * @review
 	 */
 	@Deprecated
 	@Override

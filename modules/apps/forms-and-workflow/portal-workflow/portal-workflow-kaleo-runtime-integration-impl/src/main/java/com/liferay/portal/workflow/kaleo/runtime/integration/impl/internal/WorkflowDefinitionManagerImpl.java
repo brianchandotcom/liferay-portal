@@ -59,7 +59,6 @@ public class WorkflowDefinitionManagerImpl
 	 * @deprecated As of 1.0.0, replaced by {@link
 	 *             #deployWorkflowDefinition(long, long, String, String,
 	 *             byte[])}
-	 * @review
 	 */
 	@Deprecated
 	@Override
@@ -191,7 +190,6 @@ public class WorkflowDefinitionManagerImpl
 	/**
 	 * @deprecated As of 1.0.0, replaced by {@link
 	 *             #getLatestWorkflowDefinition(long, String)}
-	 * @review
 	 */
 	@Deprecated
 	@Override

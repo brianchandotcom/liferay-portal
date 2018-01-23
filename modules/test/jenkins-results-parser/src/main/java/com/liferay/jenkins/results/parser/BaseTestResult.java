@@ -116,33 +116,7 @@ public class BaseTestResult implements TestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
-		if ((testrayLogsURL != null) &&
-			testReportURL.contains("com.liferay.poshi.runner/PoshiRunner")) {
-
-			Dom4JUtil.addToElement(
-				downstreamBuildListItemElement, " - ",
-				Dom4JUtil.getNewAnchorElement(
-					getPoshiReportURL(testrayLogsURL), "Poshi Report"),
-				" - ",
-				Dom4JUtil.getNewAnchorElement(
-					getPoshiSummaryURL(testrayLogsURL), "Poshi Summary"),
-				" - ",
-				Dom4JUtil.getNewAnchorElement(
-					getConsoleOutputURL(testrayLogsURL), "Console Output"));
-
-			if (errorDetails != null) {
-				Dom4JUtil.addToElement(
-					Dom4JUtil.toCodeSnippetElement(errorDetails));
-			}
-
-			if (hasLiferayLog(testrayLogsURL)) {
-				Dom4JUtil.addToElement(
-					downstreamBuildListItemElement, " - ",
-					Dom4JUtil.getNewAnchorElement(
-						getLiferayLogURL(testrayLogsURL), "Liferay Log"));
-			}
-		}
-		else if (errorStackTrace != null) {
+		if (errorStackTrace != null) {
 			String trimmedStackTrace = StringUtils.abbreviate(
 				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
 

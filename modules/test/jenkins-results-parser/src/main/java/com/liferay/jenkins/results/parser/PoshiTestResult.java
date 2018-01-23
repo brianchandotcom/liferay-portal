@@ -14,6 +14,7 @@
 
 package com.liferay.jenkins.results.parser;
 
+import org.dom4j.Element;
 import org.json.JSONObject;
 
 /**
@@ -23,6 +24,42 @@ public class PoshiTestResult extends BaseTestResult {
 
 	public PoshiTestResult(Build build, JSONObject caseJSONObject) {
 		super(build, caseJSONObject);
+	}
+
+	@Override
+	public Element getGitHubElement(String testrayLogsURL) {
+		String testReportURL = getTestReportURL();
+
+		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(
+			"div", null);
+
+		downstreamBuildListItemElement.add(
+			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
+
+		Dom4JUtil.addToElement(
+			downstreamBuildListItemElement, " - ",
+			Dom4JUtil.getNewAnchorElement(
+				getPoshiReportURL(testrayLogsURL), "Poshi Report"),
+			" - ",
+			Dom4JUtil.getNewAnchorElement(
+				getPoshiSummaryURL(testrayLogsURL), "Poshi Summary"),
+			" - ",
+			Dom4JUtil.getNewAnchorElement(
+				getConsoleOutputURL(testrayLogsURL), "Console Output"));
+
+		if (errorDetails != null) {
+			Dom4JUtil.addToElement(
+				Dom4JUtil.toCodeSnippetElement(errorDetails));
+		}
+
+		if (hasLiferayLog(testrayLogsURL)) {
+			Dom4JUtil.addToElement(
+				downstreamBuildListItemElement, " - ",
+				Dom4JUtil.getNewAnchorElement(
+					getLiferayLogURL(testrayLogsURL), "Liferay Log"));
+		}
+
+		return downstreamBuildListItemElement;
 	}
 
 }

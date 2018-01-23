@@ -673,6 +673,13 @@ public class JournalArticleStagedModelDataHandler
 									fileEntry);
 							}
 							catch (NoSuchFileException nsfe) {
+								if (_log.isDebugEnabled()) {
+									_log.debug(
+										"Unable to import attachment for " +
+											"file entry " +
+												fileEntry.getFileEntryId(),
+										nsfe);
+								}
 							}
 						}
 						else {

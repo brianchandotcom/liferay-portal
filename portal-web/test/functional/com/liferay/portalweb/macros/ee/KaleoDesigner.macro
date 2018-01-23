@@ -601,7 +601,7 @@
 	</command>
 
 	<command name="saveAsDraftWorkflowDefinitionViaKDCP">
-		<execute function="AssertClick" locator1="Button#SAVE_AS_DRAFT" value1="Save as Draft" />
+		<execute function="AssertClick" locator1="KaleoDesigner#SAVE_BUTTON" value1="Save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>

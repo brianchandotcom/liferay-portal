@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Blogs Analytics
+Bundle-SymbolicName: com.liferay.blogs.analytics
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Blogs
+Web-ContextPath: /blogs-analytics

@@ -19,6 +19,7 @@ import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.service.BookmarksEntryLocalService;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -49,7 +50,7 @@ public class BookmarksEntryUADEntityAnonymizerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	public Object addDataObjectWithStatusByUserId(
+	public BaseModel<?> addBaseModelWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
@@ -63,7 +64,7 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected Object addDataObject(long userId) throws Exception {
+	protected BaseModel<?> addBaseModel(long userId) throws Exception {
 		BookmarksEntry bookmarksEntry =
 			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
 
@@ -73,10 +74,8 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected long getDataObjectId(Object dataObject) {
-		BookmarksEntry bookmarksEntry = (BookmarksEntry)dataObject;
-
-		return bookmarksEntry.getEntryId();
+	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
+		return (long)baseModel.getPrimaryKeyObj();
 	}
 
 	@Override
@@ -85,11 +84,11 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isDataObjectAutoAnonymized(long dataObjectId, User user)
+	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
 
 		BookmarksEntry bookmarksEntry = _bookmarksEntryLocalService.getEntry(
-			dataObjectId);
+			baseModelPK);
 
 		if ((user.getUserId() != bookmarksEntry.getStatusByUserId()) &&
 			!StringUtil.equals(
@@ -105,8 +104,8 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isDataObjectDeleted(long dataObjectId) {
-		if (_bookmarksEntryLocalService.fetchBookmarksEntry(dataObjectId) ==
+	protected boolean isBaseModelDeleted(long baseModelPK) {
+		if (_bookmarksEntryLocalService.fetchBookmarksEntry(baseModelPK) ==
 				null) {
 
 			return true;

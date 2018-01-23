@@ -31,13 +31,13 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface PayPalCommercePaymentEngineGroupServiceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "client-id", required = false)
 	public String clientId();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "mode", required = false)
 	public String mode();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "client-secret", required = false)
 	public String clientSecret();
 
 }

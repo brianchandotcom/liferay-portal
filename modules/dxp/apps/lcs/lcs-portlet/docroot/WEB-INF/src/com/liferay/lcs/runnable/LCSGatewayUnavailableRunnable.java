@@ -77,7 +77,7 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 			if (!singedIn) {
 				if (_log.isDebugEnabled()) {
 					int seconds =
-						(int)(_multipliers[0] *
+						(int)(_MULTIPLIERS[0] *
 							_LCS_GATEWAY_UNAVAILABLE_WAIT_TIME / 1000);
 
 					_log.debug(
@@ -103,7 +103,7 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 	}
 
 	protected int getNextIndex(int i) {
-		if (i < (_multipliers.length - 1)) {
+		if (i < (_MULTIPLIERS.length - 1)) {
 			i = i + 1;
 		}
 
@@ -118,7 +118,7 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 		while (!_lcsConnectionManager.isShutdownRequested() &&
 			   !lcsGatewayAvailable) {
 
-			float multiplier = _multipliers[i];
+			float multiplier = _MULTIPLIERS[i];
 
 			i = getNextIndex(i);
 
@@ -182,12 +182,13 @@ public class LCSGatewayUnavailableRunnable implements Runnable {
 	private static final long _LCS_GATEWAY_UNAVAILABLE_WAIT_TIME =
 		PortletPropsValues.COMMUNICATION_LCS_GATEWAY_UNAVAILABLE_WAIT_TIME;
 
+	private static final float[] _MULTIPLIERS = {0.5F, 1, 2, 5};
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		LCSGatewayUnavailableRunnable.class);
 
 	private final LCSConnectionManager _lcsConnectionManager;
 	private final LCSGatewayService _lcsGatewayService;
-	private final float[] _multipliers = {0.5F, 1, 2, 5};
 	private final int _statusCode;
 
 }

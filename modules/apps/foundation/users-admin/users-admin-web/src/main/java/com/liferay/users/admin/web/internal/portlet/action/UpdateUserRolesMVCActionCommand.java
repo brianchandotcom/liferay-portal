@@ -28,9 +28,9 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.users.admin.constants.UserFormConstants;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
-import com.liferay.users.admin.web.constants.UserFormConstants;
 
 import java.util.Calendar;
 import java.util.List;

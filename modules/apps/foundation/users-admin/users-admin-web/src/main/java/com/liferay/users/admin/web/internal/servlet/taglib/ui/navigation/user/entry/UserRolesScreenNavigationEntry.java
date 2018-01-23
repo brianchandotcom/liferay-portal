@@ -16,7 +16,7 @@ package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user.e
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.users.admin.web.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserFormConstants;
 
 import org.osgi.service.component.annotations.Component;
 

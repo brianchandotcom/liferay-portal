@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.users.admin.web.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserFormConstants;
 
 import org.osgi.service.component.annotations.Component;
 

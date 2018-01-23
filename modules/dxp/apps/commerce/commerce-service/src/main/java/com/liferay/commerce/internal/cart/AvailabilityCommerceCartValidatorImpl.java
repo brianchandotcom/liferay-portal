@@ -55,11 +55,6 @@ public class AvailabilityCommerceCartValidatorImpl
 			CommerceCartItem commerceCartItem)
 		throws PortalException {
 
-		if (commerceCartItem == null) {
-			return new CommerceCartValidatorResult(
-				0, false, "product-is-no-longer-available");
-		}
-
 		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
 
 		if (cpInstance == null) {

@@ -53,10 +53,6 @@ public class DefaultCommerceCartValidatorImpl implements CommerceCartValidator {
 			CommerceCartItem commerceCartItem)
 		throws PortalException {
 
-		if (commerceCartItem == null) {
-			return new CommerceCartValidatorResult(false);
-		}
-
 		CPInstance cpInstance = commerceCartItem.fetchCPInstance();
 
 		if (cpInstance == null) {

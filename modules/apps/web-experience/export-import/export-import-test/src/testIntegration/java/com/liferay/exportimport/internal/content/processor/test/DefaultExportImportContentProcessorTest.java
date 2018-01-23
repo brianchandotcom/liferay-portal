@@ -907,7 +907,7 @@ public class DefaultExportImportContentProcessorTest {
 	}
 
 	protected String replaceMultiLocaleLayoutFriendlyURLs(String content) {
-		if (StringUtil.indexOfAny(content, _multiLocaleLayoutVariables) <= -1) {
+		if (StringUtil.indexOfAny(content, _MULTILOCALELAYOUTVARIABLES) <= -1) {
 			return content;
 		}
 
@@ -918,11 +918,11 @@ public class DefaultExportImportContentProcessorTest {
 		for (String url : urls) {
 			outURLs.add(url);
 
-			if (StringUtil.indexOfAny(url, _multiLocaleLayoutVariables) > -1) {
+			if (StringUtil.indexOfAny(url, _MULTILOCALELAYOUTVARIABLES) > -1) {
 				outURLs.add(
 					StringUtil.replace(
-						url, _multiLocaleLayoutVariables,
-						_nonDefaultMultiLocaleLayoutVariables));
+						url, _MULTILOCALELAYOUTVARIABLES,
+						_NONDEFAULTMULTILOCALELAYOUTVARIABLES));
 			}
 		}
 
@@ -1071,17 +1071,19 @@ public class DefaultExportImportContentProcessorTest {
 			entriesStream.anyMatch(entry -> entry.endsWith(expected)));
 	}
 
-	private static final Locale[] _locales =
-		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
-	private static final String[] _multiLocaleLayoutVariables = {
+	private static final String[] _MULTILOCALELAYOUTVARIABLES = {
 		"[$LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 		"[$PRIVATE_LAYOUT_FRIENDLY_URL$]", "[$PUBLIC_LAYOUT_FRIENDLY_URL$]"
 	};
-	private static final String[] _nonDefaultMultiLocaleLayoutVariables = {
+
+	private static final String[] _NONDEFAULTMULTILOCALELAYOUTVARIABLES = {
 		"[$NON_DEFAULT_LIVE_PUBLIC_LAYOUT_FRIENDLY_URL$]",
 		"[$NON_DEFAULT_PRIVATE_LAYOUT_FRIENDLY_URL$]",
 		"[$NON_DEFAULT_PUBLIC_LAYOUT_FRIENDLY_URL$]"
 	};
+
+	private static final Locale[] _locales =
+		{LocaleUtil.US, LocaleUtil.GERMANY, LocaleUtil.SPAIN};
 	private static String _oldLayoutFriendlyURLPrivateUserServletMapping;
 	private static ServiceTracker
 		<ExportImportContentProcessor,

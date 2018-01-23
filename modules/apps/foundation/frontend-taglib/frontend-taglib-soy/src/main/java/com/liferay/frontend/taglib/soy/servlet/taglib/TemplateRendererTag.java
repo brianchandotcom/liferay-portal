@@ -14,6 +14,7 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib;
 
+import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -25,7 +26,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyJavaScriptRenderer;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -188,9 +188,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			JspWriter jspWriter, Map<String, Object> context)
 		throws Exception, IOException {
 
-		SoyJavaScriptRenderer javaScriptComponentRenderer =
-			_getJavaScriptComponentRenderer();
-
 		if (!context.containsKey("element")) {
 			context.put("element", getElementSelector());
 		}
@@ -203,7 +200,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			requiredModules.addAll(_dependencies);
 		}
 
-		String componentJavaScript = javaScriptComponentRenderer.getJavaScript(
+		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
 			context, getComponentId(), requiredModules);
 
 		ScriptTag.doTag(
@@ -234,12 +231,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		if (renderJavaScript) {
 			jspWriter.append("</div>");
 		}
-	}
-
-	private SoyJavaScriptRenderer _getJavaScriptComponentRenderer()
-		throws Exception {
-
-		return new SoyJavaScriptRenderer();
 	}
 
 	private Template _getTemplate() throws TemplateException {

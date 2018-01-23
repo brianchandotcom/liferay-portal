@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.utils;
+package com.liferay.frontend.taglib.soy.internal.util;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -27,31 +27,33 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Bruno Basto
+ * @author Shuyang Zhou
  */
-public class SoyJavaScriptRenderer {
+public class SoyJavaScriptRendererUtil {
 
-	public SoyJavaScriptRenderer() throws Exception {
-		_jsonSerializer = JSONFactoryUtil.createJSONSerializer();
-	}
-
-	public String getJavaScript(
+	public static String getJavaScript(
 		Map<String, Object> context, String id, Set<String> modules) {
 
-		String contextString = _jsonSerializer.serializeDeep(context);
+		JSONSerializer jsonSerializer = JSONFactoryUtil.createJSONSerializer();
 
-		String modulesString = _jsonSerializer.serialize(modules);
+		String contextString = jsonSerializer.serializeDeep(context);
+
+		String modulesString = jsonSerializer.serialize(modules);
 
 		return StringUtil.replace(
 			_JAVA_SCRIPT_TPL, new String[] {"$CONTEXT", "$ID", "$MODULES"},
 			new String[] {contextString, id, modulesString});
 	}
 
-	private static String _getJavaScriptTPL() {
-		Class<?> clazz = SoyJavaScriptRenderer.class;
+	private static final String _JAVA_SCRIPT_TPL;
 
-		InputStream inputStream = clazz.getResourceAsStream(
-			"dependencies/bootstrap.js.tpl");
+	private static final Log _log = LogFactoryUtil.getLog(
+		SoyJavaScriptRendererUtil.class);
+
+	static {
+		InputStream inputStream =
+			SoyJavaScriptRendererUtil.class.getResourceAsStream(
+				"dependencies/bootstrap.js.tpl");
 
 		String js = StringPool.BLANK;
 
@@ -59,23 +61,10 @@ public class SoyJavaScriptRenderer {
 			js = StringUtil.read(inputStream);
 		}
 		catch (Exception e) {
-			if (_log.isDebugEnabled()) {
-				_log.debug("Unable to read template");
-			}
+			_log.error("Unable to read template", e);
 		}
 
-		return js;
+		_JAVA_SCRIPT_TPL = js;
 	}
-
-	private static final String _JAVA_SCRIPT_TPL;
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SoyJavaScriptRenderer.class);
-
-	static {
-		_JAVA_SCRIPT_TPL = _getJavaScriptTPL();
-	}
-
-	private final JSONSerializer _jsonSerializer;
 
 }

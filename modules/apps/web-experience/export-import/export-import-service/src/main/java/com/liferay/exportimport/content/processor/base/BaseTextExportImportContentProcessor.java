@@ -1535,12 +1535,8 @@ public class BaseTextExportImportContentProcessor
 
 			url = url.substring(pos);
 
-			layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			layout = LayoutLocalServiceUtil.getFriendlyURLLayout(
 				urlGroup.getGroupId(), privateLayout, url);
-
-			if (layout == null) {
-				throw new NoSuchLayoutException();
-			}
 		}
 	}
 

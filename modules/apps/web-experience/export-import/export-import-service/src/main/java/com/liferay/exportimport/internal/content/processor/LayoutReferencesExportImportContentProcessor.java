@@ -848,13 +848,15 @@ public class LayoutReferencesExportImportContentProcessor
 
 			url = url.substring(pos);
 
-			layout = _layoutLocalService.fetchLayoutByFriendlyURL(
-				urlGroup.getGroupId(), privateLayout, url);
-
-			if (layout == null) {
+			try {
+				layout = _layoutLocalService.getFriendlyURLLayout(
+					urlGroup.getGroupId(), privateLayout, url);
+			}
+			catch (NoSuchLayoutException nsle) {
 				throw new NoSuchLayoutException(
 					"Unable to validate referenced page because the page " +
-						"group cannot be found: " + groupId);
+						"group cannot be found: " + groupId,
+					nsle);
 			}
 		}
 	}

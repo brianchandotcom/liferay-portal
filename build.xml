@@ -647,6 +647,7 @@ message.
 		<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-test-integration" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-web" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="support-tomcat" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-bridges" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-java" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-slf4j" inheritAll="false" target="install-portal-snapshot" />
@@ -858,6 +859,10 @@ message.
 	<target name="publish-portal-release">
 		<ant dir="portal-impl" inheritAll="false" target="publish-portal-release" />
 		<ant dir="portal-kernel" inheritAll="false" target="publish-portal-release" />
+		<ant dir="portal-test" inheritAll="false" target="publish-portal-release" />
+		<ant dir="portal-test-integration" inheritAll="false" target="publish-portal-release" />
+		<ant dir="portal-web" inheritAll="false" target="publish-portal-release" />
+		<ant dir="support-tomcat" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-bridges" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-java" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-slf4j" inheritAll="false" target="publish-portal-release" />
@@ -867,6 +872,10 @@ message.
 	<target name="restore-latest-artifact-version">
 		<ant dir="portal-impl" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-kernel" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="portal-test" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="portal-test-integration" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="portal-web" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="support-tomcat" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-bridges" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-java" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-slf4j" inheritAll="false" target="restore-latest-artifact-version" />

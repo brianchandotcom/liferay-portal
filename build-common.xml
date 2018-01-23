@@ -319,7 +319,7 @@ information.
 				</filterchain>
 			</loadresource>
 
-			<condition property="latest.artifact.stale">
+			<condition else="false" property="latest.artifact.stale">
 				<isset property="artifact.git.log.changes" />
 			</condition>
 		</sequential>
@@ -963,9 +963,14 @@ information.
 				replace="."
 			/>
 
-			<property file="bnd.bnd" />
+			<if>
+				<available file="bnd.bnd" />
+				<then>
+					<property file="bnd.bnd" />
 
-			<property name="artifact.version" value="${Bundle-Version}" />
+					<property name="artifact.version" value="${Bundle-Version}" />
+				</then>
+			</if>
 
 			<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
 				<filterchain>
@@ -1038,11 +1043,9 @@ information.
 
 			<if>
 				<and>
-					<not>
-						<istrue value="@{snapshot}" />
-					</not>
-					<isfalse value="${publish.portal.release.force}" />
 					<available file="${project.dir}/modules/.releng/${artifact.name}.properties" />
+					<isfalse value="${publish.portal.release.force}" />
+					<isfalse value="@{snapshot}" />
 				</and>
 				<then>
 					<check-latest-artifact-staleness />
@@ -1050,7 +1053,7 @@ information.
 			</if>
 
 			<if>
-				<isfalse value="${latest.artifact.stale}" />
+				<equals arg1="${latest.artifact.stale}" arg2="false" />
 				<then>
 					<echo>${artifact.name} is not stale and does not need to be published.</echo>
 				</then>
@@ -1070,12 +1073,7 @@ information.
 					</artifact:deploy>
 
 					<if>
-						<and>
-							<not>
-								<istrue value="@{snapshot}" />
-							</not>
-							<available file="bnd.bnd" />
-						</and>
+						<isfalse value="@{snapshot}" />
 						<then>
 							<antelope:stringutil property="artifact.version.micro.beginindex" string="${artifact.version}">
 								<antelope:lastindexof string="." />
@@ -1105,37 +1103,48 @@ information.
 								result="artifact.version.micro"
 							/>
 
-							<replace
-								failOnNoReplacements="true"
-								file="bnd.bnd"
-								token="Bundle-Version: ${artifact.version}"
-								value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
-							/>
+							<if>
+								<available file="bnd.bnd" />
+								<then>
+									<replace
+										failOnNoReplacements="true"
+										file="bnd.bnd"
+										token="Bundle-Version: ${artifact.version}"
+										value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
+									/>
 
-							<replaceregexp
-								file="bnd.bnd"
-								match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
-								replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
-							/>
+									<replaceregexp
+										file="bnd.bnd"
+										match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
+										replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
+									/>
 
-							<exec executable="git" failonerror="true">
-								<arg value="add" />
-								<arg value="bnd.bnd" />
-							</exec>
+									<exec executable="git" failonerror="true">
+										<arg value="add" />
+										<arg value="bnd.bnd" />
+									</exec>
+								</then>
+								<else>
+									<replace
+										failOnNoReplacements="true"
+										file="${basedir}/build.xml"
+										token="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version}&quot; /&gt;"
+										value="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version.major.minor}.${artifact.version.micro}&quot; /&gt;"
+									/>
+
+									<exec executable="git" failonerror="true">
+										<arg value="add" />
+										<arg value="build.xml" />
+									</exec>
+								</else>
+							</if>
 
 							<exec executable="git" failonerror="true">
 								<arg value="commit" />
 								<arg value="-m" />
 								<arg value="artifact:ignore ${artifact.name} ${artifact.version} prep next" />
 							</exec>
-						</then>
-					</if>
 
-					<if>
-						<not>
-							<istrue value="@{snapshot}" />
-						</not>
-						<then>
 							<exec executable="git" failonerror="true" outputproperty="artifact.git.id">
 								<arg value="rev-list" />
 								<arg value="-1" />
@@ -1220,6 +1229,77 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 			<mkdir dir="@{dir}" />
 		</sequential>
 	</macrodef>
+
+	<target name="restore-latest-artifact-version">
+		<fail message="Please run this target from a release branch instead.">
+			<condition>
+				<not>
+					<available file="${project.dir}/modules/.releng" type="dir" />
+				</not>
+			</condition>
+		</fail>
+
+		<if>
+			<available file="${project.dir}/modules/.releng/${ant.project.name}.properties" />
+			<then>
+				<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${ant.project.name}.properties">
+					<filterchain>
+						<linecontains>
+							<contains value="artifact.url" />
+						</linecontains>
+					</filterchain>
+				</loadproperties>
+
+				<antelope:stringutil property="latest.artifact.version.beginindex" string="${latest.artifact.url}">
+					<antelope:lastindexof string="-" />
+				</antelope:stringutil>
+
+				<antelope:math
+					datatype="int"
+					operand1="${latest.artifact.version.beginindex}"
+					operand2="1"
+					operation="+"
+					result="latest.artifact.version.beginindex"
+				/>
+
+				<antelope:stringutil property="latest.artifact.version.endindex" string="${latest.artifact.url}">
+					<antelope:lastindexof string="." />
+				</antelope:stringutil>
+
+				<antelope:stringutil property="latest.artifact.version" string="${latest.artifact.url}">
+					<antelope:substring beginindex="${latest.artifact.version.beginindex}" endindex="${latest.artifact.version.endindex}" />
+				</antelope:stringutil>
+
+				<if>
+					<available file="${basedir}/bnd.bnd" />
+					<then>
+						<loadproperties srcFile="${basedir}/bnd.bnd">
+							<filterchain>
+								<linecontains>
+									<contains value="Bundle-Version" />
+								</linecontains>
+							</filterchain>
+						</loadproperties>
+
+						<replace
+							failOnNoReplacements="true"
+							file="${basedir}/bnd.bnd"
+							token="Bundle-Version: ${Bundle-Version}"
+							value="Bundle-Version: ${latest.artifact.version}"
+						/>
+					</then>
+					<else>
+						<replace
+							failOnNoReplacements="true"
+							file="${basedir}/build.xml"
+							token="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version}&quot; /&gt;"
+							value="&lt;property name=&quot;artifact.version&quot; value=&quot;${latest.artifact.version}&quot; /&gt;"
+						/>
+					</else>
+				</if>
+			</then>
+		</if>
+	</target>
 
 	<macrodef name="set-test-type">
 		<sequential>

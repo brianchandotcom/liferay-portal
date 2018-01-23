@@ -1259,20 +1259,33 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 					<antelope:substring beginindex="${latest.artifact.version.beginindex}" endindex="${latest.artifact.version.endindex}" />
 				</antelope:stringutil>
 
-				<loadproperties srcFile="${basedir}/bnd.bnd">
-					<filterchain>
-						<linecontains>
-							<contains value="Bundle-Version" />
-						</linecontains>
-					</filterchain>
-				</loadproperties>
+				<if>
+					<available file="${basedir}/bnd.bnd" />
+					<then>
+						<loadproperties srcFile="${basedir}/bnd.bnd">
+							<filterchain>
+								<linecontains>
+									<contains value="Bundle-Version" />
+								</linecontains>
+							</filterchain>
+						</loadproperties>
 
-				<replace
-					failOnNoReplacements="true"
-					file="bnd.bnd"
-					token="Bundle-Version: ${Bundle-Version}"
-					value="Bundle-Version: ${latest.artifact.version}"
-				/>
+						<replace
+							failOnNoReplacements="true"
+							file="${basedir}/bnd.bnd"
+							token="Bundle-Version: ${Bundle-Version}"
+							value="Bundle-Version: ${latest.artifact.version}"
+						/>
+					</then>
+					<else>
+						<replace
+							failOnNoReplacements="true"
+							file="${basedir}/build.xml"
+							token="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version}&quot; /&gt;"
+							value="&lt;property name=&quot;artifact.version&quot; value=&quot;${latest.artifact.version}&quot; /&gt;"
+						/>
+					</else>
+				</if>
 			</then>
 		</if>
 	</target>

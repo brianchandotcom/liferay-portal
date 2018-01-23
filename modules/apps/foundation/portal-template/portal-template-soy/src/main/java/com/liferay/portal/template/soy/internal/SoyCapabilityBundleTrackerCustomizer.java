@@ -20,8 +20,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollector;
 import com.liferay.portal.template.soy.internal.util.SoyTemplateUtil;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesCollector;
 
 import java.util.ArrayList;
 import java.util.Iterator;

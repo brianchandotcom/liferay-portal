@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.soy.internal.SoyManager;
 import com.liferay.portal.template.soy.internal.SoyProviderCapabilityBundleRegister;
+import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollector;
 
 import java.util.Collections;
 import java.util.List;

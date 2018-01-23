@@ -46,7 +46,7 @@ buildscript {
 apply plugin: "org.ajoberstar.grgit"
 
 task cherryPickArtifacts
-task increaseMajorVersions
+task incrementMajorVersions
 task lockDependencyVersion
 task syncGitRepoReleases
 
@@ -78,11 +78,11 @@ cherryPickArtifacts {
 	group = "releng"
 }
 
-increaseMajorVersions {
-	description = "Increases the major version of all modules and portal artifacts."
+incrementMajorVersions {
+	description = "Increments the major version of all modules and portal artifacts."
 
 	doLast {
-		Closure<Void> increaseMajorVersionClosure = {
+		Closure<Void> incrementMajorVersionClosure = {
 			File dir ->
 
 			File versionFile = null
@@ -100,7 +100,7 @@ increaseMajorVersions {
 				versionPattern = ~/<property name="artifact\.version" value="(\w+\.\w+\.\w+)" \/>/
 			}
 			else {
-				throw new GradleException("Unable to increase major version of ${dir}")
+				throw new GradleException("Unable to increment major version of ${dir}")
 			}
 
 			String content = versionFile.getText("UTF-8")
@@ -134,7 +134,7 @@ increaseMajorVersions {
 					return FileVisitResult.CONTINUE
 				}
 
-				increaseMajorVersionClosure it
+				incrementMajorVersionClosure it
 
 				return FileVisitResult.SKIP_SUBTREE
 			},
@@ -146,7 +146,7 @@ increaseMajorVersions {
 		String[] dirNames = ["portal-impl", "portal-kernel", "portal-test", "portal-test-integration", "portal-web", "support-tomcat", "util-bridges", "util-java", "util-slf4j", "util-taglib"]
 
 		dirNames.each {
-			increaseMajorVersionClosure new File(portalRootDir, it)
+			incrementMajorVersionClosure new File(portalRootDir, it)
 		}
 	}
 }

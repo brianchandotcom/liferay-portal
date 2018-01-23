@@ -152,11 +152,11 @@ public class BaseTestResult implements TestResult {
 		}
 
 		if (logBaseURL == null) {
-			logBaseURL = defaultLogBaseURL;
+			logBaseURL = _DEFAULT_LOG_BASE_URL;
 		}
 
 		Map<String, String> startPropertiesTempMap =
-			getStartPropertiesTempMap();
+			build.getStartPropertiesTempMap();
 
 		return JenkinsResultsParserUtil.combine(
 			logBaseURL, "/",
@@ -164,7 +164,7 @@ public class BaseTestResult implements TestResult {
 			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
 			startPropertiesTempMap.get("TOP_LEVEL_JOB_NAME"), "/",
 			startPropertiesTempMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
-			getParameterValue("JOB_VARIANT"), "/", getAxisNumber());
+			build.getJobVariant(), "/", getAxisBuildNumber());
 	}
 
 	@Override
@@ -193,6 +193,18 @@ public class BaseTestResult implements TestResult {
 		return sb.toString();
 	}
 
+	protected String getAxisBuildNumber() {
+		AxisBuild axisBuild = null;
+
+		if (build instanceof AxisBuild) {
+			axisBuild = (AxisBuild)build;
+
+			return axisBuild.getAxisNumber();
+		}
+
+		return "INVALID_AXIS_NUMBER";
+	}
+
 	protected Build build;
 	protected String className;
 	protected long duration;
@@ -202,6 +214,9 @@ public class BaseTestResult implements TestResult {
 	protected String simpleClassName;
 	protected String status;
 	protected String testName;
+
+	private static final String _DEFAULT_LOG_BASE_URL =
+		"https://testray.liferay.com/reports/production/logs";
 
 	private static final int _MAX_ERROR_STACK_DISPLAY_LENGTH = 1500;
 

@@ -36,7 +36,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_COLLECTION_PANEL_COLLAPSED</td>
-	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][@aria-expanded='false'][normalize-space()='${key_collectionName}']</td>
+	<td>//div[contains(@class,'sidebar-body')]//a[contains(@href,'FragmentCollection')][contains(@class,'collapsed')][normalize-space()='${key_collectionName}']</td>
 	<td></td>
 </tr>
 <tr>

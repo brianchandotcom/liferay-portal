@@ -429,36 +429,13 @@ public class WorkflowDefinitionManagerImpl
 			serviceContext.setCompanyId(companyId);
 			serviceContext.setUserId(userId);
 
-			KaleoDefinition kaleoDefinition =
-				_kaleoDefinitionLocalService.fetchKaleoDefinition(
-					name, serviceContext);
-
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				_kaleoDefinitionVersionLocalService.
-					fetchLatestKaleoDefinitionVersion(companyId, name, null);
-
 			if (active) {
-				if (kaleoDefinition != null) {
-					_kaleoDefinitionLocalService.activateKaleoDefinition(
-						name, version, serviceContext);
-				}
-
-				if (kaleoDefinitionVersion != null) {
-					_changeStatusKaleoDefinitionVersion(
-						kaleoDefinitionVersion,
-						WorkflowConstants.STATUS_APPROVED);
-				}
+				_kaleoDefinitionLocalService.activateKaleoDefinition(
+					name, version, serviceContext);
 			}
 			else {
-				if (kaleoDefinition != null) {
-					_kaleoDefinitionLocalService.deactivateKaleoDefinition(
-						name, version, serviceContext);
-				}
-
-				if (kaleoDefinitionVersion != null) {
-					_changeStatusKaleoDefinitionVersion(
-						kaleoDefinitionVersion, WorkflowConstants.STATUS_DRAFT);
-				}
+				_kaleoDefinitionLocalService.deactivateKaleoDefinition(
+					name, version, serviceContext);
 			}
 
 			return getWorkflowDefinition(companyId, name, version);

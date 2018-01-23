@@ -31,8 +31,6 @@ public interface TestResult {
 
 	public Element getGitHubElement();
 
-	public Element getGitHubElement(String testrayLogsURL);
-
 	public String getPackageName();
 
 	public String getStatus();

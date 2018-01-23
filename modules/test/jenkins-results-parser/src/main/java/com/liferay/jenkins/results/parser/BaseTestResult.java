@@ -96,11 +96,6 @@ public class BaseTestResult implements TestResult {
 
 	@Override
 	public Element getGitHubElement() {
-		return getGitHubElement(null);
-	}
-
-	@Override
-	public Element getGitHubElement(String testrayLogsURL) {
 		String testReportURL = getTestReportURL();
 
 		Element downstreamBuildListItemElement = Dom4JUtil.getNewElement(

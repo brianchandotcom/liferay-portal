@@ -141,17 +141,15 @@ public class AxisBuild extends BaseBuild {
 
 			PoshiTestResult poshiTestResult = (PoshiTestResult)testResult;
 
-			String testrayLogsURL = getTestrayLogsURL();
-
 			Dom4JUtil.getNewAnchorElement(
-				poshiTestResult.getPoshiReportURL(testrayLogsURL),
-				poshiReportListItemElement, "Poshi Report");
+				poshiTestResult.getPoshiReportURL(), poshiReportListItemElement,
+				"Poshi Report");
 
 			Element poshiSummaryListItemElement = Dom4JUtil.getNewElement(
 				"li", reportLinksUnorderedListElement);
 
 			Dom4JUtil.getNewAnchorElement(
-				poshiTestResult.getPoshiSummaryURL(testrayLogsURL),
+				poshiTestResult.getPoshiSummaryURL(),
 				poshiSummaryListItemElement, "Poshi Summary");
 		}
 
@@ -293,13 +291,12 @@ public class AxisBuild extends BaseBuild {
 						testResult)) {
 
 					upstreamJobFailureElements.add(
-						testResult.getGitHubElement(getTestrayLogsURL()));
+						testResult.getGitHubElement());
 
 					continue;
 				}
 
-				failureElements.add(
-					testResult.getGitHubElement(getTestrayLogsURL()));
+				failureElements.add(testResult.getGitHubElement());
 			}
 
 			if (!upstreamJobFailureElements.isEmpty()) {

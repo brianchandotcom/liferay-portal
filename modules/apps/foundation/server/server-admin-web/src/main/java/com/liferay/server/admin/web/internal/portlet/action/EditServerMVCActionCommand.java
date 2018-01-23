@@ -205,9 +205,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 		else if (cmd.equals("updateExternalServices")) {
 			updateExternalServices(actionRequest, portletPreferences);
 		}
-		else if (cmd.equals("updateFileUploads")) {
-			updateFileUploads(actionRequest, portletPreferences);
-		}
 		else if (cmd.equals("updateLogLevels")) {
 			updateLogLevels(actionRequest);
 		}
@@ -540,25 +537,6 @@ public class EditServerMVCActionCommand extends BaseMVCActionCommand {
 
 		GhostscriptUtil.reset();
 		ImageMagickUtil.reset();
-	}
-
-	protected void updateFileUploads(
-			ActionRequest actionRequest, PortletPreferences portletPreferences)
-		throws Exception {
-
-		long dlFileEntryThumbnailMaxHeight = ParamUtil.getLong(
-			actionRequest, "dlFileEntryThumbnailMaxHeight");
-		long dlFileEntryThumbnailMaxWidth = ParamUtil.getLong(
-			actionRequest, "dlFileEntryThumbnailMaxWidth");
-
-		portletPreferences.setValue(
-			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_HEIGHT,
-			String.valueOf(dlFileEntryThumbnailMaxHeight));
-		portletPreferences.setValue(
-			PropsKeys.DL_FILE_ENTRY_THUMBNAIL_MAX_WIDTH,
-			String.valueOf(dlFileEntryThumbnailMaxWidth));
-
-		portletPreferences.store();
 	}
 
 	protected void updateLogLevels(ActionRequest actionRequest)

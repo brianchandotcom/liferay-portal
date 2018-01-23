@@ -82,8 +82,14 @@ public class ChainingCheck extends BaseCheck {
 				continue;
 			}
 
-			_checkMethodName(
-				chainedMethodNames, "getClass", methodCallAST, detailAST);
+			if (chainSize == 2) {
+				if (dotAST == null) {
+					continue;
+				}
+
+				_checkMethodName(
+					chainedMethodNames, "getClass", methodCallAST, detailAST);
+			}
 
 			if (_isAllowedChainingMethodCall(
 					detailAST, methodCallAST, chainedMethodNames)) {

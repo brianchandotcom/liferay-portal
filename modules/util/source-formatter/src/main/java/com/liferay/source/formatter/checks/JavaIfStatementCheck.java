@@ -46,6 +46,13 @@ public class JavaIfStatementCheck extends IfStatementCheck {
 			}
 
 			String lineEnding = matcher.group(3);
+
+			if (lineEnding.equals(StringPool.SEMICOLON) &&
+				ifClause.contains("{\n")) {
+
+				continue;
+			}
+
 			String type = matcher.group(1);
 
 			if (!type.equals("while") &&

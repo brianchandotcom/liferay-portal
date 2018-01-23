@@ -864,6 +864,8 @@ message.
 	<target name="publish-portal-release">
 		<ant dir="portal-impl" inheritAll="false" target="publish-portal-release" />
 		<ant dir="portal-kernel" inheritAll="false" target="publish-portal-release" />
+		<ant dir="portal-test" inheritAll="false" target="publish-portal-release" />
+		<ant dir="portal-test-integration" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-bridges" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-java" inheritAll="false" target="publish-portal-release" />
 		<ant dir="util-slf4j" inheritAll="false" target="publish-portal-release" />

@@ -2321,27 +2321,27 @@ app.server.type=@{app.server.type}]]></echo>
 		</run-batch-test>
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-db2105-jdk7">
+	<target name="legacy-functional-bundle-tomcat-db2105">
 		<run-legacy-database-dump database.type="db2" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-mariadb100-jdk7">
+	<target name="legacy-functional-bundle-tomcat-mariadb100">
 		<run-legacy-database-dump database.type="mariadb" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-mysql55-jdk7">
+	<target name="legacy-functional-bundle-tomcat-mysql55">
 		<run-legacy-database-dump database.type="mysql" database.version="5.5" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-oracle121-jdk7">
+	<target name="legacy-functional-bundle-tomcat-oracle121">
 		<run-legacy-database-dump database.type="oracle" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-postgresql94-jdk7">
+	<target name="legacy-functional-bundle-tomcat-postgresql94">
 		<run-legacy-database-dump database.type="postgresql" />
 	</target>
 
-	<target name="legacy-functional-bundle-tomcat-sybase160-jdk7">
+	<target name="legacy-functional-bundle-tomcat-sybase160">
 		<run-legacy-database-dump database.type="sybase" />
 	</target>
 

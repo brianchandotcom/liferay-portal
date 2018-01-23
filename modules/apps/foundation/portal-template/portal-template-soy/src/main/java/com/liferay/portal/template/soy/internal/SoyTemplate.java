@@ -43,7 +43,6 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.AbstractMultiResourceTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
-import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
 import com.liferay.portal.template.soy.utils.SoyRawData;
 
 import java.io.Reader;
@@ -325,12 +324,6 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			}
 
 			return newMap;
-		}
-
-		if (value instanceof SoyHTMLContextValue) {
-			SoyHTMLContextValue htmlValue = (SoyHTMLContextValue)value;
-
-			return htmlValue.getValue();
 		}
 
 		if (value instanceof SoyRawData) {

@@ -14,10 +14,14 @@
 
 package com.liferay.portal.template.soy.utils;
 
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bruno Basto
@@ -35,7 +39,20 @@ public class SoyContext extends HashMap<String, Object> {
 	}
 
 	public void putHTML(String key, String value) {
-		put(key, new SoyHTMLContextValue(value));
+		Bundle bundle = FrameworkUtil.getBundle(SoyContext.class);
+
+		SoyRawData soyRawData = new SoyRawData() {
+
+			@Override
+			public Object getValue() {
+				return OSGiServiceUtil.callService(
+					bundle.getBundleContext(), SoyHTMLSanitizer.class,
+					soyHTMLSanitizer -> soyHTMLSanitizer.sanitize(value));
+			}
+
+		};
+
+		put(key, soyRawData);
 	}
 
 	public void putInjectedData(String key, Object value) {

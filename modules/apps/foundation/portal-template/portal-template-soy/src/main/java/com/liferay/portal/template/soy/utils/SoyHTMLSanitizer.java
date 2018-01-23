@@ -14,23 +14,11 @@
 
 package com.liferay.portal.template.soy.utils;
 
-import com.google.template.soy.data.SanitizedContent;
-import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
-
 /**
- * @author Bruno Basto
+ * @author Shuyang Zhou
  */
-public class SoyHTMLContextValue {
+public interface SoyHTMLSanitizer {
 
-	public SoyHTMLContextValue(String value) {
-		_value = UnsafeSanitizedContentOrdainer.ordainAsSafe(
-			value, SanitizedContent.ContentKind.HTML);
-	}
-
-	public Object getValue() {
-		return _value;
-	}
-
-	private final Object _value;
+	public Object sanitize(String value);
 
 }

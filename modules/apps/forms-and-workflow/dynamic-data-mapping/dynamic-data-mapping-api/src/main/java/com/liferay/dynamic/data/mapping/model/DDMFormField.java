@@ -183,6 +183,23 @@ public class DDMFormField implements Serializable {
 		return nestedDDMFormFieldsMap;
 	}
 
+	public Map<String, DDMFormField> getNonTransientNestedDDMFormFieldsMap() {
+		Map<String, DDMFormField> nestedDDMFormFieldsMap =
+			new LinkedHashMap<>();
+
+		for (DDMFormField nestedDDMFormField : _nestedDDMFormFields) {
+			if (!nestedDDMFormField.isTransient()) {
+				nestedDDMFormFieldsMap.put(
+					nestedDDMFormField.getName(), nestedDDMFormField);
+			}
+
+			nestedDDMFormFieldsMap.putAll(
+				nestedDDMFormField.getNonTransientNestedDDMFormFieldsMap());
+		}
+
+		return nestedDDMFormFieldsMap;
+	}
+
 	public LocalizedValue getPredefinedValue() {
 		return (LocalizedValue)_properties.get("predefinedValue");
 	}

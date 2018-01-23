@@ -87,15 +87,9 @@ public class DefaultWorkflowEngineImpl
 					name, serviceContext);
 			}
 			else {
-				List<KaleoDefinitionVersion> kaleoDefinitionVersions =
-					kaleoDefinitionVersionLocalService.
-						getKaleoDefinitionVersions(
-							serviceContext.getCompanyId(), name);
-
-				if (!kaleoDefinitionVersions.isEmpty()) {
-					kaleoDefinitionVersionLocalService.
-						deleteKaleoDefinitionVersions(kaleoDefinitionVersions);
-				}
+				kaleoDefinitionVersionLocalService.
+					deleteKaleoDefinitionVersions(
+						serviceContext.getCompanyId(), name);
 			}
 		}
 		catch (Exception e) {

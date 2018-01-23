@@ -14,6 +14,11 @@
 
 package com.liferay.jenkins.results.parser;
 
+import java.io.IOException;
+
+import java.util.Map;
+import java.util.Properties;
+
 import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
@@ -128,6 +133,38 @@ public class BaseTestResult implements TestResult {
 	@Override
 	public String getTestName() {
 		return testName;
+	}
+
+	public String getTestrayLogsURL() {
+		Properties buildProperties = null;
+
+		try {
+			buildProperties = JenkinsResultsParserUtil.getBuildProperties();
+		}
+		catch (IOException ioe) {
+			throw new RuntimeException("Unable to get build properties", ioe);
+		}
+
+		String logBaseURL = null;
+
+		if (buildProperties.containsKey("log.base.url")) {
+			logBaseURL = buildProperties.getProperty("log.base.url");
+		}
+
+		if (logBaseURL == null) {
+			logBaseURL = defaultLogBaseURL;
+		}
+
+		Map<String, String> startPropertiesTempMap =
+			getStartPropertiesTempMap();
+
+		return JenkinsResultsParserUtil.combine(
+			logBaseURL, "/",
+			startPropertiesTempMap.get("TOP_LEVEL_MASTER_HOSTNAME"), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_START_TIME"), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_JOB_NAME"), "/",
+			startPropertiesTempMap.get("TOP_LEVEL_BUILD_NUMBER"), "/",
+			getParameterValue("JOB_VARIANT"), "/", getAxisNumber());
 	}
 
 	@Override

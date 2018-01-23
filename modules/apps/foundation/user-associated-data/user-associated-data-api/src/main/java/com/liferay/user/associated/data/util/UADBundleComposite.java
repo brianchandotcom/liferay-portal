@@ -46,16 +46,16 @@ public class UADBundleComposite {
 		return count;
 	}
 
-	public List<UADEntityTypeComposite> getEntityTypeComposites() {
-		return _uadEntityTypeComposites;
-	}
-
 	public String getStatus() {
 		if (getCount() == 0) {
 			return "Complete";
 		}
 
 		return "Incomplete";
+	}
+
+	public List<UADEntityTypeComposite> getUADEntityTypeComposites() {
+		return _uadEntityTypeComposites;
 	}
 
 	public long getUserId() {

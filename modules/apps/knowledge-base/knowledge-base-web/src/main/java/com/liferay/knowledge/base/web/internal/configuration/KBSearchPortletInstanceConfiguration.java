@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.knowledge.base.web.configuration.KBSearchPortletInstanceConfiguration",
+	id = "com.liferay.knowledge.base.web.internal.configuration.KBSearchPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "knowledge-base-search-portlet-instance-configuration-name"
 )

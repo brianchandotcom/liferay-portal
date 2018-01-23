@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.messaging.configuration.DestinationWorkerConfiguration",
+	id = "com.liferay.portal.messaging.internal.configuration.DestinationWorkerConfiguration",
 	localization = "content/Language",
 	name = "destination-workfer-configuration-name"
 )

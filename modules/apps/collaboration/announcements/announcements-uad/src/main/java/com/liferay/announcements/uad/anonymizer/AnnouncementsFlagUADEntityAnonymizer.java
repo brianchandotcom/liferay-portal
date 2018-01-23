@@ -38,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG},
+	property = {"model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG},
 	service = UADEntityAnonymizer.class
 )
 public class AnnouncementsFlagUADEntityAnonymizer
@@ -104,7 +104,7 @@ public class AnnouncementsFlagUADEntityAnonymizer
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getActionableDynamicQuery(
 			_announcementsFlagLocalService::getActionableDynamicQuery,
-			AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG_USER_ID_FIELD_NAMES,
+			AnnouncementsUADConstants.USER_ID_FIELD_NAMES_ANNOUNCEMENTS_FLAG,
 			userId);
 	}
 
@@ -135,7 +135,7 @@ public class AnnouncementsFlagUADEntityAnonymizer
 	private UADDynamicQueryHelper _uadDynamicQueryHelper;
 
 	@Reference(
-		target = "(model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG + ")"
+		target = "(model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG + ")"
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 

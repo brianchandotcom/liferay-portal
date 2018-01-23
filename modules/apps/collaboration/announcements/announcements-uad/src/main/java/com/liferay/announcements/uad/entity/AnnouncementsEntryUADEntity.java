@@ -39,7 +39,8 @@ public class AnnouncementsEntryUADEntity extends BaseUADEntity {
 		AnnouncementsEntry announcementsEntry) {
 
 		super(
-			userId, uadEntityId, AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY);
+			userId, uadEntityId,
+			AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY);
 
 		_announcementsEntry = announcementsEntry;
 	}

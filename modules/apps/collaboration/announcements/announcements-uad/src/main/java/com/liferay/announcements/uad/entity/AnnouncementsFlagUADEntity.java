@@ -31,7 +31,8 @@ public class AnnouncementsFlagUADEntity extends BaseUADEntity {
 		long userId, String uadEntityId, AnnouncementsFlag announcementsFlag) {
 
 		super(
-			userId, uadEntityId, AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG);
+			userId, uadEntityId,
+			AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG);
 
 		_announcementsFlag = announcementsFlag;
 	}

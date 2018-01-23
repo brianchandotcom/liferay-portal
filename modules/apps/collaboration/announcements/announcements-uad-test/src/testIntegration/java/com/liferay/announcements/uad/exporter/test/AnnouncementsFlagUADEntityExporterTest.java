@@ -161,12 +161,12 @@ public class AnnouncementsFlagUADEntityExporterTest
 	private GroupLocalService _groupLocalService;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
 	)
 	private UADEntityAggregator _uadEntityAggregator;
 
 	@Inject(
-		filter = "model.class.name=" + AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG
+		filter = "model.class.name=" + AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_FLAG
 	)
 	private UADEntityExporter _uadEntityExporter;
 

@@ -57,7 +57,7 @@ public class AnnouncementsEntryUADEntityAggregatorTest
 
 	@Override
 	protected String getUADRegistryKey() {
-		return AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY;
+		return AnnouncementsUADConstants.CLASS_NAME_ANNOUNCEMENTS_ENTRY;
 	}
 
 	@DeleteAfterTestRun

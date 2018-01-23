@@ -19,7 +19,6 @@ import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 
-import java.util.List;
 import java.util.function.Supplier;
 
 import org.osgi.service.component.annotations.Component;
@@ -32,7 +31,7 @@ public class UADDynamicQueryHelper {
 
 	public ActionableDynamicQuery getActionableDynamicQuery(
 		Supplier<ActionableDynamicQuery> actionableDynamicQuerySupplier,
-		final List<String> userIdFieldNames, final long userId) {
+		final String[] userIdFieldNames, final long userId) {
 
 		ActionableDynamicQuery actionableDynamicQuery =
 			actionableDynamicQuerySupplier.get();
@@ -45,8 +44,8 @@ public class UADDynamicQueryHelper {
 	}
 
 	public DynamicQuery getDynamicQuery(
-		Supplier<DynamicQuery> dynamicQuerySupplier,
-		List<String> userIdFieldNames, long userId) {
+		Supplier<DynamicQuery> dynamicQuerySupplier, String[] userIdFieldNames,
+		long userId) {
 
 		DynamicQuery dynamicQuery = dynamicQuerySupplier.get();
 
@@ -55,15 +54,13 @@ public class UADDynamicQueryHelper {
 		return dynamicQuery;
 	}
 
-	private Criterion _getCriterion(
-		List<String> userIdFieldNames, long userId) {
-
+	private Criterion _getCriterion(String[] userIdFieldNames, long userId) {
 		Criterion criterion = RestrictionsFactoryUtil.eq(
-			userIdFieldNames.get(0), userId);
+			userIdFieldNames[0], userId);
 
-		for (int i = 1; i < userIdFieldNames.size(); i++) {
+		for (String userIdFieldName : userIdFieldNames) {
 			Criterion userIdCriterion = RestrictionsFactoryUtil.eq(
-				userIdFieldNames.get(i), userId);
+				userIdFieldName, userId);
 
 			criterion = RestrictionsFactoryUtil.or(criterion, userIdCriterion);
 		}

@@ -873,6 +873,8 @@ message.
 	<target name="restore-latest-artifact-version">
 		<ant dir="portal-impl" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-kernel" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="portal-test" inheritAll="false" target="restore-latest-artifact-version" />
+		<ant dir="portal-test-integration" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="portal-web" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="support-tomcat" inheritAll="false" target="restore-latest-artifact-version" />
 		<ant dir="util-bridges" inheritAll="false" target="restore-latest-artifact-version" />

@@ -48,10 +48,10 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="WorkflowAsset#createNewUserAccount">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="user1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 			<var name="workflow" value="true" />
 		</execute>
 
@@ -67,7 +67,7 @@
 		</execute>
 
 		<execute macro="User#searchCP">
-			<var name="searchTerm" value="usersn" />
+			<var name="searchTerm" value="usersn1" />
 		</execute>
 
 		<execute macro="User#viewNoUsersFoundCP" />
@@ -79,13 +79,13 @@
 		</execute>
 
 		<execute macro="Workflow#assignToMeTaskByActions">
-			<var name="workflowAssetTitle" value="userfn userln" />
+			<var name="workflowAssetTitle" value="userfn1 userln1" />
 			<var name="workflowAssetType" value="User" />
 			<var name="workflowTask" value="Review" />
 		</execute>
 
 		<execute macro="Workflow#approveTaskByActions">
-			<var name="workflowAssetTitle" value="userfn userln" />
+			<var name="workflowAssetTitle" value="userfn1 userln1" />
 			<var name="workflowAssetType" value="User" />
 			<var name="workflowTask" value="Review" />
 		</execute>
@@ -97,17 +97,17 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="user1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#logoutAndLoginPG">
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userLoginEmailAddress" value="user@liferay.com" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userLoginEmailAddress" value="user1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 	</command>
 
@@ -134,10 +134,10 @@
 		<execute macro="User#logoutPG" />
 
 		<execute macro="WorkflowAsset#createNewUserAccount">
-			<var name="userEmailAddress" value="user@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="user1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#loginUserPG">
@@ -150,13 +150,13 @@
 		</execute>
 
 		<execute macro="WorkflowAsset#viewUserDetails">
-			<var name="userEmailAddress" value="user@liferay.com" />
+			<var name="userEmailAddress" value="user1@liferay.com" />
 		</execute>
 
 		<execute macro="Workflow#gotoPreviewView" />
 
 		<execute macro="WorkflowAsset#viewUserDetails">
-			<var name="userEmailAddress" value="user@liferay.com" />
+			<var name="userEmailAddress" value="user1@liferay.com" />
 		</execute>
 	</command>
 </definition>

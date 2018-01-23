@@ -2384,6 +2384,14 @@ public abstract class BaseBuild implements Build {
 		}
 
 		protected void addTimelineData(BaseBuild build) {
+			Long buildInvokedTime = build.getInvokedTime();
+
+			if (buildInvokedTime == null) {
+				return;
+			}
+
+			_timeline[_getIndex(buildInvokedTime)]._invocationsCount++;
+
 			Long buildStartTime = build.getStartTime();
 
 			if (buildStartTime == null) {
@@ -2396,14 +2404,6 @@ public abstract class BaseBuild implements Build {
 			for (int i = startIndex; i <= endIndex; i++) {
 				_timeline[i]._slaveUsageCount++;
 			}
-
-			Long buildInvokedTime = build.getInvokedTime();
-
-			if (buildInvokedTime == null) {
-				return;
-			}
-
-			_timeline[_getIndex(buildInvokedTime)]._invocationsCount++;
 		}
 
 		protected int[] getIndexData() {

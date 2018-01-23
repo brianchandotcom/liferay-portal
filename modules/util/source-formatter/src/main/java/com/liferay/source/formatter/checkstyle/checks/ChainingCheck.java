@@ -91,6 +91,15 @@ public class ChainingCheck extends BaseCheck {
 					chainedMethodNames, "getClass", methodCallAST, detailAST);
 
 				String methodName1 = chainedMethodNames.get(0);
+
+				if ((methodName1.equals("getParamValue") ||
+					 methodName1.equals("getValue")) &&
+					DetailASTUtil.hasParentWithTokenType(
+						detailAST, TokenTypes.ENUM_DEF)) {
+
+					continue;
+				}
+
 				String methodName2 = chainedMethodNames.get(1);
 
 				if (methodName1.equals("concat") ||

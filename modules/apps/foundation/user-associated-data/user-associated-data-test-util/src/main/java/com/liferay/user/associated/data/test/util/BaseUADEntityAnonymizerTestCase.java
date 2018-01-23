@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.test.util;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -72,40 +73,39 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	@Test
 	public void testAutoAnonymize() throws Exception {
-		Object dataObject = addDataObject(_user.getUserId());
+		BaseModel baseModel = addBaseModel(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
 
 		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
 
-		long dataObjectId = getDataObjectId(dataObject);
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
-		Assert.assertTrue(isDataObjectAutoAnonymized(dataObjectId, _user));
+		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
 	}
 
 	@Test
 	public void testAutoAnonymizeAll() throws Exception {
-		Object dataObject = addDataObject(TestPropsValues.getUserId());
-		Object dataObjectAutoAnonymize = addDataObject(_user.getUserId());
+		BaseModel baseModel = addBaseModel(TestPropsValues.getUserId());
+		BaseModel autoAnonymizedBaseModel = addBaseModel(_user.getUserId());
 
 		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
 
-		long dataObjectId = getDataObjectId(dataObject);
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
 		Assert.assertFalse(
-			isDataObjectAutoAnonymized(
-				dataObjectId, TestPropsValues.getUser()));
+			isBaseModelAutoAnonymized(baseModelPK, TestPropsValues.getUser()));
 
-		long dataObjectAutoAnoymizeId = getDataObjectId(
-			dataObjectAutoAnonymize);
+		long autoAnonymizedBaseModelPK = getBaseModelPrimaryKey(
+			autoAnonymizedBaseModel);
 
 		Assert.assertTrue(
-			isDataObjectAutoAnonymized(dataObjectAutoAnoymizeId, _user));
+			isBaseModelAutoAnonymized(autoAnonymizedBaseModelPK, _user));
 	}
 
 	@Test
-	public void testAutoAnonymizeAllWithNoDataObject() throws Exception {
+	public void testAutoAnonymizeAllWithNoBaseModel() throws Exception {
 		_uadEntityAnonymizer.autoAnonymizeAll(_user.getUserId());
 	}
 
@@ -116,8 +116,8 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
 			(WhenHasStatusByUserIdField)this;
 
-		Object dataObject =
-			whenHasStatusByUserIdField.addDataObjectWithStatusByUserId(
+		BaseModel baseModel =
+			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 				TestPropsValues.getUserId(), _user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
@@ -125,9 +125,9 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
 
-		long dataObjectId = getDataObjectId(dataObject);
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
-		Assert.assertTrue(isDataObjectAutoAnonymized(dataObjectId, _user));
+		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
 	}
 
 	@Test
@@ -137,8 +137,8 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
 			(WhenHasStatusByUserIdField)this;
 
-		Object dataObject =
-			whenHasStatusByUserIdField.addDataObjectWithStatusByUserId(
+		BaseModel baseModel =
+			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 				TestPropsValues.getUserId(), _user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
@@ -146,57 +146,57 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
 
-		long dataObjectId = getDataObjectId(dataObject);
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
-		Assert.assertTrue(isDataObjectAutoAnonymized(dataObjectId, _user));
+		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
 	}
 
 	@Test
 	public void testDelete() throws Exception {
-		Object dataObject = addDataObject(_user.getUserId());
+		BaseModel baseModel = addBaseModel(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
 
 		_uadEntityAnonymizer.delete(uadEntities.get(0));
 
-		long dataObjectId = getDataObjectId(dataObject);
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
-		Assert.assertTrue(isDataObjectDeleted(dataObjectId));
+		Assert.assertTrue(isBaseModelDeleted(baseModelPK));
 	}
 
 	@Test
 	public void testDeleteAll() throws Exception {
-		Object dataObject = addDataObject(TestPropsValues.getUserId());
-		Object dataObjectDelete = addDataObject(_user.getUserId());
+		BaseModel baseModel = addBaseModel(TestPropsValues.getUserId());
+		BaseModel deletedBaseModel = addBaseModel(_user.getUserId());
 
 		_uadEntityAnonymizer.deleteAll(_user.getUserId());
 
-		long dataObjectId = getDataObjectId(dataObject);
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
 
-		Assert.assertFalse(isDataObjectDeleted(dataObjectId));
+		Assert.assertFalse(isBaseModelDeleted(baseModelPK));
 
-		long dataObjectDeleteId = getDataObjectId(dataObjectDelete);
+		long deletedBaseModelPK = getBaseModelPrimaryKey(deletedBaseModel);
 
-		Assert.assertTrue(isDataObjectDeleted(dataObjectDeleteId));
+		Assert.assertTrue(isBaseModelDeleted(deletedBaseModelPK));
 	}
 
 	@Test
-	public void testDeleteAllWithNoDataObject() throws Exception {
+	public void testDeleteAllWithNoBaseModel() throws Exception {
 		_uadEntityAnonymizer.deleteAll(_user.getUserId());
 	}
 
-	protected abstract Object addDataObject(long userId) throws Exception;
+	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
 
-	protected abstract long getDataObjectId(Object dataObject);
+	protected abstract long getBaseModelPrimaryKey(BaseModel baseModel);
 
 	protected abstract String getUADRegistryKey();
 
-	protected abstract boolean isDataObjectAutoAnonymized(
-			long dataObjectId, User user)
+	protected abstract boolean isBaseModelAutoAnonymized(
+			long baseModelPK, User user)
 		throws Exception;
 
-	protected abstract boolean isDataObjectDeleted(long dataObjectId);
+	protected abstract boolean isBaseModelDeleted(long baseModelPK);
 
 	private UADEntityAggregator _uadEntityAggregator;
 	private ServiceTracker<UADEntityAggregator, UADEntityAggregator>

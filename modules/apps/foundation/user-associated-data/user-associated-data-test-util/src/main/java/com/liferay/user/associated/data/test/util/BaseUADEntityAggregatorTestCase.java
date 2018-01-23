@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.test.util;
 
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
@@ -62,15 +63,15 @@ public abstract class BaseUADEntityAggregatorTestCase {
 
 	@Test
 	public void testCount() throws Exception {
-		addDataObject(_user.getUserId());
+		addBaseModel(_user.getUserId());
 
 		Assert.assertEquals(1, _uadEntityAggregator.count(_user.getUserId()));
 	}
 
 	@Test
 	public void testGetUADEntities() throws Exception {
-		addDataObject(TestPropsValues.getUserId());
-		addDataObject(_user.getUserId());
+		addBaseModel(TestPropsValues.getUserId());
+		addBaseModel(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
@@ -89,7 +90,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
 			(WhenHasStatusByUserIdField)this;
 
-		whenHasStatusByUserIdField.addDataObjectWithStatusByUserId(
+		whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 			TestPropsValues.getUserId(), _user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
@@ -103,7 +104,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 	}
 
 	@Test
-	public void testGetUADEntitiesWithNoDataObject() throws Exception {
+	public void testGetUADEntitiesWithNoBaseModel() throws Exception {
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
 
@@ -112,7 +113,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 
 	@Test
 	public void testGetUADEntity() throws Exception {
-		addDataObject(_user.getUserId());
+		addBaseModel(_user.getUserId());
 
 		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
 			_user.getUserId());
@@ -127,7 +128,7 @@ public abstract class BaseUADEntityAggregatorTestCase {
 		Assert.assertEquals(uadEntityId, uadEntity.getUADEntityId());
 	}
 
-	protected abstract Object addDataObject(long userId) throws Exception;
+	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
 
 	protected abstract String getUADRegistryKey();
 

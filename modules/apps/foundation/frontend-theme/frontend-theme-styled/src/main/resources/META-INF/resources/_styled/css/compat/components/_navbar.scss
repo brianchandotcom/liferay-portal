@@ -5,10 +5,14 @@
 		border: 1px solid transparent;
 		border-radius: $border-radius;
 		float: right;
+
 		// TODO: can't mix rem and px
+
 		//margin-bottom: (($navbar-height - 34px) / 2);
 		margin-right: $navbar-padding-x;
+
 		// TODO: can't mix rem and px
+
 		//margin-top: (($navbar-height - 34px) / 2);
 		padding: 9px 10px;
 		position: relative;

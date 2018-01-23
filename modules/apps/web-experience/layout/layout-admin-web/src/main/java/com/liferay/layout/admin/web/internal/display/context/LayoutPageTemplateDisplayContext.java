@@ -14,6 +14,8 @@
 
 package com.liferay.layout.admin.web.internal.display.context;
 
+import com.liferay.asset.display.contributor.AssetDisplayContributor;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.fragment.model.FragmentCollection;
 import com.liferay.fragment.model.FragmentEntry;
 import com.liferay.fragment.model.FragmentEntryInstanceLink;
@@ -21,6 +23,7 @@ import com.liferay.fragment.service.FragmentCollectionServiceUtil;
 import com.liferay.fragment.service.FragmentEntryInstanceLinkLocalServiceUtil;
 import com.liferay.fragment.service.FragmentEntryServiceUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.layout.admin.web.internal.constants.LayoutAdminWebKeys;
 import com.liferay.layout.admin.web.internal.security.permission.resource.LayoutPageTemplatePermission;
 import com.liferay.layout.admin.web.internal.util.LayoutPageTemplatePortletUtil;
 import com.liferay.layout.page.template.model.LayoutPageTemplateCollection;
@@ -67,6 +70,40 @@ public class LayoutPageTemplateDisplayContext {
 		_renderResponse = renderResponse;
 
 		_request = request;
+	}
+
+	public JSONArray getAssetDisplayContributorEntriesJSONArray()
+		throws PortalException {
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		AssetDisplayContributorTracker assetDisplayContributorTracker =
+			(AssetDisplayContributorTracker)_request.getAttribute(
+				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
+
+		List<AssetDisplayContributor> assetDisplayContributors =
+			assetDisplayContributorTracker.getAssetDisplayContributors(
+				themeDisplay.getLocale());
+
+		for (AssetDisplayContributor assetDisplayContributor :
+				assetDisplayContributors) {
+
+			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+			jsonObject.put(
+				"assetEntryClassName", assetDisplayContributor.getClassName());
+
+			jsonObject.put(
+				"assetEntryLabel",
+				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
+
+			jsonArray.put(jsonObject);
+		}
+
+		return jsonArray;
 	}
 
 	public String getDisplayStyle() {

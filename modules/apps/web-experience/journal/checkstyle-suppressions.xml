@@ -3,7 +3,4 @@
 
 <suppressions>
 	<suppress checks="StaticVariableName" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/configuration/JournalServiceConfigurationValues\.java" />
-	<suppress checks="UnprocessedException" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/exportimport/data/handler/JournalArticleStagedModelDataHandler\.java" />
-	<suppress checks="UnprocessedException" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/internal/upgrade/v1_1_0/UpgradeImageTypeContent\.java" />
-	<suppress checks="UnprocessedException" files="modules/apps/web-experience/journal/journal-service/src/main/java/com/liferay/journal/internal/util/JournalConverterImpl\.java" />
 </suppressions>

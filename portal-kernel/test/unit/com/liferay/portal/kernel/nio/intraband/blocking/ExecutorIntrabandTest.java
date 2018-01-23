@@ -107,15 +107,15 @@ public class ExecutorIntrabandTest {
 
 			};
 
-		Datagram datagram1 = Datagram.createRequestDatagram(_TYPE, _data);
+		Datagram datagram1 = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 		_executorIntraband.sendDatagram(futureRegistrationReference, datagram1);
 
-		Datagram datagram2 = Datagram.createRequestDatagram(_TYPE, _data);
+		Datagram datagram2 = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 		_executorIntraband.sendDatagram(futureRegistrationReference, datagram2);
 
-		Datagram datagram3 = Datagram.createRequestDatagram(_TYPE, _data);
+		Datagram datagram3 = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 		_executorIntraband.sendDatagram(futureRegistrationReference, datagram3);
 
@@ -484,7 +484,7 @@ public class ExecutorIntrabandTest {
 
 		_executorIntraband.sendDatagram(
 			futureRegistrationReference,
-			Datagram.createRequestDatagram(_TYPE, _data), attachment,
+			Datagram.createRequestDatagram(_TYPE, _DATA), attachment,
 			EnumSet.of(CompletionHandler.CompletionType.SUBMITTED),
 			recordCompletionHandler);
 
@@ -498,7 +498,7 @@ public class ExecutorIntrabandTest {
 
 		ByteBuffer dataByteBuffer = receiveDatagram.getDataByteBuffer();
 
-		Assert.assertArrayEquals(_data, dataByteBuffer.array());
+		Assert.assertArrayEquals(_DATA, dataByteBuffer.array());
 
 		// Callback timeout, with log
 
@@ -512,7 +512,7 @@ public class ExecutorIntrabandTest {
 
 			_executorIntraband.sendDatagram(
 				futureRegistrationReference,
-				Datagram.createRequestDatagram(_TYPE, _data), attachment,
+				Datagram.createRequestDatagram(_TYPE, _DATA), attachment,
 				EnumSet.of(CompletionHandler.CompletionType.REPLIED),
 				recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 
@@ -520,7 +520,7 @@ public class ExecutorIntrabandTest {
 
 			_executorIntraband.sendDatagram(
 				futureRegistrationReference,
-				Datagram.createRequestDatagram(_TYPE, _data), attachment,
+				Datagram.createRequestDatagram(_TYPE, _DATA), attachment,
 				EnumSet.of(CompletionHandler.CompletionType.DELIVERED),
 				recordCompletionHandler, 10, TimeUnit.MILLISECONDS);
 
@@ -562,11 +562,11 @@ public class ExecutorIntrabandTest {
 
 		writingThread.start();
 
-		Datagram datagram1 = Datagram.createRequestDatagram(_TYPE, _data);
+		Datagram datagram1 = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 		sendingQueue.put(datagram1);
 
-		Datagram datagram2 = Datagram.createRequestDatagram(_TYPE, _data);
+		Datagram datagram2 = Datagram.createRequestDatagram(_TYPE, _DATA);
 
 		sendingQueue.put(datagram2);
 
@@ -614,7 +614,7 @@ public class ExecutorIntrabandTest {
 		int counter = 0;
 
 		while (sendingQueue.offer(
-					Datagram.createRequestDatagram(_TYPE, _data), 1,
+					Datagram.createRequestDatagram(_TYPE, _DATA), 1,
 					TimeUnit.SECONDS)) {
 
 			counter++;
@@ -654,7 +654,7 @@ public class ExecutorIntrabandTest {
 		counter = 0;
 
 		while (sendingQueue.offer(
-					Datagram.createRequestDatagram(_TYPE, _data), 1,
+					Datagram.createRequestDatagram(_TYPE, _DATA), 1,
 					TimeUnit.SECONDS)) {
 
 			counter++;
@@ -696,7 +696,7 @@ public class ExecutorIntrabandTest {
 		counter = 0;
 
 		while (sendingQueue.offer(
-					Datagram.createRequestDatagram(_TYPE, _data), 1,
+					Datagram.createRequestDatagram(_TYPE, _DATA), 1,
 					TimeUnit.SECONDS) ||
 			   writingThread.isAlive()) {
 
@@ -721,6 +721,9 @@ public class ExecutorIntrabandTest {
 		sinkChannel.close();
 	}
 
+	private static final byte[] _DATA =
+		ExecutorIntrabandTest._DATA_STRING.getBytes(Charset.defaultCharset());
+
 	private static final String _DATA_STRING =
 		ExecutorIntrabandTest.class.getName();
 
@@ -728,8 +731,6 @@ public class ExecutorIntrabandTest {
 
 	private static final byte _TYPE = 1;
 
-	private final byte[] _data = _DATA_STRING.getBytes(
-		Charset.defaultCharset());
 	private ExecutorIntraband _executorIntraband;
 
 }

@@ -9,7 +9,7 @@ Export-Package:\
 	com.liferay.sync.oauth.helper,\
 	com.liferay.sync.service,\
 	com.liferay.sync.service.configuration,\
-	com.liferay.sync.service.persistence
+	com.liferay.sync.service.persistence,\
 	com.liferay.sync.util
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Sync Connector

@@ -40,6 +40,10 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = _fixIncorrectEmptyLineInsideStatement(content);
 
+		if (content.endsWith("\n}") && !content.endsWith("\n\n}")) {
+			return StringUtil.replaceLast(content, "\n}", "\n\n}");
+		}
+
 		return content;
 	}
 

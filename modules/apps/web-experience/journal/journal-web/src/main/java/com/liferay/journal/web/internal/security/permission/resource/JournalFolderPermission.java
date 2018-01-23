@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.journal.service.permission;
+package com.liferay.journal.web.internal.security.permission.resource;
 
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -26,35 +24,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Juan Fernández
- * @author Zsolt Berentey
- * @deprecated As of 4.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	property = {"model.class.name=com.liferay.journal.model.JournalFolder"},
-	service = BaseModelPermissionChecker.class
-)
-@Deprecated
-public class JournalFolderPermission implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, JournalFolder folder,
-			String actionId)
-		throws PortalException {
-
-		_journalFolderModelResourcePermission.check(
-			permissionChecker, folder, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, long folderId,
-			String actionId)
-		throws PortalException {
-
-		ModelResourcePermissionHelper.check(
-			_journalFolderModelResourcePermission, permissionChecker, groupId,
-			folderId, actionId);
-	}
+@Component(immediate = true)
+public class JournalFolderPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, JournalFolder folder,
@@ -73,21 +46,6 @@ public class JournalFolderPermission implements BaseModelPermissionChecker {
 		return ModelResourcePermissionHelper.contains(
 			_journalFolderModelResourcePermission, permissionChecker, groupId,
 			folderId, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		ModelResourcePermissionHelper.check(
-			_journalFolderModelResourcePermission, permissionChecker, groupId,
-			primaryKey, actionId);
-	}
-
-	protected void setJournalFolderLocalService(
-		JournalFolderLocalService journalFolderLocalService) {
 	}
 
 	@Reference(

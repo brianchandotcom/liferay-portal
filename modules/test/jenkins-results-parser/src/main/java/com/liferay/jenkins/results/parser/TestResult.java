@@ -37,6 +37,8 @@ public interface TestResult {
 
 	public String getPackageName();
 
+	public String getSimpleClassName();
+
 	public String getStatus();
 
 	public String getTestName();

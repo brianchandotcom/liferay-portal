@@ -49,7 +49,7 @@ public class BaseTestResult implements TestResult {
 			return testName.substring(5, testName.length() - 1);
 		}
 
-		return simpleClassName + "." + testName;
+		return getSimpleClassName() + "." + testName;
 	}
 
 	@Override
@@ -90,7 +90,40 @@ public class BaseTestResult implements TestResult {
 
 	@Override
 	public String getPackageName() {
-		return packageName;
+		String className = getClassName();
+
+		if (className.contains(".")) {
+			int x = className.lastIndexOf(".");
+
+			return className.substring(0, x);
+		}
+
+		Build build = getBuild();
+
+		System.out.println(
+			"Invalid test class name \"" + getClassName() + "\" in build " +
+				build.getBuildURL());
+
+		return className;
+	}
+
+	@Override
+	public String getSimpleClassName() {
+		String className = getClassName();
+
+		if (className.contains(".")) {
+			int x = className.lastIndexOf(".");
+
+			return className.substring(x + 1);
+		}
+
+		Build build = getBuild();
+
+		System.out.println(
+			"Invalid test class name \"" + getClassName() + "\" in build " +
+				build.getBuildURL());
+
+		return className;
 	}
 
 	@Override
@@ -146,9 +179,13 @@ public class BaseTestResult implements TestResult {
 		sb.append(build.getBuildURL());
 
 		sb.append("/testReport/");
+
+		String packageName = getPackageName();
+
 		sb.append(packageName);
+
 		sb.append("/");
-		sb.append(simpleClassName);
+		sb.append(getSimpleClassName());
 		sb.append("/");
 
 		String testName = getTestName();
@@ -186,22 +223,6 @@ public class BaseTestResult implements TestResult {
 
 		_duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
 
-		int x = _className.lastIndexOf(".");
-
-		try {
-			simpleClassName = _className.substring(x + 1);
-
-			packageName = _className.substring(0, x);
-		}
-		catch (StringIndexOutOfBoundsException sioobe) {
-			packageName = _className;
-			simpleClassName = _className;
-
-			System.out.println(
-				"Invalid test class name \"" + _className + "\" in build " +
-					build.getBuildURL());
-		}
-
 		_testName = caseJSONObject.getString("name");
 
 		_status = caseJSONObject.getString("status");
@@ -231,9 +252,6 @@ public class BaseTestResult implements TestResult {
 
 		return "INVALID_AXIS_NUMBER";
 	}
-
-	protected String packageName;
-	protected String simpleClassName;
 
 	private static final String _DEFAULT_LOG_BASE_URL =
 		"https://testray.liferay.com/reports/production/logs";

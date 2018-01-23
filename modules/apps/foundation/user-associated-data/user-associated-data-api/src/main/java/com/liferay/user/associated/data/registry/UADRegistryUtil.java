@@ -53,10 +53,6 @@ public class UADRegistryUtil {
 		return _uadRegistry.getUADEntityExporters();
 	}
 
-	public static void notify(long userId) {
-		_uadRegistry.notify(userId);
-	}
-
 	@Reference(unbind = "-")
 	protected void setUADRegistry(UADRegistry uadRegistry) {
 		_uadRegistry = uadRegistry;

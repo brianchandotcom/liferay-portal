@@ -22,7 +22,13 @@ public class AnnouncementsUADConstants {
 	public static final String ANNOUNCEMENTS_ENTRY =
 		"com.liferay.announcements.kernel.model.AnnouncementsEntry";
 
+	public static final String[] ANNOUNCEMENTS_ENTRY_USER_ID_FIELD_NAMES =
+		{"userId"};
+
 	public static final String ANNOUNCEMENTS_FLAG =
 		"com.liferay.announcements.kernel.model.AnnouncementsFlag";
+
+	public static final String[] ANNOUNCEMENTS_FLAG_USER_ID_FIELD_NAMES =
+		{"userId"};
 
 }

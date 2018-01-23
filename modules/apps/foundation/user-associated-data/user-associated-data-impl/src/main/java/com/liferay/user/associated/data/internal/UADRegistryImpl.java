@@ -25,9 +25,6 @@ import com.liferay.user.associated.data.exporter.UADEntityExporter;
 import com.liferay.user.associated.data.registry.UADRegistry;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.osgi.framework.BundleContext;
@@ -87,16 +84,6 @@ public class UADRegistryImpl implements UADRegistry {
 
 	public Collection<UADEntityExporter> getUADEntityExporters() {
 		return _uadEntityExporterTrackerMap.values();
-	}
-
-	public void notify(long userId) {
-		Map<String, List<UADEntity>> uadAssetsMap = new HashMap<>();
-
-		for (String key : getUADEntityAggregatorKeySet()) {
-			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
-
-			uadAssetsMap.put(key, uadAggregator.getUADEntities(userId));
-		}
 	}
 
 	@Activate

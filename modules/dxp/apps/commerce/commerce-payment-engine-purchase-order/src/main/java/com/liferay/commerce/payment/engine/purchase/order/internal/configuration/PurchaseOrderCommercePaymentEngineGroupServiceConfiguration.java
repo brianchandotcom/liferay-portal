@@ -32,7 +32,7 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 )
 public interface PurchaseOrderCommercePaymentEngineGroupServiceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "message", required = false)
 	public LocalizedValuesMap message();
 
 }

@@ -32,21 +32,21 @@ public class InetAddressTask extends Task {
 	@Override
 	public void execute() throws BuildException {
 		try {
-			InetAddress localHost = InetAddress.getLocalHost();
+			InetAddress inetAddress = InetAddress.getLocalHost();
 
 			if (Validator.isNotNull(_hostAddressProperty)) {
 				getProject().setUserProperty(
-					_hostAddressProperty, localHost.getHostAddress());
+					_hostAddressProperty, inetAddress.getHostAddress());
 			}
 
 			if (Validator.isNotNull(_hostNameProperty)) {
 				getProject().setUserProperty(
-					_hostNameProperty, localHost.getHostName());
+					_hostNameProperty, inetAddress.getHostName());
 			}
 
 			if (Validator.isNotNull(_vmId1Property)) {
 				int id = GetterUtil.getInteger(
-					StringUtil.extractDigits(localHost.getHostName()));
+					StringUtil.extractDigits(inetAddress.getHostName()));
 
 				getProject().setUserProperty(
 					_vmId1Property, String.valueOf((id * 2) - 1));
@@ -54,7 +54,7 @@ public class InetAddressTask extends Task {
 
 			if (Validator.isNotNull(_vmId2Property)) {
 				int id = GetterUtil.getInteger(
-					StringUtil.extractDigits(localHost.getHostName()));
+					StringUtil.extractDigits(inetAddress.getHostName()));
 
 				getProject().setUserProperty(
 					_vmId2Property, String.valueOf(id * 2));

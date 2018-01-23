@@ -45,27 +45,28 @@ public class DNSLookupWebCacheItem implements WebCacheItem {
 
 			for (int i = 0; i < array.length; i++) {
 				if ((array[i] != '.') && !Character.isDigit(array[i])) {
-					InetAddress ia = InetAddress.getByName(_domain);
+					InetAddress inetAddress = InetAddress.getByName(_domain);
 
-					results = ia.getHostAddress();
+					results = inetAddress.getHostAddress();
 
 					break;
 				}
 			}
 
 			if (results == null) {
-				InetAddress[] ia = InetAddress.getAllByName(_domain);
+				InetAddress[] inetAddresses = InetAddress.getAllByName(_domain);
 
-				if (ia.length == 0) {
+				if (inetAddresses.length == 0) {
 					results = StringPool.BLANK;
 				}
 				else {
-					StringBundler sb = new StringBundler(ia.length * 2 - 1);
+					StringBundler sb = new StringBundler(
+						inetAddresses.length * 2 - 1);
 
-					for (int i = 0; i < ia.length; i++) {
-						sb.append(ia[i].getHostName());
+					for (int i = 0; i < inetAddresses.length; i++) {
+						sb.append(inetAddresses[i].getHostName());
 
-						if ((i + 1) <= ia.length) {
+						if ((i + 1) <= inetAddresses.length) {
 							sb.append(StringPool.COMMA);
 						}
 					}

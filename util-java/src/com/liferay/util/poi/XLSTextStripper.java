@@ -69,10 +69,10 @@ public class XLSTextStripper {
 							cellStringValue = String.valueOf(doubleValue);
 						}
 						else if (cell.getCellType() == 1) {
-							RichTextString richStringCellValue =
+							RichTextString richTextString =
 								cell.getRichStringCellValue();
 
-							cellStringValue = richStringCellValue.getString();
+							cellStringValue = richTextString.getString();
 						}
 
 						if (cellStringValue != null) {

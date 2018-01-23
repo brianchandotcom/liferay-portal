@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.knowledge.base.web.configuration.KBDisplayPortletInstanceConfiguration",
+	id = "com.liferay.knowledge.base.web.internal.configuration.KBDisplayPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "knowledge-base-display-portlet-instance-configuration-name"
 )

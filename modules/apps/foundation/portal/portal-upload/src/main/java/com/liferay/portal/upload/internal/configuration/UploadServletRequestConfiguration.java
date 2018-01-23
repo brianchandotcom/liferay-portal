@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.upload.configuration.UploadServletRequestConfiguration",
+	id = "com.liferay.portal.upload.internal.configuration.UploadServletRequestConfiguration",
 	localization = "content/Language",
 	name = "upload-servlet-request-configuration-name"
 )

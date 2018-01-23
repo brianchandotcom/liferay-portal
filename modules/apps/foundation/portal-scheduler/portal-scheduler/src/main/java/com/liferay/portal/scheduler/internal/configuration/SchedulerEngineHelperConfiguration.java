@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.scheduler.configuration.SchedulerEngineHelperConfiguration",
+	id = "com.liferay.portal.scheduler.internal.configuration.SchedulerEngineHelperConfiguration",
 	localization = "content/Language",
 	name = "scheduler-engine-helper-configuration-name"
 )

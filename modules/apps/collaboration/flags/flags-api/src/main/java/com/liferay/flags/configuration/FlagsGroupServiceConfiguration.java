@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.COMPANY
 )
 @Meta.OCD(
-	id = "com.liferay.flags.configuration.FlagsConfiguration",
+	id = "com.liferay.flags.configuration.FlagsGroupServiceConfiguration",
 	localization = "content/Language", name = "flags-service-configuration-name"
 )
 public interface FlagsGroupServiceConfiguration {

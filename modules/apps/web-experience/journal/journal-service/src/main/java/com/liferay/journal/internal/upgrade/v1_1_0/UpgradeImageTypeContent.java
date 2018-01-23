@@ -199,6 +199,12 @@ public class UpgradeImageTypeContent extends UpgradeProcess {
 			return folder.getFolderId();
 		}
 		catch (NoSuchFolderException nsfe) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Unable to get folder for " +
+						String.valueOf(resourcePrimKey),
+					nsfe);
+			}
 		}
 
 		ServiceContext serviceContext = new ServiceContext();

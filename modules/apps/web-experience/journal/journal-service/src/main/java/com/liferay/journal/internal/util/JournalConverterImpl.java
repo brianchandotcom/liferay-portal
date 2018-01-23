@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.repository.model.FileEntry;
@@ -904,6 +906,10 @@ public class JournalConverterImpl implements JournalConverter {
 				jsonArray = JSONFactoryUtil.createJSONArray(fieldValue);
 			}
 			catch (JSONException jsone) {
+				if (_log.isDebugEnabled()) {
+					_log.debug("Unable to parse object", jsone);
+				}
+
 				return;
 			}
 
@@ -1084,6 +1090,9 @@ public class JournalConverterImpl implements JournalConverter {
 				dynamicElementElement, defaultLanguageId);
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		JournalConverterImpl.class);
 
 	private final Map<String, String> _ddmDataTypes;
 	private final Map<String, String> _ddmMetadataAttributes;

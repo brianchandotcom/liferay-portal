@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public class BaseAwsAurora {
+public class BaseAwsAurora implements AwsVmProvisioner {
 
 	public void create() {
 		CreateDBClusterRequest auroraCreateDBClusterRequest =

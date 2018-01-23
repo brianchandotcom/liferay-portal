@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public class AwsEc2 {
+public class AwsEc2 implements AwsVmProvisioner{
 
 	public AwsEc2(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {

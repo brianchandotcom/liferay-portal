@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.util;
+package com.liferay.sync.internal.util;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.petra.string.StringPool;

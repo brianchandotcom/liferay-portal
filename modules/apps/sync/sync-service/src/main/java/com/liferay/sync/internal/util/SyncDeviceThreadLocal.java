@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.util;
+package com.liferay.sync.internal.util;
 
 import com.liferay.petra.lang.CentralizedThreadLocal;
 import com.liferay.sync.model.SyncDevice;

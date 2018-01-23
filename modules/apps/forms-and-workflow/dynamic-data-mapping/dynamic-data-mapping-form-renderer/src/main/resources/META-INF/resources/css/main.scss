@@ -34,6 +34,10 @@
 		font-size: inherit;
 	}
 
+	.input-group-addon .form-control-feedback {
+		left: -18px;
+	}
+
 	.required-warning {
 		margin-bottom: 25px;
 
@@ -42,8 +46,8 @@
 		}
 	}
 
-	.input-group-addon .form-control-feedback {
-		left: -18px;
+	.select-arrow-down-container:focus {
+		outline: none;
 	}
 
 	.lfr-ddm-form-field-container {

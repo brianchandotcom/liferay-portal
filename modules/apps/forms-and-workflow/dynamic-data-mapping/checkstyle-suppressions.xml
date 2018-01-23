@@ -3,6 +3,5 @@
 
 <suppressions>
 	<suppress checks="Concat" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
-	<suppress checks="UnprocessedException" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-api/src/main/java/com/liferay/dynamic/data/mapping/util/DDMFormInstanceFactory\.java" />
 	<suppress checks="WhitespaceAround" files="modules/apps/forms-and-workflow/dynamic-data-mapping/dynamic-data-mapping-expression/src/test/java/com/liferay/dynamic/data/mapping/expression/internal/ArithmeticEvaluationTest\.java" />
 </suppressions>

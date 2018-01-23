@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.model.StagedModel;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.DateRange;
 import com.liferay.portal.kernel.util.ServiceProxyFactory;
@@ -587,6 +588,14 @@ public class ExportImportHelperUtil {
 		PortletDataContext portletDataContext, Element portletElement) {
 
 		_exportImportHelper.setPortletScope(portletDataContext, portletElement);
+	}
+
+	public static void transferFileToRemoteLive(
+			File file, long stagingRequestId, HttpPrincipal httpPrincipal)
+		throws Exception {
+
+		_exportImportHelper.transferFileToRemoteLive(
+			file, stagingRequestId, httpPrincipal);
 	}
 
 	/**

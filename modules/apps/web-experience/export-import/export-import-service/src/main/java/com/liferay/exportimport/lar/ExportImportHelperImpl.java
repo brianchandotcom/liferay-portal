@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.model.SystemEventConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletIdCodec;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.security.xml.SecureXMLFactoryProviderUtil;
 import com.liferay.portal.kernel.service.GroupLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalService;
@@ -92,8 +93,10 @@ import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
 import com.liferay.portal.model.impl.LayoutImpl;
 import com.liferay.portal.util.PropsValues;
+import com.liferay.portlet.exportimport.service.http.StagingServiceHttp;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 import java.util.ArrayList;
@@ -628,7 +631,7 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 
 	/**
 	 * @see com.liferay.exportimport.kernel.backgroundtask.LayoutRemoteStagingBackgroundTaskExecutor#getMissingRemoteParentLayouts(
-	 *      com.liferay.portal.kernel.security.auth.HttpPrincipal, Layout, long)
+	 *      HttpPrincipal, Layout, long)
 	 */
 	@Override
 	public List<Layout> getMissingParentLayouts(Layout layout, long liveGroupId)
@@ -1204,6 +1207,47 @@ public class ExportImportHelperImpl implements ExportImportHelper {
 		}
 		catch (Exception e) {
 			_log.error(e, e);
+		}
+	}
+
+	@Override
+	public void transferFileToRemoteLive(
+			File file, long stagingRequestId, HttpPrincipal httpPrincipal)
+		throws Exception {
+
+		byte[] bytes =
+			new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+
+		int i = 0;
+		int j = 0;
+
+		String numberString = String.valueOf(
+			(int)(file.length() / bytes.length));
+
+		String numberFormat = String.format(
+			"%%0%dd", numberString.length() + 1);
+
+		try (FileInputStream fileInputStream = new FileInputStream(file)) {
+			while ((i = fileInputStream.read(bytes)) >= 0) {
+				String fileName =
+					file.getName() + String.format(numberFormat, j++);
+
+				if (i < PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE) {
+					byte[] tempBytes = new byte[i];
+
+					System.arraycopy(bytes, 0, tempBytes, 0, i);
+
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, fileName, tempBytes);
+				}
+				else {
+					StagingServiceHttp.updateStagingRequest(
+						httpPrincipal, stagingRequestId, fileName, bytes);
+				}
+
+				bytes =
+					new byte[PropsValues.STAGING_REMOTE_TRANSFER_BUFFER_SIZE];
+			}
 		}
 	}
 

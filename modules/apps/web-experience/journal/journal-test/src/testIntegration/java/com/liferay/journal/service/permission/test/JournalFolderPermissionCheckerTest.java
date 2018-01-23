@@ -15,14 +15,15 @@
 package com.liferay.journal.service.permission.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalFolder;
-import com.liferay.journal.service.permission.JournalFolderPermission;
-import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.journal.test.util.JournalTestUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
@@ -46,19 +47,19 @@ public class JournalFolderPermissionCheckerTest extends BasePermissionTestCase {
 	@Test
 	public void testContains() throws Exception {
 		Assert.assertTrue(
-			JournalFolderPermission.contains(
+			_journalFolderModelResourcePermission.contains(
 				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertTrue(
-			JournalFolderPermission.contains(
+			_journalFolderModelResourcePermission.contains(
 				permissionChecker, _subfolder, ActionKeys.VIEW));
 
 		removePortletModelViewPermission();
 
 		Assert.assertFalse(
-			JournalFolderPermission.contains(
+			_journalFolderModelResourcePermission.contains(
 				permissionChecker, _folder, ActionKeys.VIEW));
 		Assert.assertFalse(
-			JournalFolderPermission.contains(
+			_journalFolderModelResourcePermission.contains(
 				permissionChecker, _subfolder, ActionKeys.VIEW));
 	}
 
@@ -74,8 +75,12 @@ public class JournalFolderPermissionCheckerTest extends BasePermissionTestCase {
 
 	@Override
 	protected String getResourceName() {
-		return JournalPermission.RESOURCE_NAME;
+		return JournalConstants.RESOURCE_NAME;
 	}
+
+	@Inject(filter = "model.class.name=com.liferay.journal.model.JournalFolder")
+	private static ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 	private JournalFolder _folder;
 	private JournalFolder _subfolder;

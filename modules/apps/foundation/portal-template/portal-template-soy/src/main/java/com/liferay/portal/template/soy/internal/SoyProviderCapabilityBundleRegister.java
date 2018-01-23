@@ -33,25 +33,17 @@ import org.osgi.service.component.annotations.Component;
 @Component(service = SoyProviderCapabilityBundleRegister.class)
 public class SoyProviderCapabilityBundleRegister {
 
-	public Bundle getBundle(long bundleId) {
-		return _bundles.get(bundleId);
-	}
-
-	public Collection<Bundle> getBundles() {
-		return _bundles.values();
-	}
-
-	public Bundle getTemplateBundle(String templateId) {
+	public static Bundle getTemplateBundle(String templateId) {
 		long bundleId = SoyTemplateUtil.getBundleId(templateId);
 
-		Bundle bundle = getBundle(bundleId);
+		Bundle bundle = _bundles.get(bundleId);
 
 		if (bundle == null) {
-			Collection<Bundle> bundles = getBundles();
+			Collection<Bundle> bundles = _bundles.values();
 
 			StringBundler sb = new StringBundler(bundles.size() * 2);
 
-			for (Bundle registredBundle : bundles) {
+			for (Bundle registredBundle : _bundles.values()) {
 				sb.append(registredBundle.getSymbolicName());
 				sb.append(StringPool.COMMA_AND_SPACE);
 			}

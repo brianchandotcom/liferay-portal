@@ -45,7 +45,6 @@ import com.liferay.portal.template.TemplateContextHelper;
 import com.liferay.portal.template.soy.constants.SoyTemplateConstants;
 import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
 import com.liferay.portal.template.soy.utils.SoyRawData;
-import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
 import java.io.Reader;
 import java.io.Writer;
@@ -492,8 +491,8 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 		for (TemplateResource templateResource : templateResources) {
 			try {
 				Bundle templateResourceBundle =
-					SoyTemplateResourcesProvider.getTemplateResourceBundle(
-						templateResource);
+					SoyProviderCapabilityBundleRegister.getTemplateBundle(
+						templateResource.getTemplateId());
 
 				BundleWiring bundleWiring = templateResourceBundle.adapt(
 					BundleWiring.class);

@@ -17,7 +17,6 @@ package com.liferay.gradle.plugins.defaults.internal;
 import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
-import com.liferay.gradle.plugins.node.NodeExtension;
 import com.liferay.gradle.plugins.node.NodePlugin;
 import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
@@ -41,7 +40,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
-		_configureNode(project);
 		_configureTaskClean(project);
 		_configureTaskNpmShrinkwrap(project);
 		_configureTasksPublishNodeModule(project);
@@ -53,13 +51,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	}
 
 	private NodeDefaultsPlugin() {
-	}
-
-	private void _configureNode(Project project) {
-		NodeExtension nodeExtension = GradleUtil.getExtension(
-			project, NodeExtension.class);
-
-		nodeExtension.npmArgs("--no-package-lock");
 	}
 
 	private void _configureTaskClean(Project project) {

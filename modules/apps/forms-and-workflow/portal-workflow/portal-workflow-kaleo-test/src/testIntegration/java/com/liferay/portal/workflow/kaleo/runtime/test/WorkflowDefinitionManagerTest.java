@@ -99,8 +99,8 @@ public class WorkflowDefinitionManagerTest {
 	}
 
 	@Test(expected = WorkflowException.class)
-	public void testDeleteDraftWorkflowDefinition() throws Exception {
-		WorkflowDefinition workflowDefinition = draftWorkflowDefinition();
+	public void testDeleteSaveWorkflowDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
 
 		_workflowDefinitionManager.undeployWorkflowDefinition(
 			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(),
@@ -113,34 +113,42 @@ public class WorkflowDefinitionManagerTest {
 
 	@Test
 	public void testDeployWorkflowDraftDefinition() throws Exception {
-		WorkflowDefinition draftWorkflowDefinition = draftWorkflowDefinition();
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
 
-		Assert.assertNotNull(draftWorkflowDefinition);
-		Assert.assertFalse(draftWorkflowDefinition.isActive());
+		Assert.assertFalse(workflowDefinition.isActive());
 
 		WorkflowDefinition deployedWorkflowDefinition =
 			_workflowDefinitionManager.deployWorkflowDefinition(
-				TestPropsValues.getCompanyId(),
-				draftWorkflowDefinition.getUserId(),
-				draftWorkflowDefinition.getTitle(),
-				draftWorkflowDefinition.getName(),
-				draftWorkflowDefinition.getContent().getBytes());
+				TestPropsValues.getCompanyId(), workflowDefinition.getUserId(),
+				workflowDefinition.getTitle(), workflowDefinition.getName(),
+				workflowDefinition.getContent().getBytes());
 
-		Assert.assertNotNull(deployedWorkflowDefinition);
 		Assert.assertEquals(
-			draftWorkflowDefinition.getName(),
-			deployedWorkflowDefinition.getName());
+			workflowDefinition.getName(), deployedWorkflowDefinition.getName());
 	}
 
 	@Test
-	public void testDraftWorkflowDefinitionWithoutTitleandContent()
+	public void testSaveWorkflowDefinition() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
+
+		Assert.assertNotNull(workflowDefinition);
+	}
+
+	@Test
+	public void testSaveWorkflowDefinitionIsNotActive() throws Exception {
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition();
+
+		Assert.assertFalse(workflowDefinition.isActive());
+	}
+
+	@Test
+	public void testSaveWorkflowDefinitionWithoutTitleAndContent()
 		throws Exception {
 
-		WorkflowDefinition workflowDefinition = draftWorkflowDefinition(
+		WorkflowDefinition workflowDefinition = saveWorkflowDefinition(
 			StringPool.BLANK, StringPool.BLANK.getBytes());
 
 		Assert.assertNotNull(workflowDefinition);
-		Assert.assertFalse(workflowDefinition.isActive());
 	}
 
 	@Test
@@ -476,23 +484,6 @@ public class WorkflowDefinitionManagerTest {
 		_workflowDefinitionManager.validateWorkflowDefinition(bytes);
 	}
 
-	protected WorkflowDefinition draftWorkflowDefinition() throws Exception {
-		InputStream inputStream = getResource("single-approver-definition.xml");
-
-		byte[] content = FileUtil.getBytes(inputStream);
-
-		return draftWorkflowDefinition(StringUtil.randomId(), content);
-	}
-
-	protected WorkflowDefinition draftWorkflowDefinition(
-			String title, byte[] bytes)
-		throws Exception {
-
-		return _workflowDefinitionManager.draftWorkflowDefinition(
-			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), title,
-			StringUtil.randomId(), bytes);
-	}
-
 	protected InputStream getResource(String name) {
 		Class<?> clazz = getClass();
 
@@ -500,6 +491,23 @@ public class WorkflowDefinitionManagerTest {
 
 		return classLoader.getResourceAsStream(
 			"com/liferay/portal/workflow/kaleo/dependencies/" + name);
+	}
+
+	protected WorkflowDefinition saveWorkflowDefinition() throws Exception {
+		InputStream inputStream = getResource("single-approver-definition.xml");
+
+		byte[] content = FileUtil.getBytes(inputStream);
+
+		return saveWorkflowDefinition(StringUtil.randomId(), content);
+	}
+
+	protected WorkflowDefinition saveWorkflowDefinition(
+			String title, byte[] bytes)
+		throws Exception {
+
+		return _workflowDefinitionManager.saveWorkflowDefinition(
+			TestPropsValues.getCompanyId(), TestPropsValues.getUserId(), title,
+			StringUtil.randomId(), bytes);
 	}
 
 	private BundleContext _bundleContext;

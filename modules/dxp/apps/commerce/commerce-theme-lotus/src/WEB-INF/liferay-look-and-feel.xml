@@ -8,6 +8,7 @@
 	<theme id="commerce-theme-lotus" name="Commerce Theme Lotus">
 		<template-extension>ftl</template-extension>
 		<settings>
+			<setting configurable="true" key="account-page-friendly-url" type="text" value="" />
 			<setting configurable="true" key="demo-mode" type="checkbox" value="false" />
 			<setting configurable="true" key="show-cart-icon" type="checkbox" value="true" />
 			<setting configurable="true" key="show-main-search-icon" type="checkbox" value="true" />

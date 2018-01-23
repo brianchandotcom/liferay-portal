@@ -20,13 +20,14 @@ import com.liferay.journal.exception.InvalidDDMStructureException;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.model.TrashedModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -156,8 +157,9 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return JournalFolderPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_FOLDER);
+			return ModelResourcePermissionHelper.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				groupId, classPK, ActionKeys.ADD_FOLDER);
 		}
 
 		return super.hasTrashPermission(
@@ -293,10 +295,8 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
-
-		return JournalFolderPermission.contains(
-			permissionChecker, folder, actionId);
+		return _journalFolderModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(unbind = "-")
@@ -307,5 +307,11 @@ public class JournalFolderTrashHandler extends JournalBaseTrashHandler {
 	}
 
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 }

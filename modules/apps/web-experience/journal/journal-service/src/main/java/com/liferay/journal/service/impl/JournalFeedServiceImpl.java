@@ -14,12 +14,15 @@
 
 package com.liferay.journal.service.impl;
 
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.base.JournalFeedServiceBaseImpl;
-import com.liferay.journal.service.permission.JournalFeedPermission;
-import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 /**
@@ -37,7 +40,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 			double feedVersion, ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.ADD_FEED);
 
 		return journalFeedLocalService.addFeed(
@@ -49,7 +52,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
 	@Override
 	public void deleteFeed(long feedId) throws PortalException {
-		JournalFeedPermission.check(
+		_journalFeedModelResourcePermission.check(
 			getPermissionChecker(), feedId, ActionKeys.DELETE);
 
 		journalFeedLocalService.deleteFeed(feedId);
@@ -59,7 +62,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	public void deleteFeed(long groupId, String feedId) throws PortalException {
 		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
 
-		JournalFeedPermission.check(
+		_journalFeedModelResourcePermission.check(
 			getPermissionChecker(), feed, ActionKeys.DELETE);
 
 		journalFeedLocalService.deleteFeed(feed);
@@ -69,7 +72,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 	public JournalFeed getFeed(long feedId) throws PortalException {
 		JournalFeed feed = journalFeedLocalService.getFeed(feedId);
 
-		JournalFeedPermission.check(
+		_journalFeedModelResourcePermission.check(
 			getPermissionChecker(), feed, ActionKeys.VIEW);
 
 		return feed;
@@ -81,7 +84,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
 		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
 
-		JournalFeedPermission.check(
+		_journalFeedModelResourcePermission.check(
 			getPermissionChecker(), feed, ActionKeys.VIEW);
 
 		return feed;
@@ -99,7 +102,7 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 
 		JournalFeed feed = journalFeedPersistence.findByG_F(groupId, feedId);
 
-		JournalFeedPermission.check(
+		_journalFeedModelResourcePermission.check(
 			getPermissionChecker(), feed, ActionKeys.UPDATE);
 
 		return journalFeedLocalService.updateFeed(
@@ -108,5 +111,16 @@ public class JournalFeedServiceImpl extends JournalFeedServiceBaseImpl {
 			targetLayoutFriendlyUrl, targetPortletId, contentField, feedType,
 			feedVersion, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<JournalFeed>
+		_journalFeedModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				JournalFeedServiceImpl.class,
+				"_journalFeedModelResourcePermission", JournalFeed.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				JournalFeedServiceImpl.class, "_portletResourcePermission",
+				JournalConstants.RESOURCE_NAME);
 
 }

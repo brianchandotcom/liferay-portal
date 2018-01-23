@@ -16,7 +16,6 @@ package com.liferay.journal.search;
 
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.trash.TrashHelper;
@@ -79,11 +79,8 @@ public class JournalFolderIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		JournalFolder folder = _journalFolderLocalService.getFolder(
-			entryClassPK);
-
-		return JournalFolderPermission.contains(
-			permissionChecker, folder, ActionKeys.VIEW);
+		return _journalFolderModelResourcePermission.contains(
+			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
 	@Override
@@ -216,6 +213,12 @@ public class JournalFolderIndexer
 	private IndexWriterHelper _indexWriterHelper;
 
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 	@Reference
 	private TrashHelper _trashHelper;

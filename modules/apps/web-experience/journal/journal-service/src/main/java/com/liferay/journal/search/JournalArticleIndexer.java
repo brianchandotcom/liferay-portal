@@ -26,7 +26,6 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
-import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.util.JournalConverter;
 import com.liferay.journal.util.impl.JournalUtil;
@@ -66,6 +65,7 @@ import com.liferay.portal.kernel.search.highlight.HighlightUtil;
 import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -138,7 +138,7 @@ public class JournalArticleIndexer
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		return JournalArticlePermission.contains(
+		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, entryClassPK, ActionKeys.VIEW);
 	}
 
@@ -1025,6 +1025,13 @@ public class JournalArticleIndexer
 	private IndexWriterHelper _indexWriterHelper;
 
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
+
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 	private JournalContent _journalContent;

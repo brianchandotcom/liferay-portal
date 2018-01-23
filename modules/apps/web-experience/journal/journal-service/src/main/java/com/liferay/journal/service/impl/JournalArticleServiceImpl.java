@@ -14,19 +14,23 @@
 
 package com.liferay.journal.service.impl;
 
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.base.JournalArticleServiceBaseImpl;
-import com.liferay.journal.service.permission.JournalArticlePermission;
-import com.liferay.journal.service.permission.JournalFolderPermission;
-import com.liferay.journal.service.permission.JournalPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletRequestModel;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -149,8 +153,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			String articleURL, ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_ARTICLE);
+		ModelResourcePermissionHelper.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
@@ -258,8 +263,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_ARTICLE);
+		ModelResourcePermissionHelper.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
@@ -359,8 +365,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			String articleURL, ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalFolderPermission.check(
-			getPermissionChecker(), groupId, folderId, ActionKeys.ADD_ARTICLE);
+		ModelResourcePermissionHelper.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, folderId, ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.addArticle(
 			getUserId(), groupId, folderId, classNameId, classPK, articleId,
@@ -394,9 +401,9 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		JournalArticle article = getArticle(groupId, oldArticleId);
 
-		JournalFolderPermission.check(
-			getPermissionChecker(), groupId, article.getFolderId(),
-			ActionKeys.ADD_ARTICLE);
+		ModelResourcePermissionHelper.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, article.getFolderId(), ActionKeys.ADD_ARTICLE);
 
 		return journalArticleLocalService.copyArticle(
 			getUserId(), groupId, oldArticleId, newArticleId, autoArticleId,
@@ -425,7 +432,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.DELETE);
 
 		journalArticleLocalService.deleteArticle(
@@ -453,7 +460,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.DELETE);
 
 		journalArticleLocalService.deleteArticle(
@@ -487,7 +494,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.EXPIRE);
 
 		return journalArticleLocalService.updateStatus(
@@ -522,7 +529,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.EXPIRE);
 
 		journalArticleLocalService.expireArticle(
@@ -537,7 +544,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			groupId, articleId);
 
 		if (article != null) {
-			JournalArticlePermission.check(
+			_journalArticleModelResourcePermission.check(
 				getPermissionChecker(), article, ActionKeys.VIEW);
 		}
 
@@ -554,7 +561,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle getArticle(long id) throws PortalException {
 		JournalArticle article = journalArticleLocalService.getArticle(id);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -576,7 +583,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -599,7 +606,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -629,7 +636,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, className, classPK);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -651,7 +658,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article =
 			journalArticleLocalService.getArticleByUrlTitle(groupId, urlTitle);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -678,7 +685,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
@@ -709,7 +716,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
@@ -736,7 +743,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
@@ -766,7 +773,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getArticleContent(
@@ -1131,7 +1138,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			journalArticleLocalService.getDisplayArticleByUrlTitle(
 				groupId, urlTitle);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -1362,7 +1369,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public JournalArticle getLatestArticle(long resourcePrimKey)
 		throws PortalException {
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), resourcePrimKey, ActionKeys.VIEW);
 
 		return journalArticleLocalService.getLatestArticle(resourcePrimKey);
@@ -1387,7 +1394,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getLatestArticle(
 			groupId, articleId, status);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -1416,7 +1423,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getLatestArticle(
 			groupId, className, classPK);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.VIEW);
 
 		return article;
@@ -1470,14 +1477,14 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		JournalFolderPermission.check(
-			getPermissionChecker(), groupId, newFolderId,
-			ActionKeys.ADD_ARTICLE);
+		ModelResourcePermissionHelper.check(
+			_journalFolderModelResourcePermission, getPermissionChecker(),
+			groupId, newFolderId, ActionKeys.ADD_ARTICLE);
 
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		journalArticleLocalService.moveArticle(
@@ -1510,7 +1517,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		JournalArticle article = getLatestArticle(resourcePrimKey);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.moveArticleFromTrash(
@@ -1544,7 +1551,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = getLatestArticle(
 			groupId, articleId, WorkflowConstants.STATUS_IN_TRASH);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.moveArticleFromTrash(
@@ -1567,7 +1574,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticleLocalService.getArticle(
 			groupId, articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.DELETE);
 
 		return journalArticleLocalService.moveArticleToTrash(
@@ -1612,7 +1619,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.removeArticleLocale(
@@ -1631,7 +1638,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		JournalArticle article = getLatestArticle(resourcePrimKey);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.DELETE);
 
 		journalArticleLocalService.restoreArticleFromTrash(
@@ -2106,7 +2113,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 	public void subscribe(long groupId, long articleId) throws PortalException {
 		JournalArticle article = getLatestArticle(articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.SUBSCRIBE);
 
 		journalArticleLocalService.subscribe(getUserId(), groupId, articleId);
@@ -2125,7 +2132,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException {
 
-		JournalPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 
 		journalArticleLocalService.subscribeStructure(
@@ -2138,7 +2145,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 
 		JournalArticle article = getLatestArticle(articleId);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.SUBSCRIBE);
 
 		journalArticleLocalService.unsubscribe(getUserId(), groupId, articleId);
@@ -2157,7 +2164,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 			long groupId, long userId, long ddmStructureId)
 		throws PortalException {
 
-		JournalPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.SUBSCRIBE);
 
 		journalArticleLocalService.unsubscribeStructure(
@@ -2204,7 +2211,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateArticle(
@@ -2309,7 +2316,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateArticle(
@@ -2419,7 +2426,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateArticle(
@@ -2482,7 +2489,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateArticle(
@@ -2517,7 +2524,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateArticleTranslation(
@@ -2545,7 +2552,7 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		article.setContent(content);
@@ -2578,12 +2585,28 @@ public class JournalArticleServiceImpl extends JournalArticleServiceBaseImpl {
 		JournalArticle article = journalArticlePersistence.findByG_A_V(
 			groupId, articleId, version);
 
-		JournalArticlePermission.check(
+		_journalArticleModelResourcePermission.check(
 			getPermissionChecker(), article, ActionKeys.UPDATE);
 
 		return journalArticleLocalService.updateStatus(
 			getUserId(), article, status, articleURL, serviceContext,
 			new HashMap<String, Serializable>());
 	}
+
+	private static volatile ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				JournalArticleServiceImpl.class,
+				"_journalArticleModelResourcePermission", JournalArticle.class);
+	private static volatile ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				JournalArticleServiceImpl.class,
+				"_journalFolderModelResourcePermission", JournalFolder.class);
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				JournalArticleServiceImpl.class, "_portletResourcePermission",
+				JournalConstants.RESOURCE_NAME);
 
 }

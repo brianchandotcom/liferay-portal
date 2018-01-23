@@ -74,7 +74,8 @@ public class AnnouncementsFlagUADEntityAggregator
 	private DynamicQuery _getDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getDynamicQuery(
 			_announcementsFlagLocalService::dynamicQuery,
-			AnnouncementsFlagUADEntity.getUserIdFieldNames(), userId);
+			AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG_USER_ID_FIELD_NAMES,
+			userId);
 	}
 
 	@Reference

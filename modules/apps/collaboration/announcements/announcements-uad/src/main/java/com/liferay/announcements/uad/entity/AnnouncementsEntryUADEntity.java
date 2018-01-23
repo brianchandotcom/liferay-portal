@@ -25,7 +25,6 @@ import com.liferay.user.associated.data.exception.UADEntityFieldNameException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,10 +33,6 @@ import java.util.Map;
  * @author Noah Sherrill
  */
 public class AnnouncementsEntryUADEntity extends BaseUADEntity {
-
-	public static List<String> getUserIdFieldNames() {
-		return Arrays.asList("userId");
-	}
 
 	public AnnouncementsEntryUADEntity(
 		long userId, String uadEntityId,

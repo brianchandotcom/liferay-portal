@@ -104,7 +104,8 @@ public class AnnouncementsFlagUADEntityAnonymizer
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getActionableDynamicQuery(
 			_announcementsFlagLocalService::getActionableDynamicQuery,
-			AnnouncementsFlagUADEntity.getUserIdFieldNames(), userId);
+			AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG_USER_ID_FIELD_NAMES,
+			userId);
 	}
 
 	private AnnouncementsFlag _getAnnouncementsFlag(UADEntity uadEntity)

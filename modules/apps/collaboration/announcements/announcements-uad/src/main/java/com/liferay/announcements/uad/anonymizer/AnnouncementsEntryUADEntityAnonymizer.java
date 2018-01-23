@@ -115,7 +115,8 @@ public class AnnouncementsEntryUADEntityAnonymizer
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getActionableDynamicQuery(
 			_announcementsEntryLocalService::getActionableDynamicQuery,
-			AnnouncementsEntryUADEntity.getUserIdFieldNames(), userId);
+			AnnouncementsUADConstants.ANNOUNCEMENTS_ENTRY_USER_ID_FIELD_NAMES,
+			userId);
 	}
 
 	private AnnouncementsEntry _getAnnouncementsEntry(UADEntity uadEntity)

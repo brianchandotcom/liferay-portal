@@ -53,7 +53,7 @@ public abstract class ChartObject extends AbstractMap<String, Object> {
 	protected void set(String name, Object value) {
 		if (value == null) {
 			throw new UnsupportedOperationException(
-				"Property " + name + " cannot be set to null");
+				"Property " + name + " must not be set to null");
 		}
 
 		_properties.put(name, value);

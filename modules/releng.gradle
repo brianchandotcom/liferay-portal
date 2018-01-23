@@ -118,35 +118,28 @@ increaseMajorVersions {
 			versionFile.setText content, "UTF-8"
 		}
 
-		Closure<Void> increaseMajorVersionsClosure = {
-			File dir ->
-
-			dir.traverse(
-				preDir: {
-					if (it.name in [".gradle", ".github", "build", "classes", "node_modules"]) {
-						return FileVisitResult.SKIP_SUBTREE
-					}
-
-					if (_isGitRepoReadOnly(it)) {
-						return FileVisitResult.SKIP_SUBTREE
-					}
-
-					File bndBndFile = new File(it, "bnd.bnd")
-
-					if (!bndBndFile.exists()) {
-						return FileVisitResult.CONTINUE
-					}
-
-					increaseMajorVersionClosure it
-
+		projectDir.traverse(
+			preDir: {
+				if (it.name in [".gradle", ".github", "build", "classes", "node_modules", "third-party"]) {
 					return FileVisitResult.SKIP_SUBTREE
-				},
-				type: FileType.DIRECTORIES
-			)
-		}
+				}
 
-		increaseMajorVersionsClosure new File(projectDir, "apps")
-		increaseMajorVersionsClosure new File(projectDir, "core")
+				if (_isGitRepoReadOnly(it)) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				File bndBndFile = new File(it, "bnd.bnd")
+
+				if (!bndBndFile.exists()) {
+					return FileVisitResult.CONTINUE
+				}
+
+				increaseMajorVersionClosure it
+
+				return FileVisitResult.SKIP_SUBTREE
+			},
+			type: FileType.DIRECTORIES
+		)
 
 		File portalRootDir = projectDir.parentFile
 

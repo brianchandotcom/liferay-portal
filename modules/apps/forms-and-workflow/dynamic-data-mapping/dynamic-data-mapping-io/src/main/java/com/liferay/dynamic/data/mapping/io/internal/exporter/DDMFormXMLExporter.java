@@ -114,8 +114,6 @@ public class DDMFormXMLExporter extends BaseDDMFormExporter {
 		Map<String, DDMFormField> ddmFormFields = getDistinctFields(
 			formInstanceId);
 
-		removeTransientFields(ddmFormFields);
-
 		Document document = SAXReaderUtil.createDocument();
 
 		Element rootElement = document.addElement("root");

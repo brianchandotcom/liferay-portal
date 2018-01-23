@@ -33,16 +33,18 @@ public class BaseTestResult implements TestResult {
 
 	@Override
 	public Build getBuild() {
-		return build;
+		return _build;
 	}
 
 	@Override
 	public String getClassName() {
-		return className;
+		return _className;
 	}
 
 	@Override
 	public String getDisplayName() {
+		String testName = getTestName();
+
 		if (testName.startsWith("test[")) {
 			return testName.substring(5, testName.length() - 1);
 		}
@@ -52,7 +54,17 @@ public class BaseTestResult implements TestResult {
 
 	@Override
 	public long getDuration() {
-		return duration;
+		return _duration;
+	}
+
+	@Override
+	public String getErrorDetails() {
+		return _errorDetails;
+	}
+
+	@Override
+	public String getErrorStackTrace() {
+		return _errorStackTrace;
 	}
 
 	@Override
@@ -65,9 +77,9 @@ public class BaseTestResult implements TestResult {
 		downstreamBuildListItemElement.add(
 			Dom4JUtil.getNewAnchorElement(testReportURL, getDisplayName()));
 
-		if (errorStackTrace != null) {
+		if (getErrorStackTrace() != null) {
 			String trimmedStackTrace = StringUtils.abbreviate(
-				errorStackTrace, _MAX_ERROR_STACK_DISPLAY_LENGTH);
+				getErrorStackTrace(), _MAX_ERROR_STACK_DISPLAY_LENGTH);
 
 			downstreamBuildListItemElement.add(
 				Dom4JUtil.toCodeSnippetElement(trimmedStackTrace));
@@ -83,12 +95,12 @@ public class BaseTestResult implements TestResult {
 
 	@Override
 	public String getStatus() {
-		return status;
+		return _status;
 	}
 
 	@Override
 	public String getTestName() {
-		return testName;
+		return _testName;
 	}
 
 	public String getTestrayLogsURL() {
@@ -111,6 +123,8 @@ public class BaseTestResult implements TestResult {
 			logBaseURL = _DEFAULT_LOG_BASE_URL;
 		}
 
+		Build build = getBuild();
+
 		Map<String, String> startPropertiesTempMap =
 			build.getStartPropertiesTempMap();
 
@@ -127,12 +141,17 @@ public class BaseTestResult implements TestResult {
 	public String getTestReportURL() {
 		StringBuilder sb = new StringBuilder();
 
+		Build build = getBuild();
+
 		sb.append(build.getBuildURL());
+
 		sb.append("/testReport/");
 		sb.append(packageName);
 		sb.append("/");
 		sb.append(simpleClassName);
 		sb.append("/");
+
+		String testName = getTestName();
 
 		String encodedTestName = testName;
 
@@ -161,42 +180,48 @@ public class BaseTestResult implements TestResult {
 			throw new IllegalArgumentException("Build may not be null");
 		}
 
-		this.build = build;
+		this._build = build;
 
-		className = caseJSONObject.getString("className");
+		_className = caseJSONObject.getString("className");
 
-		duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
+		_duration = (long)(caseJSONObject.getDouble("duration") * 1000D);
 
-		int x = className.lastIndexOf(".");
+		int x = _className.lastIndexOf(".");
 
 		try {
-			simpleClassName = className.substring(x + 1);
+			simpleClassName = _className.substring(x + 1);
 
-			packageName = className.substring(0, x);
+			packageName = _className.substring(0, x);
 		}
 		catch (StringIndexOutOfBoundsException sioobe) {
-			packageName = className;
-			simpleClassName = className;
+			packageName = _className;
+			simpleClassName = _className;
 
 			System.out.println(
-				"Invalid test class name \"" + className + "\" in build " +
+				"Invalid test class name \"" + _className + "\" in build " +
 					build.getBuildURL());
 		}
 
-		testName = caseJSONObject.getString("name");
+		_testName = caseJSONObject.getString("name");
 
-		status = caseJSONObject.getString("status");
+		_status = caseJSONObject.getString("status");
 
-		if (status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
+		if (_status.equals("FAILED") && caseJSONObject.has("errorDetails") &&
 			caseJSONObject.has("errorStackTrace")) {
 
-			errorDetails = caseJSONObject.optString("errorDetails");
-			errorStackTrace = caseJSONObject.optString("errorStackTrace");
+			_errorDetails = caseJSONObject.optString("errorDetails");
+			_errorStackTrace = caseJSONObject.optString("errorStackTrace");
+		}
+		else {
+			_errorDetails = null;
+			_errorStackTrace = null;
 		}
 	}
 
 	protected String getAxisNumber() {
 		AxisBuild axisBuild = null;
+
+		Build build = getBuild();
 
 		if (build instanceof AxisBuild) {
 			axisBuild = (AxisBuild)build;
@@ -207,19 +232,20 @@ public class BaseTestResult implements TestResult {
 		return "INVALID_AXIS_NUMBER";
 	}
 
-	protected Build build;
-	protected String className;
-	protected long duration;
-	protected String errorDetails;
-	protected String errorStackTrace;
 	protected String packageName;
 	protected String simpleClassName;
-	protected String status;
-	protected String testName;
 
 	private static final String _DEFAULT_LOG_BASE_URL =
 		"https://testray.liferay.com/reports/production/logs";
 
 	private static final int _MAX_ERROR_STACK_DISPLAY_LENGTH = 1500;
+
+	private final Build _build;
+	private final String _className;
+	private final long _duration;
+	private final String _errorDetails;
+	private final String _errorStackTrace;
+	private final String _status;
+	private final String _testName;
 
 }

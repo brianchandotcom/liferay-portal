@@ -76,21 +76,21 @@ public class ChainingCheck extends BaseCheck {
 			List<String> chainedMethodNames = _getChainedMethodNames(
 				methodCallAST);
 
-			if (chainedMethodNames.size() == 1) {
+			int chainSize = chainedMethodNames.size();
+
+			if (chainSize == 1) {
 				continue;
 			}
 
 			_checkMethodName(
 				chainedMethodNames, "getClass", methodCallAST, detailAST);
 
-			if (chainedMethodNames.size() == 2) {
-				continue;
-			}
-
 			if (_isAllowedChainingMethodCall(
 					detailAST, methodCallAST, chainedMethodNames)) {
 
-				_checkStyling(methodCallAST);
+				if (chainSize > 2) {
+					_checkStyling(methodCallAST);
+				}
 
 				continue;
 			}
@@ -104,7 +104,7 @@ public class ChainingCheck extends BaseCheck {
 				continue;
 			}
 
-			if ((chainedMethodNames.size() == 3) && (concatsCount == 2)) {
+			if ((chainSize == 3) && (concatsCount == 2)) {
 				continue;
 			}
 

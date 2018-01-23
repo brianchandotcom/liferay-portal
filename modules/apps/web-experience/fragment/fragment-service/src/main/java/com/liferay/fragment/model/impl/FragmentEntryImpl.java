@@ -20,7 +20,6 @@ import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 

@@ -136,9 +136,16 @@ public class BaseTestResult implements TestResult {
 
 		String encodedTestName = testName;
 
-		encodedTestName = encodedTestName.replace("[", "_");
-		encodedTestName = encodedTestName.replace("]", "_");
+		encodedTestName = encodedTestName.replace(" ", "_");
 		encodedTestName = encodedTestName.replace("#", "_");
+		encodedTestName = encodedTestName.replace("(", "_");
+		encodedTestName = encodedTestName.replace(")", "_");
+		encodedTestName = encodedTestName.replace(".", "_");
+		encodedTestName = encodedTestName.replace("<", "_");
+		encodedTestName = encodedTestName.replace(">", "_");
+		encodedTestName = encodedTestName.replace("[", "_");
+		encodedTestName = encodedTestName.replace("\"", "_");
+		encodedTestName = encodedTestName.replace("]", "_");
 
 		if (packageName.equals("junit.framework")) {
 			encodedTestName = encodedTestName.replace(".", "_");

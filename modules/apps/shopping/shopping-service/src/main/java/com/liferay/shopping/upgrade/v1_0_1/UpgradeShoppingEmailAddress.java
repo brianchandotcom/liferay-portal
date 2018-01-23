@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.shopping.upgrade.v1_0_2;
+package com.liferay.shopping.upgrade.v1_0_1;
 
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
-import com.liferay.shopping.internal.upgrade.v1_0_2.util.ShoppingOrderTable;
+import com.liferay.shopping.internal.upgrade.v1_0_1.util.ShoppingOrderTable;
 
 /**
  * @author Tibor Lipusz

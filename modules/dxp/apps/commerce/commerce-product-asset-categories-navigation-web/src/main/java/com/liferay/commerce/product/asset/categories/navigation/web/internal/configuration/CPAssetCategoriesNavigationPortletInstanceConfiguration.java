@@ -32,7 +32,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface CPAssetCategoriesNavigationPortletInstanceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "asset-vocabulary-id", required = false)
 	public String assetVocabularyId();
 
 }

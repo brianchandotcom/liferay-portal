@@ -106,6 +106,7 @@ public class AssetAddonEntrySelectorTag extends IncludeTag {
 
 	private List<AssetAddonEntry> _getFilteredSelectedAssetAddonEntries() {
 		Stream<AssetAddonEntry> stream = _selectedAssetAddonEntries.stream();
+
 		stream = stream.filter(_assetAddonEntries::contains);
 
 		return stream.collect(Collectors.toList());

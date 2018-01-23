@@ -157,9 +157,6 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(JournalFeed.class),
 			new StagedModelType(JournalFolder.class));
 
-		String[] referencedContentBehaviorOptions =
-			{"include-always", "include-if-modified"};
-
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "web-content", true, false,
@@ -169,7 +166,9 @@ public class JournalPortletDataHandler extends BasePortletDataHandler {
 						new PortletDataHandlerControl[] {
 							new PortletDataHandlerChoice(
 								NAMESPACE, "referenced-content-behavior", 0,
-								referencedContentBehaviorOptions)
+								new String[] {
+									"include-always", "include-if-modified"
+								})
 						}),
 					new PortletDataHandlerBoolean(
 						NAMESPACE, "version-history",

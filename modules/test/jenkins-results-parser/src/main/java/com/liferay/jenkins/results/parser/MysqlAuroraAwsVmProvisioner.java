@@ -17,15 +17,15 @@ package com.liferay.jenkins.results.parser;
 /**
  * @author Kiyoshi Lee
  */
-public class MysqlAwsAurora extends BaseAwsAurora {
+public class MysqlAuroraAwsVmProvisioner extends BaseAuroraAwsVmProvisioner {
 
-	public MysqlAwsAurora(
+	public MysqlAuroraAwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
 		super(awsAccessKeyId, awsSecretAccessKey, dbInstanceId);
 	}
 
-	public MysqlAwsAurora(
+	public MysqlAuroraAwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbInstanceClass, String dbInstanceId) {
 
@@ -34,7 +34,7 @@ public class MysqlAwsAurora extends BaseAwsAurora {
 			"5.6.10a", dbInstanceClass, dbInstanceId, "password", "root");
 	}
 
-	public MysqlAwsAurora(
+	public MysqlAuroraAwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbClusterId,
 		String dbEngineVersion, String dbInstanceClass, String dbInstanceId,
 		String dbPassword, String dbUsername) {

@@ -653,6 +653,7 @@ message.
 		<ant dir="portal-test" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-test-integration" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="portal-web" inheritAll="false" target="install-portal-snapshot" />
+		<ant dir="support-tomcat" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-bridges" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-java" inheritAll="false" target="install-portal-snapshot" />
 		<ant dir="util-slf4j" inheritAll="false" target="install-portal-snapshot" />

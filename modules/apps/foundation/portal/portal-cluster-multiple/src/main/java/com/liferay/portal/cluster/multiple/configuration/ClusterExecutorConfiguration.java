@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.cluster.configuration.ClusterExecutorConfiguration",
+	id = "com.liferay.portal.cluster.multiple.configuration.ClusterExecutorConfiguration",
 	localization = "content/Language",
 	name = "cluster-executor-configuration-name"
 )

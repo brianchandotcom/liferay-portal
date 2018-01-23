@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.remote.http.tunnel.configuration.HttpTunnelExtenderConfiguration",
+	id = "com.liferay.portal.remote.http.tunnel.extender.configuration.HttpTunnelExtenderConfiguration",
 	localization = "content/Language",
 	name = "http-tunnel-extender-configuration-name"
 )

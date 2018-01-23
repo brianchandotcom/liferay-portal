@@ -16,7 +16,7 @@ package com.liferay.users.admin.web.internal.servlet.taglib.ui.navigation.user;
 
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.users.admin.web.constants.UserFormConstants;
+import com.liferay.users.admin.constants.UserFormConstants;
 
 import java.util.Locale;
 

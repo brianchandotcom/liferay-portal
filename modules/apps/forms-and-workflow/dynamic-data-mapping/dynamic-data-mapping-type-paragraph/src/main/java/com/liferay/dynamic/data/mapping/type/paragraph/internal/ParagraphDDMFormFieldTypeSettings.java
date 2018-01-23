@@ -56,12 +56,7 @@ import com.liferay.dynamic.data.mapping.model.LocalizedValue;
 							value = {"label", "text", "tip", "required"}
 						)
 					}
-				)
-			}
-		),
-		@DDMFormLayoutPage(
-			title = "%properties",
-			value = {
+				),
 				@DDMFormLayoutRow(
 					{
 						@DDMFormLayoutColumn(

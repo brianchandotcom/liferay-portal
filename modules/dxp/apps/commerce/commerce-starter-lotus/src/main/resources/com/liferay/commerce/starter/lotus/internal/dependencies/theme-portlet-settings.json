@@ -8,6 +8,16 @@
 		"vocabularyName": "Commerce"
 	},
 	{
+		"instanceId": "related_products",
+		"layoutFriendlyURL": "/product-detail",
+		"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet",
+		"portletPreferences": {
+			"configurationMethod": "relatedTo",
+			"displayStyle": "default",
+			"displayStyleGroupId": ""
+		}
+	},
+	{
 		"instanceId": "footer_navigation_menu_01",
 		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
 		"portletPreferences": {

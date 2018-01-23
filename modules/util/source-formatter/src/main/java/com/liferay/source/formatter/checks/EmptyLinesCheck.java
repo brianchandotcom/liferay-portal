@@ -358,6 +358,24 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 
+		matcher = _missingEmptyLinePattern4.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start());
+			}
+		}
+
+		matcher = _missingEmptyLinePattern5.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+			}
+		}
+
 		matcher = _missingEmptyLinePattern6.matcher(content);
 
 		while (matcher.find()) {
@@ -372,24 +390,6 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		while (matcher.find()) {
 			if (isJavaSource(content, matcher.start())) {
 				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.start() + 1);
-			}
-		}
-
-		matcher = _missingEmptyLinePattern8.matcher(content);
-
-		while (matcher.find()) {
-			if (isJavaSource(content, matcher.start())) {
-				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.start());
-			}
-		}
-
-		matcher = _missingEmptyLinePattern9.matcher(content);
-
-		while (matcher.find()) {
-			if (isJavaSource(content, matcher.start())) {
-				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
 			}
 		}
@@ -398,7 +398,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 	}
 
 	protected String fixMissingEmptyLinesAroundComments(String content) {
-		Matcher matcher = _missingEmptyLinePattern4.matcher(content);
+		Matcher matcher = _missingEmptyLineAfterComment.matcher(content);
 
 		while (matcher.find()) {
 			if (isJavaSource(content, matcher.start())) {
@@ -407,7 +407,7 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		matcher = _missingEmptyLinePattern5.matcher(content);
+		matcher = _missingEmptyLineBeforeComment.matcher(content);
 
 		while (matcher.find()) {
 			if (isJavaSource(content, matcher.start())) {
@@ -540,18 +540,18 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 		"(\n\t*)(public|private|protected) [^;]+? \\{");
 	private final Pattern _missingEmptyLinePattern3 = Pattern.compile(
 		"\n(.*\\) \\{)\n[\t ]*[^ \n\t\\}]");
-	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
+	private final Pattern _missingEmptyLineAfterComment = Pattern.compile(
 		"\n\t*// .*\n[\t ]*(?!// )\\S");
-	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(
+	private final Pattern _missingEmptyLineBeforeComment = Pattern.compile(
 		"\n[\t ]*(?!// )\\S.*\n\t*// ");
-	private final Pattern _missingEmptyLinePattern6 = Pattern.compile(
+	private final Pattern _missingEmptyLinePattern4 = Pattern.compile(
 		"[^{:/\n]\n\t*(for|if|try) \\(");
-	private final Pattern _missingEmptyLinePattern7 = Pattern.compile(
+	private final Pattern _missingEmptyLinePattern5 = Pattern.compile(
 		"[\t\n]\\}\n[\t ]*(?!(/\\*|\\}|\\)|//|catch |else |finally |while ))" +
 			"\\S");
-	private final Pattern _missingEmptyLinePattern8 = Pattern.compile(
+	private final Pattern _missingEmptyLinePattern6 = Pattern.compile(
 		"[^:\\{\\s]\n\t*return ");
-	private final Pattern _missingEmptyLinePattern9 = Pattern.compile(
+	private final Pattern _missingEmptyLinePattern7 = Pattern.compile(
 		"[^\\{\\s]\n\t*break;");
 	private final Pattern _redundantEmptyLinePattern1 = Pattern.compile(
 		"\n(.*)\n\npublic ((abstract|static) )*(class|enum|interface) ");

@@ -211,7 +211,7 @@
 
 					<aui:fieldset-group markupView="lexicon">
 						<aui:fieldset>
-							<liferay-ui:input-localized name="title" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
+							<liferay-ui:input-localized name="title" placeholder="untitled-workflow" xml='<%= BeanPropertiesUtil.getString(kaleoDefinitionVersion, "title") %>' />
 						</aui:fieldset>
 
 						<c:if test="<%= kaleoDefinitionVersion != null %>">
@@ -487,6 +487,8 @@
 										function() {
 											<portlet:namespace />updateContent();
 
+											<portlet:namespace />updateTitle();
+
 											<portlet:namespace />updateAction('<portlet:actionURL name="publishKaleoDefinitionVersion" />');
 
 											submitForm(document.<portlet:namespace />fm);
@@ -514,6 +516,8 @@
 										'<portlet:namespace />addKaleoDefinitionVersion',
 										function() {
 											<portlet:namespace />updateContent();
+
+											<portlet:namespace />updateTitle();
 
 											<portlet:namespace />updateAction('<portlet:actionURL name="addKaleoDefinitionVersion" />');
 
@@ -564,6 +568,21 @@
 										}
 										else {
 											content.val(<portlet:namespace />kaleoDesigner.getContent());
+										}
+									},
+									['aui-base']
+								);
+
+								Liferay.provide(
+									window,
+									'<portlet:namespace />updateTitle',
+									function() {
+										var titleComponent = Liferay.component('<portlet:namespace />title');
+
+										var titlePlaceholderInput = titleComponent.get('inputPlaceholder');
+
+										if (!titlePlaceholderInput.val()) {
+											titlePlaceholderInput.val('<liferay-ui:message key="untitled-workflow" />');
 										}
 									},
 									['aui-base']

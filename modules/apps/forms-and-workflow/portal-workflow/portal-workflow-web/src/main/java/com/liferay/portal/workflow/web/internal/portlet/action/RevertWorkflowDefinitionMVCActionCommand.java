@@ -49,7 +49,7 @@ import org.osgi.service.component.annotations.Component;
 	service = MVCActionCommand.class
 )
 public class RevertWorkflowDefinitionMVCActionCommand
-	extends UpdateWorkflowDefinitionMVCActionCommand {
+	extends DeployWorkflowDefinitionMVCActionCommand {
 
 	/**
 	 * Reverts a workflow definition to the published state, creating a new
@@ -85,8 +85,6 @@ public class RevertWorkflowDefinitionMVCActionCommand
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				previousWorkflowDefinition.getTitle(), name,
 				content.getBytes());
-
-		addSuccessMessage(actionRequest, actionResponse);
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

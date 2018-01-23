@@ -56,11 +56,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-		"mvc.command.name=updateWorkflowDefinition"
+		"mvc.command.name=deployWorkflowDefinition"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateWorkflowDefinitionMVCActionCommand
+public class DeployWorkflowDefinitionMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -70,6 +70,8 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 
 		try {
 			doProcessAction(actionRequest, actionResponse);
+
+			addSuccessMessage(actionRequest, actionResponse);
 
 			return SessionErrors.isEmpty(actionRequest);
 		}
@@ -128,8 +130,6 @@ public class UpdateWorkflowDefinitionMVCActionCommand
 			workflowDefinitionManager.deployWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(titleMap), name, content.getBytes());
-
-		addSuccessMessage(actionRequest, actionResponse);
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 

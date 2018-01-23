@@ -17,12 +17,13 @@ package com.liferay.portal.workflow.web.internal.portlet.action;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.kernel.uuid.PortalUUID;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
+import com.liferay.portal.kernel.workflow.WorkflowDefinitionTitleException;
 import com.liferay.portal.workflow.web.internal.constants.WorkflowPortletKeys;
 
 import java.util.Locale;
@@ -33,7 +34,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jeyvison Nascimento
@@ -42,12 +42,12 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + WorkflowPortletKeys.CONTROL_PANEL_WORKFLOW,
-		"mvc.command.name=updateWorkflowDefinitionDraft"
+		"mvc.command.name=saveWorkflowDefinition"
 	},
 	service = MVCActionCommand.class
 )
-public class UpdateWorkflowDefinitionDraftMVCActionCommand
-	extends UpdateWorkflowDefinitionMVCActionCommand {
+public class SaveWorkflowDefinitionMVCActionCommand
+	extends DeployWorkflowDefinitionMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -60,20 +60,20 @@ public class UpdateWorkflowDefinitionDraftMVCActionCommand
 		Map<Locale, String> titleMap = LocalizationUtil.getLocalizationMap(
 			actionRequest, "title");
 
-		String name = ParamUtil.getString(actionRequest, "name");
+		String title = titleMap.get(LocaleUtil.getDefault());
 
-		if (Validator.isNull(name)) {
-			name = portalUUID.generate();
+		if (titleMap.isEmpty() || Validator.isNull(title)) {
+			throw new WorkflowDefinitionTitleException();
 		}
+
+		String name = ParamUtil.getString(actionRequest, "name");
 
 		String content = ParamUtil.getString(actionRequest, "content");
 
 		WorkflowDefinition workflowDefinition =
-			workflowDefinitionManager.draftWorkflowDefinition(
+			workflowDefinitionManager.saveWorkflowDefinition(
 				themeDisplay.getCompanyId(), themeDisplay.getUserId(),
 				getTitle(titleMap), name, content.getBytes());
-
-		addSuccessMessage(actionRequest, actionResponse);
 
 		setRedirectAttribute(actionRequest, workflowDefinition);
 
@@ -81,11 +81,10 @@ public class UpdateWorkflowDefinitionDraftMVCActionCommand
 	}
 
 	@Override
-	protected String getSuccessMessage(ResourceBundle resourceBundle) {
+	protected String getSuccessMessage(ActionRequest actionRequest) {
+		ResourceBundle resourceBundle = getResourceBundle(actionRequest);
+
 		return LanguageUtil.get(resourceBundle, "workflow-saved");
 	}
-
-	@Reference
-	protected PortalUUID portalUUID;
 
 }

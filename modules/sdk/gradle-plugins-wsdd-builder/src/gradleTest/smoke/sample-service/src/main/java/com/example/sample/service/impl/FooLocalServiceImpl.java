@@ -39,4 +39,5 @@ public class FooLocalServiceImpl extends FooLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.example.sample.service.FooLocalServiceUtil} to access the foo local service.
 	 */
+
 }

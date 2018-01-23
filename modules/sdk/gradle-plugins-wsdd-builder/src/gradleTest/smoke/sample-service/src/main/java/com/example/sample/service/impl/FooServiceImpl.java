@@ -39,4 +39,5 @@ public class FooServiceImpl extends FooServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.example.sample.service.FooServiceUtil} to access the foo remote service.
 	 */
+
 }

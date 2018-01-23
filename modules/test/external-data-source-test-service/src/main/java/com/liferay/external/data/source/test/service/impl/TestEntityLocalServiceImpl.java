@@ -39,4 +39,5 @@ public class TestEntityLocalServiceImpl extends TestEntityLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Always use {@link com.liferay.external.data.source.test.service.TestEntityLocalServiceUtil} to access the test entity local service.
 	 */
+
 }

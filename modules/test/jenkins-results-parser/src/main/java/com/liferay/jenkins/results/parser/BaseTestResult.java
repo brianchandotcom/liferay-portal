@@ -14,8 +14,6 @@
 
 package com.liferay.jenkins.results.parser;
 
-import java.io.IOException;
-
 import org.apache.commons.lang.StringUtils;
 
 import org.dom4j.Element;
@@ -78,16 +76,6 @@ public class BaseTestResult implements TestResult {
 	}
 
 	@Override
-	public String getConsoleOutputURL(String testrayLogsURL) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(testrayLogsURL);
-		sb.append("/jenkins-console.txt.gz");
-
-		return sb.toString();
-	}
-
-	@Override
 	public String getDisplayName() {
 		if (testName.startsWith("test[")) {
 			return testName.substring(5, testName.length() - 1);
@@ -128,50 +116,8 @@ public class BaseTestResult implements TestResult {
 	}
 
 	@Override
-	public String getLiferayLogURL(String testrayLogsURL) {
-		StringBuilder sb = new StringBuilder();
-
-		String name = getDisplayName();
-
-		sb.append(testrayLogsURL);
-		sb.append("/");
-		sb.append(name.replace("#", "_"));
-		sb.append("/liferay-log.txt.gz");
-
-		return sb.toString();
-	}
-
-	@Override
 	public String getPackageName() {
 		return packageName;
-	}
-
-	@Override
-	public String getPoshiReportURL(String testrayLogsURL) {
-		StringBuilder sb = new StringBuilder();
-
-		String name = getDisplayName();
-
-		sb.append(testrayLogsURL);
-		sb.append("/");
-		sb.append(name.replace("#", "_"));
-		sb.append("/index.html.gz");
-
-		return sb.toString();
-	}
-
-	@Override
-	public String getPoshiSummaryURL(String testrayLogsURL) {
-		StringBuilder sb = new StringBuilder();
-
-		String name = getDisplayName();
-
-		sb.append(testrayLogsURL);
-		sb.append("/");
-		sb.append(name.replace("#", "_"));
-		sb.append("/summary.html.gz");
-
-		return sb.toString();
 	}
 
 	@Override
@@ -208,21 +154,6 @@ public class BaseTestResult implements TestResult {
 		sb.append(encodedTestName);
 
 		return sb.toString();
-	}
-
-	@Override
-	public boolean hasLiferayLog(String testrayLogsURL) {
-		String liferayLog = null;
-
-		try {
-			liferayLog = JenkinsResultsParserUtil.toString(
-				getLiferayLogURL(testrayLogsURL), false, 0, 0, 0);
-		}
-		catch (IOException ioe) {
-			return false;
-		}
-
-		return !liferayLog.isEmpty();
 	}
 
 	protected Build build;

@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>FRAGMENT_SIDEBAR_FRAGMENT</td>
-	<td>//ul[@class='nav'][a[contains(@href,'FragmentCollection')][@aria-expanded='true']//div[normalize-space()='${key_fragmentName}']//button</td>
+	<td>//ul[@class='nav'][a[contains(@href,'FragmentCollection')][@aria-expanded='true']]//div[normalize-space()='${key_fragmentName}']//button</td>
 	<td></td>
 </tr>
 <!--PAGE_TEMPLATE-->

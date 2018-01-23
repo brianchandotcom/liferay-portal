@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.SyncDLObjectLocalService;
+import com.liferay.sync.util.SyncHelper;
 
 import java.util.Date;
 import java.util.List;
@@ -142,14 +143,14 @@ public class VerifyUtil {
 						if (dlFolder.getStatus() ==
 								WorkflowConstants.STATUS_APPROVED) {
 
-							_syncUtil.addSyncDLObject(
-								_syncUtil.toSyncDLObject(
+							_syncHelper.addSyncDLObject(
+								_syncHelper.toSyncDLObject(
 									dlFolder, 0, StringPool.BLANK,
 									SyncDLObjectConstants.EVENT_ADD));
 						}
 						else {
-							_syncUtil.addSyncDLObject(
-								_syncUtil.toSyncDLObject(
+							_syncHelper.addSyncDLObject(
+								_syncHelper.toSyncDLObject(
 									dlFolder, 0, StringPool.BLANK,
 									SyncDLObjectConstants.EVENT_TRASH));
 						}
@@ -215,16 +216,16 @@ public class VerifyUtil {
 
 						if (dlFileEntry.isCheckedOut()) {
 							SyncDLObject approvedFileEntrySyncDLObject =
-								_syncUtil.toSyncDLObject(
+								_syncHelper.toSyncDLObject(
 									dlFileEntry, event,
 									!dlFileEntry.isInTrash(), true);
 
-							_syncUtil.addSyncDLObject(
+							_syncHelper.addSyncDLObject(
 								approvedFileEntrySyncDLObject);
 						}
 
-						_syncUtil.addSyncDLObject(
-							_syncUtil.toSyncDLObject(
+						_syncHelper.addSyncDLObject(
+							_syncHelper.toSyncDLObject(
 								dlFileEntry, event, !dlFileEntry.isInTrash()));
 					}
 					catch (Exception e) {
@@ -297,7 +298,7 @@ public class VerifyUtil {
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							_syncUtil.addSyncDLObject(syncDLObject);
+							_syncHelper.addSyncDLObject(syncDLObject);
 						}
 					}
 					else if (type.equals(SyncDLObjectConstants.TYPE_FOLDER)) {
@@ -310,7 +311,7 @@ public class VerifyUtil {
 							syncDLObject.setModifiedTime(
 								System.currentTimeMillis());
 
-							_syncUtil.addSyncDLObject(syncDLObject);
+							_syncHelper.addSyncDLObject(syncDLObject);
 						}
 					}
 					else if (type.equals(
@@ -363,6 +364,6 @@ public class VerifyUtil {
 	private long _syncDLObjectsTotalCount;
 
 	@Reference
-	private SyncUtil _syncUtil;
+	private SyncHelper _syncHelper;
 
 }

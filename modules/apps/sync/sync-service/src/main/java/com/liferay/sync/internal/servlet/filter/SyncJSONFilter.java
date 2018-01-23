@@ -33,7 +33,7 @@ import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.service.SyncDeviceLocalServiceUtil;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
-import com.liferay.sync.util.SyncUtil;
+import com.liferay.sync.util.SyncHelper;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -219,7 +219,7 @@ public class SyncJSONFilter implements Filter {
 
 		OutputStream outputStream = servletResponse.getOutputStream();
 
-		String json = _syncUtil.buildExceptionMessage(throwable);
+		String json = _syncHelper.buildExceptionMessage(throwable);
 
 		json = "{\"exception\": \"" + json + "\"}";
 
@@ -288,6 +288,6 @@ public class SyncJSONFilter implements Filter {
 	private Portal _portal;
 
 	@Reference
-	private SyncUtil _syncUtil;
+	private SyncHelper _syncHelper;
 
 }

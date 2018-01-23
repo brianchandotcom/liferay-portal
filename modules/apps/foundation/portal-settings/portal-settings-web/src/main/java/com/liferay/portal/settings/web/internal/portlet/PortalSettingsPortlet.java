@@ -15,7 +15,7 @@
 package com.liferay.portal.settings.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 
 import javax.portlet.Portlet;
 

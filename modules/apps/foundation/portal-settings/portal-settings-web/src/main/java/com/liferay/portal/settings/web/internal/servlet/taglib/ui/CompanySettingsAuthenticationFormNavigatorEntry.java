@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorConstants;
 import com.liferay.portal.kernel.servlet.taglib.ui.FormNavigatorEntry;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.settings.web.constants.PortalSettingsWebKeys;
+import com.liferay.portal.settings.web.internal.constants.PortalSettingsWebKeys;
 
 import java.io.IOException;
 

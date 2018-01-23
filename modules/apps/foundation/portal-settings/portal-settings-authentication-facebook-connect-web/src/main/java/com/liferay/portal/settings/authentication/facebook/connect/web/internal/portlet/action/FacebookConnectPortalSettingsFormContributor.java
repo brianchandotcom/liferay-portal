@@ -18,8 +18,8 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.sso.facebook.connect.constants.FacebookConnectConstants;
 import com.liferay.portal.settings.authentication.facebook.connect.web.internal.constants.PortalSettingsFacebookConnectConstants;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsParameterUtil;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsParameterUtil;
 
 import java.util.Optional;
 

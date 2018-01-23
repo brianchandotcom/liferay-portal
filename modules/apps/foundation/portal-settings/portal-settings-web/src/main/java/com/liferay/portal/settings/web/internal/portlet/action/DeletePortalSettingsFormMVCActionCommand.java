@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.PortletKeys;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;

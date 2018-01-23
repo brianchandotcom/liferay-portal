@@ -18,6 +18,7 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.bookmarks.model.BookmarksEntry;
 import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.bookmarks.uad.test.BookmarksEntryUADEntityTestHelper;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.test.rule.Inject;
@@ -46,7 +47,7 @@ public class BookmarksEntryUADEntityAggregatorTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	public Object addDataObjectWithStatusByUserId(
+	public BaseModel<?> addBaseModelWithStatusByUserId(
 			long userId, long statusByUserId)
 		throws Exception {
 
@@ -60,7 +61,7 @@ public class BookmarksEntryUADEntityAggregatorTest
 	}
 
 	@Override
-	protected Object addDataObject(long userId) throws Exception {
+	protected BaseModel<?> addBaseModel(long userId) throws Exception {
 		BookmarksEntry bookmarksEntry =
 			_bookmarksEntryUADEntityTestHelper.addBookmarksEntry(userId);
 

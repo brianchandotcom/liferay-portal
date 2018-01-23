@@ -42,7 +42,7 @@
 <!--DEFINITION_TABLE-->
 <tr>
 	<td>DEFINITION_TABLE_TITLE</td>
-	<td>//div[contains(@id,'WorkflowPortlet')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

@@ -167,7 +167,9 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 
 	protected abstract BaseModel<?> addBaseModel(long userId) throws Exception;
 
-	protected abstract long getBaseModelPrimaryKey(BaseModel baseModel);
+	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
+		return (long)baseModel.getPrimaryKeyObj();
+	}
 
 	protected abstract String getUADRegistryKey();
 

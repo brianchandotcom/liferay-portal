@@ -74,11 +74,6 @@ public class BookmarksEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
-		return (long)baseModel.getPrimaryKeyObj();
-	}
-
-	@Override
 	protected String getUADRegistryKey() {
 		return BookmarksUADConstants.BOOKMARKS_ENTRY;
 	}

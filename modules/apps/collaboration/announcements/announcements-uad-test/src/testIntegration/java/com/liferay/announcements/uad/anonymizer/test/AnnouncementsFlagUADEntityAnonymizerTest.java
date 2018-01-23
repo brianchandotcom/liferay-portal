@@ -57,11 +57,6 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
-		return (long)baseModel.getPrimaryKeyObj();
-	}
-
-	@Override
 	protected String getUADRegistryKey() {
 		return AnnouncementsUADConstants.ANNOUNCEMENTS_FLAG;
 	}

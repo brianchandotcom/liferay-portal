@@ -44,6 +44,8 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>" label="subsidiary-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" wrapperCssClass="mt-4" />
 
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>" label="social-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
+
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_DEFAULT %>" label="default" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

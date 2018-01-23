@@ -51,8 +51,8 @@ public class BlogsEntryAssetDisplayContributor
 	}
 
 	@Override
-	protected String[] getExtendedAssetEntryFields() {
-		return new String[] {"subtitle", "content"};
+	protected String[] getAssetEntryModelFields() {
+		return new String[] {"title", "subtitle", "content"};
 	}
 
 	@Reference(
@@ -61,7 +61,7 @@ public class BlogsEntryAssetDisplayContributor
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {
 
-		resourceBundleLoader = new AggregateResourceBundleLoader(
+		this.resourceBundleLoader = new AggregateResourceBundleLoader(
 			resourceBundleLoader,
 			ResourceBundleLoaderUtil.getPortalResourceBundleLoader());
 	}

@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = "model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY,
+	property = "model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY,
 	service = UADEntityDisplay.class
 )
 public class BookmarksEntryUADEntityDisplay extends BaseUADEntityDisplay {
@@ -66,7 +66,7 @@ public class BookmarksEntryUADEntityDisplay extends BaseUADEntityDisplay {
 	protected Portal portal;
 
 	@Reference(
-		target = "(model.class.name=" + BookmarksUADConstants.BOOKMARKS_ENTRY + ")"
+		target = "(model.class.name=" + BookmarksUADConstants.CLASS_NAME_BOOKMARKS_ENTRY + ")"
 	)
 	private UADEntityAnonymizer _uadEntityAnonymizer;
 

@@ -963,9 +963,14 @@ information.
 				replace="."
 			/>
 
-			<property file="bnd.bnd" />
+			<if>
+				<available file="bnd.bnd" />
+				<then>
+					<property file="bnd.bnd" />
 
-			<property name="artifact.version" value="${Bundle-Version}" />
+					<property name="artifact.version" value="${Bundle-Version}" />
+				</then>
+			</if>
 
 			<copy file="../tools/maven/${artifact.name}.xml" tofile="pom.xml">
 				<filterchain>
@@ -1068,12 +1073,7 @@ information.
 					</artifact:deploy>
 
 					<if>
-						<and>
-							<not>
-								<istrue value="@{snapshot}" />
-							</not>
-							<available file="bnd.bnd" />
-						</and>
+						<isfalse value="@{snapshot}" />
 						<then>
 							<antelope:stringutil property="artifact.version.micro.beginindex" string="${artifact.version}">
 								<antelope:lastindexof string="." />
@@ -1103,37 +1103,48 @@ information.
 								result="artifact.version.micro"
 							/>
 
-							<replace
-								failOnNoReplacements="true"
-								file="bnd.bnd"
-								token="Bundle-Version: ${artifact.version}"
-								value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
-							/>
+							<if>
+								<available file="bnd.bnd" />
+								<then>
+									<replace
+										failOnNoReplacements="true"
+										file="bnd.bnd"
+										token="Bundle-Version: ${artifact.version}"
+										value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
+									/>
 
-							<replaceregexp
-								file="bnd.bnd"
-								match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
-								replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
-							/>
+									<replaceregexp
+										file="bnd.bnd"
+										match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
+										replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
+									/>
 
-							<exec executable="git" failonerror="true">
-								<arg value="add" />
-								<arg value="bnd.bnd" />
-							</exec>
+									<exec executable="git" failonerror="true">
+										<arg value="add" />
+										<arg value="bnd.bnd" />
+									</exec>
+								</then>
+								<else>
+									<replace
+										failOnNoReplacements="true"
+										file="${basedir}/build.xml"
+										token="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version}&quot; /&gt;"
+										value="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version.major.minor}.${artifact.version.micro}&quot; /&gt;"
+									/>
+
+									<exec executable="git" failonerror="true">
+										<arg value="add" />
+										<arg value="build.xml" />
+									</exec>
+								</else>
+							</if>
 
 							<exec executable="git" failonerror="true">
 								<arg value="commit" />
 								<arg value="-m" />
 								<arg value="artifact:ignore ${artifact.name} ${artifact.version} prep next" />
 							</exec>
-						</then>
-					</if>
 
-					<if>
-						<not>
-							<istrue value="@{snapshot}" />
-						</not>
-						<then>
 							<exec executable="git" failonerror="true" outputproperty="artifact.git.id">
 								<arg value="rev-list" />
 								<arg value="-1" />

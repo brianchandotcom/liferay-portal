@@ -189,10 +189,8 @@ public class CommerceOrderListDisplayContext {
 	}
 
 	public String getOrderStatusLabel(int status, long count) {
-		ThemeDisplay themeDisplay =
-			_commerceOrderRequestHelper.getThemeDisplay();
-
-		String label = themeDisplay.translate(
+		String label = LanguageUtil.get(
+			_commerceOrderRequestHelper.getRequest(),
 			CommerceOrderConstants.getOrderStatusLabel(status));
 
 		if (count > 0) {

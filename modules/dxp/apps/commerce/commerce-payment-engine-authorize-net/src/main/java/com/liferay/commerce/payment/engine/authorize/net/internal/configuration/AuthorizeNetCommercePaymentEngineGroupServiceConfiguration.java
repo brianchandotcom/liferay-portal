@@ -32,28 +32,34 @@ import com.liferay.portal.kernel.util.StringPool;
 )
 public interface AuthorizeNetCommercePaymentEngineGroupServiceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "api-login-id", required = false)
 	public String apiLoginId();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "environment", required = false)
 	public String environment();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "require-captcha", required = false)
 	public boolean requireCaptcha();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "require-card-code-verification", required = false)
 	public boolean requireCardCodeVerification();
 
-	@Meta.AD(deflt = StringPool.TRUE, required = false)
+	@Meta.AD(
+		deflt = StringPool.TRUE, name = "show-bank-account", required = false
+	)
 	public boolean showBankAccount();
 
-	@Meta.AD(deflt = StringPool.TRUE, required = false)
+	@Meta.AD(
+		deflt = StringPool.TRUE, name = "show-credit-card", required = false
+	)
 	public boolean showCreditCard();
 
-	@Meta.AD(deflt = StringPool.TRUE, required = false)
+	@Meta.AD(
+		deflt = StringPool.TRUE, name = "show-store-name", required = false
+	)
 	public boolean showStoreName();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "transaction-key", required = false)
 	public String transactionKey();
 
 }

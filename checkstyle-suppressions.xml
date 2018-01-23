@@ -23,6 +23,7 @@
 	<!-- Custom checks -->
 
 	<suppress checks="Append" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
+	<suppress checks="Chaining" files="portal-kernel/src/com/liferay/portal/kernel/cal/Recurrence\.java" />
 	<suppress checks="Concat" files="portal-impl/test/integration/com/liferay/portal/xmlrpc/XmlRpcParserTest\.java" />
 	<suppress checks="Concat" files="portal-kernel/test/unit/com/liferay/portal/kernel/util/StringBundlerTest\.java" />
 	<suppress checks="ConstantName" files="portal-kernel/src/com/liferay/portal/kernel/nio/intraband/BaseIntraband\.java" />

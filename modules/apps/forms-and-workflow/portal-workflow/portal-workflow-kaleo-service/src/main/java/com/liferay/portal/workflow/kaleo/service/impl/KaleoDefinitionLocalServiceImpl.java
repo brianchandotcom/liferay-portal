@@ -212,8 +212,7 @@ public class KaleoDefinitionLocalServiceImpl
 
 	@Override
 	public KaleoDefinition fetchKaleoDefinition(
-			String name, ServiceContext serviceContext)
-		throws PortalException {
+		String name, ServiceContext serviceContext) {
 
 		return kaleoDefinitionPersistence.fetchByC_N(
 			serviceContext.getCompanyId(), name);

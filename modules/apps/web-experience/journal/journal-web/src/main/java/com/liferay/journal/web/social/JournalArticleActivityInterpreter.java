@@ -17,14 +17,15 @@ package com.liferay.journal.web.social;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
-import com.liferay.journal.service.permission.JournalArticlePermission;
-import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.social.JournalActivityKeys;
 import com.liferay.journal.web.util.JournalResourceBundleLoader;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -137,16 +138,17 @@ public class JournalArticleActivityInterpreter
 				_journalArticleLocalService.getLatestArticle(
 					activity.getClassPK());
 
-			return JournalFolderPermission.contains(
-				permissionChecker, article.getGroupId(), article.getFolderId(),
+			return ModelResourcePermissionHelper.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				article.getGroupId(), article.getFolderId(),
 				ActionKeys.ADD_ARTICLE);
 		}
 		else if (activityType == JournalActivityKeys.UPDATE_ARTICLE) {
-			return JournalArticlePermission.contains(
+			return _journalArticleModelResourcePermission.contains(
 				permissionChecker, activity.getClassPK(), ActionKeys.UPDATE);
 		}
 
-		return JournalArticlePermission.contains(
+		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, activity.getClassPK(), actionId);
 	}
 
@@ -161,6 +163,18 @@ public class JournalArticleActivityInterpreter
 		{JournalArticle.class.getName()};
 
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

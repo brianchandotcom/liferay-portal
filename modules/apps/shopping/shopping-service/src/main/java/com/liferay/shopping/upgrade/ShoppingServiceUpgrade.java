@@ -48,11 +48,11 @@ public class ShoppingServiceUpgrade implements UpgradeStepRegistrator {
 
 		registry.register(
 			"com.liferay.shopping.service", "1.0.0", "1.0.1",
-			new UpgradeShoppingConfiguration(_configurationAdmin, _prefsProps));
+			new UpgradeShoppingEmailAddress());
 
 		registry.register(
 			"com.liferay.shopping.service", "1.0.1", "1.0.2",
-			new UpgradeShoppingEmailAddress());
+			new UpgradeShoppingConfiguration(_configurationAdmin, _prefsProps));
 	}
 
 	@Reference

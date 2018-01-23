@@ -94,20 +94,18 @@
 						<div class="sidebar-section">
 							{if $_sidebarTabs}
 								<nav class="navbar navbar-expand-md navbar-underline">
-									<div class="container-fluid">
-										<ul class="navbar-nav">
-											{foreach $sidebarTab in $_sidebarTabs}
-												{if $sidebarTab.visible}
-													{call .sidebarTab}
-														{param active: $sidebarTab.id == $_sidebarSelectedTab /}
-														{param id: $sidebarTab.id /}
-														{param handleTabClick: $_handleSidebarTabClick /}
-														{param name: $sidebarTab.name /}
-													{/call}
-												{/if}
-											{/foreach}
-										</ul>
-									</div>
+									<ul class="navbar-nav">
+										{foreach $sidebarTab in $_sidebarTabs}
+											{if $sidebarTab.visible}
+												{call .sidebarTab}
+													{param active: $sidebarTab.id == $_sidebarSelectedTab /}
+													{param id: $sidebarTab.id /}
+													{param handleTabClick: $_handleSidebarTabClick /}
+													{param name: $sidebarTab.name /}
+												{/call}
+											{/if}
+										{/foreach}
+									</ul>
 								</nav>
 							{/if}
 						</div>

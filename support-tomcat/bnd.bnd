@@ -1,0 +1,9 @@
+Bundle-Name: ${manifest.bundle.name}
+Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.support.tomcat.*
+Import-Package:\
+	com.liferay.*,\
+	\
+	*;resolution:=optional
+Include-Resource: classes

@@ -743,7 +743,7 @@
 
 			currentTarget = $(currentTarget);
 
-			config = A.mix(currentTarget.data(), config);
+			config = A.mix(A.merge({}, currentTarget.data()), config);
 
 			if (!config.uri) {
 				config.uri = currentTarget.data('href') || currentTarget.attr('href');

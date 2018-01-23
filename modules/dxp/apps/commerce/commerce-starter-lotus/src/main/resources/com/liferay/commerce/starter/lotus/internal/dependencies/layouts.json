@@ -70,6 +70,11 @@
 				"layoutColumnId": "column-1",
 				"layoutColumnPos": "0",
 				"portletName": "com_liferay_commerce_product_content_web_internal_portlet_CPContentPortlet"
+			},
+			{
+				"layoutColumnId": "column-1",
+				"layoutColumnPos": "1",
+				"portletName": "com_liferay_commerce_product_content_search_web_internal_portlet_CPSearchResultsPortlet_INSTANCE_related_products"
 			}
 		]
 	},

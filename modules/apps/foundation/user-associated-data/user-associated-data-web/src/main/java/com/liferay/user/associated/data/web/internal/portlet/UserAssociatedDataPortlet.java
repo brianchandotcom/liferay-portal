@@ -12,7 +12,7 @@
  * details.
  */
 
-package liferay.user.associated.data.web.portlet;
+package com.liferay.user.associated.data.web.internal.portlet;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;

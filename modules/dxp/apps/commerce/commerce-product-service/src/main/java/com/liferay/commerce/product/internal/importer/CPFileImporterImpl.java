@@ -459,8 +459,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 			content = content.replace(placeHolder, imgHtmlTag);
 		}
 
-		content = StringUtil.replace(
-			content, LOCALE_PLACEHOLDER,
+		content = content.replace(
+			LOCALE_PLACEHOLDER,
 			String.valueOf(themeDisplay.getSiteDefaultLocale()));
 
 		return content;

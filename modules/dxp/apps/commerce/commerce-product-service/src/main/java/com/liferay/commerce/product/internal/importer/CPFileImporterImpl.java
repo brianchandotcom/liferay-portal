@@ -85,6 +85,8 @@ public class CPFileImporterImpl implements CPFileImporter {
 	public static final String IMG_TAG =
 		"<img alt='' src='%s' data-fileentryid='%s' />";
 
+	public static final String LOCALE_PLACEHOLDER = "[$LOCALE$]";
+
 	@Override
 	public void cleanLayouts(ServiceContext serviceContext)
 		throws PortalException {
@@ -456,6 +458,10 @@ public class CPFileImporterImpl implements CPFileImporter {
 
 			content = content.replace(placeHolder, imgHtmlTag);
 		}
+
+		content = StringUtil.replace(
+			content, LOCALE_PLACEHOLDER,
+			String.valueOf(themeDisplay.getSiteDefaultLocale()));
 
 		return content;
 	}

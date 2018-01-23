@@ -111,7 +111,7 @@ public class BookmarksEntryUADEntityAnonymizer extends BaseUADEntityAnonymizer {
 	private ActionableDynamicQuery _getActionableDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getActionableDynamicQuery(
 			_bookmarksEntryLocalService::getActionableDynamicQuery,
-			BookmarksEntryUADEntity.getUserIdFieldNames(), userId);
+			BookmarksUADConstants.BOOKMARKS_ENTRY_USER_ID_FIELD_NAMES, userId);
 	}
 
 	private BookmarksEntry _getBookmarksEntry(UADEntity uadEntity)

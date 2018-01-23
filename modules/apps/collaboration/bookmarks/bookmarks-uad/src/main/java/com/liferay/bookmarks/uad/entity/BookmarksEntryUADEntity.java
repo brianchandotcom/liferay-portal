@@ -19,7 +19,6 @@ import com.liferay.bookmarks.uad.constants.BookmarksUADConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.user.associated.data.entity.BaseUADEntity;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +26,6 @@ import java.util.Map;
  * @author Noah Sherrill
  */
 public class BookmarksEntryUADEntity extends BaseUADEntity {
-
-	public static List<String> getUserIdFieldNames() {
-		return Arrays.asList("userId", "statusByUserId");
-	}
 
 	public BookmarksEntryUADEntity(
 		long userId, String uadEntityId, BookmarksEntry bookmarksEntry) {

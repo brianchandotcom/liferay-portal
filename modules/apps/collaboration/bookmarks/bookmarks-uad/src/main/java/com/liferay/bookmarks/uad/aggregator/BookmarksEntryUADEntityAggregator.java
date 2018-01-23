@@ -72,7 +72,7 @@ public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 	private DynamicQuery _getDynamicQuery(long userId) {
 		return _uadDynamicQueryHelper.getDynamicQuery(
 			_bookmarksEntryLocalService::dynamicQuery,
-			BookmarksEntryUADEntity.getUserIdFieldNames(), userId);
+			BookmarksUADConstants.BOOKMARKS_ENTRY_USER_ID_FIELD_NAMES, userId);
 	}
 
 	private long _getEntryId(String uadEntityId) {

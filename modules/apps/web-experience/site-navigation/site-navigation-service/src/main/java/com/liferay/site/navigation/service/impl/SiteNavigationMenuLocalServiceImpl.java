@@ -170,6 +170,7 @@ public class SiteNavigationMenuLocalServiceImpl
 				siteNavigationMenu.getGroupId(), type);
 
 		if ((actualTypeSiteNavigationMenu != null) &&
+			(actualTypeSiteNavigationMenu.getType() != type) &&
 			(actualTypeSiteNavigationMenu.getSiteNavigationMenuId() !=
 				siteNavigationMenuId)) {
 

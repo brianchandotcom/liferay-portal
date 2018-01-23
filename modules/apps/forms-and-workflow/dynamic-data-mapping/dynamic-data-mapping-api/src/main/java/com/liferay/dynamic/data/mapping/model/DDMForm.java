@@ -128,6 +128,25 @@ public class DDMForm implements Serializable {
 		return _defaultLocale;
 	}
 
+	public Map<String, DDMFormField> getNonTransientDDMFormFieldsMap(
+		boolean includeNestedDDMFormFields) {
+
+		Map<String, DDMFormField> ddmFormFieldsMap = new LinkedHashMap<>();
+
+		for (DDMFormField ddmFormField : _ddmFormFields) {
+			if (!ddmFormField.isTransient()) {
+				ddmFormFieldsMap.put(ddmFormField.getName(), ddmFormField);
+			}
+
+			if (includeNestedDDMFormFields) {
+				ddmFormFieldsMap.putAll(
+					ddmFormField.getNonTransientNestedDDMFormFieldsMap());
+			}
+		}
+
+		return ddmFormFieldsMap;
+	}
+
 	@Override
 	public int hashCode() {
 		int hash = HashUtil.hash(0, _availableLocales);

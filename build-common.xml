@@ -1038,11 +1038,9 @@ information.
 
 			<if>
 				<and>
-					<not>
-						<istrue value="@{snapshot}" />
-					</not>
-					<isfalse value="${publish.portal.release.force}" />
 					<available file="${project.dir}/modules/.releng/${artifact.name}.properties" />
+					<isfalse value="${publish.portal.release.force}" />
+					<isfalse value="@{snapshot}" />
 				</and>
 				<then>
 					<check-latest-artifact-staleness />

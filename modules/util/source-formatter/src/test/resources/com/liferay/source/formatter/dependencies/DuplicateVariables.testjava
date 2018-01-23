@@ -20,12 +20,12 @@ package com.liferay.source.formatter.dependencies;
 public class DuplicateVariables {
 
 	public String method() {
-		return _s1 + _s2 + _s3;
+		return _STRING_1 + _STRING_2 + _STRING_3;
 	}
 
-	private String _s1 = "Hello";
-	private String _s2 = "World";
-	private String _s2 = "Hello World";
-	private String _s3 = "World Hello";
+	private static String _STRING_1 = "Hello";
+	private static String _STRING_2 = "World";
+	private static String _STRING_2 = "Hello World";
+	private static String _STRING_3 = "World Hello";
 
 }

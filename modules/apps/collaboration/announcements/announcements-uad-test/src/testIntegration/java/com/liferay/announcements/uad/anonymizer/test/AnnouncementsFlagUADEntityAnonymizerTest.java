@@ -19,6 +19,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsFlagLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsFlagUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -46,7 +47,7 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected Object addDataObject(long userId) throws Exception {
+	protected BaseModel<?> addBaseModel(long userId) throws Exception {
 		AnnouncementsFlag announcementsFlag =
 			_announcementsFlagUADEntityTestHelper.addAnnouncementsFlag(userId);
 
@@ -56,10 +57,8 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected long getDataObjectId(Object dataObject) {
-		AnnouncementsFlag announcementsFlag = (AnnouncementsFlag)dataObject;
-
-		return announcementsFlag.getFlagId();
+	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
+		return (long)baseModel.getPrimaryKeyObj();
 	}
 
 	@Override
@@ -68,11 +67,11 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isDataObjectAutoAnonymized(long dataObjectId, User user)
+	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
 
 		AnnouncementsFlag announcementsFlag =
-			_announcementsFlagLocalService.getAnnouncementsFlag(dataObjectId);
+			_announcementsFlagLocalService.getAnnouncementsFlag(baseModelPK);
 
 		if (user.getUserId() != announcementsFlag.getUserId()) {
 			return true;
@@ -82,9 +81,9 @@ public class AnnouncementsFlagUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isDataObjectDeleted(long dataObjectId) {
+	protected boolean isBaseModelDeleted(long baseModelPK) {
 		if (_announcementsFlagLocalService.fetchAnnouncementsFlag(
-				dataObjectId) == null) {
+				baseModelPK) == null) {
 
 			return true;
 		}

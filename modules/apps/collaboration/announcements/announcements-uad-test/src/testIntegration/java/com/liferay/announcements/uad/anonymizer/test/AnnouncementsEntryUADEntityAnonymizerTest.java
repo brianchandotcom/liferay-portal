@@ -19,6 +19,7 @@ import com.liferay.announcements.kernel.service.AnnouncementsEntryLocalService;
 import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.test.AnnouncementsEntryUADEntityTestHelper;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
@@ -47,7 +48,7 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 		new LiferayIntegrationTestRule();
 
 	@Override
-	protected Object addDataObject(long userId) throws Exception {
+	protected BaseModel<?> addBaseModel(long userId) throws Exception {
 		AnnouncementsEntry announcementsEntry =
 			_announcementsEntryUADEntityTestHelper.addAnnouncementsEntry(
 				userId);
@@ -58,10 +59,8 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected long getDataObjectId(Object dataObject) {
-		AnnouncementsEntry announcementsEntry = (AnnouncementsEntry)dataObject;
-
-		return announcementsEntry.getEntryId();
+	protected long getBaseModelPrimaryKey(BaseModel baseModel) {
+		return (long)baseModel.getPrimaryKeyObj();
 	}
 
 	@Override
@@ -70,11 +69,11 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isDataObjectAutoAnonymized(long dataObjectId, User user)
+	protected boolean isBaseModelAutoAnonymized(long baseModelPK, User user)
 		throws Exception {
 
 		AnnouncementsEntry announcementsEntry =
-			_announcementsEntryLocalService.getEntry(dataObjectId);
+			_announcementsEntryLocalService.getEntry(baseModelPK);
 
 		if ((user.getUserId() != announcementsEntry.getUserId()) &&
 			!StringUtil.equals(
@@ -87,7 +86,7 @@ public class AnnouncementsEntryUADEntityAnonymizerTest
 	}
 
 	@Override
-	protected boolean isDataObjectDeleted(long dataObjectId) {
+	protected boolean isBaseModelDeleted(long dataObjectId) {
 		if (_announcementsEntryLocalService.fetchAnnouncementsEntry(
 				dataObjectId) == null) {
 

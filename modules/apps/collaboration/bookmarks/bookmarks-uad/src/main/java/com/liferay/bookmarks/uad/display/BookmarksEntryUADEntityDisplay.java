@@ -49,7 +49,7 @@ public class BookmarksEntryUADEntityDisplay extends BaseUADEntityDisplay {
 
 	@Override
 	public String getEntityTypeDescription() {
-		return "Bookmarks Entry Description";
+		return "A link to another page or website";
 	}
 
 	@Override

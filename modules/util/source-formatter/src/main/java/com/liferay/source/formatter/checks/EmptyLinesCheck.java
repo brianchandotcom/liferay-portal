@@ -358,24 +358,6 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			}
 		}
 
-		matcher = _missingEmptyLinePattern4.matcher(content);
-
-		while (matcher.find()) {
-			if (isJavaSource(content, matcher.start())) {
-				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.start() + 1);
-			}
-		}
-
-		matcher = _missingEmptyLinePattern5.matcher(content);
-
-		while (matcher.find()) {
-			if (isJavaSource(content, matcher.start())) {
-				return StringUtil.replaceFirst(
-					content, "\n", "\n\n", matcher.start() + 1);
-			}
-		}
-
 		matcher = _missingEmptyLinePattern6.matcher(content);
 
 		while (matcher.find()) {
@@ -409,6 +391,28 @@ public abstract class EmptyLinesCheck extends BaseFileCheck {
 			if (isJavaSource(content, matcher.start())) {
 				return StringUtil.replaceFirst(
 					content, "\n", "\n\n", matcher.start());
+			}
+		}
+
+		return content;
+	}
+
+	protected String fixMissingEmptyLinesAroundComments(String content) {
+		Matcher matcher = _missingEmptyLinePattern4.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
+			}
+		}
+
+		matcher = _missingEmptyLinePattern5.matcher(content);
+
+		while (matcher.find()) {
+			if (isJavaSource(content, matcher.start())) {
+				return StringUtil.replaceFirst(
+					content, "\n", "\n\n", matcher.start() + 1);
 			}
 		}
 

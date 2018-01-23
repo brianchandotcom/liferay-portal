@@ -30,6 +30,8 @@ public class JavaEmptyLinesCheck extends EmptyLinesCheck {
 
 		content = fixMissingEmptyLines(absolutePath, content);
 
+		content = fixMissingEmptyLinesAroundComments(content);
+
 		content = fixRedundantEmptyLines(content);
 
 		content = fixIncorrectEmptyLineBeforeCloseCurlyBrace(content);

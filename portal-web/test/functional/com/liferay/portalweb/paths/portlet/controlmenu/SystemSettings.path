@@ -19,11 +19,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>MENUBAR_CATEGORY</td>
-	<td>//ul[@role='menubar']//a[@role='menuitem' and contains(.,'${key_category}')] | //nav[contains(@class,'navbar')]//a[contains(.,'${key_category}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>SECURITY_CREDENTIAL_FIELD</td>
 	<td>//div[contains(@data-fieldname,'securityCredential')]//input[@type='password' and @value='secret']</td>
 	<td></td>

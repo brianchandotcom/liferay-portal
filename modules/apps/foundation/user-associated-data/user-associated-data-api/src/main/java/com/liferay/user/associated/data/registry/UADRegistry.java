@@ -54,6 +54,4 @@ public interface UADRegistry {
 
 	public Collection<UADEntityExporter> getUADEntityExporters();
 
-	public void notify(long userId);
-
 }

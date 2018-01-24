@@ -452,7 +452,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSecureContentAndPageAsGuest" priority="3">
+	<command ignore="true" name="ViewSecureContentAndPageAsGuest" priority="3">
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsGuest" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
@@ -682,7 +682,7 @@
 		<execute function="AssertTextEquals#assertPartialText" locator1="Message#ERROR_2" value1="You do not have the required permissions." />
 	</command>
 
-	<command name="ViewSecureContentAndPageAsSiteMember" priority="3">
+	<command ignore="true" name="ViewSecureContentAndPageAsSiteMember" priority="3">
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsSiteMember" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration" />
 
@@ -956,7 +956,7 @@
 		</execute>
 	</command>
 
-	<command name="ViewSecureContentAndPageAsUser" priority="5">
+	<command ignore="true" name="ViewSecureContentAndPageAsUser" priority="5">
 		<property name="test.name.skip.portal.instance" value="SitepagesUsecase#ViewSecureContentAndPageAsUser" />
 		<property name="testray.component.names" value="Message Boards,Site Pages Administration,Training" />
 

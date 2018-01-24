@@ -76,7 +76,7 @@
 		</execute>
 	</command>
 
-	<command name="FacebookSSOSmoke" priority="4">
+	<command ignore="true" name="FacebookSSOSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#FacebookSSOSmoke" />
 
 		<var method="TestPropsUtil#get('facebook.application.id')" name="facebookApplicationID" />
@@ -125,7 +125,7 @@
 		</execute>
 	</command>
 
-	<command name="GoogleSSOSmoke" priority="4">
+	<command ignore="true" name="GoogleSSOSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#GoogleSSOSmoke" />
 
 		<var method="TestPropsUtil#get('google.client.id')" name="googleClientID" />
@@ -193,7 +193,7 @@
 		<execute macro="Smoke#viewWelcomePage" />
 	</command>
 
-	<command name="OpenIDSmoke" priority="4">
+	<command ignore="true" name="OpenIDSmoke" priority="4">
 		<property name="test.name.skip.portal.instance" value="Login#OpenIDSmoke" />
 
 		<var method="TestPropsUtil#get('openid.password')" name="openIDPassword" />
@@ -233,7 +233,7 @@
 		</execute>
 	</command>
 
-	<command name="OpenSSOSmoke" priority="5">
+	<command ignore="true" name="OpenSSOSmoke" priority="5">
 		<property name="openam.enabled" value="true" />
 		<property name="test.name.skip.portal.instance" value="Login#OpenSSOSmoke" />
 

@@ -14,6 +14,7 @@
 
 package com.liferay.source.formatter.checkstyle.checks;
 
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
@@ -46,18 +47,19 @@ public class JSONNamingCheck extends BaseCheck {
 
 		_checkName(
 			name, typeName, tokenTypeName, "String", "JSON", "Json",
-			detailAST.getLineNo());
+			detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 		_checkName(
 			name, typeName, tokenTypeName, "JSONArray", "JSONArray",
-			"JsonArray", detailAST.getLineNo());
+			"JsonArray", detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 		_checkName(
 			name, typeName, tokenTypeName, "JSONObject", "JSONObject",
-			"JsonObject", detailAST.getLineNo());
+			"JsonObject", detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 	}
 
 	private void _checkName(
 		String name, String typeName, String tokenTypeName, String type,
-		String reservedNameEnding, String incorrectNameEnding, int lineNo) {
+		String reservedNameEnding, String incorrectNameEnding, int lineNo,
+		String[] checkTokenTypeNames) {
 
 		String lowerCaseName = StringUtil.toLowerCase(name);
 
@@ -79,7 +81,9 @@ public class JSONNamingCheck extends BaseCheck {
 			return;
 		}
 
-		if (name.endsWith(incorrectNameEnding)) {
+		if (name.endsWith(incorrectNameEnding) &&
+			ArrayUtil.contains(checkTokenTypeNames, tokenTypeName)) {
+
 			log(
 				lineNo, _MSG_RENAME_VARIABLE,
 				StringUtil.toLowerCase(tokenTypeName), name,
@@ -96,19 +100,30 @@ public class JSONNamingCheck extends BaseCheck {
 
 	private String _getTokenTypeName(DetailAST detailAST) {
 		if (detailAST.getType() == TokenTypes.METHOD_DEF) {
-			return "Method";
+			return _TOKEN_TYPE_NAME_METHOD;
 		}
 
 		if (detailAST.getType() == TokenTypes.PARAMETER_DEF) {
-			return "Parameter";
+			return _TOKEN_TYPE_NAME_PARAMETER;
 		}
 
-		return "Variable";
+		return _TOKEN_TYPE_NAME_VARIABLE;
 	}
 
 	private static final String _MSG_RENAME_VARIABLE = "variable.rename";
 
 	private static final String _MSG_RESERVED_VARIABLE_NAME =
 		"variable.name.reserved";
+
+	private static final String _TOKEN_TYPE_NAME_METHOD = "Method";
+
+	private static final String _TOKEN_TYPE_NAME_PARAMETER = "Parameter";
+
+	private static final String _TOKEN_TYPE_NAME_VARIABLE = "Variable";
+
+	private static final String[] _TOKEN_TYPE_NAMES = {
+		_TOKEN_TYPE_NAME_METHOD, _TOKEN_TYPE_NAME_PARAMETER,
+		_TOKEN_TYPE_NAME_VARIABLE
+	};
 
 }

@@ -44,7 +44,6 @@ public class FragmentRenderUtil {
 		sb.append("-");
 		sb.append(fragmentInstanceId);
 		sb.append("\">");
-
 		sb.append("<style>");
 		sb.append(css);
 		sb.append("</style>");
@@ -66,15 +65,14 @@ public class FragmentRenderUtil {
 		sb.append("<script>(function(){");
 		sb.append(js);
 		sb.append(";}());</script>");
-
 		sb.append("</div>");
 
 		return sb.toString();
 	}
 
 	public static String renderFragment(
-		long fragmentEntryId, String css, String html,
-		String js) throws PortalException {
+			long fragmentEntryId, String css, String html, String js)
+		throws PortalException {
 
 		return renderFragment(0, fragmentEntryId, css, html, js);
 	}

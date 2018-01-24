@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Portal Template Soy API
+Bundle-SymbolicName: com.liferay.portal.template.soy.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.portal.template.soy.constants,\
+	com.liferay.portal.template.soy.utils
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Template Engines

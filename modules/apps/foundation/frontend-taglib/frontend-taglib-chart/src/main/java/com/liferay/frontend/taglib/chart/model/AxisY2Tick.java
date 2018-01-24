@@ -23,7 +23,9 @@ import java.util.Collection;
 public class AxisY2Tick extends ChartObject {
 
 	public void addValue(Number value) {
-		get("values", ArrayList.class).add(value);
+		ArrayList values = get("values", ArrayList.class);
+
+		values.add(value);
 	}
 
 	public final void addValues(Collection<? extends Number> values) {

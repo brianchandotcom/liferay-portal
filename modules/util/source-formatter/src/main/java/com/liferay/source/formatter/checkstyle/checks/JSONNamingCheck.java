@@ -64,7 +64,7 @@ public class JSONNamingCheck extends BaseCheck {
 		String lowerCaseName = StringUtil.toLowerCase(name);
 
 		if (!lowerCaseName.endsWith(
-				StringUtil.toLowerCase(reservedNameEnding))) {
+				StringUtil.toLowerCase(incorrectNameEnding))) {
 
 			return;
 		}

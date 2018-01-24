@@ -45,7 +45,7 @@ public interface OrganizationTypeConfiguration {
 	@Meta.AD(deflt = "true", name = "rootable", required = false)
 	public boolean rootable();
 
-	@Meta.AD(deflt = "", name = "children-types", required = false)
+	@Meta.AD(deflt = "organization", name = "children-types", required = false)
 	public String[] childrenTypes();
 
 }

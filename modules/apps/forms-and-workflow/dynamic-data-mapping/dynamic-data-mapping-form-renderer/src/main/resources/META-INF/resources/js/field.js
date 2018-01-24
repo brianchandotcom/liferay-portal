@@ -44,7 +44,7 @@ AUI.add(
 					},
 
 					locale: {
-						value: themeDisplay.getLanguageId()
+						value: themeDisplay.getDefaultLanguageId()
 					},
 
 					name: {

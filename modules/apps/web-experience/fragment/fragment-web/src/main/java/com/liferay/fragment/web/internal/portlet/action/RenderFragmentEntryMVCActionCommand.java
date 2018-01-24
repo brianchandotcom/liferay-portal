@@ -15,9 +15,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.util.FragmentRenderUtil;
-import com.liferay.fragment.web.internal.handler.FragmentEntryExceptionRequestHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -25,11 +23,8 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -69,15 +64,12 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		try {
-			String content = FragmentRenderUtil.renderFragment(
-				fragmentEntryId, css, html, js);
-
-			jsonObject.put("content", content);
+			jsonObject.put(
+				"content",
+				FragmentRenderUtil.renderFragment(
+					fragmentEntryId, css, html, js));
 		}
 		catch (PortalException pe) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -96,16 +88,6 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference
-	private FragmentEntryExceptionRequestHandler
-		_fragmentEntryExceptionRequestHandler;
-
-	@Reference
-	private FragmentEntryService _fragmentEntryService;
-
-	@Reference
-	private Portal _portal;
 
 	@Reference(
 		target = "(bundle.symbolic.name=com.liferay.fragment.web)", unbind = "-"

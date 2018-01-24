@@ -64,7 +64,7 @@ public class CompanyServiceSettingsLocatorTest
 	public void testReturnsCompanyScopedValues() throws Exception {
 		Assert.assertEquals(
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
-			getValueFromSettings());
+			getSettingsValue());
 
 		String scopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
@@ -73,7 +73,7 @@ public class CompanyServiceSettingsLocatorTest
 
 		String companyConfigurationValue = saveConfiguration(scopedPid);
 
-		Assert.assertEquals(companyConfigurationValue, getValueFromSettings());
+		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
 
 		String companyPortletPreferencesValue = RandomTestUtil.randomString();
 
@@ -86,8 +86,7 @@ public class CompanyServiceSettingsLocatorTest
 					SettingsLocatorTestConstants.TEST_KEY,
 					companyPortletPreferencesValue)));
 
-		Assert.assertEquals(
-			companyPortletPreferencesValue, getValueFromSettings());
+		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
 	}
 
 	private long _companyId;

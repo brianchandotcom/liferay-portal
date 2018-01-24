@@ -65,7 +65,7 @@ public class GroupServiceSettingsLocatorTest
 	public void testReturnsGroupScopedValues() throws Exception {
 		Assert.assertEquals(
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
-			getValueFromSettings());
+			getSettingsValue());
 
 		String companyScopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
@@ -74,7 +74,7 @@ public class GroupServiceSettingsLocatorTest
 
 		String companyConfigurationValue = saveConfiguration(companyScopedPid);
 
-		Assert.assertEquals(companyConfigurationValue, getValueFromSettings());
+		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
 
 		String companyPortletPreferencesValue = RandomTestUtil.randomString();
 
@@ -87,8 +87,7 @@ public class GroupServiceSettingsLocatorTest
 					SettingsLocatorTestConstants.TEST_KEY,
 					companyPortletPreferencesValue)));
 
-		Assert.assertEquals(
-			companyPortletPreferencesValue, getValueFromSettings());
+		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
 
 		String groupScopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
@@ -97,7 +96,7 @@ public class GroupServiceSettingsLocatorTest
 
 		String groupConfigurationValue = saveConfiguration(groupScopedPid);
 
-		Assert.assertEquals(groupConfigurationValue, getValueFromSettings());
+		Assert.assertEquals(groupConfigurationValue, getSettingsValue());
 
 		String groupPortletPreferencesValue = RandomTestUtil.randomString();
 
@@ -110,8 +109,7 @@ public class GroupServiceSettingsLocatorTest
 					SettingsLocatorTestConstants.TEST_KEY,
 					groupPortletPreferencesValue)));
 
-		Assert.assertEquals(
-			groupPortletPreferencesValue, getValueFromSettings());
+		Assert.assertEquals(groupPortletPreferencesValue, getSettingsValue());
 	}
 
 	private long _companyId;

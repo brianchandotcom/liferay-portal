@@ -41,7 +41,7 @@ public abstract class BaseSettingsLocatorTestCase {
 		_configurationPids.clear();
 	}
 
-	protected String getValueFromSettings() throws Exception {
+	protected String getSettingsValue() throws Exception {
 		if (settingsLocator == null) {
 			return null;
 		}

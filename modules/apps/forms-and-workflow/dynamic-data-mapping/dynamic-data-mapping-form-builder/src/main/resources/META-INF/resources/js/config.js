@@ -10,12 +10,13 @@
 					filter: LiferayAUI.getFilterConfig(),
 					modules: {
 						'liferay-ddm-form-builder': {
-							path: 'form_builder.js',
+							path: 'form_builder/form_builder.js',
 							requires: [
 								'aui-form-builder',
 								'aui-form-builder-pages',
 								'aui-popover',
 								'liferay-ddm-form-builder-confirmation-dialog',
+								'liferay-ddm-form-builder-dd-support',
 								'liferay-ddm-form-builder-field-list',
 								'liferay-ddm-form-builder-field-settings-sidebar',
 								'liferay-ddm-form-builder-field-support',
@@ -80,6 +81,13 @@
 							path: 'form_builder_confirmation_dialog.js',
 							requires: []
 						},
+						'liferay-ddm-form-builder-dd-support': {
+							path: 'form_builder/form_builder_dd_support.js',
+							requires: [
+								'liferay-ddm-form-field-types',
+								'liferay-ddm-form-renderer'
+							]
+						},
 						'liferay-ddm-form-builder-field-list': {
 							path: 'form_builder_field_list.js',
 							requires: [
@@ -132,7 +140,7 @@
 							requires: ['aui-promise', 'aui-request']
 						},
 						'liferay-ddm-form-builder-layout-builder-support': {
-							path: 'form_builder_layout_builder_support.js',
+							path: 'form_builder/form_builder_layout_builder_support.js',
 							requires: []
 						},
 						'liferay-ddm-form-builder-layout-deserializer': {

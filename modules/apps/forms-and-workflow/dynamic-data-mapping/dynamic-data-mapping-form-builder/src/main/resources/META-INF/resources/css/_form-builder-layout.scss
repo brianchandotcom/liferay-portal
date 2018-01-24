@@ -1,112 +1,106 @@
-div.layout-builder-resize-col-draggable-handle {
-	background-color: transparent;
-	border-radius: 0;
-	color: #1C67FB;
-	font-size: 20px;
-	padding: 0;
-	text-align: center;
-
-	&:hover, &.layout-builder-resize-col-draggable-handle {
-		background: transparent;
-	}
-}
-
-.form-builder-field-move-target:last-child {
-	margin-top: -22px;
-}
-
-.form-builder-field-move-target.between-fields {
-	margin-top: -12px;
-}
-
-.form-builder-moving-message {
-	background-color: rgba(234, 238, 240, 0.8);
-	border-radius: 3px;
-	height: 100%;
-	position: absolute;
-	text-align: center;
-	top: 0;
-	width: 100%;
-}
-
-.form-builder-moving-message-dismiss-button {
-	margin-top: 33px;
-}
-
-.layout-builder-move-cut-button.layout-builder-move-cut-row-button {
-	background: #FFF;
-	border: 1px solid #65B6F0;
-	height: auto;
-	padding: 0;
-	right: 30px;
-	top: -22px;
-	width: auto;
-	z-index: 10;
-
-	.lexicon-icon {
-		color: #65B6F0;
-		margin: 10px;
+.form-builder-layout {
+	.layout-row {
+		border-width: 0;
 	}
 
-	&:hover {
-		background: #65B6F0;
+	.layout-builder-resize-col-breakpoint-over .layout-builder-resize-col-breakpoint-line, .layout-builder-resize-col-breakpoint-line:focus {
+		border-width: 0;
+	}
 
-		.lexicon-icon {
-			color: #FFF;
+	.form-builder-field-list,
+	.form-builder-field-list-container,
+	.form-builder-field-actions-container,
+	.form-builder-field {
+		height: 100%;
+	}
+
+	.form-builder-field {
+		min-height: 113px;
+
+		&:hover {
+			.form-builder-field-actions-container {
+				opacity: 1;
+			}
 		}
 	}
-}
 
-.layout-builder-move-cut-col-button {
-	position: static;
-}
+	.form-builder-field-actions-container {
+		@include transition(opacity 0.2s linear);
 
-.layout-builder-moving:hover .layout-builder-move-cut-row-button.layout-builder-move-cancel {
-	display: none;
-}
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		opacity: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
 
-.lfr-ddm-field-actions-container {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	opacity: 0;
-	position: absolute;
-	right: 0;
-	top: 0;
-	visibility: hidden;
-	z-index: 2;
+		.btn {
+			background-color: $light;
+			cursor: pointer;
+			margin: #{$baseline / 2} 0;
 
-	button {
-		border: solid 1px #CCC;
-		display: block;
-		margin: 4px 0;
-	}
-	@include transition(all ease 0.3s);
-}
-
-.lfr-ddm-form-field-container.form-builder-field {
-	min-height: 113px;
-
-	&:hover .lfr-ddm-field-actions-container {
-		opacity: 1;
-		visibility: visible;
-	}
-}
-
-.lfr-edit-field {
-	cursor: pointer;
-}
-
-.tool-tip-cut-row.tool-tip-white {
-	.tooltip-content {
-		background-color: #FFF;
-		color: #869CAD;
-	}
-
-	&.top {
-		.tooltip-arrow {
-			border-top-color: #FFF;
+			&:hover {
+				background-color: $primary-color;
+			}
 		}
+	}
+
+	.layout-builder-resize-col-draggable {
+		@include transition(opacity 0.2s linear);
+	}
+
+	.layout-builder-resize-col-draggable-dragging {
+		.layout-builder-resize-col-draggable-handle {
+			background: transparent;
+		}
+	}
+
+	.layout-builder-resize-col-draggable-handle {
+		border-radius: 0;
+		font-size: 20px;
+		height: 100%;
+		margin-right: -10px;
+		margin-top: 0;
+		padding: 0;
+		right: 0;
+		text-align: center;
+		top: 0;
+		width: 9px;
+
+		&, &:hover {
+			background-color: transparent;
+		}
+
+		svg {
+			display: none;
+		}
+	}
+
+	.layout-builder-resize-col-breakpoint-line {
+		border-color: transparent;
+	}
+
+	.layout-row-container-row:hover .layout-builder-move-cut-button.layout-builder-move-cut-row-button,
+	.layout-row-container-row:focus .layout-builder-move-cut-button.layout-builder-move-cut-row-button,
+	.layout-builder-move-cut-button.layout-builder-move-cut-row-button:focus,
+	.layout-row-container-row:hover .layout-builder-remove-row-button,
+	.layout-row-container-row:focus .layout-builder-remove-row-button,
+	.layout-row-container-row .layout-builder-remove-row-button:focus {
+		display: none;
+	}
+}
+
+.portlet-forms-admin .form-builder-layout {
+	.form-builder-field:hover {
+		background-color: transparent;
+	}
+
+	div.layout-row-container-row .layout-row .col:first-of-type .layout-col-content,
+	div.layout-row-container-row .layout-row .col.last-col .layout-col-content,
+	div.layout-row-container-row .layout-row .col .layout-col-content {
+		padding-left: 0;
+		padding-right: 0;
 	}
 }
 

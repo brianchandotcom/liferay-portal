@@ -48,6 +48,16 @@ AUI.add(
 						instance.after(instance._afterUiToggleDisableAddField, instance, '_uiToggleDisableAddField');
 					},
 
+					_afterFieldsChange: function() {
+						var instance = this;
+
+						var fields = instance.get('fields');
+
+						instance._uiSetFields(fields);
+
+						instance._updateRemovableLayoutColProperty();
+					},
+
 					_afterUiToggleDisableAddField: function() {
 						if (!this.get('enableAddFields')) {
 							this.get('content').one('.' + CSS_FIELD_LIST_ADD_BUTTON).setAttribute('disabled', '');

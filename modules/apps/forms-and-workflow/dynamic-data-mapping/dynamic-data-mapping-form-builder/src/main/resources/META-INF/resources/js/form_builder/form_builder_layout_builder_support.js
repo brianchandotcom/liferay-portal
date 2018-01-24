@@ -49,6 +49,9 @@ AUI.add(
 				instance._createPopoverHelperMessage();
 			},
 
+			_afterResizeColLayoutColsChange: function() {
+			},
+
 			_bindLayoutBuilderEvents: function() {
 				var instance = this;
 

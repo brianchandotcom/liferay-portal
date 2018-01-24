@@ -340,6 +340,7 @@ AUI.add(
 					_afterPaginationPageChange: function() {
 						var instance = this;
 
+						var builder = instance.get('builder');
 						var pagination = instance._getPagination();
 
 						var selectedPagination = pagination.get('page');
@@ -355,6 +356,11 @@ AUI.add(
 							instance.set('activePageNumber', selectedPagination);
 
 							instance._syncTitle();
+
+							builder._traverseFormPages();
+							builder._destroySortable(builder.sortable1);
+							builder._applyDragAndDrop();
+							builder._adjustEmptyForm(builder.getActiveLayout());
 						}
 					},
 
@@ -704,6 +710,7 @@ AUI.add(
 						var attrSuccessPage = currentTarget.getData('success-page');
 
 						if (!attrSuccessPage) {
+
 							instance._showLayout();
 						}
 					},

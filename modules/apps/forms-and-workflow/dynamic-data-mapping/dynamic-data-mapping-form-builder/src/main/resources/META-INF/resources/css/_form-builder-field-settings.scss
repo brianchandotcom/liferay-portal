@@ -196,3 +196,20 @@
 div.portlet-forms-admin .form-builder-layout .layout-row-container-row .layout-row .col {
 	min-height: 20px;
 }
+
+.form-builder-field-list-add-container {
+	display: none;
+}
+
+.lfr-ddm-add-field.btn {
+	cursor: pointer;
+	padding: 0.43125rem 0.67125rem;
+	position: fixed;
+	right: 20px;
+	top: 75px;
+	z-index: 20;
+
+	@include respond-to(phone) {
+		top: 54px;
+	}
+}

@@ -13,6 +13,8 @@ AUI.add(
 
 		var CSS_FORM_GROUP = A.getClassName('form', 'group');
 
+		var FIELD_ACTIONS = A.getClassName('lfr', 'ddm', 'field', 'actions', 'container');
+
 		var FormBuilderSettingsSupport = function() {
 		};
 
@@ -231,6 +233,10 @@ AUI.add(
 				var wrapper = container.one('.' + CSS_FORM_GROUP);
 
 				wrapper.append('<div class="' + CSS_FIELD_CONTENT_TARGET + '"></div>');
+
+				if (!container.one('.' + FIELD_ACTIONS)) {
+					container.append(instance.get('builder')._getFieldActionsLayout());
+				}
 			},
 
 			_valueSettingsRetriever: function() {

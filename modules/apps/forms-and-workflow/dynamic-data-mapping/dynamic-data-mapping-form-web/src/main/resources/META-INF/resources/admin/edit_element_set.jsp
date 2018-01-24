@@ -56,6 +56,12 @@ renderResponse.setTitle((structure == null) ? LanguageUtil.get(request, "new-ele
 		/>
 	</div>
 
+	<button class="btn btn-primary lfr-ddm-add-field">
+		<svg class="lexicon-icon">
+			<use xlink:href="<%= ddmFormAdminDisplayContext.getLexiconIconsPath() %>plus" />
+		</svg>
+	</button>
+
 	<aui:form action="<%= saveStructureURL %>" cssClass="ddm-form-builder-form" method="post" name="editForm">
 		<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 		<aui:input name="groupId" type="hidden" value="<%= groupId %>" />

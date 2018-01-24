@@ -3,8 +3,6 @@ AUI.add(
 	function(A) {
 		var CSS_PREFIX = A.getClassName('form', 'builder', 'field', 'types', 'sidebar');
 
-		var FieldSets = Liferay.DDM.FieldSets;
-
 		var FieldTypes = Liferay.DDM.Renderer.FieldTypes;
 
 		var FormBuilderFieldTypesSidebar = A.Component.create(
@@ -26,8 +24,8 @@ AUI.add(
 						value: {
 							basic: Liferay.Language.get('field-types-basic-elements'),
 							customized: Liferay.Language.get('field-types-customized-elements'),
-							field: Liferay.Language.get('field'),
-							fieldset: Liferay.Language.get('fieldset')
+							element_set: Liferay.Language.get('element-sets'),
+							elements: Liferay.Language.get('elements')
 						}
 					}
 				},
@@ -47,11 +45,14 @@ AUI.add(
 						var boundingBox = instance.get('boundingBox');
 						var navLink = '.' + CSS_PREFIX + ' .nav-tabs li';
 
-						instance._eventHandlers.push(
-							A.one('body').delegate('click', instance._bindTabAnimation.bind(instance), navLink),
-							boundingBox.delegate('click', instance._afterFieldSetItemClick.bind(instance), '.lfr-ddm-form-builder-field-set-item'),
-							boundingBox.delegate('click', instance._afterFieldTypeItemClick.bind(instance), '.lfr-ddm-form-builder-field-type-item')
-						);
+						instance._eventHandlers.push(A.one('body').delegate('click', instance._bindTabAnimation.bind(instance), navLink));
+
+						if (Liferay.Browser.isMobile()) {
+							instance._eventHandlers.push(
+								boundingBox.delegate('click', instance._afterFieldSetItemClick.bind(instance), '.lfr-ddm-form-builder-field-set-item'),
+									boundingBox.delegate('click', instance._afterFieldTypeItemClick.bind(instance), '.lfr-ddm-form-builder-field-type-item')
+							);
+						}
 
 						new A.TogglerDelegate(
 							{
@@ -106,18 +107,15 @@ AUI.add(
 
 						var fieldSetId = event.currentTarget.attr('data-field-set-id');
 
-						var fieldSetSelected = FieldSets.get(fieldSetId);
-
-						var definitionRetriever = FieldSets.getDefinitionRetriever();
-
-						definitionRetriever.getDefinition(fieldSetSelected)
-							.then(
-								function(fieldSetDefinition) {
-									instance.get('builder').createFieldSet(fieldSetDefinition);
-
-									instance.close();
-								}
-							);
+						instance.get('builder')._getFieldSetDefinitionRetriever(
+							fieldSetId,
+							function(fieldSetDefinition) {
+								instance.get('builder').createFieldSet(fieldSetDefinition);
+								instance.get('builder')._traverseFormPages();
+								instance.get('builder')._applyDragAndDrop();
+								instance.close();
+							}
+						);
 					},
 
 					_afterFieldTypeItemClick: function(event) {

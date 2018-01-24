@@ -39,7 +39,7 @@
 			basic: list<[description: string, icon: html, label: string, name: string]>,
 			customized: list<[description: string, icon: html, label: string, name: string]>
 		]}
-	{@param strings: [basic: string, customized: string, field: string, fieldset: string]}
+	{@param strings: [basic: string, customized: string, elements: string, element_set: string]}
 	{@param? icons: [angleDown: html, angleRight: html]}
 
 	<div class="sidebar-body">
@@ -51,7 +51,7 @@
 					<a href="javascript:;"
 						class="tab-content tab-label"
 						role="tab">
-						{$strings.field}
+						{$strings.elements}
 					</a>
 				</li>
 				<li class="yui3-widget tab tab-selected"
@@ -60,7 +60,7 @@
 					<a href="javascript:;"
 						class="tab-content tab-label"
 						role="tab">
-						{$strings.fieldset}
+						{$strings.element_set}
 					</a>
 				</li>
 			</ul>
@@ -119,16 +119,15 @@
 
 	<div class="list-group-body">
 		{foreach $fieldType in $fieldTypes}
-			<a class="list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-field-type-item"
-				data-field-type-name="{$fieldType.name}"
-				href="javascript:;">
+			<div class="list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-draggable-item lfr-ddm-form-builder-field-type-item"
+				data-field-type-name="{$fieldType.name}">
 
 				{call .render_field_template}
 					{param description: $fieldType.description /}
 					{param icon: $fieldType.icon /}
 					{param name: $fieldType.label /}
 				{/call}
-			</a>
+			</div>
 		{/foreach}
 	</div>
 {/template}
@@ -141,16 +140,15 @@
 
 	<div class="list-group-body">
 		{foreach $fieldSet in $fieldSets}
-			<a class="list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-field-set-item"
-				data-field-set-id="{$fieldSet.id}"
-				href="javascript:;">
+			<div class="list-group-item list-group-item-flex list-group-item-action lfr-ddm-form-builder-field-set-item lfr-ddm-form-builder-draggable-item"
+				data-field-set-id="{$fieldSet.id}">
 
 				{call .render_field_template}
 					{param description: $fieldSet.description /}
 					{param icon: $fieldSet.icon /}
 					{param name: $fieldSet.name /}
 				{/call}
-			</a>
+			</div>
 		{/foreach}
 	</div>
 {/template}

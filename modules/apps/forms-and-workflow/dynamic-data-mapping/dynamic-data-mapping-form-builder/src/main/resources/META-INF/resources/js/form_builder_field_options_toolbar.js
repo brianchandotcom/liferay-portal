@@ -34,7 +34,7 @@ AUI.add(
 								label: Liferay.Language.get('duplicate-field')
 							},
 							{
-								handler: 'removeField',
+								handler: '_removeFieldCol',
 								label: Liferay.Language.get('remove-field')
 							},
 							{

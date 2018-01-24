@@ -12,53 +12,65 @@
  * details.
  */
 
-package com.liferay.knowledge.base.internal.importer.util;
+package com.liferay.knowledge.base.internal.importer.util.test;
 
-import com.liferay.knowledge.base.model.KBArticle;
-import com.liferay.portal.kernel.model.ModelHints;
-import com.liferay.portal.kernel.model.ModelHintsUtil;
-import com.liferay.portal.kernel.util.FileUtil;
-import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.util.FileImpl;
-import com.liferay.portal.util.HtmlImpl;
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Alejandro Tardín
  */
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(Arquillian.class)
 public class KBArticleMarkdownConverterTest {
 
-	@Before
-	public void setUp() {
-		FileUtil fileUtil = new FileUtil();
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
 
-		fileUtil.setFile(new FileImpl());
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			KBArticleMarkdownConverterTest.class);
 
-		HtmlUtil htmlUtil = new HtmlUtil();
+		BundleContext bundleContext = bundle.getBundleContext();
 
-		htmlUtil.setHtml(new HtmlImpl());
+		for (Bundle installedBundle : bundleContext.getBundles()) {
+			String symbolicName = installedBundle.getSymbolicName();
 
-		ModelHintsUtil modelHintsUtil = new ModelHintsUtil();
+			if (symbolicName.equals("com.liferay.knowledge.base.service")) {
+				bundle = installedBundle;
 
-		modelHintsUtil.setModelHints(_modelHints);
+				break;
+			}
+		}
 
-		Mockito.when(
-			_modelHints.getMaxLength(KBArticle.class.getName(), "urlTitle")
-		).thenReturn(
-			256
-		);
+		Class<?> clazz = bundle.loadClass(
+			"com.liferay.knowledge.base.internal.importer.util." +
+				"KBArticleMarkdownConverter");
+
+		_constructor = clazz.getConstructor(
+			String.class, String.class, Map.class);
+
+		_method = clazz.getMethod("getSourceURL");
 	}
 
 	@Test
@@ -72,12 +84,11 @@ public class KBArticleMarkdownConverterTest {
 
 		metadata.put("base.source.url", "http://baseURL");
 
-		KBArticleMarkdownConverter kbArticleMarkdownConverter =
-			new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
+		Object object = _constructor.newInstance(
+			markdown, fileEntryName, metadata);
 
 		Assert.assertEquals(
-			"http://baseURL/some/unix/file",
-			kbArticleMarkdownConverter.getSourceURL());
+			"http://baseURL/some/unix/file", _method.invoke(object));
 	}
 
 	@Test
@@ -91,12 +102,11 @@ public class KBArticleMarkdownConverterTest {
 
 		metadata.put("base.source.url", "http://baseURL");
 
-		KBArticleMarkdownConverter kbArticleMarkdownConverter =
-			new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
+		Object object = _constructor.newInstance(
+			markdown, fileEntryName, metadata);
 
 		Assert.assertEquals(
-			"http://baseURL/some/windows/file",
-			kbArticleMarkdownConverter.getSourceURL());
+			"http://baseURL/some/windows/file", _method.invoke(object));
 	}
 
 	@Test
@@ -107,10 +117,10 @@ public class KBArticleMarkdownConverterTest {
 		String fileEntryName = "some\\windows\\file";
 		Map<String, String> metadata = new HashMap<>();
 
-		KBArticleMarkdownConverter kbArticleMarkdownConverter =
-			new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
+		Object object = _constructor.newInstance(
+			markdown, fileEntryName, metadata);
 
-		Assert.assertNull(kbArticleMarkdownConverter.getSourceURL());
+		Assert.assertNull(_method.invoke(object));
 	}
 
 	@Test
@@ -122,15 +132,14 @@ public class KBArticleMarkdownConverterTest {
 
 		metadata.put("base.source.url", "http://baseURL/");
 
-		KBArticleMarkdownConverter kbArticleMarkdownConverter =
-			new KBArticleMarkdownConverter(markdown, fileEntryName, metadata);
+		Object object = _constructor.newInstance(
+			markdown, fileEntryName, metadata);
 
 		Assert.assertEquals(
-			"http://baseURL/some/unix/file",
-			kbArticleMarkdownConverter.getSourceURL());
+			"http://baseURL/some/unix/file", _method.invoke(object));
 	}
 
-	@Mock
-	private static ModelHints _modelHints;
+	private static Constructor _constructor;
+	private static Method _method;
 
 }

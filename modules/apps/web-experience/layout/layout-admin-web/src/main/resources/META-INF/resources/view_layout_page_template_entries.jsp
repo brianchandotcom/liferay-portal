@@ -199,20 +199,7 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 		}
 	);
 
-	function handleDestroyPortlet() {
-		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
-		updateLayoutPageTemplateEntryMenuItemClickHandler.removeListener();
-
-		Liferay.detach('destroyPortlet', handleDestroyPortlet);
-	}
-
-	var addLayoutPageTemplateEntryMenuItem = document.getElementById('<portlet:namespace />addLayoutPageTemplateEntryMenuItem');
-
-	addLayoutPageTemplateEntryMenuItem.addEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
-
-	Liferay.on('destroyPortlet', handleDestroyPortlet);
-
-	dom.on(
+	var deleteSelectedLayoutPageTemplateEntriesClickHandler = dom.on(
 		'#<portlet:namespace />deleteSelectedLayoutPageTemplateEntries',
 		'click',
 		function() {
@@ -221,4 +208,18 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateCo
 			}
 		}
 	);
+
+	var addLayoutPageTemplateEntryMenuItem = document.getElementById('<portlet:namespace />addLayoutPageTemplateEntryMenuItem');
+
+	addLayoutPageTemplateEntryMenuItem.addEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
+
+	function handleDestroyPortlet() {
+		addLayoutPageTemplateEntryMenuItem.removeEventListener('click', handleAddLayoutPageTemplateEntryMenuItemClick);
+		deleteSelectedLayoutPageTemplateEntriesClickHandler.removeListener();
+		updateLayoutPageTemplateEntryMenuItemClickHandler.removeListener();
+
+		Liferay.detach('destroyPortlet', handleDestroyPortlet);
+	}
+
+	Liferay.on('destroyPortlet', handleDestroyPortlet);
 </aui:script>

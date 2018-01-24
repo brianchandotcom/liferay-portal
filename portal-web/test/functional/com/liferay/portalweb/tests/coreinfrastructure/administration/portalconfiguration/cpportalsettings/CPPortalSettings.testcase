@@ -254,7 +254,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#enterReservedEmailAddressCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -264,10 +264,10 @@
 		</execute>
 
 		<execute macro="User#addReservedEmailAddressCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 	</command>
 
@@ -282,7 +282,7 @@
 		</execute>
 
 		<execute macro="PortalSettings#enterReservedScreenNameCP">
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -292,10 +292,10 @@
 		</execute>
 
 		<execute macro="User#addReservedScreenNameCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 	</command>
 

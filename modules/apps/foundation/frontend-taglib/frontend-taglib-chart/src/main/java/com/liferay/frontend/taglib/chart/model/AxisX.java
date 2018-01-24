@@ -43,7 +43,7 @@ public class AxisX extends ChartObject {
 	}
 
 	@JSON(include = false)
-	public AxisXTick getTick() {
+	public AxisXTick getAxisXTick() {
 		return get("tick", AxisXTick.class);
 	}
 
@@ -55,7 +55,7 @@ public class AxisX extends ChartObject {
 		set("height", height);
 	}
 
-	public void setLabel(PositionLabel positionLabel) {
+	public void setPositionLabel(PositionLabel positionLabel) {
 		set("label", positionLabel);
 	}
 

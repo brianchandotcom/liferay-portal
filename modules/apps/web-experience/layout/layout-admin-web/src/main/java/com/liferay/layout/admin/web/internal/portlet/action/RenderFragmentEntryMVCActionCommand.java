@@ -25,8 +25,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -69,16 +67,13 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 			FragmentEntry fragmentEntry =
 				_fragmentEntryService.fetchFragmentEntry(fragmentEntryId);
 
-			String content = FragmentRenderUtil.renderFragment(
-				fragmentInstanceId, fragmentEntryId, fragmentEntry.getCss(),
-				fragmentEntry.getHtml(), fragmentEntry.getJs());
-
-			jsonObject.put("content", content);
+			jsonObject.put(
+				"content",
+				FragmentRenderUtil.renderFragment(
+					fragmentInstanceId, fragmentEntryId, fragmentEntry.getCss(),
+					fragmentEntry.getHtml(), fragmentEntry.getJs()));
 		}
 		catch (PortalException pe) {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				actionRequest);
-
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
@@ -102,7 +97,8 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 	private FragmentEntryService _fragmentEntryService;
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)", unbind = "-"
+		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",
+		unbind = "-"
 	)
 	private ResourceBundleLoader _resourceBundleLoader;
 

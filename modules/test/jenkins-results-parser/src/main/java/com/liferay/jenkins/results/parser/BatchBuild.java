@@ -281,9 +281,15 @@ public class BatchBuild extends BaseBuild {
 				continue;
 			}
 
+			AxisBuild axisBuild = getAxisBuild(axisVariable);
+
+			if (axisBuild == null) {
+				continue;
+			}
+
 			testResults.addAll(
 				TestResult.getTestResults(
-					getAxisBuild(axisVariable), suitesJSONArray, testStatus));
+					axisBuild, suitesJSONArray, testStatus));
 		}
 
 		return testResults;

@@ -24,7 +24,7 @@ import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
 import com.liferay.user.associated.data.registry.UADRegistry;
-import com.liferay.user.associated.data.util.UADBundleComposite;
+import com.liferay.user.associated.data.util.UADEntitySetComposite;
 import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ import org.osgi.service.component.annotations.Component;
 public class UADRegistryImpl implements UADRegistry {
 
 	@Override
-	public List<UADBundleComposite> getUADBundleComposites(long userId) {
+	public List<UADEntitySetComposite> getUADBundleComposites(long userId) {
 		Map<String, List<UADEntityTypeComposite>> uadEntityTypeCompositesMap =
 			new HashMap<>();
 
@@ -72,7 +72,7 @@ public class UADRegistryImpl implements UADRegistry {
 			uadEntityTypeCompositesMap.put(bundleId, uadEntityTypeComposites);
 		}
 
-		List<UADBundleComposite> uadBundleComposites = new ArrayList<>();
+		List<UADEntitySetComposite> uadBundleComposites = new ArrayList<>();
 
 		for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
 				uadEntityTypeCompositesMap.entrySet()) {
@@ -82,8 +82,9 @@ public class UADRegistryImpl implements UADRegistry {
 			List<UADEntityTypeComposite> uadEntityTypeComposites =
 				entry.getValue();
 
-			UADBundleComposite uadBundleComposite = new UADBundleComposite(
-				userId, bundleId, uadEntityTypeComposites);
+			UADEntitySetComposite uadBundleComposite =
+				new UADEntitySetComposite(
+					userId, bundleId, uadEntityTypeComposites);
 
 			uadBundleComposites.add(uadBundleComposite);
 		}

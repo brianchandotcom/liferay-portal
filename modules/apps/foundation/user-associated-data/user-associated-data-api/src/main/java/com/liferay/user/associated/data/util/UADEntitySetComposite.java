@@ -20,9 +20,9 @@ import java.util.Locale;
 /**
  * @author William Newbury
  */
-public class UADBundleComposite {
+public class UADEntitySetComposite {
 
-	public UADBundleComposite(
+	public UADEntitySetComposite(
 		long userId, String bundleId,
 		List<UADEntityTypeComposite> uadEntityTypeComposites) {
 

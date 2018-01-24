@@ -19,7 +19,7 @@ import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
 import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
-import com.liferay.user.associated.data.util.UADBundleComposite;
+import com.liferay.user.associated.data.util.UADEntitySetComposite;
 import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 
 import java.util.Collection;
@@ -31,7 +31,7 @@ import java.util.Set;
 */
 public interface UADRegistry {
 
-	public List<UADBundleComposite> getUADBundleComposites(long userId);
+	public List<UADEntitySetComposite> getUADBundleComposites(long userId);
 
 	public UADEntityAggregator getUADEntityAggregator(String key);
 

@@ -156,21 +156,46 @@ public class BaselinePlugin implements Plugin<Project> {
 	private BaselineTask _addTaskBaseline(
 		final AbstractArchiveTask newJarTask) {
 
+		final BaselineTask baselineTask = _addTaskBaseline(
+			newJarTask, BASELINE_TASK_NAME, true);
+
+		baselineTask.setDescription(
+			"Compares the public API of this project with the public API of " +
+				"the previous released version, if found.");
+		baselineTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
+
+		Project project = baselineTask.getProject();
+
+		PluginContainer pluginContainer = project.getPlugins();
+
+		pluginContainer.withId(
+			"biz.aQute.bnd.builder",
+			new Action<Plugin>() {
+
+				@Override
+				public void execute(Plugin plugin) {
+					_configureTaskBaselineForBndBuilderPlugin(baselineTask);
+				}
+
+			});
+
+		return baselineTask;
+	}
+
+	private BaselineTask _addTaskBaseline(
+		final AbstractArchiveTask newJarTask, String taskName,
+		boolean overwrite) {
+
 		Project project = newJarTask.getProject();
 
 		final BaselineTask baselineTask = GradleUtil.addTask(
-			project, BASELINE_TASK_NAME, BaselineTask.class, true);
+			project, taskName, BaselineTask.class, overwrite);
 
 		File bndFile = project.file("bnd.bnd");
 
 		if (bndFile.exists()) {
 			baselineTask.setBndFile(bndFile);
 		}
-
-		baselineTask.setDescription(
-			"Compares the public API of this project with the public API of " +
-				"the previous released version, if found.");
-		baselineTask.setGroup(JavaBasePlugin.VERIFICATION_GROUP);
 
 		baselineTask.setNewJarFile(
 			new Callable<File>() {
@@ -192,19 +217,6 @@ public class BaselinePlugin implements Plugin<Project> {
 						SourceSet.MAIN_SOURCE_SET_NAME);
 
 					return GradleUtil.getSrcDir(sourceSet.getResources());
-				}
-
-			});
-
-		PluginContainer pluginContainer = project.getPlugins();
-
-		pluginContainer.withId(
-			"biz.aQute.bnd.builder",
-			new Action<Plugin>() {
-
-				@Override
-				public void execute(Plugin plugin) {
-					_configureTaskBaselineForBndBuilderPlugin(baselineTask);
 				}
 
 			});

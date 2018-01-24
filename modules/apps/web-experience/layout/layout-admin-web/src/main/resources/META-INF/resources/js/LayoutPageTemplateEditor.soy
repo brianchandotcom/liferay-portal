@@ -81,6 +81,18 @@
 									{param spritemap: $spritemap /}
 								{/call}
 							{/foreach}
+						{elseif $_sidebarSelectedTab == 'added'}
+							{if $fragments and (length($fragments) > 0)}
+								{foreach $fragment in $fragments}
+									{call LayoutPageTemplateSidebarAddedFragment.render}
+										{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
+										{param fragmentEntryId: $fragment.fragmentEntryId /}
+										{param index: index($fragment) /}
+										{param name: $fragment.name /}
+										{param spritemap: $spritemap /}
+									{/call}
+								{/foreach}
+							{/if}
 						{/if}
 					{/param}
 

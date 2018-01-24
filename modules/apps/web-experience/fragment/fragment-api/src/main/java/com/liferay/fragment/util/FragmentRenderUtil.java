@@ -15,6 +15,7 @@
 package com.liferay.fragment.util;
 
 import com.liferay.fragment.model.FragmentEntry;
+import com.liferay.fragment.service.FragmentEntryLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
 import com.liferay.portal.kernel.sanitizer.SanitizerException;
@@ -30,6 +31,23 @@ import java.util.Optional;
  * @author Pablo Molina
  */
 public class FragmentRenderUtil {
+
+	public static String renderFragment(FragmentEntry fragmentEntry) {
+		return renderFragment(
+			0, fragmentEntry.getFragmentEntryId(), fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs());
+	}
+
+	public static String renderFragment(
+		long fragmentInstanceId, long fragmentEntryId) {
+
+		FragmentEntry fragmentEntry =
+			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
+
+		return renderFragment(
+			fragmentInstanceId, fragmentEntryId, fragmentEntry.getCss(),
+			fragmentEntry.getHtml(), fragmentEntry.getJs());
+	}
 
 	public static String renderFragment(
 		long fragmentInstanceId, long fragmentEntryId, String css, String html,

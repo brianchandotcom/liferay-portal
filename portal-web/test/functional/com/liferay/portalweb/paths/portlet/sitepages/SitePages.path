@@ -23,6 +23,27 @@
 	<td></td>
 	<td></td>
 </tr>
+<!--LIST_GROUP_ITEM-->
+<tr>
+	<td>LIST_GROUP_ITEM</td>
+	<td>//li[contains(@class,'list-group-item')]//div[h4[normalize-space()='${key_itemName}']]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ANGLE_ICON</td>
+	<td>xpath=(//a[*[name()='svg'][contains(@class,'icon-angle-right')]])[${key_depth}]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ELLIPSIS_ICON</td>
+	<td>//li[contains(@class,'list-group-item')][div[normalize-space()='${key_pageName}']]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
+<tr>
+	<td>LIST_GROUP_ITEM_PLUS_ICON</td>
+	<td>//li[contains(@class,'list-group-item')][div[normalize-space()='${key_pageName}']]//a[*[name()='svg'][contains(@class,'icon-plus')]]</td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PUBLIC_PAGES</td>

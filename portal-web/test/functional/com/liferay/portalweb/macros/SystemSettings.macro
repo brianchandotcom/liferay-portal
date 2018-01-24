@@ -1,5 +1,5 @@
 <definition>
-	<command name="configureCategoryNavigationDisplayStyle">
+	<command name="configureDisplayStyle">
 		<execute function="Click" locator1="Dropdown#TRIGGER" />
 
 		<execute function="Type" locator1="Dropdown#SEARCH_FIELD" value1="${displayStyle}" />

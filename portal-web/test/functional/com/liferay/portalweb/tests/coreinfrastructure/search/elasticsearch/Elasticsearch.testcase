@@ -156,32 +156,32 @@ discoveryZenPingUnicastHostsPort=&quot;9300-9400&quot;" />
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Apple" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchPortlet#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchPortlet#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>
 
 		<execute macro="Navigator#openURL" />
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Orange" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchPortlet#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultsPG">
+		<execute macro="SearchPortlet#viewSearchResultsPG">
 			<var name="searchAssetTitle" value="Apple" />
 			<var name="searchAssetType" value="Message Boards Message" />
 		</execute>

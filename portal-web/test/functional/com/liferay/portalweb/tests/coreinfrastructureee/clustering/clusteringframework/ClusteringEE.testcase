@@ -196,11 +196,11 @@
 			<var name="entryTitle" value="Blogs Entry2 Title" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Entry1" />
 		</execute>
 
-		<execute macro="Search#viewSearchNoPG">
+		<execute macro="SearchPortlet#viewSearchNoPG">
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Entry1" />
 		</execute>

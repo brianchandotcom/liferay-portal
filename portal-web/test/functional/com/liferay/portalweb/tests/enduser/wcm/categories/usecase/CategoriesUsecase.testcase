@@ -194,12 +194,12 @@
 			<var name="pageName" value="Category Page Name" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="localizationIDName" value="Suchen" />
 			<var name="searchTerm" value="Kategorienamen" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Web Content Title" />
 			<var name="searchAssetType" value="Webcontent" />
 		</execute>
@@ -1844,11 +1844,11 @@
 			<var name="pageName" value="Search Page" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Edited" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="DM Document Title" />
 			<var name="searchAssetType" value="Document" />
 		</execute>

@@ -712,11 +712,11 @@
 			<var name="siteName" value="Organization Name" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -745,11 +745,11 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchNoPG">
+		<execute macro="SearchPortlet#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Test Document" />
@@ -772,11 +772,11 @@
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -1322,11 +1322,11 @@
 			<var name="pageName" value="Documents and Media Page" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>
@@ -1354,11 +1354,11 @@
 
 		<execute function="AssertTextEquals" locator1="Message#EMPTY_INFO" value1="There are no documents or media files in this folder." />
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchNoPG">
+		<execute macro="SearchPortlet#viewSearchNoPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchNoResults" value="true" />
 			<var name="searchTerm" value="Test Document" />
@@ -1380,11 +1380,11 @@
 			<var name="dmDocumentTitle" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Test Document" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Test Document" />
 			<var name="searchAssetType" value="Document" />
 		</execute>

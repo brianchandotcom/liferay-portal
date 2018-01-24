@@ -829,11 +829,11 @@
 			<var name="pageName" value="Calendar Page" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="tag1" />
 		</execute>
 
-		<execute macro="Search#viewSearchResultPG">
+		<execute macro="SearchPortlet#viewSearchResultPG">
 			<var name="searchAssetTitle" value="Calendar Event Title" />
 			<var name="searchAssetType" value="Calendar Event" />
 		</execute>

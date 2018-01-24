@@ -132,8 +132,8 @@ const SIDEBAR_TABS = [
 	{
 		id: 'fragments',
 		name: Liferay.Language.get('fragments'),
-		visible: true
-	}
+		visible: true,
+	},
 ];
 
 /**
@@ -241,7 +241,9 @@ LayoutPageTemplateEditor.STATE = {
 	 * @private
 	 * @type {boolean}
 	 */
-	_contextualSidebarVisible: Config.bool().internal().value(true),
+	_contextualSidebarVisible: Config.bool()
+		.internal()
+		.value(true),
 
 	/**
 	 * When true, it indicates that are changes pending to save.
@@ -279,12 +281,13 @@ LayoutPageTemplateEditor.STATE = {
 	 * 	 visible:boolean
 	 * }>}
 	 */
-	_sidebarTabs: Config
-		.arrayOf(Config.shapeOf({
+	_sidebarTabs: Config.arrayOf(
+		Config.shapeOf({
 			id: Config.string(),
 			name: Config.string(),
-			visible: Config.bool()
-		}))
+			visible: Config.bool(),
+		})
+	)
 		.internal()
 		.value(SIDEBAR_TABS),
 
@@ -298,7 +301,7 @@ LayoutPageTemplateEditor.STATE = {
 	 */
 	_sidebarSelectedTab: Config.oneOf(SIDEBAR_TABS.map(tab => tab.id))
 		.internal()
-		.value(SIDEBAR_TABS[0].id)
+		.value(SIDEBAR_TABS[0].id),
 };
 
 Soy.register(LayoutPageTemplateEditor, templates);

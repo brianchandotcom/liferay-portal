@@ -53,7 +53,7 @@ public class UADRegistryImpl implements UADRegistry {
 		for (String key : getUADEntityAggregatorKeySet()) {
 			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
 
-			String bundleId = uadAggregator.getBundleId();
+			String uadEntitySetName = uadAggregator.getUADEntitySetName();
 
 			List<UADEntity> uadEntities = uadAggregator.getUADEntities(userId);
 
@@ -65,11 +65,12 @@ public class UADRegistryImpl implements UADRegistry {
 
 			List<UADEntityTypeComposite> uadEntityTypeComposites =
 				uadEntityTypeCompositesMap.getOrDefault(
-					bundleId, new ArrayList<UADEntityTypeComposite>());
+					uadEntitySetName, new ArrayList<UADEntityTypeComposite>());
 
 			uadEntityTypeComposites.add(uadEntityTypeComposite);
 
-			uadEntityTypeCompositesMap.put(bundleId, uadEntityTypeComposites);
+			uadEntityTypeCompositesMap.put(
+				uadEntitySetName, uadEntityTypeComposites);
 		}
 
 		List<UADEntitySetComposite> uadBundleComposites = new ArrayList<>();
@@ -77,14 +78,14 @@ public class UADRegistryImpl implements UADRegistry {
 		for (Map.Entry<String, List<UADEntityTypeComposite>> entry :
 				uadEntityTypeCompositesMap.entrySet()) {
 
-			String bundleId = entry.getKey();
+			String uadEntitySetName = entry.getKey();
 
 			List<UADEntityTypeComposite> uadEntityTypeComposites =
 				entry.getValue();
 
 			UADEntitySetComposite uadBundleComposite =
 				new UADEntitySetComposite(
-					userId, bundleId, uadEntityTypeComposites);
+					userId, uadEntitySetName, uadEntityTypeComposites);
 
 			uadBundleComposites.add(uadBundleComposite);
 		}
@@ -179,7 +180,7 @@ public class UADRegistryImpl implements UADRegistry {
 		for (String key : getUADEntityAggregatorKeySet()) {
 			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
 
-			if (bundleId.equals(uadAggregator.getBundleId())) {
+			if (bundleId.equals(uadAggregator.getUADEntitySetName())) {
 				List<UADEntity> uadEntities = uadAggregator.getUADEntities(
 					userId);
 

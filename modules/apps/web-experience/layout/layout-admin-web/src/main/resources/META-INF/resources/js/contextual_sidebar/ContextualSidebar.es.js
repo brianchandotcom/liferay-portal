@@ -21,7 +21,10 @@ class ContextualSidebar extends Component {
 
 		this._handleOpenProductMenu = this._handleOpenProductMenu.bind(this);
 
-		this._productMenu.on('openStart.lexicon.sidenav', this._handleOpenProductMenu);
+		this._productMenu.on(
+			'openStart.lexicon.sidenav',
+			this._handleOpenProductMenu
+		);
 	}
 
 	/**
@@ -31,7 +34,10 @@ class ContextualSidebar extends Component {
 	disposed() {
 		document.body.classList.remove('has-contextual-sidebar');
 
-		this._productMenu.off('openStart.lexicon.sidenav', this._handleOpenProductMenu);
+		this._productMenu.off(
+			'openStart.lexicon.sidenav',
+			this._handleOpenProductMenu
+		);
 	}
 
 	/**
@@ -39,8 +45,7 @@ class ContextualSidebar extends Component {
 	 * @inheritDoc
 	 * @review
 	 */
-	syncVisible() {
-	}
+	syncVisible() {}
 
 	/**
 	 * @inheritDoc
@@ -51,7 +56,8 @@ class ContextualSidebar extends Component {
 			document.body.classList.add('contextual-sidebar-visible');
 
 			this._productMenuToggle.sideNavigation('hide');
-		} else {
+		}
+		else {
 			document.body.classList.remove('contextual-sidebar-visible');
 		}
 	}

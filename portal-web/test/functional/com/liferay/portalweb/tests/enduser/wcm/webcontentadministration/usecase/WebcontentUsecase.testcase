@@ -1271,7 +1271,7 @@
 			<var name="portlet" value="System Settings" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="Web Content" />
 		</execute>
 

@@ -662,7 +662,7 @@
 			<var name="searchTerm" value="Test Bookmark" />
 		</execute>
 
-		<execute macro="Search#viewSearchAssetTitle">
+		<execute macro="SearchPortlet#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="Test Bookmark" />
 		</execute>
 	</command>
@@ -734,7 +734,7 @@
 			<var name="searchTerm" value="Test Bookmark" />
 		</execute>
 
-		<execute macro="Search#viewSearchAssetTitle">
+		<execute macro="SearchPortlet#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="Test Bookmark" />
 		</execute>
 
@@ -750,7 +750,7 @@
 			<var name="searchTerm" value="Test Bookmark 2" />
 		</execute>
 
-		<execute macro="Search#viewSearchAssetTitle">
+		<execute macro="SearchPortlet#viewSearchAssetTitle">
 			<var name="searchAssetTitle" value="Test Bookmark 2" />
 		</execute>
 	</command>

@@ -1160,8 +1160,8 @@
 			<var name="kfStatus" value="Pending" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="One" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="One" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#deleteProcessRecord">
@@ -3305,8 +3305,8 @@
 			<var name="kfStatus" value="Pending" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="One" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="One" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
@@ -3319,8 +3319,8 @@
 			<var name="kfProcessFieldData" value="Two" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="Two" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Two" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordTable">
@@ -3333,8 +3333,8 @@
 			<var name="kfProcessFieldData" value="One" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="Hello" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Hello" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessNoRecords">
@@ -3707,8 +3707,8 @@
 			<var name="kfProcessName" value="Kaleo Forms Process" />
 		</execute>
 
-		<execute macro="KaleoFormsAdmin#searchProcessRecords">
-			<var name="kfProcessSearchData" value="One" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="One" />
 		</execute>
 
 		<execute macro="KaleoFormsAdmin#viewProcessRecordDetails">

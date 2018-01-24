@@ -440,7 +440,7 @@
 			<var name="userScreenName" value="usersn" />
 		</execute>
 
-		<execute macro="UserGroup#searchMembersInUserGroupCP">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="usersn" />
 		</execute>
 

@@ -410,8 +410,9 @@
 			<var name="portletName" value="My Sites" />
 		</execute>
 
-		<execute macro="Site#searchInputCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Site Name" />
+			<var name="portletName" value="My Sites" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
@@ -579,8 +580,8 @@
 			<var name="portletName" value="My Sites" />
 		</execute>
 
-		<execute macro="Site#searchInputCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#viewNoMySitesViaMySitesPG">
@@ -745,8 +746,9 @@
 			<var name="portletName" value="My Sites" />
 		</execute>
 
-		<execute macro="Site#searchInputCP">
-			<var name="siteName" value="Site Name" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Site Name" />
+			<var name="portletName" value="My Sites" />
 		</execute>
 
 		<execute macro="MySites#viewNoOptions">

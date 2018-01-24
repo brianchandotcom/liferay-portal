@@ -845,20 +845,20 @@
 			<var name="siteName" value="Site Name" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="blue" />
 		</execute>
 
-		<execute macro="Search#viewSearchAssetTitle">
+		<execute macro="SearchPortlet#viewSearchAssetTitle">
 			<var name="searchAssetSummary" value="Entry Content 1" />
 			<var name="searchAssetTitle" value="Entry Title 1" />
 		</execute>
 
-		<execute macro="Search#searchPG">
+		<execute macro="SearchPortlet#searchPG">
 			<var name="searchTerm" value="yellow" />
 		</execute>
 
-		<execute macro="Search#viewSearchAssetTitle">
+		<execute macro="SearchPortlet#viewSearchAssetTitle">
 			<var name="searchAssetSummary" value="Entry Content 3" />
 			<var name="searchAssetTitle" value="Entry Title 3" />
 		</execute>

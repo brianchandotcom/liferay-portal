@@ -472,8 +472,8 @@
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="RecycleBin#searchCP">
-			<var name="assetName" value="1" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="1" />
 		</execute>
 
 		<execute macro="RecycleBin#viewCP">
@@ -492,8 +492,8 @@
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="RecycleBin#searchCP">
-			<var name="assetName" value="2" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="2" />
 		</execute>
 
 		<execute macro="RecycleBin#viewCP">
@@ -512,8 +512,8 @@
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="RecycleBin#searchCP">
-			<var name="assetName" value="3" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="3" />
 		</execute>
 
 		<execute macro="RecycleBin#viewCP">
@@ -604,8 +604,8 @@
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="RecycleBin#searchCP">
-			<var name="assetName" value="1" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="1" />
 		</execute>
 
 		<execute macro="RecycleBin#viewCP">
@@ -624,8 +624,8 @@
 			<var name="portlet" value="Recycle Bin" />
 		</execute>
 
-		<execute macro="RecycleBin#searchCP">
-			<var name="assetName" value="2" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="2" />
 		</execute>
 
 		<execute macro="RecycleBin#viewCP">

@@ -100,8 +100,9 @@
 			<var name="calendarResourceName" value="Truck" />
 		</execute>
 
-		<execute macro="CalendarResource#search">
-			<var name="calendarResourceName" value="Room Car " />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Room Car " />
+			<var name="portletName" value="Calendar" />
 		</execute>
 
 		<execute macro="CalendarResource#viewResourceName">
@@ -116,8 +117,9 @@
 			<var name="calendarResourceName" value="Truck" />
 		</execute>
 
-		<execute macro="CalendarResource#search">
-			<var name="calendarResourceName" value="Room" />
+		<execute macro="Search#searchPG">
+			<var name="searchTerm" value="Room" />
+			<var name="portletName" value="Calendar" />
 		</execute>
 
 		<execute macro="CalendarResource#viewResourceName">

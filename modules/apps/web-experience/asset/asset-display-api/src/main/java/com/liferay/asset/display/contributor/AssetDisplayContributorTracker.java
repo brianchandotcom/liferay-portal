@@ -15,9 +15,7 @@
 package com.liferay.asset.display.contributor;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -38,31 +36,8 @@ public class AssetDisplayContributorTracker {
 		return _assetDisplayContributor.get(className);
 	}
 
-	public List<AssetDisplayContributor> getAssetDisplayContributors(
-		Locale locale) {
-
-		List<AssetDisplayContributor> assetDisplayContributors =
-			new ArrayList<>();
-
-		for (Map.Entry<String, AssetDisplayContributor> entry :
-				_assetDisplayContributor.entrySet()) {
-
-			assetDisplayContributors.add(entry.getValue());
-		}
-
-		Collections.sort(
-			assetDisplayContributors,
-			(assetDisplayContributor1, assetDisplayContributor2) -> {
-				String assetDisplayContributorLabel1 =
-					assetDisplayContributor1.getLabel(locale);
-				String assetDisplayContributorLabel2 =
-					assetDisplayContributor2.getLabel(locale);
-
-				return assetDisplayContributorLabel1.compareTo(
-					assetDisplayContributorLabel2);
-			});
-
-		return Collections.unmodifiableList(assetDisplayContributors);
+	public List<AssetDisplayContributor> getAssetDisplayContributors() {
+		return new ArrayList(_assetDisplayContributor.values());
 	}
 
 	@Reference(

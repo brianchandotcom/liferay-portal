@@ -85,8 +85,7 @@ public class LayoutPageTemplateDisplayContext {
 				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 
 		List<AssetDisplayContributor> assetDisplayContributors =
-			assetDisplayContributorTracker.getAssetDisplayContributors(
-				themeDisplay.getLocale());
+			assetDisplayContributorTracker.getAssetDisplayContributors();
 
 		for (AssetDisplayContributor assetDisplayContributor :
 				assetDisplayContributors) {

@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.json.JSON;
 public class AxisY2 extends ChartObject {
 
 	@JSON(include = false)
-	public AxisY2Tick getTick() {
+	public AxisY2Tick getAxis2Tick() {
 		return get("tick", AxisY2Tick.class);
 	}
 
@@ -30,8 +30,8 @@ public class AxisY2 extends ChartObject {
 		set("center", center);
 	}
 
-	public void setDefault(Range range) {
-		set("default", range);
+	public void setDefaultRange(Range defaultRange) {
+		set("default", defaultRange);
 	}
 
 	public void setInner(boolean inner) {
@@ -42,7 +42,7 @@ public class AxisY2 extends ChartObject {
 		set("inverted", inverted);
 	}
 
-	public void setLabel(PositionLabel positionLabel) {
+	public void setPositionLabel(PositionLabel positionLabel) {
 		set("label", positionLabel);
 	}
 

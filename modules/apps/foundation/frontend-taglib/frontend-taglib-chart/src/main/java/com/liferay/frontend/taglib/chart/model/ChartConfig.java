@@ -58,8 +58,8 @@ public abstract class ChartConfig<ColumnType extends Column>
 		return get("axisY2", AxisY2.class);
 	}
 
-	public void setAxisRotated(boolean rotated) {
-		set("axisRotated", rotated);
+	public void setAxisRotated(boolean axisRotated) {
+		set("axisRotated", axisRotated);
 	}
 
 }

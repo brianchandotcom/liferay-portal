@@ -14,23 +14,43 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
+import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocator;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
+import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.Dictionary;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.After;
+import org.junit.BeforeClass;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
+@RunWith(Arquillian.class)
 public abstract class BaseSettingsLocatorTestCase {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		companyId = TestPropsValues.getCompanyId();
+		groupId = TestPropsValues.getGroupId();
+	}
 
 	@After
 	public void tearDown() throws Exception {
@@ -67,6 +87,10 @@ public abstract class BaseSettingsLocatorTestCase {
 		return value;
 	}
 
+	protected static long companyId;
+	protected static long groupId;
+
+	protected final String portletId = RandomTestUtil.randomString();
 	protected SettingsLocator settingsLocator;
 
 	private final Set<String> _configurationPids = new HashSet<>();

@@ -76,6 +76,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,7 @@ import org.apache.chemistry.opencmis.client.api.Document;
 import org.apache.chemistry.opencmis.client.api.FileableCmisObject;
 import org.apache.chemistry.opencmis.client.api.ItemIterable;
 import org.apache.chemistry.opencmis.client.api.ObjectId;
+import org.apache.chemistry.opencmis.client.api.OperationContext;
 import org.apache.chemistry.opencmis.client.api.QueryResult;
 import org.apache.chemistry.opencmis.client.api.Session;
 import org.apache.chemistry.opencmis.client.runtime.ObjectIdImpl;
@@ -1538,8 +1540,18 @@ public class CMISRepository extends BaseCmisRepository {
 
 			Folder parentFolder = toFolder(cmisParentFolder);
 
-			ItemIterable<CmisObject> cmisObjects =
-				cmisParentFolder.getChildren();
+			OperationContext operationContext =
+				session.createOperationContext();
+
+			operationContext.setFilter(
+				_toSet(
+					"cmis:isPrivateWorkingCopy",
+					"cmis:isVersionSeriesCheckedOut",
+					"cmis:lastModificationDate", "cmis:name",
+					"cmis:versionSeriesId"));
+
+			ItemIterable<CmisObject> cmisObjects = cmisParentFolder.getChildren(
+				operationContext);
 
 			for (CmisObject cmisObject : cmisObjects) {
 				if (cmisObject instanceof
@@ -1557,10 +1569,17 @@ public class CMISRepository extends BaseCmisRepository {
 					_cmisModelCache.putFolder(cmisFolder);
 				}
 				else if (cmisObject instanceof Document) {
+					Document document = (Document)cmisObject;
+
 					CMISFileEntry cmisFileEntry = (CMISFileEntry)toFileEntry(
-						(Document)cmisObject);
+						document);
 
 					cmisFileEntry.setParentFolder(parentFolder);
+
+					if (document.isPrivateWorkingCopy()) {
+						foldersAndFileEntries.remove(cmisFileEntry);
+						fileEntries.remove(cmisFileEntry);
+					}
 
 					foldersAndFileEntries.add(cmisFileEntry);
 					fileEntries.add(cmisFileEntry);
@@ -2303,6 +2322,16 @@ public class CMISRepository extends BaseCmisRepository {
 		if (objectId != null) {
 			throw new DuplicateFolderNameException(title);
 		}
+	}
+
+	private final <T> Set<T> _toSet(T... items) {
+		HashSet<T> set = new HashSet<>();
+
+		for (T item : items) {
+			set.add(item);
+		}
+
+		return set;
 	}
 
 	private static final int _DELETE_DEEP = -1;

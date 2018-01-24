@@ -112,6 +112,20 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof CMISFileEntry)) {
+			return false;
+		}
+
+		String versionSeriesId = _document.getVersionSeriesId();
+
+		CMISFileEntry fileEntry2 = (CMISFileEntry)obj;
+
+		return versionSeriesId.equals(
+			fileEntry2._document.getVersionSeriesId());
+	}
+
+	@Override
 	public void execute(RepositoryModelOperation repositoryModelOperation)
 		throws PortalException {
 
@@ -585,6 +599,13 @@ public class CMISFileEntry extends CMISModel implements FileEntry {
 		}
 
 		return versionUserUuid;
+	}
+
+	@Override
+	public int hashCode() {
+		String versionSeriesId = _document.getVersionSeriesId();
+
+		return versionSeriesId.hashCode();
 	}
 
 	@Override

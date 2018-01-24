@@ -155,6 +155,7 @@ public abstract class CMISModel {
 		_mappedActionKeys.put(ActionKeys.VIEW, Action.CAN_GET_PROPERTIES);
 
 		_unsupportedActionKeys.add(ActionKeys.ADD_SHORTCUT);
+		_unsupportedActionKeys.add(ActionKeys.OVERRIDE_CHECKOUT);
 		_unsupportedActionKeys.add(ActionKeys.PERMISSIONS);
 		_unsupportedActionKeys.add(ActionKeys.SUBSCRIBE);
 	}

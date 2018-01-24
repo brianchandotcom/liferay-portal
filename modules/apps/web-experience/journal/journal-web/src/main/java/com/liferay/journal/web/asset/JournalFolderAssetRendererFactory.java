@@ -20,11 +20,11 @@ import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayPortletURL;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.trash.TrashHelper;
 
 import javax.portlet.PortletRequest;
@@ -110,10 +110,8 @@ public class JournalFolderAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		JournalFolder folder = _journalFolderLocalService.getFolder(classPK);
-
-		return JournalFolderPermission.contains(
-			permissionChecker, folder, actionId);
+		return _journalFolderModelResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(
@@ -131,6 +129,13 @@ public class JournalFolderAssetRendererFactory
 	}
 
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
+
 	private ServletContext _servletContext;
 
 	@Reference

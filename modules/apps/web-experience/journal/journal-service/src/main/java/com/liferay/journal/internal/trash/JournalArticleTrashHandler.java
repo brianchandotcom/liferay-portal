@@ -20,11 +20,10 @@ import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
+import com.liferay.journal.model.JournalFolder;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalArticleResourceLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
-import com.liferay.journal.service.permission.JournalArticlePermission;
-import com.liferay.journal.service.permission.JournalFolderPermission;
 import com.liferay.journal.util.impl.JournalUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
@@ -35,6 +34,8 @@ import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.Filter;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.trash.TrashActionKeys;
 import com.liferay.portal.kernel.trash.TrashHandler;
@@ -185,8 +186,9 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 		throws PortalException {
 
 		if (trashActionId.equals(TrashActionKeys.MOVE)) {
-			return JournalFolderPermission.contains(
-				permissionChecker, groupId, classPK, ActionKeys.ADD_ARTICLE);
+			return ModelResourcePermissionHelper.contains(
+				_journalFolderModelResourcePermission, permissionChecker,
+				groupId, classPK, ActionKeys.ADD_ARTICLE);
 		}
 
 		return super.hasTrashPermission(
@@ -360,7 +362,7 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws PortalException {
 
-		return JournalArticlePermission.contains(
+		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -395,9 +397,22 @@ public class JournalArticleTrashHandler extends JournalBaseTrashHandler {
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
+
 	private JournalArticleResourceLocalService
 		_journalArticleResourceLocalService;
 	private JournalFolderLocalService _journalFolderLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFolder)"
+	)
+	private ModelResourcePermission<JournalFolder>
+		_journalFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

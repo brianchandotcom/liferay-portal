@@ -18,7 +18,6 @@ import com.liferay.asset.kernel.action.AssetEntryAction;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.model.JournalArticle;
-import com.liferay.journal.service.permission.JournalArticlePermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -27,6 +26,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.taglib.security.PermissionsURLTag;
 
 import java.util.Locale;
@@ -34,6 +34,7 @@ import java.util.Locale;
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Jürgen Kappler
@@ -89,11 +90,17 @@ public class JournalPermissionAssetEntryAction implements AssetEntryAction {
 
 		JournalArticle article = (JournalArticle)assetRenderer.getAssetObject();
 
-		return JournalArticlePermission.contains(
+		return _journalArticleModelResourcePermission.contains(
 			permissionChecker, article, ActionKeys.PERMISSIONS);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		JournalPermissionAssetEntryAction.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalArticle)"
+	)
+	private ModelResourcePermission<JournalArticle>
+		_journalArticleModelResourcePermission;
 
 }

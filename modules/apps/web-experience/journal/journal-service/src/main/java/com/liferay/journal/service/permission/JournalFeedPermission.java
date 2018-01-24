@@ -14,27 +14,26 @@
 
 package com.liferay.journal.service.permission;
 
-import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
-import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalFeed;
 import com.liferay.journal.service.JournalFeedLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Raymond Augé
+ * @deprecated As of 4.0.0, with no direct replacement
  */
 @Component(
 	property = {"model.class.name=com.liferay.journal.model.JournalFeed"},
 	service = BaseModelPermissionChecker.class
 )
+@Deprecated
 public class JournalFeedPermission implements BaseModelPermissionChecker {
 
 	public static void check(
@@ -42,21 +41,16 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, feed, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, JournalFeed.class.getName(),
-				feed.getFeedId(), actionId);
-		}
+		_journalFeedModelResourcePermission.check(
+			permissionChecker, feed, actionId);
 	}
 
 	public static void check(
 			PermissionChecker permissionChecker, long id, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, id, actionId)) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, JournalFeed.class.getName(), id, actionId);
-		}
+		_journalFeedModelResourcePermission.check(
+			permissionChecker, id, actionId);
 	}
 
 	/**
@@ -76,39 +70,20 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 	}
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, JournalFeed feed,
-		String actionId) {
+			PermissionChecker permissionChecker, JournalFeed feed,
+			String actionId)
+		throws PortalException {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			JournalArticle.class.getName(), PortletProvider.Action.EDIT);
-
-		Boolean hasPermission = StagingPermissionUtil.hasPermission(
-			permissionChecker, feed.getGroupId(), JournalFeed.class.getName(),
-			feed.getPrimaryKey(), portletId, actionId);
-
-		if (hasPermission != null) {
-			return hasPermission.booleanValue();
-		}
-
-		if (permissionChecker.hasOwnerPermission(
-				feed.getCompanyId(), JournalFeed.class.getName(), feed.getId(),
-				feed.getUserId(), actionId)) {
-
-			return true;
-		}
-
-		return permissionChecker.hasPermission(
-			feed.getGroupId(), JournalFeed.class.getName(), feed.getId(),
-			actionId);
+		return _journalFeedModelResourcePermission.contains(
+			permissionChecker, feed, actionId);
 	}
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long feedId, String actionId)
 		throws PortalException {
 
-		JournalFeed feed = _journalFeedLocalService.getFeed(feedId);
-
-		return contains(permissionChecker, feed, actionId);
+		return _journalFeedModelResourcePermission.contains(
+			permissionChecker, feedId, actionId);
 	}
 
 	/**
@@ -122,7 +97,8 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 
 		JournalFeed feed = _journalFeedLocalService.getFeed(groupId, feedId);
 
-		return contains(permissionChecker, feed, actionId);
+		return _journalFeedModelResourcePermission.contains(
+			permissionChecker, feed, actionId);
 	}
 
 	@Override
@@ -131,7 +107,8 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 			String actionId)
 		throws PortalException {
 
-		check(permissionChecker, primaryKey, actionId);
+		_journalFeedModelResourcePermission.check(
+			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(unbind = "-")
@@ -141,6 +118,18 @@ public class JournalFeedPermission implements BaseModelPermissionChecker {
 		_journalFeedLocalService = journalFeedLocalService;
 	}
 
+	@Reference(
+		target = "(model.class.name=com.liferay.journal.model.JournalFeed)",
+		unbind = "-"
+	)
+	protected void setModelResourcePermission(
+		ModelResourcePermission<JournalFeed> modelResourcePermission) {
+
+		_journalFeedModelResourcePermission = modelResourcePermission;
+	}
+
 	private static JournalFeedLocalService _journalFeedLocalService;
+	private static ModelResourcePermission<JournalFeed>
+		_journalFeedModelResourcePermission;
 
 }

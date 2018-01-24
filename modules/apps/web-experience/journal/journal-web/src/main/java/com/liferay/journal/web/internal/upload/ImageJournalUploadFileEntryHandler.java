@@ -16,7 +16,7 @@ package com.liferay.journal.web.internal.upload;
 
 import com.liferay.document.library.kernel.util.DLValidator;
 import com.liferay.journal.configuration.JournalFileUploadsConfiguration;
-import com.liferay.journal.service.permission.JournalPermission;
+import com.liferay.journal.constants.JournalConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.ImageTypeException;
@@ -24,10 +24,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
-import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionCheckerUtil;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.FileUtil;
@@ -65,9 +63,9 @@ public class ImageJournalUploadFileEntryHandler
 			(ThemeDisplay)uploadPortletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-		_checkPermission(
-			themeDisplay.getScopeGroupId(),
-			themeDisplay.getPermissionChecker());
+		_portletResourcePermission.check(
+			themeDisplay.getPermissionChecker(), themeDisplay.getScopeGroup(),
+			ActionKeys.ADD_ARTICLE);
 
 		String fileName = uploadPortletRequest.getFileName(_PARAMETER_NAME);
 		long size = uploadPortletRequest.getSize(_PARAMETER_NAME);
@@ -94,22 +92,6 @@ public class ImageJournalUploadFileEntryHandler
 	protected void activate(Map<String, Object> properties) {
 		_journalFileUploadsConfiguration = ConfigurableUtil.createConfigurable(
 			JournalFileUploadsConfiguration.class, properties);
-	}
-
-	private void _checkPermission(
-			long groupId, PermissionChecker permissionChecker)
-		throws PortalException {
-
-		boolean containsResourcePermission =
-			ResourcePermissionCheckerUtil.containsResourcePermission(
-				permissionChecker, JournalPermission.RESOURCE_NAME, groupId,
-				ActionKeys.ADD_ARTICLE);
-
-		if (!containsResourcePermission) {
-			throw new PrincipalException.MustHavePermission(
-				permissionChecker, JournalPermission.RESOURCE_NAME, groupId,
-				ActionKeys.ADD_ARTICLE);
-		}
 	}
 
 	private boolean _exists(ThemeDisplay themeDisplay, String curFileName) {
@@ -165,6 +147,11 @@ public class ImageJournalUploadFileEntryHandler
 	private DLValidator _dlValidator;
 
 	private JournalFileUploadsConfiguration _journalFileUploadsConfiguration;
+
+	@Reference(
+		target = "(resource.name=" + JournalConstants.RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	@Reference
 	private UniqueFileNameProvider _uniqueFileNameProvider;

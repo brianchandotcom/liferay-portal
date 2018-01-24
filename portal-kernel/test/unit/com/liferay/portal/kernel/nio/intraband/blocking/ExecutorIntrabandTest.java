@@ -721,15 +721,17 @@ public class ExecutorIntrabandTest {
 		sinkChannel.close();
 	}
 
-	private static final byte[] _DATA =
-		ExecutorIntrabandTest._DATA_STRING.getBytes(Charset.defaultCharset());
-
-	private static final String _DATA_STRING =
-		ExecutorIntrabandTest.class.getName();
+	private static final byte[] _DATA;
 
 	private static final long _DEFAULT_TIMEOUT = Time.SECOND;
 
 	private static final byte _TYPE = 1;
+
+	static {
+		String dataString = ExecutorIntrabandTest.class.getName();
+
+		_DATA = dataString.getBytes(Charset.defaultCharset());
+	}
 
 	private ExecutorIntraband _executorIntraband;
 

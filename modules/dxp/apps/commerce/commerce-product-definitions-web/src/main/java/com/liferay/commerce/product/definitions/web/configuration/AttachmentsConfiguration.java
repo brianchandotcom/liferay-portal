@@ -32,12 +32,12 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface AttachmentsConfiguration {
 
 	@Meta.AD(
-		deflt = ".gif,.jpeg,.jpg,.png,.mpg,.ogg",
-		name = "allowed-file-extensions", required = false
+		deflt = ".gif,.jpeg,.jpg,.png,.mpg,.ogg", name = "image-extensions",
+		required = false
 	)
 	public String[] imageExtensions();
 
-	@Meta.AD(deflt = "5242880", required = false)
+	@Meta.AD(deflt = "5242880", name = "image-max-size", required = false)
 	public long imageMaxSize();
 
 }

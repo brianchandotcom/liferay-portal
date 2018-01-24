@@ -27,8 +27,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
-import java.util.Set;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -57,23 +55,27 @@ public class AssetDisplayContributorFieldsMVCActionCommand
 		ThemeDisplay themeDisplay = (ThemeDisplay)actionRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		String assetEntryClassName = ParamUtil.getString(
-			actionRequest, "assetEntryClassName");
+		String className = ParamUtil.getString(actionRequest, "className");
 
 		AssetDisplayContributor assetDisplayContributor =
 			_assetDisplayContributorTracker.getAssetDisplayContributor(
-				assetEntryClassName);
+				className);
+
+		if (assetDisplayContributor == null) {
+			JSONPortletResponseUtil.writeJSON(
+				actionRequest, actionResponse,
+				JSONFactoryUtil.createJSONArray());
+
+			return;
+		}
 
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
-		if (assetDisplayContributor != null) {
-			Set<AssetDisplayField> assetDisplayFields =
+		for (AssetDisplayField assetDisplayField :
 				assetDisplayContributor.getAssetEntryFields(
-					themeDisplay.getLocale());
+					themeDisplay.getLocale())) {
 
-			for (AssetDisplayField assetDisplayField : assetDisplayFields) {
-				jsonArray.put(assetDisplayField.toJSONObject());
-			}
+			jsonArray.put(assetDisplayField.toJSONObject());
 		}
 
 		JSONPortletResponseUtil.writeJSON(

@@ -72,10 +72,8 @@ public class LayoutPageTemplateDisplayContext {
 		_request = request;
 	}
 
-	public JSONArray getAssetDisplayContributorEntriesJSONArray()
+	public JSONArray getAssetDisplayContributorsJSONArray()
 		throws PortalException {
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -84,19 +82,16 @@ public class LayoutPageTemplateDisplayContext {
 			(AssetDisplayContributorTracker)_request.getAttribute(
 				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER);
 
-		List<AssetDisplayContributor> assetDisplayContributors =
-			assetDisplayContributorTracker.getAssetDisplayContributors();
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 
 		for (AssetDisplayContributor assetDisplayContributor :
-				assetDisplayContributors) {
+				assetDisplayContributorTracker.getAssetDisplayContributors()) {
 
 			JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
+			jsonObject.put("className", assetDisplayContributor.getClassName());
 			jsonObject.put(
-				"assetEntryClassName", assetDisplayContributor.getClassName());
-
-			jsonObject.put(
-				"assetEntryLabel",
+				"label",
 				assetDisplayContributor.getLabel(themeDisplay.getLocale()));
 
 			jsonArray.put(jsonObject);

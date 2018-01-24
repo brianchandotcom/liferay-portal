@@ -56,7 +56,8 @@ public class UpgradeOrganizationTest {
 		for (Organization organization : organizations) {
 			Assert.assertTrue(
 				ArrayUtil.contains(
-					PropsValues.ORGANIZATIONS_TYPES, organization.getType()));
+					OrganizationLocalServiceUtil.getTypes(),
+					organization.getType()));
 		}
 	}
 

@@ -1362,15 +1362,17 @@ public class SelectorIntrabandTest {
 		}
 	}
 
-	private static final byte[] _DATA =
-		SelectorIntrabandTest._DATA_STRING.getBytes(Charset.defaultCharset());
-
-	private static final String _DATA_STRING =
-		SelectorIntrabandTest.class.getName();
+	private static final byte[] _DATA;
 
 	private static final long _DEFAULT_TIMEOUT = Time.SECOND;
 
 	private static final byte _TYPE = 1;
+
+	static {
+		String dataString = SelectorIntrabandTest.class.getName();
+
+		_DATA = dataString.getBytes(Charset.defaultCharset());
+	}
 
 	private SelectorIntraband _selectorIntraband;
 

@@ -1585,15 +1585,17 @@ public class BaseIntrabandTest {
 		Assert.assertTrue(message.startsWith(messagePrefix));
 	}
 
-	private static final byte[] _DATA = BaseIntrabandTest._DATA_STRING.getBytes(
-		Charset.defaultCharset());
-
-	private static final String _DATA_STRING =
-		BaseIntrabandTest.class.getName();
+	private static final byte[] _DATA;
 
 	private static final long _DEFAULT_TIMEOUT = Time.SECOND;
 
 	private static final byte _TYPE = 1;
+
+	static {
+		String dataString = BaseIntrabandTest.class.getName();
+
+		_DATA = dataString.getBytes(Charset.defaultCharset());
+	}
 
 	private final MockIntraband _mockIntraband = new MockIntraband(
 		_DEFAULT_TIMEOUT);

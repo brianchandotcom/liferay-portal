@@ -12,17 +12,38 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.model;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
+public class Padding extends ChartObject {
 
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
+	public Padding() {
+		this(0, 0, 0, 0);
+	}
 
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
+	public Padding(int left, int top, int right, int bottom) {
+		setLeft(left);
+		setTop(top);
+		setRight(right);
+		setBottom(bottom);
+	}
+
+	public void setBottom(int bottom) {
+		set("bottom", bottom);
+	}
+
+	public void setLeft(int left) {
+		set("left", left);
+	}
+
+	public void setRight(int right) {
+		set("right", right);
+	}
+
+	public void setTop(int top) {
+		set("top", top);
+	}
 
 }

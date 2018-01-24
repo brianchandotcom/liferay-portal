@@ -12,17 +12,39 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.model;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
+public class Range implements Iterable {
 
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
+	public Range() {
+		this(0, 0);
+	}
 
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
+	public Range(Number start, Number end) {
+		_values.add(start);
+		_values.add(end);
+	}
+
+	@Override
+	public Iterator iterator() {
+		return _values.iterator();
+	}
+
+	public void setEnd(Number end) {
+		_values.set(1, end);
+	}
+
+	public void setStart(Number start) {
+		_values.set(0, start);
+	}
+
+	private List<Number> _values = new ArrayList<>();
 
 }

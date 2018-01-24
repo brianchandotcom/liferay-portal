@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.internal.exportimport.data.handler;
+package com.liferay.mobile.device.rules.web.internal.exportimport.data.handler;
 
 import com.liferay.exportimport.data.handler.base.BaseStagedModelDataHandler;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;

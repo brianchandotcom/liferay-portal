@@ -248,16 +248,12 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		throws ConfigurationException {
 
 		try {
-			StringBundler pidFilter = new StringBundler(5);
-
-			pidFilter.append(StringPool.OPEN_PARENTHESIS);
-			pidFilter.append(Constants.SERVICE_PID);
-			pidFilter.append(StringPool.EQUAL);
-			pidFilter.append(pid);
-			pidFilter.append(StringPool.CLOSE_PARENTHESIS);
+			String pidFilter = StringBundler.concat(
+				StringPool.OPEN_PARENTHESIS, Constants.SERVICE_PID,
+				StringPool.EQUAL, pid, StringPool.CLOSE_PARENTHESIS);
 
 			Configuration[] configurations =
-				_configurationAdmin.listConfigurations(pidFilter.toString());
+				_configurationAdmin.listConfigurations(pidFilter);
 
 			if (configurations != null) {
 				configurations[0].delete();

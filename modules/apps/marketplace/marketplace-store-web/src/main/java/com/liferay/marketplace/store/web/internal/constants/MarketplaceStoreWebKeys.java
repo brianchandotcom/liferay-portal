@@ -12,18 +12,15 @@
  * details.
  */
 
-package com.liferay.marketplace.store.web.constants;
+package com.liferay.marketplace.store.web.internal.constants;
 
 /**
  * @author Ryan Park
- * @author Joan Kim
  */
-public class MarketplaceStorePortletKeys {
+public class MarketplaceStoreWebKeys {
 
-	public static final String MARKETPLACE_PURCHASED =
-		"com_liferay_marketplace_store_web_portlet_MarketplacePurchasedPortlet";
+	public static final String OAUTH_AUTHORIZED = "OAUTH_AUTHORIZED";
 
-	public static final String MARKETPLACE_STORE =
-		"com_liferay_marketplace_store_web_portlet_MarketplaceStorePortlet";
+	public static final String OAUTH_REQUEST_TOKEN = "OAUTH_REQUEST_TOKEN";
 
 }

@@ -58,7 +58,6 @@ import java.util.Map;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
-import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 

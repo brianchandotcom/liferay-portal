@@ -161,24 +161,6 @@
 				padding: $dialog-footer-padding;
 			}
 		}
-
-		.btn-lg {
-			@include media-query(null, $screen-xs-max) {
-				font-size: 12px;
-				padding: 8px 24px;
-			}
-		}
-	}
-
-	.blog-article-button-row,
-	.journal-article-button-row,
-	.kb-submit-buttons {
-		.btn-lg {
-			@include media-query(null, $screen-xs-max) {
-				padding-left: 16px;
-				padding-right: 16px;
-			}
-		}
 	}
 
 	.dialog-body,

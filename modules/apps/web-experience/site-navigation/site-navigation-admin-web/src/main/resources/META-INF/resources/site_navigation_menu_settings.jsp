@@ -22,22 +22,30 @@ String redirect = ParamUtil.getString(request, "redirect");
 SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSiteNavigationMenu();
 %>
 
-<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
-	<div class="alert alert-warning">
-		<liferay-ui:message key="the-primary-menu-for-this-site-is-already-defined" />
-	</div>
-</c:if>
+<portlet:actionURL name="/navigation_menu/edit_site_navigation_menu_settings" var="editSiteNavigationMenuSettingsURL" />
 
-<portlet:actionURL name="/navigation_menu/edit_primary_site_navigation_menu" var="editPrimarySiteNavigationMenuURL" />
-
-<aui:form action="<%= editPrimarySiteNavigationMenuURL %>">
+<aui:form action="<%= editSiteNavigationMenuSettingsURL %>">
 	<aui:input name="redirect" type="hidden" value="<%= redirect %>" />
 	<aui:input name="siteNavigationMenuId" type="hidden" value="<%= siteNavigationMenu.getSiteNavigationMenuId() %>" />
 
-	<aui:fieldset label="function">
-		<aui:input checked="<%= siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>" label="primary" name="primary" type="radio" value="<%= true %>" />
+	<aui:fieldset helpMessage="function-help" label="function">
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="main-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
 
-		<aui:input checked="<%= !siteNavigationMenu.isPrimary() %>" disabled="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>" label="secondary" name="primary" type="radio" value="<%= false %>" />
+		<%
+		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
+		%>
+
+		<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
+			<div class="text-muted" id="<portlet:namespace/>currentPrimaryMenu">
+				<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="current-main-menu-x" />
+			</div>
+		</c:if>
+
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SECONDARY %>" label="subsidiary-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SECONDARY %>" wrapperCssClass="mt-4" />
+
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_SOCIAL %>" label="social-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_SOCIAL %>" />
+
+		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_DEFAULT %>" label="default" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_DEFAULT %>" />
 	</aui:fieldset>
 
 	<aui:button-row>

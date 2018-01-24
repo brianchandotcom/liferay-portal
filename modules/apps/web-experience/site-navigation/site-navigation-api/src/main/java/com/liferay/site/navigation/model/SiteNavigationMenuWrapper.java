@@ -66,7 +66,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
-		attributes.put("primary", getPrimary());
+		attributes.put("type", getType());
 
 		return attributes;
 	}
@@ -121,10 +121,10 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 			setName(name);
 		}
 
-		Boolean primary = (Boolean)attributes.get("primary");
+		Integer type = (Integer)attributes.get("type");
 
-		if (primary != null) {
-			setPrimary(primary);
+		if (type != null) {
+			setType(type);
 		}
 	}
 
@@ -194,16 +194,6 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
-	* Returns the primary of this site navigation menu.
-	*
-	* @return the primary of this site navigation menu
-	*/
-	@Override
-	public boolean getPrimary() {
-		return _siteNavigationMenu.getPrimary();
-	}
-
-	/**
 	* Returns the primary key of this site navigation menu.
 	*
 	* @return the primary key of this site navigation menu
@@ -226,6 +216,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public long getSiteNavigationMenuId() {
 		return _siteNavigationMenu.getSiteNavigationMenuId();
+	}
+
+	/**
+	* Returns the type of this site navigation menu.
+	*
+	* @return the type of this site navigation menu
+	*/
+	@Override
+	public int getType() {
+		return _siteNavigationMenu.getType();
 	}
 
 	/**
@@ -276,16 +276,6 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public boolean isNew() {
 		return _siteNavigationMenu.isNew();
-	}
-
-	/**
-	* Returns <code>true</code> if this site navigation menu is primary.
-	*
-	* @return <code>true</code> if this site navigation menu is primary; <code>false</code> otherwise
-	*/
-	@Override
-	public boolean isPrimary() {
-		return _siteNavigationMenu.isPrimary();
 	}
 
 	@Override
@@ -370,16 +360,6 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
-	* Sets whether this site navigation menu is primary.
-	*
-	* @param primary the primary of this site navigation menu
-	*/
-	@Override
-	public void setPrimary(boolean primary) {
-		_siteNavigationMenu.setPrimary(primary);
-	}
-
-	/**
 	* Sets the primary key of this site navigation menu.
 	*
 	* @param primaryKey the primary key of this site navigation menu
@@ -402,6 +382,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public void setSiteNavigationMenuId(long siteNavigationMenuId) {
 		_siteNavigationMenu.setSiteNavigationMenuId(siteNavigationMenuId);
+	}
+
+	/**
+	* Sets the type of this site navigation menu.
+	*
+	* @param type the type of this site navigation menu
+	*/
+	@Override
+	public void setType(int type) {
+		_siteNavigationMenu.setType(type);
 	}
 
 	/**

@@ -40,6 +40,7 @@ page import="com.liferay.portal.kernel.util.ParamUtil" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.display.context.SiteNavigationAdminDisplayContext" %><%@
 page import="com.liferay.site.navigation.admin.web.internal.security.permission.resource.SiteNavigationMenuPermission" %><%@
+page import="com.liferay.site.navigation.constants.SiteNavigationConstants" %><%@
 page import="com.liferay.site.navigation.exception.InvalidSiteNavigationMenuItemOrderException" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenu" %><%@
 page import="com.liferay.site.navigation.model.SiteNavigationMenuItem" %><%@

@@ -137,7 +137,7 @@ public class SiteNavigationMenuPersistenceTest {
 
 		newSiteNavigationMenu.setName(RandomTestUtil.randomString());
 
-		newSiteNavigationMenu.setPrimary(RandomTestUtil.randomBoolean());
+		newSiteNavigationMenu.setType(RandomTestUtil.nextInt());
 
 		_siteNavigationMenus.add(_persistence.update(newSiteNavigationMenu));
 
@@ -161,8 +161,8 @@ public class SiteNavigationMenuPersistenceTest {
 			Time.getShortTimestamp(newSiteNavigationMenu.getModifiedDate()));
 		Assert.assertEquals(existingSiteNavigationMenu.getName(),
 			newSiteNavigationMenu.getName());
-		Assert.assertEquals(existingSiteNavigationMenu.getPrimary(),
-			newSiteNavigationMenu.getPrimary());
+		Assert.assertEquals(existingSiteNavigationMenu.getType(),
+			newSiteNavigationMenu.getType());
 	}
 
 	@Test
@@ -182,11 +182,11 @@ public class SiteNavigationMenuPersistenceTest {
 	}
 
 	@Test
-	public void testCountByG_P() throws Exception {
-		_persistence.countByG_P(RandomTestUtil.nextLong(),
-			RandomTestUtil.randomBoolean());
+	public void testCountByG_T() throws Exception {
+		_persistence.countByG_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextInt());
 
-		_persistence.countByG_P(0L, RandomTestUtil.randomBoolean());
+		_persistence.countByG_T(0L, 0);
 	}
 
 	@Test
@@ -221,7 +221,7 @@ public class SiteNavigationMenuPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("SiteNavigationMenu",
 			"siteNavigationMenuId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "primary", true);
+			"modifiedDate", true, "name", true, "type", true);
 	}
 
 	@Test
@@ -431,10 +431,10 @@ public class SiteNavigationMenuPersistenceTest {
 				existingSiteNavigationMenu.getGroupId()),
 			ReflectionTestUtil.<Long>invoke(existingSiteNavigationMenu,
 				"getOriginalGroupId", new Class<?>[0]));
-		Assert.assertEquals(Boolean.valueOf(
-				existingSiteNavigationMenu.getPrimary()),
-			ReflectionTestUtil.<Boolean>invoke(existingSiteNavigationMenu,
-				"getOriginalPrimary", new Class<?>[0]));
+		Assert.assertEquals(Integer.valueOf(
+				existingSiteNavigationMenu.getType()),
+			ReflectionTestUtil.<Integer>invoke(existingSiteNavigationMenu,
+				"getOriginalType", new Class<?>[0]));
 	}
 
 	protected SiteNavigationMenu addSiteNavigationMenu()
@@ -457,7 +457,7 @@ public class SiteNavigationMenuPersistenceTest {
 
 		siteNavigationMenu.setName(RandomTestUtil.randomString());
 
-		siteNavigationMenu.setPrimary(RandomTestUtil.randomBoolean());
+		siteNavigationMenu.setType(RandomTestUtil.nextInt());
 
 		_siteNavigationMenus.add(_persistence.update(siteNavigationMenu));
 

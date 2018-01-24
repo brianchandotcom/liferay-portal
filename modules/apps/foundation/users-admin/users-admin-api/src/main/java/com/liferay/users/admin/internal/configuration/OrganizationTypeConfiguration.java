@@ -22,8 +22,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  * @author Marco Leo
  */
 @ExtendedObjectClassDefinition(
-	category = "foundation", scope = ExtendedObjectClassDefinition.Scope.SYSTEM,
-	factoryInstanceLabelAttribute = "name"
+	category = "foundation", factoryInstanceLabelAttribute = "name",
+	scope = ExtendedObjectClassDefinition.Scope.SYSTEM
 )
 @Meta.OCD(
 	factory = true,
@@ -33,34 +33,19 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface OrganizationTypeConfiguration {
 
-	@Meta.AD(
-		name = "name",
-		deflt = "organization", required = false
-	)
+	@Meta.AD(deflt = "organization", name = "name", required = false)
 	public String name();
 
-	@Meta.AD(
-		name = "country-enabled",
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", name = "country-enabled", required = false)
 	public boolean countryEnabled();
 
-	@Meta.AD(
-		name = "country-required",
-		deflt = "false", required = false
-	)
+	@Meta.AD(deflt = "false", name = "country-required", required = false)
 	public boolean countryRequired();
 
-	@Meta.AD(
-		name = "rootable",
-		deflt = "true", required = false
-	)
+	@Meta.AD(deflt = "true", name = "rootable", required = false)
 	public boolean rootable();
 
-	@Meta.AD(
-		name = "children-types",
-		deflt = "", required = false
-	)
+	@Meta.AD(deflt = "", name = "children-types", required = false)
 	public String[] childrenTypes();
 
 }

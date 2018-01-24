@@ -770,7 +770,7 @@
 			},
 
 			portal: {
-				base: PATH_JAVASCRIPT + '/liferay/',
+				base: Liferay.ThemeDisplay.getCDNBaseURL() + PATH_JAVASCRIPT + '/liferay/',
 				combine: false,
 				modules: {
 					'portal-available-languages': {

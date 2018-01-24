@@ -522,7 +522,11 @@ public class TopLevelBuild extends BaseBuild {
 		String baseRepositoryName = getBaseRepositoryName();
 		String branchName = getBranchName();
 
-		String companionRepositoryName = baseRepositoryName + "-ee";
+		String companionRepositoryName = baseRepositoryName;
+
+		if (branchName.equals("master")) {
+			companionRepositoryName = companionRepositoryName + "-ee";
+		}
 
 		if (branchName.endsWith("-private")) {
 			companionRepositoryName = baseRepositoryName.substring(

@@ -43,6 +43,12 @@
 		<execute function="Type" locator1="TextArea#DESCRIPTION" value1="${description}" />
 	</command>
 
+	<command name="inputDescriptionTextInput">
+		<execute function="Click" locator1="TextInput#DESCRIPTION" />
+
+		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${description}" />
+	</command>
+
 	<command name="inputLocalizedName">
 		<execute function="Click" locator1="Language#SITE_NAME_TRANSLATION">
 			<var name="key_language" value="${language}" />

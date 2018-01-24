@@ -1,0 +1,11 @@
+Bundle-Name: Liferay Knowledge Base Markdown Converter Implementation
+Bundle-SymbolicName: com.liferay.knowledge.base.markdown.converter.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!org.objectweb.*,\
+	\
+	!org.parboiled.*,\
+	\
+	!org.pegdown.*,\
+	\
+	*

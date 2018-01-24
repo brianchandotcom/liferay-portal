@@ -8,7 +8,6 @@ import templates from './LayoutColumn.soy';
  * LayoutColumn
  */
 class LayoutColumn extends Component {
-
 	/**
 	 * Handle permission item click in order to open the target href
 	 * in a dialog.
@@ -18,12 +17,12 @@ class LayoutColumn extends Component {
 	_handlePermissionLinkClick(event) {
 		Liferay.Util.openInDialog(event, {
 			dialog: {
-				destroyOnHide: true
+				destroyOnHide: true,
 			},
 			dialogIframe: {
-				bodyCssClass: 'dialog-with-footer'
+				bodyCssClass: 'dialog-with-footer',
 			},
-			uri: event.delegateTarget.href
+			uri: event.delegateTarget.href,
 		});
 	}
 
@@ -34,9 +33,11 @@ class LayoutColumn extends Component {
 	 * @private
 	 */
 	_handleDeleteItemClick(event) {
-		if (!confirm(Liferay.Language.get(
-			'are-you-sure-you-want-to-delete-this'
-		))) {
+		if (
+			!confirm(
+				Liferay.Language.get('are-you-sure-you-want-to-delete-this')
+			)
+		) {
 			event.preventDefault();
 		}
 	}

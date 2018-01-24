@@ -220,7 +220,9 @@ LayoutPageTemplateEditor.STATE = {
 	 * @private
 	 * @type {boolean}
 	 */
-	_contextualSidebarVisible: Config.bool().internal().value(true),
+	_contextualSidebarVisible: Config.bool()
+		.internal()
+		.value(true),
 
 	/**
 	 * When true, it indicates that are changes pending to save.

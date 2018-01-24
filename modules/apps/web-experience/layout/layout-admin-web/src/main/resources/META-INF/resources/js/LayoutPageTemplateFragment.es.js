@@ -22,7 +22,7 @@ class LayoutPageTemplateFragment extends Component {
 	 */
 	rendered() {
 		if (this.refs.content) {
-			this.refs.content.querySelectorAll('script').forEach((script) => {
+			this.refs.content.querySelectorAll('script').forEach(script => {
 				const parentNode = script.parentNode;
 				const newScript = document.createElement('script');
 
@@ -163,7 +163,9 @@ LayoutPageTemplateFragment.STATE = {
 	 * @private
 	 * @type {function}
 	 */
-	_content: Config.func().internal().value(Soy.toIncDom('')),
+	_content: Config.func()
+		.internal()
+		.value(Soy.toIncDom('')),
 
 	/**
 	 * Flag indicating that fragment information is being loaded
@@ -173,7 +175,7 @@ LayoutPageTemplateFragment.STATE = {
 	 * @private
 	 * @type {boolean}
 	 */
-	_loading: Config.bool().value(false)
+	_loading: Config.bool().value(false),
 };
 
 Soy.register(LayoutPageTemplateFragment, templates);

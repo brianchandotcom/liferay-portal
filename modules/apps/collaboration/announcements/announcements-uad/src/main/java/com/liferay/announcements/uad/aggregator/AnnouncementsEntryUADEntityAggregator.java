@@ -20,7 +20,6 @@ import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
 import com.liferay.announcements.uad.entity.AnnouncementsEntryUADEntity;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.entity.UADEntity;
 
@@ -39,7 +38,7 @@ import org.osgi.service.component.annotations.Reference;
 	service = UADEntityAggregator.class
 )
 public class AnnouncementsEntryUADEntityAggregator
-	extends BaseUADEntityAggregator {
+	extends BaseAnnouncementsUADEntityAggregator {
 
 	@Override
 	public List<UADEntity> getUADEntities(long userId) {

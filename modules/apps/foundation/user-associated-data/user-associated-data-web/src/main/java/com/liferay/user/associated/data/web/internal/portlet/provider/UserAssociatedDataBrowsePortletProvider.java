@@ -12,7 +12,7 @@
  * details.
  */
 
-package liferay.user.associated.data.web.portlet;
+package com.liferay.user.associated.data.web.internal.portlet.provider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;

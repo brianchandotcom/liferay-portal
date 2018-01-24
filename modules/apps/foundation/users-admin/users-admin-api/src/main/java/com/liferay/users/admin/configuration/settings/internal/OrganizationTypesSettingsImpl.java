@@ -14,6 +14,8 @@
 
 package com.liferay.users.admin.configuration.settings.internal;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.users.admin.internal.model.OrganizationType;
 import com.liferay.users.admin.kernel.organization.types.OrganizationTypesSettings;
@@ -39,7 +41,11 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public String[] getChildrenTypes(String type) {
-		OrganizationType organizationType = _organizationTypes.get(type);
+		OrganizationType organizationType = getOrganizationType(type);
+
+		if (organizationType == null) {
+			return new String[0];
+		}
 
 		return organizationType.getChildrenTypes();
 	}
@@ -51,21 +57,33 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public boolean isCountryEnabled(String type) {
-		OrganizationType organizationType = _organizationTypes.get(type);
+		OrganizationType organizationType = getOrganizationType(type);
+
+		if (organizationType == null) {
+			return false;
+		}
 
 		return organizationType.isCountryEnabled();
 	}
 
 	@Override
 	public boolean isCountryRequired(String type) {
-		OrganizationType organizationType = _organizationTypes.get(type);
+		OrganizationType organizationType = getOrganizationType(type);
+
+		if (organizationType == null) {
+			return false;
+		}
 
 		return organizationType.isCountryRequired();
 	}
 
 	@Override
 	public boolean isRootable(String type) {
-		OrganizationType organizationType = _organizationTypes.get(type);
+		OrganizationType organizationType = getOrganizationType(type);
+
+		if (organizationType == null) {
+			return false;
+		}
 
 		return organizationType.isRootable();
 	}
@@ -82,11 +100,24 @@ public class OrganizationTypesSettingsImpl
 		_organizationTypes.put(organizationType.getName(), organizationType);
 	}
 
+	protected OrganizationType getOrganizationType(String type) {
+		OrganizationType organizationType = _organizationTypes.get(type);
+
+		if (organizationType == null) {
+			_log.error("Unable to get organization type '" + type + "'");
+		}
+
+		return organizationType;
+	}
+
 	protected void removeOrganizationType(
 		OrganizationType organizationType, Map<String, Object> properties) {
 
 		_organizationTypes.remove(organizationType.getName());
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		OrganizationTypesSettingsImpl.class);
 
 	private final Map<String, OrganizationType> _organizationTypes =
 		new HashMap<>();

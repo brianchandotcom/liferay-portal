@@ -25,38 +25,9 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcPath", "/admin/view_templates.jsp");
 portletURL.setParameter("orderBycol", orderByCol);
 portletURL.setParameter("orderByType", orderByType);
-
-portletDisplay.setShowBackIcon(true);
-portletDisplay.setURLBack(redirect);
-
-renderResponse.setTitle(LanguageUtil.get(request, "templates"));
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewTemplatesURL">
-			<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewTemplatesURL %>"
-			label="templates"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL %>" method="get" name="fm2">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<liferay-util:include page="/admin/common/top_tabs.jsp" servletContext="<%= application %>" />
 
 <%
 String keywords = ParamUtil.getString(request, "keywords");
@@ -102,6 +73,18 @@ String keywords = ParamUtil.getString(request, "keywords");
 				orderColumns='<%= new String[] {"title", "user-name", "create-date", "modified-date"} %>'
 				portletURL="<%= sortURL %>"
 			/>
+
+			<li>
+				<liferay-portlet:renderURL varImpl="searchURL">
+					<portlet:param name="mvcPath" value="/admin/view_templates.jsp" />
+				</liferay-portlet:renderURL>
+
+				<aui:form action="<%= searchURL %>" method="get" name="fm2">
+					<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+					<liferay-ui:input-search markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 	</c:if>
 

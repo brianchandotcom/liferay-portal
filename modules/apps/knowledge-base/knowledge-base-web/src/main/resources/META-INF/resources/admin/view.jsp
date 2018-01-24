@@ -112,6 +112,19 @@ if (parentResourcePrimKey != KBFolderConstants.DEFAULT_PARENT_FOLDER_ID) {
 				orderColumns='<%= new String[] {"priority", "modified-date", "title", "view-count"} %>'
 				portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
 			/>
+
+			<li>
+				<liferay-portlet:renderURL varImpl="searchURL">
+					<portlet:param name="mvcPath" value="/admin/search.jsp" />
+				</liferay-portlet:renderURL>
+
+				<aui:form action="<%= searchURL %>" method="get" name="searchFm">
+					<liferay-portlet:renderURLParams varImpl="searchURL" />
+					<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
+
+					<liferay-ui:input-search id="keywords" markupView="lexicon" placeholder='<%= LanguageUtil.get(request, "search") %>' />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 	</c:if>
 

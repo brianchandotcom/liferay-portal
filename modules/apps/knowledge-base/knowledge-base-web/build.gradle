@@ -32,6 +32,7 @@ dependencies {
 	provided project(":apps:collaboration:blogs:blogs-api")
 	provided project(":apps:collaboration:document-library:document-library-api")
 	provided project(":apps:collaboration:subscription:subscription-api")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:web-experience:asset:asset-taglib")
 	provided project(":apps:web-experience:journal:journal-api")
 }

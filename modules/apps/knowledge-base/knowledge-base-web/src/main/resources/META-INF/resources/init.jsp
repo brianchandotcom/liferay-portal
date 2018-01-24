@@ -20,6 +20,7 @@
 
 <%@ taglib uri="http://liferay.com/tld/asset" prefix="liferay-asset" %><%@
 taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -101,6 +102,7 @@ page import="com.liferay.knowledge.base.web.internal.configuration.KBDisplayPort
 page import="com.liferay.knowledge.base.web.internal.configuration.KBSearchPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.internal.configuration.KBSectionPortletInstanceConfiguration" %><%@
 page import="com.liferay.knowledge.base.web.internal.constants.KBWebKeys" %><%@
+page import="com.liferay.knowledge.base.web.internal.display.context.KBAdminNavigationDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBAdminViewDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBNavigationDisplayContext" %><%@
 page import="com.liferay.knowledge.base.web.internal.display.context.KBSelectParentDisplayContext" %><%@

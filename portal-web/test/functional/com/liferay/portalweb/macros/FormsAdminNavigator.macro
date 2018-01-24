@@ -40,6 +40,8 @@
 
 		<execute function="Click" locator1="Form#SIDEBAR_MENUITEM_REMOVE_FIELD" />
 
+		<execute function="Click" locator1="Button#DELETE" />
+
 		<execute function="AssertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
 	</command>
 

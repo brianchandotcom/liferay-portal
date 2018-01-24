@@ -36,6 +36,7 @@ dependencies {
 	provided project(":apps:collaboration:upload:upload-api")
 	provided project(":apps:foundation:friendly-url:friendly-url-api")
 	provided project(":apps:foundation:frontend-taglib:frontend-taglib")
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 	provided project(":apps:web-experience:asset:asset-api")
 	provided project(":apps:web-experience:asset:asset-display-api")
 	provided project(":apps:web-experience:asset:asset-taglib")

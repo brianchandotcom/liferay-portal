@@ -23,35 +23,40 @@ PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/blogs/view");
 portletURL.setParameter("navigation", navigation);
+
+List<NavigationItem> navigationItems = new ArrayList<>();
+
+NavigationItem entriesNavigationItem = new NavigationItem();
+
+entriesNavigationItem.setActive(navigation.equals("entries"));
+
+PortletURL viewEntriesURL = renderResponse.createRenderURL();
+
+entriesNavigationItem.setHref(viewEntriesURL.toString());
+
+entriesNavigationItem.setLabel(LanguageUtil.get(request, "entries"));
+
+navigationItems.add(entriesNavigationItem);
+
+NavigationItem imagesNavigationItem = new NavigationItem();
+
+imagesNavigationItem.setActive(navigation.equals("images"));
+
+PortletURL viewImagesURL = renderResponse.createRenderURL();
+
+viewImagesURL.setParameter("navigation", "images");
+
+imagesNavigationItem.setHref(viewImagesURL.toString());
+
+imagesNavigationItem.setLabel(LanguageUtil.get(request, "images"));
+
+navigationItems.add(imagesNavigationItem);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewEntriesURL" />
-
-		<aui:nav-item
-			href="<%= viewEntriesURL %>"
-			label="entries"
-			selected='<%= navigation.equals("entries") %>'
-		/>
-
-		<portlet:renderURL var="viewImagesURL">
-			<portlet:param name="navigation" value="images" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewImagesURL %>"
-			label="images"
-			selected='<%= navigation.equals("images") %>'
-		/>
-	</aui:nav>
-
-	<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-		<aui:nav-bar-search>
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:nav-bar-search>
-	</aui:form>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= navigationItems %>"
+/>
 
 <c:choose>
 	<c:when test='<%= navigation.equals("entries") %>'>

@@ -14,50 +14,33 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.PortletKeys;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
 public class GroupServiceSettingsLocatorTest
 	extends BaseSettingsLocatorTestCase {
 
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
-
 	@Before
 	public void setUp() throws Exception {
-		_companyId = TestPropsValues.getCompanyId();
-		_portletId = RandomTestUtil.randomString();
-		_groupId = TestPropsValues.getGroupId();
-
 		settingsLocator = new GroupServiceSettingsLocator(
-			_groupId, _portletId,
+			groupId, portletId,
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 	}
 
@@ -70,7 +53,7 @@ public class GroupServiceSettingsLocatorTest
 		String companyScopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-				Scope.COMPANY, String.valueOf(_companyId));
+				Scope.COMPANY, String.valueOf(companyId));
 
 		String companyConfigurationValue = saveConfiguration(companyScopedPid);
 
@@ -80,8 +63,8 @@ public class GroupServiceSettingsLocatorTest
 
 		_portletPreferencesList.add(
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				_companyId, _companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
-				_portletId, null,
+				companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
+				portletId, null,
 				String.format(
 					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
 					SettingsLocatorTestConstants.TEST_KEY,
@@ -92,7 +75,7 @@ public class GroupServiceSettingsLocatorTest
 		String groupScopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-				Scope.GROUP, String.valueOf(_groupId));
+				Scope.GROUP, String.valueOf(groupId));
 
 		String groupConfigurationValue = saveConfiguration(groupScopedPid);
 
@@ -102,8 +85,8 @@ public class GroupServiceSettingsLocatorTest
 
 		_portletPreferencesList.add(
 			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				_companyId, _groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
-				_portletId, null,
+				companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
+				portletId, null,
 				String.format(
 					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
 					SettingsLocatorTestConstants.TEST_KEY,
@@ -111,10 +94,6 @@ public class GroupServiceSettingsLocatorTest
 
 		Assert.assertEquals(groupPortletPreferencesValue, getSettingsValue());
 	}
-
-	private long _companyId;
-	private long _groupId;
-	private String _portletId;
 
 	@DeleteAfterTestRun
 	private final List<PortletPreferences> _portletPreferencesList =

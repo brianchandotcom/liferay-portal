@@ -165,11 +165,6 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LINK_TO_PAGE_NAV_BAR</td>
-	<td>//ul[contains(@class,'navbar')]//a[contains(.,'${key_navItem}')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LINK_TO_PAGE_BREADCRUMB</td>
 	<td>//ul[contains(@class,'breadcrumb')]/li[${key_number}]</td>
 	<td></td>
@@ -180,23 +175,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>LINK_TO_PAGE_PAGE</td>
-	<td>//li[@class='treeview-node']//div[@data-treeitemname='${key_pageName}']//div[contains(@class,'card-row')]</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_TO_PAGE_PAGE_SELECTED</td>
-	<td>//li[@class='treeview-node']//div[@data-treeitemname='${key_pageName}' and contains(@class,'selected')]//div[contains(@class,'card-row')]</td>
-	<td></td>
-</tr>
-<tr>
 	<td>LINK_TO_PAGE_PAGE_CARET</td>
 	<td>//a[contains(.,'${key_pageName}')]/../input[@type='radio']/../a</td>
-	<td></td>
-</tr>
-<tr>
-	<td>LINK_TO_PAGE_PAGE_TOGGLER</td>
-	<td>//li[@class='treeview-node']//div[@data-treeitemname='${key_pageName}']/div[@class='treeview-node-toggler']</td>
 	<td></td>
 </tr>
 <tr>

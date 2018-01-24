@@ -673,7 +673,7 @@
 		<while>
 			<condition function="IsElementPresent" locator1="KaleoDesigner#DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />
 			<then>
-				<execute macro="KaleoDesigner#deleteTableDefinitionDraftViaKDCP" />
+				<execute macro="Workflow#deleteWorkflowDefinition" />
 
 				<if>
 					<condition function="IsElementNotPresent" locator1="KaleoDesigner#DEFINITION_TABLE_DEFINITION_DRAFT_ACTIONS" />

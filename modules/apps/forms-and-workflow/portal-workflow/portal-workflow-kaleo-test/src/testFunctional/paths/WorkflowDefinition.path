@@ -42,22 +42,22 @@
 <!--DEFINITION_TABLE-->
 <tr>
 	<td>DEFINITION_TABLE_TITLE</td>
-	<td>//div[contains(@id,'WorkflowPortlet')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_SPECIFIC_DEFINITION_ELLIPSIS</td>
-	<td>//div[contains(@id,'WorkflowPortlet')]//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[4]//div/a</td>
+	<td>//tr[contains(.,'${key_workflowDefinitionTitle}')]/td[4]//div/a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_TITLE_PUBLISHED</td>
-	<td>//div[contains(@id,'WorkflowPortlet')]//tr[count(preceding-sibling::tr[contains(@class,'splitter')])=1 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[count(preceding-sibling::tr[contains(@class,'splitter')])=1 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DEFINITION_TABLE_TITLE_UNPUBLISHED</td>
-	<td>//div[contains(@id,'WorkflowPortlet')]//tr[count(preceding-sibling::tr[contains(@class,'splitter')])=2 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
+	<td>//tr[count(preceding-sibling::tr[contains(@class,'splitter')])=2 and contains(.,'${key_workflowDefinitionTitle}')]/td[1]</td>
 	<td></td>
 </tr>
 <tr>

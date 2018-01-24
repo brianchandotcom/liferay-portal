@@ -30,8 +30,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getContent() throws PortalException {
-		return FragmentRenderUtil.renderFragment(
-			getFragmentEntryId(), getCss(), getHtml(), getJs());
+		return FragmentRenderUtil.renderFragment(this);
 	}
 
 	@Override

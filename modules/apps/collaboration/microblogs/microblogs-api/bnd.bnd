@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.microblogs.exception,\
 	com.liferay.microblogs.model,\
 	com.liferay.microblogs.service,\
-	com.liferay.microblogs.service.persistence
+	com.liferay.microblogs.service.persistence,\
+	com.liferay.microblogs.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Microblogs

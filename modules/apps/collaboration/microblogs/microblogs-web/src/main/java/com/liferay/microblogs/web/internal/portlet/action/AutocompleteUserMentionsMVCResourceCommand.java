@@ -15,7 +15,7 @@
 package com.liferay.microblogs.web.internal.portlet.action;
 
 import com.liferay.microblogs.constants.MicroblogsPortletKeys;
-import com.liferay.microblogs.util.MicroblogsUtil;
+import com.liferay.microblogs.web.internal.util.MicroblogsWebUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -67,7 +67,7 @@ public class AutocompleteUserMentionsMVCResourceCommand
 				(ThemeDisplay)resourceRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			JSONArray jsonArray = MicroblogsUtil.getJSONRecipients(
+			JSONArray jsonArray = MicroblogsWebUtil.getJSONRecipients(
 				userId, themeDisplay);
 
 			HttpServletResponse response = _portal.getHttpServletResponse(

@@ -25,7 +25,7 @@ public abstract class BaseAnnouncementsUADEntityAggregator
 
 	@Override
 	public String getUADEntitySetName() {
-		return AnnouncementsUADConstants.BUNDLE_ID;
+		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
 	}
 
 }

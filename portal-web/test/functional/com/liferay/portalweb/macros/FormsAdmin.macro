@@ -93,11 +93,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="searchFormEntry">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${searchTerm}" />
-		</execute>
-	</command>
 
 	<command name="teardownForms">
 		<while>

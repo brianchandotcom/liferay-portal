@@ -692,11 +692,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-	<command name="searchProcessRecords">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${kfProcessSearchData}" />
-		</execute>
-	</command>
 
 	<command name="submitNewProcess">
 		<execute macro="KaleoFormsAdmin#viewProcessRecord">

@@ -893,11 +893,6 @@
 		</execute>
 	</command>
 
-	<command name="searchInputCP">
-		<execute macro="Search#searchCP">
-			<var name="searchTerm" value="${siteName}" />
-		</execute>
-	</command>
 
 	<command name="searchMemberCP">
 		<var name="searchTerm" value="${userEmailAddressSearchValue}" />

@@ -14,29 +14,19 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentEntryService;
 import com.liferay.fragment.util.FragmentRenderUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
@@ -63,43 +53,13 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		try {
-			FragmentEntry fragmentEntry =
-				_fragmentEntryService.fetchFragmentEntry(fragmentEntryId);
-
-			jsonObject.put(
-				"content",
-				FragmentRenderUtil.renderFragment(
-					fragmentInstanceId, fragmentEntryId, fragmentEntry.getCss(),
-					fragmentEntry.getHtml(), fragmentEntry.getJs()));
-		}
-		catch (PortalException pe) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLocale());
-
-			hideDefaultSuccessMessage(actionRequest);
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					resourceBundle, "an-unexpected-error-occurred"));
-		}
+		jsonObject.put(
+			"content",
+			FragmentRenderUtil.renderFragment(
+				fragmentInstanceId, fragmentEntryId));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference
-	private FragmentEntryService _fragmentEntryService;
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.layout.admin.web)",
-		unbind = "-"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

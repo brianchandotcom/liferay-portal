@@ -201,9 +201,7 @@
 		<execute function="Select" locator1="DocumentsAndMediaEditMarketingBanner#BUSINESS_GOAL_SELECT" value1="${businessGoal}" />
 		<execute function="Click" locator1="DocumentsAndMediaEditMarketingBanner#NEEDS_LEGAL_REVIEW_${legalReview}_RADIO" />
 		<execute function="Type" locator1="DocumentsAndMediaEditMarketingBanner#BANNER_NAME_FIELD" value1="${bannerName}" />
-		<execute macro="PortletEntry#inputDescription">
-			<var name="description" value="${bannerDescription}" />
-		</execute>
+		<execute function="Type" locator1="DocumentsAndMediaEditMarketingBanner#BANNER_DESCRIPTION_FIELD" value1="${bannerDescription}" />
 
 		<execute macro="PortletEntry#publish" />
 	</command>

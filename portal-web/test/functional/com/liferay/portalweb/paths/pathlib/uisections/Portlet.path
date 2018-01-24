@@ -94,6 +94,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>SEARCH_FIELD</td>
+	<td>//div[section/header/div[normalize-space()='${key_portletName}']]//input[contains(@name,'keywords')]</td>
+	<td></td>
+</tr>
+<tr>
 	<td>SIGN_IN_CUSTOM_LOOK_AND_FEEL</td>
 	<td>portal/screenshots/home/sign_in_custom_look_and_feel.png</td>
 	<td></td>

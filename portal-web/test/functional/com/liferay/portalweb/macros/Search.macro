@@ -7,4 +7,14 @@
 
 		<execute function="KeyPress" locator1="TextInput#SEARCH" value1="\RETURN" />
 	</command>
+
+	<command name="searchPG">
+		<var name="key_portletName" value="${portletName}" />
+
+		<execute function="AssertElementPresent" locator1="Portlet#SEARCH_FIELD" />
+
+		<execute function="Type" locator1="Portlet#SEARCH_FIELD" value1="${searchTerm}" />
+
+		<execute function="KeyPress" locator1="Portlet#SEARCH_FIELD" value1="\RETURN" />
+	</command>
 </definition>

@@ -92,7 +92,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-
 	<command name="tearDown">
 		<execute macro="CalendarNavigator#gotoResources" />
 

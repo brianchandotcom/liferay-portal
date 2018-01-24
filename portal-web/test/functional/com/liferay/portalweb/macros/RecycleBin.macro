@@ -190,7 +190,6 @@
 		<execute function="AssertElementNotPresent" locator1="RecycleBin#RECYCLE_BIN_TABLE_NAME" />
 	</command>
 
-
 	<command name="undoMoveToRecycleBin">
 		<execute function="AssertClick" locator1="Button#UNDO" value1="Undo" />
 	</command>

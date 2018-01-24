@@ -362,8 +362,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="This is a *.docx file." />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="This is a *.docx file." />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
@@ -1053,8 +1053,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread3 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread3 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
@@ -1068,8 +1068,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread4 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread4 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
@@ -1083,8 +1083,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread1 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread1 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
@@ -1096,8 +1096,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread2 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread2 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
@@ -1109,8 +1109,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread1 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread1 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
@@ -1124,8 +1124,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread2 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread2 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewSearchResultPG">
@@ -1139,8 +1139,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread3 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread3 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">
@@ -1152,8 +1152,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="MB Thread4 Message Subject" />
 			<var name="portletName" value="Message Boards" />
+			<var name="searchTerm" value="MB Thread4 Message Subject" />
 		</execute>
 
 		<execute macro="MessageboardsPortlet#viewNoSearchResultSubjectPG">

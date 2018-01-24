@@ -314,7 +314,6 @@
 		<execute function="AssertTextNotPresent" locator1="UserGroups#USER_GROUP_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
-
 	<command name="tearDownCP">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />

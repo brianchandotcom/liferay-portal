@@ -101,8 +101,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="Room Car " />
 			<var name="portletName" value="Calendar" />
+			<var name="searchTerm" value="Room Car " />
 		</execute>
 
 		<execute macro="CalendarResource#viewResourceName">
@@ -118,8 +118,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="Room" />
 			<var name="portletName" value="Calendar" />
+			<var name="searchTerm" value="Room" />
 		</execute>
 
 		<execute macro="CalendarResource#viewResourceName">

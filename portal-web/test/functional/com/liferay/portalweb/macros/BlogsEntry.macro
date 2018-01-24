@@ -611,8 +611,8 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="${entrySearchTerm}" />
 			<var name="portletName" value="Blogs" />
+			<var name="searchTerm" value="${entrySearchTerm}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="No entries were found that matched the keywords: ${entrySearchTerm}." />
@@ -639,8 +639,8 @@
 		<var name="key_entryTitle" value="${entryTitle}" />
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="${entrySearchTerm}" />
 			<var name="portletName" value="Blogs" />
+			<var name="searchTerm" value="${entrySearchTerm}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Blogs#SEARCH_RESULTS_ENTRY_TITLE" value1="${entryTitle}" />

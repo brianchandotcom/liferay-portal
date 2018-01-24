@@ -411,8 +411,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="Site Name" />
 			<var name="portletName" value="My Sites" />
+			<var name="searchTerm" value="Site Name" />
 		</execute>
 
 		<execute macro="Site#viewMySitesViaMySitesPG">
@@ -747,8 +747,8 @@
 		</execute>
 
 		<execute macro="Search#searchPG">
-			<var name="searchTerm" value="Site Name" />
 			<var name="portletName" value="My Sites" />
+			<var name="searchTerm" value="Site Name" />
 		</execute>
 
 		<execute macro="MySites#viewNoOptions">

@@ -893,7 +893,6 @@
 		</execute>
 	</command>
 
-
 	<command name="searchMemberCP">
 		<var name="searchTerm" value="${userEmailAddressSearchValue}" />
 

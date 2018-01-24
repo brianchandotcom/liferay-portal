@@ -93,7 +93,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-
 	<command name="teardownForms">
 		<while>
 			<condition function="IsElementPresent" locator1="Icon#BODY_VERTICAL_ELLIPSIS" />

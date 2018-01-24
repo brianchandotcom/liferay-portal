@@ -692,7 +692,6 @@
 		<execute macro="PortletEntry#save" />
 	</command>
 
-
 	<command name="submitNewProcess">
 		<execute macro="KaleoFormsAdmin#viewProcessRecord">
 			<var name="kfProcessName" value="${kfProcessName}" />

@@ -37,7 +37,9 @@ public class AxisX extends ChartObject {
 	}
 
 	public void addCategory(String category) {
-		get("categories", ArrayList.class).add(category);
+		ArrayList categories = get("categories", ArrayList.class);
+
+		categories.add(category);
 	}
 
 	@JSON(include = false)

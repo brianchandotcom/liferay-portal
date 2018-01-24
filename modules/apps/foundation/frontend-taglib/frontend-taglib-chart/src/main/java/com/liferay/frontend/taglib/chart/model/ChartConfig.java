@@ -26,7 +26,9 @@ public abstract class ChartConfig<ColumnType extends Column>
 	extends ChartObject {
 
 	public void addColumn(ColumnType columnType) {
-		get("columnTypes", ArrayList.class).add(columnType);
+		ArrayList columns = get("columns", ArrayList.class);
+
+		columns.add(columnType);
 	}
 
 	public void addColumns(Collection<? extends ColumnType> columnTypes) {

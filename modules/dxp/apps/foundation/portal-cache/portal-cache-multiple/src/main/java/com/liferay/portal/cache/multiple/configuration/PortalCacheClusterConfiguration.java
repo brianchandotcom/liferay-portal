@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.cluster.Priority;
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.cache.cluster.configuration.PortalCacheClusterConfiguration",
+	id = "com.liferay.portal.cache.multiple.configuration.PortalCacheClusterConfiguration",
 	name = "portal-cache-cluster-configuration-name"
 )
 public interface PortalCacheClusterConfiguration {

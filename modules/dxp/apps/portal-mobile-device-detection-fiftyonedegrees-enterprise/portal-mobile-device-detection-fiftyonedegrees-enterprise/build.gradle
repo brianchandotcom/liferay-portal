@@ -5,6 +5,10 @@ task downloadDATs
 String repositoryPrivatePassword = System.getProperty("repository.private.password")
 String repositoryPrivateUsername = System.getProperty("repository.private.username")
 
+classes {
+	dependsOn downloadDATs
+}
+
 dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.portal.configuration.metatype", version: "2.0.0"
@@ -26,8 +30,4 @@ downloadDATs {
 			repositoryPrivateUsername, repositoryPrivatePassword,
 			new File(dir, "51Degrees-EnterpriseV3_2.dat.gz"), false, false)
 	}
-}
-
-classes {
-	dependsOn downloadDATs
 }

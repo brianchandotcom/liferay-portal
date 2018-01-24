@@ -57,40 +57,6 @@
 		</for>
 	</command>
 
-	<command name="DeletePages" priority="5">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page1" />
-		</execute>
-
-		<execute macro="SitePages#addPublicPage">
-			<var name="pageName" value="Page2" />
-		</execute>
-
-		<execute macro="SitePages#deletePage">
-			<var name="pageName" value="Page1" />
-		</execute>
-
-		<execute macro="Page#viewDeletedPage">
-			<var name="pageName" value="Page1" />
-		</execute>
-
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="Page#deleteViaX">
-			<var name="pageName" value="Page2" />
-		</execute>
-
-		<execute macro="Page#viewDeletedPage">
-			<var name="pageName" value="Page2" />
-		</execute>
-	</command>
-
 	<command name="EditPageViaControlMenu" priority="5">
 		<description message="This is a use case for LPS-71160" />
 

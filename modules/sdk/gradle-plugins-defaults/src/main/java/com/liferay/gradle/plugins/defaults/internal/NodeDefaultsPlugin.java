@@ -18,10 +18,8 @@ import com.liferay.gradle.plugins.BaseDefaultsPlugin;
 import com.liferay.gradle.plugins.defaults.internal.util.GradlePluginsDefaultsUtil;
 import com.liferay.gradle.plugins.defaults.internal.util.GradleUtil;
 import com.liferay.gradle.plugins.node.NodePlugin;
-import com.liferay.gradle.plugins.node.tasks.NpmShrinkwrapTask;
 import com.liferay.gradle.plugins.node.tasks.PublishNodeModuleTask;
 
-import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import org.gradle.api.Action;
@@ -41,7 +39,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 	@Override
 	protected void configureDefaults(Project project, NodePlugin nodePlugin) {
 		_configureTaskClean(project);
-		_configureTaskNpmShrinkwrap(project);
 		_configureTasksPublishNodeModule(project);
 	}
 
@@ -62,15 +59,6 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 			delete.delete("node_modules");
 		}
-	}
-
-	private void _configureTaskNpmShrinkwrap(Project project) {
-		NpmShrinkwrapTask npmShrinkwrapTask =
-			(NpmShrinkwrapTask)GradleUtil.getTask(
-				project, NodePlugin.NPM_SHRINKWRAP_TASK_NAME);
-
-		npmShrinkwrapTask.excludeDependencies(
-			_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES);
 	}
 
 	private void _configureTaskPublishNodeModule(
@@ -137,9 +125,5 @@ public class NodeDefaultsPlugin extends BaseDefaultsPlugin<NodePlugin> {
 
 			});
 	}
-
-	private static final Iterable<String>
-		_NPM_SHRINKWRAP_EXCLUDED_DEPENDENCIES = Collections.singleton(
-			"fsevents");
 
 }

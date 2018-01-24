@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.internal.upgrade;
+package com.liferay.mobile.device.rules.web.internal.upgrade;
 
-import com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.rule.SimpleRuleHandler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.internal.upgrade;
+package com.liferay.mobile.device.rules.web.internal.upgrade;
 
-import com.liferay.mobile.device.rules.rule.group.action.LayoutTemplateModificationActionHandler;
-import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHandler;
-import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
-import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.LayoutTemplateModificationActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.SimpleRedirectActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.SiteRedirectActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.ThemeModificationActionHandler;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.StringBundler;
 

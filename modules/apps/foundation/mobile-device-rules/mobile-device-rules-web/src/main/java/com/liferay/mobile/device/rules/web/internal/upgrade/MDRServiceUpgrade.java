@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.internal.upgrade;
+package com.liferay.mobile.device.rules.web.internal.upgrade;
 
 import com.liferay.portal.kernel.upgrade.DummyUpgradeStep;
 import com.liferay.portal.upgrade.registry.UpgradeStepRegistrator;

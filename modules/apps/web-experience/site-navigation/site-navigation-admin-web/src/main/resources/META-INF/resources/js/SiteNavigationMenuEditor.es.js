@@ -63,63 +63,60 @@ class SiteNavigationMenuEditor extends State {
 		const source = data.source;
 		const target = data.target;
 
-		if (
-			!target ||
-			target === source ||
-			source.parentNode.contains(target)
-		) {
-			return;
-		}
+		if (target &&
+			target !== source &&
+			!source.parentNode.contains(target) &&
+			target.dataset.siteNavigationMenuItemId) {
 
-		const placeholderRegion = position.getRegion(placeholder);
-		const targetRegion = position.getRegion(target);
+			const placeholderRegion = position.getRegion(placeholder);
+			const targetRegion = position.getRegion(target);
 
-		if (!target.dataset.siteNavigationMenuItemId) {
-			return;
-		}
+			const nested = placeholderRegion.right - targetRegion.right > placeholderRegion.width / 3;
 
-		const nested = placeholderRegion.right - targetRegion.right > placeholderRegion.width / 3;
+			removeClasses(source.parentNode, 'ml-5');
 
-		removeClasses(source.parentNode, 'ml-5');
+			let newParentId = target.dataset.parentSiteNavigationMenuItemId;
 
-		let newParentId = target.dataset.parentSiteNavigationMenuItemId;
+			if (placeholderRegion.top < targetRegion.top) {
+				target.parentNode.parentNode.insertBefore(source.parentNode, target.parentNode);
+			}
+			else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
+				target.parentNode.insertBefore(
+					source.parentNode,
+					target.nextSibling
+				);
+			}
+			else if (nested && placeholderRegion.bottom > targetRegion.bottom) {
+				target.parentNode.insertBefore(
+					source.parentNode,
+					target.nextSibling
+				);
 
-		if (placeholderRegion.top < targetRegion.top) {
-			target.parentNode.parentNode.insertBefore(source.parentNode, target.parentNode);
-		}
-		else if (!nested && (placeholderRegion.bottom > targetRegion.bottom)) {
-			target.parentNode.insertBefore(
-				source.parentNode,
-				target.nextSibling
+				newParentId = target.dataset.siteNavigationMenuItemId;
+
+				addClasses(source.parentNode, 'ml-5');
+			}
+
+			source.dataset.parentId = newParentId;
+
+			const parent = document.querySelector(`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
+
+			const children = Array.from(parent.querySelectorAll('.container-item'))
+				.filter(
+					(node) =>
+						(node === source.parentNode) ||
+						(Array.from(parent.children).indexOf(node) != -1)
+				);
+
+			const order = children.reduce(
+				(previousValue, currentValue, index) => {
+					return currentValue === source.parentNode ? index : previousValue;
+				},
+				0
 			);
+
+			source.dataset.dragOrder = order;
 		}
-		else if (nested && placeholderRegion.bottom > targetRegion.bottom) {
-			target.parentNode.insertBefore(
-				source.parentNode,
-				target.nextSibling
-			);
-
-			newParentId = target.dataset.siteNavigationMenuItemId;
-
-			addClasses(source.parentNode, 'ml-5');
-		}
-
-		source.dataset.parentId = newParentId;
-
-		const parent = document.querySelector(`[data-site-navigation-menu-item-id="${newParentId}"]`).parentNode;
-
-		const children = Array.from(parent.querySelectorAll('.container-item'))
-			.filter(
-				(node) =>
-					(node === source.parentNode) ||
-					(Array.from(parent.children).indexOf(node) != -1)
-			);
-
-		const order = children.reduce((previousValue, currentValue, index) => {
-			return currentValue === source.parentNode ? index : previousValue;
-		}, 0);
-
-		source.dataset.dragOrder = order;
 	}
 
 	/**
@@ -154,27 +151,34 @@ class SiteNavigationMenuEditor extends State {
 				`${this.namespace}siteNavigationMenuItemId`,
 				data.source.dataset.siteNavigationMenuItemId
 			);
+
 			formData.append(
 				`${this.namespace}parentSiteNavigationMenuItemId`,
 				data.source.dataset.parentId
 			);
+
 			formData.append(
 				`${this.namespace}order`,
 				data.source.dataset.dragOrder
 			);
 
-			fetch(this.editSiteNavigationMenuItemParentURL, {
-				body: formData,
-				credentials: 'include',
-				method: 'POST'
-			}).then(() => {
-				if (Liferay.SPA) {
-					Liferay.SPA.app.navigate(window.location.href);
+			fetch(
+				this.editSiteNavigationMenuItemParentURL,
+				{
+					body: formData,
+					credentials: 'include',
+					method: 'POST'
 				}
-				else {
-					window.location.reload();
+			).then(
+				() => {
+					if (Liferay.SPA) {
+						Liferay.SPA.app.navigate(window.location.href);
+					}
+					else {
+						window.location.reload();
+					}
 				}
-			});
+			);
 		}
 		else {
 			removeClasses(data.source.parentNode, 'item-dragging');

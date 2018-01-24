@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 	scope = ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE
 )
 @Meta.OCD(
-	id = "com.liferay.commerce.cart.content.web.internal.configuration.CommerceAddressContentPortletInstanceConfiguration",
+	id = "com.liferay.commerce.address.content.web.internal.portlet.configuration.CommerceAddressContentPortletInstanceConfiguration",
 	localization = "content/Language",
 	name = "commerce-address-web-portlet-instance-configuration-name"
 )

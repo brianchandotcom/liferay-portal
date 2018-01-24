@@ -15,8 +15,9 @@
 package com.liferay.fragment.util;
 
 import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.sanitizer.Sanitizer;
+import com.liferay.portal.kernel.sanitizer.SanitizerException;
 import com.liferay.portal.kernel.sanitizer.SanitizerUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
@@ -31,48 +32,52 @@ import java.util.Optional;
 public class FragmentRenderUtil {
 
 	public static String renderFragment(
-			long fragmentInstanceId, long fragmentEntryId, String css,
-			String html, String js)
-		throws PortalException {
+		long fragmentInstanceId, long fragmentEntryId, String css, String html,
+		String js) {
 
-		StringBundler sb = new StringBundler(15);
+		try {
+			StringBundler sb = new StringBundler(15);
 
-		sb.append("<div class=\"fragment-");
-		sb.append(fragmentEntryId);
-		sb.append("\" id=\"fragment-");
-		sb.append(fragmentEntryId);
-		sb.append("-");
-		sb.append(fragmentInstanceId);
-		sb.append("\">");
-		sb.append("<style>");
-		sb.append(css);
-		sb.append("</style>");
+			sb.append("<div class=\"fragment-");
+			sb.append(fragmentEntryId);
+			sb.append("\" id=\"fragment-");
+			sb.append(fragmentEntryId);
+			sb.append("-");
+			sb.append(fragmentInstanceId);
+			sb.append("\">");
+			sb.append("<style>");
+			sb.append(css);
+			sb.append("</style>");
 
-		Optional<ServiceContext> serviceContextOptional = Optional.ofNullable(
-			ServiceContextThreadLocal.getServiceContext());
+			Optional<ServiceContext> serviceContextOptional =
+				Optional.ofNullable(
+					ServiceContextThreadLocal.getServiceContext());
 
-		ServiceContext serviceContext = serviceContextOptional.orElse(
-			new ServiceContext());
+			ServiceContext serviceContext = serviceContextOptional.orElse(
+				new ServiceContext());
 
-		String sanitizedHtml = SanitizerUtil.sanitize(
-			serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
-			serviceContext.getUserId(), FragmentEntry.class.getName(),
-			fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL, html,
-			null);
+			String sanitizedHtml = SanitizerUtil.sanitize(
+				serviceContext.getCompanyId(), serviceContext.getScopeGroupId(),
+				serviceContext.getUserId(), FragmentEntry.class.getName(),
+				fragmentEntryId, ContentTypes.TEXT_HTML, Sanitizer.MODE_ALL,
+				html, null);
 
-		sb.append(sanitizedHtml);
+			sb.append(sanitizedHtml);
 
-		sb.append("<script>(function(){");
-		sb.append(js);
-		sb.append(";}());</script>");
-		sb.append("</div>");
+			sb.append("<script>(function(){");
+			sb.append(js);
+			sb.append(";}());</script>");
+			sb.append("</div>");
 
-		return sb.toString();
+			return sb.toString();
+		}
+		catch (SanitizerException se) {
+			throw new SystemException(se);
+		}
 	}
 
 	public static String renderFragment(
-			long fragmentEntryId, String css, String html, String js)
-		throws PortalException {
+		long fragmentEntryId, String css, String html, String js) {
 
 		return renderFragment(0, fragmentEntryId, css, html, js);
 	}

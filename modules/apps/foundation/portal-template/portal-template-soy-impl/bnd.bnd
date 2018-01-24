@@ -1,5 +1,5 @@
-Bundle-Name: Liferay Portal Template Soy
-Bundle-SymbolicName: com.liferay.portal.template.soy
+Bundle-Name: Liferay Portal Template Soy Implementation
+Bundle-SymbolicName: com.liferay.portal.template.soy.impl
 Bundle-Version: 3.0.0
 Import-Package:\
 	!com.google.inject.internal.asm.util,\

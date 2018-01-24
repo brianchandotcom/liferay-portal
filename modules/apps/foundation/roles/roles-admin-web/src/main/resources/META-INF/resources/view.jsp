@@ -51,52 +51,9 @@ pageContext.setAttribute("portletURL", portletURL);
 
 <liferay-ui:error exception="<%= RequiredRoleException.class %>" message="you-cannot-delete-a-system-role" />
 
-<%
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem regularRolesNavigationItem = new NavigationItem();
-
-regularRolesNavigationItem.setActive(type == RoleConstants.TYPE_REGULAR);
-
-PortletURL regularRolesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-regularRolesURL.setParameter("type", String.valueOf(RoleConstants.TYPE_REGULAR));
-
-regularRolesNavigationItem.setHref(regularRolesURL.toString());
-regularRolesNavigationItem.setLabel(LanguageUtil.get(request, "regular-roles"));
-
-navigationItems.add(regularRolesNavigationItem);
-
-NavigationItem siteRolesNavigationItem = new NavigationItem();
-
-siteRolesNavigationItem.setActive(type == RoleConstants.TYPE_SITE);
-
-PortletURL siteRolesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-siteRolesURL.setParameter("type", String.valueOf(RoleConstants.TYPE_SITE));
-
-siteRolesNavigationItem.setHref(siteRolesURL.toString());
-siteRolesNavigationItem.setLabel(LanguageUtil.get(request, "site-roles"));
-
-navigationItems.add(siteRolesNavigationItem);
-
-NavigationItem organizationRolesNavigationItem = new NavigationItem();
-
-organizationRolesNavigationItem.setActive(type == RoleConstants.TYPE_ORGANIZATION);
-
-PortletURL organizationRolesURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-organizationRolesURL.setParameter("type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-
-organizationRolesNavigationItem.setHref(organizationRolesURL.toString());
-organizationRolesNavigationItem.setLabel(LanguageUtil.get(request, "organization-roles"));
-
-navigationItems.add(organizationRolesNavigationItem);
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= navigationItems %>"
+	items="<%= roleDisplayContext.getViewRoleNavigationItems(portletURL) %>"
 />
 
 <liferay-frontend:management-bar

@@ -31,20 +31,10 @@ if (selUser != null) {
 }
 
 portletURL.setParameter("eventName", eventName);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "regular-roles"));
-
-navigationItems.add(entriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items='<%= roleDisplayContext.getSelectRoleNavigationItems("regular-roles") %>'
 />
 
 <liferay-frontend:management-bar>

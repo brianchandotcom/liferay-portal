@@ -23,16 +23,12 @@ import java.util.Locale;
 public class UADEntitySetComposite {
 
 	public UADEntitySetComposite(
-		long userId, String bundleId,
+		long userId, String uadEntitySetName,
 		List<UADEntityTypeComposite> uadEntityTypeComposites) {
 
 		_userId = userId;
-		_bundleId = bundleId;
+		_uadEntitySetName = uadEntitySetName;
 		_uadEntityTypeComposites = uadEntityTypeComposites;
-	}
-
-	public String getBundleId() {
-		return _bundleId;
 	}
 
 	public int getCount() {
@@ -55,6 +51,10 @@ public class UADEntitySetComposite {
 		return "incomplete";
 	}
 
+	public String getUADEntitySetName() {
+		return _uadEntitySetName;
+	}
+
 	public List<UADEntityTypeComposite> getUADEntityTypeComposites() {
 		return _uadEntityTypeComposites;
 	}
@@ -63,7 +63,7 @@ public class UADEntitySetComposite {
 		return _userId;
 	}
 
-	private final String _bundleId;
+	private final String _uadEntitySetName;
 	private final List<UADEntityTypeComposite> _uadEntityTypeComposites;
 	private final long _userId;
 

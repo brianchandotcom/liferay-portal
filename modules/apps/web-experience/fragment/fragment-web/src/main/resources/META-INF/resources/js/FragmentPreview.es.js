@@ -65,14 +65,17 @@ class FragmentPreview extends Component {
 	 */
 	rendered() {
 		if (this.refs.preview) {
-			this.refs.preview.querySelectorAll('script').forEach((script) => {
-				const parentNode = script.parentNode;
-				const newScript = document.createElement('script');
+			this.refs.preview.querySelectorAll('script').forEach(
+				(script) => {
+					const parentNode = script.parentNode;
+					const newScript = document.createElement('script');
 
-				newScript.innerHTML = script.innerHTML;
-				parentNode.removeChild(script);
-				parentNode.appendChild(newScript);
-			});
+					newScript.innerHTML = script.innerHTML;
+
+					parentNode.removeChild(script);
+					parentNode.appendChild(newScript);
+				}
+			);
 		}
 	}
 
@@ -120,16 +123,23 @@ class FragmentPreview extends Component {
 			formData.append(`${this.namespace}html`, this.html);
 			formData.append(`${this.namespace}js`, this.js);
 
-			fetch(this.renderFragmentEntryURL, {
-				body: formData,
-				credentials: 'include',
-				method: 'post'
-			})
-				.then(response => response.json())
-				.then(response => {
+			fetch(
+				this.renderFragmentEntryURL,
+				{
+					body: formData,
+					credentials: 'include',
+					method: 'post'
+				}
+			)
+			.then(
+				response => response.json()
+			)
+			.then(
+				response => {
 					this._loading = false;
 					this._previewContent = Soy.toIncDom(response.content);
-				});
+				}
+			);
 		}
 	}
 
@@ -221,6 +231,21 @@ FragmentPreview.STATE = {
 	spritemap: Config.string().required(),
 
 	/**
+	 * Ratio of the preview being rendered.
+	 * This property is modified internally with the ui buttons
+	 * presented to the user, but it can be safely altered externally.
+	 * @default 'full'
+	 * @instance
+	 * @memberOf FragmentPreview
+	 * @protected
+	 * @type {?string}
+	 */
+	_currentPreviewSize: Config.oneOf(PREVIEW_SIZES)
+		.internal()
+		.value(null)
+		.setter('_setPreviewSize'),
+
+	/**
 	 * Flag for checking if the preview content is being loaded
 	 * @default false
 	 * @instance
@@ -243,21 +268,6 @@ FragmentPreview.STATE = {
 	_previewContent: Config.func()
 		.internal()
 		.value(Soy.toIncDom('')),
-
-	/**
-	 * Ratio of the preview being rendered.
-	 * This property is modified internally with the ui buttons
-	 * presented to the user, but it can be safely altered externally.
-	 * @default 'full'
-	 * @instance
-	 * @memberOf FragmentPreview
-	 * @protected
-	 * @type {?string}
-	 */
-	_currentPreviewSize: Config.oneOf(PREVIEW_SIZES)
-		.internal()
-		.value(null)
-		.setter('_setPreviewSize'),
 
 	/**
 	 * List of available sizes

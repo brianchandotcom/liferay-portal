@@ -15,29 +15,31 @@
 package com.liferay.users.admin.configuration.settings.internal;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactory;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.users.admin.internal.configuration.OrganizationsTypesConfiguration;
+import com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration;
+import com.liferay.users.admin.internal.model.OrganizationType;
 import com.liferay.users.admin.kernel.organization.types.OrganizationTypesSettings;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.component.annotations.ReferencePolicyOption;
 
 /**
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.users.admin.internal.configuration.OrganizationsTypesConfiguration",
+	configurationPid = "com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration",
 	immediate = true, service = OrganizationTypesSettings.class
 )
 public class OrganizationTypesSettingsImpl
@@ -45,71 +47,62 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public String[] getChildrenTypes(String type) {
-		JSONObject typeJSONObject = _jsonObject.getJSONObject(type);
 
-		JSONArray jsonArray = typeJSONObject.getJSONArray("childrenTypes");
+		OrganizationType organizationType = _organizationTypes.get(type);
 
-		return ArrayUtil.toStringArray(jsonArray);
+		return organizationType.getChildrenTypes();
 	}
 
 	@Override
 	public String[] getTypes() {
-		return _types;
+		return ArrayUtil.toStringArray(_organizationTypes.keySet());
 	}
 
 	@Override
 	public boolean isCountryEnabled(String type) {
-		JSONObject typeJSONObject = _jsonObject.getJSONObject(type);
 
-		return typeJSONObject.getBoolean("countryEnabled");
+		OrganizationType organizationType = _organizationTypes.get(type);
+
+		return organizationType.isCountryEnabled();
 	}
 
 	@Override
 	public boolean isCountryRequired(String type) {
-		JSONObject typeJSONObject = _jsonObject.getJSONObject(type);
 
-		return typeJSONObject.getBoolean("countryRequired");
+		OrganizationType organizationType = _organizationTypes.get(type);
+
+		return organizationType.isCountryRequired();
 	}
 
 	@Override
 	public boolean isRootable(String type) {
-		JSONObject typeJSONObject = _jsonObject.getJSONObject(type);
 
-		return typeJSONObject.getBoolean("rootable");
+		OrganizationType organizationType = _organizationTypes.get(type);
+
+		return organizationType.isRootable();
 	}
 
-	@Activate
-	@Modified
-	protected void activate(Map<String, Object> properties) {
-		OrganizationsTypesConfiguration typesConfiguration =
-			ConfigurableUtil.createConfigurable(
-				OrganizationsTypesConfiguration.class, properties);
+	@Reference(
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC,
+		policyOption = ReferencePolicyOption.GREEDY,
+		unbind = "removeOrganizationType"
+	)
+	protected void addOrganizationType(
+		OrganizationType organizationType, Map<String, Object> properties) {
 
-		try {
-			String json = typesConfiguration.json();
-
-			json = StringUtil.replace(json, "\\,", ",");
-
-			_jsonObject = _jsonFactory.createJSONObject(json);
-
-			_types = ArrayUtil.toStringArray(_jsonObject.names());
-		}
-		catch (JSONException jsone) {
-			_log.error(
-				"Unable to parse the organization types configuration JSON",
-				jsone);
-
-			_jsonObject = _jsonFactory.getUnmodifiableJSONObject();
-		}
+		_organizationTypes.put(
+			organizationType.getName() , organizationType);
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		OrganizationTypesSettingsImpl.class);
+	protected void removeOrganizationType(
+		OrganizationType organizationType, Map<String, Object> properties) {
 
-	@Reference
-	private JSONFactory _jsonFactory;
+		_organizationTypes.remove(organizationType.getName());
+	}
 
-	private volatile JSONObject _jsonObject;
-	private volatile String[] _types;
+
+	private final Map<String, OrganizationType> _organizationTypes =
+		new HashMap<>();
 
 }

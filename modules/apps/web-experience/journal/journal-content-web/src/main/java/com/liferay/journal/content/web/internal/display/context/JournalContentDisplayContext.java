@@ -546,13 +546,11 @@ public class JournalContentDisplayContext {
 			return new long[] {scopeGroup.getLiveGroupId()};
 		}
 
-		if (themeDisplay.getScopeGroupId() == themeDisplay.getSiteGroupId()) {
-			return PortalUtil.getSharedContentSiteGroupIds(
-				themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
-				themeDisplay.getUserId());
+		if (themeDisplay.getScopeGroupId() != themeDisplay.getSiteGroupId()) {
+			return new long[] {themeDisplay.getScopeGroupId()};
 		}
 
-		return new long[] {themeDisplay.getScopeGroupId()};
+		return null;
 	}
 
 	public List<UserToolAssetAddonEntry>

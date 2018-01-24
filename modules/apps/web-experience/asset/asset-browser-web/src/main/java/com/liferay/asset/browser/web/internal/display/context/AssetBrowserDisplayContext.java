@@ -304,13 +304,8 @@ public class AssetBrowserDisplayContext {
 
 		managementBarFilterItems.add(managementBarFilterItem);
 
-		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
-
-		long[] selectedGroupIds = PortalUtil.getSharedContentSiteGroupIds(
-			themeDisplay.getCompanyId(), selectedGroupId,
-			themeDisplay.getUserId());
-
-		List<Group> groups = GroupLocalServiceUtil.getGroups(selectedGroupIds);
+		List<Group> groups = GroupLocalServiceUtil.getGroups(
+			getSelectedGroupIds());
 
 		for (Group curGroup : groups) {
 			boolean active = false;
@@ -398,6 +393,13 @@ public class AssetBrowserDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("groupId", String.valueOf(getGroupId()));
+
+		long[] selectedGroupIds = getSelectedGroupIds();
+
+		if (selectedGroupIds.length > 0) {
+			portletURL.setParameter(
+				"selectedGroupIds", StringUtil.merge(selectedGroupIds));
+		}
 
 		long selectedGroupId = ParamUtil.getLong(_request, "selectedGroupId");
 

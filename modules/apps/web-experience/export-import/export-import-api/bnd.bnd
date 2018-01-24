@@ -4,6 +4,7 @@ Bundle-Version: 2.3.0
 Export-Package:\
 	com.liferay.exportimport.constants,\
 	com.liferay.exportimport.content.processor,\
+	com.liferay.exportimport.controller,\
 	com.liferay.exportimport.data.handler.base,\
 	com.liferay.exportimport.portlet.data.handler.helper,\
 	com.liferay.exportimport.portlet.data.handler.provider,\

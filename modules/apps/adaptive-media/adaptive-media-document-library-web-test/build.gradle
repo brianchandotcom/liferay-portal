@@ -11,7 +11,3 @@ dependencies {
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-api");
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api");
 }
-
-deploy {
-	enabled = false
-}

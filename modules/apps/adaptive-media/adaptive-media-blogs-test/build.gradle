@@ -14,19 +14,4 @@ dependencies {
 	testIntegrationCompile project(":apps:adaptive-media:adaptive-media-image-api")
 
 	testIntegrationRuntime group: "com.liferay", name: "com.liferay.asset.test.util", version: "1.0.0-20170905.203607-1"
-	testIntegrationRuntime group: "com.liferay.portal", name: "com.liferay.portal.test", version: "3.1.0"
-	testIntegrationRuntime group: "com.liferay.portal", name: "com.liferay.portal.test.integration", version: "3.2.0"
-	testIntegrationRuntime group: "org.apache.aries", name: "org.apache.aries.util", version: "1.1.3"
-	testIntegrationRuntime group: "org.apache.aries.jmx", name: "org.apache.aries.jmx", version: "1.1.5"
-}
-
-deploy {
-	enabled = false
-}
-
-deployDependencies {
-	from configurations.testIntegrationRuntime + configurations.testIntegrationCompile
-	include "*test.util*"
-	include "*aries*.jar"
-	include "*portal.test*.jar"
 }

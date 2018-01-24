@@ -93,6 +93,6 @@ public abstract class BaseSettingsLocatorTestCase {
 	protected final String portletId = RandomTestUtil.randomString();
 	protected SettingsLocator settingsLocator;
 
-	private final Set<String> _configurationPids = new HashSet<>();
+	private static final Set<String> _configurationPids = new HashSet<>();
 
 }

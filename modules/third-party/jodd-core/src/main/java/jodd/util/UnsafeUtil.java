@@ -20,14 +20,7 @@ public class UnsafeUtil {
 	private static final long STRING_COUNT_FIELD_OFFSET;
 
 	static {
-		Unsafe unsafe;
-		try {
-			Field unsafeField = Unsafe.class.getDeclaredField("theUnsafe");
-			unsafeField.setAccessible(true);
-			unsafe = (Unsafe) unsafeField.get(null);
-		} catch (Throwable ignore) {
-			unsafe = null;
-		}
+		Unsafe unsafe = null;
 
 		long stringValueFieldOffset = -1L;
 		long stringOffsetFieldOffset = -1L;

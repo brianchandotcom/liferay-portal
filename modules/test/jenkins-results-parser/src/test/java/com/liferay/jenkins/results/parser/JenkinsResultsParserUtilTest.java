@@ -191,13 +191,12 @@ public class JenkinsResultsParserUtilTest
 	}
 
 	protected void testToString(File file) throws Exception {
-		String expectedJSONString = read(file);
-		String actualJSONString = JenkinsResultsParserUtil.toString(
+		String expectedJSON = read(file);
+		String actualJSON = JenkinsResultsParserUtil.toString(
 			JenkinsResultsParserUtil.getLocalURL(toURLString(file)));
 
 		Assert.assertEquals(
-			expectedJSONString.replace("\n", ""),
-			actualJSONString.replace("\n", ""));
+			expectedJSON.replace("\n", ""), actualJSON.replace("\n", ""));
 	}
 
 	@Override

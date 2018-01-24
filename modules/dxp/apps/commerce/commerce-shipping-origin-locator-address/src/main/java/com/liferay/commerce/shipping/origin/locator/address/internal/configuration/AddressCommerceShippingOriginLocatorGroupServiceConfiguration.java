@@ -31,34 +31,34 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AddressCommerceShippingOriginLocatorGroupServiceConfiguration {
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "name", required = false)
 	public String name();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "city", required = false)
 	public String city();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "zip", required = false)
 	public String zip();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "commerce-country-id", required = false)
 	public long commerceCountryId();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "commerce-region-id", required = false)
 	public long commerceRegionId();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "latitude", required = false)
 	public double latitude();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "longitude", required = false)
 	public double longitude();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "street1", required = false)
 	public String street1();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "street2", required = false)
 	public String street2();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "street3", required = false)
 	public String street3();
 
 }

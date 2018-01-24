@@ -36,47 +36,50 @@ public interface FedExCommerceShippingEngineGroupServiceConfiguration {
 
 	@Meta.AD(
 		deflt = FedExCommerceShippingEngineConstants.PACKING_TYPE_BY_DIMENSIONS,
-		required = false
+		name = "packing-type", required = false
 	)
 	public String packingType();
 
-	@Meta.AD(deflt = DropoffType._BUSINESS_SERVICE_CENTER, required = false)
+	@Meta.AD(
+		deflt = DropoffType._BUSINESS_SERVICE_CENTER, name = "dropoff-type",
+		required = false
+	)
 	public String dropoffType();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "account-number", required = false)
 	public String accountNumber();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "use-residential-rates", required = false)
 	public boolean useResidentialRates();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "use-discounted-rates", required = false)
 	public boolean useDiscountedRates();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "key", required = false)
 	public String key();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "meter-number", required = false)
 	public String meterNumber();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "password", required = false)
 	public String password();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "service-types", required = false)
 	public String serviceTypes();
 
-	@Meta.AD(required = false)
+	@Meta.AD(name = "url", required = false)
 	public String url();
 
-	@Meta.AD(deflt = "150", required = false)
+	@Meta.AD(deflt = "150", name = "max-weight-pounds", required = false)
 	public int maxWeightPounds();
 
-	@Meta.AD(deflt = "68", required = false)
+	@Meta.AD(deflt = "68", name = "max-weight-kilograms", required = false)
 	public int maxWeightKilograms();
 
-	@Meta.AD(deflt = "165", required = false)
+	@Meta.AD(deflt = "165", name = "max-size-inches", required = false)
 	public int maxSizeInches();
 
-	@Meta.AD(deflt = "419", required = false)
+	@Meta.AD(deflt = "419", name = "max-size-centimeters", required = false)
 	public int maxSizeCentimeters();
 
 }

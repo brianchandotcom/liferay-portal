@@ -14,22 +14,14 @@
 
 package com.liferay.users.admin.configuration.settings.internal;
 
-import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.users.admin.internal.model.OrganizationType;
 import com.liferay.users.admin.kernel.organization.types.OrganizationTypesSettings;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
@@ -47,7 +39,6 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public String[] getChildrenTypes(String type) {
-
 		OrganizationType organizationType = _organizationTypes.get(type);
 
 		return organizationType.getChildrenTypes();
@@ -60,7 +51,6 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public boolean isCountryEnabled(String type) {
-
 		OrganizationType organizationType = _organizationTypes.get(type);
 
 		return organizationType.isCountryEnabled();
@@ -68,7 +58,6 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public boolean isCountryRequired(String type) {
-
 		OrganizationType organizationType = _organizationTypes.get(type);
 
 		return organizationType.isCountryRequired();
@@ -76,7 +65,6 @@ public class OrganizationTypesSettingsImpl
 
 	@Override
 	public boolean isRootable(String type) {
-
 		OrganizationType organizationType = _organizationTypes.get(type);
 
 		return organizationType.isRootable();
@@ -91,8 +79,7 @@ public class OrganizationTypesSettingsImpl
 	protected void addOrganizationType(
 		OrganizationType organizationType, Map<String, Object> properties) {
 
-		_organizationTypes.put(
-			organizationType.getName() , organizationType);
+		_organizationTypes.put(organizationType.getName(), organizationType);
 	}
 
 	protected void removeOrganizationType(
@@ -100,7 +87,6 @@ public class OrganizationTypesSettingsImpl
 
 		_organizationTypes.remove(organizationType.getName());
 	}
-
 
 	private final Map<String, OrganizationType> _organizationTypes =
 		new HashMap<>();

@@ -70,10 +70,10 @@
 
 		<execute macro="User#addCP">
 			<var name="allowManualMembershipManagement" value="true" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -83,8 +83,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -95,7 +95,7 @@
 
 		<execute macro="User#assignRegularRoleCP">
 			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -108,17 +108,17 @@
 
 		<execute macro="Organization#addMemberCP">
 			<var name="orgName" value="Organization Name" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userName" value="userfn userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userName" value="userfn1 userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoSite">

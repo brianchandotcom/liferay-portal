@@ -47,9 +47,9 @@
 
 		<execute macro="User#addCP">
 			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var name="userFirstName" value="userfn" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userFirstName" value="userfn1" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -61,7 +61,7 @@
 		<execute macro="User#editPasswordCP">
 			<var name="password" value="password" />
 			<var method="TestPropsUtil#get('email.address.4')" name="userEmailAddress" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -72,7 +72,7 @@
 
 		<execute macro="User#assignRegularRoleCP">
 			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -169,13 +169,13 @@
 
 		<execute macro="Mentions#addMentionViaComments">
 			<var name="entryComment" value="Comment mentioning" />
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
+			<var name="mentionsUserFullName" value="userfn1 userln1" />
+			<var name="mentionsUserScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="Mentions#viewCommentMentionTagLink">
-			<var name="mentionsUserFullName" value="userfn userln" />
-			<var name="mentionsUserScreenName" value="usersn" />
+			<var name="mentionsUserFullName" value="userfn1 userln1" />
+			<var name="mentionsUserScreenName" value="usersn1" />
 		</execute>
 	</command>
 </definition>

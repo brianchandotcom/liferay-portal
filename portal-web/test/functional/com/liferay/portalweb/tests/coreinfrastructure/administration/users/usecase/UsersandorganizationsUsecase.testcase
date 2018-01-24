@@ -75,10 +75,10 @@
 		</execute>
 
 		<execute macro="User#addCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 			<var name="userFirstName" value="&lt;userfn&gt;" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -88,10 +88,10 @@
 		</execute>
 
 		<execute macro="User#viewCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 			<var name="userFirstName" value="&lt;userfn&gt;" />
-			<var name="userLastName" value="userln" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userLastName" value="userln1" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -101,8 +101,8 @@
 		</execute>
 
 		<execute macro="User#editPasswordCP">
-			<var name="userEmailAddress" value="userea@liferay.com" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -113,19 +113,19 @@
 
 		<execute macro="User#assignRegularRoleCP">
 			<var name="roleTitle" value="Administrator" />
-			<var name="userScreenName" value="usersn" />
+			<var name="userScreenName" value="usersn1" />
 		</execute>
 
 		<execute macro="User#logoutPG" />
 
 		<execute macro="User#loginUserPG">
 			<var name="password" value="test" />
-			<var name="userEmailAddress" value="userea@liferay.com" />
+			<var name="userEmailAddress" value="userea1@liferay.com" />
 		</execute>
 
 		<execute macro="UserBar#gotoProfile" />
 
-		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln" />
+		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln1" />
 	</command>
 
 	<command name="AssignImportedUserGroupToSuborganizationSites" priority="5">

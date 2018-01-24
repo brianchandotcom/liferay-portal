@@ -14,18 +14,18 @@
 
 package com.liferay.asset.display.contributor;
 
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HashUtil;
-
-import java.io.Serializable;
 
 import java.util.Objects;
 
 /**
  * @author Jürgen Kappler
  */
-public class AssetDisplayField implements Serializable {
+public class AssetDisplayField {
 
-	public AssetDisplayField(String key, Serializable label) {
+	public AssetDisplayField(String key, String label) {
 		_key = key;
 		_label = label;
 	}
@@ -55,7 +55,7 @@ public class AssetDisplayField implements Serializable {
 		return _key;
 	}
 
-	public Serializable getLabel() {
+	public String getLabel() {
 		return _label;
 	}
 
@@ -66,7 +66,16 @@ public class AssetDisplayField implements Serializable {
 		return HashUtil.hash(hash, _label);
 	}
 
+	public JSONObject toJSONObject() {
+		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
+
+		jsonObject.put("key", getKey());
+		jsonObject.put("label", getLabel());
+
+		return jsonObject;
+	}
+
 	private final String _key;
-	private final Serializable _label;
+	private final String _label;
 
 }

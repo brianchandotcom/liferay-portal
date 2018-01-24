@@ -15,10 +15,9 @@
 package com.liferay.asset.display.contributor;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -31,36 +30,25 @@ public abstract class BaseAssetDisplayContributor
 
 	@Override
 	public Set<AssetDisplayField> getAssetEntryFields(Locale locale) {
-		Set<AssetDisplayField> assetDisplayFields = new HashSet<>();
+		Set<AssetDisplayField> assetDisplayFields = new LinkedHashSet<>();
 
-		String[] assetEntryFields = _BASIC_ASSET_ENTRY_FIELDS;
-		String[] extendedAssetEntryFields = getExtendedAssetEntryFields();
+		String[] assetEntryModelFields = getAssetEntryModelFields();
 
 		ResourceBundle resourceBundle = resourceBundleLoader.loadResourceBundle(
 			locale);
 
-		if (ArrayUtil.isNotEmpty(extendedAssetEntryFields)) {
-			assetEntryFields = ArrayUtil.append(
-				assetEntryFields, extendedAssetEntryFields);
-		}
-
-		for (String assetDisplayField : assetEntryFields) {
+		for (String assetEntryModelField : assetEntryModelFields) {
 			assetDisplayFields.add(
 				new AssetDisplayField(
-					assetDisplayField,
-					LanguageUtil.get(resourceBundle, assetDisplayField)));
+					assetEntryModelField,
+					LanguageUtil.get(resourceBundle, assetEntryModelField)));
 		}
 
 		return assetDisplayFields;
 	}
 
-	protected String[] getExtendedAssetEntryFields() {
-		return null;
-	}
+	protected abstract String[] getAssetEntryModelFields();
 
 	protected ResourceBundleLoader resourceBundleLoader;
-
-	private static final String[] _BASIC_ASSET_ENTRY_FIELDS =
-		{"title", "userName"};
 
 }

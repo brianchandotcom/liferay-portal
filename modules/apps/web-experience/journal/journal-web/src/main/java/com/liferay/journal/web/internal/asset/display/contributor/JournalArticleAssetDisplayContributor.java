@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.blogs.web.internal.asset.display.contributor;
+package com.liferay.journal.web.internal.asset.display.contributor;
 
 import com.liferay.asset.display.contributor.AssetDisplayContributor;
 import com.liferay.asset.display.contributor.BaseAssetDisplayContributor;
-import com.liferay.blogs.model.BlogsEntry;
+import com.liferay.journal.model.JournalArticle;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -32,12 +32,12 @@ import org.osgi.service.component.annotations.Reference;
  * @author Jürgen Kappler
  */
 @Component(immediate = true, service = AssetDisplayContributor.class)
-public class BlogsEntryAssetDisplayContributor
+public class JournalArticleAssetDisplayContributor
 	extends BaseAssetDisplayContributor implements AssetDisplayContributor {
 
 	@Override
 	public String getClassName() {
-		return BlogsEntry.class.getName();
+		return JournalArticle.class.getName();
 	}
 
 	@Override
@@ -47,16 +47,16 @@ public class BlogsEntryAssetDisplayContributor
 
 		return LanguageUtil.get(
 			resourceBundle,
-			"model.resource.com.liferay.blogs.model.BlogsEntry");
+			"model.resource.com.liferay.journal.model.JournalArticle");
 	}
 
 	@Override
 	protected String[] getAssetEntryModelFields() {
-		return new String[] {"title", "subtitle", "content"};
+		return new String[] {"title", "description"};
 	}
 
 	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.blogs.web)", unbind = "-"
+		target = "(bundle.symbolic.name=com.liferay.journal.web)", unbind = "-"
 	)
 	protected void setResourceBundleLoader(
 		ResourceBundleLoader resourceBundleLoader) {

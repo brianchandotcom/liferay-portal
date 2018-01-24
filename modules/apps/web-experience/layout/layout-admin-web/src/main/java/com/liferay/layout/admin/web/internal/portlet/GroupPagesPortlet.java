@@ -16,6 +16,7 @@ package com.liferay.layout.admin.web.internal.portlet;
 
 import com.liferay.application.list.GroupProvider;
 import com.liferay.application.list.constants.ApplicationListWebKeys;
+import com.liferay.asset.display.contributor.AssetDisplayContributorTracker;
 import com.liferay.asset.kernel.exception.AssetCategoryException;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
@@ -143,6 +144,10 @@ public class GroupPagesPortlet extends MVCPortlet {
 			}
 
 			renderRequest.setAttribute(
+				LayoutAdminWebKeys.ASSET_DISPLAY_CONTRIBUTOR_TRACKER,
+				_assetDisplayContributorTracker);
+
+			renderRequest.setAttribute(
 				ApplicationListWebKeys.GROUP_PROVIDER, _groupProvider);
 
 			renderRequest.setAttribute(
@@ -200,6 +205,9 @@ public class GroupPagesPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		GroupPagesPortlet.class);
+
+	@Reference
+	private AssetDisplayContributorTracker _assetDisplayContributorTracker;
 
 	@Reference
 	private GroupProvider _groupProvider;

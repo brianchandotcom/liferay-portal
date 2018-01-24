@@ -15,6 +15,7 @@
 package com.liferay.portal.upgrade.v7_0_3;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LoggingTimer;
@@ -35,7 +36,7 @@ public class UpgradeOrganization extends UpgradeProcess {
 
 	protected void updateOrganizationsType() throws Exception {
 		List<String> organizationsTypes = ListUtil.toList(
-			PropsValues.ORGANIZATIONS_TYPES);
+			OrganizationLocalServiceUtil.getTypes());
 
 		String organizationsTypesString = ListUtil.toString(
 			organizationsTypes, StringPool.NULL, "', '");

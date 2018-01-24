@@ -195,7 +195,7 @@
 </tr>
 <tr>
 	<td>RECYCLE_BIN_INFO</td>
-	<td>//span[contains(@class,'taglib-icon-help')]</td>
+	<td>//div[contains(@class,'tooltip-content')]</td>
 	<td></td>
 </tr>
 <tr>

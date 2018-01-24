@@ -49,7 +49,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.kernel.util.SessionParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.workflow.WorkflowEngineManager;
 
@@ -190,12 +189,8 @@ public class DDMFormAdminPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException {
 
-		String currentTab = SessionParamUtil.getString(
-			renderRequest, "currentTab");
-
-		PortletSession portletSession = renderRequest.getPortletSession();
-
-		portletSession.setAttribute("currentTab", currentTab);
+		String currentTab = ParamUtil.getString(
+			renderRequest, "currentTab", "forms");
 
 		if (currentTab.equals("element-set")) {
 			renderRequest.setAttribute(

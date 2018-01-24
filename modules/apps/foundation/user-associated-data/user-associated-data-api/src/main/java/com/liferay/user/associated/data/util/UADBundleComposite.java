@@ -15,6 +15,7 @@
 package com.liferay.user.associated.data.util;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author William Newbury
@@ -46,12 +47,12 @@ public class UADBundleComposite {
 		return count;
 	}
 
-	public String getStatus() {
+	public String getStatusLabel(Locale locale) {
 		if (getCount() == 0) {
-			return "Complete";
+			return "complete";
 		}
 
-		return "Incomplete";
+		return "incomplete";
 	}
 
 	public List<UADEntityTypeComposite> getUADEntityTypeComposites() {

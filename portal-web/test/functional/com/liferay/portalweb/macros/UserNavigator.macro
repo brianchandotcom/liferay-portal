@@ -1,4 +1,12 @@
 <definition>
+	<command name="gotoDisplaySettings">
+		<execute macro="UserNavigator#gotoPreferences" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Display Settings" />
+		</execute>
+	</command>
+
 	<command name="gotoGeneral">
 		<if>
 			<condition function="IsElementNotPresent" locator1="NavUnderline#ACTIVE_NAV_UNDERLINE_LINK" />
@@ -8,6 +16,22 @@
 				</execute>
 			</then>
 		</if>
+	</command>
+
+	<command name="gotoMemberships">
+		<execute macro="UserNavigator#gotoGeneral" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Memberships" />
+		</execute>
+	</command>
+
+	<command name="gotoOrganizations">
+		<execute macro="UserNavigator#gotoGeneral" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Organizations" />
+		</execute>
 	</command>
 
 	<command name="gotoPassword">
@@ -21,6 +45,14 @@
 	<command name="gotoPreferences">
 		<execute macro="Navigator#gotoNavUnderline">
 			<var name="navUnderline" value="Preferences" />
+		</execute>
+	</command>
+
+	<command name="gotoProfileAndPrivateArea">
+		<execute macro="UserNavigator#gotoGeneral" />
+
+		<execute macro="Navigator#gotoNavNested">
+			<var name="navNested" value="Profile and Private Area" />
 		</execute>
 	</command>
 

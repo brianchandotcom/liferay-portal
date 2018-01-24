@@ -252,19 +252,15 @@
 	</command>
 
 	<command name="addPersonalSiteCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Personal Site Template" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES_LABEL" value1="My Dashboard" />
+		<execute macro="UserNavigator#gotoProfileAndPrivateArea" />
 
-		<execute function="Select" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_PRIVATE_PAGES" value1="${siteTemplateName}" />
+		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_MY_DASHBOARD_LABEL" value1="My Dashboard" />
+
+		<execute function="Select" locator1="UsersAndOrganizationsEditUser#PERSONAL_SITE_MY_DASHBOARD" value1="${siteTemplateName}" />
 
 		<execute macro="PortletEntry#save" />
 	</command>
@@ -802,21 +798,11 @@
 	</command>
 
 	<command name="assignOrgRoleCP">
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="${userScreenName}" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<var name="key_rowEntry" value="${userScreenName}" />
-
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Roles" />
-		</execute>
+		<execute macro="UserNavigator#gotoRoles" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_ORGANIZATION_ROLES_SELECT_LINK" value1="Select" />
 
@@ -862,21 +848,11 @@
 	</command>
 
 	<command name="assignSiteRoleCP">
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="${userScreenName}" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<var name="key_rowEntry" value="${userScreenName}" />
-
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Roles" />
-		</execute>
+		<execute macro="UserNavigator#gotoRoles" />
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ROLES_SITE_ROLES_SELECT_LINK" value1="Select" />
 
@@ -1379,11 +1355,7 @@
 	<!-- The time zone option should change automatically because of Daylight Savings Time (DST). Since Los Angeles switches between Pacific Daylight Time (PDT), (UTC -07:00) and Pacific Standard Time (PST), (UTC -08:00), this macro will have to be updated accordingly. -->
 
 	<command name="editUserDisplaySettingsTimeZonePacific">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Settings" />
-		</execute>
+		<execute macro="UserNavigator#gotoDisplaySettings" />
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
@@ -1399,11 +1371,7 @@
 
 		<execute macro="PortletEntry#save" />
 
-		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Display Settings" />
-		</execute>
+		<execute macro="UserNavigator#gotoDisplaySettings" />
 
 		<if>
 			<condition function="IsTextNotEqual" locator1="UsersAndOrganizationsEditUser#DISPLAY_SETTINGS_AMERICA_TIME_ZONE_SELECT" value1="(UTC -07:00) Pacific Daylight Time"  />
@@ -1449,21 +1417,13 @@
 	</command>
 
 	<command name="editUserOrganizationCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="Pause" locator1="3000" />
+		<execute macro="UserNavigator#gotoOrganizations" />
 
 		<var name="key_orgName" value="${orgName}" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Organizations" />
-		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#ORGANIZATIONS_SELECT_LINK" value1="Select" />
 
@@ -1485,21 +1445,13 @@
 	</command>
 
 	<command name="editUserSiteCP">
-		<var name="key_userScreenName" value="${userScreenName}" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
+		</execute>
 
-		<execute function="Pause" locator1="1000" />
-
-		<execute function="AssertTextEquals" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="AssertClick" locator1="UsersAndOrganizations#USER_TABLE_SCREEN_NAME" value1="${userScreenName}" />
-
-		<execute function="Pause" locator1="3000" />
+		<execute macro="UserNavigator#gotoMemberships" />
 
 		<var name="key_siteName" value="${siteName}" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Sites" />
-		</execute>
 
 		<execute function="AssertClick" locator1="UsersAndOrganizationsEditUser#SITES_SELECT_LINK" value1="Select" />
 
@@ -2196,23 +2148,11 @@
 	</command>
 
 	<command name="unassignRegularRoleCP">
-		<execute function="Pause" locator1="1000" />
-
-		<execute macro="User#searchCP">
-			<var name="searchTerm" value="${userScreenName}" />
+		<execute macro="UserNavigator#gotoUser">
+			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
-		<var name="key_rowEntry" value="${userScreenName}" />
-
-		<execute function="Click" locator1="ContentRow#ENTRY_CONTENT_ENTRY_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Edit">
-			<var name="key_menuItem" value="Edit" />
-		</execute>
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Roles" />
-		</execute>
+		<execute macro="UserNavigator#gotoRoles" />
 
 		<var name="key_roleTitle" value="${roleTitle}" />
 
@@ -2368,9 +2308,7 @@
 	</command>
 
 	<command name="viewUserInfomationOrganizationSitesCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Sites" />
-		</execute>
+		<execute macro="UserNavigator#gotoMemberships" />
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -2378,9 +2316,7 @@
 	</command>
 
 	<command name="viewUserInfomationRolesCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Roles" />
-		</execute>
+		<execute macro="UserNavigator#gotoRoles" />
 
 		<var name="key_roleTitle" value="${roleTitle}" />
 
@@ -2388,9 +2324,7 @@
 	</command>
 
 	<command name="viewUserInfomationSitesCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Sites" />
-		</execute>
+		<execute macro="UserNavigator#gotoMemberships" />
 
 		<var name="key_siteName" value="${siteName}" />
 
@@ -2398,9 +2332,7 @@
 	</command>
 
 	<command name="viewUserInfomationUserGroupsCP">
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="User Groups" />
-		</execute>
+		<execute macro="UserNavigator#gotoMemberships" />
 
 		<var name="key_userGroupName" value="${userGroupName}" />
 
@@ -2427,11 +2359,7 @@
 	</command>
 
 	<command name="viewUserSiteCP">
-		<execute function="Pause" locator1="3000" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Sites" />
-		</execute>
+		<execute macro="UserNavigator#gotoMemberships" />
 
 		<var name="key_siteName" value="${siteName}" />
 

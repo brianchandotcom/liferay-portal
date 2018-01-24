@@ -12,12 +12,16 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.rule.group.action;
+package com.liferay.mobile.device.rules.web.internal.rule.group.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,10 +36,34 @@ import org.osgi.service.component.annotations.Component;
  * @author Edward Han
  */
 @Component(immediate = true, service = ActionHandler.class)
-public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
+public class LayoutTemplateModificationActionHandler implements ActionHandler {
 
 	public static String getHandlerType() {
-		return SimpleRedirectActionHandler.class.getName();
+		return LayoutTemplateModificationActionHandler.class.getName();
+	}
+
+	@Override
+	public void applyAction(
+		MDRAction mdrAction, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		UnicodeProperties mdrActionTypeSettingsProperties =
+			mdrAction.getTypeSettingsProperties();
+
+		String layoutTemplateId = GetterUtil.getString(
+			mdrActionTypeSettingsProperties.getProperty("layoutTemplateId"));
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Layout layout = themeDisplay.getLayout();
+
+		if (layout.isTypePortlet()) {
+			LayoutTypePortlet layoutTypePortlet =
+				(LayoutTypePortlet)layout.getLayoutType();
+
+			layoutTypePortlet.setLayoutTemplateId(0, layoutTemplateId, false);
+		}
 	}
 
 	@Override
@@ -48,18 +76,7 @@ public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 		return getHandlerType();
 	}
 
-	@Override
-	protected String getURL(
-		MDRAction mdrAction, HttpServletRequest request,
-		HttpServletResponse response) {
-
-		UnicodeProperties typeSettingsProperties =
-			mdrAction.getTypeSettingsProperties();
-
-		return GetterUtil.getString(typeSettingsProperties.getProperty("url"));
-	}
-
 	private static final Collection<String> _propertyNames =
-		Collections.unmodifiableCollection(Arrays.asList("url"));
+		Collections.unmodifiableCollection(Arrays.asList("layoutTemplateId"));
 
 }

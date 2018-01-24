@@ -16,10 +16,10 @@ package com.liferay.mobile.device.rules.web.internal.portlet.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
-import com.liferay.mobile.device.rules.rule.group.action.LayoutTemplateModificationActionHandler;
-import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHandler;
-import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
-import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.LayoutTemplateModificationActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.SimpleRedirectActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.SiteRedirectActionHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.action.ThemeModificationActionHandler;
 import com.liferay.mobile.device.rules.web.internal.rule.group.rule.SimpleRuleHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;

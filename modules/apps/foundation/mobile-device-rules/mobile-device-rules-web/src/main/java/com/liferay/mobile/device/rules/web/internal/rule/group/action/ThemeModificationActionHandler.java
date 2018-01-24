@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.rule.group.action;
+package com.liferay.mobile.device.rules.web.internal.rule.group.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.model.MDRAction;

@@ -31,8 +31,6 @@ import java.util.Set;
 */
 public interface UADRegistry {
 
-	public List<UADEntitySetComposite> getUADBundleComposites(long userId);
-
 	public UADEntityAggregator getUADEntityAggregator(String key);
 
 	public UADEntityAggregator getUADEntityAggregator(UADEntity uadEntity);
@@ -63,10 +61,12 @@ public interface UADRegistry {
 
 	public Collection<UADEntityExporter> getUADEntityExporters();
 
+	public List<UADEntitySetComposite> getUADEntitySetComposites(long userId);
+
 	public UADEntityTypeComposite getUADEntityTypeComposite(
 		long userId, String key);
 
 	public List<UADEntityTypeComposite> getUADEntityTypeComposites(
-		long userId, String bundleId);
+		long userId, String uadEntitySetName);
 
 }

@@ -71,10 +71,9 @@ public class BaselinePlugin implements Plugin<Project> {
 		final Configuration baselineConfiguration = _addConfigurationBaseline(
 			jar);
 
-		final BaselineTask baselineTask = _addTaskBaseline(
-			jar, baselineConfigurationExtension);
+		final BaselineTask baselineTask = _addTaskBaseline(jar);
 
-		_configureTasksBaseline(project);
+		_configureTasksBaseline(project, baselineConfigurationExtension);
 
 		project.afterEvaluate(
 			new Action<Project>() {
@@ -155,37 +154,12 @@ public class BaselinePlugin implements Plugin<Project> {
 
 	@SuppressWarnings("rawtypes")
 	private BaselineTask _addTaskBaseline(
-		final AbstractArchiveTask newJarTask,
-		final BaselineConfigurationExtension baselineConfigurationExtension) {
+		final AbstractArchiveTask newJarTask) {
 
-		final Project project = newJarTask.getProject();
+		Project project = newJarTask.getProject();
 
 		final BaselineTask baselineTask = GradleUtil.addTask(
 			project, BASELINE_TASK_NAME, BaselineTask.class, true);
-
-		baselineTask.doFirst(
-			new Action<Task>() {
-
-				@Override
-				public void execute(Task task) {
-					if (baselineConfigurationExtension.isAllowMavenLocal()) {
-						return;
-					}
-
-					BaselineTask baselineTask = (BaselineTask)task;
-
-					File oldJarFile = baselineTask.getOldJarFile();
-
-					if ((oldJarFile != null) &&
-						GradleUtil.isFromMavenLocal(project, oldJarFile)) {
-
-						throw new GradleException(
-							"Please delete " + oldJarFile.getParent() +
-								" and try again");
-					}
-				}
-
-			});
 
 		File bndFile = project.file("bnd.bnd");
 
@@ -214,7 +188,8 @@ public class BaselinePlugin implements Plugin<Project> {
 				@Override
 				public File call() throws Exception {
 					SourceSet sourceSet = GradleUtil.getSourceSet(
-						project, SourceSet.MAIN_SOURCE_SET_NAME);
+						baselineTask.getProject(),
+						SourceSet.MAIN_SOURCE_SET_NAME);
 
 					return GradleUtil.getSrcDir(sourceSet.getResources());
 				}
@@ -235,16 +210,6 @@ public class BaselinePlugin implements Plugin<Project> {
 			});
 
 		return baselineTask;
-	}
-
-	private void _configureTaskBaseline(BaselineTask baselineTask) {
-		String ignoreFailures = GradleUtil.getTaskPrefixedProperty(
-			baselineTask, "ignoreFailures");
-
-		if (Validator.isNotNull(ignoreFailures)) {
-			baselineTask.setIgnoreFailures(
-				Boolean.parseBoolean(ignoreFailures));
-		}
 	}
 
 	private void _configureTaskBaseline(
@@ -276,13 +241,54 @@ public class BaselinePlugin implements Plugin<Project> {
 			});
 	}
 
+	private void _configureTaskBaseline(
+		BaselineTask baselineTask,
+		final BaselineConfigurationExtension baselineConfigurationExtension) {
+
+		baselineTask.doFirst(
+			new Action<Task>() {
+
+				@Override
+				public void execute(Task task) {
+					if (baselineConfigurationExtension.isAllowMavenLocal()) {
+						return;
+					}
+
+					BaselineTask baselineTask = (BaselineTask)task;
+
+					File oldJarFile = baselineTask.getOldJarFile();
+
+					if ((oldJarFile != null) &&
+						GradleUtil.isFromMavenLocal(
+							task.getProject(), oldJarFile)) {
+
+						throw new GradleException(
+							"Please delete " + oldJarFile.getParent() +
+								" and try again");
+					}
+				}
+
+			});
+
+		String ignoreFailures = GradleUtil.getTaskPrefixedProperty(
+			baselineTask, "ignoreFailures");
+
+		if (Validator.isNotNull(ignoreFailures)) {
+			baselineTask.setIgnoreFailures(
+				Boolean.parseBoolean(ignoreFailures));
+		}
+	}
+
 	private void _configureTaskBaselineForBndBuilderPlugin(
 		BaselineTask baselineTask) {
 
 		GradleUtil.setProperty(baselineTask, "bundleTask", null);
 	}
 
-	private void _configureTasksBaseline(Project project) {
+	private void _configureTasksBaseline(
+		Project project,
+		final BaselineConfigurationExtension baselineConfigurationExtension) {
+
 		TaskContainer taskContainer = project.getTasks();
 
 		taskContainer.withType(
@@ -291,7 +297,8 @@ public class BaselinePlugin implements Plugin<Project> {
 
 				@Override
 				public void execute(BaselineTask baselineTask) {
-					_configureTaskBaseline(baselineTask);
+					_configureTaskBaseline(
+						baselineTask, baselineConfigurationExtension);
 				}
 
 			});

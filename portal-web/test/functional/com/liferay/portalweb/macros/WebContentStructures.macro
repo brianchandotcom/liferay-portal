@@ -22,10 +22,6 @@
 		<execute function="SelectFrame" value1="relative=top" />
 	</command>
 
-	<command name="addDescription">
-		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${structureDescription}" />
-	</command>
-
 	<command name="addFavoriteStructure">
 		<execute function="AssertTextEquals" locator1="Message#INFO_1" value1="You can add as many as 7 favorites in your quick menu." />
 

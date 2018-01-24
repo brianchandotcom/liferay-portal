@@ -27,6 +27,10 @@ public class NavigationItem implements Serializable {
 		return _active;
 	}
 
+	public boolean getDisabled() {
+		return _disabled;
+	}
+
 	public String getHref() {
 		return _href;
 	}
@@ -37,6 +41,10 @@ public class NavigationItem implements Serializable {
 
 	public void setActive(boolean active) {
 		_active = active;
+	}
+
+	public void setDisabled(boolean disabled) {
+		_disabled = disabled;
 	}
 
 	public void setHref(PortletURL portletURL, Object... parameters) {
@@ -66,6 +74,7 @@ public class NavigationItem implements Serializable {
 	}
 
 	private boolean _active;
+	private boolean _disabled;
 	private String _href;
 	private String _label;
 

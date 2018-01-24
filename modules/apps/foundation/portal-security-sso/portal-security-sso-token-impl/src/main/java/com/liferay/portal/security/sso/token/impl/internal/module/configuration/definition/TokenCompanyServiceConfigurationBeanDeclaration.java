@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.module.configuration.definition;
+package com.liferay.portal.security.sso.token.impl.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
+import com.liferay.portal.security.sso.token.impl.configuration.TokenConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 

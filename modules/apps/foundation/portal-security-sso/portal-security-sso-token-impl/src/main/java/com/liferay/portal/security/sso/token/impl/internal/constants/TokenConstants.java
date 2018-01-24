@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.constants;
+package com.liferay.portal.security.sso.token.impl.internal.constants;
 
 /**
  * @author Michael C. Han

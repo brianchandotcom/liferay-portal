@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.events;
+package com.liferay.portal.security.sso.token.impl.internal.events;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CookieKeys;

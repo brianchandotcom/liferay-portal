@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.verify;
+package com.liferay.portal.security.sso.token.impl.internal.verify;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -20,9 +20,9 @@ import com.liferay.portal.kernel.service.CompanyLocalService;
 import com.liferay.portal.kernel.settings.SettingsFactory;
 import com.liferay.portal.kernel.util.PrefsProps;
 import com.liferay.portal.kernel.util.SetUtil;
-import com.liferay.portal.security.sso.token.internal.constants.LegacyTokenPropsKeys;
-import com.liferay.portal.security.sso.token.internal.constants.TokenConfigurationKeys;
-import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
+import com.liferay.portal.security.sso.token.impl.internal.constants.LegacyTokenPropsKeys;
+import com.liferay.portal.security.sso.token.impl.internal.constants.TokenConfigurationKeys;
+import com.liferay.portal.security.sso.token.impl.internal.constants.TokenConstants;
 import com.liferay.portal.verify.BaseCompanySettingsVerifyProcess;
 import com.liferay.portal.verify.VerifyProcess;
 

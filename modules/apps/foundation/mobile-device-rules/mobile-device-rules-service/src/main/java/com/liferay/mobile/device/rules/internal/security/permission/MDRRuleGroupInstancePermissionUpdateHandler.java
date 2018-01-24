@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.mobile.device.rules.service.permission;
+package com.liferay.mobile.device.rules.internal.security.permission;
 
 import com.liferay.mobile.device.rules.model.MDRRuleGroupInstance;
 import com.liferay.mobile.device.rules.service.MDRRuleGroupInstanceLocalService;

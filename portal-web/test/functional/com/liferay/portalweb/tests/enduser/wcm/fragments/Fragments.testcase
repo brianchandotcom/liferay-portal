@@ -101,7 +101,7 @@ element.style.border='2px dashed red';
 			<var name="templateScript" value="${javascriptSnippet}" />
 		</execute>
 
-		<execute macro="PortletEntry#save" />
+		<execute macro="PortletEntry#publish" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

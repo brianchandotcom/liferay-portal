@@ -30,37 +30,17 @@
 	</command>
 
 	<command name="gotoDeleteField">
-		<toggle name="LPS-75355">
-			<on>
-				<execute macro="FormsAdminNavigator#gotoEditField">
-					<var name="fieldName" value="${fieldName}" />
-				</execute>
+		<execute macro="FormsAdminNavigator#gotoEditField">
+			<var name="fieldName" value="${fieldName}" />
+		</execute>
 
-				<var name="key_fieldName" value="${fieldName}" />
+		<var name="key_fieldName" value="${fieldName}" />
 
-				<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
+		<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
 
-				<execute function="Click" locator1="Form#SIDEBAR_MENUITEM_REMOVE_FIELD" />
+		<execute function="Click" locator1="Form#SIDEBAR_MENUITEM_REMOVE_FIELD" />
 
-				<execute function="Click" locator1="Button#DELETE" />
-
-				<execute function="AssertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
-			</on>
-
-			<off>
-				<execute macro="FormsAdminNavigator#gotoEditField">
-					<var name="fieldName" value="${fieldName}" />
-				</execute>
-
-				<var name="key_fieldName" value="${fieldName}" />
-
-				<execute function="Click" locator1="Form#SIDEBAR_ELLIPSIS" />
-
-				<execute function="Click" locator1="Form#SIDEBAR_MENUITEM_REMOVE_FIELD" />
-
-				<execute function="AssertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
-			</off>
-		</toggle>
+		<execute function="AssertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
 	</command>
 
 	<command name="gotoEdit">

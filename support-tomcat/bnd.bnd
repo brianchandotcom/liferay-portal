@@ -1,7 +1,13 @@
 Bundle-Name: ${manifest.bundle.name}
 Bundle-SymbolicName: ${manifest.bundle.symbolic.name}
 Bundle-Version: 1.0.0
-Export-Package: com.liferay.support.tomcat.*
+Export-Package:\
+	com.liferay.support.tomcat.jasper.runtime,\
+	com.liferay.support.tomcat.loader,\
+	com.liferay.support.tomcat.poller.comet,\
+	com.liferay.support.tomcat.session,\
+	com.liferay.support.tomcat.startup,\
+	com.liferay.support.tomcat.webresources
 Import-Package:\
 	com.liferay.*,\
 	\

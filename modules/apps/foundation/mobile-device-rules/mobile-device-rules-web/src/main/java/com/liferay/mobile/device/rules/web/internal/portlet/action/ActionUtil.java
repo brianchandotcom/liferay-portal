@@ -20,7 +20,7 @@ import com.liferay.mobile.device.rules.rule.group.action.LayoutTemplateModificat
 import com.liferay.mobile.device.rules.rule.group.action.SimpleRedirectActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.SiteRedirectActionHandler;
 import com.liferay.mobile.device.rules.rule.group.action.ThemeModificationActionHandler;
-import com.liferay.mobile.device.rules.rule.group.rule.SimpleRuleHandler;
+import com.liferay.mobile.device.rules.web.internal.rule.group.rule.SimpleRuleHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;

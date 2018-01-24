@@ -1968,7 +1968,7 @@
 		</execute>
 
 		<for list="${fieldValueList}" param="fieldValue">
-			<execute macro="FormsAdmin#searchFormEntry">
+			<execute macro="Search#searchCP">
 				<var name="searchTerm" value="${fieldValue}" />
 			</execute>
 
@@ -1992,7 +1992,7 @@
 			</for>
 		</for>
 
-		<execute macro="FormsAdmin#searchFormEntry">
+		<execute macro="Search#searchCP">
 			<var name="searchTerm" value="otherEntry" />
 		</execute>
 

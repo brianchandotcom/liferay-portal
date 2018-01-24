@@ -772,8 +772,8 @@
 
 		<execute macro="DMNavigator#gotoHomeCP" />
 
-		<execute macro="DMDocument#searchCP">
-			<var name="dmDocumentKeyword" value="Document_3.doc" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Document_3.doc" />
 		</execute>
 
 		<execute macro="DMDocument#viewSearchResultsCP">

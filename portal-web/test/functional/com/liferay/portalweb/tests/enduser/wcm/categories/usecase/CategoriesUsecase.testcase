@@ -2055,8 +2055,8 @@
 				<var name="portlet" value="Categories" />
 			</execute>
 
-			<execute macro="Vocabulary#searchCP">
-				<var name="vocabularySearchEntry" value="${vocabularyName}" />
+			<execute macro="Search#searchCP">
+				<var name="searchTerm" value="${vocabularyName}" />
 			</execute>
 
 			<execute macro="Vocabulary#viewSearchResultsCP">
@@ -2073,8 +2073,8 @@
 				<var name="portlet" value="Categories" />
 			</execute>
 
-			<execute macro="Vocabulary#searchCP">
-				<var name="vocabularySearchEntry" value="${vocabularyDescription}" />
+			<execute macro="Search#searchCP">
+				<var name="searchTerm" value="${vocabularyDescription}" />
 			</execute>
 
 			<execute macro="Vocabulary#viewSearchResultsCP">
@@ -2090,8 +2090,8 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Vocabulary#searchCP">
-			<var name="vocabularySearchEntry" value="Vocab" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Vocab" />
 		</execute>
 
 		<execute macro="Vocabulary#viewSearchResultsCP">
@@ -2124,8 +2124,8 @@
 			<var name="portlet" value="Categories" />
 		</execute>
 
-		<execute macro="Vocabulary#searchCP">
-			<var name="vocabularySearchEntry" value="Null" />
+		<execute macro="Search#searchCP">
+			<var name="searchTerm" value="Null" />
 		</execute>
 
 		<execute macro="Vocabulary#viewSearchResultsCP">

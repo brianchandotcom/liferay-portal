@@ -120,21 +120,18 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		String instanceState = _getState();
 
-		int i = 0;
+		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
 
 		while (!instanceState.equals("running")) {
-			if (i == 20) {
+			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"The EC2 Instance has not responded after 10 ",
-						"minutes."));
+					"Timeout occurred while waiting for EC2 instance " +
+						"state \"running\"");
 			}
 
 			instanceState = _getState();
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
-
-			i++;
 		}
 	}
 
@@ -150,21 +147,18 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the EC2 Instance to terminate.");
 
-		int i = 0;
+		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
 
 		while (!instanceState.equals("terminated")) {
-			if (i == 20) {
+			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"The EC2 Instance has not responded after 10 ",
-						"minutes."));
+					"Timeout occurred while waiting for EC2 instance " +
+						"state \"terminated\"");
 			}
 
 			instanceState = _getState();
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
-
-			i++;
 		}
 
 		DeleteVolumeRequest deleteVolumeRequest = new DeleteVolumeRequest();
@@ -225,6 +219,8 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		return ebsInstanceBlockDevice.getVolumeId();
 	}
+
+	private static final long _TIMEOUT_DURATION = 1000 * 60 * 10;
 
 	private final AmazonEC2 _amazonEC2;
 	private String _imageId;

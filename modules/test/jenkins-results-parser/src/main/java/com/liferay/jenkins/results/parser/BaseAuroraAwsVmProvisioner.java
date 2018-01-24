@@ -57,21 +57,22 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the RDS Cluster to start.");
 
-		int i = 0;
+		long timeoutDuration = 1000 * 60 * 10;
+
+		long timeout = System.currentTimeMillis() + timeoutDuration;
 
 		while (!auroraClusterStatus.equals("available")) {
-			if (i == 20) {
+			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
-						"The Aurora Cluster has not responded after 10 ",
-						"minutes."));
+						"The Aurora cluster has not responded after ",
+						JenkinsResultsParserUtil.toDurationString(
+							timeoutDuration)));
 			}
 
 			auroraClusterStatus = _getClusterStatus();
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
-
-			i++;
 		}
 
 		CreateDBInstanceRequest auroraCreateDBInstanceRequest =
@@ -90,21 +91,20 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the RDS Instance to start.");
 
-		i = 0;
+		timeout = System.currentTimeMillis() + timeoutDuration;
 
 		while (!auroraStatus.equals("available")) {
-			if (i == 20) {
+			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
 					JenkinsResultsParserUtil.combine(
-						"The Aurora Instance has not responded after 10 ",
-						"minutes."));
+						"The Aurora instance has not responded after ",
+						JenkinsResultsParserUtil.toDurationString(
+							timeoutDuration)));
 			}
 
 			auroraStatus = _getStatus();
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
-
-			i++;
 		}
 	}
 

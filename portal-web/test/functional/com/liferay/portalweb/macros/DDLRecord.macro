@@ -330,33 +330,11 @@
 			<var name="parentPage" value="${parentPage}" />
 		</execute>
 
-		<toggle name="LPS-68869">
-			<on>
-				<execute function="SelectFrameTop" />
+		<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
 
-				<execute function="AssertClick" locator1="Button#DONE" value1="Done" />
+		<var name="key_fieldName" value="${fieldName}" />
 
-				<var name="key_fieldName" value="${fieldName}" />
-
-				<if>
-					<isset var="parentPage" />
-					<then>
-						<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${pagePrivacy} Pages &gt; ${parentPage} &gt; ${ddlRecordFieldData}" />
-					</then>
-					<else>
-						<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${pagePrivacy} Pages &gt; ${ddlRecordFieldData}" />
-					</else>
-				</if>
-			</on>
-
-			<off>
-				<execute function="AssertClick" locator1="Button#SELECT" value1="Select" />
-
-				<var name="key_fieldName" value="${fieldName}" />
-
-				<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
-			</off>
-		</toggle>
+		<execute function="AssertTextEquals" locator1="DDLEditRecord#LINK_TO_PAGE_PAGE_SELECT" value1="${ddlRecordFieldData}" />
 	</command>
 
 	<command name="populateFieldNumber">

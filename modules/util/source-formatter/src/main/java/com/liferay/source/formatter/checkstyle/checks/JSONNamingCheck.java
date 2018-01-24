@@ -49,6 +49,12 @@ public class JSONNamingCheck extends BaseCheck {
 			name, typeName, tokenTypeName, "String", "JSON", "Json",
 			detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 		_checkName(
+			name, typeName, tokenTypeName, "String", "JSON", "JSONString",
+			detailAST.getLineNo(), new String[] {_TOKEN_TYPE_NAME_VARIABLE});
+		_checkName(
+			name, typeName, tokenTypeName, "String", "JSON", "JsonString",
+			detailAST.getLineNo(), new String[] {_TOKEN_TYPE_NAME_VARIABLE});
+		_checkName(
 			name, typeName, tokenTypeName, "JSONArray", "JSONArray",
 			"JsonArray", detailAST.getLineNo(), _TOKEN_TYPE_NAMES);
 		_checkName(

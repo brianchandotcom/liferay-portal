@@ -62,25 +62,10 @@ request.setAttribute("edit_role_assignments.jsp-role", role);
 request.setAttribute("edit_role_assignments.jsp-displayStyle", displayStyle);
 
 request.setAttribute("edit_role_assignments.jsp-portletURL", portletURL);
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-
-PortletURL usersPortletURL = PortletURLUtil.clone(portletURL, renderResponse);
-
-usersPortletURL.setParameter("tabs2", "users");
-
-entriesNavigationItem.setHref(usersPortletURL.toString());
-entriesNavigationItem.setLabel(LanguageUtil.get(request, tabs2));
-
-navigationItems.add(entriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items="<%= roleDisplayContext.getAssigneesNavigationItems(portletURL) %>"
 />
 
 <portlet:actionURL name="editRoleAssignments" var="editRoleAssignmentsURL">

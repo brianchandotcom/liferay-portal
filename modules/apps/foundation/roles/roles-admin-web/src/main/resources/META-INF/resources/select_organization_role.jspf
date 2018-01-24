@@ -56,20 +56,10 @@ if (step == 1) {
 		uniqueOrganizationId = organizations.get(0).getOrganizationId();
 	}
 }
-
-List<NavigationItem> navigationItems = new ArrayList<>();
-
-NavigationItem entriesNavigationItem = new NavigationItem();
-
-entriesNavigationItem.setActive(true);
-entriesNavigationItem.setHref(StringPool.BLANK);
-entriesNavigationItem.setLabel(LanguageUtil.get(request, "organization-roles"));
-
-navigationItems.add(entriesNavigationItem);
 %>
 
 <clay:navigation-bar
-	items="<%= navigationItems %>"
+	items='<%= roleDisplayContext.getSelectRoleNavigationItems("organization-roles") %>'
 />
 
 <liferay-frontend:management-bar>

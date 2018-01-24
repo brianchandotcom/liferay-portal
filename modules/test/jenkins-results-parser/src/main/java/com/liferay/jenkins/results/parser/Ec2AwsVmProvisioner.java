@@ -41,14 +41,14 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 	public Ec2AwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
 
-		BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
 			awsAccessKeyId, awsSecretAccessKey);
 
 		AmazonEC2ClientBuilder amazonEC2ClientBuilder =
 			AmazonEC2ClientBuilder.standard();
 
 		amazonEC2ClientBuilder.withCredentials(
-			new AWSStaticCredentialsProvider(awsCredentials));
+			new AWSStaticCredentialsProvider(basicAWSCredentials));
 		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
 
 		_amazonEC2 = amazonEC2ClientBuilder.build();
@@ -62,14 +62,14 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 		String awsAccessKeyId, String awsSecretAccessKey, String imageId,
 		String instanceType, String keyName) {
 
-		BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
 			awsAccessKeyId, awsSecretAccessKey);
 
 		AmazonEC2ClientBuilder amazonEC2ClientBuilder =
 			AmazonEC2ClientBuilder.standard();
 
 		amazonEC2ClientBuilder.withCredentials(
-			new AWSStaticCredentialsProvider(awsCredentials));
+			new AWSStaticCredentialsProvider(basicAWSCredentials));
 		amazonEC2ClientBuilder.withRegion(Regions.US_WEST_1);
 
 		_amazonEC2 = amazonEC2ClientBuilder.build();
@@ -118,7 +118,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the EC2 Instance to start.");
 
-		String instanceState = _getState();
+		String instanceState = _getInstanceState();
 
 		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
 
@@ -131,7 +131,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
 
-			instanceState = _getState();
+			instanceState = _getInstanceState();
 		}
 	}
 
@@ -143,7 +143,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		_amazonEC2.terminateInstances(terminateInstancesRequest);
 
-		String instanceState = _getState();
+		String instanceState = _getInstanceState();
 
 		System.out.println("Waiting for the EC2 Instance to terminate.");
 
@@ -158,7 +158,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
 
-			instanceState = _getState();
+			instanceState = _getInstanceState();
 		}
 
 		DeleteVolumeRequest deleteVolumeRequest = new DeleteVolumeRequest();
@@ -197,7 +197,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 		return instances.get(0);
 	}
 
-	private String _getState() {
+	private String _getInstanceState() {
 		Instance instance = _getInstance();
 
 		InstanceState instanceState = instance.getState();

@@ -39,100 +39,94 @@ import java.util.List;
 public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 
 	public void create() {
-		CreateDBClusterRequest auroraCreateDBClusterRequest =
+		CreateDBClusterRequest createDBClusterRequest =
 			new CreateDBClusterRequest();
 
-		auroraCreateDBClusterRequest.withBackupRetentionPeriod(1);
-		auroraCreateDBClusterRequest.withDBClusterIdentifier(_dbClusterId);
-		auroraCreateDBClusterRequest.withEngine(_dbEngine);
-		auroraCreateDBClusterRequest.withEngineVersion(_dbEngineVersion);
-		auroraCreateDBClusterRequest.withMasterUsername(_dbUsername);
-		auroraCreateDBClusterRequest.withMasterUserPassword(_dbPassword);
-		auroraCreateDBClusterRequest.withVpcSecurityGroupIds(
+		createDBClusterRequest.withBackupRetentionPeriod(1);
+		createDBClusterRequest.withDBClusterIdentifier(_dbClusterId);
+		createDBClusterRequest.withEngine(_dbEngine);
+		createDBClusterRequest.withEngineVersion(_dbEngineVersion);
+		createDBClusterRequest.withMasterUsername(_dbUsername);
+		createDBClusterRequest.withMasterUserPassword(_dbPassword);
+		createDBClusterRequest.withVpcSecurityGroupIds(
 			_vpcSecurityGroupIds);
 
-		_amazonRDS.createDBCluster(auroraCreateDBClusterRequest);
+		_amazonRDS.createDBCluster(createDBClusterRequest);
 
-		String auroraClusterStatus = _getClusterStatus();
+		String dbClusterStatus = _getDBClusterStatus();
 
-		System.out.println("Waiting for the RDS Cluster to start.");
+		System.out.println("Waiting for the DB Cluster to start.");
 
-		long timeoutDuration = 1000 * 60 * 10;
+		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
 
-		long timeout = System.currentTimeMillis() + timeoutDuration;
-
-		while (!auroraClusterStatus.equals("available")) {
+		while (!dbClusterStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"The Aurora cluster has not responded after ",
-						JenkinsResultsParserUtil.toDurationString(
-							timeoutDuration)));
+					"Timeout occurred while waiting for DB cluster " +
+						"status \"available\"");
 			}
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
 
-			auroraClusterStatus = _getClusterStatus();
+			dbClusterStatus = _getDBClusterStatus();
 		}
 
-		CreateDBInstanceRequest auroraCreateDBInstanceRequest =
+		CreateDBInstanceRequest createDBInstanceRequest =
 			new CreateDBInstanceRequest();
 
-		auroraCreateDBInstanceRequest.withDBClusterIdentifier(_dbClusterId);
-		auroraCreateDBInstanceRequest.withDBInstanceClass(_dbInstanceClass);
-		auroraCreateDBInstanceRequest.withDBInstanceIdentifier(_dbInstanceId);
-		auroraCreateDBInstanceRequest.withEngine(_dbEngine);
-		auroraCreateDBInstanceRequest.withMultiAZ(false);
-		auroraCreateDBInstanceRequest.withPubliclyAccessible(true);
+		createDBInstanceRequest.withDBClusterIdentifier(_dbClusterId);
+		createDBInstanceRequest.withDBInstanceClass(_dbInstanceClass);
+		createDBInstanceRequest.withDBInstanceIdentifier(_dbInstanceId);
+		createDBInstanceRequest.withEngine(_dbEngine);
+		createDBInstanceRequest.withMultiAZ(false);
+		createDBInstanceRequest.withPubliclyAccessible(true);
 
-		_amazonRDS.createDBInstance(auroraCreateDBInstanceRequest);
+		_amazonRDS.createDBInstance(createDBInstanceRequest);
 
-		String auroraStatus = _getStatus();
+		String dbInstanceStatus = _getDBInstanceStatus();
 
-		System.out.println("Waiting for the RDS Instance to start.");
+		System.out.println("Waiting for the DB Instance to start.");
 
-		timeout = System.currentTimeMillis() + timeoutDuration;
+		timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
 
-		while (!auroraStatus.equals("available")) {
+		while (!dbInstanceStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					JenkinsResultsParserUtil.combine(
-						"The Aurora instance has not responded after ",
-						JenkinsResultsParserUtil.toDurationString(
-							timeoutDuration)));
+					"Timeout occurred while waiting for DB instance " +
+						"status \"available\"");
 			}
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
 
-			auroraStatus = _getStatus();
+			dbInstanceStatus = _getDBInstanceStatus();
 		}
 	}
 
 	public void delete() {
-		DeleteDBInstanceRequest auroraDeleteDBInstanceRequest =
+		DeleteDBInstanceRequest deleteDBInstanceRequest =
 			new DeleteDBInstanceRequest();
 
-		auroraDeleteDBInstanceRequest.withDBInstanceIdentifier(_dbInstanceId);
-		auroraDeleteDBInstanceRequest.withSkipFinalSnapshot(true);
+		deleteDBInstanceRequest.withDBInstanceIdentifier(_dbInstanceId);
+		deleteDBInstanceRequest.withSkipFinalSnapshot(true);
 
-		_amazonRDS.deleteDBInstance(auroraDeleteDBInstanceRequest);
+		_amazonRDS.deleteDBInstance(deleteDBInstanceRequest);
 
-		DeleteDBClusterRequest auroraDeleteDBClusterRequest =
+		DeleteDBClusterRequest deleteDBClusterRequest =
 			new DeleteDBClusterRequest();
 
-		auroraDeleteDBClusterRequest.withDBClusterIdentifier(_dbClusterId);
+		deleteDBClusterRequest.withDBClusterIdentifier(_dbClusterId);
 
-		auroraDeleteDBClusterRequest.withSkipFinalSnapshot(true);
+		deleteDBClusterRequest.withSkipFinalSnapshot(true);
 
-		_amazonRDS.deleteDBCluster(auroraDeleteDBClusterRequest);
+		_amazonRDS.deleteDBCluster(deleteDBClusterRequest);
 	}
 
 	public String getAddress() {
-		DBInstance auroraInstance = _getInstance();
+		DBInstance dbInstance = _getDBInstance();
 
-		Endpoint auroraEndpoint = auroraInstance.getEndpoint();
+		Endpoint endpoint = dbInstance.getEndpoint();
 
-		return auroraEndpoint.getAddress();
+		return endpoint.getAddress();
 	}
 
 	public String getDBEngine() {
@@ -154,14 +148,14 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 	protected BaseAuroraAwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String dbInstanceId) {
 
-		BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
 			awsAccessKeyId, awsSecretAccessKey);
 
 		AmazonRDSClientBuilder amazonRDSClientBuilder =
 			AmazonRDSClientBuilder.standard();
 
 		amazonRDSClientBuilder.withCredentials(
-			new AWSStaticCredentialsProvider(awsCredentials));
+			new AWSStaticCredentialsProvider(basicAWSCredentials));
 		amazonRDSClientBuilder.withRegion(Regions.US_WEST_1);
 
 		_amazonRDS = amazonRDSClientBuilder.build();
@@ -176,14 +170,14 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 		String dbEngine, String dbEngineVersion, String dbInstanceClass,
 		String dbInstanceId, String dbPassword, String dbUsername) {
 
-		BasicAWSCredentials awsCredentials = new BasicAWSCredentials(
+		BasicAWSCredentials basicAWSCredentials = new BasicAWSCredentials(
 			awsAccessKeyId, awsSecretAccessKey);
 
 		AmazonRDSClientBuilder amazonRDSClientBuilder =
 			AmazonRDSClientBuilder.standard();
 
 		amazonRDSClientBuilder.withCredentials(
-			new AWSStaticCredentialsProvider(awsCredentials));
+			new AWSStaticCredentialsProvider(basicAWSCredentials));
 		amazonRDSClientBuilder.withRegion(Regions.US_WEST_1);
 
 		_amazonRDS = amazonRDSClientBuilder.build();
@@ -197,16 +191,16 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 		_dbUsername = dbUsername;
 	}
 
-	private String _getClusterStatus() {
-		DescribeDBClustersRequest auroraClustersRequest =
+	private String _getDBClusterStatus() {
+		DescribeDBClustersRequest describeDBClustersRequest =
 			new DescribeDBClustersRequest();
 
-		auroraClustersRequest.withDBClusterIdentifier(_dbClusterId);
+		describeDBClustersRequest.withDBClusterIdentifier(_dbClusterId);
 
-		DescribeDBClustersResult auroraClustersResult =
-			_amazonRDS.describeDBClusters(auroraClustersRequest);
+		DescribeDBClustersResult describeDBClustersResult =
+			_amazonRDS.describeDBClusters(describeDBClustersRequest);
 
-		List<DBCluster> auroraClusters = auroraClustersResult.getDBClusters();
+		List<DBCluster> auroraClusters = describeDBClustersResult.getDBClusters();
 
 		DBCluster auroraCluster = auroraClusters.get(0);
 
@@ -214,31 +208,33 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 	}
 
 	private String _getDbClusterId() {
-		DBInstance auroraInstance = _getInstance();
+		DBInstance dbInstance = _getDBInstance();
 
-		return auroraInstance.getDBClusterIdentifier();
+		return dbInstance.getDBClusterIdentifier();
 	}
 
-	private DBInstance _getInstance() {
-		DescribeDBInstancesRequest auroraInstanceRequest =
+	private DBInstance _getDBInstance() {
+		DescribeDBInstancesRequest describeDBInstancesRequest =
 			new DescribeDBInstancesRequest();
 
-		auroraInstanceRequest.withDBInstanceIdentifier(_dbInstanceId);
+		describeDBInstancesRequest.withDBInstanceIdentifier(_dbInstanceId);
 
-		DescribeDBInstancesResult auroraInstancesResult =
-			_amazonRDS.describeDBInstances(auroraInstanceRequest);
+		DescribeDBInstancesResult describeDBInstancesResult =
+			_amazonRDS.describeDBInstances(describeDBInstancesRequest);
 
-		List<DBInstance> auroraInstances =
-			auroraInstancesResult.getDBInstances();
+		List<DBInstance> dbInstances =
+			describeDBInstancesResult.getDBInstances();
 
-		return auroraInstances.get(0);
+		return dbInstances.get(0);
 	}
 
-	private String _getStatus() {
-		DBInstance auroraInstance = _getInstance();
+	private String _getDBInstanceStatus() {
+		DBInstance dbInstance = _getDBInstance();
 
-		return auroraInstance.getDBInstanceStatus();
+		return dbInstance.getDBInstanceStatus();
 	}
+
+	private static final long _TIMEOUT_DURATION = 1000 * 60 * 10;
 
 	private final AmazonRDS _amazonRDS;
 	private final String _dbClusterId;

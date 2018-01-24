@@ -58,7 +58,9 @@
 	<command name="addCustomAbstract">
 		<execute function="Click" locator1="Radio#CUSTOM_ABSTRACT" />
 
-		<execute function="Type" locator1="TextInput#DESCRIPTION" value1="${entryAbstractDescription}" />
+		<execute macro="PortletEntry#inputDescriptionTextInput">
+			<var name="description" value="${entryAbstractDescription}" />
+		</execute>
 	</command>
 
 	<command name="addCustomURL">

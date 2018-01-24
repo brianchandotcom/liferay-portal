@@ -13,8 +13,8 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute macro="WebContentStructures#addDescription">
-					<var name="structureDescription" value="${structureDescription}" />
+				<execute macro="PortletEntry#inputDescriptionTextInput">
+					<var name="description" value="${structureDescription}" />
 				</execute>
 			</then>
 		</if>
@@ -110,8 +110,8 @@
 		<if>
 			<isset var="structureDescription" />
 			<then>
-				<execute macro="WebContentStructures#addDescription">
-					<var name="structureDescription" value="${structureDescription}" />
+				<execute macro="PortletEntry#inputDescriptionTextInput">
+					<var name="description" value="${structureDescription}" />
 				</execute>
 			</then>
 		</if>

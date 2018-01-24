@@ -16,6 +16,7 @@ package com.liferay.portal.webserver;
 
 import com.liferay.portal.kernel.cache.MultiVMPoolUtil;
 import com.liferay.portal.kernel.cache.PortalCache;
+import com.liferay.portal.kernel.cache.PortalCacheHelperUtil;
 import com.liferay.portal.kernel.security.pacl.DoPrivileged;
 import com.liferay.portal.kernel.webserver.WebServerServletToken;
 import com.liferay.portal.servlet.filters.cache.CacheUtil;
@@ -40,7 +41,8 @@ public class WebServerServletTokenImpl implements WebServerServletToken {
 		if (token == null) {
 			token = _createToken();
 
-			_portalCache.put(key, token);
+			PortalCacheHelperUtil.putWithoutReplicator(
+				_portalCache, key, token);
 		}
 
 		return token;

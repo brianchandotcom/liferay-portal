@@ -32,8 +32,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.service.cm.ConfigurationAdmin;
-
 /**
  * @author Drew Brokke
  */
@@ -170,7 +168,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(
+		String portletInstanceValue = saveScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 			portletInstanceKey);
 
@@ -183,7 +181,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 		Assert.assertNotSame(systemSettings, portletInstanceSettings);
 
 		Assert.assertEquals(
-			companyValue,
+			portletInstanceValue,
 			portletInstanceSettings.getValue(
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
@@ -226,9 +224,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
 				scopePrimKey));
 	}
-
-	@Inject
-	private ConfigurationAdmin _configurationAdmin;
 
 	@Inject
 	private SettingsLocatorHelper _settingsLocatorHelper;

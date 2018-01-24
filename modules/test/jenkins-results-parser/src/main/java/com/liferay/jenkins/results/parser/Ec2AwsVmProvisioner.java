@@ -116,23 +116,7 @@ public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
 			}
 		}
 
-		System.out.println("Waiting for the EC2 Instance to start.");
-
-		String instanceState = _getInstanceState();
-
-		long timeout = System.currentTimeMillis() + timeoutDuration;
-
-		while (!instanceState.equals("running")) {
-			if (System.currentTimeMillis() >= timeout) {
-				throw new RuntimeException(
-					"Timeout occurred while waiting for EC2 instance " +
-						"state \"running\"");
-			}
-
-			JenkinsResultsParserUtil.sleep(1000 * 30);
-
-			instanceState = _getInstanceState();
-		}
+		_waitForInstanceState("running");
 	}
 
 	public void delete() {
@@ -143,23 +127,7 @@ public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
 
 		_amazonEC2.terminateInstances(terminateInstancesRequest);
 
-		String instanceState = _getInstanceState();
-
-		System.out.println("Waiting for the EC2 Instance to terminate.");
-
-		long timeout = System.currentTimeMillis() + timeoutDuration;
-
-		while (!instanceState.equals("terminated")) {
-			if (System.currentTimeMillis() >= timeout) {
-				throw new RuntimeException(
-					"Timeout occurred while waiting for EC2 instance " +
-						"state \"terminated\"");
-			}
-
-			JenkinsResultsParserUtil.sleep(1000 * 30);
-
-			instanceState = _getInstanceState();
-		}
+		_waitForInstanceState("terminated");
 
 		DeleteVolumeRequest deleteVolumeRequest = new DeleteVolumeRequest();
 
@@ -218,6 +186,29 @@ public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
 			instanceBlockDeviceMapping.getEbs();
 
 		return ebsInstanceBlockDevice.getVolumeId();
+	}
+
+	private void _waitForInstanceState(String targetState) {
+		String instanceState = _getInstanceState();
+
+		System.out.println(
+			JenkinsResultsParserUtil.combine(
+				"Waiting for the EC2 Instance state \"", targetState, "\""));
+		
+		long timeout = System.currentTimeMillis() + timeoutDuration;
+
+		while (!instanceState.equals("terminated")) {
+			if (System.currentTimeMillis() >= timeout) {
+				throw new RuntimeException(
+					"Timeout occurred while waiting for EC2 instance " +
+						"state \"terminated\"");
+			}
+
+			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			instanceState = _getInstanceState();
+		}
+		
 	}
 
 	private final AmazonEC2 _amazonEC2;

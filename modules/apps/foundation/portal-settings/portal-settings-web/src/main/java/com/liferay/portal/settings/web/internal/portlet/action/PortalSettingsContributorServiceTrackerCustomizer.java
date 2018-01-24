@@ -18,8 +18,8 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.util.HashMapDictionary;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Dictionary;
 import java.util.Hashtable;

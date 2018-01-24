@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.settings.web.constants;
+package com.liferay.portal.settings.constants;
 
 /**
  * @author Philip Jones

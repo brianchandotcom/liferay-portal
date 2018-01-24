@@ -16,7 +16,7 @@ package com.liferay.portal.settings.authentication.opensso.web.internal.portlet.
 
 import com.liferay.portal.security.sso.opensso.constants.OpenSSOConstants;
 import com.liferay.portal.settings.authentication.opensso.web.internal.constants.PortalSettingsOpenSSOConstants;
-import com.liferay.portal.settings.web.portlet.action.PortalSettingsFormContributor;
+import com.liferay.portal.settings.portlet.action.PortalSettingsFormContributor;
 
 import java.util.Optional;
 

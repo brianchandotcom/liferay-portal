@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.portal.settings.web.constants.PortalSettingsPortletKeys;
+import com.liferay.portal.settings.constants.PortalSettingsPortletKeys;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;

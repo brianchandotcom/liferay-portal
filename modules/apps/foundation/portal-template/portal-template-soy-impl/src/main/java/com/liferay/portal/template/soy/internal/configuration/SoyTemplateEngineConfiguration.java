@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.template.soy.configuration;
+package com.liferay.portal.template.soy.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.template.soy.configuration.SoyTemplateEngineConfiguration",
+	id = "com.liferay.portal.template.soy.internal.configuration.SoyTemplateEngineConfiguration",
 	localization = "content/Language",
 	name = "soy-template-engine-configuration-name"
 )

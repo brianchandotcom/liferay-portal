@@ -22,9 +22,9 @@ public class BookmarksUADConstants {
 	public static final String CLASS_NAME_BOOKMARKS_ENTRY =
 		"com.liferay.bookmarks.model.BookmarksEntry";
 
+	public static final String UAD_ENTITY_SET_NAME = "Bookmarks";
+
 	public static final String[] USER_ID_FIELD_NAMES_BOOKMARKS_ENTRY =
 		{"userId", "statusByUserId"};
-
-	public static final String BUNDLE_ID = "Bookmarks";
 
 }

@@ -71,7 +71,7 @@ public class BookmarksEntryUADEntityAggregator extends BaseUADEntityAggregator {
 
 	@Override
 	public String getUADEntitySetName() {
-		return BookmarksUADConstants.BUNDLE_ID;
+		return BookmarksUADConstants.UAD_ENTITY_SET_NAME;
 	}
 
 	private DynamicQuery _getDynamicQuery(long userId) {

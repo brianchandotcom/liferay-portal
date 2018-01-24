@@ -72,10 +72,10 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		PowerMockito.mockStatic(ExportImportPathUtil.class);
 
-		_setUpFileEntryToExport(_fileEntryId1, _fileEntry1);
-		_setUpFileEntryToImport(_fileEntryId1, _fileEntry1);
-		_setUpFileEntryToExport(_fileEntryId2, _fileEntry2);
-		_setUpFileEntryToImport(_fileEntryId2, _fileEntry2);
+		_setUpFileEntryToExport(_FILE_ENTRY_ID_1, _fileEntry1);
+		_setUpFileEntryToImport(_FILE_ENTRY_ID_1, _fileEntry1);
+		_setUpFileEntryToExport(_FILE_ENTRY_ID_2, _fileEntry2);
+		_setUpFileEntryToImport(_FILE_ENTRY_ID_2, _fileEntry2);
 	}
 
 	@Test
@@ -99,7 +99,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("&<img data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" src=\"");
 		sb.append(RandomTestUtil.randomString());
 		sb.append("\" />&");
@@ -120,7 +120,8 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		throws Exception {
 
 		String content =
-			"&<picture data-fileentryid=\"" + _fileEntryId1 + "\"></picture>&";
+			"&<picture data-fileentryid=\"" + _FILE_ENTRY_ID_1 +
+				"\"></picture>&";
 
 		Assert.assertEquals(
 			_amImageHTMLExportImportContentProcessor.
@@ -148,13 +149,13 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		expectedSB.append("<img src=\"");
 		expectedSB.append(urlFileEntry1);
 		expectedSB.append("\" data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId1);
+		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" />");
 		expectedSB.append(infix);
 		expectedSB.append("<img src=\"");
 		expectedSB.append(urlFileEntry2);
 		expectedSB.append("\" data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId2);
+		expectedSB.append(_FILE_ENTRY_ID_2);
 		expectedSB.append("\" />");
 		expectedSB.append(suffix);
 
@@ -162,13 +163,13 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		sb.append(prefix);
 		sb.append("<img data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" src=\"");
 		sb.append(urlFileEntry1);
 		sb.append("\" />");
 		sb.append(infix);
 		sb.append("<img data-fileentryid=\"");
-		sb.append(_fileEntryId2);
+		sb.append(_FILE_ENTRY_ID_2);
 		sb.append("\" src=\"");
 		sb.append(urlFileEntry2);
 		sb.append("\" />");
@@ -193,13 +194,13 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		expectedSB.append(prefix);
 		expectedSB.append("<picture data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId1);
+		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry1);
 		expectedSB.append("\" /></picture>");
 		expectedSB.append(infix);
 		expectedSB.append("<picture data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId2);
+		expectedSB.append(_FILE_ENTRY_ID_2);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry2);
 		expectedSB.append("\" /></picture>");
@@ -209,13 +210,13 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		sb.append(prefix);
 		sb.append("<picture data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry1);
 		sb.append("\" /></picture>");
 		sb.append(infix);
 		sb.append("<picture data-fileentryid=\"");
-		sb.append(_fileEntryId2);
+		sb.append(_FILE_ENTRY_ID_2);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry2);
 		sb.append("\" /></picture>");
@@ -247,7 +248,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		expectedSB.append("<img src=\"");
 		expectedSB.append(urlFileEntry1);
 		expectedSB.append("\" data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId1);
+		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" />");
 		expectedSB.append(suffix);
 
@@ -255,7 +256,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		sb.append(prefix);
 		sb.append("<img data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" src=\"");
 		sb.append(urlFileEntry1);
 		sb.append("\" />");
@@ -280,7 +281,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		expectedSB.append("<img attr1=\"1\" attr2=\"2\" src=\"");
 		expectedSB.append(urlFileEntry1);
 		expectedSB.append("\" attr3=\"3\" data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId1);
+		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\" />");
 		expectedSB.append(suffix);
 
@@ -288,7 +289,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		sb.append(prefix);
 		sb.append("<img attr1=\"1\" data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" attr2=\"2\" src=\"");
 		sb.append(urlFileEntry1);
 		sb.append("\" attr3=\"3\"/>");
@@ -309,7 +310,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		expectedSB.append(prefix);
 		expectedSB.append("<picture data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId1);
+		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry1);
 		expectedSB.append("\" /></picture>");
@@ -319,7 +320,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 
 		sb.append(prefix);
 		sb.append("<picture data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry1);
 		sb.append("\" /></picture>");
@@ -338,7 +339,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		StringBundler expectedSB = new StringBundler(5);
 
 		expectedSB.append("<picture data-fileEntryId=\"");
-		expectedSB.append(_fileEntryId1);
+		expectedSB.append(_FILE_ENTRY_ID_1);
 		expectedSB.append("\"><source /><img src=\"");
 		expectedSB.append(urlFileEntry1);
 		expectedSB.append("\" class=\"pretty\" /></picture>");
@@ -346,7 +347,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<picture data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\"><img src=\"");
 		sb.append(urlFileEntry1);
 		sb.append("\" class=\"pretty\" /></picture>");
@@ -362,11 +363,11 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		).when(
 			_dlAppLocalService
 		).getFileEntry(
-			_fileEntryId1
+			_FILE_ENTRY_ID_1
 		);
 
 		String content =
-			"<img export-import-path=\"PATH_" + _fileEntryId1 + "\" />";
+			"<img export-import-path=\"PATH_" + _FILE_ENTRY_ID_1 + "\" />";
 
 		Assert.assertEquals(
 			content,
@@ -410,7 +411,7 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		sb.append("<img data-fileentryid=\"");
 		sb.append(RandomTestUtil.randomLong());
 		sb.append("\" src=\"PATH_");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" />");
 
 		_amImageHTMLExportImportContentProcessor.validateContentReferences(
@@ -436,9 +437,9 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		StringBundler sb = new StringBundler(5);
 
 		sb.append("<img data-fileentryid=\"");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" src=\"PATH_");
-		sb.append(_fileEntryId1);
+		sb.append(_FILE_ENTRY_ID_1);
 		sb.append("\" />");
 
 		_amImageHTMLExportImportContentProcessor.validateContentReferences(
@@ -454,11 +455,11 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		).when(
 			_dlAppLocalService
 		).getFileEntry(
-			_fileEntryId1
+			_FILE_ENTRY_ID_1
 		);
 
 		String content =
-			"<picture data-fileentryid=\"" + _fileEntryId1 + "\"></picture>";
+			"<picture data-fileentryid=\"" + _FILE_ENTRY_ID_1 + "\"></picture>";
 
 		_amImageHTMLExportImportContentProcessor.validateContentReferences(
 			RandomTestUtil.randomLong(), content);
@@ -533,8 +534,9 @@ public class AMImageHTMLExportImportContentProcessorTest {
 		);
 	}
 
-	private static final long _fileEntryId1 = RandomTestUtil.randomLong();
-	private static final long _fileEntryId2 = RandomTestUtil.randomLong();
+	private static final long _FILE_ENTRY_ID_1 = RandomTestUtil.randomLong();
+
+	private static final long _FILE_ENTRY_ID_2 = RandomTestUtil.randomLong();
 
 	private final AMEmbeddedReferenceSet _amEmbeddedReferenceSet = Mockito.mock(
 		AMEmbeddedReferenceSet.class);

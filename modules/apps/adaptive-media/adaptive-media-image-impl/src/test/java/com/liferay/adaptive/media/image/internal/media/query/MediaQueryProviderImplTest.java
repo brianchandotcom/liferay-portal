@@ -634,7 +634,7 @@ public class MediaQueryProviderImplTest {
 
 	private void _addAdaptiveMedias(
 			FileEntry fileEntry,
-			AdaptiveMedia<AMImageProcessor>...adaptiveMedias)
+			AdaptiveMedia<AMImageProcessor>... adaptiveMedias)
 		throws PortalException {
 
 		Mockito.when(

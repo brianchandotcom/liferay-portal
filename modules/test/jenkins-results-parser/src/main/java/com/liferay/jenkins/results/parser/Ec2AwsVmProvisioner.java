@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
+public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
 
 	public Ec2AwsVmProvisioner(
 		String awsAccessKeyId, String awsSecretAccessKey, String instanceId) {
@@ -120,7 +120,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		String instanceState = _getInstanceState();
 
-		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
+		long timeout = System.currentTimeMillis() + timeoutDuration;
 
 		while (!instanceState.equals("running")) {
 			if (System.currentTimeMillis() >= timeout) {
@@ -147,7 +147,7 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the EC2 Instance to terminate.");
 
-		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
+		long timeout = System.currentTimeMillis() + timeoutDuration;
 
 		while (!instanceState.equals("terminated")) {
 			if (System.currentTimeMillis() >= timeout) {
@@ -219,8 +219,6 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 
 		return ebsInstanceBlockDevice.getVolumeId();
 	}
-
-	private static final long _TIMEOUT_DURATION = 1000 * 60 * 10;
 
 	private final AmazonEC2 _amazonEC2;
 	private String _imageId;

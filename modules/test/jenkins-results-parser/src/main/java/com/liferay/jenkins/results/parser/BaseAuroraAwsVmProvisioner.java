@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * @author Kiyoshi Lee
  */
-public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
+public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 
 	public void create() {
 		CreateDBClusterRequest createDBClusterRequest =
@@ -57,7 +57,7 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the DB Cluster to start.");
 
-		long timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
+		long timeout = System.currentTimeMillis() + timeoutDuration;
 
 		while (!dbClusterStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
@@ -87,7 +87,7 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 
 		System.out.println("Waiting for the DB Instance to start.");
 
-		timeout = System.currentTimeMillis() + _TIMEOUT_DURATION;
+		timeout = System.currentTimeMillis() + timeoutDuration;
 
 		while (!dbInstanceStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
@@ -233,8 +233,6 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 
 		return dbInstance.getDBInstanceStatus();
 	}
-
-	private static final long _TIMEOUT_DURATION = 1000 * 60 * 10;
 
 	private final AmazonRDS _amazonRDS;
 	private final String _dbClusterId;

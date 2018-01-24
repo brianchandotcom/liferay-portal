@@ -14,8 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentEntryService;
+import com.liferay.fragment.util.FragmentRenderUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,7 +27,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
@@ -37,11 +35,11 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/fragment_entry"
+		"mvc.command.name=/layout/render_fragment_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -50,24 +48,18 @@ public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
-
-		FragmentEntry fragmentEntry = _fragmentEntryService.fetchFragmentEntry(
-			fragmentEntryId);
+		long fragmentInstanceId = ParamUtil.getLong(
+			actionRequest, "fragmentInstanceId");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (fragmentEntry != null) {
-			jsonObject.put("css", fragmentEntry.getCss());
-			jsonObject.put("html", fragmentEntry.getHtml());
-			jsonObject.put("js", fragmentEntry.getJs());
-			jsonObject.put("name", fragmentEntry.getName());
-		}
+		jsonObject.put(
+			"content",
+			FragmentRenderUtil.renderFragment(
+				fragmentInstanceId, fragmentEntryId));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference
-	private FragmentEntryService _fragmentEntryService;
 
 }

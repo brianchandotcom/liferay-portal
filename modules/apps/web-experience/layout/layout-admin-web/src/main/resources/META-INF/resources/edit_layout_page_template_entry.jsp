@@ -31,16 +31,16 @@ renderResponse.setTitle(layoutPageTemplateDisplayContext.getLayoutPageTemplateEn
 	<portlet:param name="mvcPath" value="/edit_layout_page_template_entry.jsp" />
 </portlet:actionURL>
 
-<portlet:actionURL name="/layout/fragment_entry" var="fragmentEntryURL" />
+<portlet:actionURL name="/layout/render_fragment_entry" var="renderFragmentEntryURL" />
 
 <%
 Map<String, Object> layoutPageTemplateEditorContext = new HashMap<>();
 
 layoutPageTemplateEditorContext.put("fragments", layoutPageTemplateDisplayContext.getFragmentEntryInstanceLinksJSONArray());
 layoutPageTemplateEditorContext.put("fragmentCollections", layoutPageTemplateDisplayContext.getFragmentCollectionsJSONArray());
-layoutPageTemplateEditorContext.put("fragmentEntryURL", fragmentEntryURL);
 layoutPageTemplateEditorContext.put("layoutPageTemplateEntryId", layoutPageTemplateDisplayContext.getLayoutPageTemplateEntryId());
 layoutPageTemplateEditorContext.put("portletNamespace", renderResponse.getNamespace());
+layoutPageTemplateEditorContext.put("renderFragmentEntryURL", renderFragmentEntryURL);
 layoutPageTemplateEditorContext.put("spritemap", themeDisplay.getPathThemeImages() + "/lexicon/icons.svg");
 layoutPageTemplateEditorContext.put("updatePageTemplateURL", String.valueOf(editLayoutPageTemplateFragmentsURL));
 %>

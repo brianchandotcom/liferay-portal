@@ -44,6 +44,11 @@
 	<td>//li[contains(@class,'list-group-item')][div[normalize-space()='${key_pageName}']]//a[*[name()='svg'][contains(@class,'icon-plus')]]</td>
 	<td></td>
 </tr>
+<tr>
+	<td>LIST_GROUP_ITEM_ROW_ELLIPSIS</td>
+	<td>xpath=(//li[contains(@class,'list-group-item')])[${key_index}]//button[*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td></td>
+</tr>
 <!--NAVIGATION-->
 <tr>
 	<td>NAVIGATION_PUBLIC_PAGES</td>

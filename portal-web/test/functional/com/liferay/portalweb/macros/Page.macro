@@ -555,13 +555,13 @@
 		</execute>
 
 		<while>
-			<condition function="IsElementPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
-				<var name="key_rowNumber" value="2" />
+			<condition function="IsElementPresent" locator1="SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS">
+				<var name="key_index" value="2" />
 			</condition>
 
 			<then>
-				<execute function="Click#waitForMenuToggleJSClick" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
-					<var name="key_rowNumber" value="2" />
+				<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS">
+					<var name="key_index" value="2" />
 				</execute>
 
 				<execute function="AssertClickNoError" locator1="MenuItem#ANY_MENU_ITEM" value1="Delete">
@@ -572,8 +572,8 @@
 			</then>
 		</while>
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER_ELLIPSIS">
-			<var name="key_rowNumber" value="2" />
+		<execute function="AssertElementNotPresent" locator1="SitePages#LIST_GROUP_ITEM_ROW_ELLIPSIS">
+			<var name="key_index" value="2" />
 		</execute>
 	</command>
 

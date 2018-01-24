@@ -29,6 +29,10 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
+
+String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
+
+boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
 %>
 
 <aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />
@@ -82,6 +86,21 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 				<div class="workflow-definition-content-source" id="<portlet:namespace />contentEditor"></div>
 			</aui:col>
 		</aui:fieldset>
+
+		<c:choose>
+			<c:when test="<%= !previewBeforeRestore %>">
+				<aui:button-row>
+					<liferay-portlet:renderURL portletName="<%= KaleoDesignerPortletKeys.KALEO_DESIGNER %>" var="editURL">
+						<portlet:param name="mvcPath" value='<%= "/designer/edit_kaleo_definition_version.jsp" %>' />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="name" value="<%= kaleoDefinitionVersion.getName() %>" />
+						<portlet:param name="draftVersion" value="<%= kaleoDefinitionVersion.getVersion() %>" />
+					</liferay-portlet:renderURL>
+
+					<aui:button cssClass="btn-lg" href="<%= editURL %>" primary="<%= true %>" value="edit" />
+				</aui:button-row>
+			</c:when>
+		</c:choose>
 	</div>
 </div>
 
@@ -92,6 +111,7 @@ renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
 		{
 			boundingBox: '#<portlet:namespace />contentEditor',
 			height: 600,
+			mode: 'xml',
 			readOnly: 'true',
 			tabSize: 4,
 			width: '100%'

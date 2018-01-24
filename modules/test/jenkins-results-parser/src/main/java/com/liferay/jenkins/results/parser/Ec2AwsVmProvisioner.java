@@ -129,9 +129,9 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 						"state \"running\"");
 			}
 
-			instanceState = _getState();
-
 			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			instanceState = _getState();
 		}
 	}
 
@@ -156,9 +156,9 @@ public class Ec2AwsVmProvisioner implements AwsVmProvisioner {
 						"state \"terminated\"");
 			}
 
-			instanceState = _getState();
-
 			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			instanceState = _getState();
 		}
 
 		DeleteVolumeRequest deleteVolumeRequest = new DeleteVolumeRequest();

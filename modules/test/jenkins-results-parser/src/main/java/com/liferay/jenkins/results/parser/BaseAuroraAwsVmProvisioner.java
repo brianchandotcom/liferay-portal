@@ -70,9 +70,9 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 							timeoutDuration)));
 			}
 
-			auroraClusterStatus = _getClusterStatus();
-
 			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			auroraClusterStatus = _getClusterStatus();
 		}
 
 		CreateDBInstanceRequest auroraCreateDBInstanceRequest =
@@ -102,9 +102,9 @@ public abstract class BaseAuroraAwsVmProvisioner implements AwsVmProvisioner {
 							timeoutDuration)));
 			}
 
-			auroraStatus = _getStatus();
-
 			JenkinsResultsParserUtil.sleep(1000 * 30);
+
+			auroraStatus = _getStatus();
 		}
 	}
 

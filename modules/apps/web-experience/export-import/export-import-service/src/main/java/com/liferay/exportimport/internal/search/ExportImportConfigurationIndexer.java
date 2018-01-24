@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.search;
+package com.liferay.exportimport.internal.search;
 
 import aQute.bnd.annotation.ProviderType;
 

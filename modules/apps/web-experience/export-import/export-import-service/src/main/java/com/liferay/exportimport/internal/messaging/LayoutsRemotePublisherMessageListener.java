@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.messaging;
+package com.liferay.exportimport.internal.messaging;
 
 import aQute.bnd.annotation.ProviderType;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.staging;
+package com.liferay.exportimport.internal.staging;
 
 import static com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames.PORTLET_REMOTE_STAGING_BACKGROUND_TASK_EXECUTOR;
 import static com.liferay.exportimport.kernel.background.task.BackgroundTaskExecutorNames.PORTLET_STAGING_BACKGROUND_TASK_EXECUTOR;

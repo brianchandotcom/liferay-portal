@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.portlet.preferences.processor.capability;
+package com.liferay.exportimport.internal.portlet.preferences.processor.capability;
 
 import aQute.bnd.annotation.ProviderType;
 

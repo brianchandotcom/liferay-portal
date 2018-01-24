@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.xstream;
+package com.liferay.exportimport.internal.xstream;
 
 import aQute.bnd.annotation.ProviderType;
 

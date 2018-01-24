@@ -6,6 +6,7 @@ import Soy from 'metal-soy';
 import './contextual_sidebar/ContextualSidebar.es';
 import './LayoutPageTemplateFragment.es';
 import './LayoutPageTemplateFragmentCollection.es';
+import './LayoutPageTemplateSidebarAddedFragment.es';
 import templates from './LayoutPageTemplateEditor.soy';
 
 /**
@@ -134,6 +135,11 @@ const SIDEBAR_TABS = [
 		name: Liferay.Language.get('fragments'),
 		visible: true,
 	},
+	{
+		id: 'added',
+		name: Liferay.Language.get('added'),
+		visible: true
+	}
 ];
 
 /**

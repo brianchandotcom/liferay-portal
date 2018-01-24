@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.module.configuration.definition;
+package com.liferay.portal.security.sso.token.impl.internal.module.configuration.definition;
 
-import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
-import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
+import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
+import com.liferay.portal.security.sso.token.impl.configuration.TokenConfiguration;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -24,17 +23,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Mika Koivisto
  */
 @Component
-public class TokenCompanyServiceConfigurationPidMapping
-	implements ConfigurationPidMapping {
+public class TokenCompanyServiceConfigurationBeanDeclaration
+	implements ConfigurationBeanDeclaration {
 
 	@Override
 	public Class<?> getConfigurationBeanClass() {
 		return TokenConfiguration.class;
-	}
-
-	@Override
-	public String getConfigurationPid() {
-		return TokenConstants.SERVICE_NAME;
 	}
 
 }

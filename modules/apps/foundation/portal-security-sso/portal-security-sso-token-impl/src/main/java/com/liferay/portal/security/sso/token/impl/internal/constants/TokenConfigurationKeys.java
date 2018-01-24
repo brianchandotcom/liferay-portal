@@ -12,23 +12,19 @@
  * details.
  */
 
-package com.liferay.portal.security.sso.token.internal.module.configuration.definition;
-
-import com.liferay.portal.kernel.settings.definition.ConfigurationBeanDeclaration;
-import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
-
-import org.osgi.service.component.annotations.Component;
+package com.liferay.portal.security.sso.token.impl.internal.constants;
 
 /**
  * @author Mika Koivisto
  */
-@Component
-public class TokenCompanyServiceConfigurationBeanDeclaration
-	implements ConfigurationBeanDeclaration {
+public class TokenConfigurationKeys {
 
-	@Override
-	public Class<?> getConfigurationBeanClass() {
-		return TokenConfiguration.class;
-	}
+	public static final String AUTH_ENABLED = "enabled";
+
+	public static final String IMPORT_FROM_LDAP = "importFromLDAP";
+
+	public static final String LOGOUT_REDIRECT_URL = "logoutRedirectURL";
+
+	public static final String USER_HEADER = "userTokenName";
 
 }

@@ -147,7 +147,7 @@ public class AMServlet extends HttpServlet {
 	private String _getRequestHandlerPattern(HttpServletRequest request) {
 		String pathInfo = request.getPathInfo();
 
-		Matcher matcher = _REQUEST_HANDLER_PATTERN.matcher(pathInfo);
+		Matcher matcher = _requestHandlerPattern.matcher(pathInfo);
 
 		if (matcher.find()) {
 			return matcher.group(1);
@@ -156,7 +156,7 @@ public class AMServlet extends HttpServlet {
 		return StringPool.BLANK;
 	}
 
-	private static final Pattern _REQUEST_HANDLER_PATTERN = Pattern.compile(
+	private static final Pattern _requestHandlerPattern = Pattern.compile(
 		"^/([^/]*)");
 
 	private AMRequestHandlerLocator _amRequestHandlerLocator;

@@ -48,8 +48,7 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 		createDBClusterRequest.withEngineVersion(_dbEngineVersion);
 		createDBClusterRequest.withMasterUsername(_dbUsername);
 		createDBClusterRequest.withMasterUserPassword(_dbPassword);
-		createDBClusterRequest.withVpcSecurityGroupIds(
-			_vpcSecurityGroupIds);
+		createDBClusterRequest.withVpcSecurityGroupIds(_vpcSecurityGroupIds);
 
 		_amazonRDS.createDBCluster(createDBClusterRequest);
 
@@ -57,13 +56,13 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 
 		System.out.println("Waiting for the DB Cluster to start.");
 
-		long timeout = System.currentTimeMillis() + timeoutDuration;
+		long timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
 
 		while (!dbClusterStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					"Timeout occurred while waiting for DB cluster " +
-						"status \"available\"");
+					"Timeout occurred while waiting for DB cluster status " +
+						"\"available\"");
 			}
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
@@ -87,13 +86,13 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 
 		System.out.println("Waiting for the DB Instance to start.");
 
-		timeout = System.currentTimeMillis() + timeoutDuration;
+		timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
 
 		while (!dbInstanceStatus.equals("available")) {
 			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					"Timeout occurred while waiting for DB instance " +
-						"status \"available\"");
+					"Timeout occurred while waiting for DB instance status " +
+						"\"available\"");
 			}
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
@@ -191,6 +190,12 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 		_dbUsername = dbUsername;
 	}
 
+	private String _getDbClusterId() {
+		DBInstance dbInstance = _getDBInstance();
+
+		return dbInstance.getDBClusterIdentifier();
+	}
+
 	private String _getDBClusterStatus() {
 		DescribeDBClustersRequest describeDBClustersRequest =
 			new DescribeDBClustersRequest();
@@ -200,17 +205,12 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 		DescribeDBClustersResult describeDBClustersResult =
 			_amazonRDS.describeDBClusters(describeDBClustersRequest);
 
-		List<DBCluster> auroraClusters = describeDBClustersResult.getDBClusters();
+		List<DBCluster> auroraClusters =
+			describeDBClustersResult.getDBClusters();
 
 		DBCluster auroraCluster = auroraClusters.get(0);
 
 		return auroraCluster.getStatus();
-	}
-
-	private String _getDbClusterId() {
-		DBInstance dbInstance = _getDBInstance();
-
-		return dbInstance.getDBClusterIdentifier();
 	}
 
 	private DBInstance _getDBInstance() {

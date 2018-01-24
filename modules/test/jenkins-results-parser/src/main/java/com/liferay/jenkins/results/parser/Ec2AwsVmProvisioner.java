@@ -194,21 +194,20 @@ public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
 		System.out.println(
 			JenkinsResultsParserUtil.combine(
 				"Waiting for the EC2 Instance state \"", targetState, "\""));
-		
-		long timeout = System.currentTimeMillis() + timeoutDuration;
+
+		long timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
 
 		while (!instanceState.equals("terminated")) {
 			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					"Timeout occurred while waiting for EC2 instance " +
-						"state \"terminated\"");
+					"Timeout occurred while waiting for EC2 instance state " +
+						"\"terminated\"");
 			}
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);
 
 			instanceState = _getInstanceState();
 		}
-		
 	}
 
 	private final AmazonEC2 _amazonEC2;

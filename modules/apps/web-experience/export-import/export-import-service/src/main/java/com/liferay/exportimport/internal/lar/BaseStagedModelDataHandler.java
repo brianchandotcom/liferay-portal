@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
+package com.liferay.exportimport.internal.lar;
 
 import com.liferay.portal.kernel.model.StagedModel;
 

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
+package com.liferay.exportimport.internal.lar;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContextListener;

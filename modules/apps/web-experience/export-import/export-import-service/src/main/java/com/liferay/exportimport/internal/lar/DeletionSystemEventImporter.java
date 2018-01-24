@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.exportimport.lar;
+package com.liferay.exportimport.internal.lar;
 
 import static com.liferay.exportimport.kernel.lar.StagedModelType.REFERRER_CLASS_NAME_ALL;
 import static com.liferay.exportimport.kernel.lar.StagedModelType.REFERRER_CLASS_NAME_ANY;

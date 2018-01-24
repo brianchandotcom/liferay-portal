@@ -134,7 +134,9 @@ public abstract class BaseSourceProcessor implements SourceProcessor {
 		List<String> fileNames = sourceFormatterArgs.getFileNames();
 
 		if (fileNames != null) {
-			return fileNames;
+			return SourceFormatterUtil.filterFileNames(
+				fileNames, new String[0], getIncludes(),
+				_sourceFormatterExcludes, false);
 		}
 
 		return doGetFileNames();

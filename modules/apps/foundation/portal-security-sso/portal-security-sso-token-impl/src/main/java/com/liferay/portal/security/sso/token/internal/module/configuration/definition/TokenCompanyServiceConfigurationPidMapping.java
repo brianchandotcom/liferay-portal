@@ -15,7 +15,7 @@
 package com.liferay.portal.security.sso.token.internal.module.configuration.definition;
 
 import com.liferay.portal.kernel.settings.definition.ConfigurationPidMapping;
-import com.liferay.portal.security.sso.token.configuration.TokenConfiguration;
+import com.liferay.portal.security.sso.token.impl.configuration.TokenConfiguration;
 import com.liferay.portal.security.sso.token.internal.constants.TokenConstants;
 
 import org.osgi.service.component.annotations.Component;

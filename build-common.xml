@@ -1230,77 +1230,6 @@ artifact.url=${remote.repository.url}/com/liferay/portal/com.liferay.${processed
 		</sequential>
 	</macrodef>
 
-	<target name="restore-latest-artifact-version">
-		<fail message="Please run this target from a release branch instead.">
-			<condition>
-				<not>
-					<available file="${project.dir}/modules/.releng" type="dir" />
-				</not>
-			</condition>
-		</fail>
-
-		<if>
-			<available file="${project.dir}/modules/.releng/${ant.project.name}.properties" />
-			<then>
-				<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${ant.project.name}.properties">
-					<filterchain>
-						<linecontains>
-							<contains value="artifact.url" />
-						</linecontains>
-					</filterchain>
-				</loadproperties>
-
-				<antelope:stringutil property="latest.artifact.version.beginindex" string="${latest.artifact.url}">
-					<antelope:lastindexof string="-" />
-				</antelope:stringutil>
-
-				<antelope:math
-					datatype="int"
-					operand1="${latest.artifact.version.beginindex}"
-					operand2="1"
-					operation="+"
-					result="latest.artifact.version.beginindex"
-				/>
-
-				<antelope:stringutil property="latest.artifact.version.endindex" string="${latest.artifact.url}">
-					<antelope:lastindexof string="." />
-				</antelope:stringutil>
-
-				<antelope:stringutil property="latest.artifact.version" string="${latest.artifact.url}">
-					<antelope:substring beginindex="${latest.artifact.version.beginindex}" endindex="${latest.artifact.version.endindex}" />
-				</antelope:stringutil>
-
-				<if>
-					<available file="${basedir}/bnd.bnd" />
-					<then>
-						<loadproperties srcFile="${basedir}/bnd.bnd">
-							<filterchain>
-								<linecontains>
-									<contains value="Bundle-Version" />
-								</linecontains>
-							</filterchain>
-						</loadproperties>
-
-						<replace
-							failOnNoReplacements="true"
-							file="${basedir}/bnd.bnd"
-							token="Bundle-Version: ${Bundle-Version}"
-							value="Bundle-Version: ${latest.artifact.version}"
-						/>
-					</then>
-					<else>
-						<replace
-							failOnNoReplacements="true"
-							file="${basedir}/build.xml"
-							token="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version}&quot; /&gt;"
-							value="&lt;property name=&quot;artifact.version&quot; value=&quot;${latest.artifact.version}&quot; /&gt;"
-						/>
-					</else>
-				</if>
-			</then>
-		</if>
-	</target>
-
 	<macrodef name="set-test-type">
 		<sequential>
 			<if>
@@ -1907,6 +1836,77 @@ rerun your task.
 
 	<target name="print-properties">
 		<echoproperties />
+	</target>
+
+	<target name="restore-latest-artifact-version">
+		<fail message="Please run this target from a release branch instead.">
+			<condition>
+				<not>
+					<available file="${project.dir}/modules/.releng" type="dir" />
+				</not>
+			</condition>
+		</fail>
+
+		<if>
+			<available file="${project.dir}/modules/.releng/${ant.project.name}.properties" />
+			<then>
+				<loadproperties prefix="latest" srcFile="${project.dir}/modules/.releng/${ant.project.name}.properties">
+					<filterchain>
+						<linecontains>
+							<contains value="artifact.url" />
+						</linecontains>
+					</filterchain>
+				</loadproperties>
+
+				<antelope:stringutil property="latest.artifact.version.beginindex" string="${latest.artifact.url}">
+					<antelope:lastindexof string="-" />
+				</antelope:stringutil>
+
+				<antelope:math
+					datatype="int"
+					operand1="${latest.artifact.version.beginindex}"
+					operand2="1"
+					operation="+"
+					result="latest.artifact.version.beginindex"
+				/>
+
+				<antelope:stringutil property="latest.artifact.version.endindex" string="${latest.artifact.url}">
+					<antelope:lastindexof string="." />
+				</antelope:stringutil>
+
+				<antelope:stringutil property="latest.artifact.version" string="${latest.artifact.url}">
+					<antelope:substring beginindex="${latest.artifact.version.beginindex}" endindex="${latest.artifact.version.endindex}" />
+				</antelope:stringutil>
+
+				<if>
+					<available file="${basedir}/bnd.bnd" />
+					<then>
+						<loadproperties srcFile="${basedir}/bnd.bnd">
+							<filterchain>
+								<linecontains>
+									<contains value="Bundle-Version" />
+								</linecontains>
+							</filterchain>
+						</loadproperties>
+
+						<replace
+							failOnNoReplacements="true"
+							file="${basedir}/bnd.bnd"
+							token="Bundle-Version: ${Bundle-Version}"
+							value="Bundle-Version: ${latest.artifact.version}"
+						/>
+					</then>
+					<else>
+						<replace
+							failOnNoReplacements="true"
+							file="${basedir}/build.xml"
+							token="&lt;property name=&quot;artifact.version&quot; value=&quot;${artifact.version}&quot; /&gt;"
+							value="&lt;property name=&quot;artifact.version&quot; value=&quot;${latest.artifact.version}&quot; /&gt;"
+						/>
+					</else>
+				</if>
+			</then>
+		</if>
 	</target>
 
 	<target name="run-cpd">

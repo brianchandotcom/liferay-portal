@@ -48,7 +48,7 @@ public class LiferayParser extends Parser {
 		}
 
 		arrayBuilder.add(
-			PictureWithCaption(), Reference(), HorizontalRule(), Heading(),
+			pictureWithCaption(), Reference(), HorizontalRule(), Heading(),
 			OrderedList(), BulletList(), HtmlBlock());
 
 		if (ext(TABLES)) {
@@ -68,7 +68,7 @@ public class LiferayParser extends Parser {
 		return Sequence(ZeroOrMore(BlankLine()), FirstOf(arrayBuilder.get()));
 	}
 
-	public Rule PictureWithCaption() {
+	public Rule pictureWithCaption() {
 		return NodeSequence(
 			TestNot(OneOrMore(CharEntity())), '!', Label(), Spn1(), '(', Sp(),
 			LinkSource(), Spn1(), FirstOf(LinkTitle(), push("")), Sp(), ')',

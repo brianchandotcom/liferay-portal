@@ -320,12 +320,6 @@ renderResponse.setTitle(!configuredPublish ? LanguageUtil.get(request, "new-publ
 		if (dateChecker.validRange) {
 			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
-			var allContentSelected = AUI.$('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
-
-			if (allContentSelected === 'true') {
-				form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
-			}
-
 			if (deletePortletDataBeforeImportingCheckbox.length && deletePortletDataBeforeImportingCheckbox[0].checked) {
 				confirm('<%= UnicodeLanguageUtil.get(request, "delete-portlet-data-before-importing-confirmation") %>') && submitForm(form);
 			}

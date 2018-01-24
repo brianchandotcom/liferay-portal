@@ -192,14 +192,6 @@ renderResponse.setTitle(!configuredExport ? LanguageUtil.get(request, "new-custo
 			var dateChecker = exportImport.getDateRangeChecker();
 
 			if (dateChecker.validRange) {
-				var allContentSelected = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
-
-				if (allContentSelected === 'true') {
-					var portletDataControlDefault = A.one('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>');
-
-					portletDataControlDefault.val(true);
-				}
-
 				submitForm(form, form.attr('action'), false);
 			}
 			else {

@@ -200,12 +200,7 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 
 					<ul class="lfr-tree list-unstyled">
 						<li class="tree-item">
-							<aui:select inlineField="<%= true %>" label="" name="<%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>">
-								<aui:option id="allContent" label="all-content" selected="<%= true %>" value="<%= true %>" />
-								<aui:option id="chooseContent" label="choose-content" value="<%= false %>" />
-							</aui:select>
-
-							<ul class="hide select-options" id="<portlet:namespace />selectContents">
+							<ul class="select-options" id="<portlet:namespace />selectContents">
 								<li class="options">
 									<ul class="portlet-list">
 
@@ -425,7 +420,6 @@ ManifestSummary manifestSummary = ExportImportHelperUtil.getManifestSummary(user
 <aui:script>
 	Liferay.Util.toggleRadio('<portlet:namespace />allApplications', '', ['<portlet:namespace />selectApplications']);
 	Liferay.Util.toggleRadio('<portlet:namespace />chooseApplications', '<portlet:namespace />selectApplications', '');
-	Liferay.Util.toggleSelectBox('<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>', 'false', '<portlet:namespace />selectContents');
 </aui:script>
 
 <aui:script use="liferay-export-import-export-import">

@@ -174,12 +174,6 @@ renderResponse.setTitle((exportImportConfiguration == null) ? LanguageUtil.get(r
 		if (dateChecker.validRange) {
 			var form = AUI.$(document.<portlet:namespace />exportPagesFm);
 
-			var allContentSelected = AUI.$('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
-
-			if (allContentSelected === 'true') {
-				form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
-			}
-
 			submitForm(form);
 		}
 		else {

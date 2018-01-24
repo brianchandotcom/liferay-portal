@@ -281,12 +281,6 @@ response.setHeader("Ajax-ID", request.getHeader("Ajax-ID"));
 		if (dateChecker.validRange) {
 			var form = AUI.$(document.<portlet:namespace />publishPagesFm);
 
-			var allContentSelected = AUI.$('#<portlet:namespace /><%= PortletDataHandlerKeys.PORTLET_DATA_ALL %>').val();
-
-			if (allContentSelected === 'true') {
-				form.fm('<%= PortletDataHandlerKeys.PORTLET_DATA_CONTROL_DEFAULT %>').val(true);
-			}
-
 			submitForm(form);
 		}
 		else {

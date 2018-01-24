@@ -21,19 +21,46 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 /**
  * @author Marco Leo
  */
-@ExtendedObjectClassDefinition(category = "foundation")
-@Meta.OCD(
-	id = "com.liferay.users.admin.internal.configuration.OrganizationsTypesConfiguration",
-	localization = "content/Language",
-	name = "organizations-types-configuration-name"
+@ExtendedObjectClassDefinition(
+	category = "foundation", scope = ExtendedObjectClassDefinition.Scope.SYSTEM,
+	factoryInstanceLabelAttribute = "name"
 )
-public interface OrganizationsTypesConfiguration {
+@Meta.OCD(
+	factory = true,
+	id = "com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration",
+	localization = "content/Language",
+	name = "organization-type-configuration-name"
+)
+public interface OrganizationTypeConfiguration {
 
 	@Meta.AD(
-		deflt = "{\"organization\":{\"childrenTypes\":[\"organization\"]\\,\"countryEnabled\":true\\,\"countryRequired\":false\\,\"rootable\":true}}",
-		description = "organizations-types-help", name = "organizations-types",
-		required = false
+		name = "name",
+		deflt = "organization", required = false
 	)
-	public String json();
+	public String name();
+
+	@Meta.AD(
+		name = "country-enabled",
+		deflt = "true", required = false
+	)
+	public boolean countryEnabled();
+
+	@Meta.AD(
+		name = "country-required",
+		deflt = "false", required = false
+	)
+	public boolean countryRequired();
+
+	@Meta.AD(
+		name = "rootable",
+		deflt = "true", required = false
+	)
+	public boolean rootable();
+
+	@Meta.AD(
+		name = "children-types",
+		deflt = "", required = false
+	)
+	public String[] childrenTypes();
 
 }

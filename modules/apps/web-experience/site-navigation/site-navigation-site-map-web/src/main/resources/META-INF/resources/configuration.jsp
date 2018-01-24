@@ -32,6 +32,16 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 		<div class="container-fluid-1280">
 			<aui:fieldset-group markupView="lexicon">
 				<aui:fieldset>
+					<div class="display-template">
+						<liferay-ddm:template-selector
+							className="<%= LayoutSet.class.getName() %>"
+							displayStyle="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayStyle() %>"
+							displayStyleGroupId="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId() %>"
+							refreshURL="<%= configurationRenderURL %>"
+							showEmptyOption="<%= true %>"
+						/>
+					</div>
+
 					<aui:select label="root-layout" name="preferences--rootLayoutUuid--">
 						<aui:option value="" />
 
@@ -75,16 +85,6 @@ List<LayoutDescription> layoutDescriptions = siteNavigationSiteMapDisplayContext
 					<aui:input name="preferences--useHtmlTitle--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.useHtmlTitle() %>" />
 
 					<aui:input name="preferences--showHiddenPages--" type="toggle-switch" value="<%= siteNavigationSiteMapPortletInstanceConfiguration.showHiddenPages() %>" />
-
-					<div class="display-template">
-						<liferay-ddm:template-selector
-							className="<%= LayoutSet.class.getName() %>"
-							displayStyle="<%= siteNavigationSiteMapPortletInstanceConfiguration.displayStyle() %>"
-							displayStyleGroupId="<%= siteNavigationSiteMapDisplayContext.getDisplayStyleGroupId() %>"
-							refreshURL="<%= configurationRenderURL %>"
-							showEmptyOption="<%= true %>"
-						/>
-					</div>
 				</aui:fieldset>
 			</aui:fieldset-group>
 		</div>

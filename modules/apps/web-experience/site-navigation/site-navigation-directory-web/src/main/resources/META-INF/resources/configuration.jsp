@@ -28,21 +28,27 @@
 		<div class="container-fluid-1280">
 			<aui:row>
 				<aui:col width="<%= 50 %>">
-					<aui:fieldset column="<%= true %>">
-						<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
-							<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
-							<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
-							<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
-							<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
-						</aui:select>
+					<aui:fieldset-group markupView="lexicon">
+						<aui:fieldset cssClass="ml-3">
+							<aui:row>
+								<aui:select name="preferences--sites--" value="<%= sitesDirectoryDisplayContext.getSites() %>">
+									<aui:option label="<%= SitesDirectoryTag.SITES_TOP_LEVEL %>" />
+									<aui:option label="<%= SitesDirectoryTag.SITES_PARENT_LEVEL %>" />
+									<aui:option label="<%= SitesDirectoryTag.SITES_SIBLINGS %>" />
+									<aui:option label="<%= SitesDirectoryTag.SITES_CHILDREN %>" />
+								</aui:select>
+							</aui:row>
 
-						<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
-							<aui:option label="icon" />
-							<aui:option label="descriptive" />
-							<aui:option label="list" />
-							<aui:option label="list-hierarchy" />
-						</aui:select>
-					</aui:fieldset>
+							<aui:row>
+								<aui:select name="preferences--displayStyle--" value="<%= sitesDirectoryDisplayContext.getDisplayStyle() %>">
+									<aui:option label="icon" />
+									<aui:option label="descriptive" />
+									<aui:option label="list" />
+									<aui:option label="list-hierarchy" />
+								</aui:select>
+							</aui:row>
+						</aui:fieldset>
+					</aui:fieldset-group>
 				</aui:col>
 
 				<aui:col width="<%= 50 %>">

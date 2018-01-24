@@ -34,10 +34,16 @@ import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 public interface JournalGroupServiceConfiguration {
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_added_body.tmpl}",
-		name = "email-article-added-body", required = false
+		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
+		name = "email-from-name", required = false
 	)
-	public LocalizedValuesMap emailArticleAddedBody();
+	public String emailFromName();
+
+	@Meta.AD(
+		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
+		name = "email-from-address", required = false
+	)
+	public String emailFromAddress();
 
 	@Meta.AD(
 		deflt = "true", name = "email-article-added-enabled", required = false
@@ -51,70 +57,10 @@ public interface JournalGroupServiceConfiguration {
 	public LocalizedValuesMap emailArticleAddedSubject();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_denied_body.tmpl}",
-		name = "email-article-approval-denied-body", required = false
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_added_body.tmpl}",
+		name = "email-article-added-body", required = false
 	)
-	public LocalizedValuesMap emailArticleApprovalDeniedBody();
-
-	@Meta.AD(
-		deflt = "false", name = "email-article-approval-denied-enabled",
-		required = false
-	)
-	public boolean emailArticleApprovalDeniedEnabled();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_denied_subject.tmpl}",
-		name = "email-article-approval-denied-subject", required = false
-	)
-	public LocalizedValuesMap emailArticleApprovalDeniedSubject();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_granted_body.tmpl}",
-		name = "email-article-approval-granted-body", required = false
-	)
-	public LocalizedValuesMap emailArticleApprovalGrantedBody();
-
-	@Meta.AD(
-		deflt = "false", name = "email-article-approval-granted-enabled",
-		required = false
-	)
-	public boolean emailArticleApprovalGrantedEnabled();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_granted_subject.tmpl}",
-		name = "email-article-approval-granted-subject", required = false
-	)
-	public LocalizedValuesMap emailArticleApprovalGrantedSubject();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_requested_body.tmpl}",
-		name = "email-article-approval-requested-body", required = false
-	)
-	public LocalizedValuesMap emailArticleApprovalRequestedBody();
-
-	@Meta.AD(
-		deflt = "false", name = "email-article-approval-requested-enabled",
-		required = false
-	)
-	public boolean emailArticleApprovalRequestedEnabled();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_requested_subject.tmpl}",
-		name = "email-article-approval-requested-subject", required = false
-	)
-	public LocalizedValuesMap emailArticleApprovalRequestedSubject();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_from_folder_body.tmpl}",
-		name = "email-article-moved-from-folder-body", required = false
-	)
-	public LocalizedValuesMap emailArticleMovedFromFolderBody();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_from_trash_body.tmpl}",
-		name = "email-article-moved-from-trash-body", required = false
-	)
-	public LocalizedValuesMap emailArticleMovedFromTrashBody();
+	public LocalizedValuesMap emailArticleAddedBody();
 
 	@Meta.AD(
 		deflt = "true", name = "email-article-moved-from-folder-enabled",
@@ -129,16 +75,10 @@ public interface JournalGroupServiceConfiguration {
 	public LocalizedValuesMap emailArticleMovedFromFolderSubject();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_from_trash_subject.tmpl}",
-		name = "email-article-moved-from-trash-subject", required = false
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_from_folder_body.tmpl}",
+		name = "email-article-moved-from-folder-body", required = false
 	)
-	public LocalizedValuesMap emailArticleMovedFromTrashSubject();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_to_folder_body.tmpl}",
-		name = "email-article-moved-to-folder-body", required = false
-	)
-	public LocalizedValuesMap emailArticleMovedToFolderBody();
+	public LocalizedValuesMap emailArticleMovedFromFolderBody();
 
 	@Meta.AD(
 		deflt = "true", name = "email-article-moved-to-folder-enabled",
@@ -153,10 +93,98 @@ public interface JournalGroupServiceConfiguration {
 	public LocalizedValuesMap emailArticleMovedToFolderSubject();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_to_trash_body.tmpl}",
-		name = "email-article-moved-to-trash-body", required = false
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_to_folder_body.tmpl}",
+		name = "email-article-moved-to-folder-body", required = false
 	)
-	public LocalizedValuesMap emailArticleMovedToTrashBody();
+	public LocalizedValuesMap emailArticleMovedToFolderBody();
+
+	@Meta.AD(
+		deflt = "true", name = "email-article-review-enabled", required = false
+	)
+	public boolean emailArticleReviewEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_review_subject.tmpl}",
+		name = "email-article-review-subject", required = false
+	)
+	public LocalizedValuesMap emailArticleReviewSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_review_body.tmpl}",
+		name = "email-article-review-body", required = false
+	)
+	public LocalizedValuesMap emailArticleReviewBody();
+
+	@Meta.AD(
+		deflt = "false", name = "email-article-approval-requested-enabled",
+		required = false
+	)
+	public boolean emailArticleApprovalRequestedEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_requested_subject.tmpl}",
+		name = "email-article-approval-requested-subject", required = false
+	)
+	public LocalizedValuesMap emailArticleApprovalRequestedSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_requested_body.tmpl}",
+		name = "email-article-approval-requested-body", required = false
+	)
+	public LocalizedValuesMap emailArticleApprovalRequestedBody();
+
+	@Meta.AD(
+		deflt = "false", name = "email-article-approval-granted-enabled",
+		required = false
+	)
+	public boolean emailArticleApprovalGrantedEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_granted_subject.tmpl}",
+		name = "email-article-approval-granted-subject", required = false
+	)
+	public LocalizedValuesMap emailArticleApprovalGrantedSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_granted_body.tmpl}",
+		name = "email-article-approval-granted-body", required = false
+	)
+	public LocalizedValuesMap emailArticleApprovalGrantedBody();
+
+	@Meta.AD(
+		deflt = "false", name = "email-article-approval-denied-enabled",
+		required = false
+	)
+	public boolean emailArticleApprovalDeniedEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_denied_subject.tmpl}",
+		name = "email-article-approval-denied-subject", required = false
+	)
+	public LocalizedValuesMap emailArticleApprovalDeniedSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_approval_denied_body.tmpl}",
+		name = "email-article-approval-denied-body", required = false
+	)
+	public LocalizedValuesMap emailArticleApprovalDeniedBody();
+
+	@Meta.AD(
+		deflt = "true", name = "email-article-updated-enabled", required = false
+	)
+	public boolean emailArticleUpdatedEnabled();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_updated_subject.tmpl}",
+		name = "email-article-updated-subject", required = false
+	)
+	public LocalizedValuesMap emailArticleUpdatedSubject();
+
+	@Meta.AD(
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_updated_body.tmpl}",
+		name = "email-article-updated-body", required = false
+	)
+	public LocalizedValuesMap emailArticleUpdatedBody();
 
 	@Meta.AD(
 		deflt = "true", name = "email-article-moved-to-trash-enabled",
@@ -171,49 +199,21 @@ public interface JournalGroupServiceConfiguration {
 	public LocalizedValuesMap emailArticleMovedToTrashSubject();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_review_body.tmpl}",
-		name = "email-article-review-body", required = false
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_to_trash_body.tmpl}",
+		name = "email-article-moved-to-trash-body", required = false
 	)
-	public LocalizedValuesMap emailArticleReviewBody();
+	public LocalizedValuesMap emailArticleMovedToTrashBody();
 
 	@Meta.AD(
-		deflt = "true", name = "email-article-review-enabled", required = false
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_from_trash_subject.tmpl}",
+		name = "email-article-moved-from-trash-subject", required = false
 	)
-	public boolean emailArticleReviewEnabled();
+	public LocalizedValuesMap emailArticleMovedFromTrashSubject();
 
 	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_review_subject.tmpl}",
-		name = "email-article-review-subject", required = false
+		deflt = "${resource:com/liferay/journal/dependencies/email_article_moved_from_trash_body.tmpl}",
+		name = "email-article-moved-from-trash-body", required = false
 	)
-	public LocalizedValuesMap emailArticleReviewSubject();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_updated_body.tmpl}",
-		name = "email-article-updated-body", required = false
-	)
-	public LocalizedValuesMap emailArticleUpdatedBody();
-
-	@Meta.AD(
-		deflt = "true", name = "email-article-updated-enabled", required = false
-	)
-	public boolean emailArticleUpdatedEnabled();
-
-	@Meta.AD(
-		deflt = "${resource:com/liferay/journal/dependencies/email_article_updated_subject.tmpl}",
-		name = "email-article-updated-subject", required = false
-	)
-	public LocalizedValuesMap emailArticleUpdatedSubject();
-
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/admin.email.from.address}",
-		name = "email-from-address", required = false
-	)
-	public String emailFromAddress();
-
-	@Meta.AD(
-		deflt = "${server-property://com.liferay.portal/admin.email.from.name}",
-		name = "email-from-name", required = false
-	)
-	public String emailFromName();
+	public LocalizedValuesMap emailArticleMovedFromTrashBody();
 
 }

@@ -32,16 +32,16 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 public interface AssetCategoriesNavigationPortletInstanceConfiguration {
 
+	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
+	public long displayStyleGroupId();
+
+	@Meta.AD(name = "display-style", required = false)
+	public String displayStyle();
+
 	@Meta.AD(deflt = "true", name = "all-asset-vocabularies", required = false)
 	public boolean allAssetVocabularies();
 
 	@Meta.AD(name = "asset-vocabulary-ids", required = false)
 	public String[] assetVocabularyIds();
-
-	@Meta.AD(name = "display-style", required = false)
-	public String displayStyle();
-
-	@Meta.AD(deflt = "0", name = "display-style-group-id", required = false)
-	public long displayStyleGroupId();
 
 }

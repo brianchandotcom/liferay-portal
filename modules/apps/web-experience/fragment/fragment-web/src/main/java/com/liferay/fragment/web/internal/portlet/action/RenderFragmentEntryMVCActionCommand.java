@@ -16,25 +16,17 @@ package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
 import com.liferay.fragment.util.FragmentRenderUtil;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleLoader;
-import com.liferay.portal.kernel.util.WebKeys;
-
-import java.util.ResourceBundle;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
@@ -63,35 +55,12 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		try {
-			jsonObject.put(
-				"content",
-				FragmentRenderUtil.renderFragment(
-					fragmentEntryId, css, html, js));
-		}
-		catch (PortalException pe) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)actionRequest.getAttribute(WebKeys.THEME_DISPLAY);
-
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(
-					themeDisplay.getLocale());
-
-			hideDefaultSuccessMessage(actionRequest);
-
-			jsonObject.put(
-				"error",
-				LanguageUtil.get(
-					resourceBundle, "an-unexpected-error-occurred"));
-		}
+		jsonObject.put(
+			"content",
+			FragmentRenderUtil.renderFragment(fragmentEntryId, css, html, js));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference(
-		target = "(bundle.symbolic.name=com.liferay.fragment.web)", unbind = "-"
-	)
-	private ResourceBundleLoader _resourceBundleLoader;
 
 }

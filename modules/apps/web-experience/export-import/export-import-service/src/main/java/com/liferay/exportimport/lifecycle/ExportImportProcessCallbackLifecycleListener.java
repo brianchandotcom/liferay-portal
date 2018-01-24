@@ -16,8 +16,8 @@ package com.liferay.exportimport.lifecycle;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.internal.lar.ExportImportProcessCallbackUtil;
 import com.liferay.exportimport.kernel.lifecycle.BaseProcessExportImportLifecycleListener;
-import com.liferay.exportimport.lar.ExportImportProcessCallbackUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 

@@ -80,8 +80,6 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 			var depth = Math.trunc(100 * (-entryBoundingClientRect.top) / entryBoundingClientRect.height);
 
-			console.log(depth);
-
 			if (depth >= 0 && depth <= 100) {
 				Analytics.send(
 					'DEPTH',

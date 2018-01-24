@@ -172,7 +172,7 @@ AUI.add(
 								{
 									dialog: {
 										constrain: true,
-										cssClass: 'lfr-fulscreen-source-editor-dialog',
+										cssClass: 'lfr-fulscreen-source-editor-dialog modal-full-screen',
 										modal: true,
 										'toolbars.footer': [
 											{

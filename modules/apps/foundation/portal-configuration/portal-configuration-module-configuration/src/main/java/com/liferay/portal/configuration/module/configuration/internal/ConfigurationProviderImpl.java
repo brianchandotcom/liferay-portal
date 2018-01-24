@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.module.configuration.internal;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -59,8 +60,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, ExtendedObjectClassDefinition.Scope.COMPANY,
-			String.valueOf(companyId));
+			configurationPid, Scope.COMPANY, String.valueOf(companyId));
 
 		_deleteConfiguration(scopedPid);
 	}
@@ -72,8 +72,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, ExtendedObjectClassDefinition.Scope.GROUP,
-			String.valueOf(groupId));
+			configurationPid, Scope.GROUP, String.valueOf(groupId));
 
 		_deleteConfiguration(scopedPid);
 	}
@@ -86,8 +85,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		String scopedPid = _getConfigurationScopedPid(
-			configurationPid,
-			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId);
+			configurationPid, Scope.PORTLET_INSTANCE, portletId);
 
 		_deleteConfiguration(scopedPid);
 	}
@@ -198,8 +196,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, ExtendedObjectClassDefinition.Scope.COMPANY,
-			String.valueOf(companyId));
+			configurationPid, Scope.COMPANY, String.valueOf(companyId));
 
 		_saveConfiguration(scopedPid, properties);
 	}
@@ -212,8 +209,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, ExtendedObjectClassDefinition.Scope.GROUP,
-			String.valueOf(groupId));
+			configurationPid, Scope.GROUP, String.valueOf(groupId));
 
 		_saveConfiguration(scopedPid, properties);
 	}
@@ -227,8 +223,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		String configurationPid = _getConfigurationPid(clazz);
 
 		String scopedPid = _getConfigurationScopedPid(
-			configurationPid,
-			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE, portletId);
+			configurationPid, Scope.PORTLET_INSTANCE, portletId);
 
 		_saveConfiguration(scopedPid, properties);
 	}
@@ -279,8 +274,7 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 	}
 
 	private String _getConfigurationScopedPid(
-		String configurationPid, ExtendedObjectClassDefinition.Scope scope,
-		String scopePrimKey) {
+		String configurationPid, Scope scope, String scopePrimKey) {
 
 		StringBundler sb = new StringBundler(7);
 

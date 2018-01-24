@@ -36,10 +36,10 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"verify.process.name=com.liferay.portal.security.sso.token.shibboleth"},
+	property = {"verify.process.name=com.liferay.portal.security.sso.token.siteminder"},
 	service = VerifyProcess.class
 )
-public class ShibbolethCompanySettingsVerifyProcess
+public class SiteMinderCompanySettingsVerifyProcess
 	extends BaseCompanySettingsVerifyProcess {
 
 	@Override
@@ -49,26 +49,22 @@ public class ShibbolethCompanySettingsVerifyProcess
 
 	@Override
 	protected Set<String> getLegacyPropertyKeys() {
-		return SetUtil.fromArray(LegacyTokenPropsKeys.SHIBBOLETH_KEYS);
+		return SetUtil.fromArray(LegacyTokenPropsKeys.SITEMINDER_KEYS);
 	}
 
 	@Override
 	protected String[][] getRenamePropertyKeysArray() {
 		return new String[][] {
 			new String[] {
-				LegacyTokenPropsKeys.SHIBBOLETH_AUTH_ENABLED,
+				LegacyTokenPropsKeys.SITEMINDER_AUTH_ENABLED,
 				TokenConfigurationKeys.AUTH_ENABLED
 			},
 			new String[] {
-				LegacyTokenPropsKeys.SHIBBOLETH_IMPORT_FROM_LDAP,
+				LegacyTokenPropsKeys.SITEMINDER_IMPORT_FROM_LDAP,
 				TokenConfigurationKeys.IMPORT_FROM_LDAP
 			},
 			new String[] {
-				LegacyTokenPropsKeys.SHIBBOLETH_LOGOUT_URL,
-				TokenConfigurationKeys.LOGOUT_REDIRECT_URL
-			},
-			new String[] {
-				LegacyTokenPropsKeys.SHIBBOLETH_USER_HEADER,
+				LegacyTokenPropsKeys.SITEMINDER_USER_HEADER,
 				TokenConfigurationKeys.USER_HEADER
 			}
 		};
@@ -91,22 +87,13 @@ public class ShibbolethCompanySettingsVerifyProcess
 		_companyLocalService = companyLocalService;
 	}
 
-	/**
-	 * @deprecated As of 3.0.0, with no direct replacement
-	 */
-	@Deprecated
-	@Reference(unbind = "-")
-	protected void setPrefsProps(PrefsProps prefsProps) {
-		_prefsProps = prefsProps;
-	}
-
 	@Reference(unbind = "-")
 	protected void setSettingsFactory(SettingsFactory settingsFactory) {
 		_settingsFactory = settingsFactory;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		ShibbolethCompanySettingsVerifyProcess.class);
+		SiteMinderCompanySettingsVerifyProcess.class);
 
 	private CompanyLocalService _companyLocalService;
 	private PrefsProps _prefsProps;

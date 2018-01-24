@@ -18,6 +18,7 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletInstance;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.settings.SystemSettingsLocator;
 import com.liferay.portal.kernel.settings.TypedSettings;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -59,8 +59,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, Scope.COMPANY, String.valueOf(companyId));
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				configurationPid, Scope.COMPANY, String.valueOf(companyId));
 
 		_deleteConfiguration(scopedPid);
 	}
@@ -71,8 +72,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, Scope.GROUP, String.valueOf(groupId));
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				configurationPid, Scope.GROUP, String.valueOf(groupId));
 
 		_deleteConfiguration(scopedPid);
 	}
@@ -84,8 +86,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, Scope.PORTLET_INSTANCE, portletId);
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				configurationPid, Scope.PORTLET_INSTANCE, portletId);
 
 		_deleteConfiguration(scopedPid);
 	}
@@ -195,8 +198,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, Scope.COMPANY, String.valueOf(companyId));
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				configurationPid, Scope.COMPANY, String.valueOf(companyId));
 
 		_saveConfiguration(scopedPid, properties);
 	}
@@ -208,8 +212,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, Scope.GROUP, String.valueOf(groupId));
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				configurationPid, Scope.GROUP, String.valueOf(groupId));
 
 		_saveConfiguration(scopedPid, properties);
 	}
@@ -222,8 +227,9 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 
 		String configurationPid = _getConfigurationPid(clazz);
 
-		String scopedPid = _getConfigurationScopedPid(
-			configurationPid, Scope.PORTLET_INSTANCE, portletId);
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				configurationPid, Scope.PORTLET_INSTANCE, portletId);
 
 		_saveConfiguration(scopedPid, properties);
 	}
@@ -271,22 +277,6 @@ public class ConfigurationProviderImpl implements ConfigurationProvider {
 		}
 
 		return ocd.id();
-	}
-
-	private String _getConfigurationScopedPid(
-		String configurationPid, Scope scope, String scopePrimKey) {
-
-		StringBundler sb = new StringBundler(7);
-
-		sb.append(configurationPid);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(StringUtil.toUpperCase(scope.name()));
-		sb.append(StringPool.UNDERLINE);
-		sb.append(StringPool.UNDERLINE);
-		sb.append(scopePrimKey);
-
-		return sb.toString();
 	}
 
 	private <T> String _getSettingsId(Class<T> clazz) {

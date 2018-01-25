@@ -18,12 +18,6 @@
 
 <portlet:actionURL name="unsubscribe" var="unsubscribeURL" />
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="subscriptions" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
-
 <%
 int subscriptionsCount = SubscriptionLocalServiceUtil.getUserSubscriptionsCount(user.getUserId());
 

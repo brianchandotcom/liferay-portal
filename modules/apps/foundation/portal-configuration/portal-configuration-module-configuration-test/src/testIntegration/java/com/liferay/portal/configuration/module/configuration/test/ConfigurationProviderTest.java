@@ -77,7 +77,7 @@ public class ConfigurationProviderTest {
 
 	@Test
 	public void testDeleteCompanyConfiguration() throws Exception {
-		String scopedPid = _pid + "__COMPANY__12345";
+		String scopedPid = _PID + "__COMPANY__12345";
 
 		_createConfiguration(scopedPid);
 
@@ -91,7 +91,7 @@ public class ConfigurationProviderTest {
 
 	@Test
 	public void testDeleteGroupConfiguration() throws Exception {
-		String scopedPid = _pid + "__GROUP__12345";
+		String scopedPid = _PID + "__GROUP__12345";
 
 		_createConfiguration(scopedPid);
 
@@ -105,7 +105,7 @@ public class ConfigurationProviderTest {
 
 	@Test
 	public void testDeletePortletInstanceConfiguration() throws Exception {
-		String scopedPid = _pid + "__PORTLET_INSTANCE__12345";
+		String scopedPid = _PID + "__PORTLET_INSTANCE__12345";
 
 		_createConfiguration(scopedPid);
 
@@ -119,14 +119,14 @@ public class ConfigurationProviderTest {
 
 	@Test
 	public void testDeleteSystemConfiguration() throws Exception {
-		_createConfiguration(_pid);
+		_createConfiguration(_PID);
 
-		Assert.assertEquals(1, _getExistingConfigurationCount(_pid));
+		Assert.assertEquals(1, _getExistingConfigurationCount(_PID));
 
 		ConfigurationProviderUtil.deleteSystemConfiguration(
 			TestConfiguration.class);
 
-		Assert.assertEquals(0, _getExistingConfigurationCount(_pid));
+		Assert.assertEquals(0, _getExistingConfigurationCount(_PID));
 	}
 
 	@Test
@@ -137,7 +137,7 @@ public class ConfigurationProviderTest {
 		ConfigurationProviderUtil.saveCompanyConfiguration(
 			TestConfiguration.class, 12345, _properties);
 
-		String scopedPid = _pid + "__COMPANY__12345";
+		String scopedPid = _PID + "__COMPANY__12345";
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -152,7 +152,7 @@ public class ConfigurationProviderTest {
 		ConfigurationProviderUtil.saveGroupConfiguration(
 			TestConfiguration.class, 12345, _properties);
 
-		String scopedPid = _pid + "__GROUP__12345";
+		String scopedPid = _PID + "__GROUP__12345";
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -167,7 +167,7 @@ public class ConfigurationProviderTest {
 		ConfigurationProviderUtil.savePortletInstanceConfiguration(
 			TestConfiguration.class, "12345", _properties);
 
-		String scopedPid = _pid + "__PORTLET_INSTANCE__12345";
+		String scopedPid = _PID + "__PORTLET_INSTANCE__12345";
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -182,7 +182,7 @@ public class ConfigurationProviderTest {
 		ConfigurationProviderUtil.saveSystemConfiguration(
 			TestConfiguration.class, _properties);
 
-		_configuration = _getConfiguration(_pid, StringPool.QUESTION);
+		_configuration = _getConfiguration(_PID, StringPool.QUESTION);
 
 		assertPropertyValues(_properties, _configuration.getProperties());
 	}
@@ -241,7 +241,7 @@ public class ConfigurationProviderTest {
 	private Configuration _configuration;
 	private Dictionary<String, Object> _properties;
 
-	private static final String _pid = "test.pid";
+	private static final String _PID = "test.pid";
 
 	@Meta.OCD(id = "test.pid")
 	private interface TestConfiguration {

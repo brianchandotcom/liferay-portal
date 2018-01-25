@@ -292,6 +292,10 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu.getGroupId(), false, layoutId);
 
 		for (Layout layout : layouts) {
+			if (layout.isHidden()) {
+				continue;
+			}
+
 			SiteNavigationMenuItemType siteNavigationMenuItemType =
 				_siteNavigationMenuItemTypeRegistry.
 					getSiteNavigationMenuItemTypeByLayoutType(layout.getType());

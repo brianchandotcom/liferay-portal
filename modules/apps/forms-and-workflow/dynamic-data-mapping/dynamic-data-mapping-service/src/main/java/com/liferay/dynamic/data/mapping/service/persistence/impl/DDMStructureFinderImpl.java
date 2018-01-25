@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMStructureImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMStructurePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -68,8 +69,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -90,8 +91,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -106,8 +107,8 @@ public class DDMStructureFinderImpl
 	public int countByC_G_C_S(
 		long companyId, long[] groupIds, long classNameId, int status) {
 
-		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
-		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+		String[] names = _customSQL.keywords(StringPool.BLANK);
+		String[] descriptions = _customSQL.keywords(StringPool.BLANK, false);
 
 		return countByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
@@ -120,8 +121,8 @@ public class DDMStructureFinderImpl
 		String description, String storageType, int type, int status,
 		boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return countByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
@@ -159,8 +160,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -175,8 +176,8 @@ public class DDMStructureFinderImpl
 	public int filterCountByC_G_C_S(
 		long companyId, long[] groupIds, long classNameId, int status) {
 
-		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
-		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+		String[] names = _customSQL.keywords(StringPool.BLANK);
+		String[] descriptions = _customSQL.keywords(StringPool.BLANK, false);
 
 		return filterCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
@@ -189,8 +190,8 @@ public class DDMStructureFinderImpl
 		String description, String storageType, int type, int status,
 		boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return filterCountByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
@@ -219,8 +220,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -248,8 +249,8 @@ public class DDMStructureFinderImpl
 		long companyId, long[] groupIds, long classNameId, int status,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
-		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+		String[] names = _customSQL.keywords(StringPool.BLANK);
+		String[] descriptions = _customSQL.keywords(StringPool.BLANK, false);
 
 		return filterFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
@@ -264,8 +265,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return filterFindByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
@@ -295,8 +296,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -318,8 +319,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -336,8 +337,8 @@ public class DDMStructureFinderImpl
 		long companyId, long[] groupIds, long classNameId, int status,
 		int start, int end, OrderByComparator<DDMStructure> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(StringPool.BLANK);
-		String[] descriptions = CustomSQLUtil.keywords(StringPool.BLANK, false);
+		String[] names = _customSQL.keywords(StringPool.BLANK);
+		String[] descriptions = _customSQL.keywords(StringPool.BLANK, false);
 
 		return findByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, null,
@@ -352,8 +353,8 @@ public class DDMStructureFinderImpl
 		boolean andOperator, int start, int end,
 		OrderByComparator<DDMStructure> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return findByC_G_C_N_D_S_T_S(
 			companyId, groupIds, classNameId, names, descriptions, storageType,
@@ -376,27 +377,27 @@ public class DDMStructureFinderImpl
 		long companyId, long[] groupIds, long classNameId, long classPK,
 		String[] names, String[] descriptions, boolean andOperator) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_C_C_N_D);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_C_C_N_D);
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -440,16 +441,15 @@ public class DDMStructureFinderImpl
 		String[] descriptions, String storageType, int type, int status,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
-				getClass(), COUNT_BY_C_G_C_N_D_S_T_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_C_N_D_S_T_S);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -462,15 +462,15 @@ public class DDMStructureFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -520,28 +520,28 @@ public class DDMStructureFinderImpl
 		String[] names, String[] descriptions, boolean andOperator, int start,
 		int end, OrderByComparator<DDMStructure> orderByComparator) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_C_C_N_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_C_C_N_D);
 
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
-				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -579,15 +579,15 @@ public class DDMStructureFinderImpl
 		OrderByComparator<DDMStructure> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_C_N_D_S_T_R);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_C_N_D_S_T_R);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -600,16 +600,16 @@ public class DDMStructureFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(DDMStructure.name))", StringPool.LIKE,
 				false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMStructure.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
-				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -679,5 +679,8 @@ public class DDMStructureFinderImpl
 
 		return sb.toString();
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

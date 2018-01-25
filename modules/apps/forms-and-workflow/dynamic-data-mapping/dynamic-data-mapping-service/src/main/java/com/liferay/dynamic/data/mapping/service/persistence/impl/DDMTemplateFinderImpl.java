@@ -20,7 +20,7 @@ import com.liferay.dynamic.data.mapping.model.impl.DDMTemplateImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMTemplateFinder;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -68,15 +69,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -95,15 +96,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -132,8 +133,8 @@ public class DDMTemplateFinderImpl
 
 		long[] classNameIds = {classNameId};
 		long[] classPKs = {classPK};
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 
 		return doCountByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -146,11 +147,11 @@ public class DDMTemplateFinderImpl
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return countByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
@@ -180,11 +181,11 @@ public class DDMTemplateFinderImpl
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return countByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -212,15 +213,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -239,15 +240,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -286,8 +287,8 @@ public class DDMTemplateFinderImpl
 
 		long[] classNameIds = {classNameId};
 		long[] classPKs = {classPK};
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 
 		return doCountByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -300,11 +301,11 @@ public class DDMTemplateFinderImpl
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return filterCountByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
@@ -333,11 +334,11 @@ public class DDMTemplateFinderImpl
 		long resourceClassNameId, String name, String description, String type,
 		String mode, String language, int status, boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return filterCountByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -366,15 +367,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -395,15 +396,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(languages, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(languages, false);
 		}
 		else {
 			andOperator = true;
@@ -448,8 +449,8 @@ public class DDMTemplateFinderImpl
 
 		long[] classNameIds = {classNameId};
 		long[] classPKs = {classPK};
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 
 		return doFindByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -464,11 +465,11 @@ public class DDMTemplateFinderImpl
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return filterFindByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
@@ -501,11 +502,11 @@ public class DDMTemplateFinderImpl
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return filterFindByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -536,15 +537,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -565,15 +566,15 @@ public class DDMTemplateFinderImpl
 
 		String[] names = null;
 		String[] descriptions = null;
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 		String[] languages = null;
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
-			languages = CustomSQLUtil.keywords(languages, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
+			languages = _customSQL.keywords(languages, false);
 		}
 		else {
 			andOperator = true;
@@ -618,8 +619,8 @@ public class DDMTemplateFinderImpl
 
 		long[] classNameIds = {classNameId};
 		long[] classPKs = {classPK};
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
 
 		return doFindByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -634,11 +635,11 @@ public class DDMTemplateFinderImpl
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return findByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupId, classNameId, classPK, resourceClassNameId,
@@ -671,11 +672,11 @@ public class DDMTemplateFinderImpl
 		String mode, String language, int status, boolean andOperator,
 		int start, int end, OrderByComparator<DDMTemplate> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
-		String[] types = CustomSQLUtil.keywords(type, false);
-		String[] modes = CustomSQLUtil.keywords(mode, false);
-		String[] languages = CustomSQLUtil.keywords(language, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
+		String[] types = _customSQL.keywords(type, false);
+		String[] modes = _customSQL.keywords(mode, false);
+		String[] languages = _customSQL.keywords(language, false);
 
 		return findByC_G_C_C_R_N_D_T_M_L_S(
 			companyId, groupIds, classNameIds, classPKs, resourceClassNameId,
@@ -706,7 +707,7 @@ public class DDMTemplateFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C_SC_S);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_C_SC_S);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -763,18 +764,18 @@ public class DDMTemplateFinderImpl
 		String[] types, String[] modes, String[] languages, int status,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
-		types = CustomSQLUtil.keywords(types, false);
-		modes = CustomSQLUtil.keywords(modes, false);
-		languages = CustomSQLUtil.keywords(languages, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
+		types = _customSQL.keywords(types, false);
+		modes = _customSQL.keywords(modes, false);
+		languages = _customSQL.keywords(languages, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_C_G_C_C_R_N_D_T_M_L_S);
 
 			if (inlineSQLHelper) {
@@ -792,19 +793,19 @@ public class DDMTemplateFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$CLASS_PK$]", getClassPKs(classPKs));
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(DDMTemplate.name))", StringPool.LIKE,
 				false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.description", StringPool.LIKE, false,
 				descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.type", StringPool.LIKE, false, types);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.mode", StringPool.LIKE, false, modes);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.language", StringPool.LIKE, true, languages);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -868,7 +869,7 @@ public class DDMTemplateFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C_SC_S);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_C_SC_S);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -883,7 +884,7 @@ public class DDMTemplateFinderImpl
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
 
 			if (orderByComparator != null) {
-				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -922,18 +923,18 @@ public class DDMTemplateFinderImpl
 		OrderByComparator<DDMTemplate> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
-		types = CustomSQLUtil.keywords(types, false);
-		modes = CustomSQLUtil.keywords(modes, false);
-		languages = CustomSQLUtil.keywords(languages, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
+		types = _customSQL.keywords(types, false);
+		modes = _customSQL.keywords(modes, false);
+		languages = _customSQL.keywords(languages, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_C_G_C_C_R_N_D_T_M_L_S);
 
 			if (inlineSQLHelper) {
@@ -951,22 +952,22 @@ public class DDMTemplateFinderImpl
 			sql = StringUtil.replace(
 				sql, "[$CLASS_PK$]", getClassPKs(classPKs));
 			sql = StringUtil.replace(sql, "[$STATUS$]", getStatus(status));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(DDMTemplate.name))", StringPool.LIKE,
 				false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.description", StringPool.LIKE, false,
 				descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.type", StringPool.LIKE, false, types);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.mode", StringPool.LIKE, false, modes);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMTemplate.language", StringPool.LIKE, true, languages);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
-				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -1079,5 +1080,8 @@ public class DDMTemplateFinderImpl
 
 		return sb.toString();
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

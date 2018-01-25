@@ -17,7 +17,7 @@ package com.liferay.dynamic.data.mapping.service.persistence.impl;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.impl.DDMFormInstanceImpl;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceFinder;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -85,8 +86,8 @@ public class DDMFormInstanceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -118,8 +119,8 @@ public class DDMFormInstanceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -150,8 +151,8 @@ public class DDMFormInstanceFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -166,15 +167,15 @@ public class DDMFormInstanceFinderImpl
 		long companyId, long groupId, String[] names, String[] descriptions,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_G_N_D);
+			String sql = _customSQL.get(getClass(), COUNT_BY_C_G_N_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -187,13 +188,13 @@ public class DDMFormInstanceFinderImpl
 					sql, "(DDMFormInstance.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(DDMFormInstance.name)", StringPool.LIKE, false,
 				names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMFormInstance.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -236,15 +237,15 @@ public class DDMFormInstanceFinderImpl
 		OrderByComparator<DDMFormInstance> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_C_G_N_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_C_G_N_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -257,14 +258,14 @@ public class DDMFormInstanceFinderImpl
 					sql, "(DDMFormInstance.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(DDMFormInstance.name)", StringPool.LIKE, false,
 				names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDMFormInstance.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -291,5 +292,8 @@ public class DDMFormInstanceFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

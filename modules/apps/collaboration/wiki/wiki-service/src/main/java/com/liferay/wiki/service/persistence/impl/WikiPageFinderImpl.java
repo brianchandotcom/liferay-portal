@@ -15,7 +15,7 @@
 package com.liferay.wiki.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.wiki.exception.NoSuchPageException;
 import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.model.impl.WikiPageImpl;
@@ -145,8 +146,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
-				getClass(), FIND_BY_RESOURCE_PRIM_KEY);
+			String sql = _customSQL.get(getClass(), FIND_BY_RESOURCE_PRIM_KEY);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -204,7 +204,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_NO_ASSETS);
+			String sql = _customSQL.get(getClass(), FIND_BY_NO_ASSETS);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -241,7 +241,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_CREATE_DATE);
+			String sql = _customSQL.get(getClass(), COUNT_BY_CREATE_DATE);
 
 			String createDateComparator = StringPool.GREATER_THAN;
 
@@ -299,7 +299,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), COUNT_BY_G_N_H_S, queryDefinition, "WikiPage");
 
 			if (inlineSQLHelper) {
@@ -357,7 +357,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_CREATE_DATE);
+			String sql = _customSQL.get(getClass(), FIND_BY_CREATE_DATE);
 
 			String createDateComparator = StringPool.GREATER_THAN;
 
@@ -405,7 +405,7 @@ public class WikiPageFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(
+			String sql = _customSQL.get(
 				getClass(), FIND_BY_G_N_H_S, queryDefinition, "WikiPage");
 
 			if (inlineSQLHelper) {
@@ -414,7 +414,7 @@ public class WikiPageFinderImpl
 					groupId);
 			}
 
-			sql = CustomSQLUtil.replaceOrderBy(
+			sql = _customSQL.replaceOrderBy(
 				sql, queryDefinition.getOrderByComparator("WikiPage"));
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -448,5 +448,8 @@ public class WikiPageFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

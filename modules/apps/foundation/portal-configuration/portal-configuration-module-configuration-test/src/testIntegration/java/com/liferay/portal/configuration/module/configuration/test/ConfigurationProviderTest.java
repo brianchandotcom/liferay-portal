@@ -17,8 +17,11 @@ package com.liferay.portal.configuration.module.configuration.test;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.test.rule.Inject;
@@ -73,42 +76,54 @@ public class ConfigurationProviderTest {
 
 	@Test
 	public void testDeleteCompanyConfiguration() throws Exception {
-		String scopedPid = _PID + "__COMPANY__12345";
+		long companyId = RandomTestUtil.randomLong();
+
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_PID, Scope.COMPANY, String.valueOf(companyId));
 
 		_createConfiguration(scopedPid);
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
 
 		_configurationProvider.deleteCompanyConfiguration(
-			TestConfiguration.class, 12345);
+			TestConfiguration.class, companyId);
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
 	}
 
 	@Test
 	public void testDeleteGroupConfiguration() throws Exception {
-		String scopedPid = _PID + "__GROUP__12345";
+		long groupId = RandomTestUtil.randomLong();
+
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_PID, Scope.GROUP, String.valueOf(groupId));
 
 		_createConfiguration(scopedPid);
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
 
 		_configurationProvider.deleteGroupConfiguration(
-			TestConfiguration.class, 12345);
+			TestConfiguration.class, groupId);
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
 	}
 
 	@Test
 	public void testDeletePortletInstanceConfiguration() throws Exception {
-		String scopedPid = _PID + "__PORTLET_INSTANCE__12345";
+		String portletInstanceId = RandomTestUtil.randomString();
+
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_PID, Scope.PORTLET_INSTANCE, portletInstanceId);
 
 		_createConfiguration(scopedPid);
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
 
 		_configurationProvider.deletePortletInstanceConfiguration(
-			TestConfiguration.class, "12345");
+			TestConfiguration.class, portletInstanceId);
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
 	}
@@ -130,10 +145,14 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "companyValue1");
 		_properties.put("key2", "companyValue2");
 
-		_configurationProvider.saveCompanyConfiguration(
-			TestConfiguration.class, 12345, _properties);
+		long companyId = RandomTestUtil.randomLong();
 
-		String scopedPid = _PID + "__COMPANY__12345";
+		_configurationProvider.saveCompanyConfiguration(
+			TestConfiguration.class, companyId, _properties);
+
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_PID, Scope.COMPANY, String.valueOf(companyId));
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -145,10 +164,14 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "groupValue1");
 		_properties.put("key2", "groupValue2");
 
-		_configurationProvider.saveGroupConfiguration(
-			TestConfiguration.class, 12345, _properties);
+		long groupId = RandomTestUtil.randomLong();
 
-		String scopedPid = _PID + "__GROUP__12345";
+		_configurationProvider.saveGroupConfiguration(
+			TestConfiguration.class, groupId, _properties);
+
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_PID, Scope.GROUP, String.valueOf(groupId));
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 
@@ -160,10 +183,14 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "portletInstanceValue1");
 		_properties.put("key2", "portletInstanceValue2");
 
-		_configurationProvider.savePortletInstanceConfiguration(
-			TestConfiguration.class, "12345", _properties);
+		String portletInstanceId = RandomTestUtil.randomString();
 
-		String scopedPid = _PID + "__PORTLET_INSTANCE__12345";
+		_configurationProvider.savePortletInstanceConfiguration(
+			TestConfiguration.class, portletInstanceId, _properties);
+
+		String scopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				_PID, Scope.PORTLET_INSTANCE, portletInstanceId);
 
 		_configuration = _getConfiguration(scopedPid, StringPool.QUESTION);
 

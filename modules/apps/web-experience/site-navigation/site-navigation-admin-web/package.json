@@ -7,19 +7,14 @@
 	},
 	"devDependencies": {
 		"check-source-formatting": "^2.0.2",
-		"eslint": "^4.11.0",
-		"eslint-config-liferay": "^2.0.15",
 		"liferay-module-config-generator": "^1.2.1",
-		"metal-cli": "^4.0.1",
-		"prettier-eslint-cli": "^4.4.0"
+		"metal-cli": "^4.0.1"
 	},
 	"name": "site-navigation-menu-web",
 	"scripts": {
 		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.es.js test/**/*.es.js",
-		"format": "npm run csf -- -i",
-		"lint": "eslint src/**/*.es.js",
-		"prettier": "prettier-eslint src/**/*.es.js"
+		"format": "npm run csf -- -i"
 	},
 	"version": "1.0.0"
 }

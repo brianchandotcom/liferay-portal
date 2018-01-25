@@ -46,7 +46,7 @@
 </tr>
 <tr>
 	<td>SEARCH_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
 	<td></td>
 </tr>
 <tr>
@@ -149,17 +149,17 @@
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE_COPY</td>
-	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']//a)[2]</td>
+	<td>xpath=(//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']//a)[2]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_TITLE_ON_LIVE</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[@class=' list-group-item-content']</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']</td>
 	<td></td>
 </tr>
 <tr>

@@ -10,32 +10,32 @@
 <tbody>
 <tr>
 	<td>ITEM_ACTIONS</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h4[contains(.,'${key_itemName}')]/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h4[contains(.,'${key_itemName}')]/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_ACTIONS_DEFAULT</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h5/../..//a[span/*[name()='svg'][contains(@class,'icon-ellipsis-v')]]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_DESCRIPTION</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]/../h6[1]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_itemName}')]/../h6[1]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_NAME</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_NAME_LINK</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'${key_itemName}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h5/a[contains(.,'${key_itemName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ITEM_SUB_INFO</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5[contains(.,'${key_itemName}')]/../h6[2]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h5[contains(.,'${key_itemName}')]/../h6[2]</td>
 	<td></td>
 </tr>
 <tr>
@@ -45,7 +45,7 @@
 </tr>
 <tr>
 	<td>INDEPENDENT_MODULES_LINK</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li/div[contains(@class,'list-group-item-content')]/h5/a[contains(.,'Independent Modules')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li/*[@data-qa-id='rowItemContent']/h5/a[contains(.,'Independent Modules')]</td>
 	<td></td>
 </tr>
 </tbody>

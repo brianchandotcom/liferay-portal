@@ -1,0 +1,54 @@
+import com.liferay.gradle.plugins.baseline.BaselinePlugin
+import com.liferay.gradle.plugins.baseline.BaselineTask
+
+buildscript {
+	apply from: file("../modules/build-buildscript.gradle"), to: buildscript
+}
+
+apply plugin: BaselinePlugin
+
+Properties bndProperties = GUtil.loadProperties(file("bnd.bnd"))
+
+archivesBaseName = "com.liferay." + name.replace('-' as char, '.' as char)
+group = "com.liferay.portal"
+version = bndProperties.getProperty("Bundle-Version")
+
+jar {
+	archiveName = "${project.name}.jar"
+	dependsOn = []
+	destinationDir = projectDir
+	enabled = false
+}
+
+reporting {
+	baseDir = "../baseline-reports"
+}
+
+repositories {
+	maven {
+		url System.properties["repository.url"] ?: "https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public"
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ["src"]
+		}
+
+		resources {
+			srcDirs = ["src"]
+		}
+	}
+}
+
+tasks.withType(BaselineTask) {
+	ignoreFailures = true
+
+	if (name == "baseline") {
+		logFileName = "${project.name}.log"
+	}
+	else {
+		logFileName = project.name + "-" + name.substring(8) + ".log"
+	}
+}

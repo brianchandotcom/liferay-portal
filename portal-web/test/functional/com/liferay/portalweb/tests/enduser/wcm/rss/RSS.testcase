@@ -85,7 +85,7 @@
 
 		<execute macro="RSSPortlet#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="2" />
+			<var name="feedRowIndexNumber" value="1" />
 			<var name="feedTitle" value="Latimes > Technology News" />
 			<var name="feedType" value="file" />
 			<var name="feedUrlLink" value="rss2.0.xml" />
@@ -105,7 +105,7 @@
 
 		<execute macro="RSSPortlet#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="3" />
+			<var name="feedRowIndexNumber" value="2" />
 			<var name="feedTitle" value="Reuters > Sports News" />
 			<var name="feedType" value="file" />
 			<var name="feedUrlLink" value="reuters_sports_news.xml" />
@@ -402,7 +402,7 @@
 
 		<execute macro="RSSPortlet#addFeed">
 			<var name="buttonRowIndexNumber" value="1" />
-			<var name="feedRowIndexNumber" value="2" />
+			<var name="feedRowIndexNumber" value="1" />
 			<var name="feedTitle" value="NBA" />
 			<var name="feedType" value="file" />
 			<var name="feedUrlLink" value="nba.xml" />

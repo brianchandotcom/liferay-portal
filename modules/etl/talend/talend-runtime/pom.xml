@@ -74,10 +74,12 @@
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.javadoc.formatter</artifactId>
+				<version>1.0.26</version>
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.xml.formatter</artifactId>
+				<version>1.0.5</version>
 				<configuration>
 					<fileName>pom.xml</fileName>
 				</configuration>

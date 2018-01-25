@@ -32,6 +32,7 @@ List repositoryEntries = (List)request.getAttribute("liferay-item-selector:repos
 int repositoryEntriesCount = GetterUtil.getInteger(request.getAttribute("liferay-item-selector:repository-entry-browser:repositoryEntriesCount"));
 boolean showBreadcrumb = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showBreadcrumb"));
 boolean showDragAndDropZone = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showDragAndDropZone"));
+boolean showSearch = GetterUtil.getBoolean(request.getAttribute("liferay-item-selector:repository-entry-browser:showSearch"));
 String tabName = GetterUtil.getString(request.getAttribute("liferay-item-selector:repository-entry-browser:tabName"));
 PortletURL uploadURL = (PortletURL)request.getAttribute("liferay-item-selector:repository-entry-browser:uploadURL");
 
@@ -81,6 +82,21 @@ if (Validator.isNotNull(keywords)) {
 				orderColumns="<%= orderColumns %>"
 				portletURL="<%= sortURL %>"
 			/>
+
+			<c:if test="<%= showSearch %>">
+
+				<%
+				PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+				searchURL.setParameter("resetCur", Boolean.TRUE.toString());
+				%>
+
+				<li>
+					<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 	</liferay-frontend:management-bar>
 </c:if>

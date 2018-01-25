@@ -46,7 +46,7 @@
 	</header>
 
 	<div id="content">
-		<div id="main-content">
+		<div class="sheet" id="main-content">
 
 			<%
 			UnicodeProperties unicodeProperties = (UnicodeProperties)session.getAttribute(WebKeys.SETUP_WIZARD_PROPERTIES);

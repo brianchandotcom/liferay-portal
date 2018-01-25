@@ -241,7 +241,7 @@
 	</command>
 
 	<command name="save">
-		<execute macro="Button#clickSave" />
+		<execute macro="DDLDataDefinition#save" />
 	</command>
 
 	<command name="tearDownCP">

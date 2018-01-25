@@ -82,7 +82,7 @@
 	</command>
 
 	<command name="clickSave">
-		<execute macro="Button#clickSave" />
+		<execute macro="DDLDataDefinition#clickSave" />
 	</command>
 
 	<command name="deleteCP">

@@ -35,6 +35,8 @@ birthday.set(Calendar.YEAR, 1970);
 if (selContact != null) {
 	birthday.setTime(selContact.getBirthday());
 }
+
+String organizationIdsString = ParamUtil.getString(request, "organizationsSearchContainerPrimaryKeys");
 %>
 
 <liferay-ui:error-marker key="<%= WebKeys.ERROR_SECTION %>" value="details" />
@@ -206,6 +208,10 @@ if (selContact != null) {
 		</c:if>
 
 		<aui:input disabled='<%= !UsersAdminUtil.hasUpdateFieldPermission(permissionChecker, user, selUser, "jobTitle") %>' name="jobTitle" />
+
+		<c:if test="<%= (selUser == null) && Validator.isNotNull(organizationIdsString) %>">
+			<aui:input name="addOrganizationIds" type="hidden" value="<%= organizationIdsString %>" />
+		</c:if>
 
 		<%
 		boolean lockedOut = false;

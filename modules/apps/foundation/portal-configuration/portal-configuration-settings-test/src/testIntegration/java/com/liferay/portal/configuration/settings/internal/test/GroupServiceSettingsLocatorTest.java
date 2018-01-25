@@ -19,7 +19,7 @@ import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portal.kernel.settings.CompanyServiceSettingsLocator;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
@@ -34,28 +34,28 @@ import org.junit.Test;
 /**
  * @author Drew Brokke
  */
-public class CompanyServiceSettingsLocatorTest
+public class GroupServiceSettingsLocatorTest
 	extends BaseSettingsLocatorTestCase {
 
 	@Before
 	public void setUp() throws Exception {
-		settingsLocator = new CompanyServiceSettingsLocator(
-			companyId, portletId,
+		settingsLocator = new GroupServiceSettingsLocator(
+			groupId, portletId,
 			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
 	}
 
 	@Test
-	public void testReturnsCompanyScopedValues() throws Exception {
+	public void testReturnsGroupScopedValues() throws Exception {
 		Assert.assertEquals(
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			getSettingsValue());
 
-		String scopedPid =
+		String companyScopedPid =
 			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
 				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
 				Scope.COMPANY, String.valueOf(companyId));
 
-		String companyConfigurationValue = saveConfiguration(scopedPid);
+		String companyConfigurationValue = saveConfiguration(companyScopedPid);
 
 		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
 
@@ -71,6 +71,28 @@ public class CompanyServiceSettingsLocatorTest
 					companyPortletPreferencesValue)));
 
 		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
+
+		String groupScopedPid =
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
+				Scope.GROUP, String.valueOf(groupId));
+
+		String groupConfigurationValue = saveConfiguration(groupScopedPid);
+
+		Assert.assertEquals(groupConfigurationValue, getSettingsValue());
+
+		String groupPortletPreferencesValue = RandomTestUtil.randomString();
+
+		_portletPreferencesList.add(
+			PortletPreferencesLocalServiceUtil.addPortletPreferences(
+				companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
+				portletId, null,
+				String.format(
+					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
+					SettingsLocatorTestConstants.TEST_KEY,
+					groupPortletPreferencesValue)));
+
+		Assert.assertEquals(groupPortletPreferencesValue, getSettingsValue());
 	}
 
 	@DeleteAfterTestRun

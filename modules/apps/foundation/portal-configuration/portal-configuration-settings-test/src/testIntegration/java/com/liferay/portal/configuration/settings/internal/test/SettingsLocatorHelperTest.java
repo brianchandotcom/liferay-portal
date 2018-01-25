@@ -14,41 +14,24 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
-import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
-import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
-import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.Inject;
-import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import org.junit.Assert;
-import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import org.osgi.service.cm.ConfigurationAdmin;
 
 /**
  * @author Drew Brokke
  */
-@RunWith(Arquillian.class)
 public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
-
-	@ClassRule
-	@Rule
-	public static final AggregateTestRule aggregateTestRule =
-		new LiferayIntegrationTestRule();
 
 	@Test
 	public void testGetCompanyScopedConfigurationSettings() throws Exception {
-		long companyId = TestPropsValues.getCompanyId();
-
 		Settings companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
 				companyId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
@@ -93,8 +76,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 
 	@Test
 	public void testGetGroupScopedConfigurationSettings() throws Exception {
-		long groupId = TestPropsValues.getGroupId();
-
 		Settings groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
 				groupId, SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
@@ -140,8 +121,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 	public void testGetPortletInstanceScopedConfigurationSettings()
 		throws Exception {
 
-		String portletId = RandomTestUtil.randomString();
-
 		String portletInstanceKey =
 			portletId + "_INSTANCE_" + RandomTestUtil.randomString();
 
@@ -170,7 +149,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(
+		String portletInstanceValue = saveScopedConfiguration(
 			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
 			portletInstanceKey);
 
@@ -183,7 +162,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 		Assert.assertNotSame(systemSettings, portletInstanceSettings);
 
 		Assert.assertEquals(
-			companyValue,
+			portletInstanceValue,
 			portletInstanceSettings.getValue(
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
@@ -228,9 +207,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 	}
 
 	@Inject
-	private ConfigurationAdmin _configurationAdmin;
-
-	@Inject
-	private SettingsLocatorHelper _settingsLocatorHelper;
+	private static SettingsLocatorHelper _settingsLocatorHelper;
 
 }

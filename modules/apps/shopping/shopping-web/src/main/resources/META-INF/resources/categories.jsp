@@ -109,6 +109,35 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<%
+		boolean showAddCategoryButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
+		boolean showAddItemButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_ITEM);
+		%>
+
+		<c:if test="<%= showAddCategoryButton || showAddItemButton %>">
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<c:if test="<%= showAddCategoryButton %>">
+					<portlet:renderURL var="addCategoriesURL">
+						<portlet:param name="mvcRenderCommandName" value="/shopping/edit_category" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
+					</portlet:renderURL>
+
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoriesURL.toString() %>" />
+				</c:if>
+
+				<c:if test="<%= showAddItemButton %>">
+					<portlet:renderURL var="addItemURL">
+						<portlet:param name="mvcRenderCommandName" value="/shopping/edit_item" />
+						<portlet:param name="redirect" value="<%= currentURL %>" />
+						<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
+					</portlet:renderURL>
+
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-item") %>' url="<%= addItemURL.toString() %>" />
+				</c:if>
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
@@ -297,32 +326,3 @@ boolean showSearch = (categoriesAndItemsCount > 0);
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" resultRowSplitter="<%= new ShoppingResultRowSplitter() %>" />
 	</liferay-ui:search-container>
 </div>
-
-<%
-boolean showAddCategoryButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY);
-boolean showAddItemButton = ShoppingCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_ITEM);
-%>
-
-<c:if test="<%= showAddCategoryButton || showAddItemButton %>">
-	<liferay-frontend:add-menu>
-		<c:if test="<%= showAddCategoryButton %>">
-			<portlet:renderURL var="addCategoriesURL">
-				<portlet:param name="mvcRenderCommandName" value="/shopping/edit_category" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="parentCategoryId" value="<%= String.valueOf(categoryId) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-category") %>' url="<%= addCategoriesURL.toString() %>" />
-		</c:if>
-
-		<c:if test="<%= showAddItemButton %>">
-			<portlet:renderURL var="addItemURL">
-				<portlet:param name="mvcRenderCommandName" value="/shopping/edit_item" />
-				<portlet:param name="redirect" value="<%= currentURL %>" />
-				<portlet:param name="categoryId" value="<%= String.valueOf(categoryId) %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-item") %>' url="<%= addItemURL.toString() %>" />
-		</c:if>
-	</liferay-frontend:add-menu>
-</c:if>

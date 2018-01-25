@@ -74,11 +74,6 @@ public class LayoutScopesItemSelectorView
 	}
 
 	@Override
-	public boolean isShowSearch() {
-		return true;
-	}
-
-	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		Layout layout = themeDisplay.getLayout();
 

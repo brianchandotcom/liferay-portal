@@ -53,6 +53,12 @@
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) %>">
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", assetBrowserDisplayContext.getAddButtonLabel(), false) %>' url="<%= assetBrowserDisplayContext.getAddButtonURL() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 </liferay-frontend:management-bar>
 
@@ -205,12 +211,6 @@
 		<liferay-ui:search-iterator displayStyle="<%= assetBrowserDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= Validator.isNotNull(assetBrowserDisplayContext.getAddButtonURL()) %>">
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.format(request, "add-x", assetBrowserDisplayContext.getAddButtonLabel(), false) %>' url="<%= assetBrowserDisplayContext.getAddButtonURL() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	Liferay.Util.selectEntityHandler('#<portlet:namespace />selectAssetFm', '<%= HtmlUtil.escapeJS(assetBrowserDisplayContext.getEventName()) %>');

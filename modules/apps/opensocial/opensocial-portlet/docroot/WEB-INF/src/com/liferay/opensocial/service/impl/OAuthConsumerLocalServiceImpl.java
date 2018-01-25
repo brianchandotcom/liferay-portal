@@ -17,8 +17,8 @@ package com.liferay.opensocial.service.impl;
 import com.liferay.opensocial.model.OAuthConsumer;
 import com.liferay.opensocial.model.OAuthConsumerConstants;
 import com.liferay.opensocial.service.base.OAuthConsumerLocalServiceBaseImpl;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
 import java.util.List;

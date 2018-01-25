@@ -14,6 +14,7 @@
 
 package com.liferay.shopping.service.persistence.impl;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
@@ -24,7 +25,6 @@ import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.service.ShoppingCategoryLocalServiceUtil;

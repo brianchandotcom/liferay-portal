@@ -32,6 +32,7 @@ import com.liferay.mail.reader.service.AccountLocalServiceUtil;
 import com.liferay.mail.reader.service.AttachmentLocalServiceUtil;
 import com.liferay.mail.reader.service.FolderLocalServiceUtil;
 import com.liferay.mail.reader.service.MessageLocalServiceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -46,7 +47,6 @@ import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;

@@ -16,8 +16,8 @@ package com.liferay.knowledge.base.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Roberto Díaz

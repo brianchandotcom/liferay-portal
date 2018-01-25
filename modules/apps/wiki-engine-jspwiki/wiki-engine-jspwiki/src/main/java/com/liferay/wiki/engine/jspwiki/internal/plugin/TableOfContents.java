@@ -18,8 +18,8 @@ import com.ecyrd.jspwiki.WikiContext;
 import com.ecyrd.jspwiki.parser.Heading;
 import com.ecyrd.jspwiki.plugin.PluginException;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
 

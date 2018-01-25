@@ -43,6 +43,7 @@ import com.liferay.knowledge.base.util.comparator.KBTemplateCreateDateComparator
 import com.liferay.knowledge.base.util.comparator.KBTemplateModifiedDateComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateTitleComparator;
 import com.liferay.knowledge.base.util.comparator.KBTemplateUserNameComparator;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -57,7 +58,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.ArrayList;

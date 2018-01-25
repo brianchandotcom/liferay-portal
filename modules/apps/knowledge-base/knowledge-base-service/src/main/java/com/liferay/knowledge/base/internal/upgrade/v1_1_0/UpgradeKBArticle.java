@@ -19,6 +19,7 @@ import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleLatestUp
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleMainUpgradeColumnImpl;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleRootResourcePrimKeyUpgradeColumnImpl;
 import com.liferay.knowledge.base.internal.upgrade.v1_1_0.util.KBArticleTable;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
@@ -28,7 +29,6 @@ import com.liferay.portal.kernel.upgrade.util.UpgradeTable;
 import com.liferay.portal.kernel.upgrade.util.UpgradeTableFactoryUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 /**

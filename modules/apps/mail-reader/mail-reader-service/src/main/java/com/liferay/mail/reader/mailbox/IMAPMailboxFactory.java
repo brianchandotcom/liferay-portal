@@ -16,8 +16,8 @@ package com.liferay.mail.reader.mailbox;
 
 import com.liferay.mail.reader.constants.MailPortletKeys;
 import com.liferay.mail.reader.model.Account;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.osgi.service.component.annotations.Component;
 

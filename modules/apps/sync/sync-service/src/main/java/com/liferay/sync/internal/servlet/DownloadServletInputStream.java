@@ -14,9 +14,9 @@
 
 package com.liferay.sync.internal.servlet;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.io.InputStream;

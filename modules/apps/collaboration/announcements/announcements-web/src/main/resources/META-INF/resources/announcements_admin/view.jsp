@@ -78,6 +78,17 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 			portletURL="<%= currentURLObj %>"
 			selectedDisplayStyle='<%= "list" %>'
 		/>
+
+		<portlet:renderURL var="addEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="distributionScope" value="<%= distributionScope %>" />
+			<portlet:param name="alert" value='<%= String.valueOf(navigation.equals("alerts")) %>' />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= navigation.equals("alerts") ? LanguageUtil.get(resourceBundle, "add-alert") : LanguageUtil.get(resourceBundle, "add-announcement") %>' url="<%= addEntryURL %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -164,17 +175,6 @@ List<AnnouncementsEntry> announcementsEntries = announcementsEntriesSearchContai
 		</liferay-ui:search-container>
 	</aui:form>
 </div>
-
-<portlet:renderURL var="addEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/announcements/edit_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="distributionScope" value="<%= distributionScope %>" />
-	<portlet:param name="alert" value='<%= String.valueOf(navigation.equals("alerts")) %>' />
-</portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= navigation.equals("alerts") ? LanguageUtil.get(resourceBundle, "add-alert") : LanguageUtil.get(resourceBundle, "add-announcement") %>' url="<%= addEntryURL %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

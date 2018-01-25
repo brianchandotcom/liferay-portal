@@ -47,6 +47,8 @@ SearchContainer groupSearch = (SearchContainer)request.getAttribute("view.jsp-gr
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

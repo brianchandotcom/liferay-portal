@@ -178,6 +178,11 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 				<replacetoken><![CDATA[<maxWarmingSearchers>2</maxWarmingSearchers>]]></replacetoken>
 				<replacevalue><![CDATA[<maxWarmingSearchers>5</maxWarmingSearchers>]]></replacevalue>
 			</replace>
+
+			<echo file="${solr.dir}/server/solr/liferay/core.properties">config=solrconfig.xml
+dataDir=data
+name=liferay
+schema=schema.xml</echo>
 		</sequential>
 	</macrodef>
 

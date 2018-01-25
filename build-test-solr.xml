@@ -318,19 +318,18 @@ schema=schema.xml</echo>
 			</then>
 		</if>
 
-		<antcall target="start-solr-core" />
-
-		<create-solr-core />
-
 		<get-testcase-property property.name="solr.solrcloud.enabled" />
 
 		<if>
 			<equals arg1="${solr.solrcloud.enabled}" arg2="true" />
 			<then>
-				<antcall target="stop-solr-core" />
-
 				<antcall target="start-solr-solrcloud" />
 			</then>
+			<else>
+				<antcall target="start-solr-core" />
+
+				<create-solr-core />
+			</else>
 		</if>
 	</target>
 

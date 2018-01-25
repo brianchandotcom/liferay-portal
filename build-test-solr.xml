@@ -31,14 +31,14 @@
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-liferay-solr-adapter-properties">
+	<macrodef name="configure-liferay-solr-adapter-osgi-configs">
 		<sequential>
 			<echo file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">readURL=http://localhost:8983/solr/liferay
 writeURL=http://localhost:8983/solr/liferay</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="configure-liferay-solr-solrcloud-properties">
+	<macrodef name="configure-liferay-solr-solrcloud-osgi-configs">
 		<sequential>
 			<echo append="true" file="${liferay.home}/osgi/configs/com.liferay.portal.search.solr.configuration.SolrConfiguration.cfg">
 clientType=CLOUD</echo>
@@ -273,7 +273,7 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 			<arg value="clean" />
 		</gradle-execute>
 
-		<configure-liferay-solr-adapter-properties />
+		<configure-liferay-solr-adapter-osgi-configs />
 
 		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
 
@@ -359,6 +359,8 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 		<prepare-solr-solrcloud-configurations />
 
 		<configure-liferay-solr-solrcloud-properties />
+
+		<configure-liferay-solr-solrcloud-osgi-configs />
 
 		<start-solr-solrcloud-interactive-startup-no-prompt />
 	</target>

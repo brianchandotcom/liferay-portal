@@ -15,7 +15,7 @@
 	},
 	"name": "site-navigation-menu-web",
 	"scripts": {
-		"checkFormat": "npm run prettier -- --list-different",
+		"checkFormat": "npm run csf",
 		"csf": "csf src/**/*.es.js test/**/*.es.js",
 		"format": "npm run csf -- -i",
 		"lint": "eslint src/**/*.es.js",

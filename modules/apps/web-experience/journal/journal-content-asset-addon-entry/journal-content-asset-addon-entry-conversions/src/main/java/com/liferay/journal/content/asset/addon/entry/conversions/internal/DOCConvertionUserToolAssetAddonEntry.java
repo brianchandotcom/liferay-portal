@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.asset.addon.entry.conversions.internal;
 
-import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 
 import javax.servlet.ServletContext;
 

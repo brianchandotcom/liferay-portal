@@ -28,8 +28,8 @@ import com.liferay.dynamic.data.mapping.service.permission.DDMTemplatePermission
 import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
-import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntry;
-import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalPermission;

@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.asset.addon.entry.related.assets.internal;
 
-import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.ContentMetadataAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 

@@ -393,7 +393,16 @@ public class ModulesStructureTest {
 					if (StringUtil.startsWith(fileName, ".lfrbuild-")) {
 						fileNames.add(fileName);
 
-						if (!_nonEmptyMarkerFileNames.contains(fileName)) {
+						if (_nonEmptyMarkerFileNames.contains(fileName)) {
+							String content = ModulesStructureTestUtil.read(
+								path);
+
+							Assert.assertEquals(
+								"Forbidden leading or trailing whitespaces " +
+									"in " + path,
+								content.trim(), content);
+						}
+						else {
 							Assert.assertEquals(
 								"Marker file " + path + " must be empty", 0,
 								basicFileAttributes.size());

@@ -86,7 +86,6 @@
 								{foreach $fragment in $fragments}
 									{call LayoutPageTemplateSidebarAddedFragment.render}
 										{param events: ['fragmentRemoveButtonClick': $_handleFragmentRemoveButtonClick] /}
-										{param fragmentEntryId: $fragment.fragmentEntryId /}
 										{param index: index($fragment) /}
 										{param name: $fragment.name /}
 										{param spritemap: $spritemap /}

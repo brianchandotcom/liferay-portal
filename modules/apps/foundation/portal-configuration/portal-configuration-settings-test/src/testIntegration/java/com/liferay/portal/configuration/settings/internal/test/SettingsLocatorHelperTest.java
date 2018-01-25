@@ -191,21 +191,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 	}
 
-	protected String saveConfiguration() throws Exception {
-		return saveConfiguration(
-			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
-	}
-
-	protected String saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope, String scopePrimKey)
-		throws Exception {
-
-		return saveConfiguration(
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
-				scopePrimKey));
-	}
-
 	@Inject
 	private static SettingsLocatorHelper _settingsLocatorHelper;
 

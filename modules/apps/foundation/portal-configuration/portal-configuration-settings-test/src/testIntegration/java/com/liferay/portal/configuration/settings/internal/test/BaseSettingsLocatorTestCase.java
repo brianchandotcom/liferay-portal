@@ -15,18 +15,26 @@
 package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
+import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.configuration.test.util.ConfigurationTestUtil;
+import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
+import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.After;
@@ -71,6 +79,11 @@ public abstract class BaseSettingsLocatorTestCase {
 		return settings.getValue(SettingsLocatorTestConstants.TEST_KEY, null);
 	}
 
+	protected String saveConfiguration() throws Exception {
+		return saveConfiguration(
+			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
+	}
+
 	protected String saveConfiguration(String configurationPid)
 		throws Exception {
 
@@ -87,6 +100,36 @@ public abstract class BaseSettingsLocatorTestCase {
 		return value;
 	}
 
+	protected String savePortletPreferences(long ownerId, int ownerType)
+		throws Exception {
+
+		String value = RandomTestUtil.randomString();
+
+		_portletPreferencesList.add(
+			_portletPreferencesLocalService.addPortletPreferences(
+				companyId, ownerId, ownerType, 0, portletId, null,
+				String.format(
+					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
+					SettingsLocatorTestConstants.TEST_KEY, value)));
+
+		return value;
+	}
+
+	protected String saveScopedConfiguration(Scope scope, long scopePrimKey)
+		throws Exception {
+
+		return saveScopedConfiguration(scope, String.valueOf(scopePrimKey));
+	}
+
+	protected String saveScopedConfiguration(Scope scope, String scopePrimKey)
+		throws Exception {
+
+		return saveConfiguration(
+			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
+				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
+				scopePrimKey));
+	}
+
 	protected static long companyId;
 	protected static long groupId;
 
@@ -94,5 +137,13 @@ public abstract class BaseSettingsLocatorTestCase {
 	protected SettingsLocator settingsLocator;
 
 	private static final Set<String> _configurationPids = new HashSet<>();
+
+	@Inject
+	private static PortletPreferencesLocalService
+		_portletPreferencesLocalService;
+
+	@DeleteAfterTestRun
+	private final List<PortletPreferences> _portletPreferencesList =
+		new ArrayList<>();
 
 }

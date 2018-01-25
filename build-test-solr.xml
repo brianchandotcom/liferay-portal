@@ -73,6 +73,11 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 	</logging>
 </solr>]]></replacevalue>
 			</replace>
+
+			<replace file="${solr.dir}/server/resources/log4j.properties">
+				<replacetoken><![CDATA[WARN]]></replacetoken>
+				<replacevalue><![CDATA[INFO]]></replacevalue>
+			</replace>
 		</sequential>
 	</macrodef>
 

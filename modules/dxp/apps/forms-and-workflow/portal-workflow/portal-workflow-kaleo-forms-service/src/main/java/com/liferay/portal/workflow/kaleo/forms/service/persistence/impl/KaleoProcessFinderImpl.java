@@ -14,7 +14,7 @@
 
 package com.liferay.portal.workflow.kaleo.forms.service.persistence.impl;
 
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.model.impl.KaleoProcessImpl;
 import com.liferay.portal.workflow.kaleo.forms.service.persistence.KaleoProcessFinder;
@@ -78,8 +79,8 @@ public class KaleoProcessFinderImpl
 	public int countByG_N_D(
 		long groupId, String name, String description, boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return doCountByG_N_D(groupId, names, descriptions, andOperator, false);
 	}
@@ -118,8 +119,8 @@ public class KaleoProcessFinderImpl
 	public int filterCountByG_N_D(
 		long groupId, String name, String description, boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return doCountByG_N_D(groupId, names, descriptions, andOperator, true);
 	}
@@ -148,8 +149,8 @@ public class KaleoProcessFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -184,8 +185,8 @@ public class KaleoProcessFinderImpl
 		long groupId, String name, String description, boolean andOperator,
 		int start, int end, OrderByComparator<KaleoProcess> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return filterFindByG_N_D(
 			groupId, names, descriptions, andOperator, start, end,
@@ -245,8 +246,8 @@ public class KaleoProcessFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 		}
 		else {
 			andOperator = true;
@@ -279,8 +280,8 @@ public class KaleoProcessFinderImpl
 		long groupId, String name, String description, boolean andOperator,
 		int start, int end, OrderByComparator<KaleoProcess> orderByComparator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description, false);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description, false);
 
 		return findByG_N_D(
 			groupId, names, descriptions, andOperator, start, end,
@@ -335,8 +336,8 @@ public class KaleoProcessFinderImpl
 		boolean andOperator = true;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
-			descriptions = CustomSQLUtil.keywords(keywords, false);
+			names = _customSQL.keywords(keywords);
+			descriptions = _customSQL.keywords(keywords, false);
 			andOperator = false;
 		}
 
@@ -363,15 +364,15 @@ public class KaleoProcessFinderImpl
 		long groupId, String[] names, String[] descriptions,
 		boolean andOperator, boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_N_D);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_N_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -384,12 +385,12 @@ public class KaleoProcessFinderImpl
 					sql, "(KaleoProcess.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(DDLRecordSet.name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDLRecordSet.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -449,15 +450,15 @@ public class KaleoProcessFinderImpl
 		OrderByComparator<KaleoProcess> orderByComparator,
 		boolean inlineSQLHelper) {
 
-		names = CustomSQLUtil.keywords(names);
-		descriptions = CustomSQLUtil.keywords(descriptions, false);
+		names = _customSQL.keywords(names);
+		descriptions = _customSQL.keywords(descriptions, false);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_N_D);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_N_D);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -470,13 +471,13 @@ public class KaleoProcessFinderImpl
 					sql, "(KaleoProcess.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(DDLRecordSet.name)", StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "DDLRecordSet.description", StringPool.LIKE, true,
 				descriptions);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -501,5 +502,8 @@ public class KaleoProcessFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

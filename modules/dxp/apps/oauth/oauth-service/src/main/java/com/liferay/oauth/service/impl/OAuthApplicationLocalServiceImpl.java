@@ -21,7 +21,7 @@ import com.liferay.oauth.model.OAuthApplication;
 import com.liferay.oauth.model.OAuthUser;
 import com.liferay.oauth.service.base.OAuthApplicationLocalServiceBaseImpl;
 import com.liferay.oauth.util.OAuthUtil;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.InputStream;
 
@@ -183,7 +184,7 @@ public class OAuthApplicationLocalServiceImpl
 		long companyId, String keywords, LinkedHashMap<String, Object> params,
 		int start, int end, OrderByComparator orderByComparator) {
 
-		keywords = CustomSQLUtil.keywords(keywords)[0];
+		keywords = _customSQL.keywords(keywords)[0];
 
 		if ((params != null) && params.containsKey("userId")) {
 			long userId = (Long)params.get("userId");
@@ -210,7 +211,7 @@ public class OAuthApplicationLocalServiceImpl
 	public int searchCount(
 		long companyId, String keywords, LinkedHashMap<String, Object> params) {
 
-		keywords = CustomSQLUtil.keywords(keywords)[0];
+		keywords = _customSQL.keywords(keywords)[0];
 
 		if ((params != null) && params.containsKey("userId")) {
 			long userId = (Long)params.get("userId");
@@ -291,5 +292,8 @@ public class OAuthApplicationLocalServiceImpl
 			throw new OAuthApplicationWebsiteURLException();
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

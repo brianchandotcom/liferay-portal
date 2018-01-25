@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.persistence.impl;
 
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.model.Source;
 import com.liferay.portal.reports.engine.console.model.impl.SourceImpl;
 import com.liferay.portal.reports.engine.console.service.persistence.SourceFinder;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -87,15 +88,15 @@ public class SourceFinderImpl
 			andOperator = true;
 		}
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] driverUrls = CustomSQLUtil.keywords(driverUrl);
+		String[] names = _customSQL.keywords(name);
+		String[] driverUrls = _customSQL.keywords(driverUrl);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_N_DU);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_N_DU);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -108,14 +109,14 @@ public class SourceFinderImpl
 					sql, "(Reports_Source.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(Reports_Source.name))", StringPool.LIKE,
 				false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(Reports_Source.driverUrl)", StringPool.LIKE, true,
 				driverUrls);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -159,15 +160,15 @@ public class SourceFinderImpl
 			andOperator = true;
 		}
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] driverUrls = CustomSQLUtil.keywords(driverUrl);
+		String[] names = _customSQL.keywords(name);
+		String[] driverUrls = _customSQL.keywords(driverUrl);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_N_DU);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_N_DU);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -180,16 +181,16 @@ public class SourceFinderImpl
 					sql, "(Reports_Source.groupId = ?) AND", StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(Reports_Source.name))", StringPool.LIKE,
 				false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(Reports_Source.driverUrl)", StringPool.LIKE, true,
 				driverUrls);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
-				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -214,5 +215,8 @@ public class SourceFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

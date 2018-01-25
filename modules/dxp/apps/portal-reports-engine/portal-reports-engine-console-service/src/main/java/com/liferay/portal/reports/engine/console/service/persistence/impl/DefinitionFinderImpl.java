@@ -14,7 +14,7 @@
 
 package com.liferay.portal.reports.engine.console.service.persistence.impl;
 
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.reports.engine.console.model.Definition;
 import com.liferay.portal.reports.engine.console.model.impl.DefinitionImpl;
 import com.liferay.portal.reports.engine.console.service.persistence.DefinitionFinder;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -97,16 +98,16 @@ public class DefinitionFinderImpl
 			andOperator = true;
 		}
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
-		String[] reportNames = CustomSQLUtil.keywords(reportName);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description);
+		String[] reportNames = _customSQL.keywords(reportName);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_S_N_D_RN);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_S_N_D_RN);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -127,17 +128,17 @@ public class DefinitionFinderImpl
 					StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(Reports_Definition.name))",
 				StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(Reports_Definition.description))",
 				StringPool.LIKE, false, descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(Reports_Definition.reportName)", StringPool.LIKE,
 				true, reportNames);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -189,16 +190,16 @@ public class DefinitionFinderImpl
 			andOperator = true;
 		}
 
-		String[] names = CustomSQLUtil.keywords(name);
-		String[] descriptions = CustomSQLUtil.keywords(description);
-		String[] reportNames = CustomSQLUtil.keywords(reportName);
+		String[] names = _customSQL.keywords(name);
+		String[] descriptions = _customSQL.keywords(description);
+		String[] reportNames = _customSQL.keywords(reportName);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_S_N_D_RN);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_S_N_D_RN);
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
@@ -219,20 +220,20 @@ public class DefinitionFinderImpl
 					StringPool.BLANK);
 			}
 
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(Reports_Definition.name))",
 				StringPool.LIKE, false, names);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(CAST_TEXT(Reports_Definition.description))",
 				StringPool.LIKE, false, descriptions);
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(Reports_Definition.reportName)", StringPool.LIKE,
 				true, reportNames);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			if (orderByComparator != null) {
-				sql = CustomSQLUtil.replaceOrderBy(sql, orderByComparator);
+				sql = _customSQL.replaceOrderBy(sql, orderByComparator);
 			}
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
@@ -263,5 +264,8 @@ public class DefinitionFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

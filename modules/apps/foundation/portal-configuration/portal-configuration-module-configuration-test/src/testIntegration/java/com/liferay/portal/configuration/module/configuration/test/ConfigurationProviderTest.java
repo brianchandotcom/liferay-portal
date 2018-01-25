@@ -38,10 +38,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Constants;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
@@ -64,10 +61,6 @@ public class ConfigurationProviderTest {
 
 	@Before
 	public void setUp() throws Exception {
-		_bundle = FrameworkUtil.getBundle(ConfigurationProviderTest.class);
-
-		_bundleContext = _bundle.getBundleContext();
-
 		_properties = new Hashtable<>();
 	}
 
@@ -239,8 +232,6 @@ public class ConfigurationProviderTest {
 		configuration.update(_properties);
 	}
 
-	private Bundle _bundle;
-	private BundleContext _bundleContext;
 	private Configuration _configuration;
 	private Dictionary<String, Object> _properties;
 

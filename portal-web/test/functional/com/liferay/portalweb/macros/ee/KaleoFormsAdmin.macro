@@ -635,7 +635,7 @@
 	<command name="saveFieldSet">
 		<execute function="AssertClick" locator1="KaleoDesigner#SAVE_BUTTON" value1="Save" />
 
-		<execute macro="Alert#viewSuccessMessage" />
+		<execute macro="Alert#waitForSuccessMessageHide" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

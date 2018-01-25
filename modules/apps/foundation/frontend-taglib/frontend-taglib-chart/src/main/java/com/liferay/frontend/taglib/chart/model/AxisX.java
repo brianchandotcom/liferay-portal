@@ -55,10 +55,6 @@ public class AxisX extends ChartObject {
 		set("height", height);
 	}
 
-	public void setPositionLabel(PositionLabel positionLabel) {
-		set("label", positionLabel);
-	}
-
 	public void setLabel(String label) {
 		set("label", label);
 	}
@@ -77,6 +73,10 @@ public class AxisX extends ChartObject {
 
 	public void setPadding(Padding padding) {
 		set("padding", padding);
+	}
+
+	public void setPositionLabel(PositionLabel positionLabel) {
+		set("label", positionLabel);
 	}
 
 	public void setShow(boolean show) {

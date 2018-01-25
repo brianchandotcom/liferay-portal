@@ -42,10 +42,6 @@ public class AxisY2 extends ChartObject {
 		set("inverted", inverted);
 	}
 
-	public void setPositionLabel(PositionLabel positionLabel) {
-		set("label", positionLabel);
-	}
-
 	public void setLabel(String label) {
 		set("label", label);
 	}
@@ -60,6 +56,10 @@ public class AxisY2 extends ChartObject {
 
 	public void setPadding(Padding padding) {
 		set("padding", padding);
+	}
+
+	public void setPositionLabel(PositionLabel positionLabel) {
+		set("label", positionLabel);
 	}
 
 	public void setShow(boolean show) {

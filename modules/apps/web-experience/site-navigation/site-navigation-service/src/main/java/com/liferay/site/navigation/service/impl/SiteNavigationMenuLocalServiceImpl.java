@@ -15,8 +15,6 @@
 package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
@@ -290,9 +288,10 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	private void _addSiteNavigationMenuItems(
-		long userId, long groupId, long siteNavigationMenuId,
-		long parentSiteNavigationMenuId, Layout layout,
-		ServiceContext serviceContext) {
+			long userId, long groupId, long siteNavigationMenuId,
+			long parentSiteNavigationMenuId, Layout layout,
+			ServiceContext serviceContext)
+		throws PortalException {
 
 		Optional<SiteNavigationMenuItemType> optional = Optional.ofNullable(
 			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
@@ -306,45 +305,38 @@ public class SiteNavigationMenuLocalServiceImpl
 			return;
 		}
 
-		try {
-			String typeSettings = layout.getTypeSettings();
+		String typeSettings = layout.getTypeSettings();
 
-			if (siteNavigationMenuItemType.getType().equals("layout")) {
-				UnicodeProperties unicodeProperties = new UnicodeProperties();
+		if (siteNavigationMenuItemType.getType().equals("layout")) {
+			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
-				unicodeProperties.setProperty(
-					"groupId", String.valueOf(layout.getGroupId()));
-				unicodeProperties.setProperty("layoutUuid", layout.getUuid());
-				unicodeProperties.setProperty(
-					"privateLayout", String.valueOf(layout.isPrivateLayout()));
+			unicodeProperties.setProperty(
+				"groupId", String.valueOf(layout.getGroupId()));
+			unicodeProperties.setProperty("layoutUuid", layout.getUuid());
+			unicodeProperties.setProperty(
+				"privateLayout", String.valueOf(layout.isPrivateLayout()));
 
-				typeSettings = unicodeProperties.toString();
-			}
+			typeSettings = unicodeProperties.toString();
+		}
 
-			SiteNavigationMenuItem siteNavigationMenuItem =
-				siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-					userId, groupId, siteNavigationMenuId,
-					parentSiteNavigationMenuId,
-					siteNavigationMenuItemType.getType(), typeSettings,
-					serviceContext);
+		SiteNavigationMenuItem siteNavigationMenuItem =
+			siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+				userId, groupId, siteNavigationMenuId,
+				parentSiteNavigationMenuId,
+				siteNavigationMenuItemType.getType(), typeSettings,
+				serviceContext);
 
-			List<Layout> children = layoutLocalService.getLayouts(
-				groupId, false, layout.getLayoutId());
+		List<Layout> children = layoutLocalService.getLayouts(
+			groupId, false, layout.getLayoutId());
 
 			for (Layout childLayout : children) {
 				_addSiteNavigationMenuItems(
 					userId, groupId, siteNavigationMenuId,
 					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 					childLayout, serviceContext);
-			}
-		}
-		catch (PortalException pe) {
-			_log.error(pe, pe);
+
 		}
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuLocalServiceImpl.class);
 
 	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)
 	private SiteNavigationMenuItemTypeRegistry

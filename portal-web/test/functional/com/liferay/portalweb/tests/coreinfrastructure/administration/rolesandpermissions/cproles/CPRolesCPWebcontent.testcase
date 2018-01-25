@@ -36,7 +36,7 @@
 	</tear-down>
 
 	<command name="AddFolderSiteRoleDefaultPermission" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="acceptance" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">
 			<var name="page" value="Public Pages" />
@@ -86,7 +86,7 @@
 	</command>
 
 	<command name="AddFolderSiteRoleDefinePermission" priority="5">
-		<property name="portal.acceptance" value="true" />
+		<property name="portal.acceptance" value="quarantine" />
 		<property name="test.name.skip.portal.instance" value="CPRolesCPWebcontent#AddFolderSiteRoleDefinePermission" />
 
 		<execute macro="Permissions#setUpSiteRoleCP">

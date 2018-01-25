@@ -50,6 +50,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 			portletURL="<%= layoutsAdminDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= layoutsAdminDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "page") %>' url="<%= layoutsAdminDisplayContext.getAddLayoutURL() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -133,12 +139,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "pages"));
 		</c:otherwise>
 	</c:choose>
 </aui:form>
-
-<c:if test="<%= layoutsAdminDisplayContext.isShowAddRootLayoutButton() %>">
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "page") %>' url="<%= layoutsAdminDisplayContext.getAddLayoutURL() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />deleteSelectedPages').on(

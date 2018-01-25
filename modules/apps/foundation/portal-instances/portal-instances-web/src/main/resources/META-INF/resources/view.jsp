@@ -24,13 +24,18 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
+
+NavigationItem instancesNavigationItem = new NavigationItem();
+
+instancesNavigationItem.setActive(true);
+instancesNavigationItem.setHref(StringPool.BLANK);
+instancesNavigationItem.setLabel(LanguageUtil.get(request, "instances"));
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="instances" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= Arrays.asList(instancesNavigationItem) %>"
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

@@ -58,7 +58,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			siteNavigationMenu, 0, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
 			serviceContext);
 
-		return null;
+		return siteNavigationMenu;
 	}
 
 	@Override

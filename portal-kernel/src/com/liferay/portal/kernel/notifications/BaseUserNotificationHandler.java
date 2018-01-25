@@ -157,9 +157,9 @@ public abstract class BaseUserNotificationHandler
 
 			sb.append("<div class=\"title\">[$TITLE$]</div><div ");
 			sb.append("class=\"body\"><div class=\"button-holder\"><a ");
-			sb.append("class=\"btn btn-lg btn-primary ");
+			sb.append("class=\"btn btn-primary ");
 			sb.append("user-notification-action\" href=\"[$CONFIRM_URL$]\">");
-			sb.append("[$CONFIRM$]</a><a class=\"btn btn-lg btn-default ");
+			sb.append("[$CONFIRM$]</a><a class=\"btn btn-default ");
 			sb.append("user-notification-action\" href=\"[$IGNORE_URL$]\">");
 			sb.append("[$IGNORE$]</a></div></div>");
 

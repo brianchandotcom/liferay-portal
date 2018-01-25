@@ -90,6 +90,19 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 			portletURL="<%= renderResponse.createRenderURL() %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
+			<portlet:renderURL var="viewPasswordPoliciesURL" />
+
+			<portlet:renderURL var="addPasswordPolicyURL">
+				<portlet:param name="mvcPath" value="/edit_password_policy.jsp" />
+				<portlet:param name="redirect" value="<%= viewPasswordPoliciesURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addPasswordPolicyURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -175,16 +188,3 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "passwor
 		}
 	);
 </aui:script>
-
-<c:if test="<%= PortalPermissionUtil.contains(permissionChecker, ActionKeys.ADD_PASSWORD_POLICY) %>">
-	<portlet:renderURL var="viewPasswordPoliciesURL" />
-
-	<portlet:renderURL var="addPasswordPolicyURL">
-		<portlet:param name="mvcPath" value="/edit_password_policy.jsp" />
-		<portlet:param name="redirect" value="<%= viewPasswordPoliciesURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addPasswordPolicyURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>

@@ -42,7 +42,7 @@ dependencies {
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-io")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
 	provided project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-validator")
-	provided project(":apps:foundation:portal-template:portal-template-soy")
+	provided project(":apps:foundation:portal-template:portal-template-soy-api")
 
 	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
 	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.1.2-20161129.044808-1"

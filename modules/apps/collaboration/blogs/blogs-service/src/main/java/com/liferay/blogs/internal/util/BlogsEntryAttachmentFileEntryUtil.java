@@ -16,7 +16,6 @@ package com.liferay.blogs.internal.util;
 
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.model.BlogsEntry;
-import com.liferay.blogs.util.BlogsEntryAttachmentContentUpdater;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -129,21 +128,6 @@ public class BlogsEntryAttachmentFileEntryUtil {
 		return tempBlogsEntryAttachmentFileEntries;
 	}
 
-	/**
-	 * @deprecated As of 1.1.0, replaced by {@link
-	 *             BlogsEntryAttachmentContentUpdater#updateContent(String,
-	 *             List)}
-	 */
-	@Deprecated
-	public static String updateContent(
-		String content,
-		List<BlogsEntryAttachmentFileEntryReference>
-			blogsEntryAttachmentFileEntryReferences) {
-
-		return _BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER.updateContent(
-			content, blogsEntryAttachmentFileEntryReferences);
-	}
-
 	private static FileEntry _fetchPortletFileEntry(
 		long groupId, String fileName, long folderId) {
 
@@ -193,10 +177,6 @@ public class BlogsEntryAttachmentFileEntryUtil {
 				"Unable to get a unique file name for ", fileName,
 				" in folder ", String.valueOf(folderId)));
 	}
-
-	private static final BlogsEntryAttachmentContentUpdater
-		_BLOGS_ENTRY_ATTACHMENT_CONTENT_UPDATER =
-			new BlogsEntryAttachmentContentUpdater();
 
 	private static final int _UNIQUE_FILE_NAME_TRIES = 50;
 

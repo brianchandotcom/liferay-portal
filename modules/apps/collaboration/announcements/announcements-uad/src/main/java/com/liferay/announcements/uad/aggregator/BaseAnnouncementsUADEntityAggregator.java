@@ -12,27 +12,20 @@
  * details.
  */
 
-package com.liferay.user.associated.data.aggregator;
+package com.liferay.announcements.uad.aggregator;
 
-import aQute.bnd.annotation.ProviderType;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.user.associated.data.entity.UADEntity;
-
-import java.util.List;
+import com.liferay.announcements.uad.constants.AnnouncementsUADConstants;
+import com.liferay.user.associated.data.aggregator.BaseUADEntityAggregator;
 
 /**
- * @author William Newbury
+ * @author Drew Brokke
  */
-@ProviderType
-public interface UADEntityAggregator {
+public abstract class BaseAnnouncementsUADEntityAggregator
+	extends BaseUADEntityAggregator {
 
-	public long count(long userId);
-
-	public List<UADEntity> getUADEntities(long userId);
-
-	public UADEntity getUADEntity(String uadEntityId) throws PortalException;
-
-	public String getUADEntitySetName();
+	@Override
+	public String getUADEntitySetName() {
+		return AnnouncementsUADConstants.UAD_ENTITY_SET_NAME;
+	}
 
 }

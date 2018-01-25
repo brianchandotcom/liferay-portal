@@ -14,20 +14,21 @@
 
 package com.liferay.user.associated.data.registry;
 
-import aQute.bnd.annotation.ProviderType;
-
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
 import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.display.UADEntityDisplay;
 import com.liferay.user.associated.data.entity.UADEntity;
 import com.liferay.user.associated.data.exporter.UADEntityExporter;
+import com.liferay.user.associated.data.util.UADEntitySetComposite;
+import com.liferay.user.associated.data.util.UADEntityTypeComposite;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 /**
 * @author William Newbury
 */
-@ProviderType
 public interface UADRegistry {
 
 	public UADEntityAggregator getUADEntityAggregator(String key);
@@ -46,6 +47,12 @@ public interface UADRegistry {
 
 	public Collection<UADEntityAnonymizer> getUADEntityAnonymizers();
 
+	public UADEntityDisplay getUADEntityDisplay(String key);
+
+	public UADEntityDisplay getUADEntityDisplay(UADEntity uadEntity);
+
+	public Set<String> getUADEntityDisplayKeySet();
+
 	public UADEntityExporter getUADEntityExporter(String key);
 
 	public UADEntityExporter getUADEntityExporter(UADEntity uadEntity);
@@ -53,5 +60,13 @@ public interface UADRegistry {
 	public Set<String> getUADEntityExporterKeySet();
 
 	public Collection<UADEntityExporter> getUADEntityExporters();
+
+	public List<UADEntitySetComposite> getUADEntitySetComposites(long userId);
+
+	public UADEntityTypeComposite getUADEntityTypeComposite(
+		long userId, String key);
+
+	public List<UADEntityTypeComposite> getUADEntityTypeComposites(
+		long userId, String uadEntitySetName);
 
 }

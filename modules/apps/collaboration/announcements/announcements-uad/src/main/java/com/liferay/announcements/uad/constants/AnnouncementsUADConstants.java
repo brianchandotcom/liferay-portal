@@ -25,6 +25,8 @@ public class AnnouncementsUADConstants {
 	public static final String CLASS_NAME_ANNOUNCEMENTS_FLAG =
 		"com.liferay.announcements.kernel.model.AnnouncementsFlag";
 
+	public static final String UAD_ENTITY_SET_NAME = "Announcements";
+
 	public static final String[] USER_ID_FIELD_NAMES_ANNOUNCEMENTS_ENTRY =
 		{"userId"};
 

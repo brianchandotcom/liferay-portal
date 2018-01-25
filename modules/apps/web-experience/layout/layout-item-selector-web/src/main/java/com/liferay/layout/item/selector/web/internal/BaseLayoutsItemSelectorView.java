@@ -67,11 +67,6 @@ public abstract class BaseLayoutsItemSelectorView
 	public abstract boolean isPrivateLayout();
 
 	@Override
-	public boolean isShowSearch() {
-		return false;
-	}
-
-	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
 			LayoutItemSelectorCriterion layoutItemSelectorCriterion,

@@ -18,12 +18,12 @@
 
 <%
 DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
+DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
 %>
 
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() || dlPortletInstanceSettingsHelper.isShowSearch() %>">
-	<aui:nav-bar cssClass='<%= dlPortletInstanceSettingsHelper.isShowSearch() ? "collapse-basic-search" : StringPool.BLANK %>' markupView="lexicon">
-		<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
-			<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
-		</c:if>
-	</aui:nav-bar>
+<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
+	<clay:navigation-bar
+		inverted="<%= true %>"
+		items="<%= dlAdminDisplayContext.getNavigationItems() %>"
+	/>
 </c:if>

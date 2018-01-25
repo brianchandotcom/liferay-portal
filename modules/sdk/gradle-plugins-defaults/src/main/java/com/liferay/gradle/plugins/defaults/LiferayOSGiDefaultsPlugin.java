@@ -20,7 +20,6 @@ import aQute.bnd.version.Version;
 import com.liferay.gradle.plugins.LiferayBasePlugin;
 import com.liferay.gradle.plugins.LiferayOSGiPlugin;
 import com.liferay.gradle.plugins.baseline.BaselinePlugin;
-import com.liferay.gradle.plugins.baseline.BaselineTask;
 import com.liferay.gradle.plugins.cache.CacheExtension;
 import com.liferay.gradle.plugins.cache.CachePlugin;
 import com.liferay.gradle.plugins.cache.task.TaskCache;
@@ -449,7 +448,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 		_configureTaskTest(project);
 		_configureTaskTestIntegration(project);
 		_configureTaskTlddoc(project, portalRootDir);
-		_configureTasksBaseline(project);
 		_configureTasksCheckOSGiBundleState(project, liferayExtension);
 		_configureTasksFindBugs(project);
 		_configureTasksJavaCompile(project);
@@ -2571,33 +2569,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 				portalTestConfiguration));
 	}
 
-	private void _configureTaskBaseline(BaselineTask baselineTask) {
-		Project project = baselineTask.getProject();
-
-		String reportLevel = GradleUtil.getProperty(
-			project, "baseline.jar.report.level", "standard");
-
-		boolean reportLevelIsDiff = reportLevel.equals("diff");
-		boolean reportLevelIsPersist = reportLevel.equals("persist");
-
-		if (reportLevelIsPersist && FileUtil.exists(project, "bnd.bnd")) {
-			baselineTask.setBndFile("bnd.bnd");
-		}
-
-		boolean reportDiff = false;
-
-		if (reportLevelIsDiff || reportLevelIsPersist) {
-			reportDiff = true;
-		}
-
-		baselineTask.setReportDiff(reportDiff);
-
-		boolean reportOnlyDirtyPackages = GradleUtil.getProperty(
-			project, "baseline.jar.report.only.dirty.packages", true);
-
-		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
-	}
-
 	private void _configureTaskBaselineSyncReleaseVersions(
 		Task task, final File versionOverrideFile) {
 
@@ -3194,21 +3165,6 @@ public class LiferayOSGiDefaultsPlugin implements Plugin<Project> {
 					file);
 			}
 		}
-	}
-
-	private void _configureTasksBaseline(Project project) {
-		TaskContainer taskContainer = project.getTasks();
-
-		taskContainer.withType(
-			BaselineTask.class,
-			new Action<BaselineTask>() {
-
-				@Override
-				public void execute(BaselineTask baselineTask) {
-					_configureTaskBaseline(baselineTask);
-				}
-
-			});
 	}
 
 	private void _configureTasksCheckOSGiBundleState(

@@ -367,6 +367,27 @@ public class BaselinePlugin implements Plugin<Project> {
 			baselineTask.setIgnoreFailures(
 				Boolean.parseBoolean(ignoreFailures));
 		}
+
+		Project project = baselineTask.getProject();
+
+		String reportLevel = GradleUtil.getProperty(
+			project, "baseline.jar.report.level", "standard");
+
+		boolean reportLevelIsDiff = reportLevel.equals("diff");
+		boolean reportLevelIsPersist = reportLevel.equals("persist");
+
+		boolean reportDiff = false;
+
+		if (reportLevelIsDiff || reportLevelIsPersist) {
+			reportDiff = true;
+		}
+
+		baselineTask.setReportDiff(reportDiff);
+
+		boolean reportOnlyDirtyPackages = GradleUtil.getProperty(
+			project, "baseline.jar.report.only.dirty.packages", true);
+
+		baselineTask.setReportOnlyDirtyPackages(reportOnlyDirtyPackages);
 	}
 
 	private void _configureTaskBaselineForBndBuilderPlugin(

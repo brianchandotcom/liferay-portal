@@ -115,6 +115,10 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 		_showDragAndDropZone = showDragAndDropZone;
 	}
 
+	public void setShowSearch(boolean showSearch) {
+		_showSearch = showSearch;
+	}
+
 	public void setTabName(String tabName) {
 		_tabName = tabName;
 	}
@@ -236,6 +240,9 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 				"showDragAndDropZone",
 			_isShownDragAndDropZone());
 		request.setAttribute(
+			"liferay-item-selector:repository-entry-browser:showSearch",
+			_showSearch);
+		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:tabName", _tabName);
 		request.setAttribute(
 			"liferay-item-selector:repository-entry-browser:uploadURL",
@@ -272,6 +279,7 @@ public class RepositoryEntryBrowserTag extends IncludeTag {
 	private int _repositoryEntriesCount;
 	private boolean _showBreadcrumb;
 	private boolean _showDragAndDropZone = true;
+	private boolean _showSearch = true;
 	private String _tabName;
 	private PortletURL _uploadURL;
 

@@ -7,4 +7,3 @@ Import-Package:\
 	\
 	*;resolution:=optional
 Include-Resource: classes
--baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.bridges-2.0.0.jar

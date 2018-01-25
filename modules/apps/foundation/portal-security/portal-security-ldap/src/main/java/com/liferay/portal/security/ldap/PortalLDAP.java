@@ -83,6 +83,10 @@ public interface PortalLDAP {
 			String filter, Attribute attribute)
 		throws Exception;
 
+	/**
+	 * @deprecated As of 2.2.0
+	 */
+	@Deprecated
 	public String getNameInNamespace(
 			long ldapServerId, long companyId, Binding binding)
 		throws Exception;

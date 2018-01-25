@@ -92,8 +92,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			ldapServerId, userGroup.getCompanyId(), userGroup.getName());
 
 		if (groupBinding != null) {
-			return _portalLDAP.getNameInNamespace(
-				ldapServerId, userGroup.getCompanyId(), groupBinding);
+			return groupBinding.getNameInNamespace();
 		}
 
 		StringBundler sb = new StringBundler(5);
@@ -174,7 +173,8 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			UserOperation userOperation)
 		throws Exception {
 
-		Modifications modifications = Modifications.getInstance();
+		Modifications modifications = getModifications(
+			userGroup, groupMappings, new HashMap<String, String>());
 
 		String groupDN = getGroupDNName(ldapServerId, userGroup, groupMappings);
 		String userDN = getUserDNName(ldapServerId, user, userMappings);
@@ -342,8 +342,7 @@ public class DefaultPortalToLDAPConverter implements PortalToLDAPConverter {
 			user.getEmailAddress());
 
 		if (userBinding != null) {
-			return _portalLDAP.getNameInNamespace(
-				ldapServerId, user.getCompanyId(), userBinding);
+			return userBinding.getNameInNamespace();
 		}
 
 		StringBundler sb = new StringBundler(5);

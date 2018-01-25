@@ -128,9 +128,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			Name name = new CompositeName();
 
-			name.add(
-				_portalLDAP.getNameInNamespace(
-					ldapServerId, companyId, binding));
+			name.add(binding.getNameInNamespace());
 
 			Modifications modifications =
 				_portalToLDAPConverter.getLDAPContactModifications(
@@ -225,9 +223,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 		try {
 			Name name = new CompositeName();
 
-			name.add(
-				_portalLDAP.getNameInNamespace(
-					ldapServerId, companyId, binding));
+			name.add(binding.getNameInNamespace());
 
 			Modifications modifications =
 				_portalToLDAPConverter.getLDAPGroupModifications(
@@ -246,8 +242,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 					sve);
 			}
 
-			String fullGroupDN = _portalLDAP.getNameInNamespace(
-				ldapServerId, companyId, binding);
+			String fullGroupDN = binding.getNameInNamespace();
 
 			Attributes attributes = _portalLDAP.getGroupAttributes(
 				ldapServerId, companyId, ldapContext, fullGroupDN, true);
@@ -318,8 +313,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 			else {
 				Attributes attributes = _portalLDAP.getUserAttributes(
 					ldapServerId, companyId, ldapContext,
-					_portalLDAP.getNameInNamespace(
-						ldapServerId, companyId, binding));
+					binding.getNameInNamespace());
 
 				String modifyTimestamp = LDAPUtil.getAttributeString(
 					attributes, "modifyTimestamp");
@@ -341,9 +335,7 @@ public class LDAPUserExporterImpl implements UserExporter {
 
 			Name name = new CompositeName();
 
-			name.add(
-				_portalLDAP.getNameInNamespace(
-					ldapServerId, companyId, binding));
+			name.add(binding.getNameInNamespace());
 
 			Modifications modifications =
 				_portalToLDAPConverter.getLDAPUserModifications(

@@ -182,7 +182,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 				return null;
 			}
 
-			String baseDN = ldapServerConfiguration.baseDN();
+			String groupsDN = ldapServerConfiguration.groupsDN();
 
 			String groupFilter = ldapServerConfiguration.groupSearchFilter();
 
@@ -216,7 +216,7 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			SearchControls searchControls = new SearchControls(
 				SearchControls.SUBTREE_SCOPE, 1, 0, null, false, false);
 
-			enu = ldapContext.search(baseDN, sb.toString(), searchControls);
+			enu = ldapContext.search(groupsDN, sb.toString(), searchControls);
 
 			if (enu.hasMoreElements()) {
 				return enu.nextElement();
@@ -324,11 +324,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		String baseDN = ldapServerConfiguration.baseDN();
+		String groupsDN = ldapServerConfiguration.groupsDN();
 		String groupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 
 		return getGroups(
-			companyId, ldapContext, cookie, maxResults, baseDN,
+			companyId, ldapContext, cookie, maxResults, groupsDN,
 			groupSearchFilter, searchResults);
 	}
 
@@ -343,11 +343,11 @@ public class DefaultPortalLDAP implements PortalLDAP {
 			_ldapServerConfigurationProvider.getConfiguration(
 				companyId, ldapServerId);
 
-		String baseDN = ldapServerConfiguration.baseDN();
+		String groupsDN = ldapServerConfiguration.groupsDN();
 		String groupSearchFilter = ldapServerConfiguration.groupSearchFilter();
 
 		return getGroups(
-			companyId, ldapContext, cookie, maxResults, baseDN,
+			companyId, ldapContext, cookie, maxResults, groupsDN,
 			groupSearchFilter, attributeIds, searchResults);
 	}
 
@@ -472,6 +472,10 @@ public class DefaultPortalLDAP implements PortalLDAP {
 		return attribute;
 	}
 
+	/**
+	 * @deprecated As of 2.2.0
+	 */
+	@Deprecated
 	@Override
 	public String getNameInNamespace(
 			long ldapServerId, long companyId, Binding binding)

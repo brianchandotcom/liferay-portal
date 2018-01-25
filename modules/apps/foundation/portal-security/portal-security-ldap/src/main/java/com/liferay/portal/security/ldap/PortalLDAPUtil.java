@@ -139,6 +139,10 @@ public class PortalLDAPUtil {
 			companyId, ldapContext, baseDN, filter, attribute);
 	}
 
+	/**
+	 * @deprecated As of 2.2.0
+	 */
+	@Deprecated
 	public static String getNameInNamespace(
 			long ldapServerId, long companyId, Binding binding)
 		throws Exception {

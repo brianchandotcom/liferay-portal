@@ -224,8 +224,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 				Attributes attributes = _portalLDAP.getUserAttributes(
 					ldapServerId, companyId, ldapContext,
-					_portalLDAP.getNameInNamespace(
-						ldapServerId, companyId, binding));
+					binding.getNameInNamespace());
 
 				return importUser(
 					ldapServerId, companyId, ldapContext, attributes, null);
@@ -327,8 +326,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 		LdapContext ldapContext = _portalLDAP.getContext(
 			ldapServerId, companyId);
 
-		String fullUserDN = _portalLDAP.getNameInNamespace(
-			ldapServerId, companyId, result);
+		String fullUserDN = result.getNameInNamespace();
 
 		Attributes attributes = _portalLDAP.getUserAttributes(
 			ldapServerId, companyId, ldapContext, fullUserDN);
@@ -768,10 +766,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 						ldapImportContext.getLdapServerId(),
 						ldapImportContext.getCompanyId(),
 						ldapImportContext.getLdapContext(),
-						_portalLDAP.getNameInNamespace(
-							ldapImportContext.getLdapServerId(),
-							ldapImportContext.getCompanyId(), searchResult),
-						true);
+						searchResult.getNameInNamespace(), true);
 
 					UserGroup userGroup = importUserGroup(
 						ldapImportContext.getCompanyId(), groupAttributes,
@@ -824,9 +819,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 
 			for (SearchResult searchResult : searchResults) {
 				try {
-					String fullUserDN = _portalLDAP.getNameInNamespace(
-						ldapImportContext.getLdapServerId(),
-						ldapImportContext.getCompanyId(), searchResult);
+					String fullUserDN = searchResult.getNameInNamespace();
 
 					if (ldapImportContext.containsImportedUser(fullUserDN)) {
 						continue;
@@ -984,9 +977,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 				ldapImportContext.getCompanyId(), user.getScreenName(),
 				user.getEmailAddress());
 
-			String fullUserDN = _portalLDAP.getNameInNamespace(
-				ldapImportContext.getLdapServerId(),
-				ldapImportContext.getCompanyId(), binding);
+			String fullUserDN = binding.getNameInNamespace();
 
 			sb.append(escapeValue(fullUserDN));
 
@@ -1011,9 +1002,7 @@ public class LDAPUserImporterImpl implements LDAPUserImporter, UserImporter {
 					searchResults);
 
 				for (SearchResult searchResult : searchResults) {
-					String fullGroupDN = _portalLDAP.getNameInNamespace(
-						ldapImportContext.getLdapServerId(),
-						ldapImportContext.getCompanyId(), searchResult);
+					String fullGroupDN = searchResult.getNameInNamespace();
 
 					newUserGroupIds = importGroup(
 						ldapImportContext, fullGroupDN, user, newUserGroupIds);

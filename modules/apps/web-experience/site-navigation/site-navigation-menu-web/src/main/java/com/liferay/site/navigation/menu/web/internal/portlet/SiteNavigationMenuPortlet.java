@@ -71,13 +71,7 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 		super.doDispatch(renderRequest, renderResponse);
 	}
 
-	@Reference(unbind = "-")
-	protected void setPortletDisplayTemplate(
-		PortletDisplayTemplate portletDisplayTemplate) {
-
-		_portletDisplayTemplate = portletDisplayTemplate;
-	}
-
+	@Reference
 	private PortletDisplayTemplate _portletDisplayTemplate;
 
 }

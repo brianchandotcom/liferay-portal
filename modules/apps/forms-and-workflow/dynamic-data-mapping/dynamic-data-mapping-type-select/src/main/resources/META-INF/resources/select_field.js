@@ -34,6 +34,13 @@ AUI.add(
 						value: 'manual'
 					},
 
+					fixedOptions: {
+						getter: '_getFixedOptions',
+						state: true,
+						validator: Array.isArray,
+						value: []
+					},
+
 					multiple: {
 						state: true,
 						value: false
@@ -151,6 +158,7 @@ AUI.add(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
 								badgeCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced')),
+								fixedOptions: instance.get('fixedOptions'),
 								open: instance._open,
 								options: instance.get('options'),
 								predefinedValue: instance.get('readOnly') ? instance.get('predefinedValue') : instance.getValue(),
@@ -259,6 +267,10 @@ AUI.add(
 								visible: false
 							}
 						);
+					},
+
+					_getFixedOptions: function(fixedOptions) {
+						return fixedOptions || [];
 					},
 
 					_getOptions: function(options) {

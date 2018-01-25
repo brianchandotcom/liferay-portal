@@ -320,12 +320,12 @@
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//ul[@class='results-chosen']//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]//div[contains(@class,'select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>DATA_PROVIDER_OUTPUT_PARAMETER_TYPE_FIELD_OPTIONS_LIST_2</td>
-	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//ul[@class='results-chosen']//li[contains(.,'${key_outputParameterType}')]</td>
+	<td>//div[contains(@data-fieldname,'outputParameters')]/../following-sibling::div//div[contains(@class,'select-field')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_outputParameterType}')]</td>
 	<td></td>
 </tr>
 <tr>

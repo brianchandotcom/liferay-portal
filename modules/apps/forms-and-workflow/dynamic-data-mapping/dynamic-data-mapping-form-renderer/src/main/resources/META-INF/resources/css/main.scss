@@ -281,9 +281,14 @@
 			width: 100%;
 		}
 
+		.dropdown-visible {
+			display: block;
+		}
+
 		.results-chosen {
 			margin: 0;
 			max-height: 438px;
+			min-width: 100%;
 			overflow-x: hidden;
 			overflow-y: auto;
 			padding: 0;
@@ -324,6 +329,10 @@
 				&:hover {
 					background-color: #FFF;
 				}
+			}
+
+			.inline-scroller > span {
+				padding-left: 16px;
 			}
 		}
 	}

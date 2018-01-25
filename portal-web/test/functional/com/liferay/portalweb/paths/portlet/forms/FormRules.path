@@ -168,7 +168,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_ADVANCED_OPERATOR</td>
-	<td>//div[@class='container-list-advanced-operators']//ul[@class='results-chosen']//li[contains(.,'${key_calculateAdvancedOperator}')]</td>
+	<td>//div[@class='container-list-advanced-operators']//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateAdvancedOperator}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -178,7 +178,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_ADD_FIELD_LIST</td>
-	<td>//div[@class='calculator-add-field-button-container']//ul[@class='results-chosen']//li[contains(.,'${key_calculateFieldOption}')]</td>
+	<td>//div[@class='calculator-add-field-button-container']//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateFieldOption}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -188,7 +188,7 @@
 </tr>
 <tr>
 	<td>RULE_BUILDER_CALCULATE_RESULT_FIELD_LIST</td>
-	<td>//div[contains(@class,'calculate-container-fields')]//ul[@class='results-chosen']//li[contains(.,'${key_calculateResultField}')]</td>
+	<td>//div[contains(@class,'calculate-container-fields')]//ul[contains(@class,'results-chosen')]//li[contains(.,'${key_calculateResultField}')]</td>
 	<td></td>
 </tr>
 <tr>

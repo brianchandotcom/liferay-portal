@@ -332,14 +332,17 @@ AUI.add(
 				var instance = this;
 
 				var field = event.target;
-
 				var fieldName = field.get('fieldName');
+				var options = field.get('options').concat(field.get('fixedOptions'));
 
 				if (fieldName) {
 					var index = fieldName.split('-')[0];
 
 					if (fieldName.match('-condition-first-operand')) {
-						var type = instance._getDataType(field.getValue(), field.get('options'));
+						var operatorSelected = instance._getOperator(index);
+						var type = instance._getDataType(field.getValue(), options);
+
+						operatorSelected.cleanSelect();
 
 						instance._hideSecondOperandField(index);
 
@@ -475,6 +478,8 @@ AUI.add(
 			_renderFirstOperand: function(index, condition, container) {
 				var instance = this;
 
+				var fixedFields = [];
+
 				var value = [];
 
 				if (condition) {
@@ -483,11 +488,12 @@ AUI.add(
 
 				var fields = instance.get('fields').slice();
 
-				fields.unshift(currentUser);
+				fixedFields.push(currentUser);
 
 				var field = instance.createSelectField(
 					{
 						fieldName: index + '-condition-first-operand',
+						fixedOptions: fixedFields,
 						label: instance.get('strings').if,
 						options: fields,
 						showLabel: false,
@@ -800,7 +806,7 @@ AUI.add(
 							}
 						];
 					}
-
+					secondOperandType.cleanSelect();
 					secondOperandType.set('options', options);
 				}
 			},

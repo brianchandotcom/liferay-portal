@@ -96,7 +96,7 @@ AUI.add(
 
 				new renderer(context, container);
 
-				return container.firstChild.outerHTML;
+				return container.firstChild.firstElementChild.innerHTML;
 			},
 
 			_renderList: function(options) {
@@ -111,13 +111,17 @@ AUI.add(
 					}
 				);
 
-				instance.get('container').one('.results-chosen').setHTML(template);
+				var optionsList = instance.get('container').one('.inline-scroller');
+
+				if (optionsList) {
+					optionsList.setHTML(template);
+				}
 			},
 
 			_visitDOMListItems: function(callBack) {
 				var instance = this;
 
-				instance.get('container').all('li.select-option-item').each(callBack);
+				instance.get('container').all('li.select-option-item.unfixed').each(callBack);
 
 				return instance;
 			}

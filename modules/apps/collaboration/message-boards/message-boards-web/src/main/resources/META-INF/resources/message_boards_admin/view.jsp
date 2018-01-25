@@ -126,6 +126,10 @@ mbListDisplayContext.populateResultsAndTotal(searchContainer);
 			portletURL="<%= searchContainer.getIteratorURL() %>"
 			selectedDisplayStyle="descriptive"
 		/>
+
+		<c:if test="<%= !mbListDisplayContext.isShowSearch() && !mbListDisplayContext.isShowRecentPosts() %>">
+			<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<portlet:renderURL var="viewEntriesHomeURL">
@@ -223,10 +227,6 @@ request.setAttribute("view.jsp-entriesSearchContainer", searchContainer);
 
 	</c:otherwise>
 </c:choose>
-
-<c:if test="<%= !mbListDisplayContext.isShowSearch() && !mbListDisplayContext.isShowRecentPosts() %>">
-	<liferay-util:include page="/message_boards_admin/add_button.jsp" servletContext="<%= application %>" />
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

@@ -12,17 +12,34 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.model;
+
+import java.util.List;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
+public class SingleValueColumn extends Column {
 
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
+	public SingleValueColumn(String id) {
+		super(id);
+	}
 
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
+	public SingleValueColumn(String id, Number value) {
+		super(id);
+
+		setValue(value);
+	}
+
+	public void setValue(Number value) {
+		List<Number> data = getData();
+
+		if (data.isEmpty()) {
+			data.add(value);
+		}
+		else {
+			data.set(0, value);
+		}
+	}
 
 }

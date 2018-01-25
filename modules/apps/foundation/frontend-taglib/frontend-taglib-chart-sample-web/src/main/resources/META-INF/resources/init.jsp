@@ -17,11 +17,13 @@
 <%@ taglib uri="http://liferay.com/tld/chart" prefix="chart" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
-<%@ page import="java.util.ArrayList" %><%@
-page import="java.util.HashMap" %><%@
-page import="java.util.List" %><%@
-page import="java.util.Map" %>
+<%@ page import="com.liferay.frontend.taglib.chart.sample.web.constants.ChartSamplePortletKeys" %><%@
+page import="com.liferay.frontend.taglib.chart.sample.web.internal.display.context.ChartSampleDisplayContext" %>
 
 <liferay-theme:defineObjects />
 
 <%@ include file="/init-ext.jsp" %>
+
+<%
+ChartSampleDisplayContext chartSampleDisplayContext = (ChartSampleDisplayContext)request.getAttribute(ChartSamplePortletKeys.CHART_SAMPLE_DISPLAY_CONTEXT);
+%>

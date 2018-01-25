@@ -12,17 +12,13 @@
  * details.
  */
 
-package com.liferay.frontend.taglib.chart.sample.web.constants;
+package com.liferay.frontend.taglib.chart.model.point;
+
+import com.liferay.frontend.taglib.chart.model.ChartConfig;
+import com.liferay.frontend.taglib.chart.model.MultiValueColumn;
 
 /**
- * @author Chema Balsas
+ * @author Iván Zaera Avellón
  */
-public class ChartSamplePortletKeys {
-
-	public static final String CHART_SAMPLE =
-		"com_liferay_chart_sample_web_portlet_ChartSamplePortlet";
-
-	public static final String CHART_SAMPLE_DISPLAY_CONTEXT =
-		"CHART_SAMPLE_DISPLAY_CONTEXT";
-
+public abstract class PointChartConfig extends ChartConfig<MultiValueColumn> {
 }

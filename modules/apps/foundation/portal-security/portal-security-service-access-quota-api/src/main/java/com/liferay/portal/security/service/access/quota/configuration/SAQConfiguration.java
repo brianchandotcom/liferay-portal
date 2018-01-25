@@ -40,7 +40,7 @@ public interface SAQConfiguration {
 	public String serviceSignature();
 
 	@Meta.AD(
-		deflt = "60", name = "saq-configuration-service-max", min = "1",
+		deflt = "60", min = "1", name = "saq-configuration-service-max",
 		required = true
 	)
 	public int max();

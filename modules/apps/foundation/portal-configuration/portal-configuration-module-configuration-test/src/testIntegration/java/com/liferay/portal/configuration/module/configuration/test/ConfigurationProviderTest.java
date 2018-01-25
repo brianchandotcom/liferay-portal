@@ -17,7 +17,7 @@ package com.liferay.portal.configuration.module.configuration.test;
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
-import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -59,6 +59,9 @@ public class ConfigurationProviderTest {
 	@Inject
 	private static ConfigurationAdmin _configurationAdmin;
 
+	@Inject
+	private static ConfigurationProvider _configurationProvider;
+
 	@Before
 	public void setUp() throws Exception {
 		_bundle = FrameworkUtil.getBundle(ConfigurationProviderTest.class);
@@ -83,7 +86,7 @@ public class ConfigurationProviderTest {
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
 
-		ConfigurationProviderUtil.deleteCompanyConfiguration(
+		_configurationProvider.deleteCompanyConfiguration(
 			TestConfiguration.class, 12345);
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
@@ -97,7 +100,7 @@ public class ConfigurationProviderTest {
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
 
-		ConfigurationProviderUtil.deleteGroupConfiguration(
+		_configurationProvider.deleteGroupConfiguration(
 			TestConfiguration.class, 12345);
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
@@ -111,7 +114,7 @@ public class ConfigurationProviderTest {
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(scopedPid));
 
-		ConfigurationProviderUtil.deletePortletInstanceConfiguration(
+		_configurationProvider.deletePortletInstanceConfiguration(
 			TestConfiguration.class, "12345");
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(scopedPid));
@@ -123,7 +126,7 @@ public class ConfigurationProviderTest {
 
 		Assert.assertEquals(1, _getExistingConfigurationCount(_PID));
 
-		ConfigurationProviderUtil.deleteSystemConfiguration(
+		_configurationProvider.deleteSystemConfiguration(
 			TestConfiguration.class);
 
 		Assert.assertEquals(0, _getExistingConfigurationCount(_PID));
@@ -134,7 +137,7 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "companyValue1");
 		_properties.put("key2", "companyValue2");
 
-		ConfigurationProviderUtil.saveCompanyConfiguration(
+		_configurationProvider.saveCompanyConfiguration(
 			TestConfiguration.class, 12345, _properties);
 
 		String scopedPid = _PID + "__COMPANY__12345";
@@ -149,7 +152,7 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "groupValue1");
 		_properties.put("key2", "groupValue2");
 
-		ConfigurationProviderUtil.saveGroupConfiguration(
+		_configurationProvider.saveGroupConfiguration(
 			TestConfiguration.class, 12345, _properties);
 
 		String scopedPid = _PID + "__GROUP__12345";
@@ -164,7 +167,7 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "portletInstanceValue1");
 		_properties.put("key2", "portletInstanceValue2");
 
-		ConfigurationProviderUtil.savePortletInstanceConfiguration(
+		_configurationProvider.savePortletInstanceConfiguration(
 			TestConfiguration.class, "12345", _properties);
 
 		String scopedPid = _PID + "__PORTLET_INSTANCE__12345";
@@ -179,7 +182,7 @@ public class ConfigurationProviderTest {
 		_properties.put("key1", "systemValue1");
 		_properties.put("key2", "systemValue2");
 
-		ConfigurationProviderUtil.saveSystemConfiguration(
+		_configurationProvider.saveSystemConfiguration(
 			TestConfiguration.class, _properties);
 
 		_configuration = _getConfiguration(_PID, StringPool.QUESTION);

@@ -53,13 +53,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu items
 
-		List<Layout> layouts = layoutLocalService.getLayouts(groupId, false, 0);
-
-		for (Layout layout : layouts) {
-			_addSiteNavigationMenuItems(
-				userId, groupId, siteNavigationMenu.getSiteNavigationMenuId(),
-				0, layout, serviceContext);
-		}
+		_addSiteNavigationMenuItems(siteNavigationMenu, 0, 0, serviceContext);
 
 		return null;
 	}
@@ -286,38 +280,39 @@ public class SiteNavigationMenuLocalServiceImpl
 	}
 
 	private void _addSiteNavigationMenuItems(
-			long userId, long groupId, long siteNavigationMenuId,
-			long parentSiteNavigationMenuId, Layout layout,
+			SiteNavigationMenu siteNavigationMenu,
+			long parentSiteNavigationMenuId, long layoutId,
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		SiteNavigationMenuItemType siteNavigationMenuItemType =
-			_siteNavigationMenuItemTypeRegistry.
-				getSiteNavigationMenuItemTypeByLayoutType(layout.getType());
+		List<Layout> layouts = layoutLocalService.getLayouts(
+			siteNavigationMenu.getGroupId(), false, layoutId);
 
-		if (siteNavigationMenuItemType == null) {
-			return;
-		}
+		for (Layout layout : layouts) {
+			SiteNavigationMenuItemType siteNavigationMenuItemType =
+				_siteNavigationMenuItemTypeRegistry.
+					getSiteNavigationMenuItemTypeByLayoutType(layout.getType());
 
-		String typeSettings =
-			siteNavigationMenuItemType.getTypeSettingsFromLayout(layout);
+			if (siteNavigationMenuItemType == null) {
+				continue;
+			}
 
-		SiteNavigationMenuItem siteNavigationMenuItem =
-			siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
-				userId, groupId, siteNavigationMenuId,
-				parentSiteNavigationMenuId,
-				siteNavigationMenuItemType.getType(), typeSettings,
-				serviceContext);
+			String typeSettings =
+				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout);
 
-		List<Layout> children = layoutLocalService.getLayouts(
-			groupId, false, layout.getLayoutId());
+			SiteNavigationMenuItem siteNavigationMenuItem =
+				siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
+					siteNavigationMenu.getUserId(),
+					siteNavigationMenu.getGroupId(),
+					siteNavigationMenu.getSiteNavigationMenuId(),
+					parentSiteNavigationMenuId,
+					siteNavigationMenuItemType.getType(), typeSettings,
+					serviceContext);
 
-			for (Layout childLayout : children) {
-				_addSiteNavigationMenuItems(
-					userId, groupId, siteNavigationMenuId,
-					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					childLayout, serviceContext);
-
+			_addSiteNavigationMenuItems(
+				siteNavigationMenu,
+				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
+				layout.getLayoutId(), serviceContext);
 		}
 	}
 

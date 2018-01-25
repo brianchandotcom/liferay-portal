@@ -60,7 +60,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		List<Layout> layouts = layoutLocalService.getLayouts(groupId, false, 0);
 
 		for (Layout layout : layouts) {
-			_addSiteNavigationMenuItem(
+			_addSiteNavigationMenuItems(
 				userId, groupId, siteNavigationMenu.getSiteNavigationMenuId(),
 				0, layout, serviceContext);
 		}
@@ -289,7 +289,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		}
 	}
 
-	private SiteNavigationMenuItem _addSiteNavigationMenuItem(
+	private SiteNavigationMenuItem _addSiteNavigationMenuItems(
 		long userId, long groupId, long siteNavigationMenuId,
 		long parentSiteNavigationMenuId, Layout layout,
 		ServiceContext serviceContext) {
@@ -332,7 +332,7 @@ public class SiteNavigationMenuLocalServiceImpl
 				groupId, false, layout.getLayoutId());
 
 			for (Layout childLayout : children) {
-				_addSiteNavigationMenuItem(
+				_addSiteNavigationMenuItems(
 					userId, groupId, siteNavigationMenuId,
 					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 					childLayout, serviceContext);

@@ -284,7 +284,6 @@
 
 		<execute macro="Navigator#getCurrentURL">
 			<return from="currentURL" name="adminEditURL" />
-			<var name="adminEditURL" value="${adminEditURL}" />
 		</execute>
 
 		<var name="maliciousURL">
@@ -324,7 +323,6 @@
 
 		<execute macro="Navigator#getCurrentURL">
 			<return from="currentURL" name="adminEditURL" />
-			<var name="adminEditURL" value="${adminEditURL}" />
 		</execute>
 
 		<var name="maliciousURL">

@@ -294,13 +294,9 @@ public class SiteNavigationMenuLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		Optional<SiteNavigationMenuItemType> optional = Optional.ofNullable(
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				layout.getType()));
-
-		SiteNavigationMenuItemType siteNavigationMenuItemType = optional.orElse(
-			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
-				"layout"));
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.
+				getSiteNavigationMenuItemTypeByLayoutType(layout.getType());
 
 		if (siteNavigationMenuItemType == null) {
 			return;

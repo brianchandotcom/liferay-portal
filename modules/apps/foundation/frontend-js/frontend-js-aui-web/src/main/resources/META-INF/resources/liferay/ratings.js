@@ -138,6 +138,12 @@ AUI.add(
 					_sendVoteRequest: function(url, score, callback) {
 						var instance = this;
 
+						Liferay.fire('ratings:vote', {
+							className: instance.get('className'),
+							classPK: instance.get('classPK'),
+							score: score
+						});
+
 						A.io.request(
 							url,
 							{

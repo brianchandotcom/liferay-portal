@@ -260,7 +260,7 @@
 	</command>
 
 	<command name="viewRecycleBinMaxAge">
-		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_INFO" value1="Entries that have been in the Recycle Bin for more than ${maxAgeField} minute are automatically deleted." />
+		<execute function="AssertTextEquals#assertPartialText" locator1="Message#RECYCLE_BIN_INFO" value1="Entries that have been in the Recycle Bin for more than ${maxAgeField} are automatically deleted." />
 	</command>
 
 	<command name="viewRecyclebinViaSiteSettingsCP">

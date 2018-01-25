@@ -215,6 +215,21 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 					</then>
 				</elseif>
 			</if>
+	<macrodef name="prepare-solr-solrcloud-example">
+		<sequential>
+			<copy todir="${solr.dir}/example/cloud/node1/solr">
+				<fileset dir="${solr.dir}/server/solr">
+					<include name="solr.xml" />
+					<include name="zoo.cfg" />
+				</fileset>
+			</copy>
+
+			<copy todir="${solr.dir}/example/cloud/node2/solr">
+				<fileset dir="${solr.dir}/server/solr">
+					<include name="solr.xml" />
+					<include name="zoo.cfg" />
+				</fileset>
+			</copy>
 		</sequential>
 	</macrodef>
 
@@ -363,7 +378,7 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 	<target name="start-solr-solrcloud">
 		<prepare-solr-solrcloud-configurations />
 
-		<configure-liferay-solr-solrcloud-properties />
+		<prepare-solr-solrcloud-example />
 
 		<configure-liferay-solr-solrcloud-osgi-configs />
 

@@ -17,7 +17,7 @@ package com.liferay.product.navigation.product.menu.web.internal.portlet;
 import com.liferay.admin.kernel.util.PortalProductMenuApplicationType;
 import com.liferay.portal.kernel.portlet.BasePortletProvider;
 import com.liferay.portal.kernel.portlet.ViewPortletProvider;
-import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys;
+import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuPortletKeys;
 
 import org.osgi.service.component.annotations.Component;
 

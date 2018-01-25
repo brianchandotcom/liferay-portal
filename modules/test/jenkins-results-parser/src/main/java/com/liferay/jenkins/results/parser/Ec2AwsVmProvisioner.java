@@ -197,11 +197,11 @@ public class Ec2AwsVmProvisioner extends BaseAwsVmProvisioner {
 
 		long timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
 
-		while (!instanceState.equals("terminated")) {
+		while (!instanceState.equals(targetState)) {
 			if (System.currentTimeMillis() >= timeout) {
 				throw new RuntimeException(
-					"Timeout occurred while waiting for EC2 instance state " +
-						"\"terminated\"");
+					"Timeout occurred while waiting for EC2 instance state \"" +
+						targetState + "\"");
 			}
 
 			JenkinsResultsParserUtil.sleep(1000 * 30);

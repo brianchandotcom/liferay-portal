@@ -48,6 +48,18 @@ public class MDRWebUpgrade implements UpgradeStepRegistrator {
 					"SimpleRuleHandler",
 				"com.liferay.mobile.device.rules.rule.group.rule." +
 					"SimpleRuleHandler"));
+
+		registry.register(
+			"com.liferay.mobile.device.rules.web", "1.0.1", "1.0.2",
+			new MDRActionUpgrade(
+				"com.liferay.mobile.device.rules.rule.group.action",
+				"com.liferay.mobile.device.rules.web.internal.rule.group." +
+					"action"),
+			new MDRRuleUpgrade(
+				"com.liferay.mobile.device.rules.rule.group.rule." +
+					"SimpleRuleHandler",
+				"com.liferay.mobile.device.rules.web.internal.rule.group." +
+					"rule.SimpleRuleHandler"));
 	}
 
 }

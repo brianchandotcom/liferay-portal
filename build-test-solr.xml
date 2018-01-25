@@ -191,35 +191,9 @@ schema=schema.xml</echo>
 			<copy todir="${solr.dir}/server/solr/configsets/liferay_configs/conf">
 				<fileset dir="${solr.dir}/server/solr/liferay/conf" />
 			</copy>
+		</sequential>
+	</macrodef>
 
-			<if>
-				<os family="unix" />
-				<then>
-					<replace file="${solr.dir}/bin/solr">
-						<replacetoken><![CDATA[CLOUD_COLLECTION='gettingstarted']]></replacetoken>
-						<replacevalue><![CDATA[CLOUD_COLLECTION='liferay']]></replacevalue>
-					</replace>
-
-					<replace file="${solr.dir}/bin/solr">
-						<replacetoken><![CDATA[CLOUD_CONFIG='data_driven_schema_configs']]></replacetoken>
-						<replacevalue><![CDATA[CLOUD_CONFIG='liferay_configs']]></replacevalue>
-					</replace>
-				</then>
-				<elseif>
-					<os family="windows" />
-					<then>
-						<replace file="${solr.dir}/bin/solr.cmd">
-							<replacetoken><![CDATA[CLOUD_COLLECTION='gettingstarted']]></replacetoken>
-							<replacevalue><![CDATA[CLOUD_COLLECTION='liferay']]></replacevalue>
-						</replace>
-
-						<replace file="${solr.dir}/bin/solr.cmd">
-							<replacetoken><![CDATA[CLOUD_CONFIG='data_driven_schema_configs']]></replacetoken>
-							<replacevalue><![CDATA[CLOUD_CONFIG='liferay_configs']]></replacevalue>
-						</replace>
-					</then>
-				</elseif>
-			</if>
 	<macrodef name="prepare-solr-solrcloud-example">
 		<sequential>
 			<copy todir="${solr.dir}/example/cloud/node1/solr">

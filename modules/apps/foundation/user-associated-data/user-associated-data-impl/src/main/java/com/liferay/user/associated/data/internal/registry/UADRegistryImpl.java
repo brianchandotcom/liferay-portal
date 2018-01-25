@@ -114,12 +114,12 @@ public class UADRegistryImpl implements UADRegistry {
 			new HashMap<>();
 
 		for (String key : getUADEntityAggregatorKeySet()) {
+			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
+
 			List<UADEntityTypeComposite> uadEntityTypeComposites =
 				uadEntityTypeCompositesMap.getOrDefault(
 					uadAggregator.getUADEntitySetName(),
 					new ArrayList<UADEntityTypeComposite>());
-
-			UADEntityAggregator uadAggregator = getUADEntityAggregator(key);
 
 			UADEntityTypeComposite uadEntityTypeComposite =
 				new UADEntityTypeComposite(

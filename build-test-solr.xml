@@ -212,7 +212,7 @@ schema=schema.xml</echo>
 		</sequential>
 	</macrodef>
 
-	<macrodef name="start-solr-solrcloud-interactive-startup-no-prompt">
+	<macrodef name="start-solr-solrcloud-example">
 		<sequential>
 			<if>
 				<os family="unix" />
@@ -221,7 +221,17 @@ schema=schema.xml</echo>
 
 					<exec dir="${solr.dir}/bin" executable="/bin/bash">
 						<arg value="-c" />
-						<arg value="./solr -e cloud -noprompt" />
+						<arg value="./solr start -cloud -p 8983 -s ${solr.dir}/example/cloud/node1/solr" />
+					</exec>
+
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr start -cloud -p 7574 -s ${solr.dir}/example/cloud/node2/solr -z localhost:9983" />
+					</exec>
+
+					<exec dir="${solr.dir}/bin" executable="/bin/bash">
+						<arg value="-c" />
+						<arg value="./solr create_collection -c liferay -p 8983 -d liferay_configs -shards 2 -replicationFactor 2" />
 					</exec>
 				</then>
 				<elseif>
@@ -229,7 +239,17 @@ schema=schema.xml</echo>
 					<then>
 						<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
 							<arg value="/c" />
-							<arg value="solr -e cloud -noprompt" />
+							<arg value="solr start -cloud -p 8983 -s ${solr.dir}/example/cloud/node1/solr" />
+						</exec>
+
+						<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="solr start -cloud -p 7574 -s ${solr.dir}/example/cloud/node2/solr -z localhost:9983" />
+						</exec>
+
+						<exec dir="${solr.dir}/bin" executable="cmd" spawn="true">
+							<arg value="/c" />
+							<arg value="solr create_collection -c liferay -p 8983 -d liferay_configs -shards 2 -replicationFactor 2" />
 						</exec>
 					</then>
 				</elseif>
@@ -361,7 +381,7 @@ schema=schema.xml</echo>
 
 		<configure-liferay-solr-solrcloud-osgi-configs />
 
-		<start-solr-solrcloud-interactive-startup-no-prompt />
+		<start-solr-solrcloud-example />
 	</target>
 
 	<target name="stop-solr-core">

@@ -105,6 +105,15 @@ FragmentEditor.STATE = {
 	namespace: Config.string().required(),
 
 	/**
+	 * Render fragment entry URL
+	 * @default undefined
+	 * @instance
+	 * @memberOf FragmentEditor
+	 * @type {!string}
+	 */
+	renderFragmentEntryURL: Config.string().required(),
+
+	/**
 	 * Path of the available icons.
 	 * @instance
 	 * @memberOf FragmentEditor

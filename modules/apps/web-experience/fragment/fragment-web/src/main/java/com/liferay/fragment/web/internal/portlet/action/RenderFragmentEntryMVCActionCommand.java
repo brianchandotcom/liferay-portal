@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.layout.admin.web.internal.portlet.action;
+package com.liferay.fragment.web.internal.portlet.action;
 
-import com.liferay.fragment.model.FragmentEntry;
-import com.liferay.fragment.service.FragmentEntryService;
-import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
+import com.liferay.fragment.constants.FragmentPortletKeys;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -28,7 +27,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pablo Molina
@@ -36,12 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + LayoutAdminPortletKeys.GROUP_PAGES,
-		"mvc.command.name=/layout/fragment_entry"
+		"javax.portlet.name=" + FragmentPortletKeys.FRAGMENT,
+		"mvc.command.name=/fragment/render_fragment_entry"
 	},
 	service = MVCActionCommand.class
 )
-public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
+public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -51,23 +49,19 @@ public class FragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
 
-		FragmentEntry fragmentEntry = _fragmentEntryService.fetchFragmentEntry(
-			fragmentEntryId);
+		String css = ParamUtil.getString(actionRequest, "css");
+		String html = ParamUtil.getString(actionRequest, "html");
+		String js = ParamUtil.getString(actionRequest, "js");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
-		if (fragmentEntry != null) {
-			jsonObject.put("css", fragmentEntry.getCss());
-			jsonObject.put("html", fragmentEntry.getHtml());
-			jsonObject.put("js", fragmentEntry.getJs());
-			jsonObject.put("name", fragmentEntry.getName());
-		}
+		jsonObject.put(
+			"content",
+			FragmentEntryRenderUtil.renderFragmentEntry(
+				fragmentEntryId, css, html, js));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);
 	}
-
-	@Reference
-	private FragmentEntryService _fragmentEntryService;
 
 }

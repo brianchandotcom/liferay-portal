@@ -79,6 +79,10 @@ renderResponse.setTitle(title);
 	</aui:button-row>
 </aui:form>
 
+<portlet:actionURL name="/fragment/render_fragment_entry" var="renderFragmentEntryURL">
+	<portlet:param name="fragmentEntryId" value="<%= String.valueOf(fragmentDisplayContext.getFragmentEntryId()) %>" />
+</portlet:actionURL>
+
 <aui:script require="fragment-web/js/FragmentEditor.es as FragmentEditor, metal-dom/src/all/dom as dom">
 	var cssInput = document.getElementById('<portlet:namespace />cssContent');
 	var htmlInput = document.getElementById('<portlet:namespace />htmlContent');
@@ -98,6 +102,7 @@ renderResponse.setTitle(title);
 			initialHTML: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getHtmlContent()) %>',
 			initialJS: '<%= HtmlUtil.escapeJS(fragmentDisplayContext.getJsContent()) %>',
 			namespace: '<portlet:namespace />',
+			renderFragmentEntryURL: '<%= renderFragmentEntryURL %>',
 			spritemap: '<%= themeDisplay.getPathThemeImages() %>/lexicon/icons.svg'
 		},
 		wrapper

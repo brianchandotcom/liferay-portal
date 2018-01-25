@@ -82,27 +82,27 @@
 <!--PAGE_CONTROLS-->
 <tr>
 	<td>PAGE_CONTROLS_ELLIPSIS_ICON</td>
-	<td>//a[@class='form-builder-controls-trigger']</td>
+	<td>//div[@class='form-builder-controls-trigger']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_ADD_NEW_PAGE</td>
-	<td>//li[@class='form-builder-page-manager-add-last-position' and contains(text(),'Add New Page')]</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Add New Page']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_ADD_SUCCESS_PAGE</td>
-	<td>//li[@class='form-builder-page-manager-add-success-page' and contains(text(),'Add Success Page')]</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Add Success Page']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_DELETE_CURRENT_PAGE</td>
-	<td>//li[@class='form-builder-page-manager-delete-page' and contains(text(),'Delete Current Page')]</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Delete Current Page']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PAGE_CONTROLS_SWITCH_PAGINATION_MODE</td>
-	<td>//li[@class='form-builder-page-manager-switch-mode' and contains(text(),'Switch Pagination Mode')]</td>
+	<td>//li[contains(@class,'dropdown-item')]//a[text()='Switch Pagination Mode']</td>
 	<td></td>
 </tr>
 <tr>
@@ -186,7 +186,7 @@
 </tr>
 <tr>
 	<td>PUBLISH_URL_FORM_PAGE</td>
-	<td>//div[contains(@class,'form-builder-app')]</td>
+	<td>//div[contains(@class,'ddm-form-basic-info')]</td>
 	<td></td>
 </tr>
 <tr>

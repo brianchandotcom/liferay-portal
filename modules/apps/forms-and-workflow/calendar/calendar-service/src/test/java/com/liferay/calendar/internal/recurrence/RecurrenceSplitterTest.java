@@ -17,8 +17,8 @@ package com.liferay.calendar.internal.recurrence;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.util.JCalendarUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.CalendarFactoryImpl;
 
 import java.util.Calendar;

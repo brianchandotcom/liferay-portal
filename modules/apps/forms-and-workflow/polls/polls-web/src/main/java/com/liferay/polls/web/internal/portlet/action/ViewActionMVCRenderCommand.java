@@ -14,6 +14,7 @@
 
 package com.liferay.polls.web.internal.portlet.action;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.constants.PollsWebKeys;
 import com.liferay.polls.exception.NoSuchQuestionException;
@@ -22,7 +23,6 @@ import com.liferay.polls.service.PollsQuestionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;

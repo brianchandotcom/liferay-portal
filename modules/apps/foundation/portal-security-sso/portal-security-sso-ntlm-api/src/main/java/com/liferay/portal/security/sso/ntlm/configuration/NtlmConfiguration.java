@@ -37,9 +37,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface NtlmConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to enable NTLM single sign on. NTLM will work only if LDAP authentication is also enabled and the authentication is made by screen name.",
-		name = "enabled", required = false
+		deflt = "false", description = "enabled-help", name = "enabled",
+		required = false
 	)
 	public boolean enabled();
 
@@ -64,8 +63,7 @@ public interface NtlmConfiguration {
 	public String servicePassword();
 
 	@Meta.AD(
-		deflt = "0x600FFFFF",
-		description = "Negotiate flags are set according to the client's requested capabilities and the server's ServerCapabilities. See the following link: http://msdn.microsoft.com/en-us/library/cc717152%28v=PROT.10%29.aspx",
+		deflt = "0x600FFFFF", description = "negotiate-flags-help",
 		name = "negotiate-flags", required = false
 	)
 	public String negotiateFlags();

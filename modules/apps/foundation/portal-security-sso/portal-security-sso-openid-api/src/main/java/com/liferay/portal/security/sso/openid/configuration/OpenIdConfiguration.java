@@ -37,9 +37,8 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 public interface OpenIdConfiguration {
 
 	@Meta.AD(
-		deflt = "false",
-		description = "Set this to true to enable OpenId authentication.",
-		name = "enabled", required = false
+		deflt = "false", description = "enabled-help", name = "enabled",
+		required = false
 	)
 	public boolean enabled();
 

@@ -1,3 +1,6 @@
+import aQute.bnd.header.Parameters
+import aQute.bnd.osgi.Domain
+
 import com.liferay.gradle.util.copy.RenameDependencyClosure
 
 import org.dm.gradle.plugins.bundle.JarBuilder
@@ -30,6 +33,15 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 			properties["-check"] = "imports"
 			properties["-fixupmessages"] = '"Classpath is empty. Private-Package ...";is:=ignore'
 			properties["-include"] = "system.packages.extra.bnd"
+
+			File portalImplJarFile = configurations.provided.find {
+				it.name.startsWith "com.liferay.portal.impl-"
+			}
+
+			Domain portalImplJar = Domain.domain(portalImplJarFile)
+			Parameters provideCapability = portalImplJar.provideCapability
+
+			properties["Provide-Capability"] = provideCapability.toString()
 
 			jarBuilder.withClasspath new File[0]
 			jarBuilder.withFailOnError true

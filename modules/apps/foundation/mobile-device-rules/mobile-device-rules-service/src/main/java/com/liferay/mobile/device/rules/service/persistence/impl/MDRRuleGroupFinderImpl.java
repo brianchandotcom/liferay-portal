@@ -19,7 +19,7 @@ import com.liferay.mobile.device.rules.model.impl.MDRRuleGroupImpl;
 import com.liferay.mobile.device.rules.service.persistence.MDRRuleGroupFinder;
 import com.liferay.mobile.device.rules.util.comparator.RuleGroupCreateDateComparator;
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -60,7 +61,7 @@ public class MDRRuleGroupFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
+			names = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -74,7 +75,7 @@ public class MDRRuleGroupFinderImpl
 		long groupId, String name, LinkedHashMap<String, Object> params,
 		boolean andOperator) {
 
-		String[] names = CustomSQLUtil.keywords(name);
+		String[] names = _customSQL.keywords(name);
 
 		return countByG_N(groupId, names, params, andOperator);
 	}
@@ -84,7 +85,7 @@ public class MDRRuleGroupFinderImpl
 		long groupId, String[] names, LinkedHashMap<String, Object> params,
 		boolean andOperator) {
 
-		names = CustomSQLUtil.keywords(names);
+		names = _customSQL.keywords(names);
 
 		if (params == null) {
 			params = _emptyLinkedHashMap;
@@ -95,12 +96,12 @@ public class MDRRuleGroupFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_N);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_N);
 
 			sql = StringUtil.replace(sql, "[$GROUP_ID$]", getGroupIds(params));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, true, names);
-			sql = CustomSQLUtil.replaceAndOperator(sql, true);
+			sql = _customSQL.replaceAndOperator(sql, true);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -151,7 +152,7 @@ public class MDRRuleGroupFinderImpl
 		boolean andOperator = false;
 
 		if (Validator.isNotNull(keywords)) {
-			names = CustomSQLUtil.keywords(keywords);
+			names = _customSQL.keywords(keywords);
 		}
 		else {
 			andOperator = true;
@@ -175,7 +176,7 @@ public class MDRRuleGroupFinderImpl
 		long groupId, String name, LinkedHashMap<String, Object> params,
 		boolean andOperator, int start, int end) {
 
-		String[] names = CustomSQLUtil.keywords(name);
+		String[] names = _customSQL.keywords(name);
 
 		return findByG_N(groupId, names, params, andOperator, start, end);
 	}
@@ -196,7 +197,7 @@ public class MDRRuleGroupFinderImpl
 		boolean andOperator, int start, int end,
 		OrderByComparator<MDRRuleGroup> obc) {
 
-		names = CustomSQLUtil.keywords(names);
+		names = _customSQL.keywords(names);
 
 		if (params == null) {
 			params = _emptyLinkedHashMap;
@@ -207,13 +208,13 @@ public class MDRRuleGroupFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_N);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_N);
 
 			sql = StringUtil.replace(sql, "[$GROUP_ID$]", getGroupIds(params));
-			sql = CustomSQLUtil.replaceKeywords(
+			sql = _customSQL.replaceKeywords(
 				sql, "lower(name)", StringPool.LIKE, true, names);
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
-			sql = CustomSQLUtil.replaceOrderBy(sql, obc);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceOrderBy(sql, obc);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -267,6 +268,9 @@ public class MDRRuleGroupFinderImpl
 			qPos.add(groupId);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 	private final LinkedHashMap<String, Object> _emptyLinkedHashMap =
 		new LinkedHashMap<>(0);

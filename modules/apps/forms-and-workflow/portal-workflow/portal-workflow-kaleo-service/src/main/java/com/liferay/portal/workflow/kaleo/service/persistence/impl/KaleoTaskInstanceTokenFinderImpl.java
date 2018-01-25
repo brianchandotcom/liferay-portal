@@ -15,7 +15,7 @@
 package com.liferay.portal.workflow.kaleo.service.persistence.impl;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.workflow.kaleo.model.KaleoTaskInstanceToken;
 import com.liferay.portal.workflow.kaleo.model.impl.KaleoTaskInstanceTokenModelImpl;
 import com.liferay.portal.workflow.kaleo.runtime.util.RoleUtil;
@@ -181,39 +182,39 @@ public class KaleoTaskInstanceTokenFinderImpl
 		String sql = null;
 
 		if (count) {
-			sql = CustomSQLUtil.get(getClass(), COUNT_BY_C_KTAI);
+			sql = _customSQL.get(getClass(), COUNT_BY_C_KTAI);
 		}
 		else {
-			sql = CustomSQLUtil.get(getClass(), FIND_BY_C_KTAI);
+			sql = _customSQL.get(getClass(), FIND_BY_C_KTAI);
 		}
 
-		sql = CustomSQLUtil.appendCriteria(
+		sql = _customSQL.appendCriteria(
 			sql, getAssigneeClassName(kaleoTaskInstanceTokenQuery));
-		sql = CustomSQLUtil.appendCriteria(
+		sql = _customSQL.appendCriteria(
 			sql, getAssigneeClassPK(kaleoTaskInstanceTokenQuery));
-		sql = CustomSQLUtil.appendCriteria(
+		sql = _customSQL.appendCriteria(
 			sql, getCompleted(kaleoTaskInstanceTokenQuery));
-		sql = CustomSQLUtil.appendCriteria(
+		sql = _customSQL.appendCriteria(
 			sql, getKaleoInstanceId(kaleoTaskInstanceTokenQuery));
-		sql = CustomSQLUtil.appendCriteria(
+		sql = _customSQL.appendCriteria(
 			sql, getRoleIds(kaleoTaskInstanceTokenQuery));
-		sql = CustomSQLUtil.appendCriteria(
+		sql = _customSQL.appendCriteria(
 			sql, getSearchByUserRoles(kaleoTaskInstanceTokenQuery));
 
 		if (appendSearchCriteria(kaleoTaskInstanceTokenQuery)) {
-			sql = CustomSQLUtil.appendCriteria(sql, " AND (");
+			sql = _customSQL.appendCriteria(sql, " AND (");
 
 			if (ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) ||
 				ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetTypes())) {
 
-				sql = CustomSQLUtil.appendCriteria(sql, " (");
+				sql = _customSQL.appendCriteria(sql, " (");
 			}
 
-			sql = CustomSQLUtil.appendCriteria(
+			sql = _customSQL.appendCriteria(
 				sql, getAssetPrimaryKey(kaleoTaskInstanceTokenQuery));
-			sql = CustomSQLUtil.appendCriteria(
+			sql = _customSQL.appendCriteria(
 				sql,
 				getAssetTypes(
 					kaleoTaskInstanceTokenQuery,
@@ -225,10 +226,10 @@ public class KaleoTaskInstanceTokenFinderImpl
 				ArrayUtil.isNotEmpty(
 					kaleoTaskInstanceTokenQuery.getAssetTypes())) {
 
-				sql = CustomSQLUtil.appendCriteria(sql, ") ");
+				sql = _customSQL.appendCriteria(sql, ") ");
 			}
 
-			sql = CustomSQLUtil.appendCriteria(
+			sql = _customSQL.appendCriteria(
 				sql,
 				getDueDateGT(
 					kaleoTaskInstanceTokenQuery,
@@ -236,7 +237,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 						kaleoTaskInstanceTokenQuery.getAssetPrimaryKeys()) &&
 					ArrayUtil.isEmpty(
 						kaleoTaskInstanceTokenQuery.getAssetTypes())));
-			sql = CustomSQLUtil.appendCriteria(
+			sql = _customSQL.appendCriteria(
 				sql,
 				getDueDateLT(
 					kaleoTaskInstanceTokenQuery,
@@ -245,7 +246,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 					 ArrayUtil.isEmpty(
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null)));
-			sql = CustomSQLUtil.appendCriteria(
+			sql = _customSQL.appendCriteria(
 				sql,
 				getTaskName(
 					kaleoTaskInstanceTokenQuery,
@@ -255,7 +256,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 						 kaleoTaskInstanceTokenQuery.getAssetTypes()) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateGT() == null) &&
 					 (kaleoTaskInstanceTokenQuery.getDueDateLT() == null)));
-			sql = CustomSQLUtil.appendCriteria(
+			sql = _customSQL.appendCriteria(
 				sql,
 				getAssetTitle(
 					kaleoTaskInstanceTokenQuery,
@@ -267,9 +268,9 @@ public class KaleoTaskInstanceTokenFinderImpl
 					(kaleoTaskInstanceTokenQuery.getDueDateLT() == null) &&
 					Validator.isNull(
 						kaleoTaskInstanceTokenQuery.getTaskName())));
-			sql = CustomSQLUtil.appendCriteria(sql, ")");
+			sql = _customSQL.appendCriteria(sql, ")");
 
-			sql = CustomSQLUtil.replaceAndOperator(
+			sql = _customSQL.replaceAndOperator(
 				sql, kaleoTaskInstanceTokenQuery.isAndOperator());
 		}
 
@@ -367,7 +368,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		String[] assetTitles = CustomSQLUtil.keywords(assetTitle, false);
+		String[] assetTitles = _customSQL.keywords(assetTitle, false);
 
 		if (ArrayUtil.isEmpty(assetTitles)) {
 			return StringPool.BLANK;
@@ -404,7 +405,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		assetTypes = CustomSQLUtil.keywords(
+		assetTypes = _customSQL.keywords(
 			kaleoTaskInstanceTokenQuery.getAssetTypes());
 
 		if (ArrayUtil.isEmpty(assetTypes)) {
@@ -721,7 +722,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return StringPool.BLANK;
 		}
 
-		String[] taskNames = CustomSQLUtil.keywords(taskName, false);
+		String[] taskNames = _customSQL.keywords(taskName, false);
 
 		if (ArrayUtil.isEmpty(taskNames)) {
 			return StringPool.BLANK;
@@ -804,7 +805,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return;
 		}
 
-		String[] assetTitles = CustomSQLUtil.keywords(assetTitle, false);
+		String[] assetTitles = _customSQL.keywords(assetTitle, false);
 
 		qPos.add(assetTitles);
 	}
@@ -819,7 +820,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return;
 		}
 
-		assetTypes = CustomSQLUtil.keywords(assetTypes, false);
+		assetTypes = _customSQL.keywords(assetTypes, false);
 
 		qPos.add(assetTypes);
 	}
@@ -917,7 +918,7 @@ public class KaleoTaskInstanceTokenFinderImpl
 			return;
 		}
 
-		String[] taskNames = CustomSQLUtil.keywords(taskName, false);
+		String[] taskNames = _customSQL.keywords(taskName, false);
 
 		qPos.add(taskNames);
 	}
@@ -938,5 +939,8 @@ public class KaleoTaskInstanceTokenFinderImpl
 
 	private static final String _ORDER_BY_ENTITY_ALIAS =
 		"KaleoTaskInstanceToken.";
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

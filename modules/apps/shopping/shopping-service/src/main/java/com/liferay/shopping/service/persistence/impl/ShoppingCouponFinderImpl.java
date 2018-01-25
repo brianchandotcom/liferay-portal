@@ -14,13 +14,14 @@
 
 package com.liferay.shopping.service.persistence.impl;
 
-import com.liferay.portal.dao.orm.custom.sql.CustomSQLUtil;
+import com.liferay.portal.dao.orm.custom.sql.CustomSQL;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.model.impl.ShoppingCouponImpl;
 import com.liferay.shopping.service.persistence.ShoppingCouponFinder;
@@ -45,16 +46,16 @@ public class ShoppingCouponFinderImpl
 		long groupId, long companyId, String code, boolean active,
 		String discountType, boolean andOperator) {
 
-		code = CustomSQLUtil.keywords(code)[0];
+		code = _customSQL.keywords(code)[0];
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), COUNT_BY_G_C_C_A_DT);
+			String sql = _customSQL.get(getClass(), COUNT_BY_G_C_C_A_DT);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -95,16 +96,16 @@ public class ShoppingCouponFinderImpl
 		long groupId, long companyId, String code, boolean active,
 		String discountType, boolean andOperator, int start, int end) {
 
-		code = CustomSQLUtil.keywords(code)[0];
+		code = _customSQL.keywords(code)[0];
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(getClass(), FIND_BY_G_C_C_A_DT);
+			String sql = _customSQL.get(getClass(), FIND_BY_G_C_C_A_DT);
 
-			sql = CustomSQLUtil.replaceAndOperator(sql, andOperator);
+			sql = _customSQL.replaceAndOperator(sql, andOperator);
 
 			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
@@ -130,5 +131,8 @@ public class ShoppingCouponFinderImpl
 			closeSession(session);
 		}
 	}
+
+	@ServiceReference(type = CustomSQL.class)
+	private CustomSQL _customSQL;
 
 }

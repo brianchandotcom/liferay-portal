@@ -16,6 +16,7 @@ package com.liferay.site.navigation.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -53,7 +54,9 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu items
 
-		_addSiteNavigationMenuItems(siteNavigationMenu, 0, 0, serviceContext);
+		_addSiteNavigationMenuItems(
+			siteNavigationMenu, 0, LayoutConstants.DEFAULT_PARENT_LAYOUT_ID,
+			serviceContext);
 
 		return null;
 	}

@@ -597,7 +597,7 @@ public class SourceFormatter {
 			if (gradlePropertiesFile.exists() && gradlewFile.exists()) {
 				String content = FileUtil.read(gradlePropertiesFile);
 
-				if (content.contains("systemProp.repository.private.url=")) {
+				if (content.contains("project.path.prefix=")) {
 					return true;
 				}
 			}

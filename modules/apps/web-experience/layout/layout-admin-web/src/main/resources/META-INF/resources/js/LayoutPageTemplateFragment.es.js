@@ -39,25 +39,26 @@ class LayoutPageTemplateFragment extends Component {
 	 */
 	willUpdate(changes) {
 		if (changes.fragmentEntryId || changes.index) {
-			const fragmentId = changes.fragmentEntryId
+			const fragmentEntryId = changes.fragmentEntryId
 				? changes.fragmentEntryId.newVal
 				: this.fragmentEntryId;
-			const fragmentInstanceId = changes.index
+			const fragmentEntryInstanceId = changes.index
 				? changes.index.newVal
 				: this.index;
 
-			this._fetchFragmentContent(fragmentInstanceId, fragmentId);
+			this._fetchFragmentContent(
+				fragmentEntryInstanceId, fragmentEntryId);
 		}
 	}
 
 	/**
 	 * Fetches a fragment entry from the given ID, and stores the HTML,
 	 * CSS and JS result into component properties.
-	 * @param {!string} fragmentInstanceId
+	 * @param {!string} fragmentEntryInstanceId
 	 * @param {!string} fragmentEntryId
 	 * @private
 	 */
-	_fetchFragmentContent(fragmentInstanceId, fragmentEntryId) {
+	_fetchFragmentContent(fragmentEntryInstanceId, fragmentEntryId) {
 		const formData = new FormData();
 
 		formData.append(
@@ -65,8 +66,8 @@ class LayoutPageTemplateFragment extends Component {
 			fragmentEntryId
 		);
 		formData.append(
-			`${this.portletNamespace}fragmentInstanceId`,
-			fragmentInstanceId
+			`${this.portletNamespace}fragmentEntryInstanceId`,
+			fragmentEntryInstanceId
 		);
 
 		this._loading = true;

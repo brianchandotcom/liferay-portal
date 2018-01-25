@@ -30,28 +30,28 @@ import java.util.Optional;
 /**
  * @author Pablo Molina
  */
-public class FragmentRenderUtil {
+public class FragmentEntryRenderUtil {
 
-	public static String renderFragment(FragmentEntry fragmentEntry) {
-		return renderFragment(
+	public static String renderFragmentEntry(FragmentEntry fragmentEntry) {
+		return renderFragmentEntry(
 			0, fragmentEntry.getFragmentEntryId(), fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs());
 	}
 
-	public static String renderFragment(
-		long fragmentInstanceId, long fragmentEntryId) {
+	public static String renderFragmentEntry(
+		long fragmentEntryInstanceId, long fragmentEntryId) {
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
 
-		return renderFragment(
-			fragmentInstanceId, fragmentEntryId, fragmentEntry.getCss(),
+		return renderFragmentEntry(
+			fragmentEntryInstanceId, fragmentEntryId, fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs());
 	}
 
-	public static String renderFragment(
-		long fragmentInstanceId, long fragmentEntryId, String css, String html,
-		String js) {
+	public static String renderFragmentEntry(
+		long fragmentEntryInstanceId, long fragmentEntryId, String css,
+		String html, String js) {
 
 		try {
 			StringBundler sb = new StringBundler(15);
@@ -61,7 +61,7 @@ public class FragmentRenderUtil {
 			sb.append("\" id=\"fragment-");
 			sb.append(fragmentEntryId);
 			sb.append("-");
-			sb.append(fragmentInstanceId);
+			sb.append(fragmentEntryInstanceId);
 			sb.append("\">");
 			sb.append("<style>");
 			sb.append(css);
@@ -94,10 +94,10 @@ public class FragmentRenderUtil {
 		}
 	}
 
-	public static String renderFragment(
+	public static String renderFragmentEntry(
 		long fragmentEntryId, String css, String html, String js) {
 
-		return renderFragment(0, fragmentEntryId, css, html, js);
+		return renderFragmentEntry(0, fragmentEntryId, css, html, js);
 	}
 
 }

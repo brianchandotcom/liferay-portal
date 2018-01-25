@@ -14,7 +14,7 @@
 
 package com.liferay.fragment.model.impl;
 
-import com.liferay.fragment.util.FragmentRenderUtil;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.html.preview.model.HtmlPreviewEntry;
 import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
@@ -30,7 +30,7 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 
 	@Override
 	public String getContent() throws PortalException {
-		return FragmentRenderUtil.renderFragment(this);
+		return FragmentEntryRenderUtil.renderFragmentEntry(this);
 	}
 
 	@Override

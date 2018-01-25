@@ -14,7 +14,7 @@
 
 package com.liferay.layout.admin.web.internal.portlet.action;
 
-import com.liferay.fragment.util.FragmentRenderUtil;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.layout.admin.constants.LayoutAdminPortletKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -48,15 +48,15 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		long fragmentEntryId = ParamUtil.getLong(
 			actionRequest, "fragmentEntryId");
-		long fragmentInstanceId = ParamUtil.getLong(
-			actionRequest, "fragmentInstanceId");
+		long fragmentEntryInstanceId = ParamUtil.getLong(
+			actionRequest, "fragmentEntryInstanceId");
 
 		JSONObject jsonObject = JSONFactoryUtil.createJSONObject();
 
 		jsonObject.put(
 			"content",
-			FragmentRenderUtil.renderFragment(
-				fragmentInstanceId, fragmentEntryId));
+			FragmentEntryRenderUtil.renderFragmentEntry(
+				fragmentEntryInstanceId, fragmentEntryId));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

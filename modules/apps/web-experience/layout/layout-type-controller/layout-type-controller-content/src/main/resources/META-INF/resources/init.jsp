@@ -18,7 +18,7 @@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 
 <%@ page import="com.liferay.fragment.model.FragmentEntryInstanceLink" %><%@
-page import="com.liferay.fragment.util.FragmentRenderUtil" %><%@
+page import="com.liferay.fragment.util.FragmentEntryRenderUtil" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateCollection" %><%@
 page import="com.liferay.layout.page.template.model.LayoutPageTemplateEntry" %><%@
 page import="com.liferay.layout.page.template.service.LayoutPageTemplateCollectionLocalServiceUtil" %><%@

@@ -15,7 +15,7 @@
 package com.liferay.fragment.web.internal.portlet.action;
 
 import com.liferay.fragment.constants.FragmentPortletKeys;
-import com.liferay.fragment.util.FragmentRenderUtil;
+import com.liferay.fragment.util.FragmentEntryRenderUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.JSONPortletResponseUtil;
@@ -57,7 +57,8 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		jsonObject.put(
 			"content",
-			FragmentRenderUtil.renderFragment(fragmentEntryId, css, html, js));
+			FragmentEntryRenderUtil.renderFragmentEntry(
+				fragmentEntryId, css, html, js));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

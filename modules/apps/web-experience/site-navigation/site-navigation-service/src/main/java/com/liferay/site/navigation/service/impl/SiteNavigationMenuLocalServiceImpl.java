@@ -37,7 +37,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 /**
  * @author Pavel Savinov
@@ -58,15 +57,13 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		// Site navigation menu items
 
-		List<Layout> publicLayouts = layoutLocalService.getLayouts(
-			groupId, false, 0);
+		List<Layout> layouts = layoutLocalService.getLayouts(groupId, false, 0);
 
-		Stream<Layout> stream = publicLayouts.stream().parallel();
-
-		stream.forEach(
-			layout -> _addSiteNavigationMenuItem(
+		for (Layout layout : layouts) {
+			_addSiteNavigationMenuItem(
 				userId, groupId, siteNavigationMenu.getSiteNavigationMenuId(),
-				0, layout, serviceContext));
+				0, layout, serviceContext);
+		}
 
 		return null;
 	}
@@ -334,13 +331,12 @@ public class SiteNavigationMenuLocalServiceImpl
 			List<Layout> children = layoutLocalService.getLayouts(
 				groupId, false, layout.getLayoutId());
 
-			Stream<Layout> stream = children.stream().parallel();
-
-			stream.forEach(
-				childLayout -> _addSiteNavigationMenuItem(
+			for (Layout childLayout : children) {
+				_addSiteNavigationMenuItem(
 					userId, groupId, siteNavigationMenuId,
 					siteNavigationMenuItem.getSiteNavigationMenuItemId(),
-					childLayout, serviceContext));
+					childLayout, serviceContext);
+			}
 		}
 		catch (PortalException pe) {
 			_log.error(pe, pe);

@@ -23,6 +23,12 @@
 			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
 		</repository>
 	</repositories>
+	<properties>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<log4j.rootLogger>DEBUG, stdout</log4j.rootLogger>
+	</properties>
 	<dependencies>
 		<dependency>
 			<groupId>org.talend.components</groupId>

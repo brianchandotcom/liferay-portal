@@ -184,16 +184,12 @@ public class ConfigurationProviderTest {
 	}
 
 	private int _getExistingConfigurationCount(String pid) throws Exception {
-		StringBundler pidFilterSB = new StringBundler(5);
-
-		pidFilterSB.append(StringPool.OPEN_PARENTHESIS);
-		pidFilterSB.append(Constants.SERVICE_PID);
-		pidFilterSB.append(StringPool.EQUAL);
-		pidFilterSB.append(pid);
-		pidFilterSB.append(StringPool.CLOSE_PARENTHESIS);
+		String pidFilter = StringBundler.concat(
+			StringPool.OPEN_PARENTHESIS, Constants.SERVICE_PID,
+			StringPool.EQUAL, pid, StringPool.CLOSE_PARENTHESIS);
 
 		Configuration[] configurations = _configurationAdmin.listConfigurations(
-			pidFilterSB.toString());
+			pidFilter);
 
 		if (configurations == null) {
 			return 0;

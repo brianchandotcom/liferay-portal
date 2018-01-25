@@ -70,25 +70,6 @@ List<String> titles = localizedItemSelectorRendering.getTitles();
 				%>
 
 			</aui:nav>
-
-			<%
-			ItemSelectorView<ItemSelectorCriterion> itemSelectorView = itemSelectorViewRenderer.getItemSelectorView();
-			%>
-
-			<c:if test="<%= itemSelectorView.isShowSearch() %>">
-
-				<%
-				PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
-
-				searchURL.setParameter("resetCur", Boolean.TRUE.toString());
-				%>
-
-				<aui:nav-bar-search>
-					<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
-						<liferay-ui:input-search markupView="lexicon" />
-					</aui:form>
-				</aui:nav-bar-search>
-			</c:if>
 		</aui:nav-bar>
 
 		<%

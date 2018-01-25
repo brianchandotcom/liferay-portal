@@ -15,6 +15,7 @@
 package com.liferay.dynamic.data.mapping.form.renderer.internal;
 
 import com.google.template.soy.data.SanitizedContent;
+import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
 
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluationResult;
 import com.liferay.dynamic.data.mapping.form.evaluator.DDMFormEvaluator;
@@ -41,6 +42,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
 import com.liferay.portal.util.PortalImpl;
 
 import java.lang.reflect.Field;
@@ -500,6 +502,21 @@ public class DDMFormTemplateContextFactoryTest extends PowerMockito {
 			_ddmFormTemplateContextFactory,
 			new DDMFormTemplateContextFactoryHelper(
 				ddmDataProviderInstanceService)
+		);
+
+		field(
+			DDMFormTemplateContextFactoryImpl.class, "_soyHTMLSanitizer"
+		).set(
+			_ddmFormTemplateContextFactory,
+			new SoyHTMLSanitizer() {
+
+				@Override
+				public Object sanitize(String value) {
+					return UnsafeSanitizedContentOrdainer.ordainAsSafe(
+						value, SanitizedContent.ContentKind.HTML);
+				}
+
+			}
 		);
 	}
 

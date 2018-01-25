@@ -39,7 +39,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
+import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -159,11 +159,10 @@ public class DDMFormTemplateContextFactoryImpl
 
 		ResourceBundle resourceBundle = getResourceBundle(locale);
 
-		SoyHTMLContextValue soyHTMLContextValue = new SoyHTMLContextValue(
-			getRequiredFieldsWarningMessageHTML(resourceBundle));
-
 		templateContext.put(
-			"requiredFieldsWarningMessageHTML", soyHTMLContextValue.getValue());
+			"requiredFieldsWarningMessageHTML",
+			_soyHTMLSanitizer.sanitize(
+				getRequiredFieldsWarningMessageHTML(resourceBundle)));
 
 		templateContext.put("rules", toObjectList(ddmForm.getDDMFormRules()));
 		templateContext.put(
@@ -357,5 +356,8 @@ public class DDMFormTemplateContextFactoryImpl
 
 	@Reference
 	private JSONFactory _jsonFactory;
+
+	@Reference
+	private SoyHTMLSanitizer _soyHTMLSanitizer;
 
 }

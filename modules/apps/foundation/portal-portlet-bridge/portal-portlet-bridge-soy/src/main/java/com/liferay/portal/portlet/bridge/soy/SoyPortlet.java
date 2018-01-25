@@ -14,6 +14,7 @@
 
 package com.liferay.portal.portlet.bridge.soy;
 
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -469,23 +470,35 @@ public class SoyPortlet extends MVCPortlet {
 			return _templateResources;
 		}
 
-		_templateResources =
-			SoyTemplateResourcesProvider.getBundleTemplateResources(
-				_bundle, templatePath);
+		Bundle bundle = FrameworkUtil.getBundle(SoyPortlet.class);
 
-		MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
+		_templateResources = OSGiServiceUtil.callService(
+			bundle.getBundleContext(), SoyTemplateResourcesProvider.class,
+			soyTemplateResourcesProvider -> {
+				List<TemplateResource> templateResources =
+					soyTemplateResourcesProvider.getBundleTemplateResources(
+						_bundle, templatePath);
 
-		for (String mvcCommandName : mvcCommandCache.getMVCCommandNames()) {
-			MVCCommand mvcCommand = _getMVCRenderCommand(mvcCommandName);
+				MVCCommandCache mvcCommandCache = getRenderMVCCommandCache();
 
-			Bundle bundle = FrameworkUtil.getBundle(mvcCommand.getClass());
+				for (String mvcCommandName :
+						mvcCommandCache.getMVCCommandNames()) {
 
-			List<TemplateResource> mvcCommandTemplateResources =
-				SoyTemplateResourcesProvider.getBundleTemplateResources(
-					bundle, templatePath);
+					MVCCommand mvcCommand = _getMVCRenderCommand(
+						mvcCommandName);
 
-			_templateResources.addAll(mvcCommandTemplateResources);
-		}
+					Bundle curBundle = FrameworkUtil.getBundle(
+						mvcCommand.getClass());
+
+					List<TemplateResource> mvcCommandTemplateResources =
+						soyTemplateResourcesProvider.getBundleTemplateResources(
+							curBundle, templatePath);
+
+					templateResources.addAll(mvcCommandTemplateResources);
+				}
+
+				return templateResources;
+			});
 
 		return _templateResources;
 	}

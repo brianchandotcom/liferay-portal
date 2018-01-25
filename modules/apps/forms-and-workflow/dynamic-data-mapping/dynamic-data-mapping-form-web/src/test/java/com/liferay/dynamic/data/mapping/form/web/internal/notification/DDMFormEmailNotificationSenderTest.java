@@ -14,6 +14,9 @@
 
 package com.liferay.dynamic.data.mapping.form.web.internal.notification;
 
+import com.google.template.soy.data.SanitizedContent;
+import com.google.template.soy.data.UnsafeSanitizedContentOrdainer;
+
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServicesTracker;
 import com.liferay.dynamic.data.mapping.form.field.type.DefaultDDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.model.DDMForm;
@@ -24,7 +27,8 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
+import com.liferay.portal.template.soy.utils.SoyHTMLSanitizer;
+import com.liferay.portal.template.soy.utils.SoyRawData;
 import com.liferay.portal.util.HtmlImpl;
 
 import java.util.Locale;
@@ -71,11 +75,9 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertTrue(fieldLabelValueMap.containsKey("value"));
 		Assert.assertNull(fieldLabelValueMap.get("label"));
 
-		SoyHTMLContextValue soyHTMLContextValue =
-			(SoyHTMLContextValue)fieldLabelValueMap.get("value");
+		SoyRawData soyRawData = (SoyRawData)fieldLabelValueMap.get("value");
 
-		Assert.assertEquals(
-			"test", String.valueOf(soyHTMLContextValue.getValue()));
+		Assert.assertEquals("test", String.valueOf(soyRawData.getValue()));
 	}
 
 	@Test
@@ -93,11 +95,10 @@ public class DDMFormEmailNotificationSenderTest {
 		Assert.assertTrue(fieldLabelValueMap.containsKey("value"));
 		Assert.assertNull(fieldLabelValueMap.get("label"));
 
-		SoyHTMLContextValue soyHTMLContextValue =
-			(SoyHTMLContextValue)fieldLabelValueMap.get("value");
+		SoyRawData soyRawData = (SoyRawData)fieldLabelValueMap.get("value");
 
 		Assert.assertEquals(
-			StringPool.BLANK, String.valueOf(soyHTMLContextValue.getValue()));
+			StringPool.BLANK, String.valueOf(soyRawData.getValue()));
 	}
 
 	protected DDMFormValues createDDMFormValues(Value value) {
@@ -129,6 +130,21 @@ public class DDMFormEmailNotificationSenderTest {
 			"_ddmFormFieldTypeServicesTracker"
 		).set(
 			_ddmFormEmailNotificationSender, _ddmFormFieldTypeServicesTracker
+		);
+
+		MemberMatcher.field(
+			DDMFormEmailNotificationSender.class, "_soyHTMLSanitizer"
+		).set(
+			_ddmFormEmailNotificationSender,
+			new SoyHTMLSanitizer() {
+
+				@Override
+				public Object sanitize(String value) {
+					return UnsafeSanitizedContentOrdainer.ordainAsSafe(
+						value, SanitizedContent.ContentKind.HTML);
+				}
+
+			}
 		);
 	}
 

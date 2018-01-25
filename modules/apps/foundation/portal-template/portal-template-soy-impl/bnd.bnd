@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Portal Template Soy Implementation
+Bundle-SymbolicName: com.liferay.portal.template.soy.impl
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.google.inject.internal.asm.util,\
+	\
+	!javax.microedition.io,\
+	\
+	!org.objectweb.asm.util,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Template Engines

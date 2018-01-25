@@ -14,6 +14,8 @@
 
 package com.liferay.frontend.taglib.soy.servlet.taglib;
 
+import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -25,7 +27,6 @@ import com.liferay.portal.kernel.util.ServerDetector;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.template.soy.utils.SoyContext;
-import com.liferay.portal.template.soy.utils.SoyJavaScriptRenderer;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 import com.liferay.taglib.aui.ScriptTag;
 import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
@@ -39,6 +40,9 @@ import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bruno Basto
@@ -188,9 +192,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			JspWriter jspWriter, Map<String, Object> context)
 		throws Exception, IOException {
 
-		SoyJavaScriptRenderer javaScriptComponentRenderer =
-			_getJavaScriptComponentRenderer();
-
 		if (!context.containsKey("element")) {
 			context.put("element", getElementSelector());
 		}
@@ -203,7 +204,7 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 			requiredModules.addAll(_dependencies);
 		}
 
-		String componentJavaScript = javaScriptComponentRenderer.getJavaScript(
+		String componentJavaScript = SoyJavaScriptRendererUtil.getJavaScript(
 			context, getComponentId(), requiredModules);
 
 		ScriptTag.doTag(
@@ -236,12 +237,6 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 		}
 	}
 
-	private SoyJavaScriptRenderer _getJavaScriptComponentRenderer()
-		throws Exception {
-
-		return new SoyJavaScriptRenderer();
-	}
-
 	private Template _getTemplate() throws TemplateException {
 		return TemplateManagerUtil.getTemplate(
 			TemplateConstants.LANG_TYPE_SOY, _getTemplateResources(), false);
@@ -249,8 +244,11 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	private List<TemplateResource> _getTemplateResources() {
 		if (_templateResources == null) {
-			_templateResources =
-				SoyTemplateResourcesProvider.getAllTemplateResources();
+			Bundle bundle = FrameworkUtil.getBundle(TemplateRendererTag.class);
+
+			_templateResources = OSGiServiceUtil.callService(
+				bundle.getBundleContext(), SoyTemplateResourcesProvider.class,
+				SoyTemplateResourcesProvider::getAllTemplateResources);
 		}
 
 		return _templateResources;

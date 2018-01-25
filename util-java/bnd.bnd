@@ -9,4 +9,3 @@ Import-Package:\
 Include-Resource:\
 	classes,\
 	@../tmp/lib-pre/com.liferay.util.java.compat.jar
--baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.util.java-2.5.0.jar

@@ -16,4 +16,3 @@ Include-Resource:\
 	@../tmp/lib-pre/com.liferay.portal.kernel.message.boards.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.nio.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.kernel.util.compat.jar
--baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.kernel-2.61.0.jar

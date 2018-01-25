@@ -83,5 +83,4 @@ Include-Resource:\
 	@../tmp/lib-pre/com.liferay.portal.impl.message.boards.compat.jar,\
 	@../tmp/lib-pre/com.liferay.portal.impl.trash.compat.jar
 Private-Package: com.liferay.*.dependencies
--baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.impl-2.27.0.jar
 -donotcopy: (log4j\.properties|logging\.properties|portal-.*\.properties|system-.*\.properties|\.touch)

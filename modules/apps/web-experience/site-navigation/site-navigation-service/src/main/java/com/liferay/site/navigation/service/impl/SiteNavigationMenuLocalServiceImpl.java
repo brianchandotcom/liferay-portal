@@ -34,6 +34,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -307,7 +308,7 @@ public class SiteNavigationMenuLocalServiceImpl
 
 		String typeSettings = layout.getTypeSettings();
 
-		if (siteNavigationMenuItemType.getType().equals("layout")) {
+		if (Objects.equals(siteNavigationMenuItemType.getType(), "layout")) {
 			UnicodeProperties unicodeProperties = new UnicodeProperties();
 
 			unicodeProperties.setProperty(

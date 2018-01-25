@@ -40,7 +40,7 @@ LayoutPageTemplateSidebarAddedFragment.STATE = {
 	 * Fragment index
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf LayoutPageTemplateSidebarAddedFragment
 	 * @type {!number}
 	 */
 	index: Config.number().required(),
@@ -49,7 +49,7 @@ LayoutPageTemplateSidebarAddedFragment.STATE = {
 	 * Fragment name
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateFragment
+	 * @memberOf LayoutPageTemplateSidebarAddedFragment
 	 * @type {!string}
 	 */
 	name: Config.string().required(),
@@ -58,7 +58,7 @@ LayoutPageTemplateSidebarAddedFragment.STATE = {
 	 * Path of the available icons.
 	 * @default undefined
 	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
+	 * @memberOf LayoutPageTemplateSidebarAddedFragment
 	 * @type {!string}
 	 */
 	spritemap: Config.string().required(),

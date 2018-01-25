@@ -138,8 +138,8 @@ const SIDEBAR_TABS = [
 	{
 		id: 'added',
 		name: Liferay.Language.get('added'),
-		visible: true
-	}
+		visible: true,
+	},
 ];
 
 /**

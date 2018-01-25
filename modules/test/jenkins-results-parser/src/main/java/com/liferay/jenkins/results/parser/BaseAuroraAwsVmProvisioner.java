@@ -54,7 +54,7 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 
 		String dbClusterStatus = _getDBClusterStatus();
 
-		System.out.println("Waiting for the DB Cluster to start.");
+		System.out.println("Waiting for the DB Cluster to start");
 
 		long timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
 
@@ -84,7 +84,7 @@ public abstract class BaseAuroraAwsVmProvisioner extends BaseAwsVmProvisioner {
 
 		String dbInstanceStatus = _getDBInstanceStatus();
 
-		System.out.println("Waiting for the DB Instance to start.");
+		System.out.println("Waiting for the DB Instance to start");
 
 		timeout = System.currentTimeMillis() + TIMEOUT_DURATION;
 

@@ -15,7 +15,7 @@
 package com.liferay.portal.classloader.tracker.internal;
 
 import com.liferay.petra.lang.ClassLoaderPool;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;

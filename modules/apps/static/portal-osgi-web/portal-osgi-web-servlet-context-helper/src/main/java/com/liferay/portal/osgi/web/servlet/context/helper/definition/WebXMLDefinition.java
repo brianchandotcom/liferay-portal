@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.web.servlet.context.helper.definition;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.osgi.web.servlet.context.helper.internal.order.OrderImpl;
 import com.liferay.portal.osgi.web.servlet.context.helper.order.Order;
 

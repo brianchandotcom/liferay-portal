@@ -16,8 +16,8 @@ package com.liferay.portal.configuration.metatype.annotations;
 
 import aQute.bnd.annotation.xml.XMLAttribute;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

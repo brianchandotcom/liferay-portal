@@ -14,7 +14,7 @@
 
 package com.liferay.portal.osgi.web.wab.extender.internal.registration;
 
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 
 import java.util.ArrayList;
 import java.util.Collection;

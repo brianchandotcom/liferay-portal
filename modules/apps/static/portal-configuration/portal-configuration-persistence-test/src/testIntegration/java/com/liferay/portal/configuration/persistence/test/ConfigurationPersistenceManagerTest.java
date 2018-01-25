@@ -16,8 +16,8 @@ package com.liferay.portal.configuration.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.osgi.util.ServiceTrackerFactory;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.persistence.ConfigurationPersistenceManager;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 

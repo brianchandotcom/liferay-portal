@@ -14,12 +14,12 @@
 
 package com.liferay.portal.osgi.web.wab.generator.internal.connection;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StreamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.osgi.web.wab.generator.WabGenerator;
 import com.liferay.portal.util.FastDateFormatFactoryImpl;

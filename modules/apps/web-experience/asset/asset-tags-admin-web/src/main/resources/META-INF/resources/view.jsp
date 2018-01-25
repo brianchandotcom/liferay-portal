@@ -62,6 +62,16 @@
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= assetTagsDisplayContext.isShowAddButton() %>">
+			<portlet:renderURL var="editTagURL">
+				<portlet:param name="mvcPath" value="/edit_tag.jsp" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tag") %>' url="<%= editTagURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -156,16 +166,6 @@
 		<liferay-ui:search-iterator displayStyle="<%= assetTagsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= assetTagsDisplayContext.isShowAddButton() %>">
-	<portlet:renderURL var="editTagURL">
-		<portlet:param name="mvcPath" value="/edit_tag.jsp" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-tag") %>' url="<%= editTagURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script sandbox="<%= true %>">
 	var Util = Liferay.Util;

@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
@@ -34,8 +33,6 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @author Pavel Savinov
@@ -302,19 +299,8 @@ public class SiteNavigationMenuLocalServiceImpl
 			return;
 		}
 
-		String typeSettings = layout.getTypeSettings();
-
-		if (Objects.equals(siteNavigationMenuItemType.getType(), "layout")) {
-			UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-			unicodeProperties.setProperty(
-				"groupId", String.valueOf(layout.getGroupId()));
-			unicodeProperties.setProperty("layoutUuid", layout.getUuid());
-			unicodeProperties.setProperty(
-				"privateLayout", String.valueOf(layout.isPrivateLayout()));
-
-			typeSettings = unicodeProperties.toString();
-		}
+		String typeSettings =
+			siteNavigationMenuItemType.getTypeSettingsFromLayout(layout);
 
 		SiteNavigationMenuItem siteNavigationMenuItem =
 			siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(

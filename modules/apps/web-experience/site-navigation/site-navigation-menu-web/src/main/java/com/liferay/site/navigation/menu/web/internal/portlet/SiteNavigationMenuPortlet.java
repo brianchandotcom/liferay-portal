@@ -73,9 +73,6 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_TEMPLATE, _portletDisplayTemplate);
-
 		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -97,6 +94,9 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 					"Unable to create default primary navigation menu", pe);
 			}
 		}
+
+		renderRequest.setAttribute(
+			WebKeys.PORTLET_DISPLAY_TEMPLATE, _portletDisplayTemplate);
 
 		super.doDispatch(renderRequest, renderResponse);
 	}

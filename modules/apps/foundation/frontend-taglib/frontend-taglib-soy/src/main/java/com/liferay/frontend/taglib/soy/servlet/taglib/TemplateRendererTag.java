@@ -15,6 +15,7 @@
 package com.liferay.frontend.taglib.soy.servlet.taglib;
 
 import com.liferay.frontend.taglib.soy.internal.util.SoyJavaScriptRendererUtil;
+import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -39,6 +40,9 @@ import java.util.Set;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Bruno Basto
@@ -240,8 +244,11 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 
 	private List<TemplateResource> _getTemplateResources() {
 		if (_templateResources == null) {
-			_templateResources =
-				SoyTemplateResourcesProvider.getAllTemplateResources();
+			Bundle bundle = FrameworkUtil.getBundle(TemplateRendererTag.class);
+
+			_templateResources = OSGiServiceUtil.callService(
+				bundle.getBundleContext(), SoyTemplateResourcesProvider.class,
+				SoyTemplateResourcesProvider::getAllTemplateResources);
 		}
 
 		return _templateResources;

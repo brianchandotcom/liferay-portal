@@ -14,64 +14,20 @@
 
 package com.liferay.portal.template.soy.utils;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.template.TemplateException;
 import com.liferay.portal.kernel.template.TemplateResource;
-import com.liferay.portal.template.soy.internal.SoyManager;
-import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollector;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Miguel Pastor
  */
-@Component(immediate = true)
-public class SoyTemplateResourcesProvider {
+public interface SoyTemplateResourcesProvider {
 
-	public static List<TemplateResource> getAllTemplateResources() {
-		if (_soyManager == null) {
-			return Collections.<TemplateResource>emptyList();
-		}
+	public List<TemplateResource> getAllTemplateResources();
 
-		return Collections.unmodifiableList(
-			_soyManager.getAllTemplateResources());
-	}
-
-	public static List<TemplateResource> getBundleTemplateResources(
-		Bundle bundle, String templatePath) {
-
-		try {
-			SoyTemplateResourcesCollector soyTemplateResourcesCollector =
-				new SoyTemplateResourcesCollector(bundle, templatePath);
-
-			return soyTemplateResourcesCollector.getTemplateResources();
-		}
-		catch (TemplateException te) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Unable to get template resources for bundle " +
-						bundle.getBundleId(),
-					te);
-			}
-		}
-
-		return Collections.emptyList();
-	}
-
-	@Reference(unbind = "-")
-	protected void setSoyManager(SoyManager soyManager) {
-		_soyManager = soyManager;
-	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		SoyTemplateResourcesProvider.class);
-
-	private static SoyManager _soyManager;
+	public List<TemplateResource> getBundleTemplateResources(
+		Bundle bundle, String templatePath);
 
 }

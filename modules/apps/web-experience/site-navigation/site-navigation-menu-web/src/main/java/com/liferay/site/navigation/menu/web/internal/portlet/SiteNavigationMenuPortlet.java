@@ -14,18 +14,10 @@
 
 package com.liferay.site.navigation.menu.web.internal.portlet;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portlet.display.template.PortletDisplayTemplate;
 import com.liferay.site.navigation.menu.web.internal.constants.SiteNavigationMenuPortletKeys;
-import com.liferay.site.navigation.model.SiteNavigationMenu;
-import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
 
 import java.io.IOException;
 
@@ -73,28 +65,6 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		SiteNavigationMenu primarySiteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
-				themeDisplay.getScopeGroupId());
-
-		if (primarySiteNavigationMenu == null) {
-			try {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(renderRequest);
-
-				_siteNavigationMenuLocalService.addDefaultSiteNavigationMenu(
-					themeDisplay.getUserId(), themeDisplay.getScopeGroupId(),
-					serviceContext);
-			}
-			catch (PortalException pe) {
-				_log.error(
-					"Unable to create default primary navigation menu", pe);
-			}
-		}
-
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_TEMPLATE, _portletDisplayTemplate);
 
@@ -108,12 +78,6 @@ public class SiteNavigationMenuPortlet extends MVCPortlet {
 		_portletDisplayTemplate = portletDisplayTemplate;
 	}
 
-	private static final Log _log = LogFactoryUtil.getLog(
-		SiteNavigationMenuPortlet.class);
-
 	private PortletDisplayTemplate _portletDisplayTemplate;
-
-	@Reference
-	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;
 
 }

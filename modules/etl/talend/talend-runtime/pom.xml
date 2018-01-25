@@ -76,6 +76,14 @@
 					<fileName>pom.xml</fileName>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
+				<configuration>
+					<failOnError>false</failOnError>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

@@ -29,9 +29,7 @@ import com.liferay.journal.constants.JournalContentPortletKeys;
 import com.liferay.journal.constants.JournalPortletKeys;
 import com.liferay.journal.constants.JournalWebKeys;
 import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntry;
-import com.liferay.journal.content.asset.addon.entry.common.ContentMetadataAssetAddonEntryTracker;
 import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
-import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntryTracker;
 import com.liferay.journal.content.web.configuration.JournalContentPortletInstanceConfiguration;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalArticlePermission;
 import com.liferay.journal.content.web.internal.security.permission.resource.JournalPermission;
@@ -40,6 +38,8 @@ import com.liferay.journal.model.JournalArticleDisplay;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.util.JournalContent;
 import com.liferay.journal.web.asset.JournalArticleAssetRenderer;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
+import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
@@ -88,6 +88,10 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -392,8 +396,7 @@ public class JournalContentDisplayContext {
 
 		List<ContentMetadataAssetAddonEntry> contentMetadataAssetAddonEntries =
 			ListUtil.filter(
-				ContentMetadataAssetAddonEntryTracker.
-					getContentMetadataAssetAddonEntries(),
+				new ArrayList<>(_contentMetadataAssetAddonEntryMap.values()),
 				new PredicateFilter<ContentMetadataAssetAddonEntry>() {
 
 					@Override
@@ -413,7 +416,7 @@ public class JournalContentDisplayContext {
 	public List<UserToolAssetAddonEntry> getEnabledUserToolAssetAddonEntries() {
 		List<UserToolAssetAddonEntry> userToolAssetAddonEntries =
 			ListUtil.filter(
-				UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntries(),
+				new ArrayList<>(_userToolAssetAddonEntryMap.values()),
 				new PredicateFilter<UserToolAssetAddonEntry>() {
 
 					@Override
@@ -517,9 +520,8 @@ public class JournalContentDisplayContext {
 				contentMetadataAssetAddonEntryKeys) {
 
 			ContentMetadataAssetAddonEntry contentMetadataAssetAddonEntry =
-				ContentMetadataAssetAddonEntryTracker.
-					getContentMetadataAssetAddonEntry(
-						contentMetadataAssetAddonEntryKey);
+				_contentMetadataAssetAddonEntryMap.getService(
+					contentMetadataAssetAddonEntryKey);
 
 			if (contentMetadataAssetAddonEntry != null) {
 				_contentMetadataAssetAddonEntries.add(
@@ -575,7 +577,7 @@ public class JournalContentDisplayContext {
 
 		for (String userToolAssetAddonEntryKey : userToolAssetAddonEntryKeys) {
 			UserToolAssetAddonEntry userToolAssetAddonEntry =
-				UserToolAssetAddonEntryTracker.getUserToolAssetAddonEntry(
+				_userToolAssetAddonEntryMap.getService(
 					userToolAssetAddonEntryKey);
 
 			if (userToolAssetAddonEntry != null) {
@@ -1067,6 +1069,41 @@ public class JournalContentDisplayContext {
 			}
 
 		};
+
+	private static final
+		ServiceTrackerMap<String, ContentMetadataAssetAddonEntry>
+			_contentMetadataAssetAddonEntryMap;
+	private static final
+		ServiceTrackerMap<String, UserToolAssetAddonEntry>
+			_userToolAssetAddonEntryMap;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(
+			JournalContentDisplayContext.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		_contentMetadataAssetAddonEntryMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, ContentMetadataAssetAddonEntry.class, null,
+				(serviceReference, emitter) -> {
+					ContentMetadataAssetAddonEntry
+						contentMetadataAssetAddonEntry =
+							bundleContext.getService(serviceReference);
+
+					emitter.emit(contentMetadataAssetAddonEntry.getKey());
+				});
+
+		_userToolAssetAddonEntryMap =
+			ServiceTrackerMapFactory.openSingleValueMap(
+				bundleContext, UserToolAssetAddonEntry.class, null,
+				(serviceReference, emitter) -> {
+					UserToolAssetAddonEntry userToolAssetAddonEntry =
+						bundleContext.getService(serviceReference);
+
+					emitter.emit(userToolAssetAddonEntry.getKey());
+				});
+	}
 
 	private JournalArticle _article;
 	private JournalArticleDisplay _articleDisplay;

@@ -28,15 +28,6 @@ class LayoutPageTemplateSidebarAddedFragment extends Component {
  */
 LayoutPageTemplateSidebarAddedFragment.STATE = {
 	/**
-	 * Fragment entry ID
-	 * @default undefined
-	 * @instance
-	 * @memberOf LayoutPageTemplateEditor
-	 * @type {!string}
-	 */
-	fragmentEntryId: Config.string().required(),
-
-	/**
 	 * Fragment index
 	 * @default undefined
 	 * @instance

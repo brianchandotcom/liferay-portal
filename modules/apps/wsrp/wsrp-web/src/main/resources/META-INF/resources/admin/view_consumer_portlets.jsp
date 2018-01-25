@@ -49,6 +49,16 @@ renderResponse.setTitle(LanguageUtil.get(request, "manage-portlets"));
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:renderURL var="addPortletURL">
+			<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-portlet") %>' url="<%= addPortletURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -107,16 +117,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "manage-portlets"));
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
-
-<portlet:renderURL var="addPortletURL">
-	<portlet:param name="mvcPath" value="/admin/edit_consumer_portlet.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-	<portlet:param name="wsrpConsumerId" value="<%= String.valueOf(wsrpConsumer.getWsrpConsumerId()) %>" />
-</portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-portlet") %>' url="<%= addPortletURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "manage-portlets"), currentURL);

@@ -31,11 +31,14 @@ public class SAXReaderFactory {
 	public static final SAXReader getSAXReader(
 		XMLReader xmlReader, boolean validate, boolean secure) {
 
+		DocumentFactory documentFactory = DocumentFactory.getInstance();
+
 		SAXReader reader = null;
 
 		try {
 			reader = new SAXReader(xmlReader, validate);
 
+			reader.setDocumentFactory(documentFactory);
 			reader.setEntityResolver(new EntityResolver());
 			reader.setFeature(_FEATURES_DYNAMIC, validate);
 			reader.setFeature(_FEATURES_VALIDATION, validate);
@@ -57,6 +60,7 @@ public class SAXReaderFactory {
 
 			reader = new SAXReader(xmlReader, false);
 
+			reader.setDocumentFactory(documentFactory);
 			reader.setEntityResolver(new EntityResolver());
 		}
 

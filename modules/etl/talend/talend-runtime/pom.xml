@@ -22,6 +22,11 @@
 			<id>releases</id>
 			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
 		</repository>
+		<repository>
+			<id>talend_runtime_nexus</id>
+			<name>Talend Runtime Nexus</name>
+			<url>https://talend-update.talend.com/nexus/service/local/repositories/libraries/content/</url>
+		</repository>
 	</repositories>
 	<properties>
 		<java.version>1.8</java.version>
@@ -30,11 +35,6 @@
 		<log4j.rootLogger>DEBUG, stdout</log4j.rootLogger>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.2.4</version>
-		</dependency>
 		<dependency>
 			<groupId>com.liferay</groupId>
 			<artifactId>com.liferay.talend.definition</artifactId>
@@ -46,14 +46,68 @@
 			<version>2.0.1</version>
 		</dependency>
 		<dependency>
-			<groupId>org.glassfish.jersey.core</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>2.22.2</version>
-		</dependency>
-		<dependency>
 			<groupId>org.talend.components</groupId>
 			<artifactId>components-api</artifactId>
-			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>jersey-client-2.22.2</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>javax.ws.rs-api-2.0.1</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>hk2-api-2.4.0-b34</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>hk2-locator-2.4.0-b34</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>javax.inject-2.4.0-b34</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>jersey-common-2.22.2</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>jersey-guava-2.22.2</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>javassist-3.18.1-GA</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>aopalliance-repackaged-2.4.0-b34</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>osgi-resource-locator-1.0.1</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>hk2-utils-2.4.0-b34</artifactId>
+			<version>6.4.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.talend.libraries</groupId>
+			<artifactId>javax.annotation-api-1.2</artifactId>
+			<version>6.4.0</version>
 		</dependency>
 		<dependency>
 			<groupId>org.talend.components</groupId>

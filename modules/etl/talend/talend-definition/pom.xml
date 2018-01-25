@@ -22,6 +22,11 @@
 			<id>releases</id>
 			<url>https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease/</url>
 		</repository>
+		<repository>
+			<id>talend_runtime_nexus</id>
+			<name>Talend Runtime Nexus</name>
+			<url>https://talend-update.talend.com/nexus/service/local/repositories/libraries/content/</url>
+		</repository>
 	</repositories>
 	<properties>
 		<java.version>1.8</java.version>

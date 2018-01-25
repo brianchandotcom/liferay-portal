@@ -122,6 +122,7 @@ import org.springframework.context.ApplicationContext;
  * @author Raymond Augé
  * @author Miguel Pastor
  * @author Kamesh Sampath
+ * @author Gregory Amerson
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
@@ -727,6 +728,23 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Properties extraProperties = PropsUtil.getProperties(
 			PropsKeys.MODULE_FRAMEWORK_PROPERTIES, true);
 
+		Parameters extraCapabilities = OSGiHeader.parseHeader(
+			extraProperties.getProperty(
+				Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA));
+
+		Parameters provideCapability = _getProvideCapability();
+
+		if (extraCapabilities.size() > 0) {
+			extraCapabilities.putAll(provideCapability);
+		}
+		else {
+			extraCapabilities = provideCapability;
+		}
+
+		extraProperties.setProperty(
+			Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA,
+			extraCapabilities.toString());
+
 		for (Map.Entry<Object, Object> entry : extraProperties.entrySet()) {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
@@ -797,6 +815,26 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
 
 		return properties;
+	}
+
+	private Parameters _getProvideCapability() {
+		Manifest provideCapabilityManifest = null;
+
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"/META-INF/system.packages.extra.mf");
+
+		try {
+			provideCapabilityManifest = new Manifest(inputStream);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
+
+		Attributes attributes = provideCapabilityManifest.getMainAttributes();
+
+		return new Parameters(attributes.getValue("Provide-Capability"));
 	}
 
 	private Bundle _getStaticBundle(

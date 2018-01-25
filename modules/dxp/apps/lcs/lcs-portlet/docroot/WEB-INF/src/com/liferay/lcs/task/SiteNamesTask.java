@@ -109,6 +109,7 @@ public class SiteNamesTask extends BaseScheduledTask {
 		groupMap.put("groupId", group.getGroupId());
 		groupMap.put("groupKey", group.getGroupKey());
 		groupMap.put("name", group.getName());
+		groupMap.put("parentGroupId", group.getParentGroupId());
 		groupMap.put("uuid", group.getUuid());
 
 		return groupMap;

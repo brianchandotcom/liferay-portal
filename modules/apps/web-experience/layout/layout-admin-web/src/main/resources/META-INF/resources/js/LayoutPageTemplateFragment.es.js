@@ -47,18 +47,18 @@ class LayoutPageTemplateFragment extends Component {
 				: this.index;
 
 			this._fetchFragmentContent(
-				fragmentEntryInstanceId, fragmentEntryId);
+				fragmentEntryId, fragmentEntryInstanceId);
 		}
 	}
 
 	/**
 	 * Fetches a fragment entry from the given ID, and stores the HTML,
 	 * CSS and JS result into component properties.
-	 * @param {!string} fragmentEntryInstanceId
 	 * @param {!string} fragmentEntryId
+	 * @param {!string} fragmentEntryInstanceId
 	 * @private
 	 */
-	_fetchFragmentContent(fragmentEntryInstanceId, fragmentEntryId) {
+	_fetchFragmentContent(fragmentEntryId, fragmentEntryInstanceId) {
 		const formData = new FormData();
 
 		formData.append(

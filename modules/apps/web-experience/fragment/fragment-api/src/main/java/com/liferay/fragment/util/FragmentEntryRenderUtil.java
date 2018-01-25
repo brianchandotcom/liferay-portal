@@ -34,23 +34,23 @@ public class FragmentEntryRenderUtil {
 
 	public static String renderFragmentEntry(FragmentEntry fragmentEntry) {
 		return renderFragmentEntry(
-			0, fragmentEntry.getFragmentEntryId(), fragmentEntry.getCss(),
+			fragmentEntry.getFragmentEntryId(), 0, fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs());
 	}
 
 	public static String renderFragmentEntry(
-		long fragmentEntryInstanceId, long fragmentEntryId) {
+		long fragmentEntryId, long fragmentEntryInstanceId) {
 
 		FragmentEntry fragmentEntry =
 			FragmentEntryLocalServiceUtil.fetchFragmentEntry(fragmentEntryId);
 
 		return renderFragmentEntry(
-			fragmentEntryInstanceId, fragmentEntryId, fragmentEntry.getCss(),
+			fragmentEntryId, fragmentEntryInstanceId, fragmentEntry.getCss(),
 			fragmentEntry.getHtml(), fragmentEntry.getJs());
 	}
 
 	public static String renderFragmentEntry(
-		long fragmentEntryInstanceId, long fragmentEntryId, String css,
+		long fragmentEntryId, long fragmentEntryInstanceId, String css,
 		String html, String js) {
 
 		try {
@@ -97,7 +97,7 @@ public class FragmentEntryRenderUtil {
 	public static String renderFragmentEntry(
 		long fragmentEntryId, String css, String html, String js) {
 
-		return renderFragmentEntry(0, fragmentEntryId, css, html, js);
+		return renderFragmentEntry(fragmentEntryId, 0, css, html, js);
 	}
 
 }

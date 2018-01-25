@@ -56,7 +56,7 @@ public class RenderFragmentEntryMVCActionCommand extends BaseMVCActionCommand {
 		jsonObject.put(
 			"content",
 			FragmentEntryRenderUtil.renderFragmentEntry(
-				fragmentEntryInstanceId, fragmentEntryId));
+				fragmentEntryId, fragmentEntryInstanceId));
 
 		JSONPortletResponseUtil.writeJSON(
 			actionRequest, actionResponse, jsonObject);

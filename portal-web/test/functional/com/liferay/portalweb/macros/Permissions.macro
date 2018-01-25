@@ -200,13 +200,6 @@
 	</command>
 
 	<command name="setUpOrgRoleLoginUserPG">
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -275,13 +268,6 @@
 			<var name="roleTitle" value="" />
 		</execute>
 
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
-		</execute>
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Users" />
 			<var name="panel" value="Control Panel" />
@@ -341,13 +327,6 @@
 			<var name="i" value="${i}" />
 			<var name="pageName" value="${pageName}" />
 			<var name="portletName" value="${portletName}" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">
@@ -470,13 +449,6 @@
 
 		<execute macro="PortalSettings#editConfigurationUsersDefaultUserAssociationsRolesCP">
 			<var name="roleTitle" value="" />
-		</execute>
-
-		<execute macro="JSONUser#addUser">
-			<var name="userEmailAddress" value="${userEmailAddress}" />
-			<var name="userFirstName" value="${userFirstName}" />
-			<var name="userLastName" value="${userLastName}" />
-			<var name="userScreenName" value="${userScreenName}" />
 		</execute>
 
 		<execute macro="ProductMenu#gotoPortlet">

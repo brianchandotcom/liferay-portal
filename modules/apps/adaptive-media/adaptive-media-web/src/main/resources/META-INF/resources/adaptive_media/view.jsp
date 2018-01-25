@@ -16,17 +16,20 @@
 
 <%@ include file="/adaptive_media/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewImageConfigurationEntriesURL" />
+<portlet:renderURL var="viewImageConfigurationEntriesURL" />
 
-		<aui:nav-item
-			href="<%= viewImageConfigurationEntriesURL %>"
-			label="image-resolutions"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+<%
+NavigationItem imageResolutionsNavigationItem = new NavigationItem();
+
+imageResolutionsNavigationItem.setActive(true);
+imageResolutionsNavigationItem.setHref(viewImageConfigurationEntriesURL);
+imageResolutionsNavigationItem.setLabel(LanguageUtil.get(request, "image-resolutions"));
+%>
+
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= Arrays.asList(imageResolutionsNavigationItem) %>"
+/>
 
 <%
 List<AMImageConfigurationEntry> selectedConfigurationEntries = (List)request.getAttribute(AMWebKeys.CONFIGURATION_ENTRIES_LIST);

@@ -151,20 +151,6 @@
 
 .form-builder-sidebar,
 .portlet-forms {
-	.form-control {
-		font-size: 14px;
-	}
-
-	@include sm {
-		.form-control {
-			font-size: 16px;
-		}
-	}
-
-	.help-block {
-		font-size: 14px;
-	}
-
 	.icon-asterisk {
 		margin-left: 4px;
 	}

@@ -154,7 +154,7 @@ AUI.add(
 								open: instance._open,
 								options: instance.get('options'),
 								predefinedValue: instance.get('readOnly') ? instance.get('predefinedValue') : instance.getValue(),
-								selectCaretDoubleIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('caret-double-l', 'icon-monospaced')),
+								selectCaretDoubleIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('caret-double')),
 								selectSearchIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('search', 'icon-monospaced')),
 								strings: instance.get('strings'),
 								value: instance.getValue()

@@ -633,7 +633,9 @@
 	</command>
 
 	<command name="saveFieldSet">
-		<execute macro="PortletEntry#save" />
+		<execute function="AssertClick" locator1="KaleoDesigner#SAVE_BUTTON" value1="Save" />
+
+		<execute macro="Alert#viewSuccessMessage" />
 
 		<execute function="SelectFrame" value1="relative=top" />
 

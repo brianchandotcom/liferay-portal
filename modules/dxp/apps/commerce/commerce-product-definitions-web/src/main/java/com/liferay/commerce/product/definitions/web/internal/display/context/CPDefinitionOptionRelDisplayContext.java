@@ -41,6 +41,7 @@ import com.liferay.taglib.util.CustomAttributesUtil;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -101,7 +102,9 @@ public class CPDefinitionOptionRelDisplayContext extends
 		List<DDMFormFieldType> ddmFormFieldTypes =
 			_ddmFormFieldTypeServicesTracker.getDDMFormFieldTypes();
 
-		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream().filter(
+		Stream<DDMFormFieldType> stream = ddmFormFieldTypes.stream();
+
+		stream.filter(
 			fieldType -> {
 				Map<String, Object> properties =
 					_ddmFormFieldTypeServicesTracker.
@@ -111,7 +114,10 @@ public class CPDefinitionOptionRelDisplayContext extends
 					properties, "ddm.form.field.type.system");
 			});
 
-		return stream.collect(Collectors.toList());
+		Collector<DDMFormFieldType, ?, List<DDMFormFieldType>> collector =
+			Collectors.toList();
+
+		return stream.collect(collector);
 	}
 
 	public String getItemSelectorUrl() {

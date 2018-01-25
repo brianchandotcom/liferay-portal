@@ -164,8 +164,9 @@ public class CPAttachmentFileEntryDemoDataCreatorHelper
 						JSONArray valueJSONArray =
 							_jsonFactory.createJSONArray();
 
-						valueJSONArray.put(
-							optionIdsJSONArray.get(1).toString());
+						Object object = optionIdsJSONArray.get(1);
+
+						valueJSONArray.put(object.toString());
 
 						jsonObject.put("value", valueJSONArray);
 

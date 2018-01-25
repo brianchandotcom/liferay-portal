@@ -28,10 +28,10 @@ import com.liferay.portal.kernel.trash.BaseTrashHandler;
 import com.liferay.portal.kernel.trash.TrashHandler;
 import com.liferay.portal.kernel.util.Portal;
 
+import java.util.Locale;
+
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -89,10 +89,9 @@ public class CPDefinitionTrashHandler extends BaseTrashHandler {
 	public String getRestoreMessage(
 		PortletRequest portletRequest, long cpDefinitionId) {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			portletRequest);
+		Locale locale = _portal.getLocale(portletRequest);
 
-		return LanguageUtil.get(httpServletRequest, "catalog");
+		return LanguageUtil.get(locale, "catalog");
 	}
 
 	@Override

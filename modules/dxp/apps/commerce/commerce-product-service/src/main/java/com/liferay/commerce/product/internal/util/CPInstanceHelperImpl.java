@@ -64,6 +64,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -565,14 +566,19 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	protected String createDDMFormRuleCondition(DDMForm ddmForm) {
 		String notEmptyStatement = "not(isEmpty(getValue('%s')))";
 
-		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
 
 		Stream<String> notEmptyStatementStream = stream.map(
 			field -> {
 				return String.format(notEmptyStatement, field.getName());
 			});
 
-		return notEmptyStatementStream.collect(Collectors.joining(" OR "));
+		Collector<CharSequence, ?, String> collector = Collectors.joining(
+			" OR ");
+
+		return notEmptyStatementStream.collect(collector);
 	}
 
 	protected String createDDMFormRuleInputMapping(
@@ -585,7 +591,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		String inputMappingStatement = "'%s=', getValue('%s')";
 		String delimiter = ", ';',";
 
-		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
 
 		Stream<String> inputMappingStatementStream = stream.map(
 			field -> {
@@ -606,7 +614,9 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	protected String createDDMFormRuleOutputMapping(DDMForm ddmForm) {
 		String outputMappingStatement = "%s=%s";
 
-		Stream<DDMFormField> stream = ddmForm.getDDMFormFields().stream();
+		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
+
+		Stream<DDMFormField> stream = ddmFormFields.stream();
 
 		Stream<String> outputMappingStatementStream = stream.map(
 			field -> {

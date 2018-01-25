@@ -18,9 +18,11 @@ import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProviderUtil;
+import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.osgi.util.test.OSGiServiceUtil;
+import com.liferay.portal.test.rule.Inject;
+import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 
 import java.io.IOException;
 
@@ -31,6 +33,8 @@ import java.util.Hashtable;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -46,6 +50,14 @@ import org.osgi.service.cm.ConfigurationAdmin;
  */
 @RunWith(Arquillian.class)
 public class ConfigurationProviderTest {
+
+	@ClassRule
+	@Rule
+	public static final AggregateTestRule aggregateTestRule =
+		new LiferayIntegrationTestRule();
+
+	@Inject
+	private static ConfigurationAdmin _configurationAdmin;
 
 	@Before
 	public void setUp() throws Exception {
@@ -184,10 +196,8 @@ public class ConfigurationProviderTest {
 		pidFilter.append(pid);
 		pidFilter.append(StringPool.CLOSE_PARENTHESIS);
 
-		Configuration[] configurations = OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.listConfigurations(
-				pidFilter.toString()));
+		Configuration[] configurations = _configurationAdmin.listConfigurations(
+			pidFilter.toString());
 
 		if (configurations == null) {
 			return 0;
@@ -213,10 +223,7 @@ public class ConfigurationProviderTest {
 	private Configuration _getConfiguration(String pid, String location)
 		throws IOException {
 
-		return OSGiServiceUtil.callService(
-			_bundleContext, ConfigurationAdmin.class,
-			configurationAdmin -> configurationAdmin.getConfiguration(
-				pid, location));
+		return _configurationAdmin.getConfiguration(pid, location);
 	}
 
 	private void _createConfiguration(String pid) throws Exception {

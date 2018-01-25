@@ -576,24 +576,33 @@ public class SourceFormatter {
 		return false;
 	}
 
-	private boolean _isSubrepository() {
+	private boolean _isSubrepository() throws Exception {
+		if (_isPortalSource()) {
+			return false;
+		}
+
 		String baseDirAbsolutePath = SourceUtil.getAbsolutePath(
 			_sourceFormatterArgs.getBaseDirName());
 
-		int x = baseDirAbsolutePath.length();
+		File baseDir = new File(baseDirAbsolutePath);
 
 		for (int i = 0; i < _SUBREPOSITORY_MAX_DIR_LEVEL; i++) {
-			x = baseDirAbsolutePath.lastIndexOf(CharPool.FORWARD_SLASH, x - 1);
-
-			if (x == -1) {
+			if (!baseDir.exists()) {
 				return false;
 			}
 
-			String dirName = baseDirAbsolutePath.substring(x + 1);
+			File gradlePropertiesFile = new File(baseDir, "gradle.properties");
+			File gradlewFile = new File(baseDir, "gradlew");
 
-			if (dirName.startsWith("com-liferay-")) {
-				return true;
+			if (gradlePropertiesFile.exists() && gradlewFile.exists()) {
+				String content = FileUtil.read(gradlePropertiesFile);
+
+				if (content.contains("systemProp.repository.private.url=")) {
+					return true;
+				}
 			}
+
+			baseDir = baseDir.getParentFile();
 		}
 
 		return false;

@@ -20,7 +20,7 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 %>
 
 <c:if test="<%= hasAddOrganizationPermission || hasAddUserPermission %>">
-	<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu inline="<%= true %>">
 		<c:if test="<%= hasAddUserPermission %>">
 			<portlet:renderURL var="addUserURL">
 				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />

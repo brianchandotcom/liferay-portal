@@ -101,6 +101,22 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<c:if test="<%= hasAddUserPermission %>">
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<portlet:renderURL var="viewUsersURL">
+					<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+					<portlet:param name="usersListView" value="<%= usersListView %>" />
+				</portlet:renderURL>
+
+				<portlet:renderURL var="addUserURL">
+					<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
+					<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "user") %>' url="<%= addUserURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -341,19 +357,3 @@ boolean showRestoreButton = (searchTerms.getStatus() != WorkflowConstants.STATUS
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= hasAddUserPermission %>">
-	<liferay-frontend:add-menu>
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-			<portlet:param name="usersListView" value="<%= usersListView %>" />
-		</portlet:renderURL>
-
-		<portlet:renderURL var="addUserURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
-			<portlet:param name="redirect" value="<%= viewUsersURL %>" />
-		</portlet:renderURL>
-
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "user") %>' url="<%= addUserURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>

@@ -104,6 +104,8 @@ if (organization != null) {
 					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
+
+				<%@ include file="/add_menu.jspf" %>
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-action-buttons>
@@ -241,8 +243,6 @@ if (organization != null) {
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<%@ include file="/add_menu.jspf" %>
 
 <aui:script>
 	function <portlet:namespace />delete() {

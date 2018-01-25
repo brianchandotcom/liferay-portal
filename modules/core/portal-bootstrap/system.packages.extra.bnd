@@ -274,6 +274,7 @@ Export-Package:\
 	\
 	*
 Import-Package: !*
+Liferay-Service: true
 -includeresource:\
 	-@lib/com.liferay.portal.app.license.api.jar,\
 	@../../../lib/development/jms.jar,\

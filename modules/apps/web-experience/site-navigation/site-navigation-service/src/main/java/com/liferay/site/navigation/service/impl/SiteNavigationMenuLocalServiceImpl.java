@@ -289,7 +289,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		}
 	}
 
-	private SiteNavigationMenuItem _addSiteNavigationMenuItems(
+	private void _addSiteNavigationMenuItems(
 		long userId, long groupId, long siteNavigationMenuId,
 		long parentSiteNavigationMenuId, Layout layout,
 		ServiceContext serviceContext) {
@@ -303,7 +303,7 @@ public class SiteNavigationMenuLocalServiceImpl
 				"layout"));
 
 		if (siteNavigationMenuItemType == null) {
-			return null;
+			return;
 		}
 
 		try {
@@ -341,8 +341,6 @@ public class SiteNavigationMenuLocalServiceImpl
 		catch (PortalException pe) {
 			_log.error(pe, pe);
 		}
-
-		return null;
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

@@ -22,9 +22,7 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry_types");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
-</aui:nav-bar>
+<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar
 	disabled="false"

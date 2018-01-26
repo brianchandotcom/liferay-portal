@@ -14,7 +14,9 @@
 
 package com.liferay.source.formatter.checks.util;
 
+import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.source.formatter.SourceFormatterMessage;
 import com.liferay.source.formatter.checks.FileCheck;
@@ -39,6 +41,7 @@ import java.lang.reflect.Constructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -67,7 +70,8 @@ public class SourceChecksUtil {
 
 	public static SourceChecksResult processSourceChecks(
 			File file, String fileName, String absolutePath, String content,
-			boolean modulesFile, List<SourceCheck> sourceChecks,
+			Set<String> modifiedMessages, boolean modulesFile,
+			List<SourceCheck> sourceChecks,
 			SourceChecksSuppressions sourceChecksSuppressions,
 			boolean showDebugInformation)
 		throws Exception {
@@ -111,7 +115,8 @@ public class SourceChecksUtil {
 					catch (ParseException pe) {
 						sourceChecksResult.addSourceFormatterMessage(
 							new SourceFormatterMessage(
-								fileName, pe.getMessage(), null, -1));
+								fileName, pe.getMessage(), "SourceCheck",
+								clazz.getSimpleName(), null, -1));
 
 						continue;
 					}
@@ -133,7 +138,8 @@ public class SourceChecksUtil {
 					catch (ParseException pe) {
 						sourceChecksResult.addSourceFormatterMessage(
 							new SourceFormatterMessage(
-								fileName, pe.getMessage(), null, -1));
+								fileName, pe.getMessage(), "SourceCheck",
+								clazz.getSimpleName(), null, -1));
 
 						continue;
 					}
@@ -152,6 +158,18 @@ public class SourceChecksUtil {
 			}
 
 			if (!content.equals(sourceChecksResult.getContent())) {
+				StringBundler sb = new StringBundler(7);
+
+				sb.append(file.toString());
+				sb.append(CharPool.SPACE);
+				sb.append(CharPool.OPEN_PARENTHESIS);
+				sb.append("SourceCheck");
+				sb.append(CharPool.COLON);
+				sb.append(clazz.getSimpleName());
+				sb.append(CharPool.CLOSE_PARENTHESIS);
+
+				modifiedMessages.add(sb.toString());
+
 				if (showDebugInformation) {
 					DebugUtil.printContentModifications(
 						clazz.getSimpleName(), fileName, content,

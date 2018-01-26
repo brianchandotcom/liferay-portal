@@ -69,12 +69,14 @@ public class JavaSourceProcessor extends BaseSourceProcessor {
 		throws Exception {
 
 		Set<String> modifiedContents = new HashSet<>();
+		Set<String> modifiedMessages = new TreeSet<>();
 
 		String newContent = format(
 			file, fileName, absolutePath, content, content, modifiedContents,
-			0);
+			modifiedMessages, 0);
 
-		file = processFormattedFile(file, fileName, content, newContent);
+		file = processFormattedFile(
+			file, fileName, content, newContent, modifiedMessages);
 
 		_processCheckstyle(file);
 	}

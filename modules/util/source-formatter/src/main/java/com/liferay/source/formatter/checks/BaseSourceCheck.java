@@ -151,9 +151,12 @@ public abstract class BaseSourceCheck implements SourceCheck {
 			sourceFormatterMessages = new TreeSet<>();
 		}
 
+		Class<?> clazz = getClass();
+
 		sourceFormatterMessages.add(
 			new SourceFormatterMessage(
-				fileName, message, markdownFileName, lineCount));
+				fileName, message, "SourceCheck", clazz.getSimpleName(),
+				markdownFileName, lineCount));
 
 		_sourceFormatterMessagesMap.put(fileName, sourceFormatterMessages);
 	}

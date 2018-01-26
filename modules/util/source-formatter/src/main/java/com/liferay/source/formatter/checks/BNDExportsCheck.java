@@ -175,6 +175,8 @@ public class BNDExportsCheck extends BaseFileCheck {
 				 ArrayUtil.isNotEmpty(srcFiles)) &&
 				!packageinfoFile.exists()) {
 
+				addMessage(fileName, "Added packageinfo for " + exportPackage);
+
 				FileUtil.write(packageinfoFile, "version 1.0.0");
 			}
 		}

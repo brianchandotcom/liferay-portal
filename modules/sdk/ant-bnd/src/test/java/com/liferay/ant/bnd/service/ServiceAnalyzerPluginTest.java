@@ -21,10 +21,7 @@ import aQute.bnd.osgi.Jar;
 import java.io.InputStream;
 
 import org.junit.Assert;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-
 import org.osgi.framework.Constants;
 
 /**
@@ -91,8 +88,5 @@ public class ServiceAnalyzerPluginTest {
 				provideCapability.toString(), 2, provideCapability.size());
 		}
 	}
-
-	@Rule
-	public final TemporaryFolder tempFolder = new TemporaryFolder();
 
 }

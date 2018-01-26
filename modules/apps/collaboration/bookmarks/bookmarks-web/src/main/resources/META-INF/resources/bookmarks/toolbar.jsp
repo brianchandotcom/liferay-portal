@@ -64,6 +64,25 @@ portletURL.setParameter("tag", StringPool.BLANK);
 			navigationKeys="<%= navigationKeys %>"
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
+
+		<c:if test="<%= bookmarksGroupServiceOverriddenConfiguration.showFoldersSearch() %>">
+			<li>
+
+				<%
+				long folderId = GetterUtil.getLong((String)request.getAttribute("view.jsp-folderId"));
+				%>
+
+				<liferay-portlet:renderURL varImpl="searchURL">
+					<portlet:param name="mvcRenderCommandName" value="/bookmarks/view" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+					<portlet:param name="folderId" value="<%= String.valueOf(folderId) %>" />
+				</liferay-portlet:renderURL>
+
+				<aui:form action="<%= searchURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

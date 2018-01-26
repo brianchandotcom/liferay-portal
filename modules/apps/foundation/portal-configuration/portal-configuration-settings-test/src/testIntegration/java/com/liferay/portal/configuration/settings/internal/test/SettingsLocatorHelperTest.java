@@ -55,8 +55,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(
-			Scope.COMPANY, String.valueOf(companyId));
+		String companyValue = saveScopedConfiguration(Scope.COMPANY, companyId);
 
 		companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
@@ -98,8 +97,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String groupValue = saveScopedConfiguration(
-			Scope.GROUP, String.valueOf(groupId));
+		String groupValue = saveScopedConfiguration(Scope.GROUP, groupId);
 
 		groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(

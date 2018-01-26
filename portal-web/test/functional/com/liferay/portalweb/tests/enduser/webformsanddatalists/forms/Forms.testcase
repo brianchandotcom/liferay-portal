@@ -34,6 +34,72 @@
 		</if>
 	</tear-down>
 
+	<command name="Add20Forms" priority="4">
+		<execute macro="ProductMenu#gotoPortlet">
+			<var name="category" value="Content" />
+			<var name="panel" value="Site Administration" />
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<for list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20" param="number">
+			<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+			<execute function="Refresh" />
+
+			<execute macro="Form#editName">
+				<var name="formName" value="Form${number}" />
+			</execute>
+
+			<execute macro="Form#editDescription" />
+
+			<execute macro="Form#editPageTitle">
+				<var name="formPageName" value="Created Form Page Name" />
+			</execute>
+
+			<execute macro="Form#gotoAddField">
+				<var name="fieldType" value="Text Field" />
+			</execute>
+
+			<execute macro="Form#editFieldLabel">
+				<var name="fieldValue" value="Label" />
+			</execute>
+
+			<execute macro="Form#closeSidebar" />
+
+			<execute macro="Form#save" />
+
+			<execute macro="ProductMenu#gotoSitesContent">
+				<var name="portlet" value="Forms" />
+			</execute>
+		</for>
+	</command>
+
+	<command name="Add30Fields" priority="4">
+		<execute macro="Navigator#openURL" />
+
+		<execute macro="ProductMenu#gotoSitesContent">
+			<var name="portlet" value="Forms" />
+		</execute>
+
+		<execute macro="FormsAdminNavigator#gotoAddForm" />
+
+		<execute macro="Form#editName" />
+
+		<for list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30" param="number">
+			<execute macro="Form#gotoAddField">
+				<var name="fieldType" value="Text Field" />
+			</execute>
+
+			<execute macro="Form#editFieldLabel">
+				<var name="fieldValue" value="Field${number}" />
+			</execute>
+
+			<execute macro="Form#closeSidebar" />
+		</for>
+
+		<execute macro="Form#save" />
+	</command>
+
 	<command name="AddElementSetsWithTranslation" priority="5">
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -248,72 +314,6 @@
 		<execute macro="Form#closeSidebar" />
 
 		<execute macro="Form#saveElementSet" />
-	</command>
-
-	<command name="Add20Forms" priority="4">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Content" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<for list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20" param="number">
-			<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-			<execute function="Refresh" />
-
-			<execute macro="Form#editName">
-				<var name="formName" value="Form${number}" />
-			</execute>
-
-			<execute macro="Form#editDescription" />
-
-			<execute macro="Form#editPageTitle">
-				<var name="formPageName" value="Created Form Page Name" />
-			</execute>
-
-			<execute macro="Form#gotoAddField">
-				<var name="fieldType" value="Text Field" />
-			</execute>
-
-			<execute macro="Form#editFieldLabel">
-				<var name="fieldValue" value="Label" />
-			</execute>
-
-			<execute macro="Form#closeSidebar" />
-
-			<execute macro="Form#save" />
-
-			<execute macro="ProductMenu#gotoSitesContent">
-				<var name="portlet" value="Forms" />
-			</execute>
-		</for>
-	</command>
-
-	<command name="Add30Fields" priority="4">
-		<execute macro="Navigator#openURL" />
-
-		<execute macro="ProductMenu#gotoSitesContent">
-			<var name="portlet" value="Forms" />
-		</execute>
-
-		<execute macro="FormsAdminNavigator#gotoAddForm" />
-
-		<execute macro="Form#editName" />
-
-		<for list="1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30" param="number">
-			<execute macro="Form#gotoAddField">
-				<var name="fieldType" value="Text Field" />
-			</execute>
-
-			<execute macro="Form#editFieldLabel">
-				<var name="fieldValue" value="Field${number}" />
-			</execute>
-
-			<execute macro="Form#closeSidebar" />
-		</for>
-
-		<execute macro="Form#save" />
 	</command>
 
 	<command name="AddFormInGlobal" priority="5">

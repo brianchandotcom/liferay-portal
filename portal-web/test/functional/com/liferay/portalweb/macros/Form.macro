@@ -240,20 +240,20 @@
 		<execute function="AssertClick" locator1="Form#SIDEBAR_PROPERTIES_TAB" value1="Properties" />
 	</command>
 
-	<command name="gotoElementsTab">
-		<execute function="AssertClick" locator1="Form#SIDEBAR_ELEMENTS_TAB" value1="Elements" />
-	</command>
-
-	<command name="gotoElementSetsTab">
-		<execute function="AssertClick" locator1="Form#SIDEBAR_ELEMENT_SETS_TAB" value1="Element Sets" />
-	</command>
-
 	<command name="gotoAutocompleteConfiguration">
 		<execute function="Click" locator1="FormFields#AUTOCOMPLETE_PANEL" />
 	</command>
 
 	<command name="gotoBasicTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_BASIC_TAB" value1="Basic" />
+	</command>
+
+	<command name="gotoElementSetsTab">
+		<execute function="AssertClick" locator1="Form#SIDEBAR_ELEMENT_SETS_TAB" value1="Element Sets" />
+	</command>
+
+	<command name="gotoElementsTab">
+		<execute function="AssertClick" locator1="Form#SIDEBAR_ELEMENTS_TAB" value1="Elements" />
 	</command>
 
 	<command name="gotoFormPage">
@@ -309,12 +309,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="saveElementSet">
-		<execute macro="Button#clickSave" />
-
-		<execute macro="Alert#waitForSuccessMessageHide" />
-	</command>
-
 	<command name="saveAndPublish">
 		<execute function="Click" locator1="Form#SAVE_BUTTON_DROPDOWN" />
 
@@ -323,6 +317,12 @@
 		</execute>
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="saveElementSet">
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="saveLocalized">

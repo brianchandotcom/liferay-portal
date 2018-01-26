@@ -84,12 +84,17 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 
 					int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);
 
-					if (lastIndexOf > 0) {
-						String index = elName.substring(lastIndexOf + 1);
+					if (lastIndexOf < 1) {
+						continue;
+					}
 
-						if (Validator.isNumber(index)) {
-							elName = elName.substring(0, lastIndexOf);
-						}
+					String index = elName.substring(lastIndexOf + 1);
+
+					if (Validator.isNumber(index)) {
+						elName = elName.substring(0, lastIndexOf);
+					}
+					else {
+						continue;
 					}
 
 					ps2.setString(1, elName);

@@ -167,8 +167,6 @@ BookmarksUtil.addPortletBreadcrumbEntries(folder, request, renderResponse);
 	portletURL="<%= restoreTrashEntriesURL %>"
 />
 
-<liferay-util:include page="/bookmarks/navigation.jsp" servletContext="<%= application %>" />
-
 <liferay-util:include page="/bookmarks/toolbar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="searchContainerId" value="entries" />
 </liferay-util:include>

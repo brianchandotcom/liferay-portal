@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.service.permission;
+package com.liferay.dynamic.data.lists.internal.service.permission;
 
-import com.liferay.dynamic.data.lists.model.DDLRecordSet;
-import com.liferay.dynamic.data.lists.service.DDLRecordSetLocalService;
+import com.liferay.dynamic.data.lists.model.DDLRecord;
+import com.liferay.dynamic.data.lists.service.DDLRecordLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -29,34 +29,34 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	property = {
-		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecordSet"
+		"model.class.name=com.liferay.dynamic.data.lists.model.DDLRecord"
 	},
 	service = PermissionUpdateHandler.class
 )
-public class DDLRecordSetPermissionUpdateHandler
+public class DDLRecordPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		DDLRecordSet ddlRecordSet = _ddlRecordSetLocalService.fetchDDLRecordSet(
+		DDLRecord ddlRecord = _ddlRecordLocalService.fetchDDLRecord(
 			GetterUtil.getLong(primKey));
 
-		if (ddlRecordSet == null) {
+		if (ddlRecord == null) {
 			return;
 		}
 
-		ddlRecordSet.setModifiedDate(new Date());
+		ddlRecord.setModifiedDate(new Date());
 
-		_ddlRecordSetLocalService.updateDDLRecordSet(ddlRecordSet);
+		_ddlRecordLocalService.updateDDLRecord(ddlRecord);
 	}
 
 	@Reference(unbind = "-")
-	protected void setDDLRecordSetLocalService(
-		DDLRecordSetLocalService ddlRecordSetLocalService) {
+	protected void setDDLRecordLocalService(
+		DDLRecordLocalService ddlRecordLocalService) {
 
-		_ddlRecordSetLocalService = ddlRecordSetLocalService;
+		_ddlRecordLocalService = ddlRecordLocalService;
 	}
 
-	private DDLRecordSetLocalService _ddlRecordSetLocalService;
+	private DDLRecordLocalService _ddlRecordLocalService;
 
 }

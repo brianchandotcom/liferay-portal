@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.dynamic.data.lists.service.permission;
+package com.liferay.dynamic.data.lists.internal.service.permission;
 
 import com.liferay.dynamic.data.lists.constants.DDLConstants;
 import com.liferay.dynamic.data.mapping.util.DDMStructurePermissionSupport;

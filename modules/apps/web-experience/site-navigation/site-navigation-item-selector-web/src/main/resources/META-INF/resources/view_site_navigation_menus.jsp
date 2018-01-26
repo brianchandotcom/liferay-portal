@@ -49,6 +49,18 @@ String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDispla
 			orderColumns="<%= siteNavigationMenuItemSelectorViewDisplayContext.getOrderColumns() %>"
 			portletURL="<%= siteNavigationMenuItemSelectorViewDisplayContext.getPortletURL() %>"
 		/>
+
+		<%
+		PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+		searchURL.setParameter("resetCur", Boolean.TRUE.toString());
+		%>
+
+		<li>
+			<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

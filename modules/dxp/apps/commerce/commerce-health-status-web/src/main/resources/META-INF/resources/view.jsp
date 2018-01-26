@@ -63,7 +63,7 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 
 				<div class="<%= iconCheckCssClass %>">
 					<liferay-ui:icon
-						cssClass="commerce-health-status-icon-check"
+						cssClass="commerce-admin-icon-check"
 						icon="check"
 						markupView="lexicon"
 					/>
@@ -71,7 +71,7 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 
 				<div class="<%= iconTimesCssClass %>">
 					<liferay-ui:icon
-						cssClass="commerce-health-status-icon-times"
+						cssClass="commerce-admin-icon-times"
 						icon="times"
 						markupView="lexicon"
 					/>
@@ -89,13 +89,3 @@ SearchContainer<CommerceHealthStatus> commerceHealthStatusSearchContainer = comm
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
-
-<style>
-	.commerce-health-status-icon-check .lexicon-icon-check {
-		fill: green;
-	}
-
-	.commerce-health-status-icon-times .lexicon-icon-times {
-		fill: red;
-	}
-</style>

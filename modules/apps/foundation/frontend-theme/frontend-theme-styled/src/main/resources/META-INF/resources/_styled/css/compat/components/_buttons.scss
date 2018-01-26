@@ -85,6 +85,16 @@
 		}
 	}
 
+	.btn-xs {
+		@extend .btn-sm;
+
+		.icon-monospaced {
+			height: 1rem;
+			line-height: 18px;
+			width: 1rem;
+		}
+	}
+
 	.btn-bottom-right {
 		bottom: 30px;
 		position: fixed;

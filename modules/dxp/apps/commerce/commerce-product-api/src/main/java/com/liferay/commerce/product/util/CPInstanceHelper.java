@@ -45,6 +45,9 @@ public interface CPInstanceHelper {
 			long cpDefinitionId, Locale locale)
 		throws PortalException;
 
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+		getCPDefinitionOptionRelsMap(String json) throws PortalException;
+
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
 			long cpDefinitionId, String optionFieldName,
 			Map<String, String> optionMap)
@@ -59,15 +62,12 @@ public interface CPInstanceHelper {
 			boolean skuContributor)
 		throws PortalException;
 
+	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
+		throws PortalException;
+
 	public DDMForm getPublicStoreDDMForm(
 			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
 			boolean skuContributor)
-		throws PortalException;
-
-	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		parseCPInstanceJSONString(String json) throws PortalException;
-
-	public List<KeyValuePair> parseJSONString(String json, Locale locale)
 		throws PortalException;
 
 	public String renderCPAttachmentFileEntryOptions(

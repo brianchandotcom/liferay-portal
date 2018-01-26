@@ -93,7 +93,7 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = or
 
 					String thumbnailSrc = orderSummaryCheckoutStepDisplayContext.getCommerceCartItemThumb(commerceCartItem, themeDisplay);
 
-					List<KeyValuePair> keyValuePairs = orderSummaryCheckoutStepDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
+					List<KeyValuePair> keyValuePairs = orderSummaryCheckoutStepDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
 
 					StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 

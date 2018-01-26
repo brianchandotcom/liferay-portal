@@ -47,7 +47,7 @@ request.setAttribute("view.jsp-portletURL", portletURL);
 
 				String thumbnailSrc = cpDefinition.getDefaultImageThumbnailSrc(themeDisplay);
 
-				List<KeyValuePair> keyValuePairs = commerceWishListContentDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
+				List<KeyValuePair> keyValuePairs = commerceWishListContentDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
 
 				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 

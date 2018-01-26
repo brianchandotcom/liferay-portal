@@ -78,7 +78,7 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = co
 
 				String thumbnailSrc = commerceCartContentDisplayContext.getCommerceCartItemThumbnailSrc(commerceCartItem, themeDisplay);
 
-				List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.parseJSONString(commerceCartItem.getJson(), locale);
+				List<KeyValuePair> keyValuePairs = commerceCartContentDisplayContext.getKeyValuePairs(commerceCartItem.getJson(), locale);
 
 				StringJoiner stringJoiner = new StringJoiner(StringPool.COMMA);
 

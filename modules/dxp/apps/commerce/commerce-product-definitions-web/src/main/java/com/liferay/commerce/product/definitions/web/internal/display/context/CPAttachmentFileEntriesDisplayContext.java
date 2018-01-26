@@ -354,7 +354,7 @@ public class CPAttachmentFileEntriesDisplayContext extends
 			return Collections.emptyMap();
 		}
 
-		return _cpInstanceHelper.parseCPInstanceJSONString(
+		return _cpInstanceHelper.getCPDefinitionOptionRelsMap(
 			cpAttachmentFileEntry.getJson());
 	}
 

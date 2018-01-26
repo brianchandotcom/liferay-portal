@@ -167,6 +167,12 @@ public class CommerceCartContentDisplayContext {
 		return _commercePriceFormatter.format(httpServletRequest, price);
 	}
 
+	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
+		throws PortalException {
+
+		return cpInstanceHelper.getKeyValuePairs(json, locale);
+	}
+
 	public PortletURL getPortletURL() throws PortalException {
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
@@ -215,12 +221,6 @@ public class CommerceCartContentDisplayContext {
 
 	public boolean isValidCommerceCart() throws PortalException {
 		return _commerceCartValidatorRegistry.isValid(_commerceCart);
-	}
-
-	public List<KeyValuePair> parseJSONString(String json, Locale locale)
-		throws PortalException {
-
-		return cpInstanceHelper.parseJSONString(json, locale);
 	}
 
 	public List<CommerceCartValidatorResult> validateCommerceCartItem(

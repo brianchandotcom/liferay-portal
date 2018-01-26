@@ -160,7 +160,7 @@ public class CPInstanceIndexer extends BaseIndexer<CPInstance> {
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap =
-				_cpInstanceHelper.parseCPInstanceJSONString(
+				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
 					cpInstance.getDDMContent());
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

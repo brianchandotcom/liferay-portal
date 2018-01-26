@@ -120,10 +120,10 @@ public class OrderSummaryCheckoutStepDisplayContext {
 		return _commercePriceFormatter.format(_httpServletRequest, price);
 	}
 
-	public List<KeyValuePair> parseJSONString(String json, Locale locale)
+	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
 		throws PortalException {
 
-		return _cpInstanceHelper.parseJSONString(json, locale);
+		return _cpInstanceHelper.getKeyValuePairs(json, locale);
 	}
 
 	private final CommerceCart _commerceCart;

@@ -183,6 +183,63 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
+	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+		getCPDefinitionOptionRelsMap(String json) throws PortalException {
+
+		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
+			cpDefinitionOptionRelListMap = new HashMap<>();
+
+		if (Validator.isNull(json)) {
+			return cpDefinitionOptionRelListMap;
+		}
+
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
+
+		for (int i = 0; i < jsonArray.length(); i++) {
+			JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+			long cpDefinitionOptionRelId = jsonObject.getLong("key");
+			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
+
+			CPDefinitionOptionRel cpDefinitionOptionRel =
+				_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
+					cpDefinitionOptionRelId);
+
+			if (cpDefinitionOptionRel == null) {
+				continue;
+			}
+
+			for (int j = 0; j < valueJSONArray.length(); j++) {
+				long cpDefinitionOptionValueRelId = GetterUtil.getLong(
+					valueJSONArray.getString(j));
+
+				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
+					_cpDefinitionOptionValueRelLocalService.
+						fetchCPDefinitionOptionValueRel(
+							cpDefinitionOptionValueRelId);
+
+				if (cpDefinitionOptionValueRel == null) {
+					continue;
+				}
+
+				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
+					cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
+
+				if (cpDefinitionOptionValueRels == null) {
+					cpDefinitionOptionValueRels = new ArrayList<>();
+
+					cpDefinitionOptionRelListMap.put(
+						cpDefinitionOptionRel, cpDefinitionOptionValueRels);
+				}
+
+				cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
+			}
+		}
+
+		return cpDefinitionOptionRelListMap;
+	}
+
+	@Override
 	public List<CPDefinitionOptionValueRel> getCPDefinitionOptionValueRel(
 			long cpDefinitionId, String optionFieldName,
 			Map<String, String> optionMap)
@@ -348,75 +405,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 	}
 
 	@Override
-	public DDMForm getPublicStoreDDMForm(
-			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
-			boolean skuContributor)
-		throws PortalException {
-
-		return _getDDMForm(
-			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor,
-			false, true);
-	}
-
-	@Override
-	public Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-		parseCPInstanceJSONString(String json) throws PortalException {
-
-		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
-			cpDefinitionOptionRelListMap = new HashMap<>();
-
-		if (Validator.isNull(json)) {
-			return cpDefinitionOptionRelListMap;
-		}
-
-		JSONArray jsonArray = JSONFactoryUtil.createJSONArray(json);
-
-		for (int i = 0; i < jsonArray.length(); i++) {
-			JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-			long cpDefinitionOptionRelId = jsonObject.getLong("key");
-			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
-
-			CPDefinitionOptionRel cpDefinitionOptionRel =
-				_cpDefinitionOptionRelLocalService.fetchCPDefinitionOptionRel(
-					cpDefinitionOptionRelId);
-
-			if (cpDefinitionOptionRel == null) {
-				continue;
-			}
-
-			for (int j = 0; j < valueJSONArray.length(); j++) {
-				long cpDefinitionOptionValueRelId = GetterUtil.getLong(
-					valueJSONArray.getString(j));
-
-				CPDefinitionOptionValueRel cpDefinitionOptionValueRel =
-					_cpDefinitionOptionValueRelLocalService.
-						fetchCPDefinitionOptionValueRel(
-							cpDefinitionOptionValueRelId);
-
-				if (cpDefinitionOptionValueRel == null) {
-					continue;
-				}
-
-				List<CPDefinitionOptionValueRel> cpDefinitionOptionValueRels =
-					cpDefinitionOptionRelListMap.get(cpDefinitionOptionRel);
-
-				if (cpDefinitionOptionValueRels == null) {
-					cpDefinitionOptionValueRels = new ArrayList<>();
-
-					cpDefinitionOptionRelListMap.put(
-						cpDefinitionOptionRel, cpDefinitionOptionValueRels);
-				}
-
-				cpDefinitionOptionValueRels.add(cpDefinitionOptionValueRel);
-			}
-		}
-
-		return cpDefinitionOptionRelListMap;
-	}
-
-	@Override
-	public List<KeyValuePair> parseJSONString(String json, Locale locale)
+	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
 		throws PortalException {
 
 		List<KeyValuePair> values = new ArrayList<>();
@@ -469,6 +458,17 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		}
 
 		return values;
+	}
+
+	@Override
+	public DDMForm getPublicStoreDDMForm(
+			long cpDefinitionId, Locale locale, boolean ignoreSKUCombinations,
+			boolean skuContributor)
+		throws PortalException {
+
+		return _getDDMForm(
+			cpDefinitionId, locale, ignoreSKUCombinations, skuContributor,
+			false, true);
 	}
 
 	@Override

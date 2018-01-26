@@ -223,7 +223,7 @@ public class CPAttachmentFileEntryIndexer
 
 		Map<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>
 			cpDefinitionOptionRelListMap =
-				_cpInstanceHelper.parseCPInstanceJSONString(
+				_cpInstanceHelper.getCPDefinitionOptionRelsMap(
 					cpAttachmentFileEntry.getJson());
 
 		for (Map.Entry<CPDefinitionOptionRel, List<CPDefinitionOptionValueRel>>

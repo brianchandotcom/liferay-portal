@@ -268,7 +268,7 @@ public class CPInstanceDisplayContext
 
 		CPInstance cpInstance = _cpInstanceService.getCPInstance(cpInstanceId);
 
-		return _cpInstanceHelper.parseCPInstanceJSONString(
+		return _cpInstanceHelper.getCPDefinitionOptionRelsMap(
 			cpInstance.getDDMContent());
 	}
 

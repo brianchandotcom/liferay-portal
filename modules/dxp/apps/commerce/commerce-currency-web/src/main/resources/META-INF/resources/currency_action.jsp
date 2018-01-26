@@ -35,6 +35,30 @@ CommerceCurrency commerceCurrency = (CommerceCurrency)row.getObject();
 			url="<%= editURL %>"
 		/>
 
+		<portlet:actionURL name="editCommerceCurrency" var="setPrimaryURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setPrimary" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceCurrencyId" value="<%= String.valueOf(commerceCurrency.getCommerceCurrencyId()) %>" />
+			<portlet:param name="primary" value="<%= String.valueOf(!commerceCurrency.getPrimary()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= (commerceCurrency.getPrimary()) ? LanguageUtil.get(request, "unset-as-primary") : LanguageUtil.get(request, "set-as-primary") %>'
+			url="<%= setPrimaryURL %>"
+		/>
+
+		<portlet:actionURL name="editCommerceCurrency" var="setActiveURL">
+			<portlet:param name="<%= Constants.CMD %>" value="setActive" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+			<portlet:param name="commerceCurrencyId" value="<%= String.valueOf(commerceCurrency.getCommerceCurrencyId()) %>" />
+			<portlet:param name="active" value="<%= String.valueOf(!commerceCurrency.getActive()) %>" />
+		</portlet:actionURL>
+
+		<liferay-ui:icon
+			message='<%= (commerceCurrency.getActive()) ? LanguageUtil.get(request, "unset-as-active") : LanguageUtil.get(request, "set-as-active") %>'
+			url="<%= setActiveURL %>"
+		/>
+
 		<portlet:actionURL name="editCommerceCurrency" var="deleteURL">
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />

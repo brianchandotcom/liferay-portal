@@ -129,7 +129,7 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 		HttpSession userSession = PortalSessionContext.get(sessionId);
 
 		if (userSession != null) {
-			boolean eanbled = ClusterInvokeThreadLocal.isEnabled();
+			boolean enabled = ClusterInvokeThreadLocal.isEnabled();
 
 			ClusterInvokeThreadLocal.setEnabled(true);
 
@@ -137,7 +137,7 @@ public class EditSessionMVCActionCommand extends BaseMVCActionCommand {
 				userSession.invalidate();
 			}
 			finally {
-				ClusterInvokeThreadLocal.setEnabled(eanbled);
+				ClusterInvokeThreadLocal.setEnabled(enabled);
 			}
 		}
 	}

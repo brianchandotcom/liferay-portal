@@ -374,8 +374,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			long cpDefinitionOptionRelId = GetterUtil.getLong(
-				jsonObject.getString("key"));
+			long cpDefinitionOptionRelId = jsonObject.getLong("key");
 			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =
@@ -431,8 +430,7 @@ public class CPInstanceHelperImpl implements CPInstanceHelper {
 		for (int i = 0; i < jsonArray.length(); i++) {
 			JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-			long cpDefinitionOptionRelId = GetterUtil.getLong(
-				jsonObject.getString("key"));
+			long cpDefinitionOptionRelId = jsonObject.getLong("key");
 			JSONArray valueJSONArray = jsonObject.getJSONArray("value");
 
 			CPDefinitionOptionRel cpDefinitionOptionRel =

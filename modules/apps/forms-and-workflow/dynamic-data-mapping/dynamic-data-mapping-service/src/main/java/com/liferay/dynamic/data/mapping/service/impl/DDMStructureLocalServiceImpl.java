@@ -45,6 +45,7 @@ import com.liferay.dynamic.data.mapping.util.DDM;
 import com.liferay.dynamic.data.mapping.util.DDMXML;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidationException;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValidator;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.backgroundtask.BackgroundTaskManager;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -178,6 +179,7 @@ public class DDMStructureLocalServiceImpl
 				structure, serviceContext.getModelPermissions());
 		}
 
+		if (!ExportImportThreadLocal.isImportInProcess()) {
 
 			// Structure version
 
@@ -186,6 +188,7 @@ public class DDMStructureLocalServiceImpl
 				structure.getDefinition(),
 				DDMStructureConstants.VERSION_DEFAULT, structure, ddmFormLayout,
 				serviceContext);
+		}
 
 		// Data provider instance links
 

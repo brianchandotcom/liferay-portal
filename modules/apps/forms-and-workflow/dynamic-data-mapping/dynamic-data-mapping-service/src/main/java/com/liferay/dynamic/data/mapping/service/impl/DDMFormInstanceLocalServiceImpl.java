@@ -29,6 +29,7 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.util.DDMFormFactory;
 import com.liferay.dynamic.data.mapping.util.DDMFormInstanceFactory;
 import com.liferay.dynamic.data.mapping.validator.DDMFormValuesValidator;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ResourceConstants;
@@ -103,11 +104,13 @@ public class DDMFormInstanceLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
-		long structureVersionId = getStructureVersionId(ddmStructureId);
+		if (!ExportImportThreadLocal.isImportInProcess()) {
+			long structureVersionId = getStructureVersionId(ddmStructureId);
 
 			ddmFormInstanceVersionLocalService.addFormInstanceVersion(
 				structureVersionId, userId, ddmFormInstance, _VERSION_DEFAULT,
 				serviceContext);
+		}
 
 		return updatedDDMFormInstance;
 	}

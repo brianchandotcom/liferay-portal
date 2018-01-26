@@ -37,8 +37,8 @@ if (!resultRowSplitterEntries.isEmpty()) {
 }
 %>
 
-<div class="table-responsive">
-	<table class="table table-autofit table-heading-nowrap table-list">
+<div class="table-responsive-lg">
+	<table class="show-quick-actions-on-hover table table-autofit table-list">
 		<c:if test="<%= ListUtil.isNotNull(headerNames) %>">
 			<thead>
 				<tr>
@@ -159,11 +159,9 @@ if (!resultRowSplitterEntries.isEmpty()) {
 			%>
 
 				<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-					<tr class="splitter">
+					<tr class="table-divider">
 						<td colspan="<%= (headerNames != null) ? headerNames.size() : StringPool.BLANK %>">
-							<div class="splitter">
-								<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
-							</div>
+							<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
 						</td>
 					</tr>
 				</c:if>

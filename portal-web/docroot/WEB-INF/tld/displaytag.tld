@@ -494,7 +494,7 @@
       <rtexprvalue>true</rtexprvalue>
       <type>java.lang.String</type>
       <description>
-        html pass through attribute; use this instead of directly coding presentational atttributes.
+        html pass through attribute; use this instead of directly coding presentational attributes.
       </description>
     </attribute>
     <attribute>

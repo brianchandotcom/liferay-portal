@@ -41,7 +41,9 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 		keyProperty="name"
 		modelVar="entityTypeComposite"
 	>
-		<% UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay(); %>
+		<%
+		UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
+		%>
 
 		<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
 			<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />

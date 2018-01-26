@@ -49,9 +49,9 @@ public class AutoAnonymizeUserAssociatedDataMVCActionCommand
 		UADEntityAnonymizer uadEntityAnonymizer =
 			_uadRegistry.getUADEntityAnonymizer(key);
 
-		long userId = ParamUtil.getLong(actionRequest, "userId");
+		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		uadEntityAnonymizer.autoAnonymizeAll(userId);
+		uadEntityAnonymizer.autoAnonymizeAll(selUserId);
 	}
 
 	@Override

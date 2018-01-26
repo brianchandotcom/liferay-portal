@@ -26,7 +26,7 @@ UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)row.getO
 	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
 		<portlet:param name="mvcActionCommand" value="/user_associated_data/auto_anonymize_user_associated_data" />
 		<portlet:param name="key" value="<%= uadEntityTypeComposite.getKey() %>" />
-		<portlet:param name="userId" value="<%= String.valueOf(uadEntityTypeComposite.getUserId()) %>" />
+		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -37,7 +37,7 @@ UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)row.getO
 	<portlet:actionURL name="/user_associated_data/delete_user_associated_data" var="deleteURL">
 		<portlet:param name="mvcActionCommand" value="/user_associated_data/delete_user_associated_data" />
 		<portlet:param name="key" value="<%= uadEntityTypeComposite.getKey() %>" />
-		<portlet:param name="userId" value="<%= String.valueOf(uadEntityTypeComposite.getUserId()) %>" />
+		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon
@@ -48,7 +48,7 @@ UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)row.getO
 	<portlet:actionURL name="/user_associated_data/export_user_associated_data" var="exportURL">
 		<portlet:param name="mvcActionCommand" value="/user_associated_data/export_user_associated_data" />
 		<portlet:param name="key" value="<%= uadEntityTypeComposite.getKey() %>" />
-		<portlet:param name="userId" value="<%= String.valueOf(uadEntityTypeComposite.getUserId()) %>" />
+		<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon

@@ -12,15 +12,17 @@
  * details.
  */
 
-package com.liferay.jenkins.results.parser;
+package com.liferay.jenkins.results.parser.vm.provisioner;
 
 /**
- * @author Kiyoshi Lee
+ * @author Peter Yoo
  */
-public interface AwsVmProvisioner {
+public abstract class BaseAwsVmProvisioner implements AwsVmProvisioner {
 
-	public void create();
+	public abstract void create();
 
-	public void delete();
+	public abstract void delete();
+
+	protected static final long TIMEOUT_DURATION = 1000 * 60 * 10;
 
 }

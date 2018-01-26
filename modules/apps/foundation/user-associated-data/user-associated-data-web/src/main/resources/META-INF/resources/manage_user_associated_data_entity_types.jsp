@@ -21,8 +21,6 @@ String redirect = ParamUtil.getString(request, "redirect");
 
 String backURL = ParamUtil.getString(request, "backURL", redirect);
 
-Long selUserId = ParamUtil.getLong(request, "selUserId");
-
 List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite>)request.getAttribute("entityTypeComposites");
 %>
 
@@ -48,7 +46,7 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 		<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
 			<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
 			<portlet:param name="key" value="<%= entityTypeComposite.getKey() %>" />
-			<portlet:param name="userId" value="<%= String.valueOf(entityTypeComposite.getUserId()) %>" />
+			<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
 		</portlet:renderURL>
 
 		<liferay-ui:search-container-column-text

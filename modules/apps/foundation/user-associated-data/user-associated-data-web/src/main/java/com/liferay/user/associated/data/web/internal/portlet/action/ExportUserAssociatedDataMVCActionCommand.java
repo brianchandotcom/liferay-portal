@@ -55,9 +55,9 @@ public class ExportUserAssociatedDataMVCActionCommand
 		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(
 			key);
 
-		long userId = ParamUtil.getLong(actionRequest, "userId");
+		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		uadEntityExporter.exportAll(userId);
+		uadEntityExporter.exportAll(selUserId);
 	}
 
 	@Reference

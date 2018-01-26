@@ -47,9 +47,9 @@ public class DeleteUserAssociatedDataMVCActionCommand
 		UADEntityAnonymizer uadEntityAnonymizer =
 			_uadRegistry.getUADEntityAnonymizer(key);
 
-		long userId = ParamUtil.getLong(actionRequest, "userId");
+		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
-		uadEntityAnonymizer.deleteAll(userId);
+		uadEntityAnonymizer.deleteAll(selUserId);
 	}
 
 	@Override

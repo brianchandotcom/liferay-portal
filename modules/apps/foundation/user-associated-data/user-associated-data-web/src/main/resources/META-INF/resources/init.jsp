@@ -36,3 +36,7 @@ page import="com.liferay.user.associated.data.util.UADEntityTypeComposite" %>
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
+
+<%
+long selUserId = ParamUtil.getLong(request, "selUserId");
+%>

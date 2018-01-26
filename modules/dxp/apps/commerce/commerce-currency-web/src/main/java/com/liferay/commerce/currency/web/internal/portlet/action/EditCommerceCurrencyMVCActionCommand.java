@@ -20,17 +20,24 @@ import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.ExchangeRateProvider;
+import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
+import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
@@ -93,6 +100,15 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 				updateCommerceCurrency(actionRequest);
 			}
+			else if (cmd.equals("setActive")) {
+				setActive(actionRequest);
+			}
+			else if (cmd.equals("setPrimary")) {
+				setPrimary(actionRequest);
+			}
+			else if (cmd.equals("updateExchangeRates")) {
+				updateExchangeRates(actionRequest);
+			}
 		}
 		catch (Exception e) {
 			if (e instanceof NoSuchCurrencyException ||
@@ -117,6 +133,28 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 				throw e;
 			}
 		}
+	}
+
+	protected void setActive(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceCurrencyId = ParamUtil.getLong(
+			actionRequest, "commerceCurrencyId");
+
+		boolean active = ParamUtil.getBoolean(actionRequest, "active");
+
+		_commerceCurrencyService.setActive(commerceCurrencyId, active);
+	}
+
+	protected void setPrimary(ActionRequest actionRequest)
+		throws PortalException {
+
+		long commerceCurrencyId = ParamUtil.getLong(
+			actionRequest, "commerceCurrencyId");
+
+		boolean primary = ParamUtil.getBoolean(actionRequest, "primary");
+
+		_commerceCurrencyService.setPrimary(commerceCurrencyId, primary);
 	}
 
 	protected CommerceCurrency updateCommerceCurrency(
@@ -155,7 +193,63 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 		return commerceCurrency;
 	}
 
+	protected void updateExchangeRates(ActionRequest actionRequest)
+		throws Exception {
+
+		long[] updateCommerceCurrencyExchangeRateIds = null;
+
+		long commerceCurrencyId = ParamUtil.getLong(
+			actionRequest, "commerceCurrencyId");
+
+		if (commerceCurrencyId > 0) {
+			updateCommerceCurrencyExchangeRateIds =
+				new long[] {commerceCurrencyId};
+		}
+		else {
+			updateCommerceCurrencyExchangeRateIds = StringUtil.split(
+				ParamUtil.getString(
+					actionRequest, "updateCommerceCurrencyExchangeRateIds"),
+				0L);
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceCurrency.class.getName(), actionRequest);
+
+		ExchangeRateProviderGroupServiceConfiguration
+			exchangeRateProviderGroupServiceConfiguration =
+				_configurationProvider.getConfiguration(
+					ExchangeRateProviderGroupServiceConfiguration.class,
+					new GroupServiceSettingsLocator(
+						serviceContext.getScopeGroupId(),
+						CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
+
+		String exchangeRateProviderKey =
+			exchangeRateProviderGroupServiceConfiguration.
+				defaultExchangeRateProviderKey();
+
+		if (Validator.isNull(exchangeRateProviderKey)) {
+			return;
+		}
+
+		ExchangeRateProvider exchangeRateProvider =
+			_exchangeRateProviderRegistry.getExchangeRateProvider(
+				exchangeRateProviderKey);
+
+		for (long updateCommerceCurrencyExchangeRateId :
+				updateCommerceCurrencyExchangeRateIds) {
+
+			_commerceCurrencyService.updateExchangeRate(
+				updateCommerceCurrencyExchangeRateId, exchangeRateProvider);
+		}
+	}
+
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 }

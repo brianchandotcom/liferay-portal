@@ -268,7 +268,8 @@ public class DDMRESTDataProvider implements DDMDataProvider {
 
 		HttpResponse httpResponse = httpRequest.send();
 
-		DocumentContext documentContext = JsonPath.parse(httpResponse.body());
+		DocumentContext documentContext = JsonPath.parse(
+			httpResponse.bodyText());
 
 		DDMDataProviderResponse ddmDataProviderResponse =
 			createDDMDataProviderResponse(

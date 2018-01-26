@@ -67,18 +67,6 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			selected="<%= true %>"
 		/>
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -105,6 +93,18 @@ MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, request, renderR
 			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
+
+		<li>
+			<liferay-portlet:renderURL varImpl="searchURL">
+				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+			</liferay-portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

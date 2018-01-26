@@ -18,6 +18,7 @@ import com.liferay.commerce.currency.model.CommerceCurrency;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public interface ExchangeRateProvider {
 
@@ -25,5 +26,7 @@ public interface ExchangeRateProvider {
 			CommerceCurrency primaryCommerceCurrency,
 			CommerceCurrency secondaryCommerceCurrency)
 		throws Exception;
+
+	public String getKey();
 
 }

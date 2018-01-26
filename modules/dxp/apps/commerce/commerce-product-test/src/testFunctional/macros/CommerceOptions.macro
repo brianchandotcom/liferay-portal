@@ -1,5 +1,9 @@
 <definition>
 	<command name="addEntry">
+		<execute function="Pause" locator1="3000" />
+
+		<execute function="AssertElementPresent" locator1="CommerceEntry#TITLE_FIELD" />
+
 		<if>
 			<condition function="IsElementPresent" locator1="Button#DELETE" />
 			<then>

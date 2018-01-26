@@ -86,7 +86,7 @@ portletURL.setParameter("delta", String.valueOf(delta));
 
 			String portletId = (String)request.getAttribute(WebKeys.PORTLET_ID);
 
-			if (portletId.equals(SyncAdminPortletKeys.SYNC_ADMIN_PORTLET)) {
+			if (portletId.equals(SyncPortletKeys.SYNC_ADMIN_PORTLET)) {
 				syncDevices = SyncDeviceLocalServiceUtil.search(themeDisplay.getCompanyId(), keywords, searchContainer.getStart(), searchContainer.getEnd(), orderByComparator);
 			}
 			else {

@@ -127,7 +127,7 @@ public class LiveUsersMessageListener extends BaseMessageListener {
 			Future<ClusterNodeResponses> future, Throwable throwable) {
 
 			_log.error(
-				"Uanble to add cluster node " + _clusterNodeId, throwable);
+				"Unable to add cluster node " + _clusterNodeId, throwable);
 		}
 
 		@Override

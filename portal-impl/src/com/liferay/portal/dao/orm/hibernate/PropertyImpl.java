@@ -418,7 +418,7 @@ public class PropertyImpl extends ProjectionImpl implements Property {
 			return (DynamicQueryImpl)doPrivilegedHandler.getActualBean();
 		}
 
-		throw new IllegalArgumentException("Uanble to unwrap " + subselect);
+		throw new IllegalArgumentException("Unable to unwrap " + subselect);
 	}
 
 	private final org.hibernate.criterion.Property _property;

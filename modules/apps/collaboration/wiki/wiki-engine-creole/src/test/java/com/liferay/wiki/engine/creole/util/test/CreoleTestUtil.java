@@ -71,7 +71,7 @@ public class CreoleTestUtil {
 			throw new RuntimeException("File " + fileName + " does not exist");
 		}
 		catch (RecognitionException re) {
-			throw new RuntimeException("Uanble to parse " + fileName);
+			throw new RuntimeException("Unable to parse " + fileName);
 		}
 
 		return creole10parser.getWikiPageNode();

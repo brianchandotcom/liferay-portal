@@ -16,10 +16,7 @@ package com.liferay.commerce.currency.web.internal.util;
 
 import com.liferay.commerce.admin.web.util.CommerceAdminModule;
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.service.CommerceCurrencyService;
 import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
-import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
-import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
@@ -32,7 +29,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.xml.Element;
 
 import java.io.IOException;
@@ -160,14 +156,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException {
 
-		CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext =
-			new CommerceCurrenciesDisplayContext(
-				_commerceCurrencyService, _roundingTypeServicesTracker,
-				renderRequest, renderResponse);
-
-		renderRequest.setAttribute(
-			WebKeys.PORTLET_DISPLAY_CONTEXT, commerceCurrenciesDisplayContext);
-
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 		HttpServletResponse httpServletResponse =
@@ -177,9 +165,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 			_servletContext, httpServletRequest, httpServletResponse,
 			"/view.jsp");
 	}
-
-	@Reference
-	private CommerceCurrencyService _commerceCurrencyService;
 
 	@Reference(
 		target = "(model.class.name=com.liferay.commerce.currency.model.CommerceCurrency)"
@@ -192,9 +177,6 @@ public class CurrenciesCommerceAdminModule implements CommerceAdminModule {
 
 	@Reference
 	private Portal _portal;
-
-	@Reference
-	private RoundingTypeServicesTracker _roundingTypeServicesTracker;
 
 	@Reference(
 		target = "(osgi.web.symbolicname=com.liferay.commerce.currency.web)"

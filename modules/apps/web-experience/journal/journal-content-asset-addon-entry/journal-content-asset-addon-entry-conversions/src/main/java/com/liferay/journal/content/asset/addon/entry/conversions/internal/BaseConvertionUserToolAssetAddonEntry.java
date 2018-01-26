@@ -14,7 +14,7 @@
 
 package com.liferay.journal.content.asset.addon.entry.conversions.internal;
 
-import com.liferay.journal.content.asset.addon.entry.common.UserToolAssetAddonEntry;
+import com.liferay.journal.content.asset.addon.entry.UserToolAssetAddonEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.servlet.taglib.ui.BaseJSPAssetAddonEntry;
 import com.liferay.portal.kernel.util.ArrayUtil;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.journal.content.asset.addon.entry.common;
+package com.liferay.journal.content.asset.addon.entry;
 
 import com.liferay.portal.kernel.servlet.taglib.ui.AssetAddonEntry;
 

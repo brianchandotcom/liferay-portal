@@ -71,6 +71,12 @@ $languageUtil.format($locale, $lang_key, $arguments.toArray())#end
 	#end
 #end
 
+#macro (search_bar $default_preferences)
+	#if ($is_setup_complete)
+		$theme.runtime("com_liferay_portal_search_web_search_bar_portlet_SearchBarPortlet", $portletProviderAction.VIEW, "templateSearch", $!default_preferences)
+	#end
+#end
+
 #macro (user_personal_bar)
 	#if ($is_setup_complete || !$is_signed_in)
 		#set ($render_portlet_boundary = $request.getAttribute("RENDER_PORTLET_BOUNDARY"))

@@ -249,12 +249,22 @@
 </tr>
 <tr>
 	<td>SIDEBAR_PROPERTIES_TAB</td>
-	<td>//a[contains(@class,'tab') and .='properties'] | //a[contains(@class,'tab') and .='Properties']</td>
+	<td>//a[contains(@class,'tab') and .='Properties']</td>
 	<td></td>
 </tr>
 <tr>
 	<td>SIDEBAR_BASIC_TAB</td>
-	<td>//a[contains(@class,'tab') and .='basic'] | //a[contains(@class,'tab') and .='Basic']</td>
+	<td>//a[contains(@class,'tab') and .='Basic']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_ELEMENTS_TAB</td>
+	<td>//a[contains(@class,'tab') and .='Elements']</td>
+	<td></td>
+</tr>
+<tr>
+	<td>SIDEBAR_ELEMENT_SETS_TAB</td>
+	<td>//a[contains(@class,'tab') and .='Element Sets']</td>
 	<td></td>
 </tr>
 <tr>

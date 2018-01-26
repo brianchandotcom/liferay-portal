@@ -206,12 +206,28 @@
 		<return name="publicURL" value="${publicURL}" />
 	</command>
 
+	<command name="gotoAddElementSet">
+		<var name="key_columnSize" value="${columnSize}" />
+
+		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
+
+		<execute function="Click" locator1="Form#ADD_FIELD" />
+
+		<execute macro="Form#gotoElementSetsTab" />
+
+		<var name="key_fieldType" value="${elementSetTitle}" />
+
+		<execute function="DragAndDrop" locator1="Form#ADD_FIELD_TYPE" locator2="Form#ADD_FIELD_POSITION" value1="${elementSetTitle}" />
+	</command>
+
 	<command name="gotoAddField">
 		<var name="key_columnSize" value="${columnSize}" />
 
 		<execute function="MouseOver#mouseOverNotVisible" locator1="Form#ADD_FIELD" />
 
 		<execute function="Click" locator1="Form#ADD_FIELD" />
+
+		<execute macro="Form#gotoElementsTab" />
 
 		<var name="key_fieldType" value="${fieldType}" />
 
@@ -222,6 +238,14 @@
 
 	<command name="gotoAdvancedTab">
 		<execute function="AssertClick" locator1="Form#SIDEBAR_PROPERTIES_TAB" value1="Properties" />
+	</command>
+
+	<command name="gotoElementsTab">
+		<execute function="AssertClick" locator1="Form#SIDEBAR_ELEMENTS_TAB" value1="Elements" />
+	</command>
+
+	<command name="gotoElementSetsTab">
+		<execute function="AssertClick" locator1="Form#SIDEBAR_ELEMENT_SETS_TAB" value1="Element Sets" />
 	</command>
 
 	<command name="gotoAutocompleteConfiguration">
@@ -283,6 +307,12 @@
 		<execute function="AssertClick" locator1="Form#SAVE_FORM_BUTTON" value1="Save Form" />
 
 		<execute macro="Alert#viewSuccessMessage" />
+	</command>
+
+	<command name="saveElementSet">
+		<execute macro="Button#clickSave" />
+
+		<execute macro="Alert#waitForSuccessMessageHide" />
 	</command>
 
 	<command name="saveAndPublish">

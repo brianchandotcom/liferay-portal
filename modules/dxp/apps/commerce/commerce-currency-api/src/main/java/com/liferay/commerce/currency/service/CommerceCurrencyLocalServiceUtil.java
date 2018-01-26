@@ -358,6 +358,18 @@ public class CommerceCurrencyLocalServiceUtil {
 		getService().importDefaultValues(serviceContext);
 	}
 
+	public static com.liferay.commerce.currency.model.CommerceCurrency setActive(
+		long commerceCurrencyId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceCurrencyId, active);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency setPrimary(
+		long commerceCurrencyId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setPrimary(commerceCurrencyId, primary);
+	}
+
 	/**
 	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -379,6 +391,24 @@ public class CommerceCurrencyLocalServiceUtil {
 		return getService()
 				   .updateCommerceCurrency(commerceCurrencyId, code, nameMap,
 			rate, roundingType, primary, priority, active, serviceContext);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrencyRate(
+		long commerceCurrencyId, double rate)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCommerceCurrencyRate(commerceCurrencyId, rate);
+	}
+
+	public static void updateExchangeRate(long commerceCurrencyId,
+		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
+		throws java.lang.Exception {
+		getService().updateExchangeRate(commerceCurrencyId, exchangeRateProvider);
+	}
+
+	public static void updateExchangeRates(long groupId,
+		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
+		throws java.lang.Exception {
+		getService().updateExchangeRates(groupId, exchangeRateProvider);
 	}
 
 	public static CommerceCurrencyLocalService getService() {

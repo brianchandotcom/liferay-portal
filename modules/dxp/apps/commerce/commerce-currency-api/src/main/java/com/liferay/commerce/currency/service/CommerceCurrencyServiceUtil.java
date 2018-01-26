@@ -101,6 +101,18 @@ public class CommerceCurrencyServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.commerce.currency.model.CommerceCurrency setActive(
+		long commerceCurrencyId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setActive(commerceCurrencyId, active);
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrency setPrimary(
+		long commerceCurrencyId, boolean primary)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().setPrimary(commerceCurrencyId, primary);
+	}
+
 	public static com.liferay.commerce.currency.model.CommerceCurrency updateCommerceCurrency(
 		long commerceCurrencyId, java.lang.String code,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap, double rate,
@@ -111,6 +123,18 @@ public class CommerceCurrencyServiceUtil {
 		return getService()
 				   .updateCommerceCurrency(commerceCurrencyId, code, nameMap,
 			rate, roundingType, primary, priority, active, serviceContext);
+	}
+
+	public static void updateExchangeRate(long commerceCurrencyId,
+		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
+		throws java.lang.Exception {
+		getService().updateExchangeRate(commerceCurrencyId, exchangeRateProvider);
+	}
+
+	public static void updateExchangeRates(long groupId,
+		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
+		throws java.lang.Exception {
+		getService().updateExchangeRates(groupId, exchangeRateProvider);
 	}
 
 	public static CommerceCurrencyService getService() {

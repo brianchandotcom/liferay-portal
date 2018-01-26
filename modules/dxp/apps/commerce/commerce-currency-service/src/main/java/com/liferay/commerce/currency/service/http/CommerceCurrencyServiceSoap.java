@@ -69,6 +69,64 @@ import java.util.Map;
  */
 @ProviderType
 public class CommerceCurrencyServiceSoap {
+	public static void updateExchangeRates(long groupId,
+		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
+		throws RemoteException {
+		try {
+			CommerceCurrencyServiceUtil.updateExchangeRates(groupId,
+				exchangeRateProvider);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap setPrimary(
+		long commerceCurrencyId, boolean primary) throws RemoteException {
+		try {
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.setPrimary(commerceCurrencyId,
+					primary);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.commerce.currency.model.CommerceCurrencySoap setActive(
+		long commerceCurrencyId, boolean active) throws RemoteException {
+		try {
+			com.liferay.commerce.currency.model.CommerceCurrency returnValue = CommerceCurrencyServiceUtil.setActive(commerceCurrencyId,
+					active);
+
+			return com.liferay.commerce.currency.model.CommerceCurrencySoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void updateExchangeRate(long commerceCurrencyId,
+		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
+		throws RemoteException {
+		try {
+			CommerceCurrencyServiceUtil.updateExchangeRate(commerceCurrencyId,
+				exchangeRateProvider);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.commerce.currency.model.CommerceCurrencySoap addCommerceCurrency(
 		java.lang.String code, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues, double rate,

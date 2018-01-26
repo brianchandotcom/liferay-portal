@@ -17,6 +17,7 @@ package com.liferay.commerce.currency.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.util.ExchangeRateProvider;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -316,6 +317,12 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 	public void importDefaultValues(ServiceContext serviceContext)
 		throws java.lang.Exception;
 
+	public CommerceCurrency setActive(long commerceCurrencyId, boolean active)
+		throws PortalException;
+
+	public CommerceCurrency setPrimary(long commerceCurrencyId, boolean primary)
+		throws PortalException;
+
 	/**
 	* Updates the commerce currency in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -331,4 +338,13 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		double rate, java.lang.String roundingType, boolean primary,
 		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
+
+	public CommerceCurrency updateCommerceCurrencyRate(
+		long commerceCurrencyId, double rate) throws PortalException;
+
+	public void updateExchangeRate(long commerceCurrencyId,
+		ExchangeRateProvider exchangeRateProvider) throws java.lang.Exception;
+
+	public void updateExchangeRates(long groupId,
+		ExchangeRateProvider exchangeRateProvider) throws java.lang.Exception;
 }

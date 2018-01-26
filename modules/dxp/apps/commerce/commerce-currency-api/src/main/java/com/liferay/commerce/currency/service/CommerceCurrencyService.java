@@ -17,6 +17,7 @@ package com.liferay.commerce.currency.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
+import com.liferay.commerce.currency.util.ExchangeRateProvider;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -97,9 +98,21 @@ public interface CommerceCurrencyService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
+	public CommerceCurrency setActive(long commerceCurrencyId, boolean active)
+		throws PortalException;
+
+	public CommerceCurrency setPrimary(long commerceCurrencyId, boolean primary)
+		throws PortalException;
+
 	public CommerceCurrency updateCommerceCurrency(long commerceCurrencyId,
 		java.lang.String code, Map<Locale, java.lang.String> nameMap,
 		double rate, java.lang.String roundingType, boolean primary,
 		double priority, boolean active, ServiceContext serviceContext)
 		throws PortalException;
+
+	public void updateExchangeRate(long commerceCurrencyId,
+		ExchangeRateProvider exchangeRateProvider) throws java.lang.Exception;
+
+	public void updateExchangeRates(long groupId,
+		ExchangeRateProvider exchangeRateProvider) throws java.lang.Exception;
 }

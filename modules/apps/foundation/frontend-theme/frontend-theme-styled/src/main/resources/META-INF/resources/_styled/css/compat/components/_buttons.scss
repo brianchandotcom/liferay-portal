@@ -69,17 +69,19 @@
 		}
 	}
 
-	.btn-cancel.btn-link.btn-default {
-		@include border-radius(0.25rem);
+	.btn-link.btn-default {
+		&.btn-cancel, &.close-modal {
+			@include border-radius(0.25rem);
 
-		@include button-variant(theme-color(secondary), theme-color(secondary));
+			@include button-variant(theme-color(secondary), theme-color(secondary));
 
-		@include clay-button-variant(map-get($btn-palette, secondary));
+			@include clay-button-variant(map-get($btn-palette, secondary));
 
-		font-weight: 600;
+			font-weight: 600;
 
-		@include hover {
-			text-decoration: none;
+			@include hover {
+				text-decoration: none;
+			}
 		}
 	}
 

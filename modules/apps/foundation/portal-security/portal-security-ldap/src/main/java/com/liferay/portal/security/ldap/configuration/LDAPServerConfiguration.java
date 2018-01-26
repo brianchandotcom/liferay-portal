@@ -111,8 +111,7 @@ public interface LDAPServerConfiguration {
 	public String[] contactCustomMappings();
 
 	@Meta.AD(
-		deflt = "true", description = "group-search-filter-enabled-help",
-		name = "group-search-filter-enabled", required = false
+		deflt = "true", name = "group-search-filter-enabled", required = false
 	)
 	public boolean groupSearchFilterEnabled();
 

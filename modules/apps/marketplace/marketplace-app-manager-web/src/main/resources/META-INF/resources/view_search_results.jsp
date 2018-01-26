@@ -35,17 +35,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-results"), null);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewURL" />
+<portlet:renderURL var="viewURL" />
 
-		<aui:nav-item
-			href="<%= viewURL %>"
-			label="search"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
+/>
 
 <liferay-frontend:management-bar
 	searchContainerId="appDisplays"

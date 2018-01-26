@@ -70,20 +70,15 @@ renderResponse.setTitle((moduleGroupDisplay != null) ? moduleGroupDisplay.getTit
 MarketplaceAppManagerUtil.addPortletBreadcrumbEntry(appDisplay, moduleGroupDisplay, request, renderResponse);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewURL">
-			<portlet:param name="mvcPath" value="/view_modules.jsp" />
-			<portlet:param name="app" value="<%= app %>" />
-		</portlet:renderURL>
+<portlet:renderURL var="viewURL">
+	<portlet:param name="mvcPath" value="/view_modules.jsp" />
+	<portlet:param name="app" value="<%= app %>" />
+</portlet:renderURL>
 
-		<aui:nav-item
-			href="<%= viewURL %>"
-			label="modules"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items='<%= appManagerDisplayContext.getNavigationItems(viewURL, "modules") %>'
+/>
 
 <liferay-frontend:management-bar
 	searchContainerId="appDisplays"

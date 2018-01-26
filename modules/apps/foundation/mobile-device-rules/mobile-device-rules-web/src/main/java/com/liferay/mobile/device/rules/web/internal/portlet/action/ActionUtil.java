@@ -16,11 +16,8 @@ package com.liferay.mobile.device.rules.web.internal.portlet.action;
 
 import com.liferay.mobile.device.rules.action.ActionHandler;
 import com.liferay.mobile.device.rules.action.ActionHandlerManagerUtil;
-import com.liferay.mobile.device.rules.web.internal.rule.group.action.LayoutTemplateModificationActionHandler;
-import com.liferay.mobile.device.rules.web.internal.rule.group.action.SimpleRedirectActionHandler;
-import com.liferay.mobile.device.rules.web.internal.rule.group.action.SiteRedirectActionHandler;
-import com.liferay.mobile.device.rules.web.internal.rule.group.action.ThemeModificationActionHandler;
-import com.liferay.mobile.device.rules.web.internal.rule.group.rule.SimpleRuleHandler;
+import com.liferay.mobile.device.rules.rule.RuleGroupProcessorUtil;
+import com.liferay.mobile.device.rules.rule.RuleHandler;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,8 +25,6 @@ import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.PortletConfig;
@@ -44,28 +39,24 @@ import javax.portlet.ResourceResponse;
 public class ActionUtil {
 
 	public static String getActionEditorJSP(String type) {
-		String editorJSP = null;
-
 		ActionHandler actionHandler = ActionHandlerManagerUtil.getActionHandler(
 			type);
 
-		if (actionHandler != null) {
-			editorJSP = actionHandler.getEditorJSP();
+		if (actionHandler == null) {
+			return StringPool.BLANK;
 		}
 
-		if (editorJSP == null) {
-			editorJSP = StringPool.BLANK;
-		}
-
-		return editorJSP;
+		return actionHandler.getEditorJSP();
 	}
 
 	public static String getRuleEditorJSP(String type) {
-		if (type.equals(SimpleRuleHandler.getHandlerType())) {
-			return "/rule/simple_rule.jsp";
+		RuleHandler ruleHandler = RuleGroupProcessorUtil.getRuleHandler(type);
+
+		if (ruleHandler == null) {
+			return StringPool.BLANK;
 		}
 
-		return StringPool.BLANK;
+		return ruleHandler.getEditorJSP();
 	}
 
 	public static UnicodeProperties getTypeSettingsProperties(

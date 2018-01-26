@@ -26,6 +26,8 @@ public interface RuleHandler {
 
 	public boolean evaluateRule(MDRRule mdrRule, ThemeDisplay themeDisplay);
 
+	public String getEditorJSP();
+
 	public Collection<String> getPropertyNames();
 
 	public String getType();

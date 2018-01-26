@@ -69,10 +69,6 @@ public class SimpleRuleHandler implements RuleHandler {
 
 	public static final String PROPERTY_TABLET = "tablet";
 
-	public static String getHandlerType() {
-		return SimpleRuleHandler.class.getName();
-	}
-
 	@Override
 	public boolean evaluateRule(MDRRule mdrRule, ThemeDisplay themeDisplay) {
 		Device device = themeDisplay.getDevice();
@@ -135,13 +131,18 @@ public class SimpleRuleHandler implements RuleHandler {
 	}
 
 	@Override
+	public String getEditorJSP() {
+		return "/rule/simple_rule.jsp";
+	}
+
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}
 
 	@Override
 	public String getType() {
-		return getHandlerType();
+		return SimpleRuleHandler.class.getName();
 	}
 
 	protected StringBundler getLogStringBundler(

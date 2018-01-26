@@ -44,7 +44,7 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 		<% UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay(); %>
 
 		<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-			<portlet:param name="mvcRenderCommandName" value="/users_admin/manage_user_associated_data_entities" />
+			<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
 			<portlet:param name="key" value="<%= entityTypeComposite.getKey() %>" />
 			<portlet:param name="userId" value="<%= String.valueOf(entityTypeComposite.getUserId()) %>" />
 		</portlet:renderURL>
@@ -82,4 +82,4 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 	<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
-<portlet:actionURL name="/users_admin/anonymize_user_associated_data" var="anonymizeUserAssociatedDataActionURL" />
+<portlet:actionURL name="/user_associated_data/anonymize_user_associated_data" var="anonymizeUserAssociatedDataActionURL" />

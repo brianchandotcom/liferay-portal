@@ -335,26 +335,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public PortletSession getPortletSession(boolean create) {
-		/*HttpSession httpSes = _req.getSession(create);
-
-		if (httpSes == null) {
-			return null;
-		}
-		else {
-			if (create) {
-				_session = new PortletSessionImpl(
-					_req.getSession(), _portletContext, _portletName, _plid);
-			}
-
-			return _ses;
-		}*/
-
-		/*if ((_session == null) && create) {
-			_req.getSession(create);
-
-			_session = new PortletSessionImpl(
-				_req.getSession(), _portletContext, _portletName, _plid);
-		}*/
 
 		if (!create && _invalidSession) {
 			return null;
@@ -1036,7 +1016,8 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 					name);
 
 				if ((requestValues != null) &&
-					lifecycle.equals(PortletRequest.RESOURCE_PHASE)) {
+					(lifecycle.equals(PortletRequest.ACTION_PHASE) ||
+					 lifecycle.equals(PortletRequest.RESOURCE_PHASE))) {
 
 					dynamicRequest.setParameterValues(
 						name, ArrayUtil.append(requestValues, values));

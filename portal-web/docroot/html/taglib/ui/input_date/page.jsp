@@ -237,7 +237,13 @@ else {
 								event.newSelection[0] = new Date();
 							}
 
-							event.newSelection[0] ? datePicker.updateValue(event.newSelection[0]) : datePicker.updateValue('');
+							var updatedVal = '';
+
+							if (event.newSelection[0]) {
+								updatedVal = event.newSelection[0];
+							}
+
+							datePicker.updateValue(updatedVal);
 						}
 					},
 					popover: {

@@ -44,6 +44,7 @@ import java.util.Map;
 /**
  * @author Andrea Di Giorgi
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceCurrencyLocalServiceImpl
 	extends CommerceCurrencyLocalServiceBaseImpl {
@@ -189,12 +190,44 @@ public class CommerceCurrencyLocalServiceImpl
 		for (Map.Entry<String, ExchangeRateProvider> exchangeRateProviderEntry :
 				exchangeRateProviderMap.entrySet()) {
 
-			_updateExchangeRates(
+			updateExchangeRates(
 				serviceContext.getScopeGroupId(),
 				exchangeRateProviderEntry.getValue());
 
 			break;
 		}
+	}
+
+	@Override
+	public CommerceCurrency setActive(long commerceCurrencyId, boolean active)
+		throws PortalException {
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
+
+		commerceCurrency.setActive(active);
+
+		commerceCurrencyPersistence.update(commerceCurrency);
+
+		return commerceCurrency;
+	}
+
+	@Override
+	public CommerceCurrency setPrimary(long commerceCurrencyId, boolean primary)
+		throws PortalException {
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
+
+		validate(
+			commerceCurrencyId, commerceCurrency.getGroupId(),
+			commerceCurrency.getCode(), commerceCurrency.getNameMap(), primary);
+
+		commerceCurrency.setPrimary(primary);
+
+		commerceCurrencyPersistence.update(commerceCurrency);
+
+		return commerceCurrency;
 	}
 
 	@Override
@@ -228,6 +261,60 @@ public class CommerceCurrencyLocalServiceImpl
 		return commerceCurrency;
 	}
 
+	@Override
+	public CommerceCurrency updateCommerceCurrencyRate(
+			long commerceCurrencyId, double rate)
+		throws PortalException {
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
+
+		commerceCurrency.setRate(rate);
+
+		return commerceCurrencyPersistence.update(commerceCurrency);
+	}
+
+	@Override
+	public void updateExchangeRate(
+			long commerceCurrencyId, ExchangeRateProvider exchangeRateProvider)
+		throws Exception {
+
+		if (exchangeRateProvider == null) {
+			return;
+		}
+
+		CommerceCurrency commerceCurrency =
+			commerceCurrencyPersistence.findByPrimaryKey(commerceCurrencyId);
+
+		CommerceCurrency primaryCommerceCurrency = fetchPrimaryCommerceCurrency(
+			commerceCurrency.getGroupId());
+
+		if (primaryCommerceCurrency == null) {
+			return;
+		}
+
+		double exchangeRate = exchangeRateProvider.getExchangeRate(
+			primaryCommerceCurrency, commerceCurrency);
+
+		commerceCurrency.setRate(exchangeRate);
+
+		updateCommerceCurrency(commerceCurrency);
+	}
+
+	@Override
+	public void updateExchangeRates(
+			long groupId, ExchangeRateProvider exchangeRateProvider)
+		throws Exception {
+
+		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
+			groupId, true);
+
+		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
+			updateExchangeRate(
+				commerceCurrency.getCommerceCurrencyId(), exchangeRateProvider);
+		}
+	}
+
 	protected void validate(
 			long commerceCurrencyId, long groupId, String code,
 			Map<Locale, String> nameMap, boolean primary)
@@ -258,30 +345,6 @@ public class CommerceCurrencyLocalServiceImpl
 					commerceCurrencyPersistence.update(commerceCurrency);
 				}
 			}
-		}
-	}
-
-	private void _updateExchangeRates(
-			long groupId, ExchangeRateProvider exchangeRateProvider)
-		throws Exception {
-
-		if (exchangeRateProvider == null) {
-			return;
-		}
-
-		CommerceCurrency primaryCommerceCurrency = fetchPrimaryCommerceCurrency(
-			groupId);
-
-		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
-			groupId, true);
-
-		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
-			double exchangeRate = exchangeRateProvider.getExchangeRate(
-				primaryCommerceCurrency, commerceCurrency);
-
-			commerceCurrency.setRate(exchangeRate);
-
-			updateCommerceCurrency(commerceCurrency);
 		}
 	}
 

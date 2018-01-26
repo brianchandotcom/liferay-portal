@@ -90,3 +90,12 @@ create table DDMFormInstanceVersion (
 
 create index IX_EB92EF26 on DDMFormInstanceVersion (formInstanceId, status);
 create unique index IX_AE51CDC8 on DDMFormInstanceVersion (formInstanceId, version[$COLUMN_LENGTH:75$]);
+create index IX_41CD774C on DDMFormInstanceVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_96A360CE on DDMFormInstanceVersion (uuid_[$COLUMN_LENGTH:75$], groupId);
+
+alter table DDMStructureVersion add uuid_ VARCHAR(75) null;
+alter table DDMStructureVersion add modifiedDate DATE null;
+alter table DDMStructureVersion add lastPublishDate DATE null;
+
+create index IX_54DF650C on DDMStructureVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
+create unique index IX_6CD5BE8E on DDMStructureVersion (uuid_[$COLUMN_LENGTH:75$], groupId);

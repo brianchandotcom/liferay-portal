@@ -14,8 +14,7 @@
 
 package com.liferay.portal.configuration.settings.internal.test;
 
-import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
+import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.settings.Settings;
 import com.liferay.portal.kernel.settings.SettingsLocatorHelper;
@@ -56,9 +55,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String companyValue = saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.COMPANY,
-			String.valueOf(companyId));
+		String companyValue = saveScopedConfiguration(Scope.COMPANY, companyId);
 
 		companySettings =
 			_settingsLocatorHelper.getCompanyConfigurationBeanSettings(
@@ -100,8 +97,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
-		String groupValue = saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.GROUP, String.valueOf(groupId));
+		String groupValue = saveScopedConfiguration(Scope.GROUP, groupId);
 
 		groupSettings =
 			_settingsLocatorHelper.getGroupConfigurationBeanSettings(
@@ -150,8 +146,7 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
 
 		String portletInstanceValue = saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope.PORTLET_INSTANCE,
-			portletInstanceKey);
+			Scope.PORTLET_INSTANCE, portletInstanceKey);
 
 		portletInstanceSettings =
 			_settingsLocatorHelper.getPortletInstanceConfigurationBeanSettings(
@@ -189,21 +184,6 @@ public class SettingsLocatorHelperTest extends BaseSettingsLocatorTestCase {
 			settings.getValue(
 				SettingsLocatorTestConstants.TEST_KEY,
 				SettingsLocatorTestConstants.TEST_DEFAULT_VALUE));
-	}
-
-	protected String saveConfiguration() throws Exception {
-		return saveConfiguration(
-			SettingsLocatorTestConstants.TEST_CONFIGURATION_PID);
-	}
-
-	protected String saveScopedConfiguration(
-			ExtendedObjectClassDefinition.Scope scope, String scopePrimKey)
-		throws Exception {
-
-		return saveConfiguration(
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID, scope,
-				scopePrimKey));
 	}
 
 	@Inject

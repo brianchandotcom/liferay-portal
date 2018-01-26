@@ -29,11 +29,9 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 	public PortletInstanceSettingsLocator(
 		Layout layout, String portletInstanceKey) {
 
-		_layout = layout;
-		_portletInstanceKey = portletInstanceKey;
-
-		_configurationPid = PortletIdCodec.decodePortletName(
-			portletInstanceKey);
+		this(
+			layout, portletInstanceKey,
+			PortletIdCodec.decodePortletName(portletInstanceKey));
 	}
 
 	public PortletInstanceSettingsLocator(
@@ -42,6 +40,10 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 		_layout = layout;
 		_portletInstanceKey = portletInstanceKey;
 		_configurationPid = configurationPid;
+	}
+
+	public String getConfigurationPid() {
+		return _configurationPid;
 	}
 
 	public long getOwnerId() {
@@ -62,13 +64,12 @@ public class PortletInstanceSettingsLocator implements SettingsLocator {
 
 	@Override
 	public Settings getSettings() throws SettingsException {
-		Settings configurationBeanSettings =
-			_settingsLocatorHelper.getConfigurationBeanSettings(
-				_configurationPid);
+		SystemSettingsLocator systemSettingsLocator = new SystemSettingsLocator(
+			_configurationPid);
 
 		Settings portalPreferencesSettings = new PortletPreferencesSettings(
 			PrefsPropsUtil.getPreferences(_layout.getCompanyId()),
-			configurationBeanSettings);
+			systemSettingsLocator.getSettings());
 
 		return PortletPreferencesLocalServiceUtil.getPortletInstanceSettings(
 			_layout.getCompanyId(), _layout.getGroupId(), _portletInstanceKey,

@@ -17,6 +17,7 @@ package com.liferay.portal.configuration.test.util;
 import com.liferay.osgi.util.service.OSGiServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HashMapDictionary;
+import com.liferay.portal.kernel.util.ReflectionUtil;
 
 import java.util.Dictionary;
 import java.util.concurrent.CountDownLatch;
@@ -73,13 +74,14 @@ public class ConfigurationTestUtil {
 			Configuration configuration, Dictionary<String, Object> dictionary)
 		throws Exception {
 
-		CountDownLatch countDownLatch = new CountDownLatch(3);
+		CountDownLatch eventCountdownLatch = new CountDownLatch(1);
+		CountDownLatch updateCountDownLatch = new CountDownLatch(2);
 
 		String markerPID = ConfigurationTestUtil.class.getName();
 
 		ConfigurationListener configurationListener = configurationEvent -> {
 			if (markerPID.equals(configurationEvent.getPid())) {
-				countDownLatch.countDown();
+				eventCountdownLatch.countDown();
 			}
 		};
 
@@ -88,8 +90,16 @@ public class ConfigurationTestUtil {
 				_bundleContext.registerService(
 					ConfigurationListener.class, configurationListener, null);
 
-		ManagedService managedService = properties ->
-			countDownLatch.countDown();
+		ManagedService managedService = properties -> {
+			try {
+				eventCountdownLatch.await();
+			}
+			catch (InterruptedException ie) {
+				ReflectionUtil.throwException(ie);
+			}
+
+			updateCountDownLatch.countDown();
+		};
 
 		Dictionary<String, Object> properties = new HashMapDictionary<>();
 
@@ -116,7 +126,7 @@ public class ConfigurationTestUtil {
 
 			markerConfiguration.delete();
 
-			countDownLatch.await();
+			updateCountDownLatch.await();
 		}
 		finally {
 			configurationListenerServiceRegistration.unregister();

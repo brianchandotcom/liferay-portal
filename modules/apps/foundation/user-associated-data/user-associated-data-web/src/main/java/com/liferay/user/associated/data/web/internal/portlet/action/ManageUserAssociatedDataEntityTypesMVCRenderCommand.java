@@ -12,7 +12,7 @@
  * details.
  */
 
-package liferay.user.associated.data.web.internal.portlet.action;
+package com.liferay.user.associated.data.web.internal.portlet.action;
 
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;

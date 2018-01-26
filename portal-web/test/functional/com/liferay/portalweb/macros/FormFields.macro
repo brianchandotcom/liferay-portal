@@ -590,6 +590,12 @@
 		<execute function="AssertElementPresent" locator1="FormFields#SWITCHER" />
 	</command>
 
+	<command name="viewSwitcherChecked">
+		<var name="key_fieldName" value="${fieldName}" />
+
+		<execute function="AssertChecked#assertCheckedNotVisible" locator1="FormFields#CHECKBOX" />
+	</command>
+
 	<command name="viewSwitcherLabel">
 		<execute function="AssertTextEquals#assertText" locator1="FormFields#SWITCHER_LABEL" value1="${fieldLabel}">
 			<var name="key_fieldLabel" value="${fieldLabel}" />

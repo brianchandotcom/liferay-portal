@@ -16,20 +16,28 @@ package com.liferay.commerce.currency.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.ExchangeRateProvider;
+import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
+import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
+import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.commerce.currency.web.internal.util.CommerceCurrencyUtil;
 import com.liferay.commerce.currency.web.internal.util.CurrenciesCommerceAdminModule;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationException;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
+import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -38,15 +46,20 @@ import javax.portlet.RenderResponse;
 /**
  * @author Andrea Di Giorgi
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceCurrenciesDisplayContext {
 
 	public CommerceCurrenciesDisplayContext(
 		CommerceCurrencyService commerceCurrencyService,
+		ConfigurationProvider configurationProvider,
+		ExchangeRateProviderRegistry exchangeRateProviderRegistry,
 		RoundingTypeServicesTracker roundingTypeServicesTracker,
 		RenderRequest renderRequest, RenderResponse renderResponse) {
 
 		_commerceCurrencyService = commerceCurrencyService;
+		_configurationProvider = configurationProvider;
+		_exchangeRateProviderRegistry = exchangeRateProviderRegistry;
 		_roundingTypeServicesTracker = roundingTypeServicesTracker;
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
@@ -66,6 +79,24 @@ public class CommerceCurrenciesDisplayContext {
 		}
 
 		return _commerceCurrency;
+	}
+
+	public ExchangeRateProviderGroupServiceConfiguration
+			getExchangeRateProviderGroupServiceConfiguration()
+		throws ConfigurationException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)_renderRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return _configurationProvider.getConfiguration(
+			ExchangeRateProviderGroupServiceConfiguration.class,
+			new GroupServiceSettingsLocator(
+				themeDisplay.getScopeGroupId(),
+				CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
+	}
+
+	public Map<String, ExchangeRateProvider> getExchangeRateProviders() {
+		return _exchangeRateProviderRegistry.getExchangeRateProviderMap();
 	}
 
 	public String getOrderByCol() {
@@ -186,6 +217,8 @@ public class CommerceCurrenciesDisplayContext {
 
 	private CommerceCurrency _commerceCurrency;
 	private final CommerceCurrencyService _commerceCurrencyService;
+	private final ConfigurationProvider _configurationProvider;
+	private final ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 	private CommerceCurrency _primaryCommerceCurrency;
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;

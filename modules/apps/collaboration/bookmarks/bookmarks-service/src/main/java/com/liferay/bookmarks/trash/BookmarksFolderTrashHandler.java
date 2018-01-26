@@ -15,10 +15,10 @@
 package com.liferay.bookmarks.trash;
 
 import com.liferay.bookmarks.asset.BookmarksFolderAssetRenderer;
+import com.liferay.bookmarks.internal.util.BookmarksUtil;
 import com.liferay.bookmarks.model.BookmarksFolder;
 import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.bookmarks.service.permission.BookmarksFolderPermissionChecker;
-import com.liferay.bookmarks.util.BookmarksUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.ContainerModel;
 import com.liferay.portal.kernel.security.permission.ActionKeys;

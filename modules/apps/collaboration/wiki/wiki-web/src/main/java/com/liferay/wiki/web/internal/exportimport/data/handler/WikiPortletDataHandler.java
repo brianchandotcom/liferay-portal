@@ -35,7 +35,6 @@ import com.liferay.wiki.util.WikiCacheHelper;
 import com.liferay.wiki.util.WikiCacheThreadLocal;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletPreferences;
 
@@ -81,6 +80,8 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws PortletDataException {
 
+		boolean clearCache = WikiCacheThreadLocal.isClearCache();
+
 		WikiCacheThreadLocal.setClearCache(false);
 
 		try {
@@ -88,7 +89,9 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 				portletDataContext, portletId, portletPreferences, data);
 		}
 		finally {
-			WikiCacheThreadLocal.setClearCache(true);
+			WikiCacheThreadLocal.setClearCache(clearCache);
+
+			_wikiCacheHelper.clearCache();
 		}
 	}
 
@@ -192,14 +195,6 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 		for (Element pageElement : pageElements) {
 			StagedModelDataHandlerUtil.importStagedModel(
 				portletDataContext, pageElement);
-		}
-
-		Map<Long, Long> nodeIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				WikiNode.class);
-
-		if (!nodeIds.isEmpty()) {
-			_wikiCacheHelper.clearCache();
 		}
 
 		return null;

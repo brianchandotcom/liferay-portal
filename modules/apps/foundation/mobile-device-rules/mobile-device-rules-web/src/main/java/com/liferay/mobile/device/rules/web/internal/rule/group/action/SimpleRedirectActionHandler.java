@@ -39,6 +39,11 @@ public class SimpleRedirectActionHandler extends BaseRedirectActionHandler {
 	}
 
 	@Override
+	public String getEditorJSP() {
+		return "/action/simple_url.jsp";
+	}
+
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}

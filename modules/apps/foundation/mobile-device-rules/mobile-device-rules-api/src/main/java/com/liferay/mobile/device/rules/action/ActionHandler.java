@@ -32,6 +32,8 @@ public interface ActionHandler {
 			HttpServletResponse response)
 		throws PortalException;
 
+	public String getEditorJSP();
+
 	public Collection<String> getPropertyNames();
 
 	public String getType();

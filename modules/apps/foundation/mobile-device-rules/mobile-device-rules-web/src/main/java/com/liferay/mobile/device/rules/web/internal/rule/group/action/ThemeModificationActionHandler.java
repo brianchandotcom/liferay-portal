@@ -90,6 +90,11 @@ public class ThemeModificationActionHandler implements ActionHandler {
 	}
 
 	@Override
+	public String getEditorJSP() {
+		return "/action/theme.jsp";
+	}
+
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}

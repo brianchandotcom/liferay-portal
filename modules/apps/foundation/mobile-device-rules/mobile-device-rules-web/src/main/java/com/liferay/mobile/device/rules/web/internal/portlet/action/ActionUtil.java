@@ -50,7 +50,7 @@ public class ActionUtil {
 			type);
 
 		if (actionHandler != null) {
-			editorJSP = _actionEditorJSPs.get(actionHandler.getClass());
+			editorJSP = actionHandler.getEditorJSP();
 		}
 
 		if (editorJSP == null) {
@@ -100,21 +100,6 @@ public class ActionUtil {
 			portletContext.getRequestDispatcher(editorJSP);
 
 		portletRequestDispatcher.include(resourceRequest, resourceResponse);
-	}
-
-	protected static void registerEditorJSP(Class<?> clazz, String fileName) {
-		_actionEditorJSPs.put(clazz, "/action/" + fileName + ".jsp");
-	}
-
-	private static final Map<Class<?>, String> _actionEditorJSPs =
-		new HashMap<>();
-
-	static {
-		registerEditorJSP(
-			LayoutTemplateModificationActionHandler.class, "layout_tpl");
-		registerEditorJSP(SimpleRedirectActionHandler.class, "simple_url");
-		registerEditorJSP(SiteRedirectActionHandler.class, "site_url");
-		registerEditorJSP(ThemeModificationActionHandler.class, "theme");
 	}
 
 }

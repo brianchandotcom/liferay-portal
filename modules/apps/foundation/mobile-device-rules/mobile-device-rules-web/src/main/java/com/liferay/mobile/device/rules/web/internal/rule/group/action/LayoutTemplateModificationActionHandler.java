@@ -67,6 +67,11 @@ public class LayoutTemplateModificationActionHandler implements ActionHandler {
 	}
 
 	@Override
+	public String getEditorJSP() {
+		return "/action/layout_tpl.jsp";
+	}
+
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}

@@ -51,6 +51,11 @@ public class SiteRedirectActionHandler extends BaseRedirectActionHandler {
 	}
 
 	@Override
+	public String getEditorJSP() {
+		return "/action/site_url.jsp";
+	}
+
+	@Override
 	public Collection<String> getPropertyNames() {
 		return _propertyNames;
 	}

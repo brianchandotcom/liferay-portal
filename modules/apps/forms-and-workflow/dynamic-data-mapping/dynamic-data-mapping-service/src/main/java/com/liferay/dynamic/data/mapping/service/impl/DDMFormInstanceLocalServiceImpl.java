@@ -105,9 +105,9 @@ public class DDMFormInstanceLocalServiceImpl
 
 		long structureVersionId = getStructureVersionId(ddmStructureId);
 
-		addFormInstanceVersion(
-			structureVersionId, user, ddmFormInstance, _VERSION_DEFAULT,
-			serviceContext);
+			ddmFormInstanceVersionLocalService.addFormInstanceVersion(
+				structureVersionId, userId, ddmFormInstance, _VERSION_DEFAULT,
+				serviceContext);
 
 		return updatedDDMFormInstance;
 	}
@@ -338,44 +338,6 @@ public class DDMFormInstanceLocalServiceImpl
 			settingsDDMFormValues, serviceContext, ddmFormInstance);
 	}
 
-	protected DDMFormInstanceVersion addFormInstanceVersion(
-			long ddmStructureVersionId, User user,
-			DDMFormInstance ddmFormInstance, String version,
-			ServiceContext serviceContext)
-		throws PortalException {
-
-		long ddmFormInstanceVersionId = counterLocalService.increment();
-
-		DDMFormInstanceVersion ddmFormInstanceVersion =
-			ddmFormInstanceVersionPersistence.create(ddmFormInstanceVersionId);
-
-		ddmFormInstanceVersion.setGroupId(ddmFormInstance.getGroupId());
-		ddmFormInstanceVersion.setCompanyId(ddmFormInstance.getCompanyId());
-		ddmFormInstanceVersion.setUserId(ddmFormInstance.getUserId());
-		ddmFormInstanceVersion.setUserName(ddmFormInstance.getUserName());
-		ddmFormInstanceVersion.setCreateDate(ddmFormInstance.getModifiedDate());
-		ddmFormInstanceVersion.setFormInstanceId(
-			ddmFormInstance.getFormInstanceId());
-		ddmFormInstanceVersion.setStructureVersionId(ddmStructureVersionId);
-		ddmFormInstanceVersion.setVersion(version);
-		ddmFormInstanceVersion.setName(ddmFormInstance.getName());
-		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
-
-		int status = GetterUtil.getInteger(
-			serviceContext.getAttribute("status"),
-			WorkflowConstants.STATUS_APPROVED);
-
-		ddmFormInstanceVersion.setStatus(status);
-
-		ddmFormInstanceVersion.setStatusByUserId(user.getUserId());
-		ddmFormInstanceVersion.setStatusByUserName(user.getFullName());
-		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());
-
-		ddmFormInstanceVersionPersistence.update(ddmFormInstanceVersion);
-
-		return ddmFormInstanceVersion;
-	}
-
 	protected DDMFormInstance doUpdateFormInstance(
 			long userId, long ddmStructureId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap,
@@ -437,12 +399,12 @@ public class DDMFormInstanceLocalServiceImpl
 		long ddmStructureVersionId = getStructureVersionId(ddmStructureId);
 
 		if (updateVersion) {
-			updateFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance);
+			ddmFormInstanceVersionLocalService.updateFormInstanceVersion(
+				ddmStructureVersionId, userId, ddmFormInstance, serviceContext);
 		}
 		else {
-			addFormInstanceVersion(
-				ddmStructureVersionId, user, ddmFormInstance, version,
+			ddmFormInstanceVersionLocalService.addFormInstanceVersion(
+				ddmStructureVersionId, userId, ddmFormInstance, version,
 				serviceContext);
 		}
 
@@ -519,27 +481,6 @@ public class DDMFormInstanceLocalServiceImpl
 				DDMFormInstanceSettings.class, ddmFormValues);
 
 		return ddmFormInstanceSettings.workflowDefinition();
-	}
-
-	protected void updateFormInstanceVersion(
-			long ddmStructureVersionId, User user,
-			DDMFormInstance ddmFormInstance)
-		throws PortalException {
-
-		DDMFormInstanceVersion ddmFormInstanceVersion =
-			ddmFormInstanceVersionLocalService.getLatestFormInstanceVersion(
-				ddmFormInstance.getFormInstanceId());
-
-		ddmFormInstanceVersion.setUserId(ddmFormInstance.getUserId());
-		ddmFormInstanceVersion.setUserName(ddmFormInstance.getUserName());
-		ddmFormInstanceVersion.setStructureVersionId(ddmStructureVersionId);
-		ddmFormInstanceVersion.setName(ddmFormInstance.getName());
-		ddmFormInstanceVersion.setDescription(ddmFormInstance.getDescription());
-		ddmFormInstanceVersion.setStatusByUserId(user.getUserId());
-		ddmFormInstanceVersion.setStatusByUserName(user.getFullName());
-		ddmFormInstanceVersion.setStatusDate(ddmFormInstance.getModifiedDate());
-
-		ddmFormInstanceVersionPersistence.update(ddmFormInstanceVersion);
 	}
 
 	protected void updateWorkflowDefinitionLink(

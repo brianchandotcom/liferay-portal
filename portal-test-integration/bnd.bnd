@@ -35,4 +35,3 @@ Include-Resource:\
 	@${project.dir}/../lib/portal/httpmime.jar,\
 	@${project.dir}/../lib/portal/juniversalchardet.jar,\
 	@${project.dir}/../lib/portal/poi.jar
--baseline: *;file=${project.dir}/.bnd/ant-baseline-cache/com.liferay.portal.test.integration-4.0.0.jar

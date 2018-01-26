@@ -111,7 +111,7 @@
 					<xsd:element name="hostEmail" type="xsd:string" minOccurs="0"/>
 					<xsd:element name="totalPeopleMinutes" type="xsd:int" minOccurs="0"/>
 					<xsd:element name="totalCallInMinutes" type="xsd:int" minOccurs="0"/>
-					<xsd:element name="totalCallInTolllfreeMinutes" type="xsd:int" minOccurs="0"/>
+					<xsd:element name="totalCallInTollfreeMinutes" type="xsd:int" minOccurs="0"/>
 					<xsd:element name="totalCallOutDomestic" type="xsd:int" minOccurs="0"/>
 					<xsd:element name="totalCallOutInternational" type="xsd:int" minOccurs="0"/>
 					<xsd:element name="totalVoipMinutes" type="xsd:int" minOccurs="0"/>

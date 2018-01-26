@@ -141,7 +141,7 @@
 	</command>
 
 	<command name="SolrSmokeTest" priority="4">
-		<property name="test.name.skip.portal.instance" value="SolrEE#SolrSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="Solr#SolrSmokeTest" />
 
 		<!-- <description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr by asserting the Solr administration dashboard and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
@@ -232,7 +232,7 @@
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote SolrCloud with 2 nodes by asserting console logging for ZooKeeper and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<property name="solr.solrcloud.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="SolrEE#SolrWithSolrCloudSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="Solr#SolrWithSolrCloudSmokeTest" />
 
 		<execute macro="Solr#viewSolrwithSolrCloudEnabledInConsole" />
 
@@ -318,7 +318,7 @@
 		<description message="This smoke test is to ensure that Liferay is successfully running on a remote Solr with SSL Authentication by asserting console logging for KeyStoreLoaderImpl and performing searches in portal. Note by default, an embedded Elasticsearch is deployed in portal." />
 
 		<property name="solr.ssl.authentication.enabled" value="true" />
-		<property name="test.name.skip.portal.instance" value="SolrEE#SolrWithSSLAuthenticationSmokeTest" />
+		<property name="test.name.skip.portal.instance" value="Solr#SolrWithSSLAuthenticationSmokeTest" />
 
 		<execute macro="Solr#viewSolrwithSSLAuthenticationEnabledInConsole" />
 
@@ -399,7 +399,7 @@
 	<command ignore="true" name="ViewReindexAllSearchIndexesLoggingInSolrAdmin" priority="4">
 		<property name="index.on.startup" value="false" />
 		<property name="solr.logging.info.level" value="true" />
-		<property name="test.name.skip.portal.instance" value="SolrEE#ViewReindexAllSearchIndexesLoggingInSolrAdmin" />
+		<property name="test.name.skip.portal.instance" value="Solr#ViewReindexAllSearchIndexesLoggingInSolrAdmin" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Configuration" />

@@ -282,7 +282,7 @@
 			<xsd:element name="trackingCode" type="xsd:boolean" minOccurs="0"/>
 			<xsd:element name="siteAdminReport" type="xsd:boolean" minOccurs="0"/>
 			<xsd:element name="subScriptionService" type="xsd:boolean" minOccurs="0"/>
-			<xsd:element name="isECommmerce" type="xsd:boolean" minOccurs="0"/>
+			<xsd:element name="isECommerce" type="xsd:boolean" minOccurs="0"/>
 			<xsd:element name="conferencePrice" type="xsd:float" minOccurs="0"/>
 			<xsd:element name="callInPrice" type="xsd:float" minOccurs="0"/>
 			<xsd:element name="callInTollFreePrice" type="xsd:float" minOccurs="0"/>

@@ -274,7 +274,7 @@
 </tr>
 <tr>
 	<td>SIDEBAR_CLOSE</td>
-	<td>//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
+	<td>//div[contains(@class,'open') and contains(@class,'form-builder-sidebar')]//div[contains(@class,'sidebar-header')]//a[contains(@class,'close')]</td>
 	<td></td>
 </tr>
 <!--DATA_PROVIDER_OUTPUT_PARAMETER-->

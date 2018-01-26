@@ -14,11 +14,11 @@
 
 package com.liferay.shopping.upgrade.v1_0_2;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.PrefsProps;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.shopping.configuration.ShoppingFileUploadsConfiguration;
 
 import java.util.Dictionary;

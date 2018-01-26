@@ -187,27 +187,7 @@ public class BaseTestResult implements TestResult {
 		sb.append("/");
 		sb.append(getSimpleClassName());
 		sb.append("/");
-
-		String testName = getTestName();
-
-		String encodedTestName = testName;
-
-		encodedTestName = encodedTestName.replace(" ", "_");
-		encodedTestName = encodedTestName.replace("#", "_");
-		encodedTestName = encodedTestName.replace("(", "_");
-		encodedTestName = encodedTestName.replace(")", "_");
-		encodedTestName = encodedTestName.replace(".", "_");
-		encodedTestName = encodedTestName.replace("<", "_");
-		encodedTestName = encodedTestName.replace(">", "_");
-		encodedTestName = encodedTestName.replace("[", "_");
-		encodedTestName = encodedTestName.replace("\"", "_");
-		encodedTestName = encodedTestName.replace("]", "_");
-
-		if (packageName.equals("junit.framework")) {
-			encodedTestName = encodedTestName.replace(".", "_");
-		}
-
-		sb.append(encodedTestName);
+		sb.append(getEncodedTestName());
 
 		return sb.toString();
 	}
@@ -251,6 +231,20 @@ public class BaseTestResult implements TestResult {
 		}
 
 		return "INVALID_AXIS_NUMBER";
+	}
+
+	protected String getEncodedTestName() {
+		StringBuilder sb = new StringBuilder(getTestName());
+
+		for (int i = 0; i < sb.length(); i++) {
+			char c = sb.charAt(i);
+
+			if (!Character.isJavaIdentifierPart(c)) {
+				sb.setCharAt(i, '_');
+			}
+		}
+
+		return sb.toString();
 	}
 
 	private static final String _DEFAULT_LOG_BASE_URL =

@@ -63,10 +63,6 @@
 	@import "partials/buttons";
 	@import "partials/forms";
 	@import "partials/table";
-
-	a, .btn, input, .form-control {
-		// @include hover-focus-active();
-	}
 }
 
 #content {

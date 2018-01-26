@@ -14,10 +14,7 @@
 
 package com.liferay.site.navigation.type;
 
-import com.liferay.petra.string.StringPool;
-import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 
 import java.util.List;
@@ -48,6 +45,19 @@ public class SiteNavigationMenuItemTypeRegistry {
 		return _siteNavigationMenuItemTypes.get(type);
 	}
 
+	public SiteNavigationMenuItemType getSiteNavigationMenuItemTypeByLayoutType(
+		String layoutType) {
+
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypes.get(layoutType);
+
+		if (siteNavigationMenuItemType != null) {
+			return siteNavigationMenuItemType;
+		}
+
+		return _siteNavigationMenuItemTypes.get("layout");
+	}
+
 	public List<SiteNavigationMenuItemType> getSiteNavigationMenuItemTypes() {
 		return ListUtil.fromMapValues(_siteNavigationMenuItemTypes);
 	}
@@ -75,12 +85,6 @@ public class SiteNavigationMenuItemTypeRegistry {
 
 		_siteNavigationMenuItemTypes.remove(
 			siteNavigationMenuItemType.getType());
-	}
-
-	private String _getJavaScriptFileName(String fileName) {
-		String shortFileName = FileUtil.getShortFileName(fileName);
-
-		return StringUtil.replace(shortFileName, ".js", StringPool.BLANK);
 	}
 
 	private final Map<String, SiteNavigationMenuItemType>

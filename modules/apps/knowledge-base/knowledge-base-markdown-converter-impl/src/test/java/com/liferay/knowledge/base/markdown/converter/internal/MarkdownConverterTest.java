@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.knowledge.base.markdown.converter;
+package com.liferay.knowledge.base.markdown.converter.internal;
 
+import com.liferay.knowledge.base.markdown.converter.MarkdownConverter;
 import com.liferay.knowledge.base.markdown.converter.factory.MarkdownConverterFactory;
 import com.liferay.knowledge.base.markdown.converter.internal.pegdown.factory.MarkdownConverterFactoryImpl;
 

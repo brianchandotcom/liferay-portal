@@ -53,6 +53,17 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 		return getService().addDDMFormInstanceVersion(ddmFormInstanceVersion);
 	}
 
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion addFormInstanceVersion(
+		long ddmStructureVersionId, long userId,
+		com.liferay.dynamic.data.mapping.model.DDMFormInstance ddmFormInstance,
+		java.lang.String version,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addFormInstanceVersion(ddmStructureVersionId, userId,
+			ddmFormInstance, version, serviceContext);
+	}
+
 	/**
 	* Creates a new ddm form instance version with the primary key. Does not add the ddm form instance version to the database.
 	*
@@ -184,6 +195,19 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 		return getService().fetchDDMFormInstanceVersion(formInstanceVersionId);
 	}
 
+	/**
+	* Returns the ddm form instance version matching the UUID and group.
+	*
+	* @param uuid the ddm form instance version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion fetchDDMFormInstanceVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService()
+				   .fetchDDMFormInstanceVersionByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -199,6 +223,21 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 		long formInstanceVersionId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getDDMFormInstanceVersion(formInstanceVersionId);
+	}
+
+	/**
+	* Returns the ddm form instance version matching the UUID and group.
+	*
+	* @param uuid the ddm form instance version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddm form instance version
+	* @throws PortalException if a matching ddm form instance version could not be found
+	*/
+	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion getDDMFormInstanceVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getDDMFormInstanceVersionByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -218,12 +257,48 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 	}
 
 	/**
+	* Returns all the ddm form instance versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddm form instance versions
+	* @param companyId the primary key of the company
+	* @return the matching ddm form instance versions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion> getDDMFormInstanceVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService()
+				   .getDDMFormInstanceVersionsByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of ddm form instance versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddm form instance versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddm form instance versions
+	* @param end the upper bound of the range of ddm form instance versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddm form instance versions, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion> getDDMFormInstanceVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion> orderByComparator) {
+		return getService()
+				   .getDDMFormInstanceVersionsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
 	* Returns the number of ddm form instance versions.
 	*
 	* @return the number of ddm form instance versions
 	*/
 	public static int getDDMFormInstanceVersionsCount() {
 		return getService().getDDMFormInstanceVersionsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion getFormInstanceVersion(
@@ -289,6 +364,16 @@ public class DDMFormInstanceVersionLocalServiceUtil {
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion updateDDMFormInstanceVersion(
 		com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion ddmFormInstanceVersion) {
 		return getService().updateDDMFormInstanceVersion(ddmFormInstanceVersion);
+	}
+
+	public static void updateFormInstanceVersion(long ddmStructureVersionId,
+		long userId,
+		com.liferay.dynamic.data.mapping.model.DDMFormInstance ddmFormInstance,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateFormInstanceVersion(ddmStructureVersionId, userId,
+			ddmFormInstance, serviceContext);
 	}
 
 	public static DDMFormInstanceVersionLocalService getService() {

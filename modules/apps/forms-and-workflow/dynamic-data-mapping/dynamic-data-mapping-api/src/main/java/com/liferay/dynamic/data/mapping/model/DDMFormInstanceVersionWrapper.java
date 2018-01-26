@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -59,12 +61,14 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("formInstanceVersionId", getFormInstanceVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
+		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("formInstanceId", getFormInstanceId());
 		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("name", getName());
@@ -75,12 +79,19 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
+		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long formInstanceVersionId = (Long)attributes.get(
 				"formInstanceVersionId");
 
@@ -116,6 +127,12 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 
 		if (createDate != null) {
 			setCreateDate(createDate);
+		}
+
+		Date modifiedDate = (Date)attributes.get("modifiedDate");
+
+		if (modifiedDate != null) {
+			setModifiedDate(modifiedDate);
 		}
 
 		Long formInstanceId = (Long)attributes.get("formInstanceId");
@@ -176,6 +193,12 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
+		}
+
+		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
+
+		if (lastPublishDate != null) {
+			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -336,6 +359,26 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	@Override
 	public long getGroupId() {
 		return _ddmFormInstanceVersion.getGroupId();
+	}
+
+	/**
+	* Returns the last publish date of this ddm form instance version.
+	*
+	* @return the last publish date of this ddm form instance version
+	*/
+	@Override
+	public Date getLastPublishDate() {
+		return _ddmFormInstanceVersion.getLastPublishDate();
+	}
+
+	/**
+	* Returns the modified date of this ddm form instance version.
+	*
+	* @return the modified date of this ddm form instance version
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _ddmFormInstanceVersion.getModifiedDate();
 	}
 
 	/**
@@ -534,6 +577,16 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _ddmFormInstanceVersion.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this ddm form instance version.
+	*
+	* @return the uuid of this ddm form instance version
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _ddmFormInstanceVersion.getUuid();
 	}
 
 	/**
@@ -801,6 +854,26 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	}
 
 	/**
+	* Sets the last publish date of this ddm form instance version.
+	*
+	* @param lastPublishDate the last publish date of this ddm form instance version
+	*/
+	@Override
+	public void setLastPublishDate(Date lastPublishDate) {
+		_ddmFormInstanceVersion.setLastPublishDate(lastPublishDate);
+	}
+
+	/**
+	* Sets the modified date of this ddm form instance version.
+	*
+	* @param modifiedDate the modified date of this ddm form instance version
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_ddmFormInstanceVersion.setModifiedDate(modifiedDate);
+	}
+
+	/**
 	* Sets the name of this ddm form instance version.
 	*
 	* @param name the name of this ddm form instance version
@@ -982,6 +1055,16 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 	}
 
 	/**
+	* Sets the uuid of this ddm form instance version.
+	*
+	* @param uuid the uuid of this ddm form instance version
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_ddmFormInstanceVersion.setUuid(uuid);
+	}
+
+	/**
 	* Sets the version of this ddm form instance version.
 	*
 	* @param version the version of this ddm form instance version
@@ -1034,6 +1117,11 @@ public class DDMFormInstanceVersionWrapper implements DDMFormInstanceVersion,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _ddmFormInstanceVersion.getStagedModelType();
 	}
 
 	@Override

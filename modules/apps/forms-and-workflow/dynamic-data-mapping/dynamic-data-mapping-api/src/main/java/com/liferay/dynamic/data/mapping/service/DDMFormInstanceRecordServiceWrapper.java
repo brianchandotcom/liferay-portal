@@ -36,12 +36,12 @@ public class DDMFormInstanceRecordServiceWrapper
 
 	@Override
 	public com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord addFormInstanceRecord(
-		long groupId, long ddmFormInstanceId,
+		long groupId, long ddmFormInstanceVersionId,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ddmFormInstanceRecordService.addFormInstanceRecord(groupId,
-			ddmFormInstanceId, ddmFormValues, serviceContext);
+			ddmFormInstanceVersionId, ddmFormValues, serviceContext);
 	}
 
 	@Override

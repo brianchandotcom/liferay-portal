@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.base;
 
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.DDMStructureVersionService;
+import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureLayoutPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMStructureVersionPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -26,6 +27,7 @@ import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
+import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -127,6 +129,100 @@ public abstract class DDMStructureVersionServiceBaseImpl extends BaseServiceImpl
 		this.counterLocalService = counterLocalService;
 	}
 
+	/**
+	 * Returns the ddm structure layout local service.
+	 *
+	 * @return the ddm structure layout local service
+	 */
+	public com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService getDDMStructureLayoutLocalService() {
+		return ddmStructureLayoutLocalService;
+	}
+
+	/**
+	 * Sets the ddm structure layout local service.
+	 *
+	 * @param ddmStructureLayoutLocalService the ddm structure layout local service
+	 */
+	public void setDDMStructureLayoutLocalService(
+		com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService) {
+		this.ddmStructureLayoutLocalService = ddmStructureLayoutLocalService;
+	}
+
+	/**
+	 * Returns the ddm structure layout persistence.
+	 *
+	 * @return the ddm structure layout persistence
+	 */
+	public DDMStructureLayoutPersistence getDDMStructureLayoutPersistence() {
+		return ddmStructureLayoutPersistence;
+	}
+
+	/**
+	 * Sets the ddm structure layout persistence.
+	 *
+	 * @param ddmStructureLayoutPersistence the ddm structure layout persistence
+	 */
+	public void setDDMStructureLayoutPersistence(
+		DDMStructureLayoutPersistence ddmStructureLayoutPersistence) {
+		this.ddmStructureLayoutPersistence = ddmStructureLayoutPersistence;
+	}
+
+	/**
+	 * Returns the user local service.
+	 *
+	 * @return the user local service
+	 */
+	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+		return userLocalService;
+	}
+
+	/**
+	 * Sets the user local service.
+	 *
+	 * @param userLocalService the user local service
+	 */
+	public void setUserLocalService(
+		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+		this.userLocalService = userLocalService;
+	}
+
+	/**
+	 * Returns the user remote service.
+	 *
+	 * @return the user remote service
+	 */
+	public com.liferay.portal.kernel.service.UserService getUserService() {
+		return userService;
+	}
+
+	/**
+	 * Sets the user remote service.
+	 *
+	 * @param userService the user remote service
+	 */
+	public void setUserService(
+		com.liferay.portal.kernel.service.UserService userService) {
+		this.userService = userService;
+	}
+
+	/**
+	 * Returns the user persistence.
+	 *
+	 * @return the user persistence
+	 */
+	public UserPersistence getUserPersistence() {
+		return userPersistence;
+	}
+
+	/**
+	 * Sets the user persistence.
+	 *
+	 * @param userPersistence the user persistence
+	 */
+	public void setUserPersistence(UserPersistence userPersistence) {
+		this.userPersistence = userPersistence;
+	}
+
 	public void afterPropertiesSet() {
 	}
 
@@ -183,4 +279,14 @@ public abstract class DDMStructureVersionServiceBaseImpl extends BaseServiceImpl
 	protected DDMStructureVersionPersistence ddmStructureVersionPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
 	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService.class)
+	protected com.liferay.dynamic.data.mapping.service.DDMStructureLayoutLocalService ddmStructureLayoutLocalService;
+	@BeanReference(type = DDMStructureLayoutPersistence.class)
+	protected DDMStructureLayoutPersistence ddmStructureLayoutPersistence;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
+	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+	@ServiceReference(type = com.liferay.portal.kernel.service.UserService.class)
+	protected com.liferay.portal.kernel.service.UserService userService;
+	@ServiceReference(type = UserPersistence.class)
+	protected UserPersistence userPersistence;
 }

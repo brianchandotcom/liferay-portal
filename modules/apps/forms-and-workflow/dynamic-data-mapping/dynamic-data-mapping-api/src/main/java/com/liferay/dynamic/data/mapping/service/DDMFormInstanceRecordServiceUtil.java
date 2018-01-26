@@ -42,12 +42,12 @@ public class DDMFormInstanceRecordServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord addFormInstanceRecord(
-		long groupId, long ddmFormInstanceId,
+		long groupId, long ddmFormInstanceVersionId,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addFormInstanceRecord(groupId, ddmFormInstanceId,
+				   .addFormInstanceRecord(groupId, ddmFormInstanceVersionId,
 			ddmFormValues, serviceContext);
 	}
 

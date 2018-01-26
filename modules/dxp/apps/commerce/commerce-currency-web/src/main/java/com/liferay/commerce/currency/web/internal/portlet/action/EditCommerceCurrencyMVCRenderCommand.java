@@ -17,8 +17,10 @@ package com.liferay.commerce.currency.web.internal.portlet.action;
 import com.liferay.commerce.admin.web.constants.CommerceAdminPortletKeys;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
+import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
 import com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext;
+import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderConstants;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -61,7 +63,8 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 		try {
 			CommerceCurrenciesDisplayContext commerceCurrenciesDisplayContext =
 				new CommerceCurrenciesDisplayContext(
-					_commerceCurrencyService, _roundingTypeServicesTracker,
+					_commerceCurrencyService, _configurationProvider,
+					_exchangeRateProviderRegistry, _roundingTypeServicesTracker,
 					renderRequest, renderResponse);
 
 			renderRequest.setAttribute(
@@ -94,6 +97,12 @@ public class EditCommerceCurrencyMVCRenderCommand implements MVCRenderCommand {
 
 	@Reference
 	private CommerceCurrencyService _commerceCurrencyService;
+
+	@Reference
+	private ConfigurationProvider _configurationProvider;
+
+	@Reference
+	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 	@Reference
 	private Portal _portal;

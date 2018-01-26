@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.exportimport.web.trash;
+package com.liferay.exportimport.web.internal.trash;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
-import com.liferay.exportimport.web.constants.ExportImportWebKeys;
+import com.liferay.exportimport.web.internal.constants.ExportImportWebKeys;
 import com.liferay.portal.kernel.trash.BaseJSPTrashRenderer;
 import com.liferay.portal.kernel.util.PortletKeys;
 

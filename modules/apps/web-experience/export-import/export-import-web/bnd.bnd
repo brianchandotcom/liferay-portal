@@ -1,9 +1,6 @@
 Bundle-Name: Liferay Export Import Web
 Bundle-SymbolicName: com.liferay.exportimport.web
-Bundle-Version: 1.0.35
-Export-Package:\
-	com.liferay.exportimport.web.constants,\
-	com.liferay.exportimport.web.trash
+Bundle-Version: 2.0.0
 Liferay-JS-Config: /META-INF/resources/js/config.js
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Data Management

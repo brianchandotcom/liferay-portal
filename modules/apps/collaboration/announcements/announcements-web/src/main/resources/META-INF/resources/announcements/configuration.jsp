@@ -73,7 +73,7 @@ if (!roles.isEmpty()) {
 
 					<div class="<%= announcementsDisplayContext.isCustomizeAnnouncementsDisplayed() ? "" : "hide" %>" id="<portlet:namespace />announcementsDisplayed">
 						<div class="alert alert-info">
-							<liferay-ui:message key="general-annnouncements-will-always-be-shown-select-any-other-distribution-scopes-you-would-like-to-display" />
+							<liferay-ui:message key="general-announcements-will-always-be-shown-select-any-other-distribution-scopes-you-would-like-to-display" />
 						</div>
 
 						<liferay-ui:tabs

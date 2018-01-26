@@ -37,13 +37,14 @@ renderResponse.setTitle(modelResourceName);
 ExpandoBridge expandoBridge = ExpandoBridgeFactoryUtil.getExpandoBridge(company.getCompanyId(), modelResource);
 
 List<String> attributeNames = Collections.list(expandoBridge.getAttributeNames());
+
+ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="fields" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items='<%= expandoDisplayContext.getNavigationItems("fields") %>'
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= true %>"

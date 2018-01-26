@@ -29,13 +29,14 @@ headerNames.add("custom-fields");
 List<CustomAttributesDisplay> customAttributesDisplays = PortletLocalServiceUtil.getCustomAttributesDisplays();
 
 Collections.sort(customAttributesDisplays, new CustomAttributesDisplayComparator(locale));
+
+ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request);
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="custom-fields" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items='<%= expandoDisplayContext.getNavigationItems("custom-fields") %>'
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

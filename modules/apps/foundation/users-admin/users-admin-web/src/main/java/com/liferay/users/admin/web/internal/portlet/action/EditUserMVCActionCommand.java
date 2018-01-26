@@ -75,6 +75,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portlet.InvokerPortletImpl;
 import com.liferay.portlet.admin.util.AdminUtil;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
+import com.liferay.users.admin.kernel.util.UsersAdminUtil;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -135,6 +136,8 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 		int birthdayYear = ParamUtil.getInteger(actionRequest, "birthdayYear");
 		String comments = ParamUtil.getString(actionRequest, "comments");
 		String jobTitle = ParamUtil.getString(actionRequest, "jobTitle");
+		long[] organizationIds = UsersAdminUtil.getOrganizationIds(
+			actionRequest);
 		boolean sendEmail = true;
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -145,7 +148,7 @@ public class EditUserMVCActionCommand extends BaseMVCActionCommand {
 			screenName, emailAddress, facebookId, null,
 			LocaleUtil.fromLanguageId(languageId), firstName, middleName,
 			lastName, prefixId, suffixId, male, birthdayMonth, birthdayDay,
-			birthdayYear, jobTitle, null, null, null, null,
+			birthdayYear, jobTitle, null, organizationIds, null, null,
 			new ArrayList<Address>(), new ArrayList<EmailAddress>(),
 			new ArrayList<Phone>(), new ArrayList<Website>(),
 			new ArrayList<AnnouncementsDelivery>(), sendEmail, serviceContext);

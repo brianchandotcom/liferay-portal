@@ -47,10 +47,10 @@ public class ManageUserAssociatedDataEntitiesMVCRenderCommand
 		throws PortletException {
 
 		String key = ParamUtil.getString(renderRequest, "key");
-		long userId = ParamUtil.getLong(renderRequest, "userId");
+		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
 		UADEntityTypeComposite entityTypeComposite =
-			_uadRegistry.getUADEntityTypeComposite(userId, key);
+			_uadRegistry.getUADEntityTypeComposite(selUserId, key);
 
 		renderRequest.setAttribute("entityTypeComposite", entityTypeComposite);
 

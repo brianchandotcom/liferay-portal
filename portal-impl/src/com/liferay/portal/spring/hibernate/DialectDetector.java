@@ -104,8 +104,8 @@ public class DialectDetector {
 			}
 			else if (dbName.equals("ASE")) {
 				throw new RuntimeException(
-					"jTDS is no longer supported. Please use the Sybase " +
-						"JDBC driver to connect to Sybase.");
+					"jTDS is no longer supported. Please use the Sybase JDBC " +
+						"driver to connect to Sybase.");
 			}
 			else if (dbName.startsWith("DB2") && (dbMajorVersion >= 9)) {
 				dialect = new DB2Dialect();

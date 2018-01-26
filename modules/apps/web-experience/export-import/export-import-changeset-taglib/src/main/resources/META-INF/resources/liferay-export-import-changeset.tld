@@ -80,27 +80,27 @@
 		<tag-class>com.liferay.exportimport.changeset.taglib.servlet.taglib.PublishEntityTag</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
-			<description>The class name of the entity that will be published. Either the class name or class name ID should be passed.</description>
+			<description>The class name of the entity to publish. The class name or class name ID should be passed.</description>
 			<name>className</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>The class name ID of the entity that will be published. Either the class name or class name ID should be passed.</description>
+			<description>The class name ID of the entity to publish. The class name or class name ID should be passed.</description>
 			<name>classNameId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>The group ID of the entity that will be published.</description>
+			<description>The group ID of the entity to publish.</description>
 			<name>groupId</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>
 			<type>long</type>
 		</attribute>
 		<attribute>
-			<description>The UUID of the entity that will be published.</description>
+			<description>The UUID of the entity to publish.</description>
 			<name>uuid</name>
 			<required>true</required>
 			<rtexprvalue>true</rtexprvalue>

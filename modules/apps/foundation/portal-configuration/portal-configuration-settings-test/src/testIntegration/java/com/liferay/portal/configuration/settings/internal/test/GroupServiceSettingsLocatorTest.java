@@ -15,13 +15,10 @@
 package com.liferay.portal.configuration.settings.internal.test;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition.Scope;
-import com.liferay.portal.configuration.metatype.util.ConfigurationScopedPidUtil;
 import com.liferay.portal.configuration.settings.internal.constants.SettingsLocatorTestConstants;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portal.kernel.settings.GroupServiceSettingsLocator;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
-import com.liferay.portal.kernel.test.util.RandomTestUtil;
 import com.liferay.portal.kernel.util.PortletKeys;
 
 import java.util.ArrayList;
@@ -50,47 +47,23 @@ public class GroupServiceSettingsLocatorTest
 			SettingsLocatorTestConstants.TEST_DEFAULT_VALUE,
 			getSettingsValue());
 
-		String companyScopedPid =
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-				Scope.COMPANY, String.valueOf(companyId));
-
-		String companyConfigurationValue = saveConfiguration(companyScopedPid);
+		String companyConfigurationValue = saveScopedConfiguration(
+			Scope.COMPANY, companyId);
 
 		Assert.assertEquals(companyConfigurationValue, getSettingsValue());
 
-		String companyPortletPreferencesValue = RandomTestUtil.randomString();
-
-		_portletPreferencesList.add(
-			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				companyId, companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY, 0,
-				portletId, null,
-				String.format(
-					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
-					SettingsLocatorTestConstants.TEST_KEY,
-					companyPortletPreferencesValue)));
+		String companyPortletPreferencesValue = savePortletPreferences(
+			companyId, PortletKeys.PREFS_OWNER_TYPE_COMPANY);
 
 		Assert.assertEquals(companyPortletPreferencesValue, getSettingsValue());
 
-		String groupScopedPid =
-			ConfigurationScopedPidUtil.buildConfigurationScopedPid(
-				SettingsLocatorTestConstants.TEST_CONFIGURATION_PID,
-				Scope.GROUP, String.valueOf(groupId));
-
-		String groupConfigurationValue = saveConfiguration(groupScopedPid);
+		String groupConfigurationValue = saveScopedConfiguration(
+			Scope.GROUP, groupId);
 
 		Assert.assertEquals(groupConfigurationValue, getSettingsValue());
 
-		String groupPortletPreferencesValue = RandomTestUtil.randomString();
-
-		_portletPreferencesList.add(
-			PortletPreferencesLocalServiceUtil.addPortletPreferences(
-				companyId, groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP, 0,
-				portletId, null,
-				String.format(
-					SettingsLocatorTestConstants.PORTLET_PREFERENCES_FORMAT,
-					SettingsLocatorTestConstants.TEST_KEY,
-					groupPortletPreferencesValue)));
+		String groupPortletPreferencesValue = savePortletPreferences(
+			groupId, PortletKeys.PREFS_OWNER_TYPE_GROUP);
 
 		Assert.assertEquals(groupPortletPreferencesValue, getSettingsValue());
 	}

@@ -164,6 +164,71 @@ prepareMajorIncrement {
 	description = "Prepares the build scripts of modules and portal artifacts to a major version increment."
 
 	doLast {
+		Map<String, String> moduleNamePathsMap = [:]
+
+		projectDir.traverse(
+			preDir: {
+				if (it.name in [".gradle", ".github", "build", "classes", "node_modules", "third-party"]) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				if (_isGitRepoReadOnly(it)) {
+					return FileVisitResult.SKIP_SUBTREE
+				}
+
+				File bndBndFile = new File(it, "bnd.bnd")
+
+				if (!bndBndFile.exists()) {
+					return FileVisitResult.CONTINUE
+				}
+
+				Properties bndProperties = GUtil.loadProperties(bndBndFile)
+
+				String bundleSymbolicName = bndProperties.getProperty("Bundle-SymbolicName")
+
+				if (!bundleSymbolicName) {
+					return FileVisitResult.CONTINUE
+				}
+
+				String modulePath = relativePath(it)
+
+				modulePath = ":" + modulePath.replace(File.separatorChar, ':' as char)
+
+				moduleNamePathsMap[bundleSymbolicName] = modulePath
+
+				return FileVisitResult.SKIP_SUBTREE
+			},
+			type: FileType.DIRECTORIES
+		)
+
+		Closure<Void> convertToProjectDependenciesClosure = {
+			File dir ->
+
+			File buildGradleFile = new File(dir, "build.gradle")
+
+			String content = buildGradleFile.getText("UTF-8")
+
+			content = content.replaceAll(/group: "com\.liferay", name: "(.+)", version: "\d.+"/) {
+				String dependency, String artifactName ->
+
+				String modulePath = moduleNamePathsMap[artifactName]
+
+				if (!modulePath) {
+					return null
+				}
+
+				return "project(\"${modulePath}\")"
+			}
+
+			content = content.replaceAll(/group: "com\.liferay\.portal", name: "(.+)", version: "\d.+"/) {
+				String dependency, String artifactName ->
+
+				"group: \"com.liferay.portal\", name: \"${artifactName}\", version: \"default\""
+			}
+
+			buildGradleFile.setText content, "UTF-8"
+		}
+
 		Closure<Void> incrementMajorVersionClosure = {
 			File dir ->
 
@@ -200,28 +265,16 @@ prepareMajorIncrement {
 			versionFile.setText content, "UTF-8"
 		}
 
-		projectDir.traverse(
-			preDir: {
-				if (it.name in [".gradle", ".github", "build", "classes", "node_modules", "third-party"]) {
-					return FileVisitResult.SKIP_SUBTREE
-				}
+		moduleNamePathsMap.each {
+			String bundleSymbolicName, String modulePath ->
 
-				if (_isGitRepoReadOnly(it)) {
-					return FileVisitResult.SKIP_SUBTREE
-				}
+			modulePath = modulePath.replace(':' as char, File.separatorChar)
 
-				File bndBndFile = new File(it, "bnd.bnd")
+			File moduleDir = file(modulePath.substring(1))
 
-				if (!bndBndFile.exists()) {
-					return FileVisitResult.CONTINUE
-				}
-
-				incrementMajorVersionClosure it
-
-				return FileVisitResult.SKIP_SUBTREE
-			},
-			type: FileType.DIRECTORIES
-		)
+			convertToProjectDependenciesClosure moduleDir
+			incrementMajorVersionClosure moduleDir
+		}
 
 		File portalRootDir = projectDir.parentFile
 

@@ -16,16 +16,4 @@
 			</map>
 		</property>
 	</bean>
-	<bean class="com.liferay.calendar.notification.impl.NotificationSenderFactory" id="com.liferay.calendar.notification.impl.NotificationSenderFactory">
-		<property name="notificationSenders">
-			<map>
-				<entry key="email">
-					<bean class="com.liferay.calendar.notification.impl.EmailNotificationSender" />
-				</entry>
-				<entry key="im">
-					<bean class="com.liferay.calendar.notification.impl.IMNotificationSender" />
-				</entry>
-			</map>
-		</property>
-	</bean>
 </beans>

@@ -14,9 +14,15 @@
 
 package com.liferay.calendar.notification.impl;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Lundgren
  */
+@Component(
+	immediate = true, property = {"notification.type=im"},
+	service = NotificationSender.class
+)
 public class IMNotificationSender implements NotificationSender {
 
 	@Override

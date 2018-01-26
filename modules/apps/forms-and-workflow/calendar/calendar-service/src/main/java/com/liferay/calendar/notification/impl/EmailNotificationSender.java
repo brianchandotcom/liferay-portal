@@ -18,13 +18,20 @@ import com.liferay.calendar.model.CalendarNotificationTemplate;
 import com.liferay.calendar.model.CalendarNotificationTemplateConstants;
 import com.liferay.calendar.notification.NotificationField;
 import com.liferay.mail.kernel.model.MailMessage;
-import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.mail.kernel.service.MailService;
 
 import javax.mail.internet.InternetAddress;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Lundgren
  */
+@Component(
+	immediate = true, property = {"notification.type=email"},
+	service = NotificationSender.class
+)
 public class EmailNotificationSender implements NotificationSender {
 
 	@Override
@@ -90,12 +97,15 @@ public class EmailNotificationSender implements NotificationSender {
 
 			mailMessage.setTo(toInternetAddress);
 
-			MailServiceUtil.sendEmail(mailMessage);
+			_mailService.sendEmail(mailMessage);
 		}
 		catch (Exception e) {
 			throw new NotificationSenderException(
 				"Unable to send mail message", e);
 		}
 	}
+
+	@Reference
+	private MailService _mailService;
 
 }

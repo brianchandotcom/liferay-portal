@@ -76,6 +76,8 @@
 
 		@include clay-button-variant(map-get($btn-palette, secondary));
 
+		font-weight: 600;
+
 		@include hover {
 			text-decoration: none;
 		}

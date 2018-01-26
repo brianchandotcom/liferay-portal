@@ -89,6 +89,11 @@ public class RecentSitesItemSelectorViewDisplayContext
 		return groupSearch;
 	}
 
+	@Override
+	public boolean isShowSearch() {
+		return false;
+	}
+
 	private final RecentGroupManager _recentGroupManager;
 
 }

@@ -42,6 +42,21 @@ GroupSearch groupSearch = siteItemSelectorViewDisplayContext.getGroupSearch();
 					portletURL="<%= siteItemSelectorViewDisplayContext.getPortletURL() %>"
 				/>
 			</c:if>
+
+			<c:if test="<%= siteItemSelectorViewDisplayContext.isShowSearch() %>">
+
+				<%
+				PortletURL searchURL = PortletURLUtil.clone(currentURLObj, liferayPortletResponse);
+
+				searchURL.setParameter("resetCur", Boolean.TRUE.toString());
+				%>
+
+				<li>
+					<aui:form action='<%= HttpUtil.removeParameter(searchURL.toString(), liferayPortletResponse.getNamespace() + "keywords") %>' name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
+			</c:if>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons

@@ -119,6 +119,11 @@ public abstract class BaseSitesItemSelectorViewDisplayContext
 	}
 
 	@Override
+	public boolean isShowSearch() {
+		return true;
+	}
+
+	@Override
 	public boolean isShowSortFilter() {
 		return false;
 	}

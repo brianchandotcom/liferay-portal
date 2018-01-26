@@ -25,6 +25,7 @@ import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.comparator.CalendarNameComparator;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -38,7 +39,6 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 

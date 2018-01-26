@@ -21,9 +21,9 @@ import com.google.ical.values.DateValueImpl;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.recurrence.Recurrence;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import java.text.ParseException;

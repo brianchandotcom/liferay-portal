@@ -21,6 +21,7 @@ import com.liferay.calendar.model.CalendarResource;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarLocalService;
 import com.liferay.calendar.util.CalendarResourceUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.kernel.test.util.UserTestUtil;
 import com.liferay.portal.kernel.util.DateUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.service.test.ServiceTestUtil;
 

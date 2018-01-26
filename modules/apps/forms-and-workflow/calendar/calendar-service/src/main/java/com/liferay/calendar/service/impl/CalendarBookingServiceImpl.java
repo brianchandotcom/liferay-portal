@@ -23,6 +23,7 @@ import com.liferay.calendar.util.CalendarUtil;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RSSUtil;
 import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,7 +38,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
 
 import com.sun.syndication.feed.synd.SyndContent;

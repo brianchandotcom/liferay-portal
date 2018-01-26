@@ -25,6 +25,7 @@ import com.liferay.calendar.service.configuration.CalendarServiceConfigurationKe
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationUtil;
 import com.liferay.calendar.service.configuration.CalendarServiceConfigurationValues;
 import com.liferay.petra.content.ContentUtil;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.configuration.Filter;
 import com.liferay.portal.kernel.log.Log;
@@ -34,7 +35,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 

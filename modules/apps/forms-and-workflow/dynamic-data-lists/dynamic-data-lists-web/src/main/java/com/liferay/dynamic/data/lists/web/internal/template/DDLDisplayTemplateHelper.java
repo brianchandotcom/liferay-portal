@@ -22,6 +22,7 @@ import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRenderer;
 import com.liferay.dynamic.data.mapping.render.DDMFormFieldValueRendererRegistryUtil;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;

@@ -22,8 +22,8 @@ import com.liferay.dynamic.data.mapping.model.UnlocalizedValue;
 import com.liferay.dynamic.data.mapping.model.Value;
 import com.liferay.dynamic.data.mapping.storage.DDMFormFieldValue;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.HtmlUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.template.soy.utils.SoyHTMLContextValue;
 import com.liferay.portal.util.HtmlImpl;
 

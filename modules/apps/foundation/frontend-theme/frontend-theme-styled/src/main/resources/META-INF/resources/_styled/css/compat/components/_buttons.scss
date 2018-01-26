@@ -105,5 +105,9 @@
 
 	.button-holder {
 		display: flex;
+
+		&.btn-group {
+			display: inline-flex;
+		}
 	}
 }

@@ -105,6 +105,13 @@
 		</if>
 
 		<if>
+			<isset var="recycleBinNotification" />
+			<then>
+				<execute function="AssertTextEquals" locator1="Message#ERROR_3_ALT" value1="The recycle bin of this site will be automatically emptied before turning on local staging. Make sure to manually restore anything you don't want to delete permanently before you continue." />
+			</then>
+		</if>
+
+		<if>
 			<equals arg1="${editActivateStaging}" arg2="true" />
 			<then>
 				<execute macro="Button#clickSave" />

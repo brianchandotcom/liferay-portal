@@ -1453,7 +1453,7 @@ public class Types {
             }
         }
 
-        // If addded, look at the namespace uri to see if the schema element should be
+        // If added, look at the namespace uri to see if the schema element should be
         // generated.
         if (added) {
             String prefix = namespaces.getCreatePrefix(namespaceURI);

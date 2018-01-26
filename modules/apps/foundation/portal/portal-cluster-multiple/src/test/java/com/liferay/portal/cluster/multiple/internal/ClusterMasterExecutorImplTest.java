@@ -227,7 +227,7 @@ public class ClusterMasterExecutorImplTest extends BaseClusterTestCase {
 	@Test
 	public void testExecuteOnMasterDisabled() throws Exception {
 
-		// Test 1, execute without exception when log is eanbled
+		// Test 1, execute without exception when log is enabled
 
 		ClusterMasterExecutorImpl clusterMasterExecutorImpl =
 			new ClusterMasterExecutorImpl();

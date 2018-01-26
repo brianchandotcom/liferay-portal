@@ -716,24 +716,6 @@
 		<url-pattern>*.jsp</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-		<filter-name>I18n Filter</filter-name>
-		<url-pattern>/group/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>I18n Filter</filter-name>
-		<url-pattern>/user/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
-		<filter-name>I18n Filter</filter-name>
-		<url-pattern>/web/*</url-pattern>
-		<dispatcher>FORWARD</dispatcher>
-		<dispatcher>REQUEST</dispatcher>
-	</filter-mapping>
-	<filter-mapping>
 		<filter-name>Secure Friendly URL Servlet Filter</filter-name>
 		<url-pattern>/group/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
@@ -766,6 +748,24 @@
 	<filter-mapping>
 		<filter-name>Secure RSS Filter</filter-name>
 		<url-pattern>/user/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>I18n Filter</filter-name>
+		<url-pattern>/group/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>I18n Filter</filter-name>
+		<url-pattern>/user/*</url-pattern>
+		<dispatcher>FORWARD</dispatcher>
+		<dispatcher>REQUEST</dispatcher>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>I18n Filter</filter-name>
+		<url-pattern>/web/*</url-pattern>
 		<dispatcher>FORWARD</dispatcher>
 		<dispatcher>REQUEST</dispatcher>
 	</filter-mapping>

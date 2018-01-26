@@ -2,6 +2,7 @@ Bundle-Name: Liferay Export Import Changeset API
 Bundle-SymbolicName: com.liferay.exportimport.changeset.api
 Bundle-Version: 1.0.0
 Export-Package:\
+	com.liferay.exportimport.changeset,\
 	com.liferay.exportimport.changeset.constants,\
 	com.liferay.exportimport.changeset.exception
 Liferay-Releng-Module-Group-Description:

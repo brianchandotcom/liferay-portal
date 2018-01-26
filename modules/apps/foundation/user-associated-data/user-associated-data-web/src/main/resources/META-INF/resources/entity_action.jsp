@@ -25,8 +25,8 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:actionURL name="/users_admin/auto_anonymize_user_associated_data_entity" var="autoAnonymizeURL">
-		<portlet:param name="mvcActionCommand" value="/users_admin/auto_anonymize_user_associated_data_entity" />
+	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data_entity" var="autoAnonymizeURL">
+		<portlet:param name="mvcActionCommand" value="/user_associated_data/auto_anonymize_user_associated_data_entity" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>
@@ -36,8 +36,8 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 		url="<%= autoAnonymizeURL %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/delete_user_associated_data_entity" var="deleteURL">
-		<portlet:param name="mvcActionCommand" value="/users_admin/delete_user_associated_data_entity" />
+	<portlet:actionURL name="/user_associated_data/delete_user_associated_data_entity" var="deleteURL">
+		<portlet:param name="mvcActionCommand" value="/user_associated_data/delete_user_associated_data_entity" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>
@@ -47,8 +47,8 @@ UADEntity uadEntity = (UADEntity)row.getObject();
 		url="<%= deleteURL %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/export_user_associated_data_entity" var="exportURL">
-		<portlet:param name="mvcActionCommand" value="/users_admin/export_user_associated_data_entity" />
+	<portlet:actionURL name="/user_associated_data/export_user_associated_data_entity" var="exportURL">
+		<portlet:param name="mvcActionCommand" value="/user_associated_data/export_user_associated_data_entity" />
 		<portlet:param name="uadEntityId" value="<%= uadEntity.getUADEntityId() %>" />
 		<portlet:param name="uadRegistryKey" value="<%= uadEntity.getUADRegistryKey() %>" />
 	</portlet:actionURL>

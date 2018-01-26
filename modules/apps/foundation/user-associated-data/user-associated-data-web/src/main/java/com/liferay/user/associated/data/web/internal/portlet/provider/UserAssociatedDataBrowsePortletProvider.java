@@ -49,7 +49,7 @@ public class UserAssociatedDataBrowsePortletProvider
 
 		portletURL.setParameter(
 			"mvcRenderCommandName",
-			"/users_admin/manage_user_associated_data_bundles");
+			"/user_associated_data/manage_user_associated_data_bundles");
 
 		return portletURL;
 	}

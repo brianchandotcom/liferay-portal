@@ -23,8 +23,8 @@ UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)row.getO
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<portlet:actionURL name="/users_admin/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
-		<portlet:param name="mvcActionCommand" value="/users_admin/auto_anonymize_user_associated_data" />
+	<portlet:actionURL name="/user_associated_data/auto_anonymize_user_associated_data" var="autoAnonymizeURL">
+		<portlet:param name="mvcActionCommand" value="/user_associated_data/auto_anonymize_user_associated_data" />
 		<portlet:param name="key" value="<%= uadEntityTypeComposite.getKey() %>" />
 		<portlet:param name="userId" value="<%= String.valueOf(uadEntityTypeComposite.getUserId()) %>" />
 	</portlet:actionURL>
@@ -34,8 +34,8 @@ UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)row.getO
 		url="<%= autoAnonymizeURL %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/delete_user_associated_data" var="deleteURL">
-		<portlet:param name="mvcActionCommand" value="/users_admin/delete_user_associated_data" />
+	<portlet:actionURL name="/user_associated_data/delete_user_associated_data" var="deleteURL">
+		<portlet:param name="mvcActionCommand" value="/user_associated_data/delete_user_associated_data" />
 		<portlet:param name="key" value="<%= uadEntityTypeComposite.getKey() %>" />
 		<portlet:param name="userId" value="<%= String.valueOf(uadEntityTypeComposite.getUserId()) %>" />
 	</portlet:actionURL>
@@ -45,8 +45,8 @@ UADEntityTypeComposite uadEntityTypeComposite = (UADEntityTypeComposite)row.getO
 		url="<%= deleteURL %>"
 	/>
 
-	<portlet:actionURL name="/users_admin/export_user_associated_data" var="exportURL">
-		<portlet:param name="mvcActionCommand" value="/users_admin/export_user_associated_data" />
+	<portlet:actionURL name="/user_associated_data/export_user_associated_data" var="exportURL">
+		<portlet:param name="mvcActionCommand" value="/user_associated_data/export_user_associated_data" />
 		<portlet:param name="key" value="<%= uadEntityTypeComposite.getKey() %>" />
 		<portlet:param name="userId" value="<%= String.valueOf(uadEntityTypeComposite.getUserId()) %>" />
 	</portlet:actionURL>

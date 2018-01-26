@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 	immediate = true,
 	property = {
 		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
-		"mvc.command.name=/users_admin/manage_user_associated_data_entities"
+		"mvc.command.name=/user_associated_data/manage_user_associated_data_entities"
 	},
 	service = MVCRenderCommand.class
 )

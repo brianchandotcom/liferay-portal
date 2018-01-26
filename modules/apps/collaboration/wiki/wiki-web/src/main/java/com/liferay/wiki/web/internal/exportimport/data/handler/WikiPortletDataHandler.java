@@ -198,7 +198,7 @@ public class WikiPortletDataHandler extends BasePortletDataHandler {
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				WikiNode.class);
 
-		for (long nodeId : nodeIds.values()) {
+		if (!nodeIds.isEmpty()) {
 			_wikiCacheHelper.clearCache();
 		}
 

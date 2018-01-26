@@ -21,10 +21,52 @@ import com.liferay.portal.kernel.settings.SettingsLocator;
 import com.liferay.registry.collections.ServiceTrackerCollections;
 import com.liferay.registry.collections.ServiceTrackerList;
 
+import java.util.Dictionary;
+
 /**
  * @author Jorge Ferrer
  */
 public class ConfigurationProviderUtil {
+
+	public static <T> void deleteCompanyConfiguration(
+			Class<T> clazz, long companyId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deleteCompanyConfiguration(clazz, companyId);
+	}
+
+	public static <T> void deleteGroupConfiguration(
+			Class<T> clazz, long groupId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deleteGroupConfiguration(clazz, groupId);
+	}
+
+	public static <T> void deletePortletInstanceConfiguration(
+			Class<T> clazz, String portletId)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deletePortletInstanceConfiguration(
+			clazz, portletId);
+	}
+
+	public static <T> void deleteSystemConfiguration(Class<T> clazz)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.deleteSystemConfiguration(clazz);
+	}
 
 	public static <T> T getCompanyConfiguration(Class<T> clazz, long companyId)
 		throws ConfigurationException {
@@ -92,6 +134,51 @@ public class ConfigurationProviderUtil {
 			getConfigurationProvider();
 
 		return configurationProvider.getSystemConfiguration(clazz);
+	}
+
+	public static <T> void saveCompanyConfiguration(
+			Class<T> clazz, long companyId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.saveCompanyConfiguration(
+			clazz, companyId, properties);
+	}
+
+	public static <T> void saveGroupConfiguration(
+			Class<T> clazz, long groupId, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.saveGroupConfiguration(
+			clazz, groupId, properties);
+	}
+
+	public static <T> void savePortletInstanceConfiguration(
+			Class<T> clazz, String portletId,
+			Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.savePortletInstanceConfiguration(
+			clazz, portletId, properties);
+	}
+
+	public static <T> void saveSystemConfiguration(
+			Class<T> clazz, Dictionary<String, Object> properties)
+		throws ConfigurationException {
+
+		ConfigurationProvider configurationProvider =
+			getConfigurationProvider();
+
+		configurationProvider.saveSystemConfiguration(clazz, properties);
 	}
 
 	private static final ServiceTrackerList<ConfigurationProvider>

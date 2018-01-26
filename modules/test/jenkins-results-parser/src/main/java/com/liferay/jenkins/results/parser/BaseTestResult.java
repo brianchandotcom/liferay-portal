@@ -16,6 +16,9 @@ package com.liferay.jenkins.results.parser;
 
 import java.io.IOException;
 
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
+
 import java.util.Map;
 import java.util.Properties;
 
@@ -169,7 +172,17 @@ public class BaseTestResult implements TestResult {
 		sb.append("/");
 		sb.append(getEncodedTestName());
 
-		return sb.toString();
+		String testReportURL = sb.toString();
+
+		try {
+			return JenkinsResultsParserUtil.encode(testReportURL);
+		}
+		catch (MalformedURLException | URISyntaxException e) {
+			System.out.println(
+				"Could not encode the test report URL: " + testReportURL);
+		}
+
+		return testReportURL;
 	}
 
 	protected BaseTestResult(Build build, JSONObject caseJSONObject) {

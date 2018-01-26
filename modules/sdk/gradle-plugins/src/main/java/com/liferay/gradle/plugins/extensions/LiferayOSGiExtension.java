@@ -101,7 +101,11 @@ public class LiferayOSGiExtension {
 
 			});
 
+		_bundleDefaultInstructions.put(
+			"-includeresource", "META-INF/service.xml=-service.xml");
 		_bundleDefaultInstructions.put("-jsp", "*.jsp,*.jspf");
+		_bundleDefaultInstructions.put(
+			"-liferay-service-xml", "service.xml,*/service.xml");
 		_bundleDefaultInstructions.put("-sass", "*");
 	}
 

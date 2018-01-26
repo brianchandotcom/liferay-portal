@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
@@ -110,6 +111,10 @@ public class AddFormInstanceRecordMVCResourceCommand
 		DDMFormInstance ddmFormInstance =
 			_ddmFormInstanceService.getFormInstance(formInstanceId);
 
+		DDMFormInstanceVersion ddmFormInstanceVersion =
+			ddmFormInstance.getFormInstanceVersion(
+				ddmFormInstance.getVersion());
+
 		DDMFormValues ddmFormValues = createDDMFormValues(
 			ddmFormInstance, resourceRequest);
 
@@ -128,8 +133,9 @@ public class AddFormInstanceRecordMVCResourceCommand
 
 		if (ddmFormInstanceRecordVersion == null) {
 			_ddmFormInstanceRecordService.addFormInstanceRecord(
-				ddmFormInstance.getGroupId(), formInstanceId, ddmFormValues,
-				serviceContext);
+				ddmFormInstance.getGroupId(),
+				ddmFormInstanceVersion.getFormInstanceVersionId(),
+				ddmFormValues, serviceContext);
 		}
 		else {
 			_ddmFormInstanceRecordService.updateFormInstanceRecord(

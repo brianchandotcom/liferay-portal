@@ -22,7 +22,9 @@ import com.liferay.dynamic.data.mapping.internal.storage.StorageEngineAccessor;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
+import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
@@ -74,16 +76,17 @@ public class DDMFormInstanceRecordLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public DDMFormInstanceRecord addFormInstanceRecord(
-			long userId, long groupId, long ddmFormInstanceId,
+			long userId, long groupId, long ddmFormInstanceVersionId,
 			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
-		DDMFormInstance ddmFormInstance =
-			ddmFormInstancePersistence.findByPrimaryKey(ddmFormInstanceId);
+		DDMFormInstanceVersion ddmFormInstanceVersion =
+			ddmFormInstanceVersionPersistence.findByPrimaryKey(
+				ddmFormInstanceVersionId);
 
-		validate(groupId, ddmFormInstance);
+		validate(groupId, ddmFormInstanceVersion);
 
 		long recordId = counterLocalService.increment();
 
@@ -100,15 +103,21 @@ public class DDMFormInstanceRecordLocalServiceImpl
 
 		StorageEngine storageEngine = storageEngineAccessor.getStorageEngine();
 
+		DDMStructureVersion structureVersion =
+			ddmFormInstanceVersion.getStructureVersion();
+
 		long ddmStorageId = storageEngine.create(
-			ddmFormInstance.getCompanyId(), ddmFormInstance.getStructureId(),
-			ddmFormValues, serviceContext);
+			ddmFormInstanceVersion.getCompanyId(),
+			structureVersion.getStructureId(),
+			structureVersion.getStructureVersionId(), ddmFormValues,
+			serviceContext);
 
 		ddmFormInstanceRecord.setStorageId(ddmStorageId);
 
-		ddmFormInstanceRecord.setFormInstanceId(ddmFormInstanceId);
+		ddmFormInstanceRecord.setFormInstanceId(
+			ddmFormInstanceVersion.getFormInstanceId());
 		ddmFormInstanceRecord.setFormInstanceVersion(
-			ddmFormInstance.getVersion());
+			ddmFormInstanceVersion.getVersion());
 		ddmFormInstanceRecord.setVersion(_VERSION_DEFAULT);
 
 		ddmFormInstanceRecordPersistence.update(ddmFormInstanceRecord);
@@ -728,10 +737,11 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			ddmFormInstanceRecordVersion);
 	}
 
-	protected void validate(long groupId, DDMFormInstance ddmFormInstance)
+	protected void validate(
+			long groupId, DDMFormInstanceVersion ddmFormInstanceVersion)
 		throws PortalException {
 
-		if (ddmFormInstance.getGroupId() != groupId) {
+		if (ddmFormInstanceVersion.getGroupId() != groupId) {
 			throw new FormInstanceRecordGroupIdException(
 				"Record group ID is not the same as the form instance group " +
 					"ID");

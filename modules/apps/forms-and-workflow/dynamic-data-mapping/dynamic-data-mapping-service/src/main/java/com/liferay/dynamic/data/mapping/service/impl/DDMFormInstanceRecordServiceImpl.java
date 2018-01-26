@@ -16,6 +16,7 @@ package com.liferay.dynamic.data.mapping.service.impl;
 
 import com.liferay.dynamic.data.mapping.constants.DDMActionKeys;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordServiceBaseImpl;
 import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstancePermission;
 import com.liferay.dynamic.data.mapping.service.permission.DDMFormInstanceRecordPermission;
@@ -35,17 +36,21 @@ public class DDMFormInstanceRecordServiceImpl
 
 	@Override
 	public DDMFormInstanceRecord addFormInstanceRecord(
-			long groupId, long ddmFormInstanceId, DDMFormValues ddmFormValues,
-			ServiceContext serviceContext)
+			long groupId, long ddmFormInstanceVersionId,
+			DDMFormValues ddmFormValues, ServiceContext serviceContext)
 		throws PortalException {
 
+		DDMFormInstanceVersion formInstanceVersion =
+			ddmFormInstanceVersionLocalService.getFormInstanceVersion(
+				ddmFormInstanceVersionId);
+
 		DDMFormInstancePermission.check(
-			getPermissionChecker(), ddmFormInstanceId,
+			getPermissionChecker(), formInstanceVersion.getFormInstanceId(),
 			DDMActionKeys.ADD_FORM_INSTANCE_RECORD);
 
 		return ddmFormInstanceRecordLocalService.addFormInstanceRecord(
-			getGuestOrUserId(), groupId, ddmFormInstanceId, ddmFormValues,
-			serviceContext);
+			getGuestOrUserId(), groupId, ddmFormInstanceVersionId,
+			ddmFormValues, serviceContext);
 	}
 
 	@Override

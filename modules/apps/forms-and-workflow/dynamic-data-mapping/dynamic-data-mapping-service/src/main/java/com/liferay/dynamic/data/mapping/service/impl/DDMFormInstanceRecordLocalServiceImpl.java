@@ -27,6 +27,7 @@ import com.liferay.dynamic.data.mapping.service.base.DDMFormInstanceRecordLocalS
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.exportimport.kernel.lar.ExportImportThreadLocal;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -131,8 +132,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			serviceContext.getAssetTagNames(), locale,
 			serviceContext.getAssetPriority());
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) {
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			(serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH)) {
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), groupId, userId,
@@ -392,8 +394,9 @@ public class DDMFormInstanceRecordLocalServiceImpl
 			return ddmFormInstanceRecord;
 		}
 
-		if (serviceContext.getWorkflowAction() ==
-				WorkflowConstants.ACTION_PUBLISH) {
+		if (!ExportImportThreadLocal.isImportInProcess() &&
+			(serviceContext.getWorkflowAction() ==
+				WorkflowConstants.ACTION_PUBLISH)) {
 
 			WorkflowHandlerRegistryUtil.startWorkflowInstance(
 				user.getCompanyId(), ddmFormInstanceRecord.getGroupId(), userId,

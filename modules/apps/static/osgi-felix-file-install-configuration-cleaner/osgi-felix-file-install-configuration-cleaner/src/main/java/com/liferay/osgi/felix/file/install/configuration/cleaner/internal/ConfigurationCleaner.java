@@ -72,7 +72,7 @@ public class ConfigurationCleaner {
 					if (_log.isInfoEnabled()) {
 						_log.info(
 							"Configuration was reset because " + fileName +
-								" being deleted");
+								" was deleted");
 					}
 				}
 			}

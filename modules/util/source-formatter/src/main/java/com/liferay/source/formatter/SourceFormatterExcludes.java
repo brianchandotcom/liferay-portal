@@ -15,6 +15,7 @@
 package com.liferay.source.formatter;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,6 +24,9 @@ import java.util.Set;
  * @author Hugo Huijser
  */
 public class SourceFormatterExcludes {
+
+	public SourceFormatterExcludes() {
+	}
 
 	public SourceFormatterExcludes(
 		Set<ExcludeSyntaxPattern> defaultExcludeSyntaxPatterns) {
@@ -54,7 +58,8 @@ public class SourceFormatterExcludes {
 		return _excludeSyntaxPatternsMap;
 	}
 
-	private final Set<ExcludeSyntaxPattern> _defaultExcludeSyntaxPatterns;
+	private Set<ExcludeSyntaxPattern> _defaultExcludeSyntaxPatterns =
+		new HashSet<>();
 	private Map<String, List<ExcludeSyntaxPattern>> _excludeSyntaxPatternsMap =
 		new HashMap<>();
 

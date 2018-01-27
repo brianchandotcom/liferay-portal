@@ -15,7 +15,6 @@
 package com.liferay.frontend.taglib.clay.servlet.taglib.soy;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.soy.base.BaseClayTag;
-
 import com.liferay.portal.kernel.dao.search.ResultRow;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.util.Validator;
@@ -35,26 +34,30 @@ public class HorizontalCardTag extends BaseClayTag {
 	public int doStartTag() {
 		Map<String, Object> context = getContext();
 
-		if (Validator.isNotNull(_rowChecker)) {			
+		if (Validator.isNotNull(_rowChecker)) {
 			if (Validator.isNull(context.get("selectable"))) {
 				putValue("selectable", true);
 			}
-			
+
 			if (Validator.isNull(context.get("inputName"))) {
 				putValue("inputName", _rowChecker.getRowIds());
 			}
-			
+
 			if (Validator.isNull(context.get("inputValue"))) {
 				putValue("inputValue", _resultRow.getPrimaryKey());
 			}
-			
+
 			if (Validator.isNotNull(_resultRow)) {
 				if (Validator.isNull(context.get("disabled"))) {
-					putValue("disabled", _rowChecker.isDisabled(_resultRow.getObject()));
+					putValue(
+						"disabled",
+						_rowChecker.isDisabled(_resultRow.getObject()));
 				}
-				
+
 				if (Validator.isNull(context.get("selected"))) {
-					putValue("selected", _rowChecker.isChecked(_resultRow.getObject()));
+					putValue(
+						"selected",
+						_rowChecker.isChecked(_resultRow.getObject()));
 				}
 			}
 		}

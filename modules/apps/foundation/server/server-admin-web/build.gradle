@@ -6,6 +6,7 @@ dependencies {
 	provided group: "com.liferay", name: "com.liferay.application.list.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.captcha.api", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.frontend.taglib", version: "2.0.0"
+	provided group: "com.liferay", name: "com.liferay.frontend.taglib.soy", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.log4j", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
@@ -21,4 +22,5 @@ dependencies {
 	provided group: "javax.servlet.jsp", name: "javax.servlet.jsp-api", version: "2.3.1"
 	provided group: "log4j", name: "log4j", version: "1.2.17"
 	provided group: "org.osgi", name: "org.osgi.service.component.annotations", version: "1.3.0"
+	provided project(":apps:foundation:frontend-taglib:frontend-taglib-clay")
 }

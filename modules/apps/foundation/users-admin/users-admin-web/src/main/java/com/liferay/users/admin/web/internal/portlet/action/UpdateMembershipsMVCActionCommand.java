@@ -27,7 +27,6 @@ import com.liferay.portal.kernel.service.UserService;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.Portal;
-import com.liferay.users.admin.constants.UserFormConstants;
 import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 import com.liferay.users.admin.kernel.util.UsersAdmin;
 
@@ -101,12 +100,6 @@ public class UpdateMembershipsMVCActionCommand extends BaseMVCActionCommand {
 				SessionErrors.add(actionRequest, e.getClass(), e);
 
 				actionResponse.setRenderParameter("mvcPath", "/edit_user.jsp");
-				actionResponse.setRenderParameter(
-					"screenNavigationCategoryKey",
-					UserFormConstants.CATEGORY_KEY_GENERAL);
-				actionResponse.setRenderParameter(
-					"screenNavigationEntryKey",
-					UserFormConstants.ENTRY_KEY_MEMBERSHIPS);
 			}
 			else {
 				throw e;

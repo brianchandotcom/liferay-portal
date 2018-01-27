@@ -50,12 +50,6 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="users" selected="<%= true %>" />
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -82,6 +76,12 @@ SearchContainer userSearchContainer = new UserSearch(renderRequest, portletURL);
 			orderColumns='<%= new String[] {"first-name", "last-name", "screen-name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

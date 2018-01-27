@@ -39,12 +39,6 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 	<aui:nav cssClass="navbar-nav">
 		<aui:nav-item label="user-groups" selected="<%= true %>" />
 	</aui:nav>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= portletURL.toString() %>" name="searchFm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar>
@@ -54,6 +48,12 @@ renderResponse.setTitle(LanguageUtil.get(request, "user-groups"));
 				navigationKeys='<%= new String[] {"all"} %>'
 				portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 			/>
+
+			<li>
+				<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+					<liferay-ui:input-search markupView="lexicon" />
+				</aui:form>
+			</li>
 		</liferay-frontend:management-bar-filters>
 
 		<liferay-frontend:management-bar-display-buttons

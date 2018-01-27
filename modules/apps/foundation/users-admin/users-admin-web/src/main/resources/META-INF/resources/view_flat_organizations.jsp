@@ -91,6 +91,12 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 					orderColumns='<%= new String[] {"name", "type"} %>'
 					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 				/>
+
+				<li>
+					<aui:form action="<%= portletURL.toString() %>" name="searchFm">
+						<liferay-ui:input-search markupView="lexicon" />
+					</aui:form>
+				</li>
 			</liferay-frontend:management-bar-filters>
 
 			<liferay-frontend:management-bar-buttons>

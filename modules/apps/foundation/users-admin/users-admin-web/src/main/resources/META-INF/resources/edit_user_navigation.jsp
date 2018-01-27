@@ -31,8 +31,8 @@ if (selUser != null) {
 
 long selUserId = (selUser != null) ? selUser.getUserId() : 0;
 
-String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey");
-String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigationEntryKey");
+String screenNavigationCategoryKey = ParamUtil.getString(request, "screenNavigationCategoryKey", UserFormConstants.CATEGORY_KEY_GENERAL);
+String screenNavigationEntryKey = ParamUtil.getString(request, "screenNavigationEntryKey", UserFormConstants.ENTRY_KEY_INFORMATION);
 %>
 
 <portlet:actionURL name="<%= actionCommandName %>" var="actionCommandURL" />

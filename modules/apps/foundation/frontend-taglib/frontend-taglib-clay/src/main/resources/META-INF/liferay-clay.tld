@@ -640,6 +640,18 @@
 		</attribute>
 		<attribute>
 			<description></description>
+			<name>resultRow</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
+			<name>rowChecker</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description></description>
 			<name>selectable</name>
 			<required>false</required>
 			<rtexprvalue>true</rtexprvalue>

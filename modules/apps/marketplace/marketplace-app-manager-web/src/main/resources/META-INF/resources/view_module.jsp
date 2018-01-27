@@ -93,53 +93,10 @@ else {
 }
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewModuleComponentsURL">
-			<portlet:param name="mvcPath" value="/view_module.jsp" />
-			<portlet:param name="app" value="<%= app %>" />
-			<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
-			<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
-			<portlet:param name="version" value="<%= bundle.getVersion().toString() %>" />
-			<portlet:param name="pluginType" value="components" />
-			<portlet:param name="orderByType" value="<%= orderByType %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewModuleComponentsURL %>"
-			label="components"
-			selected='<%= pluginType.equals("components") %>'
-		/>
-
-		<portlet:renderURL var="viewModulePortletsURL">
-			<portlet:param name="mvcPath" value="/view_module.jsp" />
-			<portlet:param name="app" value="<%= app %>" />
-			<portlet:param name="moduleGroup" value="<%= moduleGroup %>" />
-			<portlet:param name="symbolicName" value="<%= bundle.getSymbolicName() %>" />
-			<portlet:param name="version" value="<%= bundle.getVersion().toString() %>" />
-			<portlet:param name="pluginType" value="portlets" />
-			<portlet:param name="orderByType" value="<%= orderByType %>" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewModulePortletsURL %>"
-			label="portlets"
-			selected='<%= pluginType.equals("portlets") %>'
-		/>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= appManagerDisplayContext.getModuleNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	searchContainerId="components"
@@ -159,6 +116,18 @@ else {
 			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
+
+		<li>
+			<liferay-portlet:renderURL varImpl="searchURL">
+				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+			</liferay-portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

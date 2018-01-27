@@ -53,11 +53,6 @@ public class MediaItemSelectorView
 	}
 
 	@Override
-	public boolean isShowSearch() {
-		return false;
-	}
-
-	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}

@@ -68,10 +68,14 @@ public interface ItemSelectorView<T extends ItemSelectorCriterion> {
 	 * Returns whether the item selector view should show the search field. If
 	 * the view supports search, this method should return <code>true</code>.
 	 *
+	 * @deprecated As of 2.4.0, with no direct replacement
 	 * @return <code>true</code> if the item selector view should show the
 	 *         search field
 	 */
-	public boolean isShowSearch();
+	@Deprecated
+	public default boolean isShowSearch() {
+		return true;
+	};
 
 	/**
 	 * Returns whether the item selector view is visible.

@@ -84,11 +84,6 @@ public class KBAttachmentItemSelectorView
 	}
 
 	@Override
-	public boolean isShowSearch() {
-		return true;
-	}
-
-	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}

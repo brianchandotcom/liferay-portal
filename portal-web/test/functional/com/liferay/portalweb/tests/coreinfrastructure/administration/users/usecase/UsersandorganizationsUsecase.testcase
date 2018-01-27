@@ -76,7 +76,7 @@
 
 		<execute macro="User#addCP">
 			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="&lt;userfn&gt;" />
+			<var name="userFirstName" value="&lt;userfn1&gt;" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
@@ -89,7 +89,7 @@
 
 		<execute macro="User#viewCP">
 			<var name="userEmailAddress" value="userea1@liferay.com" />
-			<var name="userFirstName" value="&lt;userfn&gt;" />
+			<var name="userFirstName" value="&lt;userfn1&gt;" />
 			<var name="userLastName" value="userln1" />
 			<var name="userScreenName" value="usersn1" />
 		</execute>
@@ -125,7 +125,7 @@
 
 		<execute macro="UserBar#gotoProfile" />
 
-		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn&gt; userln1" />
+		<execute function="AssertTextEquals" locator1="Home#USER_NAME_HEADER" value1="&lt;userfn1&gt; userln1" />
 	</command>
 
 	<command name="AssignImportedUserGroupToSuborganizationSites" priority="5">

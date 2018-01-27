@@ -19,6 +19,7 @@
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
+taglib uri="http://liferay.com/tld/clay" prefix="clay" %><%@
 taglib uri="http://liferay.com/tld/expando" prefix="liferay-expando" %><%@
 taglib uri="http://liferay.com/tld/frontend" prefix="liferay-frontend" %><%@
 taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
@@ -134,6 +135,7 @@ page import="com.liferay.portlet.usersadmin.search.UserSearch" %><%@
 page import="com.liferay.portlet.usersadmin.search.UserSearchTerms" %><%@
 page import="com.liferay.roles.admin.constants.RolesAdminPortletKeys" %><%@
 page import="com.liferay.roles.admin.kernel.util.RolesAdminUtil" %><%@
+page import="com.liferay.roles.admin.web.internal.display.context.RoleDisplayContext" %><%@
 page import="com.liferay.roles.admin.web.internal.search.RoleChecker" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.kernel.util.UsersAdmin" %><%@
@@ -172,6 +174,8 @@ if (permissionChecker.isCompanyAdmin()) {
 	filterManageableGroups = false;
 	filterManageableOrganizations = false;
 }
+
+RoleDisplayContext roleDisplayContext = new RoleDisplayContext(request, renderResponse);
 %>
 
 <%@ include file="/init-ext.jsp" %>

@@ -90,14 +90,11 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 
 					String index = elName.substring(lastIndexOf + 1);
 
-					if (Validator.isNumber(index)) {
-						elName = elName.substring(0, lastIndexOf);
-					}
-					else {
+					if (!Validator.isNumber(index)) {
 						continue;
 					}
 
-					ps2.setString(1, elName);
+					ps2.setString(1, elName.substring(0, lastIndexOf));
 					ps2.setLong(2, articleImageId);
 
 					ps2.addBatch();

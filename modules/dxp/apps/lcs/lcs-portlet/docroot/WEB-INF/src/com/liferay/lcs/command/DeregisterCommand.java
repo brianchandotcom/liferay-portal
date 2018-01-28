@@ -19,6 +19,7 @@ import com.liferay.lcs.messaging.CommandMessage;
 import com.liferay.lcs.util.KeyGenerator;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSPortletPreferencesUtil;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -29,14 +30,21 @@ public class DeregisterCommand implements Command {
 
 	@Override
 	public void execute(CommandMessage commandMessage) {
-		if (_log.isTraceEnabled()) {
-			_log.trace("Executing deregister command");
-		}
-
 		boolean deregister = Boolean.valueOf(
 			(String)commandMessage.get("deregister"));
 		boolean invalidateToken = Boolean.valueOf(
 			(String)commandMessage.get("invalidateToken"));
+
+		if (_log.isDebugEnabled()) {
+			StringBundler sb = new StringBundler();
+
+			sb.append("Executing deregister command with deregister = ");
+			sb.append(deregister);
+			sb.append(" and invalidateToken = ");
+			sb.append(invalidateToken);
+
+			_log.debug(sb.toString());
+		}
 
 		if (deregister || invalidateToken) {
 			LCSPortletPreferencesUtil.removeCredentials();

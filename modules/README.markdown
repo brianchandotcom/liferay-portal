@@ -77,6 +77,7 @@ module with `ant all` and the other marker files choose the deploy directory.
 
 File Name | Description
 --------- | -----------
+`.lfrbuild-lowest-major-version` | Declares the lowest major version of the released artifact to use in the semantic versioning check.
 `.lfrbuild-portal-pre` | Builds the module, during the `ant compile` execution, in the `tmp/lib-pre` directory before building `portal-kernel`, `portal-impl`, etc.
 `.lfrbuild-portal-private` | Deploys the module during the `ant all` execution in a private branch. `-test` modules never have this file.
 `.lfrbuild-portal-public` | Deploys the module during the `ant all` execution in a public branch. `-test` modules never have this file.

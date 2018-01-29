@@ -3397,10 +3397,26 @@ to version 2.3.70.
 - [LPS-77186]: Update the [Liferay Source Formatter] dependency to version
 1.0.541.
 
-## 3.5.96 - 2018-01-24
+## 3.5.96 - 2018-01-25
+
+### Changed
+- [LPS-77143]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.71.
+- [LPS-77143]: Update the [Liferay Source Formatter] dependency to version
+1.0.542.
+
+## 3.5.97 - 2018-01-25
 
 ### Changed
 - [LPS-77423]: Set the default Node.js version to 8.9.4.
+
+## 3.5.98 - 2018-01-26
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins Source Formatter] dependency
+to version 2.3.72.
+- [LPS-74544]: Update the [Liferay Source Formatter] dependency to version
+1.0.543.
 
 [Gradle Bundle Plugin]: https://github.com/TomDmitriev/gradle-bundle-plugin
 [Liferay Alloy Taglib]: https://github.com/liferay/alloy-taglibs
@@ -3691,10 +3707,10 @@ to version 2.3.70.
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
 [LPS-77111]: https://issues.liferay.com/browse/LPS-77111
+[LPS-77143]: https://issues.liferay.com/browse/LPS-77143
 [LPS-77186]: https://issues.liferay.com/browse/LPS-77186
 [LPS-77250]: https://issues.liferay.com/browse/LPS-77250
 [LPS-77305]: https://issues.liferay.com/browse/LPS-77305
-[LPS-77400]: https://issues.liferay.com/browse/LPS-77400
 [LPS-77402]: https://issues.liferay.com/browse/LPS-77402
 [LPS-77423]: https://issues.liferay.com/browse/LPS-77423
 [LRDOCS-3023]: https://issues.liferay.com/browse/LRDOCS-3023

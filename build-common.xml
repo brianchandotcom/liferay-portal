@@ -1113,12 +1113,6 @@ information.
 										value="Bundle-Version: ${artifact.version.major.minor}.${artifact.version.micro}"
 									/>
 
-									<replaceregexp
-										file="bnd.bnd"
-										match="\Q/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-\E\d+\.\d+\.\d+\.jar"
-										replace="/.bnd/ant-baseline-cache/com.liferay.${processed.artifact.name}-${artifact.version.major.minor}.0.jar"
-									/>
-
 									<exec executable="git" failonerror="true">
 										<arg value="add" />
 										<arg value="bnd.bnd" />

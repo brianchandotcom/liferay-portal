@@ -114,106 +114,13 @@
 					<property name="-sourcepath" value="." />
 				</bnd>
 
-				<var name="-baseline" unset="true" />
-
 				<if>
 					<not>
 						<equals arg1="${baseline.jar.report.level}" arg2="off" />
 					</not>
 					<then>
-						<loadproperties srcFile="bnd.bnd">
-							<filterchain>
-								<linecontains>
-									<contains value="-baseline" />
-								</linecontains>
-							</filterchain>
-						</loadproperties>
+						<gradle-execute forcedcacheenabled="false" task="baseline" />
 					</then>
-				</if>
-
-				<if>
-					<isset property="-baseline" />
-					<then>
-						<antelope:stringutil property="baseline.file.beginindex" string="${-baseline}">
-							<indexof string="=" />
-						</antelope:stringutil>
-
-						<math
-							datatype="int"
-							operand1="${baseline.file.beginindex}"
-							operand2="1"
-							operation="+"
-							result="baseline.file.beginindex"
-						/>
-
-						<antelope:stringutil property="baseline.file" string="${-baseline}">
-							<substring beginindex="${baseline.file.beginindex}" />
-						</antelope:stringutil>
-
-						<var name="-baseline" unset="true" />
-
-						<antelope:stringutil property="baseline.file.name.beginindex" string="${baseline.file}">
-							<lastindexof string="/" />
-						</antelope:stringutil>
-
-						<math
-							datatype="int"
-							operand1="${baseline.file.name.beginindex}"
-							operand2="1"
-							operation="+"
-							result="baseline.file.name.beginindex"
-						/>
-
-						<antelope:stringutil property="baseline.file.name.endindex" string="${baseline.file}">
-							<lastindexof string="-" />
-						</antelope:stringutil>
-
-						<antelope:stringutil property="baseline.file.name" string="${baseline.file}">
-							<substring beginindex="${baseline.file.name.beginindex}" endindex="${baseline.file.name.endindex}" />
-						</antelope:stringutil>
-
-						<math
-							datatype="int"
-							operand1="${baseline.file.name.endindex}"
-							operand2="1"
-							operation="+"
-							result="baseline.file.version.beginindex"
-						/>
-
-						<antelope:stringutil property="baseline.file.version.endindex" string="${baseline.file}">
-							<lastindexof string="." />
-						</antelope:stringutil>
-
-						<antelope:stringutil property="baseline.file.version" string="${baseline.file}">
-							<substring beginindex="${baseline.file.version.beginindex}" endindex="${baseline.file.version.endindex}" />
-						</antelope:stringutil>
-
-						<mirrors-get
-							dest="${baseline.file}"
-							src="${baseline.jar.url}/com/liferay/portal/${baseline.file.name}/${baseline.file.version}/${baseline.file.name}-${baseline.file.version}.jar"
-						/>
-					</then>
-				</if>
-
-				<taskdef classname="com.liferay.ant.bnd.BaselineJarTask" classpathref="lib.classpath" name="baseline-jar" />
-
-				<if>
-					<isset property="jar.compat.file" />
-					<then>
-						<baseline-jar
-							bndFile="bnd.bnd"
-							bndRootFile="${project.dir}/common.bnd"
-							newCompatJarFile="${jar.compat.file}"
-							newJarFile="${jar.file}.jar"
-						/>
-					</then>
-					<else>
-						<baseline-jar
-							bndFile="bnd.bnd"
-							bndRootFile="${project.dir}/common.bnd"
-							newJarFile="${jar.file}.jar"
-						/>
-					</else>
 				</if>
 			</then>
 			<else>

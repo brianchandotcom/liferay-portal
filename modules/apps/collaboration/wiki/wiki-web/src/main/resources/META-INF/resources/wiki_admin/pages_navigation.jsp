@@ -16,12 +16,6 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<%
-WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
-
-WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-%>
-
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
 	<aui:nav cssClass="navbar-nav">
 		<portlet:renderURL var="viewPagesURL">
@@ -34,18 +28,4 @@ WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderRespons
 			selected="<%= true %>"
 		/>
 	</aui:nav>
-
-	<%
-	PortletURL searchURL = wikiURLHelper.getSearchURL();
-	%>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-			<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-
-			<liferay-ui:input-search id="keywords1" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>

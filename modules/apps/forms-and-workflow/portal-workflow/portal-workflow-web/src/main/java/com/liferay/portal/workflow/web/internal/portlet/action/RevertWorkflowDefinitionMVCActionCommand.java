@@ -55,9 +55,9 @@ public class RevertWorkflowDefinitionMVCActionCommand
 	 * Reverts a workflow definition to the published state, creating a new
 	 * version of it.
 	 *
-	 * @param  actionRequest
-	 * @param  actionResponse
-	 * @review
+	 * @param actionRequest the action request from which to retrieve the
+	 *        workflow definition name and version
+	 * @param actionResponse the action response
 	 */
 	@Override
 	protected void doProcessAction(
@@ -92,11 +92,10 @@ public class RevertWorkflowDefinitionMVCActionCommand
 	}
 
 	/**
-	 * Return a success message to the workflow definition reversion action
+	 * Returns a success message for the revert workflow definition action
 	 *
-	 * @param  actionRequest The actionRequest object of the action
+	 * @param  actionRequest the action request
 	 * @return the success message
-	 * @review
 	 */
 	@Override
 	protected String getSuccessMessage(ActionRequest actionRequest) {

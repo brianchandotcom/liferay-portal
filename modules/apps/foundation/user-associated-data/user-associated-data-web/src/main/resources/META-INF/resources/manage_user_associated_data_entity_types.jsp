@@ -24,62 +24,64 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite>)request.getAttribute("entityTypeComposites");
 %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="no-data-requires-anonymization"
-	id="UADEntityTypeComposites"
-	iteratorURL="<%= currentURLObj %>"
->
-	<liferay-ui:search-container-results
-		results="<%= entityTypeComposites %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.user.associated.data.util.UADEntityTypeComposite"
-		escapedModel="<%= true %>"
-		keyProperty="name"
-		modelVar="entityTypeComposite"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="no-data-requires-anonymization"
+		id="UADEntityTypeComposites"
+		iteratorURL="<%= currentURLObj %>"
 	>
-		<%
-		UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
-		%>
-
-		<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-			<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
-			<portlet:param name="key" value="<%= entityTypeComposite.getKey() %>" />
-			<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="name"
-			value="<%= uadEntityDisplay.getEntityTypeName() %>"
+		<liferay-ui:search-container-results
+			results="<%= entityTypeComposites %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="description"
-			value="<%= uadEntityDisplay.getEntityTypeDescription() %>"
-		/>
+		<liferay-ui:search-container-row
+			className="com.liferay.user.associated.data.util.UADEntityTypeComposite"
+			escapedModel="<%= true %>"
+			keyProperty="name"
+			modelVar="entityTypeComposite"
+		>
+			<%
+			UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
+			%>
 
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="count"
-			property="count"
-		/>
+			<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
+				<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entities" />
+				<portlet:param name="key" value="<%= entityTypeComposite.getKey() %>" />
+				<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="nonanonymizable-fields"
-			value="<%= uadEntityDisplay.getEntityTypeNonAnonymizableFieldNames() %>"
-		/>
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="name"
+				value="<%= uadEntityDisplay.getEntityTypeName() %>"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/entity_type_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="description"
+				value="<%= uadEntityDisplay.getEntityTypeDescription() %>"
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="count"
+				property="count"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="nonanonymizable-fields"
+				value="<%= uadEntityDisplay.getEntityTypeNonAnonymizableFieldNames() %>"
+			/>
+
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/entity_type_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</div>
 
 <portlet:actionURL name="/user_associated_data/anonymize_user_associated_data" var="anonymizeUserAssociatedDataActionURL" />

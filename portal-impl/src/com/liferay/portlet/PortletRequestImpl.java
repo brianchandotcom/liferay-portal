@@ -335,7 +335,6 @@ public abstract class PortletRequestImpl implements LiferayPortletRequest {
 
 	@Override
 	public PortletSession getPortletSession(boolean create) {
-
 		if (!create && _invalidSession) {
 			return null;
 		}

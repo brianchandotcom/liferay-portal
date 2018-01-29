@@ -28,7 +28,7 @@ public class NavigationItemList extends ArrayList<NavigationItem> {
 	public void add(Consumer<NavigationItem> consumer) {
 		NavigationItem navigationItem = new NavigationItem();
 
-		consumer.accept(new NavigationItem());
+		consumer.accept(navigationItem);
 
 		add(navigationItem);
 	}

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.item.selector.internal.handler;
+package com.liferay.blogs.item.selector.web.internal.handler;
 
 import com.liferay.blogs.item.selector.criterion.BlogsItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;

@@ -54,8 +54,18 @@
 			}
 		}
 
+		String urlBack = redirect;
+
+		if (Validator.isNull(urlBack)) {
+			PortletURL backPortletURL = renderResponse.createRenderURL();
+
+			backPortletURL.setParameter("mvcPath", "/designer/view.jsp");
+
+			urlBack = backPortletURL.toString();
+		}
+
 		portletDisplay.setShowBackIcon(true);
-		portletDisplay.setURLBack(redirect);
+		portletDisplay.setURLBack(urlBack);
 
 		renderResponse.setTitle((kaleoDefinitionVersion == null) ? LanguageUtil.get(request, "new-workflow") : kaleoDefinitionVersion.getTitle(locale));
 		%>

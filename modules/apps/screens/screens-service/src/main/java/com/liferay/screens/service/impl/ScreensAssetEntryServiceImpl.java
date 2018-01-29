@@ -121,9 +121,7 @@ public class ScreensAssetEntryServiceImpl
 			if (!layouts.isEmpty()) {
 				Layout layout = layouts.get(0);
 
-				List<AssetEntry> assetEntries =
-					_assetPublisherUtil.getAssetEntries(
-						portletPreferences, layout, groupId, max, false);
+				List<AssetEntry> assetEntries = new ArrayList<>();
 
 				assetEntries = filterAssetEntries(assetEntries);
 

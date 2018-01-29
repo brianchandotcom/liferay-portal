@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.constants;
+package com.liferay.asset.publisher.constants;
 
 /**
  * Provides constants for the Asset Publisher portlet, panel category keys, and

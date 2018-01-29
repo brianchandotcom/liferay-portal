@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.web.constants;
+package com.liferay.asset.publisher.constants;
 
 /**
  * Provides portlet IDs for different implementations of the {@link

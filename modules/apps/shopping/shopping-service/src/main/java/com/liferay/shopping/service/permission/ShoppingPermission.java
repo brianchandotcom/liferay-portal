@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
+import com.liferay.shopping.constants.ShoppingConstants;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -25,12 +26,12 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + ShoppingPermission.RESOURCE_NAME},
+	property = {"resource.name=" + ShoppingConstants.RESOURCE_NAME},
 	service = ShoppingPermission.class
 )
 public class ShoppingPermission {
 
-	public static final String RESOURCE_NAME = "com.liferay.shopping";
+	public static final String RESOURCE_NAME = ShoppingConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -38,7 +39,8 @@ public class ShoppingPermission {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
+				permissionChecker, ShoppingConstants.RESOURCE_NAME, groupId,
+				actionId);
 		}
 	}
 
@@ -46,7 +48,7 @@ public class ShoppingPermission {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
+			groupId, ShoppingConstants.RESOURCE_NAME, groupId, actionId);
 	}
 
 }

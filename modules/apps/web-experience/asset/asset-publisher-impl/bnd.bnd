@@ -1,5 +1,0 @@
-Bundle-Name: Liferay Asset Publisher Implementation
-Bundle-SymbolicName: com.liferay.asset.publisher.impl
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Asset

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.asset.publisher.internal.util;
+package com.liferay.asset.publisher.web.internal.util;
 
 import com.liferay.asset.kernel.AssetRendererFactoryRegistryUtil;
 import com.liferay.asset.kernel.model.AssetCategory;

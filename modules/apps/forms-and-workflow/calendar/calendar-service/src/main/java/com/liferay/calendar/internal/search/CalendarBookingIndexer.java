@@ -47,6 +47,7 @@ import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.trash.TrashHelper;
 
 import java.util.Locale;
@@ -259,9 +260,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 	protected void doReindex(CalendarBooking calendarBooking) throws Exception {
 		int status = calendarBooking.getStatus();
 
-		if ((status == CalendarBookingWorkflowConstants.STATUS_APPROVED) ||
+		if ((status == WorkflowConstants.STATUS_APPROVED) ||
 			(status == CalendarBookingWorkflowConstants.STATUS_MAYBE) ||
-			(status == CalendarBookingWorkflowConstants.STATUS_IN_TRASH)) {
+			(status == WorkflowConstants.STATUS_IN_TRASH)) {
 
 			Document document = getDocument(calendarBooking);
 
@@ -269,7 +270,7 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 				getSearchEngineId(), calendarBooking.getCompanyId(), document,
 				isCommitImmediately());
 		}
-		else if (status == CalendarBookingWorkflowConstants.STATUS_DENIED) {
+		else if (status == WorkflowConstants.STATUS_DENIED) {
 			doDelete(calendarBooking);
 		}
 	}
@@ -317,9 +318,9 @@ public class CalendarBookingIndexer extends BaseIndexer<CalendarBooking> {
 						"status");
 
 					int[] statuses = {
-						CalendarBookingWorkflowConstants.STATUS_APPROVED,
+						WorkflowConstants.STATUS_APPROVED,
 						CalendarBookingWorkflowConstants.STATUS_MAYBE,
-						CalendarBookingWorkflowConstants.STATUS_IN_TRASH
+						WorkflowConstants.STATUS_IN_TRASH
 					};
 
 					dynamicQuery.add(statusProperty.in(statuses));

@@ -1385,9 +1385,9 @@ public class CalendarPortlet extends MVCPortlet {
 		long[] calendarIds = ParamUtil.getLongValues(
 			resourceRequest, "calendarIds");
 		int[] statuses = {
-			CalendarBookingWorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_APPROVED,
 			CalendarBookingWorkflowConstants.STATUS_MAYBE,
-			CalendarBookingWorkflowConstants.STATUS_PENDING
+			WorkflowConstants.STATUS_PENDING
 		};
 		long startTime = ParamUtil.getLong(resourceRequest, "startTime");
 		long endTime = ParamUtil.getLong(resourceRequest, "endTime");
@@ -1813,8 +1813,7 @@ public class CalendarPortlet extends MVCPortlet {
 
 				_calendarBookingLocalService.updateStatus(
 					childCalendarBooking.getUserId(), childCalendarBooking,
-					CalendarBookingWorkflowConstants.STATUS_PENDING,
-					serviceContext);
+					WorkflowConstants.STATUS_PENDING, serviceContext);
 			}
 		}
 

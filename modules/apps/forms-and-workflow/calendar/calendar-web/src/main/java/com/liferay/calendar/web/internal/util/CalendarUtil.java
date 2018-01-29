@@ -25,7 +25,6 @@ import com.liferay.calendar.service.CalendarResourceLocalService;
 import com.liferay.calendar.service.CalendarService;
 import com.liferay.calendar.util.JCalendarUtil;
 import com.liferay.calendar.util.RecurrenceUtil;
-import com.liferay.calendar.workflow.CalendarBookingWorkflowConstants;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -40,6 +39,7 @@ import com.liferay.portal.kernel.service.WorkflowInstanceLinkLocalService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -279,7 +279,7 @@ public class CalendarUtil {
 
 		for (CalendarBooking calendarBooking : calendarBookings) {
 			if ((calendarBooking.getStatus() ==
-					CalendarBookingWorkflowConstants.STATUS_DRAFT) &&
+					WorkflowConstants.STATUS_DRAFT) &&
 				(calendarBooking.getUserId() != themeDisplay.getUserId())) {
 
 				continue;

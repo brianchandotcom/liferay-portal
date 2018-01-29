@@ -218,10 +218,10 @@ public class CalendarBookingLocalServiceImpl
 		int status = 0;
 
 		if (calendarBooking.isMasterBooking()) {
-			status = CalendarBookingWorkflowConstants.STATUS_DRAFT;
+			status = WorkflowConstants.STATUS_DRAFT;
 		}
 		else if (hasExclusiveCalendarBooking(calendar, startTime, endTime)) {
-			status = CalendarBookingWorkflowConstants.STATUS_DENIED;
+			status = WorkflowConstants.STATUS_DENIED;
 		}
 		else if (isStagingCalendarBooking(calendarBooking)) {
 			status = CalendarBookingWorkflowConstants.STATUS_MASTER_STAGING;
@@ -230,7 +230,7 @@ public class CalendarBookingLocalServiceImpl
 			status = CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING;
 		}
 		else {
-			status = CalendarBookingWorkflowConstants.STATUS_PENDING;
+			status = WorkflowConstants.STATUS_PENDING;
 		}
 
 		calendarBooking.setStatus(status);
@@ -913,8 +913,7 @@ public class CalendarBookingLocalServiceImpl
 		}
 
 		int[] statuses = {
-			CalendarBookingWorkflowConstants.STATUS_APPROVED,
-			CalendarBookingWorkflowConstants.STATUS_PENDING
+			WorkflowConstants.STATUS_APPROVED, WorkflowConstants.STATUS_PENDING
 		};
 
 		List<CalendarBooking> calendarBookings = getOverlappingCalendarBookings(
@@ -1052,8 +1051,7 @@ public class CalendarBookingLocalServiceImpl
 
 			calendarBookingLocalService.updateStatus(
 				userId, recurringCalendarBooking,
-				CalendarBookingWorkflowConstants.STATUS_IN_TRASH,
-				serviceContext);
+				WorkflowConstants.STATUS_IN_TRASH, serviceContext);
 
 			// Social
 
@@ -1645,12 +1643,12 @@ public class CalendarBookingLocalServiceImpl
 
 		// Asset
 
-		if (status == CalendarBookingWorkflowConstants.STATUS_APPROVED) {
+		if (status == WorkflowConstants.STATUS_APPROVED) {
 			assetEntryLocalService.updateVisible(
 				CalendarBooking.class.getName(),
 				calendarBooking.getCalendarBookingId(), true);
 		}
-		else if (status == CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
+		else if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			assetEntryLocalService.updateVisible(
 				CalendarBooking.class.getName(),
 				calendarBooking.getCalendarBookingId(), false);
@@ -1664,7 +1662,7 @@ public class CalendarBookingLocalServiceImpl
 				calendarBooking.getCalendarBookingId());
 		}
 
-		if (status == CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
+		if (status == WorkflowConstants.STATUS_IN_TRASH) {
 			if (calendarBooking.isMasterRecurringBooking()) {
 				if (calendarBooking.isMasterBooking()) {
 					trashEntryLocalService.addTrashEntry(
@@ -1679,8 +1677,7 @@ public class CalendarBookingLocalServiceImpl
 						CalendarBooking.class.getName(),
 						calendarBooking.getCalendarBookingId(),
 						calendarBooking.getUuid(), null,
-						CalendarBookingWorkflowConstants.STATUS_PENDING, null,
-						null);
+						WorkflowConstants.STATUS_PENDING, null, null);
 				}
 
 				sendNotification(
@@ -1865,29 +1862,22 @@ public class CalendarBookingLocalServiceImpl
 		int newParentStatus, int oldParentStatus, int oldChildStatus,
 		boolean parentStaged) {
 
-		if (newParentStatus ==
-				CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
-
-			return CalendarBookingWorkflowConstants.STATUS_IN_TRASH;
+		if (newParentStatus == WorkflowConstants.STATUS_IN_TRASH) {
+			return WorkflowConstants.STATUS_IN_TRASH;
 		}
 
-		if (oldParentStatus ==
-				CalendarBookingWorkflowConstants.STATUS_IN_TRASH) {
-
-			return CalendarBookingWorkflowConstants.STATUS_PENDING;
+		if (oldParentStatus == WorkflowConstants.STATUS_IN_TRASH) {
+			return WorkflowConstants.STATUS_PENDING;
 		}
 
-		if ((newParentStatus ==
-				CalendarBookingWorkflowConstants.STATUS_DENIED) ||
+		if ((newParentStatus == WorkflowConstants.STATUS_DENIED) ||
 			(newParentStatus ==
 				CalendarBookingWorkflowConstants.STATUS_MAYBE)) {
 
 			return oldChildStatus;
 		}
 
-		if (newParentStatus !=
-				CalendarBookingWorkflowConstants.STATUS_APPROVED) {
-
+		if (newParentStatus != WorkflowConstants.STATUS_APPROVED) {
 			return CalendarBookingWorkflowConstants.STATUS_MASTER_PENDING;
 		}
 
@@ -1901,7 +1891,7 @@ public class CalendarBookingLocalServiceImpl
 			return CalendarBookingWorkflowConstants.STATUS_MASTER_STAGING;
 		}
 
-		return CalendarBookingWorkflowConstants.STATUS_PENDING;
+		return WorkflowConstants.STATUS_PENDING;
 	}
 
 	protected Calendar getNotLiveCalendar(Calendar calendar)

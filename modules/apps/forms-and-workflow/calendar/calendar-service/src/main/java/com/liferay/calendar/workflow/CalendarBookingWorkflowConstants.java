@@ -14,13 +14,11 @@
 
 package com.liferay.calendar.workflow;
 
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
-
 /**
  * @author Michael C. Han
  * @author Eduardo Lundgren
  */
-public class CalendarBookingWorkflowConstants extends WorkflowConstants {
+public class CalendarBookingWorkflowConstants {
 
 	public static final int STATUS_MASTER_PENDING = 10;
 

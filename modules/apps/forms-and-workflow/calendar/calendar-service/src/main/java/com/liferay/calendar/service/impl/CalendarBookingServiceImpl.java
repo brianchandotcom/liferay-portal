@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.TimeZoneUtil;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.rss.export.RSSExporter;
 import com.liferay.rss.model.SyndContent;
@@ -355,7 +356,7 @@ public class CalendarBookingServiceImpl extends CalendarBookingServiceBaseImpl {
 		Calendar calendar = calendarService.getCalendar(calendarId);
 
 		int[] statuses = {
-			CalendarBookingWorkflowConstants.STATUS_APPROVED,
+			WorkflowConstants.STATUS_APPROVED,
 			CalendarBookingWorkflowConstants.STATUS_MAYBE
 		};
 

@@ -42,7 +42,7 @@
 
 		<execute function="Click" locator1="Button#DELETE" />
 
-		<execute function="AssertNotVisible" locator1="Form#SIDEBAR_CLOSE" />
+		<execute function="AssertElementNotPresent" locator1="Form#SIDEBAR_CLOSE" />
 	</command>
 
 	<command name="gotoEdit">

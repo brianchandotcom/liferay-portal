@@ -176,6 +176,8 @@
 
 		<execute function="AssertTextEquals" locator1="MyWorkflowTasks#DIALOG_BOX_TITLE" value1="Assign to..." />
 
+		<execute macro="IFrame#selectConfigurationFrame" />
+
 		<execute function="Select" locator1="MyWorkflowTasks#DIALOG_BOX_ASSIGN_TO_SELECT" value1="${user}" />
 
 		<if>

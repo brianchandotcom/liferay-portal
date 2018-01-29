@@ -148,6 +148,17 @@ public class AssetTagsSelectorDisplayContext {
 		return portletURL;
 	}
 
+	public String[] getSelectedTags() {
+		if (!ArrayUtil.isEmpty(_selectedTags)) {
+			return _selectedTags;
+		}
+
+		_selectedTags = ParamUtil.getStringValues(
+			_renderRequest, "selectedTags");
+
+		return _selectedTags;
+	}
+
 	public SearchContainer getTagsSearchContainer() {
 		if (_tagsSearchContainer != null) {
 			return _tagsSearchContainer;
@@ -235,6 +246,7 @@ public class AssetTagsSelectorDisplayContext {
 	private final RenderRequest _renderRequest;
 	private final RenderResponse _renderResponse;
 	private final HttpServletRequest _request;
+	private String[] _selectedTags;
 	private SearchContainer _tagsSearchContainer;
 
 }

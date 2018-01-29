@@ -427,6 +427,33 @@ public class ModulesStructureTest {
 		}
 	}
 
+	@Test
+	public void testScanReadmeFiles() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					Path path = dirPath.resolve("README.markdown");
+
+					if (Files.exists(path)) {
+						byte[] bytes = Files.readAllBytes(path);
+
+						Assert.assertNotEquals(
+							"Please delete the empty readme file " + path,
+							0, bytes.length);
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	private void _addGradlePluginNames(
 			Set<String> pluginNames, String pluginNamePrefix,
 			Path buildGradlePath, String pluginIdPrefix,

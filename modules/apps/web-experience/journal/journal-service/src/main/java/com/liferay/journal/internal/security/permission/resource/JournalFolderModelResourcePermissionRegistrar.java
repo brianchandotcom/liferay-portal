@@ -22,6 +22,7 @@ import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.petra.function.UnsafeFunction;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.resource.DynamicInheritancePermissionLogic;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
@@ -65,6 +66,13 @@ public class JournalFolderModelResourcePermissionRegistrar {
 						new DynamicInheritancePermissionLogic<>(
 							modelResourcePermission, _getFetchParentFunction(),
 							false));
+				},
+				actionId -> {
+					if (ActionKeys.ADD_FOLDER.equals(actionId)) {
+						return ActionKeys.ADD_SUBFOLDER;
+					}
+
+					return actionId;
 				}),
 			properties);
 	}

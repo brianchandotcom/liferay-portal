@@ -319,6 +319,13 @@ public class StagedLayoutSetStagedModelDataHandler
 
 		checkLayoutSetPrototypeLayouts(portletDataContext, modifiedLayouts);
 
+		// Settings
+
+		_layoutSetLocalService.updateSettings(
+			portletDataContext.getScopeGroupId(),
+			portletDataContext.isPrivateLayout(),
+			importedStagedLayoutSet.getSettings());
+
 		// Last merge time
 
 		updateLastMergeTime(portletDataContext, modifiedLayouts);

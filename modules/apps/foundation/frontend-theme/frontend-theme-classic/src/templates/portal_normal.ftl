@@ -41,7 +41,9 @@
 				<a class="${logo_css_class} align-items-center d-inline-flex" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 					<img alt="${logo_description}" class="mr-3" height="48" src="${site_logo}" />
 
-					<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+					<#if show_site_name>
+						<h1 class="font-weight-bold h2 mb-0 text-dark">${site_name}</h1>
+					</#if>
 				</a>
 
 				<#include "${full_templates_path}/navigation.ftl" />

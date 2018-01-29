@@ -233,20 +233,17 @@ else {
 							var date = A.DataType.Date.parse(newSelection);
 							var invalidNumber = isNaN(newSelection);
 
-							if (invalidNumber && !nullable) {
+							if ((invalidNumber && !nullable) || (invalidNumber && !date && nullable && newSelection)) {
 								event.newSelection[0] = new Date();
 							}
-							else if (invalidNumber && !date && nullable) {
-								var selection = new Date();
 
-								if (!newSelection) {
-									selection = '';
-								}
+							var updatedVal = '';
 
-								event.newSelection[0] = selection;
+							if (event.newSelection[0]) {
+								updatedVal = event.newSelection[0];
 							}
 
-							datePicker.updateValue(event.newSelection[0]);
+							datePicker.updateValue(updatedVal);
 						}
 					},
 					popover: {

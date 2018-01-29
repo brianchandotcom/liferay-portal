@@ -307,6 +307,19 @@ public class MirrorsGetTask extends Task {
 
 			return true;
 		}
+		catch (IOException ioe) {
+			String errorMessage = ioe.getMessage();
+
+			if (errorMessage.contains("403")) {
+				if (_verbose) {
+					System.out.println("MD5 file cannot be accessed.");
+				}
+
+				return true;
+			}
+
+			return false;
+		}
 
 		Checksum checksum = new Checksum();
 

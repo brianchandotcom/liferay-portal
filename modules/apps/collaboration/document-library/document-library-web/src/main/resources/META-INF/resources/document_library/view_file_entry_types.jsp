@@ -22,19 +22,24 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/document_library/view_file_entry_types");
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<liferay-portlet:renderURL varImpl="searchURL">
-		<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry_types" />
-	</liferay-portlet:renderURL>
+<liferay-util:include page="/document_library/navigation.jsp" servletContext="<%= application %>" />
 
-	<liferay-util:include page="/document_library/navigation_tabs.jsp" servletContext="<%= application %>" />
+<liferay-frontend:management-bar
+	disabled="false"
+	includeCheckBox="false"
+>
+	<liferay-frontend:management-bar-filters>
+		<li>
+			<liferay-portlet:renderURL varImpl="searchURL">
+				<portlet:param name="mvcRenderCommandName" value="/document_library/view_file_entry_types" />
+			</liferay-portlet:renderURL>
 
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+			<aui:form action="<%= searchURL.toString() %>" method="post" name="fm">
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
+	</liferay-frontend:management-bar-filters>
+</liferay-frontend:management-bar>
 
 <div class="container-fluid-1280 main-content-body">
 	<liferay-ui:error exception="<%= RequiredFileEntryTypeException.class %>" message="cannot-delete-a-document-type-that-is-presently-used-by-one-or-more-documents" />

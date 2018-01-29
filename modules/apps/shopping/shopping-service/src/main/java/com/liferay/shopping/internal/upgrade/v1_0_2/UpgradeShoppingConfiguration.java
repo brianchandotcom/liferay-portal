@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.shopping.upgrade.v1_0_2;
+package com.liferay.shopping.internal.upgrade.v1_0_2;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;

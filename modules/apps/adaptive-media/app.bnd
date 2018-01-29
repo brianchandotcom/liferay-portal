@@ -1,13 +1,13 @@
-Liferay-Releng-App-Description: Adaptive Media
+Liferay-Releng-App-Description: The Adaptive Media app tailors media in your portal to the device consuming it. Since users often consume media on multiple devices that have different screen sizes and capabilities, you should make sure that your portal presents that media in a manner suitable for each device. For example, portal administrators can configure the Adaptive Media app to send high-res images to high-res devices, low-res images to low-res devices, and so on. This ensures that your users have the best possible experience when consuming media from your portal, regardless of the device they use.<br /><br />Note that at this time, the Adaptive Media app only works with images in Documents and Media, Blogs, and Web Content.<br /><br />Once installed, the Adaptive Media app appears in the Control Panel, under the Configuration menu.
 Liferay-Releng-App-Title: ${liferay.releng.app.title.prefix} Adaptive Media
 Liferay-Releng-Bundle: false
 Liferay-Releng-Category: Utility
 Liferay-Releng-Demo-Url:
 Liferay-Releng-Deprecated: false
 Liferay-Releng-Labs: false
-Liferay-Releng-Marketplace: false
+Liferay-Releng-Marketplace: true
 Liferay-Releng-Portal-Required: false
 Liferay-Releng-Public: ${liferay.releng.public}
-Liferay-Releng-Restart-Required: false
+Liferay-Releng-Restart-Required: true
 Liferay-Releng-Support-Url: http://www.liferay.com
 Liferay-Releng-Supported: ${liferay.releng.supported}

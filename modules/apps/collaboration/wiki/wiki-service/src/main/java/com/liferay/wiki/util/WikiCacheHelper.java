@@ -160,11 +160,10 @@ public class WikiCacheHelper {
 	}
 
 	private String _encodeKey(long nodeId, String title, String postfix) {
-		StringBundler sb = new StringBundler(6);
+		StringBundler sb = new StringBundler(5);
 
-		sb.append(_CACHE_NAME);
-		sb.append(StringPool.POUND);
 		sb.append(StringUtil.toHexString(nodeId));
+		sb.append(StringPool.POUND);
 		sb.append(title);
 
 		if (postfix != null) {

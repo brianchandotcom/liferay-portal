@@ -67,6 +67,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
+		attributes.put("addNewPages", getAddNewPages());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		if (type != null) {
 			setType(type);
 		}
+
+		Boolean addNewPages = (Boolean)attributes.get("addNewPages");
+
+		if (addNewPages != null) {
+			setAddNewPages(addNewPages);
+		}
 	}
 
 	@Override
@@ -136,6 +143,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public int compareTo(SiteNavigationMenu siteNavigationMenu) {
 		return _siteNavigationMenu.compareTo(siteNavigationMenu);
+	}
+
+	/**
+	* Returns the add new pages of this site navigation menu.
+	*
+	* @return the add new pages of this site navigation menu
+	*/
+	@Override
+	public boolean getAddNewPages() {
+		return _siteNavigationMenu.getAddNewPages();
 	}
 
 	/**
@@ -263,6 +280,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		return _siteNavigationMenu.hashCode();
 	}
 
+	/**
+	* Returns <code>true</code> if this site navigation menu is add new pages.
+	*
+	* @return <code>true</code> if this site navigation menu is add new pages; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isAddNewPages() {
+		return _siteNavigationMenu.isAddNewPages();
+	}
+
 	@Override
 	public boolean isCachedModel() {
 		return _siteNavigationMenu.isCachedModel();
@@ -281,6 +308,16 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	@Override
 	public void persist() {
 		_siteNavigationMenu.persist();
+	}
+
+	/**
+	* Sets whether this site navigation menu is add new pages.
+	*
+	* @param addNewPages the add new pages of this site navigation menu
+	*/
+	@Override
+	public void setAddNewPages(boolean addNewPages) {
+		_siteNavigationMenu.setAddNewPages(addNewPages);
 	}
 
 	@Override

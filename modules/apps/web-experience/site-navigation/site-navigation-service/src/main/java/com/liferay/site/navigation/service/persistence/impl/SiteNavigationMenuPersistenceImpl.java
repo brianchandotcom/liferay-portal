@@ -2569,6 +2569,7 @@ public class SiteNavigationMenuPersistenceImpl extends BasePersistenceImpl<SiteN
 		siteNavigationMenuImpl.setModifiedDate(siteNavigationMenu.getModifiedDate());
 		siteNavigationMenuImpl.setName(siteNavigationMenu.getName());
 		siteNavigationMenuImpl.setType(siteNavigationMenu.getType());
+		siteNavigationMenuImpl.setAddNewPages(siteNavigationMenu.isAddNewPages());
 
 		return siteNavigationMenuImpl;
 	}

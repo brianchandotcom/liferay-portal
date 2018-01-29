@@ -43,6 +43,7 @@ public class SiteNavigationMenuSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
 		soapModel.setType(model.getType());
+		soapModel.setAddNewPages(model.getAddNewPages());
 
 		return soapModel;
 	}
@@ -170,6 +171,18 @@ public class SiteNavigationMenuSoap implements Serializable {
 		_type = type;
 	}
 
+	public boolean getAddNewPages() {
+		return _addNewPages;
+	}
+
+	public boolean isAddNewPages() {
+		return _addNewPages;
+	}
+
+	public void setAddNewPages(boolean addNewPages) {
+		_addNewPages = addNewPages;
+	}
+
 	private long _siteNavigationMenuId;
 	private long _groupId;
 	private long _companyId;
@@ -179,4 +192,5 @@ public class SiteNavigationMenuSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private int _type;
+	private boolean _addNewPages;
 }

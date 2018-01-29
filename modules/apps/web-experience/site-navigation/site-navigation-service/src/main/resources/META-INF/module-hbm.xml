@@ -16,6 +16,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="addNewPages" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 	</class>
 	<class name="com.liferay.site.navigation.model.impl.SiteNavigationMenuItemImpl" table="SiteNavigationMenuItem">
 		<id name="siteNavigationMenuItemId" type="long">

@@ -333,6 +333,7 @@ public class SiteNavigationMenuServiceHttp {
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
 		HttpPrincipal httpPrincipal, long siteNavigationMenuId, int type,
+		boolean addNewPages,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -341,7 +342,7 @@ public class SiteNavigationMenuServiceHttp {
 					_updateSiteNavigationMenuParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
-					siteNavigationMenuId, type, serviceContext);
+					siteNavigationMenuId, type, addNewPages, serviceContext);
 
 			Object returnObj = null;
 
@@ -433,7 +434,7 @@ public class SiteNavigationMenuServiceHttp {
 			long.class, java.lang.String.class
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes9 = new Class[] {
-			long.class, int.class,
+			long.class, int.class, boolean.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _updateSiteNavigationMenuParameterTypes10 = new Class[] {

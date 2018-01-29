@@ -98,8 +98,8 @@ public interface SiteNavigationMenuService extends BaseService {
 		java.lang.String keywords);
 
 	public SiteNavigationMenu updateSiteNavigationMenu(
-		long siteNavigationMenuId, int type, ServiceContext serviceContext)
-		throws PortalException;
+		long siteNavigationMenuId, int type, boolean addNewPages,
+		ServiceContext serviceContext) throws PortalException;
 
 	public SiteNavigationMenu updateSiteNavigationMenu(
 		long siteNavigationMenuId, java.lang.String name,

@@ -12,7 +12,7 @@ class LayoutPageTemplateFragment extends Component {
 	 * @inheritDoc
 	 */
 	created() {
-		this._fetchFragmentContent(this.index, this.fragmentEntryId);
+		this._fetchFragmentContent(this.fragmentEntryId, this.index);
 	}
 
 	/**

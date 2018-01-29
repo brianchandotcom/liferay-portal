@@ -1182,13 +1182,15 @@ public class TopLevelBuild extends BaseBuild {
 				}
 			}
 
-			if (failureElements.isEmpty()) {
+			Dom4JUtil.addToElement(rootElement, Dom4JUtil.getNewElement("hr"));
+
+			if (failureElements.isEmpty() &&
+				upstreamJobFailureElements.isEmpty()) {
+
 				failureElements.add(0, super.getGitHubMessageElement());
 			}
 
-			Dom4JUtil.addToElement(rootElement, Dom4JUtil.getNewElement("hr"));
-
-			if ((failureElements.size() == 1) &&
+			if (failureElements.isEmpty() &&
 				!upstreamJobFailureElements.isEmpty()) {
 
 				Dom4JUtil.addToElement(

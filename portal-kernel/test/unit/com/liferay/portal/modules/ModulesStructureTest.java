@@ -441,11 +441,13 @@ public class ModulesStructureTest {
 					Path path = dirPath.resolve("README.markdown");
 
 					if (Files.exists(path)) {
-						byte[] bytes = Files.readAllBytes(path);
+						BasicFileAttributes readmeBasicFileAttributes =
+							Files.readAttributes(
+								path, BasicFileAttributes.class);
 
 						Assert.assertNotEquals(
 							"Please delete the empty readme file " + path, 0,
-							bytes.length);
+							readmeBasicFileAttributes.size());
 					}
 
 					return FileVisitResult.CONTINUE;

@@ -83,5 +83,3 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
 </div>
-
-<portlet:actionURL name="/user_associated_data/anonymize_user_associated_data" var="anonymizeUserAssociatedDataActionURL" />

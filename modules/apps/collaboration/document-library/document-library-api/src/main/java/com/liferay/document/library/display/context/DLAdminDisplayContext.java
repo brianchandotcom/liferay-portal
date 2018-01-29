@@ -1,4 +1,3 @@
-<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,18 +11,18 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
---%>
 
-<%@ include file="/document_library/init.jsp" %>
+package com.liferay.document.library.display.context;
 
-<%
-DLPortletInstanceSettingsHelper dlPortletInstanceSettingsHelper = new DLPortletInstanceSettingsHelper(dlRequestHelper);
-DLAdminDisplayContext dlAdminDisplayContext = dlDisplayContextProvider.getDLAdminDisplayContext(currentURLObj, liferayPortletRequest, liferayPortletResponse);
-%>
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 
-<c:if test="<%= dlPortletInstanceSettingsHelper.isShowTabs() %>">
-	<clay:navigation-bar
-		inverted="<%= true %>"
-		items="<%= dlAdminDisplayContext.getNavigationItems() %>"
-	/>
-</c:if>
+import java.util.List;
+
+/**
+ * @author Alejandro Tardín
+ */
+public interface DLAdminDisplayContext {
+
+	public List<NavigationItem> getNavigationItems();
+
+}

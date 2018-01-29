@@ -27,7 +27,8 @@ public class JSPNavigationItemList extends NavigationItemList {
 	public JSPNavigationItemList(PageContext pageContext) {
 		renderResponse = (RenderResponse)pageContext.findAttribute(
 			"renderResponse");
-		request = (HttpServletRequest)pageContext.findAttribute("request");
+		request = (HttpServletRequest)pageContext.findAttribute(
+			"javax.servlet.jsp.jspRequest");
 	}
 
 	protected RenderResponse renderResponse;

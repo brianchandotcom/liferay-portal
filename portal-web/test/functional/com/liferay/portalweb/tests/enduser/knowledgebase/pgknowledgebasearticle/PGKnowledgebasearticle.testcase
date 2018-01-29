@@ -1,4 +1,5 @@
 <definition component-name="portal-knowledge-base">
+	<property name="portal.acceptance" value="austin" />
 	<property name="custom.properties" value="default.layout.template.id=1_column" />
 	<property name="portal.release" value="true" />
 	<property name="portal.upstream" value="true" />

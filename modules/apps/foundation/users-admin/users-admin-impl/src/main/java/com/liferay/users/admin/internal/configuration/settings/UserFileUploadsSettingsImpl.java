@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.users.admin.configuration.settings.internal;
+package com.liferay.users.admin.internal.configuration.settings;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;

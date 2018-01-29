@@ -55,7 +55,7 @@ extend `BaselineTask`. If `true`, the baseline check will fail if the
 ### Changed
 - [LPS-76224]: Update the [Liferay Ant BND] dependency to version 2.0.42.
 
-## 1.2.0 - 2018-01-26
+## 1.2.0 - 2018-01-29
 
 ### Added
 - [LPS-77441]: Allow to run the semantic versioning check using multiple

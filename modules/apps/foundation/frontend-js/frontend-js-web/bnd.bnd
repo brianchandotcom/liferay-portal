@@ -34,6 +34,7 @@ Liferay-Top-Head-Authenticated-JS-Resources:\
 Liferay-Top-Head-JS-Resources:\
 	/jquery/jquery.js,\
 	\
+	/clay/popper.js,\
 	/clay/bootstrap.js,\
 	\
 	/loader/config.js,\

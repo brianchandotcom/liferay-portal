@@ -184,13 +184,8 @@ if (tabs1.equals("published")) {
 			</liferay-ui:search-container-row>
 		</c:when>
 		<c:otherwise>
-
-			<%
-			searchContainer.setTotal(KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersionsCount(company.getCompanyId(), null, status));
-			%>
-
 			<liferay-ui:search-container-results
-				results="<%= KaleoDefinitionVersionLocalServiceUtil.getLatestKaleoDefinitionVersions(company.getCompanyId(), null, status, searchContainer.getStart(), searchContainer.getEnd(), null) %>"
+				results="<%= kaleoFormsAdminDisplayContext.getSearchContainerResults(searchContainer, status) %>"
 			/>
 
 			<liferay-ui:search-container-row

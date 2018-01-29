@@ -19,19 +19,29 @@ import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
 import com.liferay.dynamic.data.mapping.storage.StorageEngine;
 import com.liferay.dynamic.data.mapping.util.DDMDisplay;
 import com.liferay.dynamic.data.mapping.util.DDMDisplayRegistry;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortalPreferences;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.workflow.kaleo.forms.constants.KaleoFormsPortletKeys;
 import com.liferay.portal.workflow.kaleo.forms.model.KaleoProcess;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessCreateDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.util.comparator.KaleoProcessModifiedDateComparator;
 import com.liferay.portal.workflow.kaleo.forms.web.configuration.KaleoFormsWebConfiguration;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.display.context.util.KaleoFormsAdminRequestHelper;
+import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoDefinitionVersionActivePredicateFilter;
 import com.liferay.portal.workflow.kaleo.forms.web.internal.search.KaleoProcessSearch;
+import com.liferay.portal.workflow.kaleo.model.KaleoDefinitionVersion;
+import com.liferay.portal.workflow.kaleo.service.KaleoDefinitionVersionLocalService;
+
+import java.util.List;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -45,12 +55,15 @@ public class KaleoFormsAdminDisplayContext {
 	public KaleoFormsAdminDisplayContext(
 		RenderRequest renderRequest, RenderResponse renderResponse,
 		DDMDisplayRegistry ddmDisplayRegistry,
+		KaleoDefinitionVersionLocalService kaleoDefinitionVersionLocalService,
 		KaleoFormsWebConfiguration kaleoFormsWebConfiguration,
 		StorageEngine storageEngine) {
 
 		_renderRequest = renderRequest;
 		_renderResponse = renderResponse;
 		_ddmDisplayRegistry = ddmDisplayRegistry;
+		_kaleoDefinitionVersionLocalService =
+			kaleoDefinitionVersionLocalService;
 		_kaleoFormsWebConfiguration = kaleoFormsWebConfiguration;
 		_kaleoFormsAdminRequestHelper = new KaleoFormsAdminRequestHelper(
 			renderRequest);
@@ -171,9 +184,39 @@ public class KaleoFormsAdminDisplayContext {
 		return portletURL;
 	}
 
+	public List<KaleoDefinitionVersion> getSearchContainerResults(
+			SearchContainer<KaleoDefinitionVersion> searchContainer, int status)
+		throws PortalException {
+
+		List<KaleoDefinitionVersion> kaleoDefinitionVersions =
+			_kaleoDefinitionVersionLocalService.
+				getLatestKaleoDefinitionVersions(
+					_kaleoFormsAdminRequestHelper.getCompanyId(), null,
+					WorkflowConstants.STATUS_ANY, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null);
+
+		kaleoDefinitionVersions = ListUtil.filter(
+			kaleoDefinitionVersions,
+			new KaleoDefinitionVersionActivePredicateFilter(status));
+
+		searchContainer.setTotal(kaleoDefinitionVersions.size());
+
+		if (kaleoDefinitionVersions.size() >
+				(searchContainer.getEnd() - searchContainer.getStart())) {
+
+			kaleoDefinitionVersions = ListUtil.subList(
+				kaleoDefinitionVersions, searchContainer.getStart(),
+				searchContainer.getEnd());
+		}
+
+		return kaleoDefinitionVersions;
+	}
+
 	private static final String[] _DISPLAY_VIEWS = {"list"};
 
 	private final DDMDisplayRegistry _ddmDisplayRegistry;
+	private final KaleoDefinitionVersionLocalService
+		_kaleoDefinitionVersionLocalService;
 	private String _kaleoFormsAdminDisplayStyle;
 	private final KaleoFormsAdminRequestHelper _kaleoFormsAdminRequestHelper;
 	private final KaleoFormsWebConfiguration _kaleoFormsWebConfiguration;

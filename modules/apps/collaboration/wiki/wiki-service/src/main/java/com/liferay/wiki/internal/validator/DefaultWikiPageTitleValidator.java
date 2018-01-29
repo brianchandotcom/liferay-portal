@@ -15,8 +15,10 @@
 package com.liferay.wiki.internal.validator;
 
 import com.liferay.petra.string.StringPool;
+import com.liferay.portal.kernel.model.ModelHintsUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.wiki.exception.PageTitleException;
+import com.liferay.wiki.model.WikiPage;
 import com.liferay.wiki.validator.WikiPageTitleValidator;
 
 import java.util.regex.Matcher;
@@ -41,6 +43,14 @@ public class DefaultWikiPageTitleValidator implements WikiPageTitleValidator {
 
 	@Override
 	public void validate(String title) throws PageTitleException {
+		int titleMaxLength = ModelHintsUtil.getMaxLength(
+			WikiPage.class.getName(), "title");
+
+		if (title.length() > titleMaxLength) {
+			throw new PageTitleException(
+				"Title has more than " + titleMaxLength + " characters");
+		}
+
 		if (title.equals("all_pages") || title.equals("orphan_pages") ||
 			title.equals("recent_changes")) {
 

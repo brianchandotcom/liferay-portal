@@ -12,14 +12,15 @@
  * details.
  */
 
-package com.liferay.product.navigation.product.menu.web.constants;
+package com.liferay.product.navigation.product.menu.web.internal.constants;
 
 /**
- * @author Julio Camarero
+ * @author Adolfo Pérez
  */
-public class ProductNavigationProductMenuWebKeys {
+public class ProductNavigationProductMenuPortletKeys {
 
-	public static final String PRODUCT_NAVIGATION_PRODUCT_MENU_STATE =
-		"com.liferay.product.navigation.product.menu.web_productMenuState";
+	public static final String PRODUCT_NAVIGATION_PRODUCT_MENU =
+		"com_liferay_product_navigation_product_menu_web_portlet_" +
+			"ProductMenuPortlet";
 
 }

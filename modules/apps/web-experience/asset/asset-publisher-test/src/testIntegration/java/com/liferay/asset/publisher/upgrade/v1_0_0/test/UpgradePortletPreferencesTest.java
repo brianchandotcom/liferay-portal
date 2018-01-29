@@ -16,7 +16,6 @@ package com.liferay.asset.publisher.upgrade.v1_0_0.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
-import com.liferay.asset.publisher.web.upgrade.v1_0_0.UpgradePortletPreferences;
 import com.liferay.document.library.kernel.model.DLFileEntryMetadata;
 import com.liferay.document.library.kernel.model.DLFileEntryType;
 import com.liferay.document.library.kernel.service.DLFileEntryTypeLocalServiceUtil;
@@ -34,6 +33,7 @@ import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.test.rule.DeleteAfterTestRun;
 import com.liferay.portal.kernel.test.util.GroupTestUtil;
@@ -46,6 +46,8 @@ import com.liferay.portal.kernel.xml.SAXReader;
 import com.liferay.portal.test.rule.Inject;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.LayoutTestUtil;
+
+import java.lang.reflect.Constructor;
 
 import java.text.DateFormat;
 
@@ -62,6 +64,10 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * Tests the upgrade behavior for the Asset Publisher's portlet preferences.
@@ -140,7 +146,8 @@ public class UpgradePortletPreferencesTest {
 
 		Assert.assertEquals(dateString, ddmStructureFieldValue);
 
-		_upgradePortletPreferences.upgrade();
+		ReflectionTestUtil.invoke(
+			_upgradePortletPreferences, "upgrade", new Class<?>[0]);
 
 		portletPreferences = getPortletPreferences(portletId);
 
@@ -187,7 +194,8 @@ public class UpgradePortletPreferencesTest {
 
 		updatePortletPreferences(portletId, portletPreferencesMap);
 
-		_upgradePortletPreferences.upgrade();
+		ReflectionTestUtil.invoke(
+			_upgradePortletPreferences, "upgrade", new Class<?>[0]);
 
 		PortletPreferences portletPreferences = getPortletPreferences(
 			portletId);
@@ -234,7 +242,8 @@ public class UpgradePortletPreferencesTest {
 
 		Assert.assertEquals(dateString, fieldValue);
 
-		_upgradePortletPreferences.upgrade();
+		ReflectionTestUtil.invoke(
+			_upgradePortletPreferences, "upgrade", new Class<?>[0]);
 
 		portletPreferences = getPortletPreferences(portletId);
 
@@ -274,7 +283,8 @@ public class UpgradePortletPreferencesTest {
 
 		updatePortletPreferences(portletId, portletPreferencesMap);
 
-		_upgradePortletPreferences.upgrade();
+		ReflectionTestUtil.invoke(
+			_upgradePortletPreferences, "upgrade", new Class<?>[0]);
 
 		PortletPreferences portletPreferences = getPortletPreferences(
 			portletId);
@@ -312,7 +322,8 @@ public class UpgradePortletPreferencesTest {
 
 		updatePortletPreferences(portletId, portletPreferencesMap);
 
-		_upgradePortletPreferences.upgrade();
+		ReflectionTestUtil.invoke(
+			_upgradePortletPreferences, "upgrade", new Class<?>[0]);
 
 		PortletPreferences portletPreferences = getPortletPreferences(
 			portletId);
@@ -368,7 +379,8 @@ public class UpgradePortletPreferencesTest {
 
 		updatePortletPreferences(portletId, portletPreferencesMap);
 
-		_upgradePortletPreferences.upgrade();
+		ReflectionTestUtil.invoke(
+			_upgradePortletPreferences, "upgrade", new Class<?>[0]);
 
 		PortletPreferences portletPreferences = getPortletPreferences(
 			portletId);
@@ -445,8 +457,39 @@ public class UpgradePortletPreferencesTest {
 			"yyyyMMddHHmmss");
 	}
 
-	protected void setUpUpgradePortletPreferences() {
-		_upgradePortletPreferences = new UpgradePortletPreferences(
+	protected void setUpUpgradePortletPreferences()
+		throws ReflectiveOperationException {
+
+		Bundle bundle = FrameworkUtil.getBundle(
+			UpgradePortletPreferencesTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		Bundle assetPublisherWebBundle = null;
+
+		for (Bundle curBundle : bundleContext.getBundles()) {
+			if ("com.liferay.asset.publisher.web".equals(
+					curBundle.getSymbolicName())) {
+
+				assetPublisherWebBundle = curBundle;
+
+				break;
+			}
+		}
+
+		Assert.assertNotNull(
+			"Unable to find asset-publisher-web bundle",
+			assetPublisherWebBundle);
+
+		Class<?> clazz = assetPublisherWebBundle.loadClass(
+			"com.liferay.asset.publisher.web.upgrade.v1_0_0." +
+				"UpgradePortletPreferences");
+
+		Constructor<?> constructor = clazz.getConstructor(
+			DDMStructureLocalService.class, DDMStructureLinkLocalService.class,
+			SAXReader.class);
+
+		_upgradePortletPreferences = constructor.newInstance(
 			_ddmStructureLocalService, _ddmStructureLinkLocalService,
 			_saxReader);
 	}
@@ -478,6 +521,6 @@ public class UpgradePortletPreferencesTest {
 	private Layout _layout;
 	private DateFormat _newDateFormat;
 	private DateFormat _oldDateFormat;
-	private UpgradePortletPreferences _upgradePortletPreferences;
+	private Object _upgradePortletPreferences;
 
 }

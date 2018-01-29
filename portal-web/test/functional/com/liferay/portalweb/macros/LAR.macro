@@ -116,8 +116,6 @@
 		<if>
 			<isset var="uncheckSubContent" />
 			<then>
-				<execute function="Click" locator1="Select#CONTENT_CHOOSE_CONTENT" />
-
 				<var name="key_contentName" value="${mainContent}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
@@ -135,8 +133,6 @@
 		<if>
 			<isset var="uncheckSubSubContent" />
 			<then>
-				<execute function="Check" locator1="Select#CONTENT_CHOOSE_CONTENT" />
-
 				<var name="key_contentName" value="${contentName}" />
 
 				<execute function="Check" locator1="PagesConfiguration#CONTENT_CHOOSE_CONTENT_CONTENT_CHECKBOX" />
@@ -155,7 +151,6 @@
 		<if>
 			<isset var="contentDateRange" />
 			<then>
-				<execute function="Click" locator1="Select#CONTENT_CHOOSE_CONTENT" />
 				<execute function="Click" locator1="Radio#CHOOSE_CONTENT_DATE_RANGE_CHANGE" />
 
 				<var name="key_contentDateRange" value="${contentDateRange}" />
@@ -170,7 +165,6 @@
 		<if>
 			<isset var="lastDateRange" />
 			<then>
-				<execute function="Click" locator1="Select#CONTENT_CHOOSE_CONTENT" />
 				<execute function="Click" locator1="Radio#RANGE_LAST" />
 
 				<var name="key_lastDateRange" value="${lastDateRange}" />

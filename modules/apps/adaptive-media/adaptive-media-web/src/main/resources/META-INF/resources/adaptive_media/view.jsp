@@ -16,19 +16,20 @@
 
 <%@ include file="/adaptive_media/init.jsp" %>
 
-<portlet:renderURL var="viewImageConfigurationEntriesURL" />
-
-<%
-NavigationItem imageResolutionsNavigationItem = new NavigationItem();
-
-imageResolutionsNavigationItem.setActive(true);
-imageResolutionsNavigationItem.setHref(viewImageConfigurationEntriesURL);
-imageResolutionsNavigationItem.setLabel(LanguageUtil.get(request, "image-resolutions"));
-%>
-
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= Arrays.asList(imageResolutionsNavigationItem) %>"
+	items="<%= 
+	new JSPNavigationItemList(pageContext) {
+		{
+			add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(renderResponse.createRenderURL());
+				navigationItem.setLabel(LanguageUtil.get(request, "image-resolutions"));
+			});
+		}
+	}
+	%>"
 />
 
 <%

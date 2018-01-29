@@ -33,7 +33,7 @@ page import="com.liferay.adaptive.media.web.internal.background.task.OptimizeIma
 page import="com.liferay.adaptive.media.web.internal.background.task.OptimizeImagesSingleConfigurationBackgroundTaskExecutor" %><%@
 page import="com.liferay.adaptive.media.web.internal.constants.AMWebKeys" %><%@
 page import="com.liferay.adaptive.media.web.internal.search.ImageConfigurationEntriesChecker" %><%@
-page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem" %><%@
+page import="com.liferay.frontend.taglib.clay.servlet.taglib.util.JSPNavigationItemList" %><%@
 page import="com.liferay.petra.string.StringPool" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTask" %><%@
 page import="com.liferay.portal.kernel.backgroundtask.BackgroundTaskConstants" %><%@
@@ -55,7 +55,6 @@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="java.io.Serializable" %>
 
 <%@ page import="java.util.ArrayList" %><%@
-page import="java.util.Arrays" %><%@
 page import="java.util.List" %><%@
 page import="java.util.Map" %>
 

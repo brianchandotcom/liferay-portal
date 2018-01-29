@@ -24,45 +24,47 @@ String backURL = ParamUtil.getString(request, "backURL", redirect);
 List<UADEntitySetComposite> uadEntitySetComposites = (List<UADEntitySetComposite>)request.getAttribute("uadEntitySetComposites");
 %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="no-data-requires-anonymization"
-	id="UADEntitySetComposite"
-	iteratorURL="<%= currentURLObj %>"
->
-	<liferay-ui:search-container-results
-		results="<%= uadEntitySetComposites %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.user.associated.data.util.UADEntitySetComposite"
-		escapedModel="<%= true %>"
-		keyProperty="name"
-		modelVar="uadEntitySetComposite"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="no-data-requires-anonymization"
+		id="UADEntitySetComposite"
+		iteratorURL="<%= currentURLObj %>"
 	>
-		<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
-			<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entity_types" />
-			<portlet:param name="uadEntitySetName" value="<%= uadEntitySetComposite.getUADEntitySetName() %>" />
-			<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
-		</portlet:renderURL>
-
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="name"
-			property="UADEntitySetName"
+		<liferay-ui:search-container-results
+			results="<%= uadEntitySetComposites %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="count"
-			property="count"
-		/>
+		<liferay-ui:search-container-row
+			className="com.liferay.user.associated.data.util.UADEntitySetComposite"
+			escapedModel="<%= true %>"
+			keyProperty="name"
+			modelVar="uadEntitySetComposite"
+		>
+			<portlet:renderURL var="manageUserAssociatedDataEntitiesURL">
+				<portlet:param name="mvcRenderCommandName" value="/user_associated_data/manage_user_associated_data_entity_types" />
+				<portlet:param name="uadEntitySetName" value="<%= uadEntitySetComposite.getUADEntitySetName() %>" />
+				<portlet:param name="selUserId" value="<%= String.valueOf(selUserId) %>" />
+			</portlet:renderURL>
 
-		<liferay-ui:search-container-column-text
-			href="<%= manageUserAssociatedDataEntitiesURL %>"
-			name="status"
-			property="statusLabel"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="name"
+				property="UADEntitySetName"
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="count"
+				property="count"
+			/>
+
+			<liferay-ui:search-container-column-text
+				href="<%= manageUserAssociatedDataEntitiesURL %>"
+				name="status"
+				property="statusLabel"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</div>

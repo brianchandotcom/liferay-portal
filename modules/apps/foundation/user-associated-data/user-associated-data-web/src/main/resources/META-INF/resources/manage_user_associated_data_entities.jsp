@@ -22,41 +22,43 @@ UADEntityTypeComposite entityTypeComposite = (UADEntityTypeComposite)request.get
 UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
 %>
 
-<liferay-ui:search-container
-	emptyResultsMessage="no-entities-remain-of-this-type"
-	id="UADEntities"
->
-	<liferay-ui:search-container-results
-		results="<%= entityTypeComposite.getUADEntities() %>"
-	/>
-
-	<liferay-ui:search-container-row
-		className="com.liferay.user.associated.data.entity.UADEntity"
-		escapedModel="<%= true %>"
-		keyProperty="name"
-		modelVar="uadEntity"
+<div class="container-fluid-1280">
+	<liferay-ui:search-container
+		emptyResultsMessage="no-entities-remain-of-this-type"
+		id="UADEntities"
 	>
-		<liferay-ui:search-container-column-text
-			name="entity-id"
-			property="UADEntityId"
+		<liferay-ui:search-container-results
+			results="<%= entityTypeComposite.getUADEntities() %>"
 		/>
 
-		<liferay-ui:search-container-column-text
-			href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
-			name="edit-url"
-			value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
-		/>
+		<liferay-ui:search-container-row
+			className="com.liferay.user.associated.data.entity.UADEntity"
+			escapedModel="<%= true %>"
+			keyProperty="name"
+			modelVar="uadEntity"
+		>
+			<liferay-ui:search-container-column-text
+				name="entity-id"
+				property="UADEntityId"
+			/>
 
-		<liferay-ui:search-container-column-text
-			name="nonanonymizable-fields"
-			value="<%= uadEntityDisplay.getEntityNonAnonymizableFieldValues(uadEntity) %>"
-		/>
+			<liferay-ui:search-container-column-text
+				href="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+				name="edit-url"
+				value="<%= uadEntityDisplay.getEditURL(uadEntity, liferayPortletRequest, liferayPortletResponse) %>"
+			/>
 
-		<liferay-ui:search-container-column-jsp
-			cssClass="entry-action-column"
-			path="/entity_action.jsp"
-		/>
-	</liferay-ui:search-container-row>
+			<liferay-ui:search-container-column-text
+				name="nonanonymizable-fields"
+				value="<%= uadEntityDisplay.getEntityNonAnonymizableFieldValues(uadEntity) %>"
+			/>
 
-	<liferay-ui:search-iterator />
-</liferay-ui:search-container>
+			<liferay-ui:search-container-column-jsp
+				cssClass="entry-action-column"
+				path="/entity_action.jsp"
+			/>
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+</div>

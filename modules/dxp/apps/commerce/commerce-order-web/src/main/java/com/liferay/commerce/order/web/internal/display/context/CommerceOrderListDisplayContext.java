@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -197,9 +198,9 @@ public class CommerceOrderListDisplayContext {
 			StringBundler sb = new StringBundler(4);
 
 			sb.append(label);
-			sb.append(" <span class=\"badge badge-primary\">");
+			sb.append(" (");
 			sb.append(count);
-			sb.append("</span>");
+			sb.append(CharPool.CLOSE_PARENTHESIS);
 
 			label = sb.toString();
 		}

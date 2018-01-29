@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Mobile Device Recognition Implementation
+Bundle-SymbolicName: com.liferay.portal.mobile.device.recognition.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Mobile Device Rules

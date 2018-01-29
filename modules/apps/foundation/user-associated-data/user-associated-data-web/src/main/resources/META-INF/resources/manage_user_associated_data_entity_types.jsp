@@ -40,6 +40,7 @@ List<UADEntityTypeComposite> entityTypeComposites = (List<UADEntityTypeComposite
 			keyProperty="name"
 			modelVar="entityTypeComposite"
 		>
+
 			<%
 			UADEntityDisplay uadEntityDisplay = entityTypeComposite.getUADEntityDisplay();
 			%>

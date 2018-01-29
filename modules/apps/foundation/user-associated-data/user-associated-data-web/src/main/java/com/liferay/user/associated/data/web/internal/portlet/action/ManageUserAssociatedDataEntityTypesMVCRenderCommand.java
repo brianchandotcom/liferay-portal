@@ -53,7 +53,8 @@ public class ManageUserAssociatedDataEntityTypesMVCRenderCommand
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
 		List<UADEntityTypeComposite> entityTypeComposites =
-			_uadRegistry.getUADEntityTypeComposites(selUserId, uadEntitySetName);
+			_uadRegistry.getUADEntityTypeComposites(
+				selUserId, uadEntitySetName);
 
 		renderRequest.setAttribute(
 			"entityTypeComposites", entityTypeComposites);

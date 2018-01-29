@@ -1,0 +1,15 @@
+task runGradleTest
+
+gradle.liferayWorkspace {
+	bundleUrl = "file:src/gradleTest/relativeUrl/bundle.zip"
+}
+
+runGradleTest {
+	dependsOn initBundle
+
+	doLast {
+		File generatedFile = new File(gradle.liferayWorkspace.homeDir, "file.txt")
+
+		assert generatedFile.exists()
+	}
+}

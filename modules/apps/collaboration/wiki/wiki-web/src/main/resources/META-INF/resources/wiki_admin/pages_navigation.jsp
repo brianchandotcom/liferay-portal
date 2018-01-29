@@ -16,16 +16,21 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="/wiki/view_pages" />
-		</portlet:renderURL>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= 
+	new JSPNavigationItemList(pageContext) {
+		{
+			PortletURL viewPagesURL = renderResponse.createRenderURL();
+			viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 
-		<aui:nav-item
-			href="<%= viewPagesURL %>"
-			label="pages"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+			add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(viewPagesURL.toString());
+				navigationItem.setLabel(LanguageUtil.get(request, "pages"));
+			});
+		}
+	}
+	%>"
+/>

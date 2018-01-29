@@ -54,19 +54,24 @@ request.setAttribute("view.jsp-orderByType", orderByType);
 	<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RESTORE %>" />
 </portlet:actionURL>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewNodesURL">
-			<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
-		</portlet:renderURL>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= 
+	new JSPNavigationItemList(pageContext) {
+		{
+			PortletURL viewNodesURL = renderResponse.createRenderURL();
+			viewNodesURL.setParameter("mvcRenderCommandName", "/wiki_admin/view");
 
-		<aui:nav-item
-			href="<%= viewNodesURL %>"
-			label="wikis"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-</aui:nav-bar>
+			add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(viewNodesURL.toString());
+				navigationItem.setLabel(LanguageUtil.get(request, "wikis"));
+			});
+		}
+	}
+	%>"
+/>
 
 <%
 int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);

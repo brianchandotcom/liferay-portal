@@ -221,6 +221,27 @@ public interface SiteNavigationMenuModel extends BaseModel<SiteNavigationMenu>,
 	 */
 	public void setType(int type);
 
+	/**
+	 * Returns the add new pages of this site navigation menu.
+	 *
+	 * @return the add new pages of this site navigation menu
+	 */
+	public boolean getAddNewPages();
+
+	/**
+	 * Returns <code>true</code> if this site navigation menu is add new pages.
+	 *
+	 * @return <code>true</code> if this site navigation menu is add new pages; <code>false</code> otherwise
+	 */
+	public boolean isAddNewPages();
+
+	/**
+	 * Sets whether this site navigation menu is add new pages.
+	 *
+	 * @param addNewPages the add new pages of this site navigation menu
+	 */
+	public void setAddNewPages(boolean addNewPages);
+
 	@Override
 	public boolean isNew();
 

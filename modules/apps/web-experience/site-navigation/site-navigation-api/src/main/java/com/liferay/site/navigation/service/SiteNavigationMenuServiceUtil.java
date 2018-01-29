@@ -108,12 +108,12 @@ public class SiteNavigationMenuServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long siteNavigationMenuId, int type,
+		long siteNavigationMenuId, int type, boolean addNewPages,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenu(siteNavigationMenuId, type,
-			serviceContext);
+			addNewPages, serviceContext);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(

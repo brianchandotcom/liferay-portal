@@ -13,6 +13,7 @@
 			<validator name="required" />
 		</field>
 		<field name="type" type="int" />
+		<field name="addNewPages" type="boolean" />
 	</model>
 	<model name="com.liferay.site.navigation.model.SiteNavigationMenuItem">
 		<field name="siteNavigationMenuItemId" type="long" />

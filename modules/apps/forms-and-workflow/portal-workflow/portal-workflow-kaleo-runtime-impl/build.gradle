@@ -4,7 +4,6 @@ targetCompatibility = "1.8"
 dependencies {
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.rules.engine.api", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.push.notifications.api", version: "1.2.0"
@@ -16,4 +15,5 @@ dependencies {
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-api")
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-definition-api")
 	provided project(":apps:forms-and-workflow:portal-workflow:portal-workflow-kaleo-runtime-api")
+	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
 }

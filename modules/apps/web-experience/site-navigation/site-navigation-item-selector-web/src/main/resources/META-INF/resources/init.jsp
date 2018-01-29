@@ -24,7 +24,9 @@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.portlet.PortletURLUtil" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.HttpUtil" %><%@
 page import="com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys" %><%@
 page import="com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationItemSelectorViewDisplayContext" %>
 
@@ -37,6 +39,8 @@ page import="java.util.Map" %>
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
+
+<portlet:defineObjects />
 
 <%
 SiteNavigationItemSelectorViewDisplayContext siteNavigationItemSelectorViewDisplayContext = (SiteNavigationItemSelectorViewDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT);

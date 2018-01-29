@@ -54,11 +54,6 @@ public class TestItemSelectorView
 	}
 
 	@Override
-	public boolean isShowSearch() {
-		return false;
-	}
-
-	@Override
 	public boolean isVisible(ThemeDisplay themeDisplay) {
 		return true;
 	}

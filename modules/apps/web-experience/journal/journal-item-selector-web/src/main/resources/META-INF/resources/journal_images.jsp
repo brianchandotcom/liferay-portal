@@ -52,6 +52,7 @@ if (journalArticle != null) {
 	portletURL="<%= journalItemSelectorViewDisplayContext.getPortletURL(request, liferayPortletResponse) %>"
 	repositoryEntries="<%= portletFileEntries %>"
 	repositoryEntriesCount="<%= portletFileEntriesCount %>"
+	showSearch="<%= false %>"
 	tabName="<%= journalItemSelectorViewDisplayContext.getTitle(locale) %>"
 	uploadURL="<%= journalItemSelectorViewDisplayContext.getUploadURL(liferayPortletResponse) %>"
 />

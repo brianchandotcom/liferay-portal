@@ -162,7 +162,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 	}
 
 	private String _fixTabsInJavaSource(String content) {
-		Matcher matcher = _javaSourcePattern.matcher(content);
+		Matcher matcher = _javaSourcePattern1.matcher(content);
 
 		while (matcher.find()) {
 			String tabs = matcher.group(1);
@@ -171,6 +171,22 @@ public class JSPIndentationCheck extends BaseFileCheck {
 
 			if (tabs.length() != minimumTabCount) {
 				int diff = minimumTabCount - tabs.length();
+				int end = getLineCount(content, matcher.end(2));
+				int start = getLineCount(content, matcher.start(3));
+
+				return _fixTabs(content, start, end, diff);
+			}
+		}
+
+		matcher = _javaSourcePattern2.matcher(content);
+
+		while (matcher.find()) {
+			String tabs = matcher.group(1);
+
+			int minimumTabCount = _getMinimumTabCount(matcher.group(2));
+
+			if ((tabs.length() + 1) != minimumTabCount) {
+				int diff = minimumTabCount - (tabs.length() + 1);
 				int end = getLineCount(content, matcher.end(2));
 				int start = getLineCount(content, matcher.start(3));
 
@@ -359,7 +375,7 @@ public class JSPIndentationCheck extends BaseFileCheck {
 				String trimmedLine = StringUtil.trimLeading(line);
 
 				if (javaSource) {
-					if (trimmedLine.equals("%>")) {
+					if (trimmedLine.matches("%>[\"']?")) {
 						javaSource = false;
 					}
 					else if (trimmedLine.startsWith("/*") &&
@@ -427,7 +443,10 @@ public class JSPIndentationCheck extends BaseFileCheck {
 					jspLines.add(jspLine);
 				}
 
-				if (!javaSource && trimmedLine.matches("<%!?")) {
+				if (!javaSource &&
+					(trimmedLine.matches("<%!?") ||
+					 trimmedLine.matches(".*[\"']<%="))) {
+
 					javaSource = true;
 				}
 				else if (!multiLineComment) {
@@ -501,8 +520,11 @@ public class JSPIndentationCheck extends BaseFileCheck {
 		}
 	}
 
-	private final Pattern _javaSourcePattern = Pattern.compile(
+	private final Pattern _javaSourcePattern1 = Pattern.compile(
 		"\n(\t*)(<%\n(\t*[^\t%].*?))\n\t*%>\n", Pattern.DOTALL);
+	private final Pattern _javaSourcePattern2 = Pattern.compile(
+		"\n(\t*)([^\t\n]+[\"']<%=\n(\t*[^\t%].*?))\n\t*%>[\"']\n",
+		Pattern.DOTALL);
 
 	private class JSPLine {
 

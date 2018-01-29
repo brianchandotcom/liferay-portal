@@ -39,7 +39,7 @@ if (keywords != null) {
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= 
+	items="<%=
 		new JSPNavigationItemList(pageContext) {
 			{
 				List<String> configurationCategories = (List<String>)request.getAttribute(ConfigurationAdminWebKeys.CONFIGURATION_CATEGORIES);

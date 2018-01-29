@@ -136,8 +136,19 @@ public class JSPWhitespaceCheck extends WhitespaceCheck {
 					line = StringUtil.replace(line, "%>", " %>");
 				}
 
-				if (line.contains("<%=") && !line.contains("<%= ")) {
-					line = StringUtil.replace(line, "<%=", "<%= ");
+				int pos = -1;
+
+				while (true) {
+					pos = line.indexOf("<%=", pos + 1);
+
+					if ((pos == -1) || (pos + 3) == line.length()) {
+						break;
+					}
+
+					if (line.charAt(pos + 3) != CharPool.SPACE) {
+						line = StringUtil.replaceFirst(
+							line, "<%=", "<%= ", pos);
+					}
 				}
 
 				if (trimmedLine.startsWith(StringPool.DOUBLE_SLASH) ||

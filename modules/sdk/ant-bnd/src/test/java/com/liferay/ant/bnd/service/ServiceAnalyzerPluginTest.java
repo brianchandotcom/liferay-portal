@@ -22,6 +22,7 @@ import java.io.InputStream;
 
 import org.junit.Assert;
 import org.junit.Test;
+
 import org.osgi.framework.Constants;
 
 /**

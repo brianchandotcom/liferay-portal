@@ -716,18 +716,26 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Build getLongestDelayedDownstreamBuild() {
-		Build longestDelayedDownstreamBuild = null;
+		List<Build> downstreamBuilds = getDownstreamBuilds(null);
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
-			if ((longestDelayedDownstreamBuild == null) ||
-				(downstreamBuild.getDelayTime() >
-					longestDelayedDownstreamBuild.getDelayTime())) {
+		if (downstreamBuilds.isEmpty()) {
+			return this;
+		}
 
-				longestDelayedDownstreamBuild = downstreamBuild;
+		Build longestDelayedBuild = downstreamBuilds.get(0);
+
+		for (Build downstreamBuild : downstreamBuilds) {
+			Build longestDelayedDownstreamBuild =
+				downstreamBuild.getLongestDelayedDownstreamBuild();
+
+			if (downstreamBuild.getDelayTime() >
+					longestDelayedBuild.getDelayTime()) {
+
+				longestDelayedBuild = longestDelayedDownstreamBuild;
 			}
 		}
 
-		return longestDelayedDownstreamBuild;
+		return longestDelayedBuild;
 	}
 
 	@Override

@@ -174,12 +174,14 @@ public class BaseTestResult implements TestResult {
 
 		String testReportURL = sb.toString();
 
-		try {
-			return JenkinsResultsParserUtil.encode(testReportURL);
-		}
-		catch (MalformedURLException | URISyntaxException e) {
-			System.out.println(
-				"Could not encode the test report URL: " + testReportURL);
+		if (testReportURL.startsWith("http")) {
+			try {
+				return JenkinsResultsParserUtil.encode(testReportURL);
+			}
+			catch (MalformedURLException | URISyntaxException e) {
+				System.out.println(
+					"Could not encode the test report URL: " + testReportURL);
+			}
 		}
 
 		return testReportURL;

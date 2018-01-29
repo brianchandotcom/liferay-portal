@@ -46,7 +46,7 @@ public class UserGroupNamesTask extends BaseScheduledTask {
 	@Override
 	protected void doRun() throws Exception {
 		if (_log.isTraceEnabled()) {
-			_log.trace("Running userGroup names task");
+			_log.trace("Running user group names task");
 		}
 
 		int start = 0;

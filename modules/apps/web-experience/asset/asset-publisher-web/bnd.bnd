@@ -2,9 +2,6 @@ Bundle-Name: Liferay Asset Publisher Web
 Bundle-SymbolicName: com.liferay.asset.publisher.web
 Bundle-Version: 2.0.0
 Export-Package:\
-	com.liferay.asset.publisher.web.display.context,\
-	com.liferay.asset.publisher.web.portlet,\
-	com.liferay.asset.publisher.web.portlet.action,\
 	com.liferay.asset.publisher.web.servlet.taglib.ui,\
 	com.liferay.asset.publisher.web.upgrade.v1_0_0,\
 	com.liferay.asset.publisher.web.util

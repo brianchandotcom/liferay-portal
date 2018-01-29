@@ -75,14 +75,7 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 	public void testAutoAnonymize() throws Exception {
 		BaseModel baseModel = addBaseModel(_user.getUserId());
 
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
-
-		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
-
-		long baseModelPK = getBaseModelPrimaryKey(baseModel);
-
-		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
+		_testAutoAnonymize(baseModel);
 	}
 
 	@Test
@@ -120,14 +113,21 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
 				TestPropsValues.getUserId(), _user.getUserId());
 
-		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
-			_user.getUserId());
+		_testAutoAnonymize(baseModel);
+	}
 
-		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
+	@Test
+	public void testAutoAnonymizeUserOnly() throws Exception {
+		Assume.assumeTrue(this instanceof WhenHasStatusByUserIdField);
 
-		long baseModelPK = getBaseModelPrimaryKey(baseModel);
+		WhenHasStatusByUserIdField whenHasStatusByUserIdField =
+			(WhenHasStatusByUserIdField)this;
 
-		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
+		BaseModel baseModel =
+			whenHasStatusByUserIdField.addBaseModelWithStatusByUserId(
+				_user.getUserId(), TestPropsValues.getUserId());
+
+		_testAutoAnonymize(baseModel);
 	}
 
 	@Test
@@ -178,6 +178,17 @@ public abstract class BaseUADEntityAnonymizerTestCase {
 		throws Exception;
 
 	protected abstract boolean isBaseModelDeleted(long baseModelPK);
+
+	private void _testAutoAnonymize(BaseModel baseModel) throws Exception {
+		List<UADEntity> uadEntities = _uadEntityAggregator.getUADEntities(
+			_user.getUserId());
+
+		_uadEntityAnonymizer.autoAnonymize(uadEntities.get(0));
+
+		long baseModelPK = getBaseModelPrimaryKey(baseModel);
+
+		Assert.assertTrue(isBaseModelAutoAnonymized(baseModelPK, _user));
+	}
 
 	private UADEntityAggregator _uadEntityAggregator;
 	private ServiceTracker<UADEntityAggregator, UADEntityAggregator>

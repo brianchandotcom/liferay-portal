@@ -351,7 +351,9 @@ public class ClusterSchedulerEngine
 							SchedulerResponse schedulerResponse = future.get(
 								_callMasterTimeout, TimeUnit.SECONDS);
 
-							if (schedulerResponse == null) {
+							if ((schedulerResponse == null) ||
+								(schedulerResponse.getTrigger() == null)) {
+
 								if (_log.isInfoEnabled()) {
 									_log.info(
 										"Memory clustered job is not yet " +

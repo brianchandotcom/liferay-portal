@@ -1230,7 +1230,7 @@ public class CalendarPortlet extends MVCPortlet {
 		searchContext.setStart(0);
 		searchContext.setUserId(themeDisplay.getUserId());
 
-		Indexer<?> indexer = CalendarSearcher.getInstance();
+		Indexer<?> indexer = new CalendarSearcher();
 
 		return indexer.search(searchContext);
 	}

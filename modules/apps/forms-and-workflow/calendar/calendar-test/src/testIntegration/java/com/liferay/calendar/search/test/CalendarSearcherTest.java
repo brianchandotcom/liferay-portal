@@ -240,7 +240,7 @@ public class CalendarSearcherTest {
 	protected void assertSearch(String keywords, int length) throws Exception {
 		_searchContext.setKeywords(StringUtil.toLowerCase(keywords));
 
-		Indexer<?> indexer = CalendarSearcher.getInstance();
+		Indexer<?> indexer = new CalendarSearcher();
 
 		Hits hits = indexer.search(_searchContext);
 

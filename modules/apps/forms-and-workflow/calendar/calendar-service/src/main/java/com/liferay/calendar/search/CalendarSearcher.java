@@ -17,7 +17,6 @@ package com.liferay.calendar.search;
 import com.liferay.calendar.model.Calendar;
 import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.search.Indexer;
 
 /**
  * @author Adam Brandizzi
@@ -25,10 +24,6 @@ import com.liferay.portal.kernel.search.Indexer;
 public class CalendarSearcher extends BaseSearcher {
 
 	public static final String CLASS_NAME = Calendar.class.getName();
-
-	public static Indexer<?> getInstance() {
-		return new CalendarSearcher();
-	}
 
 	public CalendarSearcher() {
 		setDefaultSelectedFieldNames(

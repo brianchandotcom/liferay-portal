@@ -285,7 +285,6 @@
 		</execute>
 
 		<execute macro="Staging#configurePublishToLive">
-			<var name="checkAllContent" value="true" />
 			<var name="checkPageName" value="Public Pages" />
 		</execute>
 

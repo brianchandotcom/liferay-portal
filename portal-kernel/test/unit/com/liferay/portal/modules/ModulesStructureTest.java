@@ -686,7 +686,7 @@ public class ModulesStructureTest {
 		return null;
 	}
 
-	private String _getGradleTemplate(String name) throws IOException {
+	private String _getGradleTemplate(String name) {
 		String template = StringUtil.read(ModulesStructureTest.class, name);
 
 		return StringUtil.replace(

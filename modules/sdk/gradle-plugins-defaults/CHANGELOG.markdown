@@ -2785,6 +2785,7 @@ task.
 ## 5.2.54 - 2018-01-29
 
 ### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.99.
 - [LPS-77441]: Update the [Liferay Gradle Plugins Baseline] dependency to
 version 1.2.0.
 

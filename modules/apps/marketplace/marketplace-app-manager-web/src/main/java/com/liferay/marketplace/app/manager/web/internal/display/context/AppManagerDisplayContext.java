@@ -15,11 +15,10 @@
 package com.liferay.marketplace.app.manager.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -43,36 +42,40 @@ public class AppManagerDisplayContext {
 		String pluginType = ParamUtil.getString(
 			_request, "pluginType", "components");
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							pluginType.equals("components"));
+						navigationItem.setHref(_getViewModuleURL("components"));
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "components"));
+					});
 
-		NavigationItem componentsNavigationItem = new NavigationItem();
-
-		componentsNavigationItem.setActive(pluginType.equals("components"));
-		componentsNavigationItem.setHref(_getViewModuleURL("components"));
-		componentsNavigationItem.setLabel(
-			LanguageUtil.get(_request, "components"));
-
-		navigationItems.add(componentsNavigationItem);
-
-		NavigationItem portletsNavigationItem = new NavigationItem();
-
-		portletsNavigationItem.setActive(pluginType.equals("portlets"));
-		portletsNavigationItem.setHref(_getViewModuleURL("portlets"));
-		portletsNavigationItem.setLabel(LanguageUtil.get(_request, "portlets"));
-
-		navigationItems.add(portletsNavigationItem);
-
-		return navigationItems;
+				add(
+					navigationItem -> {
+						navigationItem.setActive(pluginType.equals("portlets"));
+						navigationItem.setHref(_getViewModuleURL("portlets"));
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "portlets"));
+					});
+			}
+		};
 	}
 
 	public List<NavigationItem> getNavigationItems(String url, String label) {
-		NavigationItem navigationItem = new NavigationItem();
-
-		navigationItem.setActive(true);
-		navigationItem.setHref(url);
-		navigationItem.setLabel(LanguageUtil.get(_request, label));
-
-		return Arrays.asList(navigationItem);
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(url);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, label));
+					});
+			}
+		};
 	}
 
 	private String _getViewModuleURL(String pluginType) {

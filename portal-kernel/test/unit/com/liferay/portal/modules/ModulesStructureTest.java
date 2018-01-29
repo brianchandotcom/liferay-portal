@@ -444,8 +444,8 @@ public class ModulesStructureTest {
 						byte[] bytes = Files.readAllBytes(path);
 
 						Assert.assertNotEquals(
-							"Please delete the empty readme file " + path,
-							0, bytes.length);
+							"Please delete the empty readme file " + path, 0,
+							bytes.length);
 					}
 
 					return FileVisitResult.CONTINUE;

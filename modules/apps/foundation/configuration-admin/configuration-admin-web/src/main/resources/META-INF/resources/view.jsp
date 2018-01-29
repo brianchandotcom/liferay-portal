@@ -49,7 +49,7 @@ if (keywords != null) {
 						add(
 							navigationItem -> {
 								navigationItem.setActive(curConfigurationCategory.equals(configurationCategory));
-								navigationItem.setHref(renderResponse.createRenderURL(), "configurationCategory", "curConfigurationCategory");
+								navigationItem.setHref(renderResponse.createRenderURL(), "configurationCategory", curConfigurationCategory);
 								navigationItem.setLabel(LanguageUtil.get(request, curConfigurationCategory));
 							});
 					}

@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.util;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

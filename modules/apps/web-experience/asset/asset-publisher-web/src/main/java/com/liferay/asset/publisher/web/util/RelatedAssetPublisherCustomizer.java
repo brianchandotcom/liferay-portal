@@ -16,7 +16,7 @@ package com.liferay.asset.publisher.web.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.asset.util.AssetEntryQueryProcessor;
 import com.liferay.portal.kernel.util.WebKeys;
 

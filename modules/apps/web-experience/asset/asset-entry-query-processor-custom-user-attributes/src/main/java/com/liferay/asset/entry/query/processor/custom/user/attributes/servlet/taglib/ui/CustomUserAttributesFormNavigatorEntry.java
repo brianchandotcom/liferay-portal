@@ -14,7 +14,7 @@
 
 package com.liferay.asset.entry.query.processor.custom.user.attributes.servlet.taglib.ui;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.servlet.taglib.ui.BaseConfigurationFormNavigatorEntry;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;

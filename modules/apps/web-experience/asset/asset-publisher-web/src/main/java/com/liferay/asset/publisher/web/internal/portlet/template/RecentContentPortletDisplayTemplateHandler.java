@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.internal.portlet.template;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 import com.liferay.portal.kernel.template.TemplateHandler;
 
 import org.osgi.service.component.annotations.Component;

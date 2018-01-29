@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.servlet.taglib.ui;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherConstants;
+import com.liferay.asset.publisher.constants.AssetPublisherConstants;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizer;
 import com.liferay.asset.publisher.web.util.AssetPublisherCustomizerRegistry;
 import com.liferay.portal.kernel.model.Portlet;

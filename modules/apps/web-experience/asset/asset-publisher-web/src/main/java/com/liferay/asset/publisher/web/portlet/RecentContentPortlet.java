@@ -14,7 +14,7 @@
 
 package com.liferay.asset.publisher.web.portlet;
 
-import com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys;
+import com.liferay.asset.publisher.constants.AssetPublisherPortletKeys;
 
 import javax.portlet.Portlet;
 

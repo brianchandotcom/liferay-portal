@@ -38,10 +38,11 @@ public class DeregisterCommand implements Command {
 		if (_log.isDebugEnabled()) {
 			StringBundler sb = new StringBundler();
 
-			sb.append("Executing deregister command with deregister = ");
+			sb.append("Command message: {deregister=");
 			sb.append(deregister);
-			sb.append(" and invalidateToken = ");
+			sb.append(", invalidateToken=");
 			sb.append(invalidateToken);
+			sb.append("}");
 
 			_log.debug(sb.toString());
 		}

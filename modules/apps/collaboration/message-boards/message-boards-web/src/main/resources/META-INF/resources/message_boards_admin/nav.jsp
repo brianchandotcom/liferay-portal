@@ -17,9 +17,7 @@
 <%@ include file="/message_boards/init.jsp" %>
 
 <%
-long categoryId = ParamUtil.getLong(request, "categoryId");
 String navItemSelected = ParamUtil.getString(request, "navItemSelected");
-Boolean showSearchFm = GetterUtil.getBoolean(ParamUtil.getString(request, "showSearchFm"), Boolean.FALSE);
 %>
 
 <aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
@@ -62,21 +60,4 @@ Boolean showSearchFm = GetterUtil.getBoolean(ParamUtil.getString(request, "showS
 			selected='<%= navItemSelected.equals("banned-users") %>'
 		/>
 	</aui:nav>
-
-	<c:if test="<%= showSearchFm %>">
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcRenderCommandName" value="/message_boards_admin/search" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL %>" name="searchFm">
-			<aui:nav-bar-search>
-				<liferay-portlet:renderURLParams varImpl="searchURL" />
-				<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-				<aui:input name="breadcrumbsCategoryId" type="hidden" value="<%= categoryId %>" />
-				<aui:input name="searchCategoryId" type="hidden" value="<%= categoryId %>" />
-
-				<liferay-ui:input-search markupView="lexicon" />
-			</aui:nav-bar-search>
-		</aui:form>
-	</c:if>
 </aui:nav-bar>

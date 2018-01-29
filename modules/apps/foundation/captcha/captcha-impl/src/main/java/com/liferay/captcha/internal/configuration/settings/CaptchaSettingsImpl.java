@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.captcha.configuration.settings.internal;
+package com.liferay.captcha.internal.configuration.settings;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
 import com.liferay.petra.string.StringPool;

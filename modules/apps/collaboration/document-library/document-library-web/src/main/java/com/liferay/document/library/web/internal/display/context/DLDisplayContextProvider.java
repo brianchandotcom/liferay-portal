@@ -42,7 +42,6 @@ import com.liferay.portal.kernel.util.WebKeys;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
@@ -67,16 +66,7 @@ public class DLDisplayContextProvider {
 		PortletURL currentURL, LiferayPortletRequest request,
 		LiferayPortletResponse response) {
 
-		try {
-			ResourceBundle resourceBundle =
-				_resourceBundleLoader.loadResourceBundle(request.getLocale());
-
-			return new DefaultDLAdminDisplayContext(
-				currentURL, resourceBundle, request, response);
-		}
-		catch (PortletException pe) {
-			throw new SystemException(pe);
-		}
+		return new DefaultDLAdminDisplayContext(currentURL, request, response);
 	}
 
 	public DLEditFileEntryDisplayContext getDLEditFileEntryDisplayContext(

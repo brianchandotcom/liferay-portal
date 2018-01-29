@@ -19,6 +19,8 @@ import com.liferay.document.library.display.context.DLAdminDisplayContext;
 import com.liferay.document.library.web.internal.display.context.util.DLRequestHelper;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Portlet;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
@@ -30,13 +32,10 @@ import com.liferay.portal.kernel.service.PortletLocalServiceUtil;
 import com.liferay.portal.kernel.theme.PortletDisplay;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.webdav.WebDAVUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
@@ -50,107 +49,114 @@ import javax.servlet.http.HttpServletRequest;
 public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 
 	public DefaultDLAdminDisplayContext(
-			PortletURL currentURL, ResourceBundle resourceBundle,
-			LiferayPortletRequest request, LiferayPortletResponse response)
-		throws PortletException {
+		PortletURL currentURL, LiferayPortletRequest request,
+		LiferayPortletResponse response) {
 
-		String mvcRenderCommandName = ParamUtil.getString(
-			request, "mvcRenderCommandName", "/document_library/view");
-
-		DLRequestHelper dlRequestHelper = new DLRequestHelper(
-			request.getHttpServletRequest());
-
-		ThemeDisplay themeDisplay = _getThemeDisplay(
-			request.getHttpServletRequest());
-
-		Portlet portlet = _getPortlet(themeDisplay);
-
-		NavigationItem documentLibraryNavigationItem =
-			_getDocumentLibraryNavigationItem(
-				mvcRenderCommandName, currentURL, resourceBundle, response);
-
-		_navigationItems.add(documentLibraryNavigationItem);
-
-		if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
-				dlRequestHelper.getPortletName())) {
-
-			NavigationItem fileEntryTypesNavigationItem =
-				_getFileEntryTypesNavigationItem(
-					currentURL, response, resourceBundle, mvcRenderCommandName);
-
-			_navigationItems.add(fileEntryTypesNavigationItem);
-
-			NavigationItem metadataSetsNavigationItem =
-				_getMetadataSetsNavigationItem(
-					request, themeDisplay, resourceBundle, portlet);
-
-			_navigationItems.add(metadataSetsNavigationItem);
-		}
+		_currentURL = currentURL;
+		_request = request;
+		_response = response;
 	}
 
 	@Override
 	public List<NavigationItem> getNavigationItems() {
-		return _navigationItems;
+		String mvcRenderCommandName = ParamUtil.getString(
+			_request, "mvcRenderCommandName", "/document_library/view");
+
+		DLRequestHelper dlRequestHelper = new DLRequestHelper(
+			_request.getHttpServletRequest());
+
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						_populateDocumentLibraryNavigationItem(
+							navigationItem, mvcRenderCommandName);
+					});
+
+				if (DLPortletKeys.DOCUMENT_LIBRARY_ADMIN.equals(
+						dlRequestHelper.getPortletName())) {
+
+					add(
+						navigationItem -> {
+							_populateFileEntryTypesNavigationItem(
+								navigationItem, mvcRenderCommandName);
+						});
+
+					add(
+						DefaultDLAdminDisplayContext.this
+							::_populateMetadataSetsNavigationItem);
+				}
+			}
+		};
 	}
 
-	private NavigationItem _getDocumentLibraryNavigationItem(
-			String mvcRenderCommandName, PortletURL currentURL,
-			ResourceBundle resourceBundle, LiferayPortletResponse response)
-		throws PortletException {
+	private PortletURL _clonePortletURL() {
+		try {
+			return PortletURLUtil.clone(_currentURL, _response);
+		}
+		catch (PortletException pe) {
+			throw new RuntimeException(pe);
+		}
+	}
 
-		PortletURL viewDocumentLibraryURL = PortletURLUtil.clone(
-			currentURL, response);
+	private Portlet _getPortlet(ThemeDisplay themeDisplay) {
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
+	}
+
+	private ThemeDisplay _getThemeDisplay(HttpServletRequest request) {
+		return (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+	}
+
+	private void _populateDocumentLibraryNavigationItem(
+		NavigationItem navigationItem, String mvcRenderCommandName) {
+
+		PortletURL viewDocumentLibraryURL = _clonePortletURL();
 
 		viewDocumentLibraryURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view");
-		viewDocumentLibraryURL.setParameter("redirect", currentURL.toString());
+		viewDocumentLibraryURL.setParameter("redirect", _currentURL.toString());
 
-		NavigationItem documentLibraryNavigationItem = new NavigationItem();
-
-		documentLibraryNavigationItem.setActive(
+		navigationItem.setActive(
 			!mvcRenderCommandName.equals(
 				"/document_library/view_file_entry_types"));
 
-		documentLibraryNavigationItem.setHref(
-			viewDocumentLibraryURL.toString());
+		navigationItem.setHref(viewDocumentLibraryURL.toString());
 
-		documentLibraryNavigationItem.setLabel(
-			ResourceBundleUtil.getString(
-				resourceBundle, "documents-and-media"));
-
-		return documentLibraryNavigationItem;
+		navigationItem.setLabel(
+			LanguageUtil.get(
+				_request.getHttpServletRequest(), "documents-and-media"));
 	}
 
-	private NavigationItem _getFileEntryTypesNavigationItem(
-			PortletURL currentURL, LiferayPortletResponse response,
-			ResourceBundle resourceBundle, String mvcRenderCommandName)
-		throws PortletException {
+	private void _populateFileEntryTypesNavigationItem(
+		NavigationItem navigationItem, String mvcRenderCommandName) {
 
-		PortletURL viewFileEntryTypesURL = PortletURLUtil.clone(
-			currentURL, response);
+		PortletURL viewFileEntryTypesURL = _clonePortletURL();
 
 		viewFileEntryTypesURL.setParameter(
 			"mvcRenderCommandName", "/document_library/view_file_entry_types");
-		viewFileEntryTypesURL.setParameter("redirect", currentURL.toString());
+		viewFileEntryTypesURL.setParameter("redirect", _currentURL.toString());
 
-		NavigationItem fileEntryTypesNavigationItem = new NavigationItem();
-
-		fileEntryTypesNavigationItem.setActive(
+		navigationItem.setActive(
 			mvcRenderCommandName.equals(
 				"/document_library/view_file_entry_types"));
-		fileEntryTypesNavigationItem.setHref(viewFileEntryTypesURL.toString());
-		fileEntryTypesNavigationItem.setLabel(
-			ResourceBundleUtil.getString(resourceBundle, "document-types"));
-
-		return fileEntryTypesNavigationItem;
+		navigationItem.setHref(viewFileEntryTypesURL.toString());
+		navigationItem.setLabel(
+			LanguageUtil.get(
+				_request.getHttpServletRequest(), "document-types"));
 	}
 
-	private NavigationItem _getMetadataSetsNavigationItem(
-		LiferayPortletRequest request, ThemeDisplay themeDisplay,
-		ResourceBundle resourceBundle, Portlet portlet) {
+	private void _populateMetadataSetsNavigationItem(
+		NavigationItem navigationItem) {
+
+		ThemeDisplay themeDisplay = _getThemeDisplay(
+			_request.getHttpServletRequest());
+
+		Portlet portlet = _getPortlet(themeDisplay);
 
 		PortletURL viewMetadataSetsURL = PortletURLFactoryUtil.create(
-			request,
+			_request,
 			PortletProviderUtil.getPortletId(
 				DDMStructure.class.getName(), PortletProvider.Action.VIEW),
 			PortletRequest.RENDER_PHASE);
@@ -169,26 +175,15 @@ public class DefaultDLAdminDisplayContext implements DLAdminDisplayContext {
 		viewMetadataSetsURL.setParameter(
 			"showManageTemplates", Boolean.FALSE.toString());
 
-		NavigationItem metadataSetsNavigationItem = new NavigationItem();
-
-		metadataSetsNavigationItem.setActive(false);
-		metadataSetsNavigationItem.setHref(viewMetadataSetsURL.toString());
-		metadataSetsNavigationItem.setLabel(
-			ResourceBundleUtil.getString(resourceBundle, "metadata-sets"));
-
-		return metadataSetsNavigationItem;
+		navigationItem.setActive(false);
+		navigationItem.setHref(viewMetadataSetsURL.toString());
+		navigationItem.setLabel(
+			LanguageUtil.get(
+				_request.getHttpServletRequest(), "metadata-sets"));
 	}
 
-	private Portlet _getPortlet(ThemeDisplay themeDisplay) {
-		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
-
-		return PortletLocalServiceUtil.getPortletById(portletDisplay.getId());
-	}
-
-	private ThemeDisplay _getThemeDisplay(HttpServletRequest request) {
-		return (ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
-	}
-
-	private List<NavigationItem> _navigationItems = new ArrayList<>();
+	private final PortletURL _currentURL;
+	private final LiferayPortletRequest _request;
+	private final LiferayPortletResponse _response;
 
 }

@@ -41,7 +41,6 @@ import com.liferay.calendar.recurrence.PositionalWeekday;
 import com.liferay.calendar.recurrence.Recurrence;
 import com.liferay.calendar.recurrence.RecurrenceSerializer;
 import com.liferay.calendar.recurrence.Weekday;
-import com.liferay.calendar.search.CalendarSearcher;
 import com.liferay.calendar.service.CalendarBookingLocalService;
 import com.liferay.calendar.service.CalendarBookingService;
 import com.liferay.calendar.service.CalendarLocalService;
@@ -76,10 +75,10 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.PortletURLFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.BaseSearcher;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
-import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
@@ -1230,9 +1229,7 @@ public class CalendarPortlet extends MVCPortlet {
 		searchContext.setStart(0);
 		searchContext.setUserId(themeDisplay.getUserId());
 
-		Indexer<?> indexer = new CalendarSearcher();
-
-		return indexer.search(searchContext);
+		return _baseSearcher.search(searchContext);
 	}
 
 	protected void serveCalendar(
@@ -1826,6 +1823,11 @@ public class CalendarPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		CalendarPortlet.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.calendar.model.Calendar)"
+	)
+	private BaseSearcher _baseSearcher;
 
 	private CalendarBookingLocalService _calendarBookingLocalService;
 	private CalendarBookingService _calendarBookingService;

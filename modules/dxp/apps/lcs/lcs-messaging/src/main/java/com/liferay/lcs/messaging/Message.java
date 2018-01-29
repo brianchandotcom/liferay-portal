@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -267,6 +268,13 @@ public abstract class Message implements Serializable {
 
 	static {
 		_objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
+
+		TypeFactory typeFactory = TypeFactory.defaultInstance();
+
+		typeFactory = typeFactory.withClassLoader(
+			Message.class.getClassLoader());
+
+		_objectMapper.setTypeFactory(typeFactory);
 	}
 
 	private long _createTime = System.currentTimeMillis();

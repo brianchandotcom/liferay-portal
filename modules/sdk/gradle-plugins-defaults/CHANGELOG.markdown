@@ -2761,16 +2761,26 @@ when applied.
 ### Changed
 - [LPS-77186]: Update the [Liferay Gradle Plugins] dependency to version 3.5.95.
 
-## 5.2.51 - 2018-01-24
+## 5.2.51 - 2018-01-25
 
 ### Changed
-- [LPS-77423]: Update the [Liferay Gradle Plugins] dependency to version 3.5.96.
+- [LPS-77143]: Update the [Liferay Gradle Plugins] dependency to version 3.5.95.
+
+## 5.2.52 - 2018-01-25
+
+### Changed
+- [LPS-77423]: Update the [Liferay Gradle Plugins] dependency to version 3.5.97.
 
 ### Removed
 - [LPS-77423]: Remove `--no-package-lock` default argument in the `npmInstall`
 task.
 - [LPS-77423]: Remove exclusion of the `fsevents` dependency from the generated
 `npm-shrinkwrap.json` files.
+
+## 5.2.53 - 2018-01-26
+
+### Changed
+- [LPS-74544]: Update the [Liferay Gradle Plugins] dependency to version 3.5.98.
 
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
@@ -3078,6 +3088,7 @@ task.
 [LPS-76954]: https://issues.liferay.com/browse/LPS-76954
 [LPS-76957]: https://issues.liferay.com/browse/LPS-76957
 [LPS-77111]: https://issues.liferay.com/browse/LPS-77111
+[LPS-77143]: https://issues.liferay.com/browse/LPS-77143
 [LPS-77186]: https://issues.liferay.com/browse/LPS-77186
 [LPS-77250]: https://issues.liferay.com/browse/LPS-77250
 [LPS-77305]: https://issues.liferay.com/browse/LPS-77305

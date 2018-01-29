@@ -515,7 +515,7 @@ public class DDMStructureLocalServiceImpl
 
 		// Structure versions
 
-		ddmStructureVersionLocalService.deleteStructureVersion(
+		ddmStructureVersionLocalService.deleteStructureStructureVersions(
 			structure.getStructureId());
 
 		// Resources

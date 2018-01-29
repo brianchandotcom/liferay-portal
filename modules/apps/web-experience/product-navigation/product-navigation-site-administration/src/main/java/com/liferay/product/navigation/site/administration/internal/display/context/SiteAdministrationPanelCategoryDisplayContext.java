@@ -41,7 +41,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.util.PropsValues;
-import com.liferay.product.navigation.product.menu.web.display.context.ProductMenuDisplayContext;
+import com.liferay.product.navigation.product.menu.display.context.ProductMenuDisplayContext;
 import com.liferay.product.navigation.site.administration.internal.application.list.SiteAdministrationPanelCategory;
 import com.liferay.product.navigation.site.administration.internal.constants.SiteAdministrationWebKeys;
 import com.liferay.site.util.GroupURLProvider;

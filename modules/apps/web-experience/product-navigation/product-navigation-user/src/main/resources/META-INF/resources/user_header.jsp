@@ -23,10 +23,10 @@ UserPanelCategory userPanelCategory = (UserPanelCategory)request.getAttribute(Ap
 
 int notificationsCount = panelCategoryHelper.getNotificationsCount(userPanelCategory.getKey(), permissionChecker, themeDisplay.getScopeGroup(), user);
 
-ProductMenuDisplayContext productMenuDisplayContext = new ProductMenuDisplayContext(liferayPortletRequest, liferayPortletResponse);
+String rootPanelCategoryKey = RootPanelCategoryKeyUtil.getRootPanelCategoryKey(liferayPortletRequest);
 %>
 
-<a aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Objects.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) %>" class="collapse-icon collapse-icon-middle <%= Objects.equals(userPanelCategory.getKey(), productMenuDisplayContext.getRootPanelCategoryKey()) ? StringPool.BLANK : "collapsed" %> panel-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuUserPanelCategory" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
+<a aria-controls="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" aria-expanded="<%= Objects.equals(userPanelCategory.getKey(), rootPanelCategoryKey) %>" class="collapse-icon collapse-icon-middle <%= Objects.equals(userPanelCategory.getKey(), rootPanelCategoryKey) ? StringPool.BLANK : "collapsed" %> panel-toggler" data-parent="#<portlet:namespace />Accordion" data-qa-id="productMenuUserPanelCategory" data-toggle="collapse" href="#<portlet:namespace /><%= AUIUtil.normalizeId(userPanelCategory.getKey()) %>Collapse" role="button">
 	<liferay-ui:user-portrait
 		imageCssClass="user-icon-lg"
 		user="<%= user %>"

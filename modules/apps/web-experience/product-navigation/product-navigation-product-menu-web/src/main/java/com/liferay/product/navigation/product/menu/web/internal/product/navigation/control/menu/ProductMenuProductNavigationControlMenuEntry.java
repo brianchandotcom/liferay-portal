@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.product.navigation.control.menu.BaseProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.ProductNavigationControlMenuEntry;
 import com.liferay.product.navigation.control.menu.constants.ProductNavigationControlMenuCategoryKeys;
-import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuPortletKeys;
-import com.liferay.product.navigation.product.menu.web.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.product.navigation.product.menu.constants.ProductNavigationProductMenuWebKeys;
+import com.liferay.product.navigation.product.menu.web.internal.constants.ProductNavigationProductMenuPortletKeys;
 import com.liferay.taglib.portletext.RuntimeTag;
 import com.liferay.taglib.util.BodyBottomTag;
 

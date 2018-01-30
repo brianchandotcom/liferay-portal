@@ -24,8 +24,13 @@ import com.liferay.portal.template.soy.internal.util.SoyTemplateResourcesCollect
 import com.liferay.portal.template.soy.internal.util.SoyTemplateUtil;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Stream;
 
@@ -84,8 +89,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 		return bundleCapabilities;
 	}
 
-	public List<TemplateResource> getAllTemplateResources() {
-		return _templateResources;
+    public Collection<TemplateResource> getAllTemplateResources() {
+		return _templateResources.values();
 	}
 
 	@Override
@@ -130,9 +135,9 @@ public class SoyCapabilityBundleTrackerCustomizer
 			templateResourcesStream.forEach(
 				templateResource -> {
 					if ((templateResource != null) &&
-						!_templateResources.contains(templateResource)) {
+						!_templateResources.containsKey(templateResource.getTemplateId())) {
 
-						_templateResources.add(templateResource);
+						_templateResources.put(templateResource.getTemplateId(), templateResource);
 					}
 				});
 		}
@@ -151,7 +156,7 @@ public class SoyCapabilityBundleTrackerCustomizer
 
 		List<TemplateResource> removedTemplateResources = new ArrayList<>();
 
-		Iterator<TemplateResource> iterator = _templateResources.iterator();
+		Iterator<TemplateResource> iterator = _templateResources.values().iterator();
 
 		while (iterator.hasNext()) {
 			TemplateResource templateResource = iterator.next();
@@ -164,7 +169,9 @@ public class SoyCapabilityBundleTrackerCustomizer
 			}
 		}
 
-		_templateResources.removeAll(removedTemplateResources);
+		for (TemplateResource removedTemplateResource : removedTemplateResources) {
+			_templateResources.remove(removedTemplateResource.getTemplateId());
+		}
 
 		return removedTemplateResources;
 	}
@@ -172,8 +179,8 @@ public class SoyCapabilityBundleTrackerCustomizer
 	private static final Log _log = LogFactoryUtil.getLog(
 		SoyCapabilityBundleTrackerCustomizer.class);
 
-	private static final List<TemplateResource> _templateResources =
-		new CopyOnWriteArrayList<>();
+    private static final Map<String,TemplateResource> _templateResources =
+		new ConcurrentSkipListMap<>();
 
 	private final SoyProviderCapabilityBundleRegister
 		_soyProviderCapabilityBundleRegister;

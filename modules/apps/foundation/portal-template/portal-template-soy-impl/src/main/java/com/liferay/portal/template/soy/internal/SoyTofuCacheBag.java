@@ -45,8 +45,6 @@ public class SoyTofuCacheBag {
 	}
 
 	public void putMessageBundle(Locale locale, SoyMsgBundle soyMsgBundle) {
-		_soyTofu.addToCache(soyMsgBundle, null);
-
 		_soyMsgBundleCache.put(locale, soyMsgBundle);
 	}
 

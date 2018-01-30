@@ -16,6 +16,7 @@ package com.liferay.portal.template.soy.utils;
 
 import com.liferay.portal.kernel.template.TemplateResource;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -25,7 +26,7 @@ import org.osgi.framework.Bundle;
  */
 public interface SoyTemplateResourcesProvider {
 
-	public List<TemplateResource> getAllTemplateResources();
+	public Collection<TemplateResource> getAllTemplateResources();
 
 	public List<TemplateResource> getBundleTemplateResources(
 		Bundle bundle, String templatePath);

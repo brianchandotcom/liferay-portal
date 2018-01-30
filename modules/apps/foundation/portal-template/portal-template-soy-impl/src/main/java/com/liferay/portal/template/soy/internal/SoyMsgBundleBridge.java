@@ -35,7 +35,7 @@ import java.util.ResourceBundle;
 /**
  * @author Bruno Basto
  */
-public class SoyMsgBundleBridge implements SoyMsgBundle {
+public class SoyMsgBundleBridge extends SoyMsgBundle {
 
 	public SoyMsgBundleBridge(
 		Iterable<SoyMsg> messages, Locale locale,
@@ -55,9 +55,13 @@ public class SoyMsgBundleBridge implements SoyMsgBundle {
 	public SoyMsg getMsg(long messageId) {
 		SoyMsg soyMsg = _getMsg(messageId);
 
-		return new SoyMsg(
-			messageId, getLocaleString(), false,
-			_getLocalizedMessageParts(soyMsg));
+		SoyMsg.Builder builder = SoyMsg.builder();
+
+		builder.setLocaleString(getLocaleString());
+		builder.setIsPlrselMsg(false);
+		builder.setParts(_getLocalizedMessageParts(soyMsg));
+
+		return builder.build();
 	}
 
 	@Override

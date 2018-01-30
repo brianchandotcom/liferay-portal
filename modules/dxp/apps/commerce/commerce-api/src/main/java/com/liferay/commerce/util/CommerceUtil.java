@@ -16,6 +16,8 @@ package com.liferay.commerce.util;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceAddressRestriction;
+import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommercePriceEntry;
 import com.liferay.commerce.model.CommercePriceList;
@@ -25,6 +27,8 @@ import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
 import com.liferay.commerce.util.comparator.CommerceAddressCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceAddressRestrictionCreateDateComparator;
+import com.liferay.commerce.util.comparator.CommerceCartItemModifiedDateComparator;
+import com.liferay.commerce.util.comparator.CommerceCartNameComparator;
 import com.liferay.commerce.util.comparator.CommerceCountryPriorityComparator;
 import com.liferay.commerce.util.comparator.CommercePriceEntryCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommercePriceListCreateDateComparator;
@@ -106,6 +110,51 @@ public class CommerceUtil {
 		}
 
 		return sort;
+	}
+
+	public static OrderByComparator<CommerceCartItem>
+		getCommerceCartItemOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceCartItem> orderByComparator = null;
+
+		if (orderByCol.equals("modified-date")) {
+			orderByComparator = new CommerceCartItemModifiedDateComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
+	public static OrderByComparator<CommerceCart>
+		getCommerceCartOrderByComparator(String orderByCol) {
+
+		return getCommerceCartOrderByComparator(orderByCol, "asc");
+	}
+
+	public static OrderByComparator<CommerceCart>
+		getCommerceCartOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceCart> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new CommerceCartNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
 	}
 
 	public static OrderByComparator<CommerceCountry>

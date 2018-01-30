@@ -51,6 +51,10 @@ public class ExportImportConfigurationConstants {
 	public static final String TYPE_PUBLISH_LAYOUT_REMOTE_LABEL =
 		"publish-layout-remote";
 
+	public static final int TYPE_PUBLISH_PORTLET = 8;
+
+	public static final String TYPE_PUBLISH_PORTLET_LABEL = "publish-portlet";
+
 	public static final int TYPE_PUBLISH_PORTLET_LOCAL = 8;
 
 	public static final String TYPE_PUBLISH_PORTLET_LOCAL_LABEL =

@@ -179,6 +179,7 @@
 		<!-- Other fields -->
 
 		<column name="name" type="String" />
+		<column name="defaultCart" type="boolean" />
 		<column name="type" type="int" />
 		<column name="billingAddressId" type="long" />
 		<column name="shippingAddressId" type="long" />
@@ -209,6 +210,12 @@
 			<finder-column name="groupId" />
 			<finder-column name="userId" />
 			<finder-column name="name" />
+			<finder-column name="type" />
+		</finder>
+		<finder name="G_U_D_T" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="userId" />
+			<finder-column name="defaultCart" />
 			<finder-column name="type" />
 		</finder>
 

@@ -210,8 +210,6 @@
 	<command name="AddStructureWithSeparatorField" priority="4">
 		<description message="This is a use case for LPS-52248." />
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -235,8 +233,6 @@
 			<var name="structureName" value="WC Structure Name" />
 		</execute>
 
-		<execute macro="Navigator#openURL" />
-
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
 			<var name="panel" value="Site Administration" />
@@ -256,8 +252,6 @@
 		</execute>
 
 		<execute macro="DDLDataDefinition#save" />
-
-		<execute macro="Navigator#openURL" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />

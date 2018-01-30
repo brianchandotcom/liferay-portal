@@ -289,9 +289,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 					PortletSession portletSession =
 						renderRequest.getPortletSession();
 
-					long commerceCartId = 0;
-
-					commerceCartId = (Long)portletSession.getAttribute(
+					long commerceCartId = (Long)portletSession.getAttribute(
 						CommerceWebKeys.WISH_LIST_COMMERCE_CART_ID);
 
 					if (commerceCartId > 0) {

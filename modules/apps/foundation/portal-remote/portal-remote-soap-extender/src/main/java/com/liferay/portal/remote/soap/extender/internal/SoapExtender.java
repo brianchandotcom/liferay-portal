@@ -18,7 +18,7 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.remote.dependency.manager.tccl.TCCLDependencyManager;
 import com.liferay.portal.remote.soap.extender.SoapDescriptorBuilder;
-import com.liferay.portal.remote.soap.extender.configuration.SoapExtenderConfiguration;
+import com.liferay.portal.remote.soap.extender.internal.configuration.SoapExtenderConfiguration;
 
 import java.util.Map;
 
@@ -41,7 +41,7 @@ import org.osgi.service.http.whiteboard.HttpWhiteboardConstants;
  * @author Carlos Sierra Andrés
  */
 @Component(
-	configurationPid = "com.liferay.portal.remote.soap.extender.configuration.SoapExtenderConfiguration",
+	configurationPid = "com.liferay.portal.remote.soap.extender.internal.configuration.SoapExtenderConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class SoapExtender {

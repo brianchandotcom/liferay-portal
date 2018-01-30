@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.remote.soap.extender.configuration;
+package com.liferay.portal.remote.soap.extender.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -23,7 +23,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "foundation")
 @Meta.OCD(
-	id = "com.liferay.portal.remote.soap.extender.configuration.JaxWsApiConfiguration",
+	id = "com.liferay.portal.remote.soap.extender.internal.configuration.JaxWsApiConfiguration",
 	localization = "content/Language", name = "jax-ws-api-configuration-name"
 )
 public interface JaxWsApiConfiguration {

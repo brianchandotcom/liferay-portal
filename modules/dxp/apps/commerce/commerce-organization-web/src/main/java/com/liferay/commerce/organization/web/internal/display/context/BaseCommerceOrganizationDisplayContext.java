@@ -60,7 +60,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		_defaultOrderByType = "desc";
 	}
 
-	public Organization getCurrentAccount() throws PortalException {
+	public Organization getCurrentAccountOrganization() throws PortalException {
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(cpRequestHelper.getRequest());
 
@@ -77,7 +77,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 			return commerceOrganizationService.getOrganization(organizationId);
 		}
 
-		return getCurrentAccount();
+		return getCurrentAccountOrganization();
 	}
 
 	public String getDisplayStyle() {
@@ -102,7 +102,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public String getPath(Organization organization) throws PortalException {
-		Organization topOrganization = getCurrentAccount();
+		Organization topOrganization = getCurrentAccountOrganization();
 
 		List<Organization> organizations = new ArrayList<>();
 
@@ -207,7 +207,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		data.put("direction-right", StringPool.TRUE);
 
-		Organization topOrganization = getCurrentAccount();
+		Organization topOrganization = getCurrentAccountOrganization();
 
 		Organization organization = currentOrganization;
 
@@ -243,7 +243,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		_defaultOrderByType = defaultOrderByType;
 	}
 
-	public boolean siteHasOrganization() {
+	public boolean isOrganizationGroup() {
 		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
 
 		Group group = themeDisplay.getScopeGroup();

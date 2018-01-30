@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
+import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
 
 import java.util.ResourceBundle;
@@ -71,7 +72,7 @@ public class HtmlParserUtil {
 
 			document = SAXReaderUtil.read(html, false);
 		}
-		catch (Exception de) {
+		catch (DocumentException de) {
 			throw new FragmentEntryContentException(
 				LanguageUtil.get(
 					resourceBundle, "fragment-entry-html-is-invalid"),

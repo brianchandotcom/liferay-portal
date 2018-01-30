@@ -144,7 +144,7 @@
 		{foreach $currentValue in $value}
 			{if $option.value == $currentValue}
 				<li>
-					<span class="badge badge-default badge-sm multiple-badge" data-original-title="{$option.label}" title="{$option.label}">
+					<span class="badge badge-primary badge-sm multiple-badge" data-original-title="{$option.label}" title="{$option.label}">
 						{$option.label}
 						{if not $readOnly}
 							<a class="trigger-badge-item-close" data-badge-value="{$option.value}" href="javascript:void(0)">{$badgeCloseIcon}</a>

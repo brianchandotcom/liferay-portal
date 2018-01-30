@@ -157,7 +157,7 @@ AUI.add(
 						return A.merge(
 							SelectField.superclass.getTemplateContext.apply(instance, arguments),
 							{
-								badgeCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times', 'icon-monospaced')),
+								badgeCloseIcon: soyIncDom(Liferay.Util.getLexiconIconTpl('times')),
 								fixedOptions: instance.get('fixedOptions'),
 								open: instance._open,
 								options: instance.get('options'),

@@ -12,53 +12,26 @@
  * details.
  */
 
-package com.liferay.polls.service.permission;
+package com.liferay.polls.web.internal.security.permission.resource;
 
 import com.liferay.polls.constants.PollsConstants;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Mika Koivisto
- * @deprecated As of 4.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + PollsConstants.RESOURCE_NAME},
-	service = ResourcePermissionChecker.class
-)
-@Deprecated
-public class PollsResourcePermissionChecker
-	extends BaseResourcePermissionChecker {
-
-	public static final String RESOURCE_NAME = PollsConstants.RESOURCE_NAME;
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
-	}
+@Component(immediate = true)
+public class PollsPermission {
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return _portletResourcePermission.contains(
 			permissionChecker, groupId, actionId);
-	}
-
-	@Override
-	public Boolean checkResource(
-		PermissionChecker permissionChecker, long classPK, String actionId) {
-
-		return _portletResourcePermission.contains(
-			permissionChecker, classPK, actionId);
 	}
 
 	@Reference(

@@ -12,12 +12,10 @@
  * details.
  */
 
-package com.liferay.polls.service.permission;
+package com.liferay.polls.web.internal.security.permission.resource;
 
 import com.liferay.polls.model.PollsQuestion;
-import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 
@@ -25,34 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 4.0.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.polls.model.PollsQuestion"}
-)
-@Deprecated
-public class PollsQuestionPermissionChecker
-	implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long questionId,
-			String actionId)
-		throws PortalException {
-
-		_pollsQuestionModelResourcePermission.check(
-			permissionChecker, questionId, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, PollsQuestion question,
-			String actionId)
-		throws PortalException {
-
-		_pollsQuestionModelResourcePermission.check(
-			permissionChecker, question, actionId);
-	}
+@Component(immediate = true)
+public class PollsQuestionPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long questionId,
@@ -70,16 +44,6 @@ public class PollsQuestionPermissionChecker
 
 		return _pollsQuestionModelResourcePermission.contains(
 			permissionChecker, question, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_pollsQuestionModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(
@@ -90,10 +54,6 @@ public class PollsQuestionPermissionChecker
 		ModelResourcePermission<PollsQuestion> modelResourcePermission) {
 
 		_pollsQuestionModelResourcePermission = modelResourcePermission;
-	}
-
-	protected void setPollsQuestionLocalService(
-		PollsQuestionLocalService pollsQuestionLocalService) {
 	}
 
 	private static ModelResourcePermission<PollsQuestion>

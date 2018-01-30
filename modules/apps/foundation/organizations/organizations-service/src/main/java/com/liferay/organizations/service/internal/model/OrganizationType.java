@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.users.admin.internal.model;
+package com.liferay.organizations.service.internal.model;
 
+import com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration;
 
 import java.util.Map;
 
@@ -27,7 +27,7 @@ import org.osgi.service.component.annotations.Modified;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration",
+	configurationPid = "com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
 	immediate = true, service = OrganizationType.class
 )
 public class OrganizationType {

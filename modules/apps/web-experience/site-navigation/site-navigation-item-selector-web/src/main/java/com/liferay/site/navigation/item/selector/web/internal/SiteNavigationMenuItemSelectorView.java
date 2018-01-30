@@ -21,9 +21,9 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationItemSelectorCriterion;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
-import com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationItemSelectorViewDisplayContext;
+import com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemSelectorViewDisplayContext;
 
 import java.io.IOException;
 
@@ -51,14 +51,14 @@ import org.osgi.service.component.annotations.Reference;
 	property = {"item.selector.view.order:Integer=300"},
 	service = ItemSelectorView.class
 )
-public class SiteNavigationMenusItemSelectorView
-	implements ItemSelectorView<SiteNavigationItemSelectorCriterion> {
+public class SiteNavigationMenuItemSelectorView
+	implements ItemSelectorView<SiteNavigationMenuItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteNavigationItemSelectorCriterion>
+	public Class<SiteNavigationMenuItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return SiteNavigationItemSelectorCriterion.class;
+		return SiteNavigationMenuItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -91,21 +91,21 @@ public class SiteNavigationMenusItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			SiteNavigationItemSelectorCriterion
-				siteNavigationItemSelectorCriterion,
+			SiteNavigationMenuItemSelectorCriterion
+				siteNavigationMenuItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		SiteNavigationItemSelectorViewDisplayContext
-			siteNavigationItemSelectorViewDisplayContext =
-				new SiteNavigationItemSelectorViewDisplayContext(
+		SiteNavigationMenuItemSelectorViewDisplayContext
+			siteNavigationMenuItemSelectorViewDisplayContext =
+				new SiteNavigationMenuItemSelectorViewDisplayContext(
 					(HttpServletRequest)request, portletURL,
 					itemSelectedEventName);
 
 		request.setAttribute(
 			SiteNavigationItemSelectorWebKeys.
-				SITE_NAVIGATION_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			siteNavigationItemSelectorViewDisplayContext);
+				SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			siteNavigationMenuItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 

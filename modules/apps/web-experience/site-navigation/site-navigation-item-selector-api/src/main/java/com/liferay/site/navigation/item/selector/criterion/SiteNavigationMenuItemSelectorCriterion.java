@@ -19,6 +19,6 @@ import com.liferay.item.selector.BaseItemSelectorCriterion;
 /**
  * @author Pavel Savinov
  */
-public class SiteNavigationItemSelectorCriterion
+public class SiteNavigationMenuItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 }

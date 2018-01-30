@@ -1,0 +1,8 @@
+Bundle-Name: Liferay Product Navigation Product Menu API
+Bundle-SymbolicName: com.liferay.product.navigation.product.menu.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.product.navigation.product.menu.constants,\
+	com.liferay.product.navigation.product.menu.display.context
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Product Navigation

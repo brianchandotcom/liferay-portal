@@ -168,6 +168,12 @@ version 3.2.1.
 ### Changed
 - [LPS-76221]: Update the [Liferay Gradle Plugins] dependency to version 3.5.57.
 
+## 1.8.1 - 2018-01-29
+
+### Added
+- [LPS-76221]: Add support for relative file URLs in the
+`liferay.workspace.bundle.url` project property.
+
 [Gradle Download Task]: https://github.com/michel-kraemer/gradle-download-task/
 [Liferay Gradle Plugins]: https://github.com/liferay/liferay-portal/tree/master/modules/sdk/gradle-plugins
 [Liferay Portal Tools Bundle Support]: https://github.com/liferay/liferay-portal/tree/master/modules/util/portal-tools-bundle-support
@@ -206,3 +212,4 @@ version 3.2.1.
 [LPS-75479]: https://issues.liferay.com/browse/LPS-75479
 [LPS-76221]: https://issues.liferay.com/browse/LPS-76221
 [LPS-76271]: https://issues.liferay.com/browse/LPS-76271
+[LPS-77586]: https://issues.liferay.com/browse/LPS-77586

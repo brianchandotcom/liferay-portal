@@ -36,7 +36,7 @@ public class DeregisterCommand implements Command {
 			(String)commandMessage.get("invalidateToken"));
 
 		if (_log.isDebugEnabled()) {
-			StringBundler sb = new StringBundler();
+			StringBundler sb = new StringBundler(5);
 
 			sb.append("Command message: {deregister=");
 			sb.append(deregister);

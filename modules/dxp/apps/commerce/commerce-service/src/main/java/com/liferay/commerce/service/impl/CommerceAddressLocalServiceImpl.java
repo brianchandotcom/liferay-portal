@@ -373,7 +373,7 @@ public class CommerceAddressLocalServiceImpl
 				commerceAddressId);
 
 			if (commerceAddress == null) {
-				commerceAddress = null;
+				commerceAddresses = null;
 
 				Indexer<CommerceAddress> indexer =
 					IndexerRegistryUtil.getIndexer(CommerceAddress.class);

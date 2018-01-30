@@ -21,14 +21,11 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.model.ShoppingItem;
 import com.liferay.shopping.model.ShoppingItemField;
 import com.liferay.shopping.model.ShoppingItemPrice;
 import com.liferay.shopping.service.base.ShoppingItemServiceBaseImpl;
-import com.liferay.shopping.service.permission.ShoppingCategoryPermission;
-import com.liferay.shopping.service.permission.ShoppingItemPermission;
 
 import java.io.File;
 
@@ -136,14 +133,6 @@ public class ShoppingItemServiceImpl extends ShoppingItemServiceBaseImpl {
 			mediumImageURL, mediumFile, largeImage, largeImageURL, largeFile,
 			itemFields, itemPrices, serviceContext);
 	}
-
-	@Deprecated
-	@ServiceReference(type = ShoppingCategoryPermission.class)
-	protected ShoppingCategoryPermission shoppingCategoryPermission;
-
-	@Deprecated
-	@ServiceReference(type = ShoppingItemPermission.class)
-	protected ShoppingItemPermission shoppingItemPermission;
 
 	private static volatile ModelResourcePermission<ShoppingCategory>
 		_shoppingCategoryModelResourcePermission =

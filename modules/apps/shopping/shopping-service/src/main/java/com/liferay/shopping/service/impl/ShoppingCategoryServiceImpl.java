@@ -23,10 +23,8 @@ import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermi
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.service.base.ShoppingCategoryServiceBaseImpl;
-import com.liferay.shopping.service.permission.ShoppingCategoryPermission;
 
 import java.util.List;
 
@@ -144,9 +142,6 @@ public class ShoppingCategoryServiceImpl
 			categoryId, parentCategoryId, name, description,
 			mergeWithParentCategory, serviceContext);
 	}
-
-	@ServiceReference(type = ShoppingCategoryPermission.class)
-	protected ShoppingCategoryPermission shoppingCategoryPermission;
 
 	private static volatile ModelResourcePermission<ShoppingCategory>
 		_shoppingCategoryModelResourcePermission =

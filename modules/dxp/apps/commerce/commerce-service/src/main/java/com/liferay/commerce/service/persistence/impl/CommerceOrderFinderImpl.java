@@ -35,6 +35,7 @@ public class CommerceOrderFinderImpl
 	public static final String COUNT_BY_G_O =
 		CommerceOrderFinder.class.getName() + ".countByG_O";
 
+	@Override
 	public Map<Integer, Long> countByG_S(long groupId) {
 		Session session = null;
 

@@ -50,6 +50,7 @@ import java.util.Map;
 public class CommerceOrganizationServiceImpl
 	extends CommerceOrganizationServiceBaseImpl {
 
+	@Override
 	public Organization addOrganization(
 			long parentOrganizationId, String name, String type,
 			ServiceContext serviceContext)

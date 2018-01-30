@@ -27,6 +27,8 @@ long parentOrganizationId = ParamUtil.getLong(request, "parentOrganizationId", O
 if (parentOrganizationId > 0) {
 	portletURL.setParameter("parentOrganizationId", String.valueOf(parentOrganizationId));
 }
+
+boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
 %>
 
 <liferay-frontend:management-bar>
@@ -50,6 +52,12 @@ if (parentOrganizationId > 0) {
 			orderColumns='<%= new String[] {"name", "type"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<c:if test="<%= showSearch %>">
+			<li>
+				<liferay-util:include page="/organization_search.jsp" servletContext="<%= application %>" />
+			</li>
+		</c:if>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

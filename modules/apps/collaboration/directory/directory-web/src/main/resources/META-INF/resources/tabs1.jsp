@@ -17,8 +17,6 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean showSearch = ParamUtil.getBoolean(request, "showSearch", true);
-
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/directory/view");
@@ -46,21 +44,5 @@ portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 
 			<aui:nav-item href="<%= portletURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
 		</aui:nav>
-	</c:if>
-
-	<c:if test="<%= showSearch %>">
-		<aui:nav-bar-search>
-			<c:choose>
-				<c:when test='<%= tabs1.equals("organizations") %>'>
-					<liferay-util:include page="/organization_search.jsp" servletContext="<%= application %>" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("user-groups") %>'>
-					<liferay-ui:input-search markupView="lexicon" />
-				</c:when>
-				<c:when test='<%= tabs1.equals("users") || portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>'>
-					<liferay-util:include page="/user_search.jsp" servletContext="<%= application %>" />
-				</c:when>
-			</c:choose>
-		</aui:nav-bar-search>
 	</c:if>
 </aui:nav-bar>

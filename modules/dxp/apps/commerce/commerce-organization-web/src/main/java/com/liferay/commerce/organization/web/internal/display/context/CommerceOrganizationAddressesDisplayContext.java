@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
@@ -71,6 +72,8 @@ public class CommerceOrganizationAddressesDisplayContext
 	}
 
 	public CommerceAddress getCommerceAddress() throws PortalException {
+		HttpServletRequest httpServletRequest = cpRequestHelper.getRequest();
+
 		CommerceAddress commerceAddress =
 			(CommerceAddress)httpServletRequest.getAttribute(
 				CommerceWebKeys.COMMERCE_ADDRESS);
@@ -106,6 +109,8 @@ public class CommerceOrganizationAddressesDisplayContext
 	}
 
 	public List<CommerceCountry> getCommerceCountries() {
+		HttpServletRequest httpServletRequest = cpRequestHelper.getRequest();
+
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
 				WebKeys.THEME_DISPLAY);
@@ -145,6 +150,10 @@ public class CommerceOrganizationAddressesDisplayContext
 
 	public String getEditCommerceAddressHref(long commerceAddressId)
 		throws WindowStateException {
+
+		HttpServletRequest httpServletRequest = cpRequestHelper.getRequest();
+		LiferayPortletResponse liferayPortletResponse =
+			cpRequestHelper.getLiferayPortletResponse();
 
 		ThemeDisplay themeDisplay =
 			(ThemeDisplay)httpServletRequest.getAttribute(
@@ -190,7 +199,8 @@ public class CommerceOrganizationAddressesDisplayContext
 			return _keywords;
 		}
 
-		_keywords = ParamUtil.getString(httpServletRequest, "keywords");
+		_keywords = ParamUtil.getString(
+			cpRequestHelper.getRequest(), "keywords");
 
 		return _keywords;
 	}
@@ -219,7 +229,7 @@ public class CommerceOrganizationAddressesDisplayContext
 		}
 
 		_searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null,
+			cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
 			"there-are-no-addresses");
 
 		OrderByComparator<CommerceAddress> orderByComparator =
@@ -230,7 +240,8 @@ public class CommerceOrganizationAddressesDisplayContext
 		_searchContainer.setOrderByComparator(orderByComparator);
 		_searchContainer.setOrderByType(getOrderByType());
 		_searchContainer.setRowChecker(
-			new EmptyOnClickRowChecker(liferayPortletResponse));
+			new EmptyOnClickRowChecker(
+				cpRequestHelper.getLiferayPortletResponse()));
 
 		Organization organization = getCurrentOrganization();
 
@@ -240,7 +251,8 @@ public class CommerceOrganizationAddressesDisplayContext
 		BaseModelSearchResult<CommerceAddress>
 			commerceAddressBaseModelSearchResult =
 				_commerceAddressService.searchCommerceAddresses(
-					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					cpRequestHelper.getCompanyId(),
+					cpRequestHelper.getScopeGroupId(),
 					Organization.class.getName(),
 					organization.getOrganizationId(), getKeywords(),
 					_searchContainer.getStart(), _searchContainer.getEnd(),

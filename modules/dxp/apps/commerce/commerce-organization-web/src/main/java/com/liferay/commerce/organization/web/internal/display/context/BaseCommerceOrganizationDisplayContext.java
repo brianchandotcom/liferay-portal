@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -31,7 +30,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,16 +50,9 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		HttpServletRequest httpServletRequest,
 		OrganizationService organizationService) {
 
-		this.httpServletRequest = httpServletRequest;
 		this.organizationService = organizationService;
 
-		themeDisplay = (ThemeDisplay)httpServletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
-
-		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 
 		_defaultOrderByCol = "create-date";
 		_defaultOrderByType = "desc";
@@ -69,7 +60,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public Organization getCurrentAccount() throws PortalException {
 		HttpServletRequest originalHttpServletRequest =
-			PortalUtil.getOriginalServletRequest(httpServletRequest);
+			PortalUtil.getOriginalServletRequest(cpRequestHelper.getRequest());
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
@@ -81,7 +72,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public Organization getCurrentOrganization() throws PortalException {
 		long organizationId = ParamUtil.getLong(
-			httpServletRequest, "organizationId");
+			cpRequestHelper.getRequest(), "organizationId");
 
 		Organization organization =
 			OrganizationLocalServiceUtil.fetchOrganization(organizationId);
@@ -96,7 +87,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = ParamUtil.getString(
-				httpServletRequest, "displayStyle");
+				cpRequestHelper.getRequest(), "displayStyle");
 		}
 
 		return _displayStyle;
@@ -104,14 +95,14 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
-			_defaultOrderByCol);
+			cpRequestHelper.getRequest(),
+			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, _defaultOrderByCol);
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
-			_defaultOrderByType);
+			cpRequestHelper.getRequest(),
+			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, _defaultOrderByType);
 	}
 
 	public String getPath(Organization organization) throws PortalException {
@@ -153,35 +144,41 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
+		LiferayPortletResponse liferayPortletResponse =
+			cpRequestHelper.getLiferayPortletResponse();
+
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
+		String redirect = ParamUtil.getString(
+			cpRequestHelper.getRequest(), "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
 		}
 
-		String delta = ParamUtil.getString(httpServletRequest, "delta");
+		String delta = ParamUtil.getString(
+			cpRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			httpServletRequest, "deltaEntry");
+			cpRequestHelper.getRequest(), "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
 		String displayStyle = ParamUtil.getString(
-			httpServletRequest, "displayStyle");
+			cpRequestHelper.getRequest(), "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
-		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
+		String keywords = ParamUtil.getString(
+			cpRequestHelper.getRequest(), "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -191,6 +188,8 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public Organization getSiteOrganization() throws PortalException {
+		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
+
 		Group group = themeDisplay.getScopeGroup();
 
 		return OrganizationLocalServiceUtil.fetchOrganization(
@@ -198,7 +197,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public List<Organization> getUserOrganizations() throws PortalException {
-		User user = themeDisplay.getUser();
+		User user = cpRequestHelper.getUser();
 
 		return user.getOrganizations(true);
 	}
@@ -231,12 +230,12 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				String.valueOf(organization.getOrganizationId()));
 
 			PortalUtil.addPortletBreadcrumbEntry(
-				httpServletRequest, organization.getName(),
+				cpRequestHelper.getRequest(), organization.getName(),
 				portletURL.toString(), data);
 		}
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			httpServletRequest, curentOrganization.getName(),
+			cpRequestHelper.getRequest(), curentOrganization.getName(),
 			portletURL.toString(), data);
 	}
 
@@ -249,6 +248,8 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public boolean siteHasOrganization() {
+		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
+
 		Group group = themeDisplay.getScopeGroup();
 
 		if (group.getOrganizationId() > 0) {
@@ -259,11 +260,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	protected final CPRequestHelper cpRequestHelper;
-	protected final HttpServletRequest httpServletRequest;
-	protected final LiferayPortletRequest liferayPortletRequest;
-	protected final LiferayPortletResponse liferayPortletResponse;
 	protected final OrganizationService organizationService;
-	protected final ThemeDisplay themeDisplay;
 
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;

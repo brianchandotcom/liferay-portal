@@ -51,7 +51,7 @@ public class CommerceOrganizationBranchesDisplayContext
 		}
 
 		_searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null,
+			cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
 			"no-organizations-were-found");
 
 		Organization organization = getCurrentOrganization();

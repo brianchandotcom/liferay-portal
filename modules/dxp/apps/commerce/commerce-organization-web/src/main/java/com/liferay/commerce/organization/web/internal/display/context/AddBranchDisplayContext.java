@@ -14,7 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
-import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,10 +27,13 @@ public class AddBranchDisplayContext
 	extends BaseCommerceOrganizationDisplayContext {
 
 	public AddBranchDisplayContext(
-		HttpServletRequest httpServletRequest,
-		OrganizationService organizationService, Portal portal) {
+		CommerceOrganizationHelper commerceOrganizationHelper,
+		CommerceOrganizationService commerceOrganizationService,
+		HttpServletRequest httpServletRequest, Portal portal) {
 
-		super(httpServletRequest, organizationService, portal);
+		super(
+			commerceOrganizationHelper, commerceOrganizationService,
+			httpServletRequest, portal);
 	}
 
 }

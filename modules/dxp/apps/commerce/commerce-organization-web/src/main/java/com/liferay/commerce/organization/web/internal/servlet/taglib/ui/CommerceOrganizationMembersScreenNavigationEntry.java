@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationMembersDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
@@ -27,7 +29,6 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -113,7 +114,8 @@ public class CommerceOrganizationMembersScreenNavigationEntry
 		CommerceOrganizationMembersDisplayContext
 			commerceOrganizationMembersDisplayContext =
 				new CommerceOrganizationMembersDisplayContext(
-					httpServletRequest, _organizationService, _portal);
+					_commerceOrganizationHelper, _commerceOrganizationService,
+					httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -128,10 +130,13 @@ public class CommerceOrganizationMembersScreenNavigationEntry
 		CommerceOrganizationMembersScreenNavigationEntry.class);
 
 	@Reference
-	private JSPRenderer _jspRenderer;
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
-	private OrganizationService _organizationService;
+	private CommerceOrganizationService _commerceOrganizationService;
+
+	@Reference
+	private JSPRenderer _jspRenderer;
 
 	@Reference
 	private Portal _portal;

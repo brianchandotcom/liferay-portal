@@ -14,10 +14,11 @@
 
 package com.liferay.commerce.organization.web.internal.portlet.action;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.organization.web.internal.display.context.AddBranchDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -53,7 +54,8 @@ public class AddBranchMVCRenderCommand implements MVCRenderCommand {
 
 		AddBranchDisplayContext addBranchDisplayContext =
 			new AddBranchDisplayContext(
-				httpServletRequest, _organizationService, _portal);
+				_commerceOrganizationHelper, _commerceOrganizationService,
+				httpServletRequest, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, addBranchDisplayContext);
@@ -62,7 +64,10 @@ public class AddBranchMVCRenderCommand implements MVCRenderCommand {
 	}
 
 	@Reference
-	private OrganizationService _organizationService;
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private Portal _portal;

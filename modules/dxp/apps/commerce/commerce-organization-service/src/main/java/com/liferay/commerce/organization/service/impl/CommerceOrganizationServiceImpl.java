@@ -63,11 +63,17 @@ public class CommerceOrganizationServiceImpl
 	}
 
 	@Override
+	public Organization getOrganization(long organizationId)
+		throws PortalException {
+
+		return organizationService.getOrganization(organizationId);
+	}
+
+	@Override
 	public Address getOrganizationPrimaryAddress(long organizationId)
 		throws PortalException {
 
-		Organization organization = organizationService.getOrganization(
-			organizationId);
+		Organization organization = getOrganization(organizationId);
 
 		List<Address> addresses = organization.getAddresses();
 
@@ -84,8 +90,7 @@ public class CommerceOrganizationServiceImpl
 	public EmailAddress getOrganizationPrimaryEmailAddress(long organizationId)
 		throws PortalException {
 
-		Organization organization = organizationService.getOrganization(
-			organizationId);
+		Organization organization = getOrganization(organizationId);
 
 		List<EmailAddress> emailAddresses =
 			emailAddressService.getEmailAddresses(

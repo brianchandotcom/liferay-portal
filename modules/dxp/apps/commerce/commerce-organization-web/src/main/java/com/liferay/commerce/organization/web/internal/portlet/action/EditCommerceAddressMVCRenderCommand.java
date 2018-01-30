@@ -14,13 +14,14 @@
 
 package com.liferay.commerce.organization.web.internal.portlet.action;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationAddressesDisplayContext;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -57,9 +58,9 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 		CommerceOrganizationAddressesDisplayContext
 			commerceOrganizationAddressesDisplayContext =
 				new CommerceOrganizationAddressesDisplayContext(
-					httpServletRequest, _commerceAddressService,
-					_commerceCountryService, _commerceRegionService,
-					_organizationService, _portal);
+					_commerceAddressService, _commerceCountryService,
+					_commerceOrganizationHelper, _commerceOrganizationService,
+					_commerceRegionService, httpServletRequest, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -75,10 +76,13 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 	private CommerceCountryService _commerceCountryService;
 
 	@Reference
-	private CommerceRegionService _commerceRegionService;
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
-	private OrganizationService _organizationService;
+	private CommerceOrganizationService _commerceOrganizationService;
+
+	@Reference
+	private CommerceRegionService _commerceRegionService;
 
 	@Reference
 	private Portal _portal;

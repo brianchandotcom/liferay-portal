@@ -15,13 +15,13 @@
 package com.liferay.commerce.organization.web.internal.display.context;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +33,13 @@ public class CommerceSearchOrganizationsDisplayContext
 	extends BaseCommerceOrganizationDisplayContext {
 
 	public CommerceSearchOrganizationsDisplayContext(
-		HttpServletRequest httpServletRequest,
+		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceOrganizationService commerceOrganizationService,
-		OrganizationService organizationService, Portal portal) {
+		HttpServletRequest httpServletRequest, Portal portal) {
 
-		super(httpServletRequest, organizationService, portal);
-
-		_commerceOrganizationService = commerceOrganizationService;
+		super(
+			commerceOrganizationHelper, commerceOrganizationService,
+			httpServletRequest, portal);
 
 		setDefaultOrderByCol("name");
 	}
@@ -61,7 +61,7 @@ public class CommerceSearchOrganizationsDisplayContext
 			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
-			_commerceOrganizationService.searchOrganizations(
+			commerceOrganizationService.searchOrganizations(
 				organization.getOrganizationId(), null, "account",
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});
@@ -73,7 +73,6 @@ public class CommerceSearchOrganizationsDisplayContext
 		return _searchContainer;
 	}
 
-	private final CommerceOrganizationService _commerceOrganizationService;
 	private SearchContainer<Organization> _searchContainer;
 
 }

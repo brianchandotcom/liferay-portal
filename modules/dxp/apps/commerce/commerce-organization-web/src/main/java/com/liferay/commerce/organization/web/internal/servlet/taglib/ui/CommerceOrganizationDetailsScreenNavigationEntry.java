@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDetailDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
@@ -23,7 +24,6 @@ import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -48,7 +48,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	configurationPid = "com.liferay.user.admin.configuration.UserFileUploadsConfiguration",
-	property = {"screen.navigation.entry.order:Integer=10"},
+	property = "screen.navigation.entry.order:Integer=10",
 	service = {ScreenNavigationCategory.class, ScreenNavigationEntry.class}
 )
 public class CommerceOrganizationDetailsScreenNavigationEntry
@@ -97,9 +97,8 @@ public class CommerceOrganizationDetailsScreenNavigationEntry
 		CommerceOrganizationDetailDisplayContext
 			commerceOrganizationDetailDisplayContext =
 				new CommerceOrganizationDetailDisplayContext(
-					httpServletRequest, _commerceOrganizationService,
-					_organizationService, _portal,
-					_userFileUploadsConfiguration);
+					_commerceOrganizationHelper, _commerceOrganizationService,
+					httpServletRequest, _portal, _userFileUploadsConfiguration);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -118,13 +117,13 @@ public class CommerceOrganizationDetailsScreenNavigationEntry
 	}
 
 	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private OrganizationService _organizationService;
 
 	@Reference
 	private Portal _portal;

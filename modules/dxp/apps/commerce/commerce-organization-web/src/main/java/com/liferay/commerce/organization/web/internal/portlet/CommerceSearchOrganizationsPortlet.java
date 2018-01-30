@@ -15,10 +15,10 @@
 package com.liferay.commerce.organization.web.internal.portlet;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceSearchOrganizationsDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -73,8 +73,8 @@ public class CommerceSearchOrganizationsPortlet extends MVCPortlet {
 		CommerceSearchOrganizationsDisplayContext
 			commerceSearchOrganizationsDisplayContext =
 				new CommerceSearchOrganizationsDisplayContext(
-					httpServletRequest, _commerceOrganizationService,
-					_organizationService, _portal);
+					_commerceOrganizationHelper, _commerceOrganizationService,
+					httpServletRequest, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -84,10 +84,10 @@ public class CommerceSearchOrganizationsPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceOrganizationService _commerceOrganizationService;
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
-	private OrganizationService _organizationService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private Portal _portal;

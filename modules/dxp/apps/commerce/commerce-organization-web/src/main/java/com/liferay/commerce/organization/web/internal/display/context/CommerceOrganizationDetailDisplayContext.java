@@ -15,11 +15,11 @@
 package com.liferay.commerce.organization.web.internal.display.context;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
@@ -32,15 +32,16 @@ public class CommerceOrganizationDetailDisplayContext
 	extends BaseCommerceOrganizationDisplayContext {
 
 	public CommerceOrganizationDetailDisplayContext(
-		HttpServletRequest httpServletRequest,
+		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceOrganizationService commerceOrganizationService,
-		OrganizationService organizationService, Portal portal,
+		HttpServletRequest httpServletRequest, Portal portal,
 		UserFileUploadsConfiguration userFileUploadsConfiguration) {
 
-		super(httpServletRequest, organizationService, portal);
+		super(
+			commerceOrganizationHelper, commerceOrganizationService,
+			httpServletRequest, portal);
 
-		this.commerceOrganizationService = commerceOrganizationService;
-		this.userFileUploadsConfiguration = userFileUploadsConfiguration;
+		_userFileUploadsConfiguration = userFileUploadsConfiguration;
 	}
 
 	public Address getOrganizationPrimaryAddress() throws PortalException {
@@ -60,10 +61,9 @@ public class CommerceOrganizationDetailDisplayContext
 	}
 
 	public UserFileUploadsConfiguration getUserFileUploadsConfiguration() {
-		return userFileUploadsConfiguration;
+		return _userFileUploadsConfiguration;
 	}
 
-	protected final CommerceOrganizationService commerceOrganizationService;
-	protected final UserFileUploadsConfiguration userFileUploadsConfiguration;
+	private final UserFileUploadsConfiguration _userFileUploadsConfiguration;
 
 }

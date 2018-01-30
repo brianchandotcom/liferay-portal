@@ -18,6 +18,8 @@ import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.CommerceOrganizationScreenNavigationConstants;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCountryService;
@@ -32,7 +34,6 @@ import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -55,13 +56,16 @@ public class CommerceOrganizationAddressesDisplayContext
 	extends BaseCommerceOrganizationDisplayContext {
 
 	public CommerceOrganizationAddressesDisplayContext(
-		HttpServletRequest httpServletRequest,
 		CommerceAddressService commerceAddressService,
 		CommerceCountryService commerceCountryService,
+		CommerceOrganizationHelper commerceOrganizationHelper,
+		CommerceOrganizationService commerceOrganizationService,
 		CommerceRegionService commerceRegionService,
-		OrganizationService organizationService, Portal portal) {
+		HttpServletRequest httpServletRequest, Portal portal) {
 
-		super(httpServletRequest, organizationService, portal);
+		super(
+			commerceOrganizationHelper, commerceOrganizationService,
+			httpServletRequest, portal);
 
 		_commerceAddressService = commerceAddressService;
 		_commerceCountryService = commerceCountryService;

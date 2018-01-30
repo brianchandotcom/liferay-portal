@@ -15,13 +15,13 @@
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationBranchesDisplayContext;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -88,8 +88,8 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 		CommerceOrganizationBranchesDisplayContext
 			commerceOrganizationBranchesDisplayContext =
 				new CommerceOrganizationBranchesDisplayContext(
-					httpServletRequest, _commerceOrganizationService,
-					_organizationService, _portal);
+					_commerceOrganizationHelper, _commerceOrganizationService,
+					httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -100,13 +100,13 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 	}
 
 	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
+
+	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;
-
-	@Reference
-	private OrganizationService _organizationService;
 
 	@Reference
 	private Portal _portal;

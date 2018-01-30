@@ -14,6 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,7 +23,6 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.Portal;
 
@@ -36,10 +37,13 @@ public class CommerceOrganizationMembersDisplayContext
 	extends BaseCommerceOrganizationDisplayContext {
 
 	public CommerceOrganizationMembersDisplayContext(
-		HttpServletRequest httpServletRequest,
-		OrganizationService organizationService, Portal portal) {
+		CommerceOrganizationHelper commerceOrganizationHelper,
+		CommerceOrganizationService commerceOrganizationService,
+		HttpServletRequest httpServletRequest, Portal portal) {
 
-		super(httpServletRequest, organizationService, portal);
+		super(
+			commerceOrganizationHelper, commerceOrganizationService,
+			httpServletRequest, portal);
 
 		setDefaultOrderByCol("last-name");
 	}

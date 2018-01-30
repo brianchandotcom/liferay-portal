@@ -14,6 +14,9 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,10 +24,7 @@ import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.service.OrganizationLocalServiceUtil;
-import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -39,7 +39,6 @@ import java.util.Map;
 import javax.portlet.PortletURL;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * @author Marco Leo
@@ -47,10 +46,12 @@ import javax.servlet.http.HttpSession;
 public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public BaseCommerceOrganizationDisplayContext(
-		HttpServletRequest httpServletRequest,
-		OrganizationService organizationService, Portal portal) {
+		CommerceOrganizationHelper commerceOrganizationHelper,
+		CommerceOrganizationService commerceOrganizationService,
+		HttpServletRequest httpServletRequest, Portal portal) {
 
-		this.organizationService = organizationService;
+		_commerceOrganizationHelper = commerceOrganizationHelper;
+		this.commerceOrganizationService = commerceOrganizationService;
 		_portal = portal;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
@@ -63,26 +64,20 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		HttpServletRequest originalHttpServletRequest =
 			_portal.getOriginalServletRequest(cpRequestHelper.getRequest());
 
-		HttpSession httpSession = originalHttpServletRequest.getSession();
-
-		long organizationId = GetterUtil.getLong(
-			httpSession.getAttribute("LIFERAY_SHARED_currentOrganizationId"));
-
-		return OrganizationLocalServiceUtil.fetchOrganization(organizationId);
+		return _commerceOrganizationHelper.getCurrentOrganization(
+			originalHttpServletRequest,
+			CommerceOrganizationConstants.TYPE_ACCOUNT);
 	}
 
 	public Organization getCurrentOrganization() throws PortalException {
 		long organizationId = ParamUtil.getLong(
 			cpRequestHelper.getRequest(), "organizationId");
 
-		Organization organization =
-			OrganizationLocalServiceUtil.fetchOrganization(organizationId);
-
-		if (organization == null) {
-			organization = getCurrentAccount();
+		if (organizationId > 0) {
+			return commerceOrganizationService.getOrganization(organizationId);
 		}
 
-		return organization;
+		return getCurrentAccount();
 	}
 
 	public String getDisplayStyle() {
@@ -118,7 +113,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				break;
 			}
 
-			organization = OrganizationLocalServiceUtil.fetchOrganization(
+			organization = commerceOrganizationService.getOrganization(
 				organization.getParentOrganizationId());
 
 			organizations.add(organization);
@@ -193,7 +188,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		Group group = themeDisplay.getScopeGroup();
 
-		return OrganizationLocalServiceUtil.fetchOrganization(
+		return commerceOrganizationService.getOrganization(
 			group.getOrganizationId());
 	}
 
@@ -223,7 +218,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				break;
 			}
 
-			organization = OrganizationLocalServiceUtil.fetchOrganization(
+			organization = commerceOrganizationService.getOrganization(
 				organization.getParentOrganizationId());
 
 			portletURL.setParameter(
@@ -260,9 +255,10 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		return false;
 	}
 
+	protected final CommerceOrganizationService commerceOrganizationService;
 	protected final CPRequestHelper cpRequestHelper;
-	protected final OrganizationService organizationService;
 
+	private final CommerceOrganizationHelper _commerceOrganizationHelper;
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;

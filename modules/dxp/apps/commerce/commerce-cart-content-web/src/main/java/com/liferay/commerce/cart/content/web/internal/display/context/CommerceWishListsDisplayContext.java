@@ -123,7 +123,7 @@ public class CommerceWishListsDisplayContext {
 		_searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
 
 		OrderByComparator<CommerceCart> orderByComparator =
-			CommerceUtil.getCommerceCartOrderByComparator(Field.NAME);
+			CommerceUtil.getCommerceCartOrderByComparator(Field.NAME, "asc");
 
 		_searchContainer.setOrderByComparator(orderByComparator);
 

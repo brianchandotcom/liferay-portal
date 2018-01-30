@@ -133,12 +133,6 @@ public class CommerceUtil {
 	}
 
 	public static OrderByComparator<CommerceCart>
-		getCommerceCartOrderByComparator(String orderByCol) {
-
-		return getCommerceCartOrderByComparator(orderByCol, "asc");
-	}
-
-	public static OrderByComparator<CommerceCart>
 		getCommerceCartOrderByComparator(
 			String orderByCol, String orderByType) {
 

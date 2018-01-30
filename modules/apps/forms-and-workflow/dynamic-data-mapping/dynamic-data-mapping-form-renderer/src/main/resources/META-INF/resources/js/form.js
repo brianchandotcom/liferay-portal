@@ -8,10 +8,6 @@ AUI.add(
 		var Form = A.Component.create(
 			{
 				ATTRS: {
-					builder: {
-						value: {}
-					},
-
 					container: {
 						setter: A.one,
 						valueFn: '_valueContainer'
@@ -85,21 +81,18 @@ AUI.add(
 					getEvaluationPayload: function() {
 						var instance = this;
 
-						var languageId;
+						var portletNamespace = instance.get('portletNamespace');
 
-						var builder = instance.get('builder');
+						var languageId = instance._getURLParameter(portletNamespace, 'languageId');
 
-						if (_.isEmpty(builder)) {
+						if (!languageId) {
 							languageId = themeDisplay.getDefaultLanguageId();
-						}
-						else {
-							languageId = builder.get('defaultLanguageId');
 						}
 
 						return {
 							languageId: languageId,
 							p_auth: Liferay.authToken,
-							portletNamespace: instance.get('portletNamespace'),
+							portletNamespace: portletNamespace,
 							serializedFormContext: JSON.stringify(instance.get('context'))
 						};
 					},
@@ -197,6 +190,14 @@ AUI.add(
 								containerId: container.get('id')
 							}
 						);
+					},
+
+					_getURLParameter: function(portletNamespace, parameterName) {
+						var currentUrl = window.location.href;
+
+						var url = new A.Url(currentUrl);
+
+						return url.getParameter(portletNamespace + parameterName);
 					},
 
 					_onLiferaySubmitForm: function(event) {

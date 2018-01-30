@@ -310,6 +310,16 @@ public class CommerceAddressLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceAddress> searchCommerceAddresses(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCommerceAddresses(companyId, groupId, className,
+			classPK, keywords, start, end, sort);
+	}
+
 	/**
 	* Updates the commerce address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*

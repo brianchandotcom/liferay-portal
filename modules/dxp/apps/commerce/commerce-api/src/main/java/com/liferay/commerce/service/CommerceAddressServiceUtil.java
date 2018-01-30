@@ -106,6 +106,16 @@ public class CommerceAddressServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceAddress> searchCommerceAddresses(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort sort)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchCommerceAddresses(companyId, groupId, className,
+			classPK, keywords, start, end, sort);
+	}
+
 	public static com.liferay.commerce.model.CommerceAddress updateCommerceAddress(
 		long commerceAddressId, java.lang.String name,
 		java.lang.String description, java.lang.String street1,

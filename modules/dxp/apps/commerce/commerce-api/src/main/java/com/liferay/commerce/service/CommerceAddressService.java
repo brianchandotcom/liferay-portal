@@ -21,6 +21,8 @@ import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -96,6 +98,12 @@ public interface CommerceAddressService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceAddress> searchCommerceAddresses(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
 
 	public CommerceAddress updateCommerceAddress(long commerceAddressId,
 		java.lang.String name, java.lang.String description,

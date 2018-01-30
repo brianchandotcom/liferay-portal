@@ -25,8 +25,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -71,6 +73,7 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress addCommerceAddress(CommerceAddress commerceAddress);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress addCommerceAddress(java.lang.String className,
 		long classPK, java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,
@@ -192,6 +195,7 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceAddress fetchCommerceAddress(long commerceAddressId);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress geolocateCommerceAddress(long commerceAddressId)
 		throws PortalException;
 
@@ -259,6 +263,12 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceAddress> searchCommerceAddresses(
+		long companyId, long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end, Sort sort)
+		throws PortalException;
+
 	/**
 	* Updates the commerce address in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
@@ -269,6 +279,7 @@ public interface CommerceAddressLocalService extends BaseLocalService,
 	public CommerceAddress updateCommerceAddress(
 		CommerceAddress commerceAddress);
 
+	@Indexable(type = IndexableType.REINDEX)
 	public CommerceAddress updateCommerceAddress(long commerceAddressId,
 		java.lang.String name, java.lang.String description,
 		java.lang.String street1, java.lang.String street2,

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.portal.session.module.configuration;
+package com.liferay.portal.security.auth.verifier.internal.digest.authentication.module.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.module.configuration.BaseAuthVerifierConfiguration;
 
 /**
  * @author Tomas Polesovsky
@@ -27,10 +27,14 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.portal.session.module.configuration.PortalSessionAuthVerifierConfiguration",
+	id = "com.liferay.portal.security.auth.verifier.internal.digest.authentication.module.configuration.DigestAuthenticationAuthVerifierConfiguration",
 	localization = "content/Language",
-	name = "portal-session-auth-verifier-configuration-name"
+	name = "digest-authentication-auth-verifier-configuration-name"
 )
-public interface PortalSessionAuthVerifierConfiguration
+public interface DigestAuthenticationAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {
+
+	@Meta.AD(name = "force-digest-auth", required = false)
+	public boolean forceDigestAuth();
+
 }

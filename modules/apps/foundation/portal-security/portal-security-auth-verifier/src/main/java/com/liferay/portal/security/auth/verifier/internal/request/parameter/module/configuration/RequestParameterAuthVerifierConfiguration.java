@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.tunnel.module.configuration;
+package com.liferay.portal.security.auth.verifier.internal.request.parameter.module.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
-import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVerifierConfiguration;
+import com.liferay.portal.security.auth.verifier.internal.module.configuration.BaseAuthVerifierConfiguration;
 
 /**
  * @author Tomas Polesovsky
@@ -27,17 +27,10 @@ import com.liferay.portal.security.auth.verifier.module.configuration.BaseAuthVe
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.portal.security.auth.verifier.tunnel.module.configuration.TunnelAuthVerifierConfiguration",
+	id = "com.liferay.portal.security.auth.verifier.internal.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration",
 	localization = "content/Language",
-	name = "tunnel-auth-verifier-configuration-name"
+	name = "request-parameter-auth-verifier-configuration-name"
 )
-public interface TunnelAuthVerifierConfiguration
+public interface RequestParameterAuthVerifierConfiguration
 	extends BaseAuthVerifierConfiguration {
-
-	@Meta.AD(
-		deflt = "SYSTEM_USER_PASSWORD", name = "service-access-policy-name",
-		required = false
-	)
-	public String serviceAccessPolicyName();
-
 }

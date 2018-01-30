@@ -19,7 +19,7 @@ import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.security.auth.verifier.internal.module.BaseAuthVerifierPublisher;
-import com.liferay.portal.security.auth.verifier.request.parameter.RequestParameterAuthVerifier;
+import com.liferay.portal.security.auth.verifier.internal.request.parameter.RequestParameterAuthVerifier;
 
 import java.util.Map;
 
@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Tomas Polesovsky
  */
 @Component(
-	configurationPid = "com.liferay.portal.security.auth.verifier.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration",
+	configurationPid = "com.liferay.portal.security.auth.verifier.internal.request.parameter.module.configuration.RequestParameterAuthVerifierConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE
 )
 public class RequestParameterAuthVerifierPublisher

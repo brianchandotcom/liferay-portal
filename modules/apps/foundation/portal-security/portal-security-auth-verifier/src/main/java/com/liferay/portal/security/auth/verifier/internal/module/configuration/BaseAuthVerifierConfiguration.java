@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.module.configuration;
+package com.liferay.portal.security.auth.verifier.internal.module.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 

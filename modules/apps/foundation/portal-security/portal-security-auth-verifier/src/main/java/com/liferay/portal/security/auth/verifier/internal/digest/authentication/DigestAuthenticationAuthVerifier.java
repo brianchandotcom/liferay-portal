@@ -12,16 +12,18 @@
  * details.
  */
 
-package com.liferay.portal.security.auth.verifier.portal.session;
+package com.liferay.portal.security.auth.verifier.internal.digest.authentication;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.security.auth.AccessControlContext;
 import com.liferay.portal.kernel.security.auth.AuthException;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthManagerUtil;
+import com.liferay.portal.kernel.security.auth.http.HttpAuthorizationHeader;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifier;
 import com.liferay.portal.kernel.security.auth.verifier.AuthVerifierResult;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
 import java.util.Properties;
 
@@ -30,18 +32,16 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Tomas Polesovsky
  */
-public class PortalSessionAuthVerifier implements AuthVerifier {
-
-	public static final String AUTH_TYPE = HttpServletRequest.FORM_AUTH;
+public class DigestAuthenticationAuthVerifier implements AuthVerifier {
 
 	@Override
 	public String getAuthType() {
-		return AUTH_TYPE;
+		return HttpServletRequest.DIGEST_AUTH;
 	}
 
 	@Override
 	public AuthVerifierResult verify(
-			AccessControlContext accessControlContext, Properties properties)
+			AccessControlContext accessControlContext, Properties configuration)
 		throws AuthException {
 
 		try {
@@ -49,15 +49,36 @@ public class PortalSessionAuthVerifier implements AuthVerifier {
 
 			HttpServletRequest request = accessControlContext.getRequest();
 
-			User user = PortalUtil.getUser(request);
+			long userId = HttpAuthManagerUtil.getDigestUserId(request);
 
-			if ((user == null) || user.isDefaultUser()) {
+			if (userId == 0) {
+				boolean forcedDigestAuth = MapUtil.getBoolean(
+					accessControlContext.getSettings(), "digest_auth");
+
+				if (!forcedDigestAuth) {
+					forcedDigestAuth = GetterUtil.getBoolean(
+						configuration.getProperty("digest_auth"));
+				}
+
+				if (forcedDigestAuth) {
+					HttpAuthorizationHeader httpAuthorizationHeader =
+						new HttpAuthorizationHeader(
+							HttpAuthorizationHeader.SCHEME_DIGEST);
+
+					HttpAuthManagerUtil.generateChallenge(
+						request, accessControlContext.getResponse(),
+						httpAuthorizationHeader);
+
+					authVerifierResult.setState(
+						AuthVerifierResult.State.INVALID_CREDENTIALS);
+				}
+
 				return authVerifierResult;
 			}
 
 			authVerifierResult.setPasswordBasedAuthentication(true);
 			authVerifierResult.setState(AuthVerifierResult.State.SUCCESS);
-			authVerifierResult.setUserId(user.getUserId());
+			authVerifierResult.setUserId(userId);
 
 			return authVerifierResult;
 		}

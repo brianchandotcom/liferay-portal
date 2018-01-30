@@ -295,7 +295,6 @@
 
 			li {
 				@extend %text-ellipsis;
-				color: #869CAD;
 				cursor: pointer;
 				line-height: 15px;
 				list-style: none;
@@ -304,7 +303,9 @@
 				padding: 12px 16px;
 
 				&.option-selected {
-					color: #65B6F0;
+					background-color: #F0F5FF;
+					color: #272833;
+					text-decoration: none;
 				}
 
 				input[type='checkbox'] {
@@ -316,10 +317,6 @@
 			li:last-child {
 				border-bottom-left-radius: 4px;
 				border-bottom-right-radius: 4px;
-			}
-
-			li:hover {
-				background-color: #F7FAFA;
 			}
 
 			.no-results-list {

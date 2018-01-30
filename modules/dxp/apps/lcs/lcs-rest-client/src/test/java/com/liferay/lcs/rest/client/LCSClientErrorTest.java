@@ -33,14 +33,14 @@ public class LCSClientErrorTest extends PowerMockito {
 
 	@Test
 	public void testToJSON() throws Exception {
-		String restErrorJSONString =
+		String restErrorJSON =
 			LCSClientError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY.toJSON(
 				"Test Message", 400, "arg1", "10000", "arg2", 20000);
 
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		ObjectNode objectNode = objectMapper.readValue(
-			restErrorJSONString, ObjectNode.class);
+			restErrorJSON, ObjectNode.class);
 
 		Assert.assertTrue(objectNode.has("args"));
 		Assert.assertTrue(objectNode.has("errorCode"));
@@ -57,12 +57,10 @@ public class LCSClientErrorTest extends PowerMockito {
 
 		Assert.assertEquals(400, statusJsonNode.asInt());
 
-		restErrorJSONString =
-			LCSClientError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY.toJSON(
-				"Test Message", 404);
+		restErrorJSON = LCSClientError.NO_SUCH_LCS_SUBSCRIPTION_ENTRY.toJSON(
+			"Test Message", 404);
 
-		objectNode = objectMapper.readValue(
-			restErrorJSONString, ObjectNode.class);
+		objectNode = objectMapper.readValue(restErrorJSON, ObjectNode.class);
 
 		Assert.assertFalse(objectNode.has("args"));
 		Assert.assertTrue(objectNode.has("errorCode"));

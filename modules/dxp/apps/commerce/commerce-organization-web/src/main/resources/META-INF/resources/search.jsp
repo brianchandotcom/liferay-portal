@@ -26,61 +26,12 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 		searchContainer="<%= commerceOrganizationSearchDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
-			className="Object"
-			modelVar="result"
+			className="com.liferay.portal.kernel.model.Organization"
+			modelVar="organization"
 		>
-
-			<%
-			Organization curOrganization = null;
-			User user2 = null;
-			CommerceOrder commerceOrder = null;
-
-			if (result instanceof Organization) {
-				curOrganization = (Organization)result;
-			}
-			else if (result instanceof User) {
-				user2 = (User)result;
-			}
-			else if (result instanceof CommerceOrder) {
-				commerceOrder = (CommerceOrder)result;
-			}
-			%>
-
-			<c:choose>
-				<c:when test="<%= commerceOrder != null %>">
-					<liferay-ui:search-container-column-text
-						name="name"
-						value="<%= String.valueOf(commerceOrder.getCommerceOrderId()) %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="Order"
-					/>
-				</c:when>
-				<c:when test="<%= user2 != null %>">
-					<liferay-ui:search-container-column-text
-						name="name"
-						value="<%= user2.getFullName() %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="User"
-					/>
-				</c:when>
-				<c:when test="<%= curOrganization != null %>">
-					<liferay-ui:search-container-column-text
-						name="name"
-						value="<%= curOrganization.getName() %>"
-					/>
-
-					<liferay-ui:search-container-column-text
-						name="type"
-						value="Organization"
-					/>
-				</c:when>
-			</c:choose>
+			<liferay-ui:search-container-column-text
+				property="name"
+			/>
 
 			<liferay-ui:search-container-column-jsp
 				cssClass="entry-action-column"

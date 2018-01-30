@@ -44,7 +44,7 @@
 
 		<execute macro="DDLDataDefinition#selectCP" />
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 

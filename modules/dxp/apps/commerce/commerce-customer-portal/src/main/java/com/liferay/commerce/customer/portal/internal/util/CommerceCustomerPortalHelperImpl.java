@@ -39,7 +39,7 @@ public class CommerceCustomerPortalHelperImpl
 		HttpSession httpSession = httpServletRequest.getSession();
 
 		long currentOrganizationId = GetterUtil.getLong(
-			httpSession.getAttribute("LIFERAY_SHARED_currentOrganizationId"));
+			httpSession.getAttribute(_CURRENT_ORGANIZATION_ID_KEY));
 
 		return _organizationLocalService.fetchOrganization(
 			currentOrganizationId);
@@ -51,6 +51,9 @@ public class CommerceCustomerPortalHelperImpl
 
 		return null;
 	}
+
+	private static final String _CURRENT_ORGANIZATION_ID_KEY =
+		"LIFERAY_SHARED_CURRENT_ORGANIZATION_ID";
 
 	@Reference
 	private OrganizationLocalService _organizationLocalService;

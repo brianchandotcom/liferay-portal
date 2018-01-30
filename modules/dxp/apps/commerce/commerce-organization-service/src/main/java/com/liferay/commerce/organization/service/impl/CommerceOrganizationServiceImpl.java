@@ -162,7 +162,7 @@ public class CommerceOrganizationServiceImpl
 			String.valueOf(OrganizationConstants.ANY_PARENT_ORGANIZATION_ID));
 
 		if (Validator.isNotNull(type)) {
-			attributes.put("type", "account");
+			attributes.put(Field.TYPE, type);
 		}
 
 		if (Validator.isNotNull(keywords)) {

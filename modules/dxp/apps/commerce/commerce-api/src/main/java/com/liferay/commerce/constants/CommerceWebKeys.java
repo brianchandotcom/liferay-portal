@@ -55,4 +55,7 @@ public class CommerceWebKeys {
 	public static final String COMMERCE_TIER_PRICE_ENTRIES =
 		"COMMERCE_TIER_PRICE_ENTRIES";
 
+	public static final String WISH_LIST_COMMERCE_CART_ID =
+		"WISH_LIST_COMMERCE_CART_ID";
+
 }

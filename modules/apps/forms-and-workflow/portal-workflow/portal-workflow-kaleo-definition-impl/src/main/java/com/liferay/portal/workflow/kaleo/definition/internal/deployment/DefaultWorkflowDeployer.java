@@ -71,31 +71,10 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
+			title, name, definition, serviceContext);
+
 		KaleoDefinitionVersion kaleoDefinitionVersion =
-			_kaleoDefinitionVersionLocalService.
-				fetchLatestKaleoDefinitionVersion(
-					serviceContext.getCompanyId(), name);
-
-		KaleoDefinition kaleoDefinition = null;
-
-		if (kaleoDefinitionVersion != null) {
-			kaleoDefinition = kaleoDefinitionVersion.fetchKaleoDefinition();
-		}
-
-		if (kaleoDefinition == null) {
-			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
-				name, title, definition.getDescription(),
-				definition.getContent(), 1, serviceContext);
-		}
-		else {
-			kaleoDefinition =
-				_kaleoDefinitionLocalService.updatedKaleoDefinition(
-					kaleoDefinition.getKaleoDefinitionId(), title,
-					definition.getDescription(), definition.getContent(),
-					serviceContext);
-		}
-
-		kaleoDefinitionVersion =
 			_kaleoDefinitionVersionLocalService.
 				fetchLatestKaleoDefinitionVersion(
 					serviceContext.getCompanyId(), name);
@@ -183,10 +162,55 @@ public class DefaultWorkflowDeployer implements WorkflowDeployer {
 			kaleoDefinition);
 	}
 
+	@Override
+	public WorkflowDefinition save(
+			String title, String name, Definition definition,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KaleoDefinition kaleoDefinition = _addOrUpdateKaleoDefinition(
+			title, name, definition, serviceContext);
+
+		return _kaleoWorkflowModelConverter.toWorkflowDefinition(
+			kaleoDefinition);
+	}
+
 	protected int getNextVersion(String version) {
 		int[] versionParts = StringUtil.split(version, StringPool.PERIOD, 0);
 
 		return ++versionParts[0];
+	}
+
+	private KaleoDefinition _addOrUpdateKaleoDefinition(
+			String title, String name, Definition definition,
+			ServiceContext serviceContext)
+		throws PortalException {
+
+		KaleoDefinitionVersion kaleoDefinitionVersion =
+			_kaleoDefinitionVersionLocalService.
+				fetchLatestKaleoDefinitionVersion(
+					serviceContext.getCompanyId(), name);
+
+		KaleoDefinition kaleoDefinition = null;
+
+		if (kaleoDefinitionVersion != null) {
+			kaleoDefinition = kaleoDefinitionVersion.fetchKaleoDefinition();
+		}
+
+		if (kaleoDefinition == null) {
+			kaleoDefinition = _kaleoDefinitionLocalService.addKaleoDefinition(
+				name, title, definition.getDescription(),
+				definition.getContent(), 1, serviceContext);
+		}
+		else {
+			kaleoDefinition =
+				_kaleoDefinitionLocalService.updatedKaleoDefinition(
+					kaleoDefinition.getKaleoDefinitionId(), title,
+					definition.getDescription(), definition.getContent(),
+					serviceContext);
+		}
+
+		return kaleoDefinition;
 	}
 
 	@Reference

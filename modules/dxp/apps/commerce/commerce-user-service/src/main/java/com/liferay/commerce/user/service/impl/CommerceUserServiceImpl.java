@@ -162,7 +162,7 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 			String.valueOf(OrganizationConstants.ANY_PARENT_ORGANIZATION_ID));
 
 		if (Validator.isNotNull(type)) {
-			attributes.put("type", "account");
+			attributes.put("type", type);
 		}
 
 		if (Validator.isNotNull(keywords)) {

@@ -42,13 +42,13 @@ Organization organization = addBranchDisplayContext.getCurrentOrganization();
 		<aui:input autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" name="name" />
 
 		<aui:input name="type" type="hidden" value="branch" />
-
-		<aui:button-row>
-			<aui:button cssClass="btn-lg" name="saveButton" value="save" />
-
-			<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
-		</aui:button-row>
 	</div>
+
+	<aui:button-row>
+		<aui:button cssClass="btn-lg" name="saveButton" value="save" />
+
+		<aui:button cssClass="btn-lg" name="cancelButton" type="cancel" />
+	</aui:button-row>
 </aui:form>
 
 <aui:script use="aui-base,aui-io-request">

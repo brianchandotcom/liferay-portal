@@ -76,7 +76,7 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 			/>
 
 			<liferay-ui:search-container-column-text
-				title="path"
+				name="path"
 			>
 				<%= HtmlUtil.escape(commerceOrganizationBranchesDisplayContext.getPath(organization)) %> > <strong><%= HtmlUtil.escape(organization.getName()) %></strong>
 			</liferay-ui:search-container-column-text>

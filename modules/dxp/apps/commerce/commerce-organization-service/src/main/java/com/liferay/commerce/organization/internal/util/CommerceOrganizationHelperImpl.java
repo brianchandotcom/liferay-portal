@@ -35,7 +35,7 @@ public class CommerceOrganizationHelperImpl
 
 	@Override
 	public Organization getCurrentOrganization(
-			HttpServletRequest httpServletRequest, String organizationType)
+			HttpServletRequest httpServletRequest)
 		throws PortalException {
 
 		httpServletRequest = _portal.getOriginalServletRequest(
@@ -50,13 +50,6 @@ public class CommerceOrganizationHelperImpl
 
 		return _commerceOrganizationService.getOrganization(
 			currentOrganizationId);
-	}
-
-	@Override
-	public Organization setCurrentOrganization(
-		HttpServletRequest httpServletRequest, String organizationType) {
-
-		return null;
 	}
 
 	private static final String _CURRENT_ORGANIZATION_ID_KEY =

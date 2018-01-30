@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
-import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.display.context.util.CommerceOrganizationRequestHelper;
@@ -225,8 +224,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		throws PortalException {
 
 		return _commerceOrganizationHelper.getCurrentOrganization(
-			commerceOrganizationRequestHelper.getRequest(),
-			CommerceOrganizationConstants.TYPE_ACCOUNT);
+			commerceOrganizationRequestHelper.getRequest());
 	}
 
 	private final CommerceOrganizationHelper _commerceOrganizationHelper;

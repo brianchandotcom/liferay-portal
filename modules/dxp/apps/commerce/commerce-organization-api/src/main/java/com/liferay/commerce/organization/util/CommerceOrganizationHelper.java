@@ -28,10 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 public interface CommerceOrganizationHelper {
 
 	public Organization getCurrentOrganization(
-			HttpServletRequest httpServletRequest, String organizationType)
+			HttpServletRequest httpServletRequest)
 		throws PortalException;
-
-	public Organization setCurrentOrganization(
-		HttpServletRequest httpServletRequest, String organizationType);
 
 }

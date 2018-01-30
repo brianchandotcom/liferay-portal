@@ -741,8 +741,8 @@ public abstract class BaseBuild implements Build {
 			Build longestDelayedDownstreamBuild =
 				downstreamBuild.getLongestDelayedDownstreamBuild();
 
-			if (downstreamBuild.getDelayTime() >
-					longestDelayedBuild.getDelayTime()) {
+			if (longestDelayedDownstreamBuild.getDelayTime() >
+				longestDelayedBuild.getDelayTime()) {
 
 				longestDelayedBuild = longestDelayedDownstreamBuild;
 			}

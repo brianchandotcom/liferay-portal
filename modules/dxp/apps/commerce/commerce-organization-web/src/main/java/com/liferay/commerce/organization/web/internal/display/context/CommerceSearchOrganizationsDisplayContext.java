@@ -54,8 +54,8 @@ public class CommerceSearchOrganizationsDisplayContext
 		}
 
 		_searchContainer = new SearchContainer<>(
-			cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
-			"no-results");
+			commerceOrganizationRequestHelper.getLiferayPortletRequest(),
+			getPortletURL(), null, "no-results");
 
 		Organization organization = _getSiteOrganization();
 
@@ -76,7 +76,8 @@ public class CommerceSearchOrganizationsDisplayContext
 	}
 
 	private Organization _getSiteOrganization() throws PortalException {
-		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
+		ThemeDisplay themeDisplay =
+			commerceOrganizationRequestHelper.getThemeDisplay();
 
 		Group group = themeDisplay.getScopeGroup();
 

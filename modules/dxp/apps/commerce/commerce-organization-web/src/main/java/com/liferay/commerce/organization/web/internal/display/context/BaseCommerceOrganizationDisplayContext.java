@@ -17,7 +17,7 @@ package com.liferay.commerce.organization.web.internal.display.context;
 import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
-import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.commerce.organization.web.internal.display.context.util.CommerceOrganizationRequestHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -51,7 +51,8 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		this.commerceOrganizationService = commerceOrganizationService;
 		_portal = portal;
 
-		cpRequestHelper = new CPRequestHelper(httpServletRequest);
+		commerceOrganizationRequestHelper =
+			new CommerceOrganizationRequestHelper(httpServletRequest);
 
 		_defaultOrderByCol = "create-date";
 		_defaultOrderByType = "desc";
@@ -59,7 +60,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public Organization getCurrentOrganization() throws PortalException {
 		long organizationId = ParamUtil.getLong(
-			cpRequestHelper.getRequest(), "organizationId");
+			commerceOrganizationRequestHelper.getRequest(), "organizationId");
 
 		if (organizationId > 0) {
 			return commerceOrganizationService.getOrganization(organizationId);
@@ -71,7 +72,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	public String getDisplayStyle() {
 		if (_displayStyle == null) {
 			_displayStyle = ParamUtil.getString(
-				cpRequestHelper.getRequest(), "displayStyle");
+				commerceOrganizationRequestHelper.getRequest(), "displayStyle");
 		}
 
 		return _displayStyle;
@@ -79,13 +80,13 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public String getOrderByCol() {
 		return ParamUtil.getString(
-			cpRequestHelper.getRequest(),
+			commerceOrganizationRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_COL_PARAM, _defaultOrderByCol);
 	}
 
 	public String getOrderByType() {
 		return ParamUtil.getString(
-			cpRequestHelper.getRequest(),
+			commerceOrganizationRequestHelper.getRequest(),
 			SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM, _defaultOrderByType);
 	}
 
@@ -129,40 +130,40 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public PortletURL getPortletURL() throws PortalException {
 		LiferayPortletResponse liferayPortletResponse =
-			cpRequestHelper.getLiferayPortletResponse();
+			commerceOrganizationRequestHelper.getLiferayPortletResponse();
 
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
 		String redirect = ParamUtil.getString(
-			cpRequestHelper.getRequest(), "redirect");
+			commerceOrganizationRequestHelper.getRequest(), "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
 		}
 
 		String delta = ParamUtil.getString(
-			cpRequestHelper.getRequest(), "delta");
+			commerceOrganizationRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			cpRequestHelper.getRequest(), "deltaEntry");
+			commerceOrganizationRequestHelper.getRequest(), "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
 		String displayStyle = ParamUtil.getString(
-			cpRequestHelper.getRequest(), "displayStyle");
+			commerceOrganizationRequestHelper.getRequest(), "displayStyle");
 
 		if (Validator.isNotNull(displayStyle)) {
 			portletURL.setParameter("displayStyle", getDisplayStyle());
 		}
 
 		String keywords = ParamUtil.getString(
-			cpRequestHelper.getRequest(), "keywords");
+			commerceOrganizationRequestHelper.getRequest(), "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -199,13 +200,13 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				String.valueOf(organization.getOrganizationId()));
 
 			_portal.addPortletBreadcrumbEntry(
-				cpRequestHelper.getRequest(), organization.getName(),
-				portletURL.toString(), data);
+				commerceOrganizationRequestHelper.getRequest(),
+				organization.getName(), portletURL.toString(), data);
 		}
 
 		_portal.addPortletBreadcrumbEntry(
-			cpRequestHelper.getRequest(), currentOrganization.getName(),
-			portletURL.toString(), data);
+			commerceOrganizationRequestHelper.getRequest(),
+			currentOrganization.getName(), portletURL.toString(), data);
 	}
 
 	protected void setDefaultOrderByCol(String defaultOrderByCol) {
@@ -216,14 +217,15 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		_defaultOrderByType = defaultOrderByType;
 	}
 
+	protected final CommerceOrganizationRequestHelper
+		commerceOrganizationRequestHelper;
 	protected final CommerceOrganizationService commerceOrganizationService;
-	protected final CPRequestHelper cpRequestHelper;
 
 	private Organization _getCurrentAccountOrganization()
 		throws PortalException {
 
 		return _commerceOrganizationHelper.getCurrentOrganization(
-			cpRequestHelper.getRequest(),
+			commerceOrganizationRequestHelper.getRequest(),
 			CommerceOrganizationConstants.TYPE_ACCOUNT);
 	}
 

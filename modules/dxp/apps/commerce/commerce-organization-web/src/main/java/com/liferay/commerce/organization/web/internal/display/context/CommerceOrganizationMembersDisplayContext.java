@@ -54,8 +54,8 @@ public class CommerceOrganizationMembersDisplayContext
 		}
 
 		_searchContainer = new SearchContainer<>(
-			cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
-			null);
+			commerceOrganizationRequestHelper.getLiferayPortletRequest(),
+			getPortletURL(), null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-users-were-found");
 
@@ -70,8 +70,9 @@ public class CommerceOrganizationMembersDisplayContext
 
 		BaseModelSearchResult<User> userBaseModelSearchResult =
 			UserLocalServiceUtil.searchUsers(
-				cpRequestHelper.getCompanyId(), null, 0, params,
-				_searchContainer.getStart(), _searchContainer.getEnd(), sort);
+				commerceOrganizationRequestHelper.getCompanyId(), null, 0,
+				params, _searchContainer.getStart(), _searchContainer.getEnd(),
+				sort);
 
 		_searchContainer.setTotal(userBaseModelSearchResult.getLength());
 		_searchContainer.setResults(userBaseModelSearchResult.getBaseModels());

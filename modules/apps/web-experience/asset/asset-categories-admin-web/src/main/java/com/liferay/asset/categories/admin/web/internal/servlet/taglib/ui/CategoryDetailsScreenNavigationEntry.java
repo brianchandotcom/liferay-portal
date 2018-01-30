@@ -14,7 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.servlet.taglib.ui;
 
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesConstants;
+import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesConstants;
 import com.liferay.asset.kernel.model.AssetCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationCategory;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;

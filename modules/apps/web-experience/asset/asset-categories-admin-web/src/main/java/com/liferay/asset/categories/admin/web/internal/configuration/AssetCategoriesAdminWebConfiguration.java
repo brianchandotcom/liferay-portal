@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.asset.categories.admin.web.configuration;
+package com.liferay.asset.categories.admin.web.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
-import com.liferay.asset.categories.admin.web.constants.AssetCategoriesAdminDisplayStyleKeys;
+import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminDisplayStyleKeys;
 import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClassDefinition;
 
 /**
@@ -24,7 +24,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
  */
 @ExtendedObjectClassDefinition(category = "web-experience")
 @Meta.OCD(
-	id = "com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration",
+	id = "com.liferay.asset.categories.admin.web.internal.configuration.AssetCategoriesAdminWebConfiguration",
 	localization = "content/Language",
 	name = "asset-categories-admin-web-configuration-name"
 )

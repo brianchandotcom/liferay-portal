@@ -12,15 +12,16 @@
  * details.
  */
 
-package com.liferay.asset.categories.admin.web.constants;
+package com.liferay.asset.categories.admin.web.internal.constants;
 
 /**
- * @author Jürgen Kappler
+ * @author Eudaldo Alonso
  */
-public class AssetCategoriesAdminDisplayStyleKeys {
+public class AssetCategoriesConstants {
 
-	public static final String DEFAULT = "default";
+	public static final String CATEGORY_KEY_GENERAL = "general";
 
-	public static final String FLATTENED_TREE = "flattened-tree";
+	public static final String FORM_NAVIGATOR_ID_EDIT_CATEGORY =
+		"edit.category.form";
 
 }

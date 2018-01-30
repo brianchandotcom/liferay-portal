@@ -14,7 +14,7 @@
 
 package com.liferay.asset.categories.admin.web.internal.portlet;
 
-import com.liferay.asset.categories.admin.web.configuration.AssetCategoriesAdminWebConfiguration;
+import com.liferay.asset.categories.admin.web.internal.configuration.AssetCategoriesAdminWebConfiguration;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminPortletKeys;
 import com.liferay.asset.categories.admin.web.internal.constants.AssetCategoriesAdminWebKeys;
 import com.liferay.asset.category.property.model.AssetCategoryProperty;

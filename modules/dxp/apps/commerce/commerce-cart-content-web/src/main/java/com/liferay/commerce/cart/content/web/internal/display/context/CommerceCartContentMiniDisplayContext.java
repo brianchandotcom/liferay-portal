@@ -80,11 +80,8 @@ public class CommerceCartContentMiniDisplayContext
 				displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+			_displayStyleGroupId =
+				commerceCartContentRequestHelper.getScopeGroupId();
 		}
 
 		return _displayStyleGroupId;

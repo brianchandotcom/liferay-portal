@@ -57,7 +57,8 @@ public class CommerceWishListContentDisplayContext
 	@Override
 	public int getCommerceCartType() {
 		return ParamUtil.getInteger(
-			httpServletRequest, "type", CommerceCartConstants.TYPE_WISH_LIST);
+			commerceCartContentRequestHelper.getRequest(), "type",
+			CommerceCartConstants.TYPE_WISH_LIST);
 	}
 
 	public boolean isIgnoreSKUCombinations(CommerceCartItem commerceCartItem)

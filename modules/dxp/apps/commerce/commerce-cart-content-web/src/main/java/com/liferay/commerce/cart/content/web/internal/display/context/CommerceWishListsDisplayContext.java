@@ -14,20 +14,17 @@
 
 package com.liferay.commerce.cart.content.web.internal.display.context;
 
+import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
-import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.search.Field;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
 
@@ -44,14 +41,10 @@ public class CommerceWishListsDisplayContext {
 		HttpServletRequest httpServletRequest,
 		CommerceCartService commerceCartService) {
 
-		_httpServletRequest = httpServletRequest;
 		_commerceCartService = commerceCartService;
 
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(
-			httpServletRequest);
-
-		_liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-		_liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
+		_commerceCartContentRequestHelper =
+			new CommerceCartContentRequestHelper(httpServletRequest);
 	}
 
 	public CommerceCart getCommerceCart() {
@@ -60,7 +53,7 @@ public class CommerceWishListsDisplayContext {
 		}
 
 		long commerceCartId = ParamUtil.getLong(
-			_httpServletRequest, "commerceCartId");
+			_commerceCartContentRequestHelper.getRequest(), "commerceCartId");
 
 		_commerceCart = _commerceCartService.fetchCommerceCart(commerceCartId);
 
@@ -78,28 +71,33 @@ public class CommerceWishListsDisplayContext {
 	}
 
 	public PortletURL getPortletURL() {
-		PortletURL portletURL = _liferayPortletResponse.createRenderURL();
+		HttpServletRequest httpServletRequest =
+			_commerceCartContentRequestHelper.getRequest();
+		LiferayPortletResponse liferayPortletResponse =
+			_commerceCartContentRequestHelper.getLiferayPortletResponse();
 
-		String redirect = ParamUtil.getString(_httpServletRequest, "redirect");
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		String redirect = ParamUtil.getString(httpServletRequest, "redirect");
 
 		if (Validator.isNotNull(redirect)) {
 			portletURL.setParameter("redirect", redirect);
 		}
 
-		String delta = ParamUtil.getString(_httpServletRequest, "delta");
+		String delta = ParamUtil.getString(httpServletRequest, "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			_httpServletRequest, "deltaEntry");
+			httpServletRequest, "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
 		}
 
-		String keywords = ParamUtil.getString(_httpServletRequest, "keywords");
+		String keywords = ParamUtil.getString(httpServletRequest, "keywords");
 
 		if (Validator.isNotNull(keywords)) {
 			portletURL.setParameter("keywords", keywords);
@@ -113,12 +111,9 @@ public class CommerceWishListsDisplayContext {
 			return _searchContainer;
 		}
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)_httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		_searchContainer = new SearchContainer<>(
-			_liferayPortletRequest, getPortletURL(), null, null);
+			_commerceCartContentRequestHelper.getLiferayPortletRequest(),
+			getPortletURL(), null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-wish-lists-were-found");
 
@@ -128,13 +123,13 @@ public class CommerceWishListsDisplayContext {
 		_searchContainer.setOrderByComparator(orderByComparator);
 
 		int total = _commerceCartService.getCommerceCartsCount(
-			themeDisplay.getScopeGroupId(),
+			_commerceCartContentRequestHelper.getScopeGroupId(),
 			CommerceCartConstants.TYPE_WISH_LIST);
 
 		_searchContainer.setTotal(total);
 
 		List<CommerceCart> results = _commerceCartService.getCommerceCarts(
-			themeDisplay.getScopeGroupId(),
+			_commerceCartContentRequestHelper.getScopeGroupId(),
 			CommerceCartConstants.TYPE_WISH_LIST, _searchContainer.getStart(),
 			_searchContainer.getEnd(), orderByComparator);
 
@@ -144,10 +139,9 @@ public class CommerceWishListsDisplayContext {
 	}
 
 	private CommerceCart _commerceCart;
+	private final CommerceCartContentRequestHelper
+		_commerceCartContentRequestHelper;
 	private final CommerceCartService _commerceCartService;
-	private final HttpServletRequest _httpServletRequest;
-	private final LiferayPortletRequest _liferayPortletRequest;
-	private final LiferayPortletResponse _liferayPortletResponse;
 	private SearchContainer<CommerceCart> _searchContainer;
 
 }

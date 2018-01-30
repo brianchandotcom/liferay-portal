@@ -75,16 +75,13 @@ public class CommerceCartContentTotalDisplayContext
 	}
 
 	public PortletURL getCheckoutPortletURL() throws PortalException {
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)httpServletRequest.getAttribute(
-				WebKeys.THEME_DISPLAY);
-
 		long plid = _portal.getPlidFromPortletId(
-			themeDisplay.getScopeGroupId(),
+			commerceCartContentRequestHelper.getScopeGroupId(),
 			CommercePortletKeys.COMMERCE_CHECKOUT);
 
 		return PortletURLFactoryUtil.create(
-			httpServletRequest, CommercePortletKeys.COMMERCE_CHECKOUT, plid,
+			commerceCartContentRequestHelper.getRequest(),
+			CommercePortletKeys.COMMERCE_CHECKOUT, plid,
 			PortletRequest.RENDER_PHASE);
 	}
 
@@ -103,11 +100,8 @@ public class CommerceCartContentTotalDisplayContext
 				displayStyleGroupId();
 
 		if (_displayStyleGroupId <= 0) {
-			ThemeDisplay themeDisplay =
-				(ThemeDisplay)httpServletRequest.getAttribute(
-					WebKeys.THEME_DISPLAY);
-
-			_displayStyleGroupId = themeDisplay.getScopeGroupId();
+			_displayStyleGroupId =
+				commerceCartContentRequestHelper.getScopeGroupId();
 		}
 
 		return _displayStyleGroupId;

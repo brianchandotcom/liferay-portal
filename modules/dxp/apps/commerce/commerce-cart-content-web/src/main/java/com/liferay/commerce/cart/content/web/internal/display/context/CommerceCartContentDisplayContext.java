@@ -16,10 +16,10 @@ package com.liferay.commerce.cart.content.web.internal.display.context;
 
 import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
+import com.liferay.commerce.cart.content.web.internal.display.context.util.CommerceCartContentRequestHelper;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
-import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.product.model.CPAttachmentFileEntry;
 import com.liferay.commerce.product.model.CPAttachmentFileEntryConstants;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -32,7 +32,6 @@ import com.liferay.commerce.util.CommercePriceFormatter;
 import com.liferay.document.library.kernel.util.DLUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
@@ -66,8 +65,7 @@ public class CommerceCartContentDisplayContext {
 		CPDefinitionHelper cpDefinitionHelper,
 		CPInstanceHelper cpInstanceHelper) {
 
-		this.httpServletRequest = httpServletRequest;
-		this.httpServletResponse = httpServletResponse;
+		_httpServletResponse = httpServletResponse;
 		_commerceCartHelper = commerceCartHelper;
 		_commerceCartItemService = commerceCartItemService;
 		_commerceCartValidatorRegistry = commerceCartValidatorRegistry;
@@ -76,11 +74,8 @@ public class CommerceCartContentDisplayContext {
 		this.cpDefinitionHelper = cpDefinitionHelper;
 		this.cpInstanceHelper = cpInstanceHelper;
 
-		CPRequestHelper cpRequestHelper = new CPRequestHelper(
+		commerceCartContentRequestHelper = new CommerceCartContentRequestHelper(
 			httpServletRequest);
-
-		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
-		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
 	}
 
 	public CommerceCart getCommerceCart() throws PortalException {
@@ -89,7 +84,8 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		_commerceCart = _commerceCartHelper.getCurrentCommerceCart(
-			httpServletRequest, httpServletResponse, getCommerceCartType());
+			commerceCartContentRequestHelper.getRequest(), _httpServletResponse,
+			getCommerceCartType());
 
 		return _commerceCart;
 	}
@@ -136,12 +132,14 @@ public class CommerceCartContentDisplayContext {
 		double subtotal = _commercePriceCalculator.getSubtotal(
 			getCommerceCart());
 
-		return _commercePriceFormatter.format(httpServletRequest, subtotal);
+		return _commercePriceFormatter.format(
+			commerceCartContentRequestHelper.getRequest(), subtotal);
 	}
 
 	public int getCommerceCartType() {
 		return ParamUtil.getInteger(
-			httpServletRequest, "type", CommerceCartConstants.TYPE_CART);
+			commerceCartContentRequestHelper.getRequest(), "type",
+			CommerceCartConstants.TYPE_CART);
 	}
 
 	public Map<Long, List<CommerceCartValidatorResult>>
@@ -164,7 +162,8 @@ public class CommerceCartContentDisplayContext {
 
 		double price = _commercePriceCalculator.getPrice(commerceCartItem);
 
-		return _commercePriceFormatter.format(httpServletRequest, price);
+		return _commercePriceFormatter.format(
+			commerceCartContentRequestHelper.getRequest(), price);
 	}
 
 	public List<KeyValuePair> getKeyValuePairs(String json, Locale locale)
@@ -174,16 +173,20 @@ public class CommerceCartContentDisplayContext {
 	}
 
 	public PortletURL getPortletURL() throws PortalException {
+		LiferayPortletResponse liferayPortletResponse =
+			commerceCartContentRequestHelper.getLiferayPortletResponse();
+
 		PortletURL portletURL = liferayPortletResponse.createRenderURL();
 
-		String delta = ParamUtil.getString(httpServletRequest, "delta");
+		String delta = ParamUtil.getString(
+			commerceCartContentRequestHelper.getRequest(), "delta");
 
 		if (Validator.isNotNull(delta)) {
 			portletURL.setParameter("delta", delta);
 		}
 
 		String deltaEntry = ParamUtil.getString(
-			httpServletRequest, "deltaEntry");
+			commerceCartContentRequestHelper.getRequest(), "deltaEntry");
 
 		if (Validator.isNotNull(deltaEntry)) {
 			portletURL.setParameter("deltaEntry", deltaEntry);
@@ -200,7 +203,8 @@ public class CommerceCartContentDisplayContext {
 		}
 
 		_searchContainer = new SearchContainer<>(
-			liferayPortletRequest, getPortletURL(), null, null);
+			commerceCartContentRequestHelper.getLiferayPortletRequest(),
+			getPortletURL(), null, null);
 
 		_searchContainer.setEmptyResultsMessage("no-items-were-found");
 
@@ -233,12 +237,10 @@ public class CommerceCartContentDisplayContext {
 		return _commerceCartValidatorRegistry.validate(commerceCartItem);
 	}
 
+	protected final CommerceCartContentRequestHelper
+		commerceCartContentRequestHelper;
 	protected final CPDefinitionHelper cpDefinitionHelper;
 	protected final CPInstanceHelper cpInstanceHelper;
-	protected final HttpServletRequest httpServletRequest;
-	protected final HttpServletResponse httpServletResponse;
-	protected final LiferayPortletRequest liferayPortletRequest;
-	protected final LiferayPortletResponse liferayPortletResponse;
 
 	private CommerceCart _commerceCart;
 	private final CommerceCartHelper _commerceCartHelper;
@@ -246,6 +248,7 @@ public class CommerceCartContentDisplayContext {
 	private final CommerceCartValidatorRegistry _commerceCartValidatorRegistry;
 	private final CommercePriceCalculator _commercePriceCalculator;
 	private final CommercePriceFormatter _commercePriceFormatter;
+	private final HttpServletResponse _httpServletResponse;
 	private SearchContainer<CommerceCartItem> _searchContainer;
 
 }

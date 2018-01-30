@@ -17,20 +17,11 @@
 <%@ include file="/init.jsp" %>
 
 <%
-User selUser = (User)request.getAttribute("user.selUser");
+User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 %>
 
 <aui:model-context bean="<%= selUser %>" model="<%= User.class %>" />
 
-<c:choose>
-	<c:when test="<%= selUser != null %>">
-		<aui:fieldset>
-			<aui:input label="comments" name="comments" />
-		</aui:fieldset>
-	</c:when>
-	<c:otherwise>
-		<div class="alert alert-info">
-			<liferay-ui:message key="this-section-will-be-editable-after-creating-the-user" />
-		</div>
-	</c:otherwise>
-</c:choose>
+<aui:fieldset>
+	<aui:input label="comments" name="comments" />
+</aui:fieldset>

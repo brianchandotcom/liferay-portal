@@ -17,91 +17,21 @@
 <%@ include file="/init.jsp" %>
 
 <%
-String redirect = ParamUtil.getString(request, "redirect");
-
-String backURL = ParamUtil.getString(request, "backURL", redirect);
-
-UserDisplayContext userDisplayContext = new UserDisplayContext(request, initDisplayContext);
-
-List<Group> allGroups = userDisplayContext.getAllGroups();
-List<Group> groups = userDisplayContext.getGroups();
-List<UserGroupGroupRole> inheritedSiteRoles = userDisplayContext.getInheritedSiteRoles();
-List<Group> inheritedSites = userDisplayContext.getInheritedSites();
-List<UserGroupRole> organizationRoles = userDisplayContext.getOrganizationRoles();
-List<Organization> organizations = userDisplayContext.getOrganizations();
-PasswordPolicy passwordPolicy = userDisplayContext.getPasswordPolicy();
-List<Group> roleGroups = userDisplayContext.getRoleGroups();
-List<Role> roles = userDisplayContext.getRoles();
-Contact selContact = userDisplayContext.getContact();
-User selUser = userDisplayContext.getSelectedUser();
-List<UserGroupRole> siteRoles = userDisplayContext.getSiteRoles();
-List<UserGroup> userGroups = userDisplayContext.getUserGroups();
+User selUser = (User)request.getAttribute(UsersAdminWebKeys.SELECTED_USER);
 %>
 
-<liferay-ui:error exception="<%= CompanyMaxUsersException.class %>" message="unable-to-create-user-account-because-the-maximum-number-of-users-has-been-reached" />
+<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
 
-<c:if test="<%= !portletName.equals(myAccountPortletId) %>">
+<aui:fieldset label="personal-information">
+	<liferay-util:include page="/user/details.jsp" servletContext="<%= application %>" />
 
-	<%
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(backURL);
+	<liferay-util:include page="/user/comments.jsp" servletContext="<%= application %>" />
+</aui:fieldset>
 
-	renderResponse.setTitle((selUser == null) ? LanguageUtil.get(request, "add-user") : LanguageUtil.format(request, "edit-user-x", selUser.getFullName(), false));
-	%>
+<aui:fieldset label="categorization">
+	<liferay-util:include page="/user/categorization.jsp" servletContext="<%= application %>" />
+</aui:fieldset>
 
-</c:if>
-
-<portlet:actionURL name="/users_admin/edit_user" var="editUserActionURL" />
-
-<portlet:renderURL var="editUserRenderURL">
-	<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_user" />
-	<portlet:param name="backURL" value="<%= backURL %>" />
-</portlet:renderURL>
-
-<aui:form action="<%= editUserActionURL %>" cssClass="container-fluid-1280 portlet-users-admin-edit-user" data-senna-off="true" method="post" name="fm">
-	<aui:input name="<%= Constants.CMD %>" type="hidden" value="<%= (selUser == null) ? Constants.ADD : Constants.UPDATE %>" />
-	<aui:input name="redirect" type="hidden" value="<%= editUserRenderURL %>" />
-	<aui:input name="backURL" type="hidden" value="<%= backURL %>" />
-	<aui:input name="p_u_i_d" type="hidden" value="<%= (selUser != null) ? selUser.getUserId() : 0 %>" />
-
-	<%
-	request.setAttribute("user.allGroups", allGroups);
-	request.setAttribute("user.groups", groups);
-	request.setAttribute("user.inheritedSiteRoles", inheritedSiteRoles);
-	request.setAttribute("user.inheritedSites", inheritedSites);
-	request.setAttribute("user.organizationRoles", organizationRoles);
-	request.setAttribute("user.organizations", organizations);
-	request.setAttribute("user.passwordPolicy", passwordPolicy);
-	request.setAttribute("user.roleGroups", roleGroups);
-	request.setAttribute("user.roles", roles);
-	request.setAttribute("user.selContact", selContact);
-	request.setAttribute("user.selUser", selUser);
-	request.setAttribute("user.siteRoles", siteRoles);
-	request.setAttribute("user.userGroups", userGroups);
-	%>
-
-	<liferay-ui:form-navigator
-		backURL="<%= backURL %>"
-		formModelBean="<%= selUser %>"
-		id="<%= FormNavigatorConstants.FORM_NAVIGATOR_ID_USERS %>"
-		markupView="lexicon"
-	/>
-</aui:form>
-
-<%
-if (selUser != null) {
-	PortalUtil.setPageSubtitle(selUser.getFullName(), request);
-}
-%>
-
-<aui:script>
-	function <portlet:namespace />createURL(href, value, onclick) {
-		return '<a href="' + href + '"' + (onclick ? ' onclick="' + onclick + '" ' : '') + '>' + value + '</a>';
-	}
-
-	function <portlet:namespace />saveUser(cmd) {
-		document.<portlet:namespace />fm.<portlet:namespace /><%= Constants.CMD %>.value = cmd;
-
-		submitForm(document.<portlet:namespace />fm);
-	}
-</aui:script>
+<aui:fieldset label="custom-fields">
+	<liferay-util:include page="/user/custom_fields.jsp" servletContext="<%= application %>" />
+</aui:fieldset>

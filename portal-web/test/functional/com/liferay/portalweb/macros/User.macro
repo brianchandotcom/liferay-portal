@@ -2339,13 +2339,7 @@
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#USER_GROUPS_TABLE_NAME" value1="${userGroupName}" />
 	</command>
 
-	<command name="viewUserMiscellaneousCustomFieldsCP">
-		<execute function="AssertClick" locator1="UsersAndOrganizations#MISCELLANEOUS" value1="Miscellaneous" />
-
-		<execute macro="Panel#expandPanel">
-			<var name="panelHeading" value="Custom Fields" />
-		</execute>
-
+	<command name="viewUserCustomFieldsCP">
 		<var name="key_customFieldName" value="${customFieldName}" />
 
 		<execute function="AssertTextEquals" locator1="UsersAndOrganizationsEditUser#CUSTOM_FIELDS_LABEL" value1="${customFieldName}" />

@@ -30,14 +30,8 @@ buildClay {
 
 	eachFile new StripPathSegmentsAction(3)
 
-	filter {
-		String line ->
-
-		line.replace ".offsetWidth // force reflow", ".offsetWidth.toFixed() // force reflow"
-	}
-
 	from npmInstall.nodeModulesDir
-	include "clay/build/js/"
+	include "clay/lib/js/"
 	includeEmptyDirs = false
 	into clayDestinationDir
 }

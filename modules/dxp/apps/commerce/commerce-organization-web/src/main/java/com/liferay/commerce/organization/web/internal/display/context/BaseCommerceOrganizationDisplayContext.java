@@ -214,8 +214,6 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		Organization topOrganization = getCurrentAccount();
 
-		List<Organization> organizations = new ArrayList<>();
-
 		Organization organization = curentOrganization;
 
 		while (organization != null) {

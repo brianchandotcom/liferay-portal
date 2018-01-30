@@ -1,4 +1,3 @@
 Bundle-Name: Liferay Portal Profile
 Bundle-SymbolicName: com.liferay.portal.profile
 Bundle-Version: 1.0.5
-Export-Package: com.liferay.portal.profile

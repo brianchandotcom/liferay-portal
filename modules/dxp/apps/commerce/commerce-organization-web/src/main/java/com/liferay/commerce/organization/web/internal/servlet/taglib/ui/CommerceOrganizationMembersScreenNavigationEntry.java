@@ -48,8 +48,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(
-	property = {"screen.navigation.entry.order:Integer=20"},
-	service = {ScreenNavigationEntry.class}
+	property = "screen.navigation.entry.order:Integer=20",
+	service = ScreenNavigationEntry.class
 )
 public class CommerceOrganizationMembersScreenNavigationEntry
 	implements ScreenNavigationEntry<Organization> {

@@ -35,9 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {
-		"commerce.product.content.contributor.name=" + CPContentContributorConstants.STOCK_QUANTITY_NAME
-	},
+	property = "commerce.product.content.contributor.name=" + CPContentContributorConstants.STOCK_QUANTITY_NAME,
 	service = CPContentContributor.class
 )
 public class StockQuantityCPContentContributor implements CPContentContributor {

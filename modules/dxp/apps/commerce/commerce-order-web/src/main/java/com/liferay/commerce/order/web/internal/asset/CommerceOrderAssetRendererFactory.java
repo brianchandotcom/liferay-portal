@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER},
+	property = "javax.portlet.name=" + CommercePortletKeys.COMMERCE_ORDER,
 	service = AssetRendererFactory.class
 )
 public class CommerceOrderAssetRendererFactory

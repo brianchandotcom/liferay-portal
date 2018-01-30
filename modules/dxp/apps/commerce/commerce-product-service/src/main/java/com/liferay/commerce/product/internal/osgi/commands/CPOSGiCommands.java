@@ -45,7 +45,7 @@ import org.osgi.service.component.annotations.Reference;
 		"osgi.command.function=commerceSites",
 		"osgi.command.function=createProducts", "osgi.command.scope=commerce"
 	},
-	service = {CPOSGiCommands.class}
+	service = CPOSGiCommands.class
 )
 public class CPOSGiCommands {
 

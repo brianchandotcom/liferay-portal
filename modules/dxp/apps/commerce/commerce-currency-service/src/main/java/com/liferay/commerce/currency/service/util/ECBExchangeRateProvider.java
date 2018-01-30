@@ -35,7 +35,7 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(
 	immediate = true,
-	property = {"commerce.exchange.provider.key=ecb-exchange-rate-provider"},
+	property = "commerce.exchange.provider.key=ecb-exchange-rate-provider",
 	service = ExchangeRateProvider.class
 )
 public class ECBExchangeRateProvider implements ExchangeRateProvider {

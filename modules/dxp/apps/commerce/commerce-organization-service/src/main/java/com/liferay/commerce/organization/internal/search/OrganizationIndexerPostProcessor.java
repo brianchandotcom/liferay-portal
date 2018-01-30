@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.PrefixFilter;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.LinkedHashMap;
@@ -33,9 +33,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {
-		"indexer.class.name=com.liferay.portal.kernel.model.Organization"
-	},
+	property = "indexer.class.name=com.liferay.portal.kernel.model.Organization",
 	service = IndexerPostProcessor.class
 )
 public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
@@ -52,7 +50,7 @@ public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 			return;
 		}
 
-		String treePath = GetterUtil.getString(params.get("treePath"));
+		String treePath = MapUtil.getString(params, Field.TREE_PATH);
 
 		if (Validator.isNotNull(treePath)) {
 			booleanFilter.add(
@@ -60,7 +58,7 @@ public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 				BooleanClauseOccur.MUST);
 		}
 
-		String organizationType = GetterUtil.getString(params.get(Field.TYPE));
+		String organizationType = MapUtil.getString(params, Field.TYPE);
 
 		if (Validator.isNotNull(treePath)) {
 			booleanFilter.add(

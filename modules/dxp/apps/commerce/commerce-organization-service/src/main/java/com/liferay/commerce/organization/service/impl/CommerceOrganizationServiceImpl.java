@@ -53,12 +53,12 @@ public class CommerceOrganizationServiceImpl
 	extends CommerceOrganizationServiceBaseImpl {
 
 	public Organization addOrganization(
-			long parentOrganization, String name, String type,
+			long parentOrganizationId, String name, String type,
 			ServiceContext serviceContext)
 		throws PortalException {
 
 		return organizationLocalService.addOrganization(
-			serviceContext.getUserId(), parentOrganization, name, type, 0, 0,
+			serviceContext.getUserId(), parentOrganizationId, name, type, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, serviceContext);
 	}
@@ -145,7 +145,7 @@ public class CommerceOrganizationServiceImpl
 
 		LinkedHashMap<String, Object> params = new LinkedHashMap<>();
 
-		params.put("treePath", organization.getTreePath());
+		params.put(Field.TREE_PATH, organization.getTreePath());
 
 		List<Long> excludedOrganizationIds = Collections.singletonList(
 			organization.getOrganizationId());

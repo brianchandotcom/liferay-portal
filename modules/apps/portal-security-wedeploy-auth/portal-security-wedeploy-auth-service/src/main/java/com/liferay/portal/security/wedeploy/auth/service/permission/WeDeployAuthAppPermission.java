@@ -15,8 +15,6 @@
 package com.liferay.portal.security.wedeploy.auth.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -50,12 +48,9 @@ public class WeDeployAuthAppPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long weDeployAuthId,
 		String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			WeDeployAuthApp.class.getName(), PortletProvider.Action.VIEW);
-
 		return contains(
-			permissionChecker, WeDeployAuthApp.class.getName(), portletId,
-			weDeployAuthId, actionId);
+			permissionChecker, WeDeployAuthApp.class.getName(), weDeployAuthId,
+			actionId);
 	}
 
 	@Override

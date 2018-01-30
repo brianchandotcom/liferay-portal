@@ -15,13 +15,10 @@
 package com.liferay.portal.security.wedeploy.auth.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.portlet.PortletProvider;
-import com.liferay.portal.kernel.portlet.PortletProviderUtil;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
-import com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -50,11 +47,7 @@ public class WeDeployAuthPermission extends BaseResourcePermissionChecker {
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
-		String portletId = PortletProviderUtil.getPortletId(
-			WeDeployAuthApp.class.getName(), PortletProvider.Action.EDIT);
-
-		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, 0, actionId);
+		return contains(permissionChecker, RESOURCE_NAME, 0, actionId);
 	}
 
 	@Override

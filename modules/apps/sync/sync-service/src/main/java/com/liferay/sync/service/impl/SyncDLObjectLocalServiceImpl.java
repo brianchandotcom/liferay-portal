@@ -37,7 +37,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.sync.constants.SyncDLObjectConstants;
 import com.liferay.sync.model.SyncDLObject;
 import com.liferay.sync.service.base.SyncDLObjectLocalServiceBaseImpl;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncHelper;
 
 import java.util.Date;

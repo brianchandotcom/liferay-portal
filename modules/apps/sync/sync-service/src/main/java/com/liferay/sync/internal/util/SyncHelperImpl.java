@@ -61,7 +61,7 @@ import com.liferay.sync.model.SyncDevice;
 import com.liferay.sync.model.impl.SyncDLObjectImpl;
 import com.liferay.sync.service.SyncDLObjectLocalService;
 import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
-import com.liferay.sync.service.configuration.SyncServiceConfigurationValues;
+import com.liferay.sync.service.internal.configuration.SyncServiceConfigurationValues;
 import com.liferay.sync.util.SyncHelper;
 
 import java.io.File;

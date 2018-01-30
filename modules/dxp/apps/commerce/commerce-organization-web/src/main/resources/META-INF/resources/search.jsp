@@ -27,7 +27,7 @@ CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContex
 	>
 		<liferay-ui:search-container-row
 			className="com.liferay.portal.kernel.model.Organization"
-			modelVar="organization"
+			escapedModel="<%= true %>"
 		>
 			<liferay-ui:search-container-column-text
 				property="name"

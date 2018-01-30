@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.shopping.service.permission;
+package com.liferay.shopping.web.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
@@ -25,35 +24,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 2.1.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.shopping.model.ShoppingCategory"},
-	service = ShoppingCategoryPermission.class
-)
-@Deprecated
-public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, long categoryId,
-			String actionId)
-		throws PortalException {
-
-		ModelResourcePermissionHelper.check(
-			_shoppingCategoryModelResourcePermission, permissionChecker,
-			groupId, categoryId, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, ShoppingCategory category,
-			String actionId)
-		throws PortalException {
-
-		_shoppingCategoryModelResourcePermission.check(
-			permissionChecker, category, actionId);
-	}
+@Component(immediate = true)
+public class ShoppingCategoryPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long groupId, long categoryId,
@@ -72,17 +46,6 @@ public class ShoppingCategoryPermission implements BaseModelPermissionChecker {
 
 		return _shoppingCategoryModelResourcePermission.contains(
 			permissionChecker, category, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		ModelResourcePermissionHelper.check(
-			_shoppingCategoryModelResourcePermission, permissionChecker,
-			groupId, primaryKey, actionId);
 	}
 
 	@Reference(

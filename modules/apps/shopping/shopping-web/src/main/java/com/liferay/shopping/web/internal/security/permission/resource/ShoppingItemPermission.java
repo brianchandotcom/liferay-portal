@@ -12,10 +12,9 @@
  * details.
  */
 
-package com.liferay.shopping.service.permission;
+package com.liferay.shopping.web.internal.security.permission.resource;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.shopping.model.ShoppingItem;
@@ -24,33 +23,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Brian Wing Shun Chan
- * @deprecated As of 2.1.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"model.class.name=com.liferay.shopping.model.ShoppingItem"},
-	service = ShoppingItemPermission.class
-)
-@Deprecated
-public class ShoppingItemPermission implements BaseModelPermissionChecker {
-
-	public static void check(
-			PermissionChecker permissionChecker, long itemId, String actionId)
-		throws PortalException {
-
-		_shoppingItemModelResourcePermission.check(
-			permissionChecker, itemId, actionId);
-	}
-
-	public static void check(
-			PermissionChecker permissionChecker, ShoppingItem item,
-			String actionId)
-		throws PortalException {
-
-		_shoppingItemModelResourcePermission.check(
-			permissionChecker, item, actionId);
-	}
+@Component(immediate = true)
+public class ShoppingItemPermission {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long itemId, String actionId)
@@ -67,16 +43,6 @@ public class ShoppingItemPermission implements BaseModelPermissionChecker {
 
 		return _shoppingItemModelResourcePermission.contains(
 			permissionChecker, item, actionId);
-	}
-
-	@Override
-	public void checkBaseModel(
-			PermissionChecker permissionChecker, long groupId, long primaryKey,
-			String actionId)
-		throws PortalException {
-
-		_shoppingItemModelResourcePermission.check(
-			permissionChecker, primaryKey, actionId);
 	}
 
 	@Reference(
@@ -87,10 +53,6 @@ public class ShoppingItemPermission implements BaseModelPermissionChecker {
 		ModelResourcePermission<ShoppingItem> modelResourcePermission) {
 
 		_shoppingItemModelResourcePermission = modelResourcePermission;
-	}
-
-	protected void setShoppingCategoryPermission(
-		ShoppingCategoryPermission shoppingCategoryPermission) {
 	}
 
 	private static ModelResourcePermission<ShoppingItem>

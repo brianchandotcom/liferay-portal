@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.shopping.service.permission;
+package com.liferay.shopping.web.internal.security.permission.resource;
 
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.shopping.constants.ShoppingConstants;
@@ -23,25 +22,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Jorge Ferrer
- * @deprecated As of 2.1.0, with no direct replacement
+ * @author Preston Crary
  */
-@Component(
-	immediate = true,
-	property = {"resource.name=" + ShoppingConstants.RESOURCE_NAME},
-	service = ShoppingPermission.class
-)
-@Deprecated
+@Component(immediate = true)
 public class ShoppingPermission {
-
-	public static final String RESOURCE_NAME = ShoppingConstants.RESOURCE_NAME;
-
-	public static void check(
-			PermissionChecker permissionChecker, long groupId, String actionId)
-		throws PortalException {
-
-		_portletResourcePermission.check(permissionChecker, groupId, actionId);
-	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {

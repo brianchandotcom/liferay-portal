@@ -427,6 +427,41 @@ public class ModulesStructureTest {
 		}
 	}
 
+	@Test
+	public void testScanReadmeFiles() throws IOException {
+		Files.walkFileTree(
+			_modulesDirPath,
+			new SimpleFileVisitor<Path>() {
+
+				@Override
+				public FileVisitResult preVisitDirectory(
+						Path dirPath, BasicFileAttributes basicFileAttributes)
+					throws IOException {
+
+					String dirName = String.valueOf(dirPath.getFileName());
+
+					if (dirName.equals("node_modules")) {
+						return FileVisitResult.SKIP_SUBTREE;
+					}
+
+					Path path = dirPath.resolve("README.markdown");
+
+					if (Files.exists(path)) {
+						BasicFileAttributes readmeBasicFileAttributes =
+							Files.readAttributes(
+								path, BasicFileAttributes.class);
+
+						Assert.assertNotEquals(
+							"Please delete the empty readme file " + path, 0,
+							readmeBasicFileAttributes.size());
+					}
+
+					return FileVisitResult.CONTINUE;
+				}
+
+			});
+	}
+
 	private void _addGradlePluginNames(
 			Set<String> pluginNames, String pluginNamePrefix,
 			Path buildGradlePath, String pluginIdPrefix,
@@ -651,7 +686,7 @@ public class ModulesStructureTest {
 		return null;
 	}
 
-	private String _getGradleTemplate(String name) throws IOException {
+	private String _getGradleTemplate(String name) {
 		String template = StringUtil.read(ModulesStructureTest.class, name);
 
 		return StringUtil.replace(

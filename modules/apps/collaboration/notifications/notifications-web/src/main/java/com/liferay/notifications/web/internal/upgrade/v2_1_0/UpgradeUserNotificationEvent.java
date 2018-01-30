@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,26 +49,20 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 	protected void updateUserNotificationEventActionRequired()
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select userNotificationEventId, actionRequired from " +
-					"Notifications_UserNotificationEvent");
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
 
-			while (rs.next()) {
-				long userNotificationEventId = rs.getLong(
-					"userNotificationEventId");
-				boolean actionRequired = rs.getBoolean("actionRequired");
+			sb.append("update UserNotificationEvent set actionRequired = ");
+			sb.append("TRUE where userNotificationEventId in (select ");
+			sb.append("userNotificationEventId from ");
+			sb.append("Notifications_UserNotificationEvent ");
+			sb.append("where actionRequired = TRUE)");
 
-				UserNotificationEvent userNotificationEvent =
-					_userNotificationEventLocalService.getUserNotificationEvent(
-						userNotificationEventId);
+			runSQL(sb.toString());
 
-				userNotificationEvent.setActionRequired(actionRequired);
-
-				_userNotificationEventLocalService.updateUserNotificationEvent(
-					userNotificationEvent);
-			}
+			runSQL(
+				"update UserNotificationEvent set actionRequired = FALSE " +
+					"where actionRequired IS NULL");
 		}
 	}
 

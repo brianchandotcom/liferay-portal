@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,9 +35,9 @@ public class CommerceOrganizationBranchesDisplayContext
 	public CommerceOrganizationBranchesDisplayContext(
 		HttpServletRequest httpServletRequest,
 		CommerceOrganizationService commerceOrganizationService,
-		OrganizationService organizationService) {
+		OrganizationService organizationService, Portal portal) {
 
-		super(httpServletRequest, organizationService);
+		super(httpServletRequest, organizationService, portal);
 
 		_commerceOrganizationService = commerceOrganizationService;
 

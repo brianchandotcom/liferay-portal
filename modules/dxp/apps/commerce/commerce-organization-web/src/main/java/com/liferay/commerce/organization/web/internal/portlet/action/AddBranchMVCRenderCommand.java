@@ -53,7 +53,7 @@ public class AddBranchMVCRenderCommand implements MVCRenderCommand {
 
 		AddBranchDisplayContext addBranchDisplayContext =
 			new AddBranchDisplayContext(
-				httpServletRequest, _organizationService);
+				httpServletRequest, _organizationService, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, addBranchDisplayContext);

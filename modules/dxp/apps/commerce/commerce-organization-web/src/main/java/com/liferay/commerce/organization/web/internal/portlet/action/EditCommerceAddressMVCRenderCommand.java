@@ -59,7 +59,7 @@ public class EditCommerceAddressMVCRenderCommand implements MVCRenderCommand {
 				new CommerceOrganizationAddressesDisplayContext(
 					httpServletRequest, _commerceAddressService,
 					_commerceCountryService, _commerceRegionService,
-					_organizationService);
+					_organizationService, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

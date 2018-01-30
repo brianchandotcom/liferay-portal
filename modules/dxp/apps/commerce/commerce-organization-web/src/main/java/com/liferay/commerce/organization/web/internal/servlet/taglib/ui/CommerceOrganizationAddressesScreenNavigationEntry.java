@@ -23,6 +23,7 @@ import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -83,7 +84,7 @@ public class CommerceOrganizationAddressesScreenNavigationEntry
 				new CommerceOrganizationAddressesDisplayContext(
 					httpServletRequest, _commerceAddressService,
 					_commerceCountryService, _commerceRegionService,
-					_organizationService);
+					_organizationService, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -108,5 +109,8 @@ public class CommerceOrganizationAddressesScreenNavigationEntry
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
 
 }

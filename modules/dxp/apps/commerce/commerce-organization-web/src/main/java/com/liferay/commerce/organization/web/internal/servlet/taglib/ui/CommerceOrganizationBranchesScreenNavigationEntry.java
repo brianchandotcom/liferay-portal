@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
@@ -88,7 +89,7 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 			commerceOrganizationBranchesDisplayContext =
 				new CommerceOrganizationBranchesDisplayContext(
 					httpServletRequest, _commerceOrganizationService,
-					_organizationService);
+					_organizationService, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -106,5 +107,8 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
 
 }

@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
@@ -97,7 +98,8 @@ public class CommerceOrganizationDetailsScreenNavigationEntry
 			commerceOrganizationDetailDisplayContext =
 				new CommerceOrganizationDetailDisplayContext(
 					httpServletRequest, _commerceOrganizationService,
-					_organizationService, _userFileUploadsConfiguration);
+					_organizationService, _portal,
+					_userFileUploadsConfiguration);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -123,6 +125,9 @@ public class CommerceOrganizationDetailsScreenNavigationEntry
 
 	@Reference
 	private OrganizationService _organizationService;
+
+	@Reference
+	private Portal _portal;
 
 	private volatile UserFileUploadsConfiguration _userFileUploadsConfiguration;
 

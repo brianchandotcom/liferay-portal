@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.users.admin.configuration.UserFileUploadsConfiguration;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,10 +34,10 @@ public class CommerceOrganizationDetailDisplayContext
 	public CommerceOrganizationDetailDisplayContext(
 		HttpServletRequest httpServletRequest,
 		CommerceOrganizationService commerceOrganizationService,
-		OrganizationService organizationService,
+		OrganizationService organizationService, Portal portal,
 		UserFileUploadsConfiguration userFileUploadsConfiguration) {
 
-		super(httpServletRequest, organizationService);
+		super(httpServletRequest, organizationService, portal);
 
 		this.commerceOrganizationService = commerceOrganizationService;
 		this.userFileUploadsConfiguration = userFileUploadsConfiguration;

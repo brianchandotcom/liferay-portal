@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.web.internal.display.context;
 
 import com.liferay.portal.kernel.service.OrganizationService;
+import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -26,9 +27,9 @@ public class AddBranchDisplayContext
 
 	public AddBranchDisplayContext(
 		HttpServletRequest httpServletRequest,
-		OrganizationService organizationService) {
+		OrganizationService organizationService, Portal portal) {
 
-		super(httpServletRequest, organizationService);
+		super(httpServletRequest, organizationService, portal);
 	}
 
 }

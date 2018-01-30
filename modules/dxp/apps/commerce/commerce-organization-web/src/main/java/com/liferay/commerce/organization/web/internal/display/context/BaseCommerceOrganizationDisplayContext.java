@@ -26,7 +26,7 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -48,9 +48,10 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public BaseCommerceOrganizationDisplayContext(
 		HttpServletRequest httpServletRequest,
-		OrganizationService organizationService) {
+		OrganizationService organizationService, Portal portal) {
 
 		this.organizationService = organizationService;
+		_portal = portal;
 
 		cpRequestHelper = new CPRequestHelper(httpServletRequest);
 
@@ -60,7 +61,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 	public Organization getCurrentAccount() throws PortalException {
 		HttpServletRequest originalHttpServletRequest =
-			PortalUtil.getOriginalServletRequest(cpRequestHelper.getRequest());
+			_portal.getOriginalServletRequest(cpRequestHelper.getRequest());
 
 		HttpSession httpSession = originalHttpServletRequest.getSession();
 
@@ -229,12 +230,12 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 				"organizationId",
 				String.valueOf(organization.getOrganizationId()));
 
-			PortalUtil.addPortletBreadcrumbEntry(
+			_portal.addPortletBreadcrumbEntry(
 				cpRequestHelper.getRequest(), organization.getName(),
 				portletURL.toString(), data);
 		}
 
-		PortalUtil.addPortletBreadcrumbEntry(
+		_portal.addPortletBreadcrumbEntry(
 			cpRequestHelper.getRequest(), curentOrganization.getName(),
 			portletURL.toString(), data);
 	}
@@ -265,5 +266,6 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	private String _defaultOrderByCol;
 	private String _defaultOrderByType;
 	private String _displayStyle;
+	private final Portal _portal;
 
 }

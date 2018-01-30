@@ -74,7 +74,7 @@ public class CommerceSearchOrganizationsPortlet extends MVCPortlet {
 			commerceSearchOrganizationsDisplayContext =
 				new CommerceSearchOrganizationsDisplayContext(
 					httpServletRequest, _commerceOrganizationService,
-					_organizationService);
+					_organizationService, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

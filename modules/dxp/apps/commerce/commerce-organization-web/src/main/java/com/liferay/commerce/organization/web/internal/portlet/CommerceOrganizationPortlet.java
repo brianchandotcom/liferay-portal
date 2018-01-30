@@ -82,7 +82,8 @@ public class CommerceOrganizationPortlet extends MVCPortlet {
 			commerceOrganizationDetailDisplayContext =
 				new CommerceOrganizationDetailDisplayContext(
 					httpServletRequest, _commerceOrganizationService,
-					_organizationService, _userFileUploadsConfiguration);
+					_organizationService, _portal,
+					_userFileUploadsConfiguration);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,

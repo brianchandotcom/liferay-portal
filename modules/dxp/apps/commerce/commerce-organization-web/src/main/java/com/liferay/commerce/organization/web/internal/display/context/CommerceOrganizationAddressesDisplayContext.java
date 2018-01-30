@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -58,9 +59,9 @@ public class CommerceOrganizationAddressesDisplayContext
 		CommerceAddressService commerceAddressService,
 		CommerceCountryService commerceCountryService,
 		CommerceRegionService commerceRegionService,
-		OrganizationService organizationService) {
+		OrganizationService organizationService, Portal portal) {
 
-		super(httpServletRequest, organizationService);
+		super(httpServletRequest, organizationService, portal);
 
 		_commerceAddressService = commerceAddressService;
 		_commerceCountryService = commerceCountryService;

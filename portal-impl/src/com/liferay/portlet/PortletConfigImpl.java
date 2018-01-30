@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -109,6 +110,29 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 				containerRuntimeOptions.put(
 					name.substring(_containerRuntimeOptionPrefix.length()),
 					portletAppContainerRuntimeOption.getValue());
+			}
+		}
+
+		// Java™ Portlet Specification 3.0
+		// PLT 6.8: The map returned by the getContainerRuntimeOptions method
+		// must only contain those values that are both defined for the portlet
+		// and supported by the portlet container.
+
+		Set<String> supportedRuntimeOptions = new HashSet<>();
+		Enumeration<String> enumeration =
+			_portletContext.getContainerRuntimeOptions();
+
+		while (enumeration.hasMoreElements()) {
+			supportedRuntimeOptions.add(enumeration.nextElement());
+		}
+
+		Iterator<String> iterator = containerRuntimeOptions.keySet().iterator();
+
+		while (iterator.hasNext()) {
+			String key = iterator.next();
+
+			if (!supportedRuntimeOptions.contains(key)) {
+				iterator.remove();
 			}
 		}
 

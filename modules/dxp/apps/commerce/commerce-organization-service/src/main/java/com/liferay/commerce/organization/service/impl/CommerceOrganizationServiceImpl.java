@@ -114,7 +114,7 @@ public class CommerceOrganizationServiceImpl
 			Organization.class);
 
 		SearchContext searchContext = buildSearchContext(
-			organization, keywords, type, start, end, sorts);
+			organization, type, keywords, start, end, sorts);
 
 		Hits hits = indexer.search(searchContext);
 
@@ -131,7 +131,7 @@ public class CommerceOrganizationServiceImpl
 	}
 
 	protected SearchContext buildSearchContext(
-		Organization organization, String keywords, String type, int start,
+		Organization organization, String type, String keywords, int start,
 		int end, Sort[] sorts) {
 
 		SearchContext searchContext = new SearchContext();

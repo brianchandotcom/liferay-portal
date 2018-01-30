@@ -10405,6 +10405,8 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 		<if>
 			<equals arg1="${solr.enabled}" arg2="true" />
 			<then>
+				<print-file file.name="${solr.dir}/server/logs/solr.log" />
+
 				<ant antfile="build-test-solr.xml" target="stop-solr-core" />
 			</then>
 		</if>

@@ -60,7 +60,7 @@ page import="com.liferay.sync.model.SyncDevice" %><%@
 page import="com.liferay.sync.oauth.helper.SyncOAuthHelperUtil" %><%@
 page import="com.liferay.sync.service.SyncDeviceLocalServiceUtil" %><%@
 page import="com.liferay.sync.service.configuration.SyncServiceConfigurationKeys" %><%@
-page import="com.liferay.sync.service.configuration.SyncServiceConfigurationValues" %><%@
+page import="com.liferay.sync.web.internal.configuration.SyncServiceConfigurationValues" %><%@
 page import="com.liferay.sync.web.internal.constants.SyncWebKeys" %>
 
 <%@ page import="java.util.ArrayList" %><%@

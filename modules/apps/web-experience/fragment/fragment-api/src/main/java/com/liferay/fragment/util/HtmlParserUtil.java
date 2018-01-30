@@ -17,6 +17,8 @@ package com.liferay.fragment.util;
 import com.liferay.fragment.exception.FragmentEntryContentException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Document;
 import com.liferay.portal.kernel.xml.DocumentException;
 import com.liferay.portal.kernel.xml.SAXReaderUtil;
@@ -25,7 +27,10 @@ import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.xml.parsers.SAXParserFactory;
+
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -46,7 +51,26 @@ public class HtmlParserUtil {
 				html = "<span>" + html + "</span>";
 			}
 
-			document = SAXReaderUtil.read(html);
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("(");
+			sb.append(StringPool.LESS_THAN);
+
+			String html5VoidElements = String.join(
+				StringPool.PIPE + StringPool.LESS_THAN, _HTML5_VOID_ELEMENTS);
+
+			sb.append(html5VoidElements);
+
+			sb.append(")([^\\/>]*)>");
+
+			Pattern voidElementsPattern = Pattern.compile(
+				sb.toString(), Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
+
+			Matcher voidElementsMatcher = voidElementsPattern.matcher(html);
+
+			html = voidElementsMatcher.replaceAll("$1$2/>");
+
+			document = SAXReaderUtil.read(html, false);
 		}
 		catch (DocumentException de) {
 			throw new FragmentEntryContentException(
@@ -58,8 +82,16 @@ public class HtmlParserUtil {
 		return document;
 	}
 
+	private static final String[] _HTML5_VOID_ELEMENTS = {
+		"area", "base", "br", "col", "embed", "hr", "img", "input", "link",
+		"meta", "param", "source", "track", "wbr"
+	};
+
 	private static final Pattern _pattern = Pattern.compile(
 		"^<(\\S+?)(.*?)>(.*?)</\\1>",
 		Pattern.CASE_INSENSITIVE | Pattern.DOTALL | Pattern.MULTILINE);
+
+	@Reference
+	private SAXParserFactory _saxParserFactory;
 
 }

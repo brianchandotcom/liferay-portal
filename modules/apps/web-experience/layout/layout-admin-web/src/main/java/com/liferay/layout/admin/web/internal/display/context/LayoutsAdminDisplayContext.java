@@ -956,7 +956,7 @@ public class LayoutsAdminDisplayContext {
 		JSONArray layoutsJSONArray = JSONFactoryUtil.createJSONArray();
 
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(
-			getGroupId(), isPrivateLayout(), parentLayoutId, false,
+			getSelGroupId(), isPrivateLayout(), parentLayoutId, false,
 			QueryUtil.ALL_POS, QueryUtil.ALL_POS, _getOrderByComparator());
 
 		for (Layout layout : layouts) {

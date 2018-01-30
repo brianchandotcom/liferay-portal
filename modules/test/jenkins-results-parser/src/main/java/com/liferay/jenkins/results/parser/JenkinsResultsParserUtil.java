@@ -487,6 +487,22 @@ public class JenkinsResultsParserUtil {
 		return url;
 	}
 
+	public static List<Build> flatten(List<Build> builds) {
+		List<Build> flattenedBuilds = new ArrayList<>();
+
+		for (Build build : builds) {
+			flattenedBuilds.add(build);
+
+			List<Build> downstreamBuilds = build.getDownstreamBuilds(null);
+
+			if (!downstreamBuilds.isEmpty()) {
+				flattenedBuilds.addAll(flatten(downstreamBuilds));
+			}
+		}
+
+		return flattenedBuilds;
+	}
+
 	public static String getActualResult(String buildURL) throws IOException {
 		String progressiveText = toString(
 			getLocalURL(buildURL + "/logText/progressiveText"), false);

@@ -10389,13 +10389,6 @@ module.framework.properties.blacklist.portal.profile.names=${blacklist.portal.pr
 			<then>
 				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchCluster.log" />
 
-				<get
-					dest="${elasticsearch.dir}/logs/LiferayElasticsearchClusterMappings.log"
-					src="http://localhost:9200/_all/_mapping?pretty"
-				/>
-
-				<print-file file.name="${elasticsearch.dir}/logs/LiferayElasticsearchClusterMappings.log" />
-
 				<ant antfile="build-test-elasticsearch.xml" target="stop-elasticsearch" />
 			</then>
 		</if>

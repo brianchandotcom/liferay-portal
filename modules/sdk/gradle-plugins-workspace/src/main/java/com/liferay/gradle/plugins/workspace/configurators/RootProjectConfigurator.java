@@ -412,12 +412,15 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					try {
 						if (bundleUrl.startsWith("file:")) {
-							File bundleFile = new File(
-								new URL(bundleUrl).getFile()).getAbsoluteFile();
+							URL url = new URL(bundleUrl);
 
-							URI bundleUri = bundleFile.toURI();
+							File file = new File(url.getFile());
 
-							bundleUrl = bundleUri.toASCIIString();
+							file = file.getAbsoluteFile();
+
+							URI uri = file.toURI();
+
+							bundleUrl = uri.toASCIIString();
 						}
 						else {
 							bundleUrl = bundleUrl.replace(" ", "%20");

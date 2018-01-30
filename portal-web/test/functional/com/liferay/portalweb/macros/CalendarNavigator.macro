@@ -75,6 +75,18 @@
 		<execute function="Click" locator1="Calendar#SCHEDULER_VIEW_${viewTypeUppercase}_CURRENT_DAY" />
 	</command>
 
+	<command name="gotoAddEventViaMyCalendars">
+		<var name="key_user" value="${user}" />
+
+		<execute function="Click" locator1="Calendar#MY_CALENDARS_CALENDAR_PRIMARY_MENULIST_ARROW" />
+
+		<execute function="AssertClick" locator1="Calendar#OTHER_CALENDARS_CALENDAR_MENULIST_ADD_EVENT" value1="Add Event" />
+
+		<execute macro="CalendarEvent#selectEventIframe" />
+
+		<execute macro="CalendarEvent#_viewNewEventIframe" />
+	</command>
+
 	<command name="gotoAddMyCalendars">
 		<execute function="Click" locator1="Calendar#MY_CALENDARS_MENULIST_ARROW" />
 

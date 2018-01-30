@@ -20,6 +20,7 @@ import com.liferay.commerce.exception.CommerceCartShippingAddressException;
 import com.liferay.commerce.exception.CommerceCartShippingMethodException;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommercePaymentMethod;
@@ -42,11 +43,14 @@ public class CommerceCartLocalServiceImpl
 
 	@Override
 	public CommerceCart addCommerceCart(
-			String name, int type, ServiceContext serviceContext)
+			String name, boolean defaultCart, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
 		long groupId = serviceContext.getScopeGroupId();
+
+		validateDefaultCart(0, groupId, user.getUserId(), defaultCart, type);
 
 		long commerceCartId = counterLocalService.increment();
 
@@ -59,6 +63,7 @@ public class CommerceCartLocalServiceImpl
 		commerceCart.setUserId(user.getUserId());
 		commerceCart.setUserName(user.getFullName());
 		commerceCart.setName(name);
+		commerceCart.setDefaultCart(defaultCart);
 		commerceCart.setType(type);
 		commerceCart.setExpandoBridgeAttributes(serviceContext);
 
@@ -104,10 +109,10 @@ public class CommerceCartLocalServiceImpl
 
 	@Override
 	public CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, int type, String name) {
+		long groupId, long userId, boolean defaultCart, int type) {
 
-		return commerceCartPersistence.fetchByG_U_N_T_First(
-			groupId, userId, name, type, null);
+		return commerceCartPersistence.fetchByG_U_D_T_First(
+			groupId, userId, defaultCart, type, null);
 	}
 
 	@Override
@@ -229,6 +234,24 @@ public class CommerceCartLocalServiceImpl
 	}
 
 	@Override
+	public CommerceCart updateCommerceCart(
+			long commerceCartId, String name, boolean defaultCart)
+		throws PortalException {
+
+		CommerceCart commerceCart = commerceCartPersistence.findByPrimaryKey(
+			commerceCartId);
+
+		validateDefaultCart(
+			commerceCartId, commerceCart.getGroupId(), commerceCart.getUserId(),
+			defaultCart, commerceCart.getType());
+
+		commerceCart.setName(name);
+		commerceCart.setDefaultCart(defaultCart);
+
+		return commerceCartPersistence.update(commerceCart);
+	}
+
+	@Override
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException {
 
@@ -312,6 +335,25 @@ public class CommerceCartLocalServiceImpl
 
 			if (groupId != commerceShippingMethod.getGroupId()) {
 				throw new CommerceCartShippingMethodException();
+			}
+		}
+	}
+
+	protected void validateDefaultCart(
+		long commerceCartId, long groupId, long userId, boolean defaultCart,
+		int type) {
+
+		if (defaultCart && (type == CommerceCartConstants.TYPE_WISH_LIST)) {
+			List<CommerceCart> commerceCarts =
+				commerceCartPersistence.findByG_U_D_T(
+					groupId, userId, defaultCart, type);
+
+			for (CommerceCart curCommerceCart : commerceCarts) {
+				if (curCommerceCart.getCommerceCartId() != commerceCartId) {
+					curCommerceCart.setDefaultCart(false);
+
+					commerceCartPersistence.update(curCommerceCart);
+				}
 			}
 		}
 	}

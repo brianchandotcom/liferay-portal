@@ -29,11 +29,12 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 
 	@Override
 	public CommerceCart addCommerceCart(
-			String name, int type, ServiceContext serviceContext)
+			String name, boolean defaultCart, int type,
+			ServiceContext serviceContext)
 		throws PortalException {
 
 		return commerceCartLocalService.addCommerceCart(
-			name, type, serviceContext);
+			name, defaultCart, type, serviceContext);
 	}
 
 	@Override
@@ -54,10 +55,10 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 
 	@Override
 	public CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, int type, String name) {
+		long groupId, long userId, boolean defaultCart, int type) {
 
 		return commerceCartLocalService.fetchDefaultCommerceCart(
-			groupId, userId, type, name);
+			groupId, userId, defaultCart, type);
 	}
 
 	@Override
@@ -102,6 +103,15 @@ public class CommerceCartServiceImpl extends CommerceCartServiceBaseImpl {
 			commerceCartId, billingAddressId, shippingAddressId,
 			commercePaymentMethodId, commerceShippingMethodId,
 			shippingOptionName, shippingPrice);
+	}
+
+	@Override
+	public CommerceCart updateCommerceCart(
+			long commerceCartId, String name, boolean defaultCart)
+		throws PortalException {
+
+		return commerceCartLocalService.updateCommerceCart(
+			commerceCartId, name, defaultCart);
 	}
 
 	@Override

@@ -14,7 +14,6 @@
 
 package com.liferay.commerce.cart.content.web.internal.portlet.action;
 
-import com.liferay.commerce.constants.CommerceConstants;
 import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
@@ -107,7 +106,8 @@ public class AddCommerceCartItemToWishListMVCActionCommand
 			CommerceCartItem commerceCartItem =
 				_commerceCartItemService.addCommerceCartItem(
 					commerceCart.getCommerceCartId(), cpDefinitionId,
-					cpInstanceId, CommerceConstants.WISH_LIST_DEFAULT_QUANTITY,
+					cpInstanceId,
+					CommerceCartConstants.WISH_LIST_DEFAULT_QUANTITY,
 					ddmFormValues, serviceContext);
 
 			int commerceCartItemsCount =

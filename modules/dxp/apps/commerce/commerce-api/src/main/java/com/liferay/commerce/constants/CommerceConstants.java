@@ -24,6 +24,4 @@ public class CommerceConstants {
 	public static final String SHIPPING_SERVICE_NAME =
 		"com.liferay.commerce.shipping";
 
-	public static final int WISH_LIST_DEFAULT_QUANTITY = 1;
-
 }

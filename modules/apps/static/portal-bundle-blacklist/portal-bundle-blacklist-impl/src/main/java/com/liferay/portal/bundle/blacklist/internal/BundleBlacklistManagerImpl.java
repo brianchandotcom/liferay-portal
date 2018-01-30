@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.bundle.blacklist;
+package com.liferay.portal.bundle.blacklist.internal;
 
 import com.liferay.petra.string.StringPool;
-import com.liferay.portal.bundle.blacklist.internal.BundleBlacklist;
-import com.liferay.portal.bundle.blacklist.internal.BundleBlacklistConfiguration;
+import com.liferay.portal.bundle.blacklist.BundleBlacklistManager;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -45,8 +44,9 @@ import org.osgi.service.component.annotations.Reference;
  * @author Preston Crary
  */
 @Component(immediate = true, service = BundleBlacklistManager.class)
-public class BundleBlacklistManager {
+public class BundleBlacklistManagerImpl implements BundleBlacklistManager {
 
+	@Override
 	public void addToBlacklistAndUninstall(String... bundleSymbolicNames)
 		throws IOException {
 
@@ -67,10 +67,12 @@ public class BundleBlacklistManager {
 			});
 	}
 
+	@Override
 	public Collection<String> getBlacklistBundleSymbolicNames() {
 		return _bundleBlacklist.getBlacklistBundleSymbolicNames();
 	}
 
+	@Override
 	public void removeFromBlacklistAndInstall(String... bundleSymbolicNames)
 		throws IOException {
 

@@ -12,19 +12,13 @@
  * details.
  */
 
-package com.liferay.site.navigation.item.selector.web.internal.constants;
+package com.liferay.site.navigation.item.selector.criterion;
+
+import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
  * @author Pavel Savinov
  */
-public class SiteNavigationItemSelectorWebKeys {
-
-	public static final String
-		SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT =
-			"SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-	public static final String
-		SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT =
-			"SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
+public class SiteNavigationMenuItemSelectorCriterion
+	extends BaseItemSelectorCriterion {
 }

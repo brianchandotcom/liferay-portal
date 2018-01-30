@@ -17,8 +17,8 @@ package com.liferay.site.navigation.item.selector.criterion;
 import com.liferay.item.selector.BaseItemSelectorCriterion;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
-public class SiteNavigationItemSelectorCriterion
+public class SiteNavigationMenuItemItemSelectorCriterion
 	extends BaseItemSelectorCriterion {
 }

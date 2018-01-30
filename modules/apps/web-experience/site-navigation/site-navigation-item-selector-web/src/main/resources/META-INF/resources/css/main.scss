@@ -1,0 +1,99 @@
+.site-navigation-menu-item-selector {
+	.card {
+		&:focus {
+			box-shadow: inset 0 0 0 2px #ABBCC3;
+			outline: none;
+		}
+
+		margin-bottom: 0;
+	}
+
+	.card-row-padded {
+		padding: 5px;
+	}
+
+	.selected .card {
+		box-shadow: inset 0 0 0 2px #65B6F0;
+	}
+
+	.disabled {
+		opacity: 0.7;
+	}
+
+	.treeview-node {
+		margin-bottom: 0.5rem;
+		position: relative;
+	}
+
+	.treeview-node-main {
+		float: none;
+		margin-bottom: 20px;
+		padding-left: 20px;
+		position: relative;
+
+		&:not(.disabled) {
+			cursor: pointer;
+		}
+	}
+
+	.treeview-nodes {
+		border-left: 2px solid #869CAD;
+		list-style: none;
+		margin-left: 40px;
+		padding-left: 0;
+
+		.treeview-nodes {
+			border-left-style: dashed;
+			border-left-width: 1px;
+		}
+	}
+
+	.treeview-node-name {
+		font-size: 1.4rem;
+		margin-left: 0.8rem;
+	}
+
+	.treeview-node-toggler {
+		background-color: #869CAD;
+		border-radius: 3px;
+		display: inline-block;
+		height: 14px;
+		left: 0;
+		margin-left: -7px;
+		margin-top: -8px;
+		position: absolute;
+		text-align: center;
+		top: 50%;
+		width: 14px;
+
+		&:before {
+			color: #FFF;
+			content: '+';
+			display: block;
+			line-height: 11px;
+
+			.win & {
+				line-height: 14px;
+			}
+		}
+	}
+
+	.treeview-node-wrapper > .treeview-nodes {
+		display: none;
+	}
+
+	.expanded {
+		> .treeview-node-main > .treeview-node-toggler:before {
+			content: '-';
+			font-size: 21px;
+
+			.win & {
+				line-height: 11px;
+			}
+		}
+
+		> .treeview-nodes {
+			display: block;
+		}
+	}
+}

@@ -17,6 +17,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)request.getAttribute("liferay-staging:configuration-header:exportImportConfiguration");
-String label = GetterUtil.getString(request.getAttribute("liferay-staging:configuration-header:label"));
+int backgroundTaskStatus = GetterUtil.getInteger(request.getAttribute("liferay-staging:process-status:backgroundTaskStatus"));
+String backgroundTaskStatusLabel = GetterUtil.getString(request.getAttribute("liferay-staging:process-status:backgroundTaskStatusLabel"));
+
+String cssStatusLabel = BackgroundTaskConstants.getStatusLabel(backgroundTaskStatus);
+String cssStatusClass = BackgroundTaskConstants.getStatusCssClass(backgroundTaskStatus);
 %>

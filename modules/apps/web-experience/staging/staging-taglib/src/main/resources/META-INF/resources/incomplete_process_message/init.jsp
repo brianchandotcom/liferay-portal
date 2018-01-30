@@ -17,6 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)request.getAttribute("liferay-staging:configuration-header:exportImportConfiguration");
-String label = GetterUtil.getString(request.getAttribute("liferay-staging:configuration-header:label"));
+boolean localPublishing = GetterUtil.getBoolean(request.getAttribute("liferay-staging:incomplete-process-message:localPublishing"));
+String taskExecutorClassName = GetterUtil.getString(request.getAttribute("liferay-staging:incomplete-process-message:taskExecutorClassName"));
+
+int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, taskExecutorClassName, false);
+
+if (localPublishing) {
+	incompleteBackgroundTaskCount += BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, taskExecutorClassName, false);
+}
 %>

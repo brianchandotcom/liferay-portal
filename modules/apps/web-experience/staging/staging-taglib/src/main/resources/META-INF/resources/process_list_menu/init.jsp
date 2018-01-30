@@ -17,6 +17,12 @@
 <%@ include file="/init.jsp" %>
 
 <%
-ExportImportConfiguration exportImportConfiguration = (ExportImportConfiguration)request.getAttribute("liferay-staging:configuration-header:exportImportConfiguration");
-String label = GetterUtil.getString(request.getAttribute("liferay-staging:configuration-header:label"));
+BackgroundTask backgroundTask = (BackgroundTask)request.getAttribute("liferay-staging:process-list-menu:backgroundTask");
+boolean localPublishing = GetterUtil.getBoolean(request.getAttribute("liferay-staging:process-list-menu:localPublishing"));
+
+long backgroundTaskId = backgroundTask.getBackgroundTaskId();
+long backgroundTaskGroupId = backgroundTask.getGroupId();
+Date completionDate = backgroundTask.getCompletionDate();
+
+String deleteLabel = LanguageUtil.get(request, ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel");
 %>

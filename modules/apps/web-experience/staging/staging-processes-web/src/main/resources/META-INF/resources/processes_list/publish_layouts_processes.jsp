@@ -205,21 +205,16 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 							</c:if>
 						</c:if>
 
-						<h6 class="background-task-status-row background-task-status-<%= BackgroundTaskConstants.getStatusLabel(backgroundTask.getStatus()) %> <%= BackgroundTaskConstants.getStatusCssClass(backgroundTask.getStatus()) %>">
-							<liferay-ui:message key="<%= backgroundTask.getStatusLabel() %>" />
-						</h6>
+						<liferay-staging:process-status
+							backgroundTaskStatus="<%= backgroundTask.getStatus() %>"
+							backgroundTaskStatusLabel="<%= backgroundTask.getStatusLabel() %>"
+						/>
 
-						<c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">
-							<h6 class="background-task-status-row">
-								<a class="details-link" href="javascript:Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {nodeId: 'backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>', title: $('#<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>').text()}); void(0);"><liferay-ui:message key="see-more-details" /></a>
-							</h6>
-
-							<div class="background-task-status-message hide" id="<portlet:namespace />backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>">
-								<liferay-util:include page="/processes_list/publish_process_message_task_details.jsp" servletContext="<%= application %>">
-									<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-								</liferay-util:include>
-							</div>
-						</c:if>
+						<liferay-staging:process-message-task-details
+							backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
+							backgroundTaskStatusMessage="<%= backgroundTask.getStatusMessage() %>"
+							linkClass="background-task-status-row"
+						/>
 					</liferay-ui:search-container-column-text>
 				</c:when>
 				<c:when test='<%= displayStyle.equals("list") %>'>
@@ -266,35 +261,10 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 			<liferay-ui:search-container-column-text
 				align="right"
 			>
-				<liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-					<c:if test="<%= !localPublishing || (backgroundTask.getGroupId() != liveGroupId) %>">
-						<portlet:actionURL name="editPublishConfiguration" var="relaunchURL">
-							<portlet:param name="mvcRenderCommandName" value="editPublishConfiguration" />
-							<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.RELAUNCH %>" />
-							<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
-							<portlet:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-						</portlet:actionURL>
-
-						<liferay-ui:icon
-							message="relaunch"
-							url="<%= relaunchURL %>"
-						/>
-					</c:if>
-
-					<portlet:actionURL name="deleteBackgroundTasks" var="deleteBackgroundTaskURL">
-						<portlet:param name="redirect" value="<%= currentURL.toString() %>" />
-						<portlet:param name="deleteBackgroundTaskIds" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-					</portlet:actionURL>
-
-					<%
-					Date completionDate = backgroundTask.getCompletionDate();
-					%>
-
-					<liferay-ui:icon
-						message='<%= LanguageUtil.get(request, ((completionDate != null) && completionDate.before(new Date())) ? "clear" : "cancel") %>'
-						url="<%= deleteBackgroundTaskURL %>"
-					/>
-				</liferay-ui:icon-menu>
+				<liferay-staging:process-list-menu
+					backgroundTask="<%= backgroundTask %>"
+					localPublishing="<%= localPublishing %>"
+				/>
 			</liferay-ui:search-container-column-text>
 		</liferay-ui:search-container-row>
 
@@ -302,19 +272,10 @@ OrderByComparator<BackgroundTask> orderByComparator = BackgroundTaskComparatorFa
 	</liferay-ui:search-container>
 </aui:form>
 
-<%
-int incompleteBackgroundTaskCount = BackgroundTaskManagerUtil.getBackgroundTasksCount(groupId, taskExecutorClassName, false);
-
-if (localPublishing) {
-	incompleteBackgroundTaskCount += BackgroundTaskManagerUtil.getBackgroundTasksCount(liveGroupId, taskExecutorClassName, false);
-}
-%>
-
-<div class="hide incomplete-process-message">
-	<liferay-util:include page="/processes_list/incomplete_processes_message.jsp" servletContext="<%= application %>">
-		<liferay-util:param name="incompleteBackgroundTaskCount" value="<%= String.valueOf(incompleteBackgroundTaskCount) %>" />
-	</liferay-util:include>
-</div>
+<liferay-staging:incomplete-process-message
+	localPublishing="<%= localPublishing %>"
+	taskExecutorClassName="<%= taskExecutorClassName %>"
+/>
 
 <aui:script>
 	function <portlet:namespace />deleteEntries() {

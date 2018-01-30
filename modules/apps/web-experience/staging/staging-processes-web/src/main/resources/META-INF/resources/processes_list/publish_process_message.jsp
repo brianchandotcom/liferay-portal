@@ -88,14 +88,7 @@ BackgroundTask backgroundTask = (BackgroundTask)row.getObject();
 	</c:if>
 </c:if>
 
-<c:if test="<%= Validator.isNotNull(backgroundTask.getStatusMessage()) %>">
-	<h5>
-		<a class="details-link" href="javascript:Liferay.fire('<portlet:namespace />viewBackgroundTaskDetails', {nodeId: 'backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>', title: $('#<portlet:namespace />backgroundTaskName<%= backgroundTask.getBackgroundTaskId() %>').text()}); void(0);"><liferay-ui:message key="see-more-details" /></a>
-	</h5>
-
-	<div class="background-task-status-message hide" id="<portlet:namespace />backgroundTaskStatusMessage<%= backgroundTask.getBackgroundTaskId() %>">
-		<liferay-util:include page="/processes_list/publish_process_message_task_details.jsp" servletContext="<%= application %>">
-			<liferay-util:param name="backgroundTaskId" value="<%= String.valueOf(backgroundTask.getBackgroundTaskId()) %>" />
-		</liferay-util:include>
-	</div>
-</c:if>
+<liferay-staging:process-message-task-details
+	backgroundTaskId="<%= backgroundTask.getBackgroundTaskId() %>"
+	backgroundTaskStatusMessage="<%= backgroundTask.getStatusMessage() %>"
+/>

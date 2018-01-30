@@ -23,7 +23,7 @@ CommerceSearchOrganizationsDisplayContext commerceSearchOrganizationsDisplayCont
 <div class="users-container" id="<portlet:namespace />entriesContainer">
 	<liferay-ui:search-container
 		id="organizations"
-		searchContainer="<%= commerceSearchOrganizationsDisplayContext.getSearchContainer(locale) %>"
+		searchContainer="<%= commerceSearchOrganizationsDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="Object"
@@ -88,6 +88,6 @@ CommerceSearchOrganizationsDisplayContext commerceSearchOrganizationsDisplayCont
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceSearchOrganizationsDisplayContext.getSearchContainer(locale) %>" />
+		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceSearchOrganizationsDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>
 </div>

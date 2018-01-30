@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -83,11 +84,17 @@ public class UpgradeJournalArticleImage extends UpgradeProcess {
 
 					int lastIndexOf = elName.lastIndexOf(StringPool.UNDERLINE);
 
-					if (lastIndexOf > 0) {
-						elName = elName.substring(0, lastIndexOf);
+					if (lastIndexOf < 1) {
+						continue;
 					}
 
-					ps2.setString(1, elName);
+					String index = elName.substring(lastIndexOf + 1);
+
+					if (!Validator.isNumber(index)) {
+						continue;
+					}
+
+					ps2.setString(1, elName.substring(0, lastIndexOf));
 					ps2.setLong(2, articleImageId);
 
 					ps2.addBatch();

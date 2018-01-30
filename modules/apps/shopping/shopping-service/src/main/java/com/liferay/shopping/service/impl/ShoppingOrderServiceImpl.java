@@ -16,11 +16,14 @@ package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingOrder;
 import com.liferay.shopping.service.base.ShoppingOrderServiceBaseImpl;
-import com.liferay.shopping.service.permission.ShoppingOrderPermission;
-import com.liferay.shopping.service.permission.ShoppingPermission;
 
 /**
  * @author Brian Wing Shun Chan
@@ -36,9 +39,8 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 
 		ShoppingOrder order = shoppingOrderPersistence.findByNumber(number);
 
-		ShoppingOrderPermission.check(
-			getPermissionChecker(), groupId, order.getOrderId(),
-			ActionKeys.UPDATE);
+		_shoppingOrderModelResourcePermission.check(
+			getPermissionChecker(), order, ActionKeys.UPDATE);
 
 		shoppingOrderLocalService.completeOrder(
 			number, ppTxnId, ppPaymentStatus, ppPaymentGross, ppReceiverEmail,
@@ -47,8 +49,8 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 
 	@Override
 	public void deleteOrder(long groupId, long orderId) throws PortalException {
-		ShoppingOrderPermission.check(
-			getPermissionChecker(), groupId, orderId, ActionKeys.DELETE);
+		_shoppingOrderModelResourcePermission.check(
+			getPermissionChecker(), orderId, ActionKeys.DELETE);
 
 		shoppingOrderLocalService.deleteOrder(orderId);
 	}
@@ -63,7 +65,7 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			return order;
 		}
 
-		ShoppingPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_ORDERS);
 
 		return order;
@@ -75,8 +77,8 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		ShoppingOrderPermission.check(
-			getPermissionChecker(), groupId, orderId, ActionKeys.UPDATE);
+		_shoppingOrderModelResourcePermission.check(
+			getPermissionChecker(), orderId, ActionKeys.UPDATE);
 
 		shoppingOrderLocalService.sendEmail(orderId, emailType, serviceContext);
 	}
@@ -87,8 +89,8 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			double ppPaymentGross, String ppReceiverEmail, String ppPayerEmail)
 		throws PortalException {
 
-		ShoppingOrderPermission.check(
-			getPermissionChecker(), groupId, orderId, ActionKeys.UPDATE);
+		_shoppingOrderModelResourcePermission.check(
+			getPermissionChecker(), orderId, ActionKeys.UPDATE);
 
 		return shoppingOrderLocalService.updateOrder(
 			orderId, ppTxnId, ppPaymentStatus, ppPaymentGross, ppReceiverEmail,
@@ -110,8 +112,8 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			int ccExpYear, String ccVerNumber, String comments)
 		throws PortalException {
 
-		ShoppingOrderPermission.check(
-			getPermissionChecker(), groupId, orderId, ActionKeys.UPDATE);
+		_shoppingOrderModelResourcePermission.check(
+			getPermissionChecker(), orderId, ActionKeys.UPDATE);
 
 		return shoppingOrderLocalService.updateOrder(
 			orderId, billingFirstName, billingLastName, billingEmailAddress,
@@ -122,5 +124,16 @@ public class ShoppingOrderServiceImpl extends ShoppingOrderServiceBaseImpl {
 			shippingZip, shippingCountry, shippingPhone, ccName, ccType,
 			ccNumber, ccExpMonth, ccExpYear, ccVerNumber, comments);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				ShoppingOrderServiceImpl.class, "_portletResourcePermission",
+				ShoppingConstants.RESOURCE_NAME);
+	private static volatile ModelResourcePermission<ShoppingOrder>
+		_shoppingOrderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				ShoppingOrderServiceImpl.class,
+				"_shoppingOrderModelResourcePermission", ShoppingOrder.class);
 
 }

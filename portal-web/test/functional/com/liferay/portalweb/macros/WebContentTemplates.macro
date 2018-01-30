@@ -240,10 +240,6 @@
 		</if>
 	</command>
 
-	<command name="save">
-		<execute macro="DDLDataDefinition#save" />
-	</command>
-
 	<command name="tearDownCP">
 		<execute macro="Navigator#openURL" />
 

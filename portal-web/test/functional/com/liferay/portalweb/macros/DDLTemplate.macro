@@ -345,10 +345,6 @@
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
-	<command name="saveFormTemplateCP">
-		<execute macro="DDLDataDefinition#save" />
-	</command>
-
 	<command name="saveFormTemplateViaDDLDisplayPG">
 		<execute macro="DynamicDataMapping#selectDynamicDataMappingFrame" />
 

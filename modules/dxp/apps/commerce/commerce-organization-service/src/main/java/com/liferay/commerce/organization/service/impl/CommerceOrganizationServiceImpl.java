@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.user.service.impl;
+package com.liferay.commerce.organization.service.impl;
 
-import com.liferay.commerce.user.service.base.CommerceUserServiceBaseImpl;
+import com.liferay.commerce.organization.service.base.CommerceOrganizationServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -51,7 +51,8 @@ import java.util.Map;
 /**
  * @author Marco Leo
  */
-public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
+public class CommerceOrganizationServiceImpl
+	extends CommerceOrganizationServiceBaseImpl {
 
 	public Organization addOrganization(
 			long parentOrganization, String name, String type,
@@ -162,7 +163,7 @@ public class CommerceUserServiceImpl extends CommerceUserServiceBaseImpl {
 			String.valueOf(OrganizationConstants.ANY_PARENT_ORGANIZATION_ID));
 
 		if (Validator.isNotNull(type)) {
-			attributes.put("type", type);
+			attributes.put("type", "account");
 		}
 
 		if (Validator.isNotNull(keywords)) {

@@ -226,6 +226,27 @@ public interface CommerceCartModel extends BaseModel<CommerceCart>, GroupedModel
 	public void setName(String name);
 
 	/**
+	 * Returns the default cart of this commerce cart.
+	 *
+	 * @return the default cart of this commerce cart
+	 */
+	public boolean getDefaultCart();
+
+	/**
+	 * Returns <code>true</code> if this commerce cart is default cart.
+	 *
+	 * @return <code>true</code> if this commerce cart is default cart; <code>false</code> otherwise
+	 */
+	public boolean isDefaultCart();
+
+	/**
+	 * Sets whether this commerce cart is default cart.
+	 *
+	 * @param defaultCart the default cart of this commerce cart
+	 */
+	public void setDefaultCart(boolean defaultCart);
+
+	/**
 	 * Returns the type of this commerce cart.
 	 *
 	 * @return the type of this commerce cart

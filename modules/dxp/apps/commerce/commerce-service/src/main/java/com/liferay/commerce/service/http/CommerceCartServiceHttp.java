@@ -56,7 +56,8 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class CommerceCartServiceHttp {
 	public static com.liferay.commerce.model.CommerceCart addCommerceCart(
-		HttpPrincipal httpPrincipal, java.lang.String name, int type,
+		HttpPrincipal httpPrincipal, java.lang.String name,
+		boolean defaultCart, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
@@ -64,7 +65,7 @@ public class CommerceCartServiceHttp {
 					"addCommerceCart", _addCommerceCartParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, name,
-					type, serviceContext);
+					defaultCart, type, serviceContext);
 
 			Object returnObj = null;
 
@@ -171,15 +172,15 @@ public class CommerceCartServiceHttp {
 	}
 
 	public static com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		HttpPrincipal httpPrincipal, long groupId, long userId, int type,
-		java.lang.String name) {
+		HttpPrincipal httpPrincipal, long groupId, long userId,
+		boolean defaultCart, int type) {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
 					"fetchDefaultCommerceCart",
 					_fetchDefaultCommerceCartParameterTypes4);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					userId, type, name);
+					userId, defaultCart, type);
 
 			Object returnObj = null;
 
@@ -355,12 +356,45 @@ public class CommerceCartServiceHttp {
 		}
 	}
 
+	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		HttpPrincipal httpPrincipal, long commerceCartId,
+		java.lang.String name, boolean defaultCart)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
+					"updateCommerceCart", _updateCommerceCartParameterTypes10);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					commerceCartId, name, defaultCart);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (com.liferay.commerce.model.CommerceCart)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.model.CommerceCart updateUser(
 		HttpPrincipal httpPrincipal, long commerceCartId, long userId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceCartServiceUtil.class,
-					"updateUser", _updateUserParameterTypes10);
+					"updateUser", _updateUserParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceCartId, userId);
@@ -389,7 +423,7 @@ public class CommerceCartServiceHttp {
 
 	private static Log _log = LogFactoryUtil.getLog(CommerceCartServiceHttp.class);
 	private static final Class<?>[] _addCommerceCartParameterTypes0 = new Class[] {
-			java.lang.String.class, int.class,
+			java.lang.String.class, boolean.class, int.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
 	private static final Class<?>[] _deleteCommerceCartParameterTypes1 = new Class[] {
@@ -402,7 +436,7 @@ public class CommerceCartServiceHttp {
 			java.lang.String.class, long.class
 		};
 	private static final Class<?>[] _fetchDefaultCommerceCartParameterTypes4 = new Class[] {
-			long.class, long.class, int.class, java.lang.String.class
+			long.class, long.class, boolean.class, int.class
 		};
 	private static final Class<?>[] _getCommerceCartParameterTypes5 = new Class[] {
 			long.class
@@ -422,7 +456,10 @@ public class CommerceCartServiceHttp {
 			long.class, long.class, long.class, long.class, long.class,
 			java.lang.String.class, double.class
 		};
-	private static final Class<?>[] _updateUserParameterTypes10 = new Class[] {
+	private static final Class<?>[] _updateCommerceCartParameterTypes10 = new Class[] {
+			long.class, java.lang.String.class, boolean.class
+		};
+	private static final Class<?>[] _updateUserParameterTypes11 = new Class[] {
 			long.class, long.class
 		};
 }

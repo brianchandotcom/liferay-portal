@@ -82,6 +82,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
+			{ "defaultCart", Types.BOOLEAN },
 			{ "type_", Types.INTEGER },
 			{ "billingAddressId", Types.BIGINT },
 			{ "shippingAddressId", Types.BIGINT },
@@ -102,6 +103,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("defaultCart", Types.BOOLEAN);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
 		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
@@ -111,7 +113,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		TABLE_COLUMNS_MAP.put("shippingPrice", Types.DOUBLE);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceCart (uuid_ VARCHAR(75) null,commerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,shippingPrice DOUBLE)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceCart (uuid_ VARCHAR(75) null,commerceCartId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,defaultCart BOOLEAN,type_ INTEGER,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,shippingPrice DOUBLE)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceCart";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceCart.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceCart.createDate ASC";
@@ -129,13 +131,14 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			true);
 	public static final long BILLINGADDRESSID_COLUMN_BITMASK = 1L;
 	public static final long COMPANYID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long NAME_COLUMN_BITMASK = 8L;
-	public static final long SHIPPINGADDRESSID_COLUMN_BITMASK = 16L;
-	public static final long TYPE_COLUMN_BITMASK = 32L;
-	public static final long USERID_COLUMN_BITMASK = 64L;
-	public static final long UUID_COLUMN_BITMASK = 128L;
-	public static final long CREATEDATE_COLUMN_BITMASK = 256L;
+	public static final long DEFAULTCART_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long SHIPPINGADDRESSID_COLUMN_BITMASK = 32L;
+	public static final long TYPE_COLUMN_BITMASK = 64L;
+	public static final long USERID_COLUMN_BITMASK = 128L;
+	public static final long UUID_COLUMN_BITMASK = 256L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -159,6 +162,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
+		model.setDefaultCart(soapModel.getDefaultCart());
 		model.setType(soapModel.getType());
 		model.setBillingAddressId(soapModel.getBillingAddressId());
 		model.setShippingAddressId(soapModel.getShippingAddressId());
@@ -239,6 +243,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("defaultCart", getDefaultCart());
 		attributes.put("type", getType());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
@@ -307,6 +312,12 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean defaultCart = (Boolean)attributes.get("defaultCart");
+
+		if (defaultCart != null) {
+			setDefaultCart(defaultCart);
 		}
 
 		Integer type = (Integer)attributes.get("type");
@@ -548,6 +559,35 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@JSON
 	@Override
+	public boolean getDefaultCart() {
+		return _defaultCart;
+	}
+
+	@JSON
+	@Override
+	public boolean isDefaultCart() {
+		return _defaultCart;
+	}
+
+	@Override
+	public void setDefaultCart(boolean defaultCart) {
+		_columnBitmask |= DEFAULTCART_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultCart) {
+			_setOriginalDefaultCart = true;
+
+			_originalDefaultCart = _defaultCart;
+		}
+
+		_defaultCart = defaultCart;
+	}
+
+	public boolean getOriginalDefaultCart() {
+		return _originalDefaultCart;
+	}
+
+	@JSON
+	@Override
 	public int getType() {
 		return _type;
 	}
@@ -710,6 +750,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		commerceCartImpl.setCreateDate(getCreateDate());
 		commerceCartImpl.setModifiedDate(getModifiedDate());
 		commerceCartImpl.setName(getName());
+		commerceCartImpl.setDefaultCart(getDefaultCart());
 		commerceCartImpl.setType(getType());
 		commerceCartImpl.setBillingAddressId(getBillingAddressId());
 		commerceCartImpl.setShippingAddressId(getShippingAddressId());
@@ -795,6 +836,10 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 		commerceCartModelImpl._originalName = commerceCartModelImpl._name;
 
+		commerceCartModelImpl._originalDefaultCart = commerceCartModelImpl._defaultCart;
+
+		commerceCartModelImpl._setOriginalDefaultCart = false;
+
 		commerceCartModelImpl._originalType = commerceCartModelImpl._type;
 
 		commerceCartModelImpl._setOriginalType = false;
@@ -864,6 +909,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 			commerceCartCacheModel.name = null;
 		}
 
+		commerceCartCacheModel.defaultCart = getDefaultCart();
+
 		commerceCartCacheModel.type = getType();
 
 		commerceCartCacheModel.billingAddressId = getBillingAddressId();
@@ -889,7 +936,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -909,6 +956,8 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(getModifiedDate());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", defaultCart=");
+		sb.append(getDefaultCart());
 		sb.append(", type=");
 		sb.append(getType());
 		sb.append(", billingAddressId=");
@@ -930,7 +979,7 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceCart");
@@ -971,6 +1020,10 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 		sb.append(
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>defaultCart</column-name><column-value><![CDATA[");
+		sb.append(getDefaultCart());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>type</column-name><column-value><![CDATA[");
@@ -1028,6 +1081,9 @@ public class CommerceCartModelImpl extends BaseModelImpl<CommerceCart>
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
+	private boolean _defaultCart;
+	private boolean _originalDefaultCart;
+	private boolean _setOriginalDefaultCart;
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;

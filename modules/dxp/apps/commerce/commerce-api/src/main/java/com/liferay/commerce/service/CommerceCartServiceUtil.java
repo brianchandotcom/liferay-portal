@@ -42,10 +42,11 @@ public class CommerceCartServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.service.impl.CommerceCartServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.commerce.model.CommerceCart addCommerceCart(
-		java.lang.String name, int type,
+		java.lang.String name, boolean defaultCart, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().addCommerceCart(name, type, serviceContext);
+		return getService()
+				   .addCommerceCart(name, defaultCart, type, serviceContext);
 	}
 
 	public static void deleteCommerceCart(long commerceCartId)
@@ -64,8 +65,9 @@ public class CommerceCartServiceUtil {
 	}
 
 	public static com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, int type, java.lang.String name) {
-		return getService().fetchDefaultCommerceCart(groupId, userId, type, name);
+		long groupId, long userId, boolean defaultCart, int type) {
+		return getService()
+				   .fetchDefaultCommerceCart(groupId, userId, defaultCart, type);
 	}
 
 	public static com.liferay.commerce.model.CommerceCart getCommerceCart(
@@ -113,6 +115,12 @@ public class CommerceCartServiceUtil {
 				   .updateCommerceCart(commerceCartId, billingAddressId,
 			shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, shippingPrice);
+	}
+
+	public static com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		long commerceCartId, java.lang.String name, boolean defaultCart)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCommerceCart(commerceCartId, name, defaultCart);
 	}
 
 	public static com.liferay.commerce.model.CommerceCart updateUser(

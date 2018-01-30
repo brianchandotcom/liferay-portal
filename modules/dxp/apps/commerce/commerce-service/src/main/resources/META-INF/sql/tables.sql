@@ -112,6 +112,7 @@ create table CommerceCart (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
+	defaultCart BOOLEAN,
 	type_ INTEGER,
 	billingAddressId LONG,
 	shippingAddressId LONG,

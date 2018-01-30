@@ -43,6 +43,7 @@ public class CommerceCartSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setDefaultCart(model.getDefaultCart());
 		soapModel.setType(model.getType());
 		soapModel.setBillingAddressId(model.getBillingAddressId());
 		soapModel.setShippingAddressId(model.getShippingAddressId());
@@ -174,6 +175,18 @@ public class CommerceCartSoap implements Serializable {
 		_name = name;
 	}
 
+	public boolean getDefaultCart() {
+		return _defaultCart;
+	}
+
+	public boolean isDefaultCart() {
+		return _defaultCart;
+	}
+
+	public void setDefaultCart(boolean defaultCart) {
+		_defaultCart = defaultCart;
+	}
+
 	public int getType() {
 		return _type;
 	}
@@ -239,6 +252,7 @@ public class CommerceCartSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private boolean _defaultCart;
 	private int _type;
 	private long _billingAddressId;
 	private long _shippingAddressId;

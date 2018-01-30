@@ -75,6 +75,7 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" />
+		<field name="defaultCart" type="boolean" />
 		<field name="type" type="int" />
 		<field name="billingAddressId" type="long" />
 		<field name="shippingAddressId" type="long" />

@@ -141,6 +141,8 @@ public class CommerceCartPersistenceTest {
 
 		newCommerceCart.setName(RandomTestUtil.randomString());
 
+		newCommerceCart.setDefaultCart(RandomTestUtil.randomBoolean());
+
 		newCommerceCart.setType(RandomTestUtil.nextInt());
 
 		newCommerceCart.setBillingAddressId(RandomTestUtil.nextLong());
@@ -179,6 +181,8 @@ public class CommerceCartPersistenceTest {
 			Time.getShortTimestamp(newCommerceCart.getModifiedDate()));
 		Assert.assertEquals(existingCommerceCart.getName(),
 			newCommerceCart.getName());
+		Assert.assertEquals(existingCommerceCart.getDefaultCart(),
+			newCommerceCart.getDefaultCart());
 		Assert.assertEquals(existingCommerceCart.getType(),
 			newCommerceCart.getType());
 		Assert.assertEquals(existingCommerceCart.getBillingAddressId(),
@@ -255,6 +259,15 @@ public class CommerceCartPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_U_D_T() throws Exception {
+		_persistence.countByG_U_D_T(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong(), RandomTestUtil.randomBoolean(),
+			RandomTestUtil.nextInt());
+
+		_persistence.countByG_U_D_T(0L, 0L, RandomTestUtil.randomBoolean(), 0);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CommerceCart newCommerceCart = addCommerceCart();
 
@@ -280,8 +293,8 @@ public class CommerceCartPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceCart", "uuid",
 			true, "commerceCartId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "name", true, "type", true,
-			"billingAddressId", true, "shippingAddressId", true,
+			"modifiedDate", true, "name", true, "defaultCart", true, "type",
+			true, "billingAddressId", true, "shippingAddressId", true,
 			"commercePaymentMethodId", true, "commerceShippingMethodId", true,
 			"shippingOptionName", true, "shippingPrice", true);
 	}
@@ -516,6 +529,8 @@ public class CommerceCartPersistenceTest {
 		commerceCart.setModifiedDate(RandomTestUtil.nextDate());
 
 		commerceCart.setName(RandomTestUtil.randomString());
+
+		commerceCart.setDefaultCart(RandomTestUtil.randomBoolean());
 
 		commerceCart.setType(RandomTestUtil.nextInt());
 

@@ -69,6 +69,7 @@ public class CommerceCartWrapper implements CommerceCart,
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("defaultCart", getDefaultCart());
 		attributes.put("type", getType());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
@@ -134,6 +135,12 @@ public class CommerceCartWrapper implements CommerceCart,
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Boolean defaultCart = (Boolean)attributes.get("defaultCart");
+
+		if (defaultCart != null) {
+			setDefaultCart(defaultCart);
 		}
 
 		Integer type = (Integer)attributes.get("type");
@@ -260,6 +267,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public Date getCreateDate() {
 		return _commerceCart.getCreateDate();
+	}
+
+	/**
+	* Returns the default cart of this commerce cart.
+	*
+	* @return the default cart of this commerce cart
+	*/
+	@Override
+	public boolean getDefaultCart() {
+		return _commerceCart.getDefaultCart();
 	}
 
 	@Override
@@ -408,6 +425,16 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.isCachedModel();
 	}
 
+	/**
+	* Returns <code>true</code> if this commerce cart is default cart.
+	*
+	* @return <code>true</code> if this commerce cart is default cart; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isDefaultCart() {
+		return _commerceCart.isDefaultCart();
+	}
+
 	@Override
 	public boolean isEscapedModel() {
 		return _commerceCart.isEscapedModel();
@@ -492,6 +519,16 @@ public class CommerceCartWrapper implements CommerceCart,
 	@Override
 	public void setCreateDate(Date createDate) {
 		_commerceCart.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets whether this commerce cart is default cart.
+	*
+	* @param defaultCart the default cart of this commerce cart
+	*/
+	@Override
+	public void setDefaultCart(boolean defaultCart) {
+		_commerceCart.setDefaultCart(defaultCart);
 	}
 
 	@Override

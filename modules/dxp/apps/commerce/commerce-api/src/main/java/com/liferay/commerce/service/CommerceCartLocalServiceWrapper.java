@@ -47,11 +47,11 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart addCommerceCart(
-		java.lang.String name, int type,
+		java.lang.String name, boolean defaultCart, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartLocalService.addCommerceCart(name, type,
-			serviceContext);
+		return _commerceCartLocalService.addCommerceCart(name, defaultCart,
+			type, serviceContext);
 	}
 
 	/**
@@ -211,9 +211,9 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, int type, java.lang.String name) {
+		long groupId, long userId, boolean defaultCart, int type) {
 		return _commerceCartLocalService.fetchDefaultCommerceCart(groupId,
-			userId, type, name);
+			userId, defaultCart, type);
 	}
 
 	@Override
@@ -400,6 +400,14 @@ public class CommerceCartLocalServiceWrapper implements CommerceCartLocalService
 		return _commerceCartLocalService.updateCommerceCart(commerceCartId,
 			billingAddressId, shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, shippingPrice);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		long commerceCartId, java.lang.String name, boolean defaultCart)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartLocalService.updateCommerceCart(commerceCartId,
+			name, defaultCart);
 	}
 
 	@Override

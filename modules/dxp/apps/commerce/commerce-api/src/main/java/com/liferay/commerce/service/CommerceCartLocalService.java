@@ -74,8 +74,9 @@ public interface CommerceCartLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceCart addCommerceCart(CommerceCart commerceCart);
 
-	public CommerceCart addCommerceCart(java.lang.String name, int type,
-		ServiceContext serviceContext) throws PortalException;
+	public CommerceCart addCommerceCart(java.lang.String name,
+		boolean defaultCart, int type, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new commerce cart with the primary key. Does not add the commerce cart to the database.
@@ -189,7 +190,7 @@ public interface CommerceCartLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CommerceCart fetchDefaultCommerceCart(long groupId, long userId,
-		int type, java.lang.String name);
+		boolean defaultCart, int type);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -320,6 +321,9 @@ public interface CommerceCartLocalService extends BaseLocalService,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double shippingPrice)
 		throws PortalException;
+
+	public CommerceCart updateCommerceCart(long commerceCartId,
+		java.lang.String name, boolean defaultCart) throws PortalException;
 
 	public CommerceCart updateUser(long commerceCartId, long userId)
 		throws PortalException;

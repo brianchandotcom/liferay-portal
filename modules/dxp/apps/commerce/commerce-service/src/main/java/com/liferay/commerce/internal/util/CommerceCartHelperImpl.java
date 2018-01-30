@@ -27,13 +27,16 @@ import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.CookieKeys;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import javax.portlet.PortletRequest;
+import javax.portlet.PortletSession;
 import javax.portlet.PortletURL;
+import javax.portlet.RenderRequest;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -268,16 +271,40 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			return commerceCartUuid;
 		}
 
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
-			type, groupId);
-
 		User user = _portal.getUser(httpServletRequest);
 
 		if ((user != null) && !user.isDefaultUser()) {
 			CommerceCart commerceCart =
 				_commerceCartService.fetchDefaultCommerceCart(
-					groupId, user.getUserId(), type,
-					CommerceCartConstants.DEFAULT_TITLE);
+					groupId, user.getUserId(), true, type);
+
+			if (type == CommerceCartConstants.TYPE_WISH_LIST) {
+				RenderRequest renderRequest =
+					(RenderRequest)httpServletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_REQUEST);
+
+				if (renderRequest != null) {
+					CommerceCart selectedCommerceCart = null;
+
+					PortletSession portletSession =
+						renderRequest.getPortletSession();
+
+					long commerceCartId = 0;
+
+					commerceCartId = (Long)portletSession.getAttribute(
+						CommerceWebKeys.WISH_LIST_COMMERCE_CART_ID);
+
+					if (commerceCartId > 0) {
+						selectedCommerceCart =
+							_commerceCartService.fetchCommerceCart(
+								commerceCartId);
+					}
+
+					if (selectedCommerceCart != null) {
+						commerceCart = selectedCommerceCart;
+					}
+				}
+			}
 
 			if (commerceCart != null) {
 				CommerceCartThreadLocal.setCommerceCartUuid(
@@ -286,6 +313,9 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 				return commerceCart.getUuid();
 			}
 		}
+
+		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
+			type, groupId);
 
 		commerceCartUuid = CookieKeys.getCookie(
 			httpServletRequest, commerceCartUuidWebKey, false);

@@ -34,10 +34,11 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart addCommerceCart(
-		java.lang.String name, int type,
+		java.lang.String name, boolean defaultCart, int type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceCartService.addCommerceCart(name, type, serviceContext);
+		return _commerceCartService.addCommerceCart(name, defaultCart, type,
+			serviceContext);
 	}
 
 	@Override
@@ -60,9 +61,9 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 
 	@Override
 	public com.liferay.commerce.model.CommerceCart fetchDefaultCommerceCart(
-		long groupId, long userId, int type, java.lang.String name) {
+		long groupId, long userId, boolean defaultCart, int type) {
 		return _commerceCartService.fetchDefaultCommerceCart(groupId, userId,
-			type, name);
+			defaultCart, type);
 	}
 
 	@Override
@@ -113,6 +114,14 @@ public class CommerceCartServiceWrapper implements CommerceCartService,
 		return _commerceCartService.updateCommerceCart(commerceCartId,
 			billingAddressId, shippingAddressId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, shippingPrice);
+	}
+
+	@Override
+	public com.liferay.commerce.model.CommerceCart updateCommerceCart(
+		long commerceCartId, java.lang.String name, boolean defaultCart)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCartService.updateCommerceCart(commerceCartId, name,
+			defaultCart);
 	}
 
 	@Override

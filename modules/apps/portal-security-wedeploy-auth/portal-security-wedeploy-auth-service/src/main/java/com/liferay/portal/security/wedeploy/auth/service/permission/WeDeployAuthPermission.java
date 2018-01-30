@@ -20,19 +20,19 @@ import com.liferay.portal.kernel.security.permission.BaseResourcePermissionCheck
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
 
+import com.liferay.portal.security.wedeploy.auth.constants.WeDeployConstants;
 import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Supritha Sundaram
  */
 @Component(
-	property = {"resource.name=" + WeDeployAuthPermission.RESOURCE_NAME},
+	property = {"resource.name=" + WeDeployConstants.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
 public class WeDeployAuthPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.portal.security.wedeploy.auth";
+	public static final String RESOURCE_NAME = WeDeployConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, String actionId)
@@ -40,14 +40,16 @@ public class WeDeployAuthPermission extends BaseResourcePermissionChecker {
 
 		if (!contains(permissionChecker, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker.getUserId(), RESOURCE_NAME, 0, actionId);
+				permissionChecker.getUserId(), WeDeployConstants.RESOURCE_NAME,
+				0, actionId);
 		}
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, String actionId) {
 
-		return contains(permissionChecker, RESOURCE_NAME, 0, actionId);
+		return contains(
+			permissionChecker, WeDeployConstants.RESOURCE_NAME, 0, actionId);
 	}
 
 	@Override

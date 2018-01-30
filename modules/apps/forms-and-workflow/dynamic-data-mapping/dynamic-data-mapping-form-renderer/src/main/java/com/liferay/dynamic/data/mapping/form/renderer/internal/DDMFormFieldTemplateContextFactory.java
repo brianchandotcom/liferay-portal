@@ -21,6 +21,7 @@ import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldTypeServices
 import com.liferay.dynamic.data.mapping.form.field.type.DDMFormFieldValueAccessor;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRendererConstants;
 import com.liferay.dynamic.data.mapping.form.renderer.DDMFormRenderingContext;
+import com.liferay.dynamic.data.mapping.model.DDMForm;
 import com.liferay.dynamic.data.mapping.model.DDMFormField;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldOptions;
 import com.liferay.dynamic.data.mapping.model.DDMFormFieldValidation;
@@ -128,7 +129,7 @@ public class DDMFormFieldTemplateContextFactory {
 		setDDMFormFieldTemplateContextInstanceId(
 			ddmFormFieldTemplateContext, ddmFormFieldValue.getInstanceId());
 		setDDMFormFieldTemplateContextLocale(
-			ddmFormFieldTemplateContext, "locale", _locale);
+			ddmFormFieldTemplateContext, ddmFormField);
 		setDDMFormFieldTemplateContextLocalizedValue(
 			ddmFormFieldTemplateContext, "label", ddmFormField.getLabel());
 		setDDMFormFieldTemplateContextLocalizable(
@@ -408,11 +409,13 @@ public class DDMFormFieldTemplateContextFactory {
 	}
 
 	protected void setDDMFormFieldTemplateContextLocale(
-		Map<String, Object> ddmFormFieldTemplateContext, String propertyName,
-		Locale locale) {
+		Map<String, Object> ddmFormFieldTemplateContext,
+		DDMFormField ddmFormField) {
+
+		DDMForm ddmForm = ddmFormField.getDDMForm();
 
 		ddmFormFieldTemplateContext.put(
-			propertyName, LocaleUtil.toLanguageId(locale));
+			"locale", LocaleUtil.toLanguageId(ddmForm.getDefaultLocale()));
 	}
 
 	protected void setDDMFormFieldTemplateContextLocalizable(

@@ -110,6 +110,14 @@ public interface WorkflowEngine {
 			ServiceContext serviceContext)
 		throws WorkflowException;
 
+	public default WorkflowDefinition saveWorkflowDefinition(
+			String title, String name, byte[] bytes,
+			ServiceContext serviceContext)
+		throws WorkflowException {
+
+		throw new UnsupportedOperationException();
+	}
+
 	public List<WorkflowInstance> search(
 			Long userId, String assetClassName, String nodeName,
 			String kaleoDefinitionName, Boolean completed, int start, int end,

@@ -116,7 +116,7 @@ NumberFormat percentFormat = NumberFormat.getPercentInstance(locale);
 
 	</div>
 
-	<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
+	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 		<br />
 
 		<liferay-ui:header

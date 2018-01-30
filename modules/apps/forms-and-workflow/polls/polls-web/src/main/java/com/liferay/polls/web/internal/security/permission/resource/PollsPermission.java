@@ -15,6 +15,7 @@
 package com.liferay.polls.web.internal.security.permission.resource;
 
 import com.liferay.polls.constants.PollsConstants;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
@@ -26,6 +27,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class PollsPermission {
+
+	public static boolean contains(
+		PermissionChecker permissionChecker, Group group, String actionId) {
+
+		return _portletResourcePermission.contains(
+			permissionChecker, group, actionId);
+	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {

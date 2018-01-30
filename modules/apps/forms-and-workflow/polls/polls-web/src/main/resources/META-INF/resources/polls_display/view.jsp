@@ -82,7 +82,7 @@ catch (NoSuchQuestionException nsqe) {
 					</h2>
 
 					<c:choose>
-						<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+						<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 
 							<%
 							for (PollsChoice choice : choices) {
@@ -104,7 +104,7 @@ catch (NoSuchQuestionException nsqe) {
 						<c:otherwise>
 							<%@ include file="/polls/view_question_results.jspf" %>
 
-							<c:if test="<%= !themeDisplay.isSignedIn() && !question.isExpired() && !PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+							<c:if test="<%= !themeDisplay.isSignedIn() && !question.isExpired() && !PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 								<div class="alert alert-info">
 									<a href="<%= themeDisplay.getURLSignIn() %>" target="_top"><liferay-ui:message key="please-sign-in-to-vote" /></a>
 								</div>

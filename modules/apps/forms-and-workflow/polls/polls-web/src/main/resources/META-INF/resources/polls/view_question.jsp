@@ -29,7 +29,7 @@ boolean hasVoted = PollsUtil.hasVoted(request, question.getQuestionId());
 
 boolean viewResults = ParamUtil.getBoolean(request, "viewResults");
 
-if (viewResults && !PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE)) {
+if (viewResults && !PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE)) {
 	viewResults = false;
 }
 
@@ -64,7 +64,7 @@ portletDisplay.setURLBack(redirect);
 			</h2>
 
 			<c:choose>
-				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+				<c:when test="<%= !viewResults && !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 
 					<%
 					for (PollsChoice choice : choices) {
@@ -79,7 +79,7 @@ portletDisplay.setURLBack(redirect);
 					}
 					%>
 
-					<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
+					<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 						<portlet:renderURL var="viewResultsURL">
 							<portlet:param name="mvcRenderCommandName" value="/polls/view_question" />
 							<portlet:param name="redirect" value="<%= redirect %>" />
@@ -117,7 +117,7 @@ portletDisplay.setURLBack(redirect);
 
 					<div class="button-holder">
 						<c:choose>
-							<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
+							<c:when test="<%= !question.isExpired() && !hasVoted && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.ADD_VOTE) %>">
 								<aui:button href="<%= viewQuestionURL %>" value="back-to-vote" />
 							</c:when>
 						</c:choose>

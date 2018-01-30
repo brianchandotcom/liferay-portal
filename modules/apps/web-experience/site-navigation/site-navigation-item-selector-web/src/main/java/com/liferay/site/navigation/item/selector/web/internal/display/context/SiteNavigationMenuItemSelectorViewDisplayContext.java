@@ -39,9 +39,9 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Pavel Savinov
  */
-public class SiteNavigationItemSelectorViewDisplayContext {
+public class SiteNavigationMenuItemSelectorViewDisplayContext {
 
-	public SiteNavigationItemSelectorViewDisplayContext(
+	public SiteNavigationMenuItemSelectorViewDisplayContext(
 		HttpServletRequest request, PortletURL portletURL,
 		String itemSelectedEventName) {
 

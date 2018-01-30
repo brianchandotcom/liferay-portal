@@ -14,7 +14,8 @@
 
 package com.liferay.blogs.linkback;
 
-import com.liferay.blogs.util.BlogsUtil;
+import com.liferay.blogs.internal.linkback.LinkbackConsumerImpl;
+import com.liferay.blogs.web.internal.util.BlogsUtil;
 import com.liferay.portal.kernel.comment.CommentManager;
 import com.liferay.portal.kernel.security.pacl.permission.PortalSocketPermission;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
@@ -52,7 +53,7 @@ public class LinkbackConsumerTest extends PowerMockito {
 
 		setUpBlogsUtil();
 
-		_linkbackConsumer = new LinkbackConsumer();
+		_linkbackConsumer = new LinkbackConsumerImpl();
 
 		ReflectionTestUtil.setFieldValue(
 			_linkbackConsumer, "_commentManager", _commentManager);

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.util;
+package com.liferay.blogs.web.internal.util;
 
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;

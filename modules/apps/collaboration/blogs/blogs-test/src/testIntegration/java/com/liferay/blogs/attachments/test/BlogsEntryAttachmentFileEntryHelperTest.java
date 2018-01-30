@@ -18,7 +18,6 @@ import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
-import com.liferay.blogs.util.BlogsEntryAttachmentFileEntryUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.editor.EditorConstants;
 import com.liferay.portal.kernel.model.Group;
@@ -44,15 +43,22 @@ import com.liferay.portlet.blogs.BlogsEntryAttachmentFileEntryReference;
 
 import java.io.InputStream;
 
+import java.lang.reflect.Method;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Roberto Díaz
@@ -65,6 +71,35 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			BlogsEntryAttachmentFileEntryHelperTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		for (Bundle installedBundle : bundleContext.getBundles()) {
+			String symbolicName = installedBundle.getSymbolicName();
+
+			if (symbolicName.equals("com.liferay.blogs.service")) {
+				bundle = installedBundle;
+
+				break;
+			}
+		}
+
+		Class<?> clazz = bundle.loadClass(
+			"com.liferay.blogs.internal.util." +
+				"BlogsEntryAttachmentFileEntryUtil");
+
+		_getTempBlogsMethod = clazz.getMethod(
+			"getTempBlogsEntryAttachmentFileEntries", String.class);
+
+		_addBlogsEntryMethod = clazz.getMethod(
+			"addBlogsEntryAttachmentFileEntries", Long.TYPE, Long.TYPE,
+			Long.TYPE, Long.TYPE, List.class);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -123,9 +158,8 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 					null, tempFileEntry, StringPool.BLANK));
 
 		List<FileEntry> tempBlogsEntryAttachmentFileEntries =
-			BlogsEntryAttachmentFileEntryUtil.
-				getTempBlogsEntryAttachmentFileEntries(
-					getContent(tempFileEntryImgTag));
+			(List<FileEntry>)_getTempBlogsMethod.invoke(
+				null, getContent(tempFileEntryImgTag));
 
 		Assert.assertEquals(
 			tempBlogsEntryAttachmentFileEntries.toString(), 1,
@@ -152,9 +186,8 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 			tempFileEntry);
 
 		List<FileEntry> tempBlogsEntryAttachmentFileEntries =
-			BlogsEntryAttachmentFileEntryUtil.
-				getTempBlogsEntryAttachmentFileEntries(
-					getContent(tempFileEntryImgTag));
+			(List<FileEntry>)_getTempBlogsMethod.invoke(
+				null, getContent(tempFileEntryImgTag));
 
 		Assert.assertEquals(
 			tempBlogsEntryAttachmentFileEntries.toString(), 1,
@@ -188,10 +221,10 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 		Folder folder = BlogsEntryLocalServiceUtil.addAttachmentsFolder(
 			_user.getUserId(), _group.getGroupId());
 
-		return BlogsEntryAttachmentFileEntryUtil.
-			addBlogsEntryAttachmentFileEntries(
-				_group.getGroupId(), _user.getUserId(), entry.getEntryId(),
-				folder.getFolderId(), tempFileEntries);
+		return (List<BlogsEntryAttachmentFileEntryReference>)
+			_addBlogsEntryMethod.invoke(
+				null, _group.getGroupId(), _user.getUserId(),
+				entry.getEntryId(), folder.getFolderId(), tempFileEntries);
 	}
 
 	protected String getContent(String tempFileEntryImgTag) {
@@ -237,6 +270,9 @@ public class BlogsEntryAttachmentFileEntryHelperTest {
 	}
 
 	private static final String _TEMP_FOLDER_NAME = BlogsEntry.class.getName();
+
+	private static Method _addBlogsEntryMethod;
+	private static Method _getTempBlogsMethod;
 
 	@DeleteAfterTestRun
 	private Group _group;

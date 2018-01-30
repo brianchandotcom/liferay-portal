@@ -17,6 +17,7 @@ package com.liferay.blogs.service.test;
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.blogs.attachments.test.BlogsEntryAttachmentFileEntryHelperTest;
 import com.liferay.blogs.constants.BlogsConstants;
 import com.liferay.blogs.exception.EntryContentException;
 import com.liferay.blogs.exception.EntryTitleException;
@@ -24,7 +25,6 @@ import com.liferay.blogs.exception.NoSuchEntryException;
 import com.liferay.blogs.model.BlogsEntry;
 import com.liferay.blogs.service.BlogsEntryLocalServiceUtil;
 import com.liferay.blogs.test.util.BlogsTestUtil;
-import com.liferay.blogs.util.BlogsUtil;
 import com.liferay.message.boards.kernel.service.MBMessageLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
@@ -61,16 +61,23 @@ import com.liferay.subscription.service.SubscriptionLocalServiceUtil;
 
 import java.io.InputStream;
 
+import java.lang.reflect.Method;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleContext;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Cristina González
@@ -83,6 +90,30 @@ public class BlogsEntryLocalServiceTest {
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@BeforeClass
+	public static void setUpClass() throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(
+			BlogsEntryAttachmentFileEntryHelperTest.class);
+
+		BundleContext bundleContext = bundle.getBundleContext();
+
+		for (Bundle installedBundle : bundleContext.getBundles()) {
+			String symbolicName = installedBundle.getSymbolicName();
+
+			if (symbolicName.equals("com.liferay.blogs.web")) {
+				bundle = installedBundle;
+
+				break;
+			}
+		}
+
+		Class<?> clazz = bundle.loadClass(
+			"com.liferay.blogs.web.internal.util.BlogsUtil");
+
+		_getUrlTitleMethod = clazz.getMethod(
+			"getUrlTitle", Long.TYPE, String.class);
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -708,7 +739,7 @@ public class BlogsEntryLocalServiceTest {
 			serviceContext);
 
 		Assert.assertEquals(
-			BlogsUtil.getUrlTitle(entry.getEntryId(), title),
+			_getUrlTitleMethod.invoke(null, entry.getEntryId(), title),
 			entry.getUrlTitle());
 	}
 
@@ -725,7 +756,7 @@ public class BlogsEntryLocalServiceTest {
 			_user.getUserId(), title, true, serviceContext);
 
 		Assert.assertEquals(
-			BlogsUtil.getUrlTitle(entry.getEntryId(), title),
+			_getUrlTitleMethod.invoke(null, entry.getEntryId(), title),
 			entry.getUrlTitle());
 	}
 
@@ -1090,6 +1121,8 @@ public class BlogsEntryLocalServiceTest {
 
 		return sb.toString();
 	}
+
+	private static Method _getUrlTitleMethod;
 
 	@DeleteAfterTestRun
 	private Group _group;

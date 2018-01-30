@@ -1,12 +1,6 @@
 Bundle-Name: Liferay Blogs Service
 Bundle-SymbolicName: com.liferay.blogs.service
-Bundle-Version: 1.2.0
-Export-Package:\
-	com.liferay.blogs.linkback,\
-	com.liferay.blogs.service.permission,\
-	com.liferay.blogs.settings,\
-	com.liferay.blogs.social,\
-	com.liferay.blogs.util
+Bundle-Version: 2.0.0
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Blogs
 Liferay-Require-SchemaVersion: 1.1.0

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.blogs.util;
+package com.liferay.blogs.internal.util;
 
 import com.liferay.portal.kernel.repository.model.FileEntry;
 

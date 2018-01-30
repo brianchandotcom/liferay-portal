@@ -14,13 +14,11 @@
 
 package com.liferay.portal.service;
 
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.test.CaptureHandler;
 import com.liferay.portal.kernel.test.JDKLoggerTestUtil;
 import com.liferay.portal.kernel.test.ReflectionTestUtil;
 import com.liferay.portal.service.impl.PortletLocalServiceImpl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import java.util.List;
@@ -55,20 +53,14 @@ public class ValidPortletIdTest {
 				JDKLoggerTestUtil.configureJDKLogger(
 					PortletLocalServiceImpl.class.getName(), Level.WARNING)) {
 
-			String portletId = "2_INSTANCE_'\"><script>alert(1)</script>";
-
 			try {
-				method.invoke(portletLocalServiceImpl, portletId);
+				method.invoke(
+					portletLocalServiceImpl,
+					"2_INSTANCE_'\"><script>alert(1)</script>");
 
 				Assert.fail();
 			}
-			catch (InvocationTargetException ite) {
-				Throwable throwable = ite.getCause();
-
-				Assert.assertSame(
-					PrincipalException.class, throwable.getClass());
-				Assert.assertEquals(
-					"Invalid portlet ID " + portletId, throwable.getMessage());
+			catch (Exception e) {
 			}
 
 			List<LogRecord> logRecords = captureHandler.getLogRecords();

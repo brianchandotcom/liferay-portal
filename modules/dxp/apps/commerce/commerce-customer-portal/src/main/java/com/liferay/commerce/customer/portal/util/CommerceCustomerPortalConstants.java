@@ -19,8 +19,8 @@ package com.liferay.commerce.customer.portal.util;
  */
 public class CommerceCustomerPortalConstants {
 
-	public static final String ACCOUNT_ORGANIZATION_TYPE = "account";
+	public static final String ORGANIZATION_TYPE_ACCOUNT = "account";
 
-	public static final String BRANCH_ORGANIZATION_TYPE = "branch";
+	public static final String ORGANIZATION_TYPE_BRANCH = "branch";
 
 }

@@ -53,7 +53,7 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Commerce Search Organization",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/search.jsp",
-		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_SEARCH_ORGANIZATION_ADMIN,
+		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_SEARCH_ORGANIZATIONS,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"

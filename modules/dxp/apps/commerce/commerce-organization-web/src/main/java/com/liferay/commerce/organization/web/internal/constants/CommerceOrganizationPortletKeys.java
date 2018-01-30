@@ -19,11 +19,11 @@ package com.liferay.commerce.organization.web.internal.constants;
  */
 public class CommerceOrganizationPortletKeys {
 
-	public static final String COMMERCE_ORGANIZATION_ADMIN =
+	public static final String COMMERCE_ORGANIZATION =
 		"com_liferay_commerce_organization_web_internal_portlet_" +
 			"CommerceOrganizationPortlet";
 
-	public static final String COMMERCE_SEARCH_ORGANIZATION_ADMIN =
+	public static final String COMMERCE_SEARCH_ORGANIZATIONS =
 		"com_liferay_commerce_organization_web_internal_portlet_" +
 			"CommerceSearchOrganizationsPortlet";
 

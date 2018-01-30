@@ -25,6 +25,8 @@ import com.liferay.exportimport.kernel.model.ExportImportConfiguration;
 import com.liferay.exportimport.kernel.service.ExportImportConfigurationLocalService;
 import com.liferay.exportimport.kernel.staging.Staging;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.GroupLocalService;
@@ -84,7 +86,7 @@ public class ChangesetManagerImpl implements ChangesetManager {
 	}
 
 	@Override
-	public void publishChangeset(
+	public long publishChangeset(
 		Changeset changeset, ChangesetEnvironment environment) {
 
 		addChangeset(changeset);
@@ -94,13 +96,13 @@ public class ChangesetManagerImpl implements ChangesetManager {
 		Group scopeGroup = _groupLocalService.fetchGroup(groupId);
 
 		if (!scopeGroup.isStagingGroup() && !scopeGroup.isStagedRemotely()) {
-			return;
+			return 0;
 		}
 
 		String portletId = environment.getPortletId();
 
 		if (!scopeGroup.isStagedPortlet(portletId)) {
-			return;
+			return 0;
 		}
 
 		long liveGroupId = 0;
@@ -146,13 +148,22 @@ public class ChangesetManagerImpl implements ChangesetManager {
 						ExportImportConfigurationConstants.TYPE_PUBLISH_PORTLET,
 						settingsMap);
 
-			long backgroundTaskId = _staging.publishPortlet(
+			return _staging.publishPortlet(
 				user.getUserId(), exportImportConfiguration);
 		}
 		catch (PortalException pe) {
-			pe.printStackTrace();
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Changeset cannot be published due to this error " +
+						pe.getMessage());
+			}
+
+			return 0;
 		}
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		ChangesetManagerImpl.class);
 
 	private Map<String, Changeset> _changesets = new HashMap<>();
 

@@ -24,17 +24,22 @@ String displayStyle = ParamUtil.getString(request, "displayStyle", "list");
 PortletURL portletURL = renderResponse.createRenderURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
-
-NavigationItem instancesNavigationItem = new NavigationItem();
-
-instancesNavigationItem.setActive(true);
-instancesNavigationItem.setHref(StringPool.BLANK);
-instancesNavigationItem.setLabel(LanguageUtil.get(request, "instances"));
 %>
 
 <clay:navigation-bar
 	inverted="<%= true %>"
-	items="<%= Arrays.asList(instancesNavigationItem) %>"
+	items='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.get(request, "instances"));
+					});
+			}
+		}
+	%>'
 />
 
 <liferay-frontend:management-bar>

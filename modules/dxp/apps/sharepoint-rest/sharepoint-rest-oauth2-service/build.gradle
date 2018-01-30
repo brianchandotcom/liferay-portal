@@ -1,0 +1,11 @@
+buildService {
+	apiDir = "../sharepoint-rest-oauth2-api/src/main/java"
+	testDir = "../sharepoint-rest-oauth2-test/src/testIntegration/java"
+}
+
+dependencies {
+	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.portal.spring.extender", version: "2.0.0"
+	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.6.0"
+	provided project(":private:apps:sharepoint:sharepoint-rest-oauth2-api")
+}

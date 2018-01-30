@@ -1,6 +1,0 @@
-Bundle-Name: Liferay Sharepoint OAuth 2 Test
-Bundle-SymbolicName: com.liferay.sharepoint.oauth2.test
-Bundle-Version: 1.0.0
-Liferay-Releng-Module-Group-Description:
-Liferay-Releng-Module-Group-Title: Sharepoint
--includeresource: test-classes/integration

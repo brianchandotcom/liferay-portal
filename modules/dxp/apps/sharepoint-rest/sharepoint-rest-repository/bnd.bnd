@@ -1,0 +1,13 @@
+Bundle-Name: Liferay Sharepoint REST Repository
+Bundle-SymbolicName: com.liferay.sharepoint.rest.repository
+Bundle-Version: 1.0.0
+Import-Package:\
+	!com.mashape.unirest.*,\
+	\
+	!org.apache.http.*,\
+	\
+	!org.json,\
+	\
+	*
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Sharepoint

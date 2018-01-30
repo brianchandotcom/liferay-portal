@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Sharepoint REST OAuth 2 Test
+Bundle-SymbolicName: com.liferay.sharepoint.rest.oauth2.test
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Sharepoint
+-includeresource: test-classes/integration

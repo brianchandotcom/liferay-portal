@@ -87,22 +87,20 @@ trustStorePath=${solr.dir}/server/etc/solr-ssl.keystore.jks</echo>
 			<if>
 				<os family="unix" />
 				<then>
-					<replaceregexp
-						byline="true"
-						file="${solr.dir}/bin/solr.in.sh"
-						match="#(SOLR_SSL_[A-Z]+_STORE)"
-						replace="\1"
-					/>
+					<echo append="true" file="${solr.dir}/bin/solr.in.sh">SOLR_SSL_KEY_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_KEY_STORE_PASSWORD=secret
+SOLR_SSL_TRUST_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_TRUST_STORE_PASSWORD=secret
+SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 				</then>
 				<elseif>
 					<os family="windows" />
 					<then>
-						<replaceregexp
-							byline="true"
-							file="${solr.dir}/bin/solr.in.cmd"
-							match="#(SOLR_SSL_[A-Z]+_STORE)"
-							replace="\1"
-						/>
+						<echo append="true" file="${solr.dir}/bin/solr.in.cmd">SOLR_SSL_KEY_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_KEY_STORE_PASSWORD=secret
+SOLR_SSL_TRUST_STORE=${solr.dir}/server/etc/solr-ssl.keystore.jks
+SOLR_SSL_TRUST_STORE_PASSWORD=secret
+SOLR_SSL_WANT_CLIENT_AUTH=true</echo>
 					</then>
 				</elseif>
 			</if>

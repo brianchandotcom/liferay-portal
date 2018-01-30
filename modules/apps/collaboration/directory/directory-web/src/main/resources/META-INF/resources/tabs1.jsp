@@ -16,33 +16,44 @@
 
 <%@ include file="/init.jsp" %>
 
-<%
-PortletURL portletURL = renderResponse.createRenderURL();
+<c:if test="<%= !portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
+	<clay:navigation-bar
+		inverted="<%= false %>"
+		items="<%=
+			new JSPNavigationItemList(pageContext) {
+				{
+					PortletURL portletURL = renderResponse.createRenderURL();
 
-portletURL.setParameter("mvcRenderCommandName", "/directory/view");
-%>
+					portletURL.setParameter("mvcRenderCommandName", "/directory/view");
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= !portletName.equals(PortletKeys.FRIENDS_DIRECTORY) %>">
-		<aui:nav cssClass="navbar-nav">
+					portletURL.setParameter("tabs1", "users");
 
-			<%
-			portletURL.setParameter("tabs1", "users");
-			%>
+					add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("users"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "users"));
+					});
 
-			<aui:nav-item href="<%= portletURL.toString() %>" label="users" selected='<%= tabs1.equals("users") %>' />
+					portletURL.setParameter("tabs1", "organizations");
 
-			<%
-			portletURL.setParameter("tabs1", "organizations");
-			%>
+					add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("organizations"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "organizations"));
+					});
 
-			<aui:nav-item href="<%= portletURL.toString() %>" label="organizations" selected='<%= tabs1.equals("organizations") %>' />
+					portletURL.setParameter("tabs1", "user-groups");
 
-			<%
-			portletURL.setParameter("tabs1", "user-groups");
-			%>
-
-			<aui:nav-item href="<%= portletURL.toString() %>" label="user-groups" selected='<%= tabs1.equals("user-groups") %>' />
-		</aui:nav>
-	</c:if>
-</aui:nav-bar>
+					add(
+					navigationItem -> {
+						navigationItem.setActive(tabs1.equals("user-groups"));
+						navigationItem.setHref(portletURL.toString());
+						navigationItem.setLabel(LanguageUtil.get(request, "user-groups"));
+					});
+				}
+			}
+		%>"
+	/>
+</c:if>

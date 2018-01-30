@@ -16,7 +16,6 @@ package com.liferay.commerce.address.content.web.internal.display.context;
 
 import com.liferay.commerce.address.content.web.internal.portlet.action.ActionHelper;
 import com.liferay.commerce.address.content.web.internal.portlet.configuration.CommerceAddressContentPortletInstanceConfiguration;
-import com.liferay.commerce.address.content.web.internal.util.CommerceAddressPortletUtil;
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommerceRegion;
@@ -24,6 +23,7 @@ import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.commerce.service.CommerceRegionService;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
@@ -259,7 +259,7 @@ public class CommerceAddressDisplayContext {
 		_searchContainer.setEmptyResultsMessage("there-are-no-addresses");
 
 		OrderByComparator<CommerceAddress> orderByComparator =
-			CommerceAddressPortletUtil.getCommerceAddressOrderByComparator(
+			CommerceUtil.getCommerceAddressOrderByComparator(
 				"create-date", "desc");
 
 		_searchContainer.setOrderByCol("create-date");

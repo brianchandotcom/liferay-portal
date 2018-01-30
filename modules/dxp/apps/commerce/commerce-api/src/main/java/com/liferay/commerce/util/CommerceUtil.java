@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.util;
 
+import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceAddressRestriction;
 import com.liferay.commerce.model.CommerceCountry;
 import com.liferay.commerce.model.CommercePriceEntry;
@@ -22,6 +23,7 @@ import com.liferay.commerce.model.CommerceRegion;
 import com.liferay.commerce.model.CommerceTierPriceEntry;
 import com.liferay.commerce.model.CommerceWarehouse;
 import com.liferay.commerce.model.CommerceWarehouseItem;
+import com.liferay.commerce.util.comparator.CommerceAddressCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceAddressRestrictionCreateDateComparator;
 import com.liferay.commerce.util.comparator.CommerceCountryPriorityComparator;
 import com.liferay.commerce.util.comparator.CommercePriceEntryCreateDateComparator;
@@ -48,6 +50,26 @@ import java.util.Objects;
  */
 public class CommerceUtil {
 
+	public static OrderByComparator<CommerceAddress>
+		getCommerceAddressOrderByComparator(
+			String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<CommerceAddress> orderByComparator = null;
+
+		if (orderByCol.equals("create-date")) {
+			orderByComparator = new CommerceAddressCreateDateComparator(
+				orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
 	public static OrderByComparator<CommerceAddressRestriction>
 		getCommerceAddressRestrictionOrderByComparator(
 			String orderByCol, String orderByType) {
@@ -66,6 +88,24 @@ public class CommerceUtil {
 		}
 
 		return orderByComparator;
+	}
+
+	public static Sort getCommerceAddressSort(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (Objects.equals(orderByType, "asc")) {
+			orderByAsc = true;
+		}
+
+		Sort sort = null;
+
+		if (orderByCol.equals("create-date")) {
+			sort = SortFactoryUtil.create(Field.CREATE_DATE, orderByAsc);
+		}
+
+		return sort;
 	}
 
 	public static OrderByComparator<CommerceCountry>

@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.users.admin.configuration.settings.internal;
+package com.liferay.organizations.service.internal.settings;
 
+import com.liferay.organizations.service.internal.model.OrganizationType;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.users.admin.internal.model.OrganizationType;
 import com.liferay.users.admin.kernel.organization.types.OrganizationTypesSettings;
 
 import java.util.HashMap;
@@ -33,7 +33,7 @@ import org.osgi.service.component.annotations.ReferencePolicyOption;
  * @author Marco Leo
  */
 @Component(
-	configurationPid = "com.liferay.users.admin.internal.configuration.OrganizationTypeConfiguration",
+	configurationPid = "com.liferay.organizations.service.internal.configuration.OrganizationTypeConfiguration",
 	immediate = true, service = OrganizationTypesSettings.class
 )
 public class OrganizationTypesSettingsImpl

@@ -101,11 +101,14 @@ public class CommerceOrganizationServiceImpl
 
 	@Override
 	public BaseModelSearchResult<Organization> searchOrganizations(
-			Organization organization, String type, String keywords, int start,
+			long organizationId, String type, String keywords, int start,
 			int end, Sort[] sorts)
 		throws PortalException {
 
 		List<Organization> organizations = new ArrayList<>();
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
 
 		Indexer<Organization> indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			Organization.class);

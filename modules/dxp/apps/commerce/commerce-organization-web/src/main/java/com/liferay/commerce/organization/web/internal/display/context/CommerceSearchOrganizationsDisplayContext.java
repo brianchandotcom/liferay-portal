@@ -60,8 +60,9 @@ public class CommerceSearchOrganizationsDisplayContext
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
 			_commerceOrganizationService.searchOrganizations(
-				organization, null, "account", _searchContainer.getStart(),
-				_searchContainer.getEnd(), new Sort[] {sort});
+				organization.getOrganizationId(), null, "account",
+				_searchContainer.getStart(), _searchContainer.getEnd(),
+				new Sort[] {sort});
 
 		_searchContainer.setTotal(baseModelSearchResult.getLength());
 

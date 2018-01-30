@@ -61,8 +61,9 @@ public class CommerceOrganizationBranchesDisplayContext
 
 		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
 			_commerceOrganizationService.searchOrganizations(
-				organization, "branch", null, _searchContainer.getStart(),
-				_searchContainer.getEnd(), new Sort[] {sort});
+				organization.getOrganizationId(), "branch", null,
+				_searchContainer.getStart(), _searchContainer.getEnd(),
+				new Sort[] {sort});
 
 		_searchContainer.setTotal(
 			organizationBaseModelSearchResult.getLength());

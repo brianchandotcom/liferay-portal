@@ -171,7 +171,6 @@ public class CommerceOrganizationServiceImpl
 			attributes.put("name", keywords);
 			attributes.put("region", keywords);
 			attributes.put("street", keywords);
-			attributes.put("type", keywords);
 			attributes.put("zip", keywords);
 
 			andSearch = false;

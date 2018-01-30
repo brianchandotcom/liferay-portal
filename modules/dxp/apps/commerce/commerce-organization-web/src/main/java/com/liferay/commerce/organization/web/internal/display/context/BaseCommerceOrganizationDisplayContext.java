@@ -203,7 +203,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		return user.getOrganizations(true);
 	}
 
-	public void setBreadCrumbs(Organization curentOrganization)
+	public void setBreadcrumbs(Organization currentOrganization)
 		throws PortalException {
 
 		PortletURL portletURL = getPortletURL();
@@ -214,7 +214,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		Organization topOrganization = getCurrentAccount();
 
-		Organization organization = curentOrganization;
+		Organization organization = currentOrganization;
 
 		while (organization != null) {
 			if (organization.getOrganizationId() ==
@@ -236,7 +236,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		}
 
 		_portal.addPortletBreadcrumbEntry(
-			cpRequestHelper.getRequest(), curentOrganization.getName(),
+			cpRequestHelper.getRequest(), currentOrganization.getName(),
 			portletURL.toString(), data);
 	}
 

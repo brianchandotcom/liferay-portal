@@ -21,7 +21,7 @@ CommerceOrganizationDetailDisplayContext commerceOrganizationDetailDisplayContex
 
 Organization organization = commerceOrganizationDetailDisplayContext.getCurrentOrganization();
 
-commerceOrganizationDetailDisplayContext.setBreadCrumbs(organization);
+commerceOrganizationDetailDisplayContext.setBreadcrumbs(organization);
 %>
 
 <div class="product-detail-header">

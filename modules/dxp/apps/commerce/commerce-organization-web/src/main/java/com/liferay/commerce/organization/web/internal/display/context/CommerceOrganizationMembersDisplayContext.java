@@ -22,7 +22,6 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.LinkedHashMap;
@@ -37,12 +36,9 @@ public class CommerceOrganizationMembersDisplayContext
 
 	public CommerceOrganizationMembersDisplayContext(
 		HttpServletRequest httpServletRequest,
-		OrganizationService organizationService,
-		UserLocalService userLocalService) {
+		OrganizationService organizationService) {
 
 		super(httpServletRequest, organizationService);
-
-		_userLocalService = userLocalService;
 
 		setDefaultOrderByCol("last-name");
 	}
@@ -78,6 +74,5 @@ public class CommerceOrganizationMembersDisplayContext
 	}
 
 	private SearchContainer<User> _searchContainer;
-	private final UserLocalService _userLocalService;
 
 }

@@ -28,7 +28,6 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
 import com.liferay.portal.kernel.service.OrganizationService;
-import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -113,8 +112,7 @@ public class CommerceOrganizationMembersScreenNavigationEntry
 		CommerceOrganizationMembersDisplayContext
 			commerceOrganizationMembersDisplayContext =
 				new CommerceOrganizationMembersDisplayContext(
-					httpServletRequest, _organizationService,
-					_userLocalService);
+					httpServletRequest, _organizationService);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
@@ -133,8 +131,5 @@ public class CommerceOrganizationMembersScreenNavigationEntry
 
 	@Reference
 	private OrganizationService _organizationService;
-
-	@Reference
-	private UserLocalService _userLocalService;
 
 }

@@ -205,6 +205,29 @@ public class FragmentEntryServiceTest {
 	}
 
 	@Test
+	public void testAddFragmentEntryWithVoidHTMLElements() throws Exception {
+		ServiceContext serviceContext =
+			ServiceContextTestUtil.getServiceContext(
+				_group.getGroupId(), TestPropsValues.getUserId());
+
+		FragmentCollection fragmentCollection =
+			FragmentCollectionServiceUtil.addFragmentCollection(
+				_group.getGroupId(), "Fragment Collection", StringPool.BLANK,
+				serviceContext);
+
+		String[] htmlVoidElements = {
+			"<area>", "<base>", "<br>", "<col>", "<embed>", "<hr>", "<img>",
+			"<input>", "<link>", "<meta>", "<param>", "<source>", "<track>",
+			"<wbr>"
+		};
+
+		FragmentEntryServiceUtil.addFragmentEntry(
+			_group.getGroupId(), fragmentCollection.getFragmentCollectionId(),
+			"Fragment Entry", null, String.join("\n", htmlVoidElements), null,
+			WorkflowConstants.STATUS_APPROVED, serviceContext);
+	}
+
+	@Test
 	public void testAddMultipleFragmentEntries() throws PortalException {
 		ServiceContext serviceContext =
 			ServiceContextTestUtil.getServiceContext(

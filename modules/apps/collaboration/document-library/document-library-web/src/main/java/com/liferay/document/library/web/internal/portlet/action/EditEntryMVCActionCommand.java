@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.ServletResponseConstants;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
@@ -104,6 +105,21 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 			_dlAppService.checkInFileEntry(
 				fileEntryId, false, StringPool.BLANK, serviceContext);
 		}
+
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsDLFileShortcut");
+
+		for (long fileShortcutId : fileShortcutIds) {
+			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+				fileShortcutId);
+
+			long toFileEntryId = fileShortcut.getToFileEntryId();
+
+			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
+				_dlAppService.checkInFileEntry(
+					toFileEntryId, false, StringPool.BLANK, serviceContext);
+			}
+		}
 	}
 
 	protected void checkOutEntries(ActionRequest actionRequest)
@@ -117,6 +133,20 @@ public class EditEntryMVCActionCommand extends BaseMVCActionCommand {
 
 		for (long fileEntryId : fileEntryIds) {
 			_dlAppService.checkOutFileEntry(fileEntryId, serviceContext);
+		}
+
+		long[] fileShortcutIds = ParamUtil.getLongValues(
+			actionRequest, "rowIdsDLFileShortcut");
+
+		for (long fileShortcutId : fileShortcutIds) {
+			FileShortcut fileShortcut = _dlAppService.getFileShortcut(
+				fileShortcutId);
+
+			long toFileEntryId = fileShortcut.getToFileEntryId();
+
+			if (!ArrayUtil.contains(fileEntryIds, toFileEntryId)) {
+				_dlAppService.checkOutFileEntry(toFileEntryId, serviceContext);
+			}
 		}
 	}
 

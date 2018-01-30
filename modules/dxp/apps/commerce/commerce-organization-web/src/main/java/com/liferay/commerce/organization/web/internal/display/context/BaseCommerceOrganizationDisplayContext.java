@@ -20,11 +20,8 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -60,15 +57,6 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		_defaultOrderByType = "desc";
 	}
 
-	public Organization getCurrentAccountOrganization() throws PortalException {
-		HttpServletRequest originalHttpServletRequest =
-			_portal.getOriginalServletRequest(cpRequestHelper.getRequest());
-
-		return _commerceOrganizationHelper.getCurrentOrganization(
-			originalHttpServletRequest,
-			CommerceOrganizationConstants.TYPE_ACCOUNT);
-	}
-
 	public Organization getCurrentOrganization() throws PortalException {
 		long organizationId = ParamUtil.getLong(
 			cpRequestHelper.getRequest(), "organizationId");
@@ -77,7 +65,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 			return commerceOrganizationService.getOrganization(organizationId);
 		}
 
-		return getCurrentAccountOrganization();
+		return _getCurrentAccountOrganization();
 	}
 
 	public String getDisplayStyle() {
@@ -102,7 +90,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public String getPath(Organization organization) throws PortalException {
-		Organization topOrganization = getCurrentAccountOrganization();
+		Organization topOrganization = _getCurrentAccountOrganization();
 
 		List<Organization> organizations = new ArrayList<>();
 
@@ -183,21 +171,6 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 		return portletURL;
 	}
 
-	public Organization getSiteOrganization() throws PortalException {
-		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
-
-		Group group = themeDisplay.getScopeGroup();
-
-		return commerceOrganizationService.getOrganization(
-			group.getOrganizationId());
-	}
-
-	public List<Organization> getUserOrganizations() throws PortalException {
-		User user = cpRequestHelper.getUser();
-
-		return user.getOrganizations(true);
-	}
-
 	public void setBreadcrumbs(Organization currentOrganization)
 		throws PortalException {
 
@@ -207,7 +180,7 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		data.put("direction-right", StringPool.TRUE);
 
-		Organization topOrganization = getCurrentAccountOrganization();
+		Organization topOrganization = _getCurrentAccountOrganization();
 
 		Organization organization = currentOrganization;
 
@@ -235,28 +208,24 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 			portletURL.toString(), data);
 	}
 
-	public void setDefaultOrderByCol(String defaultOrderByCol) {
+	protected void setDefaultOrderByCol(String defaultOrderByCol) {
 		_defaultOrderByCol = defaultOrderByCol;
 	}
 
-	public void setDefaultOrderByType(String defaultOrderByType) {
+	protected void setDefaultOrderByType(String defaultOrderByType) {
 		_defaultOrderByType = defaultOrderByType;
-	}
-
-	public boolean isOrganizationGroup() {
-		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
-
-		Group group = themeDisplay.getScopeGroup();
-
-		if (group.getOrganizationId() > 0) {
-			return true;
-		}
-
-		return false;
 	}
 
 	protected final CommerceOrganizationService commerceOrganizationService;
 	protected final CPRequestHelper cpRequestHelper;
+
+	private Organization _getCurrentAccountOrganization()
+		throws PortalException {
+
+		return _commerceOrganizationHelper.getCurrentOrganization(
+			cpRequestHelper.getRequest(),
+			CommerceOrganizationConstants.TYPE_ACCOUNT);
+	}
 
 	private final CommerceOrganizationHelper _commerceOrganizationHelper;
 	private String _defaultOrderByCol;

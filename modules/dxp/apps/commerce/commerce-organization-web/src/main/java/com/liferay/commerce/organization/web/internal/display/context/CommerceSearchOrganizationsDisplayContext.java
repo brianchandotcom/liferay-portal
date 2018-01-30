@@ -19,9 +19,11 @@ import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +57,7 @@ public class CommerceSearchOrganizationsDisplayContext
 			cpRequestHelper.getLiferayPortletRequest(), getPortletURL(), null,
 			"no-results");
 
-		Organization organization = getSiteOrganization();
+		Organization organization = _getSiteOrganization();
 
 		Sort sort = CommerceOrganizationPortletUtil.getOrganizationSort(
 			getOrderByCol(), getOrderByType());
@@ -71,6 +73,15 @@ public class CommerceSearchOrganizationsDisplayContext
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 
 		return _searchContainer;
+	}
+
+	private Organization _getSiteOrganization() throws PortalException {
+		ThemeDisplay themeDisplay = cpRequestHelper.getThemeDisplay();
+
+		Group group = themeDisplay.getScopeGroup();
+
+		return commerceOrganizationService.getOrganization(
+			group.getOrganizationId());
 	}
 
 	private SearchContainer<Organization> _searchContainer;

@@ -18,6 +18,7 @@ import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,9 @@ public class CommerceOrganizationHelperImpl
 	public Organization getCurrentOrganization(
 			HttpServletRequest httpServletRequest, String organizationType)
 		throws PortalException {
+
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
 
 		long currentOrganizationId = SessionParamUtil.getLong(
 			httpServletRequest, _CURRENT_ORGANIZATION_ID_KEY);
@@ -60,5 +64,8 @@ public class CommerceOrganizationHelperImpl
 
 	@Reference
 	private CommerceOrganizationService _commerceOrganizationService;
+
+	@Reference
+	private Portal _portal;
 
 }

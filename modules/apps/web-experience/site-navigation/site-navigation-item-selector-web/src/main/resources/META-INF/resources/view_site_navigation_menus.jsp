@@ -17,6 +17,8 @@
 <%@ include file="/init.jsp" %>
 
 <%
+SiteNavigationMenuItemSelectorViewDisplayContext siteNavigationMenuItemSelectorViewDisplayContext = (SiteNavigationMenuItemSelectorViewDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT);
+
 String displayStyle = siteNavigationMenuItemSelectorViewDisplayContext.getDisplayStyle();
 %>
 

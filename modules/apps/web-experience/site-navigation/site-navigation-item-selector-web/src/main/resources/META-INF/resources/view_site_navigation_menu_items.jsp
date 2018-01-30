@@ -15,3 +15,28 @@
 --%>
 
 <%@ include file="/init.jsp" %>
+
+<%
+SiteNavigationMenuItemItemSelectorViewDisplayContext siteNavigationMenuItemItemSelectorViewDisplayContext = (SiteNavigationMenuItemItemSelectorViewDisplayContext)request.getAttribute(SiteNavigationItemSelectorWebKeys.SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT);
+
+Portlet portlet = PortletLocalServiceUtil.getPortletById(company.getCompanyId(), portletDisplay.getId());
+%>
+
+<liferay-util:html-top>
+	<link href="<%= PortalUtil.getStaticResourceURL(request, application.getContextPath() + "/css/main.css", portlet.getTimestamp()) %>" rel="stylesheet" type="text/css" />
+</liferay-util:html-top>
+
+<%
+Map<String, Object> context = new HashMap<>();
+
+context.put("itemSelectorSaveEvent", siteNavigationMenuItemItemSelectorViewDisplayContext.getItemSelectedEventName());
+context.put("namespace", liferayPortletResponse.getNamespace());
+context.put("nodes", siteNavigationMenuItemItemSelectorViewDisplayContext.getSiteNavigationMenuItemsJSONArray());
+context.put("pathThemeImages", themeDisplay.getPathThemeImages());
+%>
+
+<soy:template-renderer
+	context="<%= context %>"
+	module="site-navigation-item-selector-web/js/SelectSiteNavigationMenuItem.es"
+	templateNamespace="SelectSiteNavigationMenuItem.render"
+/>

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.service.persistence;
+package com.liferay.sharepoint.rest.oauth2.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,14 +22,14 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
 import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the sharepoint o auth2 token entry service. This utility wraps {@link com.liferay.sharepoint.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the sharepoint o auth2 token entry service. This utility wraps {@link com.liferay.sharepoint.rest.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Adolfo Pérez
  * @see SharepointOAuth2TokenEntryPersistence
- * @see com.liferay.sharepoint.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl
+ * @see com.liferay.sharepoint.rest.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl
  * @generated
  */
 @ProviderType
@@ -125,7 +125,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	*/
 	public static SharepointOAuth2TokenEntry findByU_C(long userId,
 		java.lang.String configurationPid)
-		throws com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException {
+		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
 		return getPersistence().findByU_C(userId, configurationPid);
 	}
 
@@ -164,7 +164,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	*/
 	public static SharepointOAuth2TokenEntry removeByU_C(long userId,
 		java.lang.String configurationPid)
-		throws com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException {
+		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
 		return getPersistence().removeByU_C(userId, configurationPid);
 	}
 
@@ -219,7 +219,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	*/
 	public static SharepointOAuth2TokenEntry remove(
 		long sharepointOAuth2TokenEntryId)
-		throws com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException {
+		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
 		return getPersistence().remove(sharepointOAuth2TokenEntryId);
 	}
 
@@ -237,7 +237,7 @@ public class SharepointOAuth2TokenEntryUtil {
 	*/
 	public static SharepointOAuth2TokenEntry findByPrimaryKey(
 		long sharepointOAuth2TokenEntryId)
-		throws com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException {
+		throws com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException {
 		return getPersistence().findByPrimaryKey(sharepointOAuth2TokenEntryId);
 	}
 

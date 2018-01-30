@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.service.persistence.impl;
+package com.liferay.sharepoint.rest.oauth2.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -30,11 +30,11 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
-import com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException;
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
-import com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryImpl;
-import com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl;
-import com.liferay.sharepoint.oauth2.service.persistence.SharepointOAuth2TokenEntryPersistence;
+import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl;
+import com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl;
+import com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryPersistence;
 
 import java.io.Serializable;
 
@@ -56,7 +56,7 @@ import java.util.Set;
  *
  * @author Adolfo Pérez
  * @see SharepointOAuth2TokenEntryPersistence
- * @see com.liferay.sharepoint.oauth2.service.persistence.SharepointOAuth2TokenEntryUtil
+ * @see com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryUtil
  * @generated
  */
 @ProviderType

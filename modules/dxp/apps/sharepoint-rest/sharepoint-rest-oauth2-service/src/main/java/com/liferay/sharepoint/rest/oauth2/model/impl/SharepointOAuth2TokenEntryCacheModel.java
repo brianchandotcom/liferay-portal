@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.model.impl;
+package com.liferay.sharepoint.rest.oauth2.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -20,7 +20,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
 import java.io.Externalizable;
 import java.io.IOException;

@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.model;
+package com.liferay.sharepoint.rest.oauth2.model;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -25,18 +25,18 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Adolfo Pérez
  * @see SharepointOAuth2TokenEntryModel
- * @see com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryImpl
- * @see com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl
+ * @see com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl
+ * @see com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl
  * @generated
  */
-@ImplementationClassName("com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryImpl")
+@ImplementationClassName("com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl")
 @ProviderType
 public interface SharepointOAuth2TokenEntry
 	extends SharepointOAuth2TokenEntryModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public static final Accessor<SharepointOAuth2TokenEntry, Long> SHAREPOINT_O_AUTH2_TOKEN_ENTRY_ID_ACCESSOR =
 		new Accessor<SharepointOAuth2TokenEntry, Long>() {

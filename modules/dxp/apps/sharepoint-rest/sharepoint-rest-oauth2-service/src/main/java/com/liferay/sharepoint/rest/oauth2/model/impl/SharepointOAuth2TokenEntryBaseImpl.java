@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.model.impl;
+package com.liferay.sharepoint.rest.oauth2.model.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
-import com.liferay.sharepoint.oauth2.service.SharepointOAuth2TokenEntryLocalServiceUtil;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalServiceUtil;
 
 /**
  * The extended model base implementation for the SharepointOAuth2TokenEntry service. Represents a row in the &quot;SharepointOAuth2TokenEntry&quot; database table, with each column mapped to a property of this class.

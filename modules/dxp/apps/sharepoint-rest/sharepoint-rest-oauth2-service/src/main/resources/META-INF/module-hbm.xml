@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="false" default-lazy="false">
-	<import class="com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry" />
-	<class name="com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryImpl" table="SharepointOAuth2TokenEntry">
+	<import class="com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry" />
+	<class name="com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryImpl" table="SharepointOAuth2TokenEntry">
 		<id name="sharepointOAuth2TokenEntryId" type="long">
 			<generator class="assigned" />
 		</id>

@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.service.persistence;
+package com.liferay.sharepoint.rest.oauth2.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
 
-import com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException;
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
 /**
  * The persistence interface for the sharepoint o auth2 token entry service.
@@ -29,7 +29,7 @@ import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
  * </p>
  *
  * @author Adolfo Pérez
- * @see com.liferay.sharepoint.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl
+ * @see com.liferay.sharepoint.rest.oauth2.service.persistence.impl.SharepointOAuth2TokenEntryPersistenceImpl
  * @see SharepointOAuth2TokenEntryUtil
  * @generated
  */

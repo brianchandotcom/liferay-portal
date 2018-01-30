@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.service;
+package com.liferay.sharepoint.rest.oauth2.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -22,7 +22,7 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for SharepointOAuth2TokenEntry. This utility wraps
- * {@link com.liferay.sharepoint.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl} and is the
+ * {@link com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on the local server. Methods of this service will not have security checks
  * based on the propagated JAAS credentials because this service can only be
@@ -30,8 +30,8 @@ import org.osgi.util.tracker.ServiceTracker;
  *
  * @author Adolfo Pérez
  * @see SharepointOAuth2TokenEntryLocalService
- * @see com.liferay.sharepoint.oauth2.service.base.SharepointOAuth2TokenEntryLocalServiceBaseImpl
- * @see com.liferay.sharepoint.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl
+ * @see com.liferay.sharepoint.rest.oauth2.service.base.SharepointOAuth2TokenEntryLocalServiceBaseImpl
+ * @see com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl
  * @generated
  */
 @ProviderType
@@ -39,9 +39,9 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sharepoint.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.sharepoint.rest.oauth2.service.impl.SharepointOAuth2TokenEntryLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
 		long userId, java.lang.String configurationPid,
 		java.lang.String accessToken, java.lang.String refreshToken,
 		java.util.Date expirationDate)
@@ -57,8 +57,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
 	* @return the sharepoint o auth2 token entry that was added
 	*/
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
-		com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry addSharepointOAuth2TokenEntry(
+		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 		return getService()
 				   .addSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntry);
 	}
@@ -69,7 +69,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* @param sharepointOAuth2TokenEntryId the primary key for the new sharepoint o auth2 token entry
 	* @return the new sharepoint o auth2 token entry
 	*/
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry createSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry createSharepointOAuth2TokenEntry(
 		long sharepointOAuth2TokenEntryId) {
 		return getService()
 				   .createSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntryId);
@@ -91,7 +91,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* @return the sharepoint o auth2 token entry that was removed
 	* @throws PortalException if a sharepoint o auth2 token entry with the primary key could not be found
 	*/
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
 		long sharepointOAuth2TokenEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -110,8 +110,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
 	* @return the sharepoint o auth2 token entry that was removed
 	*/
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
-		com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry deleteSharepointOAuth2TokenEntry(
+		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 		return getService()
 				   .deleteSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntry);
 	}
@@ -135,7 +135,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -153,7 +153,7 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -194,13 +194,13 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
 		long sharepointOAuth2TokenEntryId) {
 		return getService()
 				   .fetchSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntryId);
 	}
 
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry fetchSharepointOAuth2TokenEntry(
 		long userId, java.lang.String configurationPid) {
 		return getService()
 				   .fetchSharepointOAuth2TokenEntry(userId, configurationPid);
@@ -233,14 +233,14 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* Returns a range of all the sharepoint o auth2 token entries.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.sharepoint.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.sharepoint.rest.oauth2.model.impl.SharepointOAuth2TokenEntryModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of sharepoint o auth2 token entries
 	* @param end the upper bound of the range of sharepoint o auth2 token entries (not inclusive)
 	* @return the range of sharepoint o auth2 token entries
 	*/
-	public static java.util.List<com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry> getSharepointOAuth2TokenEntries(
+	public static java.util.List<com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry> getSharepointOAuth2TokenEntries(
 		int start, int end) {
 		return getService().getSharepointOAuth2TokenEntries(start, end);
 	}
@@ -261,14 +261,14 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* @return the sharepoint o auth2 token entry
 	* @throws PortalException if a sharepoint o auth2 token entry with the primary key could not be found
 	*/
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
 		long sharepointOAuth2TokenEntryId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntryId);
 	}
 
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry getSharepointOAuth2TokenEntry(
 		long userId, java.lang.String configurationPid)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
@@ -281,8 +281,8 @@ public class SharepointOAuth2TokenEntryLocalServiceUtil {
 	* @param sharepointOAuth2TokenEntry the sharepoint o auth2 token entry
 	* @return the sharepoint o auth2 token entry that was updated
 	*/
-	public static com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry updateSharepointOAuth2TokenEntry(
-		com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
+	public static com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry updateSharepointOAuth2TokenEntry(
+		com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry sharepointOAuth2TokenEntry) {
 		return getService()
 				   .updateSharepointOAuth2TokenEntry(sharepointOAuth2TokenEntry);
 	}

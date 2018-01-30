@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.model;
+package com.liferay.sharepoint.rest.oauth2.model;
 
 import aQute.bnd.annotation.ProviderType;
 

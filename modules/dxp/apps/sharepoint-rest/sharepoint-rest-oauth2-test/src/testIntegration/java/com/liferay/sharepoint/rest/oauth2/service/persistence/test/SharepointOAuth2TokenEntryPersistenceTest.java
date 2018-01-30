@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.service.persistence.test;
+package com.liferay.sharepoint.rest.oauth2.service.persistence.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
 
@@ -34,11 +34,11 @@ import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PersistenceTestRule;
 import com.liferay.portal.test.rule.TransactionalTestRule;
 
-import com.liferay.sharepoint.oauth2.exception.NoSuch2TokenEntryException;
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
-import com.liferay.sharepoint.oauth2.service.SharepointOAuth2TokenEntryLocalServiceUtil;
-import com.liferay.sharepoint.oauth2.service.persistence.SharepointOAuth2TokenEntryPersistence;
-import com.liferay.sharepoint.oauth2.service.persistence.SharepointOAuth2TokenEntryUtil;
+import com.liferay.sharepoint.rest.oauth2.exception.NoSuch2TokenEntryException;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.service.SharepointOAuth2TokenEntryLocalServiceUtil;
+import com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryPersistence;
+import com.liferay.sharepoint.rest.oauth2.service.persistence.SharepointOAuth2TokenEntryUtil;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -69,7 +69,7 @@ public class SharepointOAuth2TokenEntryPersistenceTest {
 	public static final AggregateTestRule aggregateTestRule = new AggregateTestRule(new LiferayIntegrationTestRule(),
 			PersistenceTestRule.INSTANCE,
 			new TransactionalTestRule(Propagation.REQUIRED,
-				"com.liferay.sharepoint.oauth2.service"));
+				"com.liferay.sharepoint.rest.oauth2.service"));
 
 	@Before
 	public void setUp() {

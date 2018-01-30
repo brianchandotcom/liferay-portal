@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.customer.portal.util;
+package com.liferay.commerce.customer.portal.constants;
 
 /**
  * @author Marco Leo

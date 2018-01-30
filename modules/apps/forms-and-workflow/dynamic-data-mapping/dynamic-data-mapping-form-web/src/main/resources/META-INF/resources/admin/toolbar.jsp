@@ -28,6 +28,7 @@ String currentTab = ParamUtil.getString(request, "currentTab", "forms");
 >
 	<liferay-frontend:management-bar-buttons>
 		<liferay-util:include page="/admin/display_style_buttons.jsp" servletContext="<%= application %>" />
+		<liferay-util:include page="/admin/display_add_menu.jsp" servletContext="<%= application %>" />
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

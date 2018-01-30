@@ -17,13 +17,13 @@
 <%@ include file="/init.jsp" %>
 
 <%
-CommerceSearchOrganizationsDisplayContext commerceSearchOrganizationsDisplayContext = (CommerceSearchOrganizationsDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
+CommerceOrganizationSearchDisplayContext commerceOrganizationSearchDisplayContext = (CommerceOrganizationSearchDisplayContext)request.getAttribute(WebKeys.PORTLET_DISPLAY_CONTEXT);
 %>
 
 <div class="users-container" id="<portlet:namespace />entriesContainer">
 	<liferay-ui:search-container
 		id="organizations"
-		searchContainer="<%= commerceSearchOrganizationsDisplayContext.getSearchContainer() %>"
+		searchContainer="<%= commerceOrganizationSearchDisplayContext.getSearchContainer() %>"
 	>
 		<liferay-ui:search-container-row
 			className="Object"
@@ -88,6 +88,6 @@ CommerceSearchOrganizationsDisplayContext commerceSearchOrganizationsDisplayCont
 			/>
 		</liferay-ui:search-container-row>
 
-		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceSearchOrganizationsDisplayContext.getSearchContainer() %>" />
+		<liferay-ui:search-iterator markupView="lexicon" searchContainer="<%= commerceOrganizationSearchDisplayContext.getSearchContainer() %>" />
 	</liferay-ui:search-container>
 </div>

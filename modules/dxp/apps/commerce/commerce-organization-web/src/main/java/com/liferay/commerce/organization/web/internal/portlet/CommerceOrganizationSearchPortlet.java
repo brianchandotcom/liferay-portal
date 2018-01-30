@@ -17,7 +17,7 @@ package com.liferay.commerce.organization.web.internal.portlet;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
-import com.liferay.commerce.organization.web.internal.display.context.CommerceSearchOrganizationsDisplayContext;
+import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationSearchDisplayContext;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -53,14 +53,14 @@ import org.osgi.service.component.annotations.Reference;
 		"javax.portlet.display-name=Commerce Search Organization",
 		"javax.portlet.expiration-cache=0",
 		"javax.portlet.init-param.view-template=/search.jsp",
-		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_SEARCH_ORGANIZATIONS,
+		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_ORGANIZATION_SEARCH,
 		"javax.portlet.resource-bundle=content.Language",
 		"javax.portlet.security-role-ref=power-user,user",
 		"javax.portlet.supports.mime-type=text/html"
 	},
-	service = {CommerceSearchOrganizationsPortlet.class, Portlet.class}
+	service = {CommerceOrganizationSearchPortlet.class, Portlet.class}
 )
-public class CommerceSearchOrganizationsPortlet extends MVCPortlet {
+public class CommerceOrganizationSearchPortlet extends MVCPortlet {
 
 	@Override
 	public void render(
@@ -70,15 +70,15 @@ public class CommerceSearchOrganizationsPortlet extends MVCPortlet {
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
 
-		CommerceSearchOrganizationsDisplayContext
-			commerceSearchOrganizationsDisplayContext =
-				new CommerceSearchOrganizationsDisplayContext(
+		CommerceOrganizationSearchDisplayContext
+			commerceOrganizationSearchDisplayContext =
+				new CommerceOrganizationSearchDisplayContext(
 					_commerceOrganizationHelper, _commerceOrganizationService,
 					httpServletRequest, _portal);
 
 		renderRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT,
-			commerceSearchOrganizationsDisplayContext);
+			commerceOrganizationSearchDisplayContext);
 
 		super.render(renderRequest, renderResponse);
 	}

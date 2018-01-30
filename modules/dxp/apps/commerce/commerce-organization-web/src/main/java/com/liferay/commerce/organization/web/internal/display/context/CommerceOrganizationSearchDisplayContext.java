@@ -32,10 +32,10 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Marco Leo
  */
-public class CommerceSearchOrganizationsDisplayContext
+public class CommerceOrganizationSearchDisplayContext
 	extends BaseCommerceOrganizationDisplayContext {
 
-	public CommerceSearchOrganizationsDisplayContext(
+	public CommerceOrganizationSearchDisplayContext(
 		CommerceOrganizationHelper commerceOrganizationHelper,
 		CommerceOrganizationService commerceOrganizationService,
 		HttpServletRequest httpServletRequest, Portal portal) {

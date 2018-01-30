@@ -36,7 +36,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_SEARCH_ORGANIZATIONS,
+		"javax.portlet.name=" + CommerceOrganizationPortletKeys.COMMERCE_ORGANIZATION_SEARCH,
 		"mvc.command.name=setCurrentOrganization"
 	},
 	service = MVCActionCommand.class

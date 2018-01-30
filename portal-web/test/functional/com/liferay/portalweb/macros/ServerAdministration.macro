@@ -127,8 +127,6 @@
 
 		<execute function="AssertClick" locator1="ServerAdministrationResources#ACTIONS_TABLE_EXECUTE" value1="Execute" />
 
-		<execute macro="Alert#viewSuccessMessage" />
-
 		<var name="pauseCount" value="0" />
 
 		<if>
@@ -157,6 +155,9 @@
 					</then>
 				</if>
 			</then>
+			<else>
+				<execute macro="Alert#viewSuccessMessage" />
+			</else>
 		</if>
 	</command>
 

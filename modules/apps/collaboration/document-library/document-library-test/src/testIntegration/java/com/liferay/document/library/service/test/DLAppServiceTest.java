@@ -289,6 +289,25 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		}
 
 		@Test
+		public void shouldInferMoreSpecificMimeTypeFromExtension()
+			throws Exception {
+
+			String fileName = RandomTestUtil.randomString() + ".js";
+
+			ServiceContext serviceContext =
+				ServiceContextTestUtil.getServiceContext(group.getGroupId());
+
+			FileEntry fileEntry = DLAppServiceUtil.addFileEntry(
+				group.getGroupId(), parentFolder.getFolderId(), fileName,
+				ContentTypes.APPLICATION_OCTET_STREAM, fileName,
+				StringPool.BLANK, StringPool.BLANK, CONTENT.getBytes(),
+				serviceContext);
+
+			Assert.assertEquals(
+				"application/javascript", fileEntry.getMimeType());
+		}
+
+		@Test
 		public void shouldInferValidMimeType() throws Exception {
 			String fileName = RandomTestUtil.randomString();
 
@@ -1373,7 +1392,7 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 					_getConfigurationTemporarySwapper("fileMaxSize", 1L)) {
 
 				byte[] bytes = RandomTestUtil.randomBytes(
-					TikaSafeRandomizerBumper.INSTANCE);
+					TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN);
 
 				DLAppServiceUtil.updateFileEntry(
 					fileEntry.getFileEntryId(), fileName,
@@ -1884,7 +1903,8 @@ public class DLAppServiceTest extends BaseDLAppTestCase {
 		return DLAppServiceUtil.updateFileEntry(
 			fileEntryId, fileName, ContentTypes.TEXT_PLAIN, fileName,
 			StringPool.BLANK, StringPool.BLANK, majorVersion,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN),
 			serviceContext);
 	}
 

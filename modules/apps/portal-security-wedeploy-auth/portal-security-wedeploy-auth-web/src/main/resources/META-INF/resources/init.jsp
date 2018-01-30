@@ -34,8 +34,8 @@ page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.security.wedeploy.auth.constants.WeDeployAuthActionKeys" %><%@
 page import="com.liferay.portal.security.wedeploy.auth.model.WeDeployAuthApp" %><%@
 page import="com.liferay.portal.security.wedeploy.auth.service.WeDeployAuthAppLocalServiceUtil" %><%@
-page import="com.liferay.portal.security.wedeploy.auth.service.permission.WeDeployAuthAppPermission" %><%@
-page import="com.liferay.portal.security.wedeploy.auth.service.permission.WeDeployAuthPermission" %>
+page import="com.liferay.portal.security.wedeploy.auth.web.internal.security.permission.resource.WeDeployAuthAppPermission" %><%@
+page import="com.liferay.portal.security.wedeploy.auth.web.internal.security.permission.resource.WeDeployAuthPermission" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

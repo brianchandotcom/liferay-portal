@@ -89,7 +89,9 @@
 
 	var searchContainerData = searchContainer.getData(true);
 
-	selectedTags = selectedTags.filter(tag => !searchContainerData.includes(tag));
+	selectedTags = selectedTags.filter(function(tag) {
+		return !searchContainerData.includes(tag);
+	});
 
 	searchContainer.on(
 		'rowToggled',

@@ -1262,6 +1262,6 @@ public class ModulesStructureTest {
 		SetUtil.fromList(
 			Arrays.asList(
 				".lfrbuild-lowest-major-version",
-				".lfrbuild-poshi-runner-resources "));
+				".lfrbuild-poshi-runner-resources"));
 
 }

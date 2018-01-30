@@ -21,5 +21,5 @@ dependencies {
 	provided group: "org.json", name: "json", version: "20160810"
 	provided group: "org.osgi", name: "org.osgi.core", version: "6.0.0"
 	provided group: "org.osgi", name: "org.osgi.service.cm", version: "1.5.0"
-	provided project(":private:apps:sharepoint:sharepoint-rest-oauth2-api")
+	provided project(":private:apps:sharepoint-rest:sharepoint-rest-oauth2-api")
 }

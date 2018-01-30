@@ -21,9 +21,10 @@ import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemSelectorCriterion;
+import com.liferay.site.navigation.item.selector.criterion.SiteNavigationMenuItemItemSelectorCriterion;
 import com.liferay.site.navigation.item.selector.web.internal.constants.SiteNavigationItemSelectorWebKeys;
-import com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemSelectorViewDisplayContext;
+import com.liferay.site.navigation.item.selector.web.internal.display.context.SiteNavigationMenuItemItemSelectorViewDisplayContext;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.io.IOException;
 
@@ -45,20 +46,20 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
- * @author Pavel Savinov
+ * @author Eudaldo Alonso
  */
 @Component(
 	property = {"item.selector.view.order:Integer=300"},
 	service = ItemSelectorView.class
 )
 public class SiteNavigationMenuItemItemSelectorView
-	implements ItemSelectorView<SiteNavigationMenuItemSelectorCriterion> {
+	implements ItemSelectorView<SiteNavigationMenuItemItemSelectorCriterion> {
 
 	@Override
-	public Class<SiteNavigationMenuItemSelectorCriterion>
+	public Class<SiteNavigationMenuItemItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return SiteNavigationMenuItemSelectorCriterion.class;
+		return SiteNavigationMenuItemItemSelectorCriterion.class;
 	}
 
 	public ServletContext getServletContext() {
@@ -75,12 +76,13 @@ public class SiteNavigationMenuItemItemSelectorView
 		ResourceBundle resourceBundle =
 			_resourceBundleLoader.loadResourceBundle(locale);
 
-		return ResourceBundleUtil.getString(resourceBundle, "navigation-menus");
+		return ResourceBundleUtil.getString(
+			resourceBundle, "navigation-menu-items");
 	}
 
 	@Override
 	public boolean isShowSearch() {
-		return true;
+		return false;
 	}
 
 	@Override
@@ -91,27 +93,27 @@ public class SiteNavigationMenuItemItemSelectorView
 	@Override
 	public void renderHTML(
 			ServletRequest request, ServletResponse response,
-			SiteNavigationMenuItemSelectorCriterion
-				siteNavigationMenuItemSelectorCriterion,
+			SiteNavigationMenuItemItemSelectorCriterion
+				siteNavigationMenuItemItemSelectorCriterion,
 			PortletURL portletURL, String itemSelectedEventName, boolean search)
 		throws IOException, ServletException {
 
-		SiteNavigationMenuItemSelectorViewDisplayContext
-			siteNavigationMenuItemSelectorViewDisplayContext =
-				new SiteNavigationMenuItemSelectorViewDisplayContext(
-					(HttpServletRequest)request, portletURL,
-					itemSelectedEventName);
+		SiteNavigationMenuItemItemSelectorViewDisplayContext
+			siteNavigationMenuItemItemSelectorViewDisplayContext =
+				new SiteNavigationMenuItemItemSelectorViewDisplayContext(
+					(HttpServletRequest)request, itemSelectedEventName,
+					_siteNavigationMenuItemTypeRegistry);
 
 		request.setAttribute(
 			SiteNavigationItemSelectorWebKeys.
-				SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT,
-			siteNavigationMenuItemSelectorViewDisplayContext);
+				SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT,
+			siteNavigationMenuItemItemSelectorViewDisplayContext);
 
 		ServletContext servletContext = getServletContext();
 
 		RequestDispatcher requestDispatcher =
 			servletContext.getRequestDispatcher(
-				"/view_site_navigation_menus.jsp");
+				"/view_site_navigation_menu_items.jsp");
 
 		requestDispatcher.include(request, response);
 	}
@@ -132,5 +134,9 @@ public class SiteNavigationMenuItemItemSelectorView
 		target = "(osgi.web.symbolicname=com.liferay.site.navigation.item.selector.web)"
 	)
 	private ServletContext _servletContext;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 }

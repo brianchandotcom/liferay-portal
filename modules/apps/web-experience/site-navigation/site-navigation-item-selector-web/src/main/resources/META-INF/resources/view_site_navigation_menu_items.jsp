@@ -1,3 +1,4 @@
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -11,20 +12,6 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+--%>
 
-package com.liferay.site.navigation.item.selector.web.internal.constants;
-
-/**
- * @author Pavel Savinov
- */
-public class SiteNavigationItemSelectorWebKeys {
-
-	public static final String
-		SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT =
-			"SITE_NAVIGATION_MENU_ITEM_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-	public static final String
-		SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT =
-			"SITE_NAVIGATION_MENU_ITEM_SELECTOR_DISPLAY_CONTEXT";
-
-}
+<%@ include file="/init.jsp" %>

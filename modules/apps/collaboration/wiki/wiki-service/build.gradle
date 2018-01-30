@@ -16,6 +16,7 @@ dependencies {
 	compileInclude group: "oro", name: "oro", version: "2.0.8"
 
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
+	provided group: "com.liferay", name: "com.liferay.item.selector.api", version: "2.2.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	provided group: "com.liferay", name: "com.liferay.osgi.util", version: "3.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"

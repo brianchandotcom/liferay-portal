@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.captcha.constants;
+package com.liferay.captcha.internal.constants;
 
 /**
  * @author Pei-Jung Lan

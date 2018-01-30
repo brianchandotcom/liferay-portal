@@ -15,7 +15,7 @@
 package com.liferay.captcha.internal.upgrade.v1_0_0;
 
 import com.liferay.captcha.configuration.CaptchaConfiguration;
-import com.liferay.captcha.constants.LegacyCaptchaPropsKeys;
+import com.liferay.captcha.internal.constants.LegacyCaptchaPropsKeys;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.HashMapDictionary;

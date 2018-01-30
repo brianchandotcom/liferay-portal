@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.commerce.user.service.http;
+package com.liferay.commerce.organization.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.commerce.user.service.CommerceUserServiceUtil;
+import com.liferay.commerce.organization.service.CommerceOrganizationServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -25,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link CommerceUserServiceUtil} service utility. The
+ * {@link CommerceOrganizationServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -48,18 +48,18 @@ import java.rmi.RemoteException;
  * </p>
  *
  * @author Marco Leo
- * @see CommerceUserServiceHttp
- * @see CommerceUserServiceUtil
+ * @see CommerceOrganizationServiceHttp
+ * @see CommerceOrganizationServiceUtil
  * @generated
  */
 @ProviderType
-public class CommerceUserServiceSoap {
+public class CommerceOrganizationServiceSoap {
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
 		long parentOrganization, java.lang.String name, java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Organization returnValue = CommerceUserServiceUtil.addOrganization(parentOrganization,
+			com.liferay.portal.kernel.model.Organization returnValue = CommerceOrganizationServiceUtil.addOrganization(parentOrganization,
 					name, type, serviceContext);
 
 			return returnValue;
@@ -74,7 +74,7 @@ public class CommerceUserServiceSoap {
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Address returnValue = CommerceUserServiceUtil.getOrganizationPrimaryAddress(organizationId);
+			com.liferay.portal.kernel.model.Address returnValue = CommerceOrganizationServiceUtil.getOrganizationPrimaryAddress(organizationId);
 
 			return returnValue;
 		}
@@ -88,7 +88,7 @@ public class CommerceUserServiceSoap {
 	public static com.liferay.portal.kernel.model.EmailAddress getOrganizationPrimaryEmailAddress(
 		long organizationId) throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.EmailAddress returnValue = CommerceUserServiceUtil.getOrganizationPrimaryEmailAddress(organizationId);
+			com.liferay.portal.kernel.model.EmailAddress returnValue = CommerceOrganizationServiceUtil.getOrganizationPrimaryEmailAddress(organizationId);
 
 			return returnValue;
 		}
@@ -99,5 +99,5 @@ public class CommerceUserServiceSoap {
 		}
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CommerceUserServiceSoap.class);
+	private static Log _log = LogFactoryUtil.getLog(CommerceOrganizationServiceSoap.class);
 }

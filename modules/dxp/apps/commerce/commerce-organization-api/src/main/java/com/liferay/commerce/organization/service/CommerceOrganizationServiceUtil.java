@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.user.service;
+package com.liferay.commerce.organization.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -21,25 +21,25 @@ import com.liferay.osgi.util.ServiceTrackerFactory;
 import org.osgi.util.tracker.ServiceTracker;
 
 /**
- * Provides the remote service utility for CommerceUser. This utility wraps
- * {@link com.liferay.commerce.user.service.impl.CommerceUserServiceImpl} and is the
+ * Provides the remote service utility for CommerceOrganization. This utility wraps
+ * {@link com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl} and is the
  * primary access point for service operations in application layer code running
  * on a remote server. Methods of this service are expected to have security
  * checks based on the propagated JAAS credentials because this service can be
  * accessed remotely.
  *
  * @author Marco Leo
- * @see CommerceUserService
- * @see com.liferay.commerce.user.service.base.CommerceUserServiceBaseImpl
- * @see com.liferay.commerce.user.service.impl.CommerceUserServiceImpl
+ * @see CommerceOrganizationService
+ * @see com.liferay.commerce.organization.service.base.CommerceOrganizationServiceBaseImpl
+ * @see com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl
  * @generated
  */
 @ProviderType
-public class CommerceUserServiceUtil {
+public class CommerceOrganizationServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.user.service.impl.CommerceUserServiceImpl} and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
 		long parentOrganization, java.lang.String name, java.lang.String type,
@@ -81,10 +81,10 @@ public class CommerceUserServiceUtil {
 			end, sorts);
 	}
 
-	public static CommerceUserService getService() {
+	public static CommerceOrganizationService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CommerceUserService, CommerceUserService> _serviceTracker =
-		ServiceTrackerFactory.open(CommerceUserService.class);
+	private static ServiceTracker<CommerceOrganizationService, CommerceOrganizationService> _serviceTracker =
+		ServiceTrackerFactory.open(CommerceOrganizationService.class);
 }

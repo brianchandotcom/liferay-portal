@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.user.service;
+package com.liferay.commerce.organization.service;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -33,28 +33,28 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
 /**
- * Provides the remote service interface for CommerceUser. Methods of this
+ * Provides the remote service interface for CommerceOrganization. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Marco Leo
- * @see CommerceUserServiceUtil
- * @see com.liferay.commerce.user.service.base.CommerceUserServiceBaseImpl
- * @see com.liferay.commerce.user.service.impl.CommerceUserServiceImpl
+ * @see CommerceOrganizationServiceUtil
+ * @see com.liferay.commerce.organization.service.base.CommerceOrganizationServiceBaseImpl
+ * @see com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @OSGiBeanProperties(property =  {
-	"json.web.service.context.name=commerce", "json.web.service.context.path=CommerceUser"}, service = CommerceUserService.class)
+	"json.web.service.context.name=commerce", "json.web.service.context.path=CommerceOrganization"}, service = CommerceOrganizationService.class)
 @ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CommerceUserService extends BaseService {
+public interface CommerceOrganizationService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CommerceUserServiceUtil} to access the commerce user remote service. Add custom service methods to {@link com.liferay.commerce.user.service.impl.CommerceUserServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CommerceOrganizationServiceUtil} to access the commerce organization remote service. Add custom service methods to {@link com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public Organization addOrganization(long parentOrganization,
 		java.lang.String name, java.lang.String type,

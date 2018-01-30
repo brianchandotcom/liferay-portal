@@ -12,24 +12,26 @@
  * details.
  */
 
-package com.liferay.commerce.user.service;
+package com.liferay.commerce.organization.service;
 
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link CommerceUserService}.
+ * Provides a wrapper for {@link CommerceOrganizationService}.
  *
  * @author Marco Leo
- * @see CommerceUserService
+ * @see CommerceOrganizationService
  * @generated
  */
 @ProviderType
-public class CommerceUserServiceWrapper implements CommerceUserService,
-	ServiceWrapper<CommerceUserService> {
-	public CommerceUserServiceWrapper(CommerceUserService commerceUserService) {
-		_commerceUserService = commerceUserService;
+public class CommerceOrganizationServiceWrapper
+	implements CommerceOrganizationService,
+		ServiceWrapper<CommerceOrganizationService> {
+	public CommerceOrganizationServiceWrapper(
+		CommerceOrganizationService commerceOrganizationService) {
+		_commerceOrganizationService = commerceOrganizationService;
 	}
 
 	@Override
@@ -37,22 +39,22 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 		long parentOrganization, java.lang.String name, java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceUserService.addOrganization(parentOrganization, name,
-			type, serviceContext);
+		return _commerceOrganizationService.addOrganization(parentOrganization,
+			name, type, serviceContext);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceUserService.getOrganizationPrimaryAddress(organizationId);
+		return _commerceOrganizationService.getOrganizationPrimaryAddress(organizationId);
 	}
 
 	@Override
 	public com.liferay.portal.kernel.model.EmailAddress getOrganizationPrimaryEmailAddress(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceUserService.getOrganizationPrimaryEmailAddress(organizationId);
+		return _commerceOrganizationService.getOrganizationPrimaryEmailAddress(organizationId);
 	}
 
 	/**
@@ -62,7 +64,7 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 	*/
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
-		return _commerceUserService.getOSGiServiceIdentifier();
+		return _commerceOrganizationService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -71,19 +73,20 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 		java.lang.String type, java.lang.String keywords, int start, int end,
 		com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceUserService.searchOrganizations(organization, type,
-			keywords, start, end, sorts);
+		return _commerceOrganizationService.searchOrganizations(organization,
+			type, keywords, start, end, sorts);
 	}
 
 	@Override
-	public CommerceUserService getWrappedService() {
-		return _commerceUserService;
+	public CommerceOrganizationService getWrappedService() {
+		return _commerceOrganizationService;
 	}
 
 	@Override
-	public void setWrappedService(CommerceUserService commerceUserService) {
-		_commerceUserService = commerceUserService;
+	public void setWrappedService(
+		CommerceOrganizationService commerceOrganizationService) {
+		_commerceOrganizationService = commerceOrganizationService;
 	}
 
-	private CommerceUserService _commerceUserService;
+	private CommerceOrganizationService _commerceOrganizationService;
 }

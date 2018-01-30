@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.user.service.util;
+package com.liferay.commerce.organization.service.util;
 
 import aQute.bnd.annotation.ProviderType;
 

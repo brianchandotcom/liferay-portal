@@ -16,10 +16,15 @@ package com.liferay.sync.web.internal.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;
+import com.liferay.sync.util.SyncHelper;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Shinn Lok
  */
+@Component(immediate = true)
 public class SyncServiceConfigurationUtil {
 
 	public static String get(String key) {
@@ -30,8 +35,14 @@ public class SyncServiceConfigurationUtil {
 		return _configuration.getArray(key);
 	}
 
-	private static final Configuration _configuration =
-		ConfigurationFactoryUtil.getConfiguration(
-			SyncServiceConfigurationUtil.class.getClassLoader(), "portlet");
+	@Reference(unbind = "-")
+	protected void setSyncHelper(SyncHelper syncHelper) {
+		Class<?> clazz = syncHelper.getClass();
+
+		_configuration = ConfigurationFactoryUtil.getConfiguration(
+			clazz.getClassLoader(), "portlet");
+	}
+
+	private static Configuration _configuration;
 
 }

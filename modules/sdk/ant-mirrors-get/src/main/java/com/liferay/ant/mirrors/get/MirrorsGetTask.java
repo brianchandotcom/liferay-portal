@@ -300,25 +300,14 @@ public class MirrorsGetTask extends Task {
 		try {
 			remoteMD5 = toString(url);
 		}
-		catch (FileNotFoundException fnfe) {
+		catch (Exception e) {
 			if (_verbose) {
-				System.out.println("URL does not point to a valid MD5 file.");
+				System.out.println("Unable to access MD5 file");
+
+				e.printStackTrace();
 			}
 
 			return true;
-		}
-		catch (IOException ioe) {
-			String errorMessage = ioe.getMessage();
-
-			if (errorMessage.contains("403")) {
-				if (_verbose) {
-					System.out.println("MD5 file cannot be accessed.");
-				}
-
-				return true;
-			}
-
-			return false;
 		}
 
 		Checksum checksum = new Checksum();

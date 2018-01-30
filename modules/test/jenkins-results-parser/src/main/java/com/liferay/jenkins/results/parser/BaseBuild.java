@@ -177,11 +177,18 @@ public abstract class BaseBuild implements Build {
 
 		long totalDelayTime = 0;
 
-		for (Build downstreamBuild : getDownstreamBuilds(null)) {
+		List<Build> allDownstreamBuilds = JenkinsResultsParserUtil.flatten(
+			getDownstreamBuilds(null));
+
+		if (allDownstreamBuilds.isEmpty()) {
+			return 0;
+		}
+
+		for (Build downstreamBuild : allDownstreamBuilds) {
 			totalDelayTime += downstreamBuild.getDelayTime();
 		}
 
-		return totalDelayTime / getDownstreamBuildCount(null);
+		return totalDelayTime / allDownstreamBuilds.size();
 	}
 
 	@Override
@@ -741,8 +748,14 @@ public abstract class BaseBuild implements Build {
 			Build longestDelayedDownstreamBuild =
 				downstreamBuild.getLongestDelayedDownstreamBuild();
 
+			if (downstreamBuild.getDelayTime() >
+					longestDelayedDownstreamBuild.getDelayTime()) {
+
+				longestDelayedDownstreamBuild = downstreamBuild;
+			}
+
 			if (longestDelayedDownstreamBuild.getDelayTime() >
-				longestDelayedBuild.getDelayTime()) {
+					longestDelayedBuild.getDelayTime()) {
 
 				longestDelayedBuild = longestDelayedDownstreamBuild;
 			}

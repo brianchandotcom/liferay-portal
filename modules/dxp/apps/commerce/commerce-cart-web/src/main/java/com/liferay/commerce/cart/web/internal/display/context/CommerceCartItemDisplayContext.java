@@ -15,12 +15,12 @@
 package com.liferay.commerce.cart.web.internal.display.context;
 
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.item.selector.criterion.CPInstanceItemSelectorCriterion;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.item.selector.ItemSelector;
 import com.liferay.item.selector.ItemSelectorReturnType;
@@ -179,7 +179,7 @@ public class CommerceCartItemDisplayContext
 		searchContainer.setEmptyResultsMessage("no-cart-items-were-found");
 
 		OrderByComparator<CommerceCartItem> orderByComparator =
-			CommerceCartPortletUtil.getCommerceCartItemOrderByComparator(
+			CommerceUtil.getCommerceCartItemOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());

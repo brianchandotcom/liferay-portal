@@ -15,12 +15,12 @@
 package com.liferay.commerce.cart.web.internal.display.context;
 
 import com.liferay.commerce.cart.web.internal.portlet.action.ActionHelper;
-import com.liferay.commerce.cart.web.internal.util.CommerceCartPortletUtil;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommercePriceFormatter;
+import com.liferay.commerce.util.CommerceUtil;
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -145,7 +145,7 @@ public class CommerceCartDisplayContext
 		}
 
 		OrderByComparator<CommerceCart> orderByComparator =
-			CommerceCartPortletUtil.getCommerceCartOrderByComparator(
+			CommerceUtil.getCommerceCartOrderByComparator(
 				getOrderByCol(), getOrderByType());
 
 		searchContainer.setOrderByCol(getOrderByCol());

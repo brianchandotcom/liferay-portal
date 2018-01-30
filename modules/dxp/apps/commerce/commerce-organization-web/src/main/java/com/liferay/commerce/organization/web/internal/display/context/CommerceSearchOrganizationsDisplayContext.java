@@ -43,7 +43,9 @@ public class CommerceSearchOrganizationsDisplayContext
 		setDefaultOrderByCol("name");
 	}
 
-	public SearchContainer getSearchContainer() throws PortalException {
+	public SearchContainer<Organization> getSearchContainer()
+		throws PortalException {
+
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -69,6 +71,6 @@ public class CommerceSearchOrganizationsDisplayContext
 	}
 
 	private final CommerceOrganizationService _commerceOrganizationService;
-	private SearchContainer _searchContainer;
+	private SearchContainer<Organization> _searchContainer;
 
 }

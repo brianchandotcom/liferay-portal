@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.web.internal.display.context;
 
 import com.liferay.commerce.product.display.context.util.CPRequestHelper;
+import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.model.Organization;
@@ -61,6 +62,9 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 
 		liferayPortletRequest = cpRequestHelper.getLiferayPortletRequest();
 		liferayPortletResponse = cpRequestHelper.getLiferayPortletResponse();
+
+		_defaultOrderByCol = "create-date";
+		_defaultOrderByType = "desc";
 	}
 
 	public Organization getCurrentAccount() throws PortalException {
@@ -99,21 +103,15 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	}
 
 	public String getOrderByCol() {
-		if (_orderByCol == null) {
-			_orderByCol = ParamUtil.getString(
-				httpServletRequest, "orderByCol", "desc");
-		}
-
-		return _orderByType;
+		return ParamUtil.getString(
+			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_COL_PARAM,
+			_defaultOrderByCol);
 	}
 
 	public String getOrderByType() {
-		if (_orderByType == null) {
-			_orderByType = ParamUtil.getString(
-				httpServletRequest, "orderByType", "desc");
-		}
-
-		return _orderByType;
+		return ParamUtil.getString(
+			httpServletRequest, SearchContainer.DEFAULT_ORDER_BY_TYPE_PARAM,
+			_defaultOrderByType);
 	}
 
 	public String getPath(Organization organization) throws PortalException {
@@ -244,6 +242,14 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 			portletURL.toString(), data);
 	}
 
+	public void setDefaultOrderByCol(String defaultOrderByCol) {
+		_defaultOrderByCol = defaultOrderByCol;
+	}
+
+	public void setDefaultOrderByType(String defaultOrderByType) {
+		_defaultOrderByType = defaultOrderByType;
+	}
+
 	public boolean siteHasOrganization() {
 		Group group = themeDisplay.getScopeGroup();
 
@@ -261,8 +267,8 @@ public abstract class BaseCommerceOrganizationDisplayContext {
 	protected final OrganizationService organizationService;
 	protected final ThemeDisplay themeDisplay;
 
+	private String _defaultOrderByCol;
+	private String _defaultOrderByType;
 	private String _displayStyle;
-	private String _orderByCol;
-	private String _orderByType;
 
 }

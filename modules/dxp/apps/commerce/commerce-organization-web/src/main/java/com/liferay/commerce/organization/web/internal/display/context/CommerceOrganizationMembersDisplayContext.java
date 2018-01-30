@@ -43,6 +43,8 @@ public class CommerceOrganizationMembersDisplayContext
 		super(httpServletRequest, organizationService);
 
 		_userLocalService = userLocalService;
+
+		setDefaultOrderByCol("last-name");
 	}
 
 	public SearchContainer<User> getSearchContainer() throws PortalException {
@@ -62,7 +64,7 @@ public class CommerceOrganizationMembersDisplayContext
 		params.put("usersOrgs", organization.getOrganizationId());
 
 		Sort sort = CommerceOrganizationPortletUtil.getUserSort(
-			"last-name", getOrderByType());
+			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<User> userBaseModelSearchResult =
 			UserLocalServiceUtil.searchUsers(

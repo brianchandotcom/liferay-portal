@@ -39,6 +39,8 @@ public class CommerceOrganizationBranchesDisplayContext
 		super(httpServletRequest, organizationService);
 
 		_commerceUserService = commerceUserService;
+
+		setDefaultOrderByCol("nameTreePath");
 	}
 
 	public SearchContainer<Organization> getSearchContainer()
@@ -55,11 +57,11 @@ public class CommerceOrganizationBranchesDisplayContext
 		Organization organization = getCurrentOrganization();
 
 		Sort sort = CommerceOrganizationPortletUtil.getOrganizationSort(
-			"nameTreePath", getOrderByType());
+			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
 			_commerceUserService.searchOrganizations(
-				organization, null, "branches", _searchContainer.getStart(),
+				organization, "branch", null, _searchContainer.getStart(),
 				_searchContainer.getEnd(), new Sort[] {sort});
 
 		_searchContainer.setTotal(

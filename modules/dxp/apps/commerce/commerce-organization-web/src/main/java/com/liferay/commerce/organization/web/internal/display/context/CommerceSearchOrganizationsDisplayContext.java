@@ -23,8 +23,6 @@ import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.OrganizationService;
 
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -41,11 +39,12 @@ public class CommerceSearchOrganizationsDisplayContext
 		super(httpServletRequest, organizationService);
 
 		_commerceUserService = commerceUserService;
+
+		setDefaultOrderByCol("name");
+		setDefaultOrderByType("asc");
 	}
 
-	public SearchContainer getSearchContainer(Locale locale)
-		throws PortalException {
-
+	public SearchContainer getSearchContainer() throws PortalException {
 		if (_searchContainer != null) {
 			return _searchContainer;
 		}
@@ -56,7 +55,7 @@ public class CommerceSearchOrganizationsDisplayContext
 		Organization organization = getSiteOrganization();
 
 		Sort sort = CommerceOrganizationPortletUtil.getOrganizationSort(
-			"name", getOrderByType());
+			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
 			_commerceUserService.searchOrganizations(

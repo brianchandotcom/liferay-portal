@@ -746,8 +746,6 @@ AUI.add(
 			_updateSecondOperandFieldVisibility: function(index) {
 				var instance = this;
 
-				instance._hideSecondOperandField(index);
-
 				var secondOperandType = instance._getSecondOperandType(index);
 
 				if (secondOperandType.get('visible')) {
@@ -758,10 +756,12 @@ AUI.add(
 					var secondOperandOptions = instance._getSecondOperand(index, 'options');
 
 					if (secondOperandTypeValue === 'field') {
+						instance._hideSecondOperandField(index);
 						secondOperandFields.set('visible', true);
 						secondOperandOptions.cleanSelect();
 					}
 					else if (instance._isConstant(secondOperandTypeValue)) {
+						instance._hideSecondOperandField(index);
 						var options = instance._getFieldOptions(instance._getFirstOperandValue(index));
 
 						if (options.length > 0 && instance._getFieldType(instance._getFirstOperandValue(index)) !== 'text') {

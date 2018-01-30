@@ -92,14 +92,13 @@ public class DocumentHTMLProcessor {
 	}
 
 	private static final String _DOCUMENTS_REGEX =
-		"(<img [^s]*src=\"\\/(documents\\/\\d+)\\/[^&]+)(\"[^&]+)";
+		"(<img .*?src=\"\\/(documents\\/\\d+)\\/[^\\s]+)(\"[^&]+)";
 
 	private static final String _IMAGE_REGEX =
-		"(<img [^s]*src=\"\\/(image)\\/[^&]+)(\"[^&]+)";
+		"(<img .*?src=\"\\/(image)\\/[^\\s]+)(\"[^&]+)";
 
 	private static final String _PORTLET_FILE_ENTRY_REGEX =
-		"(<img [^s]*src=\"\\/(documents\\/portlet_file_entry)\\/[^&]+)(" +
-			"\"[^&]+)";
+		"(<img .*?src=\"\\/(documents\\/portlet_file_entry)\\/[^&]+)(\"[^&]+)";
 
 	private static final String _WIKI_PAGE_ATTACHMENT_REGEX =
 		"(<img ([^=]*(?<!src)=\\\"[^\\\"]+\\\")*[^=]*)((?<= src)=\\\"[^\\/]*(" +

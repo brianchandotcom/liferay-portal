@@ -31,7 +31,7 @@ buildClay {
 	eachFile new StripPathSegmentsAction(3)
 
 	from npmInstall.nodeModulesDir
-	include "clay/build/js/"
+	include "clay/lib/js/"
 	includeEmptyDirs = false
 	into clayDestinationDir
 }

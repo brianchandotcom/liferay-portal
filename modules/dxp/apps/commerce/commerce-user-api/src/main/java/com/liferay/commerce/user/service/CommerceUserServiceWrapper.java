@@ -33,6 +33,15 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Organization addOrganization(
+		long parentOrganization, java.lang.String name, java.lang.String type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserService.addOrganization(parentOrganization, name,
+			type, serviceContext);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -54,6 +63,16 @@ public class CommerceUserServiceWrapper implements CommerceUserService,
 	@Override
 	public java.lang.String getOSGiServiceIdentifier() {
 		return _commerceUserService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
+		com.liferay.portal.kernel.model.Organization organization,
+		java.lang.String type, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceUserService.searchOrganizations(organization, type,
+			keywords, start, end, sorts);
 	}
 
 	@Override

@@ -1,6 +1,4 @@
 Bundle-Name: Liferay Commerce User API
 Bundle-SymbolicName: com.liferay.commerce.user.api
 Bundle-Version: 1.0.0
-Export-Package:\
-	com.liferay.commerce.user.service,\
-	com.liferay.commerce.user.util
+Export-Package: com.liferay.commerce.user.service

@@ -19,48 +19,62 @@ import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
-import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.filter.BooleanFilter;
 import com.liferay.portal.kernel.search.filter.PrefixFilter;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.LinkedHashMap;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Marco Leo
  */
 @Component(
-    immediate = true,
-    property = {
-        "indexer.class.name=com.liferay.portal.kernel.model.Organization"
-    },
-    service = IndexerPostProcessor.class
+	immediate = true,
+	property = {
+		"indexer.class.name=com.liferay.portal.kernel.model.Organization"
+	},
+	service = IndexerPostProcessor.class
 )
 public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 
-    @Override
-    public void postProcessDocument(Document document, Object obj) throws Exception {
-        super.postProcessDocument(document, obj);
-    }
+	@Override
+	public void postProcessContextBooleanFilter(
+			BooleanFilter booleanFilter, SearchContext searchContext)
+		throws Exception {
 
-    @Override
-    public void postProcessContextBooleanFilter(BooleanFilter booleanFilter, SearchContext searchContext) throws Exception {
+		LinkedHashMap<String, Object> params =
+			(LinkedHashMap<String, Object>)searchContext.getAttribute("params");
 
-        LinkedHashMap<String, Object> params =
-            (LinkedHashMap<String, Object>)searchContext.getAttribute("params");
+		if (params == null) {
+			return;
+		}
 
-        if (params == null) {
-            return;
-        }
+		String treePath = GetterUtil.getString(params.get("treePath"));
 
-        String treePath = GetterUtil.getString(
-                params.get("treePath"));
+		if (Validator.isNotNull(treePath)) {
+			booleanFilter.add(
+				new PrefixFilter(Field.TREE_PATH, treePath),
+				BooleanClauseOccur.MUST);
+		}
 
-        if (Validator.isNotNull(treePath)) {
-            booleanFilter.add(new PrefixFilter(Field.TREE_PATH, treePath), BooleanClauseOccur.MUST);
-        }
-    }
+		String organizationType = GetterUtil.getString(params.get(Field.TYPE));
+
+		if (Validator.isNotNull(treePath)) {
+			booleanFilter.add(
+				new PrefixFilter(Field.TYPE, organizationType),
+				BooleanClauseOccur.MUST);
+		}
+	}
+
+	@Override
+	public void postProcessDocument(Document document, Object obj)
+		throws Exception {
+
+		super.postProcessDocument(document, obj);
+	}
+
 }

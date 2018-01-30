@@ -21,8 +21,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
+import com.liferay.portal.kernel.model.Organization;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -52,6 +56,10 @@ public interface CommerceUserService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceUserServiceUtil} to access the commerce user remote service. Add custom service methods to {@link com.liferay.commerce.user.service.impl.CommerceUserServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Organization addOrganization(long parentOrganization,
+		java.lang.String name, java.lang.String type,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Address getOrganizationPrimaryAddress(long organizationId)
 		throws PortalException;
@@ -66,4 +74,10 @@ public interface CommerceUserService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<Organization> searchOrganizations(
+		Organization organization, java.lang.String type,
+		java.lang.String keywords, int start, int end, Sort[] sorts)
+		throws PortalException;
 }

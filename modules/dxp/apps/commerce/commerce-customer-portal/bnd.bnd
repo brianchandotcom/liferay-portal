@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Customer Portal
+Bundle-SymbolicName: com.liferay.commerce.customer.portal
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.customer.portal.util

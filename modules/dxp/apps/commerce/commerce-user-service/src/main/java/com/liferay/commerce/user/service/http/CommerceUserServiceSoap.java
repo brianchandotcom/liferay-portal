@@ -54,6 +54,23 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CommerceUserServiceSoap {
+	public static com.liferay.portal.kernel.model.Organization addOrganization(
+		long parentOrganization, java.lang.String name, java.lang.String type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.Organization returnValue = CommerceUserServiceUtil.addOrganization(parentOrganization,
+					name, type, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId) throws RemoteException {
 		try {

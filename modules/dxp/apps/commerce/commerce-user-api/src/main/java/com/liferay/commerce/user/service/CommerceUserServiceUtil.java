@@ -41,6 +41,15 @@ public class CommerceUserServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.user.service.impl.CommerceUserServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static com.liferay.portal.kernel.model.Organization addOrganization(
+		long parentOrganization, java.lang.String name, java.lang.String type,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .addOrganization(parentOrganization, name, type,
+			serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -60,6 +69,16 @@ public class CommerceUserServiceUtil {
 	*/
 	public static java.lang.String getOSGiServiceIdentifier() {
 		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
+		com.liferay.portal.kernel.model.Organization organization,
+		java.lang.String type, java.lang.String keywords, int start, int end,
+		com.liferay.portal.kernel.search.Sort[] sorts)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .searchOrganizations(organization, type, keywords, start,
+			end, sorts);
 	}
 
 	public static CommerceUserService getService() {

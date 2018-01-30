@@ -12,14 +12,10 @@
 	</div>
 
 	<div class="application-bar-secondary">
-		<a class="application-bar-ticket link-brand-underline" href="#">
+		<a class="application-bar-account link-brand-underline" href="#">
 			<span>
-				Submit a ticket
+				${currentAccount.getName()}
 			</span>
-
-			<svg class="commerce-icon lexicon-icon lexicon-icon-comments text-light ml-1">
-				<use xlink:href="${images_folder}/lexicon/icons.svg#comments" />
-			</svg>
 		</a>
 
 		<@liferay.user_personal_bar />

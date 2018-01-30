@@ -93,14 +93,8 @@
 		}
 	}
 
-	.application-bar-ticket {
+	.application-bar-account {
 		margin-right: 20px;
-
-		> span {
-			@include media-breakpoint-down(lg) {
-				display: none;
-			}
-		}
 
 		@include media-breakpoint-up(sm) {
 			margin-right: 50px;

@@ -28,7 +28,7 @@
 
 	<div class="form-group{$visible ? '' : ' hide'} liferay-ddm-form-field-numeric {$tip ? 'liferay-ddm-form-field-has-tip' : ''}" data-fieldname="{$name}">
 		{if $showLabel}
-			<label class="control-label{$readOnly ? ' disabled' : ''}" for="{$name}">
+			<label class="{$readOnly ? ' disabled' : ''}" for="{$name}">
 				{$label}
 
 				{if $required}
@@ -36,7 +36,7 @@
 				{/if}
 			</label>
 
-			<p class="liferay-ddm-form-field-tip">{$tip ? $tip: ''}</p>
+			<span class="form-text">{$tip ? $tip: ''}</span>
 		{/if}
 
 		<div class="input-group-container {if $tooltip}input-group-default{/if}">

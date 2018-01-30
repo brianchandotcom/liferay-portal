@@ -24,8 +24,16 @@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
 taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
 taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
-<%@ page import="com.liferay.commerce.model.CommerceOrder" %><%@
+<%@ page import="com.liferay.commerce.exception.CommerceAddressCityException" %><%@
+page import="com.liferay.commerce.exception.CommerceAddressCountryException" %><%@
+page import="com.liferay.commerce.exception.CommerceAddressStreetException" %><%@
+page import="com.liferay.commerce.exception.NoSuchAddressException" %><%@
+page import="com.liferay.commerce.model.CommerceAddress" %><%@
+page import="com.liferay.commerce.model.CommerceCountry" %><%@
+page import="com.liferay.commerce.model.CommerceOrder" %><%@
+page import="com.liferay.commerce.model.CommerceRegion" %><%@
 page import="com.liferay.commerce.organization.web.internal.display.context.AddBranchDisplayContext" %><%@
+page import="com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationAddressesDisplayContext" %><%@
 page import="com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationBranchesDisplayContext" %><%@
 page import="com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDetailDisplayContext" %><%@
 page import="com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationMembersDisplayContext" %><%@
@@ -42,6 +50,7 @@ page import="com.liferay.portal.kernel.exception.NoSuchListTypeException" %><%@
 page import="com.liferay.portal.kernel.exception.NoSuchRegionException" %><%@
 page import="com.liferay.portal.kernel.exception.OrganizationNameException" %><%@
 page import="com.liferay.portal.kernel.language.LanguageUtil" %><%@
+page import="com.liferay.portal.kernel.language.UnicodeLanguageUtil" %><%@
 page import="com.liferay.portal.kernel.model.Address" %><%@
 page import="com.liferay.portal.kernel.model.EmailAddress" %><%@
 page import="com.liferay.portal.kernel.model.ListTypeConstants" %><%@
@@ -51,12 +60,15 @@ page import="com.liferay.portal.kernel.model.User" %><%@
 page import="com.liferay.portal.kernel.portlet.LiferayWindowState" %><%@
 page import="com.liferay.portal.kernel.util.Constants" %><%@
 page import="com.liferay.portal.kernel.util.HtmlUtil" %><%@
+page import="com.liferay.portal.kernel.util.StringPool" %><%@
 page import="com.liferay.portal.kernel.util.WebKeys" %><%@
 page import="com.liferay.portal.kernel.webserver.WebServerServletTokenUtil" %><%@
 page import="com.liferay.portal.kernel.workflow.WorkflowConstants" %><%@
 page import="com.liferay.portal.util.PropsValues" %><%@
 page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.users.admin.configuration.UserFileUploadsConfiguration" %>
+
+<%@ page import="java.util.List" %>
 
 <%@ page import="javax.portlet.WindowState" %>
 

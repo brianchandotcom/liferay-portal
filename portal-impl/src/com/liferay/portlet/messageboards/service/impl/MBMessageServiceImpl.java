@@ -36,6 +36,7 @@ import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ObjectValuePair;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
@@ -360,7 +361,8 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 
 			categoryId = MBCategoryConstants.DEFAULT_PARENT_CATEGORY_ID;
 			name = group.getDescriptiveName();
-			description = group.getDescription();
+			description = group.getDescription(
+				LocaleUtil.getMostRelevantLocale());
 		}
 		else {
 			groupId = category.getGroupId();
@@ -465,8 +467,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String name = StringPool.BLANK;
-		String description = StringPool.BLANK;
+		Group group = groupLocalService.getGroup(groupId);
+
+		String name = group.getDescriptiveName();
+		String description = group.getDescription(
+			LocaleUtil.getMostRelevantLocale());
 
 		List<MBMessage> messages = new ArrayList<>();
 
@@ -497,13 +502,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			}
 		}
 
-		if (!messages.isEmpty()) {
-			MBMessage message = messages.get(messages.size() - 1);
-
-			name = message.getSubject();
-			description = message.getSubject();
-		}
-
 		return exportToRSS(
 			name, description, type, version, displayStyle, feedURL, entryURL,
 			messages, themeDisplay);
@@ -516,8 +514,11 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 			String entryURL, ThemeDisplay themeDisplay)
 		throws PortalException {
 
-		String name = StringPool.BLANK;
-		String description = StringPool.BLANK;
+		Group group = groupLocalService.getGroup(groupId);
+
+		String name = group.getDescriptiveName();
+		String description = group.getDescription(
+			LocaleUtil.getMostRelevantLocale());
 
 		List<MBMessage> messages = new ArrayList<>();
 
@@ -546,13 +547,6 @@ public class MBMessageServiceImpl extends MBMessageServiceBaseImpl {
 					messages.add(message);
 				}
 			}
-		}
-
-		if (!messages.isEmpty()) {
-			MBMessage message = messages.get(messages.size() - 1);
-
-			name = message.getSubject();
-			description = message.getSubject();
 		}
 
 		return exportToRSS(

@@ -62,7 +62,8 @@ import org.osgi.service.component.annotations.Reference;
 	},
 	service = MVCActionCommand.class
 )
-public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
+public class AddCommerceCartItemToCartMVCActionCommand
+	extends BaseMVCActionCommand {
 
 	@Override
 	protected void doProcessAction(
@@ -98,7 +99,8 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 						CommerceCart.class.getName(), httpServletRequest);
 
 				commerceCart = _commerceCartService.addCommerceCart(
-					CommerceCartConstants.DEFAULT_TITLE, type, serviceContext);
+					CommerceCartConstants.DEFAULT_TITLE, true, type,
+					serviceContext);
 
 				if (!serviceContext.isSignedIn()) {
 					_commerceCartHelper.setGuestCommerceCart(
@@ -171,7 +173,7 @@ public class AddCommerceCartItemMVCActionCommand extends BaseMVCActionCommand {
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(
-		AddCommerceCartItemMVCActionCommand.class);
+		AddCommerceCartItemToCartMVCActionCommand.class);
 
 	@Reference
 	private CommerceCartHelper _commerceCartHelper;

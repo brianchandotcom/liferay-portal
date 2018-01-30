@@ -22,6 +22,7 @@ dependencies {
 	testIntegrationCompile project(":apps:collaboration:message-boards:message-boards-test-util")
 	testIntegrationCompile project(":apps:foundation:portal-search:portal-search-test-util")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-api")
+	testIntegrationCompile project(":apps:web-experience:asset:asset-categories-admin-web")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-tag-stats-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-tags-api")
 	testIntegrationCompile project(":apps:web-experience:asset:asset-test-util")

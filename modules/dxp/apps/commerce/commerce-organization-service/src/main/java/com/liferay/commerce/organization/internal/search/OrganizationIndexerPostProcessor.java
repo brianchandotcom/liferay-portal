@@ -16,7 +16,6 @@ package com.liferay.commerce.organization.internal.search;
 
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
-import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexerPostProcessor;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -68,13 +67,6 @@ public class OrganizationIndexerPostProcessor extends BaseIndexerPostProcessor {
 				new PrefixFilter(Field.TYPE, organizationType),
 				BooleanClauseOccur.MUST);
 		}
-	}
-
-	@Override
-	public void postProcessDocument(Document document, Object obj)
-		throws Exception {
-
-		super.postProcessDocument(document, obj);
 	}
 
 }

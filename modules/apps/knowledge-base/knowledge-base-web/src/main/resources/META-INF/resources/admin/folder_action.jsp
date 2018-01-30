@@ -42,7 +42,7 @@ if (kbFolder != null) {
 	showPermissionsURL = KBFolderPermission.contains(permissionChecker, kbFolder, KBActionKeys.PERMISSIONS);
 }
 else {
-	modelResource = AdminPermission.RESOURCE_NAME;
+	modelResource = KBConstants.ADMIN_RESOURCE_NAME;
 	modelResourceDescription = themeDisplay.getScopeGroupName();
 	resourcePrimKey = String.valueOf(scopeGroupId);
 

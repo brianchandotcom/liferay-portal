@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.service.permission;
 
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -28,13 +29,12 @@ import org.osgi.service.component.annotations.Component;
  * @author Brian Wing Shun Chan
  */
 @Component(
-	property = {"resource.name=" + AdminPermission.RESOURCE_NAME},
+	property = {"resource.name=" + KBConstants.ADMIN_RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
 public class AdminPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME =
-		"com.liferay.knowledge.base.admin";
+	public static final String RESOURCE_NAME = KBConstants.ADMIN_RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -49,7 +49,7 @@ public class AdminPermission extends BaseResourcePermissionChecker {
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME,
+			permissionChecker, KBConstants.ADMIN_RESOURCE_NAME,
 			KBPortletKeys.KNOWLEDGE_BASE_ADMIN, groupId, actionId);
 	}
 

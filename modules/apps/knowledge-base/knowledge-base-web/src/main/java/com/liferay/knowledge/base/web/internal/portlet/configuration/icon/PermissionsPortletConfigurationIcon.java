@@ -14,6 +14,7 @@
 
 package com.liferay.knowledge.base.web.internal.portlet.configuration.icon;
 
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.service.permission.AdminPermission;
 import com.liferay.petra.string.StringPool;
@@ -77,7 +78,7 @@ public class PermissionsPortletConfigurationIcon
 
 		try {
 			url = PermissionsURLTag.doTag(
-				StringPool.BLANK, AdminPermission.RESOURCE_NAME,
+				StringPool.BLANK, KBConstants.ADMIN_RESOURCE_NAME,
 				themeDisplay.getScopeGroupName(), null,
 				String.valueOf(themeDisplay.getScopeGroupId()),
 				LiferayWindowState.POP_UP.toString(), null,

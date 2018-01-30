@@ -56,9 +56,13 @@ public interface CommerceOrganizationService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CommerceOrganizationServiceUtil} to access the commerce organization remote service. Add custom service methods to {@link com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public Organization addOrganization(long parentOrganization,
+	public Organization addOrganization(long parentOrganizationId,
 		java.lang.String name, java.lang.String type,
 		ServiceContext serviceContext) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization getOrganization(long organizationId)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Address getOrganizationPrimaryAddress(long organizationId)
@@ -77,7 +81,6 @@ public interface CommerceOrganizationService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public BaseModelSearchResult<Organization> searchOrganizations(
-		Organization organization, java.lang.String type,
-		java.lang.String keywords, int start, int end, Sort[] sorts)
-		throws PortalException;
+		long organizationId, java.lang.String type, java.lang.String keywords,
+		int start, int end, Sort[] sorts) throws PortalException;
 }

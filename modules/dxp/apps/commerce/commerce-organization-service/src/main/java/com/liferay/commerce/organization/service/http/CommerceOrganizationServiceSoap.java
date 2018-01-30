@@ -55,12 +55,27 @@ import java.rmi.RemoteException;
 @ProviderType
 public class CommerceOrganizationServiceSoap {
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganization, java.lang.String name, java.lang.String type,
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
-			com.liferay.portal.kernel.model.Organization returnValue = CommerceOrganizationServiceUtil.addOrganization(parentOrganization,
+			com.liferay.portal.kernel.model.Organization returnValue = CommerceOrganizationServiceUtil.addOrganization(parentOrganizationId,
 					name, type, serviceContext);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.portal.kernel.model.Organization getOrganization(
+		long organizationId) throws RemoteException {
+		try {
+			com.liferay.portal.kernel.model.Organization returnValue = CommerceOrganizationServiceUtil.getOrganization(organizationId);
 
 			return returnValue;
 		}

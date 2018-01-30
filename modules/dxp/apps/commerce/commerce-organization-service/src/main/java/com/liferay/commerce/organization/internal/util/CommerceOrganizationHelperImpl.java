@@ -14,10 +14,10 @@
 
 package com.liferay.commerce.organization.internal.util;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
-import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,8 @@ public class CommerceOrganizationHelperImpl
 			return null;
 		}
 
-		return _organizationLocalService.getOrganization(currentOrganizationId);
+		return _commerceOrganizationService.getOrganization(
+			currentOrganizationId);
 	}
 
 	@Override
@@ -58,6 +59,6 @@ public class CommerceOrganizationHelperImpl
 		"LIFERAY_SHARED_CURRENT_ORGANIZATION_ID";
 
 	@Reference
-	private OrganizationLocalService _organizationLocalService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 }

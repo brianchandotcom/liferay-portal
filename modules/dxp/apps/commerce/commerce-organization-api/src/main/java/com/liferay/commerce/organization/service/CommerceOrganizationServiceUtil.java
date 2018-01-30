@@ -42,12 +42,19 @@ public class CommerceOrganizationServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.commerce.organization.service.impl.CommerceOrganizationServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganization, java.lang.String name, java.lang.String type,
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .addOrganization(parentOrganization, name, type,
+				   .addOrganization(parentOrganizationId, name, type,
 			serviceContext);
+	}
+
+	public static com.liferay.portal.kernel.model.Organization getOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getOrganization(organizationId);
 	}
 
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
@@ -72,12 +79,11 @@ public class CommerceOrganizationServiceUtil {
 	}
 
 	public static com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
-		com.liferay.portal.kernel.model.Organization organization,
-		java.lang.String type, java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts)
+		long organizationId, java.lang.String type, java.lang.String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .searchOrganizations(organization, type, keywords, start,
+				   .searchOrganizations(organizationId, type, keywords, start,
 			end, sorts);
 	}
 

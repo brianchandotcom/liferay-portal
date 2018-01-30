@@ -36,11 +36,19 @@ public class CommerceOrganizationServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.model.Organization addOrganization(
-		long parentOrganization, java.lang.String name, java.lang.String type,
+		long parentOrganizationId, java.lang.String name,
+		java.lang.String type,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrganizationService.addOrganization(parentOrganization,
+		return _commerceOrganizationService.addOrganization(parentOrganizationId,
 			name, type, serviceContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.Organization getOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrganizationService.getOrganization(organizationId);
 	}
 
 	@Override
@@ -69,11 +77,10 @@ public class CommerceOrganizationServiceWrapper
 
 	@Override
 	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.portal.kernel.model.Organization> searchOrganizations(
-		com.liferay.portal.kernel.model.Organization organization,
-		java.lang.String type, java.lang.String keywords, int start, int end,
-		com.liferay.portal.kernel.search.Sort[] sorts)
+		long organizationId, java.lang.String type, java.lang.String keywords,
+		int start, int end, com.liferay.portal.kernel.search.Sort[] sorts)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrganizationService.searchOrganizations(organization,
+		return _commerceOrganizationService.searchOrganizations(organizationId,
 			type, keywords, start, end, sorts);
 	}
 

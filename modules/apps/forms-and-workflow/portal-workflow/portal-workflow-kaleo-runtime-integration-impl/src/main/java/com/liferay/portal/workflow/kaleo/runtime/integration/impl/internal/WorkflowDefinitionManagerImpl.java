@@ -20,11 +20,8 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUID;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowDefinition;
-import com.liferay.portal.kernel.workflow.WorkflowDefinitionFileException;
 import com.liferay.portal.kernel.workflow.WorkflowDefinitionManager;
 import com.liferay.portal.kernel.workflow.WorkflowException;
 import com.liferay.portal.kernel.workflow.comparator.WorkflowComparatorFactory;
@@ -355,47 +352,13 @@ public class WorkflowDefinitionManagerImpl
 			byte[] bytes)
 		throws WorkflowException {
 
-		try {
-			Definition definition = getDefinition(bytes);
+		ServiceContext serviceContext = new ServiceContext();
 
-			String definitionName = getDefinitionName(definition, name);
+		serviceContext.setCompanyId(companyId);
+		serviceContext.setUserId(userId);
 
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setCompanyId(companyId);
-			serviceContext.setUserId(userId);
-			serviceContext.setAttribute(
-				"status", WorkflowConstants.STATUS_DRAFT);
-
-			KaleoDefinitionVersion kaleoDefinitionVersion =
-				_kaleoDefinitionVersionLocalService.
-					fetchLatestKaleoDefinitionVersion(
-						companyId, definitionName);
-
-			if (kaleoDefinitionVersion == null) {
-				kaleoDefinitionVersion =
-					_kaleoDefinitionVersionLocalService.
-						addKaleoDefinitionVersion(
-							definitionName, title, definition.getDescription(),
-							definition.getContent(), "1.0", serviceContext);
-			}
-			else {
-				String version = getNextVersion(
-					kaleoDefinitionVersion.getVersion());
-
-				kaleoDefinitionVersion =
-					_kaleoDefinitionVersionLocalService.
-						addKaleoDefinitionVersion(
-							definitionName, title, definition.getDescription(),
-							definition.getContent(), version, serviceContext);
-			}
-
-			return _kaleoWorkflowModelConverter.toWorkflowDefinition(
-				kaleoDefinitionVersion);
-		}
-		catch (Exception e) {
-			throw new WorkflowException(e);
-		}
+		return _workflowEngine.saveWorkflowDefinition(
+			title, name, bytes, serviceContext);
 	}
 
 	@Override
@@ -477,37 +440,6 @@ public class WorkflowDefinitionManagerImpl
 
 		_workflowEngine.validateWorkflowDefinition(
 			new UnsyncByteArrayInputStream(bytes));
-	}
-
-	protected Definition getDefinition(byte[] bytes) throws WorkflowException {
-		try {
-			_workflowModelParser.setValidate(false);
-
-			return _workflowModelParser.parse(
-				new UnsyncByteArrayInputStream(bytes));
-		}
-		catch (WorkflowDefinitionFileException wdfe) {
-			return new Definition(
-				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0);
-		}
-		catch (WorkflowException we) {
-			throw new WorkflowException(we);
-		}
-		finally {
-			_workflowModelParser.setValidate(true);
-		}
-	}
-
-	protected String getDefinitionName(Definition definition, String name) {
-		if (Validator.isNotNull(name)) {
-			return name;
-		}
-
-		if (Validator.isNotNull(definition.getName())) {
-			return definition.getName();
-		}
-
-		return portalUUID.generate();
 	}
 
 	protected String getNextVersion(String version) {

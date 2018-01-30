@@ -410,9 +410,22 @@ public class RootProjectConfigurator implements Plugin<Project> {
 
 					String bundleUrl = workspaceExtension.getBundleUrl();
 
-					bundleUrl = bundleUrl.replace(" ", "%20");
-
 					try {
+						if (bundleUrl.startsWith("file:")) {
+							URL url = new URL(bundleUrl);
+
+							File file = new File(url.getFile());
+
+							file = file.getAbsoluteFile();
+
+							URI uri = file.toURI();
+
+							bundleUrl = uri.toASCIIString();
+						}
+						else {
+							bundleUrl = bundleUrl.replace(" ", "%20");
+						}
+
 						download.src(bundleUrl);
 					}
 					catch (MalformedURLException murle) {

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.portlet.action;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
-import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -56,11 +56,11 @@ public class AddBranchMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Organization.class.getName(), actionRequest);
 
-		_commerceUserService.addOrganization(
+		_commerceOrganizationService.addOrganization(
 			organizationId, name, type, serviceContext);
 	}
 
 	@Reference
-	private CommerceUserService _commerceUserService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationBranchesDisplayContext;
-import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -87,7 +87,7 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 		CommerceOrganizationBranchesDisplayContext
 			commerceOrganizationBranchesDisplayContext =
 				new CommerceOrganizationBranchesDisplayContext(
-					httpServletRequest, _commerceUserService,
+					httpServletRequest, _commerceOrganizationService,
 					_organizationService);
 
 		httpServletRequest.setAttribute(
@@ -99,7 +99,7 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 	}
 
 	@Reference
-	private CommerceUserService _commerceUserService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

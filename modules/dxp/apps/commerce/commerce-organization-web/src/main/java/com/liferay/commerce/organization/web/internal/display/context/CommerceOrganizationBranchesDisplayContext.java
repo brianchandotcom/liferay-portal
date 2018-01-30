@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
-import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -33,12 +33,12 @@ public class CommerceOrganizationBranchesDisplayContext
 
 	public CommerceOrganizationBranchesDisplayContext(
 		HttpServletRequest httpServletRequest,
-		CommerceUserService commerceUserService,
+		CommerceOrganizationService commerceOrganizationService,
 		OrganizationService organizationService) {
 
 		super(httpServletRequest, organizationService);
 
-		_commerceUserService = commerceUserService;
+		_commerceOrganizationService = commerceOrganizationService;
 
 		setDefaultOrderByCol("nameTreePath");
 	}
@@ -60,7 +60,7 @@ public class CommerceOrganizationBranchesDisplayContext
 			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
-			_commerceUserService.searchOrganizations(
+			_commerceOrganizationService.searchOrganizations(
 				organization, "branch", null, _searchContainer.getStart(),
 				_searchContainer.getEnd(), new Sort[] {sort});
 
@@ -77,7 +77,7 @@ public class CommerceOrganizationBranchesDisplayContext
 		return true;
 	}
 
-	private final CommerceUserService _commerceUserService;
+	private final CommerceOrganizationService _commerceOrganizationService;
 	private SearchContainer<Organization> _searchContainer;
 
 }

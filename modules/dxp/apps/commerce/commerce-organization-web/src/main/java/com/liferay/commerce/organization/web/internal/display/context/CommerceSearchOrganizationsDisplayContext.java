@@ -14,8 +14,8 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
-import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
@@ -33,15 +33,14 @@ public class CommerceSearchOrganizationsDisplayContext
 
 	public CommerceSearchOrganizationsDisplayContext(
 		HttpServletRequest httpServletRequest,
-		CommerceUserService commerceUserService,
+		CommerceOrganizationService commerceOrganizationService,
 		OrganizationService organizationService) {
 
 		super(httpServletRequest, organizationService);
 
-		_commerceUserService = commerceUserService;
+		_commerceOrganizationService = commerceOrganizationService;
 
 		setDefaultOrderByCol("name");
-		setDefaultOrderByType("asc");
 	}
 
 	public SearchContainer getSearchContainer() throws PortalException {
@@ -58,7 +57,7 @@ public class CommerceSearchOrganizationsDisplayContext
 			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
-			_commerceUserService.searchOrganizations(
+			_commerceOrganizationService.searchOrganizations(
 				organization, null, "account", _searchContainer.getStart(),
 				_searchContainer.getEnd(), new Sort[] {sort});
 
@@ -69,7 +68,7 @@ public class CommerceSearchOrganizationsDisplayContext
 		return _searchContainer;
 	}
 
-	private final CommerceUserService _commerceUserService;
+	private final CommerceOrganizationService _commerceOrganizationService;
 	private SearchContainer _searchContainer;
 
 }

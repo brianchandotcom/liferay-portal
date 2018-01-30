@@ -14,9 +14,9 @@
 
 package com.liferay.commerce.organization.web.internal.portlet;
 
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationDetailDisplayContext;
-import com.liferay.commerce.user.service.CommerceUserService;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.OrganizationService;
@@ -81,7 +81,7 @@ public class CommerceOrganizationPortlet extends MVCPortlet {
 		CommerceOrganizationDetailDisplayContext
 			commerceOrganizationDetailDisplayContext =
 				new CommerceOrganizationDetailDisplayContext(
-					httpServletRequest, _commerceUserService,
+					httpServletRequest, _commerceOrganizationService,
 					_organizationService, _userFileUploadsConfiguration);
 
 		renderRequest.setAttribute(
@@ -99,7 +99,7 @@ public class CommerceOrganizationPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	private CommerceUserService _commerceUserService;
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private OrganizationService _organizationService;

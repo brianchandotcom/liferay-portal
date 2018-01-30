@@ -14,7 +14,7 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
-import com.liferay.commerce.user.service.CommerceUserService;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
@@ -32,20 +32,20 @@ public class CommerceOrganizationDetailDisplayContext
 
 	public CommerceOrganizationDetailDisplayContext(
 		HttpServletRequest httpServletRequest,
-		CommerceUserService commerceUserService,
+		CommerceOrganizationService commerceOrganizationService,
 		OrganizationService organizationService,
 		UserFileUploadsConfiguration userFileUploadsConfiguration) {
 
 		super(httpServletRequest, organizationService);
 
-		this.commerceUserService = commerceUserService;
+		this.commerceOrganizationService = commerceOrganizationService;
 		this.userFileUploadsConfiguration = userFileUploadsConfiguration;
 	}
 
 	public Address getOrganizationPrimaryAddress() throws PortalException {
 		Organization organization = getCurrentOrganization();
 
-		return commerceUserService.getOrganizationPrimaryAddress(
+		return commerceOrganizationService.getOrganizationPrimaryAddress(
 			organization.getOrganizationId());
 	}
 
@@ -54,7 +54,7 @@ public class CommerceOrganizationDetailDisplayContext
 
 		Organization organization = getCurrentOrganization();
 
-		return commerceUserService.getOrganizationPrimaryEmailAddress(
+		return commerceOrganizationService.getOrganizationPrimaryEmailAddress(
 			organization.getOrganizationId());
 	}
 
@@ -62,7 +62,7 @@ public class CommerceOrganizationDetailDisplayContext
 		return userFileUploadsConfiguration;
 	}
 
-	protected final CommerceUserService commerceUserService;
+	protected final CommerceOrganizationService commerceOrganizationService;
 	protected final UserFileUploadsConfiguration userFileUploadsConfiguration;
 
 }

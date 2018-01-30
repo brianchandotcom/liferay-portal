@@ -50,19 +50,15 @@ public class HtmlParserUtil {
 				html = "<span>" + html + "</span>";
 			}
 
-			StringBundler sb = new StringBundler(
-				_HTML5_VOID_ELEMENTS.length * 3 + 1);
+			StringBundler sb = new StringBundler(4);
 
 			sb.append("(");
+			sb.append(StringPool.LESS_THAN);
 
-			for (String voidElement : _HTML5_VOID_ELEMENTS) {
-				if (sb.length() > 2) {
-					sb.append(StringPool.PIPE);
-				}
+			String html5VoidElements = String.join(
+				StringPool.PIPE + StringPool.LESS_THAN, _HTML5_VOID_ELEMENTS);
 
-				sb.append(StringPool.LESS_THAN);
-				sb.append(voidElement);
-			}
+			sb.append(html5VoidElements);
 
 			sb.append(")([^\\/>]*)>");
 

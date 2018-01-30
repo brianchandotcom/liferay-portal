@@ -330,7 +330,7 @@ public class CommerceAddressLocalServiceImpl
 		attributes.put("city", keywords);
 		attributes.put("countryName", keywords);
 		attributes.put("regionName", keywords);
-		attributes.put("regionName", keywords);
+		attributes.put("zip", keywords);
 
 		searchContext.setAttributes(attributes);
 

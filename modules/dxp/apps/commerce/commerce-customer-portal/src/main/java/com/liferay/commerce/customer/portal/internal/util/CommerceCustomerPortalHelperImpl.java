@@ -17,10 +17,9 @@ package com.liferay.commerce.customer.portal.internal.util;
 import com.liferay.commerce.customer.portal.util.CommerceCustomerPortalHelper;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.SessionParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -36,10 +35,8 @@ public class CommerceCustomerPortalHelperImpl
 	public Organization getCurrentOrganization(
 		HttpServletRequest httpServletRequest, String organizationType) {
 
-		HttpSession httpSession = httpServletRequest.getSession();
-
-		long currentOrganizationId = GetterUtil.getLong(
-			httpSession.getAttribute(_CURRENT_ORGANIZATION_ID_KEY));
+		long currentOrganizationId = SessionParamUtil.getLong(
+			httpServletRequest, _CURRENT_ORGANIZATION_ID_KEY);
 
 		return _organizationLocalService.fetchOrganization(
 			currentOrganizationId);

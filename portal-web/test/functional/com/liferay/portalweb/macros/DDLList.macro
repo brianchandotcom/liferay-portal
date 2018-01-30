@@ -81,10 +81,6 @@
 		<execute function="AssertTextEquals" locator1="Message#ERROR" value1="You do not have the required permissions." />
 	</command>
 
-	<command name="clickSave">
-		<execute macro="Button#clickSave" />
-	</command>
-
 	<command name="deleteCP">
 		<var name="key_ddlListName" value="${ddlListName}" />
 
@@ -162,13 +158,13 @@
 	</command>
 
 	<command name="save">
-		<execute macro="DDLList#clickSave" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
-		<execute macro="DDLList#clickSave" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

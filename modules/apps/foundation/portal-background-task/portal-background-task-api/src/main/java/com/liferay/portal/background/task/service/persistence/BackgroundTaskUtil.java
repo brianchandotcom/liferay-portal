@@ -1660,7 +1660,7 @@ public class BackgroundTaskUtil {
 	}
 
 	/**
-	* Returns all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63;.
+	* Returns all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1668,17 +1668,17 @@ public class BackgroundTaskUtil {
 	*
 	* @param groupIds the group IDs
 	* @param name the name
-	* @param taskExecutorClassName the task executor class name
+	* @param taskExecutorClassNames the task executor class names
 	* @return the matching background tasks
 	*/
 	public static List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName) {
+		java.lang.String name, java.lang.String[] taskExecutorClassNames) {
 		return getPersistence()
-				   .findByG_N_T(groupIds, name, taskExecutorClassName);
+				   .findByG_N_T(groupIds, name, taskExecutorClassNames);
 	}
 
 	/**
-	* Returns a range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63;.
+	* Returns a range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1686,21 +1686,21 @@ public class BackgroundTaskUtil {
 	*
 	* @param groupIds the group IDs
 	* @param name the name
-	* @param taskExecutorClassName the task executor class name
+	* @param taskExecutorClassNames the task executor class names
 	* @param start the lower bound of the range of background tasks
 	* @param end the upper bound of the range of background tasks (not inclusive)
 	* @return the range of matching background tasks
 	*/
 	public static List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
+		java.lang.String name, java.lang.String[] taskExecutorClassNames,
 		int start, int end) {
 		return getPersistence()
-				   .findByG_N_T(groupIds, name, taskExecutorClassName, start,
+				   .findByG_N_T(groupIds, name, taskExecutorClassNames, start,
 			end);
 	}
 
 	/**
-	* Returns an ordered range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63;.
+	* Returns an ordered range of all the background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link BackgroundTaskModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
@@ -1708,17 +1708,17 @@ public class BackgroundTaskUtil {
 	*
 	* @param groupIds the group IDs
 	* @param name the name
-	* @param taskExecutorClassName the task executor class name
+	* @param taskExecutorClassNames the task executor class names
 	* @param start the lower bound of the range of background tasks
 	* @param end the upper bound of the range of background tasks (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching background tasks
 	*/
 	public static List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
+		java.lang.String name, java.lang.String[] taskExecutorClassNames,
 		int start, int end, OrderByComparator<BackgroundTask> orderByComparator) {
 		return getPersistence()
-				   .findByG_N_T(groupIds, name, taskExecutorClassName, start,
+				   .findByG_N_T(groupIds, name, taskExecutorClassNames, start,
 			end, orderByComparator);
 	}
 
@@ -1739,12 +1739,12 @@ public class BackgroundTaskUtil {
 	* @return the ordered range of matching background tasks
 	*/
 	public static List<BackgroundTask> findByG_N_T(long[] groupIds,
-		java.lang.String name, java.lang.String taskExecutorClassName,
+		java.lang.String name, java.lang.String[] taskExecutorClassNames,
 		int start, int end,
 		OrderByComparator<BackgroundTask> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
-				   .findByG_N_T(groupIds, name, taskExecutorClassName, start,
+				   .findByG_N_T(groupIds, name, taskExecutorClassNames, start,
 			end, orderByComparator, retrieveFromCache);
 	}
 
@@ -1775,17 +1775,17 @@ public class BackgroundTaskUtil {
 	}
 
 	/**
-	* Returns the number of background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = &#63;.
+	* Returns the number of background tasks where groupId = any &#63; and name = &#63; and taskExecutorClassName = any &#63;.
 	*
 	* @param groupIds the group IDs
 	* @param name the name
-	* @param taskExecutorClassName the task executor class name
+	* @param taskExecutorClassNames the task executor class names
 	* @return the number of matching background tasks
 	*/
 	public static int countByG_N_T(long[] groupIds, java.lang.String name,
-		java.lang.String taskExecutorClassName) {
+		java.lang.String[] taskExecutorClassNames) {
 		return getPersistence()
-				   .countByG_N_T(groupIds, name, taskExecutorClassName);
+				   .countByG_N_T(groupIds, name, taskExecutorClassNames);
 	}
 
 	/**

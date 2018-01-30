@@ -36,8 +36,6 @@ import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.impl.AddressImpl;
-import com.liferay.portal.model.impl.EmailAddressImpl;
 
 import java.io.Serializable;
 
@@ -83,7 +81,7 @@ public class CommerceOrganizationServiceImpl
 			}
 		}
 
-		return new AddressImpl();
+		return addressPersistence.create(0);
 	}
 
 	@Override
@@ -106,7 +104,7 @@ public class CommerceOrganizationServiceImpl
 			}
 		}
 
-		return new EmailAddressImpl();
+		return emailAddressPersistence.create(0);
 	}
 
 	@Override

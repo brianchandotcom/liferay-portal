@@ -14,13 +14,14 @@
 
 package com.liferay.notifications.web.internal.upgrade.v2_1_0;
 
+import com.liferay.portal.kernel.dao.jdbc.AutoBatchPreparedStatementUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.model.UserNotificationDeliveryConstants;
-import com.liferay.portal.kernel.model.UserNotificationEvent;
 import com.liferay.portal.kernel.service.UserNotificationEventLocalService;
 import com.liferay.portal.kernel.upgrade.UpgradeProcess;
 import com.liferay.portal.kernel.util.LoggingTimer;
+import com.liferay.portal.kernel.util.StringBundler;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -48,71 +49,66 @@ public class UpgradeUserNotificationEvent extends UpgradeProcess {
 	protected void updateUserNotificationEventActionRequired()
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select userNotificationEventId, actionRequired from " +
-					"Notifications_UserNotificationEvent");
-			ResultSet rs = ps.executeQuery()) {
+		try (LoggingTimer loggingTimer = new LoggingTimer()) {
+			StringBundler sb = new StringBundler(5);
 
-			while (rs.next()) {
-				long userNotificationEventId = rs.getLong(
-					"userNotificationEventId");
-				boolean actionRequired = rs.getBoolean("actionRequired");
+			sb.append("update UserNotificationEvent set actionRequired = ");
+			sb.append("TRUE where userNotificationEventId in (select ");
+			sb.append("userNotificationEventId from ");
+			sb.append("Notifications_UserNotificationEvent where ");
+			sb.append("actionRequired = TRUE)");
 
-				UserNotificationEvent userNotificationEvent =
-					_userNotificationEventLocalService.getUserNotificationEvent(
-						userNotificationEventId);
+			runSQL(sb.toString());
 
-				userNotificationEvent.setActionRequired(actionRequired);
-
-				_userNotificationEventLocalService.updateUserNotificationEvent(
-					userNotificationEvent);
-			}
+			runSQL(
+				"update UserNotificationEvent set actionRequired = FALSE " +
+					"where actionRequired IS NULL");
 		}
 	}
 
 	protected void updateUserNotificationEvents() throws Exception {
 		try (LoggingTimer loggingTimer = new LoggingTimer();
-			PreparedStatement ps = connection.prepareStatement(
-				"select userNotificationEventId, payload from " +
-					"UserNotificationEvent");
-			ResultSet rs = ps.executeQuery()) {
+			PreparedStatement ps1 = connection.prepareStatement(
+				"select userNotificationEventId, payload, actionRequired " +
+					"from UserNotificationEvent where payload like " +
+						"'%actionRequired%'");
+			PreparedStatement ps2 =
+				AutoBatchPreparedStatementUtil.concurrentAutoBatch(
+					connection,
+					"update UserNotificationEvent set payload = ?, " +
+						"actionRequired = ? where userNotificationEventId = ?");
+			ResultSet rs = ps1.executeQuery()) {
+
+			runSQL("update UserNotificationEvent set delivered = TRUE");
+
+			runSQL(
+				StringBundler.concat(
+					"update UserNotificationEvent set deliveryType = ",
+					UserNotificationDeliveryConstants.TYPE_WEBSITE,
+					" where deliveryType = 0 or deliveryType is null"));
 
 			while (rs.next()) {
 				long userNotificationEventId = rs.getLong(
 					"userNotificationEventId");
 				String payload = rs.getString("payload");
-
-				UserNotificationEvent userNotificationEvent =
-					_userNotificationEventLocalService.getUserNotificationEvent(
-						userNotificationEventId);
-
-				userNotificationEvent.setDelivered(true);
-
-				int deliveryType = userNotificationEvent.getDeliveryType();
-
-				if (deliveryType == 0) {
-					userNotificationEvent.setDeliveryType(
-						UserNotificationDeliveryConstants.TYPE_WEBSITE);
-				}
+				boolean actionRequired = rs.getBoolean("actionRequired");
 
 				JSONObject jsonObject = JSONFactoryUtil.createJSONObject(
 					payload);
 
-				boolean actionRequired = jsonObject.getBoolean(
-					"actionRequired");
+				actionRequired |= jsonObject.getBoolean("actionRequired");
 
 				jsonObject.remove("actionRequired");
 
-				userNotificationEvent.setPayload(jsonObject.toString());
+				ps2.setString(1, jsonObject.toString());
 
-				if (!userNotificationEvent.isActionRequired()) {
-					userNotificationEvent.setActionRequired(actionRequired);
-				}
+				ps2.setBoolean(2, actionRequired);
+				ps2.setLong(3, userNotificationEventId);
 
-				_userNotificationEventLocalService.updateUserNotificationEvent(
-					userNotificationEvent);
+				ps2.addBatch();
 			}
+
+			ps2.executeBatch();
 		}
 	}
 

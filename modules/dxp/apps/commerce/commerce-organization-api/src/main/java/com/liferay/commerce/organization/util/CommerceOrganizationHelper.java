@@ -16,6 +16,7 @@ package com.liferay.commerce.organization.util;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,8 @@ import javax.servlet.http.HttpServletRequest;
 public interface CommerceOrganizationHelper {
 
 	public Organization getCurrentOrganization(
-		HttpServletRequest httpServletRequest, String organizationType);
+			HttpServletRequest httpServletRequest, String organizationType)
+		throws PortalException;
 
 	public Organization setCurrentOrganization(
 		HttpServletRequest httpServletRequest, String organizationType);

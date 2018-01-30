@@ -15,6 +15,7 @@
 package com.liferay.commerce.organization.internal.util;
 
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.SessionParamUtil;
@@ -33,7 +34,8 @@ public class CommerceOrganizationHelperImpl
 
 	@Override
 	public Organization getCurrentOrganization(
-		HttpServletRequest httpServletRequest, String organizationType) {
+			HttpServletRequest httpServletRequest, String organizationType)
+		throws PortalException {
 
 		long currentOrganizationId = SessionParamUtil.getLong(
 			httpServletRequest, _CURRENT_ORGANIZATION_ID_KEY);
@@ -42,8 +44,7 @@ public class CommerceOrganizationHelperImpl
 			return null;
 		}
 
-		return _organizationLocalService.fetchOrganization(
-			currentOrganizationId);
+		return _organizationLocalService.getOrganization(currentOrganizationId);
 	}
 
 	@Override

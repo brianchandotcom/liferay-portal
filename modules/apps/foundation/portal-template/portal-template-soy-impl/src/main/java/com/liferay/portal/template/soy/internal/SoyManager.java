@@ -24,6 +24,7 @@ import com.liferay.portal.template.BaseMultiTemplateManager;
 import com.liferay.portal.template.RestrictedTemplate;
 import com.liferay.portal.template.TemplateContextHelper;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +60,7 @@ public class SoyManager extends BaseMultiTemplateManager {
 		templateContextHelper.removeHelperUtilities(classLoader);
 	}
 
-	public List<TemplateResource> getAllTemplateResources() {
+	public Collection<TemplateResource> getAllTemplateResources() {
 		return _soyCapabilityBundleTrackerCustomizer.getAllTemplateResources();
 	}
 

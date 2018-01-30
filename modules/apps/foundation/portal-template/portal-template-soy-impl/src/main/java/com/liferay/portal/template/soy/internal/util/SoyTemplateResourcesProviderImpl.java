@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.template.soy.internal.SoyManager;
 import com.liferay.portal.template.soy.utils.SoyTemplateResourcesProvider;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,13 +38,13 @@ public class SoyTemplateResourcesProviderImpl
 	implements SoyTemplateResourcesProvider {
 
 	@Override
-	public List<TemplateResource> getAllTemplateResources() {
+	public Collection<TemplateResource> getAllTemplateResources() {
 		if (_soyManager == null) {
 			return Collections.<TemplateResource>emptyList();
 		}
 
 		return Collections.unmodifiableList(
-			_soyManager.getAllTemplateResources());
+			new ArrayList<>(_soyManager.getAllTemplateResources()));
 	}
 
 	@Override

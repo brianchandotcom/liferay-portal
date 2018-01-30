@@ -33,6 +33,8 @@ import com.liferay.taglib.util.ParamAndPropertyAncestorTagImpl;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -251,10 +253,10 @@ public class TemplateRendererTag extends ParamAndPropertyAncestorTagImpl {
 				SoyTemplateResourcesProvider::getAllTemplateResources);
 		}
 
-		return _templateResources;
+		return new ArrayList<>(_templateResources);
 	}
 
-	private static List<TemplateResource> _templateResources;
+	private static Collection<TemplateResource> _templateResources;
 
 	private String _componentId;
 	private Map<String, Object> _context;

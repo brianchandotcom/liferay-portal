@@ -22,7 +22,6 @@ import com.google.template.soy.data.SoyMapData;
 import com.google.template.soy.msgs.SoyMsgBundle;
 import com.google.template.soy.tofu.SoyTofu;
 import com.google.template.soy.tofu.SoyTofu.Renderer;
-import com.google.template.soy.tofu.SoyTofuOptions;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -372,13 +371,9 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			templateResources);
 
 		if (soyTofuCacheBag == null) {
-			SoyTofuOptions soyTofuOptions = new SoyTofuOptions();
-
-			soyTofuOptions.setUseCaching(true);
-
 			SoyFileSet soyFileSet = getSoyFileSet(templateResources);
 
-			SoyTofu soyTofu = soyFileSet.compileToTofu(soyTofuOptions);
+			SoyTofu soyTofu = soyFileSet.compileToTofu();
 
 			soyTofuCacheBag = _soyTofuCacheHandler.add(
 				templateResources, soyFileSet, soyTofu);

@@ -15,8 +15,8 @@
 package com.liferay.portal.lpkg.deployer.controller.test;
 
 import com.liferay.arquillian.extension.junit.bridge.junit.Arquillian;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.concurrent.DefaultNoticeableFuture;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Collections;
 

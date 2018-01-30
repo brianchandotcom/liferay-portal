@@ -14,9 +14,9 @@
 
 package com.liferay.portal.bundle.blacklist;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.StreamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.lpkg.deployer.test.util.LPKGTestUtil;
 
 import java.io.FileOutputStream;

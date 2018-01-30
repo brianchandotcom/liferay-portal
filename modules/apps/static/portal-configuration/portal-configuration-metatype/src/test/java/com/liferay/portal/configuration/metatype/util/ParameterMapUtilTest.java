@@ -14,8 +14,8 @@
 
 package com.liferay.portal.configuration.metatype.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.module.configuration.ConfigurationException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Map;

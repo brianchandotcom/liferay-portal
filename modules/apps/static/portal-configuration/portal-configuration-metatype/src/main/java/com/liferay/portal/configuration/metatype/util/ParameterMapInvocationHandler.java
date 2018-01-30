@@ -14,9 +14,9 @@
 
 package com.liferay.portal.configuration.metatype.util;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.settings.LocalizedValuesMap;
 import com.liferay.portal.kernel.util.ProxyUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;

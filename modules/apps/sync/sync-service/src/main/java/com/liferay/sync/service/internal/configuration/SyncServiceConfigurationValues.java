@@ -12,9 +12,10 @@
  * details.
  */
 
-package com.liferay.sync.service.configuration;
+package com.liferay.sync.service.internal.configuration;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.sync.service.configuration.SyncServiceConfigurationKeys;
 
 /**
  * @author Dennis Ju

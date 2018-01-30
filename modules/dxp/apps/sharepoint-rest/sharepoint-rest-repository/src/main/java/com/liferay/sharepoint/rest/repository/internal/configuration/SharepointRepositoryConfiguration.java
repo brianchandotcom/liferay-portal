@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.configuration;
+package com.liferay.sharepoint.rest.repository.internal.configuration;
 
 import aQute.bnd.annotation.metatype.Meta;
 
@@ -26,7 +26,7 @@ import com.liferay.portal.configuration.metatype.annotations.ExtendedObjectClass
 )
 @Meta.OCD(
 	factory = true,
-	id = "com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration",
+	id = "com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration",
 	localization = "content/Language",
 	name = "sharepoint-repository-configuration-name"
 )

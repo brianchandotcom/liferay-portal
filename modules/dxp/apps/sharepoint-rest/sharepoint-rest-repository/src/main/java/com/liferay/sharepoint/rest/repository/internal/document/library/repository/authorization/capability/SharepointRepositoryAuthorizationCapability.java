@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.capability;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.capability;
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationException;
@@ -25,9 +25,9 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
-import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryRequestState;
-import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBroker;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryRequestState;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBroker;
 
 import java.io.IOException;
 

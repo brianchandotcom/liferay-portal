@@ -12,11 +12,11 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 
 import java.io.IOException;
 

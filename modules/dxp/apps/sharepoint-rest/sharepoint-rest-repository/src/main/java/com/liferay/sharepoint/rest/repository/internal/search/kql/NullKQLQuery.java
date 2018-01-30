@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.search.kql;
+package com.liferay.sharepoint.rest.repository.internal.search.kql;
 
 import com.liferay.portal.kernel.util.StringPool;
 

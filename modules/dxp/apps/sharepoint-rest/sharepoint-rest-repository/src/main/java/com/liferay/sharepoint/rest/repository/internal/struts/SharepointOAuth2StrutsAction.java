@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.struts;
+package com.liferay.sharepoint.rest.repository.internal.struts;
 
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
@@ -22,7 +22,7 @@ import com.liferay.portal.kernel.repository.RepositoryProviderUtil;
 import com.liferay.portal.kernel.repository.model.Folder;
 import com.liferay.portal.kernel.struts.BaseStrutsAction;
 import com.liferay.portal.kernel.struts.StrutsAction;
-import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryRequestState;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryRequestState;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

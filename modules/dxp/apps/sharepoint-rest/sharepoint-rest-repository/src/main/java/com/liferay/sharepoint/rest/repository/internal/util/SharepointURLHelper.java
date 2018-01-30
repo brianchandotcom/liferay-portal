@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.util;
+package com.liferay.sharepoint.rest.repository.internal.util;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryObject;

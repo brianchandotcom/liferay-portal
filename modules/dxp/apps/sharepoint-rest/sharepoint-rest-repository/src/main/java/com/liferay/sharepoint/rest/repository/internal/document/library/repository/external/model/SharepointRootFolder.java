@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.external.model;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFolder;
 import com.liferay.portal.kernel.util.StringPool;

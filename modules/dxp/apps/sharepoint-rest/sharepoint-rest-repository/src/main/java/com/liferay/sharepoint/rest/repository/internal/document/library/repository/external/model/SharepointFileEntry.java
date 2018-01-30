@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.external.model;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model;
 
 import com.liferay.document.library.repository.external.ExtRepositoryFileEntry;
 import com.liferay.document.library.repository.external.ExtRepositoryFileVersion;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.MimeTypesUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
+import com.liferay.sharepoint.rest.repository.internal.util.SharepointURLHelper;
 
 import java.util.Date;
 

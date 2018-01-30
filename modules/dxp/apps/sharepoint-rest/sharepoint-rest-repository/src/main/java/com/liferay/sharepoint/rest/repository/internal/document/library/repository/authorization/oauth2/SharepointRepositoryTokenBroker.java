@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;

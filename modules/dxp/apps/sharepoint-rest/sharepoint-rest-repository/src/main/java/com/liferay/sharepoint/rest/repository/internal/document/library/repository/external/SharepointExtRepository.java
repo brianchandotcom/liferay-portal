@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.external;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
 
 import com.liferay.document.library.repository.authorization.oauth2.Token;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
@@ -42,14 +42,14 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
-import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointFileEntry;
-import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointModel;
-import com.liferay.sharepoint.repository.internal.document.library.repository.external.model.SharepointRootFolder;
-import com.liferay.sharepoint.repository.internal.search.kql.KQLQuery;
-import com.liferay.sharepoint.repository.internal.search.kql.KQLQueryVisitor;
-import com.liferay.sharepoint.repository.internal.util.SharepointServerResponseConverter;
-import com.liferay.sharepoint.repository.internal.util.SharepointURLHelper;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointFileEntry;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointModel;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.external.model.SharepointRootFolder;
+import com.liferay.sharepoint.rest.repository.internal.search.kql.KQLQuery;
+import com.liferay.sharepoint.rest.repository.internal.search.kql.KQLQueryVisitor;
+import com.liferay.sharepoint.rest.repository.internal.util.SharepointServerResponseConverter;
+import com.liferay.sharepoint.rest.repository.internal.util.SharepointURLHelper;
 
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;

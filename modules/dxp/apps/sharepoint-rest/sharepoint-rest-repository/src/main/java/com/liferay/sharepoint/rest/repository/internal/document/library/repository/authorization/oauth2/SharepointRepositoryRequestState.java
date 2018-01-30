@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.OAuth2AuthorizationException;

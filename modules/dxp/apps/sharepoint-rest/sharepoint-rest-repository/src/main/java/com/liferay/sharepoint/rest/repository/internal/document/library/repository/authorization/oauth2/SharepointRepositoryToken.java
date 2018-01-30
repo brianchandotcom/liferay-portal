@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2;
 
 import com.liferay.document.library.repository.authorization.oauth2.OAuth2AuthorizationException;
 import com.liferay.document.library.repository.authorization.oauth2.Token;
@@ -21,7 +21,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

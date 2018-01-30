@@ -12,12 +12,12 @@
  * details.
  */
 
-package com.liferay.sharepoint.oauth2.service.impl;
+package com.liferay.sharepoint.rest.oauth2.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
-import com.liferay.sharepoint.oauth2.model.SharepointOAuth2TokenEntry;
-import com.liferay.sharepoint.oauth2.service.base.SharepointOAuth2TokenEntryLocalServiceBaseImpl;
+import com.liferay.sharepoint.rest.oauth2.model.SharepointOAuth2TokenEntry;
+import com.liferay.sharepoint.rest.oauth2.service.base.SharepointOAuth2TokenEntryLocalServiceBaseImpl;
 
 import java.util.Date;
 

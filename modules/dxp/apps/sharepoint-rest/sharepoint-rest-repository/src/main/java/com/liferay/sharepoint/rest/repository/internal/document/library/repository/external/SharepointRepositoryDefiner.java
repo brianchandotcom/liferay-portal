@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sharepoint.repository.internal.document.library.repository.external;
+package com.liferay.sharepoint.rest.repository.internal.document.library.repository.external;
 
 import com.liferay.document.library.repository.authorization.capability.AuthorizationCapability;
 import com.liferay.document.library.repository.authorization.oauth2.TokenStore;
@@ -30,9 +30,9 @@ import com.liferay.portal.kernel.util.CacheResourceBundleLoader;
 import com.liferay.portal.kernel.util.ClassResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
-import com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration;
-import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.capability.SharepointRepositoryAuthorizationCapability;
-import com.liferay.sharepoint.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBrokerFactory;
+import com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.capability.SharepointRepositoryAuthorizationCapability;
+import com.liferay.sharepoint.rest.repository.internal.document.library.repository.authorization.oauth2.SharepointRepositoryTokenBrokerFactory;
 
 import java.util.Locale;
 import java.util.Map;
@@ -47,7 +47,7 @@ import org.osgi.service.component.annotations.Reference;
  * @author Adolfo Pérez
  */
 @Component(
-	configurationPid = "com.liferay.sharepoint.repository.internal.configuration.SharepointRepositoryConfiguration",
+	configurationPid = "com.liferay.sharepoint.rest.repository.internal.configuration.SharepointRepositoryConfiguration",
 	configurationPolicy = ConfigurationPolicy.REQUIRE,
 	service = RepositoryDefiner.class
 )

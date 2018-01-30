@@ -1467,9 +1467,8 @@ public abstract class BaseBuild implements Build {
 				throw new RuntimeException(
 					"Unable to download sample " + urlString, ioe);
 			}
-			else {
-				return;
-			}
+
+			return;
 		}
 
 		try {

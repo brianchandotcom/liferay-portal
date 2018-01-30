@@ -169,8 +169,6 @@ public class DDMStructureVersionStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			structureVersion);
 
-		DDMStructureVersion importedStructureVersion = null;
-
 		Map<Long, Long> groupIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				Group.class);
@@ -180,6 +178,8 @@ public class DDMStructureVersionStagedModelDataHandler
 		if (groupIds.containsKey(structureVersion.getGroupId())) {
 			targetGroupId = groupIds.get(structureVersion.getGroupId());
 		}
+
+		DDMStructureVersion importedStructureVersion = null;
 
 		DDMStructureVersion existingStructureVersion =
 			fetchStagedModelByUuidAndGroupId(

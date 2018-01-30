@@ -103,6 +103,12 @@ public class DDMFormInstanceVersionStagedModelDataHandler
 			DDMFormInstanceVersion formInstanceVersion)
 		throws Exception {
 
+		DDMFormInstanceVersion importedFormInstanceVersion =
+			(DDMFormInstanceVersion)formInstanceVersion.clone();
+
+		importedFormInstanceVersion.setGroupId(
+			portletDataContext.getScopeGroupId());
+
 		Map<Long, Long> ddmStructureVersionIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
 				DDMStructureVersion.class);
@@ -111,19 +117,6 @@ public class DDMFormInstanceVersionStagedModelDataHandler
 			ddmStructureVersionIds, formInstanceVersion.getStructureVersionId(),
 			formInstanceVersion.getStructureVersionId());
 
-		Map<Long, Long> ddmFormInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				DDMFormInstance.class);
-
-		long ddmFormInstanceId = MapUtil.getLong(
-			ddmFormInstanceIds, formInstanceVersion.getFormInstanceId(),
-			formInstanceVersion.getFormInstanceId());
-
-		DDMFormInstanceVersion importedFormInstanceVersion =
-			(DDMFormInstanceVersion)formInstanceVersion.clone();
-
-		importedFormInstanceVersion.setGroupId(
-			portletDataContext.getScopeGroupId());
 		importedFormInstanceVersion.setStructureVersionId(
 			ddmStructureVersionId);
 
@@ -141,6 +134,14 @@ public class DDMFormInstanceVersionStagedModelDataHandler
 				portletDataContext.createServiceContext(formInstanceVersion);
 
 			serviceContext.setUuid(formInstanceVersion.getUuid());
+
+			Map<Long, Long> ddmFormInstanceIds =
+				(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+					DDMFormInstance.class);
+
+			long ddmFormInstanceId = MapUtil.getLong(
+				ddmFormInstanceIds, formInstanceVersion.getFormInstanceId(),
+				formInstanceVersion.getFormInstanceId());
 
 			DDMFormInstance formInstance =
 				_ddmFormInstanceLocalService.getDDMFormInstance(

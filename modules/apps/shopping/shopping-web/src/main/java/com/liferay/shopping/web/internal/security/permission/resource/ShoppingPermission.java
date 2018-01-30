@@ -14,6 +14,8 @@
 
 package com.liferay.shopping.web.internal.security.permission.resource;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.shopping.constants.ShoppingConstants;
@@ -26,6 +28,13 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true)
 public class ShoppingPermission {
+
+	public static void check(
+			PermissionChecker permissionChecker, Group group, String actionId)
+		throws PortalException {
+
+		_portletResourcePermission.check(permissionChecker, group, actionId);
+	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {

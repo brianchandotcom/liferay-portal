@@ -1431,7 +1431,7 @@ public abstract class BaseBuild implements Build {
 			return;
 		}
 
-		TopLevelBuild topLevelBuild = (TopLevelBuild)getTopLevelBuild();
+		TopLevelBuild topLevelBuild = getTopLevelBuild();
 
 		if ((topLevelBuild == null) || topLevelBuild.fromArchive) {
 			return;

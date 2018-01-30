@@ -133,9 +133,7 @@ public class DDMFormInstanceVersionStagedModelDataHandler
 					formInstanceVersion.getUuid(),
 					portletDataContext.getScopeGroupId());
 
-		if ((existingFormInstanceVersion == null) ||
-			!portletDataContext.isDataStrategyMirror()) {
-
+		if (existingFormInstanceVersion == null) {
 			long userId = portletDataContext.getUserId(
 				formInstanceVersion.getUserUuid());
 

@@ -21,8 +21,6 @@ import com.liferay.commerce.service.CommerceRegionService;
 import com.liferay.frontend.taglib.servlet.taglib.ScreenNavigationEntry;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationService;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
@@ -95,9 +93,6 @@ public class CommerceOrganizationAddressesScreenNavigationEntry
 			httpServletRequest, httpServletResponse,
 			"/view_organization_addresses.jsp");
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		CommerceOrganizationAddressesScreenNavigationEntry.class);
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;

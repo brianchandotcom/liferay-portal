@@ -38,31 +38,13 @@ import javax.portlet.PortletURL;
 public class CommerceOrderItemSearch
 	extends SearchContainer<CommerceOrderItem> {
 
-	public static final String EMPTY_RESULTS_MESSAGE =
-		"no-order-items-were-found";
-
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new LinkedHashMap<>();
-
-	static {
-		headerNames.add("sku");
-		headerNames.add("title");
-		headerNames.add("quantity");
-		headerNames.add("price");
-
-		orderableHeaders.put("sku", "sku");
-		orderableHeaders.put("title", "title");
-		orderableHeaders.put("quantity", "quantity");
-		orderableHeaders.put("price", "price");
-	}
-
 	public CommerceOrderItemSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
 			portletRequest, new CommerceOrderItemDisplayTerms(portletRequest),
 			new CommerceOrderItemSearchTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			DEFAULT_DELTA, iteratorURL, _headerNames, _EMPTY_RESULTS_MESSAGE);
 
 		CommerceOrderItemDisplayTerms commerceOrderItemDisplayTerms =
 			(CommerceOrderItemDisplayTerms)getDisplayTerms();
@@ -103,7 +85,7 @@ public class CommerceOrderItemSearch
 					"commerce-order-items-order-by-type", "asc");
 			}
 
-			setOrderableHeaders(orderableHeaders);
+			setOrderableHeaders(_orderableHeaders);
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);
 		}
@@ -112,7 +94,26 @@ public class CommerceOrderItemSearch
 		}
 	}
 
+	private static final String _EMPTY_RESULTS_MESSAGE =
+		"no-order-items-were-found";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderItemSearch.class);
+
+	private static final List<String> _headerNames = new ArrayList<>();
+	private static final Map<String, String> _orderableHeaders =
+		new LinkedHashMap<>();
+
+	static {
+		_headerNames.add("sku");
+		_headerNames.add("title");
+		_headerNames.add("quantity");
+		_headerNames.add("price");
+
+		_orderableHeaders.put("sku", "sku");
+		_orderableHeaders.put("title", "title");
+		_orderableHeaders.put("quantity", "quantity");
+		_orderableHeaders.put("price", "price");
+	}
 
 }

@@ -41,31 +41,13 @@ import javax.portlet.PortletURL;
  */
 public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 
-	public static final String EMPTY_RESULTS_MESSAGE = "no-orders-were-found";
-
-	public static List<String> headerNames = new ArrayList<>();
-	public static Map<String, String> orderableHeaders = new LinkedHashMap<>();
-
-	static {
-		headerNames.add("order-date");
-		headerNames.add("order-status");
-		headerNames.add("customer-name");
-		headerNames.add("order-id");
-		headerNames.add("order-value");
-		headerNames.add("notes");
-
-		orderableHeaders.put("createDate", "order-date");
-		orderableHeaders.put("commerceOrderId", "order-id");
-		orderableHeaders.put("total", "order-value");
-	}
-
 	public CommerceOrderSearch(
 		PortletRequest portletRequest, PortletURL iteratorURL) {
 
 		super(
 			portletRequest, new CommerceOrderDisplayTerms(portletRequest),
 			new CommerceOrderDisplayTerms(portletRequest), DEFAULT_CUR_PARAM,
-			DEFAULT_DELTA, iteratorURL, headerNames, EMPTY_RESULTS_MESSAGE);
+			DEFAULT_DELTA, iteratorURL, _headerNames, _EMPTY_RESULTS_MESSAGE);
 
 		CommerceOrderDisplayTerms commerceOrderDisplayTerms =
 			(CommerceOrderDisplayTerms)getDisplayTerms();
@@ -125,7 +107,7 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 			OrderByComparator<CommerceOrder> orderByComparator =
 				getOrderByComparator(orderByCol, orderByType);
 
-			setOrderableHeaders(orderableHeaders);
+			setOrderableHeaders(_orderableHeaders);
 			setOrderByCol(orderByCol);
 			setOrderByType(orderByType);
 			setOrderByComparator(orderByComparator);
@@ -160,7 +142,26 @@ public class CommerceOrderSearch extends SearchContainer<CommerceOrder> {
 		return orderByComparator;
 	}
 
+	private static final String _EMPTY_RESULTS_MESSAGE = "no-orders-were-found";
+
 	private static final Log _log = LogFactoryUtil.getLog(
 		CommerceOrderSearch.class);
+
+	private static final List<String> _headerNames = new ArrayList<>();
+	private static final Map<String, String> _orderableHeaders =
+		new LinkedHashMap<>();
+
+	static {
+		_headerNames.add("order-date");
+		_headerNames.add("order-status");
+		_headerNames.add("customer-name");
+		_headerNames.add("order-id");
+		_headerNames.add("order-value");
+		_headerNames.add("notes");
+
+		_orderableHeaders.put("createDate", "order-date");
+		_orderableHeaders.put("commerceOrderId", "order-id");
+		_orderableHeaders.put("total", "order-value");
+	}
 
 }

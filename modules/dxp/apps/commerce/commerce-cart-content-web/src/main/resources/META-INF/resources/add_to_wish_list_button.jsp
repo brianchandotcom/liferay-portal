@@ -17,21 +17,31 @@
 <%@ include file="/init.jsp" %>
 
 <%
+CPDefinition cpDefinition = (CPDefinition)request.getAttribute("cpDefinition");
+CPInstance cpInstance = (CPInstance)request.getAttribute("cpInstance");
+
+long cpInstanceId = 0;
+
+if (cpInstance != null) {
+	cpInstanceId = cpInstance.getCPInstanceId();
+}
+
+String buttonId = cpDefinition.getCPDefinitionId() + "addToWishList";
+
 HashMap<String, String> dataMap = new HashMap<>();
 
-dataMap.put("cp-definition-id", "");
-dataMap.put("cp-instance-id", "");
+dataMap.put("cp-instance-id", String.valueOf(cpInstanceId));
 %>
 
-<aui:button cssClass="btn-lg" data="<%= dataMap %>" name="add-to-wish-list" value="add-to-wish-list" />
+<aui:button cssClass="btn-lg" data="<%= dataMap %>" name="<%= buttonId %>" value="add-to-wish-list" />
 
 <aui:script use="aui-io-request,aui-parse-content,liferay-notification">
-	A.one('#<portlet:namespace />add-to-wish-list').on(
+	A.one('#<portlet:namespace /><%= buttonId %>').on(
 		'click',
 		function(event) {
 			var currentTarget = event.currentTarget;
 
-			var cpDefinitionId = currentTarget.getAttribute('data-cp-definition-id');
+			var cpDefinitionId = <%= cpDefinition.getCPDefinitionId() %>;
 
 			var cpInstanceId = currentTarget.getAttribute('data-cp-instance-id');
 
@@ -48,7 +58,7 @@ dataMap.put("cp-instance-id", "");
 			};
 
 			A.io.request(
-				'<liferay-portlet:actionURL name="addCommerceCartItem" portletName="<%= CommercePortletKeys.COMMERCE_CART_CONTENT %>" ></liferay-portlet:actionURL>',
+				'<liferay-portlet:actionURL name="addCommerceCartItem" portletName="<%= CommercePortletKeys.COMMERCE_WISH_LIST_CONTENT %>" ></liferay-portlet:actionURL>',
 				{
 					data: data,
 					on: {

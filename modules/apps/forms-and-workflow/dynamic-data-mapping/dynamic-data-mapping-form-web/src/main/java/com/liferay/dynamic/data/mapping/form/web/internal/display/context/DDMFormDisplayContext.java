@@ -165,7 +165,8 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setShowSubmitButton(showSubmitButton);
 
-		String submitLabel = getSubmitLabel(ddmFormInstance);
+		String submitLabel = getSubmitLabel(
+			ddmFormInstance, ddmFormRenderingContext.getLocale());
 
 		ddmFormRenderingContext.setSubmitLabel(submitLabel);
 
@@ -453,18 +454,19 @@ public class DDMFormDisplayContext {
 		return portletDisplay.getPortletResource();
 	}
 
-	protected String getSubmitLabel(DDMFormInstance ddmFormInstance) {
+	protected String getSubmitLabel(
+		DDMFormInstance ddmFormInstance, Locale locale) {
+
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		boolean workflowEnabled = hasWorkflowEnabled(
 			ddmFormInstance, themeDisplay);
 
 		if (workflowEnabled) {
-			return LanguageUtil.get(
-				themeDisplay.getRequest(), "submit-for-publication");
+			return LanguageUtil.get(locale, "submit-for-publication");
 		}
 		else {
-			return LanguageUtil.get(themeDisplay.getRequest(), "submit");
+			return LanguageUtil.get(locale, "submit");
 		}
 	}
 

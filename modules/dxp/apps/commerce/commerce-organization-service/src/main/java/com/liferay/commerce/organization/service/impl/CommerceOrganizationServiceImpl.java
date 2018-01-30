@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
-import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.permission.OrganizationPermissionUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -67,11 +65,8 @@ public class CommerceOrganizationServiceImpl
 	public Address getOrganizationPrimaryAddress(long organizationId)
 		throws PortalException {
 
-		Organization organization = organizationLocalService.getOrganization(
+		Organization organization = organizationService.getOrganization(
 			organizationId);
-
-		OrganizationPermissionUtil.check(
-			getPermissionChecker(), organization, ActionKeys.VIEW);
 
 		List<Address> addresses = organization.getAddresses();
 
@@ -88,15 +83,12 @@ public class CommerceOrganizationServiceImpl
 	public EmailAddress getOrganizationPrimaryEmailAddress(long organizationId)
 		throws PortalException {
 
-		Organization organization = organizationLocalService.getOrganization(
+		Organization organization = organizationService.getOrganization(
 			organizationId);
-
-		OrganizationPermissionUtil.check(
-			getPermissionChecker(), organization, ActionKeys.VIEW);
 
 		List<EmailAddress> emailAddresses =
 			emailAddressService.getEmailAddresses(
-				Organization.class.getName(), organizationId);
+				Organization.class.getName(), organization.getOrganizationId());
 
 		for (EmailAddress emailAddress : emailAddresses) {
 			if (emailAddress.isPrimary()) {

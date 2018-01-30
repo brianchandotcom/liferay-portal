@@ -38,6 +38,10 @@ public class CommerceCustomerPortalHelperImpl
 		long currentOrganizationId = SessionParamUtil.getLong(
 			httpServletRequest, _CURRENT_ORGANIZATION_ID_KEY);
 
+		if (currentOrganizationId <= 0) {
+			return null;
+		}
+
 		return _organizationLocalService.fetchOrganization(
 			currentOrganizationId);
 	}

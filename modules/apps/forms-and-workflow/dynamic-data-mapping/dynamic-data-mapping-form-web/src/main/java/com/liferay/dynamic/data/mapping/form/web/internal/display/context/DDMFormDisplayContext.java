@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -106,6 +107,20 @@ public class DDMFormDisplayContext {
 			renderRequest.setAttribute(
 				WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 		}
+	}
+
+	public String[] getAvailableLanguageIds() throws PortalException {
+		DDMForm ddmForm = getDDMForm();
+
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+		Stream<Locale> localeStreams = availableLocales.stream();
+
+		return localeStreams.map(
+			locale -> LanguageUtil.getLanguageId(locale)
+		).toArray(
+			String[]::new
+		);
 	}
 
 	public String getContainerId() {
@@ -250,6 +265,10 @@ public class DDMFormDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isFormShared() {
+		return SessionParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
 	public boolean isPreview() {
@@ -523,10 +542,6 @@ public class DDMFormDisplayContext {
 			ddmFormInstance.getSettingsModel();
 
 		return ddmFormInstanceSettings.published();
-	}
-
-	protected boolean isFormShared() {
-		return SessionParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
 	protected boolean isSharedURL() {

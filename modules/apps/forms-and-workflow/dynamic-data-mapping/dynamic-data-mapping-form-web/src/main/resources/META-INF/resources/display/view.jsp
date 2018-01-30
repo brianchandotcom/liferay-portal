@@ -20,6 +20,10 @@
 String redirect = ParamUtil.getString(request, "redirect", currentURL);
 
 long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
+
+String languageId = LanguageUtil.getLanguageId(request);
+String[] availableLanguageIds = ddmFormDisplayContext.getAvailableLanguageIds();
+Locale displayLocale = LocaleUtil.fromLanguageId(languageId);
 %>
 
 <aui:script>
@@ -55,9 +59,9 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 				<div class="portlet-forms">
 					<div class="ddm-form-basic-info">
 						<div class="container-fluid-1280">
-							<h1 class="ddm-form-name"><%= GetterUtil.getString(title.getString(locale), title.getString(title.getDefaultLocale())) %></h1>
+							<h1 class="ddm-form-name"><%= GetterUtil.getString(title.getString(displayLocale), title.getString(title.getDefaultLocale())) %></h1>
 
-							<h5 class="ddm-form-description"><%= GetterUtil.getString(body.getString(locale), body.getString(body.getDefaultLocale())) %></h5>
+							<h5 class="ddm-form-description"><%= GetterUtil.getString(body.getString(displayLocale), body.getString(body.getDefaultLocale())) %></h5>
 						</div>
 					</div>
 				</div>
@@ -112,12 +116,20 @@ long formInstanceId = ddmFormDisplayContext.getFormInstanceId();
 
 						<liferay-ui:error-principal />
 
+						<c:if test="<%= ddmFormDisplayContext.isFormShared() %>">
+							<div class="container-fluid-1280">
+								<div class="locale-actions">
+									<liferay-ui:language formAction="<%= currentURL %>" languageId="<%= languageId %>" languageIds="<%= availableLanguageIds %>" />
+								</div>
+							</div>
+						</c:if>
+
 						<div class="ddm-form-basic-info">
 							<div class="container-fluid-1280">
-								<h1 class="ddm-form-name"><%= formInstance.getName(locale) %></h1>
+								<h1 class="ddm-form-name"><%= formInstance.getName(displayLocale) %></h1>
 
 								<%
-								String description = formInstance.getDescription(locale);
+								String description = formInstance.getDescription(displayLocale);
 								%>
 
 								<c:if test="<%= Validator.isNotNull(description) %>">

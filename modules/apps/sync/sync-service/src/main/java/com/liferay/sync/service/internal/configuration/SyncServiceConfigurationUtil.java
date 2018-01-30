@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.sync.service.configuration;
+package com.liferay.sync.service.internal.configuration;
 
 import com.liferay.portal.kernel.configuration.Configuration;
 import com.liferay.portal.kernel.configuration.ConfigurationFactoryUtil;

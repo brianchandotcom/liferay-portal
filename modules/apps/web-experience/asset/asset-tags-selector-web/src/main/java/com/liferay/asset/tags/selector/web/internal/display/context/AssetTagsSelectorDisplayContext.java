@@ -149,7 +149,7 @@ public class AssetTagsSelectorDisplayContext {
 	}
 
 	public String[] getSelectedTags() {
-		if (!ArrayUtil.isEmpty(_selectedTags)) {
+		if (ArrayUtil.isNotEmpty(_selectedTags)) {
 			return _selectedTags;
 		}
 

@@ -1130,6 +1130,7 @@ AUI.add(
 								instance.getFieldSettingsPanel().close();
 								instance._traverseFormPages();
 								instance._applyDragAndDrop();
+								instance._adjustEmptyForm(instance.getActiveLayout());
 							}
 						);
 					},

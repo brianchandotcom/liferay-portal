@@ -165,10 +165,6 @@ data.put("qa-id", "navigation");
 	</div>
 </div>
 
-<c:if test="<%= !journalDisplayContext.isSearch() %>">
-	<liferay-util:include page="/add_button.jsp" servletContext="<%= application %>" />
-</c:if>
-
 <aui:script use="liferay-journal-navigation">
 	var journalNavigation = new Liferay.Portlet.JournalNavigation(
 		{

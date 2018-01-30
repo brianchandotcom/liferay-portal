@@ -83,6 +83,26 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 			portletURL="<%= displayStyleURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<c:if test="<%= hasAddRuleGroupPermission %>">
+			<portlet:renderURL var="viewRulesURL">
+				<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+				<portlet:param name="className" value="<%= className %>" />
+				<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
+			</portlet:renderURL>
+
+			<liferay-portlet:renderURL var="addRuleGroupURL">
+				<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
+				<portlet:param name="redirect" value="<%= viewRulesURL %>" />
+				<portlet:param name="backURL" value="<%= viewRulesURL %>" />
+				<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
+			</liferay-portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<%
@@ -213,26 +233,6 @@ ruleGroupSearch.setResults(mdrRuleGroups);
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" type="more" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= hasAddRuleGroupPermission %>">
-	<portlet:renderURL var="viewRulesURL">
-		<portlet:param name="mvcRenderCommandName" value="/view.jsp" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-		<portlet:param name="className" value="<%= className %>" />
-		<portlet:param name="classPK" value="<%= String.valueOf(classPK) %>" />
-	</portlet:renderURL>
-
-	<liferay-portlet:renderURL var="addRuleGroupURL">
-		<portlet:param name="mvcRenderCommandName" value="/mobile_device_rules/edit_rule_group" />
-		<portlet:param name="redirect" value="<%= viewRulesURL %>" />
-		<portlet:param name="backURL" value="<%= viewRulesURL %>" />
-		<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
-	</liferay-portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(resourceBundle, "add-device-family") %>' url="<%= addRuleGroupURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	$('#<portlet:namespace />deleteSelectedDeviceFamilies').on(

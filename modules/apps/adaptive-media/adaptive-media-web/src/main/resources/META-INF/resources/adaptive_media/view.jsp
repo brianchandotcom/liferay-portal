@@ -53,6 +53,15 @@ List<AMImageConfigurationEntry> selectedConfigurationEntries = (List)request.get
 			portletURL="<%= PortletURLUtil.clone(currentURLObj, liferayPortletResponse) %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:renderURL var="addImageConfigurationEntryURL">
+			<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-image-resolution") %>' url="<%= addImageConfigurationEntryURL %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<%
@@ -264,12 +273,3 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		component.startProgress(backgroundTaskUrl);
 	}
 </aui:script>
-
-<portlet:renderURL var="addImageConfigurationEntryURL">
-	<portlet:param name="mvcRenderCommandName" value="/adaptive_media/edit_image_configuration_entry" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-image-resolution") %>' url="<%= addImageConfigurationEntryURL %>" />
-</liferay-frontend:add-menu>

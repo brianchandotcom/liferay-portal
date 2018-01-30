@@ -49,6 +49,17 @@ String keywords = ParamUtil.getString(request, "keywords");
 				portletURL="<%= displayStyleURL %>"
 				selectedDisplayStyle="descriptive"
 			/>
+
+			<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
+				<liferay-portlet:renderURL var="addKBTemplateURL">
+					<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</liferay-portlet:renderURL>
+
+				<liferay-frontend:add-menu inline="<%= true %>">
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-template") %>' url="<%= addKBTemplateURL %>" />
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<%
@@ -160,17 +171,6 @@ String keywords = ParamUtil.getString(request, "keywords");
 		</aui:fieldset>
 	</aui:form>
 </div>
-
-<c:if test="<%= AdminPermission.contains(permissionChecker, scopeGroupId, KBActionKeys.ADD_KB_TEMPLATE) %>">
-	<liferay-portlet:renderURL var="addKBTemplateURL">
-		<portlet:param name="mvcPath" value='<%= templatePath + "edit_template.jsp" %>' />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</liferay-portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-template") %>' url="<%= addKBTemplateURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteKBTemplates() {

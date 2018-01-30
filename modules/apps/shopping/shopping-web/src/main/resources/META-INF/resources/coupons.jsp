@@ -78,6 +78,15 @@ couponSearch.setResults(coupons);
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<portlet:renderURL var="editCouponURL">
+			<portlet:param name="mvcRenderCommandName" value="/shopping/edit_coupon" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-coupon") %>' url="<%= editCouponURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -154,15 +163,6 @@ couponSearch.setResults(coupons);
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<portlet:renderURL var="editCouponURL">
-	<portlet:param name="mvcRenderCommandName" value="/shopping/edit_coupon" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-coupon") %>' url="<%= editCouponURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <aui:script>
 	$('#<portlet:namespace />deleteCoupons').on(

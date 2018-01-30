@@ -74,7 +74,7 @@ String viewMoreURL = (String)request.getAttribute("liferay-frontend:add-menu:vie
 				<aui:icon image="plus" markupView="lexicon" />
 			</button>
 
-			<ul class="dropdown-menu dropdown-menu-left-side-bottom">
+			<ul class="dropdown-menu <%= inline ? "dropdown-menu-left-side-top" : "dropdown-menu-left-side-bottom" %>">
 
 				<%
 				boolean customizeAddMenuAdviceMessage = GetterUtil.getBoolean(SessionClicks.get(request, "com.liferay.addmenu_customizeAddMenuAdviceMessage", null));

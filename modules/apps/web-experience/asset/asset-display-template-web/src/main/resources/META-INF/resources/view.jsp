@@ -60,6 +60,29 @@
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= assetDisplayTemplateDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= assetDisplayTemplateDisplayContext.isShowAddButton() %>">
+			<liferay-portlet:renderURL varImpl="editAssetDisplayTemplateURL">
+				<portlet:param name="mvcPath" value="/edit_asset_display_template.jsp" />
+			</liferay-portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+
+				<%
+				for (long curClassNameId : assetDisplayTemplateDisplayContext.getAvailableClassNameIds()) {
+					ClassName className = ClassNameLocalServiceUtil.getClassName(curClassNameId);
+
+					editAssetDisplayTemplateURL.setParameter("classNameId", String.valueOf(curClassNameId));
+				%>
+
+					<liferay-frontend:add-menu-item title="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" url="<%= editAssetDisplayTemplateURL.toString() %>" />
+
+				<%
+				}
+				%>
+
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -174,29 +197,6 @@
 		<liferay-ui:search-iterator displayStyle="<%= assetDisplayTemplateDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= assetDisplayTemplateDisplayContext.isShowAddButton() %>">
-	<liferay-portlet:renderURL varImpl="editAssetDisplayTemplateURL">
-		<portlet:param name="mvcPath" value="/edit_asset_display_template.jsp" />
-	</liferay-portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-
-		<%
-		for (long curClassNameId : assetDisplayTemplateDisplayContext.getAvailableClassNameIds()) {
-			ClassName className = ClassNameLocalServiceUtil.getClassName(curClassNameId);
-
-			editAssetDisplayTemplateURL.setParameter("classNameId", String.valueOf(curClassNameId));
-		%>
-
-			<liferay-frontend:add-menu-item title="<%= ResourceActionsUtil.getModelResource(locale, className.getValue()) %>" url="<%= editAssetDisplayTemplateURL.toString() %>" />
-
-		<%
-		}
-		%>
-
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />deleteSelectedAssetDisplayTemplates').on(

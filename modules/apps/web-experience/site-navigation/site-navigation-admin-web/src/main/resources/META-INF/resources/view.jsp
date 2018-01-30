@@ -32,6 +32,16 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 			portletURL="<%= siteNavigationAdminDisplayContext.getPortletURL() %>"
 			selectedDisplayStyle="<%= siteNavigationAdminDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
+			<portlet:renderURL var="addSiteNavigationMenuURL">
+				<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item id="addNavigationMenuMenuItem" title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addSiteNavigationMenuURL %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -172,16 +182,6 @@ String displayStyle = siteNavigationAdminDisplayContext.getDisplayStyle();
 		<liferay-ui:search-iterator displayStyle="<%= displayStyle %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= siteNavigationAdminDisplayContext.isShowAddButton() %>">
-	<portlet:renderURL var="addSiteNavigationMenuURL">
-		<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item id="addNavigationMenuMenuItem" title='<%= LanguageUtil.get(request, "add-menu") %>' url="<%= addSiteNavigationMenuURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <portlet:actionURL name="/navigation_menu/add_site_navigation_menu" var="addSiteNavigationMenuURL">
 	<portlet:param name="mvcPath" value="/edit_site_navigation_menu.jsp" />

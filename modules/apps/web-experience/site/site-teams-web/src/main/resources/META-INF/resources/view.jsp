@@ -40,6 +40,19 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= siteTeamsDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= siteTeamsDisplayContext.isShowAddButton() %>">
+
+			<%
+			PortletURL addTeamURL = renderResponse.createRenderURL();
+
+			addTeamURL.setParameter("mvcPath", "/edit_team.jsp");
+			%>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-team") %>' url="<%= addTeamURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -164,19 +177,6 @@ SiteTeamsDisplayContext siteTeamsDisplayContext = new SiteTeamsDisplayContext(re
 		<liferay-ui:search-iterator displayStyle="<%= siteTeamsDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= siteTeamsDisplayContext.isShowAddButton() %>">
-
-	<%
-	PortletURL addTeamURL = renderResponse.createRenderURL();
-
-	addTeamURL.setParameter("mvcPath", "/edit_team.jsp");
-	%>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-team") %>' url="<%= addTeamURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script sandbox="<%= true %>">
 	$('#<portlet:namespace />deleteSelectedTeams').on(

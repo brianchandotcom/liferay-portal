@@ -112,6 +112,10 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -202,10 +206,6 @@ PortalUtil.addPortletBreadcrumbEntry(request, passwordPolicy.getName(), null);
 		</c:when>
 	</c:choose>
 </aui:form>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.get(request, "add-assignees") %>' url="javascript:;" />
-</liferay-frontend:add-menu>
 
 <aui:script use="liferay-item-selector-dialog">
 	var Util = Liferay.Util;

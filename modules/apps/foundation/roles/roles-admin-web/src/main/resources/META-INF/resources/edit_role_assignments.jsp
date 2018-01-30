@@ -67,13 +67,7 @@ portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(role.getTitle(locale));
-%>
 
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.format(request, "add-x", tabs2) %>' url="javascript:;" />
-</liferay-frontend:add-menu>
-
-<%
 String tabs2Names = "users,sites,organizations,user-groups";
 
 PortletURL usersPortletURL = PortletURLUtil.clone(portletURL, renderResponse);
@@ -128,6 +122,10 @@ String[] tabs2URLs = {usersPortletURL.toString(), sitesPortletURL.toString(), or
 					portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
+
+				<liferay-frontend:add-menu inline="<%= true %>">
+					<liferay-frontend:add-menu-item id="addAssignees" title='<%= LanguageUtil.format(request, "add-x", tabs2) %>' url="javascript:;" />
+				</liferay-frontend:add-menu>
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-action-buttons>

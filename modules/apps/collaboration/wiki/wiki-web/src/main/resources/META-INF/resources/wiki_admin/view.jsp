@@ -88,6 +88,25 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<%
+		boolean showAddNodeButton = WikiResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
+		%>
+
+		<c:if test="<%= showAddNodeButton %>">
+			<portlet:renderURL var="viewNodesURL">
+				<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
+			</portlet:renderURL>
+
+			<portlet:renderURL var="addNodeURL">
+				<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
+				<portlet:param name="redirect" value="<%= viewNodesURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wiki") %>' url="<%= addNodeURL %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -241,25 +260,6 @@ int nodesCount = WikiNodeServiceUtil.getNodesCount(scopeGroupId);
 		</aui:form>
 	</div>
 </div>
-
-<%
-boolean showAddNodeButton = WikiResourcePermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_NODE);
-%>
-
-<c:if test="<%= showAddNodeButton %>">
-	<portlet:renderURL var="viewNodesURL">
-		<portlet:param name="mvcRenderCommandName" value="/wiki_admin/view" />
-	</portlet:renderURL>
-
-	<portlet:renderURL var="addNodeURL">
-		<portlet:param name="mvcRenderCommandName" value="/wiki/edit_node" />
-		<portlet:param name="redirect" value="<%= viewNodesURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-wiki") %>' url="<%= addNodeURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	function <portlet:namespace />deleteNodes() {

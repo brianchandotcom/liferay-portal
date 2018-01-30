@@ -34,7 +34,7 @@
 	List<LayoutSetPrototype> layoutSetPrototypes = LayoutSetPrototypeServiceUtil.search(company.getCompanyId(), Boolean.TRUE, null);
 	%>
 
-	<liferay-frontend:add-menu>
+	<liferay-frontend:add-menu inline="<%= true %>">
 		<c:choose>
 			<c:when test="<%= layoutSetPrototypes.isEmpty() %>">
 				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSiteURL.toString() %>" />

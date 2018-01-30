@@ -99,6 +99,32 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 					portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 					selectedDisplayStyle="<%= displayStyle %>"
 				/>
+
+				<c:if test="<%= hasAddOrganizationPermission %>">
+					<liferay-frontend:add-menu inline="<%= true %>">
+						<portlet:renderURL var="viewUsersURL">
+							<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
+							<portlet:param name="usersListView" value="<%= usersListView %>" />
+						</portlet:renderURL>
+
+						<%
+						for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
+						%>
+
+							<portlet:renderURL var="addOrganizationURL">
+								<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
+								<portlet:param name="redirect" value="<%= viewUsersURL %>" />
+								<portlet:param name="type" value="<%= organizationType %>" />
+							</portlet:renderURL>
+
+							<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
+
+						<%
+						}
+						%>
+
+					</liferay-frontend:add-menu>
+				</c:if>
 			</liferay-frontend:management-bar-buttons>
 
 			<liferay-frontend:management-bar-action-buttons>
@@ -172,29 +198,3 @@ boolean hasAddOrganizationPermission = PortalPermissionUtil.contains(permissionC
 		</div>
 	</c:otherwise>
 </c:choose>
-
-<c:if test="<%= hasAddOrganizationPermission %>">
-	<liferay-frontend:add-menu>
-		<portlet:renderURL var="viewUsersURL">
-			<portlet:param name="toolbarItem" value="<%= toolbarItem %>" />
-			<portlet:param name="usersListView" value="<%= usersListView %>" />
-		</portlet:renderURL>
-
-		<%
-		for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
-		%>
-
-			<portlet:renderURL var="addOrganizationURL">
-				<portlet:param name="mvcRenderCommandName" value="/users_admin/edit_organization" />
-				<portlet:param name="redirect" value="<%= viewUsersURL %>" />
-				<portlet:param name="type" value="<%= organizationType %>" />
-			</portlet:renderURL>
-
-			<liferay-frontend:add-menu-item title="<%= LanguageUtil.get(request, organizationType) %>" url="<%= addOrganizationURL.toString() %>" />
-
-		<%
-		}
-		%>
-
-	</liferay-frontend:add-menu>
-</c:if>

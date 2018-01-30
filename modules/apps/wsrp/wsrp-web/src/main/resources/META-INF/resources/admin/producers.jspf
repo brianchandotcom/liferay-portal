@@ -21,6 +21,15 @@
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="list"
 		/>
+
+		<portlet:renderURL var="addProducerURL">
+			<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />
+			<portlet:param name="redirect" value="<%= currentURL %>" />
+		</portlet:renderURL>
+
+		<liferay-frontend:add-menu inline="<%= true %>">
+			<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-producer") %>' url="<%= addProducerURL.toString() %>" />
+		</liferay-frontend:add-menu>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>
@@ -77,15 +86,6 @@
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
-
-<portlet:renderURL var="addProducerURL">
-	<portlet:param name="mvcPath" value="/admin/edit_producer.jsp" />
-	<portlet:param name="redirect" value="<%= currentURL %>" />
-</portlet:renderURL>
-
-<liferay-frontend:add-menu>
-	<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-producer") %>' url="<%= addProducerURL.toString() %>" />
-</liferay-frontend:add-menu>
 
 <%
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "producers"), currentURL);

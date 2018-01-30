@@ -17,6 +17,8 @@
 <%@ include file="/polls/init.jsp" %>
 
 <%
+boolean showAddPollButton = PollsResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
+
 PortletURL portletURL = pollsDisplayContext.getBasePortletURL();
 
 portletURL.setParameter("mvcRenderCommandName", "/polls/view");
@@ -31,6 +33,17 @@ portletURL.setParameter("mvcRenderCommandName", "/polls/view");
 			portletURL="<%= portletURL %>"
 			selectedDisplayStyle="<%= pollsDisplayContext.getPollsQuestionDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= showAddPollButton %>">
+			<portlet:renderURL var="editQuestionURL">
+				<portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-poll") %>' url="<%= editQuestionURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-filters>

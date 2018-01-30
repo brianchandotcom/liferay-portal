@@ -63,6 +63,18 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 			portletURL="<%= PortletURLUtil.clone(portletURL, renderResponse) %>"
 			selectedDisplayStyle="<%= displayStyle %>"
 		/>
+
+		<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, ExpandoPortletKeys.EXPANDO, ActionKeys.ADD_EXPANDO) %>">
+			<portlet:renderURL var="addExpandoURL">
+				<portlet:param name="mvcPath" value="/edit_expando.jsp" />
+				<portlet:param name="redirect" value="<%= currentURL %>" />
+				<portlet:param name="modelResource" value="<%= modelResource %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-custom-field") %>' url="<%= addExpandoURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -122,18 +134,6 @@ ExpandoDisplayContext expandoDisplayContext = new ExpandoDisplayContext(request)
 		<liferay-ui:search-iterator markupView="lexicon" paginate="<%= false %>" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= PortletPermissionUtil.contains(permissionChecker, ExpandoPortletKeys.EXPANDO, ActionKeys.ADD_EXPANDO) %>">
-	<portlet:renderURL var="addExpandoURL">
-		<portlet:param name="mvcPath" value="/edit_expando.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-		<portlet:param name="modelResource" value="<%= modelResource %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add-custom-field") %>' url="<%= addExpandoURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <aui:script>
 	$('#<portlet:namespace />deleteCustomFields').on(

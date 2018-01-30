@@ -34,7 +34,7 @@ else {
 }
 %>
 
-<liferay-frontend:add-menu>
+<liferay-frontend:add-menu inline="<%= true %>">
 	<c:if test="<%= hasAddKBFolderPermission %>">
 		<portlet:renderURL var="addFolderURL">
 			<portlet:param name="mvcPath" value="/admin/common/edit_folder.jsp" />

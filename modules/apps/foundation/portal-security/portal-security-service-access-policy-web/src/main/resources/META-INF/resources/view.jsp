@@ -50,6 +50,17 @@ PortletURL portletURL = renderResponse.createRenderURL();
 				portletURL="<%= renderResponse.createRenderURL() %>"
 				selectedDisplayStyle="<%= displayStyle %>"
 			/>
+
+			<c:if test="<%= SAPPermission.contains(permissionChecker, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>">
+				<portlet:renderURL var="addSAPEntryURL">
+					<portlet:param name="mvcPath" value="/edit_entry.jsp" />
+					<portlet:param name="redirect" value="<%= currentURL %>" />
+				</portlet:renderURL>
+
+				<liferay-frontend:add-menu inline="<%= true %>">
+					<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSAPEntryURL %>" />
+				</liferay-frontend:add-menu>
+			</c:if>
 		</liferay-frontend:management-bar-buttons>
 
 		<%
@@ -128,14 +139,3 @@ PortletURL portletURL = renderResponse.createRenderURL();
 		<liferay-ui:search-iterator markupView="lexicon" />
 	</liferay-ui:search-container>
 </div>
-
-<c:if test="<%= SAPPermission.contains(permissionChecker, SAPActionKeys.ACTION_ADD_SAP_ENTRY) %>">
-	<portlet:renderURL var="addSAPEntryURL">
-		<portlet:param name="mvcPath" value="/edit_entry.jsp" />
-		<portlet:param name="redirect" value="<%= currentURL %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, "add") %>' url="<%= addSAPEntryURL %>" />
-	</liferay-frontend:add-menu>
-</c:if>

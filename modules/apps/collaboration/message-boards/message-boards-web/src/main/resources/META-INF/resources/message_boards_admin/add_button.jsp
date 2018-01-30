@@ -20,7 +20,7 @@
 long categoryId = GetterUtil.getLong(request.getAttribute("view.jsp-categoryId"));
 %>
 
-<liferay-frontend:add-menu>
+<liferay-frontend:add-menu inline="<%= true %>">
 	<c:if test="<%= MBCategoryPermission.contains(permissionChecker, scopeGroupId, categoryId, ActionKeys.ADD_CATEGORY) %>">
 		<portlet:renderURL var="addCategoryURL">
 			<portlet:param name="mvcRenderCommandName" value="/message_boards/edit_category" />

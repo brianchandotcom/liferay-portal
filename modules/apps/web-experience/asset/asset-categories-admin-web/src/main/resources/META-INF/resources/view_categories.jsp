@@ -87,6 +87,22 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 			portletURL="<%= changeDisplayStyleURL %>"
 			selectedDisplayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>"
 		/>
+
+		<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() %>">
+			<portlet:renderURL var="addCategoryURL">
+				<portlet:param name="mvcPath" value="/edit_category.jsp" />
+
+				<c:if test="<%= assetCategoriesDisplayContext.getCategoryId() > 0 %>">
+					<portlet:param name="parentCategoryId" value="<%= String.valueOf(assetCategoriesDisplayContext.getCategoryId()) %>" />
+				</c:if>
+
+				<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
+			</portlet:renderURL>
+
+			<liferay-frontend:add-menu inline="<%= true %>">
+				<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (assetCategoriesDisplayContext.getCategoryId() > 0) ? "add-subcategory" : "add-category") %>' url="<%= addCategoryURL.toString() %>" />
+			</liferay-frontend:add-menu>
+		</c:if>
 	</liferay-frontend:management-bar-buttons>
 
 	<liferay-frontend:management-bar-action-buttons>
@@ -236,22 +252,6 @@ AssetCategoryUtil.addPortletBreadcrumbEntry(assetCategoriesDisplayContext.getVoc
 		<liferay-ui:search-iterator displayStyle="<%= assetCategoriesDisplayContext.getDisplayStyle() %>" markupView="lexicon" />
 	</liferay-ui:search-container>
 </aui:form>
-
-<c:if test="<%= assetCategoriesDisplayContext.isShowCategoriesAddButton() %>">
-	<portlet:renderURL var="addCategoryURL">
-		<portlet:param name="mvcPath" value="/edit_category.jsp" />
-
-		<c:if test="<%= assetCategoriesDisplayContext.getCategoryId() > 0 %>">
-			<portlet:param name="parentCategoryId" value="<%= String.valueOf(assetCategoriesDisplayContext.getCategoryId()) %>" />
-		</c:if>
-
-		<portlet:param name="vocabularyId" value="<%= String.valueOf(assetCategoriesDisplayContext.getVocabularyId()) %>" />
-	</portlet:renderURL>
-
-	<liferay-frontend:add-menu>
-		<liferay-frontend:add-menu-item title='<%= LanguageUtil.get(request, (assetCategoriesDisplayContext.getCategoryId() > 0) ? "add-subcategory" : "add-category") %>' url="<%= addCategoryURL.toString() %>" />
-	</liferay-frontend:add-menu>
-</c:if>
 
 <portlet:actionURL name="moveCategory" var="moveCategoryURL">
 	<portlet:param name="redirect" value="<%= currentURL %>" />

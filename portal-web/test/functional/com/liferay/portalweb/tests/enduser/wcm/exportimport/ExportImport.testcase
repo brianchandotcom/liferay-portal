@@ -259,7 +259,7 @@
 			<var name="ddlDataDefinitionName" value="DDL Definition" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="DDLRecord#addCP">
 			<var name="ddlDataDefinitionName" value="DDL Definition" />

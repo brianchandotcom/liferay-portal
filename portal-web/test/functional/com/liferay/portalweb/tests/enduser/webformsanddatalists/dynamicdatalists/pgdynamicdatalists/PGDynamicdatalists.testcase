@@ -299,7 +299,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
@@ -703,7 +703,7 @@
 			<var name="fieldName" value="Text" />
 		</execute>
 
-		<execute macro="DDLTemplate#saveFormTemplateCP" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -719,7 +719,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
@@ -1011,7 +1011,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="DDLRecord#addCP">
 			<var name="ddlDataDefinitionName" value="Data Definition Name" />
@@ -1168,7 +1168,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="ProductMenu#gotoPortlet">
 			<var name="category" value="Content" />
@@ -1287,7 +1287,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition Name" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#gotoPage">
 			<var name="pageName" value="Dynamic Data Lists Display Page" />
@@ -1948,7 +1948,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2071,7 +2071,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 
@@ -2206,7 +2206,7 @@
 			<var name="ddlDataDefinitionName" value="Data Definition" />
 		</execute>
 
-		<execute macro="DDLList#save" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Navigator#openURL" />
 

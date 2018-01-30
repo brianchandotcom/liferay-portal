@@ -75,7 +75,6 @@ public class CommerceWishListContentPortlet extends MVCPortlet {
 
 		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
 			renderRequest);
-
 		HttpServletResponse httpServletResponse =
 			_portal.getHttpServletResponse(renderResponse);
 

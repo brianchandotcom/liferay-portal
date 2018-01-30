@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.customer.portal.internal.util;
+package com.liferay.commerce.organization.internal.util;
 
-import com.liferay.commerce.customer.portal.util.CommerceCustomerPortalHelper;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.service.OrganizationLocalService;
 import com.liferay.portal.kernel.util.SessionParamUtil;
@@ -28,8 +28,8 @@ import org.osgi.service.component.annotations.Reference;
  * @author Marco Leo
  */
 @Component(immediate = true)
-public class CommerceCustomerPortalHelperImpl
-	implements CommerceCustomerPortalHelper {
+public class CommerceOrganizationHelperImpl
+	implements CommerceOrganizationHelper {
 
 	@Override
 	public Organization getCurrentOrganization(

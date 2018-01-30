@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.commerce.customer.portal.constants;
+package com.liferay.commerce.organization.constants;
 
 /**
  * @author Marco Leo
  */
-public class CommerceCustomerPortalConstants {
+public class CommerceOrganizationConstants {
 
-	public static final String ORGANIZATION_TYPE_ACCOUNT = "account";
+	public static final String TYPE_ACCOUNT = "account";
 
-	public static final String ORGANIZATION_TYPE_BRANCH = "branch";
+	public static final String TYPE_BRANCH = "branch";
 
 }

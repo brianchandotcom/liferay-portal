@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.customer.portal.util;
+package com.liferay.commerce.organization.util;
 
 import aQute.bnd.annotation.ProviderType;
 
@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * @author Marco Leo
  */
 @ProviderType
-public interface CommerceCustomerPortalHelper {
+public interface CommerceOrganizationHelper {
 
 	public Organization getCurrentOrganization(
 		HttpServletRequest httpServletRequest, String organizationType);

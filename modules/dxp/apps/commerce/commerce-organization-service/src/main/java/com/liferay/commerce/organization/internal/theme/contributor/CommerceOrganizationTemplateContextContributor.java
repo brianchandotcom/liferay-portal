@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.customer.portal.internal.theme.contributor;
+package com.liferay.commerce.organization.internal.theme.contributor;
 
-import com.liferay.commerce.customer.portal.util.CommerceCustomerPortalHelper;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.portal.kernel.template.TemplateContextContributor;
 
 import java.util.Map;
@@ -32,7 +32,7 @@ import org.osgi.service.component.annotations.Reference;
 	property = "type=" + TemplateContextContributor.TYPE_THEME,
 	service = TemplateContextContributor.class
 )
-public class CommerceCustomerPortalTemplateContextContributor
+public class CommerceOrganizationTemplateContextContributor
 	implements TemplateContextContributor {
 
 	@Override
@@ -41,10 +41,10 @@ public class CommerceCustomerPortalTemplateContextContributor
 		HttpServletRequest httpServletRequest) {
 
 		contextObjects.put(
-			"commerceCustomerPortalHelper", _commerceCustomerPortalHelper);
+			"commerceOrganizationHelper", _commerceOrganizationHelper);
 	}
 
 	@Reference
-	private CommerceCustomerPortalHelper _commerceCustomerPortalHelper;
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 }

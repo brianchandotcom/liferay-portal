@@ -117,7 +117,7 @@ AUI.add(
 
 						var formGroup = container.one('.form-group');
 
-						formGroup.insert(container.one('.form-feedback-item'), 'after');
+						formGroup.append(container.one('.form-feedback-item'));
 					},
 
 					syncInputHeight: function() {

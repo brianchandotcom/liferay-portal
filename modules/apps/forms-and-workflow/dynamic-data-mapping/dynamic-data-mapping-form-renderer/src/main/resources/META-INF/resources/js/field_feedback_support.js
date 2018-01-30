@@ -74,8 +74,8 @@ AUI.add(
 
 					targetNode.insert(instance._errorMessageNode, 'after');
 
+					instance.set('valid', false);
 					instance._errorMessageNode.show();
-
 					instance.showValidationStatus();
 
 					var root = instance.getRoot();

@@ -156,6 +156,12 @@
 
 .form-builder-sidebar,
 .portlet-forms {
+	.form-group .alloy-editor-container.input-group .alloy-editor-placeholder.ae-placeholder {
+		border-left: 0;
+		padding-left: 0;
+		width: inherit;
+	}
+
 	.icon-asterisk {
 		margin-left: 4px;
 	}

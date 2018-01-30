@@ -14,6 +14,7 @@
 
 package com.liferay.polls.service.permission;
 
+import com.liferay.polls.constants.PollsConstants;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
@@ -28,13 +29,13 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(
 	immediate = true,
-	property = {"resource.name=" + PollsResourcePermissionChecker.RESOURCE_NAME},
+	property = {"resource.name=" + PollsConstants.RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
 public class PollsResourcePermissionChecker
 	extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.polls";
+	public static final String RESOURCE_NAME = PollsConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -42,7 +43,8 @@ public class PollsResourcePermissionChecker
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
+				permissionChecker, PollsConstants.RESOURCE_NAME, groupId,
+				actionId);
 		}
 	}
 
@@ -50,8 +52,8 @@ public class PollsResourcePermissionChecker
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
 		return contains(
-			permissionChecker, RESOURCE_NAME, PollsPortletKeys.POLLS, groupId,
-			actionId);
+			permissionChecker, PollsConstants.RESOURCE_NAME,
+			PollsPortletKeys.POLLS, groupId, actionId);
 	}
 
 	@Override

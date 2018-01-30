@@ -102,7 +102,7 @@ Map<String, String[]> parameterMap = (Map<String, String[]>)settingsMap.get("par
 			<ul class="lfr-tree list-unstyled">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input name="name" placeholder="process-name-placeholder" />
+						<aui:input maxlength="200" name="name" placeholder="process-name-placeholder" />
 					</aui:fieldset>
 
 					<aui:fieldset collapsible="<%= true %>" cssClass="options-group" label="changes-since-last-publication" markupView="lexicon">

@@ -79,16 +79,6 @@ public class SyncServiceConfigurationValues {
 				SyncServiceConfigurationKeys.
 					SYNC_FILE_CHECKSUM_THRESHOLD_SIZE));
 
-	/**
-	 * @deprecated As of 1.3.0, with no direct replacement
-	 */
-	@Deprecated
-	public static final int SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL =
-		GetterUtil.getInteger(
-			SyncServiceConfigurationUtil.get(
-				SyncServiceConfigurationKeys.
-					SYNC_FILE_DIFF_CACHE_DELETE_INTERVAL));
-
 	public static final boolean SYNC_FILE_DIFF_CACHE_ENABLED =
 		GetterUtil.getBoolean(
 			SyncServiceConfigurationUtil.get(

@@ -162,13 +162,13 @@
 	</command>
 
 	<command name="save">
-		<execute macro="DDLList#clickSave" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 	</command>
 
 	<command name="saveViaDDLDisplayPG">
-		<execute macro="DDLList#clickSave" />
+		<execute macro="DDLDataDefinition#save" />
 
 		<execute macro="Alert#viewSuccessMessage" />
 

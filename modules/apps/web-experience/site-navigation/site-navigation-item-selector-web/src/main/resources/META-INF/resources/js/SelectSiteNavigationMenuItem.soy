@@ -1,4 +1,4 @@
-{namespace SelectFolder}
+{namespace SelectSiteNavigationMenuItem}
 
 /**
  * This renders the main element.
@@ -11,7 +11,7 @@
 
 	{@param selectedNodeChange_: any}
 
-	<div class="select-folder">
+	<div class="select-site-navigation-menu-item">
 		<nav class="collapse-basic-search navbar navbar-default navbar-no-collapse">
 			<div class="container-fluid-1280">
 				<div class="basic-search input-group">
@@ -38,9 +38,9 @@
 			</div>
 		</nav>
 
-		<form class="container-fluid-1280" name="{$namespace}selectFolderFm">
+		<form class="container-fluid-1280" name="{$namespace}selectSiteNavigationMenuItemFm">
 			<fieldset class="panel-body">
-				<div class="portlet-journal-tree" id="{$namespace}folderContainer">
+				<div class="portlet-journal-tree" id="{$namespace}siteNavigationMenuItemContainer">
 					{call liferay.frontend.CardsTreeview.render}
 						{param events: [
 							'selectedNodesChanged': $selectedNodeChange_

@@ -5,15 +5,15 @@ import Soy from 'metal-soy';
 import core from 'metal';
 import { Config } from 'metal-state';
 
-import templates from './SelectFolder.soy';
+import templates from './SelectSiteNavigationMenuItem.soy';
 
 /**
- * SelectFolder
+ * SelectSiteNavigationMenuItem
  *
- * This component shows a list of available folders to move content in and
- * allows to filter them by searching.
+ * This component shows a list of available site navigation menu item to select
+ * and allows to filter them by searching.
  */
-class SelectFolder extends PortletBase {
+class SelectSiteNavigationMenuItem extends PortletBase {
 
 	/**
 	 * Filters deep nested nodes based on a filtering value
@@ -76,8 +76,7 @@ class SelectFolder extends PortletBase {
 
 		if (node) {
 			var data = {
-				folderId: node.id,
-				folderName: node.name
+				selectSiteNavigationMenuItemId: node.id
 			};
 
 			Liferay.Util.getOpener().Liferay.fire(
@@ -90,7 +89,7 @@ class SelectFolder extends PortletBase {
 	}
 }
 
-SelectFolder.STATE = {
+SelectSiteNavigationMenuItem.STATE = {
 	/**
 	 * Event name to fire on node selection
 	 * @type {String}
@@ -116,6 +115,6 @@ SelectFolder.STATE = {
 	viewType: Config.string().value('tree')
 };
 
-Soy.register(SelectFolder, templates);
+Soy.register(SelectSiteNavigationMenuItem, templates);
 
-export default SelectFolder;
+export default SelectSiteNavigationMenuItem;

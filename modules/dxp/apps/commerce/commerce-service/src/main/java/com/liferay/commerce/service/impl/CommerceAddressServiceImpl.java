@@ -21,6 +21,8 @@ import com.liferay.commerce.service.base.CommerceAddressServiceBaseImpl;
 import com.liferay.commerce.service.permission.CommercePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
+import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -118,6 +120,16 @@ public class CommerceAddressServiceImpl extends CommerceAddressServiceBaseImpl {
 
 		return commerceAddressLocalService.getCommerceAddressesCount(
 			groupId, className, classPK);
+	}
+
+	@Override
+	public BaseModelSearchResult<CommerceAddress> searchCommerceAddresses(
+			long companyId, long groupId, String className, long classPK,
+			String keywords, int start, int end, Sort sort)
+		throws PortalException {
+
+		return commerceAddressLocalService.searchCommerceAddresses(
+			companyId, groupId, className, classPK, keywords, start, end, sort);
 	}
 
 	@Override

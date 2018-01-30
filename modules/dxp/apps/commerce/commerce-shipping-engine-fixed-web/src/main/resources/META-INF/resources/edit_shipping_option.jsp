@@ -120,10 +120,10 @@ Locale[] availableLocales = availableLocalesSet.toArray(new Locale[availableLoca
 			A.io.request(
 				url,
 				{
-					method: 'POST',
 					form: {
 						id: '<portlet:namespace/>fm'
 					},
+					method: 'POST',
 					on: {
 						success: function() {
 							Liferay.Util.getOpener().refreshPortlet();

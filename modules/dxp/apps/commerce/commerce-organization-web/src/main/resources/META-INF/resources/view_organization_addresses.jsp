@@ -132,7 +132,6 @@ CommerceOrganizationAddressesDisplayContext commerceOrganizationAddressesDisplay
 		window,
 		'<portlet:namespace/>editCommerceAddress',
 		function(title, uri) {
-
 			Liferay.Util.openWindow(
 				{
 					dialog: {

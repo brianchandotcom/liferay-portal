@@ -97,7 +97,6 @@ CommerceOrganizationBranchesDisplayContext commerceOrganizationBranchesDisplayCo
 		window,
 		'<portlet:namespace/>addBranch',
 		function(uri) {
-
 			var title = '<liferay-ui:message key="add-branch" />';
 
 			Liferay.Util.openWindow(

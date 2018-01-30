@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactory;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.json.JSONSerializer;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
@@ -66,7 +67,7 @@ public class DDMFormContextProviderServlet extends HttpServlet {
 		String portletNamespace) {
 
 		try {
-			String languageId = ParamUtil.getString(request, "languageId");
+			String languageId = LanguageUtil.getLanguageId(request);
 
 			Locale locale = LocaleUtil.fromLanguageId(languageId);
 

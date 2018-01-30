@@ -90,7 +90,7 @@
 	var searchContainerData = searchContainer.getData(true);
 
 	selectedTags = selectedTags.filter(function(tag) {
-		return !searchContainerData.includes(tag);
+		return searchContainerData.indexOf(tag) === -1;
 	});
 
 	searchContainer.on(

@@ -1,0 +1,4 @@
+Bundle-Name: Liferay Commerce Organization API
+Bundle-SymbolicName: com.liferay.commerce.organization.api
+Bundle-Version: 1.0.0
+Export-Package: com.liferay.commerce.organization.service

@@ -1,0 +1,6 @@
+Bundle-Name: Liferay Portal OSGi Web WAB Spring Bridge API
+Bundle-SymbolicName: com.liferay.portal.osgi.web.wab.spring.bridge.api
+Bundle-Version: 1.0.0
+Export-Package: org.eclipse.core.runtime;x-liferay-compatibility:=spring
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: WAB

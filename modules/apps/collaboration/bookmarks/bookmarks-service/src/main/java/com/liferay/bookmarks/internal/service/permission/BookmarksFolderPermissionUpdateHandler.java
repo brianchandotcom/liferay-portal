@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.bookmarks.service.permission;
+package com.liferay.bookmarks.internal.service.permission;
 
-import com.liferay.bookmarks.model.BookmarksEntry;
-import com.liferay.bookmarks.service.BookmarksEntryLocalService;
+import com.liferay.bookmarks.model.BookmarksFolder;
+import com.liferay.bookmarks.service.BookmarksFolderLocalService;
 import com.liferay.portal.kernel.security.permission.PermissionUpdateHandler;
 import com.liferay.portal.kernel.util.GetterUtil;
 
@@ -28,34 +28,34 @@ import org.osgi.service.component.annotations.Reference;
  * @author Gergely Mathe
  */
 @Component(
-	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksEntry"},
+	property = {"model.class.name=com.liferay.bookmarks.model.BookmarksFolder"},
 	service = PermissionUpdateHandler.class
 )
-public class BookmarksEntryPermissionUpdateHandler
+public class BookmarksFolderPermissionUpdateHandler
 	implements PermissionUpdateHandler {
 
 	@Override
 	public void updatedPermission(String primKey) {
-		BookmarksEntry bookmarksEntry =
-			_bookmarksEntryLocalService.fetchBookmarksEntry(
+		BookmarksFolder bookmarksFolder =
+			_bookmarksFolderLocalService.fetchBookmarksFolder(
 				GetterUtil.getLong(primKey));
 
-		if (bookmarksEntry == null) {
+		if (bookmarksFolder == null) {
 			return;
 		}
 
-		bookmarksEntry.setModifiedDate(new Date());
+		bookmarksFolder.setModifiedDate(new Date());
 
-		_bookmarksEntryLocalService.updateBookmarksEntry(bookmarksEntry);
+		_bookmarksFolderLocalService.updateBookmarksFolder(bookmarksFolder);
 	}
 
 	@Reference(unbind = "-")
-	protected void setBookmarksEntryLocalService(
-		BookmarksEntryLocalService bookmarksEntryLocalService) {
+	protected void setBookmarksFolderLocalService(
+		BookmarksFolderLocalService bookmarksFolderLocalService) {
 
-		_bookmarksEntryLocalService = bookmarksEntryLocalService;
+		_bookmarksFolderLocalService = bookmarksFolderLocalService;
 	}
 
-	private BookmarksEntryLocalService _bookmarksEntryLocalService;
+	private BookmarksFolderLocalService _bookmarksFolderLocalService;
 
 }

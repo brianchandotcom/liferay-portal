@@ -12,10 +12,11 @@
  * details.
  */
 
-package com.liferay.bookmarks.social;
+package com.liferay.bookmarks.internal.social;
 
 import com.liferay.bookmarks.constants.BookmarksPortletKeys;
 import com.liferay.bookmarks.model.BookmarksEntry;
+import com.liferay.bookmarks.social.BookmarksActivityKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;

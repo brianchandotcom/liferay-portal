@@ -7,8 +7,10 @@ Export-Package:\
 	com.liferay.bookmarks.constants,\
 	com.liferay.bookmarks.exception,\
 	com.liferay.bookmarks.model,\
+	com.liferay.bookmarks.search,\
 	com.liferay.bookmarks.service,\
 	com.liferay.bookmarks.service.persistence,\
+	com.liferay.bookmarks.social,\
 	com.liferay.bookmarks.util.comparator
 Liferay-Releng-Module-Group-Description:
 Liferay-Releng-Module-Group-Title: Bookmarks

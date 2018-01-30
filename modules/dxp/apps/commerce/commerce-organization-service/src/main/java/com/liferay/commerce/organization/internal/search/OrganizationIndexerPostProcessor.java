@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.user.internal.search;
+package com.liferay.commerce.organization.internal.search;
 
 import com.liferay.portal.kernel.search.BaseIndexerPostProcessor;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;

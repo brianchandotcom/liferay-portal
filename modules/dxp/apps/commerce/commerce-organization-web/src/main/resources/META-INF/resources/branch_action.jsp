@@ -26,4 +26,4 @@ Organization organization = (Organization)row.getObject();
 	<portlet:param name="organizationId" value="<%= String.valueOf(organization.getOrganizationId()) %>" />
 </portlet:renderURL>
 
-<aui:button href="<%= editBranchURL %>" value="edit"></aui:button>
+<aui:button href="<%= editBranchURL %>" value="edit" />

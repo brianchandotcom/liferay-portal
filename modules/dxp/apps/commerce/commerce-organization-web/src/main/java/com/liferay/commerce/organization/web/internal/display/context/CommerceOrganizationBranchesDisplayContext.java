@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
@@ -62,7 +63,8 @@ public class CommerceOrganizationBranchesDisplayContext
 
 		BaseModelSearchResult<Organization> organizationBaseModelSearchResult =
 			commerceOrganizationService.searchOrganizations(
-				organization.getOrganizationId(), "branch", null,
+				organization.getOrganizationId(),
+				CommerceOrganizationConstants.TYPE_BRANCH, null,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});
 

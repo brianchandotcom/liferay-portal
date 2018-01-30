@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.organization.web.internal.servlet.taglib.ui;
 
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.display.context.CommerceOrganizationBranchesDisplayContext;
@@ -76,7 +77,11 @@ public class CommerceOrganizationBranchesScreenNavigationEntry
 	public boolean isVisible(User user, Organization organization) {
 		String type = organization.getType();
 
-		return type.equals("account");
+		if (type.equals(CommerceOrganizationConstants.TYPE_ACCOUNT)) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

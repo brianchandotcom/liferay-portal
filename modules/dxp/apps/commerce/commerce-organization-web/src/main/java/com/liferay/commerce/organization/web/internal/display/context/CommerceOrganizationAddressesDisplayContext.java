@@ -183,23 +183,23 @@ public class CommerceOrganizationAddressesDisplayContext
 
 		portletURL.setWindowState(LiferayWindowState.POP_UP);
 
-		StringBundler editCommerceAddressHrefSB = new StringBundler(13);
+		StringBundler sb = new StringBundler(13);
 
-		editCommerceAddressHrefSB.append("javascript:");
-		editCommerceAddressHrefSB.append(liferayPortletResponse.getNamespace());
-		editCommerceAddressHrefSB.append("editCommerceAddress");
-		editCommerceAddressHrefSB.append(StringPool.OPEN_PARENTHESIS);
-		editCommerceAddressHrefSB.append(StringPool.APOSTROPHE);
-		editCommerceAddressHrefSB.append(title);
-		editCommerceAddressHrefSB.append(StringPool.APOSTROPHE);
-		editCommerceAddressHrefSB.append(StringPool.COMMA_AND_SPACE);
-		editCommerceAddressHrefSB.append(StringPool.APOSTROPHE);
-		editCommerceAddressHrefSB.append(portletURL.toString());
-		editCommerceAddressHrefSB.append(StringPool.APOSTROPHE);
-		editCommerceAddressHrefSB.append(StringPool.CLOSE_PARENTHESIS);
-		editCommerceAddressHrefSB.append(StringPool.SEMICOLON);
+		sb.append("javascript:");
+		sb.append(liferayPortletResponse.getNamespace());
+		sb.append("editCommerceAddress");
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(title);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(StringPool.COMMA_AND_SPACE);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(portletURL.toString());
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.SEMICOLON);
 
-		return editCommerceAddressHrefSB.toString();
+		return sb.toString();
 	}
 
 	public String getKeywords() {

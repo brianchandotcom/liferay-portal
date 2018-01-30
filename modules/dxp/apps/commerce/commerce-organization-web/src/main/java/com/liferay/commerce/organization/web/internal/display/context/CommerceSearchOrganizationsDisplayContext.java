@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.organization.web.internal.display.context;
 
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
@@ -64,12 +65,12 @@ public class CommerceSearchOrganizationsDisplayContext
 
 		BaseModelSearchResult<Organization> baseModelSearchResult =
 			commerceOrganizationService.searchOrganizations(
-				organization.getOrganizationId(), null, "account",
+				organization.getOrganizationId(), null,
+				CommerceOrganizationConstants.TYPE_ACCOUNT,
 				_searchContainer.getStart(), _searchContainer.getEnd(),
 				new Sort[] {sort});
 
 		_searchContainer.setTotal(baseModelSearchResult.getLength());
-
 		_searchContainer.setResults(baseModelSearchResult.getBaseModels());
 
 		return _searchContainer;

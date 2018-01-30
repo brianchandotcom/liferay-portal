@@ -71,6 +71,12 @@ public class BackgroundTaskExecutorConfigurator {
 		registerBackgroundTaskExecutor(
 			bundleContext, portletImportBackgroundTaskExecutor);
 
+		BackgroundTaskExecutor portletRemoteStagingBackgroundTaskExecutor =
+			new PortletRemoteStagingBackgroundTaskExecutor();
+
+		registerBackgroundTaskExecutor(
+			bundleContext, portletRemoteStagingBackgroundTaskExecutor);
+
 		BackgroundTaskExecutor portletStagingBackgroundTaskExecutor =
 			new PortletStagingBackgroundTaskExecutor();
 

@@ -276,6 +276,22 @@ public class BackgroundTaskPersistenceTest {
 	}
 
 	@Test
+	public void testCountByG_N_T2() throws Exception {
+		_persistence.countByG_N_T2(RandomTestUtil.nextLong(), "", "");
+
+		_persistence.countByG_N_T2(0L, "null", "null");
+
+		_persistence.countByG_N_T2(0L, (String)null, (String)null);
+	}
+
+	@Test
+	public void testCountByG_N_T2Arrayable() throws Exception {
+		_persistence.countByG_N_T2(new long[] { RandomTestUtil.nextLong(), 0L },
+			RandomTestUtil.randomString(),
+			new String[] { RandomTestUtil.randomString(), "", "null", null, null });
+	}
+
+	@Test
 	public void testCountByG_T_C() throws Exception {
 		_persistence.countByG_T_C(RandomTestUtil.nextLong(), "",
 			RandomTestUtil.randomBoolean());

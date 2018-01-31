@@ -195,7 +195,31 @@
 		<check name="JavaLocalSensitiveComparisonCheck" />
 		<check name="JavaLongLinesCheck" />
 		<check name="JavaMetaOCDIdCheck" />
-		<check name="JavaPackagePathCheck" />
+		<check name="JavaPackagePathCheck">
+			<property name="allowedInternalPackageDirName" value="modules/apps/adaptive-media/adaptive-media-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/collaboration/blogs/blogs-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/collaboration/comment/comment-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/collaboration/item-selector/item-selector-criteria-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/collaboration/wiki/wiki-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/captcha/captcha-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/organizations/organizations-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/portal-mobile-device-recognition/portal-mobile-device-recognition-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/portal-scripting/portal-scripting-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/portal-security-audit/portal-security-audit-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/roles/roles-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/user-groups-admin/user-groups-admin-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/users-admin/users-admin-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/foundation/users-admin/users-admin-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/knowledge-base/knowledge-base-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/journal/journal-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/layout/layout-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/portlet-configuration/portlet-configuration-icon-locator-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/portlet-configuration/portlet-configuration-toolbar-contributor-locator-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/site-navigation/site-navigation-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/site/site-api" />
+			<property name="allowedInternalPackageDirName" value="modules/apps/web-experience/site/site-item-selector-api" />
+			<property name="allowedInternalPackageDirName" value="modules/core/registry-api" />
+		</check>
 		<check name="JavaParameterAnnotationsCheck" />
 		<check name="JavaProcessCallableCheck" />
 		<check name="JavaRedundantConstructorCheck" />

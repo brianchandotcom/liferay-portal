@@ -22,10 +22,19 @@ import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaPackagePathCheck extends BaseFileCheck {
+
+	public void setAllowedInternalPackageDirName(
+		String allowedInternalPackageDirName) {
+
+		_allowedInternalPackageDirNames.add(allowedInternalPackageDirName);
+	}
 
 	@Override
 	protected String doProcess(
@@ -40,7 +49,7 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkPackageName(fileName, packageName);
+		_checkPackageName(fileName, absolutePath, packageName);
 
 		if (isModulesFile(absolutePath) && !isModulesApp(absolutePath, true)) {
 			_checkModulePackageName(fileName, packageName);
@@ -88,7 +97,9 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkPackageName(String fileName, String packageName) {
+	private void _checkPackageName(
+		String fileName, String absolutePath, String packageName) {
+
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		String filePath = StringUtil.replace(
@@ -109,6 +120,23 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 				fileName, "Do not use 'impl' inside 'internal'",
 				"package.markdown");
 		}
+
+		for (String allowedInternalPackageDirName :
+				_allowedInternalPackageDirNames) {
+
+			if (absolutePath.contains(allowedInternalPackageDirName)) {
+				return;
+			}
+		}
+
+		if (absolutePath.contains("-api/src/") &&
+			packageName.matches(".*\\.internal(\\..*)?")) {
+
+			addMessage(fileName, "Do not use 'internal' package in API module");
+		}
 	}
+
+	private final List<String> _allowedInternalPackageDirNames =
+		new ArrayList<>();
 
 }

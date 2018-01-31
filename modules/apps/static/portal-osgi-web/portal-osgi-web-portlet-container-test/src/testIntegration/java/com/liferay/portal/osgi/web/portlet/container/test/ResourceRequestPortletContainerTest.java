@@ -20,16 +20,20 @@ import com.liferay.portal.kernel.test.rule.AggregateTestRule;
 import com.liferay.portal.kernel.util.HashMapDictionary;
 import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.test.log.CaptureAppender;
+import com.liferay.portal.test.log.Log4JLoggerTestUtil;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.util.test.PortletContainerTestUtil;
 import com.liferay.portal.util.test.PortletContainerTestUtil.Response;
 import com.liferay.portlet.PortletURLImpl;
+import com.liferay.portlet.SecurityPortletContainerWrapper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 import java.util.Collections;
 import java.util.Dictionary;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.PortletContext;
@@ -42,6 +46,9 @@ import javax.portlet.ResourceResponse;
 import javax.portlet.WindowState;
 
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Level;
+import org.apache.log4j.spi.LoggingEvent;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -60,6 +67,47 @@ public class ResourceRequestPortletContainerTest
 	@Rule
 	public static final AggregateTestRule aggregateTestRule =
 		new LiferayIntegrationTestRule();
+
+	@Test
+	public void testInvalidPortletId() throws Exception {
+		HttpServletRequest httpServletRequest =
+			PortletContainerTestUtil.getHttpServletRequest(group, layout);
+
+		String layoutURL = layout.getRegularURL(httpServletRequest);
+
+		String url =
+			layoutURL +
+				"?p_p_id='\"><script>alert(1)</script>&p_p_lifecycle=2&";
+
+		try (CaptureAppender captureAppender =
+				Log4JLoggerTestUtil.configureLog4JLogger(
+					SecurityPortletContainerWrapper.class.getName(),
+					Level.WARN)) {
+
+			Response response = PortletContainerTestUtil.request(url);
+
+			List<LoggingEvent> loggingEvents =
+				captureAppender.getLoggingEvents();
+
+			Assert.assertEquals(
+				loggingEvents.toString(), 2, loggingEvents.size());
+
+			LoggingEvent loggingEvent = loggingEvents.get(0);
+
+			Assert.assertEquals(
+				"Invalid portlet ID '\"><script>alert(1)</script>",
+				loggingEvent.getMessage());
+
+			loggingEvent = loggingEvents.get(1);
+
+			Assert.assertEquals(
+				"User 0 is not allowed to serve resource for " + layoutURL +
+					" on '\"><script>alert(1)</script>",
+				loggingEvent.getMessage());
+
+			Assert.assertEquals(400, response.getCode());
+		}
+	}
 
 	@Test
 	public void testIsAccessGrantedByPortletAuthenticationToken()

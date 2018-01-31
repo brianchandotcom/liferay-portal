@@ -87,8 +87,8 @@ public class CommerceOrganizationServiceImpl
 				user = userLocalService.addUserWithWorkflow(
 					serviceContext.getUserId(), companyId, true,
 					StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
-					emailAddress, 0L, StringPool.BLANK, locale, emailAddress,
-					StringPool.BLANK, emailAddress, 0L, 0L, true, 1, 1, 1970,
+					emailAddress, 0, StringPool.BLANK, locale, emailAddress,
+					StringPool.BLANK, emailAddress, 0, 0, true, 1, 1, 1970,
 					StringPool.BLANK, null, new long[] {organizationId}, null,
 					null, true, serviceContext);
 			}

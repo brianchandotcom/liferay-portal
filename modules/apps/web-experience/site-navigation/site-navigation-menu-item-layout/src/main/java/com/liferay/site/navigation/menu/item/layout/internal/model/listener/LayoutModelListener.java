@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
@@ -73,7 +74,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				layout.getUserId(), layout.getGroupId(),
 				siteNavigationMenu.getSiteNavigationMenuId(),
-				parentSiteNavigationMenuItemId, "layout",
+				parentSiteNavigationMenuItemId,
+				SiteNavigationMenuItemTypeLayoutConstants.LAYOUT,
 				unicodeProperties.toString(), serviceContext);
 		}
 		catch (PortalException pe) {

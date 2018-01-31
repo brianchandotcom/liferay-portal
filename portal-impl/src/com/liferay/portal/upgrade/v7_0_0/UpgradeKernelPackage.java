@@ -193,41 +193,54 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 			String tableSQL = sb1.toString();
 
-			StringBundler sb2 = new StringBundler(9);
+			StringBundler sb2 = new StringBundler(6);
 
 			for (String[] name : names) {
 				sb2.append(tableSQL);
 				sb2.append(name[0]);
 				sb2.append("', '");
 				sb2.append(name[1]);
-				sb2.append("') where ");
-				sb2.append(columnName);
+				sb2.append("') ");
 
-				if (wildcardMode.equals(WildcardMode.LEADING) ||
-					wildcardMode.equals(WildcardMode.SURROUND)) {
+				String whereClause = _getWhereClause(
+					columnName, name[0], wildcardMode);
 
-					sb2.append(" like '%");
-				}
-				else {
-					sb2.append(" like '");
-				}
-
-				sb2.append(name[0]);
-
-				if (wildcardMode.equals(WildcardMode.SURROUND) ||
-					wildcardMode.equals(WildcardMode.TRAILING)) {
-
-					sb2.append("%'");
-				}
-				else {
-					sb2.append("'");
-				}
+				sb2.append(whereClause);
 
 				runSQL(sb2.toString());
 
 				sb2.setIndex(0);
 			}
 		}
+	}
+
+	private String _getWhereClause(
+		String columnName, String columnValue, WildcardMode wildcardMode) {
+
+		StringBundler sb = new StringBundler(8);
+
+		sb.append(" where ");
+		sb.append(columnName);
+		sb.append(" like ");
+		sb.append(StringPool.APOSTROPHE);
+
+		if (wildcardMode.equals(WildcardMode.LEADING) ||
+			wildcardMode.equals(WildcardMode.SURROUND)) {
+
+			sb.append("%");
+		}
+
+		sb.append(columnValue);
+
+		if (wildcardMode.equals(WildcardMode.SURROUND) ||
+			wildcardMode.equals(WildcardMode.TRAILING)) {
+
+			sb.append("%");
+		}
+
+		sb.append(StringPool.APOSTROPHE);
+
+		return sb.toString();
 	}
 
 	private String _transformColumnName(String columnName) {

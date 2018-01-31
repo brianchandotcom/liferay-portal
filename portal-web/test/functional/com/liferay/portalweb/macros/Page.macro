@@ -34,9 +34,9 @@
 	</command>
 
 	<command name="addJavaScript">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -85,15 +85,9 @@
 	</command>
 
 	<command name="addPageTranslations">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${page}" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${page}" />
 		</execute>
 
 		<var name="key_pageTranslation" value="${pageTranslation}" />
@@ -164,9 +158,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${page}" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${page}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -199,9 +193,9 @@
 	</command>
 
 	<command name="copyApplicationsFromPageToPage">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Copy Applications" />
-			<var name="rowEntry" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
@@ -365,9 +359,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
@@ -1032,11 +1026,10 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
 		</execute>
-
 		<var name="key_componentName" value="${componentName}" />
 
 		<if>

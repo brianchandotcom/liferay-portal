@@ -166,9 +166,9 @@
 			<var name="pageName" value="Page Name" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="Page Name" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#addFriendlyURLLocalizedPG">
@@ -192,9 +192,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="Page Name" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Page Name" />
 		</execute>
 
 		<execute macro="Page#viewPageFriendlyURLPG">
@@ -1314,9 +1314,9 @@
 			<var name="sitePageType" value="Link to URL" />
 		</execute>
 
-		<execute macro="LexiconEntry#delete">
+		<execute macro="SitePages#deletePage">
 			<var name="failure" value="The first page cannot be of type Link to URL." />
-			<var name="rowEntry" value="Blank Page" />
+			<var name="pageName" value="Blank Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoSitePage">

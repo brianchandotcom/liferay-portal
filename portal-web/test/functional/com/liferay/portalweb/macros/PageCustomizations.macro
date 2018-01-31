@@ -1,8 +1,8 @@
 <definition>
 	<command name="enableSectionCustomizableCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">

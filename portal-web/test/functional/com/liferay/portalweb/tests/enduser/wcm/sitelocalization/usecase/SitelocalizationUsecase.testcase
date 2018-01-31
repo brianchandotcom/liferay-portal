@@ -996,9 +996,9 @@
 			<var name="portlet" value="Páginas del sitio web" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="Site Page Name" />
 			<var name="menuItem" value="Configurar" />
-			<var name="rowEntry" value="Site Page Name" />
 		</execute>
 
 		<execute macro="Page#viewFriendlyURLLanguageOptionsPG">

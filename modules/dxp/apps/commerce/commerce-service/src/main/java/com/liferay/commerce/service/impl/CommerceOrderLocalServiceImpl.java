@@ -31,6 +31,8 @@ import com.liferay.commerce.util.CommercePriceCalculator;
 import com.liferay.commerce.util.CommerceShippingHelper;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -59,6 +61,7 @@ public class CommerceOrderLocalServiceImpl
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CommerceOrder addCommerceOrder(
+			long orderOrganizationId, long orderRootOrganizationId,
 			long orderUserId, long commercePaymentMethodId,
 			long commerceShippingMethodId, String shippingOptionName,
 			double subtotal, double shippingPrice, double total,
@@ -81,6 +84,8 @@ public class CommerceOrderLocalServiceImpl
 		commerceOrder.setCompanyId(user.getCompanyId());
 		commerceOrder.setUserId(user.getUserId());
 		commerceOrder.setUserName(user.getFullName());
+		commerceOrder.setOrderOrganizationId(orderOrganizationId);
+		commerceOrder.setOrderRootOrganizationId(orderRootOrganizationId);
 		commerceOrder.setOrderUserId(orderUserId);
 		commerceOrder.setCommercePaymentMethodId(commercePaymentMethodId);
 		commerceOrder.setCommerceShippingMethodId(commerceShippingMethodId);
@@ -114,6 +119,30 @@ public class CommerceOrderLocalServiceImpl
 
 		validate(commerceCart);
 
+		long orderOrganizationId = 0;
+		long orderRootOrganizationId = 0;
+
+		Group group = groupLocalService.getGroup(commerceCart.getGroupId());
+
+		if (group.isOrganization()) {
+			orderOrganizationId = group.getOrganizationId();
+
+			Organization organization =
+				organizationLocalService.getOrganization(orderOrganizationId);
+
+			List<Organization> ancestorOrganizations =
+				organization.getAncestors();
+
+			if (!ancestorOrganizations.isEmpty()) {
+				Organization rootOrganization = ancestorOrganizations.get(
+					ancestorOrganizations.size() - 1);
+
+				orderRootOrganizationId = rootOrganization.getOrganizationId();
+			}
+
+			serviceContext.setScopeGroupId(organization.getGroupId());
+		}
+
 		double subtotal = _commercePriceCalculator.getSubtotal(commerceCart);
 		double shippingPrice = commerceCart.getShippingPrice();
 
@@ -121,6 +150,7 @@ public class CommerceOrderLocalServiceImpl
 
 		CommerceOrder commerceOrder =
 			commerceOrderLocalService.addCommerceOrder(
+				orderOrganizationId, orderRootOrganizationId,
 				commerceCart.getUserId(),
 				commerceCart.getCommercePaymentMethodId(),
 				commerceCart.getCommerceShippingMethodId(),

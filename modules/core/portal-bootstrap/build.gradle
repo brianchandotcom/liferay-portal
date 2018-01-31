@@ -1,4 +1,3 @@
-import aQute.bnd.header.Parameters
 import aQute.bnd.osgi.Domain
 
 import com.liferay.gradle.util.copy.RenameDependencyClosure
@@ -38,10 +37,9 @@ if (!System.getenv("JENKINS_HOME") || !systemPackagesExtraManifestFile.exists())
 				it.name.startsWith "com.liferay.portal.impl-"
 			}
 
-			Domain portalImplJar = Domain.domain(portalImplJarFile)
-			Parameters provideCapability = portalImplJar.provideCapability
+			Domain portalImplJarDomain = Domain.domain(portalImplJarFile)
 
-			properties["Provide-Capability"] = provideCapability.toString()
+			properties["Provide-Capability"] = portalImplJarDomain.provideCapability.toString()
 
 			jarBuilder.withClasspath new File[0]
 			jarBuilder.withFailOnError true

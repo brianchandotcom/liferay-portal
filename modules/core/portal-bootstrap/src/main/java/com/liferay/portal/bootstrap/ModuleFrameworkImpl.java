@@ -728,22 +728,23 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Properties extraProperties = PropsUtil.getProperties(
 			PropsKeys.MODULE_FRAMEWORK_PROPERTIES, true);
 
-		Parameters extraCapabilities = OSGiHeader.parseHeader(
+		Parameters extraCapabilitiesParameters = OSGiHeader.parseHeader(
 			extraProperties.getProperty(
 				Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA));
 
-		Parameters provideCapability = _getProvideCapability();
+		Parameters provideCapabilityParameters =
+			_getProvideCapabilityParameters();
 
-		if (extraCapabilities.size() > 0) {
-			extraCapabilities.putAll(provideCapability);
+		if (!extraCapabilitiesParameters.isEmpty()) {
+			extraCapabilitiesParameters.putAll(provideCapabilityParameters);
 		}
 		else {
-			extraCapabilities = provideCapability;
+			extraCapabilitiesParameters = provideCapabilityParameters;
 		}
 
 		extraProperties.setProperty(
 			Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA,
-			extraCapabilities.toString());
+			extraCapabilitiesParameters.toString());
 
 		for (Map.Entry<Object, Object> entry : extraProperties.entrySet()) {
 			String key = (String)entry.getKey();
@@ -817,8 +818,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		return properties;
 	}
 
-	private Parameters _getProvideCapability() {
-		Manifest provideCapabilityManifest = null;
+	private Parameters _getProvideCapabilityParameters() {
+		Manifest manifest = null;
 
 		Class<?> clazz = getClass();
 
@@ -826,13 +827,13 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			"/META-INF/system.packages.extra.mf");
 
 		try {
-			provideCapabilityManifest = new Manifest(inputStream);
+			manifest = new Manifest(inputStream);
 		}
 		catch (IOException ioe) {
 			ReflectionUtil.throwException(ioe);
 		}
 
-		Attributes attributes = provideCapabilityManifest.getMainAttributes();
+		Attributes attributes = manifest.getMainAttributes();
 
 		return new Parameters(attributes.getValue("Provide-Capability"));
 	}

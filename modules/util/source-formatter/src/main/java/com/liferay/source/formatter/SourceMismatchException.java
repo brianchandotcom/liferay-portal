@@ -14,8 +14,8 @@
 
 package com.liferay.source.formatter;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.util.StringPool;
 
 import org.junit.Assert;
 

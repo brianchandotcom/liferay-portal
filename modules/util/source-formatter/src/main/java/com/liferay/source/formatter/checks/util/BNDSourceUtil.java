@@ -16,8 +16,8 @@ package com.liferay.source.formatter.checks.util;
 
 import aQute.bnd.osgi.Constants;
 
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.HashMap;

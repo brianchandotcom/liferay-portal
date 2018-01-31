@@ -53,9 +53,4 @@ public interface CommerceCartHelper {
 			HttpServletResponse httpServletResponse, int type)
 		throws PortalException;
 
-	public void setGuestCommerceCart(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, CommerceCart commerceCart)
-		throws PortalException;
-
 }

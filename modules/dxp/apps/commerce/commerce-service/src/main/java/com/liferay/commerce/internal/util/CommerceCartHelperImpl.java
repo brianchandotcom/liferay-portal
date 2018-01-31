@@ -134,7 +134,7 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 		long groupId = _portal.getScopeGroupId(httpServletRequest);
 
 		String uuid = _getCurrentCommerceCartUuid(
-			httpServletRequest, type, groupId);
+			httpServletRequest, httpServletResponse, type, groupId);
 
 		if (Validator.isNull(uuid)) {
 			return null;
@@ -164,38 +164,6 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 		return _commerceCartItemService.getCommerceCartItemsCount(
 			commerceCart.getCommerceCartId());
-	}
-
-	@Override
-	public void setGuestCommerceCart(
-			HttpServletRequest httpServletRequest,
-			HttpServletResponse httpServletResponse, CommerceCart commerceCart)
-		throws PortalException {
-
-		User user = _portal.getUser(httpServletRequest);
-
-		if ((user != null) && !user.isDefaultUser()) {
-			return;
-		}
-
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
-
-		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
-			commerceCart.getType(), groupId);
-
-		Cookie cookie = new Cookie(
-			commerceCartUuidWebKey, commerceCart.getUuid());
-
-		String domain = CookieKeys.getDomain(httpServletRequest);
-
-		if (Validator.isNotNull(domain)) {
-			cookie.setDomain(domain);
-		}
-
-		cookie.setMaxAge(CookieKeys.MAX_AGE);
-		cookie.setPath(StringPool.SLASH);
-
-		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
 
 	private CommerceCart _checkGuestCart(
@@ -270,7 +238,8 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	private String _getCurrentCommerceCartUuid(
-			HttpServletRequest httpServletRequest, int type, long groupId)
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, int type, long groupId)
 		throws PortalException {
 
 		String commerceCartUuid = CommerceCartThreadLocal.getCommerceCartUuid(
@@ -333,7 +302,51 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			return commerceCartUuid;
 		}
 
-		return null;
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			CommerceCart.class.getName(), httpServletRequest);
+
+		serviceContext.setScopeGroupId(groupId);
+
+		CommerceCart commerceCart = _commerceCartService.addCommerceCart(
+			CommerceCartConstants.DEFAULT_TITLE, true, type, serviceContext);
+
+		if (!serviceContext.isSignedIn()) {
+			_setGuestCommerceCart(
+				httpServletRequest, httpServletResponse, commerceCart);
+		}
+
+		return commerceCart.getUuid();
+	}
+
+	private void _setGuestCommerceCart(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse, CommerceCart commerceCart)
+		throws PortalException {
+
+		User user = _portal.getUser(httpServletRequest);
+
+		if ((user != null) && !user.isDefaultUser()) {
+			return;
+		}
+
+		long groupId = _portal.getScopeGroupId(httpServletRequest);
+
+		String commerceCartUuidWebKey = _getCommerceCartUuidWebKey(
+			commerceCart.getType(), groupId);
+
+		Cookie cookie = new Cookie(
+			commerceCartUuidWebKey, commerceCart.getUuid());
+
+		String domain = CookieKeys.getDomain(httpServletRequest);
+
+		if (Validator.isNotNull(domain)) {
+			cookie.setDomain(domain);
+		}
+
+		cookie.setMaxAge(CookieKeys.MAX_AGE);
+		cookie.setPath(StringPool.SLASH);
+
+		CookieKeys.addCookie(httpServletRequest, httpServletResponse, cookie);
 	}
 
 	@Reference

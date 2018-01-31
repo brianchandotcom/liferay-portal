@@ -85,21 +85,6 @@ public class AddCommerceCartItemToWishListMVCActionCommand
 				_commerceCartHelper.getCurrentCommerceCart(
 					httpServletRequest, httpServletResponse, type);
 
-			if (commerceCart == null) {
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(
-						CommerceCart.class.getName(), httpServletRequest);
-
-				commerceCart = _commerceCartService.addCommerceCart(
-					CommerceCartConstants.DEFAULT_TITLE, true, type,
-					serviceContext);
-
-				if (!serviceContext.isSignedIn()) {
-					_commerceCartHelper.setGuestCommerceCart(
-						httpServletRequest, httpServletResponse, commerceCart);
-				}
-			}
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				CommerceCartItem.class.getName(), httpServletRequest);
 

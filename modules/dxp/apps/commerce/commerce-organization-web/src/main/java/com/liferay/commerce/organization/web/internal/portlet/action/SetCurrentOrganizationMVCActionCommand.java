@@ -61,7 +61,7 @@ public class SetCurrentOrganizationMVCActionCommand
 			actionRequest, "currentOrganizationId");
 
 		httpSession.setAttribute(
-			"LIFERAY_SHARED_currentOrganizationId", currentOrganizationId);
+			"LIFERAY_SHARED_CURRENT_ORGANIZATION_ID", currentOrganizationId);
 	}
 
 	@Reference

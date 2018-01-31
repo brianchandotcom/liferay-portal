@@ -17,6 +17,7 @@ package com.liferay.lcs.messaging;
 import com.liferay.lcs.sigar.SigarNativeLoader;
 import com.liferay.lcs.util.LCSConnectionManager;
 import com.liferay.lcs.util.LCSUtil;
+import com.liferay.lcs.util.PortletPropsValues;
 import com.liferay.portal.kernel.license.messaging.LCSPortletState;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -44,8 +45,10 @@ public class LCSHotDeployMessageListener extends HotDeployMessageListener {
 
 		_lcsConnectionManager.onPortletDeployed();
 
-		if (_log.isTraceEnabled()) {
-			_log.trace("LCS portlet deployed");
+		if (_log.isInfoEnabled()) {
+			_log.info(
+				"LCS portlet " + PortletPropsValues.LCS_CLIENT_VERSION +
+					" deployed");
 		}
 	}
 

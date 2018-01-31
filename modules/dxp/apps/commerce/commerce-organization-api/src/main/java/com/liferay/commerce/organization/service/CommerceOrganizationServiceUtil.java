@@ -51,6 +51,16 @@ public class CommerceOrganizationServiceUtil {
 			serviceContext);
 	}
 
+	public static void addOrganizationUsers(long companyId,
+		long organizationId, java.util.Locale locale,
+		java.lang.String[] emailAddresses,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.addOrganizationUsers(companyId, organizationId, locale,
+			emailAddresses, serviceContext);
+	}
+
 	public static com.liferay.portal.kernel.model.Organization getOrganization(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -85,6 +95,12 @@ public class CommerceOrganizationServiceUtil {
 		return getService()
 				   .searchOrganizations(organizationId, type, keywords, start,
 			end, sorts);
+	}
+
+	public static void unsetOrganizationUsers(long organizationId,
+		long[] removeUserIds)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().unsetOrganizationUsers(organizationId, removeUserIds);
 	}
 
 	public static CommerceOrganizationService getService() {

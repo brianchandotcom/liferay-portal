@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import java.util.Locale;
+
 /**
  * Provides the remote service interface for CommerceOrganization. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -60,6 +62,10 @@ public interface CommerceOrganizationService extends BaseService {
 		java.lang.String name, java.lang.String type,
 		ServiceContext serviceContext) throws PortalException;
 
+	public void addOrganizationUsers(long companyId, long organizationId,
+		Locale locale, java.lang.String[] emailAddresses,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Organization getOrganization(long organizationId)
 		throws PortalException;
@@ -83,4 +89,7 @@ public interface CommerceOrganizationService extends BaseService {
 	public BaseModelSearchResult<Organization> searchOrganizations(
 		long organizationId, java.lang.String type, java.lang.String keywords,
 		int start, int end, Sort[] sorts) throws PortalException;
+
+	public void unsetOrganizationUsers(long organizationId, long[] removeUserIds)
+		throws PortalException;
 }

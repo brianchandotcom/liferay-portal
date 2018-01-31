@@ -20,6 +20,7 @@ import com.liferay.commerce.organization.service.CommerceOrganizationServiceUtil
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.rmi.RemoteException;
 
@@ -106,6 +107,35 @@ public class CommerceOrganizationServiceSoap {
 			com.liferay.portal.kernel.model.EmailAddress returnValue = CommerceOrganizationServiceUtil.getOrganizationPrimaryEmailAddress(organizationId);
 
 			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void unsetOrganizationUsers(long organizationId,
+		long[] removeUserIds) throws RemoteException {
+		try {
+			CommerceOrganizationServiceUtil.unsetOrganizationUsers(organizationId,
+				removeUserIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void addOrganizationUsers(long companyId,
+		long organizationId, String locale, java.lang.String[] emailAddresses,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			CommerceOrganizationServiceUtil.addOrganizationUsers(companyId,
+				organizationId, LocaleUtil.fromLanguageId(locale),
+				emailAddresses, serviceContext);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

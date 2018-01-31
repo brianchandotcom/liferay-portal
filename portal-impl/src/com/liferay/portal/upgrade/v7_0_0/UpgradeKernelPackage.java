@@ -40,7 +40,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		try {
 			upgradeTable(
 				"Counter", "name", getClassNames(), WildcardMode.SURROUND);
-			upgradeTable(
+			upgradeTableDuplicatesAware(
 				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
 			upgradeTable(
 				"Lock_", "className", getClassNames(), WildcardMode.SURROUND);
@@ -181,36 +181,82 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			StringBundler sb1 = new StringBundler(7);
+			_upgradeTable(tableName, columnName, names, wildcardMode, false);
+		}
+	}
 
-			sb1.append("update ");
-			sb1.append(tableName);
-			sb1.append(" set ");
-			sb1.append(columnName);
-			sb1.append(" = replace(");
-			sb1.append(_transformColumnName(columnName));
-			sb1.append(", '");
+	protected void upgradeTableDuplicatesAware(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
 
-			String tableSQL = sb1.toString();
+		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
+			_upgradeTable(tableName, columnName, names, wildcardMode, true);
+		}
+	}
 
-			StringBundler sb2 = new StringBundler(6);
+	private void _executeDelete(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
 
-			for (String[] name : names) {
-				sb2.append(tableSQL);
-				sb2.append(name[0]);
-				sb2.append("', '");
-				sb2.append(name[1]);
-				sb2.append("') ");
+		StringBundler sb1 = new StringBundler(2);
 
-				String whereClause = _getWhereClause(
-					columnName, name[0], wildcardMode);
+		sb1.append("delete from ");
+		sb1.append(tableName);
 
-				sb2.append(whereClause);
+		String tableSQL = sb1.toString();
 
-				runSQL(sb2.toString());
+		StringBundler sb2 = new StringBundler(6);
 
-				sb2.setIndex(0);
-			}
+		for (String[] name : names) {
+			sb2.append(tableSQL);
+
+			String whereClause = _getWhereClause(
+				columnName, name[1], wildcardMode);
+
+			sb2.append(whereClause);
+
+			runSQL(sb2.toString());
+
+			sb2.setIndex(0);
+		}
+	}
+
+	private void _executeUpdate(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode)
+		throws Exception {
+
+		StringBundler sb1 = new StringBundler(7);
+
+		sb1.append("update ");
+		sb1.append(tableName);
+		sb1.append(" set ");
+		sb1.append(columnName);
+		sb1.append(" = replace(");
+		sb1.append(_transformColumnName(columnName));
+		sb1.append(", '");
+
+		String tableSQL = sb1.toString();
+
+		StringBundler sb2 = new StringBundler(6);
+
+		for (String[] name : names) {
+			sb2.append(tableSQL);
+			sb2.append(name[0]);
+			sb2.append("', '");
+			sb2.append(name[1]);
+			sb2.append("') ");
+
+			String whereClause = _getWhereClause(
+				columnName, name[0], wildcardMode);
+
+			sb2.append(whereClause);
+
+			runSQL(sb2.toString());
+
+			sb2.setIndex(0);
 		}
 	}
 
@@ -251,6 +297,18 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 
 		return columnName;
+	}
+
+	private void _upgradeTable(
+			String tableName, String columnName, String[][] names,
+			WildcardMode wildcardMode, boolean duplicatesAware)
+		throws Exception {
+
+		if (duplicatesAware) {
+			_executeDelete(tableName, columnName, names, wildcardMode);
+		}
+
+		_executeUpdate(tableName, columnName, names, wildcardMode);
 	}
 
 	private static final String[][] _CLASS_NAMES = {

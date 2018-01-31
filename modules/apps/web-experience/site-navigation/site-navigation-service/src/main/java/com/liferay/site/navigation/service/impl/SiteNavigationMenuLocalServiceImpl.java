@@ -177,8 +177,15 @@ public class SiteNavigationMenuLocalServiceImpl
 
 	@Override
 	public SiteNavigationMenu fetchPrimarySiteNavigationMenu(long groupId) {
-		return siteNavigationMenuPersistence.fetchByG_T(
-			groupId, SiteNavigationConstants.TYPE_PRIMARY);
+		List<SiteNavigationMenu> siteNavigationMenus =
+			siteNavigationMenuPersistence.findByG_T(
+				groupId, SiteNavigationConstants.TYPE_PRIMARY, 0, 1);
+
+		if (siteNavigationMenus.isEmpty()) {
+			return null;
+		}
+
+		return siteNavigationMenus.get(0);
 	}
 
 	@Override
@@ -222,20 +229,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
-		SiteNavigationMenu actualTypeSiteNavigationMenu =
-			siteNavigationMenuPersistence.fetchByG_T(
-				siteNavigationMenu.getGroupId(), type);
-
-		if ((actualTypeSiteNavigationMenu != null) &&
-			(actualTypeSiteNavigationMenu.getType() != type) &&
-			(actualTypeSiteNavigationMenu.getSiteNavigationMenuId() !=
-				siteNavigationMenuId)) {
-
-			actualTypeSiteNavigationMenu.setType(
-				SiteNavigationConstants.TYPE_DEFAULT);
-
-			siteNavigationMenuPersistence.update(actualTypeSiteNavigationMenu);
-		}
+		_updateOldSiteNavigationMenuType(siteNavigationMenu, type);
 
 		User user = userLocalService.getUser(userId);
 
@@ -334,6 +328,38 @@ public class SiteNavigationMenuLocalServiceImpl
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				layout.getLayoutId(), serviceContext);
 		}
+	}
+
+	private void _updateOldSiteNavigationMenuType(
+		SiteNavigationMenu siteNavigationMenu, int type) {
+
+		if (type == SiteNavigationConstants.TYPE_DEFAULT) {
+			return;
+		}
+
+		List<SiteNavigationMenu> siteNavigationMenus =
+			siteNavigationMenuPersistence.findByG_T(
+				siteNavigationMenu.getGroupId(),
+				SiteNavigationConstants.TYPE_PRIMARY, 0, 1);
+
+		if (siteNavigationMenus.isEmpty()) {
+			return;
+		}
+
+		SiteNavigationMenu actualTypeSiteNavigationMenu =
+			siteNavigationMenus.get(0);
+
+		if ((actualTypeSiteNavigationMenu.getType() == type) ||
+			(actualTypeSiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId())) {
+
+			return;
+		}
+
+		actualTypeSiteNavigationMenu.setType(
+			SiteNavigationConstants.TYPE_DEFAULT);
+
+		siteNavigationMenuPersistence.update(actualTypeSiteNavigationMenu);
 	}
 
 	@ServiceReference(type = SiteNavigationMenuItemTypeRegistry.class)

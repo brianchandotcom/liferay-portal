@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
 import com.liferay.knowledge.base.constants.KBActionKeys;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.AdminPermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;

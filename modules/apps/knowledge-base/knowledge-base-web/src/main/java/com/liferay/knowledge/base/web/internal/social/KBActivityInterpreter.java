@@ -22,11 +22,10 @@ import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
 import com.liferay.knowledge.base.service.KBCommentLocalService;
 import com.liferay.knowledge.base.service.KBTemplateLocalService;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
-import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.AggregateResourceBundleLoader;
 import com.liferay.portal.kernel.util.ResourceBundleLoader;
@@ -224,7 +223,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 			KBArticle kbArticle = _kbArticleLocalService.getLatestKBArticle(
 				activity.getClassPK(), WorkflowConstants.STATUS_APPROVED);
 
-			return KBArticlePermission.contains(
+			return _kbArticleModelResourcePermission.contains(
 				permissionChecker, kbArticle, KBActionKeys.VIEW);
 		}
 		else if (className.equals(KBComment.class.getName())) {
@@ -234,7 +233,7 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 			KBTemplate kbTemplate = _kbTemplateLocalService.getKBTemplate(
 				activity.getClassPK());
 
-			return KBTemplatePermission.contains(
+			return _kbTemplateModelResourcePermission.contains(
 				permissionChecker, kbTemplate, KBActionKeys.VIEW);
 		}
 
@@ -280,8 +279,22 @@ public class KBActivityInterpreter extends BaseSocialActivityInterpreter {
 	};
 
 	private KBArticleLocalService _kbArticleLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"
+	)
+	private ModelResourcePermission<KBArticle>
+		_kbArticleModelResourcePermission;
+
 	private KBCommentLocalService _kbCommentLocalService;
 	private KBTemplateLocalService _kbTemplateLocalService;
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBTemplate)"
+	)
+	private ModelResourcePermission<KBTemplate>
+		_kbTemplateModelResourcePermission;
+
 	private ResourceBundleLoader _resourceBundleLoader;
 
 }

@@ -16,7 +16,7 @@ package com.liferay.knowledge.base.web.internal.search;
 
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.service.KBCommentLocalServiceUtil;
-import com.liferay.knowledge.base.service.permission.KBCommentPermission;
+import com.liferay.knowledge.base.web.internal.security.permission.resource.KBCommentPermission;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.RowChecker;

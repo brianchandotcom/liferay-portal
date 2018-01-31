@@ -17,12 +17,15 @@ package com.liferay.knowledge.base.web.internal.portlet.configuration.icon;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBFolder;
-import com.liferay.knowledge.base.service.permission.KBFolderPermission;
 import com.liferay.knowledge.base.web.internal.constants.KBWebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.configuration.icon.BasePortletConfigurationIcon;
 import com.liferay.portal.kernel.portlet.configuration.icon.PortletConfigurationIcon;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -99,14 +102,26 @@ public class MoveKBFolderPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		if (KBFolderPermission.contains(
-				permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER)) {
-
-			return true;
+		try {
+			return _kbFolderModelResourcePermission.contains(
+				permissionChecker, kbFolder, KBActionKeys.MOVE_KB_FOLDER);
+		}
+		catch (PortalException pe) {
+			if (_log.isWarnEnabled()) {
+				_log.warn(pe, pe);
+			}
 		}
 
 		return false;
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		MoveKBFolderPortletConfigurationIcon.class);
+
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBFolder)"
+	)
+	private ModelResourcePermission<KBFolder> _kbFolderModelResourcePermission;
 
 	@Reference
 	private Portal _portal;

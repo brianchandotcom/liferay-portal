@@ -19,16 +19,17 @@ import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.model.AssetRendererFactory;
 import com.liferay.asset.kernel.model.BaseAssetRendererFactory;
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.exception.NoSuchArticleException;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalService;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.LiferayPortletRequest;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
@@ -129,10 +130,9 @@ public class KBArticleAssetRendererFactory
 
 	@Override
 	public boolean hasAddPermission(
-			PermissionChecker permissionChecker, long groupId, long classTypeId)
-		throws Exception {
+		PermissionChecker permissionChecker, long groupId, long classTypeId) {
 
-		return AdminPermission.contains(
+		return _portletResourcePermission.contains(
 			permissionChecker, groupId, KBActionKeys.ADD_KB_ARTICLE);
 	}
 
@@ -141,7 +141,7 @@ public class KBArticleAssetRendererFactory
 			PermissionChecker permissionChecker, long classPK, String actionId)
 		throws Exception {
 
-		return KBArticlePermission.contains(
+		return _kbArticleModelResourcePermission.contains(
 			permissionChecker, classPK, actionId);
 	}
 
@@ -178,8 +178,19 @@ public class KBArticleAssetRendererFactory
 
 	private KBArticleLocalService _kbArticleLocalService;
 
+	@Reference(
+		target = "(model.class.name=com.liferay.knowledge.base.model.KBArticle)"
+	)
+	private ModelResourcePermission<KBArticle>
+		_kbArticleModelResourcePermission;
+
 	@Reference
 	private Portal _portal;
+
+	@Reference(
+		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")"
+	)
+	private PortletResourcePermission _portletResourcePermission;
 
 	private ServletContext _servletContext;
 

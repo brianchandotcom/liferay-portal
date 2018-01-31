@@ -29,8 +29,8 @@ import org.osgi.service.component.annotations.Reference;
 public class KBCommentPermission {
 
 	public static boolean contains(
-		PermissionChecker permissionChecker, KBComment kbComment,
-		String actionId)
+			PermissionChecker permissionChecker, KBComment kbComment,
+			String actionId)
 		throws PortalException {
 
 		return _kbCommentModelResourcePermission.contains(

@@ -5095,12 +5095,10 @@ public class PortalImpl implements Portal {
 	}
 
 	@Override
-	public Locale getSiteDefaultLocale(long groupId) throws PortalException {
-		if (groupId <= 0) {
+	public Locale getSiteDefaultLocale(Group group) throws PortalException {
+		if (group == null) {
 			return LocaleUtil.getDefault();
 		}
-
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		Group liveGroup = group;
 
@@ -5126,6 +5124,17 @@ public class PortalImpl implements Portal {
 			defaultUser.getLanguageId());
 
 		return LocaleUtil.fromLanguageId(languageId);
+	}
+
+	@Override
+	public Locale getSiteDefaultLocale(long groupId) throws PortalException {
+		if (groupId <= 0) {
+			return LocaleUtil.getDefault();
+		}
+
+		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		return getSiteDefaultLocale(group);
 	}
 
 	@Override

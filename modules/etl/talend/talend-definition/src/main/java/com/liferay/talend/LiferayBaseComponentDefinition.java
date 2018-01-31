@@ -32,6 +32,9 @@ import org.talend.daikon.sandbox.SandboxedInstance;
 public abstract class LiferayBaseComponentDefinition
 	extends AbstractComponentDefinition {
 
+	public static final String RUNTIME_SINK_CLASS_NAME =
+		"com.liferay.talend.runtime.LiferaySink";
+
 	public static final String RUNTIME_SOURCE_CLASS_NAME =
 		"com.liferay.talend.runtime.LiferaySource";
 

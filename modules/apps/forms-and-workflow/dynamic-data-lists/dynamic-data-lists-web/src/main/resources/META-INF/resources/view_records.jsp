@@ -90,18 +90,6 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 			<aui:nav-item label="<%= HtmlUtil.escape(recordSet.getName(locale)) %>" selected="<%= true %>" />
 		</aui:nav>
 	</c:if>
-
-	<aui:nav-bar-search searchContainer="<%= recordSearchContainer %>">
-		<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
-			<portlet:param name="mvcPath" value="<%= mvcPath %>" />
-			<portlet:param name="redirect" value="<%= redirect %>" />
-			<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
-		</portlet:renderURL>
-
-		<aui:form action="<%= searchURL.toString() %>" name="fm1">
-			<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= DisplayTerms.KEYWORDS %>" />
-		</aui:form>
-	</aui:nav-bar-search>
 </aui:nav-bar>
 
 <liferay-frontend:management-bar
@@ -120,6 +108,18 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 			orderColumns='<%= new String[] {"create-date", "modified-date"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<portlet:renderURL copyCurrentRenderParameters="<%= false %>" var="searchURL">
+				<portlet:param name="mvcPath" value="<%= mvcPath %>" />
+				<portlet:param name="redirect" value="<%= redirect %>" />
+				<portlet:param name="recordSetId" value="<%= String.valueOf(recordSet.getRecordSetId()) %>" />
+			</portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" name="fm1">
+				<liferay-ui:input-search autoFocus="<%= windowState.equals(WindowState.MAXIMIZED) %>" markupView="lexicon" name="<%= DisplayTerms.KEYWORDS %>" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<c:if test="<%= hasDeletePermission %>">

@@ -40,6 +40,12 @@ PortletURL portletURL = renderResponse.createRenderURL();
 			orderColumns='<%= new String[] {"create-date", "modified-date", "name"} %>'
 			portletURL="<%= portletURL %>"
 		/>
+
+		<li>
+			<aui:form action="<%= portletURL.toString() %>" method="post" name="fm1">
+				<liferay-util:include page="/record_set_search.jsp" servletContext="<%= application %>" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 
 	<liferay-frontend:management-bar-action-buttons>

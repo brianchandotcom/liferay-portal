@@ -15,10 +15,10 @@
 package com.liferay.server.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.portlet.PortletURL;
@@ -53,24 +53,20 @@ public class ServerDisplayContext {
 			"external-services", "script", "shutdown"
 		};
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		for (String tabs1Name : tabs1Names) {
-			NavigationItem entriesNavigationItem = new NavigationItem();
-
-			entriesNavigationItem.setActive(tabs1.equals(tabs1Name));
-
-			serverURL.setParameter("tabs1", tabs1Name);
-
-			entriesNavigationItem.setHref(serverURL.toString());
-
-			entriesNavigationItem.setLabel(
-				LanguageUtil.get(_request, tabs1Name));
-
-			navigationItems.add(entriesNavigationItem);
-		}
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				for (String tabs1Name : tabs1Names) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(tabs1.equals(tabs1Name));
+							navigationItem.setHref(
+								serverURL, "tabs1", tabs1Name);
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, tabs1Name));
+						});
+				}
+			}
+		};
 	}
 
 	private final RenderResponse _renderResponse;

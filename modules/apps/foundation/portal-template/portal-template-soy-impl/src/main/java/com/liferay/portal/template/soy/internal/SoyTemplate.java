@@ -228,6 +228,16 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			return value;
 		}
 
+		if (value instanceof Class) {
+			clazz = (Class)value;
+
+			return clazz.getName();
+		}
+
+		if (clazz.isEnum()) {
+			return String.valueOf(value);
+		}
+
 		if (clazz.isArray()) {
 			List<Object> newList = new ArrayList<>();
 

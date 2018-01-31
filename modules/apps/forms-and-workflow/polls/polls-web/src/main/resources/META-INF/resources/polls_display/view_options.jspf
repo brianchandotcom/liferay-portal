@@ -20,11 +20,11 @@ boolean hasConfigurationPermission = PortletPermissionUtil.contains(permissionCh
 boolean hasViewPermission = true;
 
 if (question != null) {
-	hasViewPermission = PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.VIEW);
+	hasViewPermission = PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.VIEW);
 }
 
-boolean showAddPollIcon = hasConfigurationPermission && PollsResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
-boolean showEditPollIcon = (question != null) && PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE);
+boolean showAddPollIcon = hasConfigurationPermission && PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
+boolean showEditPollIcon = (question != null) && PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE);
 boolean showIconsActions = themeDisplay.isSignedIn() && !layout.isLayoutPrototypeLinkActive() && (hasConfigurationPermission || showEditPollIcon || showAddPollIcon);
 %>
 

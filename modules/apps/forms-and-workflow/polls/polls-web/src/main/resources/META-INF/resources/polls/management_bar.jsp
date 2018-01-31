@@ -17,7 +17,7 @@
 <%@ include file="/polls/init.jsp" %>
 
 <%
-boolean showAddPollButton = PollsResourcePermissionChecker.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
+boolean showAddPollButton = PollsPermission.contains(permissionChecker, scopeGroupId, ActionKeys.ADD_QUESTION);
 
 PortletURL portletURL = pollsDisplayContext.getBasePortletURL();
 

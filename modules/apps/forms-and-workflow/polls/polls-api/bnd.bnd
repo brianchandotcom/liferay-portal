@@ -1,12 +1,11 @@
 Bundle-Name: Liferay Polls API
 Bundle-SymbolicName: com.liferay.polls.api
-Bundle-Version: 4.0.3
+Bundle-Version: 5.0.0
 Export-Package:\
 	com.liferay.polls.constants,\
 	com.liferay.polls.exception,\
 	com.liferay.polls.model,\
 	com.liferay.polls.service,\
-	com.liferay.polls.service.permission,\
 	com.liferay.polls.service.persistence,\
 	com.liferay.polls.util.comparator
 Liferay-Releng-Module-Group-Description:

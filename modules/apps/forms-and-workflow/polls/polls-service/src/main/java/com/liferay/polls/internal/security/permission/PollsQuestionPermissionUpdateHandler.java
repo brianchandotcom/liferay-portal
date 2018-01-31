@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.polls.service.permission;
+package com.liferay.polls.internal.security.permission;
 
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.PollsQuestionLocalService;

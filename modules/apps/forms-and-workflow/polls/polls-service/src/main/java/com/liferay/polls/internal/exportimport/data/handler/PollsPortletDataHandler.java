@@ -21,6 +21,7 @@ import com.liferay.exportimport.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.exportimport.kernel.lar.PortletDataHandlerControl;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
+import com.liferay.polls.constants.PollsConstants;
 import com.liferay.polls.constants.PollsPortletKeys;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
@@ -28,7 +29,6 @@ import com.liferay.polls.model.PollsVote;
 import com.liferay.polls.service.PollsChoiceLocalService;
 import com.liferay.polls.service.PollsQuestionLocalService;
 import com.liferay.polls.service.PollsVoteLocalService;
-import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.xml.Element;
@@ -103,8 +103,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(
-			PollsResourcePermissionChecker.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(PollsConstants.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -147,7 +146,7 @@ public class PollsPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		portletDataContext.importPortletPermissions(
-			PollsResourcePermissionChecker.RESOURCE_NAME);
+			PollsConstants.RESOURCE_NAME);
 
 		Element questionsElement = portletDataContext.getImportDataGroupElement(
 			PollsQuestion.class);

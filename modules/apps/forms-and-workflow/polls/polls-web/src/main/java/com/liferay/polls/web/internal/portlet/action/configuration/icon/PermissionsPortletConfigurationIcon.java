@@ -16,7 +16,7 @@ package com.liferay.polls.web.internal.portlet.action.configuration.icon;
 
 import com.liferay.petra.string.StringPool;
 import com.liferay.polls.constants.PollsPortletKeys;
-import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
+import com.liferay.polls.web.internal.security.permission.resource.PollsPermission;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -92,8 +92,8 @@ public class PermissionsPortletConfigurationIcon
 		PermissionChecker permissionChecker =
 			themeDisplay.getPermissionChecker();
 
-		return PollsResourcePermissionChecker.contains(
-			permissionChecker, themeDisplay.getScopeGroupId(),
+		return PollsPermission.contains(
+			permissionChecker, themeDisplay.getScopeGroup(),
 			ActionKeys.PERMISSIONS);
 	}
 

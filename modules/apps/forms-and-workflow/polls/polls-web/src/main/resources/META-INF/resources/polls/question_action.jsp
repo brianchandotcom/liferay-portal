@@ -23,7 +23,7 @@ PollsQuestion question = (PollsQuestion)row.getObject();
 %>
 
 <liferay-ui:icon-menu direction="left-side" icon="<%= StringPool.BLANK %>" markupView="lexicon" message="<%= StringPool.BLANK %>" showWhenSingleIcon="<%= true %>">
-	<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
+	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.UPDATE) %>">
 		<portlet:renderURL var="editURL">
 			<portlet:param name="mvcRenderCommandName" value="/polls/edit_question" />
 			<portlet:param name="redirect" value="<%= currentURL %>" />
@@ -36,7 +36,7 @@ PollsQuestion question = (PollsQuestion)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.PERMISSIONS) %>">
+	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.PERMISSIONS) %>">
 		<liferay-security:permissionsURL
 			modelResource="<%= PollsQuestion.class.getName() %>"
 			modelResourceDescription="<%= question.getTitle(locale) %>"
@@ -53,7 +53,7 @@ PollsQuestion question = (PollsQuestion)row.getObject();
 		/>
 	</c:if>
 
-	<c:if test="<%= PollsQuestionPermissionChecker.contains(permissionChecker, question, ActionKeys.DELETE) %>">
+	<c:if test="<%= PollsQuestionPermission.contains(permissionChecker, question, ActionKeys.DELETE) %>">
 		<portlet:actionURL name="/polls/edit_question" var="deleteURL">
 			<portlet:param name="mvcActionCommand" value="/polls/edit_question" />
 			<portlet:param name="<%= Constants.CMD %>" value="<%= Constants.DELETE %>" />

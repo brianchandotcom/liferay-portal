@@ -17,10 +17,10 @@ package com.liferay.polls.service.impl;
 import com.liferay.polls.model.PollsChoice;
 import com.liferay.polls.model.PollsQuestion;
 import com.liferay.polls.service.base.PollsQuestionServiceBaseImpl;
-import com.liferay.polls.service.permission.PollsQuestionPermissionChecker;
-import com.liferay.polls.service.permission.PollsResourcePermissionChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.util.List;
@@ -42,7 +42,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			List<PollsChoice> choices, ServiceContext serviceContext)
 		throws PortalException {
 
-		PollsResourcePermissionChecker.check(
+		_pollsQuestionModelResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_QUESTION);
 
@@ -54,7 +54,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 	@Override
 	public void deleteQuestion(long questionId) throws PortalException {
-		PollsQuestionPermissionChecker.check(
+		_pollsQuestionModelResourcePermission.check(
 			getPermissionChecker(), questionId, ActionKeys.DELETE);
 
 		pollsQuestionLocalService.deleteQuestion(questionId);
@@ -62,7 +62,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 
 	@Override
 	public PollsQuestion getQuestion(long questionId) throws PortalException {
-		PollsQuestionPermissionChecker.check(
+		_pollsQuestionModelResourcePermission.check(
 			getPermissionChecker(), questionId, ActionKeys.VIEW);
 
 		return pollsQuestionLocalService.getQuestion(questionId);
@@ -78,7 +78,7 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		PollsQuestionPermissionChecker.check(
+		_pollsQuestionModelResourcePermission.check(
 			getPermissionChecker(), questionId, ActionKeys.UPDATE);
 
 		return pollsQuestionLocalService.updateQuestion(
@@ -87,5 +87,11 @@ public class PollsQuestionServiceImpl extends PollsQuestionServiceBaseImpl {
 			expirationDateHour, expirationDateMinute, neverExpire, choices,
 			serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<PollsQuestion>
+		_pollsQuestionModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				PollsQuestionServiceImpl.class,
+				"_pollsQuestionModelResourcePermission", PollsQuestion.class);
 
 }

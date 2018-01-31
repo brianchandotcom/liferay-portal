@@ -2806,6 +2806,13 @@ since it has been moved into [Liferay Gradle Plugins Baseline].
 - [LPS-77630]: Update the [Liferay Gradle Plugins] dependency to version
 3.5.101.
 
+## 5.2.57 - 2018-02-01
+
+### Changed
+- [LPS-77350]: Update the [Liferay Gradle Plugins] dependency to version 3.6.0.
+- [LPS-77350]: Update the [Liferay Gradle Plugins Baseline] dependency to
+version 1.2.1.
+
 [Find Security Bugs]: https://github.com/liferay/liferay-portal/tree/master/modules/third-party/com-h3xstream-findsecbugs
 [Gradle License Report]: https://github.com/jk1/Gradle-License-Report
 [Liferay CDN]: https://cdn.lfrs.sl/repository.liferay.com/nexus/content/groups/public
@@ -3116,6 +3123,7 @@ since it has been moved into [Liferay Gradle Plugins Baseline].
 [LPS-77186]: https://issues.liferay.com/browse/LPS-77186
 [LPS-77250]: https://issues.liferay.com/browse/LPS-77250
 [LPS-77305]: https://issues.liferay.com/browse/LPS-77305
+[LPS-77350]: https://issues.liferay.com/browse/LPS-77350
 [LPS-77400]: https://issues.liferay.com/browse/LPS-77400
 [LPS-77402]: https://issues.liferay.com/browse/LPS-77402
 [LPS-77423]: https://issues.liferay.com/browse/LPS-77423

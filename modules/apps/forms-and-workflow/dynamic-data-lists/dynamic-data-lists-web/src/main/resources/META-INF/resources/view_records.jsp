@@ -84,13 +84,10 @@ recordSearchContainer.setOrderByType(ddlViewRecordsDisplayContext.getOrderByType
 	<portlet:param name="formDDMTemplateId" value="<%= String.valueOf(formDDMTemplateId) %>" />
 </portlet:renderURL>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<c:if test="<%= ddlDisplayContext.isAdminPortlet() %>">
-		<aui:nav cssClass="navbar-nav">
-			<aui:nav-item label="<%= HtmlUtil.escape(recordSet.getName(locale)) %>" selected="<%= true %>" />
-		</aui:nav>
-	</c:if>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= ddlViewRecordsDisplayContext.getNavigationItems() %>"
+/>
 
 <liferay-frontend:management-bar
 	includeCheckBox="<%= !user.isDefaultUser() %>"

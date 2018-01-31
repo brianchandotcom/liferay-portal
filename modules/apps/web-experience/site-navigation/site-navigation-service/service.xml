@@ -25,7 +25,7 @@
 
 		<column name="name" type="String" />
 		<column name="type" type="int" />
-		<column name="addNewPages" type="boolean" />
+		<column name="auto" type="boolean" />
 
 		<!-- Finder methods -->
 

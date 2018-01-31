@@ -29,7 +29,7 @@ dependencies {
 	provided group: "biz.aQute.bnd", name: "biz.aQute.bndlib", version: "3.1.0"
 	provided group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
 	provided group: "com.liferay", name: "com.liferay.petra.string", version: "1.0.0"
-	provided group: "com.liferay", name: "com.liferay.portal.instance.lifecycle", version: "3.0.0"
 	provided group: "com.liferay.portal", name: "com.liferay.portal.kernel", version: "2.4.0"
 	provided group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
+	provided project(":apps:foundation:portal:portal-instance-lifecycle-api")
 }

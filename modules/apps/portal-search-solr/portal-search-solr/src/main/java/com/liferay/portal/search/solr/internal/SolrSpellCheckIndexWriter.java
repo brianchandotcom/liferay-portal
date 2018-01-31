@@ -121,12 +121,6 @@ public class SolrSpellCheckIndexWriter
 
 		addQuerySeparator(sb);
 
-		sb.append(Field.SPELL_CHECK_WORD);
-		sb.append(StringPool.COLON);
-		sb.append(Boolean.TRUE.toString());
-
-		addQuerySeparator(sb);
-
 		addQueryType(sb, type);
 
 		return sb.toString();

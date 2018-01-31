@@ -130,23 +130,11 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testDefaultIndices() throws Exception {
-		_companyIndexFactory.activate(
-			new HashMap<String, Object>() {
-				{
-					put(
-						"typeMappings.KeywordQueryDocumentType",
-						"/META-INF/mappings/keyword-query-type-mappings.json");
-					put(
-						"typeMappings.SpellCheckDocumentType",
-						"/META-INF/mappings/spellcheck-type-mappings.json");
-				}
-			});
+		_companyIndexFactory.activate(Collections.emptyMap());
 
 		createIndices();
 
-		assertIndicesExist(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			"KeywordQueryDocumentType", "SpellCheckDocumentType");
+		assertIndicesExist(LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 	}
 
 	@Test
@@ -224,10 +212,7 @@ public class CompanyIndexFactoryTest {
 
 	@Test
 	public void testOverrideTypeMappingsHonorDefaultIndices() throws Exception {
-		_companyIndexFactory.activate(
-			Collections.<String, Object>singletonMap(
-				"typeMappings.SpellCheckDocumentType",
-				"/META-INF/mappings/spellcheck-type-mappings.json"));
+		_companyIndexFactory.activate(Collections.emptyMap());
 
 		_companyIndexFactory.setAdditionalIndexConfigurations(
 			loadAdditionalAnalyzers());
@@ -236,9 +221,7 @@ public class CompanyIndexFactoryTest {
 
 		createIndices();
 
-		assertIndicesExist(
-			LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE,
-			"SpellCheckDocumentType");
+		assertIndicesExist(LiferayTypeMappingsConstants.LIFERAY_DOCUMENT_TYPE);
 	}
 
 	@Test

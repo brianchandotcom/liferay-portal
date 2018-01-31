@@ -208,12 +208,12 @@ public class SiteNavigationMenuServiceSoap {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenuSoap updateSiteNavigationMenu(
-		long siteNavigationMenuId, int type, boolean addNewPages,
+		long siteNavigationMenuId, int type, boolean auto,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.site.navigation.model.SiteNavigationMenu returnValue = SiteNavigationMenuServiceUtil.updateSiteNavigationMenu(siteNavigationMenuId,
-					type, addNewPages, serviceContext);
+					type, auto, serviceContext);
 
 			return com.liferay.site.navigation.model.SiteNavigationMenuSoap.toSoapModel(returnValue);
 		}

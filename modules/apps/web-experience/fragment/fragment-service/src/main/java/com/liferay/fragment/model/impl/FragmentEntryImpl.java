@@ -15,11 +15,8 @@
 package com.liferay.fragment.model.impl;
 
 import com.liferay.fragment.util.FragmentEntryRenderUtil;
-import com.liferay.html.preview.model.HtmlPreviewEntry;
-import com.liferay.html.preview.service.HtmlPreviewEntryLocalServiceUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.xml.simple.Element;
 import com.liferay.portal.kernel.zip.ZipWriter;
 
@@ -31,23 +28,6 @@ public class FragmentEntryImpl extends FragmentEntryBaseImpl {
 	@Override
 	public String getContent() throws PortalException {
 		return FragmentEntryRenderUtil.renderFragmentEntry(this);
-	}
-
-	@Override
-	public String getImagePreviewURL(ThemeDisplay themeDisplay) {
-		if (getHtmlPreviewEntryId() <= 0) {
-			return StringPool.BLANK;
-		}
-
-		HtmlPreviewEntry htmlPreviewEntry =
-			HtmlPreviewEntryLocalServiceUtil.fetchHtmlPreviewEntry(
-				getHtmlPreviewEntryId());
-
-		if (htmlPreviewEntry == null) {
-			return StringPool.BLANK;
-		}
-
-		return htmlPreviewEntry.getImagePreviewURL(themeDisplay);
 	}
 
 	@Override

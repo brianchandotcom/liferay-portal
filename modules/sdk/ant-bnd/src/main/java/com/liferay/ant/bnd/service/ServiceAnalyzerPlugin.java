@@ -244,6 +244,8 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();
 
+		documentBuilderFactory.setFeature(_LOAD_EXTERNAL_DTD, false);
+
 		DocumentBuilder documentBuilder =
 			documentBuilderFactory.newDocumentBuilder();
 
@@ -328,5 +330,8 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	private static final String _LIFERAY_EXTENDER = "liferay.extender";
+
+	private static final String _LOAD_EXTERNAL_DTD =
+		"http://apache.org/xml/features/nonvalidating/load-external-dtd";
 
 }

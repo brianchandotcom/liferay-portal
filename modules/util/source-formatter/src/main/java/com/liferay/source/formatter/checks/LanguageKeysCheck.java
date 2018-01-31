@@ -65,7 +65,9 @@ public class LanguageKeysCheck extends BaseFileCheck {
 	}
 
 	protected List<Pattern> getPatterns() {
-		return Arrays.asList(languageKeyPattern);
+		return Arrays.asList(
+			languageKeyPattern, _metaAnnotationDescriptionParameterPattern,
+			_metaAnnotationNameParameterPattern);
 	}
 
 	protected final Pattern languageKeyPattern = Pattern.compile(
@@ -401,6 +403,11 @@ public class LanguageKeysCheck extends BaseFileCheck {
 		Pattern.MULTILINE);
 	private final Pattern _mergeLangPattern = Pattern.compile(
 		"mergeLang \\{\\s*sourceDirs = \\[(.*?)\\]", Pattern.DOTALL);
+	private final Pattern _metaAnnotationDescriptionParameterPattern =
+		Pattern.compile(
+			"@Meta\\.(?:AD|OCD)\\([^\\{]+?\\sdescription = \"(.+?)\"");
+	private final Pattern _metaAnnotationNameParameterPattern = Pattern.compile(
+		"@Meta\\.(?:AD|OCD)\\([^\\{]+?\\sname = \"(.+?)\"");
 	private final Map<String, Properties> _moduleLangLanguagePropertiesMap =
 		new HashMap<>();
 	private final Map<String, Properties> _moduleLanguagePropertiesMap =

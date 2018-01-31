@@ -79,28 +79,34 @@ public class CommerceOrganizationServiceImpl
 		long companyId = serviceContext.getCompanyId();
 		Locale locale = serviceContext.getLocale();
 
-		for (String emailAddress : emailAddresses) {
-			User user = userLocalService.fetchUserByEmailAddress(
-				companyId, emailAddress);
+		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+				new ProxyModeThreadLocalCloseable()) {
 
-			if (user == null) {
-				user = userLocalService.addUserWithWorkflow(
-					serviceContext.getUserId(), companyId, true,
-					StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
-					emailAddress, 0, StringPool.BLANK, locale, emailAddress,
-					StringPool.BLANK, emailAddress, 0, 0, true, 1, 1, 1970,
-					StringPool.BLANK, null, new long[] {organizationId}, null,
-					null, true, serviceContext);
+			ProxyModeThreadLocal.setForceSync(true);
+
+			long[] userIds = new long[emailAddresses.length];
+
+			for (int i = 0; i < emailAddresses.length; i++) {
+				String emailAddress = emailAddresses[i];
+
+				User user = userLocalService.fetchUserByEmailAddress(
+					companyId, emailAddress);
+
+				if (user == null) {
+					user = userLocalService.addUserWithWorkflow(
+						serviceContext.getUserId(), companyId, true,
+						StringPool.BLANK, StringPool.BLANK, true,
+						StringPool.BLANK, emailAddress, 0, StringPool.BLANK,
+						locale, emailAddress, StringPool.BLANK, emailAddress, 0,
+						0, true, 1, 1, 1970, StringPool.BLANK, null,
+						new long[] {organizationId}, null, null, true,
+						serviceContext);
+				}
+
+				userIds[i] = user.getUserId();
 			}
 
-			try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
-					new ProxyModeThreadLocalCloseable()) {
-
-				ProxyModeThreadLocal.setForceSync(true);
-
-				userLocalService.addOrganizationUsers(
-					organizationId, new long[] {user.getUserId()});
-			}
+			userLocalService.addOrganizationUsers(organizationId, userIds);
 		}
 	}
 

@@ -1,0 +1,5 @@
+Bundle-Name: Liferay Portal Instance Lifecycle Implementation
+Bundle-SymbolicName: com.liferay.portal.instance.lifecycle.impl
+Bundle-Version: 1.0.0
+Liferay-Releng-Module-Group-Description:
+Liferay-Releng-Module-Group-Title: Portal Instance Lifecycle

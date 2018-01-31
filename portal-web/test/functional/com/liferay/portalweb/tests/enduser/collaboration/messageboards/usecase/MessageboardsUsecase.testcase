@@ -1666,7 +1666,8 @@
 			<var name="entryContent" value="MB Thread Message Body 2" />
 			<var name="entryTitle" value="MB Thread Message Subject 2" />
 			<var name="rssURL" value="message_boards" />
-			<var name="siteName" value="${siteName}" />
+			<var name="feedTitle" value="MB Thread Message Subject 2" />
+			<var name="feedSubtitle" value="MB Thread Message Subject 2" />
 		</execute>
 
 		<execute function="Click" locator1="NavBar#HOME" />
@@ -1679,7 +1680,8 @@
 			<var name="entryContent" value="MB Thread Message Body 1" />
 			<var name="entryTitle" value="MB Thread Message Subject 1" />
 			<var name="rssURL" value="message_boards" />
-			<var name="siteName" value="${siteName}" />
+			<var name="feedTitle" value="MB Thread Message Subject 1" />
+			<var name="feedSubtitle" value="MB Thread Message Subject 1" />
 		</execute>
 
 		<execute function="Click" locator1="NavBar#HOME" />
@@ -1688,7 +1690,8 @@
 			<var name="entryContent" value="MB Thread Message Body 1,MB Thread Message Body 2" />
 			<var name="entryTitle" value="MB Thread Message Subject 1,MB Thread Message Subject 2" />
 			<var name="rssURL" value="message_boards" />
-			<var name="siteName" value="${siteName}" />
+			<var name="feedTitle" value="MB Thread Message Subject 1" />
+			<var name="feedSubtitle" value="MB Thread Message Subject 1" />
 		</execute>
 	</command>
 

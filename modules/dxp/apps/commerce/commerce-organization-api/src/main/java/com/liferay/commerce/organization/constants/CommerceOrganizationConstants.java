@@ -23,4 +23,6 @@ public class CommerceOrganizationConstants {
 
 	public static final String TYPE_BRANCH = "branch";
 
+	public static final String[] TYPES = {TYPE_ACCOUNT, TYPE_BRANCH};
+
 }

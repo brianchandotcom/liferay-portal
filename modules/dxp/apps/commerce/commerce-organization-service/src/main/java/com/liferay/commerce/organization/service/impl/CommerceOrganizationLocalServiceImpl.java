@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.organization.service.impl;
 
+import com.liferay.commerce.organization.constants.CommerceOrganizationConstants;
 import com.liferay.commerce.organization.service.base.CommerceOrganizationLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
@@ -34,6 +35,7 @@ import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -148,6 +150,22 @@ public class CommerceOrganizationLocalServiceImpl
 		}
 
 		return emailAddressPersistence.create(0);
+	}
+
+	@Override
+	public boolean isB2BOrganization(long organizationId)
+		throws PortalException {
+
+		Organization organization = organizationLocalService.getOrganization(
+			organizationId);
+
+		if (ArrayUtil.contains(
+				CommerceOrganizationConstants.TYPES, organization.getType())) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

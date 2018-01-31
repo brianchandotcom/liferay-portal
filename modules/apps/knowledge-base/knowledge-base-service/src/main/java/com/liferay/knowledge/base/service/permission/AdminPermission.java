@@ -15,23 +15,25 @@
 package com.liferay.knowledge.base.service.permission;
 
 import com.liferay.knowledge.base.constants.KBConstants;
-import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Peter Shin
  * @author Brian Wing Shun Chan
+ * @deprecated As of 1.3.0, with no direct replacement
  */
 @Component(
 	property = {"resource.name=" + KBConstants.ADMIN_RESOURCE_NAME},
 	service = ResourcePermissionChecker.class
 )
+@Deprecated
 public class AdminPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME = KBConstants.ADMIN_RESOURCE_NAME;
@@ -40,24 +42,34 @@ public class AdminPermission extends BaseResourcePermissionChecker {
 			PermissionChecker permissionChecker, long groupId, String actionId)
 		throws PortalException {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException();
-		}
+		_portletResourcePermission.check(permissionChecker, groupId, actionId);
 	}
 
 	public static boolean contains(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		return contains(
-			permissionChecker, KBConstants.ADMIN_RESOURCE_NAME,
-			KBPortletKeys.KNOWLEDGE_BASE_ADMIN, groupId, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, groupId, actionId);
 	}
 
 	@Override
 	public Boolean checkResource(
 		PermissionChecker permissionChecker, long classPK, String actionId) {
 
-		return contains(permissionChecker, classPK, actionId);
+		return _portletResourcePermission.contains(
+			permissionChecker, classPK, actionId);
 	}
+
+	@Reference(
+		target = "(resource.name=" + KBConstants.ADMIN_RESOURCE_NAME + ")",
+		unbind = "-"
+	)
+	protected void setPortletResourcePermission(
+		PortletResourcePermission portletResourcePermission) {
+
+		_portletResourcePermission = portletResourcePermission;
+	}
+
+	private static PortletResourcePermission _portletResourcePermission;
 
 }

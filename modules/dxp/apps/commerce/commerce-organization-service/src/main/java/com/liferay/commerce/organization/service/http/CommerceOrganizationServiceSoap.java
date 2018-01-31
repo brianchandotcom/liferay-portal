@@ -20,7 +20,6 @@ import com.liferay.commerce.organization.service.CommerceOrganizationServiceUtil
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.LocaleUtil;
 
 import java.rmi.RemoteException;
 
@@ -73,6 +72,21 @@ public class CommerceOrganizationServiceSoap {
 		}
 	}
 
+	public static void addOrganizationUsers(long organizationId,
+		java.lang.String[] emailAddresses,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			CommerceOrganizationServiceUtil.addOrganizationUsers(organizationId,
+				emailAddresses, serviceContext);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.portal.kernel.model.Organization getOrganization(
 		long organizationId) throws RemoteException {
 		try {
@@ -116,26 +130,10 @@ public class CommerceOrganizationServiceSoap {
 	}
 
 	public static void unsetOrganizationUsers(long organizationId,
-		long[] removeUserIds) throws RemoteException {
+		long[] userIds) throws RemoteException {
 		try {
 			CommerceOrganizationServiceUtil.unsetOrganizationUsers(organizationId,
-				removeUserIds);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void addOrganizationUsers(long companyId,
-		long organizationId, String locale, java.lang.String[] emailAddresses,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			CommerceOrganizationServiceUtil.addOrganizationUsers(companyId,
-				organizationId, LocaleUtil.fromLanguageId(locale),
-				emailAddresses, serviceContext);
+				userIds);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

@@ -45,12 +45,12 @@ public class CommerceOrganizationServiceWrapper
 	}
 
 	@Override
-	public void addOrganizationUsers(long companyId, long organizationId,
-		java.util.Locale locale, java.lang.String[] emailAddresses,
+	public void addOrganizationUsers(long organizationId,
+		java.lang.String[] emailAddresses,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		_commerceOrganizationService.addOrganizationUsers(companyId,
-			organizationId, locale, emailAddresses, serviceContext);
+		_commerceOrganizationService.addOrganizationUsers(organizationId,
+			emailAddresses, serviceContext);
 	}
 
 	@Override
@@ -94,10 +94,10 @@ public class CommerceOrganizationServiceWrapper
 	}
 
 	@Override
-	public void unsetOrganizationUsers(long organizationId, long[] removeUserIds)
+	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceOrganizationService.unsetOrganizationUsers(organizationId,
-			removeUserIds);
+			userIds);
 	}
 
 	@Override

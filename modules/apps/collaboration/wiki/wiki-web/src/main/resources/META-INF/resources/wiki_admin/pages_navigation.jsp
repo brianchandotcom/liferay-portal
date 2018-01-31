@@ -16,36 +16,21 @@
 
 <%@ include file="/wiki/init.jsp" %>
 
-<%
-WikiNode node = (WikiNode)request.getAttribute(WikiWebKeys.WIKI_NODE);
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items="<%= 
+	new JSPNavigationItemList(pageContext) {
+		{
+			PortletURL viewPagesURL = renderResponse.createRenderURL();
+			viewPagesURL.setParameter("mvcRenderCommandName", "/wiki/view_pages");
 
-WikiURLHelper wikiURLHelper = new WikiURLHelper(wikiRequestHelper, renderResponse, wikiGroupServiceConfiguration);
-%>
-
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewPagesURL">
-			<portlet:param name="mvcRenderCommandName" value="/wiki/view_pages" />
-		</portlet:renderURL>
-
-		<aui:nav-item
-			href="<%= viewPagesURL %>"
-			label="pages"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-
-	<%
-	PortletURL searchURL = wikiURLHelper.getSearchURL();
-	%>
-
-	<aui:nav-bar-search>
-		<aui:form action="<%= searchURL %>" method="get" name="searchFm">
-			<liferay-portlet:renderURLParams portletURL="<%= searchURL %>" />
-			<aui:input name="redirect" type="hidden" value="<%= currentURL %>" />
-			<aui:input name="nodeId" type="hidden" value="<%= node.getNodeId() %>" />
-
-			<liferay-ui:input-search id="keywords1" markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+			add(
+			navigationItem -> {
+				navigationItem.setActive(true);
+				navigationItem.setHref(viewPagesURL.toString());
+				navigationItem.setLabel(LanguageUtil.get(request, "pages"));
+			});
+		}
+	}
+	%>"
+/>

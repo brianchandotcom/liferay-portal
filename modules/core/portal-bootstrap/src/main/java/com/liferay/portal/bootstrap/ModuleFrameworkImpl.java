@@ -122,6 +122,7 @@ import org.springframework.context.ApplicationContext;
  * @author Raymond Augé
  * @author Miguel Pastor
  * @author Kamesh Sampath
+ * @author Gregory Amerson
  */
 public class ModuleFrameworkImpl implements ModuleFramework {
 
@@ -727,6 +728,27 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		Properties extraProperties = PropsUtil.getProperties(
 			PropsKeys.MODULE_FRAMEWORK_PROPERTIES, true);
 
+		Parameters extraCapabilitiesParameters = OSGiHeader.parseHeader(
+			extraProperties.getProperty(
+				Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA));
+
+		String provideCapability = _getAttributeValue(
+			Constants.PROVIDE_CAPABILITY);
+
+		Parameters provideCapabilityParameters = new Parameters(
+			provideCapability);
+
+		if (!extraCapabilitiesParameters.isEmpty()) {
+			extraCapabilitiesParameters.putAll(provideCapabilityParameters);
+		}
+		else {
+			extraCapabilitiesParameters = provideCapabilityParameters;
+		}
+
+		extraProperties.setProperty(
+			Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA,
+			extraCapabilitiesParameters.toString());
+
 		for (Map.Entry<Object, Object> entry : extraProperties.entrySet()) {
 			String key = (String)entry.getKey();
 			String value = (String)entry.getValue();
@@ -772,6 +794,26 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		if (!permissionChecker.isOmniadmin()) {
 			throw new PrincipalException.MustBeOmniadmin(permissionChecker);
 		}
+	}
+
+	private String _getAttributeValue(String name) {
+		Manifest manifest = null;
+
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"/META-INF/system.packages.extra.mf");
+
+		try {
+			manifest = new Manifest(inputStream);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		return attributes.getValue(name);
 	}
 
 	private String _getFelixFileInstallDir() {
@@ -870,23 +912,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			sb.append(StringPool.COMMA);
 		}
 
-		Manifest extraPackagesManifest = null;
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"/META-INF/system.packages.extra.mf");
-
-		try {
-			extraPackagesManifest = new Manifest(inputStream);
-		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
-		}
-
-		Attributes attributes = extraPackagesManifest.getMainAttributes();
-
-		String exportedPackages = attributes.getValue("Export-Package");
+		String exportedPackages = _getAttributeValue(Constants.EXPORT_PACKAGE);
 
 		sb.append(exportedPackages);
 

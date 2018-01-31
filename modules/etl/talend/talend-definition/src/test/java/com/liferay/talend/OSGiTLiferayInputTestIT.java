@@ -33,7 +33,7 @@ import org.talend.components.api.ComponentsPaxExamOptions;
  */
 @ExamReactorStrategy(PerClass.class)
 @RunWith(PaxExam.class)
-public class OSGiTLiferayInputTestIT extends LiferayInputTestBase {
+public class OSGiTLiferayInputTestIT extends LiferayTestBase {
 
 	@Configuration
 	public Option[] config() {

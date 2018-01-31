@@ -27,7 +27,7 @@
 	<div id="{$id ?: ''}">
 		{call Modal.render}
 			{param body kind="html"}
-				<form action="{$formSubmitURL}" method="post" data-onsubmit="{$_handleFormSubmit}">
+				<form action="{$formSubmitURL}" data-onsubmit="{$_handleFormSubmit}" method="post" ref="form">
 					{if $idFieldName}
 						<input
 							name="{$namespace}{$idFieldName}"
@@ -113,7 +113,7 @@
 				{let $submitButtonAttributes kind="attributes"}
 					{if $_loadingResponse}disabled{/if}
 					class="{$submitButtonCssClasses}"
-					type="submit"
+					data-onclick="{$_handleFormSubmit}"
 				{/let}
 
 				<button {$submitButtonAttributes}>
@@ -136,6 +136,8 @@
 			{param header kind="html"}
 				{$dialogTitle}
 			{/param}
+
+			{param ref:'modal' /}
 		{/call}
 	</div>
 {/template}

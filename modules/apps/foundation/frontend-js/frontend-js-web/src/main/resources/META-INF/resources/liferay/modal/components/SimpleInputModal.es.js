@@ -85,7 +85,7 @@ class SimpleInputModal extends Component {
 		event.preventDefault();
 
 		this.emit('formSubmit', {
-			form: event.delegateTarget,
+			form: this.refs.modal.refs.form,
 		});
 	}
 

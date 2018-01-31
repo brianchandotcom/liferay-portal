@@ -138,7 +138,7 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 
 			String updateSQL = updateSB.toString();
 
-			StringBundler selectPrefixSB = new StringBundler(7);
+			StringBundler selectPrefixSB = new StringBundler(8);
 
 			selectPrefixSB.append("select ");
 			selectPrefixSB.append(columnName);
@@ -146,25 +146,13 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			selectPrefixSB.append(tableName);
 			selectPrefixSB.append(" where ");
 			selectPrefixSB.append(columnName);
-
-			if (wildcardMode.equals(WildcardMode.LEADING) ||
-				wildcardMode.equals(WildcardMode.SURROUND)) {
-
-				selectPrefixSB.append(" like '%");
-			}
-			else {
-				selectPrefixSB.append(" like '");
-			}
+			selectPrefixSB.append(" like '");
+			selectPrefixSB.append(wildcardMode.leadingSqlWildcard());
 
 			String selectPrefix = selectPrefixSB.toString();
 
-			String selectPostfix = StringPool.APOSTROPHE;
-
-			if (wildcardMode.equals(WildcardMode.SURROUND) ||
-				wildcardMode.equals(WildcardMode.TRAILING)) {
-
-				selectPostfix = "%'";
-			}
+			String selectPostfix =
+				wildcardMode.trailingSqlWildcard() + StringPool.APOSTROPHE;
 
 			for (String[] name : names) {
 				String selectSQL = selectPrefix.concat(name[0]).concat(
@@ -270,20 +258,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		sb.append(" like ");
 		sb.append(StringPool.APOSTROPHE);
 
-		if (wildcardMode.equals(WildcardMode.LEADING) ||
-			wildcardMode.equals(WildcardMode.SURROUND)) {
-
-			sb.append("%");
-		}
-
+		sb.append(wildcardMode.leadingSqlWildcard());
 		sb.append(columnValue);
-
-		if (wildcardMode.equals(WildcardMode.SURROUND) ||
-			wildcardMode.equals(WildcardMode.TRAILING)) {
-
-			sb.append("%");
-		}
-
+		sb.append(wildcardMode.trailingSqlWildcard());
 		sb.append(StringPool.APOSTROPHE);
 
 		return sb.toString();

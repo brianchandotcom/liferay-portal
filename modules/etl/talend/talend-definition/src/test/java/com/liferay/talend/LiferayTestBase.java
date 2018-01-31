@@ -21,17 +21,25 @@ import javax.inject.Inject;
 import org.junit.Test;
 
 import org.talend.components.api.component.ComponentDefinition;
+import org.talend.components.api.service.common.DefinitionRegistry;
 import org.talend.components.api.test.AbstractComponentTest2;
-import org.talend.daikon.definition.Definition;
+import org.talend.components.liferay.LiferayInputFamilyDefinition;
 import org.talend.daikon.definition.service.DefinitionRegistryService;
 
 /**
  * @author Zoltán Takács
  */
-public class LiferayInputTestBase extends AbstractComponentTest2 {
+public class LiferayTestBase extends AbstractComponentTest2 {
 
 	@Override
 	public DefinitionRegistryService getDefinitionRegistry() {
+		if (_definitionRegistry == null) {
+			_definitionRegistry = new DefinitionRegistry();
+
+			_definitionRegistry.registerComponentFamilyDefinition(
+				new LiferayInputFamilyDefinition());
+		}
+
 		return _definitionRegistry;
 	}
 
@@ -40,12 +48,9 @@ public class LiferayInputTestBase extends AbstractComponentTest2 {
 		assertComponentIsRegistered(
 			ComponentDefinition.class, "tLiferayInput",
 			TLiferayInputDefinition.class);
-
-		assertComponentIsRegistered(
-			Definition.class, "tLiferayInput", TLiferayInputDefinition.class);
 	}
 
 	@Inject
-	private DefinitionRegistryService _definitionRegistry;
+	private DefinitionRegistry _definitionRegistry;
 
 }

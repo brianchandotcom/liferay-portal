@@ -41,7 +41,11 @@ import org.osgi.service.component.annotations.Reference;
 public class DeleteUserAssociatedDataMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void deleteAll(ActionRequest actionRequest) throws Exception {
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
+		throws Exception {
+
 		String key = ParamUtil.getString(actionRequest, "key");
 
 		UADEntityAnonymizer uadEntityAnonymizer =
@@ -50,14 +54,6 @@ public class DeleteUserAssociatedDataMVCActionCommand
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
 		uadEntityAnonymizer.deleteAll(selUserId);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		deleteAll(actionRequest);
 	}
 
 	@Reference

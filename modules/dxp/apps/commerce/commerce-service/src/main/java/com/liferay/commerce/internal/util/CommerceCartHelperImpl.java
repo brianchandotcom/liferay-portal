@@ -26,10 +26,12 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -256,8 +258,15 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 	}
 
 	private String _getCommerceCartUuidWebKey(int type, long groupId) {
-		return CommerceWebKeys.COMMERCE_CART_UUID + StringPool.UNDERLINE +
-			type + StringPool.UNDERLINE + groupId;
+		StringBundler sb = new StringBundler(5);
+
+		sb.append(CommerceWebKeys.COMMERCE_CART_UUID);
+		sb.append(CharPool.UNDERLINE);
+		sb.append(type);
+		sb.append(CharPool.UNDERLINE);
+		sb.append(groupId);
+
+		return sb.toString();
 	}
 
 	private String _getCurrentCommerceCartUuid(

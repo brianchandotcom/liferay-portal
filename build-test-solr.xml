@@ -354,22 +354,13 @@ schema=schema.xml</echo>
 			</elseif>
 		</if>
 
-		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
+		<local name="solr.server.not.started" />
 
-		<if>
-			<not>
-				<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
-			</not>
-			<then>
-				<local name="solr.server.not.started" />
+		<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
+			<socket port="8983" server="localhost" />
+		</waitfor>
 
-				<waitfor maxwait="10" maxwaitunit="second" timeoutproperty="solr.server.not.started">
-					<http url="http://localhost:8983/solr" />
-				</waitfor>
-
-				<fail if="solr.server.not.started" message="Solr server failed to initialize." />
-			</then>
-		</if>
+		<fail if="solr.server.not.started" message="Solr server failed to initialize." />
 	</target>
 
 	<target name="start-solr-solrcloud">
@@ -404,23 +395,14 @@ schema=schema.xml</echo>
 			</elseif>
 		</if>
 
-		<get-testcase-property property.name="solr.ssl.authentication.enabled" />
+		<local name="solr.server.running" />
 
-		<if>
+		<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
 			<not>
-				<equals arg1="${solr.ssl.authentication.enabled}" arg2="true" />
+				<socket port="8983" server="localhost" />
 			</not>
-			<then>
-				<local name="solr.server.running" />
+		</waitfor>
 
-				<waitfor maxwait="15" maxwaitunit="second" timeoutproperty="solr.server.running">
-					<not>
-						<http url="http://localhost:8983/solr" />
-					</not>
-				</waitfor>
-
-				<fail if="solr.server.running" message="Solr server failed to stop." />
-			</then>
-		</if>
+		<fail if="solr.server.running" message="Solr server failed to stop." />
 	</target>
 </project>

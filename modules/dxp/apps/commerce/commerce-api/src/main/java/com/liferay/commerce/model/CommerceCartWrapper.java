@@ -214,6 +214,18 @@ public class CommerceCartWrapper implements CommerceCart,
 		return _commerceCart.getBillingAddressId();
 	}
 
+	@Override
+	public java.lang.String getClassName()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCart.getClassName();
+	}
+
+	@Override
+	public long getClassPK()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCart.getClassPK();
+	}
+
 	/**
 	* Returns the commerce cart ID of this commerce cart.
 	*

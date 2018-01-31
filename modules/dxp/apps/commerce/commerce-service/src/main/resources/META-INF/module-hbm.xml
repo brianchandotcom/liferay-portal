@@ -151,6 +151,8 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="orderOrganizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="orderRootOrganizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="orderUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="billingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="shippingAddressId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

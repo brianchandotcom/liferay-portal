@@ -82,6 +82,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
+			{ "orderOrganizationId", Types.BIGINT },
+			{ "orderRootOrganizationId", Types.BIGINT },
 			{ "orderUserId", Types.BIGINT },
 			{ "billingAddressId", Types.BIGINT },
 			{ "shippingAddressId", Types.BIGINT },
@@ -111,6 +113,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("orderOrganizationId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("orderRootOrganizationId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("orderUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("billingAddressId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("shippingAddressId", Types.BIGINT);
@@ -130,7 +134,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CommerceOrder (uuid_ VARCHAR(75) null,commerceOrderId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,orderOrganizationId LONG,orderRootOrganizationId LONG,orderUserId LONG,billingAddressId LONG,shippingAddressId LONG,commercePaymentMethodId LONG,commerceShippingMethodId LONG,shippingOptionName VARCHAR(75) null,purchaseOrderNumber VARCHAR(75) null,subtotal DOUBLE,shippingPrice DOUBLE,total DOUBLE,paymentStatus INTEGER,shippingStatus INTEGER,orderStatus INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CommerceOrder";
 	public static final String ORDER_BY_JPQL = " ORDER BY commerceOrder.createDate ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CommerceOrder.createDate ASC";
@@ -173,6 +177,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setOrderOrganizationId(soapModel.getOrderOrganizationId());
+		model.setOrderRootOrganizationId(soapModel.getOrderRootOrganizationId());
 		model.setOrderUserId(soapModel.getOrderUserId());
 		model.setBillingAddressId(soapModel.getBillingAddressId());
 		model.setShippingAddressId(soapModel.getShippingAddressId());
@@ -262,6 +268,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("orderOrganizationId", getOrderOrganizationId());
+		attributes.put("orderRootOrganizationId", getOrderRootOrganizationId());
 		attributes.put("orderUserId", getOrderUserId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
@@ -334,6 +342,19 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long orderOrganizationId = (Long)attributes.get("orderOrganizationId");
+
+		if (orderOrganizationId != null) {
+			setOrderOrganizationId(orderOrganizationId);
+		}
+
+		Long orderRootOrganizationId = (Long)attributes.get(
+				"orderRootOrganizationId");
+
+		if (orderRootOrganizationId != null) {
+			setOrderRootOrganizationId(orderRootOrganizationId);
 		}
 
 		Long orderUserId = (Long)attributes.get("orderUserId");
@@ -594,6 +615,28 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@JSON
+	@Override
+	public long getOrderOrganizationId() {
+		return _orderOrganizationId;
+	}
+
+	@Override
+	public void setOrderOrganizationId(long orderOrganizationId) {
+		_orderOrganizationId = orderOrganizationId;
+	}
+
+	@JSON
+	@Override
+	public long getOrderRootOrganizationId() {
+		return _orderRootOrganizationId;
+	}
+
+	@Override
+	public void setOrderRootOrganizationId(long orderRootOrganizationId) {
+		_orderRootOrganizationId = orderRootOrganizationId;
 	}
 
 	@JSON
@@ -967,6 +1010,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		commerceOrderImpl.setUserName(getUserName());
 		commerceOrderImpl.setCreateDate(getCreateDate());
 		commerceOrderImpl.setModifiedDate(getModifiedDate());
+		commerceOrderImpl.setOrderOrganizationId(getOrderOrganizationId());
+		commerceOrderImpl.setOrderRootOrganizationId(getOrderRootOrganizationId());
 		commerceOrderImpl.setOrderUserId(getOrderUserId());
 		commerceOrderImpl.setBillingAddressId(getBillingAddressId());
 		commerceOrderImpl.setShippingAddressId(getShippingAddressId());
@@ -1110,6 +1155,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 			commerceOrderCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		commerceOrderCacheModel.orderOrganizationId = getOrderOrganizationId();
+
+		commerceOrderCacheModel.orderRootOrganizationId = getOrderRootOrganizationId();
+
 		commerceOrderCacheModel.orderUserId = getOrderUserId();
 
 		commerceOrderCacheModel.billingAddressId = getBillingAddressId();
@@ -1175,7 +1224,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(51);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1193,6 +1242,10 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", orderOrganizationId=");
+		sb.append(getOrderOrganizationId());
+		sb.append(", orderRootOrganizationId=");
+		sb.append(getOrderRootOrganizationId());
 		sb.append(", orderUserId=");
 		sb.append(getOrderUserId());
 		sb.append(", billingAddressId=");
@@ -1234,7 +1287,7 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(79);
+		StringBundler sb = new StringBundler(85);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.commerce.model.CommerceOrder");
@@ -1271,6 +1324,14 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 		sb.append(
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>orderOrganizationId</column-name><column-value><![CDATA[");
+		sb.append(getOrderOrganizationId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>orderRootOrganizationId</column-name><column-value><![CDATA[");
+		sb.append(getOrderRootOrganizationId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>orderUserId</column-name><column-value><![CDATA[");
@@ -1364,6 +1425,8 @@ public class CommerceOrderModelImpl extends BaseModelImpl<CommerceOrder>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _orderOrganizationId;
+	private long _orderRootOrganizationId;
 	private long _orderUserId;
 	private long _billingAddressId;
 	private long _shippingAddressId;

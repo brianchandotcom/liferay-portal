@@ -139,6 +139,10 @@ public class CommerceOrderPersistenceTest {
 
 		newCommerceOrder.setModifiedDate(RandomTestUtil.nextDate());
 
+		newCommerceOrder.setOrderOrganizationId(RandomTestUtil.nextLong());
+
+		newCommerceOrder.setOrderRootOrganizationId(RandomTestUtil.nextLong());
+
 		newCommerceOrder.setOrderUserId(RandomTestUtil.nextLong());
 
 		newCommerceOrder.setBillingAddressId(RandomTestUtil.nextLong());
@@ -195,6 +199,10 @@ public class CommerceOrderPersistenceTest {
 		Assert.assertEquals(Time.getShortTimestamp(
 				existingCommerceOrder.getModifiedDate()),
 			Time.getShortTimestamp(newCommerceOrder.getModifiedDate()));
+		Assert.assertEquals(existingCommerceOrder.getOrderOrganizationId(),
+			newCommerceOrder.getOrderOrganizationId());
+		Assert.assertEquals(existingCommerceOrder.getOrderRootOrganizationId(),
+			newCommerceOrder.getOrderRootOrganizationId());
 		Assert.assertEquals(existingCommerceOrder.getOrderUserId(),
 			newCommerceOrder.getOrderUserId());
 		Assert.assertEquals(existingCommerceOrder.getBillingAddressId(),
@@ -300,13 +308,15 @@ public class CommerceOrderPersistenceTest {
 		return OrderByComparatorFactoryUtil.create("CommerceOrder", "uuid",
 			true, "commerceOrderId", true, "groupId", true, "companyId", true,
 			"userId", true, "userName", true, "createDate", true,
-			"modifiedDate", true, "orderUserId", true, "billingAddressId",
-			true, "shippingAddressId", true, "commercePaymentMethodId", true,
-			"commerceShippingMethodId", true, "shippingOptionName", true,
-			"purchaseOrderNumber", true, "subtotal", true, "shippingPrice",
-			true, "total", true, "paymentStatus", true, "shippingStatus", true,
-			"orderStatus", true, "status", true, "statusByUserId", true,
-			"statusByUserName", true, "statusDate", true);
+			"modifiedDate", true, "orderOrganizationId", true,
+			"orderRootOrganizationId", true, "orderUserId", true,
+			"billingAddressId", true, "shippingAddressId", true,
+			"commercePaymentMethodId", true, "commerceShippingMethodId", true,
+			"shippingOptionName", true, "purchaseOrderNumber", true,
+			"subtotal", true, "shippingPrice", true, "total", true,
+			"paymentStatus", true, "shippingStatus", true, "orderStatus", true,
+			"status", true, "statusByUserId", true, "statusByUserName", true,
+			"statusDate", true);
 	}
 
 	@Test
@@ -537,6 +547,10 @@ public class CommerceOrderPersistenceTest {
 		commerceOrder.setCreateDate(RandomTestUtil.nextDate());
 
 		commerceOrder.setModifiedDate(RandomTestUtil.nextDate());
+
+		commerceOrder.setOrderOrganizationId(RandomTestUtil.nextLong());
+
+		commerceOrder.setOrderRootOrganizationId(RandomTestUtil.nextLong());
 
 		commerceOrder.setOrderUserId(RandomTestUtil.nextLong());
 

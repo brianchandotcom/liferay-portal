@@ -68,6 +68,8 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("orderOrganizationId", getOrderOrganizationId());
+		attributes.put("orderRootOrganizationId", getOrderRootOrganizationId());
 		attributes.put("orderUserId", getOrderUserId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
@@ -137,6 +139,19 @@ public class CommerceOrderWrapper implements CommerceOrder,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long orderOrganizationId = (Long)attributes.get("orderOrganizationId");
+
+		if (orderOrganizationId != null) {
+			setOrderOrganizationId(orderOrganizationId);
+		}
+
+		Long orderRootOrganizationId = (Long)attributes.get(
+				"orderRootOrganizationId");
+
+		if (orderRootOrganizationId != null) {
+			setOrderRootOrganizationId(orderRootOrganizationId);
 		}
 
 		Long orderUserId = (Long)attributes.get("orderUserId");
@@ -361,6 +376,26 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public Date getModifiedDate() {
 		return _commerceOrder.getModifiedDate();
+	}
+
+	/**
+	* Returns the order organization ID of this commerce order.
+	*
+	* @return the order organization ID of this commerce order
+	*/
+	@Override
+	public long getOrderOrganizationId() {
+		return _commerceOrder.getOrderOrganizationId();
+	}
+
+	/**
+	* Returns the order root organization ID of this commerce order.
+	*
+	* @return the order root organization ID of this commerce order
+	*/
+	@Override
+	public long getOrderRootOrganizationId() {
+		return _commerceOrder.getOrderRootOrganizationId();
 	}
 
 	/**
@@ -799,6 +834,26 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setNew(boolean n) {
 		_commerceOrder.setNew(n);
+	}
+
+	/**
+	* Sets the order organization ID of this commerce order.
+	*
+	* @param orderOrganizationId the order organization ID of this commerce order
+	*/
+	@Override
+	public void setOrderOrganizationId(long orderOrganizationId) {
+		_commerceOrder.setOrderOrganizationId(orderOrganizationId);
+	}
+
+	/**
+	* Sets the order root organization ID of this commerce order.
+	*
+	* @param orderRootOrganizationId the order root organization ID of this commerce order
+	*/
+	@Override
+	public void setOrderRootOrganizationId(long orderRootOrganizationId) {
+		_commerceOrder.setOrderRootOrganizationId(orderRootOrganizationId);
 	}
 
 	/**

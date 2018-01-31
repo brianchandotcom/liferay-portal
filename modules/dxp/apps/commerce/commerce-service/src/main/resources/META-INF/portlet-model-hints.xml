@@ -133,6 +133,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+		<field name="orderOrganizationId" type="long" />
+		<field name="orderRootOrganizationId" type="long" />
 		<field name="orderUserId" type="long" />
 		<field name="billingAddressId" type="long" />
 		<field name="shippingAddressId" type="long" />

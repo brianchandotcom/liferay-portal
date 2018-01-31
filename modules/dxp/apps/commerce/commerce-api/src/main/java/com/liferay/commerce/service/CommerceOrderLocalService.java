@@ -76,7 +76,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder addCommerceOrder(long orderUserId,
+	public CommerceOrder addCommerceOrder(long orderOrganizationId,
+		long orderRootOrganizationId, long orderUserId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
 		double shippingPrice, double total, int paymentStatus,

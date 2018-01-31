@@ -15,16 +15,18 @@
 package com.liferay.knowledge.base.service.impl;
 
 import com.liferay.knowledge.base.constants.KBActionKeys;
+import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.constants.KBPortletKeys;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.model.KBTemplateSearchDisplay;
 import com.liferay.knowledge.base.model.impl.KBTemplateSearchDisplayImpl;
 import com.liferay.knowledge.base.service.base.KBTemplateServiceBaseImpl;
-import com.liferay.knowledge.base.service.permission.AdminPermission;
-import com.liferay.knowledge.base.service.permission.DisplayPermission;
-import com.liferay.knowledge.base.service.permission.KBTemplatePermission;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -46,12 +48,12 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 		throws PortalException {
 
 		if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_ADMIN)) {
-			AdminPermission.check(
+			_adminPortletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				KBActionKeys.ADD_KB_TEMPLATE);
 		}
 		else if (portletId.equals(KBPortletKeys.KNOWLEDGE_BASE_DISPLAY)) {
-			DisplayPermission.check(
+			_displayPortletResourcePermission.check(
 				getPermissionChecker(), serviceContext.getScopeGroupId(),
 				KBActionKeys.ADD_KB_TEMPLATE);
 		}
@@ -64,7 +66,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 	public KBTemplate deleteKBTemplate(long kbTemplateId)
 		throws PortalException {
 
-		KBTemplatePermission.check(
+		_kbTemplateModelResourcePermission.check(
 			getPermissionChecker(), kbTemplateId, KBActionKeys.DELETE);
 
 		return kbTemplateLocalService.deleteKBTemplate(kbTemplateId);
@@ -74,7 +76,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 	public void deleteKBTemplates(long groupId, long[] kbTemplateIds)
 		throws PortalException {
 
-		AdminPermission.check(
+		_adminPortletResourcePermission.check(
 			getPermissionChecker(), groupId, KBActionKeys.DELETE_KB_TEMPLATES);
 
 		kbTemplateLocalService.deleteKBTemplates(kbTemplateIds);
@@ -96,7 +98,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 
 	@Override
 	public KBTemplate getKBTemplate(long kbTemplateId) throws PortalException {
-		KBTemplatePermission.check(
+		_kbTemplateModelResourcePermission.check(
 			getPermissionChecker(), kbTemplateId, KBActionKeys.VIEW);
 
 		return kbTemplateLocalService.getKBTemplate(kbTemplateId);
@@ -143,7 +145,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 			for (int i = 0; i < curKBTemplates.size(); i++) {
 				KBTemplate curKBTemplate = curKBTemplates.get(i);
 
-				if (!KBTemplatePermission.contains(
+				if (!_kbTemplateModelResourcePermission.contains(
 						getPermissionChecker(), curKBTemplate,
 						KBActionKeys.VIEW)) {
 
@@ -182,7 +184,7 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBTemplatePermission.check(
+		_kbTemplateModelResourcePermission.check(
 			getPermissionChecker(), kbTemplateId, KBActionKeys.UPDATE);
 
 		return kbTemplateLocalService.updateKBTemplate(
@@ -190,5 +192,22 @@ public class KBTemplateServiceImpl extends KBTemplateServiceBaseImpl {
 	}
 
 	private static final int _INTERVAL = 200;
+
+	private static volatile PortletResourcePermission
+		_adminPortletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				KBTemplateServiceImpl.class, "_adminPortletResourcePermission",
+				KBConstants.ADMIN_RESOURCE_NAME);
+	private static volatile PortletResourcePermission
+		_displayPortletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				KBTemplateServiceImpl.class,
+				"_displayPortletResourcePermission",
+				KBConstants.DISPLAY_RESOURCE_NAME);
+	private static volatile ModelResourcePermission<KBTemplate>
+		_kbTemplateModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				KBTemplateServiceImpl.class,
+				"_kbTemplateModelResourcePermission", KBTemplate.class);
 
 }

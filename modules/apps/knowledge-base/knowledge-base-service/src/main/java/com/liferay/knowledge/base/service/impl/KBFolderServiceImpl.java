@@ -17,9 +17,11 @@ package com.liferay.knowledge.base.service.impl;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBFolder;
 import com.liferay.knowledge.base.service.base.KBFolderServiceBaseImpl;
-import com.liferay.knowledge.base.service.permission.KBFolderPermission;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
@@ -37,9 +39,9 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBFolderPermission.check(
-			getPermissionChecker(), groupId, parentResourcePrimKey,
-			KBActionKeys.ADD_KB_FOLDER);
+		ModelResourcePermissionHelper.check(
+			_kbFolderModelResourcePermission, getPermissionChecker(), groupId,
+			parentResourcePrimKey, KBActionKeys.ADD_KB_FOLDER);
 
 		return kbFolderLocalService.addKBFolder(
 			getUserId(), groupId, parentResourceClassNameId,
@@ -48,7 +50,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 	@Override
 	public KBFolder deleteKBFolder(long kbFolderId) throws PortalException {
-		KBFolderPermission.check(
+		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolderId, KBActionKeys.DELETE);
 
 		return kbFolderLocalService.deleteKBFolder(kbFolderId);
@@ -81,7 +83,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 		KBFolder kbFolder = kbFolderLocalService.fetchKBFolder(kbFolderId);
 
 		if (kbFolder != null) {
-			KBFolderPermission.check(
+			_kbFolderModelResourcePermission.check(
 				getPermissionChecker(), kbFolder, KBActionKeys.VIEW);
 		}
 
@@ -100,7 +102,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 			return null;
 		}
 
-		KBFolderPermission.check(
+		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolder, KBActionKeys.VIEW);
 
 		return kbFolder;
@@ -108,7 +110,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 
 	@Override
 	public KBFolder getKBFolder(long kbFolderId) throws PortalException {
-		KBFolderPermission.check(
+		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolderId, KBActionKeys.VIEW);
 
 		return kbFolderLocalService.getKBFolder(kbFolderId);
@@ -122,7 +124,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 		KBFolder kbFolder = kbFolderLocalService.getKBFolderByUrlTitle(
 			groupId, parentKbFolderId, urlTitle);
 
-		KBFolderPermission.check(
+		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolder, KBActionKeys.VIEW);
 
 		return kbFolder;
@@ -170,7 +172,7 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 	public void moveKBFolder(long kbFolderId, long parentKBFolderId)
 		throws PortalException {
 
-		KBFolderPermission.check(
+		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolderId, KBActionKeys.MOVE_KB_FOLDER);
 
 		kbFolderLocalService.moveKBFolder(kbFolderId, parentKBFolderId);
@@ -199,12 +201,18 @@ public class KBFolderServiceImpl extends KBFolderServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		KBFolderPermission.check(
+		_kbFolderModelResourcePermission.check(
 			getPermissionChecker(), kbFolderId, KBActionKeys.UPDATE);
 
 		return kbFolderLocalService.updateKBFolder(
 			parentResourceClassNameId, parentResourcePrimKey, kbFolderId, name,
 			description, serviceContext);
 	}
+
+	private static volatile ModelResourcePermission<KBFolder>
+		_kbFolderModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				KBFolderServiceImpl.class, "_kbFolderModelResourcePermission",
+				KBFolder.class);
 
 }

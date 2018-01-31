@@ -17,7 +17,6 @@ package com.liferay.knowledge.base.service.util;
 import com.liferay.knowledge.base.constants.KBActionKeys;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.service.KBArticleLocalServiceUtil;
-import com.liferay.knowledge.base.service.permission.KBArticlePermission;
 import com.liferay.knowledge.base.util.KnowledgeBaseUtil;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalThreadLocal;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionCheckerFactoryUtil;
 import com.liferay.portal.kernel.security.permission.PermissionThreadLocal;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.Function;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -44,6 +44,21 @@ import java.util.Locale;
  */
 public class AdminSubscriptionSender extends SubscriptionSender {
 
+	public AdminSubscriptionSender(
+		KBArticle kbArticle,
+		ModelResourcePermission<KBArticle> modelResourcePermission,
+		ServiceContext serviceContext) {
+
+		_kbArticle = kbArticle;
+		_kbArticleModelResourcePermission = modelResourcePermission;
+		_serviceContext = serviceContext;
+	}
+
+	/**
+	 * @deprecated As of 1.3.0, replaced by {@link #AdminSubscriptionSender(
+	 *             KBArticle, ModelResourcePermission, ServiceContext)}
+	 */
+	@Deprecated
 	public AdminSubscriptionSender(
 		KBArticle kbArticle, ServiceContext serviceContext) {
 
@@ -124,7 +139,7 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 
 			PermissionThreadLocal.setPermissionChecker(permissionChecker);
 
-			return KBArticlePermission.contains(
+			return _kbArticleModelResourcePermission.contains(
 				permissionChecker, _kbArticle, KBActionKeys.VIEW);
 		}
 		finally {
@@ -171,6 +186,8 @@ public class AdminSubscriptionSender extends SubscriptionSender {
 	}
 
 	private final KBArticle _kbArticle;
+	private ModelResourcePermission<KBArticle>
+		_kbArticleModelResourcePermission;
 	private final ServiceContext _serviceContext;
 
 }

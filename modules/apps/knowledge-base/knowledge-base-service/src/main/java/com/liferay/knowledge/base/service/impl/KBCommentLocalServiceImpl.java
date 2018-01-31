@@ -19,11 +19,11 @@ import com.liferay.knowledge.base.constants.AdminActivityKeys;
 import com.liferay.knowledge.base.constants.KBCommentConstants;
 import com.liferay.knowledge.base.constants.KBConstants;
 import com.liferay.knowledge.base.exception.KBCommentContentException;
+import com.liferay.knowledge.base.internal.util.AdminSubscriptionSenderFactory;
 import com.liferay.knowledge.base.model.KBArticle;
 import com.liferay.knowledge.base.model.KBComment;
 import com.liferay.knowledge.base.model.KBTemplate;
 import com.liferay.knowledge.base.service.base.KBCommentLocalServiceBaseImpl;
-import com.liferay.knowledge.base.service.util.AdminSubscriptionSender;
 import com.liferay.knowledge.base.util.comparator.KBCommentCreateDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -470,8 +470,9 @@ public class KBCommentLocalServiceImpl extends KBCommentLocalServiceBaseImpl {
 				"src=\"" + serviceContext.getPortalURL() + "/"
 			});
 
-		SubscriptionSender subscriptionSender = new AdminSubscriptionSender(
-			kbArticle, serviceContext);
+		SubscriptionSender subscriptionSender =
+			AdminSubscriptionSenderFactory.createSubscriptionSender(
+				kbArticle, serviceContext);
 
 		subscriptionSender.setBody(body);
 		subscriptionSender.setCompanyId(kbArticle.getCompanyId());

@@ -40,13 +40,11 @@ public class MapIterationCheck extends BaseCheck {
 			detailAST, true, TokenTypes.FOR_EACH_CLAUSE);
 
 		for (DetailAST forEachClauseAST : forEachClauseASTList) {
-			_checkKeySetIteration(forEachClauseAST, detailAST);
+			_checkKeySetIteration(forEachClauseAST);
 		}
 	}
 
-	private void _checkKeySetIteration(
-		DetailAST forEachClauseAST, DetailAST detailAST) {
-
+	private void _checkKeySetIteration(DetailAST forEachClauseAST) {
 		DetailAST variableDefAST = forEachClauseAST.findFirstToken(
 			TokenTypes.VARIABLE_DEF);
 
@@ -70,7 +68,8 @@ public class MapIterationCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST typeAST = DetailASTUtil.findTypeAST(detailAST, mapName);
+			DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
+				keySetMethodCallAST, mapName);
 
 			if ((typeAST != null) && DetailASTUtil.isCollection(typeAST)) {
 				List<DetailAST> wildcardTypeASTList =

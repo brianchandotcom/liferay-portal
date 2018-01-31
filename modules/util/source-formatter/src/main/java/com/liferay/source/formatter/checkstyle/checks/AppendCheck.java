@@ -21,7 +21,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import com.puppycrawl.tools.checkstyle.utils.CommonUtils;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -45,7 +44,10 @@ public class AppendCheck extends StringConcatenationCheck {
 
 			String variableName = _getVariableName(methodCallAST);
 
-			if (!_isVariableType(variableName, detailAST, "StringBundler")) {
+			String variableTypeName = DetailASTUtil.getVariableTypeName(
+				methodCallAST, variableName);
+
+			if (!variableTypeName.equals("StringBundler")) {
 				continue;
 			}
 
@@ -225,29 +227,6 @@ public class AppendCheck extends StringConcatenationCheck {
 		}
 
 		return false;
-	}
-
-	private boolean _isVariableType(
-		String variableName, DetailAST detailAST, String typeName) {
-
-		if (variableName == null) {
-			return false;
-		}
-
-		Set<String> variableTypeNames = DetailASTUtil.getVariableTypeNames(
-			detailAST, variableName);
-
-		if (variableTypeNames.isEmpty()) {
-			return false;
-		}
-
-		for (String variableTypeName : variableTypeNames) {
-			if (!variableTypeName.equals(typeName)) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 
 	private static final String _MSG_INCORRECT_LINE_BREAK =

@@ -63,8 +63,8 @@ public class ValidatorIsNullCheck extends BaseCheck {
 				continue;
 			}
 
-			DetailAST typeAST = DetailASTUtil.findTypeAST(
-				detailAST, child.getText());
+			DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
+				methodCallAST, child.getText());
 
 			if (typeAST == null) {
 				continue;

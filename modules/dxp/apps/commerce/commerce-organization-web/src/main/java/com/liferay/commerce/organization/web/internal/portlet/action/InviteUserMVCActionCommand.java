@@ -31,8 +31,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.StringUtil;
 
-import java.util.Locale;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
@@ -63,13 +61,11 @@ public class InviteUserMVCActionCommand extends BaseMVCActionCommand {
 
 		long companyId = _portal.getCompanyId(actionRequest);
 
-		Locale locale = _portal.getLocale(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		_commerceOrganizationService.addOrganizationUsers(
-			companyId, organizationId, locale, emailAddresses, serviceContext);
+			companyId, organizationId, emailAddresses, serviceContext);
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 	"dependencies": {
 		"liferay-module-config-generator": "^1.1.10",
 		"metal": "^2.13.2",
-		"metal-component": "^2.13.2",
+		"metal-component": "^2.16.3",
 		"metal-debounce": "^2.0.0",
 		"metal-dropdown": "^3.0.0",
 		"metal-modal": "^2.0.5",

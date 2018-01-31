@@ -961,6 +961,7 @@
 	</command>
 
 	<command name="AddLocalizedWebContentViaSourceEditor" priority="5">
+		<property name="test.name.skip.portal.instance" value="WebcontentUsecase#AddLocalizedWebContentViaSourceEditor" />
 		<property name="testray.component.names" value="Training,Web Content Administration" />
 
 		<execute macro="ProductMenu#gotoPortlet">

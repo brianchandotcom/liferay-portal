@@ -62,8 +62,9 @@ public class CommerceOrderItemLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
+		CommerceOrder commerceOrder =
+			commerceOrderLocalService.getCommerceOrder(commerceOrderId);
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
 
 		CPInstance cpInstance = _cpInstanceLocalService.getCPInstance(
 			cpInstanceId);
@@ -76,11 +77,12 @@ public class CommerceOrderItemLocalServiceImpl
 		CommerceOrderItem commerceOrderItem =
 			commerceOrderItemPersistence.create(commerceOrderItemId);
 
-		commerceOrderItem.setGroupId(groupId);
+		commerceOrderItem.setGroupId(commerceOrder.getCommerceOrderId());
 		commerceOrderItem.setCompanyId(user.getCompanyId());
 		commerceOrderItem.setUserId(user.getUserId());
 		commerceOrderItem.setUserName(user.getFullName());
-		commerceOrderItem.setCommerceOrderId(commerceOrderId);
+		commerceOrderItem.setCommerceOrderId(
+			commerceOrder.getCommerceOrderId());
 		commerceOrderItem.setCPInstanceId(cpInstanceId);
 		commerceOrderItem.setQuantity(quantity);
 		commerceOrderItem.setShippedQuantity(shippedQuantity);

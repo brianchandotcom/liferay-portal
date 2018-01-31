@@ -1,5 +1,11 @@
 .form-builder {
-	fieldset[disabled] .form-control, .form-control[disabled] {
+	.layout-col-content {
+		border-radius: 5px;
+		height: 100%;
+		padding: 0 32px;
+	}
+
+	fieldset[disabled] .form-control {
 		background-color: #869CAD;
 	}
 

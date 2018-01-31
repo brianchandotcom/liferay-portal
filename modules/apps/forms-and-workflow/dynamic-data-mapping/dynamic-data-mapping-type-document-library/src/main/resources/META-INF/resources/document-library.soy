@@ -49,7 +49,7 @@
 
 				{else}
 					<div class="input-group">
-						<input class="field form-control" {if $dir}dir="{$dir}"{/if} id="inputFile" type="text" value="{$fileEntryTitle ? $fileEntryTitle : ''}" readonly>
+						<input class="field form-control" {if $dir}dir="{$dir}"{/if} id="inputFile" type="text" value="{$fileEntryTitle ? $fileEntryTitle : ''}" {if $readOnly}disabled{/if}>
 						{call .button_group}
 							{param clearButtonVisible: $clearButtonVisible /}
 							{param lexiconIconsPath: $lexiconIconsPath /}

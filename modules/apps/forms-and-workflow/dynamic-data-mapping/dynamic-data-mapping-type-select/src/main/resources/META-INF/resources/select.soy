@@ -61,7 +61,7 @@
 					{/if}
 				{/if}
 
-				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}">
+				<div class="form-control select-field-trigger" {if $dir}dir="{$dir}"{/if} id="{$name}" name="{$name}" {if $readOnly} disabled{/if}>
 					{if $multiple}
 						{if $displayValue}
 							<ul class="multiple-badge-list">

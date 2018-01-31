@@ -144,6 +144,8 @@ public class AssetTagsSelectorDisplayContext {
 		PortletURL portletURL = _renderResponse.createRenderURL();
 
 		portletURL.setParameter("eventName", getEventName());
+		portletURL.setParameter(
+			"selectedTags", StringUtil.merge(getSelectedTags()));
 
 		return portletURL;
 	}

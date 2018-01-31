@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.commerce.product.item.selector.internal.handler;
+package com.liferay.commerce.product.item.selector.web.internal.handler;
 
 import com.liferay.commerce.product.item.selector.criterion.CPDefinitionItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;

@@ -12,9 +12,9 @@
  * details.
  */
 
-package com.liferay.commerce.item.selector.internal.handler;
+package com.liferay.commerce.item.selector.web.internal.handler;
 
-import com.liferay.commerce.item.selector.criterion.CommerceOrderItemItemSelectorCriterion;
+import com.liferay.commerce.item.selector.criterion.CommerceWarehouseItemSelectorCriterion;
 import com.liferay.item.selector.BaseItemSelectorCriterionHandler;
 import com.liferay.item.selector.ItemSelectorCriterionHandler;
 
@@ -24,18 +24,18 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @Component(service = ItemSelectorCriterionHandler.class)
-public class CommerceOrderItemSelectorCriterionHandler
+public class CommerceWarehouseSelectorCriterionHandler
 	extends BaseItemSelectorCriterionHandler
-		<CommerceOrderItemItemSelectorCriterion> {
+		<CommerceWarehouseItemSelectorCriterion> {
 
 	@Override
-	public Class<CommerceOrderItemItemSelectorCriterion>
+	public Class<CommerceWarehouseItemSelectorCriterion>
 		getItemSelectorCriterionClass() {
 
-		return CommerceOrderItemItemSelectorCriterion.class;
+		return CommerceWarehouseItemSelectorCriterion.class;
 	}
 
 	@Activate

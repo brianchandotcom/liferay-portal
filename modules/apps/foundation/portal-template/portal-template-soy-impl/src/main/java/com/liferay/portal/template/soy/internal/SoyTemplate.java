@@ -25,6 +25,7 @@ import com.google.template.soy.tofu.SoyTofu.Renderer;
 import com.google.template.soy.tofu.SoyTofuOptions;
 
 import com.liferay.portal.kernel.bean.BeanPropertiesUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -355,17 +356,28 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			return soyRawData.getValue();
 		}
 
-		Map<String, Object> newMap = new TreeMap<>();
+		String json = JSONFactoryUtil.looseSerialize(value);
 
-		BeanPropertiesUtil.copyProperties(value, newMap);
+		Object deserialized = JSONFactoryUtil.looseDeserialize(json);
 
-		if (newMap.isEmpty()) {
-			return null;
+		if (deserialized instanceof Map) {
+			Map<String, Object> map = (Map<String, Object>)deserialized;
+
+			Map<String, Object> newMap = new TreeMap<>();
+
+			for (String key : map.keySet()) {
+				Object newValue = BeanPropertiesUtil.getObjectSilent(
+					value, key);
+
+				newMap.put(key, newValue);
+			}
+
+			if (!newMap.isEmpty()) {
+				 return getSoyMapValue(cache, newMap);
+			}
 		}
 
-		cache.put(value, newMap);
-
-		return getSoyMapValue(cache, newMap);
+		return _templateContextHelper.deserializeValue(value);
 	}
 
 	protected Object getSoyMapValue(Object value) {

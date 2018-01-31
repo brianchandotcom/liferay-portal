@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HashUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -180,7 +179,7 @@ public class I18nServlet extends HttpServlet {
 			return null;
 		}
 
-		String redirect = _getQueryString(request, path);
+		String redirect = path;
 
 		if (_log.isDebugEnabled()) {
 			_log.debug("Redirect " + redirect);
@@ -264,22 +263,6 @@ public class I18nServlet extends HttpServlet {
 		private final String _languageId;
 		private final String _path;
 
-	}
-
-	private String _getQueryString(HttpServletRequest request, String path) {
-		String queryString = request.getQueryString();
-
-		if (Validator.isNull(queryString)) {
-			queryString = (String)request.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		}
-
-		if (Validator.isNotNull(queryString)) {
-			return path + StringPool.QUESTION + queryString;
-		}
-		else {
-			return path;
-		}
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(I18nServlet.class);

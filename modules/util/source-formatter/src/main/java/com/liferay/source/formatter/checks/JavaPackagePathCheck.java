@@ -138,7 +138,8 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 				addMessage(
 					fileName,
 					"Do not use '" + matcher.group(1) +
-						"' package in API module");
+						"' package in API module",
+					"package.markdown");
 			}
 		}
 	}

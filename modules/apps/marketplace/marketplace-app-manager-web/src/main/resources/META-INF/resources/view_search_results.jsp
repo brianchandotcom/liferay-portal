@@ -35,29 +35,12 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "app-man
 PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-results"), null);
 %>
 
-<aui:nav-bar cssClass="collapse-basic-search" markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<portlet:renderURL var="viewURL" />
+<portlet:renderURL var="viewURL" />
 
-		<aui:nav-item
-			href="<%= viewURL %>"
-			label="search"
-			selected="<%= true %>"
-		/>
-	</aui:nav>
-
-	<aui:nav-bar-search>
-		<liferay-portlet:renderURL varImpl="searchURL">
-			<portlet:param name="mvcPath" value="/view_search_results.jsp" />
-		</liferay-portlet:renderURL>
-
-		<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
-			<liferay-portlet:renderURLParams varImpl="searchURL" />
-
-			<liferay-ui:input-search markupView="lexicon" />
-		</aui:form>
-	</aui:nav-bar-search>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items='<%= appManagerDisplayContext.getNavigationItems(viewURL, "search") %>'
+/>
 
 <liferay-frontend:management-bar
 	searchContainerId="appDisplays"
@@ -77,6 +60,18 @@ PortalUtil.addPortletBreadcrumbEntry(request, LanguageUtil.get(request, "search-
 			orderColumns='<%= new String[] {"title"} %>'
 			portletURL="<%= PortletURLUtil.clone(portletURL, liferayPortletResponse) %>"
 		/>
+
+		<li>
+			<liferay-portlet:renderURL varImpl="searchURL">
+				<portlet:param name="mvcPath" value="/view_search_results.jsp" />
+			</liferay-portlet:renderURL>
+
+			<aui:form action="<%= searchURL.toString() %>" method="get" name="fm1">
+				<liferay-portlet:renderURLParams varImpl="searchURL" />
+
+				<liferay-ui:input-search markupView="lexicon" />
+			</aui:form>
+		</li>
 	</liferay-frontend:management-bar-filters>
 </liferay-frontend:management-bar>
 

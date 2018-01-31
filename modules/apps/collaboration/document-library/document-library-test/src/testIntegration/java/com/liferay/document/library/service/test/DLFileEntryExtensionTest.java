@@ -375,7 +375,8 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 			TestPropsValues.getUserId(), group.getGroupId(),
 			parentFolder.getFolderId(), sourceFileName, ContentTypes.TEXT_PLAIN,
 			title, StringPool.BLANK, StringPool.BLANK,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN),
 			serviceContext);
 	}
 
@@ -390,7 +391,8 @@ public class DLFileEntryExtensionTest extends BaseDLAppTestCase {
 		DLAppServiceUtil.updateFileEntry(
 			fileEntry.getFileEntryId(), sourceFileName, ContentTypes.TEXT_PLAIN,
 			title, StringPool.BLANK, StringPool.BLANK, false,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN),
 			serviceContext);
 	}
 

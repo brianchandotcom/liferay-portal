@@ -379,10 +379,17 @@ public class DLFolderFinderTest {
 			ServiceContextTestUtil.getServiceContext(
 				groupId, TestPropsValues.getUserId());
 
+		TikaSafeRandomizerBumper tikaSafeRandomizerBumper =
+			TikaSafeRandomizerBumper.INSTANCE_NULL;
+
+		if (mimeType.equals(ContentTypes.TEXT_PLAIN)) {
+			tikaSafeRandomizerBumper =
+				TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN;
+		}
+
 		return DLAppLocalServiceUtil.addFileEntry(
 			TestPropsValues.getUserId(), groupId, folderId, sourceFileName,
-			mimeType,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			mimeType, RandomTestUtil.randomBytes(tikaSafeRandomizerBumper),
 			serviceContext);
 	}
 

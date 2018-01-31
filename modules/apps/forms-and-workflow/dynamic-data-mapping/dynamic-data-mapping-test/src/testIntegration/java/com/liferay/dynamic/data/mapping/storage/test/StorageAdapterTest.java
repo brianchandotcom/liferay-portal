@@ -331,7 +331,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 1.txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE_NULL),
 			serviceContext);
 
 		String file1Value = getDocLibraryFieldValue(file1);
@@ -340,7 +340,7 @@ public class StorageAdapterTest extends BaseDDMServiceTestCase {
 			TestPropsValues.getUserId(), TestPropsValues.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, "Test 2.txt",
 			ContentTypes.TEXT_PLAIN,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE_NULL),
 			serviceContext);
 
 		String file2Value = getDocLibraryFieldValue(file2);

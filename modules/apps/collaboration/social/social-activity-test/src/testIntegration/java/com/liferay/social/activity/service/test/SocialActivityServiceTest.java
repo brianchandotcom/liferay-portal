@@ -186,7 +186,8 @@ public class SocialActivityServiceTest {
 			TestPropsValues.getUserId(), _group.getGroupId(),
 			DLFolderConstants.DEFAULT_PARENT_FOLDER_ID, fileName,
 			ContentTypes.TEXT_PLAIN, title, StringPool.BLANK, StringPool.BLANK,
-			RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomBytes(
+				TikaSafeRandomizerBumper.INSTANCE_TEXT_PLAIN),
 			serviceContext);
 	}
 

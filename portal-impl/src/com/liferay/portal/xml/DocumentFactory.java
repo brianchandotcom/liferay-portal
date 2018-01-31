@@ -19,7 +19,7 @@ package com.liferay.portal.xml;
  */
 public class DocumentFactory extends org.dom4j.DocumentFactory {
 
-	public static synchronized DocumentFactory getInstance() {
+	public static DocumentFactory getInstance() {
 		return _documentFactory;
 	}
 

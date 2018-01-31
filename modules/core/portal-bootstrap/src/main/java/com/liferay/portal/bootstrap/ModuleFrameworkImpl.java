@@ -732,8 +732,11 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			extraProperties.getProperty(
 				Constants.FRAMEWORK_SYSTEMCAPABILITIES_EXTRA));
 
-		Parameters provideCapabilityParameters =
-			_getProvideCapabilityParameters();
+		String provideCapability = _getAttributeValue(
+			Constants.PROVIDE_CAPABILITY);
+
+		Parameters provideCapabilityParameters = new Parameters(
+			provideCapability);
 
 		if (!extraCapabilitiesParameters.isEmpty()) {
 			extraCapabilitiesParameters.putAll(provideCapabilityParameters);
@@ -793,6 +796,26 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		}
 	}
 
+	private String _getAttributeValue(String name) {
+		Manifest manifest = null;
+
+		Class<?> clazz = getClass();
+
+		InputStream inputStream = clazz.getResourceAsStream(
+			"/META-INF/system.packages.extra.mf");
+
+		try {
+			manifest = new Manifest(inputStream);
+		}
+		catch (IOException ioe) {
+			ReflectionUtil.throwException(ioe);
+		}
+
+		Attributes attributes = manifest.getMainAttributes();
+
+		return attributes.getValue(name);
+	}
+
 	private String _getFelixFileInstallDir() {
 		return PropsValues.MODULE_FRAMEWORK_PORTAL_DIR + StringPool.COMMA +
 			StringUtil.merge(PropsValues.MODULE_FRAMEWORK_AUTO_DEPLOY_DIRS);
@@ -816,27 +839,6 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 		properties.put(ServicePropsKeys.VENDOR, ReleaseInfo.getVendor());
 
 		return properties;
-	}
-
-	private Parameters _getProvideCapabilityParameters() {
-		Manifest manifest = null;
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"/META-INF/system.packages.extra.mf");
-
-		try {
-			manifest = new Manifest(inputStream);
-		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
-		}
-
-		Attributes attributes = manifest.getMainAttributes();
-
-		return new Parameters(
-			attributes.getValue(Constants.PROVIDE_CAPABILITY));
 	}
 
 	private Bundle _getStaticBundle(
@@ -910,23 +912,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 			sb.append(StringPool.COMMA);
 		}
 
-		Manifest extraPackagesManifest = null;
-
-		Class<?> clazz = getClass();
-
-		InputStream inputStream = clazz.getResourceAsStream(
-			"/META-INF/system.packages.extra.mf");
-
-		try {
-			extraPackagesManifest = new Manifest(inputStream);
-		}
-		catch (IOException ioe) {
-			ReflectionUtil.throwException(ioe);
-		}
-
-		Attributes attributes = extraPackagesManifest.getMainAttributes();
-
-		String exportedPackages = attributes.getValue(Constants.EXPORT_PACKAGE);
+		String exportedPackages = _getAttributeValue(Constants.EXPORT_PACKAGE);
 
 		sb.append(exportedPackages);
 

@@ -26,10 +26,9 @@ import com.liferay.portal.kernel.transaction.TransactionCommitCallbackUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
-import java.util.List;
-import java.util.Map;
+import java.util.Collections;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * @author Sergio González
@@ -37,18 +36,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public final class AMAsyncProcessorImpl<M, T>
 	implements AMAsyncProcessor<M, T> {
 
-	public AMAsyncProcessorImpl(Class<M> clazz, MessageBus messageBus) {
-		_clazz = clazz;
-		_messageBus = messageBus;
-	}
-
-	@Override
-	public void cleanQueue(
+	public static void cleanQueue(
 		AMProcessorCommand amProcessorCommand, String modelId) {
 
-		List<String> modelIds = _modelIds.get(amProcessorCommand);
-
-		modelIds.remove(modelId);
+		if (amProcessorCommand == AMProcessorCommand.CLEAN_UP) {
+			_cleanUpModelIds.remove(modelId);
+		}
+		else {
+			_processModelIds.remove(modelId);
+		}
 
 		if (_log.isInfoEnabled()) {
 			_log.info(
@@ -59,16 +55,15 @@ public final class AMAsyncProcessorImpl<M, T>
 		}
 	}
 
+	public AMAsyncProcessorImpl(Class<M> clazz, MessageBus messageBus) {
+		_clazz = clazz;
+		_messageBus = messageBus;
+	}
+
 	@Override
 	public void triggerCleanUp(M model, String modelId) throws PortalException {
 		if (Validator.isNotNull(modelId)) {
-			_modelIds.putIfAbsent(
-				AMProcessorCommand.CLEAN_UP, new CopyOnWriteArrayList<>());
-
-			List<String> cleanUpModelIds = _modelIds.get(
-				AMProcessorCommand.CLEAN_UP);
-
-			if (cleanUpModelIds.contains(modelId)) {
+			if (!_cleanUpModelIds.add(modelId)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Omitted clean up for model ID " + modelId +
@@ -77,8 +72,6 @@ public final class AMAsyncProcessorImpl<M, T>
 
 				return;
 			}
-
-			cleanUpModelIds.add(modelId);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -108,13 +101,7 @@ public final class AMAsyncProcessorImpl<M, T>
 	@Override
 	public void triggerProcess(M model, String modelId) throws PortalException {
 		if (Validator.isNotNull(modelId)) {
-			_modelIds.putIfAbsent(
-				AMProcessorCommand.PROCESS, new CopyOnWriteArrayList<>());
-
-			List<String> processModelIds = _modelIds.get(
-				AMProcessorCommand.PROCESS);
-
-			if (processModelIds.contains(modelId)) {
+			if (!_processModelIds.add(modelId)) {
 				if (_log.isInfoEnabled()) {
 					_log.info(
 						"Omitted process for model ID " + modelId +
@@ -123,8 +110,6 @@ public final class AMAsyncProcessorImpl<M, T>
 
 				return;
 			}
-
-			processModelIds.add(modelId);
 
 			if (_log.isInfoEnabled()) {
 				_log.info(
@@ -154,8 +139,10 @@ public final class AMAsyncProcessorImpl<M, T>
 	private static final Log _log = LogFactoryUtil.getLog(
 		AMAsyncProcessorImpl.class);
 
-	private static final Map<AMProcessorCommand, List<String>> _modelIds =
-		new ConcurrentHashMap<>();
+	private static final Set<String> _cleanUpModelIds =
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
+	private static final Set<String> _processModelIds =
+		Collections.newSetFromMap(new ConcurrentHashMap<>());
 
 	private final Class<M> _clazz;
 	private final MessageBus _messageBus;

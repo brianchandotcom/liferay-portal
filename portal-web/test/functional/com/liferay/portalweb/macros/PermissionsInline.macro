@@ -177,9 +177,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="${pageName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -201,9 +201,9 @@
 	</command>
 
 	<command name="gotoSitepageCP">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
+			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Permissions" />
-			<var name="rowEntry" value="${pageName}" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />

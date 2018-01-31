@@ -11,7 +11,7 @@ dependencies {
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.osgi.util", version: "3.2.0"
 	testIntegrationCompile group: "com.liferay", name: "com.liferay.petra.function", version: "1.0.0"
 	testIntegrationCompile group: "org.osgi", name: "org.osgi.core", version: "5.0.0"
-	testIntegrationCompile project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist")
+	testIntegrationCompile project(":apps:static:portal-bundle-blacklist:portal-bundle-blacklist-api")
 }
 
 test {

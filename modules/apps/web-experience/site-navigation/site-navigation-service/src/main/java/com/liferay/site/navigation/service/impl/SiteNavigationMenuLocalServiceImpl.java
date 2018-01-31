@@ -86,6 +86,7 @@ public class SiteNavigationMenuLocalServiceImpl
 			serviceContext.getCreateDate(new Date()));
 		siteNavigationMenu.setName(name);
 		siteNavigationMenu.setType(type);
+		siteNavigationMenu.setAuto(false);
 
 		siteNavigationMenuPersistence.update(siteNavigationMenu);
 
@@ -229,6 +230,7 @@ public class SiteNavigationMenuLocalServiceImpl
 		SiteNavigationMenu siteNavigationMenu = getSiteNavigationMenu(
 			siteNavigationMenuId);
 
+		_updateOldSiteNavigationMenuAuto(siteNavigationMenu, auto);
 		_updateOldSiteNavigationMenuType(siteNavigationMenu, type);
 
 		User user = userLocalService.getUser(userId);
@@ -328,6 +330,28 @@ public class SiteNavigationMenuLocalServiceImpl
 				siteNavigationMenuItem.getSiteNavigationMenuItemId(),
 				layout.getLayoutId(), serviceContext);
 		}
+	}
+
+	private void _updateOldSiteNavigationMenuAuto(
+		SiteNavigationMenu siteNavigationMenu, boolean auto) {
+
+		if (!auto) {
+			return;
+		}
+
+		SiteNavigationMenu autoSiteNavigationMenu = fetchAutoSiteNavigationMenu(
+			siteNavigationMenu.getGroupId());
+
+		if ((autoSiteNavigationMenu == null) ||
+			(autoSiteNavigationMenu.getSiteNavigationMenuId() ==
+				siteNavigationMenu.getSiteNavigationMenuId())) {
+
+			return;
+		}
+
+		autoSiteNavigationMenu.setAuto(false);
+
+		siteNavigationMenuPersistence.update(autoSiteNavigationMenu);
 	}
 
 	private void _updateOldSiteNavigationMenuType(

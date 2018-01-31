@@ -377,7 +377,6 @@ public abstract class BaseBuild implements Build {
 
 	@Override
 	public Long getDelayTime() {
-		Long invokedTime = getInvokedTime();
 		Long startTime = getStartTime();
 
 		long currentTime = System.currentTimeMillis();
@@ -385,6 +384,8 @@ public abstract class BaseBuild implements Build {
 		if (startTime == null) {
 			startTime = currentTime;
 		}
+
+		Long invokedTime = getInvokedTime();
 
 		if (invokedTime == null) {
 			invokedTime = currentTime;

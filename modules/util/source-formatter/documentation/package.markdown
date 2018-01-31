@@ -36,7 +36,7 @@ Bundle-SymbolicName: com.liferay.blogs.api
 ```
 or
 ```
-Bundle-SymbolicName: com.liferay.blogs.api
+Bundle-SymbolicName: com.liferay.blogs.test
 ```
 
 The package name for all files inside the module should start with

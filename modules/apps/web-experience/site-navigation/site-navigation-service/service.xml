@@ -40,6 +40,10 @@
 			<finder-column name="groupId" />
 			<finder-column name="type" />
 		</finder>
+		<finder name="G_A" return-type="Collection">
+			<finder-column name="groupId" />
+			<finder-column name="auto" />
+		</finder>
 
 		<!-- References -->
 

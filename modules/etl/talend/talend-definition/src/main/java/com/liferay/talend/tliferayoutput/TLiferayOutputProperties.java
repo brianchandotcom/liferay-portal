@@ -16,9 +16,13 @@ package com.liferay.talend.tliferayoutput;
 
 import com.liferay.talend.connection.LiferayConnectionResourceBaseProperties;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
+import org.talend.components.api.component.Connector;
 import org.talend.components.api.component.PropertyPathConnector;
+import org.talend.daikon.properties.presentation.Form;
 
 /**
  * @author Zoltán Takács
@@ -26,19 +30,36 @@ import org.talend.components.api.component.PropertyPathConnector;
 public class TLiferayOutputProperties
 	extends LiferayConnectionResourceBaseProperties {
 
-	/**
-	 * @param name
-	 */
 	public TLiferayOutputProperties(String name) {
 		super(name);
+	}
 
+	@Override
+	public void setupLayout() {
+		super.setupLayout();
+
+		Form mainForm = getForm(Form.MAIN);
 	}
 
 	@Override
 	protected Set<PropertyPathConnector> getAllSchemaPropertiesConnectors(
-		boolean isOutputConnection) {
+		boolean outputConnectors) {
 
-		return null;
+		Set<PropertyPathConnector> connectors = new HashSet<>();
+
+		if (outputConnectors) {
+			connectors.add(flowConnector);
+			connectors.add(rejectConnector);
+
+			return connectors;
+		}
+
+		return Collections.<PropertyPathConnector>emptySet();
 	}
+
+	protected transient PropertyPathConnector flowConnector =
+		new PropertyPathConnector(Connector.MAIN_NAME, "schemaFlow");
+	protected transient PropertyPathConnector rejectConnector =
+		new PropertyPathConnector(Connector.REJECT_NAME, "schemaReject");
 
 }

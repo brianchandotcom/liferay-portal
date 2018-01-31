@@ -229,6 +229,103 @@ public class DetailASTUtil {
 		return sb.toString();
 	}
 
+	public static DetailAST getVariableTypeAST(
+		DetailAST detailAST, String variableName) {
+
+		DetailAST previousAST = detailAST;
+
+		while (true) {
+			if ((previousAST.getType() == TokenTypes.CLASS_DEF) ||
+				(previousAST.getType() == TokenTypes.ENUM_DEF) ||
+				(previousAST.getType() == TokenTypes.INTERFACE_DEF)) {
+
+				DetailAST objBlockAST = previousAST.findFirstToken(
+					TokenTypes.OBJBLOCK);
+
+				List<DetailAST> variableDefASTList = getAllChildTokens(
+					objBlockAST, false, TokenTypes.VARIABLE_DEF);
+
+				for (DetailAST variableDefAST : variableDefASTList) {
+					if (variableName.equals(_getVariableName(variableDefAST))) {
+						return variableDefAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if ((previousAST.getType() == TokenTypes.FOR_EACH_CLAUSE) ||
+					 (previousAST.getType() == TokenTypes.FOR_INIT)) {
+
+				List<DetailAST> variableDefASTList = getAllChildTokens(
+					previousAST, false, TokenTypes.VARIABLE_DEF);
+
+				for (DetailAST variableDefAST : variableDefASTList) {
+					if (variableName.equals(_getVariableName(variableDefAST))) {
+						return variableDefAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if ((previousAST.getType() == TokenTypes.LITERAL_CATCH) ||
+					 (previousAST.getType() == TokenTypes.PARAMETERS)) {
+
+				List<DetailAST> parameterDefASTList = getAllChildTokens(
+					previousAST, false, TokenTypes.PARAMETER_DEF);
+
+				for (DetailAST parameterDefAST : parameterDefASTList) {
+					if (variableName.equals(
+							_getVariableName(parameterDefAST))) {
+
+						return parameterDefAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if (previousAST.getType() ==
+						TokenTypes.RESOURCE_SPECIFICATION) {
+
+				DetailAST recourcesAST = previousAST.findFirstToken(
+					TokenTypes.RESOURCES);
+
+				List<DetailAST> resourceASTList = getAllChildTokens(
+					recourcesAST, false, TokenTypes.RESOURCE);
+
+				for (DetailAST resourceAST : resourceASTList) {
+					if (variableName.equals(_getVariableName(resourceAST))) {
+						return resourceAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if (previousAST.getType() == TokenTypes.VARIABLE_DEF) {
+				if (variableName.equals(_getVariableName(previousAST))) {
+					return previousAST.findFirstToken(TokenTypes.TYPE);
+				}
+			}
+
+			DetailAST previousSiblingAST = previousAST.getPreviousSibling();
+
+			if (previousSiblingAST != null) {
+				previousAST = previousSiblingAST;
+
+				continue;
+			}
+
+			DetailAST parentAST = previousAST.getParent();
+
+			if (parentAST != null) {
+				previousAST = parentAST;
+
+				continue;
+			}
+
+			break;
+		}
+
+		return null;
+	}
+
+	public static String getVariableTypeName(
+		DetailAST detailAST, String variableName) {
+
+		return getTypeName(getVariableTypeAST(detailAST, variableName));
+	}
+
 	public static Set<String> getVariableTypeNames(
 		DetailAST detailAST, String variableName) {
 
@@ -383,6 +480,12 @@ public class DetailASTUtil {
 		}
 
 		return null;
+	}
+
+	private static String _getVariableName(DetailAST variableDefAST) {
+		DetailAST nameAST = variableDefAST.findFirstToken(TokenTypes.IDENT);
+
+		return nameAST.getText();
 	}
 
 }

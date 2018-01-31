@@ -29,6 +29,8 @@ import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
 import com.liferay.site.navigation.service.SiteNavigationMenuItemLocalService;
 import com.liferay.site.navigation.service.SiteNavigationMenuLocalService;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
+import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
 
@@ -51,13 +53,9 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			return;
 		}
 
-		UnicodeProperties unicodeProperties = new UnicodeProperties();
-
-		unicodeProperties.setProperty(
-			"groupId", String.valueOf(layout.getGroupId()));
-		unicodeProperties.setProperty("layoutUuid", layout.getUuid());
-		unicodeProperties.setProperty(
-			"privateLayout", String.valueOf(layout.isPrivateLayout()));
+		SiteNavigationMenuItemType siteNavigationMenuItemType =
+			_siteNavigationMenuItemTypeRegistry.getSiteNavigationMenuItemType(
+				SiteNavigationMenuItemTypeLayoutConstants.LAYOUT);
 
 		ServiceContext serviceContext =
 			ServiceContextThreadLocal.getServiceContext();
@@ -76,7 +74,8 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 				siteNavigationMenu.getSiteNavigationMenuId(),
 				parentSiteNavigationMenuItemId,
 				SiteNavigationMenuItemTypeLayoutConstants.LAYOUT,
-				unicodeProperties.toString(), serviceContext);
+				siteNavigationMenuItemType.getTypeSettingsFromLayout(layout),
+				serviceContext);
 		}
 		catch (PortalException pe) {
 			throw new ModelListenerException(pe);
@@ -117,6 +116,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	@Reference
 	private SiteNavigationMenuItemLocalService
 		_siteNavigationMenuItemLocalService;
+
+	@Reference
+	private SiteNavigationMenuItemTypeRegistry
+		_siteNavigationMenuItemTypeRegistry;
 
 	@Reference
 	private SiteNavigationMenuLocalService _siteNavigationMenuLocalService;

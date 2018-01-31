@@ -59,13 +59,11 @@ public class InviteUserMVCActionCommand extends BaseMVCActionCommand {
 		String[] emailAddresses = ParamUtil.getStringValues(
 			actionRequest, "emailAddresses");
 
-		long companyId = _portal.getCompanyId(actionRequest);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			User.class.getName(), actionRequest);
 
 		_commerceOrganizationService.addOrganizationUsers(
-			companyId, organizationId, emailAddresses, serviceContext);
+			organizationId, emailAddresses, serviceContext);
 	}
 
 	@Override

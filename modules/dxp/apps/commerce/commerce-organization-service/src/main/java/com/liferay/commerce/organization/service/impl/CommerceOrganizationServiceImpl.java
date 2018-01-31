@@ -68,7 +68,7 @@ public class CommerceOrganizationServiceImpl
 
 	@Override
 	public void addOrganizationUsers(
-			long companyId, long organizationId, String[] emailAddresses,
+			long organizationId, String[] emailAddresses,
 			ServiceContext serviceContext)
 		throws PortalException {
 
@@ -76,6 +76,7 @@ public class CommerceOrganizationServiceImpl
 			return;
 		}
 
+		long companyId = serviceContext.getCompanyId();
 		Locale locale = serviceContext.getLocale();
 
 		for (String emailAddress : emailAddresses) {

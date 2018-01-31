@@ -31,7 +31,6 @@
 				<execute function="Select" locator1="SitePagesEditPage#PAGE_TYPE_SELECT" value1="Embedded" />
 
 				<execute macro="Page#_addPageTypeEmbedded">
-					<var name="pageTypeDescription" value="${pageTypeDescription}" />
 					<var name="pageTypeURL" value="${pageTypeURL}" />
 				</execute>
 			</then>

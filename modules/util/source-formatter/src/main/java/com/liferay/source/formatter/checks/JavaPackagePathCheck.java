@@ -22,10 +22,19 @@ import com.liferay.source.formatter.BNDSettings;
 import com.liferay.source.formatter.checks.util.BNDSourceUtil;
 import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Hugo Huijser
  */
 public class JavaPackagePathCheck extends BaseFileCheck {
+
+	public void setAllowedInternalPackageDirName(
+		String allowedInternalPackageDirName) {
+
+		_allowedInternalPackageDirNames.add(allowedInternalPackageDirName);
+	}
 
 	@Override
 	protected String doProcess(
@@ -112,11 +121,22 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 				"package.markdown");
 		}
 
+		for (String allowedInternalPackageDirName :
+				_allowedInternalPackageDirNames) {
+
+			if (absolutePath.contains(allowedInternalPackageDirName)) {
+				return;
+			}
+		}
+
 		if (absolutePath.contains("-api/src/") &&
 			packageName.matches(".*\\.internal(\\..*)?")) {
 
 			addMessage(fileName, "Do not use 'internal' package in API module");
 		}
 	}
+
+	private final List<String> _allowedInternalPackageDirNames =
+		new ArrayList<>();
 
 }

@@ -57,7 +57,12 @@ public class DDMFormTestUtil {
 		List<DDMFormField> ddmFormFields = ddmForm.getDDMFormFields();
 
 		for (String fieldName : fieldNames) {
-			ddmFormFields.add(createLocalizableTextDDMFormField(fieldName));
+			DDMFormField ddmFormField = createLocalizableTextDDMFormField(
+				fieldName);
+
+			ddmFormField.setDDMForm(ddmForm);
+
+			ddmFormFields.add(ddmFormField);
 		}
 	}
 

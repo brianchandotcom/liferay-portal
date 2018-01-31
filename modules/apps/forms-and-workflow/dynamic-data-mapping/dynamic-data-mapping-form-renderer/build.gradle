@@ -19,7 +19,6 @@ dependencies {
 	provided project(":apps:foundation:portal-template:portal-template-soy-api")
 
 	testCompile group: "com.google.template", name: "soy", version: "2015-04-10"
-	testCompile group: "com.liferay", name: "com.liferay.dynamic.data.mapping.test.util", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections", version: "2.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.concurrent", version: "1.0.0"
 	testCompile group: "com.liferay", name: "com.liferay.petra.lang", version: "1.0.0"
@@ -33,4 +32,5 @@ dependencies {
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-expression")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-form-evaluator-impl")
 	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-service")
+	testCompile project(":apps:forms-and-workflow:dynamic-data-mapping:dynamic-data-mapping-test-util")
 }

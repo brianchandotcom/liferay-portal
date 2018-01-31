@@ -14,6 +14,7 @@
 							requires: [
 								'aui-component',
 								'aui-tabview',
+								'aui-url',
 								'liferay-ddm-form-renderer-context',
 								'liferay-ddm-form-renderer-evaluation',
 								'liferay-ddm-form-renderer-feedback',

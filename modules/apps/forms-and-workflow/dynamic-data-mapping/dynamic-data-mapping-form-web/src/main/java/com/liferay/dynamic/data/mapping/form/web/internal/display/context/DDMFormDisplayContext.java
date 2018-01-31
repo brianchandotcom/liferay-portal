@@ -59,6 +59,7 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import javax.portlet.PortletSession;
 import javax.portlet.RenderRequest;
@@ -108,6 +109,20 @@ public class DDMFormDisplayContext {
 		}
 	}
 
+	public String[] getAvailableLanguageIds() throws PortalException {
+		DDMForm ddmForm = getDDMForm();
+
+		Set<Locale> availableLocales = ddmForm.getAvailableLocales();
+
+		Stream<Locale> localeStreams = availableLocales.stream();
+
+		return localeStreams.map(
+			locale -> LanguageUtil.getLanguageId(locale)
+		).toArray(
+			String[]::new
+		);
+	}
+
 	public String getContainerId() {
 		return _containerId;
 	}
@@ -150,7 +165,8 @@ public class DDMFormDisplayContext {
 
 		ddmFormRenderingContext.setShowSubmitButton(showSubmitButton);
 
-		String submitLabel = getSubmitLabel(ddmFormInstance);
+		String submitLabel = getSubmitLabel(
+			ddmFormInstance, ddmFormRenderingContext.getLocale());
 
 		ddmFormRenderingContext.setSubmitLabel(submitLabel);
 
@@ -250,6 +266,10 @@ public class DDMFormDisplayContext {
 		}
 
 		return false;
+	}
+
+	public boolean isFormShared() {
+		return SessionParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
 	public boolean isPreview() {
@@ -434,18 +454,19 @@ public class DDMFormDisplayContext {
 		return portletDisplay.getPortletResource();
 	}
 
-	protected String getSubmitLabel(DDMFormInstance ddmFormInstance) {
+	protected String getSubmitLabel(
+		DDMFormInstance ddmFormInstance, Locale locale) {
+
 		ThemeDisplay themeDisplay = getThemeDisplay();
 
 		boolean workflowEnabled = hasWorkflowEnabled(
 			ddmFormInstance, themeDisplay);
 
 		if (workflowEnabled) {
-			return LanguageUtil.get(
-				themeDisplay.getRequest(), "submit-for-publication");
+			return LanguageUtil.get(locale, "submit-for-publication");
 		}
 		else {
-			return LanguageUtil.get(themeDisplay.getRequest(), "submit");
+			return LanguageUtil.get(locale, "submit");
 		}
 	}
 
@@ -523,10 +544,6 @@ public class DDMFormDisplayContext {
 			ddmFormInstance.getSettingsModel();
 
 		return ddmFormInstanceSettings.published();
-	}
-
-	protected boolean isFormShared() {
-		return SessionParamUtil.getBoolean(_renderRequest, "shared");
 	}
 
 	protected boolean isSharedURL() {

@@ -14,13 +14,17 @@
 
 package com.liferay.commerce.organization.web.internal.util;
 
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.comparator.UserFirstNameComparator;
 
 import java.util.Objects;
 
 /**
  * @author Marco Leo
+ * @author Alessio Antonio Rendina
  */
 public class CommerceOrganizationPortletUtil {
 
@@ -46,6 +50,24 @@ public class CommerceOrganizationPortletUtil {
 		return sort;
 	}
 
+	public static OrderByComparator<User> getUserOrderByComparator(
+		String orderByCol, String orderByType) {
+
+		boolean orderByAsc = false;
+
+		if (orderByType.equals("asc")) {
+			orderByAsc = true;
+		}
+
+		OrderByComparator<User> orderByComparator = null;
+
+		if (orderByCol.equals("name")) {
+			orderByComparator = new UserFirstNameComparator(orderByAsc);
+		}
+
+		return orderByComparator;
+	}
+
 	public static Sort getUserSort(String orderByCol, String orderByType) {
 		boolean orderByAsc = false;
 
@@ -55,7 +77,7 @@ public class CommerceOrganizationPortletUtil {
 
 		Sort sort = null;
 
-		if (orderByCol.equals("lastName_")) {
+		if (orderByCol.equals("name")) {
 			sort = SortFactoryUtil.create("lastName_sortable", orderByAsc);
 		}
 

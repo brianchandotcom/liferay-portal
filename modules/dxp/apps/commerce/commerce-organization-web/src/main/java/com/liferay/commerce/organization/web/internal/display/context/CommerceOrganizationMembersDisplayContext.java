@@ -16,17 +16,31 @@ package com.liferay.commerce.organization.web.internal.display.context;
 
 import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
+import com.liferay.commerce.organization.web.internal.servlet.taglib.ui.CommerceOrganizationScreenNavigationConstants;
 import com.liferay.commerce.organization.web.internal.util.CommerceOrganizationPortletUtil;
+import com.liferay.portal.kernel.dao.search.EmptyOnClickRowChecker;
 import com.liferay.portal.kernel.dao.search.SearchContainer;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Sort;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.LinkedHashMap;
+
+import javax.portlet.PortletURL;
+import javax.portlet.WindowStateException;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -45,7 +59,66 @@ public class CommerceOrganizationMembersDisplayContext
 			commerceOrganizationHelper, commerceOrganizationService,
 			httpServletRequest, portal);
 
-		setDefaultOrderByCol("last-name");
+		setDefaultOrderByCol("name");
+	}
+
+	public String getInviteUserHref() throws WindowStateException {
+		HttpServletRequest httpServletRequest =
+			commerceOrganizationRequestHelper.getRequest();
+		LiferayPortletResponse liferayPortletResponse =
+			commerceOrganizationRequestHelper.getLiferayPortletResponse();
+
+		ThemeDisplay themeDisplay =
+			(ThemeDisplay)httpServletRequest.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+		PortletURL portletURL = liferayPortletResponse.createRenderURL();
+
+		portletURL.setParameter("mvcRenderCommandName", "inviteUser");
+		portletURL.setParameter("redirect", themeDisplay.getURLCurrent());
+
+		portletURL.setWindowState(LiferayWindowState.POP_UP);
+
+		StringBundler sb = new StringBundler(9);
+
+		sb.append("javascript:");
+		sb.append(liferayPortletResponse.getNamespace());
+		sb.append("inviteUser");
+		sb.append(StringPool.OPEN_PARENTHESIS);
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(portletURL.toString());
+		sb.append(StringPool.APOSTROPHE);
+		sb.append(StringPool.CLOSE_PARENTHESIS);
+		sb.append(StringPool.SEMICOLON);
+
+		return sb.toString();
+	}
+
+	public String getKeywords() {
+		if (_keywords != null) {
+			return _keywords;
+		}
+
+		_keywords = ParamUtil.getString(
+			commerceOrganizationRequestHelper.getRequest(), "keywords");
+
+		return _keywords;
+	}
+
+	@Override
+	public PortletURL getPortletURL() throws PortalException {
+		PortletURL portletURL = super.getPortletURL();
+
+		portletURL.setParameter(
+			"screenNavigationCategoryKey",
+			CommerceOrganizationScreenNavigationConstants.CATEGORY_DETAILS);
+
+		portletURL.setParameter(
+			"screenNavigationEntryKey",
+			CommerceOrganizationScreenNavigationConstants.
+				ENTRY_KEY_ORGANIZATION_MEMBERS);
+
+		return portletURL;
 	}
 
 	public SearchContainer<User> getSearchContainer() throws PortalException {
@@ -65,14 +138,25 @@ public class CommerceOrganizationMembersDisplayContext
 
 		params.put("usersOrgs", organization.getOrganizationId());
 
+		OrderByComparator<User> orderByComparator =
+			CommerceOrganizationPortletUtil.getUserOrderByComparator(
+				getOrderByCol(), getOrderByType());
+
+		_searchContainer.setOrderByCol(getOrderByCol());
+		_searchContainer.setOrderByComparator(orderByComparator);
+		_searchContainer.setOrderByType(getOrderByType());
+		_searchContainer.setRowChecker(
+			new EmptyOnClickRowChecker(
+				commerceOrganizationRequestHelper.getLiferayPortletResponse()));
+
 		Sort sort = CommerceOrganizationPortletUtil.getUserSort(
 			getOrderByCol(), getOrderByType());
 
 		BaseModelSearchResult<User> userBaseModelSearchResult =
 			UserLocalServiceUtil.searchUsers(
-				commerceOrganizationRequestHelper.getCompanyId(), null, 0,
-				params, _searchContainer.getStart(), _searchContainer.getEnd(),
-				sort);
+				commerceOrganizationRequestHelper.getCompanyId(), getKeywords(),
+				WorkflowConstants.STATUS_ANY, params,
+				_searchContainer.getStart(), _searchContainer.getEnd(), sort);
 
 		_searchContainer.setTotal(userBaseModelSearchResult.getLength());
 		_searchContainer.setResults(userBaseModelSearchResult.getBaseModels());
@@ -80,6 +164,7 @@ public class CommerceOrganizationMembersDisplayContext
 		return _searchContainer;
 	}
 
+	private String _keywords;
 	private SearchContainer<User> _searchContainer;
 
 }

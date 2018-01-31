@@ -504,20 +504,22 @@ AUI.add(
 			_destroySortable: function(sortable) {
 				var instance = this;
 
-				var dropNodes = sortable.get('dropNodes');
+				if (sortable) {
+					var dropNodes = sortable.get('dropNodes');
 
-				dropNodes.each(
-					function(node) {
-						var drop = A.DD.DDM.getDrop(node);
+					dropNodes.each(
+						function(node) {
+							var drop = A.DD.DDM.getDrop(node);
 
-						if (drop) {
-							drop.destroy();
+							if (drop) {
+								drop.destroy();
+							}
 						}
-					}
-				);
+					);
 
-				sortable.delegate.destroy();
-				sortable.destroy();
+					sortable.delegate.destroy();
+					sortable.destroy();
+				}
 			},
 
 			_formatDragRow: function(rows, activePageIndex) {

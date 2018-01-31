@@ -33,12 +33,14 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 %>
 
 	<c:if test="<%= Validator.isNotNull(resultRowSplitterEntry.getTitle()) %>">
-		<div class="splitter">
-			<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
+		<div class="list-group-header">
+			<div class="list-group-header-title">
+				<liferay-ui:message key="<%= resultRowSplitterEntry.getTitle() %>" />
+			</div>
 		</div>
 	</c:if>
 
-	<ul class="display-style-descriptive tabular-list-group">
+	<ul class="list-group list-group-notification show-quick-actions-on-hover">
 		<c:if test="<%= (headerNames != null) && Validator.isNotNull(headerNames.get(0)) %>">
 			<li class="list-group-heading"><liferay-ui:message key="<%= headerNames.get(0) %>" /></li>
 		</c:if>
@@ -90,9 +92,9 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 			}
 		%>
 
-			<li class="list-group-item <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
+			<li class="list-group-item list-group-item-flex <%= GetterUtil.getString(row.getClassName()) %> <%= row.getCssClass() %> <%= rowIsChecked ? "active" : StringPool.BLANK %> <%= Validator.isNotNull(row.getState()) ? "list-group-item-" + row.getState() : StringPool.BLANK %>" data-qa-id="row" <%= AUIUtil.buildData(data) %>>
 				<c:if test="<%= rowChecker != null %>">
-					<div class="list-group-item-field">
+					<div class="autofit-col">
 						<div class="checkbox">
 							<label>
 								<%= rowChecker.getRowCheckBox(request, rowIsChecked, rowChecker.isDisabled(row.getObject()), row.getPrimaryKey()) %>
@@ -110,7 +112,7 @@ for (ResultRowSplitterEntry resultRowSplitterEntry : resultRowSplitterEntries) {
 					request.setAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW_ENTRY, entry);
 				%>
 
-					<div class="<%= entry.getCssClass() %> <%= entry.getColspan() > 1 ? "list-group-item-content" : "list-group-item-field" %>">
+					<div class="<%= entry.getCssClass() %> <%= entry.getColspan() > 1 ? "autofit-col autofit-col-expand" : "autofit-col" %>" data-qa-id="rowItemContent">
 
 						<%
 						entry.print(pageContext.getOut(), request, response);

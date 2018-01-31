@@ -20,22 +20,22 @@
 </tr>
 <tr>
 	<td>CONTENT</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h4[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>CONTENT_DUPLICATE</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h4[contains(.,'${kbSuggestionBody}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')][2]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>USER_NAME</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h5[contains(.,'${kbSuggestionUserName}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h5[contains(.,'${kbSuggestionUserName}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>STATUS</td>
-	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::div[contains(@class,'list-group-item-content')]/h4[contains(.,'${kbSuggestionBody}')]/following-sibling::h5[contains(.,'${status}')]</td>
+	<td>//ul[contains(@class,'tabular-list-group')]/li[contains(@class,'list-group-item')]/div[contains(@class,'list-group-item-field')]/following-sibling::*[@data-qa-id='rowItemContent']/h4[contains(.,'${kbSuggestionBody}')]/following-sibling::h5[contains(.,'${status}')]</td>
 	<td></td>
 </tr>
 <tr>

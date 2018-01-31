@@ -52,12 +52,12 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_ICON</td>
-	<td>//div[contains(@class,'list-group-item-content')]//h4[contains(@title,'${key_userName}')]/../../div/div[contains(@class,'user-icon')]</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]/../../div/div[contains(@class,'user-icon')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_NAME</td>
-	<td>//div[contains(@class,'list-group-item-content')]//h4[contains(@title,'${key_userName}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -77,7 +77,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_RANK</td>
-	<td>//div[contains(@class,'list-group-item-content')]//h4[contains(@title,'${key_userName}')]/../h5</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]/../h5</td>
 	<td></td>
 </tr>
 <tr>
@@ -97,7 +97,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_POSTS</td>
-	<td>//div[contains(@class,'list-group-item-content')]//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'${key_userPostNumber}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'${key_userPostNumber}')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -117,7 +117,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_JOIN_DATE</td>
-	<td>//div[contains(@class,'list-group-item-content')]//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Join Date')]</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Join Date')]</td>
 	<td></td>
 </tr>
 <tr>
@@ -137,7 +137,7 @@
 </tr>
 <tr>
 	<td>TOP_POSTERS_AUTHOR_LAST_POST_DATE</td>
-	<td>//div[contains(@class,'list-group-item-content')]//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Last Post Date')]</td>
+	<td>//*[@data-qa-id='rowItemContent']//h4[contains(@title,'${key_userName}')]//following-sibling::span[contains(.,'Last Post Date')]</td>
 	<td></td>
 </tr>
 <tr>

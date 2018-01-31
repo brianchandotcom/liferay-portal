@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.site.navigation.internal.model.listener;
+package com.liferay.site.navigation.menu.item.layout.internal.model.listener;
 
 import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;

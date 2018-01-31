@@ -386,7 +386,7 @@ public class AssetPublisherUtil {
 			long scopeGroupId, int max, boolean checkPermission)
 		throws PortalException {
 
-		return null;
+		return Collections.emptyList();
 	}
 
 	public static List<AssetEntry> getAssetEntries(

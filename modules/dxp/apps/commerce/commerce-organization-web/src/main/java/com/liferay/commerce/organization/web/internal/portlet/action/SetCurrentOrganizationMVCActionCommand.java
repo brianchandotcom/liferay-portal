@@ -15,7 +15,6 @@
 package com.liferay.commerce.organization.web.internal.portlet.action;
 
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
-import com.liferay.commerce.service.CommerceCountryService;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -63,9 +62,6 @@ public class SetCurrentOrganizationMVCActionCommand
 		httpSession.setAttribute(
 			"LIFERAY_SHARED_CURRENT_ORGANIZATION_ID", currentOrganizationId);
 	}
-
-	@Reference
-	private CommerceCountryService _commerceCountryService;
 
 	@Reference
 	private Portal _portal;

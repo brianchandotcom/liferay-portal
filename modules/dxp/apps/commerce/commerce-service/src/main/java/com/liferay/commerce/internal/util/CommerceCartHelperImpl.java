@@ -18,10 +18,12 @@ import com.liferay.commerce.constants.CommercePortletKeys;
 import com.liferay.commerce.constants.CommerceWebKeys;
 import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartConstants;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.service.CommerceCartItemService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.PortletURLFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -131,7 +133,18 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 			HttpServletResponse httpServletResponse, int type)
 		throws PortalException {
 
-		long groupId = _portal.getScopeGroupId(httpServletRequest);
+		long groupId = 0;
+
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				httpServletRequest);
+
+		if (organization != null) {
+			groupId = organization.getGroupId();
+		}
+		else {
+			groupId = _portal.getScopeGroupId(httpServletRequest);
+		}
 
 		String uuid = _getCurrentCommerceCartUuid(
 			httpServletRequest, httpServletResponse, type, groupId);
@@ -354,6 +367,9 @@ public class CommerceCartHelperImpl implements CommerceCartHelper {
 
 	@Reference
 	private CommerceCartService _commerceCartService;
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private Portal _portal;

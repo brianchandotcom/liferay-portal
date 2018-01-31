@@ -88,7 +88,6 @@ page import="com.liferay.knowledge.base.service.permission.KBArticlePermission" 
 page import="com.liferay.knowledge.base.service.permission.KBCommentPermission" %><%@
 page import="com.liferay.knowledge.base.service.permission.KBFolderPermission" %><%@
 page import="com.liferay.knowledge.base.service.permission.KBTemplatePermission" %><%@
-page import="com.liferay.knowledge.base.service.permission.SuggestionPermission" %><%@
 page import="com.liferay.knowledge.base.service.util.AdminUtil" %><%@
 page import="com.liferay.knowledge.base.service.util.KnowledgeBaseConstants" %><%@
 page import="com.liferay.knowledge.base.util.KnowledgeBaseUtil" %><%@

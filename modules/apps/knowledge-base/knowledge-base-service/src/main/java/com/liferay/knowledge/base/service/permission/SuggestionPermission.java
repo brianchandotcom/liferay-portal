@@ -24,7 +24,9 @@ import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 /**
  * @author Adolfo Pérez
+ * @deprecated As of 1.3.0, with no direct replacement
  */
+@Deprecated
 public class SuggestionPermission {
 
 	public static boolean contains(

@@ -404,20 +404,6 @@ public class SiteNavigationAdminDisplayContext {
 		return _siteNavigationMenuName;
 	}
 
-	public boolean isNotPrimarySiteNavigationMenu() {
-		SiteNavigationMenu primarySiteNavigationMenu =
-			getPrimarySiteNavigationMenu();
-
-		if ((primarySiteNavigationMenu == null) ||
-			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
-				getSiteNavigationMenuId())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	public boolean isShowAddButton() {
 		ThemeDisplay themeDisplay = (ThemeDisplay)_request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -438,6 +424,20 @@ public class SiteNavigationAdminDisplayContext {
 
 		if ((autoSiteNavigationMenu == null) ||
 			(autoSiteNavigationMenu.getSiteNavigationMenuId() ==
+				getSiteNavigationMenuId())) {
+
+			return false;
+		}
+
+		return true;
+	}
+
+	public boolean showPrimarySiteNavigationMenuMessage() {
+		SiteNavigationMenu primarySiteNavigationMenu =
+			getPrimarySiteNavigationMenu();
+
+		if ((primarySiteNavigationMenu == null) ||
+			(primarySiteNavigationMenu.getSiteNavigationMenuId() ==
 				getSiteNavigationMenuId())) {
 
 			return false;

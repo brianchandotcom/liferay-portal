@@ -31,12 +31,13 @@ SiteNavigationMenu siteNavigationMenu = siteNavigationAdminDisplayContext.getSit
 	<aui:fieldset helpMessage="function-help" label="function">
 		<aui:input checked="<%= siteNavigationMenu.getType() == SiteNavigationConstants.TYPE_PRIMARY %>" label="main-menu" name="type" type="radio" value="<%= SiteNavigationConstants.TYPE_PRIMARY %>" wrapperCssClass="mb-1" />
 
-		<%
-		SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
-		%>
+		<c:if test="<%= siteNavigationAdminDisplayContext.showPrimarySiteNavigationMenuMessage() %>">
 
-		<c:if test="<%= siteNavigationAdminDisplayContext.isNotPrimarySiteNavigationMenu() %>">
-			<div class="text-muted" id="<portlet:namespace/>currentPrimaryMenu">
+			<%
+			SiteNavigationMenu primarySiteNavigationMenu = siteNavigationAdminDisplayContext.getPrimarySiteNavigationMenu();
+			%>
+
+			<div class="text-muted">
 				<liferay-ui:message arguments="<%= primarySiteNavigationMenu.getName() %>" key="current-main-menu-x" />
 			</div>
 		</c:if>

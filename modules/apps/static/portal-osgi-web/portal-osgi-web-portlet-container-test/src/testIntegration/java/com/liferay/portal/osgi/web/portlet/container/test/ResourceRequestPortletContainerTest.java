@@ -101,7 +101,7 @@ public class ResourceRequestPortletContainerTest
 			loggingEvent = loggingEvents.get(1);
 
 			Assert.assertEquals(
-				"Reject serveResource for " + layoutURL +
+				"User 0 is not allowed to serve resource for " + layoutURL +
 					" on '\"><script>alert(1)</script>",
 				loggingEvent.getMessage());
 

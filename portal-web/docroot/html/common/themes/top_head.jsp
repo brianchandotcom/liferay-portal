@@ -117,6 +117,7 @@ if (layout != null) {
 	}
 
 	Iterator<Portlet> portletIterator = portlets.iterator();
+
 	LayoutTypeAccessPolicy layoutTypeAccessPolicy = LayoutTypeAccessPolicyTracker.getLayoutTypeAccessPolicy(layout);
 
 	while (portletIterator.hasNext()) {

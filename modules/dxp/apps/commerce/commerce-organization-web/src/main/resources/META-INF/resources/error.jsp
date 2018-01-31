@@ -19,5 +19,6 @@
 <liferay-ui:error-header />
 
 <liferay-ui:error exception="<%= NoSuchAddressException.class %>" message="the-address-could-not-be-found" />
+<liferay-ui:error exception="<%= NoSuchUserException.class %>" message="the-user-could-not-be-found" />
 
 <liferay-ui:error-principal />

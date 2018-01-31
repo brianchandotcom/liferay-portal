@@ -28,7 +28,7 @@ import com.liferay.shopping.service.ShoppingCategoryServiceUtil;
 import com.liferay.shopping.service.ShoppingCouponServiceUtil;
 import com.liferay.shopping.service.ShoppingItemServiceUtil;
 import com.liferay.shopping.service.ShoppingOrderServiceUtil;
-import com.liferay.shopping.service.permission.ShoppingPermission;
+import com.liferay.shopping.web.internal.security.permission.resource.ShoppingPermission;
 
 import javax.portlet.PortletRequest;
 
@@ -58,7 +58,7 @@ public class ActionUtil {
 		else {
 			ShoppingPermission.check(
 				themeDisplay.getPermissionChecker(),
-				themeDisplay.getScopeGroupId(), ActionKeys.VIEW);
+				themeDisplay.getScopeGroup(), ActionKeys.VIEW);
 		}
 
 		request.setAttribute(WebKeys.SHOPPING_CATEGORY, category);

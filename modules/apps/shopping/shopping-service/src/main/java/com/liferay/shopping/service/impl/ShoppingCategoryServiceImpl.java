@@ -17,13 +17,14 @@ package com.liferay.shopping.service.impl;
 import com.liferay.portal.kernel.dao.orm.QueryDefinition;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionFactory;
+import com.liferay.portal.kernel.security.permission.resource.ModelResourcePermissionHelper;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
-import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.shopping.model.ShoppingCategory;
 import com.liferay.shopping.service.base.ShoppingCategoryServiceBaseImpl;
-import com.liferay.shopping.service.permission.ShoppingCategoryPermission;
 
 import java.util.List;
 
@@ -39,7 +40,8 @@ public class ShoppingCategoryServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException {
 
-		shoppingCategoryPermission.check(
+		ModelResourcePermissionHelper.check(
+			_shoppingCategoryModelResourcePermission,
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			parentCategoryId, ActionKeys.ADD_CATEGORY);
 
@@ -52,7 +54,7 @@ public class ShoppingCategoryServiceImpl
 		ShoppingCategory category = shoppingCategoryLocalService.getCategory(
 			categoryId);
 
-		shoppingCategoryPermission.check(
+		_shoppingCategoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.DELETE);
 
 		shoppingCategoryLocalService.deleteCategory(categoryId);
@@ -102,7 +104,7 @@ public class ShoppingCategoryServiceImpl
 		ShoppingCategory category = shoppingCategoryLocalService.getCategory(
 			categoryId);
 
-		shoppingCategoryPermission.check(
+		_shoppingCategoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.VIEW);
 
 		return category;
@@ -133,7 +135,7 @@ public class ShoppingCategoryServiceImpl
 		ShoppingCategory category = shoppingCategoryLocalService.getCategory(
 			categoryId);
 
-		shoppingCategoryPermission.check(
+		_shoppingCategoryModelResourcePermission.check(
 			getPermissionChecker(), category, ActionKeys.UPDATE);
 
 		return shoppingCategoryLocalService.updateCategory(
@@ -141,7 +143,11 @@ public class ShoppingCategoryServiceImpl
 			mergeWithParentCategory, serviceContext);
 	}
 
-	@ServiceReference(type = ShoppingCategoryPermission.class)
-	protected ShoppingCategoryPermission shoppingCategoryPermission;
+	private static volatile ModelResourcePermission<ShoppingCategory>
+		_shoppingCategoryModelResourcePermission =
+			ModelResourcePermissionFactory.getInstance(
+				ShoppingCategoryServiceImpl.class,
+				"_shoppingCategoryModelResourcePermission",
+				ShoppingCategory.class);
 
 }

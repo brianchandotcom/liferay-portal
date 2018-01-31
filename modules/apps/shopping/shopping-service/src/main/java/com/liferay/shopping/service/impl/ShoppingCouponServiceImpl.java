@@ -16,10 +16,12 @@ package com.liferay.shopping.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermission;
+import com.liferay.portal.kernel.security.permission.resource.PortletResourcePermissionFactory;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.shopping.constants.ShoppingConstants;
 import com.liferay.shopping.model.ShoppingCoupon;
 import com.liferay.shopping.service.base.ShoppingCouponServiceBaseImpl;
-import com.liferay.shopping.service.permission.ShoppingPermission;
 
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			String discountType, ServiceContext serviceContext)
 		throws PortalException {
 
-		ShoppingPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.MANAGE_COUPONS);
 
@@ -55,7 +57,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 	public void deleteCoupon(long groupId, long couponId)
 		throws PortalException {
 
-		ShoppingPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_COUPONS);
 
 		shoppingCouponLocalService.deleteCoupon(couponId);
@@ -65,7 +67,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 	public ShoppingCoupon getCoupon(long groupId, long couponId)
 		throws PortalException {
 
-		ShoppingPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_COUPONS);
 
 		return shoppingCouponLocalService.getCoupon(couponId);
@@ -77,7 +79,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			String discountType, boolean andOperator, int start, int end)
 		throws PortalException {
 
-		ShoppingPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), groupId, ActionKeys.MANAGE_COUPONS);
 
 		return shoppingCouponLocalService.search(
@@ -96,7 +98,7 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			String discountType, ServiceContext serviceContext)
 		throws PortalException {
 
-		ShoppingPermission.check(
+		_portletResourcePermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.MANAGE_COUPONS);
 
@@ -107,5 +109,11 @@ public class ShoppingCouponServiceImpl extends ShoppingCouponServiceBaseImpl {
 			neverExpire, active, limitCategories, limitSkus, minOrder, discount,
 			discountType, serviceContext);
 	}
+
+	private static volatile PortletResourcePermission
+		_portletResourcePermission =
+			PortletResourcePermissionFactory.getInstance(
+				ShoppingCouponServiceImpl.class, "_portletResourcePermission",
+				ShoppingConstants.RESOURCE_NAME);
 
 }

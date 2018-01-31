@@ -169,6 +169,8 @@
 			</then>
 		</if>
 
+		<execute function="ScrollWebElementIntoView" locator1="Button#SAVE" />
+
 		<execute macro="PortletEntry#save" />
 
 		<execute function="AssertTextEquals" locator1="SitesEditSite#DETAILS_NAME" value1="${siteName}" />

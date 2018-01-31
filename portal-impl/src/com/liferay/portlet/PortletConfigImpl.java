@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.portlet.PortletBag;
 import com.liferay.portal.kernel.portlet.PortletBagPool;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -31,7 +32,6 @@ import java.util.Collections;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -118,23 +118,11 @@ public class PortletConfigImpl implements LiferayPortletConfig {
 		// must only contain those values that are both defined for the portlet
 		// and supported by the portlet container.
 
-		Set<String> supportedRuntimeOptions = new HashSet<>();
-		Enumeration<String> enumeration =
-			_portletContext.getContainerRuntimeOptions();
+		Set<String> keySet = containerRuntimeOptions.keySet();
 
-		while (enumeration.hasMoreElements()) {
-			supportedRuntimeOptions.add(enumeration.nextElement());
-		}
-
-		Iterator<String> iterator = containerRuntimeOptions.keySet().iterator();
-
-		while (iterator.hasNext()) {
-			String key = iterator.next();
-
-			if (!supportedRuntimeOptions.contains(key)) {
-				iterator.remove();
-			}
-		}
+		keySet.retainAll(
+			SetUtil.fromEnumeration(
+				_portletContext.getContainerRuntimeOptions()));
 
 		return Collections.unmodifiableMap(containerRuntimeOptions);
 	}

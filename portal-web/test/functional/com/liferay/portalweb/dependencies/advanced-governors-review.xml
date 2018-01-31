@@ -121,6 +121,7 @@
 						<template>It has been 72 hours. Please finish your review asap.</template>
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
+						<execution-type>onAssignment</execution-type>
 					</timer-notification>
 				</timer-actions>
 			</task-timer>
@@ -171,6 +172,7 @@
 						<template>It has been 72 hours. Please finish your review asap.</template>
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
+						<execution-type>onAssignment</execution-type>
 					</timer-notification>
 				</timer-actions>
 			</task-timer>
@@ -221,6 +223,7 @@
 						<template>It has been 72 hours. Please finish your review asap.</template>
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
+						<execution-type>onAssignment</execution-type>
 					</timer-notification>
 				</timer-actions>
 			</task-timer>
@@ -271,6 +274,7 @@
 						<template>It has been 72 hours. Please finish your review asap.</template>
 						<template-language>text</template-language>
 						<notification-type>user-notification</notification-type>
+						<execution-type>onAssignment</execution-type>
 					</timer-notification>
 				</timer-actions>
 			</task-timer>

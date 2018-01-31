@@ -24,6 +24,8 @@ import com.liferay.source.formatter.checks.util.JavaSourceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Hugo Huijser
@@ -129,14 +131,21 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 			}
 		}
 
-		if (absolutePath.contains("-api/src/") &&
-			packageName.matches(".*\\.internal(\\..*)?")) {
+		if (absolutePath.contains("-api/src/")) {
+			Matcher matcher = _internalPackagePattern.matcher(packageName);
 
-			addMessage(fileName, "Do not use 'internal' package in API module");
+			if (matcher.find()) {
+				addMessage(
+					fileName,
+					"Do not use '" + matcher.group(1) +
+						"' package in API module");
+			}
 		}
 	}
 
 	private final List<String> _allowedInternalPackageDirNames =
 		new ArrayList<>();
+	private final Pattern _internalPackagePattern = Pattern.compile(
+		"\\.(impl|internal)(\\.|\\Z)");
 
 }

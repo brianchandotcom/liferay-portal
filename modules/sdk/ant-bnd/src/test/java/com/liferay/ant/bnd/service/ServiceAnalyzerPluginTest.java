@@ -49,17 +49,21 @@ public class ServiceAnalyzerPluginTest {
 
 			serviceAnalyzerPlugin.analyzeJar(analyzer);
 
-			Parameters provideCapability = analyzer.getProvideCapability();
+			Parameters provideCapabilityHeaders =
+				analyzer.getProvideCapability();
 
-			Assert.assertNotNull(provideCapability);
+			Assert.assertNotNull(provideCapabilityHeaders);
 
 			Assert.assertEquals(
-				provideCapability.toString(), 1, provideCapability.size());
+				provideCapabilityHeaders.toString(), 1,
+				provideCapabilityHeaders.size());
 		}
 	}
 
 	@Test
-	public void testReadServiceXmlToProvideServiceCaps() throws Exception {
+	public void testReadServiceXmlToProvideServiceCapabilities()
+		throws Exception {
+
 		InputStream inputStream =
 			ServiceAnalyzerPluginTest.class.getResourceAsStream(
 				"dependencies/com.liferay.contacts.service.jar");
@@ -72,21 +76,26 @@ public class ServiceAnalyzerPluginTest {
 			analyzer.setProperty("Liferay-Service", "true");
 			analyzer.setProperty(
 				"-liferay-service-xml", "service.xml,**/service.xml");
+
+			Parameters parameters = new Parameters(
+				"existing.parameter;saveme=true");
+
 			analyzer.setProperty(
-				Constants.PROVIDE_CAPABILITY,
-				new Parameters("existing.parameter;saveme=true").toString());
+				Constants.PROVIDE_CAPABILITY, parameters.toString());
 
 			ServiceAnalyzerPlugin serviceAnalyzerPlugin =
 				new ServiceAnalyzerPlugin();
 
 			serviceAnalyzerPlugin.analyzeJar(analyzer);
 
-			Parameters provideCapability = analyzer.getProvideCapability();
+			Parameters provideCapabilityHeaders =
+				analyzer.getProvideCapability();
 
-			Assert.assertNotNull(provideCapability);
+			Assert.assertNotNull(provideCapabilityHeaders);
 
 			Assert.assertEquals(
-				provideCapability.toString(), 2, provideCapability.size());
+				provideCapabilityHeaders.toString(), 2,
+				provideCapabilityHeaders.size());
 		}
 	}
 

@@ -4,7 +4,7 @@
 <service-builder auto-namespace-tables="false" package-path="com.liferay.commerce.organization">
 	<author>Marco Leo</author>
 	<namespace>Commerce</namespace>
-	<entity local-service="false" name="CommerceOrganization" remote-service="true">
+	<entity local-service="true" name="CommerceOrganization" remote-service="true">
 		<reference entity="Address" package-path="com.liferay.portal" />
 		<reference entity="EmailAddress" package-path="com.liferay.portal" />
 		<reference entity="Organization" package-path="com.liferay.portal" />

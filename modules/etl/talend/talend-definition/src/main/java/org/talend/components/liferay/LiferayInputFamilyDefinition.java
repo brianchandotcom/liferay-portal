@@ -20,6 +20,7 @@ import com.google.auto.service.AutoService;
 
 import com.liferay.talend.tliferayconnection.TLiferayConnectionDefinition;
 import com.liferay.talend.tliferayinput.TLiferayInputDefinition;
+import com.liferay.talend.tliferayoutput.TLiferayOutputDefinition;
 import com.liferay.talend.wizard.LiferayConnectionWizardDefinition;
 
 import org.talend.components.api.AbstractComponentFamilyDefinition;
@@ -45,7 +46,7 @@ public class LiferayInputFamilyDefinition
 	public LiferayInputFamilyDefinition() {
 		super(
 			NAME, new TLiferayConnectionDefinition(),
-			new TLiferayInputDefinition(),
+			new TLiferayInputDefinition(), new TLiferayOutputDefinition(),
 			new LiferayConnectionWizardDefinition());
 	}
 

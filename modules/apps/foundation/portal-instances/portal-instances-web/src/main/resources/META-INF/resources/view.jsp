@@ -26,11 +26,21 @@ PortletURL portletURL = renderResponse.createRenderURL();
 portletURL.setParameter("mvcRenderCommandName", "/portal_instances/view");
 %>
 
-<aui:nav-bar markupView="lexicon">
-	<aui:nav cssClass="navbar-nav">
-		<aui:nav-item label="instances" selected="<%= true %>" />
-	</aui:nav>
-</aui:nav-bar>
+<clay:navigation-bar
+	inverted="<%= true %>"
+	items='<%=
+		new JSPNavigationItemList(pageContext) {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(LanguageUtil.get(request, "instances"));
+					});
+			}
+		}
+	%>'
+/>
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

@@ -36,6 +36,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -238,7 +239,7 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 			return;
 		}
 
-		Set<String> serviceClassNames = new HashSet<>();
+		Set<String> serviceClassNames = new TreeSet<>();
 
 		DocumentBuilderFactory documentBuilderFactory =
 			DocumentBuilderFactory.newInstance();

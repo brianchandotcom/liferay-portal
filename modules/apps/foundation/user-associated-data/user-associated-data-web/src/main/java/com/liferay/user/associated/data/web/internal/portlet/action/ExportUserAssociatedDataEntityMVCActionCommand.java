@@ -18,9 +18,9 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.aggregator.UADEntityAggregator;
-import com.liferay.user.associated.data.anonymizer.UADEntityAnonymizer;
+import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
+import com.liferay.user.associated.data.exporter.UADEntityExporter;
 import com.liferay.user.associated.data.registry.UADRegistry;
-import com.liferay.users.admin.constants.UsersAdminPortletKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -34,13 +34,12 @@ import org.osgi.service.component.annotations.Reference;
 @Component(
 	immediate = true,
 	property = {
-		"javax.portlet.name=" + UsersAdminPortletKeys.MY_ORGANIZATIONS,
-		"javax.portlet.name=" + UsersAdminPortletKeys.USERS_ADMIN,
-		"mvc.command.name=/users_admin/auto_anonymize_uad_entity"
+		"javax.portlet.name=" + UserAssociatedDataPortletKeys.USER_ASSOCIATED_DATA,
+		"mvc.command.name=/user_associated_data/export_user_associated_data_entity"
 	},
 	service = MVCActionCommand.class
 )
-public class AutoAnonymizeUADEntityMVCActionCommand
+public class ExportUserAssociatedDataEntityMVCActionCommand
 	extends BaseMVCActionCommand {
 
 	@Override
@@ -48,10 +47,10 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_autoAnonymizeUADEntity(actionRequest);
+		_exportUADEntity(actionRequest);
 	}
 
-	private void _autoAnonymizeUADEntity(ActionRequest actionRequest)
+	private void _exportUADEntity(ActionRequest actionRequest)
 		throws Exception {
 
 		String uadRegistryKey = ParamUtil.getString(
@@ -59,13 +58,12 @@ public class AutoAnonymizeUADEntityMVCActionCommand
 
 		UADEntityAggregator uadEntityAggregator =
 			_uadRegistry.getUADEntityAggregator(uadRegistryKey);
-		UADEntityAnonymizer uadEntityAnonymizer =
-			_uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
+		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(
+			uadRegistryKey);
 
 		String uadEntityId = ParamUtil.getString(actionRequest, "uadEntityId");
 
-		uadEntityAnonymizer.autoAnonymize(
-			uadEntityAggregator.getUADEntity(uadEntityId));
+		uadEntityExporter.export(uadEntityAggregator.getUADEntity(uadEntityId));
 	}
 
 	@Reference

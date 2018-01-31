@@ -18,11 +18,11 @@ import com.liferay.portal.kernel.exception.ModelListenerException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.BaseModelListener;
 import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutConstants;
 import com.liferay.portal.kernel.model.ModelListener;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.site.navigation.menu.item.layout.internal.constants.SiteNavigationMenuItemTypeLayoutConstants;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
@@ -33,6 +33,7 @@ import com.liferay.site.navigation.type.SiteNavigationMenuItemType;
 import com.liferay.site.navigation.type.SiteNavigationMenuItemTypeRegistry;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -61,13 +62,10 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			ServiceContextThreadLocal.getServiceContext();
 
 		try {
-			long parentSiteNavigationMenuItemId = 0;
-
-			if (layout.getParentPlid() > 0) {
-				parentSiteNavigationMenuItemId =
-					_getParentSiteNavigationMenuItemId(
-						layout, siteNavigationMenu);
-			}
+			long parentSiteNavigationMenuItemId =
+				_getParentSiteNavigationMenuItemId(
+					layout.getParentPlid(),
+					siteNavigationMenu.getSiteNavigationMenuId());
 
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				layout.getUserId(), layout.getGroupId(),
@@ -83,14 +81,18 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 	}
 
 	private long _getParentSiteNavigationMenuItemId(
-			Layout layout, SiteNavigationMenu primarySiteNavigationMenu)
+			long parentPlid, long siteNavigationMenuItemId)
 		throws PortalException {
 
-		Layout parentLayout = _layoutLocalService.getParentLayout(layout);
+		if (parentPlid == LayoutConstants.DEFAULT_PARENT_LAYOUT_ID) {
+			return 0;
+		}
+
+		Layout parentLayout = _layoutLocalService.fetchLayout(parentPlid);
 
 		List<SiteNavigationMenuItem> siteNavigationMenuItems =
 			_siteNavigationMenuItemLocalService.getSiteNavigationMenuItems(
-				primarySiteNavigationMenu.getSiteNavigationMenuId());
+				siteNavigationMenuItemId);
 
 		for (SiteNavigationMenuItem siteNavigationMenuItem :
 				siteNavigationMenuItems) {
@@ -102,7 +104,7 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 			String layoutUuid = unicodeProperties.getProperty("layoutUuid");
 
-			if (StringUtil.equals(parentLayout.getUuid(), layoutUuid)) {
+			if (Objects.equals(parentLayout.getUuid(), layoutUuid)) {
 				return siteNavigationMenuItem.getSiteNavigationMenuItemId();
 			}
 		}

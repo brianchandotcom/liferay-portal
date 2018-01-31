@@ -83,8 +83,9 @@ public interface DDMFormInstanceRecordLocalService extends BaseLocalService,
 
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMFormInstanceRecord addFormInstanceRecord(long userId,
-		long groupId, long ddmFormInstanceId, DDMFormValues ddmFormValues,
-		ServiceContext serviceContext) throws PortalException;
+		long groupId, long ddmFormInstanceVersionId,
+		DDMFormValues ddmFormValues, ServiceContext serviceContext)
+		throws PortalException;
 
 	/**
 	* Creates a new ddm form instance record with the primary key. Does not add the ddm form instance record to the database.

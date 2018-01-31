@@ -24,6 +24,7 @@ import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceSettings;
+import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.model.DDMFormSuccessPageSettings;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordService;
@@ -118,12 +119,17 @@ public class AddFormInstanceRecordMVCActionCommand
 					ddmFormInstance.getVersion(),
 					WorkflowConstants.STATUS_DRAFT);
 
+		DDMFormInstanceVersion ddmFormInstanceVersion =
+			ddmFormInstance.getFormInstanceVersion(
+				ddmFormInstance.getVersion());
+
 		DDMFormInstanceRecord ddmFormInstanceRecord;
 
 		if (ddmFormInstanceRecordVersion == null) {
 			ddmFormInstanceRecord =
 				_ddmFormInstanceRecordService.addFormInstanceRecord(
-					groupId, formInstanceId, ddmFormValues, serviceContext);
+					groupId, ddmFormInstanceVersion.getFormInstanceVersionId(),
+					ddmFormValues, serviceContext);
 		}
 		else {
 			ddmFormInstanceRecord =

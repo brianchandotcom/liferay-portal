@@ -17,10 +17,15 @@ package com.liferay.dynamic.data.mapping.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.dynamic.data.mapping.model.DDMForm;
+import com.liferay.dynamic.data.mapping.model.DDMFormLayout;
+import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMStructureVersion;
+
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -38,6 +44,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the local service interface for DDMStructureVersion. Methods of this
@@ -71,6 +79,13 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMStructureVersion addDDMStructureVersion(
 		DDMStructureVersion ddmStructureVersion);
+
+	public DDMStructureVersion addStructureVersion(long userId,
+		long parentStructureId, Map<Locale, java.lang.String> nameMap,
+		Map<Locale, java.lang.String> descriptionMap,
+		java.lang.String definition, java.lang.String version,
+		DDMStructure structure, DDMFormLayout ddmFormLayout,
+		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new ddm structure version with the primary key. Does not add the ddm structure version to the database.
@@ -107,6 +122,9 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	*/
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
+
+	public void deleteStructureStructureVersions(long structureId)
 		throws PortalException;
 
 	public DynamicQuery dynamicQuery();
@@ -171,6 +189,17 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureVersion fetchDDMStructureVersion(long structureVersionId);
 
+	/**
+	* Returns the ddm structure version matching the UUID and group.
+	*
+	* @param uuid the ddm structure version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructureVersion fetchDDMStructureVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId);
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -184,6 +213,18 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMStructureVersion getDDMStructureVersion(long structureVersionId)
 		throws PortalException;
+
+	/**
+	* Returns the ddm structure version matching the UUID and group.
+	*
+	* @param uuid the ddm structure version's UUID
+	* @param groupId the primary key of the group
+	* @return the matching ddm structure version
+	* @throws PortalException if a matching ddm structure version could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public DDMStructureVersion getDDMStructureVersionByUuidAndGroupId(
+		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the ddm structure versions.
@@ -200,12 +241,42 @@ public interface DDMStructureVersionLocalService extends BaseLocalService,
 	public List<DDMStructureVersion> getDDMStructureVersions(int start, int end);
 
 	/**
+	* Returns all the ddm structure versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddm structure versions
+	* @param companyId the primary key of the company
+	* @return the matching ddm structure versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructureVersion> getDDMStructureVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of ddm structure versions matching the UUID and company.
+	*
+	* @param uuid the UUID of the ddm structure versions
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching ddm structure versions, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<DDMStructureVersion> getDDMStructureVersionsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
 	* Returns the number of ddm structure versions.
 	*
 	* @return the number of ddm structure versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMStructureVersionsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

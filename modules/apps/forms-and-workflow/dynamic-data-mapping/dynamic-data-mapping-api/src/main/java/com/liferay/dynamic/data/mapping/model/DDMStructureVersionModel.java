@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.LocalizedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedGroupedModel;
 import com.liferay.portal.kernel.model.WorkflowedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -48,7 +49,7 @@ import java.util.Map;
  */
 @ProviderType
 public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>,
-	LocalizedModel, ShardedModel, WorkflowedModel {
+	LocalizedModel, ShardedModel, StagedGroupedModel, WorkflowedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -70,6 +71,23 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this ddm structure version.
+	 *
+	 * @return the uuid of this ddm structure version
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this ddm structure version.
+	 *
+	 * @param uuid the uuid of this ddm structure version
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the structure version ID of this ddm structure version.
 	 *
 	 * @return the structure version ID of this ddm structure version
@@ -88,6 +106,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @return the group ID of this ddm structure version
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -95,6 +114,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @param groupId the group ID of this ddm structure version
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -118,6 +138,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @return the user ID of this ddm structure version
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -125,6 +146,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @param userId the user ID of this ddm structure version
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -132,6 +154,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @return the user uuid of this ddm structure version
 	 */
+	@Override
 	public String getUserUuid();
 
 	/**
@@ -139,6 +162,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @param userUuid the user uuid of this ddm structure version
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -147,6 +171,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 * @return the user name of this ddm structure version
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -154,6 +179,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @param userName the user name of this ddm structure version
 	 */
+	@Override
 	public void setUserName(String userName);
 
 	/**
@@ -161,6 +187,7 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @return the create date of this ddm structure version
 	 */
+	@Override
 	public Date getCreateDate();
 
 	/**
@@ -168,7 +195,24 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 *
 	 * @param createDate the create date of this ddm structure version
 	 */
+	@Override
 	public void setCreateDate(Date createDate);
+
+	/**
+	 * Returns the modified date of this ddm structure version.
+	 *
+	 * @return the modified date of this ddm structure version
+	 */
+	@Override
+	public Date getModifiedDate();
+
+	/**
+	 * Sets the modified date of this ddm structure version.
+	 *
+	 * @param modifiedDate the modified date of this ddm structure version
+	 */
+	@Override
+	public void setModifiedDate(Date modifiedDate);
 
 	/**
 	 * Returns the structure ID of this ddm structure version.
@@ -537,6 +581,22 @@ public interface DDMStructureVersionModel extends BaseModel<DDMStructureVersion>
 	 */
 	@Override
 	public void setStatusDate(Date statusDate);
+
+	/**
+	 * Returns the last publish date of this ddm structure version.
+	 *
+	 * @return the last publish date of this ddm structure version
+	 */
+	@Override
+	public Date getLastPublishDate();
+
+	/**
+	 * Sets the last publish date of this ddm structure version.
+	 *
+	 * @param lastPublishDate the last publish date of this ddm structure version
+	 */
+	@Override
+	public void setLastPublishDate(Date lastPublishDate);
 
 	/**
 	 * Returns <code>true</code> if this ddm structure version is approved.

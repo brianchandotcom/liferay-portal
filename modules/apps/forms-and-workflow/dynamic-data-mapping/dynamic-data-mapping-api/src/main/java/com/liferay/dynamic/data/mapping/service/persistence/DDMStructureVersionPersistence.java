@@ -42,6 +42,336 @@ public interface DDMStructureVersionPersistence extends BasePersistence<DDMStruc
 	 */
 
 	/**
+	* Returns all the ddm structure versions where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid(java.lang.String uuid);
+
+	/**
+	* Returns a range of all the ddm structure versions where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @return the range of matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid(
+		java.lang.String uuid, int start, int end);
+
+	/**
+	* Returns an ordered range of all the ddm structure versions where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the ddm structure versions where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid(
+		java.lang.String uuid, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first ddm structure version in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddm structure version
+	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion findByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Returns the first ddm structure version in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion fetchByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
+	* Returns the last ddm structure version in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddm structure version
+	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion findByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Returns the last ddm structure version in the ordered set where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion fetchByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
+	* Returns the ddm structure versions before and after the current ddm structure version in the ordered set where uuid = &#63;.
+	*
+	* @param structureVersionId the primary key of the current ddm structure version
+	* @param uuid the uuid
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ddm structure version
+	* @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
+	*/
+	public DDMStructureVersion[] findByUuid_PrevAndNext(
+		long structureVersionId, java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Removes all the ddm structure versions where uuid = &#63; from the database.
+	*
+	* @param uuid the uuid
+	*/
+	public void removeByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the number of ddm structure versions where uuid = &#63;.
+	*
+	* @param uuid the uuid
+	* @return the number of matching ddm structure versions
+	*/
+	public int countByUuid(java.lang.String uuid);
+
+	/**
+	* Returns the ddm structure version where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchStructureVersionException} if it could not be found.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching ddm structure version
+	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion findByUUID_G(java.lang.String uuid, long groupId)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Returns the ddm structure version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion fetchByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns the ddm structure version where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache);
+
+	/**
+	* Removes the ddm structure version where uuid = &#63; and groupId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the ddm structure version that was removed
+	*/
+	public DDMStructureVersion removeByUUID_G(java.lang.String uuid,
+		long groupId) throws NoSuchStructureVersionException;
+
+	/**
+	* Returns the number of ddm structure versions where uuid = &#63; and groupId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param groupId the group ID
+	* @return the number of matching ddm structure versions
+	*/
+	public int countByUUID_G(java.lang.String uuid, long groupId);
+
+	/**
+	* Returns all the ddm structure versions where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid_C(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of all the ddm structure versions where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @return the range of matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the ddm structure versions where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the ddm structure versions where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link DDMStructureVersionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of ddm structure versions
+	* @param end the upper bound of the range of ddm structure versions (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ddm structure versions
+	*/
+	public java.util.List<DDMStructureVersion> findByUuid_C(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first ddm structure version in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddm structure version
+	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion findByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Returns the first ddm structure version in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion fetchByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
+	* Returns the last ddm structure version in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddm structure version
+	* @throws NoSuchStructureVersionException if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion findByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Returns the last ddm structure version in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching ddm structure version, or <code>null</code> if a matching ddm structure version could not be found
+	*/
+	public DDMStructureVersion fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator);
+
+	/**
+	* Returns the ddm structure versions before and after the current ddm structure version in the ordered set where uuid = &#63; and companyId = &#63;.
+	*
+	* @param structureVersionId the primary key of the current ddm structure version
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next ddm structure version
+	* @throws NoSuchStructureVersionException if a ddm structure version with the primary key could not be found
+	*/
+	public DDMStructureVersion[] findByUuid_C_PrevAndNext(
+		long structureVersionId, java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<DDMStructureVersion> orderByComparator)
+		throws NoSuchStructureVersionException;
+
+	/**
+	* Removes all the ddm structure versions where uuid = &#63; and companyId = &#63; from the database.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	*/
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
+	* Returns the number of ddm structure versions where uuid = &#63; and companyId = &#63;.
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @return the number of matching ddm structure versions
+	*/
+	public int countByUuid_C(java.lang.String uuid, long companyId);
+
+	/**
 	* Returns all the ddm structure versions where structureId = &#63;.
 	*
 	* @param structureId the structure ID

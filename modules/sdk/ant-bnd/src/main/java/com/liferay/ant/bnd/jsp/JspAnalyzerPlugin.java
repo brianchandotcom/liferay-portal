@@ -34,9 +34,10 @@ import aQute.lib.env.Header;
 import aQute.lib.io.IO;
 import aQute.lib.strings.Strings;
 
+import com.liferay.ant.bnd.util.NullEntityResolver;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 
 import java.util.Arrays;
@@ -53,7 +54,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
@@ -544,17 +544,6 @@ public class JspAnalyzerPlugin implements AnalyzerPlugin {
 
 	private final SAXParserFactory _saxParserFactory =
 		SAXParserFactory.newInstance();
-
-	private class NullEntityResolver implements EntityResolver {
-
-		@Override
-		public InputSource resolveEntity(String publicId, String systemId)
-			throws IOException, SAXException {
-
-			return new InputSource();
-		}
-
-	}
 
 	private class URIFinder extends DefaultHandler {
 

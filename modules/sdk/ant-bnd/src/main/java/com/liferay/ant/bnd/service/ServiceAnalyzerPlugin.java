@@ -133,20 +133,11 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 	}
 
 	protected void populateServiceClassNames(
-			Set<String> serviceClassNames, File serviceXmlFile)
+			Set<String> serviceClassNames, DocumentBuilder documentBuilder,
+			XPath xPath, File serviceXmlFile)
 		throws Exception {
 
-		DocumentBuilderFactory documentBuilderFactory =
-			DocumentBuilderFactory.newInstance();
-
-		DocumentBuilder documentBuilder =
-			documentBuilderFactory.newDocumentBuilder();
-
 		Document document = documentBuilder.parse(serviceXmlFile);
-
-		XPathFactory xPathfactory = XPathFactory.newInstance();
-
-		XPath xPath = xPathfactory.newXPath();
 
 		XPathExpression apiPackagePathXPathExpression = xPath.compile(
 			"/service-builder/@api-package-path");
@@ -249,8 +240,22 @@ public class ServiceAnalyzerPlugin implements AnalyzerPlugin {
 
 		Set<String> serviceClassNames = new HashSet<>();
 
+		DocumentBuilderFactory documentBuilderFactory =
+			DocumentBuilderFactory.newInstance();
+
+		DocumentBuilder documentBuilder =
+			documentBuilderFactory.newDocumentBuilder();
+
+		XPathFactory xPathfactory = XPathFactory.newInstance();
+
+		XPath xPath = xPathfactory.newXPath();
+
 		for (File serviceXmlFile : serviceXmlFiles) {
-			populateServiceClassNames(serviceClassNames, serviceXmlFile);
+			populateServiceClassNames(
+				serviceClassNames, documentBuilder, xPath, serviceXmlFile);
+
+			documentBuilder.reset();
+			xPath.reset();
 		}
 
 		if (!serviceClassNames.isEmpty()) {

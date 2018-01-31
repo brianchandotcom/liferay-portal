@@ -16,11 +16,14 @@ package com.liferay.commerce.organization.service.impl;
 
 import com.liferay.commerce.organization.service.base.CommerceOrganizationServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocal;
+import com.liferay.portal.kernel.messaging.proxy.ProxyModeThreadLocalCloseable;
 import com.liferay.portal.kernel.model.Address;
 import com.liferay.portal.kernel.model.EmailAddress;
 import com.liferay.portal.kernel.model.ListTypeConstants;
 import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.OrganizationConstants;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -42,6 +45,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 /**
@@ -60,6 +64,41 @@ public class CommerceOrganizationServiceImpl
 			serviceContext.getUserId(), parentOrganizationId, name, type, 0, 0,
 			ListTypeConstants.ORGANIZATION_STATUS_DEFAULT, StringPool.BLANK,
 			false, serviceContext);
+	}
+
+	@Override
+	public void addOrganizationUsers(
+			long companyId, long organizationId, Locale locale,
+			String[] emailAddresses, ServiceContext serviceContext)
+		throws PortalException {
+
+		if (emailAddresses.length == 0) {
+			return;
+		}
+
+		for (String emailAddress : emailAddresses) {
+			User user = userLocalService.fetchUserByEmailAddress(
+				companyId, emailAddress);
+
+			if (user == null) {
+				user = userLocalService.addUserWithWorkflow(
+					serviceContext.getUserId(), companyId, true,
+					StringPool.BLANK, StringPool.BLANK, true, StringPool.BLANK,
+					emailAddress, 0L, StringPool.BLANK, locale, emailAddress,
+					StringPool.BLANK, emailAddress, 0L, 0L, true, 1, 1, 1970,
+					StringPool.BLANK, null, new long[] {organizationId}, null,
+					null, true, serviceContext);
+			}
+
+			try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+					new ProxyModeThreadLocalCloseable()) {
+
+				ProxyModeThreadLocal.setForceSync(true);
+
+				userLocalService.addOrganizationUsers(
+					organizationId, new long[] {user.getUserId()});
+			}
+		}
 	}
 
 	@Override
@@ -134,6 +173,21 @@ public class CommerceOrganizationServiceImpl
 		}
 
 		return new BaseModelSearchResult<>(organizations, hits.getLength());
+	}
+
+	@Override
+	public void unsetOrganizationUsers(
+			long organizationId, long[] removeUserIds)
+		throws PortalException {
+
+		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
+				new ProxyModeThreadLocalCloseable()) {
+
+			ProxyModeThreadLocal.setForceSync(true);
+
+			userLocalService.unsetOrganizationUsers(
+				organizationId, removeUserIds);
+		}
 	}
 
 	protected SearchContext buildSearchContext(

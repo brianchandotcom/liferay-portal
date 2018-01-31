@@ -46,10 +46,6 @@ public class ExportUserAssociatedDataMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		exportAll(actionRequest);
-	}
-
-	protected void exportAll(ActionRequest actionRequest) throws Exception {
 		String key = ParamUtil.getString(actionRequest, "key");
 
 		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(

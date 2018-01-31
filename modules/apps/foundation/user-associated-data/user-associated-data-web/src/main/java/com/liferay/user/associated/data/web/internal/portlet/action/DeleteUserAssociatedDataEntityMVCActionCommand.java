@@ -47,12 +47,6 @@ public class DeleteUserAssociatedDataEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_deleteUADEntity(actionRequest);
-	}
-
-	private void _deleteUADEntity(ActionRequest actionRequest)
-		throws Exception {
-
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey");
 

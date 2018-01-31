@@ -298,23 +298,6 @@ public class WorkflowDefinitionDisplayContext {
 		return workFlowDefinitions;
 	}
 
-	public boolean showRestoreButton(
-		WorkflowDefinition currentWorkflowDefinition,
-		WorkflowDefinition workflowDefinition) {
-
-		if ((currentWorkflowDefinition.getVersion() ==
-				workflowDefinition.getVersion()) &&
-			(currentWorkflowDefinition.getModifiedDate() != null) &&
-			(workflowDefinition.getModifiedDate() != null) &&
-			currentWorkflowDefinition.getModifiedDate().equals(
-				workflowDefinition.getModifiedDate())) {
-
-			return false;
-		}
-
-		return true;
-	}
-
 	protected PredicateFilter<WorkflowDefinition> createPredicateFilter(
 		String description, String title, int status, boolean andOperator) {
 

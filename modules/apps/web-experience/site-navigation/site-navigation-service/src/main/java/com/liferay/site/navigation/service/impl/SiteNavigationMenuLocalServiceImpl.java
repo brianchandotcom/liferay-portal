@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.site.navigation.constants.SiteNavigationConstants;
-import com.liferay.site.navigation.exception.PrimarySiteNavigationMenuException;
 import com.liferay.site.navigation.exception.SiteNavigationMenuNameException;
 import com.liferay.site.navigation.model.SiteNavigationMenu;
 import com.liferay.site.navigation.model.SiteNavigationMenuItem;
@@ -270,24 +269,6 @@ public class SiteNavigationMenuLocalServiceImpl
 	protected void validate(String name) throws PortalException {
 		if (Validator.isNull(name)) {
 			throw new SiteNavigationMenuNameException();
-		}
-	}
-
-	protected void validatePrimarySiteNavigationMenu(
-			SiteNavigationMenu siteNavigationMenu)
-		throws PrimarySiteNavigationMenuException {
-
-		SiteNavigationMenu primarySiteNavigationMenu =
-			fetchPrimarySiteNavigationMenu(siteNavigationMenu.getGroupId());
-
-		if (primarySiteNavigationMenu == null) {
-			return;
-		}
-
-		if (primarySiteNavigationMenu.getSiteNavigationMenuId() !=
-				siteNavigationMenu.getSiteNavigationMenuId()) {
-
-			throw new PrimarySiteNavigationMenuException();
 		}
 	}
 

@@ -835,7 +835,8 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Attributes attributes = manifest.getMainAttributes();
 
-		return new Parameters(attributes.getValue("Provide-Capability"));
+		return new Parameters(
+			attributes.getValue(Constants.PROVIDE_CAPABILITY));
 	}
 
 	private Bundle _getStaticBundle(
@@ -925,7 +926,7 @@ public class ModuleFrameworkImpl implements ModuleFramework {
 
 		Attributes attributes = extraPackagesManifest.getMainAttributes();
 
-		String exportedPackages = attributes.getValue("Export-Package");
+		String exportedPackages = attributes.getValue(Constants.EXPORT_PACKAGE);
 
 		sb.append(exportedPackages);
 

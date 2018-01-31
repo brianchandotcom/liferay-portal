@@ -31,4 +31,7 @@ public interface CommerceOrganizationHelper {
 			HttpServletRequest httpServletRequest)
 		throws PortalException;
 
+	public void setCurrentOrganization(
+		HttpServletRequest httpServletRequest, long organizationId);
+
 }

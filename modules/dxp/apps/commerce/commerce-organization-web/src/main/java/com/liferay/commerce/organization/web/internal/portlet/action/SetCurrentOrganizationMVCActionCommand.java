@@ -14,6 +14,7 @@
 
 package com.liferay.commerce.organization.web.internal.portlet.action;
 
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
@@ -24,7 +25,6 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -48,20 +48,18 @@ public class SetCurrentOrganizationMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
-			actionRequest);
-
-		httpServletRequest = _portal.getOriginalServletRequest(
-			httpServletRequest);
-
-		HttpSession httpSession = httpServletRequest.getSession();
-
 		long currentOrganizationId = ParamUtil.getLong(
 			actionRequest, "currentOrganizationId");
 
-		httpSession.setAttribute(
-			"LIFERAY_SHARED_CURRENT_ORGANIZATION_ID", currentOrganizationId);
+		HttpServletRequest httpServletRequest = _portal.getHttpServletRequest(
+			actionRequest);
+
+		_commerceOrganizationHelper.setCurrentOrganization(
+			httpServletRequest, currentOrganizationId);
 	}
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 	@Reference
 	private Portal _portal;

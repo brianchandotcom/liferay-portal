@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.SessionParamUtil;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -50,6 +51,18 @@ public class CommerceOrganizationHelperImpl
 
 		return _commerceOrganizationService.getOrganization(
 			currentOrganizationId);
+	}
+
+	@Override
+	public void setCurrentOrganization(
+		HttpServletRequest httpServletRequest, long organizationId) {
+
+		httpServletRequest = _portal.getOriginalServletRequest(
+			httpServletRequest);
+
+		HttpSession httpSession = httpServletRequest.getSession();
+
+		httpSession.setAttribute(_CURRENT_ORGANIZATION_ID_KEY, organizationId);
 	}
 
 	private static final String _CURRENT_ORGANIZATION_ID_KEY =

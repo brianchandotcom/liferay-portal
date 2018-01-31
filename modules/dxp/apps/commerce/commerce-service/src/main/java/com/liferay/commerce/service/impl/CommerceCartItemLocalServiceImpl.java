@@ -17,6 +17,7 @@ package com.liferay.commerce.service.impl;
 import com.liferay.commerce.cart.CommerceCartValidatorRegistry;
 import com.liferay.commerce.cart.CommerceCartValidatorResult;
 import com.liferay.commerce.exception.CommerceCartValidatorException;
+import com.liferay.commerce.model.CommerceCart;
 import com.liferay.commerce.model.CommerceCartItem;
 import com.liferay.commerce.product.exception.NoSuchCPInstanceException;
 import com.liferay.commerce.product.model.CPDefinition;
@@ -48,8 +49,9 @@ public class CommerceCartItemLocalServiceImpl
 
 		// Commerce cart item
 
+		CommerceCart commerceCart = commerceCartLocalService.getCommerceCart(
+			commerceCartId);
 		User user = userLocalService.getUser(serviceContext.getUserId());
-		long groupId = serviceContext.getScopeGroupId();
 
 		validate(cpDefinitionId, cpInstanceId, commerceCartId, quantity);
 
@@ -58,11 +60,11 @@ public class CommerceCartItemLocalServiceImpl
 		CommerceCartItem commerceCartItem = commerceCartItemPersistence.create(
 			commerceCartItemId);
 
-		commerceCartItem.setGroupId(groupId);
+		commerceCartItem.setGroupId(commerceCart.getGroupId());
 		commerceCartItem.setCompanyId(user.getCompanyId());
 		commerceCartItem.setUserId(user.getUserId());
 		commerceCartItem.setUserName(user.getFullName());
-		commerceCartItem.setCommerceCartId(commerceCartId);
+		commerceCartItem.setCommerceCartId(commerceCart.getCommerceCartId());
 		commerceCartItem.setCPDefinitionId(cpDefinitionId);
 		commerceCartItem.setCPInstanceId(cpInstanceId);
 		commerceCartItem.setQuantity(quantity);

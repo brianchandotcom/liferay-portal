@@ -31,7 +31,7 @@
 </tr>
 <tr>
 	<td>CONTENT_TITLE</td>
-	<td>//div[contains(@class,'list-group-item-content')]/h4[contains(.,'${key_assetTitle}')]</td>
+	<td>//*[@data-qa-id='rowItemContent']/h4[contains(.,'${key_assetTitle}')]</td>
 	<td></td>
 </tr>
 <tr>

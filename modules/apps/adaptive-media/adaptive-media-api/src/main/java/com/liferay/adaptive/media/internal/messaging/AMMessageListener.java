@@ -15,7 +15,7 @@
 package com.liferay.adaptive.media.internal.messaging;
 
 import com.liferay.adaptive.media.internal.constants.AMDestinationNames;
-import com.liferay.adaptive.media.processor.AMAsyncProcessor;
+import com.liferay.adaptive.media.internal.processor.AMAsyncProcessorImpl;
 import com.liferay.adaptive.media.processor.AMAsyncProcessorLocator;
 import com.liferay.adaptive.media.processor.AMProcessor;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.repository.model.FileVersion;
 
 import java.util.List;
 
@@ -88,10 +87,7 @@ public class AMMessageListener extends BaseMessageListener {
 			}
 		}
 
-		AMAsyncProcessor<FileVersion, ?> amAsyncProcessor =
-			_amAsyncProcessorLocator.locateForClass(FileVersion.class);
-
-		amAsyncProcessor.cleanQueue(amProcessorCommand, modelId);
+		AMAsyncProcessorImpl.cleanQueue(amProcessorCommand, modelId);
 	}
 
 	private static final Log _log = LogFactoryUtil.getLog(

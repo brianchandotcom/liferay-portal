@@ -185,8 +185,7 @@ public class CommerceOrganizationServiceImpl
 	}
 
 	@Override
-	public void unsetOrganizationUsers(
-			long organizationId, long[] removeUserIds)
+	public void unsetOrganizationUsers(long organizationId, long[] userIds)
 		throws PortalException {
 
 		try (ProxyModeThreadLocalCloseable proxyModeThreadLocalCloseable =
@@ -194,8 +193,7 @@ public class CommerceOrganizationServiceImpl
 
 			ProxyModeThreadLocal.setForceSync(true);
 
-			userLocalService.unsetOrganizationUsers(
-				organizationId, removeUserIds);
+			userLocalService.unsetOrganizationUsers(organizationId, userIds);
 		}
 	}
 

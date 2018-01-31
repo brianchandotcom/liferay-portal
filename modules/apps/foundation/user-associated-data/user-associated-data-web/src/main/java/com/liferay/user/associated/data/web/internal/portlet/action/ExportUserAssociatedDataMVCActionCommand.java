@@ -46,10 +46,11 @@ public class ExportUserAssociatedDataMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String key = ParamUtil.getString(actionRequest, "key");
+		String uadRegistryKey = ParamUtil.getString(
+			actionRequest, "uadRegistryKey");
 
 		UADEntityExporter uadEntityExporter = _uadRegistry.getUADEntityExporter(
-			key);
+			uadRegistryKey);
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 

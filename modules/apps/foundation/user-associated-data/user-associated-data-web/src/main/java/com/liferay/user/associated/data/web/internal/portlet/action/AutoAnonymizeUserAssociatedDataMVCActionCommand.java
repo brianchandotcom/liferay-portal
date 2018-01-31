@@ -46,10 +46,11 @@ public class AutoAnonymizeUserAssociatedDataMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		String key = ParamUtil.getString(actionRequest, "key");
+		String uadRegistryKey = ParamUtil.getString(
+			actionRequest, "uadRegistryKey");
 
 		UADEntityAnonymizer uadEntityAnonymizer =
-			_uadRegistry.getUADEntityAnonymizer(key);
+			_uadRegistry.getUADEntityAnonymizer(uadRegistryKey);
 
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 

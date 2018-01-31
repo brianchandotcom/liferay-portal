@@ -200,7 +200,15 @@ public class DetailASTUtil {
 	}
 
 	public static String getTypeName(DetailAST detailAST) {
-		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+		if (detailAST == null) {
+			return StringPool.BLANK;
+		}
+
+		DetailAST typeAST = detailAST;
+
+		if (detailAST.getType() != TokenTypes.TYPE) {
+			typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+		}
 
 		DetailAST childAST = typeAST.getFirstChild();
 

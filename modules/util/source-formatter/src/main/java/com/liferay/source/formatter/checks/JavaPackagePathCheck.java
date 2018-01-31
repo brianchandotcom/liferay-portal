@@ -40,7 +40,7 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 			return content;
 		}
 
-		_checkPackageName(fileName, packageName);
+		_checkPackageName(fileName, absolutePath, packageName);
 
 		if (isModulesFile(absolutePath) && !isModulesApp(absolutePath, true)) {
 			_checkModulePackageName(fileName, packageName);
@@ -88,7 +88,9 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 		}
 	}
 
-	private void _checkPackageName(String fileName, String packageName) {
+	private void _checkPackageName(
+		String fileName, String absolutePath, String packageName) {
+
 		int pos = fileName.lastIndexOf(CharPool.SLASH);
 
 		String filePath = StringUtil.replace(
@@ -108,6 +110,12 @@ public class JavaPackagePathCheck extends BaseFileCheck {
 			addMessage(
 				fileName, "Do not use 'impl' inside 'internal'",
 				"package.markdown");
+		}
+
+		if (absolutePath.contains("-api/src/") &&
+			packageName.matches(".*\\.internal(\\..*)?")) {
+
+			addMessage(fileName, "Do not use 'internal' package in API module");
 		}
 	}
 

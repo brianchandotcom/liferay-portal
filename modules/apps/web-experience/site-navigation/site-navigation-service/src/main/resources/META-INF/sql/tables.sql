@@ -8,7 +8,7 @@ create table SiteNavigationMenu (
 	modifiedDate DATE null,
 	name VARCHAR(75) null,
 	type_ INTEGER,
-	addNewPages BOOLEAN
+	auto_ BOOLEAN
 );
 
 create table SiteNavigationMenuItem (

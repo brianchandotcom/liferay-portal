@@ -67,7 +67,7 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
-		attributes.put("addNewPages", getAddNewPages());
+		attributes.put("auto", getAuto());
 
 		return attributes;
 	}
@@ -128,10 +128,10 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 			setType(type);
 		}
 
-		Boolean addNewPages = (Boolean)attributes.get("addNewPages");
+		Boolean auto = (Boolean)attributes.get("auto");
 
-		if (addNewPages != null) {
-			setAddNewPages(addNewPages);
+		if (auto != null) {
+			setAuto(auto);
 		}
 	}
 
@@ -146,13 +146,13 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
-	* Returns the add new pages of this site navigation menu.
+	* Returns the auto of this site navigation menu.
 	*
-	* @return the add new pages of this site navigation menu
+	* @return the auto of this site navigation menu
 	*/
 	@Override
-	public boolean getAddNewPages() {
-		return _siteNavigationMenu.getAddNewPages();
+	public boolean getAuto() {
+		return _siteNavigationMenu.getAuto();
 	}
 
 	/**
@@ -281,13 +281,13 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
-	* Returns <code>true</code> if this site navigation menu is add new pages.
+	* Returns <code>true</code> if this site navigation menu is auto.
 	*
-	* @return <code>true</code> if this site navigation menu is add new pages; <code>false</code> otherwise
+	* @return <code>true</code> if this site navigation menu is auto; <code>false</code> otherwise
 	*/
 	@Override
-	public boolean isAddNewPages() {
-		return _siteNavigationMenu.isAddNewPages();
+	public boolean isAuto() {
+		return _siteNavigationMenu.isAuto();
 	}
 
 	@Override
@@ -311,13 +311,13 @@ public class SiteNavigationMenuWrapper implements SiteNavigationMenu,
 	}
 
 	/**
-	* Sets whether this site navigation menu is add new pages.
+	* Sets whether this site navigation menu is auto.
 	*
-	* @param addNewPages the add new pages of this site navigation menu
+	* @param auto the auto of this site navigation menu
 	*/
 	@Override
-	public void setAddNewPages(boolean addNewPages) {
-		_siteNavigationMenu.setAddNewPages(addNewPages);
+	public void setAuto(boolean auto) {
+		_siteNavigationMenu.setAuto(auto);
 	}
 
 	@Override

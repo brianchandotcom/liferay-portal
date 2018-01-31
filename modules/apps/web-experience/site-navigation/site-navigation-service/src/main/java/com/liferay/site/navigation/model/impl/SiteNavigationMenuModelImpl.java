@@ -78,7 +78,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
 			{ "type_", Types.INTEGER },
-			{ "addNewPages", Types.BOOLEAN }
+			{ "auto_", Types.BOOLEAN }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -92,10 +92,10 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("type_", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("addNewPages", Types.BOOLEAN);
+		TABLE_COLUMNS_MAP.put("auto_", Types.BOOLEAN);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenu (siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,addNewPages BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table SiteNavigationMenu (siteNavigationMenuId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(75) null,type_ INTEGER,auto_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table SiteNavigationMenu";
 	public static final String ORDER_BY_JPQL = " ORDER BY siteNavigationMenu.siteNavigationMenuId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY SiteNavigationMenu.siteNavigationMenuId ASC";
@@ -111,10 +111,11 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.site.navigation.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.site.navigation.model.SiteNavigationMenu"),
 			true);
-	public static final long GROUPID_COLUMN_BITMASK = 1L;
-	public static final long NAME_COLUMN_BITMASK = 2L;
-	public static final long TYPE_COLUMN_BITMASK = 4L;
-	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 8L;
+	public static final long AUTO_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long TYPE_COLUMN_BITMASK = 8L;
+	public static final long SITENAVIGATIONMENUID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,7 +139,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setName(soapModel.getName());
 		model.setType(soapModel.getType());
-		model.setAddNewPages(soapModel.getAddNewPages());
+		model.setAuto(soapModel.getAuto());
 
 		return model;
 	}
@@ -213,7 +214,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("type", getType());
-		attributes.put("addNewPages", getAddNewPages());
+		attributes.put("auto", getAuto());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -277,10 +278,10 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 			setType(type);
 		}
 
-		Boolean addNewPages = (Boolean)attributes.get("addNewPages");
+		Boolean auto = (Boolean)attributes.get("auto");
 
-		if (addNewPages != null) {
-			setAddNewPages(addNewPages);
+		if (auto != null) {
+			setAuto(auto);
 		}
 	}
 
@@ -451,19 +452,31 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 	@JSON
 	@Override
-	public boolean getAddNewPages() {
-		return _addNewPages;
+	public boolean getAuto() {
+		return _auto;
 	}
 
 	@JSON
 	@Override
-	public boolean isAddNewPages() {
-		return _addNewPages;
+	public boolean isAuto() {
+		return _auto;
 	}
 
 	@Override
-	public void setAddNewPages(boolean addNewPages) {
-		_addNewPages = addNewPages;
+	public void setAuto(boolean auto) {
+		_columnBitmask |= AUTO_COLUMN_BITMASK;
+
+		if (!_setOriginalAuto) {
+			_setOriginalAuto = true;
+
+			_originalAuto = _auto;
+		}
+
+		_auto = auto;
+	}
+
+	public boolean getOriginalAuto() {
+		return _originalAuto;
 	}
 
 	public long getColumnBitmask() {
@@ -506,7 +519,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		siteNavigationMenuImpl.setModifiedDate(getModifiedDate());
 		siteNavigationMenuImpl.setName(getName());
 		siteNavigationMenuImpl.setType(getType());
-		siteNavigationMenuImpl.setAddNewPages(getAddNewPages());
+		siteNavigationMenuImpl.setAuto(getAuto());
 
 		siteNavigationMenuImpl.resetOriginalValues();
 
@@ -581,6 +594,10 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 		siteNavigationMenuModelImpl._setOriginalType = false;
 
+		siteNavigationMenuModelImpl._originalAuto = siteNavigationMenuModelImpl._auto;
+
+		siteNavigationMenuModelImpl._setOriginalAuto = false;
+
 		siteNavigationMenuModelImpl._columnBitmask = 0;
 	}
 
@@ -632,7 +649,7 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 
 		siteNavigationMenuCacheModel.type = getType();
 
-		siteNavigationMenuCacheModel.addNewPages = getAddNewPages();
+		siteNavigationMenuCacheModel.auto = getAuto();
 
 		return siteNavigationMenuCacheModel;
 	}
@@ -659,8 +676,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		sb.append(getName());
 		sb.append(", type=");
 		sb.append(getType());
-		sb.append(", addNewPages=");
-		sb.append(getAddNewPages());
+		sb.append(", auto=");
+		sb.append(getAuto());
 		sb.append("}");
 
 		return sb.toString();
@@ -711,8 +728,8 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 		sb.append(getType());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>addNewPages</column-name><column-value><![CDATA[");
-		sb.append(getAddNewPages());
+			"<column><column-name>auto</column-name><column-value><![CDATA[");
+		sb.append(getAuto());
 		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
@@ -739,7 +756,9 @@ public class SiteNavigationMenuModelImpl extends BaseModelImpl<SiteNavigationMen
 	private int _type;
 	private int _originalType;
 	private boolean _setOriginalType;
-	private boolean _addNewPages;
+	private boolean _auto;
+	private boolean _originalAuto;
+	private boolean _setOriginalAuto;
 	private long _columnBitmask;
 	private SiteNavigationMenu _escapedModel;
 }

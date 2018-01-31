@@ -210,6 +210,12 @@ public class SiteNavigationMenuLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.site.navigation.model.SiteNavigationMenu fetchAutoSiteNavigationMenu(
+		long groupId) {
+		return _siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(groupId);
+	}
+
+	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu fetchPrimarySiteNavigationMenu(
 		long groupId) {
 		return _siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(groupId);
@@ -325,11 +331,11 @@ public class SiteNavigationMenuLocalServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long userId, long siteNavigationMenuId, int type, boolean addNewPages,
+		long userId, long siteNavigationMenuId, int type, boolean auto,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuLocalService.updateSiteNavigationMenu(userId,
-			siteNavigationMenuId, type, addNewPages, serviceContext);
+			siteNavigationMenuId, type, auto, serviceContext);
 	}
 
 	@Override

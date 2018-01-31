@@ -85,8 +85,8 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		sb.append(name);
 		sb.append(", type=");
 		sb.append(type);
-		sb.append(", addNewPages=");
-		sb.append(addNewPages);
+		sb.append(", auto=");
+		sb.append(auto);
 		sb.append("}");
 
 		return sb.toString();
@@ -130,7 +130,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 		}
 
 		siteNavigationMenuImpl.setType(type);
-		siteNavigationMenuImpl.setAddNewPages(addNewPages);
+		siteNavigationMenuImpl.setAuto(auto);
 
 		siteNavigationMenuImpl.resetOriginalValues();
 
@@ -153,7 +153,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 
 		type = objectInput.readInt();
 
-		addNewPages = objectInput.readBoolean();
+		auto = objectInput.readBoolean();
 	}
 
 	@Override
@@ -186,7 +186,7 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 
 		objectOutput.writeInt(type);
 
-		objectOutput.writeBoolean(addNewPages);
+		objectOutput.writeBoolean(auto);
 	}
 
 	public long siteNavigationMenuId;
@@ -198,5 +198,5 @@ public class SiteNavigationMenuCacheModel implements CacheModel<SiteNavigationMe
 	public long modifiedDate;
 	public String name;
 	public int type;
-	public boolean addNewPages;
+	public boolean auto;
 }

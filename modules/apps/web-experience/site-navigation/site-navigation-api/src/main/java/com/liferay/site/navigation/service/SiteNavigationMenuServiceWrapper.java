@@ -112,11 +112,11 @@ public class SiteNavigationMenuServiceWrapper
 
 	@Override
 	public com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long siteNavigationMenuId, int type, boolean addNewPages,
+		long siteNavigationMenuId, int type, boolean auto,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _siteNavigationMenuService.updateSiteNavigationMenu(siteNavigationMenuId,
-			type, addNewPages, serviceContext);
+			type, auto, serviceContext);
 	}
 
 	@Override

@@ -201,6 +201,11 @@ public class SiteNavigationMenuLocalServiceUtil {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchAutoSiteNavigationMenu(
+		long groupId) {
+		return getService().fetchAutoSiteNavigationMenu(groupId);
+	}
+
 	public static com.liferay.site.navigation.model.SiteNavigationMenu fetchPrimarySiteNavigationMenu(
 		long groupId) {
 		return getService().fetchPrimarySiteNavigationMenu(groupId);
@@ -303,12 +308,12 @@ public class SiteNavigationMenuLocalServiceUtil {
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(
-		long userId, long siteNavigationMenuId, int type, boolean addNewPages,
+		long userId, long siteNavigationMenuId, int type, boolean auto,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateSiteNavigationMenu(userId, siteNavigationMenuId,
-			type, addNewPages, serviceContext);
+			type, auto, serviceContext);
 	}
 
 	public static com.liferay.site.navigation.model.SiteNavigationMenu updateSiteNavigationMenu(

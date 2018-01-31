@@ -119,9 +119,16 @@ public class ScreensAssetEntryServiceImpl
 			List<Layout> layouts = layoutLocalService.getLayouts(companyId);
 
 			if (!layouts.isEmpty()) {
-				Layout layout = layouts.get(0);
+				AssetEntryQuery assetEntryQuery =
+					_assetPublisherHelper.getAssetEntryQuery(
+						portletPreferences, groupId, layouts.get(0), null,
+						null);
 
-				List<AssetEntry> assetEntries = new ArrayList<>();
+				assetEntryQuery.setEnd(max);
+				assetEntryQuery.setStart(0);
+
+				List<AssetEntry> assetEntries =
+					assetEntryLocalService.getEntries(assetEntryQuery);
 
 				assetEntries = filterAssetEntries(assetEntries);
 

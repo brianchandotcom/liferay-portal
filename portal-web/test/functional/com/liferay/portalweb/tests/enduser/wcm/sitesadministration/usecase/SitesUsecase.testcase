@@ -217,11 +217,6 @@
 			<var name="parentPageName" value="Home" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
-			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Blog Page" />
-		</execute>
-
 		<execute macro="Page#addPageTranslations">
 			<var name="pageTranslation" value="es_ES" />
 			<var name="pageTranslationName" value="Blog Página" />

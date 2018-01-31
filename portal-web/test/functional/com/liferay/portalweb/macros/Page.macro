@@ -34,9 +34,9 @@
 	</command>
 
 	<command name="addJavaScript">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -85,15 +85,9 @@
 	</command>
 
 	<command name="addPageTranslations">
-		<execute macro="ProductMenu#gotoPortlet">
-			<var name="category" value="Navigation" />
-			<var name="panel" value="Site Administration" />
-			<var name="portlet" value="Site Pages" />
-		</execute>
-
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${page}" />
+			<var name="pageName" value="${page}" />
 		</execute>
 
 		<var name="key_pageTranslation" value="${pageTranslation}" />
@@ -164,9 +158,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${page}" />
+			<var name="pageName" value="${page}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -199,9 +193,9 @@
 	</command>
 
 	<command name="copyApplicationsFromPageToPage">
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Copy Applications" />
-			<var name="rowEntry" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertTextEquals" locator1="Message#INFO" value1="The applications in page ${pageName} will be replaced with the ones in the page you select below." />
@@ -365,9 +359,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
@@ -797,16 +791,16 @@
 	</command>
 
 	<command name="viewNoDeletePagesAssociatedWithSiteTemplate">
-		<execute function="Click#waitForMenuToggleJSClick" locator1="Icon#ROW_VERTICAL_ELLIPSIS">
-			<var name="key_rowEntry" value="${page}" />
+		<execute function="Click#waitForMenuToggleJSClick" locator1="SitePages#LIST_GROUP_ITEM_ELLIPSIS_ICON">
+			<var name="key_pageName" value="${page}" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="MenuItem#ANY_MENU_ITEM" value1="${menuItem}">
 			<var name="key_menuItem" value="${menuItem}" />
 		</execute>
 
-		<execute function="Check" locator1="ContentRow#ENTRY_CONTENT_ENTRY_CHECKBOX">
-			<var name="key_rowEntry" value="${page}" />
+		<execute function="Check" locator1="SitePages#LIST_GROUP_ITEM_CHECKBOX">
+			<var name="key_pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="ClickNoError" locator1="Icon#DELETE" />
@@ -835,8 +829,8 @@
 			<var name="privacy" value="${privacy}" />
 		</execute>
 
-		<execute function="AssertElementNotPresent" locator1="ContentRow#ENTRY_CONTENT_ENTRY" value1="${pageName}">
-			<var name="key_rowEntry" value="${pageName}" />
+		<execute function="AssertElementNotPresent" locator1="SitePages#LIST_GROUP_ITEM">
+			<var name="key_pageName" value="${pageName}" />
 		</execute>
 	</command>
 
@@ -953,16 +947,16 @@
 	</command>
 
 	<command name="viewPagesOrder">
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName1}">
-			<var name="key_rowNumber" value="1" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName1}">
+			<var name="key_index" value="1" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName2}">
-			<var name="key_rowNumber" value="2" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName2}">
+			<var name="key_index" value="2" />
 		</execute>
 
-		<execute function="AssertTextEquals#assertPartialText" locator1="ContentRow#ENTRY_CONTENT_ROW_NUMBER" value1="${pageName3}">
-			<var name="key_rowNumber" value="3" />
+		<execute function="AssertTextEquals#assertPartialText" locator1="SitePages#LIST_GROUP_ITEM_ROW_ENTRY" value1="${pageName3}">
+			<var name="key_index" value="3" />
 		</execute>
 	</command>
 
@@ -1032,9 +1026,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="${pageName}" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<var name="key_componentName" value="${componentName}" />

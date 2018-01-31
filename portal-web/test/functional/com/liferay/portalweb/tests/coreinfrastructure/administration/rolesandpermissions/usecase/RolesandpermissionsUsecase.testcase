@@ -489,14 +489,8 @@
 			<var name="pageName" value="Private Blogs Page" />
 		</execute>
 
-		<execute macro="ProductMenuHelper#expandCategory">
-			<var name="category" value="Navigation" />
-		</execute>
-
 		<execute macro="PermissionsInline#gotoSitepageCP">
-			<var name="page" value="Private Pages" />
 			<var name="pageName" value="Private Blogs Page" />
-			<var name="siteName" value="Site Name" />
 		</execute>
 
 		<execute function="AssertElementNotPresent" locator1="Permissions#CONTENT_PERMISSIONS_ROLE_NAME">

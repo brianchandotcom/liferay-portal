@@ -99,9 +99,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Staging Test Page" />
+			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="Page#addFriendlyURLLocalizedPG">
@@ -117,9 +117,9 @@
 			<var name="portlet" value="Site Pages" />
 		</execute>
 
-		<execute macro="LexiconEntry#gotoEntryMenuItem">
+		<execute macro="SitePages#gotoPageMenuItem">
 			<var name="menuItem" value="Configure" />
-			<var name="rowEntry" value="Staging Test Page" />
+			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="Page#viewPageFriendlyURLPG">

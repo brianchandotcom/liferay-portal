@@ -31,7 +31,6 @@ import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -113,7 +112,6 @@ public class TLiferayOutputDefinitionTest {
 			ConnectorTopology.INCOMING);
 	}
 
-	@Ignore
 	@Test
 	public void testGetRuntimeInfoWrongTopology() {
 		expectedException.expect(TalendRuntimeException.class);

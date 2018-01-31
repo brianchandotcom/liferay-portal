@@ -12,11 +12,10 @@
  * details.
  */
 
-package com.liferay.talend.connection;
+package com.liferay.talend.wizard;
 
+import com.liferay.talend.connection.LiferayConnectionProperties;
 import com.liferay.talend.tliferayinput.TLiferayInputProperties;
-import com.liferay.talend.wizard.LiferayConnectionWizard;
-import com.liferay.talend.wizard.LiferayConnectionWizardDefinition;
 
 import java.util.Locale;
 

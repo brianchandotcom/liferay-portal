@@ -223,7 +223,8 @@ public class PortletFileRepositoryTest {
 			_group.getGroupId(), TestPropsValues.getUserId(),
 			User.class.getName(), TestPropsValues.getUserId(), _portletId,
 			_folder.getFolderId(),
-			RandomTestUtil.randomInputStream(TikaSafeRandomizerBumper.INSTANCE),
+			RandomTestUtil.randomInputStream(
+				TikaSafeRandomizerBumper.INSTANCE_NULL),
 			name, ContentTypes.APPLICATION_OCTET_STREAM, false);
 	}
 

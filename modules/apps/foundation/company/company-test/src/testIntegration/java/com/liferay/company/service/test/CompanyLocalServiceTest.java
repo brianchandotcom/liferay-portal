@@ -214,8 +214,8 @@ public class CompanyLocalServiceTest {
 		serviceContext.setUserId(userId);
 
 		DLAppLocalServiceUtil.addFileEntry(
-			userId, guestGroup.getGroupId(), 0, "test.xml", "text/xml",
-			"test.xml", "", "", "test".getBytes(), serviceContext);
+			userId, guestGroup.getGroupId(), 0, "test.txt", "text/plain",
+			"test.txt", "", "", "test".getBytes(), serviceContext);
 
 		CompanyLocalServiceUtil.deleteCompany(companyId);
 	}

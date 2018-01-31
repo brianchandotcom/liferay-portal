@@ -238,7 +238,8 @@ public abstract class BaseWorkflowTaskManagerTestCase {
 				RandomTestUtil.randomString(), ContentTypes.TEXT_PLAIN,
 				RandomTestUtil.randomString(), StringPool.BLANK,
 				StringPool.BLANK,
-				RandomTestUtil.randomBytes(TikaSafeRandomizerBumper.INSTANCE),
+				RandomTestUtil.randomBytes(
+					TikaSafeRandomizerBumper.INSTANCE_NULL),
 				serviceContext);
 
 			DLFileEntry dlFileEntry = DLFileEntryLocalServiceUtil.getFileEntry(

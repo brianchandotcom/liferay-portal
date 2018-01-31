@@ -18,11 +18,15 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.model.CommerceAddress;
 import com.liferay.commerce.model.CommerceCartItem;
+import com.liferay.commerce.organization.service.CommerceOrganizationLocalServiceUtil;
 import com.liferay.commerce.service.CommerceAddressLocalServiceUtil;
 import com.liferay.commerce.service.CommerceCartItemLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Group;
+import com.liferay.portal.kernel.model.Organization;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.GroupLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 
 import java.util.List;
@@ -30,6 +34,7 @@ import java.util.List;
 /**
  * @author Marco Leo
  * @author Alessio Antonio Rendina
+ * @author Andrea Di Giorgi
  */
 @ProviderType
 public class CommerceCartImpl extends CommerceCartBaseImpl {
@@ -47,6 +52,34 @@ public class CommerceCartImpl extends CommerceCartBaseImpl {
 		}
 
 		return null;
+	}
+
+	@Override
+	public String getClassName() throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+		if (group.isOrganization() &&
+			CommerceOrganizationLocalServiceUtil.isB2BOrganization(
+				group.getOrganizationId())) {
+
+			return Organization.class.getName();
+		}
+
+		return User.class.getName();
+	}
+
+	@Override
+	public long getClassPK() throws PortalException {
+		Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+		if (group.isOrganization() &&
+			CommerceOrganizationLocalServiceUtil.isB2BOrganization(
+				group.getOrganizationId())) {
+
+			return group.getOrganizationId();
+		}
+
+		return getUserId();
 	}
 
 	@Override

@@ -19,6 +19,7 @@ import com.liferay.commerce.exception.CommerceAddressCountryException;
 import com.liferay.commerce.exception.CommerceAddressStreetException;
 import com.liferay.commerce.exception.NoSuchAddressException;
 import com.liferay.commerce.model.CommerceAddress;
+import com.liferay.commerce.organization.service.CommerceOrganizationService;
 import com.liferay.commerce.organization.web.internal.constants.CommerceOrganizationPortletKeys;
 import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.portal.kernel.model.Organization;
@@ -129,6 +130,9 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 		long organizationId = ParamUtil.getLong(
 			actionRequest, "organizationId");
 
+		Organization organization =
+			_commerceOrganizationService.getOrganization(organizationId);
+
 		String name = ParamUtil.getString(actionRequest, "name");
 		String description = ParamUtil.getString(actionRequest, "description");
 		String street1 = ParamUtil.getString(actionRequest, "street1");
@@ -149,6 +153,8 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceAddress.class.getName(), actionRequest);
 
+		serviceContext.setScopeGroupId(organization.getGroupId());
+
 		if (commerceAddressId <= 0) {
 			_commerceAddressService.addCommerceAddress(
 				Organization.class.getName(), organizationId, name, description,
@@ -166,6 +172,9 @@ public class EditCommerceAddressMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private CommerceAddressService _commerceAddressService;
+
+	@Reference
+	private CommerceOrganizationService _commerceOrganizationService;
 
 	@Reference
 	private Portal _portal;

@@ -29,7 +29,6 @@ import com.liferay.commerce.service.CommerceAddressService;
 import com.liferay.commerce.service.CommerceCartService;
 import com.liferay.frontend.taglib.servlet.taglib.util.JSPRenderer;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
@@ -91,7 +90,7 @@ public abstract class BaseAddressCommerceCheckoutStep
 	}
 
 	protected CommerceAddress addCommerceAddress(
-			long addressUserId, ActionRequest actionRequest)
+			CommerceCart commerceCart, ActionRequest actionRequest)
 		throws PortalException {
 
 		String name = ParamUtil.getString(actionRequest, "name");
@@ -110,10 +109,12 @@ public abstract class BaseAddressCommerceCheckoutStep
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			CommerceAddress.class.getName(), actionRequest);
 
+		serviceContext.setScopeGroupId(commerceCart.getGroupId());
+
 		return commerceAddressService.addCommerceAddress(
-			User.class.getName(), addressUserId, name, description, street1,
-			street2, street3, city, zip, commerceRegionId, commerceCountryId,
-			phoneNumber, false, false, serviceContext);
+			commerceCart.getClassName(), commerceCart.getClassPK(), name,
+			description, street1, street2, street3, city, zip, commerceRegionId,
+			commerceCountryId, phoneNumber, false, false, serviceContext);
 	}
 
 	protected abstract BaseAddressCheckoutStepDisplayContext
@@ -140,7 +141,7 @@ public abstract class BaseAddressCommerceCheckoutStep
 
 		if (newAddress) {
 			CommerceAddress commerceAddress = addCommerceAddress(
-				commerceCart.getUserId(), actionRequest);
+				commerceCart, actionRequest);
 
 			commerceAddressId = commerceAddress.getCommerceAddressId();
 		}

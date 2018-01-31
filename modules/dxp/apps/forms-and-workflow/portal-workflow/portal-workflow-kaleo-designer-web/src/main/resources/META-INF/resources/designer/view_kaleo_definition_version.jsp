@@ -25,14 +25,14 @@ KaleoDefinition kaleoDefinition = kaleoDefinitionVersion.getKaleoDefinition();
 
 String content = kaleoDefinitionVersion.getContent();
 
+String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
+
+boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
+
 portletDisplay.setShowBackIcon(true);
 portletDisplay.setURLBack(redirect);
 
 renderResponse.setTitle(kaleoDefinitionVersion.getTitle(locale));
-
-String state = (String)request.getParameter(WorkflowWebKeys.WORKFLOW_JSP_STATE);
-
-boolean previewBeforeRestore = WorkflowWebKeys.WORKFLOW_PREVIEW_BEFORE_RESTORE_STATE.equals(state);
 %>
 
 <aui:model-context bean="<%= kaleoDefinitionVersion %>" model="<%= KaleoDefinitionVersion.class %>" />

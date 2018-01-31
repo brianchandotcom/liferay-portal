@@ -42,11 +42,11 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 
 	@Override
 	public void onAfterCreate(Layout layout) throws ModelListenerException {
-		SiteNavigationMenu primarySiteNavigationMenu =
-			_siteNavigationMenuLocalService.fetchPrimarySiteNavigationMenu(
+		SiteNavigationMenu siteNavigationMenu =
+			_siteNavigationMenuLocalService.fetchAutoSiteNavigationMenu(
 				layout.getGroupId());
 
-		if (primarySiteNavigationMenu == null) {
+		if (siteNavigationMenu == null) {
 			return;
 		}
 
@@ -67,12 +67,12 @@ public class LayoutModelListener extends BaseModelListener<Layout> {
 			if (layout.getParentPlid() > 0) {
 				parentSiteNavigationMenuItemId =
 					_getParentSiteNavigationMenuItemId(
-						layout, primarySiteNavigationMenu);
+						layout, siteNavigationMenu);
 			}
 
 			_siteNavigationMenuItemLocalService.addSiteNavigationMenuItem(
 				layout.getUserId(), layout.getGroupId(),
-				primarySiteNavigationMenu.getSiteNavigationMenuId(),
+				siteNavigationMenu.getSiteNavigationMenuId(),
 				parentSiteNavigationMenuItemId, "layout",
 				unicodeProperties.toString(), serviceContext);
 		}

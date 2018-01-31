@@ -15,6 +15,7 @@
 package com.liferay.roles.admin.web.internal.display.context;
 
 import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItem;
+import com.liferay.frontend.taglib.clay.servlet.taglib.util.NavigationItemList;
 import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.Role;
@@ -59,26 +60,21 @@ public class RoleDisplayContext {
 			PortletURL portletURL)
 		throws Exception {
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(portletURL, "tabs2", "users");
 
-		NavigationItem entriesNavigationItem = new NavigationItem();
+						String tabs2 = ParamUtil.getString(
+							_request, "tabs2", "users");
 
-		entriesNavigationItem.setActive(true);
-
-		PortletURL usersPortletURL = PortletURLUtil.clone(
-			portletURL, _renderResponse);
-
-		usersPortletURL.setParameter("tabs2", "users");
-
-		entriesNavigationItem.setHref(usersPortletURL.toString());
-
-		String tabs2 = ParamUtil.getString(_request, "tabs2", "users");
-
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, tabs2));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, tabs2));
+					});
+			}
+		};
 	}
 
 	public List<NavigationItem> getEditRoleNavigationItems() throws Exception {
@@ -86,78 +82,75 @@ public class RoleDisplayContext {
 
 		Role role = RoleServiceUtil.fetchRole(roleId);
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
 		if (role != null) {
 			List<String> tabNames = _getTabNames();
 			Map<String, String> tabsURLMap = _getTabsURLMap();
 
 			String tabs1 = ParamUtil.getString(_request, "tabs1");
 
-			for (int i = 0; i < tabNames.size(); i++) {
-				NavigationItem entriesNavigationItem = new NavigationItem();
+			return new NavigationItemList() {
+				{
+					for (String tabName : tabNames) {
+						add(
+							navigationItem -> {
+								navigationItem.setActive(tabName.equals(tabs1));
+								navigationItem.setHref(tabsURLMap.get(tabName));
+								navigationItem.setLabel(
+									LanguageUtil.get(_request, tabName));
+							});
+					}
+				}
+			};
+		}
 
-				String tabName = tabNames.get(i);
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(_getCurrentURL());
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "details"));
+					});
 
-				entriesNavigationItem.setActive(tabName.equals(tabs1));
-				entriesNavigationItem.setHref(tabsURLMap.get(tabName));
-				entriesNavigationItem.setLabel(
-					LanguageUtil.get(_request, tabName));
+				add(
+					navigationItem -> {
+						navigationItem.setActive(false);
+						navigationItem.setDisabled(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "define-permissions"));
+					});
 
-				navigationItems.add(entriesNavigationItem);
+				int type = ParamUtil.getInteger(
+					_request, "type", RoleConstants.TYPE_REGULAR);
+
+				if (type == RoleConstants.TYPE_REGULAR) {
+					add(
+						navigationItem -> {
+							navigationItem.setActive(false);
+							navigationItem.setDisabled(false);
+							navigationItem.setHref(StringPool.BLANK);
+							navigationItem.setLabel(
+								LanguageUtil.get(_request, "assignees"));
+						});
+				}
 			}
-
-			return navigationItems;
-		}
-
-		NavigationItem detailsNavigationItem = new NavigationItem();
-
-		detailsNavigationItem.setActive(true);
-		detailsNavigationItem.setHref(_getCurrentURL());
-		detailsNavigationItem.setLabel(LanguageUtil.get(_request, "details"));
-
-		navigationItems.add(detailsNavigationItem);
-
-		NavigationItem definePermissionsNavigationItem = new NavigationItem();
-
-		definePermissionsNavigationItem.setActive(false);
-		definePermissionsNavigationItem.setDisabled(true);
-		definePermissionsNavigationItem.setHref(StringPool.BLANK);
-		definePermissionsNavigationItem.setLabel(
-			LanguageUtil.get(_request, "define-permissions"));
-
-		navigationItems.add(definePermissionsNavigationItem);
-
-		int type = ParamUtil.getInteger(
-			_request, "type", RoleConstants.TYPE_REGULAR);
-
-		if (type == RoleConstants.TYPE_REGULAR) {
-			NavigationItem assigneesNavigationItem = new NavigationItem();
-
-			assigneesNavigationItem.setActive(false);
-			assigneesNavigationItem.setDisabled(false);
-			assigneesNavigationItem.setHref(StringPool.BLANK);
-			assigneesNavigationItem.setLabel(
-				LanguageUtil.get(_request, "assignees"));
-
-			navigationItems.add(assigneesNavigationItem);
-		}
-
-		return navigationItems;
+		};
 	}
 
 	public List<NavigationItem> getSelectRoleNavigationItems(String label) {
-		List<NavigationItem> navigationItems = new ArrayList<>();
-
-		NavigationItem entriesNavigationItem = new NavigationItem();
-
-		entriesNavigationItem.setActive(true);
-		entriesNavigationItem.setHref(StringPool.BLANK);
-		entriesNavigationItem.setLabel(LanguageUtil.get(_request, label));
-
-		navigationItems.add(entriesNavigationItem);
-
-		return navigationItems;
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(true);
+						navigationItem.setHref(StringPool.BLANK);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, label));
+					});
+			}
+		};
 	}
 
 	public List<NavigationItem> getViewRoleNavigationItems(
@@ -166,63 +159,40 @@ public class RoleDisplayContext {
 
 		int type = ParamUtil.getInteger(_request, "type", 1);
 
-		List<NavigationItem> navigationItems = new ArrayList<>();
+		return new NavigationItemList() {
+			{
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							type == RoleConstants.TYPE_REGULAR);
+						navigationItem.setHref(
+							portletURL, "type", RoleConstants.TYPE_REGULAR);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "regular-roles"));
+					});
 
-		NavigationItem regularRolesNavigationItem = new NavigationItem();
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							type == RoleConstants.TYPE_SITE);
+						navigationItem.setHref(
+							portletURL, "type", RoleConstants.TYPE_SITE);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "site-roles"));
+					});
 
-		regularRolesNavigationItem.setActive(
-			type == RoleConstants.TYPE_REGULAR);
-
-		PortletURL regularRolesURL = PortletURLUtil.clone(
-			portletURL, _renderResponse);
-
-		regularRolesURL.setParameter(
-			"type", String.valueOf(RoleConstants.TYPE_REGULAR));
-
-		regularRolesNavigationItem.setHref(regularRolesURL.toString());
-
-		regularRolesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "regular-roles"));
-
-		navigationItems.add(regularRolesNavigationItem);
-
-		NavigationItem siteRolesNavigationItem = new NavigationItem();
-
-		siteRolesNavigationItem.setActive(type == RoleConstants.TYPE_SITE);
-
-		PortletURL siteRolesURL = PortletURLUtil.clone(
-			portletURL, _renderResponse);
-
-		siteRolesURL.setParameter(
-			"type", String.valueOf(RoleConstants.TYPE_SITE));
-
-		siteRolesNavigationItem.setHref(siteRolesURL.toString());
-
-		siteRolesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "site-roles"));
-
-		navigationItems.add(siteRolesNavigationItem);
-
-		NavigationItem organizationRolesNavigationItem = new NavigationItem();
-
-		organizationRolesNavigationItem.setActive(
-			type == RoleConstants.TYPE_ORGANIZATION);
-
-		PortletURL organizationRolesURL = PortletURLUtil.clone(
-			portletURL, _renderResponse);
-
-		organizationRolesURL.setParameter(
-			"type", String.valueOf(RoleConstants.TYPE_ORGANIZATION));
-
-		organizationRolesNavigationItem.setHref(
-			organizationRolesURL.toString());
-
-		organizationRolesNavigationItem.setLabel(
-			LanguageUtil.get(_request, "organization-roles"));
-
-		navigationItems.add(organizationRolesNavigationItem);
-
-		return navigationItems;
+				add(
+					navigationItem -> {
+						navigationItem.setActive(
+							type == RoleConstants.TYPE_ORGANIZATION);
+						navigationItem.setHref(
+							portletURL, "type",
+							RoleConstants.TYPE_ORGANIZATION);
+						navigationItem.setLabel(
+							LanguageUtil.get(_request, "organization-roles"));
+					});
+			}
+		};
 	}
 
 	private String _getCurrentURL() {

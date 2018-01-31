@@ -41,7 +41,9 @@ import org.osgi.service.component.annotations.Reference;
 public class AutoAnonymizeUserAssociatedDataMVCActionCommand
 	extends BaseMVCActionCommand {
 
-	protected void autoAnonymizeAll(ActionRequest actionRequest)
+	@Override
+	protected void doProcessAction(
+			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
 		String key = ParamUtil.getString(actionRequest, "key");
@@ -52,14 +54,6 @@ public class AutoAnonymizeUserAssociatedDataMVCActionCommand
 		long selUserId = ParamUtil.getLong(actionRequest, "selUserId");
 
 		uadEntityAnonymizer.autoAnonymizeAll(selUserId);
-	}
-
-	@Override
-	protected void doProcessAction(
-			ActionRequest actionRequest, ActionResponse actionResponse)
-		throws Exception {
-
-		autoAnonymizeAll(actionRequest);
 	}
 
 	@Reference

@@ -47,12 +47,6 @@ public class ExportUserAssociatedDataEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_exportUADEntity(actionRequest);
-	}
-
-	private void _exportUADEntity(ActionRequest actionRequest)
-		throws Exception {
-
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey");
 

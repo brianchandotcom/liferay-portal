@@ -47,12 +47,6 @@ public class AutoAnonymizeUserAssociatedDataEntityMVCActionCommand
 			ActionRequest actionRequest, ActionResponse actionResponse)
 		throws Exception {
 
-		_autoAnonymizeUADEntity(actionRequest);
-	}
-
-	private void _autoAnonymizeUADEntity(ActionRequest actionRequest)
-		throws Exception {
-
 		String uadRegistryKey = ParamUtil.getString(
 			actionRequest, "uadRegistryKey");
 

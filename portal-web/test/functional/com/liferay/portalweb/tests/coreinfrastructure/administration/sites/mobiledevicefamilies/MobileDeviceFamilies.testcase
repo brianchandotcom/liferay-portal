@@ -110,8 +110,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Mobile Device Family Test Page" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Mobile Device Family Test Page" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">

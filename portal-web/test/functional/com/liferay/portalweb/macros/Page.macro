@@ -35,8 +35,8 @@
 
 	<command name="addJavaScript">
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -86,8 +86,8 @@
 
 	<command name="addPageTranslations">
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${page}" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="${page}" />
 		</execute>
 
 		<var name="key_pageTranslation" value="${pageTranslation}" />
@@ -159,8 +159,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${page}" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="${page}" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">
@@ -360,8 +360,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="AssertElementPresent" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
@@ -1027,9 +1027,10 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
+
 		<var name="key_componentName" value="${componentName}" />
 
 		<if>

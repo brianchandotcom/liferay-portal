@@ -100,8 +100,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Staging Test Page" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="Page#addFriendlyURLLocalizedPG">
@@ -118,8 +118,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Staging Test Page" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Staging Test Page" />
 		</execute>
 
 		<execute macro="Page#viewPageFriendlyURLPG">

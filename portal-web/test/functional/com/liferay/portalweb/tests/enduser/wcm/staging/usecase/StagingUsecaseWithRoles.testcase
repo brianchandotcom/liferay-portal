@@ -384,8 +384,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Home" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -406,8 +406,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Home" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -428,8 +428,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Home" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">
@@ -457,8 +457,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Home" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Home" />
 		</execute>
 
 		<execute macro="Page#viewPageLayoutColumn">

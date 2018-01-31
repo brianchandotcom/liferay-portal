@@ -178,8 +178,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Permissions" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute function="SelectFrame" locator1="IFrame#DIALOG" />
@@ -202,8 +202,8 @@
 
 	<command name="gotoSitepageCP">
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="${pageName}" />
 			<var name="menuItem" value="Permissions" />
+			<var name="pageName" value="${pageName}" />
 		</execute>
 
 		<execute macro="IFrame#selectPermissionsFrame" />

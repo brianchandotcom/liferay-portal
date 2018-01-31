@@ -253,8 +253,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Welcome" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Welcome" />
 		</execute>
 
 		<execute macro="Navigator#gotoNavTab">

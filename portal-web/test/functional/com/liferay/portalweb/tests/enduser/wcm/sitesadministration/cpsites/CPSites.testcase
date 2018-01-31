@@ -562,8 +562,8 @@
 		</execute>
 
 		<execute macro="SitePages#gotoPageMenuItem">
-			<var name="pageName" value="Site Page" />
 			<var name="menuItem" value="Configure" />
+			<var name="pageName" value="Site Page" />
 		</execute>
 
 		<execute macro="Page#viewFriendlyURL">

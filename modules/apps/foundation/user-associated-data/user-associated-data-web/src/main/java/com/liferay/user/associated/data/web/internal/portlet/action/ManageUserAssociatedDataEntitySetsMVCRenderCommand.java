@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.user.associated.data.constants.UserAssociatedDataPortletKeys;
 import com.liferay.user.associated.data.registry.UADRegistry;
 import com.liferay.user.associated.data.util.UADEntitySetComposite;
+import com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys;
 
 import java.util.List;
 
@@ -50,14 +51,13 @@ public class ManageUserAssociatedDataEntitySetsMVCRenderCommand
 
 		long selUserId = ParamUtil.getLong(renderRequest, "selUserId");
 
-		renderRequest.setAttribute("selUserId", selUserId);
-
 		if (selUserId > 0) {
 			List<UADEntitySetComposite> uadEntitySetComposites =
 				_uadRegistry.getUADEntitySetComposites(selUserId);
 
 			renderRequest.setAttribute(
-				"uadEntitySetComposites", uadEntitySetComposites);
+				UserAssociatedDataWebKeys.UAD_ENTITY_SET_COMPOSITES,
+				uadEntitySetComposites);
 		}
 
 		return "/manage_user_associated_data_entity_sets.jsp";

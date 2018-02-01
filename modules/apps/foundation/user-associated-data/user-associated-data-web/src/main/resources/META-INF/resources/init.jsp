@@ -27,7 +27,8 @@ page import="com.liferay.taglib.search.ResultRow" %><%@
 page import="com.liferay.user.associated.data.display.UADEntityDisplay" %><%@
 page import="com.liferay.user.associated.data.entity.UADEntity" %><%@
 page import="com.liferay.user.associated.data.util.UADEntitySetComposite" %><%@
-page import="com.liferay.user.associated.data.util.UADEntityTypeComposite" %>
+page import="com.liferay.user.associated.data.util.UADEntityTypeComposite" %><%@
+page import="com.liferay.user.associated.data.web.internal.constants.UserAssociatedDataWebKeys" %>
 
 <%@ page import="java.util.List" %>
 

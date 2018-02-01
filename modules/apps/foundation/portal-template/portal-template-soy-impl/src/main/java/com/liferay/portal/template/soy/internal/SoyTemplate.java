@@ -373,7 +373,7 @@ public class SoyTemplate extends AbstractMultiResourceTemplate {
 			}
 
 			if (!newMap.isEmpty()) {
-				 return getSoyMapValue(cache, newMap);
+				return getSoyMapValue(cache, newMap);
 			}
 		}
 

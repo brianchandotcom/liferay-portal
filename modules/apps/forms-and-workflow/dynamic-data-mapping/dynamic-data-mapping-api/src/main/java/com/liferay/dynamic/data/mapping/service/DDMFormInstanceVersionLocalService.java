@@ -16,14 +16,10 @@ package com.liferay.dynamic.data.mapping.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
-
-import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,7 +29,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -75,11 +70,6 @@ public interface DDMFormInstanceVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMFormInstanceVersion addDDMFormInstanceVersion(
 		DDMFormInstanceVersion ddmFormInstanceVersion);
-
-	public DDMFormInstanceVersion addFormInstanceVersion(
-		long ddmStructureVersionId, long userId,
-		DDMFormInstance ddmFormInstance, java.lang.String version,
-		ServiceContext serviceContext) throws PortalException;
 
 	/**
 	* Creates a new ddm form instance version with the primary key. Does not add the ddm form instance version to the database.
@@ -183,17 +173,6 @@ public interface DDMFormInstanceVersionLocalService extends BaseLocalService,
 	public DDMFormInstanceVersion fetchDDMFormInstanceVersion(
 		long formInstanceVersionId);
 
-	/**
-	* Returns the ddm form instance version matching the UUID and group.
-	*
-	* @param uuid the ddm form instance version's UUID
-	* @param groupId the primary key of the group
-	* @return the matching ddm form instance version, or <code>null</code> if a matching ddm form instance version could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFormInstanceVersion fetchDDMFormInstanceVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
@@ -207,18 +186,6 @@ public interface DDMFormInstanceVersionLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceVersion getDDMFormInstanceVersion(
 		long formInstanceVersionId) throws PortalException;
-
-	/**
-	* Returns the ddm form instance version matching the UUID and group.
-	*
-	* @param uuid the ddm form instance version's UUID
-	* @param groupId the primary key of the group
-	* @return the matching ddm form instance version
-	* @throws PortalException if a matching ddm form instance version could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public DDMFormInstanceVersion getDDMFormInstanceVersionByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the ddm form instance versions.
@@ -236,42 +203,12 @@ public interface DDMFormInstanceVersionLocalService extends BaseLocalService,
 		int end);
 
 	/**
-	* Returns all the ddm form instance versions matching the UUID and company.
-	*
-	* @param uuid the UUID of the ddm form instance versions
-	* @param companyId the primary key of the company
-	* @return the matching ddm form instance versions, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMFormInstanceVersion> getDDMFormInstanceVersionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
-
-	/**
-	* Returns a range of ddm form instance versions matching the UUID and company.
-	*
-	* @param uuid the UUID of the ddm form instance versions
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of ddm form instance versions
-	* @param end the upper bound of the range of ddm form instance versions (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching ddm form instance versions, or an empty list if no matches were found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<DDMFormInstanceVersion> getDDMFormInstanceVersionsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		OrderByComparator<DDMFormInstanceVersion> orderByComparator);
-
-	/**
 	* Returns the number of ddm form instance versions.
 	*
 	* @return the number of ddm form instance versions
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getDDMFormInstanceVersionsCount();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public DDMFormInstanceVersion getFormInstanceVersion(
@@ -322,8 +259,4 @@ public interface DDMFormInstanceVersionLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public DDMFormInstanceVersion updateDDMFormInstanceVersion(
 		DDMFormInstanceVersion ddmFormInstanceVersion);
-
-	public void updateFormInstanceVersion(long ddmStructureVersionId,
-		long userId, DDMFormInstance ddmFormInstance,
-		ServiceContext serviceContext) throws PortalException;
 }

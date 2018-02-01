@@ -18,8 +18,6 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -60,14 +58,12 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("structureId", getStructureId());
 		attributes.put("version", getVersion());
 		attributes.put("parentStructureId", getParentStructureId());
@@ -80,19 +76,12 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		return attributes;
 	}
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long structureVersionId = (Long)attributes.get("structureVersionId");
 
 		if (structureVersionId != null) {
@@ -127,12 +116,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 
 		if (createDate != null) {
 			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
 		}
 
 		Long structureId = (Long)attributes.get("structureId");
@@ -205,12 +188,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 
 		if (statusDate != null) {
 			setStatusDate(statusDate);
-		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
 		}
 	}
 
@@ -366,26 +343,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public long getGroupId() {
 		return _ddmStructureVersion.getGroupId();
-	}
-
-	/**
-	* Returns the last publish date of this ddm structure version.
-	*
-	* @return the last publish date of this ddm structure version
-	*/
-	@Override
-	public Date getLastPublishDate() {
-		return _ddmStructureVersion.getLastPublishDate();
-	}
-
-	/**
-	* Returns the modified date of this ddm structure version.
-	*
-	* @return the modified date of this ddm structure version
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _ddmStructureVersion.getModifiedDate();
 	}
 
 	/**
@@ -614,16 +571,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	@Override
 	public java.lang.String getUserUuid() {
 		return _ddmStructureVersion.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this ddm structure version.
-	*
-	* @return the uuid of this ddm structure version
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _ddmStructureVersion.getUuid();
 	}
 
 	/**
@@ -885,26 +832,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	/**
-	* Sets the last publish date of this ddm structure version.
-	*
-	* @param lastPublishDate the last publish date of this ddm structure version
-	*/
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_ddmStructureVersion.setLastPublishDate(lastPublishDate);
-	}
-
-	/**
-	* Sets the modified date of this ddm structure version.
-	*
-	* @param modifiedDate the modified date of this ddm structure version
-	*/
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_ddmStructureVersion.setModifiedDate(modifiedDate);
-	}
-
-	/**
 	* Sets the name of this ddm structure version.
 	*
 	* @param name the name of this ddm structure version
@@ -1116,16 +1043,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 	}
 
 	/**
-	* Sets the uuid of this ddm structure version.
-	*
-	* @param uuid the uuid of this ddm structure version
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_ddmStructureVersion.setUuid(uuid);
-	}
-
-	/**
 	* Sets the version of this ddm structure version.
 	*
 	* @param version the version of this ddm structure version
@@ -1178,11 +1095,6 @@ public class DDMStructureVersionWrapper implements DDMStructureVersion,
 		}
 
 		return false;
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return _ddmStructureVersion.getStagedModelType();
 	}
 
 	@Override

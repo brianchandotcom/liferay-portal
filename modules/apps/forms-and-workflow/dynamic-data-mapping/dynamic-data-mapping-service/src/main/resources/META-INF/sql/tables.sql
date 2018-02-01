@@ -90,14 +90,12 @@ create table DDMFormInstanceRecordVersion (
 );
 
 create table DDMFormInstanceVersion (
-	uuid_ VARCHAR(75) null,
 	formInstanceVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
 	formInstanceId LONG,
 	structureVersionId LONG,
 	name STRING null,
@@ -107,8 +105,7 @@ create table DDMFormInstanceVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	lastPublishDate DATE null
+	statusDate DATE null
 );
 
 create table DDMStorageLink (
@@ -166,14 +163,12 @@ create table DDMStructureLink (
 );
 
 create table DDMStructureVersion (
-	uuid_ VARCHAR(75) null,
 	structureVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
 	structureId LONG,
 	version VARCHAR(75) null,
 	parentStructureId LONG,
@@ -185,8 +180,7 @@ create table DDMStructureVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	lastPublishDate DATE null
+	statusDate DATE null
 );
 
 create table DDMTemplate (

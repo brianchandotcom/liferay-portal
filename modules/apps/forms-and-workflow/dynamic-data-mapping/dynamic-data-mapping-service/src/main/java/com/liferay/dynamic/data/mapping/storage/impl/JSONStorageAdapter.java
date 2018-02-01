@@ -50,24 +50,6 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			ServiceContext serviceContext)
 		throws Exception {
 
-		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
-			ddmStructureId);
-
-		DDMStructureVersion ddmStructureVersion =
-			ddmStructure.getLatestStructureVersion();
-
-		return doCreate(
-			companyId, ddmStructureId,
-			ddmStructureVersion.getStructureVersionId(), ddmFormValues,
-			serviceContext);
-	}
-
-	@Override
-	public long doCreate(
-			long companyId, long ddmStructureId, long ddmStructureVersionId,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
-		throws Exception {
-
 		validate(ddmFormValues, serviceContext);
 
 		long classNameId = _portal.getClassNameId(DDMContent.class.getName());
@@ -80,9 +62,15 @@ public class JSONStorageAdapter extends BaseStorageAdapter {
 			DDMStorageLink.class.getName(), null, serializedDDMFormValues,
 			serviceContext);
 
+		DDMStructure ddmStructure = _ddmStructureLocalService.getDDMStructure(
+			ddmStructureId);
+
+		DDMStructureVersion ddmStructureVersion =
+			ddmStructure.getLatestStructureVersion();
+
 		_ddmStorageLinkLocalService.addStorageLink(
-			classNameId, ddmContent.getPrimaryKey(), ddmStructureVersionId,
-			serviceContext);
+			classNameId, ddmContent.getPrimaryKey(),
+			ddmStructureVersion.getStructureVersionId(), serviceContext);
 
 		return ddmContent.getPrimaryKey();
 	}

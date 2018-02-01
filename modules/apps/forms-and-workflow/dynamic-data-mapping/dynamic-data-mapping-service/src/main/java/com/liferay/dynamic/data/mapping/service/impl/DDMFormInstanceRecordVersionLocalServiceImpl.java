@@ -27,8 +27,8 @@ import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
- * @see    DDMFormInstanceRecordVersionLocalServiceBaseImpl
- * @see    com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalServiceUtil
+ * @see DDMFormInstanceRecordVersionLocalServiceBaseImpl
+ * @see com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalServiceUtil
  */
 public class DDMFormInstanceRecordVersionLocalServiceImpl
 	extends DDMFormInstanceRecordVersionLocalServiceBaseImpl {

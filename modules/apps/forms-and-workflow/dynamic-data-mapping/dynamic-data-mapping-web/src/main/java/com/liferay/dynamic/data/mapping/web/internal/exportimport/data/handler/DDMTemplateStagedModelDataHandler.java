@@ -12,14 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.exportimport.data.handler;
+package com.liferay.dynamic.data.mapping.web.internal.exportimport.data.handler;
 
 import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.dynamic.data.mapping.exportimport.content.processor.DDMTemplateExportImportContentProcessor;
 import com.liferay.dynamic.data.mapping.model.DDMStructure;
 import com.liferay.dynamic.data.mapping.model.DDMTemplate;
 import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalService;
+import com.liferay.dynamic.data.mapping.web.internal.exportimport.content.processor.DDMTemplateExportImportContentProcessor;
 import com.liferay.exportimport.kernel.lar.ExportImportPathUtil;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.PortletDataException;
@@ -246,7 +246,7 @@ public class DDMTemplateStagedModelDataHandler
 				replaceExportContentReferences(
 					portletDataContext, template, template.getScript(),
 					portletDataContext.getBooleanParameter(
-						_DYNAMIC_DATA_MAPPING_NAMESPACE, "referenced-content"),
+						DDMPortletDataHandler.NAMESPACE, "referenced-content"),
 					false);
 
 		template.setScript(script);
@@ -506,9 +506,6 @@ public class DDMTemplateStagedModelDataHandler
 	protected void setUserLocalService(UserLocalService userLocalService) {
 		_userLocalService = userLocalService;
 	}
-
-	private static final String _DYNAMIC_DATA_MAPPING_NAMESPACE =
-		"dynamic_data_mapping";
 
 	private static final Log _log = LogFactoryUtil.getLog(
 		DDMTemplateStagedModelDataHandler.class);

@@ -65,11 +65,9 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(39);
+		StringBundler sb = new StringBundler(33);
 
-		sb.append("{uuid=");
-		sb.append(uuid);
-		sb.append(", formInstanceVersionId=");
+		sb.append("{formInstanceVersionId=");
 		sb.append(formInstanceVersionId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -81,8 +79,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		sb.append(userName);
 		sb.append(", createDate=");
 		sb.append(createDate);
-		sb.append(", modifiedDate=");
-		sb.append(modifiedDate);
 		sb.append(", formInstanceId=");
 		sb.append(formInstanceId);
 		sb.append(", structureVersionId=");
@@ -103,8 +99,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		sb.append(statusByUserName);
 		sb.append(", statusDate=");
 		sb.append(statusDate);
-		sb.append(", lastPublishDate=");
-		sb.append(lastPublishDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -113,13 +107,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 	@Override
 	public DDMFormInstanceVersion toEntityModel() {
 		DDMFormInstanceVersionImpl ddmFormInstanceVersionImpl = new DDMFormInstanceVersionImpl();
-
-		if (uuid == null) {
-			ddmFormInstanceVersionImpl.setUuid("");
-		}
-		else {
-			ddmFormInstanceVersionImpl.setUuid(uuid);
-		}
 
 		ddmFormInstanceVersionImpl.setFormInstanceVersionId(formInstanceVersionId);
 		ddmFormInstanceVersionImpl.setGroupId(groupId);
@@ -138,13 +125,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		}
 		else {
 			ddmFormInstanceVersionImpl.setCreateDate(new Date(createDate));
-		}
-
-		if (modifiedDate == Long.MIN_VALUE) {
-			ddmFormInstanceVersionImpl.setModifiedDate(null);
-		}
-		else {
-			ddmFormInstanceVersionImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
 		ddmFormInstanceVersionImpl.setFormInstanceId(formInstanceId);
@@ -195,14 +175,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 			ddmFormInstanceVersionImpl.setStatusDate(new Date(statusDate));
 		}
 
-		if (lastPublishDate == Long.MIN_VALUE) {
-			ddmFormInstanceVersionImpl.setLastPublishDate(null);
-		}
-		else {
-			ddmFormInstanceVersionImpl.setLastPublishDate(new Date(
-					lastPublishDate));
-		}
-
 		ddmFormInstanceVersionImpl.resetOriginalValues();
 
 		return ddmFormInstanceVersionImpl;
@@ -210,8 +182,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		uuid = objectInput.readUTF();
-
 		formInstanceVersionId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -221,7 +191,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
-		modifiedDate = objectInput.readLong();
 
 		formInstanceId = objectInput.readLong();
 
@@ -236,19 +205,11 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		statusByUserId = objectInput.readLong();
 		statusByUserName = objectInput.readUTF();
 		statusDate = objectInput.readLong();
-		lastPublishDate = objectInput.readLong();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		if (uuid == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(uuid);
-		}
-
 		objectOutput.writeLong(formInstanceVersionId);
 
 		objectOutput.writeLong(groupId);
@@ -265,7 +226,6 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		}
 
 		objectOutput.writeLong(createDate);
-		objectOutput.writeLong(modifiedDate);
 
 		objectOutput.writeLong(formInstanceId);
 
@@ -311,17 +271,14 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 		}
 
 		objectOutput.writeLong(statusDate);
-		objectOutput.writeLong(lastPublishDate);
 	}
 
-	public String uuid;
 	public long formInstanceVersionId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
-	public long modifiedDate;
 	public long formInstanceId;
 	public long structureVersionId;
 	public String name;
@@ -332,5 +289,4 @@ public class DDMFormInstanceVersionCacheModel implements CacheModel<DDMFormInsta
 	public long statusByUserId;
 	public String statusByUserName;
 	public long statusDate;
-	public long lastPublishDate;
 }

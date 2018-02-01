@@ -145,7 +145,9 @@ renderResponse.setTitle((formInstance == null) ? LanguageUtil.get(request, "new-
 
 		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="publishFormInstance" var="publishFormInstanceURL" />
 
-		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL" />
+		<liferay-portlet:resourceURL copyCurrentRenderParameters="<%= false %>" id="saveFormInstance" var="autoSaveFormInstanceURL">
+			<portlet:param name="autoSave" value="<%= Boolean.TRUE.toString() %>" />
+		</liferay-portlet:resourceURL>
 
 		<liferay-form:ddm-form-builder
 			ddmStructureId="<%= ddmFormAdminDisplayContext.getDDMStructureId() %>"

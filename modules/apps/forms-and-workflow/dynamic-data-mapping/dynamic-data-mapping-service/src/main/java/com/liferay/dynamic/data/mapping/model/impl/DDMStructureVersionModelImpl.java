@@ -23,8 +23,6 @@ import com.liferay.dynamic.data.mapping.model.DDMStructureVersionSoap;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
-import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.LocaleException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.Validator;
@@ -80,14 +77,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	 */
 	public static final String TABLE_NAME = "DDMStructureVersion";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "uuid_", Types.VARCHAR },
 			{ "structureVersionId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP },
 			{ "structureId", Types.BIGINT },
 			{ "version", Types.VARCHAR },
 			{ "parentStructureId", Types.BIGINT },
@@ -99,20 +94,17 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			{ "status", Types.INTEGER },
 			{ "statusByUserId", Types.BIGINT },
 			{ "statusByUserName", Types.VARCHAR },
-			{ "statusDate", Types.TIMESTAMP },
-			{ "lastPublishDate", Types.TIMESTAMP }
+			{ "statusDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("structureVersionId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("structureId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("version", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("parentStructureId", Types.BIGINT);
@@ -125,10 +117,9 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		TABLE_COLUMNS_MAP.put("statusByUserId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("statusByUserName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("statusDate", Types.TIMESTAMP);
-		TABLE_COLUMNS_MAP.put("lastPublishDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (uuid_ VARCHAR(75) null,structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null,lastPublishDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table DDMStructureVersion (structureVersionId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,structureId LONG,version VARCHAR(75) null,parentStructureId LONG,name STRING null,description TEXT null,definition TEXT null,storageType VARCHAR(75) null,type_ INTEGER,status INTEGER,statusByUserId LONG,statusByUserName VARCHAR(75) null,statusDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table DDMStructureVersion";
 	public static final String ORDER_BY_JPQL = " ORDER BY ddmStructureVersion.structureVersionId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY DDMStructureVersion.structureVersionId ASC";
@@ -144,13 +135,10 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.dynamic.data.mapping.service.util.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.dynamic.data.mapping.model.DDMStructureVersion"),
 			true);
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long STATUS_COLUMN_BITMASK = 4L;
-	public static final long STRUCTUREID_COLUMN_BITMASK = 8L;
-	public static final long UUID_COLUMN_BITMASK = 16L;
-	public static final long VERSION_COLUMN_BITMASK = 32L;
-	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 64L;
+	public static final long STATUS_COLUMN_BITMASK = 1L;
+	public static final long STRUCTUREID_COLUMN_BITMASK = 2L;
+	public static final long VERSION_COLUMN_BITMASK = 4L;
+	public static final long STRUCTUREVERSIONID_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -165,14 +153,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 		DDMStructureVersion model = new DDMStructureVersionImpl();
 
-		model.setUuid(soapModel.getUuid());
 		model.setStructureVersionId(soapModel.getStructureVersionId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
-		model.setModifiedDate(soapModel.getModifiedDate());
 		model.setStructureId(soapModel.getStructureId());
 		model.setVersion(soapModel.getVersion());
 		model.setParentStructureId(soapModel.getParentStructureId());
@@ -185,7 +171,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		model.setStatusByUserId(soapModel.getStatusByUserId());
 		model.setStatusByUserName(soapModel.getStatusByUserName());
 		model.setStatusDate(soapModel.getStatusDate());
-		model.setLastPublishDate(soapModel.getLastPublishDate());
 
 		return model;
 	}
@@ -251,14 +236,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("uuid", getUuid());
 		attributes.put("structureVersionId", getStructureVersionId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
-		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("structureId", getStructureId());
 		attributes.put("version", getVersion());
 		attributes.put("parentStructureId", getParentStructureId());
@@ -271,7 +254,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		attributes.put("statusByUserId", getStatusByUserId());
 		attributes.put("statusByUserName", getStatusByUserName());
 		attributes.put("statusDate", getStatusDate());
-		attributes.put("lastPublishDate", getLastPublishDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -281,12 +263,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		String uuid = (String)attributes.get("uuid");
-
-		if (uuid != null) {
-			setUuid(uuid);
-		}
-
 		Long structureVersionId = (Long)attributes.get("structureVersionId");
 
 		if (structureVersionId != null) {
@@ -321,12 +297,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 		if (createDate != null) {
 			setCreateDate(createDate);
-		}
-
-		Date modifiedDate = (Date)attributes.get("modifiedDate");
-
-		if (modifiedDate != null) {
-			setModifiedDate(modifiedDate);
 		}
 
 		Long structureId = (Long)attributes.get("structureId");
@@ -400,36 +370,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		if (statusDate != null) {
 			setStatusDate(statusDate);
 		}
-
-		Date lastPublishDate = (Date)attributes.get("lastPublishDate");
-
-		if (lastPublishDate != null) {
-			setLastPublishDate(lastPublishDate);
-		}
-	}
-
-	@JSON
-	@Override
-	public String getUuid() {
-		if (_uuid == null) {
-			return "";
-		}
-		else {
-			return _uuid;
-		}
-	}
-
-	@Override
-	public void setUuid(String uuid) {
-		if (_originalUuid == null) {
-			_originalUuid = _uuid;
-		}
-
-		_uuid = uuid;
-	}
-
-	public String getOriginalUuid() {
-		return GetterUtil.getString(_originalUuid);
 	}
 
 	@JSON
@@ -451,19 +391,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
 		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
 	}
 
 	@JSON
@@ -474,19 +402,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	@JSON
@@ -541,23 +457,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	@Override
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
-	}
-
-	@JSON
-	@Override
-	public Date getModifiedDate() {
-		return _modifiedDate;
-	}
-
-	public boolean hasSetModifiedDate() {
-		return _setModifiedDate;
-	}
-
-	@Override
-	public void setModifiedDate(Date modifiedDate) {
-		_setModifiedDate = true;
-
-		_modifiedDate = modifiedDate;
 	}
 
 	@JSON
@@ -681,7 +580,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setName(String name, Locale locale) {
-		setName(name, locale, LocaleUtil.getSiteDefault());
+		setName(name, locale, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -706,7 +605,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setNameMap(Map<Locale, String> nameMap) {
-		setNameMap(nameMap, LocaleUtil.getSiteDefault());
+		setNameMap(nameMap, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -780,7 +679,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setDescription(String description, Locale locale) {
-		setDescription(description, locale, LocaleUtil.getSiteDefault());
+		setDescription(description, locale, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -807,7 +706,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public void setDescriptionMap(Map<Locale, String> descriptionMap) {
-		setDescriptionMap(descriptionMap, LocaleUtil.getSiteDefault());
+		setDescriptionMap(descriptionMap, LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -942,29 +841,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		_statusDate = statusDate;
 	}
 
-	@JSON
-	@Override
-	public Date getLastPublishDate() {
-		return _lastPublishDate;
-	}
-
-	@Override
-	public void setLastPublishDate(Date lastPublishDate) {
-		_lastPublishDate = lastPublishDate;
-	}
-
 	public com.liferay.dynamic.data.mapping.model.DDMForm getDDMForm() {
 		return null;
 	}
 
 	public void setDDMForm(
 		com.liferay.dynamic.data.mapping.model.DDMForm ddmForm) {
-	}
-
-	@Override
-	public StagedModelType getStagedModelType() {
-		return new StagedModelType(PortalUtil.getClassNameId(
-				DDMStructureVersion.class.getName()));
 	}
 
 	@Override
@@ -1101,7 +983,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			return "";
 		}
 
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		Locale defaultLocale = LocaleUtil.getDefault();
 
 		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 	}
@@ -1122,7 +1004,7 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-		Locale defaultLocale = LocaleUtil.getSiteDefault();
+		Locale defaultLocale = LocaleUtil.getDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -1160,14 +1042,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	public Object clone() {
 		DDMStructureVersionImpl ddmStructureVersionImpl = new DDMStructureVersionImpl();
 
-		ddmStructureVersionImpl.setUuid(getUuid());
 		ddmStructureVersionImpl.setStructureVersionId(getStructureVersionId());
 		ddmStructureVersionImpl.setGroupId(getGroupId());
 		ddmStructureVersionImpl.setCompanyId(getCompanyId());
 		ddmStructureVersionImpl.setUserId(getUserId());
 		ddmStructureVersionImpl.setUserName(getUserName());
 		ddmStructureVersionImpl.setCreateDate(getCreateDate());
-		ddmStructureVersionImpl.setModifiedDate(getModifiedDate());
 		ddmStructureVersionImpl.setStructureId(getStructureId());
 		ddmStructureVersionImpl.setVersion(getVersion());
 		ddmStructureVersionImpl.setParentStructureId(getParentStructureId());
@@ -1180,7 +1060,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		ddmStructureVersionImpl.setStatusByUserId(getStatusByUserId());
 		ddmStructureVersionImpl.setStatusByUserName(getStatusByUserName());
 		ddmStructureVersionImpl.setStatusDate(getStatusDate());
-		ddmStructureVersionImpl.setLastPublishDate(getLastPublishDate());
 
 		ddmStructureVersionImpl.resetOriginalValues();
 
@@ -1243,18 +1122,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	public void resetOriginalValues() {
 		DDMStructureVersionModelImpl ddmStructureVersionModelImpl = this;
 
-		ddmStructureVersionModelImpl._originalUuid = ddmStructureVersionModelImpl._uuid;
-
-		ddmStructureVersionModelImpl._originalGroupId = ddmStructureVersionModelImpl._groupId;
-
-		ddmStructureVersionModelImpl._setOriginalGroupId = false;
-
-		ddmStructureVersionModelImpl._originalCompanyId = ddmStructureVersionModelImpl._companyId;
-
-		ddmStructureVersionModelImpl._setOriginalCompanyId = false;
-
-		ddmStructureVersionModelImpl._setModifiedDate = false;
-
 		ddmStructureVersionModelImpl._originalStructureId = ddmStructureVersionModelImpl._structureId;
 
 		ddmStructureVersionModelImpl._setOriginalStructureId = false;
@@ -1273,14 +1140,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	@Override
 	public CacheModel<DDMStructureVersion> toCacheModel() {
 		DDMStructureVersionCacheModel ddmStructureVersionCacheModel = new DDMStructureVersionCacheModel();
-
-		ddmStructureVersionCacheModel.uuid = getUuid();
-
-		String uuid = ddmStructureVersionCacheModel.uuid;
-
-		if ((uuid != null) && (uuid.length() == 0)) {
-			ddmStructureVersionCacheModel.uuid = null;
-		}
 
 		ddmStructureVersionCacheModel.structureVersionId = getStructureVersionId();
 
@@ -1305,15 +1164,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		}
 		else {
 			ddmStructureVersionCacheModel.createDate = Long.MIN_VALUE;
-		}
-
-		Date modifiedDate = getModifiedDate();
-
-		if (modifiedDate != null) {
-			ddmStructureVersionCacheModel.modifiedDate = modifiedDate.getTime();
-		}
-		else {
-			ddmStructureVersionCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
 		ddmStructureVersionCacheModel.structureId = getStructureId();
@@ -1383,15 +1233,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			ddmStructureVersionCacheModel.statusDate = Long.MIN_VALUE;
 		}
 
-		Date lastPublishDate = getLastPublishDate();
-
-		if (lastPublishDate != null) {
-			ddmStructureVersionCacheModel.lastPublishDate = lastPublishDate.getTime();
-		}
-		else {
-			ddmStructureVersionCacheModel.lastPublishDate = Long.MIN_VALUE;
-		}
-
 		ddmStructureVersionCacheModel._ddmForm = getDDMForm();
 
 		return ddmStructureVersionCacheModel;
@@ -1399,11 +1240,9 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(37);
 
-		sb.append("{uuid=");
-		sb.append(getUuid());
-		sb.append(", structureVersionId=");
+		sb.append("{structureVersionId=");
 		sb.append(getStructureVersionId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -1415,8 +1254,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		sb.append(getUserName());
 		sb.append(", createDate=");
 		sb.append(getCreateDate());
-		sb.append(", modifiedDate=");
-		sb.append(getModifiedDate());
 		sb.append(", structureId=");
 		sb.append(getStructureId());
 		sb.append(", version=");
@@ -1441,8 +1278,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		sb.append(getStatusByUserName());
 		sb.append(", statusDate=");
 		sb.append(getStatusDate());
-		sb.append(", lastPublishDate=");
-		sb.append(getLastPublishDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -1450,16 +1285,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(67);
+		StringBundler sb = new StringBundler(58);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.dynamic.data.mapping.model.DDMStructureVersion");
 		sb.append("</model-name>");
 
-		sb.append(
-			"<column><column-name>uuid</column-name><column-value><![CDATA[");
-		sb.append(getUuid());
-		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>structureVersionId</column-name><column-value><![CDATA[");
 		sb.append(getStructureVersionId());
@@ -1483,10 +1314,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 		sb.append(
 			"<column><column-name>createDate</column-name><column-value><![CDATA[");
 		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
-		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>structureId</column-name><column-value><![CDATA[");
@@ -1536,10 +1363,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 			"<column><column-name>statusDate</column-name><column-value><![CDATA[");
 		sb.append(getStatusDate());
 		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>lastPublishDate</column-name><column-value><![CDATA[");
-		sb.append(getLastPublishDate());
-		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1550,20 +1373,12 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			DDMStructureVersion.class
 		};
-	private String _uuid;
-	private String _originalUuid;
 	private long _structureVersionId;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
-	private Date _modifiedDate;
-	private boolean _setModifiedDate;
 	private long _structureId;
 	private long _originalStructureId;
 	private boolean _setOriginalStructureId;
@@ -1583,7 +1398,6 @@ public class DDMStructureVersionModelImpl extends BaseModelImpl<DDMStructureVers
 	private long _statusByUserId;
 	private String _statusByUserName;
 	private Date _statusDate;
-	private Date _lastPublishDate;
 	private long _columnBitmask;
 	private DDMStructureVersion _escapedModel;
 }

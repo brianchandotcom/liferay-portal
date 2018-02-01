@@ -29,14 +29,6 @@ public interface StorageAdapter {
 			ServiceContext serviceContext)
 		throws StorageException;
 
-	public default long create(
-			long companyId, long ddmStructureId, long ddmStructureVersionId,
-			DDMFormValues ddmFormValues, ServiceContext serviceContext)
-		throws StorageException {
-
-		return create(companyId, ddmStructureId, ddmFormValues, serviceContext);
-	}
-
 	public void deleteByClass(long classPK) throws StorageException;
 
 	public void deleteByDDMStructure(long ddmStructureId)

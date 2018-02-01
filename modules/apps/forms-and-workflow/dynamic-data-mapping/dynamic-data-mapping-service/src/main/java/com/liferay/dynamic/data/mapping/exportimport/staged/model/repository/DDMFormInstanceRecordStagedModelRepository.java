@@ -17,7 +17,6 @@ package com.liferay.dynamic.data.mapping.exportimport.staged.model.repository;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstance;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord;
 import com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordVersion;
-import com.liferay.dynamic.data.mapping.model.DDMFormInstanceVersion;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordLocalService;
 import com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService;
 import com.liferay.dynamic.data.mapping.storage.DDMFormValues;
@@ -37,8 +36,9 @@ import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 
 import java.util.List;
 import java.util.Objects;
@@ -83,23 +83,14 @@ public class DDMFormInstanceRecordStagedModelRepository
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ddmFormInstanceRecord);
 
-		serviceContext.setAttribute(
-			"status", WorkflowConstants.STATUS_APPROVED);
-
 		if (portletDataContext.isDataStrategyMirror()) {
 			serviceContext.setUuid(ddmFormInstanceRecord.getUuid());
 		}
 
-		DDMFormInstance formInstance = ddmFormInstanceRecord.getFormInstance();
-
-		DDMFormInstanceVersion formInstanceVersion =
-			formInstance.getFormInstanceVersion(
-				ddmFormInstanceRecord.getFormInstanceVersion());
-
 		DDMFormInstanceRecord importedFormInstanceRecord =
 			_ddmFormInstanceRecordLocalService.addFormInstanceRecord(
 				userId, ddmFormInstanceRecord.getGroupId(),
-				formInstanceVersion.getFormInstanceVersionId(), ddmFormValues,
+				ddmFormInstanceRecord.getFormInstanceId(), ddmFormValues,
 				serviceContext);
 
 		updateVersions(
@@ -309,6 +300,9 @@ public class DDMFormInstanceRecordStagedModelRepository
 		_ddmFormInstanceRecordLocalService.updateDDMFormInstanceRecord(
 			importedFormInstanceRecord);
 	}
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		DDMFormInstanceRecordStagedModelRepository.class);
 
 	@Reference
 	private DDMFormInstanceRecordLocalService

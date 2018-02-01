@@ -66,14 +66,14 @@ import java.rmi.RemoteException;
 @ProviderType
 public class DDMFormInstanceRecordServiceSoap {
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap addFormInstanceRecord(
-		long groupId, long ddmFormInstanceVersionId,
+		long groupId, long ddmFormInstanceId,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord returnValue =
 				DDMFormInstanceRecordServiceUtil.addFormInstanceRecord(groupId,
-					ddmFormInstanceVersionId, ddmFormValues, serviceContext);
+					ddmFormInstanceId, ddmFormValues, serviceContext);
 
 			return com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecordSoap.toSoapModel(returnValue);
 		}

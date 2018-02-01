@@ -12,20 +12,14 @@
  * details.
  */
 
-package com.liferay.dynamic.data.mapping.internal.upgrade.v2_0_1;
-
-import com.liferay.dynamic.data.mapping.constants.DDMPortletKeys;
-import com.liferay.portal.kernel.upgrade.BaseUpgradeLastPublishDate;
+package com.liferay.dynamic.data.mapping.web.internal.exportimport.data.handler;
 
 /**
- * @author Inácio Nery
+ * @author Marcellus Tavares
+ * @author Juan Fernández
  */
-public class UpgradeLastPublishDate extends BaseUpgradeLastPublishDate {
+public abstract class DDMPortletDataHandler {
 
-	@Override
-	protected void doUpgrade() throws Exception {
-		updateLastPublishDates(
-			DDMPortletKeys.DYNAMIC_DATA_MAPPING, "DDMStructureVersion");
-	}
+	public static final String NAMESPACE = "dynamic_data_mapping";
 
 }

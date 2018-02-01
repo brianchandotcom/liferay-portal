@@ -56,8 +56,7 @@ import com.liferay.portal.kernel.util.MethodKey;
 @ProviderType
 public class DDMFormInstanceRecordServiceHttp {
 	public static com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord addFormInstanceRecord(
-		HttpPrincipal httpPrincipal, long groupId,
-		long ddmFormInstanceVersionId,
+		HttpPrincipal httpPrincipal, long groupId, long ddmFormInstanceId,
 		com.liferay.dynamic.data.mapping.storage.DDMFormValues ddmFormValues,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -67,7 +66,7 @@ public class DDMFormInstanceRecordServiceHttp {
 					_addFormInstanceRecordParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					ddmFormInstanceVersionId, ddmFormValues, serviceContext);
+					ddmFormInstanceId, ddmFormValues, serviceContext);
 
 			Object returnObj = null;
 

@@ -29,8 +29,6 @@ create index IX_57CA016C on DDMFormInstanceRecordVersion (userId, formInstanceId
 
 create index IX_EB92EF26 on DDMFormInstanceVersion (formInstanceId, status);
 create unique index IX_AE51CDC8 on DDMFormInstanceVersion (formInstanceId, version[$COLUMN_LENGTH:75$]);
-create index IX_41CD774C on DDMFormInstanceVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_96A360CE on DDMFormInstanceVersion (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create unique index IX_702D1AD5 on DDMStorageLink (classPK);
 create index IX_81776090 on DDMStorageLink (structureId);
@@ -55,8 +53,6 @@ create index IX_17692B58 on DDMStructureLink (structureId);
 
 create index IX_17B3C96C on DDMStructureVersion (structureId, status);
 create unique index IX_64C3C42 on DDMStructureVersion (structureId, version[$COLUMN_LENGTH:75$]);
-create index IX_54DF650C on DDMStructureVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_6CD5BE8E on DDMStructureVersion (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_B6356F93 on DDMTemplate (classNameId, classPK, type_[$COLUMN_LENGTH:75$]);
 create index IX_32F83D16 on DDMTemplate (classPK);

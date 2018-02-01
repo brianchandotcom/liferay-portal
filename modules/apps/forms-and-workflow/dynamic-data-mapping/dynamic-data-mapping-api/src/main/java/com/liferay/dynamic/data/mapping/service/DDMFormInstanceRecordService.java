@@ -57,7 +57,7 @@ public interface DDMFormInstanceRecordService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link DDMFormInstanceRecordServiceUtil} to access the ddm form instance record remote service. Add custom service methods to {@link com.liferay.dynamic.data.mapping.service.impl.DDMFormInstanceRecordServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	public DDMFormInstanceRecord addFormInstanceRecord(long groupId,
-		long ddmFormInstanceVersionId, DDMFormValues ddmFormValues,
+		long ddmFormInstanceId, DDMFormValues ddmFormValues,
 		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteFormInstanceRecord(long ddmFormInstanceRecordId)

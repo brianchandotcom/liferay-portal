@@ -25,7 +25,6 @@ import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstancePersi
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordFinder;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordPersistence;
 import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceRecordVersionPersistence;
-import com.liferay.dynamic.data.mapping.service.persistence.DDMFormInstanceVersionPersistence;
 
 import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
 import com.liferay.exportimport.kernel.lar.ManifestSummary;
@@ -730,44 +729,6 @@ public abstract class DDMFormInstanceRecordLocalServiceBaseImpl
 		this.ddmFormInstanceRecordVersionPersistence = ddmFormInstanceRecordVersionPersistence;
 	}
 
-	/**
-	 * Returns the ddm form instance version local service.
-	 *
-	 * @return the ddm form instance version local service
-	 */
-	public com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService getDDMFormInstanceVersionLocalService() {
-		return ddmFormInstanceVersionLocalService;
-	}
-
-	/**
-	 * Sets the ddm form instance version local service.
-	 *
-	 * @param ddmFormInstanceVersionLocalService the ddm form instance version local service
-	 */
-	public void setDDMFormInstanceVersionLocalService(
-		com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService) {
-		this.ddmFormInstanceVersionLocalService = ddmFormInstanceVersionLocalService;
-	}
-
-	/**
-	 * Returns the ddm form instance version persistence.
-	 *
-	 * @return the ddm form instance version persistence
-	 */
-	public DDMFormInstanceVersionPersistence getDDMFormInstanceVersionPersistence() {
-		return ddmFormInstanceVersionPersistence;
-	}
-
-	/**
-	 * Sets the ddm form instance version persistence.
-	 *
-	 * @param ddmFormInstanceVersionPersistence the ddm form instance version persistence
-	 */
-	public void setDDMFormInstanceVersionPersistence(
-		DDMFormInstanceVersionPersistence ddmFormInstanceVersionPersistence) {
-		this.ddmFormInstanceVersionPersistence = ddmFormInstanceVersionPersistence;
-	}
-
 	public void afterPropertiesSet() {
 		persistedModelLocalServiceRegistry.register("com.liferay.dynamic.data.mapping.model.DDMFormInstanceRecord",
 			ddmFormInstanceRecordLocalService);
@@ -850,10 +811,6 @@ public abstract class DDMFormInstanceRecordLocalServiceBaseImpl
 	protected com.liferay.dynamic.data.mapping.service.DDMFormInstanceRecordVersionLocalService ddmFormInstanceRecordVersionLocalService;
 	@BeanReference(type = DDMFormInstanceRecordVersionPersistence.class)
 	protected DDMFormInstanceRecordVersionPersistence ddmFormInstanceRecordVersionPersistence;
-	@BeanReference(type = com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService.class)
-	protected com.liferay.dynamic.data.mapping.service.DDMFormInstanceVersionLocalService ddmFormInstanceVersionLocalService;
-	@BeanReference(type = DDMFormInstanceVersionPersistence.class)
-	protected DDMFormInstanceVersionPersistence ddmFormInstanceVersionPersistence;
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

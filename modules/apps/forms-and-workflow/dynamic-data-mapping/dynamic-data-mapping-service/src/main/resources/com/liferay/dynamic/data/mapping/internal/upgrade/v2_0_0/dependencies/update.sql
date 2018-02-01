@@ -70,14 +70,12 @@ create unique index IX_26623628 on DDMFormInstanceRecordVersion (formInstanceRec
 create index IX_57CA016C on DDMFormInstanceRecordVersion (userId, formInstanceId, formInstanceVersion[$COLUMN_LENGTH:75$], status);
 
 create table DDMFormInstanceVersion (
-	uuid_ VARCHAR(75) null,
 	formInstanceVersionId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null,
 	formInstanceId LONG,
 	structureVersionId LONG,
 	name STRING null,
@@ -87,18 +85,8 @@ create table DDMFormInstanceVersion (
 	status INTEGER,
 	statusByUserId LONG,
 	statusByUserName VARCHAR(75) null,
-	statusDate DATE null,
-	lastPublishDate DATE null
+	statusDate DATE null
 );
 
 create index IX_EB92EF26 on DDMFormInstanceVersion (formInstanceId, status);
 create unique index IX_AE51CDC8 on DDMFormInstanceVersion (formInstanceId, version[$COLUMN_LENGTH:75$]);
-create index IX_41CD774C on DDMFormInstanceVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_96A360CE on DDMFormInstanceVersion (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-alter table DDMStructureVersion add uuid_ VARCHAR(75) null;
-alter table DDMStructureVersion add modifiedDate DATE null;
-alter table DDMStructureVersion add lastPublishDate DATE null;
-
-create index IX_54DF650C on DDMStructureVersion (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_6CD5BE8E on DDMStructureVersion (uuid_[$COLUMN_LENGTH:75$], groupId);

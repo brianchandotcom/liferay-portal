@@ -35,6 +35,7 @@ liferay {
 }
 
 updateFileVersions {
+	match(/<artifactId>com\.liferay\.javadoc\.formatter<\/artifactId>\s+<version>(.+)<\/version>/, "../../etl/talend/pom.xml")
 	match(/\t\t\t\t<version>(\d.+)<\/version>/, "samples/pom.xml")
 	match(/com\.liferay\.javadoc\.formatter=(\d.+)/, "../../sdk/gradle-plugins/src/main/resources/com/liferay/gradle/plugins/dependencies/portal-tools.properties")
 }

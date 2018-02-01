@@ -19,6 +19,7 @@ import com.liferay.dynamic.data.mapping.service.DDMStructureLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleConstants;
 import com.liferay.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolderConstants;
 import com.liferay.journal.service.JournalArticleLocalService;
 import com.liferay.journal.service.JournalFolderLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.WorkflowDefinitionLinkLocalService;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.Portal;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.BaseWorkflowHandler;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.kernel.workflow.WorkflowHandler;
@@ -92,12 +94,19 @@ public class JournalArticleWorkflowHandler
 					JournalArticleConstants.DDM_STRUCTURE_ID_ALL, true);
 		}
 
-		return workflowDefinitionLink;
-	}
+		JournalFolder folder = _journalFolderLocalService.fetchFolder(folderId);
 
-	@Override
-	public boolean isVisible() {
-		return _VISIBLE;
+		if (((folderId == 0) ||
+			 (Validator.isNotNull(folder) &&
+			  (folder.getRestrictionType() ==
+				  JournalFolderConstants.RESTRICTION_TYPE_INHERIT))) &&
+			Validator.isNull(workflowDefinitionLink)) {
+
+			workflowDefinitionLink = super.getWorkflowDefinitionLink(
+				companyId, groupId, classPK);
+		}
+
+		return workflowDefinitionLink;
 	}
 
 	@Override
@@ -156,8 +165,6 @@ public class JournalArticleWorkflowHandler
 		_workflowDefinitionLinkLocalService =
 			workflowDefinitionLinkLocalService;
 	}
-
-	private static final boolean _VISIBLE = false;
 
 	private DDMStructureLocalService _ddmStructureLocalService;
 	private JournalArticleLocalService _journalArticleLocalService;

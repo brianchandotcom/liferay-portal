@@ -16,6 +16,7 @@ package com.liferay.source.formatter.checkstyle.checks;
 
 import com.liferay.petra.string.CharPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.source.formatter.checkstyle.util.DetailASTUtil;
 
 import com.puppycrawl.tools.checkstyle.api.DetailAST;
@@ -26,7 +27,6 @@ import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -310,10 +310,10 @@ public class ChainingCheck extends BaseCheck {
 			}
 		}
 
-		Set<String> variableTypeNames = DetailASTUtil.getVariableTypeNames(
-			detailAST, classOrVariableName);
+		String variableTypeName = DetailASTUtil.getVariableTypeName(
+			methodCallAST, classOrVariableName);
 
-		for (String variableTypeName : variableTypeNames) {
+		if (Validator.isNotNull(variableTypeName)) {
 			for (String allowedVariableTypeName : _allowedVariableTypeNames) {
 				if (variableTypeName.matches(allowedVariableTypeName)) {
 					return true;

@@ -20,8 +20,6 @@ import com.puppycrawl.tools.checkstyle.api.DetailAST;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -38,7 +36,6 @@ public class StringCastCheck extends BaseCheck {
 		List<DetailAST> methodCallASTList = DetailASTUtil.getMethodCalls(
 			detailAST, "toString");
 
-		outerLoop:
 		for (DetailAST methodCallAST : methodCallASTList) {
 			DetailAST dotAST = methodCallAST.findFirstToken(TokenTypes.DOT);
 
@@ -47,20 +44,12 @@ public class StringCastCheck extends BaseCheck {
 
 			DetailAST variableNameAST = nameASTList.get(0);
 
-			Set<String> variableTypeNames = DetailASTUtil.getVariableTypeNames(
-				detailAST, variableNameAST.getText());
+			String variableTypeName = DetailASTUtil.getVariableTypeName(
+				methodCallAST, variableNameAST.getText());
 
-			if (variableTypeNames.isEmpty()) {
-				continue;
+			if (variableTypeName.equals("String")) {
+				log(methodCallAST.getLineNo(), _MSG_UNNEEDED_STRING_CAST);
 			}
-
-			for (String variableTypeName : variableTypeNames) {
-				if (!Objects.equals(variableTypeName, "String")) {
-					continue outerLoop;
-				}
-			}
-
-			log(methodCallAST.getLineNo(), _MSG_UNNEEDED_STRING_CAST);
 		}
 	}
 

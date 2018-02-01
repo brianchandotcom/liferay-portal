@@ -54,8 +54,8 @@ public class AssertEqualsCheck extends BaseCheck {
 				firstChildAST, "getLength");
 
 			if (variableName != null) {
-				DetailAST typeAST = DetailASTUtil.findTypeAST(
-					detailAST, variableName);
+				DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
+					methodCallAST, variableName);
 
 				if ((typeAST != null) && _isHits(typeAST)) {
 					log(
@@ -69,8 +69,8 @@ public class AssertEqualsCheck extends BaseCheck {
 			variableName = _getVariableNameForCall(firstChildAST, "length");
 
 			if (variableName != null) {
-				DetailAST typeAST = DetailASTUtil.findTypeAST(
-					detailAST, variableName);
+				DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
+					methodCallAST, variableName);
 
 				if ((typeAST != null) && DetailASTUtil.isArray(typeAST)) {
 					log(
@@ -84,8 +84,8 @@ public class AssertEqualsCheck extends BaseCheck {
 			variableName = _getVariableNameForMethodCall(firstChildAST, "size");
 
 			if (variableName != null) {
-				DetailAST typeAST = DetailASTUtil.findTypeAST(
-					detailAST, variableName);
+				DetailAST typeAST = DetailASTUtil.getVariableTypeAST(
+					methodCallAST, variableName);
 
 				if ((typeAST != null) && DetailASTUtil.isCollection(typeAST)) {
 					log(

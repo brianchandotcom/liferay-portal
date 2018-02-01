@@ -23,9 +23,7 @@ import com.puppycrawl.tools.checkstyle.api.FullIdent;
 import com.puppycrawl.tools.checkstyle.api.TokenTypes;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author Hugo Huijser
@@ -33,42 +31,6 @@ import java.util.Set;
 public class DetailASTUtil {
 
 	public static final int ALL_TYPES = -1;
-
-	public static DetailAST findTypeAST(DetailAST methodAST, String name) {
-		List<DetailAST> localVariableDefASTList = getAllChildTokens(
-			methodAST, true, TokenTypes.VARIABLE_DEF);
-
-		DetailAST typeAST = _findTypeAST(localVariableDefASTList, name);
-
-		if (typeAST != null) {
-			return typeAST;
-		}
-
-		List<DetailAST> parameterDefASTList = getParameterDefs(methodAST);
-
-		typeAST = _findTypeAST(parameterDefASTList, name);
-
-		if (typeAST != null) {
-			return typeAST;
-		}
-
-		DetailAST classAST = methodAST.getParent();
-
-		while (classAST != null) {
-			List<DetailAST> globalVariableDefASTList = getAllChildTokens(
-				classAST, false, TokenTypes.VARIABLE_DEF);
-
-			typeAST = _findTypeAST(globalVariableDefASTList, name);
-
-			if (typeAST != null) {
-				return typeAST;
-			}
-
-			classAST = classAST.getParent();
-		}
-
-		return null;
-	}
 
 	public static List<DetailAST> getAllChildTokens(
 		DetailAST detailAST, boolean recursive, int... tokenTypes) {
@@ -200,7 +162,15 @@ public class DetailASTUtil {
 	}
 
 	public static String getTypeName(DetailAST detailAST) {
-		DetailAST typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+		if (detailAST == null) {
+			return StringPool.BLANK;
+		}
+
+		DetailAST typeAST = detailAST;
+
+		if (detailAST.getType() != TokenTypes.TYPE) {
+			typeAST = detailAST.findFirstToken(TokenTypes.TYPE);
+		}
 
 		DetailAST childAST = typeAST.getFirstChild();
 
@@ -229,48 +199,101 @@ public class DetailASTUtil {
 		return sb.toString();
 	}
 
-	public static Set<String> getVariableTypeNames(
+	public static DetailAST getVariableTypeAST(
 		DetailAST detailAST, String variableName) {
 
-		Set<String> variableTypeNames = new HashSet<>();
+		DetailAST previousAST = detailAST;
 
-		List<DetailAST> definitionASTList = new ArrayList<>();
+		while (true) {
+			if ((previousAST.getType() == TokenTypes.CLASS_DEF) ||
+				(previousAST.getType() == TokenTypes.ENUM_DEF) ||
+				(previousAST.getType() == TokenTypes.INTERFACE_DEF)) {
 
-		if (variableName.matches("_[a-z].*")) {
-			definitionASTList = getAllChildTokens(
-				_getClassAST(detailAST), true, TokenTypes.PARAMETER_DEF,
-				TokenTypes.VARIABLE_DEF);
-		}
-		else if (variableName.matches("[a-z].*")) {
-			definitionASTList = getAllChildTokens(
-				detailAST, true, TokenTypes.PARAMETER_DEF,
-				TokenTypes.VARIABLE_DEF);
-		}
+				DetailAST objBlockAST = previousAST.findFirstToken(
+					TokenTypes.OBJBLOCK);
 
-		for (DetailAST definitionAST : definitionASTList) {
-			DetailAST nameAST = definitionAST.findFirstToken(TokenTypes.IDENT);
+				List<DetailAST> variableDefASTList = getAllChildTokens(
+					objBlockAST, false, TokenTypes.VARIABLE_DEF);
 
-			if (nameAST == null) {
+				for (DetailAST variableDefAST : variableDefASTList) {
+					if (variableName.equals(_getVariableName(variableDefAST))) {
+						return variableDefAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if ((previousAST.getType() == TokenTypes.FOR_EACH_CLAUSE) ||
+					 (previousAST.getType() == TokenTypes.FOR_INIT)) {
+
+				List<DetailAST> variableDefASTList = getAllChildTokens(
+					previousAST, false, TokenTypes.VARIABLE_DEF);
+
+				for (DetailAST variableDefAST : variableDefASTList) {
+					if (variableName.equals(_getVariableName(variableDefAST))) {
+						return variableDefAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if ((previousAST.getType() == TokenTypes.LITERAL_CATCH) ||
+					 (previousAST.getType() == TokenTypes.PARAMETERS)) {
+
+				List<DetailAST> parameterDefASTList = getAllChildTokens(
+					previousAST, false, TokenTypes.PARAMETER_DEF);
+
+				for (DetailAST parameterDefAST : parameterDefASTList) {
+					if (variableName.equals(
+							_getVariableName(parameterDefAST))) {
+
+						return parameterDefAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if (previousAST.getType() ==
+						TokenTypes.RESOURCE_SPECIFICATION) {
+
+				DetailAST recourcesAST = previousAST.findFirstToken(
+					TokenTypes.RESOURCES);
+
+				List<DetailAST> resourceASTList = getAllChildTokens(
+					recourcesAST, false, TokenTypes.RESOURCE);
+
+				for (DetailAST resourceAST : resourceASTList) {
+					if (variableName.equals(_getVariableName(resourceAST))) {
+						return resourceAST.findFirstToken(TokenTypes.TYPE);
+					}
+				}
+			}
+			else if (previousAST.getType() == TokenTypes.VARIABLE_DEF) {
+				if (variableName.equals(_getVariableName(previousAST))) {
+					return previousAST.findFirstToken(TokenTypes.TYPE);
+				}
+			}
+
+			DetailAST previousSiblingAST = previousAST.getPreviousSibling();
+
+			if (previousSiblingAST != null) {
+				previousAST = previousSiblingAST;
+
 				continue;
 			}
 
-			String name = nameAST.getText();
+			DetailAST parentAST = previousAST.getParent();
 
-			if (name.equals(variableName)) {
-				DetailAST typeAST = definitionAST.findFirstToken(
-					TokenTypes.TYPE);
+			if (parentAST != null) {
+				previousAST = parentAST;
 
-				nameAST = typeAST.findFirstToken(TokenTypes.IDENT);
-
-				if (nameAST == null) {
-					return variableTypeNames;
-				}
-
-				variableTypeNames.add(nameAST.getText());
+				continue;
 			}
+
+			break;
 		}
 
-		return variableTypeNames;
+		return null;
+	}
+
+	public static String getVariableTypeName(
+		DetailAST detailAST, String variableName) {
+
+		return getTypeName(getVariableTypeAST(detailAST, variableName));
 	}
 
 	public static boolean hasParentWithTokenType(
@@ -327,22 +350,6 @@ public class DetailASTUtil {
 		return false;
 	}
 
-	private static DetailAST _findTypeAST(
-		List<DetailAST> defASTList, String name) {
-
-		for (DetailAST defAST : defASTList) {
-			DetailAST nameAST = defAST.findFirstToken(TokenTypes.IDENT);
-
-			String curName = nameAST.getText();
-
-			if (curName.equals(name)) {
-				return defAST.findFirstToken(TokenTypes.TYPE);
-			}
-		}
-
-		return null;
-	}
-
 	private static List<DetailAST> _getAllChildTokens(
 		DetailAST detailAST, boolean recursive, List<DetailAST> list,
 		int... tokenTypes) {
@@ -371,18 +378,10 @@ public class DetailASTUtil {
 		return list;
 	}
 
-	private static DetailAST _getClassAST(DetailAST detailAST) {
-		DetailAST parentAST = detailAST.getParent();
+	private static String _getVariableName(DetailAST variableDefAST) {
+		DetailAST nameAST = variableDefAST.findFirstToken(TokenTypes.IDENT);
 
-		while (true) {
-			if (parentAST.getParent() == null) {
-				break;
-			}
-
-			return parentAST.getParent();
-		}
-
-		return null;
+		return nameAST.getText();
 	}
 
 }

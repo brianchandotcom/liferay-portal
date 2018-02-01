@@ -24,6 +24,11 @@
 				</plugin>
 				<plugin>
 					<groupId>com.liferay</groupId>
+					<artifactId>com.liferay.source.formatter</artifactId>
+					<version>1.0.546</version>
+				</plugin>
+				<plugin>
+					<groupId>com.liferay</groupId>
 					<artifactId>com.liferay.xml.formatter</artifactId>
 					<version>1.0.5</version>
 					<configuration>

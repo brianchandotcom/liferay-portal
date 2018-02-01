@@ -46,7 +46,7 @@ structureSearch.setOrderByComparator(orderByComparator);
 request.setAttribute(WebKeys.SEARCH_CONTAINER, structureSearch);
 %>
 
-<liferay-util:include page="/structure_toolbar.jsp" servletContext="<%= application %>" />
+<liferay-util:include page="/structure_navigation_bar.jsp" servletContext="<%= application %>" />
 
 <liferay-frontend:management-bar>
 	<liferay-frontend:management-bar-filters>

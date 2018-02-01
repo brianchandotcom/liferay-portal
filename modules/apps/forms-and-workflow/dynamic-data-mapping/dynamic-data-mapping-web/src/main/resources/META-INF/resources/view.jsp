@@ -65,7 +65,7 @@ if (ddmDisplay.getTitle(locale) != null) {
 	<portlet:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </portlet:renderURL>
 
-<liferay-util:include page="/search_bar.jsp" servletContext="<%= application %>">
+<liferay-util:include page="/navigation_bar.jsp" servletContext="<%= application %>">
 	<liferay-util:param name="groupId" value="<%= String.valueOf(groupId) %>" />
 </liferay-util:include>
 

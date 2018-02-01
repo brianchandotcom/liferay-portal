@@ -33,6 +33,10 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Hai Yu
  */
+@Component(
+		property = {"javax.portlet.name=" + ContactsPortletKeys.CONTACTS_CENTER},
+		service = SocialRequestInterpreter.class
+	)
 public class ContactsCenterRequestInterpreter
 	extends BaseSocialRequestInterpreter {
 

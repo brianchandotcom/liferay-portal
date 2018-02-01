@@ -432,7 +432,12 @@ public class ContactsCenterPortlet extends MVCPortlet {
 
 			JSONObject extraDataJSONObject = JSONFactoryUtil.createJSONObject();
 
-			String portletId = portal.getPortletId(actionRequest);
+			String portletId = PortletIdCodec.decodePortletName(
+					portal.getPortletId(actionRequest));
+
+				if (portletId.equals(ContactsPortletKeys.PROFILE)) {
+					portletId = ContactsPortletKeys.CONTACTS_CENTER;
+				}
 
 			extraDataJSONObject.put(
 				"portletId", PortletIdCodec.decodePortletName(portletId));

@@ -17,7 +17,6 @@ package com.liferay.commerce.currency.service;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
-import com.liferay.commerce.currency.util.ExchangeRateProvider;
 
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 
@@ -343,8 +342,8 @@ public interface CommerceCurrencyLocalService extends BaseLocalService,
 		long commerceCurrencyId, double rate) throws PortalException;
 
 	public void updateExchangeRate(long commerceCurrencyId,
-		ExchangeRateProvider exchangeRateProvider) throws java.lang.Exception;
+		java.lang.String exchangeRateProviderKey) throws PortalException;
 
 	public void updateExchangeRates(long groupId,
-		ExchangeRateProvider exchangeRateProvider) throws java.lang.Exception;
+		java.lang.String exchangeRateProviderKey) throws PortalException;
 }

@@ -437,18 +437,18 @@ public class CommerceCurrencyLocalServiceWrapper
 
 	@Override
 	public void updateExchangeRate(long commerceCurrencyId,
-		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
-		throws java.lang.Exception {
+		java.lang.String exchangeRateProviderKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceCurrencyLocalService.updateExchangeRate(commerceCurrencyId,
-			exchangeRateProvider);
+			exchangeRateProviderKey);
 	}
 
 	@Override
 	public void updateExchangeRates(long groupId,
-		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
-		throws java.lang.Exception {
+		java.lang.String exchangeRateProviderKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_commerceCurrencyLocalService.updateExchangeRates(groupId,
-			exchangeRateProvider);
+			exchangeRateProviderKey);
 	}
 
 	@Override

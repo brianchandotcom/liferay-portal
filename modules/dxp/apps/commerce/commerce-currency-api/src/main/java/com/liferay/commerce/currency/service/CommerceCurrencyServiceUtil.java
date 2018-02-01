@@ -126,15 +126,15 @@ public class CommerceCurrencyServiceUtil {
 	}
 
 	public static void updateExchangeRate(long commerceCurrencyId,
-		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
-		throws java.lang.Exception {
-		getService().updateExchangeRate(commerceCurrencyId, exchangeRateProvider);
+		java.lang.String exchangeRateProviderKey)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService()
+			.updateExchangeRate(commerceCurrencyId, exchangeRateProviderKey);
 	}
 
 	public static void updateExchangeRates(long groupId,
-		com.liferay.commerce.currency.util.ExchangeRateProvider exchangeRateProvider)
-		throws java.lang.Exception {
-		getService().updateExchangeRates(groupId, exchangeRateProvider);
+		java.lang.String exchangeRateProviderKey) throws java.lang.Exception {
+		getService().updateExchangeRates(groupId, exchangeRateProviderKey);
 	}
 
 	public static CommerceCurrencyService getService() {

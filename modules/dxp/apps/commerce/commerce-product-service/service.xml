@@ -377,6 +377,10 @@
 			<finder-column name="CPDefinitionId" />
 			<finder-column name="CPSpecificationOptionId" />
 		</finder>
+		<finder name="CPDef_CPOptCat" return-type="Collection">
+			<finder-column name="CPDefinitionId" />
+			<finder-column name="CPOptionCategoryId" />
+		</finder>
 
 		<!-- References -->
 

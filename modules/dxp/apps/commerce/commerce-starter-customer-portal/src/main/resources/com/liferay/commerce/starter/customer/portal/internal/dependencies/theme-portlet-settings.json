@@ -1,0 +1,44 @@
+[
+	{
+		"instanceId": "footer_navigation_menu_01",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "select",
+			"rootLayoutUuid": ""
+		},
+		"rootLayoutFriendlyURL": "/company"
+	},
+	{
+		"instanceId": "footer_navigation_menu_02",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "select",
+			"rootLayoutUuid": ""
+		},
+		"rootLayoutFriendlyURL": "/company"
+	},
+	{
+		"instanceId": "footer_navigation_menu_03",
+		"portletName": "com_liferay_site_navigation_menu_web_portlet_SiteNavigationMenuPortlet",
+		"portletPreferences": {
+			"displayDepth": "0",
+			"displayStyle": "ddmTemplate_NAV-PILLS-STACKED-FTL",
+			"displayStyleGroupId": "",
+			"includedLayouts": "auto",
+			"rootLayoutLevel": "0",
+			"rootLayoutType": "select",
+			"rootLayoutUuid": ""
+		},
+		"rootLayoutFriendlyURL": "/company"
+	}
+]

@@ -19,6 +19,7 @@ import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayCon
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.simple.constants.SimpleCPTypeConstants;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
@@ -56,7 +57,7 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 				_cpAttachmentFileEntryService, _cpContentConfigurationHelper,
 				_cpContentContributorRegistry, cpDefinition, _cpInstanceHelper,
 				_cpDefinitionSpecificationOptionValueService,
-				httpServletRequest, _portal);
+				_cpOptionCategoryService, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, simpleCPTypeDisplayContext);
@@ -81,6 +82,9 @@ public class SimpleCPTypeRenderer implements CPTypeRenderer {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

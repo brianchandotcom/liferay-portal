@@ -19,6 +19,7 @@ import com.liferay.commerce.product.content.web.display.context.CPTypeDisplayCon
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.type.virtual.model.CPDefinitionVirtualSetting;
 import com.liferay.commerce.product.type.virtual.service.CPDefinitionVirtualSettingLocalService;
 import com.liferay.commerce.product.util.CPContentContributorRegistry;
@@ -48,14 +49,15 @@ public class VirtualCPTypeDisplayContext extends CPTypeDisplayContext {
 			DLAppService dlAppService, CPInstanceHelper cpInstanceHelper,
 			CPDefinitionSpecificationOptionValueService
 				cpDefinitionSpecificationOptionValueService,
+			CPOptionCategoryService cpOptionCategoryService,
 			HttpServletRequest httpServletRequest, Portal portal)
 		throws Exception {
 
 		super(
 			cpAttachmentFileEntryService, cpContentConfigurationHelper,
 			cpContentContributorRegistry, cpDefinition, cpInstanceHelper,
-			cpDefinitionSpecificationOptionValueService, httpServletRequest,
-			portal);
+			cpDefinitionSpecificationOptionValueService,
+			cpOptionCategoryService, httpServletRequest, portal);
 
 		_dlAppService = dlAppService;
 

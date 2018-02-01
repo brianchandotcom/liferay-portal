@@ -18,6 +18,7 @@ import com.liferay.commerce.product.content.web.configuration.CPContentConfigura
 import com.liferay.commerce.product.model.CPDefinition;
 import com.liferay.commerce.product.service.CPAttachmentFileEntryService;
 import com.liferay.commerce.product.service.CPDefinitionSpecificationOptionValueService;
+import com.liferay.commerce.product.service.CPOptionCategoryService;
 import com.liferay.commerce.product.type.CPTypeRenderer;
 import com.liferay.commerce.product.type.grouped.constants.GroupedCPTypeConstants;
 import com.liferay.commerce.product.type.grouped.service.CPDefinitionGroupedEntryService;
@@ -58,7 +59,7 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 				_cpContentContributorRegistry, cpDefinition,
 				_cpDefinitionGroupedEntryService, _cpInstanceHelper,
 				_cpDefinitionSpecificationOptionValueService,
-				httpServletRequest, _portal);
+				_cpOptionCategoryService, httpServletRequest, _portal);
 
 		httpServletRequest.setAttribute(
 			WebKeys.PORTLET_DISPLAY_CONTEXT, groupedCPTypeDisplayContext);
@@ -86,6 +87,9 @@ public class GroupedCPTypeRenderer implements CPTypeRenderer {
 
 	@Reference
 	private CPInstanceHelper _cpInstanceHelper;
+
+	@Reference
+	private CPOptionCategoryService _cpOptionCategoryService;
 
 	@Reference
 	private JSPRenderer _jspRenderer;

@@ -15,7 +15,8 @@
 		</execute>
 
 		<execute macro="RSS#viewFeedTitle">
-			<var name="siteName" value="${siteName}" />
+			<var name="feedSubtitle" value="${feedSubtitle}" />
+			<var name="feedTitle" value="${feedTitle}" />
 		</execute>
 
 		<execute macro="RSS#viewFeedEntry">
@@ -41,7 +42,7 @@
 	</command>
 
 	<command name="viewFeedTitle">
-		<execute function="AssertTextEquals" locator1="RSS#FEED_TITLE" value1="${siteName}" />
-		<execute function="AssertTextEquals" locator1="RSS#FEED_SUBTITLE" value1="${siteName}" />
+		<execute function="AssertTextEquals" locator1="RSS#FEED_TITLE" value1="${feedTitle}" />
+		<execute function="AssertTextEquals" locator1="RSS#FEED_SUBTITLE" value1="${feedSubtitle}" />
 	</command>
 </definition>

@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.module.configuration.ConfigurationException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.search.BooleanClauseOccur;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Query;
 import com.liferay.portal.kernel.search.QueryConfig;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SortFactoryUtil;
@@ -119,10 +120,10 @@ public class CPSearchResultsPortlet
 					Field.ENTRY_CLASS_NAME, CPDefinition.class.getName()),
 				BooleanClauseOccur.MUST));
 
-		String dataSource =
-			_cpSearchResultsPortletInstanceConfiguration.dataSource();
+		String configurationMethod =
+			_cpSearchResultsPortletInstanceConfiguration.configurationMethod();
 
-		if (dataSource.equals(
+		if (configurationMethod.equals(
 				CPSearchResultsConfigurationConstants.SELECT_CATEGORIES)) {
 
 			String[] assetCategoryIds =
@@ -153,11 +154,13 @@ public class CPSearchResultsPortlet
 				(CPDefinition)renderRequest.getAttribute(
 					CPWebKeys.CP_DEFINITION);
 
-			if ((cpDefinition != null) && Validator.isNotNull(dataSource)) {
+			if ((cpDefinition != null) &&
+				Validator.isNotNull(configurationMethod)) {
+
 				portletSharedSearchSettings.addCondition(
 					new BooleanClauseImpl<Query>(
 						new TermQueryImpl(
-							dataSource,
+							configurationMethod,
 							String.valueOf(cpDefinition.getCPDefinitionId())),
 						BooleanClauseOccur.MUST));
 			}

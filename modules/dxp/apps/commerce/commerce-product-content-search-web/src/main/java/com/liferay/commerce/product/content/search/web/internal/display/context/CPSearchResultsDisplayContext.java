@@ -85,8 +85,8 @@ public class CPSearchResultsDisplayContext {
 			StringPool.COMMA);
 	}
 
-	public String getDataSource() {
-		return _cpSearchResultsPortletInstanceConfiguration.dataSource();
+	public String getConfigurationMethod() {
+		return _cpSearchResultsPortletInstanceConfiguration.configurationMethod();
 	}
 
 	public String getDisplayStyle() {

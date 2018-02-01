@@ -43,31 +43,31 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 					</div>
 
 					<%
-					String dataSource = cpSearchResultsDisplayContext.getDataSource();
+					String configurationMethod = cpSearchResultsDisplayContext.getConfigurationMethod();
 					%>
 
-					<aui:select id="dataSource" name="preferences--dataSource--" showEmptyOption="<%= true %>">
+					<aui:select id="configurationMethod" name="preferences--configurationMethod--" showEmptyOption="<%= true %>">
 						<aui:option
 							label="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>"
-							selected="<%= dataSource.equals(CPSearchResultsConfigurationConstants.SELECT_CATEGORIES) %>"
+							selected="<%= configurationMethod.equals(CPSearchResultsConfigurationConstants.SELECT_CATEGORIES) %>"
 							value="<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>"
 						/>
 
 						<aui:option
 							label="<%= CPSearchResultsConfigurationConstants.RELATED_PRODUCTS %>"
-							selected="<%= dataSource.equals(CPDefinitionIndexer.FIELD_RELATED_TO) %>"
+							selected="<%= configurationMethod.equals(CPDefinitionIndexer.FIELD_RELATED_TO) %>"
 							value="<%= CPDefinitionIndexer.FIELD_RELATED_TO %>"
 						/>
 
 						<aui:option
 							label="<%= CPSearchResultsConfigurationConstants.UP_SELL_PRODUCTS %>"
-							selected="<%= dataSource.equals(CPDefinitionIndexer.FIELD_UP_SELL_OF) %>"
+							selected="<%= configurationMethod.equals(CPDefinitionIndexer.FIELD_UP_SELL_OF) %>"
 							value="<%= CPDefinitionIndexer.FIELD_UP_SELL_OF %>"
 						/>
 
 						<aui:option
 							label="<%= CPSearchResultsConfigurationConstants.CROSS_SELL_PRODUCTS %>"
-							selected="<%= dataSource.equals(CPDefinitionIndexer.FIELD_CROSS_SELL_OF) %>"
+							selected="<%= configurationMethod.equals(CPDefinitionIndexer.FIELD_CROSS_SELL_OF) %>"
 							value="<%= CPDefinitionIndexer.FIELD_CROSS_SELL_OF %>"
 						/>
 					</aui:select>
@@ -75,7 +75,7 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 					<%
 					String categoriesContainerCssClass = StringPool.BLANK;
 
-					if (!dataSource.equals(CPSearchResultsConfigurationConstants.SELECT_CATEGORIES)) {
+					if (!configurationMethod.equals(CPSearchResultsConfigurationConstants.SELECT_CATEGORIES)) {
 						categoriesContainerCssClass += "hide";
 					}
 					%>
@@ -118,10 +118,10 @@ CPSearchResultsDisplayContext cpSearchResultsDisplayContext = (CPSearchResultsDi
 		}
 	);
 
-	A.one('#<portlet:namespace />dataSource').on(
+	A.one('#<portlet:namespace />configurationMethod').on(
 		'change',
 		function() {
-			if (A.one('#<portlet:namespace />dataSource').val() == '<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>') {
+			if (A.one('#<portlet:namespace />configurationMethod').val() == '<%= CPSearchResultsConfigurationConstants.SELECT_CATEGORIES %>') {
 				A.one('#<portlet:namespace />categoriesContainer').removeClass('hide');
 			}
 			else {

@@ -40,8 +40,9 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		try {
 			upgradeTable(
 				"Counter", "name", getClassNames(), WildcardMode.SURROUND);
-			upgradeTableDuplicatesAware(
-				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND);
+			upgradeTable(
+				"ClassName_", "value", getClassNames(), WildcardMode.SURROUND,
+				true);
 			upgradeTable(
 				"Lock_", "className", getClassNames(), WildcardMode.SURROUND);
 			upgradeTable(
@@ -168,18 +169,20 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 			WildcardMode wildcardMode)
 		throws Exception {
 
-		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			_upgradeTable(tableName, columnName, names, wildcardMode, false);
-		}
+		upgradeTable(tableName, columnName, names, wildcardMode, false);
 	}
 
-	protected void upgradeTableDuplicatesAware(
+	protected void upgradeTable(
 			String tableName, String columnName, String[][] names,
-			WildcardMode wildcardMode)
+			WildcardMode wildcardMode, boolean duplicatesAware)
 		throws Exception {
 
 		try (LoggingTimer loggingTimer = new LoggingTimer(tableName)) {
-			_upgradeTable(tableName, columnName, names, wildcardMode, true);
+			if (duplicatesAware) {
+				_executeDelete(tableName, columnName, names, wildcardMode);
+			}
+
+			_executeUpdate(tableName, columnName, names, wildcardMode);
 		}
 	}
 
@@ -274,18 +277,6 @@ public class UpgradeKernelPackage extends UpgradeProcess {
 		}
 
 		return columnName;
-	}
-
-	private void _upgradeTable(
-			String tableName, String columnName, String[][] names,
-			WildcardMode wildcardMode, boolean duplicatesAware)
-		throws Exception {
-
-		if (duplicatesAware) {
-			_executeDelete(tableName, columnName, names, wildcardMode);
-		}
-
-		_executeUpdate(tableName, columnName, names, wildcardMode);
 	}
 
 	private static final String[][] _CLASS_NAMES = {

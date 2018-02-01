@@ -127,14 +127,6 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 			}
 		}
 
-		boolean hasOwnerPermission = permissionChecker.hasOwnerPermission(
-			dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
-			dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(), actionId);
-
-		if (hasOwnerPermission) {
-			return true;
-		}
-
 		String className = dlFileEntry.getClassName();
 		long classPK = dlFileEntry.getClassPK();
 
@@ -189,6 +181,14 @@ public class DLFileEntryPermission implements BaseModelPermissionChecker {
 					}
 				}
 			}
+		}
+
+		if (permissionChecker.hasOwnerPermission(
+				dlFileEntry.getCompanyId(), DLFileEntry.class.getName(),
+				dlFileEntry.getFileEntryId(), dlFileEntry.getUserId(),
+				actionId)) {
+
+			return true;
 		}
 
 		return permissionChecker.hasPermission(

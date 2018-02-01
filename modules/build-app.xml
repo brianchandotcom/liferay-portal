@@ -15,8 +15,6 @@
 
 	<property file="../build.properties" />
 
-	<property name="build.modules.excludes" value="**/adaptive-media/**" />
-
 	<property name="portal.lib.dir" value="${app.server.tomcat.lib.portal.dir}" />
 
 	<property name="osgi.dir" value="${liferay.home}/osgi" />

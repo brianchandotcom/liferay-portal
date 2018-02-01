@@ -1,10 +1,6 @@
 <definition>
 	<command name="addCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Templates">
-			<var name="key_menuItem" value="Templates" />
-		</execute>
+		<execute function="AssertClick" locator1="NavBar#TEMPLATES" value1="Templates" />
 
 		<execute macro="LexiconEntry#gotoAdd" />
 
@@ -17,11 +13,7 @@
 	</command>
 
 	<command name="gotoCP">
-		<execute function="Click" locator1="Icon#HEADER_VERTICAL_ELLIPSIS" />
-
-		<execute function="AssertClick" locator1="MenuItem#ANY_MENU_ITEM" value1="Templates">
-			<var name="key_menuItem" value="Templates" />
-		</execute>
+		<execute function="AssertClick" locator1="NavBar#TEMPLATES" value1="Templates" />
 
 		<var name="key_rowEntry" value="${kbTemplateTitle}" />
 

@@ -27,6 +27,7 @@ import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 	extends CPDefinitionSpecificationOptionValueLocalServiceBaseImpl {
@@ -96,6 +97,15 @@ public class CPDefinitionSpecificationOptionValueLocalServiceImpl
 
 		return cpDefinitionSpecificationOptionValuePersistence.
 			findByCPDefinitionId(cpDefinitionId);
+	}
+
+	@Override
+	public List<CPDefinitionSpecificationOptionValue>
+		getCPDefinitionSpecificationOptionValues(
+			long cpDefinitionId, long cpOptionCategoryId) {
+
+		return cpDefinitionSpecificationOptionValuePersistence.
+			findByCPDef_CPOptCat(cpDefinitionId, cpOptionCategoryId);
 	}
 
 	@Override

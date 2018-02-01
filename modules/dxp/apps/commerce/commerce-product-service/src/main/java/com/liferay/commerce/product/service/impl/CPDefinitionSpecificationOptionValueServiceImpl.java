@@ -32,6 +32,7 @@ import java.util.Map;
 
 /**
  * @author Andrea Di Giorgi
+ * @author Alessio Antonio Rendina
  */
 public class CPDefinitionSpecificationOptionValueServiceImpl
 	extends CPDefinitionSpecificationOptionValueServiceBaseImpl {
@@ -136,6 +137,50 @@ public class CPDefinitionSpecificationOptionValueServiceImpl
 			cpDefinitionSpecificationOptionValues =
 				cpDefinitionSpecificationOptionValueLocalService.
 					getCPDefinitionSpecificationOptionValues(cpDefinitionId);
+
+		List<CPDefinitionSpecificationOptionValue>
+			filteredCPDefinitionSpecificationOptionValues = new ArrayList<>(
+				cpDefinitionSpecificationOptionValues.size());
+
+		for (CPDefinitionSpecificationOptionValue
+				cpDefinitionSpecificationOptionValue :
+					cpDefinitionSpecificationOptionValues) {
+
+			if (CPSpecificationOptionPermission.contains(
+					getPermissionChecker(),
+					cpDefinitionSpecificationOptionValue.
+						getCPSpecificationOptionId(),
+					ActionKeys.VIEW)) {
+
+				filteredCPDefinitionSpecificationOptionValues.add(
+					cpDefinitionSpecificationOptionValue);
+			}
+		}
+
+		return filteredCPDefinitionSpecificationOptionValues;
+	}
+
+	@Override
+	public List<CPDefinitionSpecificationOptionValue>
+			getCPDefinitionSpecificationOptionValues(
+				long cpDefinitionId, long cpOptionCategoryId)
+		throws PortalException {
+
+		CPDefinitionPermission.check(
+			getPermissionChecker(), cpDefinitionId, ActionKeys.VIEW);
+
+		if (cpOptionCategoryId !=
+				CPOptionCategoryConstants.DEFAULT_CP_OPTION_CATEGORY_ID) {
+
+			CPOptionCategoryPermission.check(
+				getPermissionChecker(), cpOptionCategoryId, ActionKeys.VIEW);
+		}
+
+		List<CPDefinitionSpecificationOptionValue>
+			cpDefinitionSpecificationOptionValues =
+				cpDefinitionSpecificationOptionValueLocalService.
+					getCPDefinitionSpecificationOptionValues(
+						cpDefinitionId, cpOptionCategoryId);
 
 		List<CPDefinitionSpecificationOptionValue>
 			filteredCPDefinitionSpecificationOptionValues = new ArrayList<>(

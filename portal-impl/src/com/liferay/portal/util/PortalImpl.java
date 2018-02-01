@@ -3634,9 +3634,13 @@ public class PortalImpl implements Portal {
 
 		String queryString = request.getQueryString();
 
+		if (Validator.isNull(queryString)) {
+			queryString = (String)request.getAttribute(
+				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
+		}
+
 		if (Validator.isNotNull(queryString)) {
-			localizedFriendlyURL +=
-				StringPool.QUESTION + request.getQueryString();
+			localizedFriendlyURL += StringPool.QUESTION + queryString;
 		}
 
 		return localizedFriendlyURL;

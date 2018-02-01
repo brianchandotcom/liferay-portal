@@ -25,7 +25,6 @@ import com.liferay.portal.kernel.model.LayoutSet;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.struts.LastPath;
 import com.liferay.portal.kernel.util.HttpUtil;
-import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.Portal;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -252,12 +251,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 
 					forwardURL = forwardURL.concat(friendlyURL);
 
-					forwardURL = _appendQueryString(request, forwardURL);
-
-					if (_log.isDebugEnabled()) {
-						_log.debug("Forward to " + forwardURL);
-					}
-
 					RequestDispatcher requestDispatcher =
 						_servletContext.getRequestDispatcher(forwardURL);
 
@@ -369,8 +362,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 				forwardURLString = sb.toString();
 			}
 
-			forwardURLString = _appendQueryString(request, forwardURLString);
-
 			if (_log.isDebugEnabled()) {
 				_log.debug("Forward to " + forwardURLString);
 			}
@@ -387,21 +378,6 @@ public class VirtualHostFilter extends BasePortalFilter {
 				VirtualHostFilter.class.getName(), request, response,
 				filterChain);
 		}
-	}
-
-	private String _appendQueryString(HttpServletRequest request, String path) {
-		String queryString = request.getQueryString();
-
-		if (Validator.isNull(queryString)) {
-			queryString = (String)request.getAttribute(
-				JavaConstants.JAVAX_SERVLET_FORWARD_QUERY_STRING);
-		}
-
-		if (Validator.isNotNull(queryString)) {
-			return path.concat(StringPool.QUESTION).concat(queryString);
-		}
-
-		return path;
 	}
 
 	private String _findLanguageId(String friendlyURL) {

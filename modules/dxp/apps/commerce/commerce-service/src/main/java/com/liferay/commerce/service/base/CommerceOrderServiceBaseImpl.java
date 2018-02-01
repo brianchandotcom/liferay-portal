@@ -26,7 +26,6 @@ import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
-import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
@@ -58,7 +57,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.service.BaseServiceImpl;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
@@ -522,24 +520,6 @@ public abstract class CommerceOrderServiceBaseImpl extends BaseServiceImpl
 	public void setCommerceOrderPersistence(
 		CommerceOrderPersistence commerceOrderPersistence) {
 		this.commerceOrderPersistence = commerceOrderPersistence;
-	}
-
-	/**
-	 * Returns the commerce order finder.
-	 *
-	 * @return the commerce order finder
-	 */
-	public CommerceOrderFinder getCommerceOrderFinder() {
-		return commerceOrderFinder;
-	}
-
-	/**
-	 * Sets the commerce order finder.
-	 *
-	 * @param commerceOrderFinder the commerce order finder
-	 */
-	public void setCommerceOrderFinder(CommerceOrderFinder commerceOrderFinder) {
-		this.commerceOrderFinder = commerceOrderFinder;
 	}
 
 	/**
@@ -1588,62 +1568,6 @@ public abstract class CommerceOrderServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Returns the group local service.
-	 *
-	 * @return the group local service
-	 */
-	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
-		return groupLocalService;
-	}
-
-	/**
-	 * Sets the group local service.
-	 *
-	 * @param groupLocalService the group local service
-	 */
-	public void setGroupLocalService(
-		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group remote service.
-	 *
-	 * @return the group remote service
-	 */
-	public com.liferay.portal.kernel.service.GroupService getGroupService() {
-		return groupService;
-	}
-
-	/**
-	 * Sets the group remote service.
-	 *
-	 * @param groupService the group remote service
-	 */
-	public void setGroupService(
-		com.liferay.portal.kernel.service.GroupService groupService) {
-		this.groupService = groupService;
-	}
-
-	/**
-	 * Returns the group persistence.
-	 *
-	 * @return the group persistence
-	 */
-	public GroupPersistence getGroupPersistence() {
-		return groupPersistence;
-	}
-
-	/**
-	 * Sets the group persistence.
-	 *
-	 * @param groupPersistence the group persistence
-	 */
-	public void setGroupPersistence(GroupPersistence groupPersistence) {
-		this.groupPersistence = groupPersistence;
-	}
-
-	/**
 	 * Returns the organization local service.
 	 *
 	 * @return the organization local service
@@ -1945,8 +1869,6 @@ public abstract class CommerceOrderServiceBaseImpl extends BaseServiceImpl
 	protected CommerceOrderService commerceOrderService;
 	@BeanReference(type = CommerceOrderPersistence.class)
 	protected CommerceOrderPersistence commerceOrderPersistence;
-	@BeanReference(type = CommerceOrderFinder.class)
-	protected CommerceOrderFinder commerceOrderFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemService.class)
@@ -2057,12 +1979,6 @@ public abstract class CommerceOrderServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.kernel.service.ClassNameService classNameService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
-	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.GroupService.class)
-	protected com.liferay.portal.kernel.service.GroupService groupService;
-	@ServiceReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.OrganizationLocalService.class)
 	protected com.liferay.portal.kernel.service.OrganizationLocalService organizationLocalService;
 	@ServiceReference(type = com.liferay.portal.kernel.service.OrganizationService.class)

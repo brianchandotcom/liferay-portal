@@ -68,6 +68,9 @@ public interface CommerceCart extends CommerceCartModel, PersistedModel {
 	public CommerceAddress getShippingAddress()
 		throws com.liferay.portal.kernel.exception.PortalException;
 
+	public boolean isB2B()
+		throws com.liferay.portal.kernel.exception.PortalException;
+
 	public boolean isGuestCart()
 		throws com.liferay.portal.kernel.exception.PortalException;
 }

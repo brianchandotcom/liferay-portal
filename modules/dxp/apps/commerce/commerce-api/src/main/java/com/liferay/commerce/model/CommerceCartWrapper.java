@@ -433,6 +433,12 @@ public class CommerceCartWrapper implements CommerceCart,
 	}
 
 	@Override
+	public boolean isB2B()
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceCart.isB2B();
+	}
+
+	@Override
 	public boolean isCachedModel() {
 		return _commerceCart.isCachedModel();
 	}

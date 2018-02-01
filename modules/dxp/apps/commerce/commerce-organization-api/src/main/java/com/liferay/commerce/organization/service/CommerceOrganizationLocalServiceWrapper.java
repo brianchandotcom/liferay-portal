@@ -54,6 +54,13 @@ public class CommerceOrganizationLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.portal.kernel.model.Organization getAccountOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrganizationLocalService.getAccountOrganization(organizationId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

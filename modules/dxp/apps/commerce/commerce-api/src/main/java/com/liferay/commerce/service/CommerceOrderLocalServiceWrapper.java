@@ -48,15 +48,15 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public com.liferay.commerce.model.CommerceOrder addCommerceOrder(
-		long orderOrganizationId, long orderRootOrganizationId,
-		long orderUserId, long commercePaymentMethodId,
-		long commerceShippingMethodId, java.lang.String shippingOptionName,
-		double subtotal, double shippingPrice, double total, int paymentStatus,
+		long siteGroupId, long orderOrganizationId, long orderUserId,
+		long commercePaymentMethodId, long commerceShippingMethodId,
+		java.lang.String shippingOptionName, double subtotal,
+		double shippingPrice, double total, int paymentStatus,
 		int shippingStatus, int orderStatus,
 		com.liferay.portal.kernel.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderLocalService.addCommerceOrder(orderOrganizationId,
-			orderRootOrganizationId, orderUserId, commercePaymentMethodId,
+		return _commerceOrderLocalService.addCommerceOrder(siteGroupId,
+			orderOrganizationId, orderUserId, commercePaymentMethodId,
 			commerceShippingMethodId, shippingOptionName, subtotal,
 			shippingPrice, total, paymentStatus, shippingStatus, orderStatus,
 			serviceContext);
@@ -109,6 +109,12 @@ public class CommerceOrderLocalServiceWrapper
 		long commerceOrderId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.deleteCommerceOrder(commerceOrderId);
+	}
+
+	@Override
+	public void deleteCommerceOrders(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_commerceOrderLocalService.deleteCommerceOrders(groupId);
 	}
 
 	/**
@@ -280,10 +286,10 @@ public class CommerceOrderLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int orderStatus, int start, int end,
+		long groupId, long orderUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator) {
 		return _commerceOrderLocalService.getCommerceOrders(groupId,
-			orderStatus, start, end, orderByComparator);
+			orderUserId, start, end, orderByComparator);
 	}
 
 	/**
@@ -329,15 +335,9 @@ public class CommerceOrderLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
-		long groupId) {
-		return _commerceOrderLocalService.getCommerceOrdersCount(groupId);
-	}
-
-	@Override
-	public int getCommerceOrdersCount(long groupId, int orderStatus) {
+	public int getCommerceOrdersCount(long groupId, long orderUserId) {
 		return _commerceOrderLocalService.getCommerceOrdersCount(groupId,
-			orderStatus);
+			orderUserId);
 	}
 
 	@Override
@@ -366,6 +366,13 @@ public class CommerceOrderLocalServiceWrapper
 		java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _commerceOrderLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.search.BaseModelSearchResult<com.liferay.commerce.model.CommerceOrder> searchCommerceOrders(
+		com.liferay.portal.kernel.search.SearchContext searchContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _commerceOrderLocalService.searchCommerceOrders(searchContext);
 	}
 
 	@Override

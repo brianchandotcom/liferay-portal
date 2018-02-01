@@ -83,10 +83,10 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", siteGroupId=");
+		sb.append(siteGroupId);
 		sb.append(", orderOrganizationId=");
 		sb.append(orderOrganizationId);
-		sb.append(", orderRootOrganizationId=");
-		sb.append(orderRootOrganizationId);
 		sb.append(", orderUserId=");
 		sb.append(orderUserId);
 		sb.append(", billingAddressId=");
@@ -163,8 +163,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 			commerceOrderImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		commerceOrderImpl.setSiteGroupId(siteGroupId);
 		commerceOrderImpl.setOrderOrganizationId(orderOrganizationId);
-		commerceOrderImpl.setOrderRootOrganizationId(orderRootOrganizationId);
 		commerceOrderImpl.setOrderUserId(orderUserId);
 		commerceOrderImpl.setBillingAddressId(billingAddressId);
 		commerceOrderImpl.setShippingAddressId(shippingAddressId);
@@ -228,9 +228,9 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
 
-		orderOrganizationId = objectInput.readLong();
+		siteGroupId = objectInput.readLong();
 
-		orderRootOrganizationId = objectInput.readLong();
+		orderOrganizationId = objectInput.readLong();
 
 		orderUserId = objectInput.readLong();
 
@@ -291,9 +291,9 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
 
-		objectOutput.writeLong(orderOrganizationId);
+		objectOutput.writeLong(siteGroupId);
 
-		objectOutput.writeLong(orderRootOrganizationId);
+		objectOutput.writeLong(orderOrganizationId);
 
 		objectOutput.writeLong(orderUserId);
 
@@ -353,8 +353,8 @@ public class CommerceOrderCacheModel implements CacheModel<CommerceOrder>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long siteGroupId;
 	public long orderOrganizationId;
-	public long orderRootOrganizationId;
 	public long orderUserId;
 	public long billingAddressId;
 	public long shippingAddressId;

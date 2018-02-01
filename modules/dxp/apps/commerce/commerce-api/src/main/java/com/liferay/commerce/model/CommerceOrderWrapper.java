@@ -68,8 +68,8 @@ public class CommerceOrderWrapper implements CommerceOrder,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("siteGroupId", getSiteGroupId());
 		attributes.put("orderOrganizationId", getOrderOrganizationId());
-		attributes.put("orderRootOrganizationId", getOrderRootOrganizationId());
 		attributes.put("orderUserId", getOrderUserId());
 		attributes.put("billingAddressId", getBillingAddressId());
 		attributes.put("shippingAddressId", getShippingAddressId());
@@ -141,17 +141,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 			setModifiedDate(modifiedDate);
 		}
 
+		Long siteGroupId = (Long)attributes.get("siteGroupId");
+
+		if (siteGroupId != null) {
+			setSiteGroupId(siteGroupId);
+		}
+
 		Long orderOrganizationId = (Long)attributes.get("orderOrganizationId");
 
 		if (orderOrganizationId != null) {
 			setOrderOrganizationId(orderOrganizationId);
-		}
-
-		Long orderRootOrganizationId = (Long)attributes.get(
-				"orderRootOrganizationId");
-
-		if (orderRootOrganizationId != null) {
-			setOrderRootOrganizationId(orderRootOrganizationId);
 		}
 
 		Long orderUserId = (Long)attributes.get("orderUserId");
@@ -389,16 +388,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
-	* Returns the order root organization ID of this commerce order.
-	*
-	* @return the order root organization ID of this commerce order
-	*/
-	@Override
-	public long getOrderRootOrganizationId() {
-		return _commerceOrder.getOrderRootOrganizationId();
-	}
-
-	/**
 	* Returns the order status of this commerce order.
 	*
 	* @return the order status of this commerce order
@@ -513,6 +502,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public int getShippingStatus() {
 		return _commerceOrder.getShippingStatus();
+	}
+
+	/**
+	* Returns the site group ID of this commerce order.
+	*
+	* @return the site group ID of this commerce order
+	*/
+	@Override
+	public long getSiteGroupId() {
+		return _commerceOrder.getSiteGroupId();
 	}
 
 	/**
@@ -847,16 +846,6 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	}
 
 	/**
-	* Sets the order root organization ID of this commerce order.
-	*
-	* @param orderRootOrganizationId the order root organization ID of this commerce order
-	*/
-	@Override
-	public void setOrderRootOrganizationId(long orderRootOrganizationId) {
-		_commerceOrder.setOrderRootOrganizationId(orderRootOrganizationId);
-	}
-
-	/**
 	* Sets the order status of this commerce order.
 	*
 	* @param orderStatus the order status of this commerce order
@@ -959,6 +948,16 @@ public class CommerceOrderWrapper implements CommerceOrder,
 	@Override
 	public void setShippingStatus(int shippingStatus) {
 		_commerceOrder.setShippingStatus(shippingStatus);
+	}
+
+	/**
+	* Sets the site group ID of this commerce order.
+	*
+	* @param siteGroupId the site group ID of this commerce order
+	*/
+	@Override
+	public void setSiteGroupId(long siteGroupId) {
+		_commerceOrder.setSiteGroupId(siteGroupId);
 	}
 
 	/**

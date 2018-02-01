@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
+import com.liferay.portal.kernel.search.BaseModelSearchResult;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -76,8 +78,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public CommerceOrder addCommerceOrder(CommerceOrder commerceOrder);
 
 	@Indexable(type = IndexableType.REINDEX)
-	public CommerceOrder addCommerceOrder(long orderOrganizationId,
-		long orderRootOrganizationId, long orderUserId,
+	public CommerceOrder addCommerceOrder(long siteGroupId,
+		long orderOrganizationId, long orderUserId,
 		long commercePaymentMethodId, long commerceShippingMethodId,
 		java.lang.String shippingOptionName, double subtotal,
 		double shippingPrice, double total, int paymentStatus,
@@ -116,6 +118,8 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CommerceOrder deleteCommerceOrder(long commerceOrderId)
 		throws PortalException;
+
+	public void deleteCommerceOrders(long groupId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -238,8 +242,9 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public List<CommerceOrder> getCommerceOrders(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int orderStatus,
-		int start, int end, OrderByComparator<CommerceOrder> orderByComparator);
+	public List<CommerceOrder> getCommerceOrders(long groupId,
+		long orderUserId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator);
 
 	/**
 	* Returns all the commerce orders matching the UUID and company.
@@ -276,11 +281,7 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	public int getCommerceOrdersCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
-		long groupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId, int orderStatus);
+	public int getCommerceOrdersCount(long groupId, long orderUserId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
@@ -300,6 +301,10 @@ public interface CommerceOrderLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public BaseModelSearchResult<CommerceOrder> searchCommerceOrders(
+		SearchContext searchContext) throws PortalException;
 
 	@Indexable(type = IndexableType.REINDEX)
 	public CommerceOrder updateBillingAddress(long commerceOrderId,

@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the remote service interface for CommerceOrder. Methods of this
@@ -76,16 +75,13 @@ public interface CommerceOrderService extends BaseService {
 		java.lang.String uuid, long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CommerceOrder> getCommerceOrders(long groupId, int orderStatus,
-		int start, int end, OrderByComparator<CommerceOrder> orderByComparator)
+	public List<CommerceOrder> getCommerceOrders(long groupId,
+		long orderUserId, int start, int end,
+		OrderByComparator<CommerceOrder> orderByComparator)
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
-		long groupId) throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCommerceOrdersCount(long groupId, int orderStatus)
+	public int getCommerceOrdersCount(long groupId, long orderUserId)
 		throws PortalException;
 
 	/**

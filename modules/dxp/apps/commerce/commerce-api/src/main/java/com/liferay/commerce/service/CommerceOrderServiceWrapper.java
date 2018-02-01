@@ -72,24 +72,17 @@ public class CommerceOrderServiceWrapper implements CommerceOrderService,
 
 	@Override
 	public java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int orderStatus, int start, int end,
+		long groupId, long orderUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.getCommerceOrders(groupId, orderStatus,
+		return _commerceOrderService.getCommerceOrders(groupId, orderUserId,
 			start, end, orderByComparator);
 	}
 
 	@Override
-	public java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
-		long groupId)
+	public int getCommerceOrdersCount(long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.getCommerceOrdersCount(groupId);
-	}
-
-	@Override
-	public int getCommerceOrdersCount(long groupId, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _commerceOrderService.getCommerceOrdersCount(groupId, orderStatus);
+		return _commerceOrderService.getCommerceOrdersCount(groupId, orderUserId);
 	}
 
 	/**

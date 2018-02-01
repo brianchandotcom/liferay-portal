@@ -24,7 +24,6 @@
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderServiceImpl" id="com.liferay.commerce.service.CommerceOrderService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderPersistence" parent="basePersistence" />
-	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderFinderImpl" id="com.liferay.commerce.service.persistence.CommerceOrderFinder" parent="basePersistence" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderItemLocalServiceImpl" id="com.liferay.commerce.service.CommerceOrderItemLocalService" />
 	<bean class="com.liferay.commerce.service.impl.CommerceOrderItemServiceImpl" id="com.liferay.commerce.service.CommerceOrderItemService" />
 	<bean class="com.liferay.commerce.service.persistence.impl.CommerceOrderItemPersistenceImpl" id="com.liferay.commerce.service.persistence.CommerceOrderItemPersistence" parent="basePersistence" />

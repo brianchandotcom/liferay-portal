@@ -59,6 +59,10 @@ public interface CommerceOrganizationLocalService extends BaseLocalService {
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Organization getAccountOrganization(long organizationId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Address getOrganizationPrimaryAddress(long organizationId)
 		throws PortalException;
 

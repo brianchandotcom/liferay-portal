@@ -212,6 +212,20 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
+	 * Returns the site group ID of this commerce order.
+	 *
+	 * @return the site group ID of this commerce order
+	 */
+	public long getSiteGroupId();
+
+	/**
+	 * Sets the site group ID of this commerce order.
+	 *
+	 * @param siteGroupId the site group ID of this commerce order
+	 */
+	public void setSiteGroupId(long siteGroupId);
+
+	/**
 	 * Returns the order organization ID of this commerce order.
 	 *
 	 * @return the order organization ID of this commerce order
@@ -224,20 +238,6 @@ public interface CommerceOrderModel extends BaseModel<CommerceOrder>,
 	 * @param orderOrganizationId the order organization ID of this commerce order
 	 */
 	public void setOrderOrganizationId(long orderOrganizationId);
-
-	/**
-	 * Returns the order root organization ID of this commerce order.
-	 *
-	 * @return the order root organization ID of this commerce order
-	 */
-	public long getOrderRootOrganizationId();
-
-	/**
-	 * Sets the order root organization ID of this commerce order.
-	 *
-	 * @param orderRootOrganizationId the order root organization ID of this commerce order
-	 */
-	public void setOrderRootOrganizationId(long orderRootOrganizationId);
 
 	/**
 	 * Returns the order user ID of this commerce order.

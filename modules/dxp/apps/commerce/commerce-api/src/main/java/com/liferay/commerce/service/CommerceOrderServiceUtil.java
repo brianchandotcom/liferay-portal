@@ -73,23 +73,17 @@ public class CommerceOrderServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		long groupId, int orderStatus, int start, int end,
+		long groupId, long orderUserId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
-				   .getCommerceOrders(groupId, orderStatus, start, end,
+				   .getCommerceOrders(groupId, orderUserId, start, end,
 			orderByComparator);
 	}
 
-	public static java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
-		long groupId)
+	public static int getCommerceOrdersCount(long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceOrdersCount(groupId);
-	}
-
-	public static int getCommerceOrdersCount(long groupId, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCommerceOrdersCount(groupId, orderStatus);
+		return getService().getCommerceOrdersCount(groupId, orderUserId);
 	}
 
 	/**

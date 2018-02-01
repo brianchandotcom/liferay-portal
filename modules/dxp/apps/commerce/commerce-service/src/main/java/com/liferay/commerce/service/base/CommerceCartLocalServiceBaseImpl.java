@@ -28,7 +28,6 @@ import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
-import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
@@ -765,24 +764,6 @@ public abstract class CommerceCartLocalServiceBaseImpl
 	public void setCommerceOrderPersistence(
 		CommerceOrderPersistence commerceOrderPersistence) {
 		this.commerceOrderPersistence = commerceOrderPersistence;
-	}
-
-	/**
-	 * Returns the commerce order finder.
-	 *
-	 * @return the commerce order finder
-	 */
-	public CommerceOrderFinder getCommerceOrderFinder() {
-		return commerceOrderFinder;
-	}
-
-	/**
-	 * Sets the commerce order finder.
-	 *
-	 * @param commerceOrderFinder the commerce order finder
-	 */
-	public void setCommerceOrderFinder(CommerceOrderFinder commerceOrderFinder) {
-		this.commerceOrderFinder = commerceOrderFinder;
 	}
 
 	/**
@@ -1704,8 +1685,6 @@ public abstract class CommerceCartLocalServiceBaseImpl
 	protected com.liferay.commerce.service.CommerceOrderLocalService commerceOrderLocalService;
 	@BeanReference(type = CommerceOrderPersistence.class)
 	protected CommerceOrderPersistence commerceOrderPersistence;
-	@BeanReference(type = CommerceOrderFinder.class)
-	protected CommerceOrderFinder commerceOrderFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService;
 	@BeanReference(type = CommerceOrderItemPersistence.class)

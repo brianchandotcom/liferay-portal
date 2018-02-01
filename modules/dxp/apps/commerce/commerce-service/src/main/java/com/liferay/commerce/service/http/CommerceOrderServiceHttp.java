@@ -215,7 +215,7 @@ public class CommerceOrderServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.commerce.model.CommerceOrder> getCommerceOrders(
-		HttpPrincipal httpPrincipal, long groupId, int orderStatus, int start,
+		HttpPrincipal httpPrincipal, long groupId, long orderUserId, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.commerce.model.CommerceOrder> orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException {
@@ -224,7 +224,7 @@ public class CommerceOrderServiceHttp {
 					"getCommerceOrders", _getCommerceOrdersParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					orderStatus, start, end, orderByComparator);
+					orderUserId, start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -248,48 +248,16 @@ public class CommerceOrderServiceHttp {
 		}
 	}
 
-	public static java.util.Map<java.lang.Integer, java.lang.Long> getCommerceOrdersCount(
-		HttpPrincipal httpPrincipal, long groupId)
+	public static int getCommerceOrdersCount(HttpPrincipal httpPrincipal,
+		long groupId, long orderUserId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
 					"getCommerceOrdersCount",
 					_getCommerceOrdersCountParameterTypes6);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey, groupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
-					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.Map<java.lang.Integer, java.lang.Long>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCommerceOrdersCount(HttpPrincipal httpPrincipal,
-		long groupId, int orderStatus)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		try {
-			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
-					"getCommerceOrdersCount",
-					_getCommerceOrdersCountParameterTypes7);
-
 			MethodHandler methodHandler = new MethodHandler(methodKey, groupId,
-					orderStatus);
+					orderUserId);
 
 			Object returnObj = null;
 
@@ -324,7 +292,7 @@ public class CommerceOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
-					"updateBillingAddress", _updateBillingAddressParameterTypes8);
+					"updateBillingAddress", _updateBillingAddressParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, name, description, street1, street2,
@@ -361,7 +329,7 @@ public class CommerceOrderServiceHttp {
 		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
-					"updateCommerceOrder", _updateCommerceOrderParameterTypes9);
+					"updateCommerceOrder", _updateCommerceOrderParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, commercePaymentMethodId,
@@ -397,7 +365,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
 					"updatePurchaseOrderNumber",
-					_updatePurchaseOrderNumberParameterTypes10);
+					_updatePurchaseOrderNumberParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, purchaseOrderNumber);
@@ -436,7 +404,7 @@ public class CommerceOrderServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CommerceOrderServiceUtil.class,
 					"updateShippingAddress",
-					_updateShippingAddressParameterTypes11);
+					_updateShippingAddressParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					commerceOrderId, name, description, street1, street2,
@@ -481,16 +449,13 @@ public class CommerceOrderServiceHttp {
 	private static final Class<?>[] _getCommerceOrderByUuidAndGroupIdParameterTypes4 =
 		new Class[] { java.lang.String.class, long.class };
 	private static final Class<?>[] _getCommerceOrdersParameterTypes5 = new Class[] {
-			long.class, int.class, int.class, int.class,
+			long.class, long.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
 	private static final Class<?>[] _getCommerceOrdersCountParameterTypes6 = new Class[] {
-			long.class
+			long.class, long.class
 		};
-	private static final Class<?>[] _getCommerceOrdersCountParameterTypes7 = new Class[] {
-			long.class, int.class
-		};
-	private static final Class<?>[] _updateBillingAddressParameterTypes8 = new Class[] {
+	private static final Class<?>[] _updateBillingAddressParameterTypes7 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
@@ -498,14 +463,14 @@ public class CommerceOrderServiceHttp {
 			java.lang.String.class,
 			com.liferay.portal.kernel.service.ServiceContext.class
 		};
-	private static final Class<?>[] _updateCommerceOrderParameterTypes9 = new Class[] {
+	private static final Class<?>[] _updateCommerceOrderParameterTypes8 = new Class[] {
 			long.class, long.class, java.lang.String.class, double.class,
 			double.class, double.class, int.class, int.class
 		};
-	private static final Class<?>[] _updatePurchaseOrderNumberParameterTypes10 = new Class[] {
+	private static final Class<?>[] _updatePurchaseOrderNumberParameterTypes9 = new Class[] {
 			long.class, java.lang.String.class
 		};
-	private static final Class<?>[] _updateShippingAddressParameterTypes11 = new Class[] {
+	private static final Class<?>[] _updateShippingAddressParameterTypes10 = new Class[] {
 			long.class, java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,
 			java.lang.String.class, java.lang.String.class,

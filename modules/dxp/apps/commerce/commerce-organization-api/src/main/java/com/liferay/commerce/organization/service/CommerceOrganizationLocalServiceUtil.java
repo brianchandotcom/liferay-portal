@@ -59,6 +59,12 @@ public class CommerceOrganizationLocalServiceUtil {
 			.addOrganizationUsers(organizationId, emailAddresses, serviceContext);
 	}
 
+	public static com.liferay.portal.kernel.model.Organization getAccountOrganization(
+		long organizationId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAccountOrganization(organizationId);
+	}
+
 	public static com.liferay.portal.kernel.model.Address getOrganizationPrimaryAddress(
 		long organizationId)
 		throws com.liferay.portal.kernel.exception.PortalException {

@@ -28,7 +28,6 @@ import com.liferay.commerce.service.persistence.CommerceCartItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceCartPersistence;
 import com.liferay.commerce.service.persistence.CommerceCountryFinder;
 import com.liferay.commerce.service.persistence.CommerceCountryPersistence;
-import com.liferay.commerce.service.persistence.CommerceOrderFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemFinder;
 import com.liferay.commerce.service.persistence.CommerceOrderItemPersistence;
 import com.liferay.commerce.service.persistence.CommerceOrderNotePersistence;
@@ -85,7 +84,6 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
-import com.liferay.portal.kernel.service.persistence.GroupPersistence;
 import com.liferay.portal.kernel.service.persistence.OrganizationPersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.service.persistence.WorkflowInstanceLinkPersistence;
@@ -803,24 +801,6 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	public void setCommerceOrderPersistence(
 		CommerceOrderPersistence commerceOrderPersistence) {
 		this.commerceOrderPersistence = commerceOrderPersistence;
-	}
-
-	/**
-	 * Returns the commerce order finder.
-	 *
-	 * @return the commerce order finder
-	 */
-	public CommerceOrderFinder getCommerceOrderFinder() {
-		return commerceOrderFinder;
-	}
-
-	/**
-	 * Sets the commerce order finder.
-	 *
-	 * @param commerceOrderFinder the commerce order finder
-	 */
-	public void setCommerceOrderFinder(CommerceOrderFinder commerceOrderFinder) {
-		this.commerceOrderFinder = commerceOrderFinder;
 	}
 
 	/**
@@ -1565,43 +1545,6 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the group local service.
-	 *
-	 * @return the group local service
-	 */
-	public com.liferay.portal.kernel.service.GroupLocalService getGroupLocalService() {
-		return groupLocalService;
-	}
-
-	/**
-	 * Sets the group local service.
-	 *
-	 * @param groupLocalService the group local service
-	 */
-	public void setGroupLocalService(
-		com.liferay.portal.kernel.service.GroupLocalService groupLocalService) {
-		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group persistence.
-	 *
-	 * @return the group persistence
-	 */
-	public GroupPersistence getGroupPersistence() {
-		return groupPersistence;
-	}
-
-	/**
-	 * Sets the group persistence.
-	 *
-	 * @param groupPersistence the group persistence
-	 */
-	public void setGroupPersistence(GroupPersistence groupPersistence) {
-		this.groupPersistence = groupPersistence;
-	}
-
-	/**
 	 * Returns the organization local service.
 	 *
 	 * @return the organization local service
@@ -1855,8 +1798,6 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	protected CommerceOrderLocalService commerceOrderLocalService;
 	@BeanReference(type = CommerceOrderPersistence.class)
 	protected CommerceOrderPersistence commerceOrderPersistence;
-	@BeanReference(type = CommerceOrderFinder.class)
-	protected CommerceOrderFinder commerceOrderFinder;
 	@BeanReference(type = com.liferay.commerce.service.CommerceOrderItemLocalService.class)
 	protected com.liferay.commerce.service.CommerceOrderItemLocalService commerceOrderItemLocalService;
 	@BeanReference(type = CommerceOrderItemPersistence.class)
@@ -1935,10 +1876,6 @@ public abstract class CommerceOrderLocalServiceBaseImpl
 	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.GroupLocalService.class)
-	protected com.liferay.portal.kernel.service.GroupLocalService groupLocalService;
-	@ServiceReference(type = GroupPersistence.class)
-	protected GroupPersistence groupPersistence;
 	@ServiceReference(type = com.liferay.portal.kernel.service.OrganizationLocalService.class)
 	protected com.liferay.portal.kernel.service.OrganizationLocalService organizationLocalService;
 	@ServiceReference(type = OrganizationPersistence.class)

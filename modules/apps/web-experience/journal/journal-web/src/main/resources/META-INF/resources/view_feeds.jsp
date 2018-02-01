@@ -220,10 +220,13 @@ renderResponse.setTitle(LanguageUtil.get(request, "feeds"));
 	</liferay-ui:search-container>
 </aui:form>
 
-<aui:script>
-	function <portlet:namespace />deleteFeeds() {
-		if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
-			submitForm(document.<portlet:namespace />fm);
+<aui:script sandbox="<%= true %>">
+	$('#<portlet:namespace />deleteFeeds').on(
+		'click',
+		function() {
+			if (confirm('<%= UnicodeLanguageUtil.get(request, "are-you-sure-you-want-to-delete-the-selected-feeds") %>')) {
+				submitForm(document.<portlet:namespace />fm);
+			}
 		}
-	}
+	);
 </aui:script>

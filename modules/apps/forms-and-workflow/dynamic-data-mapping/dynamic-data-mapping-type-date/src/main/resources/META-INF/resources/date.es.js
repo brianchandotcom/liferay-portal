@@ -1,6 +1,7 @@
 import Component from 'metal-component';
+import IMask from 'imask';
+import moment from 'moment';
 import Soy from 'metal-soy';
-
 import templates from './date.soy';
 
 /**
@@ -17,6 +18,8 @@ if (!window.DDMDate) {
 	};
 }
 
+window.DDMDate.IMask = IMask;
+window.DDMDate.moment = moment;
 window.DDMDate.render = Date;
 
 export default Date;

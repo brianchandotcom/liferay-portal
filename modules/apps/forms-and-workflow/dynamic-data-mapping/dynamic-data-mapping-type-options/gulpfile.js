@@ -1,29 +1,19 @@
 'use strict';
 
 var gulp = require('gulp');
-var path = require('path');
-var runSequence = require('run-sequence');
 
-var registerUnitTestsTasks = require('liferay-forms-gulp-tasks');
+// We need to use gulp to compile soy files because metal-cli compiles for a
+// different target version (of the `goog` modules).
+require('gulp-metal').registerTasks({
+	taskPrefix: 'metal:',
+	soySrc: './src/main/resources/META-INF/resources/**/*.soy',
+	soyDest: './src/main/resources/META-INF/resources',
+});
 
-registerUnitTestsTasks(
-	{
-		karmaCoverageFile: path.resolve(__dirname, 'karma.coverage.conf.js'),
-		karmaCoverageOutput: path.resolve(__dirname, 'build/coverage'),
-		karmaFile: path.resolve(__dirname, 'karma.conf.js')
-	}
-);
+gulp.task('create-soy-files', ['metal:soy'], function() {
+	return gulp
+		.src('./src/main/resources/META-INF/resources/**/*.soy.js')
+		.pipe(gulp.dest('./src/main/resources/META-INF/resources'));
+});
 
-gulp.task(
-	'test',
-	function(done) {
-		runSequence('test:unit', done);
-	}
-);
-
-gulp.task(
-	'test:coverage',
-	function(done) {
-		runSequence('test:unit:coverage', done);
-	}
-);
+gulp.task('default', ['create-soy-files']);

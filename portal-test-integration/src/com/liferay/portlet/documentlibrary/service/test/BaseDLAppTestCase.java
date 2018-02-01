@@ -33,7 +33,7 @@ import com.liferay.portal.kernel.test.util.RoleTestUtil;
 import com.liferay.portal.kernel.test.util.ServiceContextTestUtil;
 import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 import org.junit.After;
 import org.junit.Before;
@@ -78,7 +78,7 @@ public abstract class BaseDLAppTestCase {
 			"Test Folder", RandomTestUtil.randomString(), serviceContext);
 
 		RoleTestUtil.addResourcePermission(
-			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
 			ActionKeys.VIEW);
 	}
@@ -88,7 +88,7 @@ public abstract class BaseDLAppTestCase {
 		PrincipalThreadLocal.setName(_name);
 
 		RoleTestUtil.removeResourcePermission(
-			RoleConstants.GUEST, DLPermission.RESOURCE_NAME,
+			RoleConstants.GUEST, DLConstants.RESOURCE_NAME,
 			ResourceConstants.SCOPE_GROUP, String.valueOf(group.getGroupId()),
 			ActionKeys.VIEW);
 	}

@@ -45,7 +45,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.util.RepositoryUtil;
 import com.liferay.portlet.documentlibrary.DLGroupServiceSettings;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.subscription.service.SubscriptionLocalService;
 
 import java.io.Serializable;
@@ -189,7 +189,7 @@ public class SubscriptionDLAppHelperLocalServiceWrapper
 
 		SubscriptionSender subscriptionSender =
 			new GroupSubscriptionCheckSubscriptionSender(
-				DLPermission.RESOURCE_NAME);
+				DLConstants.RESOURCE_NAME);
 
 		DLFileEntry dlFileEntry = (DLFileEntry)fileEntry.getModel();
 

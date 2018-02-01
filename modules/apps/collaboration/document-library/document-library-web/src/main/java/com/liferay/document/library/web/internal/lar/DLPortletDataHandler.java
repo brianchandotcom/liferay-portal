@@ -62,7 +62,6 @@ import com.liferay.portal.repository.liferayrepository.LiferayRepositoryDefiner;
 import com.liferay.portal.repository.temporaryrepository.TemporaryFileEntryRepositoryDefiner;
 import com.liferay.portal.util.PropsValues;
 import com.liferay.portlet.documentlibrary.constants.DLConstants;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
 import java.util.List;
 
@@ -182,7 +181,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences)
 		throws Exception {
 
-		portletDataContext.addPortletPermissions(DLPermission.RESOURCE_NAME);
+		portletDataContext.addPortletPermissions(DLConstants.RESOURCE_NAME);
 
 		Element rootElement = addExportDataRootElement(portletDataContext);
 
@@ -235,7 +234,7 @@ public class DLPortletDataHandler extends BasePortletDataHandler {
 			PortletPreferences portletPreferences, String data)
 		throws Exception {
 
-		portletDataContext.importPortletPermissions(DLPermission.RESOURCE_NAME);
+		portletDataContext.importPortletPermissions(DLConstants.RESOURCE_NAME);
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "folders")) {
 			Element foldersElement =

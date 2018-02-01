@@ -22,14 +22,15 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 
 /**
  * @author Jorge Ferrer
  */
-@OSGiBeanProperties(property = {"resource.name=" + DLPermission.RESOURCE_NAME})
+@OSGiBeanProperties(property = {"resource.name=" + DLConstants.RESOURCE_NAME})
 public class DLPermission extends BaseResourcePermissionChecker {
 
-	public static final String RESOURCE_NAME = "com.liferay.document.library";
+	public static final String RESOURCE_NAME = DLConstants.RESOURCE_NAME;
 
 	public static void check(
 			PermissionChecker permissionChecker, long groupId, String actionId)
@@ -37,7 +38,8 @@ public class DLPermission extends BaseResourcePermissionChecker {
 
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, RESOURCE_NAME, groupId, actionId);
+				permissionChecker, DLConstants.RESOURCE_NAME, groupId,
+				actionId);
 		}
 	}
 
@@ -48,7 +50,8 @@ public class DLPermission extends BaseResourcePermissionChecker {
 			FileEntry.class.getName(), PortletProvider.Action.EDIT);
 
 		return contains(
-			permissionChecker, RESOURCE_NAME, portletId, classPK, actionId);
+			permissionChecker, DLConstants.RESOURCE_NAME, portletId, classPK,
+			actionId);
 	}
 
 	@Override

@@ -31,8 +31,8 @@ import com.liferay.portal.kernel.test.util.TestPropsValues;
 import com.liferay.portal.service.permission.test.BasePermissionTestCase;
 import com.liferay.portal.test.rule.LiferayIntegrationTestRule;
 import com.liferay.portal.test.rule.PermissionCheckerTestRule;
+import com.liferay.portlet.documentlibrary.constants.DLConstants;
 import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.service.permission.DLPermission;
 
 import org.junit.Assert;
 import org.junit.ClassRule;
@@ -109,7 +109,7 @@ public class DLFolderPermissionCheckerTest extends BasePermissionTestCase {
 
 	@Override
 	protected String getResourceName() {
-		return DLPermission.RESOURCE_NAME;
+		return DLConstants.RESOURCE_NAME;
 	}
 
 	@Override

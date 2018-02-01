@@ -3,6 +3,7 @@ create index IX_A0B4C71A on CPAttachmentFileEntry (displayDate, status);
 create index IX_C2C5D600 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_BFCBDC82 on CPAttachmentFileEntry (uuid_[$COLUMN_LENGTH:75$], groupId);
 
+create index IX_95975FB4 on CPDSpecificationOptionValue (CPDefinitionId, CPOptionCategoryId);
 create unique index IX_173E8E91 on CPDSpecificationOptionValue (CPDefinitionId, CPSpecificationOptionId);
 create index IX_4F4EDBA5 on CPDSpecificationOptionValue (CPOptionCategoryId);
 create index IX_573BE140 on CPDSpecificationOptionValue (CPSpecificationOptionId);

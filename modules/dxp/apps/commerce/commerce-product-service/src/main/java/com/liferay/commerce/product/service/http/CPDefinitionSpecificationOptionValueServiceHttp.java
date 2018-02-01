@@ -221,6 +221,40 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 		}
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		HttpPrincipal httpPrincipal, long cpDefinitionId,
+		long cpOptionCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CPDefinitionSpecificationOptionValueServiceUtil.class,
+					"getCPDefinitionSpecificationOptionValues",
+					_getCPDefinitionSpecificationOptionValuesParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					cpDefinitionId, cpOptionCategoryId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue updateCPDefinitionSpecificationOptionValue(
 		HttpPrincipal httpPrincipal,
 		long cpDefinitionSpecificationOptionValueId, long cpOptionCategoryId,
@@ -231,7 +265,7 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CPDefinitionSpecificationOptionValueServiceUtil.class,
 					"updateCPDefinitionSpecificationOptionValue",
-					_updateCPDefinitionSpecificationOptionValueParameterTypes5);
+					_updateCPDefinitionSpecificationOptionValueParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					cpDefinitionSpecificationOptionValueId, cpOptionCategoryId,
@@ -273,7 +307,9 @@ public class CPDefinitionSpecificationOptionValueServiceHttp {
 		new Class[] { long.class };
 	private static final Class<?>[] _getCPDefinitionSpecificationOptionValuesParameterTypes4 =
 		new Class[] { long.class };
-	private static final Class<?>[] _updateCPDefinitionSpecificationOptionValueParameterTypes5 =
+	private static final Class<?>[] _getCPDefinitionSpecificationOptionValuesParameterTypes5 =
+		new Class[] { long.class, long.class };
+	private static final Class<?>[] _updateCPDefinitionSpecificationOptionValueParameterTypes6 =
 		new Class[] {
 			long.class, long.class, java.util.Map.class, double.class,
 			com.liferay.portal.kernel.service.ServiceContext.class

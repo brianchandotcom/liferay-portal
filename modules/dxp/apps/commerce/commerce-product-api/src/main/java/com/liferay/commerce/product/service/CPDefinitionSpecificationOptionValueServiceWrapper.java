@@ -75,6 +75,14 @@ public class CPDefinitionSpecificationOptionValueServiceWrapper
 		return _cpDefinitionSpecificationOptionValueService.getCPDefinitionSpecificationOptionValues(cpDefinitionId);
 	}
 
+	@Override
+	public java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId, long cpOptionCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _cpDefinitionSpecificationOptionValueService.getCPDefinitionSpecificationOptionValues(cpDefinitionId,
+			cpOptionCategoryId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*

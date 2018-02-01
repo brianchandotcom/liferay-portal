@@ -279,6 +279,13 @@ public class CPDefinitionSpecificationOptionValueLocalServiceUtil {
 				   .getCPDefinitionSpecificationOptionValues(cpDefinitionId);
 	}
 
+	public static java.util.List<com.liferay.commerce.product.model.CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId, long cpOptionCategoryId) {
+		return getService()
+				   .getCPDefinitionSpecificationOptionValues(cpDefinitionId,
+			cpOptionCategoryId);
+	}
+
 	/**
 	* Returns all the cp definition specification option values matching the UUID and company.
 	*

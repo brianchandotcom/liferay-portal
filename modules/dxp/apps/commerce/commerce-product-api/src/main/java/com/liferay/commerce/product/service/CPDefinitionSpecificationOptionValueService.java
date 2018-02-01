@@ -78,6 +78,10 @@ public interface CPDefinitionSpecificationOptionValueService extends BaseService
 	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
 		long cpDefinitionId) throws PortalException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId, long cpOptionCategoryId) throws PortalException;
+
 	/**
 	* Returns the OSGi service identifier.
 	*

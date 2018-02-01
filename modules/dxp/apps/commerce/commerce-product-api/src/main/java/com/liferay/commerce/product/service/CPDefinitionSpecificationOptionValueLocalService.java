@@ -244,6 +244,10 @@ public interface CPDefinitionSpecificationOptionValueLocalService
 	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
 		long cpDefinitionId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CPDefinitionSpecificationOptionValue> getCPDefinitionSpecificationOptionValues(
+		long cpDefinitionId, long cpOptionCategoryId);
+
 	/**
 	* Returns all the cp definition specification option values matching the UUID and company.
 	*

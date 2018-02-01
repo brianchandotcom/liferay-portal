@@ -262,6 +262,14 @@ public class CPDefinitionSpecificationOptionValuePersistenceTest {
 	}
 
 	@Test
+	public void testCountByCPDef_CPOptCat() throws Exception {
+		_persistence.countByCPDef_CPOptCat(RandomTestUtil.nextLong(),
+			RandomTestUtil.nextLong());
+
+		_persistence.countByCPDef_CPOptCat(0L, 0L);
+	}
+
+	@Test
 	public void testFindByPrimaryKeyExisting() throws Exception {
 		CPDefinitionSpecificationOptionValue newCPDefinitionSpecificationOptionValue =
 			addCPDefinitionSpecificationOptionValue();

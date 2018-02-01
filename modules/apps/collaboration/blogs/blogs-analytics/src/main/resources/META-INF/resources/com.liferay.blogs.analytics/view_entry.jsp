@@ -45,7 +45,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 		dom.delegate(
 			document.body,
 			'click',
-			'.social-bookmark',
+			'.social-bookmark[data-contentid="<%= entry.getEntryId() %>"]',
 			function(event) {
 				Analytics.send(
 					'SOCIAL',
@@ -60,7 +60,7 @@ long entryId = ParamUtil.getLong(request, "entryId", entry.getEntryId());
 
 		var scrollSessionId = new Date().toISOString();
 
-		var entry = document.querySelector('.entry');
+		var entry = document.querySelector('#<portlet:namespace /><%= entry.getEntryId() %>');
 
 		var debounce = metalDebounceSrcDebounce.default;
 

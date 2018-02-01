@@ -195,12 +195,12 @@
 </tr>
 <tr>
 	<td>PRIVATE_SITE_LINK</td>
-	<td>//div[contains(@class,'list-group-item-content') and contains (.,'Private')]//h5[contains(.,'${key_site}')]</td>
+	<td>//*[@data-qa-id='rowItemContent' and contains (.,'Private')]//h5[contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>
 	<td>PUBLIC_SITE_LINK</td>
-	<td>//div[contains(@class,'list-group-item-content') and contains (.,'Public')]//h5[contains(.,'${key_site}')]</td>
+	<td>//*[@data-qa-id='rowItemContent' and contains (.,'Public')]//h5[contains(.,'${key_site}')]</td>
 	<td></td>
 </tr>
 <tr>

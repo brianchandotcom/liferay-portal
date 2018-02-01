@@ -129,12 +129,12 @@
 <!--ENTRY_DESCRIPTIVE-->
 <tr>
 	<td>ENTRY_DESCRIPTIVE_THUMBNAIL</td>
-	<td>//li[contains(@data-title,'${key_webContentTitle}')]//div[contains(@class,'list-group-item-field')]/div</td>
+	<td>//li[contains(@data-title,'${key_webContentTitle}')]//*[@data-qa-id='rowItemContent']/div</td>
 	<td></td>
 </tr>
 <tr>
 	<td>ENTRY_DESCRIPTIVE_THUMBNAIL_GENERIC</td>
-	<td>//div[contains(@class,'list-group-item-field')]/div</td>
+	<td>//*[@data-qa-id='rowItemContent']/div</td>
 	<td></td>
 </tr>
 <tr>

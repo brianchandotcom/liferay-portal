@@ -974,6 +974,14 @@ public class CPDefinitionLocalServiceImpl
 			cpDefinition.getStatus(), serviceContext,
 			new HashMap<String, Serializable>());
 
+		// Asset
+
+		assetEntryLocalService.updateEntry(
+			serviceContext.getUserId(), cpDefinition.getGroupId(),
+			CPDefinition.class.getName(), cpDefinition.getCPDefinitionId(),
+			serviceContext.getAssetCategoryIds(),
+			serviceContext.getAssetTagNames());
+
 		return cpDefinitionPersistence.update(cpDefinition);
 	}
 

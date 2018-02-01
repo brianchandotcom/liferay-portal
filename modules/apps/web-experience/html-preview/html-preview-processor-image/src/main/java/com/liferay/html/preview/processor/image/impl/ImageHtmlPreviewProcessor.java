@@ -37,14 +37,18 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override
 	public File generateContentHtmlPreview(String content) {
+		return generateContentHtmlPreview(
+			content, HtmlPreviewProcessor.DEFAULT_WIDTH);
+	}
+
+	@Override
+	public File generateContentHtmlPreview(String content, int width) {
 		try {
 			File tempFile = FileUtil.createTempFile();
 
 			FileUtil.write(tempFile, content);
 
-			return _getFile(
-				new Java2DRenderer(
-					tempFile, HtmlPreviewProcessor.DEFAULT_WIDTH));
+			return _getFile(new Java2DRenderer(tempFile, width));
 		}
 		catch (Exception e) {
 			_log.error("Unable to generate HTML preview", e);
@@ -55,9 +59,13 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override
 	public File generateURLHtmlPreview(String url) {
+		return generateURLHtmlPreview(url, HtmlPreviewProcessor.DEFAULT_WIDTH);
+	}
+
+	@Override
+	public File generateURLHtmlPreview(String url, int width) {
 		try {
-			return _getFile(
-				new Java2DRenderer(url, HtmlPreviewProcessor.DEFAULT_WIDTH));
+			return _getFile(new Java2DRenderer(url, width));
 		}
 		catch (Exception e) {
 			_log.error("Unable to generate HTML preview", e);

@@ -16,10 +16,10 @@
 	{@param? role: string}
 	{@param? visible: bool}
 	<div
-		class="modal{$elementClasses ? ' ' + $elementClasses : ''}"
+		class="fade modal show{$elementClasses ? ' ' + $elementClasses : ''}"
 		style="display: {$visible ? 'block' : 'none'}">
 		<div
-			class="modal-dialog{$dialogClasses ? ' ' + $dialogClasses : ''}"
+			class="modal-dialog{$dialogClasses ? ' ' + $dialogClasses : ''} position-relative"
 			tabindex="0"
 			role="{$role ? $role : 'dialog'}"
 			aria-labelledby="{$headerId}"

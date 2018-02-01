@@ -86,7 +86,8 @@ public class CPSearchResultsDisplayContext {
 	}
 
 	public String getConfigurationMethod() {
-		return _cpSearchResultsPortletInstanceConfiguration.configurationMethod();
+		return _cpSearchResultsPortletInstanceConfiguration.
+			configurationMethod();
 	}
 
 	public String getDisplayStyle() {

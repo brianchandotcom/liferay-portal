@@ -129,6 +129,10 @@
 			</plugin>
 			<plugin>
 				<groupId>com.liferay</groupId>
+				<artifactId>com.liferay.source.formatter</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.liferay</groupId>
 				<artifactId>com.liferay.xml.formatter</artifactId>
 				<configuration>
 					<fileName>pom.xml</fileName>

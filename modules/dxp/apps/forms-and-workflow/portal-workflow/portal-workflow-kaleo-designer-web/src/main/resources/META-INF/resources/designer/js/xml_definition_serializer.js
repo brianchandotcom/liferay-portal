@@ -101,7 +101,7 @@ AUI.add(
 		var appendXMLActions = function(buffer, actions, notifications, assignments, wrapperNodeName, actionNodeName, notificationNodeName, assignmentNodeName) {
 			var hasAction = isObject(actions) && !AObject.isEmpty(actions);
 			var hasAssignment = isObject(assignments) && !AObject.isEmpty(assignments);
-			var hasNotification = isObject(notifications) && !AObject.isEmpty(notifications);
+			var hasNotification = isObject(notifications) && !AObject.isEmpty(notifications) && !AObject.isEmpty(notifications.recipients);
 			var xmlActions = XMLUtil.createObj(wrapperNodeName || 'actions');
 
 			if (hasAction || hasNotification || hasAssignment) {

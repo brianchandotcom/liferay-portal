@@ -15,7 +15,6 @@
 package com.liferay.commerce.currency.web.internal.messaging;
 
 import com.liferay.commerce.currency.service.CommerceCurrencyLocalService;
-import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
@@ -30,7 +29,6 @@ import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.TimeUnit;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Map;
 
@@ -86,17 +84,9 @@ public class UpdateExchangeRateMessageListener extends BaseMessageListener {
 			_exchangeRateProviderGroupServiceConfiguration.
 				defaultExchangeRateProviderKey();
 
-		if (Validator.isNull(exchangeRateProviderKey)) {
-			return;
-		}
-
-		ExchangeRateProvider exchangeRateProvider =
-			_exchangeRateProviderRegistry.getExchangeRateProvider(
-				exchangeRateProviderKey);
-
 		_commerceCurrencyLocalService.updateExchangeRates(
 			_exchangeRateProviderGroupServiceConfiguration.groupId(),
-			exchangeRateProvider);
+			exchangeRateProviderKey);
 	}
 
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")

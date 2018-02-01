@@ -19,8 +19,6 @@ import com.liferay.commerce.currency.exception.CommerceCurrencyCodeException;
 import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.ExchangeRateProvider;
-import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.portal.kernel.module.configuration.ConfigurationProvider;
@@ -134,13 +132,10 @@ public class EditExchangeRateMVCActionCommand extends BaseMVCActionCommand {
 						serviceContext.getScopeGroupId(),
 						CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
 
-		ExchangeRateProvider exchangeRateProvider =
-			_exchangeRateProviderRegistry.getExchangeRateProvider(
-				exchangeRateProviderGroupServiceConfiguration.
-					defaultExchangeRateProviderKey());
-
 		_commerceCurrencyService.updateExchangeRates(
-			serviceContext.getScopeGroupId(), exchangeRateProvider);
+			serviceContext.getScopeGroupId(),
+			exchangeRateProviderGroupServiceConfiguration.
+				defaultExchangeRateProviderKey());
 	}
 
 	@Reference
@@ -148,9 +143,6 @@ public class EditExchangeRateMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 	@Reference
 	private SettingsFactory _settingsFactory;

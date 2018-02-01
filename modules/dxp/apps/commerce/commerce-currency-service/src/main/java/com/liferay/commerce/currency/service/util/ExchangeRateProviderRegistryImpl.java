@@ -19,10 +19,6 @@ import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMap;
 import com.liferay.osgi.service.tracker.collections.map.ServiceTrackerMapFactory;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -41,16 +37,8 @@ public class ExchangeRateProviderRegistryImpl
 	}
 
 	@Override
-	public Map<String, ExchangeRateProvider> getExchangeRateProviderMap() {
-		Map<String, ExchangeRateProvider> exchangeRateProviderMap =
-			new HashMap<>();
-
-		for (String key : _serviceTrackerMap.keySet()) {
-			exchangeRateProviderMap.put(
-				key, _serviceTrackerMap.getService(key));
-		}
-
-		return Collections.unmodifiableMap(exchangeRateProviderMap);
+	public Iterable<String> getExchangeRateProviderKeys() {
+		return _serviceTrackerMap.keySet();
 	}
 
 	@Activate

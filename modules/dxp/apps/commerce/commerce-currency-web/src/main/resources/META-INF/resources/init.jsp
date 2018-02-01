@@ -30,7 +30,6 @@ page import="com.liferay.commerce.currency.exception.CommerceCurrencyCodeExcepti
 page import="com.liferay.commerce.currency.exception.CommerceCurrencyNameException" %><%@
 page import="com.liferay.commerce.currency.model.CommerceCurrency" %><%@
 page import="com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission" %><%@
-page import="com.liferay.commerce.currency.util.ExchangeRateProvider" %><%@
 page import="com.liferay.commerce.currency.util.RoundingType" %><%@
 page import="com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration" %><%@
 page import="com.liferay.commerce.currency.web.internal.display.context.CommerceCurrenciesDisplayContext" %><%@

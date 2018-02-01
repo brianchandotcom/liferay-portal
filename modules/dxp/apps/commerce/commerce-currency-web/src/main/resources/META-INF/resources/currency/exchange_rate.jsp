@@ -42,16 +42,13 @@ boolean autoUpdate = exchangeRateProviderGroupServiceConfiguration.autoUpdate();
 				>
 
 					<%
-					Map<String, ExchangeRateProvider> exchangeRateProviders = commerceCurrenciesDisplayContext.getExchangeRateProviders();
-
-					for (Map.Entry<String, ExchangeRateProvider> entry : exchangeRateProviders.entrySet()) {
-						String key = entry.getKey();
+					for (String exchangeRateProviderKey : commerceCurrenciesDisplayContext.getExchangeRateProviderKeys()) {
 					%>
 
 						<aui:option
-							label="<%= LanguageUtil.get(request, entry.getKey()) %>"
-							selected="<%= key.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>"
-							value="<%= entry.getKey() %>"
+							label="<%= LanguageUtil.get(request, exchangeRateProviderKey) %>"
+							selected="<%= exchangeRateProviderKey.equals(exchangeRateProviderGroupServiceConfiguration.defaultExchangeRateProviderKey()) %>"
+							value="<%= exchangeRateProviderKey %>"
 						/>
 
 					<%

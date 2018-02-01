@@ -18,7 +18,6 @@ import com.liferay.commerce.currency.constants.CommerceCurrencyActionKeys;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.base.CommerceCurrencyServiceBaseImpl;
 import com.liferay.commerce.currency.service.permission.CommerceCurrencyPermission;
-import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -158,7 +157,7 @@ public class CommerceCurrencyServiceImpl
 
 	@Override
 	public void updateExchangeRate(
-			long commerceCurrencyId, ExchangeRateProvider exchangeRateProvider)
+			long commerceCurrencyId, String exchangeRateProviderKey)
 		throws PortalException {
 
 		CommerceCurrency commerceCurrency =
@@ -169,12 +168,12 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		commerceCurrencyLocalService.updateExchangeRate(
-			commerceCurrencyId, exchangeRateProvider);
+			commerceCurrencyId, exchangeRateProviderKey);
 	}
 
 	@Override
 	public void updateExchangeRates(
-			long groupId, ExchangeRateProvider exchangeRateProvider)
+			long groupId, String exchangeRateProviderKey)
 		throws Exception {
 
 		CommerceCurrencyPermission.check(
@@ -182,7 +181,7 @@ public class CommerceCurrencyServiceImpl
 			CommerceCurrencyActionKeys.MANAGE_COMMERCE_CURRENCIES);
 
 		commerceCurrencyLocalService.updateExchangeRates(
-			groupId, exchangeRateProvider);
+			groupId, exchangeRateProviderKey);
 	}
 
 }

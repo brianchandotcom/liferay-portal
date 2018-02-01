@@ -186,15 +186,11 @@ public class CommerceCurrencyLocalServiceImpl
 				serviceContext);
 		}
 
-		Map<String, ExchangeRateProvider> exchangeRateProviderMap =
-			_exchangeRateProviderRegistry.getExchangeRateProviderMap();
-
-		for (Map.Entry<String, ExchangeRateProvider> exchangeRateProviderEntry :
-				exchangeRateProviderMap.entrySet()) {
+		for (String exchangeRateProviderKey :
+				_exchangeRateProviderRegistry.getExchangeRateProviderKeys()) {
 
 			updateExchangeRates(
-				serviceContext.getScopeGroupId(),
-				exchangeRateProviderEntry.getValue());
+				serviceContext.getScopeGroupId(), exchangeRateProviderKey);
 
 			break;
 		}
@@ -278,8 +274,12 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public void updateExchangeRate(
-			long commerceCurrencyId, ExchangeRateProvider exchangeRateProvider)
+			long commerceCurrencyId, String exchangeRateProviderKey)
 		throws PortalException {
+
+		ExchangeRateProvider exchangeRateProvider =
+			_exchangeRateProviderRegistry.getExchangeRateProvider(
+				exchangeRateProviderKey);
 
 		if (exchangeRateProvider == null) {
 			return;
@@ -314,7 +314,7 @@ public class CommerceCurrencyLocalServiceImpl
 
 	@Override
 	public void updateExchangeRates(
-			long groupId, ExchangeRateProvider exchangeRateProvider)
+			long groupId, String exchangeRateProviderKey)
 		throws PortalException {
 
 		List<CommerceCurrency> commerceCurrencies = getCommerceCurrencies(
@@ -322,7 +322,8 @@ public class CommerceCurrencyLocalServiceImpl
 
 		for (CommerceCurrency commerceCurrency : commerceCurrencies) {
 			updateExchangeRate(
-				commerceCurrency.getCommerceCurrencyId(), exchangeRateProvider);
+				commerceCurrency.getCommerceCurrencyId(),
+				exchangeRateProviderKey);
 		}
 	}
 

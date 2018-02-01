@@ -14,8 +14,6 @@
 
 package com.liferay.commerce.currency.util;
 
-import java.util.Map;
-
 /**
  * @author Marco Leo
  */
@@ -23,6 +21,6 @@ public interface ExchangeRateProviderRegistry {
 
 	public ExchangeRateProvider getExchangeRateProvider(String key);
 
-	public Map<String, ExchangeRateProvider> getExchangeRateProviderMap();
+	public Iterable<String> getExchangeRateProviderKeys();
 
 }

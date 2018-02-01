@@ -20,8 +20,6 @@ import com.liferay.commerce.currency.exception.CommerceCurrencyNameException;
 import com.liferay.commerce.currency.exception.NoSuchCurrencyException;
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.ExchangeRateProvider;
-import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.web.internal.configuration.ExchangeRateProviderGroupServiceConfiguration;
 import com.liferay.commerce.currency.web.internal.constants.CommerceCurrencyExchangeRateConstants;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -37,7 +35,6 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import java.util.Locale;
 import java.util.Map;
@@ -227,19 +224,11 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 			exchangeRateProviderGroupServiceConfiguration.
 				defaultExchangeRateProviderKey();
 
-		if (Validator.isNull(exchangeRateProviderKey)) {
-			return;
-		}
-
-		ExchangeRateProvider exchangeRateProvider =
-			_exchangeRateProviderRegistry.getExchangeRateProvider(
-				exchangeRateProviderKey);
-
 		for (long updateCommerceCurrencyExchangeRateId :
 				updateCommerceCurrencyExchangeRateIds) {
 
 			_commerceCurrencyService.updateExchangeRate(
-				updateCommerceCurrencyExchangeRateId, exchangeRateProvider);
+				updateCommerceCurrencyExchangeRateId, exchangeRateProviderKey);
 		}
 	}
 
@@ -248,8 +237,5 @@ public class EditCommerceCurrencyMVCActionCommand extends BaseMVCActionCommand {
 
 	@Reference
 	private ConfigurationProvider _configurationProvider;
-
-	@Reference
-	private ExchangeRateProviderRegistry _exchangeRateProviderRegistry;
 
 }

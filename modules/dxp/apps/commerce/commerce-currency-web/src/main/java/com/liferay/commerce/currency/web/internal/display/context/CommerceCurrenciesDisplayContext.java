@@ -16,7 +16,6 @@ package com.liferay.commerce.currency.web.internal.display.context;
 
 import com.liferay.commerce.currency.model.CommerceCurrency;
 import com.liferay.commerce.currency.service.CommerceCurrencyService;
-import com.liferay.commerce.currency.util.ExchangeRateProvider;
 import com.liferay.commerce.currency.util.ExchangeRateProviderRegistry;
 import com.liferay.commerce.currency.util.RoundingType;
 import com.liferay.commerce.currency.util.RoundingTypeServicesTracker;
@@ -37,7 +36,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
@@ -95,8 +93,8 @@ public class CommerceCurrenciesDisplayContext {
 				CommerceCurrencyExchangeRateConstants.SERVICE_NAME));
 	}
 
-	public Map<String, ExchangeRateProvider> getExchangeRateProviders() {
-		return _exchangeRateProviderRegistry.getExchangeRateProviderMap();
+	public Iterable<String> getExchangeRateProviderKeys() {
+		return _exchangeRateProviderRegistry.getExchangeRateProviderKeys();
 	}
 
 	public String getOrderByCol() {

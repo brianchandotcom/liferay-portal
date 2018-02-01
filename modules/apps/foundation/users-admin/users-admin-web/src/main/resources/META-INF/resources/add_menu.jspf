@@ -34,7 +34,7 @@ boolean hasAddUserPermission = PortalPermissionUtil.contains(permissionChecker, 
 		<c:if test="<%= hasAddOrganizationPermission %>">
 
 			<%
-			for (String organizationType : PropsValues.ORGANIZATIONS_TYPES) {
+			for (String organizationType : organizationsTypes) {
 			%>
 
 				<portlet:renderURL var="addOrganizationURL">

@@ -234,16 +234,14 @@ public class RestClient {
 	private URI _updateWithQueryParameters(
 		URI uri, Map<String, String> queryParameters) {
 
-		URI decoratedURI = uri;
-
 		for (Map.Entry<String, String> parameter : queryParameters.entrySet()) {
-			UriBuilder uriBuilder = UriBuilder.fromUri(decoratedURI);
+			UriBuilder uriBuilder = UriBuilder.fromUri(uri);
 
-			decoratedURI = uriBuilder.replaceQueryParam(
+			uri = uriBuilder.replaceQueryParam(
 				parameter.getKey(), parameter.getValue()).build();
 		}
 
-		return decoratedURI;
+		return uri;
 	}
 
 	private static final Logger _log = LoggerFactory.getLogger(

@@ -16,7 +16,7 @@ package com.liferay.portlet.documentlibrary.service.permission;
 
 import com.liferay.document.library.kernel.model.DLFileShortcut;
 import com.liferay.document.library.kernel.model.DLFileShortcutConstants;
-import com.liferay.document.library.kernel.service.DLFileShortcutLocalServiceUtil;
+import com.liferay.document.library.kernel.service.DLAppLocalServiceUtil;
 import com.liferay.exportimport.kernel.staging.permission.StagingPermissionUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.portlet.PortletProvider;
@@ -109,10 +109,10 @@ public class DLFileShortcutPermission {
 			String actionId)
 		throws PortalException {
 
-		DLFileShortcut dlFileShortcut =
-			DLFileShortcutLocalServiceUtil.getFileShortcut(fileShortcutId);
+		FileShortcut fileShortcut = DLAppLocalServiceUtil.getFileShortcut(
+			fileShortcutId);
 
-		return contains(permissionChecker, dlFileShortcut, actionId);
+		return contains(permissionChecker, fileShortcut, actionId);
 	}
 
 }

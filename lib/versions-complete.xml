@@ -5455,9 +5455,9 @@
 			</library>
 			<library>
 				<file-name>lib/portal/log4j-extras.jar</file-name>
-				<version>1.1</version>
+				<version>1.2.17</version>
 				<project-name>Log4j Extras</project-name>
-				<project-url>http://logging.apache.org/log4j/companions/extras</project-url>
+				<project-url>http://logging.apache.org/log4j/extras</project-url>
 				<licenses>
 					<license>
 						<license-name>Apache License 2.0</license-name>

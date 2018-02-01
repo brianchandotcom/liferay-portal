@@ -66,7 +66,9 @@ public class HtmlPreviewEntryLocalServiceImpl
 			htmlPreviewEntry.getUserId(), htmlPreviewEntry.getGroupId(),
 			htmlPreviewEntryId, content, mimeType);
 
-		htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
+		if (fileEntry != null) {
+			htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
+		}
 
 		htmlPreviewEntryPersistence.update(htmlPreviewEntry);
 
@@ -114,7 +116,9 @@ public class HtmlPreviewEntryLocalServiceImpl
 			htmlPreviewEntry.getUserId(), htmlPreviewEntry.getGroupId(),
 			htmlPreviewEntryId, content, mimeType);
 
-		htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
+		if (fileEntry != null) {
+			htmlPreviewEntry.setFileEntryId(fileEntry.getFileEntryId());
+		}
 
 		htmlPreviewEntryPersistence.update(htmlPreviewEntry);
 
@@ -135,13 +139,10 @@ public class HtmlPreviewEntryLocalServiceImpl
 					mimeType);
 		}
 
-		File file = null;
+		File file = htmlPreviewProcessor.generateContentHtmlPreview(content);
 
-		try {
-			file = htmlPreviewProcessor.generateHtmlPreview(content);
-		}
-		catch (Exception e) {
-			throw new PortalException("Unable to generate HTML preview", e);
+		if (file == null) {
+			return null;
 		}
 
 		Repository repository =

@@ -15,6 +15,8 @@
 package com.liferay.html.preview.processor.image.impl;
 
 import com.liferay.html.preview.processor.HtmlPreviewProcessor;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.FileUtil;
 
@@ -34,13 +36,50 @@ import org.xhtmlrenderer.util.FSImageWriter;
 public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 
 	@Override
-	public File generateHtmlPreview(String content) throws Exception {
-		File tempFile = FileUtil.createTempFile();
+	public File generateContentHtmlPreview(String content) {
+		return generateContentHtmlPreview(
+			content, HtmlPreviewProcessor.DEFAULT_WIDTH);
+	}
 
-		FileUtil.write(tempFile, content);
+	@Override
+	public File generateContentHtmlPreview(String content, int width) {
+		try {
+			File tempFile = FileUtil.createTempFile();
 
-		Java2DRenderer renderer = new Java2DRenderer(tempFile, 1024);
+			FileUtil.write(tempFile, content);
 
+			return _getFile(new Java2DRenderer(tempFile, width));
+		}
+		catch (Exception e) {
+			_log.error("Unable to generate HTML preview", e);
+		}
+
+		return null;
+	}
+
+	@Override
+	public File generateURLHtmlPreview(String url) {
+		return generateURLHtmlPreview(url, HtmlPreviewProcessor.DEFAULT_WIDTH);
+	}
+
+	@Override
+	public File generateURLHtmlPreview(String url, int width) {
+		try {
+			return _getFile(new Java2DRenderer(url, width));
+		}
+		catch (Exception e) {
+			_log.error("Unable to generate HTML preview", e);
+		}
+
+		return null;
+	}
+
+	@Override
+	public String getMimeType() {
+		return ContentTypes.IMAGE_PNG;
+	}
+
+	private File _getFile(Java2DRenderer renderer) throws Exception {
 		renderer.setBufferedImageType(BufferedImage.TYPE_INT_RGB);
 
 		File outputFile = FileUtil.createTempFile("png");
@@ -52,9 +91,7 @@ public class ImageHtmlPreviewProcessor implements HtmlPreviewProcessor {
 		return outputFile;
 	}
 
-	@Override
-	public String getMimeType() {
-		return ContentTypes.IMAGE_PNG;
-	}
+	private static final Log _log = LogFactoryUtil.getLog(
+		ImageHtmlPreviewProcessor.class);
 
 }

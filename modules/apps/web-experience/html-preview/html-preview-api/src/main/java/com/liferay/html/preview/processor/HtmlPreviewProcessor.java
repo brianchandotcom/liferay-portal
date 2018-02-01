@@ -21,7 +21,15 @@ import java.io.File;
  */
 public interface HtmlPreviewProcessor {
 
-	public File generateHtmlPreview(String content) throws Exception;
+	public static final int DEFAULT_WIDTH = 1024;
+
+	public File generateContentHtmlPreview(String content);
+
+	public File generateContentHtmlPreview(String content, int width);
+
+	public File generateURLHtmlPreview(String url);
+
+	public File generateURLHtmlPreview(String url, int width);
 
 	public String getMimeType();
 

@@ -29,7 +29,8 @@ import org.talend.daikon.definition.DefinitionImageType;
 public class LiferayConnectionWizardDefinition
 	extends AbstractComponentWizardDefintion {
 
-	public static final String COMPONENT_WIZARD_NAME = "liferay";
+	public static final String COMPONENT_WIZARD_NAME =
+		"LiferayConnectionWizard";
 
 	@Override
 	public ComponentWizard createWizard(

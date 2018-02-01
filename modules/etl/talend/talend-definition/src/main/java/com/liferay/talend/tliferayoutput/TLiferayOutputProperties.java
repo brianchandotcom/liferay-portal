@@ -47,7 +47,7 @@ public class TLiferayOutputProperties
 
 		Set<PropertyPathConnector> connectors = new HashSet<>();
 
-		if (outputConnectors) {
+		if (!outputConnectors) {
 			connectors.add(flowConnector);
 			connectors.add(rejectConnector);
 

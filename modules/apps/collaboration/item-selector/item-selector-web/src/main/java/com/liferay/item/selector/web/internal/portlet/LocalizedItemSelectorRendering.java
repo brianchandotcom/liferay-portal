@@ -27,7 +27,6 @@ import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
-import javax.portlet.PortletURL;
 
 /**
  * @author Iván Zaera
@@ -64,10 +63,8 @@ public class LocalizedItemSelectorRendering {
 
 		_navigationItems.add(
 			navigationItem -> {
-				PortletURL portletURL =
-					itemSelectorViewRenderer.getPortletURL();
-
-				navigationItem.setHref(portletURL.toString());
+				navigationItem.setHref(
+					itemSelectorViewRenderer.getPortletURL());
 
 				navigationItem.setLabel(title);
 

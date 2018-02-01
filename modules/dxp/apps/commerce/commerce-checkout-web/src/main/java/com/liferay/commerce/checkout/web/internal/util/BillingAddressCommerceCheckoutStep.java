@@ -18,8 +18,10 @@ import com.liferay.commerce.checkout.web.internal.display.context.BaseAddressChe
 import com.liferay.commerce.checkout.web.internal.display.context.BillingAddressCheckoutStepDisplayContext;
 import com.liferay.commerce.checkout.web.util.CommerceCheckoutStep;
 import com.liferay.commerce.model.CommerceCart;
+import com.liferay.commerce.organization.util.CommerceOrganizationHelper;
 import com.liferay.commerce.util.CommerceCartHelper;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.Organization;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,6 +48,23 @@ public class BillingAddressCommerceCheckoutStep
 	@Override
 	public String getName() {
 		return NAME;
+	}
+
+	@Override
+	public boolean isActive(
+			HttpServletRequest httpServletRequest,
+			HttpServletResponse httpServletResponse)
+		throws Exception {
+
+		Organization organization =
+			_commerceOrganizationHelper.getCurrentOrganization(
+				httpServletRequest);
+
+		if (organization != null) {
+			return false;
+		}
+
+		return true;
 	}
 
 	@Override
@@ -81,5 +100,8 @@ public class BillingAddressCommerceCheckoutStep
 
 	@Reference
 	private CommerceCartHelper _commerceCartHelper;
+
+	@Reference
+	private CommerceOrganizationHelper _commerceOrganizationHelper;
 
 }

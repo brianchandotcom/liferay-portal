@@ -74,7 +74,7 @@ public class ShippingAddressCheckoutStepDisplayContext
 			defaultCommerceAddressId = commerceCart.getBillingAddressId();
 		}
 
-		if (defaultCommerceAddressId == 0) {
+		if ((defaultCommerceAddressId == 0) && !commerceAddresses.isEmpty()) {
 			CommerceAddress commerceAddress = commerceAddresses.get(0);
 
 			defaultCommerceAddressId = commerceAddress.getCommerceAddressId();

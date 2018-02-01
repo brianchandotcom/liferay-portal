@@ -30,33 +30,46 @@ Map<Long, List<CommerceCartValidatorResult>> commerceCartValidatorResultMap = or
 <liferay-ui:error exception="<%= CommerceCartShippingMethodException.class %>" message="please-select-a-valid-shipping-method" />
 
 <div class="address-container row">
-	<div class="col-md-4">
-		<div class="card card-commerce">
-			<div class="card-body">
-				<h3><liferay-ui:message key="billing-address" /></h3>
 
-				<%
-				request.setAttribute("address.jsp-commerceAddress", commerceCart.getBillingAddress());
-				%>
+	<%
+	CommerceAddress billingAddress = commerceCart.getBillingAddress();
+	%>
 
-				<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
+	<c:if test="<%= billingAddress != null %>">
+		<div class="col-md-4">
+			<div class="card card-commerce">
+				<div class="card-body">
+					<h3><liferay-ui:message key="billing-address" /></h3>
+
+					<%
+					request.setAttribute("address.jsp-commerceAddress", billingAddress);
+					%>
+
+					<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
+				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
 
-	<div class="col-md-4">
-		<div class="card card-commerce">
-			<div class="card-body">
-				<h3><liferay-ui:message key="shipping-address" /></h3>
+	<%
+	CommerceAddress shippingAddress = commerceCart.getShippingAddress();
+	%>
 
-				<%
-				request.setAttribute("address.jsp-commerceAddress", commerceCart.getShippingAddress());
-				%>
+	<c:if test="<%= shippingAddress != null %>">
+		<div class="col-md-4">
+			<div class="card card-commerce">
+				<div class="card-body">
+					<h3><liferay-ui:message key="shipping-address" /></h3>
 
-				<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
+					<%
+					request.setAttribute("address.jsp-commerceAddress", shippingAddress);
+					%>
+
+					<liferay-util:include page="/address.jsp" servletContext="<%= application %>" />
+				</div>
 			</div>
 		</div>
-	</div>
+	</c:if>
 
 	<div class="col-md-4">
 		<div class="card card-commerce">

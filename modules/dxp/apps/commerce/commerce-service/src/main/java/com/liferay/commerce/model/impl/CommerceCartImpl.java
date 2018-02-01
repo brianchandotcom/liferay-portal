@@ -101,6 +101,17 @@ public class CommerceCartImpl extends CommerceCartBaseImpl {
 	}
 
 	@Override
+	public boolean isB2B() throws PortalException {
+		String className = getClassName();
+
+		if (className.equals(Organization.class.getName())) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
 	public boolean isGuestCart() throws PortalException {
 		User user = UserLocalServiceUtil.getUser(getUserId());
 

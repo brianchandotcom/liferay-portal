@@ -478,7 +478,9 @@ public class CommerceOrderLocalServiceImpl
 			if (!commercePaymentMethod.isActive()) {
 				commercePaymentMethod = null;
 			}
-			else if (commerceCart.getBillingAddressId() <= 0) {
+			else if (!commerceCart.isB2B() &&
+					 (commerceCart.getBillingAddressId() <= 0)) {
+
 				throw new CommerceCartBillingAddressException();
 			}
 		}

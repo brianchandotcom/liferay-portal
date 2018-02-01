@@ -618,6 +618,7 @@
 		<execute macro="Staging#gotoPublishToLive" />
 
 		<execute macro="Staging#configurePublishToLive">
+			<var name="checkContentNameList=" value="Documents and Media" />
 			<var name="contentDeletion" value="true" />
 		</execute>
 
